@@ -2,81 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E52E575E271
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 16:09:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B64BE75E27D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 16:16:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbjGWOJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 10:09:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36082 "EHLO
+        id S229685AbjGWOP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 10:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbjGWOJH (ORCPT
+        with ESMTP id S229660AbjGWOP6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 10:09:07 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA999269D
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:08:46 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3141fa31c2bso2458741f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:08:46 -0700 (PDT)
+        Sun, 23 Jul 2023 10:15:58 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC2B10E2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:15:56 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9923833737eso511967766b.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:15:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690121294; x=1690726094;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uMHFOpN8dCQzirwYvbZZTFJXmJn2LDjFCTJbeswbnxU=;
-        b=AybzwgJxFuP9CrSMbDFqwc9vfK1aWKwjbmr3I+J4qLtyy7cs0qUWc0KnAOEzti6pXU
-         71ZOR02RCER5QiscQbcQtuCfuwk3Hyxpoo6535locnTpu8TJ62ENJo+L8u52FZclPqCE
-         BF8uhjcrgZqApvxcNo7KygQ5Qxw5VH51nvx6MVPDU6GURGW8AAkyiZYoofbG2o4lTM/n
-         c/KzS53tEvSRb4D+QXXv15ECTPMJ/dltRZDmthzGF+f6qulowA6zM3w0iB8Kg+YICScb
-         nO9FlpioZkjI6ykDR9FAmcseHtAHuGt1UzNi0ZXOs5uGoRH/UT15Vazuws+kAIqFDEDW
-         747g==
+        d=linaro.org; s=google; t=1690121755; x=1690726555;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=N5gRIf9soWu1L4l6EUy8y1Fb5IIrkKYz0UV071lXLSI=;
+        b=MY2L09s594Rox7deo3eNSWYQvAr+z2BXjSPPVBgshC6fWI5QB7qpBlWNt7twt78hxV
+         xVqtqN3pCRJ/ciYQyfOpbK1gXro+47vCMtcik32TBmNjo0yIZyU2CJRnJitXXFxQdCCb
+         LdnjXmdLImQKmqZtMvG8qvytQSnwvgRe4KVxd2u31O/p2ZszCLB41x/Cvp9YzLnKHlem
+         4Zyl6BE2ejA2FzbRhDdkg34ruqfTU68VlAfejsCn6qvNuGhWI2WG3/XcYGNvrYiJ/4bt
+         ePsAljjB5j3IB5mo05zkf416vxBzC1choRTs7lXLcYzxdEqoTx60ibwdrNwQ3iOIdI6G
+         OgXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690121295; x=1690726095;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMHFOpN8dCQzirwYvbZZTFJXmJn2LDjFCTJbeswbnxU=;
-        b=P4WS6K3HMBrTgo5RBuknAPLK+/sudQOjgXpXzUFlv2sOdePf2vVACxQ26Y4YgMqTUl
-         vucV3zuPvzn7n9MRQQ8wcKfp91KViaxKkDtJ10YkJZ2gRvwurjVduSh5j0XBFnCr3G9Q
-         AKn4/VazyPMrSmdUduSoeGLECATnK47Qg+vPs2ykVvOgC74mzpBQcQLzGmSxR8CXoN9X
-         NCKdo2bPnHqwfrj5vJFUHIZZiAiIe5yxSMSNUHs9tX+I82p86FC7iGWknnHBH9Fpijge
-         pOcIQo5wgEAsjfHvlrXeBXvgx/X36SiSqRh0Yau1SVUPffTOhG3mkiofA8UKfG/cPLsE
-         02tg==
-X-Gm-Message-State: ABy/qLZhtP2GIVjFsrkZ1IlwNNcu7cOX4j6S0S7l00fgP5ok1UGUy2kW
-        XYXSIfGUBjjJ18LW1+2Ttn31lg==
-X-Google-Smtp-Source: APBJJlGAvQeJv6UVRWAgX5S6bpwg7RgpsSx8o9aqpnbM+/1UnHXuubPaYqr8YPDHeNKkw4BzfUq1sg==
-X-Received: by 2002:a5d:4a06:0:b0:30f:af06:7320 with SMTP id m6-20020a5d4a06000000b0030faf067320mr4579891wrq.23.1690121294681;
-        Sun, 23 Jul 2023 07:08:14 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id m12-20020adff38c000000b003145559a691sm9822586wro.41.2023.07.23.07.08.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jul 2023 07:08:14 -0700 (PDT)
-Message-ID: <24ea1af2-2304-f4f9-e83e-7ae7101e7edd@linaro.org>
-Date:   Sun, 23 Jul 2023 16:08:11 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 04/11] arm64: dts: qcom: sdm630: Drop RPM bus clocks
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1690121755; x=1690726555;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N5gRIf9soWu1L4l6EUy8y1Fb5IIrkKYz0UV071lXLSI=;
+        b=Sy52/G5gD/ezGYvhhIyQ+SicrPfJX8mGWG6ffkEZm4QywjlNRKSTYHI3OyZPdcg9VT
+         SjrqVOOPkKyFLQO0BMWBatWW3JvzTEDzvMa2kK7WevjWsOHaRDHYdhq531TFutfKQHuc
+         V5qWRy52t50df5ANlVshqZV9Cw1QoqtuoWfRvhwb9t0rzO8yX6+EEczQvfU9nJNyqE81
+         h2Aa3q/6AachQPtrpl3OrWGbP7pOtNf8NPz6+CdPeHthBVInpQoRpvsnbRbrO73Ty409
+         ecAe++u8PHEW7CZ2fPZYBPTekthFZ8e+/UvSvoOFJLF7AOCxAzXSNCwaaaRWLTVGO2no
+         Bcaw==
+X-Gm-Message-State: ABy/qLZ+QMVATSg1AV1ICEQbgavQ3s0iHBZ6NID2w6hUo5/D/3OWsLVS
+        eQzTTaPOL0YAdJLFRIK1IRKkmQ==
+X-Google-Smtp-Source: APBJJlE4TRQ4jxiEhgw2ekB7zPZtl8glF3AfTjfQF+ItgZ3+t2ozlWJzjRTcL9Lm73lYnvG0ctZSxg==
+X-Received: by 2002:a17:907:2c42:b0:982:9daf:9fcf with SMTP id hf2-20020a1709072c4200b009829daf9fcfmr7271159ejc.66.1690121755099;
+        Sun, 23 Jul 2023 07:15:55 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id g6-20020aa7c586000000b0051dd1c10c13sm4810592edq.29.2023.07.23.07.15.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Jul 2023 07:15:54 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230721-topic-rpm_clk_cleanup-v1-0-cf6cd5c621d5@linaro.org>
- <20230721-topic-rpm_clk_cleanup-v1-4-cf6cd5c621d5@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230721-topic-rpm_clk_cleanup-v1-4-cf6cd5c621d5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: usb: qcom,dwc3: drop assigned-clocks
+Date:   Sun, 23 Jul 2023 16:15:49 +0200
+Message-Id: <20230723141550.90223-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,19 +77,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/07/2023 17:36, Konrad Dybcio wrote:
-> These clocks are now handled from within the icc framework and are
-> no longer registered from within the CCF. Remove them.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm630.dtsi | 29 ++++-------------------------
->  1 file changed, 4 insertions(+), 25 deletions(-)
-> 
+The binding does not have to specify assigned-clocks, because they are
+already allowed by core DT schema.  On the other hand, fixed
+assigned-clocks in the binding will not fit different boards or SoCs.
+Exactly this is the case for Qualcomm SuperSpeed DWC3 USB SoC controller
+binding, where few boards have different assigned-clocks:
 
-Are you sure you removed all of the instances? I think usb still has RPM
-bus clocks.
+  ipq8074-hk10-c1.dtb: usb@8cf8800: assigned-clocks: [[5, 131], [5, 132], [5, 133]] is too long
+  sdm660-xiaomi-lavender.dtb: usb@a8f8800: assigned-clocks: [[37, 92], [37, 91], [38, 64]] is too long
 
-Best regards,
-Krzysztof
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index 08d42fde466a..7cedd751161d 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -85,15 +85,6 @@ properties:
+     minItems: 1
+     maxItems: 9
+ 
+-  assigned-clocks:
+-    items:
+-      - description: Phandle and clock specifier of MOCK_UTMI_CLK.
+-      - description: Phandle and clock specifoer of MASTER_CLK.
+-
+-  assigned-clock-rates:
+-    items:
+-      - description: Must be 19.2MHz (19200000).
+-      - description: Must be >= 60 MHz in HS mode, >= 125 MHz in SS mode.
+   resets:
+     maxItems: 1
+ 
+-- 
+2.34.1
 
