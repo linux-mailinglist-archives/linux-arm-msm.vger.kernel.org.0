@@ -2,573 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0988675E462
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 21:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAECE75E47A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 21:22:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbjGWTIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 15:08:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44032 "EHLO
+        id S229756AbjGWTWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 15:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbjGWTIM (ORCPT
+        with ESMTP id S229749AbjGWTWj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 15:08:12 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBB7D180;
-        Sun, 23 Jul 2023 12:08:09 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99b78fda9a8so295883366b.1;
-        Sun, 23 Jul 2023 12:08:09 -0700 (PDT)
+        Sun, 23 Jul 2023 15:22:39 -0400
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B4ED10DE;
+        Sun, 23 Jul 2023 12:22:21 -0700 (PDT)
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36NJI365006265;
+        Sun, 23 Jul 2023 19:21:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : content-type :
+ mime-version; s=corp-2023-03-30;
+ bh=OOLJz+DpRP4m+fc294Rn3UFkq7XpcXSR/Gt+slC2v5Q=;
+ b=K8C/EbuloqD9W9ul08ctZFaVpemk8ozPVuDjQF2LDxJ2YQys7DvoJvk0+zKFSe6cbVVC
+ O4HmIeBEuuJV8m0ZfDMlNOXn1JhPZ8f/eA5zlsHNOB28BuppfCI0yJp/e4TjcUa8QXk1
+ 70x6vt78T3iYrcxs+P8tEJLrig+TwAjQ/2sXovxWq+zwHYoLPZm4KUfEkRrJrGyHOpnc
+ 4h06o4a68+uDkeWeHo1efEFdvYWYCF61QcOSIRl15sV8zJcNWpE+MVHYBkdH4zoS2Lbq
+ twhzXsZTGralCgE05WGCzKlUra0L8Af4gRIQBk7cyGSkVgVfvgIgM6UeTPVceh4fWnMV vQ== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3s06qtsfjw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Sun, 23 Jul 2023 19:21:49 +0000
+Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 36NFGKO2028215;
+        Sun, 23 Jul 2023 19:21:49 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com (mail-bn8nam04lp2043.outbound.protection.outlook.com [104.47.74.43])
+        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3s05j8x3wj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Sun, 23 Jul 2023 19:21:49 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MrhV2tFLHwnTeBFrh9I/UNzZz1qyjtDc8GTXijz5v18OgWJ9zLcgIRGBKYPYLGTvkBDIEb1mcUFx8t91EFs2IQ0vbE1ttQEVrTobZf+o1k5EM/J70B10j04AZIWcB65iuEYjbMu5avOuOMzPd2sMwvcdTNSQ1K8YFm3vgYg7WsVO4gxuAELEsdM+ZM+p8gFTvfx16dRPj8ocq86qIUEesJn13p5y+ANO6RDyU17ic9Rp3ynJMC1q/8zJeFrPIXPms+ZWeKgVNIlihL5XI4WopKZUSlKFOQIqM2zh9duaPLFWpdMIxjkGGP42L6kIbJtlVnaMbBoVuAjE73z5DTUTTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OOLJz+DpRP4m+fc294Rn3UFkq7XpcXSR/Gt+slC2v5Q=;
+ b=T/dwQP15+1zFAXPMYFpwQUnbTBSAbiO5j/y/cITonBXDXTN86+dDKRTMCQJChCt+MhBsFK8jK5reAhKBt4pPjJMLyO71vDsr88QvAe5iU0HQrak1dbZFtB/9RNZgUmkhNOkD1x+oKAph9RDIP1Moeo4dRbgGHJu909RV/eJgGjoLMJvQNZAqDMJ4nF9+801Tuj8FxFaip4aBZUyl+o9RHlrb4XhhIlvQHhsgq4IRbzaYKrd5gDThIaECx9QJ7ca2oIvHyfyfL6WRmwCN/8mzLOUfSnfMtxrMOrSi6YNIizEuDg6uhrPRHKBTRsZF1L9FEKPryOBNkK7H8L/Tcrluig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690139288; x=1690744088;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=11NGdJNCDs947Iwm2g95whLNXhlGadq+55ANyrgEFt4=;
-        b=YjKC4t8LxK1tV7pv66VmJyL8NtmphbF1BBYiUEDfFfBB6SerWJ8jwMK+YKGdYACWcF
-         cEtv/YRUqWAlzKoYido5SQKdK5p8wVDvyF/YiwHRy0iNrlO7qDBtsZ2TU6LMRY7MiKl+
-         7Qtijuq28BLUi+i67iNuFf1ItKQWrVJN/sl1KS2vuqHgkoCospOEekVgHrAn5mJSXxYC
-         eOahPb5CX02LOtmfbJpYUFB9vUT6ocHZeSLWaW9FNOjvOVeQGjkJ4nDZLF6mA2wz4sZH
-         jWCOixpAx83XxsWpWZlez59Dg77CKnk/8Vs65Aug2HW9UMj1iW+GMqpy3l+bir/CY5Fa
-         ZyBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690139288; x=1690744088;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=11NGdJNCDs947Iwm2g95whLNXhlGadq+55ANyrgEFt4=;
-        b=coXpD/a+P4C+o+sPo2OXOsajjp7w2JRF4BUy0Ki+91zuKg25QOoTJRLRR/m35jOYsH
-         XK//QtMRi/LVvuQ7aqCiC0KtnqA+XrnMszWyCsmPTJG147gM7E6mf7PzxZf8WaIALNIH
-         jc57J1lzEMB1fTOLwWI35bRmRK4+WDjna0SLw/lI4dVzPhq0xumO1XyzjGQeffIc87yx
-         ClSNvN1n/CgtLfEkRDoSq0uBx6M5VrFojm2rXBl3NA27GSgZyAXdJfW9Wk/ghSrUWiKT
-         ssdmLnftE7VVF6PFtDqWX94RSa8jUXbBcF+/AUYGOJcSlPbmjFVRdKE34VYe3uer8RzT
-         wtkg==
-X-Gm-Message-State: ABy/qLbBBxw4CvE/+J6BIK4WBvfW/AVOfZHB8V79RleKjG09aNOSk1By
-        G7jqLqhfYEvxxOQcgYuUsj4=
-X-Google-Smtp-Source: APBJJlEE8Dkdsc49GVweQfoeZqQ0jjcvtt/BUieBVx7Sv/Ews67Wy12HAko+YfE0SZWbS0LExzS22A==
-X-Received: by 2002:a17:906:2208:b0:998:de72:4c89 with SMTP id s8-20020a170906220800b00998de724c89mr8786553ejs.50.1690139288261;
-        Sun, 23 Jul 2023 12:08:08 -0700 (PDT)
-Received: from david-ryuzu.fritz.box ([188.195.170.196])
-        by smtp.googlemail.com with ESMTPSA id h19-20020a1ccc13000000b003fbcdba1a63sm2843320wmb.12.2023.07.23.12.08.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jul 2023 12:08:07 -0700 (PDT)
-From:   David Wronek <davidwronek@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OOLJz+DpRP4m+fc294Rn3UFkq7XpcXSR/Gt+slC2v5Q=;
+ b=UnvA6/U4INwI2u26GLMqZO0hz2tXXUswbTIeDpgRju5m9YFXP6/J4NNt7zJDTntpAgUq6eUg0ZZb/q6QjRa4dvaVFh0wMYhaPHnw9Dn4AMDJGQj15M3aRDKwivNywcEPql8FpgJHRvP4GdP+s1LqzSpSIhvTjMV0YQA9xCTTeLo=
+Received: from CO1PR10MB4754.namprd10.prod.outlook.com (2603:10b6:303:91::24)
+ by IA0PR10MB7302.namprd10.prod.outlook.com (2603:10b6:208:407::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.31; Sun, 23 Jul
+ 2023 19:21:46 +0000
+Received: from CO1PR10MB4754.namprd10.prod.outlook.com
+ ([fe80::f82a:5d0:624d:9536]) by CO1PR10MB4754.namprd10.prod.outlook.com
+ ([fe80::f82a:5d0:624d:9536%7]) with mapi id 15.20.6609.030; Sun, 23 Jul 2023
+ 19:21:46 +0000
+To:     Ziqi Chen <quic_ziqichen@quicinc.com>
+Cc:     quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        bvanassche@acm.org, mani@kernel.org, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
+        junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+        quic_nitirawa@quicinc.com, linux-scsi@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org,
-        David Wronek <davidwronek@gmail.com>
-Subject: [PATCH v4 7/7] arm64: dts: qcom: Add support for the Xiaomi SM7125 platform
-Date:   Sun, 23 Jul 2023 21:05:08 +0200
-Message-ID: <20230723190725.1619193-8-davidwronek@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230723190725.1619193-1-davidwronek@gmail.com>
-References: <20230723190725.1619193-1-davidwronek@gmail.com>
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        linux-arm-msm@vger.kernel.org (open list:UNIVERSAL FLASH STORAGE HOST
+        CONTROLLER DRIVER...), linux-kernel@vger.kernel.org (open list)
+Subject: Re: [PATCH v1] scsi: ufs: qcom: Get queue ID from MSI index in ESI
+ handler
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq11qgy77sy.fsf@ca-mkp.ca.oracle.com>
+References: <1689062349-77385-1-git-send-email-quic_ziqichen@quicinc.com>
+Date:   Sun, 23 Jul 2023 15:21:44 -0400
+In-Reply-To: <1689062349-77385-1-git-send-email-quic_ziqichen@quicinc.com>
+        (Ziqi Chen's message of "Tue, 11 Jul 2023 15:59:08 +0800")
+Content-Type: text/plain
+X-ClientProxiedBy: DM6PR18CA0024.namprd18.prod.outlook.com
+ (2603:10b6:5:15b::37) To CO1PR10MB4754.namprd10.prod.outlook.com
+ (2603:10b6:303:91::24)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR10MB4754:EE_|IA0PR10MB7302:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1d10adf6-ede0-4288-3587-08db8bb20e66
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: OjyjuTo3CVh66mKZCeWXbs8jRgA9czAovaB+62xAOWqnydO8ecGYgBHMTPrJHxZHnci4EUM9evgh5Nt1C5niB4+Sa40BClPAYf/MJWIzyunnSOVfo4uXNXRUG4iclt/DuQDQa3ov7NWhDfa/ZbvZRL+e5vV5hFYpMqWwAfT4Bl+yIZ/GSUWbFqwW2eIVqvZDFV+jKCpQ5RFPR2AawVL8rxUsewGhTlNt8DhRICnHT8vn26cieYG+g0vxvkQpbrmciTSROq3xVq/qwkPC2R4XbBtGSz1BnTpYJq/cZa0E3HiHM9B2QmrnXMTDh+KPjTu7/Y5IhM2lhvrKNcfAhDgr4i2dW7XG4MjOpD8avDVRVLwO+3z6IvQvRq0aaBv9M6dxAN470HrZInRPMIRcHEotkkcxxZ2akGDfG0Fh3soLPw9Bi3G2rXMTetHK+YA7ZSQ150b8Y068l+IgCKo9Ab8PAyGUwfn7k05cI5p/ftRzr2rxVkD8bwjDUa8jFHg/Ow8LnBm6n8f7sz84866aWzpHka2B6umvWBDMF/srrbXhA4GfOPTBtkzsTDYZu9bZkdLH
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR10MB4754.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(346002)(366004)(136003)(396003)(39860400002)(376002)(451199021)(38100700002)(6916009)(7416002)(8936002)(8676002)(5660300002)(478600001)(54906003)(316002)(66556008)(66476007)(4326008)(66946007)(41300700001)(26005)(186003)(6506007)(6486002)(6512007)(36916002)(4744005)(2906002)(86362001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZQInynKJ81yelrM+4ZwFUI+illGJOXnuyiu8zomluuzBSmNT/jonn9uZruSi?=
+ =?us-ascii?Q?ajBEH3fwnnOOGzHuvwq5bv7WTSI5Wig+4LHjFNwWo8WxoiD1wdhltelDeFYX?=
+ =?us-ascii?Q?zsoIeCDm7BHpBXn9M2veQ8plxS+NuqUS/qFnA9bMGSltCGCOREDGCp+Sj2QA?=
+ =?us-ascii?Q?BVU3hAS9aiXeCjfVJvcnf76MpqJYBDqwkgS3IMvqiGzrFo7UeWAZMWLbyLxe?=
+ =?us-ascii?Q?RmcGY4fKtUNso37wOyegtiSWD1BWEKFapYPwiu7q+HttZf/2MWY51aecTDKb?=
+ =?us-ascii?Q?4H03fu25OZnHOmSgvh64wgGi65xDhiOuqAVBE0f+UbuJP+vZtbaQ9xedxT81?=
+ =?us-ascii?Q?aU1DTN6WxlmE5iZtV6NRS1spFjqV4Q7F0bcu38hkvAq847Qjk0pANB3V0Mur?=
+ =?us-ascii?Q?ChGW/s6XJ8YvFapFM9iTaY+WKjc85Z6owYgmfqs+P7NdCNVUz/WOYTl4jeM3?=
+ =?us-ascii?Q?ugjRqDeFuj1IMUwEr1B8OwbCeBALx1xdNQameisrxX3eySzksHtmpLQwA9wA?=
+ =?us-ascii?Q?ifRzWxTttprYQEKeKC54LbhcxVs1OltpzJJTT+my0NyoX27Tuqv33XiSfRj/?=
+ =?us-ascii?Q?Dz7kHG3M4iF3YLP5695zpymBpS7IDp8b2lPdxjxWxjsCfBEnMwf5VGOD2Pqf?=
+ =?us-ascii?Q?xOm0/gxEYcDal1RBJSYyYYvLOhOxw8iM+skZUDs+V0UPvcYZ+b2ewARHTGzv?=
+ =?us-ascii?Q?8SaDGgzauIAImjWqpBgyRscb2tjbFexPlF4T1O39lzzcL8nqYbMDuhS5c9FK?=
+ =?us-ascii?Q?J1Pcxq+0GEXcbSdmZCIsH8XmX1bNXdfbYIha5krPKiNZUA1GL2UfgP5uFqAu?=
+ =?us-ascii?Q?3dFWLHk43U3OZM2LIUDN847hr7U8iTbPuXM3jb/mpWl1SxOoAyD+90Ar5OA/?=
+ =?us-ascii?Q?GNlmi7ZK4kuSeBEJO8GvvMffZ5F8o8w/VnCQ7vWBejtsQy2KLsJ3S2SsZxSi?=
+ =?us-ascii?Q?g4p/MEjgHj8NqTPfHzs7l8y7J8n7fLkYbHEoBMxqpnoKr9qzvUmBk2IDvvVj?=
+ =?us-ascii?Q?eCobm2UjsX3WNcVsHh1OA4nGiIsz0jOZpuurvyaSJhlNY4XZzPBDPGjF9qpo?=
+ =?us-ascii?Q?5iMJGpC01sdAWthVC2h886LwPq9pJvKNyBKK56gLQbWtkxRNU1CrKbSkkN/H?=
+ =?us-ascii?Q?mcjeMqK3Oi6E2iS+2pIXsSqnK2jhLLY0oyyWMpf4O1MpHvAGWUf1yhBFkZeR?=
+ =?us-ascii?Q?uTCB2TVoKVpSCgR9VMt8l6GZfIRg+sCvt44pAACtdhJuQKa1EMIs+ZIfCCYH?=
+ =?us-ascii?Q?VhouAXAnZKwwN63ziMnl4p4NiiQ2gSB575RCR5eFKbqbsAwip9tjHObw7CT8?=
+ =?us-ascii?Q?3+M2xII8l0u8F6Z21rPukbtxbjzZnN90tAHkO+nd+PxgBLC8506hZ94/wxYa?=
+ =?us-ascii?Q?Kyc+okMdgYNULTBe0Sss96MNYXZ3O+5RMlOWcVkxJauOIT5729O4HUQWMBw2?=
+ =?us-ascii?Q?B7HxT+9rWmgHKXEMokgNK0lkXMtBX69EnBil51ATu52ZOdfmIrCxeg/gA5RT?=
+ =?us-ascii?Q?HPPRxArRqAz7gmHPnIiGomeJkiK++DZuS1dBWaqLxmpCmu37v7W5Ww3CdIEl?=
+ =?us-ascii?Q?CYcq/8zOYSUHuXEVo2mK4obBIn2duDhjkxvYadrWuF+V4+6ZDzr/aKKEplp1?=
+ =?us-ascii?Q?3Q=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: =?us-ascii?Q?NJJG/XEC3R7wk+cuS5KA+gR9gWyOuNQ4GETkyGk10erZxzRNsKqnesI1FvXw?=
+ =?us-ascii?Q?Y3ZWgr+yI79DTtq1QGRQaV9ncorwnSQjR3KopzgAYbDD4mH+VqHgm04tUWb2?=
+ =?us-ascii?Q?ub5rqNK4Kw2RT/JD+WPTZ9OrQbGE3Zy91Ftb5hnhw9RhreujPdfe5Dk+AP+e?=
+ =?us-ascii?Q?KoUynI4HzONXYQrZbewxvs8blZv6TTXCDq4dugB0JW00OQLk7ENIvQczrNiJ?=
+ =?us-ascii?Q?Aj63aiKXqZl/f4fHCdbKi241FbV5AwvFQ8eGXTKQlf4WTwm6+cEk/RJ8iq3m?=
+ =?us-ascii?Q?WDd4XZ2XjQ1KuhmWwh0+mgkLVAWcVGwM1WxR8Bs4r4/I08Ax0AbcnQQVaNbG?=
+ =?us-ascii?Q?nzvPMemEeX/AppCCNkWXOuggLD0Ti4QnC1wxfPPPOqkhAR1WWCMOQq33JET+?=
+ =?us-ascii?Q?U4whEEPn0HTK18tqBDSTNQhiDx/7QSlu0T+lFYUfHxBLa6EXKT0Pze9HGVw5?=
+ =?us-ascii?Q?oRkdzmeeNlYQve28IyQJaFJbmAPpcymOMELoNpC2M6527ja68YH9/4rPmNnr?=
+ =?us-ascii?Q?ESpFbByg0c4ZFx5Pl6mlNSBH8FRlwoPqcY7rQkcGvlzNfDt/OtX414nYVI7D?=
+ =?us-ascii?Q?7Qpx7ktPzY7b1eLfo5bALPZigL+ZYa0nVvI/MSFkvY4Us3UOBxq0fToHYCUa?=
+ =?us-ascii?Q?CwShCvvlYS5U1jQuV7+dkXWq8HM6VZVV4k+zFHPty0hXYFcBIifHDr4SgDY4?=
+ =?us-ascii?Q?ygLcdBGEyqnoTTVW1k6aqKDJ3cf58oZSL5mmtnI7l5KXhKS8FkyISbxyu1jr?=
+ =?us-ascii?Q?FbGTouMre7Gf/tX+iju9LQ/TLYsCwaonbonIFlwvGYw3dEXyFs/5+iRtdYf9?=
+ =?us-ascii?Q?Vul7Xr5eTDGWZzFknmFQ9+GGVjnlBmivUedqwalNG98VRqt8GaI8F8D1wiCD?=
+ =?us-ascii?Q?6hUWWq8hvdBwnfT216pb4dlZdQRKpYln/yVsD39JK8UCnXWJoiT3iCmwaUP0?=
+ =?us-ascii?Q?BkALuMTwZC+vV5FJYQlf4rmLMXGBAL9JIA21p9sak1a5/hm6CqPv+xRvIsuf?=
+ =?us-ascii?Q?+ceV5dwt/Ejdn1b/eSNv5EKMMMh5GIyap6aHYk/EiWg1EKo=3D?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d10adf6-ede0-4288-3587-08db8bb20e66
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR10MB4754.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2023 19:21:46.8105
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FYo+bo97OJs59KLcCQEz8o63VeesG9jEHUxywGwRR3WWZS6iCLDaplak6hp9FbKRSsHnyNfSmCTWRR843qassX+gCUcyddb5vNh4R2RZfwQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7302
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-23_08,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 adultscore=0 bulkscore=0
+ mlxlogscore=999 suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307230181
+X-Proofpoint-ORIG-GUID: 06hupt7H1hbtyvvrq4vKgBr3ZYmvo-WM
+X-Proofpoint-GUID: 06hupt7H1hbtyvvrq4vKgBr3ZYmvo-WM
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are 6 Xiaomi smartphones with the SM7125 SoC:
 
-- POCO M2 Pro (gram)
-- Redmi Note 9S (curtana)
-- Redmi Note 9 Pro (Global, joyeuse)
-- Redmi Note 9 Pro (India, curtana)
-- Redmi Note 9 Pro Max (excalibur)
-- Redmi Note 10 Lite (curtana)
+Ziqi,
 
-These devices share a common board design (a.k.a miatoll) with only a
-few differences. Add support for the common board, as well as support
-for the global Redmi Note 9 Pro.
+> platform_msi_domain_alloc_irqs() does not always get consecutive IRQ
+> numbers, hence queue IDs calculated out from IRQ numbers may be
+> incorrect if we assume IRQ numbers are consecutive. Fix it by passing
+> msi_desc to ESI handler to use msi_desc->msi_index as queue ID.
 
-Signed-off-by: David Wronek <davidwronek@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm7125-xiaomi-joyeuse.dts   |  16 +
- .../boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi  | 423 ++++++++++++++++++
- 3 files changed, 440 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi
+Applied to 6.6/scsi-staging, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 337abc4ceb17..7ef9e7d43904 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -192,6 +192,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-joyeuse.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
-new file mode 100644
-index 000000000000..2b3d1ed1bcae
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm7125-xiaomi-miatoll.dtsi"
-+
-+/ {
-+	model = "Xiaomi Redmi Note 9 Pro (Global)";
-+	compatible = "xiaomi,joyeuse", "qcom,sm7125";
-+
-+	/* required for bootloader to select correct board */
-+	qcom,board-id = <0x50022 1>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi
-new file mode 100644
-index 000000000000..e55cd83c19b8
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi
-@@ -0,0 +1,423 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/firmware/qcom,scm.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sm7125.dtsi"
-+#include "pm6150.dtsi"
-+#include "pm6150l.dtsi"
-+
-+/delete-node/ &ipa_fw_mem;
-+/delete-node/ &rmtfs_mem;
-+
-+/ {
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_SM7125 0>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer@9c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0x9c000000 0x0 (1080 * 2400 * 4)>;
-+			width = <1080>;
-+			height = <2400>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-+		};
-+	};
-+
-+	gpio_keys: gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		key-vol-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm6150l_gpios 2 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
-+	reserved-memory {
-+		mpss_mem: memory@86000000 {
-+			reg = <0x0 0x86000000 0x0 0x8400000>;
-+			no-map;
-+		};
-+
-+		venus_mem: memory@8ee00000 {
-+			reg = <0x0 0x8ee00000 0x0 0x500000>;
-+			no-map;
-+		};
-+
-+		cdsp_mem: memory@8f300000 {
-+			reg = <0x0 0x8f300000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		adsp_mem: memory@91100000 {
-+			reg = <0x0 0x91100000 0x0 0x2800000>;
-+			no-map;
-+		};
-+
-+		wlan_mem: memory@93900000 {
-+			reg = <0x0 0x93900000 0x0 0x200000>;
-+			no-map;
-+		};
-+
-+		ipa_fw_mem: memory@93b00000 {
-+			reg = <0x0 0x93b00000 0x0 0x10000>;
-+			no-map;
-+		};
-+
-+		gpu_mem: memory@93b15000 {
-+			reg = <0x0 0x93b15000 0x0 0x2000>;
-+			no-map;
-+		};
-+
-+		cont_splash_mem: memory@9c000000 {
-+			reg = <0x0 0x9c000000 0x0 (1080 * 2400 * 4)>;
-+			no-map;
-+		};
-+
-+		pstore_mem: ramoops@9d800000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0x9d800000 0x0 0x400000>;
-+			record-size = <0x80000>;
-+			pmsg-size = <0x200000>;
-+			console-size = <0x100000>;
-+		};
-+
-+		rmtfs_mem: memory@fa601000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0 0xfa601000 0x0 0x200000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+		};
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm6150-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vreg_s1a_1p1: smps1 {
-+			regulator-min-microvolt = <1128000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vreg_s4a_1p0: smps4 {
-+			regulator-min-microvolt = <824000>;
-+			regulator-max-microvolt = <1120000>;
-+		};
-+
-+		vreg_s5a_2p0: smps5 {
-+			regulator-min-microvolt = <1744000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+
-+		vreg_l1a_1p2: ldo1 {
-+			regulator-min-microvolt = <1178000>;
-+			regulator-max-microvolt = <1256000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2a_1p0: ldo2 {
-+			regulator-min-microvolt = <944000>;
-+			regulator-max-microvolt = <1056000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3a_1p0: ldo3 {
-+			regulator-min-microvolt = <968000>;
-+			regulator-max-microvolt = <1064000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4a_0p88: ldo4 {
-+			regulator-min-microvolt = <824000>;
-+			regulator-max-microvolt = <928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5a_2p7: ldo5 {
-+			regulator-min-microvolt = <2496000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6a_0p6: ldo6 {
-+			regulator-min-microvolt = <568000>;
-+			regulator-max-microvolt = <648000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9a_0p664: ldo9 {
-+			regulator-min-microvolt = <488000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10a_1p8: ldo10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1832000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11a_1p8: ldo11 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1952000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_1p8: ldo13 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-min-microvolt = <1728000>;
-+			regulator-max-microvolt = <1832000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15a_1p8: ldo15 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+			regulator-min-microvolt = <2496000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17a_3p1: ldo17 {
-+			regulator-min-microvolt = <2920000>;
-+			regulator-max-microvolt = <3232000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18a_3p0: ldo18 {
-+			regulator-min-microvolt = <1696000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l19a_3p0: ldo19 {
-+			regulator-min-microvolt = <2696000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm6150l-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vreg_s8c_1p3: smps8 {
-+			regulator-min-microvolt = <1120000>;
-+			regulator-max-microvolt = <1408000>;
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-min-microvolt = <1616000>;
-+			regulator-max-microvolt = <1984000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2c_1p3: ldo2 {
-+			regulator-min-microvolt = <1168000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3c_1p23: ldo3 {
-+			regulator-min-microvolt = <1144000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4c_1p8: ldo4 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6c_3p0: ldo6 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7c_3p0: ldo7 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9c_2p9: ldo9 {
-+			regulator-min-microvolt = <2952000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11c_3p3: ldo11 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
-+	};
-+};
-+
-+&dispcc {
-+	/* HACK: disable until a panel driver is ready to retain simplefb */
-+	status = "disabled";
-+};
-+
-+&pm6150_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&pm6150_rtc {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 69 GPIO_ACTIVE_HIGH>;
-+	pinctrl-names = "default","sleep";
-+	pinctrl-0 = <&sdc2_on>;
-+	pinctrl-1 = <&sdc2_off>;
-+	vmmc-supply = <&vreg_l9c_2p9>;
-+	vqmmc-supply = <&vreg_l6c_3p0>;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <34 4>, <59 4>;
-+
-+	sdc2_on: sdc2-on-state {
-+		clk-pins {
-+			pins = "sdc2_clk";
-+			bias-disable;
-+			drive-strength = <16>;
-+		};
-+
-+		cmd-pins {
-+			pins = "sdc2_cmd";
-+			bias-pull-up;
-+			drive-strength = <10>;
-+		};
-+
-+		data-pins {
-+			pins = "sdc2_data";
-+			bias-pull-up;
-+			drive-strength = <10>;
-+		};
-+
-+		sd-cd-pins {
-+			pins = "gpio69";
-+			function = "gpio";
-+			bias-pull-up;
-+			drive-strength = <2>;
-+		};
-+	};
-+
-+	sdc2_off: sdc2-off-state {
-+		clk-pins {
-+			pins = "sdc2_clk";
-+			bias-disable;
-+			drive-strength = <2>;
-+		};
-+
-+		cmd-pins {
-+			pins = "sdc2_cmd";
-+			bias-pull-up;
-+			drive-strength = <2>;
-+		};
-+
-+		data-pins {
-+			pins = "sdc2_data";
-+			bias-pull-up;
-+			drive-strength = <2>;
-+		};
-+
-+		sd-cd-pins {
-+			pins = "gpio69";
-+			function = "gpio";
-+			bias-pull-up;
-+			drive-strength = <2>;
-+		};
-+	};
-+};
-+
-+&usb_1 {
-+	qcom,select-utmi-as-pipe-clk;
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
-+	status = "okay";
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&vreg_l4a_0p88>;
-+	vdda-phy-dpdm-supply = <&vreg_l17a_3p1>;
-+	vdda-pll-supply = <&vreg_l11a_1p8>;
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vreg_l4a_0p88>;
-+	vdda-pll-supply = <&vreg_l3c_1p23>;
-+	status = "okay";
-+};
 -- 
-2.41.0
-
+Martin K. Petersen	Oracle Linux Engineering
