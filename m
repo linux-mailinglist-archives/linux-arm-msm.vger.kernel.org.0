@@ -2,100 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CB2775E0F6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 11:34:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0788175E182
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 12:55:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbjGWJew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 05:34:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39980 "EHLO
+        id S229576AbjGWKzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 06:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjGWJev (ORCPT
+        with ESMTP id S229534AbjGWKzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 05:34:51 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C14E67
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 02:34:49 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-314319c0d3eso2937316f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 02:34:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690104888; x=1690709688;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4RQzulAln68QaO9xCL+1uqZn0t96ask7tv6fnlyXL9E=;
-        b=mxahKaJmQ9V/amzC/e6KwIs48UtlToaFXzkTmbqljUfs7owNzm+ROa+GSqcutQaXxx
-         nKqYmNZ/eZorXs7fb8R8kCfDKpvIPM91Zw/yCLu5wErRC443YichwaqUP9NyLq8RteGZ
-         e8/c8laNGwDh25TFszYPeCtJ9Z8EHyT7Naj+79RQAb3nxiLzAsXw6AaNuCCnaTcMZoe7
-         B/LLndwWh6q8AGqsp+KGFPtze+6yykZxvKYXsyx7gpwncBFkST95DW5TMKJtEXH5cqtX
-         moVIvxIJ1g9wfxVX5PmTh+EI5W3ZpHb7Ey6FlYmmoTx7E34J/LhMS02wSYPYEoCj8fMs
-         jMqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690104888; x=1690709688;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4RQzulAln68QaO9xCL+1uqZn0t96ask7tv6fnlyXL9E=;
-        b=JO2eS12sAECvtkigcct6deVcgho8WpWbWT3p1v9xVugE68pHWbWTzY9sgpHreakLjf
-         /jpkYu+WvJT2a93PT8meTmvbKljgKW9FPKqMwBfAwyqCow1BeFI3DbL6KQD4ukhuJOD4
-         O411rmHPAnoTUeY/itjUbyDhqMSrHWb2ft2PItRRMVFQRaYou1nLOTUzKUOqTFnZweSC
-         xMOEyFXW6lxytcVgVtYnxwrwfd9Yc6GkKSPtJs+QnAcvIr8njHiPv8TPBsWixGsjPjga
-         BtgVvzRzU8+j/FuOyT0nX3R2WwNIgYL+axM6weFFP+EC+DR4G4X0exPpKs3azsGWy8/4
-         PTig==
-X-Gm-Message-State: ABy/qLYwkBafaMYnkyhrbRqlYQgdL5f88YnrMYyLXTtEHM5w9dva9cMQ
-        4U3LvysrqcyuqBhtoRb27YQqrw==
-X-Google-Smtp-Source: APBJJlFriNeOwzy4enYAho2TrtX5YBSNV5iCxkOpDFw6Wt6bicliLHEWrHUekrzUkCyhRfMet3gV8Q==
-X-Received: by 2002:adf:e34c:0:b0:314:336e:d4d8 with SMTP id n12-20020adfe34c000000b00314336ed4d8mr5779040wrj.8.1690104888099;
-        Sun, 23 Jul 2023 02:34:48 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id v4-20020a5d4b04000000b0031411b7087dsm9241975wrq.20.2023.07.23.02.34.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jul 2023 02:34:47 -0700 (PDT)
-Message-ID: <12079552-f724-b821-15c0-bf2ea6afc780@linaro.org>
-Date:   Sun, 23 Jul 2023 11:34:45 +0200
+        Sun, 23 Jul 2023 06:55:10 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B0E8E5E;
+        Sun, 23 Jul 2023 03:55:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1690109688; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=OEfz+orufQY5cNmm9G8cBvw3W9YITgCTUgrEp2xPjb2T/hMeSfVMecjc6+iQle1Aoz
+    aFOCyKseHlRk2/iOJ7UOLV25mR3gqaVZ/W9LO9KFjb8Hv2PgirV6kdxkoKsKJCpdRB7y
+    /F6a0TfsKgh/Ko2LxEm8iwMYEhyEo3nsIdfmJnMIjnRZcwa/tQ/OTAmRsLh0nODgoDKq
+    68cgFmDSzeG7NLXvab6/lOWdE14FuWdpHCZt66VIDVULrL+Pyyt/GgC3qfMIyMWk8243
+    yB3DcbCx/HYN1RF60eh6I+TdHpCRWomPmtu+/P5IOmOfAmQoEEFiS1Rkj6aGJLmk5yBH
+    6fFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1690109688;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=hF+ms8Lsly9Hr5pKQvnSnpwWb901GZ6/p89DrvqLNj4=;
+    b=lwFhVt3Y43SSTRpu+rqYj8LoAMV+vnEH5tM/NcyLWGjevGarxJRKlpfg3Rrld5bwtt
+    2icGalVi+or98QaqAqHILNB4h80T7gCTuFT6HJSaF6eO1GMyi9Gkc5zxStzZPcyaa7BK
+    BKlcTAip/KWwxDhHliMrP0Ge6VDgJIFxgWV+CYE62TXTjQ00I+ZPO4PM3O/Ac+8QSqnS
+    Z78uANMACRRBmWuH/jsenH6X1jkUB4SeIOz6NmnWRPi/5fIPbVKQmAuEDY7lSpDcAXLA
+    nzX2m03EtUX1DZsnMdFx5Y7FFER20oekJVhVHgovWvMVkMARHjFjp4TjPVptYYRerUVm
+    2afA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1690109688;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=hF+ms8Lsly9Hr5pKQvnSnpwWb901GZ6/p89DrvqLNj4=;
+    b=ebaBJQzx5qwYb3vEJDYsZWYGQGe0/tbxtTHWljV3mzyahghdXoiKQACUFjBUDT+PAJ
+    /+jQlUSdjek08nKKupzlhSBCMXwJsBGwdCaZUOl4Ln9TOBEB6vrUL4Aj/QIWo1MfbUyh
+    Ci30Dn/nMD24qAisInfn3tMiGLWsrK8W4QrzFQ7zwe4BSNFzzN0OdfE907vPvf3xB/qt
+    uM5BvUTRTD9HtGFSchSs3qSB45v2UKMSJ/4ZTdzOTRHjfUS/UqhqXAozt3UhZTERSFYm
+    uXomph+wPV/1frTTCM2xoynOLv2Ntz8dJQ22kVt85ERB363b07mMXSvXdLCL0/JFXuN5
+    7J9Q==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1690109688;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=hF+ms8Lsly9Hr5pKQvnSnpwWb901GZ6/p89DrvqLNj4=;
+    b=DlaVvywo25M4p8k4h55cYLz4NUQ4lbg9sAKvwepMKacujF81FdLNBjLguiJX7zHxPz
+    BCiXeY5O47MXm+vA6sDQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4l38TY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.6.4 DYNA|AUTH)
+    with ESMTPSA id V0b383z6NAsmCdU
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sun, 23 Jul 2023 12:54:48 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Sun, 23 Jul 2023 12:54:41 +0200
+Subject: [PATCH] arm64: dts: qcom: msm8939-samsung-a7: Drop internal pull
+ for SD CD
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 07/11] dt-bindings: remoteproc: qcom,msm8996-mss-pil:
- Remove PNoC clock
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230721-topic-rpm_clk_cleanup-v1-0-cf6cd5c621d5@linaro.org>
- <20230721-topic-rpm_clk_cleanup-v1-7-cf6cd5c621d5@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230721-topic-rpm_clk_cleanup-v1-7-cf6cd5c621d5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Message-Id: <20230723-a7sdc2cdnopull-v1-1-699fd730afcb@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIAPAGvWQC/x3MTQqAIBBA4avIrBP8CYyuEi1MxxoQC6UIxLsnL
+ b/FexUKZsICM6uQ8aFCZ+qQAwN32LQjJ98NSigtjNLcmuKdcj6d1x0j17iNzvowBRmgR1fGQO8
+ /XNbWPpF5JS9gAAAA
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/07/2023 17:36, Konrad Dybcio wrote:
-> The PNoC clock is a clock for the entire PNoC bus, managed from
-> within the interconnect driver. Attaching it to MSS was a total hack.
-> Get rid of it.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+A7 seems to have external pull-up for the SD card chip detect (like
+most MSM8916/MSM8939 devices) so drop the internal pull-up. It's not
+necessary.
 
+Tested-by: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
+index 66e56ac59998..ba652909d162 100644
+--- a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
++++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
+@@ -448,7 +448,7 @@ sdc2_cd_default: sdc2-cd-default-state {
+ 		pins = "gpio38";
+ 		function = "gpio";
+ 		drive-strength = <2>;
+-		bias-pull-up;
++		bias-disable;
+ 	};
+ 
+ 	sensor_i2c_default: sensor-i2c-default-state {
+
+---
+base-commit: 34e472f41d9cd04400b80649ce82cfe11fbe135a
+change-id: 20230723-a7sdc2cdnopull-3eb4cadf8f1f
 
 Best regards,
-Krzysztof
+-- 
+Stephan Gerhold <stephan@gerhold.net>
 
