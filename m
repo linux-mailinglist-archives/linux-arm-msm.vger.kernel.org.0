@@ -2,81 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED28275E1EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 14:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7179875E203
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 15:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbjGWMjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 08:39:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50758 "EHLO
+        id S229936AbjGWNTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 09:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbjGWMjB (ORCPT
+        with ESMTP id S229866AbjGWNTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 08:39:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5025E1AA;
-        Sun, 23 Jul 2023 05:39:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD84160C80;
-        Sun, 23 Jul 2023 12:38:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11D6C433C7;
-        Sun, 23 Jul 2023 12:38:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690115939;
-        bh=DqMrwul8Z+Kp+FVoVrlZHdVil5ffk4Br9Pj1Hqbnxm4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Ob77RBPFBoVTTNibSWxMjo0wYIwPaVtL0+Hj7xKLbn+8iwdFiEl306vNqyY02UYoL
-         jPYeKJ+MmA8RU2waU4uBNAvx+/k8LWhw1LvDiwwxOYcT8A1N61ZbBJwn2kgvupboS1
-         BS/Ly2Fwldf5uZurcjDRKOMfZVR+pXchkx2F9ETNpzNFputSU9qCWgDPTK3ficVtVB
-         hkKcaRcnMnpipcBvew2sRWfQD5EKlTmzr9CfzlxoWvfTNZGhet4PsFi1FmXGnXleMF
-         gtaTvOuB9gZlAqFWvC0RyHGmfCN2287EnLmncsKSc1B6d50Aw/+XGT9xje7oGzxj+G
-         JP70unohiRQRQ==
-Date:   Sun, 23 Jul 2023 13:38:48 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Michael Hennerich <michael.hennerich@analog.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Alexandru Tachici <alexandru.tachici@analog.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Sun, 23 Jul 2023 09:19:36 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C209B10E0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:33 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-313e742a787so2044918f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690118372; x=1690723172;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZxKGN5SUivNz+ligYrmWT0BW3UDY3UHFVrq/Gy6pOrM=;
+        b=TeXKvpfxHyL7htn+rjDHaupCyknovawCuk5PA1SA7Ntp1u56kIUN32nOA+OjXR5gTT
+         aRObbBarli+wBusROTpJiJ9KCfw7rk/o5+UPpjPW3PpNBO8Pmjc0CrVMmT99JBBXSjaJ
+         QJyuxUMo/UZtCdEOMlkeqP/QnyYzAGaNwKAq6f7phiRg77CA6fP8L5DXlLCOCVXW0KbP
+         5eLrrY08w6kdUWvnu/wVx9JshN+guajvNrH/NiKYd27lCEhyPjIPmhuqWcUDjBvXr7qW
+         VatjF02Ai2Y57EcOEhcToGa96XqRmahPBCc9uxMbHg4sIQnm0w0f9BX0I+kYKbrpBzgk
+         Fc9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690118372; x=1690723172;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZxKGN5SUivNz+ligYrmWT0BW3UDY3UHFVrq/Gy6pOrM=;
+        b=QwziyHB5BSt/O79YyV63IKiwPYT/zDwiGGKYOlvOoDZIwgdpwwcZmZa9vslYUA1e1K
+         KkY930MbaiO8wxlgZfhOnVw/AStaNBxiSBAlCqd3NB+HGQlko0y2xJmYP3sToxKfZXHn
+         ud2A0fxcjVYmGoPkjxcDHrQIMOIkr+U4yQh+JOb63HBRDbbzEj5rnZTdmZfKdmKZVQzm
+         Lwb/HKJ+znrPD+HayMENbJUxLFkPfm5j8LZXoZNuVg7+tIYhSwUqW3X2QvwRrbcVpR5O
+         lvwiSPXMmQ3quknaRwi1sxQXjc1h0QQ1Ay5bdIa3Wr2pR3sqyChd17Vt2Ax4Qyhux0VT
+         UWEw==
+X-Gm-Message-State: ABy/qLbY6M3ymXLYc/8JKKSF7vaTNKYQYImTa3FJ57X/pDoAo64+sSy0
+        OyCKS0FCfFw7yfDo80DfkzgLQw==
+X-Google-Smtp-Source: APBJJlG7G2NBT/RCN58YIlYPpGzshVCKmMSd3YJ5rW+vc1J8zD/+ky6sxLp75IuhRiCGEBhUE8JiCw==
+X-Received: by 2002:a5d:4eca:0:b0:314:2736:ba3e with SMTP id s10-20020a5d4eca000000b003142736ba3emr9328519wrv.3.1690118372184;
+        Sun, 23 Jul 2023 06:19:32 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id t15-20020a5d49cf000000b003143765e207sm9700257wrs.49.2023.07.23.06.19.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Jul 2023 06:19:31 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Crt Mori <cmo@melexis.com>, devicetree@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH] iio: adc: Explicitly include correct DT includes
-Message-ID: <20230723133848.5dc96150@jic23-huawei>
-In-Reply-To: <20230715182510.3d09970c@jic23-huawei>
-References: <20230714174628.4057920-1-robh@kernel.org>
-        <20230715182510.3d09970c@jic23-huawei>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, workflows@vger.kernel.org,
+        linux-doc@vger.kernel.org, arm@kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH v3 1/3] MAINTAINERS: soc: reference maintainer profile
+Date:   Sun, 23 Jul 2023 15:19:22 +0200
+Message-Id: <20230723131924.78190-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,55 +81,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 15 Jul 2023 18:25:10 +0100
-Jonathan Cameron <jic23@kernel.org> wrote:
+Mention the SoC maintainer profile in P: entry.
 
-> On Fri, 14 Jul 2023 11:46:26 -0600
-> Rob Herring <robh@kernel.org> wrote:
-> 
-> > The DT of_device.h and of_platform.h date back to the separate
-> > of_platform_bus_type before it as merged into the regular platform bus.
-> > As part of that merge prepping Arm DT support 13 years ago, they
-> > "temporarily" include each other. They also include platform_device.h
-> > and of.h. As a result, there's a pretty much random mix of those include
-> > files used throughout the tree. In order to detangle these headers and
-> > replace the implicit includes with struct declarations, users need to
-> > explicitly include the correct includes.
-> > 
-> > Signed-off-by: Rob Herring <robh@kernel.org>  
-> 
-> Hi Rob,
-> 
-> Just one in here that I noticed isn't quite right. I'd have fixed it 
-> up (and can still do so if nothing else comes up) but I want to give
-> this more time on list anyway so won't pick it up today.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
 
-Fixed up whilst applying.
+---
 
-Applied to the togreg branch of iio.git and pushed out as testing to see
-if 0-day can find anything we missed.
+Changes in v3:
+1. None
 
-Thanks,
+Changes in v2:
+1. Add Rb tag.
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-Jonathan
-
-> 
-> Jonathan
-> 
-> > diff --git a/drivers/iio/adc/stmpe-adc.c b/drivers/iio/adc/stmpe-adc.c
-> > index 67518e460e05..55e36b40fdf5 100644
-> > --- a/drivers/iio/adc/stmpe-adc.c
-> > +++ b/drivers/iio/adc/stmpe-adc.c
-> > @@ -14,9 +14,10 @@
-> >  #include <linux/kernel.h>
-> >  #include <linux/mfd/stmpe.h>
-> >  #include <linux/module.h>
-> > -#include <linux/of_platform.h>
-> > +#include <linux/of.h>
-> >  #include <linux/platform_device.h>
-> >  #include <linux/device.h>
-> > +#include <linux/of.h>  
-> 
-> Duplicate include.
-> 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3dfa40abc885..7624eb231b65 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1570,6 +1570,7 @@ M:	Olof Johansson <olof@lixom.net>
+ M:	soc@kernel.org
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+ S:	Maintained
++P:	Documentation/process/maintainer-soc.rst
+ C:	irc://irc.libera.chat/armlinux
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git
+ F:	Documentation/process/maintainer-soc.rst
+-- 
+2.34.1
 
