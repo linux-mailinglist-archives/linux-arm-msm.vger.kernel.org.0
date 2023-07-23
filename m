@@ -2,128 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8E4D75DE5D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 21:41:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5132475DFB0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 04:16:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229654AbjGVTl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Jul 2023 15:41:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59234 "EHLO
+        id S229785AbjGWCQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Jul 2023 22:16:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjGVTl4 (ORCPT
+        with ESMTP id S229456AbjGWCQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Jul 2023 15:41:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 342662707;
-        Sat, 22 Jul 2023 12:41:37 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36MJUTwu020067;
-        Sat, 22 Jul 2023 19:40:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=lTyqRrAz0M+mSVTdCULJfxi4Kvp6m47KIN1XFC6azao=;
- b=Tulg/cMYBdauh+BmOtTSWVDCXPZaY9nVDjB6ixukET0D/mLLVXAJZDfAVtQXKe0SsV/g
- Eib272VpV2/In7yOGxQKyQZ2LCXClaCiyK+oxTxkgtFMd6Cj6gfbwz/7mYzjbG6f1XQz
- IpQ9oAXzqw6SLnDMLHcWG9pd3xqBh/coGJsOse/OqGMIqGociC29aPSUPuMpayCFdkBs
- iBbyOuywsUk4AYwMltlpa+cme1zYES4WaL321ftlGxk8gBKHYla/xGGh8v7c5PjjDGTp
- +jKHXuiZJhVu2ABPZ3c5v+otttx9QcZdfNbvBnMaO92SsqgGjrxbIFzXJ1xoDFTGDLaE Zg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s064dgw8r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Jul 2023 19:40:58 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36MJetTj001500
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Jul 2023 19:40:55 GMT
-Received: from [10.110.24.156] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sat, 22 Jul
- 2023 12:40:52 -0700
-Message-ID: <a19818a4-3457-7362-4deb-b981fdc9ba84@quicinc.com>
-Date:   Sat, 22 Jul 2023 12:40:51 -0700
+        Sat, 22 Jul 2023 22:16:50 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F15180;
+        Sat, 22 Jul 2023 19:16:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690078609; x=1721614609;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=IzEO4IEifVL71A4mhJqlzF1dVCJiZMCAMhavJh+/RIA=;
+  b=nkaGN96pFrFfMw2JHjrj8eXthP2GUsqYJIMT/Tomvobdx2Gr221k7c2l
+   8KhktMWmcrdfi/7b6g0KVpAcd95Tb6PefA+h17jzHNYXhiO3uXR2w1Ok6
+   PXLj3W8YTiQYghbXKcpIz56xs4V3S/yqY4xz1HutI2xESbMV+Ndf4SyDs
+   UqNzVjzBKUryEAzzlDw0izm3sRXy/oFIFQ4hh7HWgw+TST3izRghu9rfK
+   Ua3H0GU/6ydIoovR8kNYMhP/lk2JAoHdKAPHCe48F0tP23wl+87IuRoNb
+   RlP4ElIkwiHaU+5Ay5Vnm/key9O/TftqJYjsizQd6MU3byKl+EjvMJMWY
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="431038648"
+X-IronPort-AV: E=Sophos;i="6.01,226,1684825200"; 
+   d="scan'208";a="431038648"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 19:16:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="790577627"
+X-IronPort-AV: E=Sophos;i="6.01,226,1684825200"; 
+   d="scan'208";a="790577627"
+Received: from lkp-server02.sh.intel.com (HELO 36946fcf73d7) ([10.239.97.151])
+  by fmsmga008.fm.intel.com with ESMTP; 22 Jul 2023 19:16:39 -0700
+Received: from kbuild by 36946fcf73d7 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qNOeE-0008kF-1B;
+        Sun, 23 Jul 2023 02:16:38 +0000
+Date:   Sun, 23 Jul 2023 10:15:55 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
+Cc:     oe-kbuild-all@lists.linux.dev, cristian.marussi@arm.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Nikunj Kela <quic_nkela@quicinc.com>
+Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
+Message-ID: <202307231034.5C5lj4Dv-lkp@intel.com>
+References: <20230718160833.36397-3-quic_nkela@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] scripts/check-uapi.sh: add stgdiff support
-Content-Language: en-US
-To:     Giuliano Procida <gprocida@google.com>, <quic_johmoo@quicinc.com>
-CC:     <masahiroy@kernel.org>, <nathan@kernel.org>,
-        <ndesaulniers@google.com>, <nicolas@fjasle.eu>,
-        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <gregkh@linuxfoundation.org>,
-        <rdunlap@infradead.org>, <arnd@arndb.de>, <andersson@kernel.org>,
-        <tkjos@google.com>, <maennich@google.com>,
-        <kernel-team@android.com>, <libabigail@sourceware.org>,
-        <jorcrous@amazon.com>, <quic_satyap@quicinc.com>,
-        <quic_eberman@quicinc.com>, <quic_gurus@quicinc.com>
-References: <20230407203456.27141-2-quic_johmoo@quicinc.com>
- <20230720161053.1213680-1-gprocida@google.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20230720161053.1213680-1-gprocida@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: X7PsJVrYMn_-7N-VhobBVNHwA6iB6cqa
-X-Proofpoint-ORIG-GUID: X7PsJVrYMn_-7N-VhobBVNHwA6iB6cqa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-22_08,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- phishscore=0 mlxscore=0 spamscore=0 adultscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307220180
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230718160833.36397-3-quic_nkela@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/20/2023 9:10 AM, Giuliano Procida wrote:
-> Hi John.
-> 
-> I spent a few minutes adding stgdiff support to the script. It's
-> really just for illustration purposes.
-> 
-> As I think you know, STG doesn't yet exist as a project outside of
-> AOSP. Nevertheless, this may be useful to you as-is.
-> 
-> STG has quite a different philosophy to libabigil in terms of
-> filtering out certain kinds of differences. Some of the things (like
-> enum enumerator additions) are not considered harmless. The reasoning
-> behind this is basically...
-> https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)
-> 
-> However, it does have --ignore interface_addition (and the related
-> --ignore type_definition_addition) which can be used to detect whether
-> one ABI is a subset of another.
-> 
-> I am looking at adding support for macro definitions (gcc -g3) to STG
-> which will then let us cover significantly more of the UAPI surface.
-> 
-> Unfortunately, there are some headers which use anonymous enums to
-> define constants (e.g. and ironically BTF). ABI tracking these types
-> would require something a bit hacky. Or we could just name them.
+Hi Nikunj,
 
-Thank you Giuliano for trying the script w/ stg. We will review the 
-modifications below.
+kernel test robot noticed the following build warnings:
 
-Just to update everyone here that John is looking into the libabigail 
-changes to reduce the false positives as discussed earlier in the email 
-thread. There is some progress on the libabigail mailing list. Once we 
-have enough changes made in the libabigail, John will update here with 
-his results.
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on linus/master v6.5-rc2 next-20230721]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-We have also submitted abstract in LPC 2023 Android MC as well about the 
-UAPI checker. We hope to make a good progress before LPC.
+url:    https://github.com/intel-lab-lkp/linux/commits/Nikunj-Kela/dt-bindings-arm-Add-qcom-specific-hvc-transport-for-SCMI/20230719-001116
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230718160833.36397-3-quic_nkela%40quicinc.com
+patch subject: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
+config: arm64-randconfig-r083-20230723 (https://download.01.org/0day-ci/archive/20230723/202307231034.5C5lj4Dv-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 12.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20230723/202307231034.5C5lj4Dv-lkp@intel.com/reproduce)
 
----Trilok Soni
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202307231034.5C5lj4Dv-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/firmware/arm_scmi/qcom_hvc.c:136:26: sparse: sparse: cast removes address space '__iomem' of expression
+>> drivers/firmware/arm_scmi/qcom_hvc.c:136:52: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void const volatile [noderef] __iomem *addr @@     got void * @@
+   drivers/firmware/arm_scmi/qcom_hvc.c:136:52: sparse:     expected void const volatile [noderef] __iomem *addr
+   drivers/firmware/arm_scmi/qcom_hvc.c:136:52: sparse:     got void *
+   drivers/firmware/arm_scmi/qcom_hvc.c:139:25: sparse: sparse: cast removes address space '__iomem' of expression
+   drivers/firmware/arm_scmi/qcom_hvc.c:139:58: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void const volatile [noderef] __iomem *addr @@     got void * @@
+   drivers/firmware/arm_scmi/qcom_hvc.c:139:58: sparse:     expected void const volatile [noderef] __iomem *addr
+   drivers/firmware/arm_scmi/qcom_hvc.c:139:58: sparse:     got void *
+
+vim +/__iomem +136 drivers/firmware/arm_scmi/qcom_hvc.c
+
+    82	
+    83	static int qcom_hvc_chan_setup(struct scmi_chan_info *cinfo,
+    84				       struct device *dev, bool tx)
+    85	{
+    86		struct device *cdev = cinfo->dev;
+    87		struct scmi_qcom_hvc *scmi_info;
+    88		resource_size_t size;
+    89		struct resource res;
+    90		struct device_node *np;
+    91		unsigned long cap_id;
+    92		u32 func_id;
+    93		int ret, irq;
+    94	
+    95		if (!tx)
+    96			return -ENODEV;
+    97	
+    98		scmi_info = devm_kzalloc(dev, sizeof(*scmi_info), GFP_KERNEL);
+    99		if (!scmi_info)
+   100			return -ENOMEM;
+   101	
+   102		np = of_parse_phandle(cdev->of_node, "shmem", 0);
+   103		if (!of_device_is_compatible(np, "arm,scmi-shmem"))
+   104			return -ENXIO;
+   105	
+   106		ret = of_address_to_resource(np, 0, &res);
+   107		of_node_put(np);
+   108		if (ret) {
+   109			dev_err(cdev, "failed to get SCMI Tx shared memory\n");
+   110			return ret;
+   111		}
+   112	
+   113		size = resource_size(&res);
+   114	
+   115		/* let's map 2 additional ulong since
+   116		 * func-id & capability-id are kept after shmem.
+   117		 *     +-------+
+   118		 *     |       |
+   119		 *     | shmem |
+   120		 *     |       |
+   121		 *     |       |
+   122		 *     +-------+ <-- size
+   123		 *     | funcId|
+   124		 *     +-------+ <-- size + sizeof(ulong)
+   125		 *     | capId |
+   126		 *     +-------+ <-- size + 2*sizeof(ulong)
+   127		 */
+   128	
+   129		scmi_info->shmem = devm_ioremap(dev, res.start,
+   130						size + 2 * sizeof(unsigned long));
+   131		if (!scmi_info->shmem) {
+   132			dev_err(dev, "failed to ioremap SCMI Tx shared memory\n");
+   133			return -EADDRNOTAVAIL;
+   134		}
+   135	
+ > 136		func_id = readl((void *)(scmi_info->shmem) + size);
+   137	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
