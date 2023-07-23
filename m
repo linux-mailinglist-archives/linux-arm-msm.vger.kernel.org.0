@@ -2,79 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F053575E20B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 15:19:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 045F875E217
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 15:33:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230094AbjGWNTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 09:19:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54786 "EHLO
+        id S229557AbjGWNdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 09:33:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjGWNTk (ORCPT
+        with ESMTP id S229452AbjGWNdu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 09:19:40 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C80210C7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:38 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-314172bac25so2379004f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690118377; x=1690723177;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cq9s2MRmoeFpX577eLT/PXRHWoFvAvb+qfQGOwk/Af8=;
-        b=W0lU3lshIhNR/8v9wa76sGNoC3/gt0Z0TcGHF/M2q51rgSHr0Fel0v6nJ3tqEJDjJt
-         J6EU4FkyqOCOwTRmyMYTz8EFGcbEQAmOid+D85GXPZkMn+GqIFI6u31mQEvS3ia6gYkE
-         VRyL00WcwDUTtKXOhdn47xSXqaam9KqD0/SNTMhvqGP6qTkrm/niqeQgBh5NHOeJFWWC
-         R24IFPBAtM7OdWhPP5WKGZGI/PIgu0OUPXB2QiEjCf7D7vMYntFvHE6VBKxbGgkvgufQ
-         m+U80+wXzPThWbrDYlJhlo8hRfhDDMpCGD7AZlN11oAQnn5eRu0ks4C81zzmR5cBBdKq
-         ywmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690118377; x=1690723177;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Cq9s2MRmoeFpX577eLT/PXRHWoFvAvb+qfQGOwk/Af8=;
-        b=icBJCa8higi+ukx/uZMeTzu6mYfHaG1t45h9Pp0bS+XoWr+J6742jNwWiMuTxWfK/H
-         ENuhBzVerxxuzFzh4YanrjPU9o38yTFgBYct71geFEAgYrpjuTimAfDFir6rrffSetUo
-         lKND2opphg4wAmRZP6KU8qS4nckidPpmpYh44ban7CQ5kYJDcQptjUccra9NoNdTTxVH
-         cguIeGKG2nBx/wJc6CNoDw7CdVJVzmbdAI++U7dupaRIL4qXbX/Mwlr/wQxDAbR9Synv
-         wBWJbFd4Og9XL9aT/z1ol2MM709z6rQtjoHcerpZcEyawS/b3j+hBgGGducIPqOYQ1D6
-         yYAg==
-X-Gm-Message-State: ABy/qLY7L6HTap1Cn/YGVMxD36MCiJi35aDTmdelZXQe1M3fselGLI8I
-        pY9Q/bi3N+yZm9GrsYdhcnjTzw==
-X-Google-Smtp-Source: APBJJlEF3DVK7Nm+ZYwiYQ2FdzbEw4bJ8lmL4Nhtpd0CxQPE5O2W9Bh4hUdzsrZ66YAwaJvSWSixFA==
-X-Received: by 2002:adf:fe12:0:b0:317:54d9:eb48 with SMTP id n18-20020adffe12000000b0031754d9eb48mr1484877wrr.11.1690118376994;
-        Sun, 23 Jul 2023 06:19:36 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id t15-20020a5d49cf000000b003143765e207sm9700257wrs.49.2023.07.23.06.19.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jul 2023 06:19:36 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
+        Sun, 23 Jul 2023 09:33:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F5D10DC;
+        Sun, 23 Jul 2023 06:33:49 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36NDVoWe018898;
+        Sun, 23 Jul 2023 13:33:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/zRygFxep4I/hzO0qe76/3c+2dFGWUlJIzmD/z6DibU=;
+ b=By+zk12pVfbaSE8TOjrmcva22wC/wWYN7H+mlGF6nB9GzOCHvgK66FGq41yfUCoQcAwZ
+ 0ZzJzDkNgNiOf1diSNzp7OJaKVErBGE6Ob0+a/WYp0edh69ZAXXWY8UxVl5Brk4CPwMV
+ E9vhW0b5YA57AFhaHaFQUW3uet6mj3axnYjuoEWRgP4D6G7XBH+/jmV5thIhQ7CD5lnE
+ uLX37/K9Ywpa8KU/w+ShvkghCJhCaKQuX8Fw7P8ERJrLV7CxLxgCPdotOV18JgR7c7+D
+ eeTYlc5pZpvhsHLleUoHEKrNoFGG1P+ckWgMNNe3Irw2ZJStPl//Vo65c2lTfCrrgExp 0A== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s089tsgy9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 23 Jul 2023 13:33:40 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36NDXd8Y031337
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 23 Jul 2023 13:33:39 GMT
+Received: from [10.216.27.226] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 23 Jul
+ 2023 06:33:35 -0700
+Message-ID: <06c8e7c6-91e9-7f6b-1feb-d94ce88ebb26@quicinc.com>
+Date:   Sun, 23 Jul 2023 19:03:27 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2 1/2] dt-bindings: arm: qcom,ids: drop the IPQ5019 SoC
+ ID
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, workflows@vger.kernel.org,
-        linux-doc@vger.kernel.org, arm@kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 3/3] MAINTAINER: samsung: document dtbs_check requirement for Samsung
-Date:   Sun, 23 Jul 2023 15:19:24 +0200
-Message-Id: <20230723131924.78190-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230723131924.78190-1-krzysztof.kozlowski@linaro.org>
-References: <20230723131924.78190-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_saahtoma@quicinc.com>
+References: <20230712041912.398724-1-quic_kathirav@quicinc.com>
+ <20230712041912.398724-2-quic_kathirav@quicinc.com>
+ <20230714155954.GA3919199-robh@kernel.org>
+ <dba8ab0a-c17b-8660-5c5a-803e7f394547@quicinc.com>
+ <e4fub7xxkiupbkszaxwu4x5otdi7afvyl334ybwlxafkbxfw3c@cd4gja5u6st6>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <e4fub7xxkiupbkszaxwu4x5otdi7afvyl334ybwlxafkbxfw3c@cd4gja5u6st6>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GIybfryqChpFPHCsz-EBlg1lzd0QCUep
+X-Proofpoint-ORIG-GUID: GIybfryqChpFPHCsz-EBlg1lzd0QCUep
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-23_02,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=650
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 adultscore=0 clxscore=1015 spamscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307230125
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,35 +88,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Samsung ARM/ARM64 SoCs (including legacy S3C64xx and S5PV210) are also
-expected not to bring any new dtbs_check warnings.  In fact this have
-been already enforced and tested since few release.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 7/22/2023 9:32 AM, Bjorn Andersson wrote:
+> On Sat, Jul 15, 2023 at 08:41:56PM +0530, Kathiravan T wrote:
+>> On 7/14/2023 9:29 PM, Rob Herring wrote:
+>>> On Wed, Jul 12, 2023 at 09:49:11AM +0530, Kathiravan T wrote:
+>>>> IPQ5019 SoC is never productized. So lets drop it.
+>>> You need to remove the user before removing the definition.
+>> Rob, Currently there are no users for this macro.
+>>
+> But you're removing a user in patch 2? Or am I reading that incorrectly?
 
----
 
-Changes in v3:
-1. None
+My bad. Sorry, I misunderstood the Rob's statement. Let me send the V3 
+in the correct order.
 
-Changes in v2:
-1. None
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9fe3870300f2..4b299e39111d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2646,6 +2646,7 @@ R:	Alim Akhtar <alim.akhtar@samsung.com>
- L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
- L:	linux-samsung-soc@vger.kernel.org
- S:	Maintained
-+P:	Documentation/process/maintainer-soc-clean-dts.rst
- Q:	https://patchwork.kernel.org/project/linux-samsung-soc/list/
- B:	mailto:linux-samsung-soc@vger.kernel.org
- C:	irc://irc.libera.chat/linux-exynos
--- 
-2.34.1
-
+>
+> Regards,
+> Bjorn
