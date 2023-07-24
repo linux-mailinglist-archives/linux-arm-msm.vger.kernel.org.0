@@ -2,131 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 961D775F383
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:38:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E33475F38E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:40:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjGXKiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 06:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37576 "EHLO
+        id S231974AbjGXKkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 06:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231733AbjGXKiX (ORCPT
+        with ESMTP id S231848AbjGXKkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 06:38:23 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F88E65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:37:46 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso60167501fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:37:46 -0700 (PDT)
+        Mon, 24 Jul 2023 06:40:14 -0400
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31BED10CB;
+        Mon, 24 Jul 2023 03:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690195049; x=1690799849;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5Mjx+AKhx73Ok5LyRGO+wvJwkfYR1YCJ1GmS45SCWjo=;
-        b=V2w1M5vsqmHXlIhqoP3CFjl90aC/dMsTDC2/gvSeHijf69xefY9gc3AAVQvLjVfsqU
-         hI9Jzo4anJKrHgV8NC4YfCDlxlqx7eshePH0dWaL97GiHjtIhZKSodTuC2UXa7fBgclW
-         LsehIB3KrhxZCHcq5lYlDCMOxGho7ajvWX33Z7ugPlzMhcGfSfq6FioA0kt7ohn2muwX
-         CU44WyV1b/M7e/5wiWDkKuNituxMIpZa721yzVSntztIehD1Q8THor650WYxAOMR1C5g
-         mBleh+bY+CFFGyHDFc8j8l92XBDSWl7KbOM5ikQDZ3COxb7lPktQwBtrWK8NV8XoawuD
-         rw+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690195049; x=1690799849;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Mjx+AKhx73Ok5LyRGO+wvJwkfYR1YCJ1GmS45SCWjo=;
-        b=FIDgRnjUF2i20BmicGvSDWFEoAI4DfMAEHgNze3lsvQ4mIAwAvcnGis0ymeziDnIbL
-         4GEN3lEe0Os+dDBPkq+GEZIo8ijyi2THkm5thAptT+r0ct8sO9+Z3ypZd67RgJG188b2
-         9BRzuaJzNUQQTTlQoNd1bpQLP3EnkNQP5nD7NM6LFU++9l0u04xCRy6/D83DImIXL+yf
-         Xv+8IWolGVfPmxV3Ob8N479OgctvVP7OpEtbnKK6jpLU3Ub4n6t+dikMlBk/UJp1+x8J
-         CU98ezDBy7cEoseHTJo9AJ6h5Nc5vGCv+zkZfkc49titFiRzcriBdmWCtVrtnz37Sh1p
-         veaQ==
-X-Gm-Message-State: ABy/qLYC96l0Hqcqngda1Nb54A1NfqZeKldFmLBF4HSpasZ9xGj4yhQ5
-        a3yh1D/uZjDx+qG6XHVtDTFOYg==
-X-Google-Smtp-Source: APBJJlE2SOID+4J+69lHO2dT9FFEgfRdy/8MiMsKBKvUOMEJjaWZeOTlclZwAxcq5jFYEx/efhXsDA==
-X-Received: by 2002:a2e:a1cb:0:b0:2b7:842:a64c with SMTP id c11-20020a2ea1cb000000b002b70842a64cmr5064283ljm.5.1690195048844;
-        Mon, 24 Jul 2023 03:37:28 -0700 (PDT)
-Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
-        by smtp.gmail.com with ESMTPSA id y23-20020a2e9797000000b002b6a930b8b0sm2783314lji.73.2023.07.24.03.37.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 03:37:28 -0700 (PDT)
-Message-ID: <b2bfe586-58b7-6b5a-c4fe-f7d1a17860a2@linaro.org>
-Date:   Mon, 24 Jul 2023 12:37:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: arm: msm: kpss-acc: Revert "dt-bindings:
- arm: msm: kpss-acc: Make the optional reg truly optional"
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1690195189; x=1721731189;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=/kATrrWVYVgcfj/srzQQkHMxx2dvHMHic6hEFaMECqg=;
+  b=OSMeMsvYt9SG2h17U4uV0W4sHPBmU/axsgaDHftypZq8/EKm60sfYdFh
+   st/YN6hbcPGgboTk04t4c/l+4VE+l4dNVlvC6VPmkMDxYnp5s9zhtidvd
+   Q/0mUeerTUTWNzKFC8qu5a7d5Ls7wrcThd8pcQDU2VniVXAWmgCAFWbqM
+   ke1jMZBFwmIIrH3NAa4iJOBH/7AYRRRjaEvGIW+54LOCd+3peu9BjPzLK
+   UVmDOwcA8Ob19MkZBQhNDmTd/Skc3b2GLQkJTknUCTW1RRiNCeCbVrxSJ
+   wKB/MYeX+8+1GA/9sCP/Dhe4fzSpcRyBgk4V94R1KSNlm5Ib+7OEu3Eaj
+   w==;
+X-IronPort-AV: E=Sophos;i="6.01,228,1684792800"; 
+   d="scan'208";a="32078481"
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 24 Jul 2023 12:39:17 +0200
+Received: from steina-w.tq-net.de (unknown [10.123.53.21])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id DAEBC280078;
+        Mon, 24 Jul 2023 12:39:16 +0200 (CEST)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230724090109.19489-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230724090109.19489-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>
+Cc:     Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: [PATCH v4 0/6] extcon-usb-gpio YAML conversion
+Date:   Mon, 24 Jul 2023 12:39:07 +0200
+Message-Id: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.07.2023 11:01, Krzysztof Kozlowski wrote:
-> This reverts commit 981be238e1d28e156aa9da2a8722f86f02fd0453 because it
-> was totally bogus and duplicated existing minItems:
-> 
->   ruamel.yaml.constructor.DuplicateKeyError: while constructing a mapping
->   Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml: ignoring, error parsing file
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-My bad.
+Hi,
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+after some misunderstanding on my side, sorry for that and the noise, v4
+series now includes now all the changes for the bindings and DT in
+individual patches.
+I've transferred the R-b and A-b tags to the individual patches in the
+arch/arm64 patches. Only to specific patches, e.g. mediatek, if sent with
+#mediatek inidicator, to all patches otherwise. arch/arm has still yet to
+receive feedback.
 
-Konrad
+Changes in v4:
+* Put bindings and DT changes back into a single series
+* Split patches per SoC family
+
+Best regards,
+Alexander
+
+Alexander Stein (6):
+  dt-bindings: extcon-usb-gpio: convert to DT schema format
+  ARM: dts: ti/omap: Replace deprecated extcon-usb-gpio
+    id-gpio/vbus-gpio properties
+  ARM: dts: nxp/imx: Replace deprecated extcon-usb-gpio
+    id-gpio/vbus-gpio properties
+  arm64: dts: freescale: Replace deprecated extcon-usb-gpio
+    id-gpio/vbus-gpio properties
+  arm64: dts: mediatek: Replace deprecated extcon-usb-gpio
+    id-gpio/vbus-gpio properties
+  arm64: dts: qcom: Replace deprecated extcon-usb-gpio id-gpio/vbus-gpio
+    properties
+
+ .../bindings/extcon/extcon-usb-gpio.txt       | 21 --------
+ .../bindings/extcon/extcon-usb-gpio.yaml      | 51 +++++++++++++++++++
+ .../arm/boot/dts/nxp/imx/imx6qdl-colibri.dtsi |  2 +-
+ arch/arm/boot/dts/nxp/imx/imx7-colibri.dtsi   |  2 +-
+ arch/arm/boot/dts/ti/omap/am571x-idk.dts      |  4 +-
+ .../boot/dts/ti/omap/am5729-beagleboneai.dts  |  2 +-
+ .../boot/dts/ti/omap/am572x-idk-common.dtsi   |  4 +-
+ .../arm/boot/dts/ti/omap/dra7-evm-common.dtsi |  4 +-
+ arch/arm/boot/dts/ti/omap/dra71-evm.dts       |  4 +-
+ .../boot/dts/ti/omap/dra72-evm-common.dtsi    |  4 +-
+ arch/arm/boot/dts/ti/omap/dra76-evm.dts       |  4 +-
+ .../boot/dts/freescale/imx8mp-msc-sm2s.dtsi   |  2 +-
+ .../dts/freescale/imx8mq-tqma8mq-mba8mx.dts   |  2 +-
+ arch/arm64/boot/dts/mediatek/mt2712-evb.dts   |  4 +-
+ arch/arm64/boot/dts/mediatek/mt8173-evb.dts   |  2 +-
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts      |  2 +-
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts   |  4 +-
+ .../boot/dts/qcom/msm8916-acer-a1-724.dts     |  2 +-
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts |  2 +-
+ .../boot/dts/qcom/msm8916-gplus-fl8005a.dts   |  2 +-
+ .../arm64/boot/dts/qcom/msm8916-huawei-g7.dts |  2 +-
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts |  2 +-
+ .../dts/qcom/msm8916-wingtech-wt88047.dts     |  2 +-
+ .../qcom/msm8939-sony-xperia-kanuti-tulip.dts |  2 +-
+ .../qcom/msm8996-sony-xperia-tone-dora.dts    |  2 +-
+ .../dts/qcom/msm8996-sony-xperia-tone.dtsi    |  2 +-
+ .../boot/dts/qcom/msm8998-fxtec-pro1.dts      |  2 +-
+ .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi |  4 +-
+ .../boot/dts/qcom/sda660-inforce-ifc6560.dts  |  2 +-
+ .../dts/qcom/sdm630-sony-xperia-nile.dtsi     |  2 +-
+ .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  |  2 +-
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  |  2 +-
+ .../dts/qcom/sm6125-xiaomi-laurel-sprout.dts  |  2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |  2 +-
+ 34 files changed, 92 insertions(+), 62 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/extcon/extcon-usb-gpio.txt
+ create mode 100644 Documentation/devicetree/bindings/extcon/extcon-usb-gpio.yaml
+
+-- 
+2.34.1
+
