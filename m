@@ -2,112 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96BC975EC3C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 09:09:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11CA775EC41
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 09:10:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229468AbjGXHJs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 03:09:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51604 "EHLO
+        id S229853AbjGXHKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 03:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbjGXHJr (ORCPT
+        with ESMTP id S229507AbjGXHKu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 03:09:47 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60BD180;
-        Mon, 24 Jul 2023 00:09:45 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36O60oWG012621;
-        Mon, 24 Jul 2023 07:09:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=8Pm/VR/5mlNa4De0nl8d+6zhJqVN5AlnV2B21swUrZA=;
- b=k92cUhmiBygkvx4QNXe034Q/miu0//WXL1QvCtZrTIjV3HNsgqXN5JCDBxiiTXGH9CMV
- HnuAgBuyrDkIZsdIe0/ycNF5pau06Rid7mZiVoLXxdy2BVhmXxR794eKjlB9u5uXeusd
- fB4vYFn/Ly7UwDznSkqkDNRXeu54nEPz8PXPXyrAmZlyVTX3Kw4p/JvCZGxrKE7oRXQI
- ljHXcdHPtm1pM1IsmIRXkEMM2Ej5smedXFyVDwvMGWAN9QXfP7yntvDfPW9Yq/SRPva+
- kI0H7zOgwAul01KZ9Q83u3WsPqJYEEARmEiipXITaELJJqM7LKC3P+zLyiQSBntqU2RH NQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s07b8akrm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Jul 2023 07:09:40 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36O79dMn006488
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Jul 2023 07:09:39 GMT
-Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 24 Jul 2023 00:09:36 -0700
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
-Subject: [PATCH v2] misc: fastrpc: Fix incorrect DMA mapping unmap request
-Date:   Mon, 24 Jul 2023 12:39:31 +0530
-Message-ID: <1690182571-7348-1-git-send-email-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 24 Jul 2023 03:10:50 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A87139
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 00:10:48 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9923833737eso588886366b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 00:10:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690182647; x=1690787447;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QNUo0Kn9Aa2Dgdj2gFIhpNrROHE/bncbbpqnizXf6ac=;
+        b=XBUONx0XrgqCY9fZgz3fyLS7sx1wucVYmBIqDiE1WVjoXmXrD5hnDdky2dwBz5wqbl
+         wMg5GMkY+wnsGC2EsGFUHcD4mQn5Ioyc/Dvre6LvhEaIF7hvZAnisPUrEX4+wV28NPu5
+         WgiomtlgNaDO4CK03pmYWtD5bd9C7jhmZjiy3MMNbCJIdkA4ysFNKjrAWuaY/wJ0cOa1
+         aTQk5unjVkodxc555cQ+5rCu+GH8M31LFuEtiZHP9sMQ6YubOLkSgO25cTn+2dXxjqzE
+         moQ/3tvLkXOwz4yja8gWW0d+YP9SPOKyjeaCvZ28INSnuBkr2/WNLrh90TsIctezV5JY
+         u5ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690182647; x=1690787447;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QNUo0Kn9Aa2Dgdj2gFIhpNrROHE/bncbbpqnizXf6ac=;
+        b=Dl/UT6gqgLe/IbTvVbDUVJMg004Qc1PXqabuZiA+qva2PhsZbl+UGMrzYo4rVZ1rV6
+         ZkoiGRMsIusEJ/D6pgN8MYHlzcdZ7r4ldoP6jSNdznJpmn9/DMXnDte6q7kckCyi1yEy
+         LkjSfaCK1C1XovvSAqJ0fTXYkcMFX/iOuhqsoDc0Wv59JtV3nBtH4nDj67GZaVyqzsdw
+         t/eYpzhHCEo/JeMqlcLtx9sMPtjna12QOf3azkfxOzWDv9EMT2E2A8oe892tK/eq1gKO
+         0R9C3KxJvjKDuYpdmusuFOfCCd2p7Ke4nFBcaQkoJg3LvQNk0/cfuGU63I6uATmGNGos
+         ctiA==
+X-Gm-Message-State: ABy/qLZ7Mp27GwyMiEIdI49ZJq+d9cq2Du5X3YNxynaPMzXUhUr/b6O2
+        IsR8wl4tjxPSr+rKbyaHSKRAww==
+X-Google-Smtp-Source: APBJJlGqjMKUoeRrImKQFupGiJ2uC2XkQKoD01CqdLe354F8gMvelSbPPWaIJVuA9pyFDHsmHhcJ7g==
+X-Received: by 2002:a17:907:75e5:b0:993:a379:6158 with SMTP id jz5-20020a17090775e500b00993a3796158mr8298544ejc.17.1690182647475;
+        Mon, 24 Jul 2023 00:10:47 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id kk7-20020a170907766700b0098df7d0e096sm6294662ejc.54.2023.07.24.00.10.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jul 2023 00:10:47 -0700 (PDT)
+Message-ID: <e0897453-54b0-2a2c-2bf0-1f771c0c6565@linaro.org>
+Date:   Mon, 24 Jul 2023 09:10:43 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fF3sXOt-28g5aqHbKrWvhp7f8YycG35q
-X-Proofpoint-ORIG-GUID: fF3sXOt-28g5aqHbKrWvhp7f8YycG35q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-24_05,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
- suspectscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 impostorscore=0
- spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307240064
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/2] arm64: dts: Replace deprecated extcon-usb-gpio
+ id-gpio/vbus-gpio properties
+Content-Language: en-US
+To:     Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        =?UTF-8?Q?Beno=c3=aet_Cousson?= <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>
+Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+References: <20230721081948.1185360-1-alexander.stein@ew.tq-group.com>
+ <20230721081948.1185360-2-alexander.stein@ew.tq-group.com>
+ <c3ea2edb-1b3e-2c39-ccf6-333e3c8b9020@linaro.org>
+ <3251040.44csPzL39Z@steina-w>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3251040.44csPzL39Z@steina-w>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Scatterlist table is obtained during map create request and the same
-table is used for DMA mapping unmap. In case there is any failure
-while getting the sg_table, ERR_PTR is returned instead of sg_table.
+On 24/07/2023 08:05, Alexander Stein wrote:
+> Hi,
+> 
+> Am Freitag, 21. Juli 2023, 14:22:06 CEST schrieb Krzysztof Kozlowski:
+>> On 21/07/2023 10:19, Alexander Stein wrote:
+>>> Use id-gpios and vbus-gpios instead.
+>>>
+>>> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+>>> Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
+>>> Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> #mediatek
+>>> Reviewed-by: AngeloGioacchino Del Regno
+>>> <angelogioacchino.delregno@collabora.com> Acked-by: Shawn Guo
+>>> <shawnguo@kernel.org>
+>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>> Changes in v3:
+>>> * Rebased to next-20230721
+>>> * Split from bindings patch
+>>
+>> I think you wanted to split it per subsystem, right? That's why you
+>> resent/v3? But the split did not happen.
+> 
+> Yes, I split it into dt bindings and DT changes patches. Is this not correct?
 
-When the map is getting freed, there is only a non-NULL check of
-sg_table which will also be true in case failure was returned instead
-of sg_table. This would result in improper unmap request. Add proper
-check to avoid bad unmap request.
+We talked about DTS patch - this one. It was already split between
+bindings and DTS, so this would not have been a topic at all.
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
-Changes in v2:
-  - Added fixes information to commit text
+> 
+>> If you decide not to split,
+>> then try to figure out: who should pick up this patchset?
+> 
+> Well, intention was one patch for DT bindings maintainers and these two 
+> patches for imx maintainer (Shawn AFAIK).
 
- drivers/misc/fastrpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+You touch there much more than IMX, so if you intend that you need to be
+pretty clear. I see there around 5% of changes from IMX, so targeting
+IMX is a weird choice.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 9666d28..75da69a 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -313,7 +313,7 @@ static void fastrpc_free_map(struct kref *ref)
- 
- 	map = container_of(ref, struct fastrpc_map, refcount);
- 
--	if (map->table) {
-+	if (map->table && !IS_ERR(map->table)) {
- 		if (map->attr & FASTRPC_ATTR_SECUREMAP) {
- 			struct qcom_scm_vmperm perm;
- 			int vmid = map->fl->cctx->vmperms[0].vmid;
--- 
-2.7.4
+
+> I've send patches separated by arch/
+> arm and arch/arm64 in one series, so I'm slightly confused now.
+
+So telling you second time - don't. Split per subsystem.
+
+Best regards,
+Krzysztof
 
