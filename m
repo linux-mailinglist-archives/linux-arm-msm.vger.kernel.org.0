@@ -2,108 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8346D75FF87
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 21:06:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFDE175FF97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 21:10:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbjGXTGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 15:06:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59302 "EHLO
+        id S230138AbjGXTKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 15:10:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230385AbjGXTG0 (ORCPT
+        with ESMTP id S229479AbjGXTKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 15:06:26 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F029B1BCB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 12:06:11 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-522382c4840so1388697a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 12:06:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690225570; x=1690830370;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ARogtLV1RFi23rA4Eq6YEJ7tIgrbKGbfHhga/QvC0fU=;
-        b=w0kQy3xiLmArXRkkGu10vZ23WrHCfJLWIXo9QxV+sek2oXdNWu2anZlxzT+qkbBsHV
-         HL2hbzWcVsbMl8+yiex4lhMms+WPq6/OqGZqlbtDDCvQlPYqHhuKuK1ZoTZRfPOTjN8W
-         HYcaW60qbC3XNSDX5BqZ38V76iV3C+6J4LO07s6H2LT7DTBK9EkfIW5UkWnv4HUsL/Ev
-         1W6ZNTqBHKdnibskaSOSQZ2HXRGCq1usIeFAvpMDaPoEepeWU+jxwscrZz0vLxwidAYU
-         cXPjtxD8SB8okSLgQiB0flkAv2HWqHJ8KhPPRvynHdM8woQsP/eJPhoEY5CnAtfOO6Ns
-         CkVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690225570; x=1690830370;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ARogtLV1RFi23rA4Eq6YEJ7tIgrbKGbfHhga/QvC0fU=;
-        b=PDWnYxl7jH+32z/BztxpTgGubIQWR1YbqwMDrys2LocBLJiY9sTre5b4+TPRYms7dm
-         mrV1+VbT5egQDdleO20EMAGzVXDoYXUyuzFKMd1fgjyj0ALZCVCAfSSTA8hR+X7fS43Q
-         Zn2Zc2HKNJwd3OHgxVx4VRBv9qb3wxrc87Z6qj+Uarm6BoJKlpKl27KHDPINO2rjrxQl
-         WtKpZYiBEFERRPewBOOIyFdBQS197fHzDoavNCEQT/Wgsdd0xsMzxqHXBXDAY8oa1Q3a
-         fEE6ed9pTLlApRsddd06FyG4kmHbWlHt2hb0ech6oR7bFtPXv1dWpk7LRfmzvfzhtXv0
-         xR9Q==
-X-Gm-Message-State: ABy/qLZyqPjkLFsxbdUswo+lXthPfX2c+936THCx6YDaBPQeFGXhwrZF
-        njPij07Uziou/2XKsPcPdocJ8w==
-X-Google-Smtp-Source: APBJJlFhBfPgz5j3cak/MLvEFnT1GfFIYwYH+XuXWgIqTQF5ElhY9BQssoVDyngMXlOqYXdd6ZWVKA==
-X-Received: by 2002:a05:6402:1814:b0:521:d23b:f2c5 with SMTP id g20-20020a056402181400b00521d23bf2c5mr9287843edy.14.1690225570119;
-        Mon, 24 Jul 2023 12:06:10 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id h1-20020aa7de01000000b0051a4fcf7187sm6524547edv.62.2023.07.24.12.06.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 12:06:06 -0700 (PDT)
-Message-ID: <34be3638-ed14-bb0b-eb2e-c44f43c582f2@linaro.org>
-Date:   Mon, 24 Jul 2023 21:06:00 +0200
+        Mon, 24 Jul 2023 15:10:09 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA54D10F6;
+        Mon, 24 Jul 2023 12:10:06 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F36F6131D;
+        Mon, 24 Jul 2023 19:10:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8569DC433C7;
+        Mon, 24 Jul 2023 19:10:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690225805;
+        bh=gi/Kpw0YoiBU5vrnlwQ4STkpZ+7UQf+MK+WxWW9gHCI=;
+        h=Date:Subject:To:References:From:In-Reply-To:From;
+        b=O45liGQFcvfhI7XioJJ+28GH3YveLiU9NTHY1/FhZH0M4eF0F2gPfUKBhIg0ETBuq
+         VQIwtjuQOTGMgPAgEJ9LgNuGYWwojiQbUciwP2//cyctufvtO9X341Uc01Avzz0qpo
+         5syeEZ2iZQsKJ5QMdOBRd8LFc7l/Y4ZXfbYNMaDjZzanCrmgSbJuZiuSu5dLjfC2MO
+         bvp5UI09UgfriiqInmnRBQFYDgKUU03cXpHybnbhx9CcyiaTGnkkr+d9h8iIGmYfsX
+         QWehe4k53kbX2g0MPqsZcPs1I0OhGK2wVo7DsgC3bEmgCpYY7QfkCIecR+NLeOgWVW
+         U8e11tkdSll2g==
+Message-ID: <a9f20ae3-74a3-fe3a-7de5-a57eb2d5aa81@kernel.org>
+Date:   Mon, 24 Jul 2023 21:09:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
- TLMM
+Subject: Re: [PATCH] pinctrl: qcom: Remove the unused _groups variable build
+ warning
 Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, quic_varada@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230719192058.433517-1-krzysztof.kozlowski@linaro.org>
- <20230719192058.433517-2-krzysztof.kozlowski@linaro.org>
- <CACRpkdbK7gU36nVOm0J+HbLk5JRKki+30=UaJ6hZjF1DiB4bBw@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CACRpkdbK7gU36nVOm0J+HbLk5JRKki+30=UaJ6hZjF1DiB4bBw@mail.gmail.com>
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        oe-kbuild-all@lists.linux.dev
+References: <1689934361-32642-1-git-send-email-quic_srichara@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <1689934361-32642-1-git-send-email-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/07/2023 20:09, Linus Walleij wrote:
-> On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 21/07/2023 12:12, Sricharan Ramabadhran wrote:
+> When building with clang toolchain and arm64-randconfig-r015-20230712
+> kernel test robot reports the below warning.
 > 
->> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
->> driver is similar to SM8250 LPASS pin controller, with difference in one
->> new pin (gpio14) belonging to swr_tx_data.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>  drivers/pinctrl/qcom/pinctrl-ipq5018.c:244:27: warning: unused variable '_groups' [-Wunused-const-variable]
+>    static const char * const _groups[] = {
+>                              ^
+>    1 warning generated.
 > 
-> This sure looks good to me.
+>      static const char * const _groups[] = {
+>              "gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "gpio7",
+>              "gpio8", "gpio9", "gpio10", "gpio11", "gpio12", "gpio13", "gpio14",
+>              "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio21",
+>              "gpio22", "gpio23", "gpio24", "gpio25", "gpio26", "gpio27", "gpio28",
+>              "gpio29", "gpio30", "gpio31", "gpio32", "gpio33", "gpio34", "gpio35",
+>              "gpio36", "gpio37", "gpio38", "gpio39", "gpio40", "gpio41", "gpio42",
+>              "gpio43", "gpio44", "gpio45", "gpio46",
+>    };
 > 
-> Krzystof, can you collect a branch with pin control changes for
-> Qualcomm chips that I can pull? If it's OK with Bjorn that is.
+> Fixing it by removing the variable.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202307120814.vWPY6URk-lkp@intel.com/
+> Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-Sure, I can go through the lore search results and grab recent submissions.
+This seems to be a duplicate of gpio_groups, so:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
