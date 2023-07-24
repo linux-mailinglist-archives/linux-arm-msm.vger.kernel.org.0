@@ -2,145 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 665A075ECC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 09:53:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB02375ED9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:30:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231250AbjGXHw7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 03:52:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38310 "EHLO
+        id S231565AbjGXIae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 04:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231283AbjGXHwz (ORCPT
+        with ESMTP id S231572AbjGXIa0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 03:52:55 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D9FC1A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 00:52:53 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1bb775625e2so12735225ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 00:52:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690185172; x=1690789972;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5VhedmatU6HoIII2qqg2OWSwifXoBo+6lC39h5T5OiE=;
-        b=mUo9VVHeJqvv5/13oniv8dSMGS0TwRRoZ2KGC3abbvQcQgCyHE0y/I3BncT8UWegAB
-         QWrfEcCgoxQLZ4QmMwWnZiAQy0jAF5vsrBxLwNgwv6FZfXOkT17iQMP7SuGCEOZ68J9C
-         hq5KnNtEkUFKZCEe8ti4FuHzKHW51XerefYzR4o6jijCVkNgf0HqWpQVVzWZjaKYNzyE
-         i/QLtR0woZdJ9OGfx+IhCvptaH499B2V5DfjzxHCTIqDniyB/JJDYGzqhrWFqwgu5i0q
-         XkxY6J+FInh4hQLedUHDckonZq6L0xz/BD204qrHCgkZG/kUh82WK6hEohn+CZjSjVLr
-         Tbjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690185172; x=1690789972;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5VhedmatU6HoIII2qqg2OWSwifXoBo+6lC39h5T5OiE=;
-        b=VRfaR8PeYhkVJtuiWb5DsfDSJY0UTuF9asIRm5sDYA7FPqQHiY20OWxjFTIo1QdexI
-         7AHUdi04HfS8JOex/3Wzg+aBnSKKt4wEjpTwkLDwifYZr4oPbA37Vhd4qRSxVwXyZFy+
-         1eehRCrYoqdRJ8YsNmG/d0VR0cLYCC6HMM+7+/AojL0G89RghXxZqtRMWuvSHCg9k7KZ
-         F2dOedXOArGGyyAHXne3/5b3+p0IHNNk7k6sVKjpnktKPZUe8SxxtfPgb21AJ61cPuaF
-         RqS7xNYBTEF/HyARhNyaRbKoT4rpQQaovv6ikcAlpU4bIUiWldqLwQVfElaTQzlHHYr+
-         yzSA==
-X-Gm-Message-State: ABy/qLZyuXK8XZ+887Csa/vLD2z0J8Ey1Nh13QNrye+GAqk2JFuX9VVD
-        Yg5D28lufEA1xDE5W/+JgeV2Cw==
-X-Google-Smtp-Source: APBJJlELM8SaJzazdwWH5EKfNF7REafvHJx9cgtFozFimBEV2JSUitEcnIudb1cDrOBfCk/uNxR82Q==
-X-Received: by 2002:a17:902:f687:b0:1bb:8cb6:3f99 with SMTP id l7-20020a170902f68700b001bb8cb63f99mr6534056plg.14.1690185172533;
-        Mon, 24 Jul 2023 00:52:52 -0700 (PDT)
-Received: from localhost ([122.172.87.195])
-        by smtp.gmail.com with ESMTPSA id v6-20020a170902b7c600b001bb7a736b4csm4613001plz.77.2023.07.24.00.52.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 00:52:52 -0700 (PDT)
-Date:   Mon, 24 Jul 2023 13:22:50 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/15] UFS: Add OPP and interconnect support
-Message-ID: <20230724075250.eezimnx4sum2ffjy@vireshk-i7>
-References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
- <20230721094206.dfgnn73kmzzj6rtw@vireshk-i7>
- <20230721115453.GA2536@thinkpad>
+        Mon, 24 Jul 2023 04:30:26 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDF41B4;
+        Mon, 24 Jul 2023 01:30:24 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36O7AxqJ007886;
+        Mon, 24 Jul 2023 08:30:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=MdybWXpnwON4r3kpNey8g0weJJhEXvuN9YA51hELc+Y=;
+ b=K6pY7uta1VL+xnXaDZENQmz68KTIx8SqAdO2qy/1bcVQLN8ZzDbzkeNC16U0NAGxo9JZ
+ AMuqU4GZST4zBU66MJwC5yG1Oq+wPdKTgNJ8lExy4OyN/Wb0yXkYz1HcqbVxJBeX+YU2
+ aGty9w5gwGpMsFil+T99RYEL6lxNx6cGznsim5XZQz6koV+7OG7HQ3Ljnk3OXdYm2+Y0
+ mmjhz6gnojYQ6ltyhNHq9yCbnK5uXJLFDKrNv7BuQHsKHbUYKj/S3gTHWhKjaEOI84B4
+ 0LWnvuzCTSI9rl6/QIaxSHYHPsXrVz+ooz9I+y7rT+bbPxD1FEqgfxEORXiES0fH0rP7 Qg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s06q9asfh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Jul 2023 08:30:15 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36O8UETN022662
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Jul 2023 08:30:14 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 24 Jul 2023 01:30:10 -0700
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v5 0/2] nvmem: sec-qfprom: Add Qualcomm secure QFPROM support
+Date:   Mon, 24 Jul 2023 13:59:44 +0530
+Message-ID: <20230724082946.7441-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230721115453.GA2536@thinkpad>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: v-oYAvIR7xXnd2VOF4n9Jan_7vFYfli5
+X-Proofpoint-GUID: v-oYAvIR7xXnd2VOF4n9Jan_7vFYfli5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-24_06,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ phishscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=613
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307240074
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-07-23, 17:24, Manivannan Sadhasivam wrote:
-> On Fri, Jul 21, 2023 at 03:12:06PM +0530, Viresh Kumar wrote:
-> > On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
-> > > Hi,
-> > > 
-> > > This series adds OPP (Operating Points) support to UFSHCD driver and
-> > > interconnect support to Qcom UFS driver.
-> > > 
-> > > Motivation behind adding OPP support is to scale both clocks as well as
-> > > regulators/performance state dynamically. Currently, UFSHCD just scales
-> > > clock frequency during runtime with the help of "freq-table-hz" property
-> > > defined in devicetree. With the addition of OPP tables in devicetree (as
-> > > done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
-> > > both clocks and performance state of power domain which helps in power
-> > > saving.
-> > > 
-> > > For the addition of OPP support to UFSHCD, there are changes required to
-> > > the OPP framework and devfreq drivers which are also added in this series.
-> > > 
-> > > Finally, interconnect support is added to Qcom UFS driver for scaling the
-> > > interconnect path dynamically. This is required to avoid boot crash in
-> > > recent SoCs and also to save power during runtime. More information is
-> > > available in patch 13/13.
-> > 
-> > Hi Mani,
-> > 
-> > I have picked the OPP related patches from here (apart from DT one)
-> > and sent them separately in a series, along with few changes from me.
-> > Also pushed them in my linux-next branch.
-> > 
-> 
-> Thanks Viresh! For patch 8/15, Kbuild bot has identified one potential null ptr
-> dereference issue. Could you please fix that in your branch?
-> 
-> You just need to remove the opp dereference in dev_pm_opp_get_freq_indexed()
-> before the IS_ERR_OR_NULL() check as below:
-> 
-> ```
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 66dc0d0cfaed..683e6e61f80b 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -208,9 +208,7 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_get_freq);
->   */
->  unsigned long dev_pm_opp_get_freq_indexed(struct dev_pm_opp *opp, u32 index)
->  {
-> -       struct opp_table *opp_table = opp->opp_table;
-> -
-> -       if (IS_ERR_OR_NULL(opp) || index >= opp_table->clk_count) {
-> +       if (IS_ERR_OR_NULL(opp) || index >= opp->opp_table->clk_count) {
->                 pr_err("%s: Invalid parameters\n", __func__);
->                 return 0;
->         }
+Changes in v5 -
+ - Separating this from original series [1].
+ - Added description of driver to secure qfprom binding.
+ - Replaced pm_runtime_enable() withh devm_pm_runtime_enable().
+ - Changed module license to GPL instead of GPL v2.
 
-Fixed.
+This series introduces a new driver for reading secure fuse region and adding
+dt-bindings for same.
 
--- 
-viresh
+[1] https://lore.kernel.org/linux-arm-msm/20230623141806.13388-1-quic_kbajaj@quicinc.com/
+
+
+Komal Bajaj (2):
+  dt-bindings: nvmem: sec-qfprom: Add bindings for secure qfprom
+  nvmem: sec-qfprom: Add Qualcomm secure QFPROM support
+
+ .../bindings/nvmem/qcom,sec-qfprom.yaml       |  58 ++++++++++
+ drivers/nvmem/Kconfig                         |  13 +++
+ drivers/nvmem/Makefile                        |   2 +
+ drivers/nvmem/sec-qfprom.c                    | 101 ++++++++++++++++++
+ 4 files changed, 174 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+ create mode 100644 drivers/nvmem/sec-qfprom.c
+
+--
+2.40.1
+
