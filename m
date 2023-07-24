@@ -2,107 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2096F76007F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 22:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44D20760092
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 22:36:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbjGXUab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 16:30:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60778 "EHLO
+        id S229954AbjGXUgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 16:36:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbjGXUaa (ORCPT
+        with ESMTP id S230227AbjGXUgI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 16:30:30 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2575A12C;
-        Mon, 24 Jul 2023 13:30:26 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-66869feb7d1so2818601b3a.3;
-        Mon, 24 Jul 2023 13:30:26 -0700 (PDT)
+        Mon, 24 Jul 2023 16:36:08 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C6710F8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 13:36:06 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so7323177e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 13:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690230625; x=1690835425;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5BNJAl+/HhqKVjKjPfAnVjqY/TXaSAI5ioNVIBm58zc=;
-        b=V08awoeOFINLWgkwJiIGQEkxIFgOAXzVoZZVOMR0m9IvHfUx6aaoTVdGq4f7Q/yjbI
-         RkEZSFPXrZgtPgWc2pDSWqMVwbTLYCs6eQ3+RjYvRRYGAvvNeqYz6oLy88lByUGsCor1
-         lFaUgWaS46DPsQjFbUrhhM5quQ1n7TaFkCt1nUz+ACrhJ2YEJI68eEo492eROfD73+iG
-         LNNobDyLMLOpnbYGvY6ikQ4wZhb2WprhRQ3c4kKSAVa4BreGIzXGZIDMRGmDk9H9ZMCS
-         YAaoeUS3NvSvJXtTPFPJCSnbQLnmvpJCYItEnESJgDBcc9ualKvA+qS15JPe4mEWfLnW
-         Rtag==
+        d=linaro.org; s=google; t=1690230964; x=1690835764;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mLdFsPRAS8xCwJorGH97RJOgCVh7iDyyrluQEQtwOCQ=;
+        b=Fk1dzY+FjjjXjhSvAzTq8uOpc7/d9zhEn/iO551BOTW8UZ7DlvgjxeCh7oT1mb97zV
+         iRXi0GFupN7gJ5MOC8STPPHwXjtmDUEVhflKuxICKFPaUHHz0n3bEb2AOhSNxP+gvBNp
+         9YH4//F9blipEA/m+kX+f8pZK8saHoEWxYATAGsCD7XIbHcMYOn5vIAU5dXDPpW7Doeh
+         oK6+8xVvV2bM5vaWoaXqZygdIfzOYJoVxG6nyaEonutrzoX/lTRGr4lW4tg4K/cN9B6R
+         xnkfW+FmKBTOKbSPPT6rykCxbAB748baF/O3Bp89oODerJAbf0Q+MvNRsSRbixRSpjlP
+         FEzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690230625; x=1690835425;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5BNJAl+/HhqKVjKjPfAnVjqY/TXaSAI5ioNVIBm58zc=;
-        b=VfBrauHiztSD0C0ty1SWie/AIH/yuqkXiFP/I/fP4PMFD2PongLeFRvLQtUBXxkjXR
-         Zx8t7G4lyJcIMfuEtyn/Hx+Ou07rrQeNYi8yUuF5Bcw6gf4Tea+auNpUpD9d1XpxKUAy
-         uArPRmQJNAqdCvFxNxAB3nALuNe7XBVHqM2kFItr+sh+9dcOATamg6ReDyx5QOzfw47U
-         qXbGegmhS9fw+DwKpJT0BRDR+TLo67PD+qpPSKXTLtK16YZycJtLxMOdgT2NAltkA1nl
-         jdcjdGgByOG5XA45kAKmDOkxsGIcBGFEhvnq3nxr6ffIfjhBV0nwLZzyIYyP/qhewMRF
-         YKYQ==
-X-Gm-Message-State: ABy/qLbJqXbHJBFHklELUfdpqMOtnpmNb/Jspc0ghbdlEyptQio3p7zL
-        PVfPpN4shlnwgUT+LcmRrcQ=
-X-Google-Smtp-Source: APBJJlEb6W5sHnwrtOUP5D6oZIB3+ii60YRuLGHeoKQ0bJ1BZdGpTI+paNOSv1EpR4gfYJv6xXW25A==
-X-Received: by 2002:a05:6a21:78a3:b0:138:198f:65ca with SMTP id bf35-20020a056a2178a300b00138198f65camr12337920pzc.13.1690230625436;
-        Mon, 24 Jul 2023 13:30:25 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
-        by smtp.gmail.com with ESMTPSA id v11-20020a62a50b000000b00682a16f0b00sm8057046pfm.210.2023.07.24.13.30.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 13:30:24 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Disallow submit with fence id 0
-Date:   Mon, 24 Jul 2023 13:30:21 -0700
-Message-ID: <20230724203021.147819-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        d=1e100.net; s=20221208; t=1690230964; x=1690835764;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mLdFsPRAS8xCwJorGH97RJOgCVh7iDyyrluQEQtwOCQ=;
+        b=l1Act3NHNSfy+jhPVlT9v5932BzCwmHOoe7IJ+kVc8B7WNX8i84/l4msVB2Yx1ahiV
+         CP+rTdEcL0X5KmLTU5q8tH8VrLDwrUPjJI6HsRPTJ+EKxzCe+iq0xODH66gp6Mwxnlas
+         9isRhJXxuQpPVaeru1Jr/hZbcGTUl4+K/cuD5nEk40WOTyxZ7jCotZxs5Ou/AckxBMUz
+         OAribsIPuhjb6GqpXmJIavtj1PaonOV7SkRVq7nxCjpFbxTI//2QD96FCAUoS0TcG9oi
+         m6WZR4hVIi+XxqzLCowhOyM+I33lROENcFueXD3wDN4N2X4HQvIc+EsboRkNJRh7ipbq
+         fjXQ==
+X-Gm-Message-State: ABy/qLbVnIKMQfGB9+d8Ml+fxLBIM7J2a3CrxwxYi3Xv63R2JZik2jcz
+        89x2YfmW0I7HP9UnREdpoz00wg==
+X-Google-Smtp-Source: APBJJlGAyvOSXg9MYrlihpCf1WwARrBoed9/YAGHC1BuEiH2ayUiymDgCEUM4mEOC+/YhSVqhqrW6Q==
+X-Received: by 2002:a05:6512:ac5:b0:4f8:4b19:9533 with SMTP id n5-20020a0565120ac500b004f84b199533mr106930lfu.19.1690230963879;
+        Mon, 24 Jul 2023 13:36:03 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id j14-20020ac253ae000000b004fb757bd429sm2414910lfh.96.2023.07.24.13.36.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jul 2023 13:36:03 -0700 (PDT)
+Message-ID: <d1951f5d-d3d9-f04d-7b76-38d8a0e27c56@linaro.org>
+Date:   Mon, 24 Jul 2023 23:36:02 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 1/7] drivers: soc: qcom: rpmpd: Fix MSM8976 power
+ domains setup
+Content-Language: en-GB
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230723160827.22660-1-a39.skl@gmail.com>
+ <20230723160827.22660-2-a39.skl@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230723160827.22660-2-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 23/07/2023 19:08, Adam Skladowski wrote:
+> Downstream kernel parses resource names based on pm8950-rpm-regulator.dtsi
+> in such file qcom,resource-name takes three values: smpa,ldoa and clk0.
+> First appearance of RWSC/RWSM point to msm-4.4 kernel
+> which is way newer than what this platform was shipped with (msm-3.10).
+> For the max_state downstream code limit value to TURBO inside dts
+> with only one turbo_high being placed in msm-thermal bindings.
+> One of effects of requesting TURBO_HIGH vote is rebooting of device
+> which happens during voting inside WCNSS/IRIS,
+> this behavior was observed on LeEco S2 smartphone.
+> Fix regulator setup and drop unused resources.
+> 
+> Fixes: b1d522443b4b ("soc: qcom: rpmpd: Add rpm power domains for msm8976")
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 
-A fence id of zero is expected to be invalid, and is not removed from
-the fence_idr table.  If userspace is requesting to specify the fence
-id with the FENCE_SN_IN flag, we need to reject a zero fence id value.
-
-Fixes: 17154addc5c1 ("drm/msm: Add MSM_SUBMIT_FENCE_SN_IN")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 9d66498cdc04..63c96416e183 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -901,7 +901,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	 * after the job is armed
- 	 */
- 	if ((args->flags & MSM_SUBMIT_FENCE_SN_IN) &&
--			idr_find(&queue->fence_idr, args->fence)) {
-+			(!args->fence || idr_find(&queue->fence_idr, args->fence))) {
- 		spin_unlock(&queue->idr_lock);
- 		idr_preload_end();
- 		ret = -EINVAL;
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 -- 
-2.41.0
+With best wishes
+Dmitry
 
