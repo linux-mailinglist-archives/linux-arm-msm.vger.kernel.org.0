@@ -2,113 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3556575F798
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 14:59:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 177C075F7C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 15:06:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231630AbjGXM7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 08:59:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49148 "EHLO
+        id S230482AbjGXNG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 09:06:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232319AbjGXM66 (ORCPT
+        with ESMTP id S231171AbjGXNGy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 08:58:58 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEEF65B2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:55:56 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fd32e611e0so5433568e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:55:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690203307; x=1690808107;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U+knMhAc9BN4MHY0osSYfy9WGScVxJZhfmgQ35b2tDs=;
-        b=vCTYXQPJBilz8G7K2UMcyYnfDBboigPw9q7bSoWBMDRyQ0sXpX0iRxoB1UDQxGmfs+
-         pHXYCFQYw8yr79DOeh4KlKuFR68Hl3gA7po8m23lJBkF1p1a8Hr21D3CdXMQyQ+/XOTY
-         LMQ4Uq2NPTD2Go8aNgnrmvnSKILbaFnNdkwM7SaKMo0UGFNmm5zzQECr97v4buX3NKKa
-         yWrLvv8IfHV8+E3bDGC/ycIG7h77GNTYm3kKNS9ZadumNzswr5of0n5jwaHlgQZ5kXh8
-         ayL7pYVJe2a7kILIEE18h50cM2c7LmOdXocK7Eza0rEhpSwts4476a4NCKAgRCh143LF
-         nUNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690203307; x=1690808107;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U+knMhAc9BN4MHY0osSYfy9WGScVxJZhfmgQ35b2tDs=;
-        b=BKPZjqBxUR0LuywbHbrnklbeZ+PhyWpBXcJ+XIUbzwo1QrQC6Ps5h9xV3YJYisihic
-         9vTrMl/88UoRUwJ3WmgjgmmzO4PdrD9nL6kcs+LciF9ZoLhJFVcYtL8f6oxQKxAic+4u
-         UEknnR1Kz/o25r55e9zYH+HiYF5hyp92TcFczqmTDvkr8vUpvI42K08VTGjObWSyrgqo
-         n60ZmmF8JwF27+kxfcd5eRpp7exbXloeWCHxebG2Eg/zxscL0pG/6zsK3RCDNqSvCCv3
-         vUlSDt+suqyw6h2rQGEDTznXSB6ul19TCQIQZOmB/JopP+4etRUWfVcYLU/7IJ0whpkR
-         nbOg==
-X-Gm-Message-State: ABy/qLYqQZF78kTBr0KEl3MWSUGeTB//rpjpggky6z5enpjZgW/oNK0V
-        2oKmUNtsxr1MnaSgGwW1iebpGA==
-X-Google-Smtp-Source: APBJJlFX52/xcCTtWufZx3j2QwekAQgxDVxUDRjf0gBkJT6hotHMf0it+V/ltnajYS4gpefd+k9j6Q==
-X-Received: by 2002:a19:640f:0:b0:4f3:b242:aa98 with SMTP id y15-20020a19640f000000b004f3b242aa98mr2765511lfb.30.1690203307268;
-        Mon, 24 Jul 2023 05:55:07 -0700 (PDT)
-Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
-        by smtp.gmail.com with ESMTPSA id m8-20020a195208000000b004fb86662871sm2166604lfb.233.2023.07.24.05.55.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 05:55:06 -0700 (PDT)
-Message-ID: <2a68b891-b855-1998-3eaf-a21473da0851@linaro.org>
-Date:   Mon, 24 Jul 2023 14:55:06 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/6] soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC
- support
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mon, 24 Jul 2023 09:06:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B88DF;
+        Mon, 24 Jul 2023 06:06:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BDC2961176;
+        Mon, 24 Jul 2023 13:06:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D9BC433C8;
+        Mon, 24 Jul 2023 13:06:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690204010;
+        bh=ADbWdiG5m7FC03JjNyoWb5nYouhnLpSkLMz/+0jVixc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cbbdLJgWpYJmTeYwWsvBtIvOSgmHTuNrSeq+un5zt6ujsvmGj/v76uJoEl/DqeOKa
+         JejTNY2t92wGwpjklGy/1YzQCR78h8CFqsRRwH5UwTCxMzE3FbQ/qibEJsuVR+4Gz7
+         sICH6+LmGaARXwy6JJFdsqFAEZbOHJT0suI+X3xXNRyr6ea88xAg65G3AGinLAIHv7
+         NtzNiBy7IF7dL8ZhEA3YwNfQQjf4x97lNNiPj1sSoCgvJvEaTYgNc3PEJc7qogxH+V
+         yfATcxtZ3sA9grzx2VfwbOavX9lb04V+fVO8y6SoxPLlfRrMmUhfZpZ97paZ51M196
+         usS4/n+111Ujw==
+Date:   Mon, 24 Jul 2023 18:36:33 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Ziqi Chen <quic_ziqichen@quicinc.com>,
+        Can Guo <quic_cang@quicinc.com>, Arnd Bergmann <arnd@arndb.de>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230724084155.8682-1-quic_kbajaj@quicinc.com>
- <20230724084155.8682-7-quic_kbajaj@quicinc.com>
- <34868b94-abe3-aa67-fb76-35d9a2481cfd@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <34868b94-abe3-aa67-fb76-35d9a2481cfd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH] scsi: ufs: qcom: remove unused variable
+Message-ID: <20230724130633.GN6291@thinkpad>
+References: <20230724122029.1430482-1-arnd@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <20230724122029.1430482-1-arnd@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -116,28 +67,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.07.2023 14:45, Mukesh Ojha wrote:
+On Mon, Jul 24, 2023 at 02:19:58PM +0200, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
+> A recent change removed the only user of a local variable that needs
+> to now also be removed:
 > 
-> On 7/24/2023 2:11 PM, Komal Bajaj wrote:
->> Add LLCC configuration data for QDU1000 and QRU1000 SoCs.
->>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->> ---
-[...]
+> drivers/ufs/host/ufs-qcom.c: In function 'ufs_qcom_mcq_esi_handler':
+> drivers/ufs/host/ufs-qcom.c:1652:31: error: unused variable 'host' [-Werror=unused-variable]
+> 
+> Fixes: 8f2b78652d055 ("scsi: ufs: qcom: Get queue ID from MSI index in ESI handler")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
->>   static const struct qcom_sct_config sc7180_cfgs = {
->>       .llcc_config    = sc7180_cfg,
->>       .num_cfgs    = 1,
->> @@ -611,6 +672,11 @@ static const struct qcom_sct_config sm8550_cfgs = {
->>       .num_cfgs    = 1,
->>   };
->>   +static const struct qcom_sct_config qdu1000_cfgs = {
->> +    .llcc_config    = qdu1000_cfg,
->> +    .num_cfgs    = 1,
-> 
-> 
-> Should not this be 4 ?
-Even better, use ARRAY_SIZE(name_of_arr)
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-Konrad
+- Mani
+
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 3ee5ff905f9a6..5728e94b6527b 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1649,7 +1649,6 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *data)
+>  	struct msi_desc *desc = data;
+>  	struct device *dev = msi_desc_to_dev(desc);
+>  	struct ufs_hba *hba = dev_get_drvdata(dev);
+> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>  	u32 id = desc->msi_index;
+>  	struct ufs_hw_queue *hwq = &hba->uhq[id];
+>  
+> -- 
+> 2.39.2
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
