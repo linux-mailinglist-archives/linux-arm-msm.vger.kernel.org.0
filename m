@@ -2,82 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72B6D75F3CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:49:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80C5D75F3FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232523AbjGXKte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 06:49:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44772 "EHLO
+        id S233190AbjGXK4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 06:56:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232500AbjGXKtd (ORCPT
+        with ESMTP id S233169AbjGXK4Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 06:49:33 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB9E119
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:49:26 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb863edcb6so6198837e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690195764; x=1690800564;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v8HKgJSSV07pp4d9brlO+h0JzIdiYnacUoJ+79PuEI4=;
-        b=RQ+a0ZCwPXPESV3mIgCp8tm1prElKptpDZyaKjzC1uelhVuzifZNS0vm0tjagrC4F3
-         DQcZW4HqO9to/UuDYKcaJfw5gp7RlNb8rVlcYvBeQhY6QXRiioPm6iVYVWzFJfbEia/q
-         xh2nMHfVzFpfY77jfpw++wB1iZCSedd0nWtjZazJNVVoxU1hXEml4I2b7ldB3DlMUwIf
-         /IsXMYMP8Rvit3g5iTF3VYo7yTl33XsyqFOi0zHEM5ubB9zh9hDvSdBK/TFXpY2C5Idw
-         Dxaa7tMp4VroJQxng1+H/Kq53kqbsKvlYDH6SxXlUhGRPjjEPsBteV7Am8TFLH0sfpbQ
-         AR9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690195764; x=1690800564;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=v8HKgJSSV07pp4d9brlO+h0JzIdiYnacUoJ+79PuEI4=;
-        b=l9MEgT3MgsPS3lKOCz5GpclyQ2w3+u7GpGxlkE2GikhXQWbQk5aIq92y7To+yPCxlS
-         /DEBvl79zeeQ4k8iygrsgG5GANLANtiKqGWM4geazbgf+d9VDYGXVIsZZI1p6CWFraXO
-         v05iL/T/CHttYYRHEssvNTBHTLlafDpKtea0YZS1hDIHKol4YmHpd2KLB1fCKSLuDD/T
-         sgXG3GqoU+HtS91PRThA7rwA18SBC4f+OKYGdcVQPa1jMulCu662iRKmqdNSNjMNjesH
-         8vpCIy5av2i8nue69EYhWWHJRK4Edwn4wx8jxwduNtluLWAkEXSaS8gI7tsVheUsOcpF
-         2hpw==
-X-Gm-Message-State: ABy/qLbf6lCbe9e2l+xngDH/lAQ9CXWrUJ60IbR0et4dulwR5oTZkUD5
-        FzQsbMr7f6RIHkhL+Qb6vygZfd6yRDUNSC9ximxzqA==
-X-Google-Smtp-Source: APBJJlFkO0TeYh3ZoRhiTaeivQ83oCvFNp+UJcf10hvH93B8FuaB3rm6LSEyOJ3IW11fakDe9mFCiQ==
-X-Received: by 2002:a05:6512:ea0:b0:4f9:5718:70b3 with SMTP id bi32-20020a0565120ea000b004f9571870b3mr5338407lfb.31.1690195764496;
-        Mon, 24 Jul 2023 03:49:24 -0700 (PDT)
-Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
-        by smtp.gmail.com with ESMTPSA id o14-20020ac2494e000000b004fdc7ec5cbesm2164201lfi.300.2023.07.24.03.49.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 03:49:24 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 24 Jul 2023 12:49:22 +0200
-Subject: [PATCH v2 2/2] interconnect: qcom: qcm2290: Enable sync state
+        Mon, 24 Jul 2023 06:56:16 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51385BD;
+        Mon, 24 Jul 2023 03:56:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A4958610A7;
+        Mon, 24 Jul 2023 10:56:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01995C433C9;
+        Mon, 24 Jul 2023 10:56:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690196171;
+        bh=nhiYOOlqYWW6vzgECE0M6nDHju7clmLHW8qTMCC7aZU=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=jrC8yq/dHXAayYHzlJwe4D/32EaVTNbeCb8g9mYeP6aMu+GqrjpvYQNEwraOZzoNe
+         U5/5UxiA7DdXj+3FPGHCvOvROlLOnCzci0fVAiAbfgvpLY3fV0YRHCLNiChegpZIYS
+         0JB71pP1MRujoopQaR3pFSpXDyCtsfCaRX2fnLO3MBxmk8V7p8ZMiM6ORCFXAkYHxr
+         Ca5oUpATvJ5r71KFkOu8YuQ3wrSs9nhT2oV3j6WFaBCpHfCcomb1oeXfwsAn+Ou/XM
+         5Uqu4LZN7P8lpQc6Q6FJVsEBQjao9ji0iXRhvZcDymlLZXnAIa48xFBr8CBl+8NfnP
+         Xn942CKLFs9NA==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+In-Reply-To: <20230711120916.4165894-1-dmitry.baryshkov@linaro.org>
+References: <20230711120916.4165894-1-dmitry.baryshkov@linaro.org>
+Subject: Re: (subset) [PATCH v4 00/10] phy: qcom-qmp-combo: convert to
+ newer style of bindings
+Message-Id: <169019616764.466601.16148746210108391264.b4-ty@kernel.org>
+Date:   Mon, 24 Jul 2023 16:26:07 +0530
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230720-topic-qcm2290_icc-v2-2-a2ceb9d3e713@linaro.org>
-References: <20230720-topic-qcm2290_icc-v2-0-a2ceb9d3e713@linaro.org>
-In-Reply-To: <20230720-topic-qcm2290_icc-v2-0-a2ceb9d3e713@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690195761; l=1022;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=GplZxeOl64/ZE1tfvreBeiinURUbtJKYvGy7WRRT0bI=;
- b=O9MXnPhMxVQyCLJrL3jyqGMGBqfsvhiRg6ST9CmmM/h6dHwd8kFNhD6wYW8cmNWC/1c67k5+7
- bzRBUL4EjjaCC6B+ki4drZ0UMURNFGXwB68yhuX+ukOGnhQZH3t61nf
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,32 +64,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the generic .sync_state callback to ensure there are no
-outstanding votes that would waste power.
 
-Generally one would need a bunch of interface clocks to access the QoS
-registers when trying to go over all possible nodes during sync_state,
-but QCM2290 surprisingly does not seem to require any such handling.
+On Tue, 11 Jul 2023 15:09:06 +0300, Dmitry Baryshkov wrote:
+> Reviewing several patchsets for newer platforms made me understand that
+> having two styles of QMP PHY bindings causes confusion. Despite binding
+> documents having notes telling that old bindings should be used for
+> older platforms, it is too easy to attempt adding new platform with
+> older QMP PHY binding. Thus let's have just a single documented style of
+> bindings.
+> 
+> [...]
 
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/qcm2290.c | 1 +
- 1 file changed, 1 insertion(+)
+Applied, thanks!
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index c22354f3e667..5bc4b7516608 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -1364,6 +1364,7 @@ static struct platform_driver qcm2290_noc_driver = {
- 	.driver = {
- 		.name = "qnoc-qcm2290",
- 		.of_match_table = qcm2290_noc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qcm2290_noc_driver);
+[01/10] dt-bindings: phy: migrate combo QMP PHY bindings to qcom,sc8280xp-qmp-usb43dp-phy.yaml
+        commit: 57a79ce964d76757c2fd21e097bcd9eb44884def
+[02/10] phy: qcom-qmp-combo: simplify clock handling
+        commit: 28e265bf84a8f885b3156f24dc246bf1d7bb40a5
+[03/10] phy: qcom-qmp-combo: populate offsets for all combo PHYs
+        commit: a542ae82dfdd1e84f84593161ffc586e72cc992d
+[04/10] phy: qcom-qmp-combo: add qcom,sc7280-qmp-usb3-dp-phy compat entry
+        commit: 486392f44dd96aeb34bbbc1b119bc5d332f1164f
 
+Best regards,
 -- 
-2.41.0
+~Vinod
+
 
