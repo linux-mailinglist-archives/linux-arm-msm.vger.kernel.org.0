@@ -2,80 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB27175EE6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:54:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 531CB75EE87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:57:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbjGXIyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 04:54:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51208 "EHLO
+        id S231982AbjGXI5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 04:57:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231947AbjGXIyx (ORCPT
+        with ESMTP id S231998AbjGXI5V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 04:54:53 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C1F131;
-        Mon, 24 Jul 2023 01:54:50 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id C575D6607029;
-        Mon, 24 Jul 2023 09:54:48 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1690188889;
-        bh=nPyP49dnhRShPNzgNG3OKPk0ThYGx46zvyJAuyYOCJg=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=efCe+vHgRs9HiIsvZK3U+2yvp7/CekPNNT5Z0yfsoMF4ThOqxS2yGm+VDCAUXZjbx
-         uN/hg511Xe6C6LwZVit4l0cuXs3LW1WpL2lyZF3eUZtjmQgzhIKh+gPM6LzPZ5NabR
-         tREqbURs3ybP/kPK+0SlaY0Xdi+/0aI/rTKrM+lRcagqaeRKc/veBKbZeEQc63pHdi
-         V5VRGP6bXxymu3NuC8iLxgqYz0fQYNx+0ri0lRqHHGd5NmkhJu6mj2Zgi9x7Qmouk4
-         y2m0D5Eh/RTr+VIANdaRTLGSN9JfrzgGJzMTCQH99KtX7Zpze+K0qpREAwHiPE15BW
-         XH72P78iecmDQ==
-Message-ID: <056328aa-9856-2361-837b-9d0e69efceb2@collabora.com>
-Date:   Mon, 24 Jul 2023 10:54:46 +0200
+        Mon, 24 Jul 2023 04:57:21 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F35710D5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 01:57:08 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99454855de1so610270266b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 01:57:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690189027; x=1690793827;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=owG6OHIwikfnxyddtRAYGrs5TFXY1YqI1q2T1OmAufw=;
+        b=HkQCoTDd6APCNCBfEHGJeKiIM5LEFIe2lR7tQPRUotVV4SAkiw5N08guAqpX9fknNX
+         MILkXQKxAmkQp0y+WDxAa3nw70d9XaFOf/0mgyexOfeYI4MDfHuUFXtXf8hfHidEiu9v
+         VuZ/R446wIpQApn2xmE2BRhzKGCyZafm9qmOGHKlgc1xbiO81XxX4/XExlHgrgWcOy/w
+         apQq0Sfmc2mC+Sd6f6E+7hMWCwcNxurWvzMOEKOpr9x8Shxlon0kVTkxM87Kxtm05nhy
+         4S59SlUQ5CO2piu+X9w7pyMG4+TzJEzH0zubjwGd0NoBBlZY09NWjHfetCgfzC9WfNLV
+         RUWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690189027; x=1690793827;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=owG6OHIwikfnxyddtRAYGrs5TFXY1YqI1q2T1OmAufw=;
+        b=O71MoPWHKN49tos59ZRIhNtScmYSNAkHUzLYjppf1rmEau4S1p9zFkpaS8pNk8te8U
+         eua6qsi29WWD5XIdQQe7dmNo4rE15TjFuileqs/IafHVr7nOkJV1X/O8yn28DgK0ZO5U
+         uj8VN8zWSJpmOr1j099n0pfxZnYntODx34xS7Gcryo1ff0BCH5hCvUIZz4YBO0WniseW
+         T9NBQoNTDXf7t0JVZ1PkP8e6fnlXBn1ZTk4c/HECTo/pwQimlc33DrLfQMs1NMFni1GB
+         RWod8lRSNhbJt+wKG+4jgCFb6/pvlGFGg8vmx8ogDZLexIqIMnYwGNcXpx1WVgHJPBPz
+         PLoQ==
+X-Gm-Message-State: ABy/qLY3kCZNV009ftP/ZQea1oaQ/N5NI21GB8s66XCRDMX+9RWMKdUA
+        dke3aOKv/qpx2LxJ8YuSp+bZmw==
+X-Google-Smtp-Source: APBJJlEM3lq1JFdQgmAyuMscN6S6KogpTMrAJRbJpDsQAF+3oubQ6gVynSJ/RMaGXgp5plWWzolmWw==
+X-Received: by 2002:a17:907:7631:b0:993:e9b8:90f5 with SMTP id jy17-20020a170907763100b00993e9b890f5mr7994896ejc.8.1690189027087;
+        Mon, 24 Jul 2023 01:57:07 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id s6-20020a170906960600b0098cf565d98asm6363259ejx.22.2023.07.24.01.57.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jul 2023 01:57:06 -0700 (PDT)
+Message-ID: <82d45863-d48a-1eab-a3e0-142f46d4863c@linaro.org>
+Date:   Mon, 24 Jul 2023 10:57:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 6/7] arm64: dts: qcom: msm8976: Split lpass region
+Subject: Re: [PATCH V3 2/2] dt-bindings: arm: qcom,ids: drop the IPQ5019 SoC
+ ID
 Content-Language: en-US
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Kathiravan T <quic_kathirav@quicinc.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230723140712.9438-1-a39.skl@gmail.com>
- <20230723140712.9438-7-a39.skl@gmail.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230723140712.9438-7-a39.skl@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_saahtoma@quicinc.com
+References: <20230724083745.1015321-1-quic_kathirav@quicinc.com>
+ <20230724083745.1015321-3-quic_kathirav@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230724083745.1015321-3-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 23/07/23 16:06, Adam Skladowski ha scritto:
-> Some devices like Sony Loire uses Broadcom module over sdc3 however others
-> utilize qcom WCNSS, split shared region based on downstream pil-tz loader.
+On 24/07/2023 10:37, Kathiravan T wrote:
+> IPQ5019 SoC is never productized. So lets drop it.
 > 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
 
-That should go in board specific files, not in the SoC dtsi.
 
-Regards,
-Angelo
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
