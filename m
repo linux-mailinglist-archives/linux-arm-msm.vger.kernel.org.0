@@ -2,91 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F29575F54E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 13:40:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBA9A75F600
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 14:18:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229962AbjGXLkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 07:40:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57650 "EHLO
+        id S229831AbjGXMSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 08:18:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjGXLkG (ORCPT
+        with ESMTP id S229456AbjGXMSS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 07:40:06 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE27CE65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 04:40:04 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fcd615d7d6so6281144e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 04:40:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690198803; x=1690803603;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FkaTBeASYu8P0h7GTLxOpD3T0h5M1j1+XIcBVhBejCw=;
-        b=TmpjHofSYLVfVJNedt0O7I7sIBvRnxc1Ld/aw4IzK8oJs3k6TQXF8h0x4h+POY+/c5
-         65oVGeD/qaicON/k64VhctooQEsyGkFg/fCGvm458v2BsL/TVXIFz2MSyv0lq18WUFGV
-         +f+jHgcJjKXeQpjXcstCN40yqf/dQ2w2EX1Esmn4CIL4RDreLu8DPei7+SWH/PImHlBz
-         7di/x8gDopi+o3n1DQkuOO4k1jselKHrCb3ZSCDHRSWWTE76+4Jb4e/hL+2RYaNYEa+A
-         9pVA6Kz1IwGT33zhWvjCqj7MGgAba9Rv12P11DRocgnHyHxbtg5ZX0RaX8FdP6Ymd/8B
-         JKsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690198803; x=1690803603;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FkaTBeASYu8P0h7GTLxOpD3T0h5M1j1+XIcBVhBejCw=;
-        b=kPOPUfhcMc45aqmOkPwBSAF16yyPuDo27Sah8xHGbIxwBH+D9Zv247JAdnr2sIZSZH
-         xzRzzzb68LFH7Iu8x9QeQyO2ZDSGUkfktCASeee68Xulh5uJf61aluCvQT1irONaAnKy
-         kPCs88oRDSxvatRtVqueiMIeCKWwtFrQPc9Hj0vdhNbCqA4UG7JO67TOnzwDIA18qFsW
-         fKSV1POwcp9XYbLrGAwS2hFe16+pzMxbvtWMxfpe6LeHNPOXHWsp6VLsatYUTzMSjGTv
-         82Nf8DFKfVsRjFSvZJTRl7PTGSDjNZOwyHfcPJunEia3NCGtYeTBFfg3DdtSonpYOj/U
-         O2Qg==
-X-Gm-Message-State: ABy/qLaCtut2vgv9q3q4FQRwRxuDWq8qsm/0+3eoGipDSheUEw1nO+z/
-        vV8i3VsHnKvCNJSBGq+5vvzDYg==
-X-Google-Smtp-Source: APBJJlH0+gvt/maOnNTBdDlYacWoBXnnvhUrQ/EO7mWnjfF8Gq+FLsqc3zbSP4To5aMzoQ76U+wSDg==
-X-Received: by 2002:a05:6512:743:b0:4f8:5e21:a3a9 with SMTP id c3-20020a056512074300b004f85e21a3a9mr5070585lfs.45.1690198802939;
-        Mon, 24 Jul 2023 04:40:02 -0700 (PDT)
-Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
-        by smtp.gmail.com with ESMTPSA id u1-20020ac24c21000000b004fb881e5c23sm2168977lfq.47.2023.07.24.04.40.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 04:40:02 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 24 Jul 2023 13:39:58 +0200
-Subject: [PATCH v2 3/3] arm64: defconfig: enable Qualcomm SM6115 LPASS
- pinctrl
+        Mon, 24 Jul 2023 08:18:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32FCA170D;
+        Mon, 24 Jul 2023 05:17:47 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8A55C61124;
+        Mon, 24 Jul 2023 12:17:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE84DC433C7;
+        Mon, 24 Jul 2023 12:17:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690201064;
+        bh=QrEpSq7cPtZ3cWIhHPElPK38cx6jwtPbdBU+j7U7fKM=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+        b=lFo5/uyfnIZhAXSNnfYH/zs0wLPvsdGmMHFPu1gPwZUyuOP10nfFnm2e23E9mVHox
+         RPTdsfQNauiU49m1hBahLSzV9+gtG/J7umAiMCAj2AameE5Kr8rrBCOJ9W6HPjIMkc
+         lBp1NfEAIBufJmTKwy4+ZdRStOdLezK2HhFQXgRbYXDnNec/zH0oZOEiZUwOk3URR0
+         CwbOA3I9uES6cdgV2JXRUz8O/MvIwDzgSFlH2Jg5PAfwuqtmwK87bHc16vNtVYlbJG
+         hfzmJLudml4J90E2WDeTwJcjuLZaZewiSQ45z8+KBeEkpGI5axaDFLzZmilBUDvalQ
+         cGU58i/dTyQGA==
+Message-ID: <01e8445d033314b6d9cd67bece74ca1c3ce89945.camel@kernel.org>
+Subject: Re: [PATCH v2 34/47] nfsd: dynamically allocate the nfsd-client
+ shrinker
+From:   Jeff Layton <jlayton@kernel.org>
+To:     Qi Zheng <zhengqi.arch@bytedance.com>, akpm@linux-foundation.org,
+        david@fromorbit.com, tkhai@ya.ru, vbabka@suse.cz,
+        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
+        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
+        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
+        gregkh@linuxfoundation.org, muchun.song@linux.dev
+Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        Chuck Lever <chuck.lever@oracle.com>
+Date:   Mon, 24 Jul 2023 08:17:39 -0400
+In-Reply-To: <20230724094354.90817-35-zhengqi.arch@bytedance.com>
+References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
+         <20230724094354.90817-35-zhengqi.arch@bytedance.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230722-topic-6115_lpasstlmm-v2-3-d4883831a858@linaro.org>
-References: <20230722-topic-6115_lpasstlmm-v2-0-d4883831a858@linaro.org>
-In-Reply-To: <20230722-topic-6115_lpasstlmm-v2-0-d4883831a858@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690198796; l=785;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=hEAbD0xgwC03VcKuSXGbzmZXyqv8HA2q8JevzuYpv3w=;
- b=ERjNz1vReCRC3dDYlHXbQ1VlkzVZzSxXRlX00NBwQDLB98nOU3vnIGSVQIaAATG830boIMcTk
- Oob798ysbfZB4+1PryOMWbTgpV1CH7GiqFpLjpgmPBME+foFcUyI3S8
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,29 +74,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the Qualcomm SM6115 LPASS TLMM pin controller driver for
-providing GPIOs/pins for audio block on SM6115 based boards (e.g.
-QTI RB2).
+On Mon, 2023-07-24 at 17:43 +0800, Qi Zheng wrote:
+> In preparation for implementing lockless slab shrink, use new APIs to
+> dynamically allocate the nfsd-client shrinker, so that it can be freed
+> asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
+> read-side critical section when releasing the struct nfsd_net.
+>=20
+> Acked-by: Chuck Lever <chuck.lever@oracle.com>
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> ---
+>  fs/nfsd/netns.h     |  2 +-
+>  fs/nfsd/nfs4state.c | 20 ++++++++++++--------
+>  2 files changed, 13 insertions(+), 9 deletions(-)
+>=20
+> diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+> index ec49b200b797..f669444d5336 100644
+> --- a/fs/nfsd/netns.h
+> +++ b/fs/nfsd/netns.h
+> @@ -195,7 +195,7 @@ struct nfsd_net {
+>  	int			nfs4_max_clients;
+> =20
+>  	atomic_t		nfsd_courtesy_clients;
+> -	struct shrinker		nfsd_client_shrinker;
+> +	struct shrinker		*nfsd_client_shrinker;
+>  	struct work_struct	nfsd_shrinker_work;
+>  };
+> =20
+> diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+> index 3339177f8e2f..c7a4616cd866 100644
+> --- a/fs/nfsd/nfs4state.c
+> +++ b/fs/nfsd/nfs4state.c
+> @@ -4388,8 +4388,7 @@ static unsigned long
+>  nfsd4_state_shrinker_count(struct shrinker *shrink, struct shrink_contro=
+l *sc)
+>  {
+>  	int count;
+> -	struct nfsd_net *nn =3D container_of(shrink,
+> -			struct nfsd_net, nfsd_client_shrinker);
+> +	struct nfsd_net *nn =3D shrink->private_data;
+> =20
+>  	count =3D atomic_read(&nn->nfsd_courtesy_clients);
+>  	if (!count)
+> @@ -8125,12 +8124,17 @@ static int nfs4_state_create_net(struct net *net)
+>  	INIT_WORK(&nn->nfsd_shrinker_work, nfsd4_state_shrinker_worker);
+>  	get_net(net);
+> =20
+> -	nn->nfsd_client_shrinker.scan_objects =3D nfsd4_state_shrinker_scan;
+> -	nn->nfsd_client_shrinker.count_objects =3D nfsd4_state_shrinker_count;
+> -	nn->nfsd_client_shrinker.seeks =3D DEFAULT_SEEKS;
+> -
+> -	if (register_shrinker(&nn->nfsd_client_shrinker, "nfsd-client"))
+> +	nn->nfsd_client_shrinker =3D shrinker_alloc(0, "nfsd-client");
+> +	if (!nn->nfsd_client_shrinker)
+>  		goto err_shrinker;
+> +
+> +	nn->nfsd_client_shrinker->scan_objects =3D nfsd4_state_shrinker_scan;
+> +	nn->nfsd_client_shrinker->count_objects =3D nfsd4_state_shrinker_count;
+> +	nn->nfsd_client_shrinker->seeks =3D DEFAULT_SEEKS;
+> +	nn->nfsd_client_shrinker->private_data =3D nn;
+> +
+> +	shrinker_register(nn->nfsd_client_shrinker);
+> +
+>  	return 0;
+> =20
+>  err_shrinker:
+> @@ -8228,7 +8232,7 @@ nfs4_state_shutdown_net(struct net *net)
+>  	struct list_head *pos, *next, reaplist;
+>  	struct nfsd_net *nn =3D net_generic(net, nfsd_net_id);
+> =20
+> -	unregister_shrinker(&nn->nfsd_client_shrinker);
+> +	shrinker_unregister(nn->nfsd_client_shrinker);
+>  	cancel_work(&nn->nfsd_shrinker_work);
+>  	cancel_delayed_work_sync(&nn->laundromat_work);
+>  	locks_end_grace(&nn->nfsd4_manager);
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 6cbf6eb59378..6911101db09e 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -587,6 +587,7 @@ CONFIG_PINCTRL_SDM660=y
- CONFIG_PINCTRL_SDM670=y
- CONFIG_PINCTRL_SDM845=y
- CONFIG_PINCTRL_SM6115=y
-+CONFIG_PINCTRL_SM6115_LPASS_LPI=m
- CONFIG_PINCTRL_SM6125=y
- CONFIG_PINCTRL_SM6350=y
- CONFIG_PINCTRL_SM6375=y
-
--- 
-2.41.0
-
+Acked-by: Jeff Layton <jlayton@kernel.org>
