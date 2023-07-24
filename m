@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7862A760278
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 00:41:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DE5076027B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 00:41:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229829AbjGXWlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 18:41:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58354 "EHLO
+        id S231314AbjGXWlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 18:41:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjGXWlB (ORCPT
+        with ESMTP id S229485AbjGXWlM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 18:41:01 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6084B171B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 15:40:59 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id e9e14a558f8ab-348c8ec869eso13196105ab.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 15:40:59 -0700 (PDT)
+        Mon, 24 Jul 2023 18:41:12 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94ADC10C8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 15:41:10 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id ca18e2360f4ac-785ccf19489so256954139f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 15:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690238458; x=1690843258;
+        d=linaro.org; s=google; t=1690238470; x=1690843270;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iKKgu6i/BBqK+vHvXOuZXXT6jRdj5IPssioGIwoBJF4=;
-        b=Hzu3T9XRyiq8KcynvHxfdIrLya3B1g/zWPJ57AoSNqTf6WLvQkAl7lLPBg3JcBQNk7
-         XCe5GmZtcSJmpMaCLHK0FdZGTermZaDN2ZyQS4Ic0OBqm+6GU97c6w9+8KhzFlcG8ndH
-         iYktX4ihjyT79kvfDkJOWXvTyr4067FfY61ONlueQEe1QBhQva36howY/OQ7g4JF1OkV
-         dlHPOavI+CteCqNVxPKtAqABLki/5bkxxnJiloH7qKhJT61LcVGOSaC0rBh+mEIGosjB
-         9FmPee5ELruCiQU03d8C/vpfDeCL1GFFBziCMk26YjTUVatDO3qn2gv2slFnpK4rEh9U
-         5mRQ==
+        bh=KeP2Bpkp9J7OOE4sWn2E6NWLqeXa4peAEEdE+9mQzSs=;
+        b=uVBTiaICcqS0cbclHhojIy9A/rn1xLF2yWj0IT3eGwYot+z7UEEoFf8vl2QmbV5HZd
+         oZMhnIVX0R9vxalzBDfEdnRYeggfqAWPp4oZ9iIRiYDirNYDPry665l3xLJOv4w9ndoV
+         atAKzCpgip8LDAIXf6qHwji/s1g3JbuWcbuDNTbWkgkfmMoERf1A203T+0pmhikbtKdF
+         ftEXpPbfnz5Wvvbtbdb23i/4K0J3WvPEoAfxj+wRypNZFJmdRvo094Efvgx0Uz399ao+
+         kY/uZo+vG0RSD0FXczITHgWRFih72r4lLaRNLR1zaoxfD2RRB/VOQFv104/3q7VyvDCy
+         wRoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690238458; x=1690843258;
+        d=1e100.net; s=20221208; t=1690238470; x=1690843270;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iKKgu6i/BBqK+vHvXOuZXXT6jRdj5IPssioGIwoBJF4=;
-        b=FueWpD4+YThH6gUT6g2H1b6YD3XTBsnOk+GO7iQQBVVezoAVAZV8Q99nUhqh/jwMWn
-         q4RKqE6RXflX9u7PnzlwwXB6WnH7FboETtQ1A1Be0Bye9qczN9tQ69nc5DQzkwEGOoHM
-         85dNtBtJHQFGLfGsKvnmNqlgYppw+nFrF/kKWmKm2FufZfZuglQxpKmGRy8omz+gAstT
-         C+kwc1g0jU3nz0nFUpcJ3PsE4STeGyForN22Hd7rHsazYAOWTKW8Rqz04mjg70jVwxq7
-         A5jPMmYYccMqisNFEgkLu5lw+mVU19AbeKoR2iYcB7A7IplHbcy06pO2G/vX+9MSbOpQ
-         9IfQ==
-X-Gm-Message-State: ABy/qLbp9L3Hzkk/6uqZIamjPW97Wu/ooWo5YBnTkhSoXHy2S+4LAxvX
-        Re4c95gByVeI43YlT1A/w97vOA==
-X-Google-Smtp-Source: APBJJlEWt68nkZpbyT0RxibRCLbOdlbisPQd9crre6rbKDCoThNCdcGwvFgg74D0WZSNonJH4u9QYw==
-X-Received: by 2002:a05:6e02:b47:b0:348:8163:b6be with SMTP id f7-20020a056e020b4700b003488163b6bemr1218203ilu.30.1690238458732;
-        Mon, 24 Jul 2023 15:40:58 -0700 (PDT)
+        bh=KeP2Bpkp9J7OOE4sWn2E6NWLqeXa4peAEEdE+9mQzSs=;
+        b=Ck9IcnKx6NwePFc5K4SPWgbqkTtV2EjzMO0rZ/rWYYh3xVgmZ5Ddw1HidOqTKLfqsY
+         3PvMBFn/Rd3sH4U98VhZEkXa8ETZwuQzq+uBHT1raXbAmZfRJQ6UTQ934J+kHJcsTrs8
+         0kagx5arS5pn+dyBbnVo4uuaeb1o7lpJlu4CIU4gzwwZfQBwKS6PQZfO7VS9Tg9CP9j+
+         OKhtvR8AzoHG7QXte1xCM/zXYa2PhbYbQw4hUN1lrR55vKI9rU0lP2Y128GLaD8R1wsj
+         DhHtHpexY+NbkIx2WTFgG8nTxOwGgKGsyOJGLPsNL56oGPfG7FxMp/jM0WJQtpry5MWf
+         I67w==
+X-Gm-Message-State: ABy/qLYuBB10EwZu5jqymoVydiDcjpPmQpemVNmP6Tq7f70blcgEQ1RW
+        LBlMufxPF7V3m0qoy6D7LhMptQ==
+X-Google-Smtp-Source: APBJJlEhDUh7RSS2Z2tTSspy5ELCXvyGnC/B2CaIbRlOt16SjoWMnBbRRS+8HrDzVxydj5/qeS3lcg==
+X-Received: by 2002:a5d:9b8f:0:b0:783:5e20:768d with SMTP id r15-20020a5d9b8f000000b007835e20768dmr1134570iom.18.1690238469994;
+        Mon, 24 Jul 2023 15:41:09 -0700 (PDT)
 Received: from localhost.localdomain (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id o11-20020a056638124b00b0042b482a8763sm3090952jas.70.2023.07.24.15.40.57
+        by smtp.gmail.com with ESMTPSA id gv18-20020a0566382e5200b0042b1297468esm3103953jab.51.2023.07.24.15.41.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 15:40:58 -0700 (PDT)
+        Mon, 24 Jul 2023 15:41:08 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -60,8 +60,8 @@ Cc:     dianders@chromium.org, caleb.connolly@linaro.org, mka@chromium.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         stable@vger.kernel.org
 Subject: [PATCH net] net: ipa: only reset hashed tables when supported
-Date:   Mon, 24 Jul 2023 17:40:55 -0500
-Message-Id: <20230724224055.1688854-1-elder@linaro.org>
+Date:   Mon, 24 Jul 2023 17:41:06 -0500
+Message-Id: <20230724224106.1688869-1-elder@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -103,45 +103,44 @@ transactions (if they occur due to errors).  This patch addresses
 only the underflows that Google originally reported.
 
 Fixes: d338ae28d8a8 ("net: ipa: kill all other transaction lists")
-Cc: <stable@vger.kernel.org>	# 6.4.x
+Cc: <stable@vger.kernel.org>    # 6.1.x
 Tested-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/ipa_table.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/net/ipa/ipa_table.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/ipa/ipa_table.c b/drivers/net/ipa/ipa_table.c
-index f0529c31d0b6e..7b637bb8b41c8 100644
+index 510ff2dc8999a..cd81dd916c29e 100644
 --- a/drivers/net/ipa/ipa_table.c
 +++ b/drivers/net/ipa/ipa_table.c
-@@ -273,16 +273,15 @@ static int ipa_filter_reset(struct ipa *ipa, bool modem)
+@@ -311,16 +311,15 @@ static int ipa_filter_reset(struct ipa *ipa, bool modem)
  	if (ret)
  		return ret;
  
--	ret = ipa_filter_reset_table(ipa, true, false, modem);
+-	ret = ipa_filter_reset_table(ipa, IPA_MEM_V4_FILTER_HASHED, modem);
 -	if (ret)
 -		return ret;
 -
- 	ret = ipa_filter_reset_table(ipa, false, true, modem);
+ 	ret = ipa_filter_reset_table(ipa, IPA_MEM_V6_FILTER, modem);
 +	if (ret || !ipa_table_hash_support(ipa))
 +		return ret;
 +
-+	ret = ipa_filter_reset_table(ipa, true, false, modem);
++	ret = ipa_filter_reset_table(ipa, IPA_MEM_V4_FILTER_HASHED, modem);
  	if (ret)
  		return ret;
--	ret = ipa_filter_reset_table(ipa, true, true, modem);
+-	ret = ipa_filter_reset_table(ipa, IPA_MEM_V6_FILTER_HASHED, modem);
  
 -	return ret;
-+	return ipa_filter_reset_table(ipa, true, true, modem);
++	return ipa_filter_reset_table(ipa, IPA_MEM_V6_FILTER_HASHED, modem);
  }
  
  /* The AP routes and modem routes are each contiguous within the
-@@ -291,12 +290,13 @@ static int ipa_filter_reset(struct ipa *ipa, bool modem)
+@@ -329,11 +328,12 @@ static int ipa_filter_reset(struct ipa *ipa, bool modem)
   * */
  static int ipa_route_reset(struct ipa *ipa, bool modem)
  {
 +	bool hash_support = ipa_table_hash_support(ipa);
- 	u32 modem_route_count = ipa->modem_route_count;
  	struct gsi_trans *trans;
  	u16 first;
  	u16 count;
@@ -151,18 +150,22 @@ index f0529c31d0b6e..7b637bb8b41c8 100644
  	if (!trans) {
  		dev_err(&ipa->pdev->dev,
  			"no transaction for %s route reset\n",
-@@ -313,10 +313,12 @@ static int ipa_route_reset(struct ipa *ipa, bool modem)
+@@ -350,12 +350,14 @@ static int ipa_route_reset(struct ipa *ipa, bool modem)
  	}
  
- 	ipa_table_reset_add(trans, false, false, false, first, count);
--	ipa_table_reset_add(trans, false, true, false, first, count);
+ 	ipa_table_reset_add(trans, false, first, count, IPA_MEM_V4_ROUTE);
+-	ipa_table_reset_add(trans, false, first, count,
+-			    IPA_MEM_V4_ROUTE_HASHED);
 -
- 	ipa_table_reset_add(trans, false, false, true, first, count);
--	ipa_table_reset_add(trans, false, true, true, first, count);
+ 	ipa_table_reset_add(trans, false, first, count, IPA_MEM_V6_ROUTE);
+-	ipa_table_reset_add(trans, false, first, count,
+-			    IPA_MEM_V6_ROUTE_HASHED);
 +
 +	if (hash_support) {
-+		ipa_table_reset_add(trans, false, true, false, first, count);
-+		ipa_table_reset_add(trans, false, true, true, first, count);
++		ipa_table_reset_add(trans, false, first, count,
++				    IPA_MEM_V4_ROUTE_HASHED);
++		ipa_table_reset_add(trans, false, first, count,
++				    IPA_MEM_V6_ROUTE_HASHED);
 +	}
  
  	gsi_trans_commit_wait(trans);
