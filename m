@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AACDC75F356
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:31:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C54575F364
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:34:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231132AbjGXKba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 06:31:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59714 "EHLO
+        id S231316AbjGXKeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 06:34:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbjGXKbQ (ORCPT
+        with ESMTP id S231270AbjGXKeS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 06:31:16 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A0C10D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:31:10 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b743161832so58338321fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:31:10 -0700 (PDT)
+        Mon, 24 Jul 2023 06:34:18 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D46139
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:34:06 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b701e41cd3so58272001fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690194669; x=1690799469;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=RiHIilmtHLP/QavO+OGO0GXl45X3ep1zM9w6gfMfPkI=;
-        b=hb13hJgDOvjkCYKa88uF+9cle2s96UA6EUmELfaeULfNKkImo3jN7y6WVsFAZIhKGS
-         /wn7vUinRseTBqMz6b1uSvW6etMkD+xtfiONU6KDJU8ss7W+r/QNIx4Ga7h1DCbDqlKp
-         7BaJ7GpNlXoHJNNGNAiaqpPvy/TtkVOdgX01W0VNKMMbzIRy1u9toFWkUzY+aArm3egc
-         qNfhJ0Ulj2cBHN/ftuQnjzhFXLHZR5711P7pEzwC4/EmAKsCCM9bofj3s8eiXqUlvuWS
-         Y1zc8El9RX6ikctkQjzI5fkATFaq1lctpvdShJkhWYQOyB31ins7IZ2B8ObXu9wdPsG4
-         p8Bg==
+        d=linaro.org; s=google; t=1690194844; x=1690799644;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6/4NT80C8o+EyVnLY4XxDVvzkLXvBxsKNvLZXorPucs=;
+        b=QNswk2bs5yFZMtjR1PhS8fBgd6i0txIzfCiASd5Hb8Sl0Fa8GU7GKWMeUI1Ye6/Xn7
+         jX+sJH07wtjbkChiQ+A1mjjgRWJxK5nV3lULpOvfs1Ktpx9TF37QwtFOqvQGK44zGBHH
+         GtaUiEdxqAlzUZY2XSTtEdDggygddLgPAdeofPld0vQ7ECk79zSHx/2edt1c5NJc/27L
+         U/Lo5GUn1atMFepWWKjiTJ+TvuJt6p9qXbDeSO+h+sG55zBcH3UgoH1iJb1UcQ8pjfVL
+         ThdvbRSSXt1G6OsaSU8LETrlfXgamCyMklKG3E920P8YBjB3stLBZdtKGfVfN9KKwqTQ
+         nDDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690194669; x=1690799469;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RiHIilmtHLP/QavO+OGO0GXl45X3ep1zM9w6gfMfPkI=;
-        b=cvflCfX9dUL2VPS0InKUQBnGwXfa2FkwvCj3uWOWWqTmqaXnzPsGTarpEcMADaSXn1
-         0H1q4lLdmJ2m2usKhOEO+5+KhOb3n8n3wjlf4J85/mOI7HWqLKio53BUEG3q3wPNqvLL
-         ayXEe6kU25U/Vj8B7HE7jGkWFxG9sKelh3R4ushobRWDXC3AyxQaAFkBKCiultC0aKg8
-         MFm1s166eqGJ65js9Frfa+nVluW2jGdCLDEDZAEHUVZ6a9mV60hMFdKMSdmFU3HthCZL
-         lJjWGpU73BHJL8Si+PvGGv4cSQ+iYRJ2DBJ1/CVqtwO3aiXufPhtekwz4pE0qUkGSFSR
-         MQ5g==
-X-Gm-Message-State: ABy/qLYreQ+SQrvjywCAlH9820fW3wIm5BOEFghgJimN/JCckvgGT3f9
-        pIF3WqYOGmuOGGkQc//JFYzVBEs4Lxe1WvYG/4HAYw==
-X-Google-Smtp-Source: APBJJlHKAzgTcZxkzYS3fSGQXQBlZ9mX3fhV1WNe2d3EY3lX3vQxMHj32kTI+ExC1ULbKMplpm78QA==
-X-Received: by 2002:a2e:8097:0:b0:2b7:339c:f791 with SMTP id i23-20020a2e8097000000b002b7339cf791mr5860487ljg.25.1690194669057;
-        Mon, 24 Jul 2023 03:31:09 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690194844; x=1690799644;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6/4NT80C8o+EyVnLY4XxDVvzkLXvBxsKNvLZXorPucs=;
+        b=VpKv5rmFrNd6ZChEla0WMhuSviVWavt8+6buM/ux4KORrxS6EH+NISg+xHiytvoyjT
+         gjj3XvyCFdm8L6ifXx3vdcrno6GuzgCenTYnzANJYDyley/wbur6dC4XNzpaJvZEVcEn
+         y/GhYREpfpu+RCZhfuct0dEJjRdCj7P+x/VTf1tUZwuVcTK4W0Zn8xUGT34o56cpdRQz
+         kcMlxLHPmWTojwsqO+Wz0Phk7DGDshi4tiXbmvFMuQdNTnamkOCMLoNVHOsheKS2Ayyf
+         nIaUKhW6/iGuIkgps20iXirhSBTQkZGWPi3xYuNBam0a8qvyZLmFQ3IbapUCA4j6N6oO
+         MXgA==
+X-Gm-Message-State: ABy/qLbdTLehKxmxrL6YNZassBvRYLrCcRxADElp5AMWUNPpn3ihisXL
+        ThJ1roE3v10xaivg6s1XljncT66lrWhsarqbEodoSg==
+X-Google-Smtp-Source: APBJJlGTk6OH0WpLIfXAX9MO2RtuNy1TKjU6ZqzkoCdUxTsyd3vzUYecuZmoAa5s/6f9FMoR4/HupA==
+X-Received: by 2002:a2e:7312:0:b0:2b8:377a:22f1 with SMTP id o18-20020a2e7312000000b002b8377a22f1mr5847682ljc.32.1690194844461;
+        Mon, 24 Jul 2023 03:34:04 -0700 (PDT)
 Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
-        by smtp.gmail.com with ESMTPSA id w12-20020a2e998c000000b002b724063010sm2774991lji.47.2023.07.24.03.31.06
+        by smtp.gmail.com with ESMTPSA id 12-20020a05651c00cc00b002b94b355527sm2761607ljr.32.2023.07.24.03.34.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 03:31:08 -0700 (PDT)
-Message-ID: <96573f47-d38c-2886-e408-ce463550308e@linaro.org>
-Date:   Mon, 24 Jul 2023 12:31:04 +0200
+        Mon, 24 Jul 2023 03:34:04 -0700 (PDT)
+Message-ID: <17443dda-1677-92f8-24de-ff37057f3df4@linaro.org>
+Date:   Mon, 24 Jul 2023 12:34:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] interconnect: qcom: qcm2290: Enable sync state
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230720-topic-qcm2290_icc-v1-0-7f67f2e259c1@linaro.org>
- <20230720-topic-qcm2290_icc-v1-2-7f67f2e259c1@linaro.org>
- <ZLmQdjDgIbbhyTMJ@gerhold.net>
- <3e1d650d-7c5b-381c-464f-3c464c056a1b@linaro.org>
- <ZL0InL6slLRNcVkI@gerhold.net>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm630: align USB DWC3 clocks with
+ bindings
 Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230723141849.93078-1-krzysztof.kozlowski@linaro.org>
+ <20230723141849.93078-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -106,12 +103,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZL0InL6slLRNcVkI@gerhold.net>
+In-Reply-To: <20230723141849.93078-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -119,48 +116,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.07.2023 13:01, Stephan Gerhold wrote:
-> On Fri, Jul 21, 2023 at 02:03:16PM +0200, Konrad Dybcio wrote:
->> On 20.07.2023 21:52, Stephan Gerhold wrote:
->>> On Thu, Jul 20, 2023 at 08:24:01PM +0200, Konrad Dybcio wrote:
->>>> Very surprisingly, qcm2290 does not seem to require any interface
->>>> clocks.
->>>
->>> What does this mean exactly? The interconnect .sync_state() is
->>> responsible to drop the initial maximum bandwidth votes, with the
->>> assumption that all active devices have voted for the bandwidth they
->>> need. How does this relate to "requiring interface clocks"?
->> If it required such clocks to be present, sync_state could not
->> complete, as trying to access some nodes would crash the platform
->> due to unclocked access.
+On 23.07.2023 16:18, Krzysztof Kozlowski wrote:
+> Bindings require different order of clocks for USB DWC3 nodes (sleep
+> before mock_utmi).
 > 
-> You mean something like the IPA clock that must be active to do the QoS
-> writes?
-> 
-> Wouldn't it already crash before .sync_state() then, when the initial
-> max bandwidth votes are being made?
-No, the bandwidth votes are fully handled by RPM with no external deps.
-
-Only accessing the QoS registers from the AP seems to trigger crashes
-on unclocked access. But surprisingly, not on this SoC.
-
->>>> It's therefore safe to enable sync_state to park unused devices.
->>>> Do so.
->>>
->>> Doesn't this make everything painfully slow? There are no interconnect
->>> consumers at all in qcm2290.dtsi. I would expect that all bandwidths
->>> end up at minimum.
->> There are no interconnect providers defined in qcm2290.dtsi.
-> 
-> Ack, so I guess you're going to add them together with the actual
-> consumers?
-Correct.
-
-> 
-> I think the patch itself is fine. Only the commit message is a bit
-> misleading. The actual change that is being done here is enabling the
-> bandwidth scaling (dropping the max bandwidth votes after
-> .sync_state()). Can you try to clarify the commit message a bit?
-Yes, I'll resend.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
