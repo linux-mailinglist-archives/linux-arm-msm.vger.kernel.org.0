@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3975A75EE5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:51:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB27175EE6B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:54:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231905AbjGXIvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 04:51:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49590 "EHLO
+        id S231946AbjGXIyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 04:54:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231896AbjGXIvi (ORCPT
+        with ESMTP id S231947AbjGXIyx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 04:51:38 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF39C9;
-        Mon, 24 Jul 2023 01:51:37 -0700 (PDT)
+        Mon, 24 Jul 2023 04:54:53 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C1F131;
+        Mon, 24 Jul 2023 01:54:50 -0700 (PDT)
 Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (No client certificate requested)
         (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 02C356607029;
-        Mon, 24 Jul 2023 09:51:34 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id C575D6607029;
+        Mon, 24 Jul 2023 09:54:48 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1690188695;
-        bh=d9AW+MKnPahVLf1G6Ns/+qjCnIfMZz9qqZK1zh/61Yw=;
+        s=mail; t=1690188889;
+        bh=nPyP49dnhRShPNzgNG3OKPk0ThYGx46zvyJAuyYOCJg=;
         h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=GXXb+XLfsbMrOxDaM8ivaBqOyvExwuqpxtZm/hOZSB9s+2LucLV2W65c0MJM+ClcF
-         r8GoTVNuYOZ7CtolHG9Cw6MZ+V3RvI+vg3C106XhoaQ8B1kLVTI3waBhEwxiMNNk2G
-         BCGhd3lkOfVhbnBXC1UmZRlo/t+SLznzoeGb7r06vPOmAC/NZpXXZ177oFdZuOPqBf
-         zdnQzifz5evJefPP2mgbtTbzA6lpu0WSyw1RBekzsD+qBlgh7mmIcuUF7jKJ7xo/mV
-         +Tcl/htutTr3np1dM/AOihRHSabhfMN4AUsTg2detC2P9lEU6XtLtj7ZytAuOW9mtc
-         UnoxuHfkFRNoA==
-Message-ID: <7f20ec52-bcd2-a9e1-369a-878be1e20a67@collabora.com>
-Date:   Mon, 24 Jul 2023 10:51:32 +0200
+        b=efCe+vHgRs9HiIsvZK3U+2yvp7/CekPNNT5Z0yfsoMF4ThOqxS2yGm+VDCAUXZjbx
+         uN/hg511Xe6C6LwZVit4l0cuXs3LW1WpL2lyZF3eUZtjmQgzhIKh+gPM6LzPZ5NabR
+         tREqbURs3ybP/kPK+0SlaY0Xdi+/0aI/rTKrM+lRcagqaeRKc/veBKbZeEQc63pHdi
+         V5VRGP6bXxymu3NuC8iLxgqYz0fQYNx+0ri0lRqHHGd5NmkhJu6mj2Zgi9x7Qmouk4
+         y2m0D5Eh/RTr+VIANdaRTLGSN9JfrzgGJzMTCQH99KtX7Zpze+K0qpREAwHiPE15BW
+         XH72P78iecmDQ==
+Message-ID: <056328aa-9856-2361-837b-9d0e69efceb2@collabora.com>
+Date:   Mon, 24 Jul 2023 10:54:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 3/7] clk: qcom: hfpll: Allow matching pdata
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: msm8976: Split lpass region
 Content-Language: en-US
 To:     Adam Skladowski <a39.skl@gmail.com>
 Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
@@ -53,10 +53,10 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230723140712.9438-1-a39.skl@gmail.com>
- <20230723140712.9438-4-a39.skl@gmail.com>
+ <20230723140712.9438-7-a39.skl@gmail.com>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230723140712.9438-4-a39.skl@gmail.com>
+In-Reply-To: <20230723140712.9438-7-a39.skl@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -70,51 +70,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Il 23/07/23 16:06, Adam Skladowski ha scritto:
-> HFPLL driver can be used to drive PLLs also on different SoCs like MSM8976
-> On MSM8976 each PLL gets it own different configuration,
-> add matching pdata to driver to support multiple configurations.
+> Some devices like Sony Loire uses Broadcom module over sdc3 however others
+> utilize qcom WCNSS, split shared region based on downstream pil-tz loader.
 > 
 > Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
->   drivers/clk/qcom/hfpll.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
-> index f4d78003d189..ec18bc8f0089 100644
-> --- a/drivers/clk/qcom/hfpll.c
-> +++ b/drivers/clk/qcom/hfpll.c
-> @@ -6,6 +6,7 @@
->   #include <linux/module.h>
->   #include <linux/platform_device.h>
->   #include <linux/of.h>
-> +#include <linux/of_device.h>
->   #include <linux/clk.h>
->   #include <linux/clk-provider.h>
->   #include <linux/regmap.h>
-> @@ -32,7 +33,7 @@ static const struct hfpll_data hdata = {
->   };
->   
->   static const struct of_device_id qcom_hfpll_match_table[] = {
-> -	{ .compatible = "qcom,hfpll" },
-> +	{ .compatible = "qcom,hfpll", &hdata },
 
-This is supposed to be
-
-{ .compatible = xxx, .data = &hdata }
+That should go in board specific files, not in the SoC dtsi.
 
 Regards,
 Angelo
-
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, qcom_hfpll_match_table);
-> @@ -83,7 +84,7 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
->   
->   	init.parent_data = &pdata;
->   
-> -	h->d = &hdata;
-> +	h->d = of_device_get_match_data(&pdev->dev);
->   	h->clkr.hw.init = &init;
->   	spin_lock_init(&h->lock);
->   
-
