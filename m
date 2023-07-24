@@ -2,124 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8464C760096
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 22:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56FCA7600B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 22:55:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbjGXUjE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 16:39:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35752 "EHLO
+        id S230320AbjGXUzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 16:55:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjGXUjD (ORCPT
+        with ESMTP id S229548AbjGXUzH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 16:39:03 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B586EA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 13:39:01 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b9352ff1aeso70042641fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 13:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690231140; x=1690835940;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DZE4lUSdFm6QKnndi6dJO980TAcjqHjMQk5oPhkhqQE=;
-        b=n9Jzo1TuMwqZ11K1RzMnsYvMMXsfhNlTxP/6vxW97me1HTpUOBy8GGXMABGtemr2o6
-         YFyBQPo6h9Jg8nvspcJbSTA9lxG42EVfuFgz5qXqHwiLDiXDKyz6BXlDS1bMoX4V81/2
-         yJk5FDSGRzqk8V34FLCWKypmvznIsFz4auRby56t9kGBh6eJlJqpKiKWwhgnjBcaBhKQ
-         jFuEEXeYg9bgsWwNaUximm+oUfnrjqc2AOpuY9OWpF662BTmf6N5HHgel0PCMUm7wbOI
-         XXNrFVDuZxi+KbVRHVvTx5frEoyLMJgtg950ArVy6UWsqfJLTXZKcDmNw6DeasGMENuf
-         OuCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690231140; x=1690835940;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DZE4lUSdFm6QKnndi6dJO980TAcjqHjMQk5oPhkhqQE=;
-        b=Is4xzaMhXjhdHvKye3w18DXDAwACDEJqsBOXPL9Jn6dVUIiU9PsbjBZDAr23mlEJPL
-         3F0JOZOY2sgn19RpbVHsdJGEeb6TbEwKVaJArPGgckXpRmHaXXEow6F/7lhnvNA5xUFo
-         BocSxweImIweUr+iYGSH+ikyVxo2fcZTV3OhhW6CGgokzYW4JKic/wnCnvxSemETWFKF
-         Q3Syuw4M8OEJClWkWpijjZOoc+tTKOqtM1JqVysl0tz0vHg5HHJdeyZyWZFAZs/53Tnq
-         bWxoS+l5601ufUst4foV88HuJGkoWibht+io3JIr56LcZ0+2rBI8yiZmaqZ4lBFxCNhq
-         63nA==
-X-Gm-Message-State: ABy/qLb12WwsdMohuwrOhyaufrP/a8WbspwAyN8NHqX5t326ROFxgWS0
-        QvJ17VNT6OKURDjYgLnhOs3tdg==
-X-Google-Smtp-Source: APBJJlH5bYAVAZYHVRzn7JqMvL4ecNqOkr2hyh8Yv5Ys/QmSHycHw54Pvto8uIgFDvdP7NtaJLe84w==
-X-Received: by 2002:a2e:9c10:0:b0:2b6:eceb:9bb with SMTP id s16-20020a2e9c10000000b002b6eceb09bbmr5954843lji.45.1690231139774;
-        Mon, 24 Jul 2023 13:38:59 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id s20-20020a2e9c14000000b002b94aed74d5sm3027793lji.72.2023.07.24.13.38.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 13:38:59 -0700 (PDT)
-Message-ID: <3a58f297-5586-433c-8c33-96543bb3906d@linaro.org>
-Date:   Mon, 24 Jul 2023 23:38:58 +0300
+        Mon, 24 Jul 2023 16:55:07 -0400
+Received: from smtprelay07.ispgateway.de (smtprelay07.ispgateway.de [134.119.228.97])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29131704;
+        Mon, 24 Jul 2023 13:54:59 -0700 (PDT)
+Received: from [77.64.243.219] (helo=note-book.lan)
+        by smtprelay07.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <git@apitzsch.eu>)
+        id 1qO2Yj-0001dY-7T; Mon, 24 Jul 2023 22:53:37 +0200
+From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+Subject: [PATCH 0/2] arm64: dts: qcom: msm8939-longcheer-l9100: Add initial
+ dts
+Date:   Mon, 24 Jul 2023 22:52:40 +0200
+Message-Id: <20230724-bq_m5-v1-0-17a0870a73be@apitzsch.eu>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 0/7] MSM8976 PLL,RPMPD and DTS changes
-Content-Language: en-GB
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAJjkvmQC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2MDcyMT3aTC+FxT3aRky8S0VGNzizSLFCWg2oKi1LTMCrA50bG1tQAvoSj
+ sVwAAAA==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230723160827.22660-1-a39.skl@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230723160827.22660-1-a39.skl@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+X-Mailer: b4 0.12.3
+X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_VALIDITY_RPBL,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/07/2023 19:08, Adam Skladowski wrote:
-> This patch series fixes introduce support for msm8976 pll,
-> also brings some adjustments and fixes domains setup and few dts nitpicks.
+This dts adds support for BQ Aquaris M5 (Longcheer L9100) released in
+2015.
 
-Could you please extend the series with the DT patches utilizing the 
-HFPLL? You can keep them disabled via the status property if they are 
-not expected to be used yet.
+Add a device tree with initial support for:
 
-> 
-> Changes since v1
-> ================
-> 1. Fixed few styling issues
-> 2. Changed compatibles for plls
-> 3. Added fixes: tag to first patch
-> 
-> Adam Skladowski (7):
->    drivers: soc: qcom: rpmpd: Fix MSM8976 power domains setup
->    clk: qcom: clk-hfpll: Configure l_val in init when required
->    clk: qcom: hfpll: Allow matching pdata
->    dt-bindings: clock: qcom,hfpll: Document MSM8976 compatibles
->    clk: qcom: hfpll: Add MSM8976 PLL data
->    arm64: dts: qcom: msm8976: Split lpass region
->    arm64: dts: qcom: msm8976: Fix smsm ipc bit shifts
-> 
->   .../devicetree/bindings/clock/qcom,hfpll.txt  |  3 +
->   arch/arm64/boot/dts/qcom/msm8976.dtsi         | 11 +++-
->   drivers/clk/qcom/clk-hfpll.c                  |  4 ++
->   drivers/clk/qcom/clk-hfpll.h                  |  1 +
->   drivers/clk/qcom/hfpll.c                      | 59 ++++++++++++++++++-
->   drivers/soc/qcom/rpmpd.c                      | 27 ++++-----
->   6 files changed, 83 insertions(+), 22 deletions(-)
-> 
+- GPIO keys
+- Hall sensor
+- SDHCI
+- WCNSS (BT/WIFI)
+- Accelerometer/Magnetometer
+- Vibrator
+- Touchscreen
+- Front flash
 
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+---
+André Apitzsch (2):
+      dt-bindings: arm: qcom: Add BQ Aquaris M5
+      arm64: dts: qcom: msm8939-longcheer-l9100: Add initial device tree
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 340 +++++++++++++++++++++
+ 3 files changed, 342 insertions(+)
+---
+base-commit: 4d2c646ac07cf4a35ef1c4a935a1a4fd6c6b1a36
+change-id: 20230724-bq_m5-bc9afe378f8d
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+André Apitzsch <git@apitzsch.eu>
 
