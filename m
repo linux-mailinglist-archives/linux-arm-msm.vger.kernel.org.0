@@ -2,201 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6D0E75F4C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 13:18:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DBBE75F546
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 13:40:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbjGXLSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 07:18:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43994 "EHLO
+        id S229678AbjGXLkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 07:40:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjGXLSI (ORCPT
+        with ESMTP id S229553AbjGXLkC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 07:18:08 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 24B84E65;
-        Mon, 24 Jul 2023 04:17:47 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B206CDE0;
-        Mon, 24 Jul 2023 04:18:29 -0700 (PDT)
-Received: from [10.57.34.62] (unknown [10.57.34.62])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C518B3F5A1;
-        Mon, 24 Jul 2023 04:17:39 -0700 (PDT)
-Message-ID: <cdd08c9e-81d3-a85f-5426-5db738aa73ec@arm.com>
-Date:   Mon, 24 Jul 2023 12:17:40 +0100
+        Mon, 24 Jul 2023 07:40:02 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92A0E5C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 04:39:59 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fbb281eec6so6388672e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 04:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690198798; x=1690803598;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vJ4yOgRXHtYK3jmLeq4Idrc0hB5BqvDloR4hEaxZCoc=;
+        b=hvX7wN6tws6Me+yfYdsoMhlkMC8EumtAdhgPwJHKAwY1pk5tJAWr0qHohpmNwmxCdC
+         sOVrZ8sbjPURvhVzk4kPqx3A+eXTTfmIftdiAexdrLUOECHTkt2jPEFQBxu/QhFbY9/V
+         Sg7c3ZO6Tfq2dWcVAref1q2lyyyOE8vYSY4b6PfdBwCck5GLX6cAO4cPVcoIKnug/RLK
+         EmIpchaDJCqyEWXw4h+XI1vuqGgmgxvmrjy2W921bybIqyuvVmaz4MI+4Nc/LRXiikXI
+         LU6WNyfoC1wTM+XZ5QbsmEgMpuAc42TX4isDXYALOERmM1B5235+02Cv6300gwiexWqw
+         viag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690198798; x=1690803598;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vJ4yOgRXHtYK3jmLeq4Idrc0hB5BqvDloR4hEaxZCoc=;
+        b=W7WolPNyNklYNqcD9zX5lCFLJjAbdtMcJ4lLRLn374ZsCC5XBRRMXpNpxkNVQslkOd
+         7ZPBRHIyv7MWOIY9IxuzQp4hRbB9G9CZCNLyIxJJEgtcSeJDAU+F8s4sYBAdlWLO08KZ
+         SrerYdZhYilMGSS/7xktZsmjdiGjqVap327ZzpdAOm/SIM+kpEygnmFuXh/nrT0VBl76
+         gA/VPC4y5ArbH0QlPthBJfEMGqSBHPHHQOszFY17WS03KuYMlGof3YPdmYSh/4O5qnpJ
+         sAWq9dkOZy607i6gHFgceLvZLLTMw9iE5saXCvIfkSXEE9NoC+RGpKwzFb4y28oon/ti
+         m8Mw==
+X-Gm-Message-State: ABy/qLb6FxvobKznCV4LVdR1irmUZtd0TN1hWpGZgYuaJC4CUDR9DYJ5
+        ne9TTKyrh8DWnMnYQts7ukV//A==
+X-Google-Smtp-Source: APBJJlHJLqB0l9juZ3h2RvkRLq9XkLsByx7clUGMX82DIWl/8ZUJ550IJa8XWsOdhQcQ/aio7blv0A==
+X-Received: by 2002:a19:8c0b:0:b0:4f9:a232:f09c with SMTP id o11-20020a198c0b000000b004f9a232f09cmr4185431lfd.63.1690198797951;
+        Mon, 24 Jul 2023 04:39:57 -0700 (PDT)
+Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
+        by smtp.gmail.com with ESMTPSA id u1-20020ac24c21000000b004fb881e5c23sm2168977lfq.47.2023.07.24.04.39.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jul 2023 04:39:57 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/3] SM6115 LPASS TLMM
+Date:   Mon, 24 Jul 2023 13:39:55 +0200
+Message-Id: <20230722-topic-6115_lpasstlmm-v2-0-d4883831a858@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 24/47] drm/panfrost: dynamically allocate the
- drm-panfrost shrinker
-To:     Qi Zheng <zhengqi.arch@bytedance.com>, akpm@linux-foundation.org,
-        david@fromorbit.com, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu, cel@kernel.org,
-        senozhatsky@chromium.org, yujie.liu@intel.com,
-        gregkh@linuxfoundation.org, muchun.song@linux.dev
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-25-zhengqi.arch@bytedance.com>
-Content-Language: en-GB
-From:   Steven Price <steven.price@arm.com>
-In-Reply-To: <20230724094354.90817-25-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAAtjvmQC/4WNQQ7CIBAAv2I4iwGKpXryH6YxFNZ2EwrNUhtN0
+ 7+L/YDHmWQyK8tACJldDysjWDBjigXU8cDcYGMPHH1hpoSqhFGKz2lCx2spz48w2ZznMI4cnDb
+ 64htrhGMl7WwG3pGNbihxfIVQ5ETwxPf+ureFB8xzos++XuTP/rkskgteKS9rXfnGGH0LGC2lU
+ 6Ketdu2fQED0d9czgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690198796; l=1248;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=MyMuaMloZrXeqpFIhj35adNC4/W+TiZZpLrCk6Q8v6M=;
+ b=VJpyTZf36Wng6fHwXT9oyN1V2jIGCOjbx2gFVWOTgcjy41piGxCnvkF5HmIkd3W7tlJRysJjw
+ cW+OXunkPPIBCILEWrpHX27LDjPHVAWTUuRgX/y3Zdoh670qV+QO50+
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/07/2023 10:43, Qi Zheng wrote:
-> In preparation for implementing lockless slab shrink, use new APIs to
-> dynamically allocate the drm-panfrost shrinker, so that it can be freed
-> asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
-> read-side critical section when releasing the struct panfrost_device.
-> 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+This series introduces the bindings and driver for SM6115's LPI TLMM
+block and enables it as a module in the arm64 defconfig.
 
-One nit below, but otherwise:
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Fix up gpio number regex pattern and gpio-ranges in bindings
+- pick up tags
+- do not change patch 3 as suggested, a bulk reorder seems more
+  appropriate
+- Link to v1: https://lore.kernel.org/r/20230722-topic-6115_lpasstlmm-v1-0-32d1643d8774@linaro.org
 
-Reviewed-by: Steven Price <steven.price@arm.com>
+---
+Konrad Dybcio (3):
+      dt-bindings: pinctrl: qcom,sm6115-lpass-lpi: add SM6115 LPASS TLMM
+      pinctrl: qcom: Introduce SM6115 LPI pinctrl driver
+      arm64: defconfig: enable Qualcomm SM6115 LPASS pinctrl
 
-> ---
->  drivers/gpu/drm/panfrost/panfrost_device.h    |  2 +-
->  drivers/gpu/drm/panfrost/panfrost_drv.c       |  6 +++-
->  drivers/gpu/drm/panfrost/panfrost_gem.h       |  2 +-
->  .../gpu/drm/panfrost/panfrost_gem_shrinker.c  | 32 ++++++++++++-------
->  4 files changed, 27 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm/panfrost/panfrost_device.h
-> index b0126b9fbadc..e667e5689353 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_device.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
-> @@ -118,7 +118,7 @@ struct panfrost_device {
->  
->  	struct mutex shrinker_lock;
->  	struct list_head shrinker_list;
-> -	struct shrinker shrinker;
-> +	struct shrinker *shrinker;
->  
->  	struct panfrost_devfreq pfdevfreq;
->  };
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> index bbada731bbbd..f705bbdea360 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> @@ -598,10 +598,14 @@ static int panfrost_probe(struct platform_device *pdev)
->  	if (err < 0)
->  		goto err_out1;
->  
-> -	panfrost_gem_shrinker_init(ddev);
-> +	err = panfrost_gem_shrinker_init(ddev);
-> +	if (err)
-> +		goto err_out2;
->  
->  	return 0;
->  
-> +err_out2:
-> +	drm_dev_unregister(ddev);
->  err_out1:
->  	pm_runtime_disable(pfdev->dev);
->  	panfrost_device_fini(pfdev);
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
-> index ad2877eeeccd..863d2ec8d4f0 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
-> @@ -81,7 +81,7 @@ panfrost_gem_mapping_get(struct panfrost_gem_object *bo,
->  void panfrost_gem_mapping_put(struct panfrost_gem_mapping *mapping);
->  void panfrost_gem_teardown_mappings_locked(struct panfrost_gem_object *bo);
->  
-> -void panfrost_gem_shrinker_init(struct drm_device *dev);
-> +int panfrost_gem_shrinker_init(struct drm_device *dev);
->  void panfrost_gem_shrinker_cleanup(struct drm_device *dev);
->  
->  #endif /* __PANFROST_GEM_H__ */
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
-> index bf0170782f25..9a90dfb5301f 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
-> @@ -18,8 +18,7 @@
->  static unsigned long
->  panfrost_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
->  {
-> -	struct panfrost_device *pfdev =
-> -		container_of(shrinker, struct panfrost_device, shrinker);
-> +	struct panfrost_device *pfdev = shrinker->private_data;
->  	struct drm_gem_shmem_object *shmem;
->  	unsigned long count = 0;
->  
-> @@ -65,8 +64,7 @@ static bool panfrost_gem_purge(struct drm_gem_object *obj)
->  static unsigned long
->  panfrost_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
->  {
-> -	struct panfrost_device *pfdev =
-> -		container_of(shrinker, struct panfrost_device, shrinker);
-> +	struct panfrost_device *pfdev = shrinker->private_data;
->  	struct drm_gem_shmem_object *shmem, *tmp;
->  	unsigned long freed = 0;
->  
-> @@ -97,13 +95,24 @@ panfrost_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
->   *
->   * This function registers and sets up the panfrost shrinker.
->   */
-> -void panfrost_gem_shrinker_init(struct drm_device *dev)
-> +int panfrost_gem_shrinker_init(struct drm_device *dev)
->  {
->  	struct panfrost_device *pfdev = dev->dev_private;
-> -	pfdev->shrinker.count_objects = panfrost_gem_shrinker_count;
-> -	pfdev->shrinker.scan_objects = panfrost_gem_shrinker_scan;
-> -	pfdev->shrinker.seeks = DEFAULT_SEEKS;
-> -	WARN_ON(register_shrinker(&pfdev->shrinker, "drm-panfrost"));
-> +
-> +	pfdev->shrinker = shrinker_alloc(0, "drm-panfrost");
-> +	if (!pfdev->shrinker) {
-> +		WARN_ON(1);
+ .../pinctrl/qcom,sm6115-lpass-lpi-pinctrl.yaml     | 135 ++++++++++++++++
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/pinctrl/qcom/Kconfig                       |   9 ++
+ drivers/pinctrl/qcom/Makefile                      |   1 +
+ drivers/pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c    | 175 +++++++++++++++++++++
+ 5 files changed, 321 insertions(+)
+---
+base-commit: ae867bc97b713121b2a7f5fcac68378a0774739b
+change-id: 20230722-topic-6115_lpasstlmm-ec4749d8a70c
 
-I don't think this WARN_ON is particularly useful - if there's a failed
-memory allocation we should see output from the kernel anyway. And we're
-changing the semantics from "continue just without a shrinker" (which
-argueably justifies the warning) to "probe fails, device doesn't work"
-which will be obvious to the user so I don't feel we need the additional
-warn.
-
-> +		return -ENOMEM;
-> +	}
-> +
-> +	pfdev->shrinker->count_objects = panfrost_gem_shrinker_count;
-> +	pfdev->shrinker->scan_objects = panfrost_gem_shrinker_scan;
-> +	pfdev->shrinker->seeks = DEFAULT_SEEKS;
-> +	pfdev->shrinker->private_data = pfdev;
-> +
-> +	shrinker_register(pfdev->shrinker);
-> +
-> +	return 0;
->  }
->  
->  /**
-> @@ -116,7 +125,6 @@ void panfrost_gem_shrinker_cleanup(struct drm_device *dev)
->  {
->  	struct panfrost_device *pfdev = dev->dev_private;
->  
-> -	if (pfdev->shrinker.nr_deferred) {
-> -		unregister_shrinker(&pfdev->shrinker);
-> -	}
-> +	if (pfdev->shrinker)
-> +		shrinker_unregister(pfdev->shrinker);
->  }
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
