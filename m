@@ -2,157 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7925775EB02
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 07:48:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87CFA75EB33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 08:05:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbjGXFsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 01:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
+        id S229745AbjGXGFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 02:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbjGXFsu (ORCPT
+        with ESMTP id S229675AbjGXGFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 01:48:50 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4070180
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 22:48:48 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id 5614622812f47-3a1e6022b93so2856911b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 22:48:48 -0700 (PDT)
+        Mon, 24 Jul 2023 02:05:41 -0400
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78287CF;
+        Sun, 23 Jul 2023 23:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690177728; x=1690782528;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=lNMSJE9p1d1PLJNEmsQ7eFS8jEnCuwKDv4PumrYQpcU=;
-        b=U2hCDJhqsVhkHUOQsTHa749IWNwB0SnHVLRpLCH+muXbPeT9dFRmgcZAt180d0ZGwQ
-         GoFJw8/oJ/6kKRqNckSYZe+MtIYZJJucZdWCR+j5PJEGUjNSUVIeRfwAqJ+ECgoo4XTi
-         DOGAaudgfcJW9Sz0dPv2uWhvq/XushbdnZyhIkY5z5Qzg89DdSyrJ+lvXIgqEO1iuvoY
-         Zt3cumjiC1wQxl/1XDgRTL+zWaClNYqe8PFqwQeleeLpXsdICfpKICzpeNpC0SWzTOKV
-         EVlOqbQ5D9Dj5BaJvtgsfX88GVXXvr35iAvrLxsyjvIyXtQ45O1vcTfg/0asjpsztYWE
-         M6tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690177728; x=1690782528;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lNMSJE9p1d1PLJNEmsQ7eFS8jEnCuwKDv4PumrYQpcU=;
-        b=kk+edkiYKOhs4d/+fvIWR8bvS7yOgBIFvx+tZvGP+gYCf6DblzKu04/nL6BkN0NotK
-         HHJmXbNpCU+ZSYZCDYlXwgYrnZzP/s6qUtx6SdTFAdjIIgFhErvEYYgRV1gpfAgUMLPo
-         6ZxyKIlayQV+iQkr2nohKZKGFifpBaSUGQYkRvAYUiuV2QklDW7PHfYSTDHPGPdqwSHS
-         OVJWJpdhfmbgcURDrPddgROj9H4RT9wLKO5yWy2BRu4ljktlePI+DBkChf6MNpuTRGI2
-         ltzHhb7v9aLI2iHBFNIdgKyo8+QSA67xI/vv1vVcMHd06NHAPlYH7GgS+XtNsbhWZms2
-         1paQ==
-X-Gm-Message-State: ABy/qLayBP7QHpVJbCF4oVUh5Q7Qlv4i8caH0gU56//Gifwb+dOia7R1
-        R0lZmt/ziRrrw4wi/cw5nNy7
-X-Google-Smtp-Source: APBJJlFz6ludZ7Mio0r4WkFjCla6W2awgNfZfIDwDmUrHT+7qIWS2Z4g1QjBEXxpcBblte51sXGp0g==
-X-Received: by 2002:a05:6808:1a2a:b0:3a1:eb0e:ddc6 with SMTP id bk42-20020a0568081a2a00b003a1eb0eddc6mr11524567oib.29.1690177727975;
-        Sun, 23 Jul 2023 22:48:47 -0700 (PDT)
-Received: from thinkpad ([117.206.118.29])
-        by smtp.gmail.com with ESMTPSA id g11-20020a17090a714b00b002676e961261sm7285578pjs.1.2023.07.23.22.48.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jul 2023 22:48:47 -0700 (PDT)
-Date:   Mon, 24 Jul 2023 11:18:31 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>, vireshk@kernel.org,
-        nm@ti.com, sboyd@kernel.org, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 04/15] arm64: dts: qcom: sdm845: Fix the min frequency
- of "ice_core_clk"
-Message-ID: <20230724054831.GB2370@thinkpad>
-References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
- <20230720054100.9940-5-manivannan.sadhasivam@linaro.org>
- <20230721071801.e6ngfnkwg2ujsklg@vireshk-i7>
- <20230721115731.GB2536@thinkpad>
- <q36uuwhjmolgf3kjn3rrtw5fgfobatav334fez4cofzmrvge2h@cgwfhhhy6b6s>
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1690178740; x=1721714740;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=cYOvDa/qJ9hkLr+Th/fUbw3uX8xGcuMEk/G0ZAWXTcM=;
+  b=kOZKoy2u0OLUdg7flrRD0D95ru1urrFQqARkuI/NBxp8dI/eXmMRj7bo
+   Wlkm+72w1h6ZGWWoORPph1TsiVw18eTOSouj82rkO/OT5e0JdHIBnAQLO
+   2+5M80Vg9PQlA8VihXE4M73gzVqblRnpja/17YPzNEPe5NP0GAfqz5CR+
+   8Uf7PPExyvDpoV6Zspv/EvraNvXwHBQRcIJWKoP4+/v6qwswyLUrnX8rl
+   yOqdmBqgRcd05YKkIMBAd776VwbRE5e+CCwbwAklquF1rBEMRdcixAr1O
+   5T4TA3q78wlfoMctfjVG/XWo/sz/egwO7iXALYGcbqX8+oku6cBbR6ZRP
+   g==;
+X-IronPort-AV: E=Sophos;i="6.01,228,1684792800"; 
+   d="scan'208";a="32069740"
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 24 Jul 2023 08:05:37 +0200
+Received: from steina-w.localnet (unknown [10.123.53.21])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 20C6D280078;
+        Mon, 24 Jul 2023 08:05:37 +0200 (CEST)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        =?ISO-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v3 2/2] arm64: dts: Replace deprecated extcon-usb-gpio id-gpio/vbus-gpio properties
+Date:   Mon, 24 Jul 2023 08:05:36 +0200
+Message-ID: <3251040.44csPzL39Z@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <c3ea2edb-1b3e-2c39-ccf6-333e3c8b9020@linaro.org>
+References: <20230721081948.1185360-1-alexander.stein@ew.tq-group.com> <20230721081948.1185360-2-alexander.stein@ew.tq-group.com> <c3ea2edb-1b3e-2c39-ccf6-333e3c8b9020@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <q36uuwhjmolgf3kjn3rrtw5fgfobatav334fez4cofzmrvge2h@cgwfhhhy6b6s>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 21, 2023 at 08:15:36PM -0700, Bjorn Andersson wrote:
-> On Fri, Jul 21, 2023 at 05:27:31PM +0530, Manivannan Sadhasivam wrote:
-> > On Fri, Jul 21, 2023 at 12:48:01PM +0530, Viresh Kumar wrote:
-> > > On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
-> > > > Minimum frequency of the "ice_core_clk" should be 75MHz as specified in the
-> > > > downstream vendor devicetree. So fix it!
-> > > > 
-> > > > https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.7.3.r1-09300-sdm845.0/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > > 
-> > > > Fixes: 433f9a57298f ("arm64: dts: sdm845: add Inline Crypto Engine registers and clock")
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
-> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > > index 9ed74bf72d05..89520a9fe1e3 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > > @@ -2614,7 +2614,7 @@ ufs_mem_hc: ufshc@1d84000 {
-> > > >  				<0 0>,
-> > > >  				<0 0>,
-> > > >  				<0 0>,
-> > > > -				<0 300000000>;
-> > > > +				<75000000 300000000>;
-> > > >  
-> > > >  			status = "disabled";
-> > > >  		};
-> > > 
-> > > Please keep new feature and fixes like this in separate series. This
-> > > could be merged directly in the currently ongoing kernel rc and
-> > > doesn't need to wait for this series.
-> > > 
-> > > Or at least keep the commit at the top, so another maintainer can
-> > > simply pick it.
-> > > 
-> > 
-> > That's what I did. This patch and previous patch are the fixes patches, so they
-> > are posted on top of other dts patches to be merged separately if required.
-> > 
-> 
-> I agree with Viresh, this is patch 4 in a series where 1-2, 7- are new
-> things.
-> 
-> I can pick this from here, but I think it would have been better to send
-> this as 3-4 different series; 1 with DeviceTree fixes, 1 with driver
-> fixes, one that adds interconnect support and one that adds opp support
-> - the latter two with dts changes last...
-> 
-> 
-> And, the freq-table-hz -> opp transition in dts files must be merged
-> after the driver changes, so this will likely have to wait until 1
-> release after the driver changes.
-> 
+Hi,
 
-Hmm, Ok. Let me resend the series as you suggested (excluding the patches
-already merged).
+Am Freitag, 21. Juli 2023, 14:22:06 CEST schrieb Krzysztof Kozlowski:
+> On 21/07/2023 10:19, Alexander Stein wrote:
+> > Use id-gpios and vbus-gpios instead.
+> >=20
+> > Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> > Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
+> > Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> #mediatek
+> > Reviewed-by: AngeloGioacchino Del Regno
+> > <angelogioacchino.delregno@collabora.com> Acked-by: Shawn Guo
+> > <shawnguo@kernel.org>
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> > Changes in v3:
+> > * Rebased to next-20230721
+> > * Split from bindings patch
+>=20
+> I think you wanted to split it per subsystem, right? That's why you
+> resent/v3? But the split did not happen.
 
-- Mani
+Yes, I split it into dt bindings and DT changes patches. Is this not correc=
+t?
 
-> Regards,
-> Bjorn
+> If you decide not to split,
+> then try to figure out: who should pick up this patchset?
 
--- 
-மணிவண்ணன் சதாசிவம்
+Well, intention was one patch for DT bindings maintainers and these two=20
+patches for imx maintainer (Shawn AFAIK). I've send patches separated by ar=
+ch/
+arm and arch/arm64 in one series, so I'm slightly confused now.
+
+Best regards,
+Alexander
+=2D-=20
+TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
+Amtsgericht M=FCnchen, HRB 105018
+Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
+http://www.tq-group.com/
+
+
