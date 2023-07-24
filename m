@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70B0075F786
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 14:59:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13EF375F788
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 14:59:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229895AbjGXM7A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231303AbjGXM7A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 24 Jul 2023 08:59:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231735AbjGXM6F (ORCPT
+        with ESMTP id S232039AbjGXM6g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 08:58:05 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C066F5FD0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:54:46 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f954d7309fso5406310e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:54:46 -0700 (PDT)
+        Mon, 24 Jul 2023 08:58:36 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DB961B2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:55:25 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fb8574a3a1so6284799e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690203219; x=1690808019;
+        d=linaro.org; s=google; t=1690203273; x=1690808073;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=a2Ax+g4Vq22atUQfE+CrYPUiHKIfw129Y1mAPVdfhrk=;
-        b=yIjEagSPzyrV4pnOzGUMMfEoceZFbE4b2sE2bDD34FCS9owCq5V48XdsU3g05ebZAd
-         1rdKzRxjTXXlk8BAaIU/FYi6gf4ly6wUBZ87I+2zs1toMcGk3mcfmltS90FnjYZf2PM+
-         zWmYpWGqIXMDcxhu/KHB8jUHxNXfeXimh1aWxjChWy6OfZezytgZrvzZTXQa2E29l1iQ
-         EkOUKoO4jKZPPBwyxpFh+othkKSu/BkQ63tb3Nuyp01uLqNcpCxJTI2A2QJnSmAECKP+
-         LBwKMkqIkylWf74OoEOrFYOo1Ax74/TUnpbJKFcMgqLHpk73Aps09ydWTHMEYv5zwJhw
-         PQ7A==
+        bh=hkqiONv+dk+F5KKc54xuMKLW6iRoacOe1L/tucR0jDY=;
+        b=j0yVug7k4gIGONgUGIrelgnSYdVRMRBfl+l6NJHjlX2D4P0r4NeeiUygYrhkeeZ/ZM
+         l4/ScQ+FAvmkBwRlwSrqX0qiW5bOYgKdnhVahpXVcKtsFczU0NkfdcpBCKIG5JOD2Lmn
+         sdXmY8Kv7xrUXKY4L8vthHtNty3uDsZkoTgJYwCY2CVxZHb9rWSlwIDOYLD/xhfRfe9F
+         PxjWb/zOa/iuJoYY6/QDSzyM8sxd/Bci/BF3jouAaLHxR1xM8pX7gD6NrjfpwPka4LJG
+         qZAZ3WD97QLjyAXegW1kN6PneIlSB29LHZBIDNgpUrIrPEkitZ9Q0h7cS8OaFC1K0DL1
+         C3pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690203219; x=1690808019;
+        d=1e100.net; s=20221208; t=1690203273; x=1690808073;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a2Ax+g4Vq22atUQfE+CrYPUiHKIfw129Y1mAPVdfhrk=;
-        b=S+XwG4cAZ718s289NTZJqqgZBdzENH3AQ2bi6Qo0G0ofFf8JRsEpDv8WmB+RCsfv+J
-         oeYHtYpfMeDpWWPEZ4euHglueBw9pd5yyi5XDO61gX3WxERhOdVKJ6G/DRdh7ML8V9qV
-         EwyV7uWZeuXUtOma+OmIu9/+izgBxEIB6ye9Bnl6jkSGkVHHWPyHmsQCBdG1fGEmYtnH
-         OD6L+tvLALb5kAOaC/x61oXU8/30JsRkCrtuRs2gNap37LUSr7JwYBppxPC1abdP85Ce
-         mtWMU6a98SMY8Rb2N6u75vXYqhG/7DRUEQIAh926YzHz6ynTAYCFFTypc7qL61QzGhUW
-         Sv7A==
-X-Gm-Message-State: ABy/qLZjE8UK+tzef6BF+lXISSCz6MC40lnRV6UuUC177mFWIq2UUKHW
-        aV8Vpu9f2O0vSWxbHd7jQ+Ns2A==
-X-Google-Smtp-Source: APBJJlF3M0XAIIrNjCgd3lRmor0h1II8rIjFWnG7yMxjXazt29zxHtYqTKVQn1cYI8S8IR2Mgzm7Nw==
-X-Received: by 2002:a05:6512:e8c:b0:4fb:8ff3:1f74 with SMTP id bi12-20020a0565120e8c00b004fb8ff31f74mr3971328lfb.20.1690203219568;
-        Mon, 24 Jul 2023 05:53:39 -0700 (PDT)
+        bh=hkqiONv+dk+F5KKc54xuMKLW6iRoacOe1L/tucR0jDY=;
+        b=YeFQCe+Qerq3QAHYEYPG8tLtJszjNck23A7KYiWH/QapRr0eFDEBml5/YGWbUyxBEH
+         mnMuDRsfCe9JgW80APrewqMh08xxQrkbH9vWISVM13Bb1L9UOiWDf26WOJuB0Ts3JTzF
+         KBdo7u9DGjgmlLC5FDuAmxUF5IdLEdG2IbvF4KcWp2d+PJO/gTFL6CnF0V63RgOMg74J
+         C3YV11BxrE16wYDFXb4QPbvZYbIuwoKpNtbTnd6K6bXQJYPk7euufRRr/a68PbpcDZ8/
+         3fthFEywGkQtJtZvO05ssS6WVz9tPhO9WGpeRUTNHRTHQVM0rQVh85Gki+ZtgLqy8tTP
+         dyXg==
+X-Gm-Message-State: ABy/qLblXjd1nhE/K++rzDwUlOse+s7pVHIEOB4i/u5pQDm5dijKgNy5
+        KU+Y9UBPkZt1mpO9eRs8Z2qrAQ==
+X-Google-Smtp-Source: APBJJlE+gv3hwkcqasHqwmELN1Xjvi6FO/fjPnfzTTDYAzdwGMm1yUl4KTbtsgL+3Bt7239Wzw5keQ==
+X-Received: by 2002:a19:6506:0:b0:4f8:752f:df48 with SMTP id z6-20020a196506000000b004f8752fdf48mr5035634lfb.29.1690203272852;
+        Mon, 24 Jul 2023 05:54:32 -0700 (PDT)
 Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
-        by smtp.gmail.com with ESMTPSA id m8-20020a195208000000b004fb86662871sm2166604lfb.233.2023.07.24.05.53.38
+        by smtp.gmail.com with ESMTPSA id m8-20020a195208000000b004fb86662871sm2166604lfb.233.2023.07.24.05.54.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 05:53:39 -0700 (PDT)
-Message-ID: <af7d1db2-8bbe-e078-6b17-7f841fb7f475@linaro.org>
-Date:   Mon, 24 Jul 2023 14:53:37 +0200
+        Mon, 24 Jul 2023 05:54:32 -0700 (PDT)
+Message-ID: <b8c611c3-3216-8405-3407-6f0e3bb520d4@linaro.org>
+Date:   Mon, 24 Jul 2023 14:54:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] PCI: qcom: Add early fixup to set the max payload
- size for IPQ9574
+Subject: Re: [PATCH v5 6/6] soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC
+ support
 Content-Language: en-US
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>, mani@kernel.org,
-        agross@kernel.org, andersson@kernel.org, lpieralisi@kernel.org,
-        kw@linux.com, robh@kernel.org, bhelgaas@google.com,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     quic_varada@quicinc.com, quic_devipriy@quicinc.com
-References: <20230724124711.2346886-1-quic_ipkumar@quicinc.com>
- <20230724124711.2346886-2-quic_ipkumar@quicinc.com>
+References: <20230724084155.8682-1-quic_kbajaj@quicinc.com>
+ <20230724084155.8682-7-quic_kbajaj@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230724124711.2346886-2-quic_ipkumar@quicinc.com>
+In-Reply-To: <20230724084155.8682-7-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -114,20 +114,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.07.2023 14:47, Praveenkumar I wrote:
-> Set 256 bytes as payload size for IPQ9574 via early fixup. This allows
-> PCIe RC to use the max payload size when a capable link partner is
-> connected.
+On 24.07.2023 10:41, Komal Bajaj wrote:
+> Add LLCC configuration data for QDU1000 and QRU1000 SoCs.
 > 
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
-[...]
-
+>  drivers/soc/qcom/llcc-qcom.c | 67 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 67 insertions(+)
 > 
-> +static void qcom_fixup_mps_256(struct pci_dev *dev)
-> +{
-> +	pcie_set_mps(dev, 256);
-Looks like setting "dev->pcie_mpss = 1" here would make the PCIe generic
-code take care of this.
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 228ffb4a8971..95766260b3b8 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -364,6 +364,36 @@ static const struct llcc_slice_config sm8550_data[] =  {
+>  	{LLCC_VIDVSP,   28,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+>  };
+>  
+> +static const struct llcc_slice_config qdu1000_data_2ch[] = {
+> +	{ LLCC_MDMHPGRW, 7, 512, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MODHW,    9, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MDMPNG,  21, 256, 0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_ECC,     26, 512, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_MODPE,   29, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_APTCM,   30, 256, 3, 1, 0x0,   0xC, 1, 0, 0, 1, 0, 0, 0 },
+Please use lowercase hex.
 
 Konrad
