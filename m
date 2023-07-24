@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9648F75F368
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:35:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 961D775F383
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:38:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbjGXKfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 06:35:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35330 "EHLO
+        id S231713AbjGXKiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 06:38:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbjGXKfF (ORCPT
+        with ESMTP id S231733AbjGXKiX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 06:35:05 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B157E0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:35:04 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b74209fb60so59383191fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:35:04 -0700 (PDT)
+        Mon, 24 Jul 2023 06:38:23 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F88E65
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:37:46 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso60167501fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690194902; x=1690799702;
+        d=linaro.org; s=google; t=1690195049; x=1690799849;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6/4NT80C8o+EyVnLY4XxDVvzkLXvBxsKNvLZXorPucs=;
-        b=QMDPg7CvuicgqrmXn4s2PTmeMnayG0YoqCu6+afVpm0Rr9ZM8D2BxnfoMeL/4Osgog
-         p7Z+y7d37B9z06xLwWyT4AlUZVKNcb6hbd2+Sx169REqmHneu6N8HnDxslDKMswH+Qq9
-         AzM3LRtF8Flqrh7NeNyU7izNCTzPelENkqQ49zLm73AmbLa39yJ30kzK72/b+ZMKBeVe
-         cdPFk3steFLjHs5CddbOd/7IEDrnLmwmQidzv4DbptkKfmupw6J5YZ3jviGOdZAPCsaj
-         pABdrz2BXe5QJ7/4Fj3tA96IUptUh+WLT1lTRcG+G/fpINCxYnwqNWBa6iem7diw0ezk
-         rb5Q==
+        bh=5Mjx+AKhx73Ok5LyRGO+wvJwkfYR1YCJ1GmS45SCWjo=;
+        b=V2w1M5vsqmHXlIhqoP3CFjl90aC/dMsTDC2/gvSeHijf69xefY9gc3AAVQvLjVfsqU
+         hI9Jzo4anJKrHgV8NC4YfCDlxlqx7eshePH0dWaL97GiHjtIhZKSodTuC2UXa7fBgclW
+         LsehIB3KrhxZCHcq5lYlDCMOxGho7ajvWX33Z7ugPlzMhcGfSfq6FioA0kt7ohn2muwX
+         CU44WyV1b/M7e/5wiWDkKuNituxMIpZa721yzVSntztIehD1Q8THor650WYxAOMR1C5g
+         mBleh+bY+CFFGyHDFc8j8l92XBDSWl7KbOM5ikQDZ3COxb7lPktQwBtrWK8NV8XoawuD
+         rw+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690194902; x=1690799702;
+        d=1e100.net; s=20221208; t=1690195049; x=1690799849;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6/4NT80C8o+EyVnLY4XxDVvzkLXvBxsKNvLZXorPucs=;
-        b=J3Cm+XYP1KVuOSXk9zbrBKNO/BxBBqX7jafyyZHai3rRcLPu4ov42Mpm88K32dSF9R
-         n/RN8B8w2bf/iXtjlpl+jIXeR7f/Cs91kVPJ2Bf44S2293FoF3jhrWpFFSiRCqYU4glX
-         235LImMIG6mhOGa7TrIZHu29+4CLGHXuR5QsxA1LByo4P6SDWJngTnSyGGnCeqp3waAZ
-         uLR8N/w9U2fv5mGhWOwGKfaRB3fiZMYmcNycjNJJaiTyz6DyeTigejMWHLmdaTgjpgB3
-         sWhGXqgQK7hkkbIUKRZCVyuWb66jU/0dN7xKIWOTju6+tjc2J9g20C6ZgiOK9YQKuHnx
-         n1vw==
-X-Gm-Message-State: ABy/qLZrjxazL64wvx5EEvj7JJjVLGqKDUvigLeQtO4CGjbvMOjUFE4P
-        M4kd2EDj6X8cNHLz5HW05KoYvA==
-X-Google-Smtp-Source: APBJJlFkNROY/IPGZNiGFV2eLYpS4XZEGRoVUN9Vi8JcQBAMdJWzJHF6XyyJXDiFotmH+F8tESrQlg==
-X-Received: by 2002:a2e:9599:0:b0:2b7:364e:91ec with SMTP id w25-20020a2e9599000000b002b7364e91ecmr5407843ljh.13.1690194902424;
-        Mon, 24 Jul 2023 03:35:02 -0700 (PDT)
+        bh=5Mjx+AKhx73Ok5LyRGO+wvJwkfYR1YCJ1GmS45SCWjo=;
+        b=FIDgRnjUF2i20BmicGvSDWFEoAI4DfMAEHgNze3lsvQ4mIAwAvcnGis0ymeziDnIbL
+         4GEN3lEe0Os+dDBPkq+GEZIo8ijyi2THkm5thAptT+r0ct8sO9+Z3ypZd67RgJG188b2
+         9BRzuaJzNUQQTTlQoNd1bpQLP3EnkNQP5nD7NM6LFU++9l0u04xCRy6/D83DImIXL+yf
+         Xv+8IWolGVfPmxV3Ob8N479OgctvVP7OpEtbnKK6jpLU3Ub4n6t+dikMlBk/UJp1+x8J
+         CU98ezDBy7cEoseHTJo9AJ6h5Nc5vGCv+zkZfkc49titFiRzcriBdmWCtVrtnz37Sh1p
+         veaQ==
+X-Gm-Message-State: ABy/qLYC96l0Hqcqngda1Nb54A1NfqZeKldFmLBF4HSpasZ9xGj4yhQ5
+        a3yh1D/uZjDx+qG6XHVtDTFOYg==
+X-Google-Smtp-Source: APBJJlE2SOID+4J+69lHO2dT9FFEgfRdy/8MiMsKBKvUOMEJjaWZeOTlclZwAxcq5jFYEx/efhXsDA==
+X-Received: by 2002:a2e:a1cb:0:b0:2b7:842:a64c with SMTP id c11-20020a2ea1cb000000b002b70842a64cmr5064283ljm.5.1690195048844;
+        Mon, 24 Jul 2023 03:37:28 -0700 (PDT)
 Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
-        by smtp.gmail.com with ESMTPSA id 12-20020a05651c00cc00b002b94b355527sm2761607ljr.32.2023.07.24.03.35.00
+        by smtp.gmail.com with ESMTPSA id y23-20020a2e9797000000b002b6a930b8b0sm2783314lji.73.2023.07.24.03.37.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 03:35:02 -0700 (PDT)
-Message-ID: <e5ce83a0-9d4c-1fb2-17eb-777a41d8e754@linaro.org>
-Date:   Mon, 24 Jul 2023 12:34:59 +0200
+        Mon, 24 Jul 2023 03:37:28 -0700 (PDT)
+Message-ID: <b2bfe586-58b7-6b5a-c4fe-f7d1a17860a2@linaro.org>
+Date:   Mon, 24 Jul 2023 12:37:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc8180x: align USB DWC3 clocks with
- bindings
+Subject: Re: [PATCH] dt-bindings: arm: msm: kpss-acc: Revert "dt-bindings:
+ arm: msm: kpss-acc: Make the optional reg truly optional"
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -63,9 +63,10 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230723141849.93078-1-krzysztof.kozlowski@linaro.org>
+References: <20230724090109.19489-1-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,11 +103,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230723141849.93078-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230724090109.19489-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -115,12 +116,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.07.2023 16:18, Krzysztof Kozlowski wrote:
-> Bindings require different order of clocks for USB DWC3 nodes (sleep
-> before mock_utmi).
+On 24.07.2023 11:01, Krzysztof Kozlowski wrote:
+> This reverts commit 981be238e1d28e156aa9da2a8722f86f02fd0453 because it
+> was totally bogus and duplicated existing minItems:
+> 
+>   ruamel.yaml.constructor.DuplicateKeyError: while constructing a mapping
+>   Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml: ignoring, error parsing file
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+My bad.
+
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
