@@ -2,143 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3A6A75EE52
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:49:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3975A75EE5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 10:51:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231849AbjGXItr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 04:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48092 "EHLO
+        id S231905AbjGXIvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 04:51:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231851AbjGXItn (ORCPT
+        with ESMTP id S231896AbjGXIvi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 04:49:43 -0400
-Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C25ED;
-        Mon, 24 Jul 2023 01:49:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
-  t=1690188559; x=1721724559;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=Q0LGi2QX3xgEV9GZ5vh6iIhI2gnfjhuPy7mD6FixJUY=;
-  b=M7DX+UuBtoqirgUoVlEFPZcmW1Oa8oH6j+dqQ9/9wzESR3A3H+QRGO0H
-   qTBJG8dXtgY3kmr+hmwel8DpGXCzfaF4nhTCoTxjWEi3risT9JNvLabZ2
-   9zLtc4Y8mmqZFnuEEDxhrMuQjhUMDdAPxOr54nU7LVXGWc0Oeczm5QGz2
-   qQ3N7pdhJqWF6FSpNythL650ESOf7qhgSa4QPdB9yiGu+cR4osYuL/udo
-   mmKcmvEwG+AXKaRrh/yy7EIbtQujdJ81lxqd+zXJbMecWxfbaNlO2J82x
-   ZvZolA967g9yQk/NGFfFnfzAnHVYP5834kkH5fws0Oe7Ect3gzb4DMCq7
-   w==;
-X-IronPort-AV: E=Sophos;i="6.01,228,1684792800"; 
-   d="scan'208";a="32075023"
-Received: from vtuxmail01.tq-net.de ([10.115.0.20])
-  by mx1.tq-group.com with ESMTP; 24 Jul 2023 10:49:17 +0200
-Received: from steina-w.localnet (unknown [10.123.53.21])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 24 Jul 2023 04:51:38 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF39C9;
+        Mon, 24 Jul 2023 01:51:37 -0700 (PDT)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (No client certificate requested)
-        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 0FD34280078;
-        Mon, 24 Jul 2023 10:49:17 +0200 (CEST)
-From:   Alexander Stein <alexander.stein@ew.tq-group.com>
-To:     Rob Herring <robh+dt@kernel.org>,
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 02C356607029;
+        Mon, 24 Jul 2023 09:51:34 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1690188695;
+        bh=d9AW+MKnPahVLf1G6Ns/+qjCnIfMZz9qqZK1zh/61Yw=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=GXXb+XLfsbMrOxDaM8ivaBqOyvExwuqpxtZm/hOZSB9s+2LucLV2W65c0MJM+ClcF
+         r8GoTVNuYOZ7CtolHG9Cw6MZ+V3RvI+vg3C106XhoaQ8B1kLVTI3waBhEwxiMNNk2G
+         BCGhd3lkOfVhbnBXC1UmZRlo/t+SLznzoeGb7r06vPOmAC/NZpXXZ177oFdZuOPqBf
+         zdnQzifz5evJefPP2mgbtTbzA6lpu0WSyw1RBekzsD+qBlgh7mmIcuUF7jKJ7xo/mV
+         +Tcl/htutTr3np1dM/AOihRHSabhfMN4AUsTg2detC2P9lEU6XtLtj7ZytAuOW9mtc
+         UnoxuHfkFRNoA==
+Message-ID: <7f20ec52-bcd2-a9e1-369a-878be1e20a67@collabora.com>
+Date:   Mon, 24 Jul 2023 10:51:32 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 3/7] clk: qcom: hfpll: Allow matching pdata
+Content-Language: en-US
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        =?ISO-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v3 2/2] arm64: dts: Replace deprecated extcon-usb-gpio id-gpio/vbus-gpio properties
-Date:   Mon, 24 Jul 2023 10:49:16 +0200
-Message-ID: <3178020.5fSG56mABF@steina-w>
-Organization: TQ-Systems GmbH
-In-Reply-To: <e0897453-54b0-2a2c-2bf0-1f771c0c6565@linaro.org>
-References: <20230721081948.1185360-1-alexander.stein@ew.tq-group.com> <3251040.44csPzL39Z@steina-w> <e0897453-54b0-2a2c-2bf0-1f771c0c6565@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230723140712.9438-1-a39.skl@gmail.com>
+ <20230723140712.9438-4-a39.skl@gmail.com>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20230723140712.9438-4-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Il 23/07/23 16:06, Adam Skladowski ha scritto:
+> HFPLL driver can be used to drive PLLs also on different SoCs like MSM8976
+> On MSM8976 each PLL gets it own different configuration,
+> add matching pdata to driver to support multiple configurations.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+>   drivers/clk/qcom/hfpll.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
+> index f4d78003d189..ec18bc8f0089 100644
+> --- a/drivers/clk/qcom/hfpll.c
+> +++ b/drivers/clk/qcom/hfpll.c
+> @@ -6,6 +6,7 @@
+>   #include <linux/module.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/of.h>
+> +#include <linux/of_device.h>
+>   #include <linux/clk.h>
+>   #include <linux/clk-provider.h>
+>   #include <linux/regmap.h>
+> @@ -32,7 +33,7 @@ static const struct hfpll_data hdata = {
+>   };
+>   
+>   static const struct of_device_id qcom_hfpll_match_table[] = {
+> -	{ .compatible = "qcom,hfpll" },
+> +	{ .compatible = "qcom,hfpll", &hdata },
 
-Am Montag, 24. Juli 2023, 09:10:43 CEST schrieb Krzysztof Kozlowski:
-> On 24/07/2023 08:05, Alexander Stein wrote:
-> > Hi,
-> >=20
-> > Am Freitag, 21. Juli 2023, 14:22:06 CEST schrieb Krzysztof Kozlowski:
-> >> On 21/07/2023 10:19, Alexander Stein wrote:
-> >>> Use id-gpios and vbus-gpios instead.
-> >>>=20
-> >>> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-> >>> Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
-> >>> Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> #mediatek
-> >>> Reviewed-by: AngeloGioacchino Del Regno
-> >>> <angelogioacchino.delregno@collabora.com> Acked-by: Shawn Guo
-> >>> <shawnguo@kernel.org>
-> >>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>> ---
-> >>> Changes in v3:
-> >>> * Rebased to next-20230721
-> >>> * Split from bindings patch
-> >>=20
-> >> I think you wanted to split it per subsystem, right? That's why you
-> >> resent/v3? But the split did not happen.
-> >=20
-> > Yes, I split it into dt bindings and DT changes patches. Is this not
-> > correct?
-> We talked about DTS patch - this one. It was already split between
-> bindings and DTS, so this would not have been a topic at all.
+This is supposed to be
 
-Ah, sorry. I misunderstood and thought you were referring to bindings and D=
-T=20
-changes in one series. My bad.
+{ .compatible = xxx, .data = &hdata }
 
-> >> If you decide not to split,
-> >> then try to figure out: who should pick up this patchset?
-> >=20
-> > Well, intention was one patch for DT bindings maintainers and these two
-> > patches for imx maintainer (Shawn AFAIK).
->=20
-> You touch there much more than IMX, so if you intend that you need to be
-> pretty clear. I see there around 5% of changes from IMX, so targeting
-> IMX is a weird choice.
+Regards,
+Angelo
 
-That's true. There are several SoC families.
-
-> > I've send patches separated by arch/
-> > arm and arch/arm64 in one series, so I'm slightly confused now.
->=20
-> So telling you second time - don't. Split per subsystem.
-
-Okay, I think I got it. I'll respin a new series, including patches for=20
-bindings and for each SoC family separately.
-
-Best regards.
-Alexander
-=2D-=20
-TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
-Amtsgericht M=FCnchen, HRB 105018
-Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
-http://www.tq-group.com/
-
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, qcom_hfpll_match_table);
+> @@ -83,7 +84,7 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
+>   
+>   	init.parent_data = &pdata;
+>   
+> -	h->d = &hdata;
+> +	h->d = of_device_get_match_data(&pdev->dev);
+>   	h->clkr.hw.init = &init;
+>   	spin_lock_init(&h->lock);
+>   
 
