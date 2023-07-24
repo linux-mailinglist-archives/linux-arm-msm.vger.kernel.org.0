@@ -2,57 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13EE575FDC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 19:31:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F0D875FEB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 20:04:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbjGXRbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 13:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
+        id S229688AbjGXSER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 14:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231265AbjGXRbj (ORCPT
+        with ESMTP id S229495AbjGXSEQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 13:31:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39D9171F;
-        Mon, 24 Jul 2023 10:31:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3FD6061306;
-        Mon, 24 Jul 2023 17:31:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B93C433C8;
-        Mon, 24 Jul 2023 17:31:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690219896;
-        bh=jTpn8Fz2iciYuoEBgv60/TBE76Imy8ifUR5muq9g77U=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=DMIvyyacP3iu4kLw90X2uogRzVAHkIJMHwX4GVA5ibPczcXDmaK13BggXaKR/OMiy
-         eaj+YcGHkD+BTrWUqdazj3khEVqz3iu00jrN6TfQkwurf8RsAt/czhwmVOFGa2ozkr
-         W3cToLVAibt9Hlb+OuOumIoxQ5gS4Jn5CgxApEXNjeOyIBOesPjqlAvMOv5BcBG1TO
-         QkV8+EXAu4MA/sw2QHj5bQt0dZtkXpy2+CDbQjFQdL/rzuEhdE1PsV3ESghT1WfyQ7
-         DuW8jtmYfb72Lbi0Rl2qwERvsRMzw/JA6XHG/4p683EhYVX+WTBYS+Zd4FwHnLje0+
-         0Co7SDvTN9mDA==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20230721165027.2155528-1-quic_bjorande@quicinc.com>
-References: <20230721165027.2155528-1-quic_bjorande@quicinc.com>
-Subject: Re: [PATCH] ASoC: codecs: lpass: Log clk_get() failures
-Message-Id: <169021989456.995610.9873876267138125933.b4-ty@kernel.org>
-Date:   Mon, 24 Jul 2023 18:31:34 +0100
+        Mon, 24 Jul 2023 14:04:16 -0400
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675ECCD;
+        Mon, 24 Jul 2023 11:04:14 -0700 (PDT)
+Received: from [193.138.155.172] (helo=phil.localnet)
+        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <heiko@sntech.de>)
+        id 1qNzuc-0007kq-Co; Mon, 24 Jul 2023 20:04:02 +0200
+From:   Heiko Stuebner <heiko@sntech.de>
+To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        =?ISO-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc:     Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: Replace deprecated extcon-usb-gpio
+ id-gpio/vbus-gpio properties
+Date:   Mon, 24 Jul 2023 20:04:00 +0200
+Message-ID: <6220628.iIbC2pHGDl@phil>
+In-Reply-To: <20230724103914.1779027-7-alexander.stein@ew.tq-group.com>
+References: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com>
+ <20230724103914.1779027-7-alexander.stein@ew.tq-group.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,T_SPF_HELO_TEMPERROR autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,39 +64,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Jul 2023 09:50:27 -0700, Bjorn Andersson wrote:
-> The LPASS macro drivers all acquire a number of clocks, but give no
-> indication when clk_get() fails, making it hard to identify and debug
-> system configuration issues.  Make these drivers provide useful debug
-> information when this happens.
+Am Montag, 24. Juli 2023, 12:39:13 CEST schrieb Alexander Stein:
+> Use id-gpios and vbus-gpios instead.
 > 
+> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Acked-by: Shawn Guo <shawnguo@kernel.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+
+>  arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi                 | 2 +-
+
+sorry to be a spoilsport, but Rockchip is not part of qcom ;-) .
+
+I don't have a massive problem with this going through the qcom tree
+though, so if you don't respin,
+
+Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
+
+
+> diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+> index aa3e21bd6c8f..20e3f41efe97 100644
+> --- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+> +++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+> @@ -27,7 +27,7 @@ module_led: led-0 {
+>  
+>  	extcon_usb3: extcon-usb3 {
+>  		compatible = "linux,extcon-usb-gpio";
+> -		id-gpio = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
+> +		id-gpios = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
+>  		pinctrl-names = "default";
+>  		pinctrl-0 = <&usb3_id>;
+>  	};
 > 
 
-Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-Thanks!
-
-[1/1] ASoC: codecs: lpass: Log clk_get() failures
-      commit: f54e3474507427bf272bcc79c7c248c7f55d45b4
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
 
