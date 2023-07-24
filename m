@@ -2,61 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F0D875FEB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 20:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C490375FED0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 20:09:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjGXSER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 14:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33632 "EHLO
+        id S229593AbjGXSJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 14:09:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbjGXSEQ (ORCPT
+        with ESMTP id S229608AbjGXSJs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 14:04:16 -0400
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675ECCD;
-        Mon, 24 Jul 2023 11:04:14 -0700 (PDT)
-Received: from [193.138.155.172] (helo=phil.localnet)
-        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <heiko@sntech.de>)
-        id 1qNzuc-0007kq-Co; Mon, 24 Jul 2023 20:04:02 +0200
-From:   Heiko Stuebner <heiko@sntech.de>
-To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
+        Mon, 24 Jul 2023 14:09:48 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73596E42
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 11:09:46 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d0b597e7ac1so2265223276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 11:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690222185; x=1690826985;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sv32dzLI0S4Cbunmm3HM6sgTMma037t/aW6t7P4RPbY=;
+        b=m9qM00AY4ZxOu6/glCrlngvO1uZkwJ9dILIjT/zcdXHELshmbaiO/Exh7UfIV/+5QP
+         90akMVHwl+u6dBhx/FSJY9nWYBDKfK/ds1HbirPIzyZLOdxLyR3u3gQCReu/qn8q8NDm
+         xdVKTL68bZe7H6YS6p+bsnklcP84kn3Vl3woxHQEskIU3TypCEapPd8kumLikO3n8Z4b
+         FCqsnQjrRIK5ko9N4g3idYTH/HuyBydmio38Cula9dLsXEiUB3LKUvHmpQRP+nEQ1/Sl
+         iOasgOTt7wzdNpngeg6F2WJ0bx46hKoZMwZ8qdiRFpJSznn5yobZdS3uIfECRVSRKGfi
+         /y0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690222185; x=1690826985;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sv32dzLI0S4Cbunmm3HM6sgTMma037t/aW6t7P4RPbY=;
+        b=cPto9ucNvO3NjcE6M5quY+mv9k3Gi9h+8NPJelC3VToyb1xZ1QAA9XdAvE5gPcQfU8
+         C1kGLh2a5hPVBihIJbspS9h0DLlsOVuAhFyRCbZ2kuXLvOkxHPtTMYaWxLXOEXmJ+t2i
+         4RoSKSa9Ci4KsUaIlaHLWNpT8+CPf14e56nv/HACPBkj39Ys44BvmW5GI3E2VpuBbJJ6
+         wg4MLGx0DEwy8Xd6em5dgXnezbdcv/hkZqAgMkYRiLpKqRgd36D85FuQAr959JmaogwJ
+         3abuyEhjEZja/5wcHiv8x6HctYrpm2xW3N+NN1KTrBg2pVgD36PNFRux/wRs/N6Qaiok
+         cX3Q==
+X-Gm-Message-State: ABy/qLYszHeSSlHAC7tETF582wYFEwY9fRsyr9PUUrUA/r3yx6+cOCVU
+        J4rSuZ4XuOqpEngABjtnhu2B+JPFlqjFvzrdTvnjbQ==
+X-Google-Smtp-Source: APBJJlFsPXLIqdE4FI2fEH9PF5W6wX0kB9Iu5IZ67bqIZrFvevztigHRLGRRgVz6eTQN6Okx3EPcfSB7Z3fPf63pUlo=
+X-Received: by 2002:a25:a1ca:0:b0:cac:2767:2b8e with SMTP id
+ a68-20020a25a1ca000000b00cac27672b8emr8296660ybi.60.1690222185691; Mon, 24
+ Jul 2023 11:09:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230719192058.433517-1-krzysztof.kozlowski@linaro.org> <20230719192058.433517-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230719192058.433517-2-krzysztof.kozlowski@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 24 Jul 2023 20:09:34 +0200
+Message-ID: <CACRpkdbK7gU36nVOm0J+HbLk5JRKki+30=UaJ6hZjF1DiB4bBw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS TLMM
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        =?ISO-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alexander Stein <alexander.stein@ew.tq-group.com>
-Cc:     Alexander Stein <alexander.stein@ew.tq-group.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: Replace deprecated extcon-usb-gpio
- id-gpio/vbus-gpio properties
-Date:   Mon, 24 Jul 2023 20:04:00 +0200
-Message-ID: <6220628.iIbC2pHGDl@phil>
-In-Reply-To: <20230724103914.1779027-7-alexander.stein@ew.tq-group.com>
-References: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com>
- <20230724103914.1779027-7-alexander.stein@ew.tq-group.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,T_SPF_HELO_TEMPERROR autolearn=ham
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,40 +79,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Montag, 24. Juli 2023, 12:39:13 CEST schrieb Alexander Stein:
-> Use id-gpios and vbus-gpios instead.
-> 
-> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Acked-by: Shawn Guo <shawnguo@kernel.org>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+On Wed, Jul 19, 2023 at 9:21=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
->  arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi                 | 2 +-
+> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
+> driver is similar to SM8250 LPASS pin controller, with difference in one
+> new pin (gpio14) belonging to swr_tx_data.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-sorry to be a spoilsport, but Rockchip is not part of qcom ;-) .
+This sure looks good to me.
 
-I don't have a massive problem with this going through the qcom tree
-though, so if you don't respin,
+Krzystof, can you collect a branch with pin control changes for
+Qualcomm chips that I can pull? If it's OK with Bjorn that is.
 
-Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
-
-
-> diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-> index aa3e21bd6c8f..20e3f41efe97 100644
-> --- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-> +++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-> @@ -27,7 +27,7 @@ module_led: led-0 {
->  
->  	extcon_usb3: extcon-usb3 {
->  		compatible = "linux,extcon-usb-gpio";
-> -		id-gpio = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
-> +		id-gpios = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&usb3_id>;
->  	};
-> 
-
-
-
-
+Yours,
+Linus Walleij
