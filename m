@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DBFF75F141
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 11:56:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EC2175F13D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 11:56:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232810AbjGXJ41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 05:56:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51926 "EHLO
+        id S232878AbjGXJ4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 05:56:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232619AbjGXJzv (ORCPT
+        with ESMTP id S230479AbjGXJz6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 05:55:51 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656FE59D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 02:51:03 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1b7dfb95761so5879995ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 02:51:03 -0700 (PDT)
+        Mon, 24 Jul 2023 05:55:58 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C622F30C4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 02:51:08 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-2680edb9767so229954a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 02:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1690192218; x=1690797018;
+        d=bytedance.com; s=google; t=1690192230; x=1690797030;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tx0FAlNIhhphM8SETf+9243EVHMgBeYNK+AXzmxIezQ=;
-        b=YTfPugmHCk5Giro4CjFOmzbKkI7HJdV0vsDB4TzS6mGnPQKEUemoxYTNWrdu/E93kj
-         6rb1na84A/nf6JJQgZLRucXt2LbXOJbRmcuphszkqRQsFezxcJpi7w4b7fLRmYCBPcZF
-         4l9Jesyer1cnHOeAOuu1atoBtGOF2Hi89J+wuYgFZbI4os99VTzsysgcXEMrYAOOTtWx
-         pJJhhqbwlv5qn9Pf+scc/easkuZhqJ5AueYpxd4sdsrGo5W3f8JKXrqMpLvSxxgZLh3E
-         1PGhTx/OpgjsdMBthM6uSfqb5CFC4LVij0h3lS8QWwDKGMYakkpMlhcXlyLOkFlcnv5i
-         ndxA==
+        bh=h5Pgz5o85vjRJX2NAYGHXGIfrVWxEYXMNean3UujJOE=;
+        b=HTXrSeoRNfCylQUvp3rA93XfC5B9ZAm1jE2rq6Hxhf34WiOMuxDD1meCGjwu9EwIX7
+         ZbtHbS4fRmsyA8f1AQ95KeA8pk2Wu8dqsEYadFuPM8kR0aC/DghUlOU1O4pFRVVN27md
+         Jz3ZRGJgXj2574vm45/AlAwiQEEVW+fNcrUB9gqDXxsp5xfvZzaaREkRLWgNT154mbaN
+         kLE4oZiRvqBvE8wXvErAyC7133TniCzwa8RrEDkzsepAqin0to9X/dlSZmLYhsSlZCfb
+         1LIBzBngTPhlUQBluPspeHfucBGL5ud/FkBEqD4eyTXeqLx9y9KdZjNraR8njMzNn3Wl
+         0XdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690192218; x=1690797018;
+        d=1e100.net; s=20221208; t=1690192230; x=1690797030;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tx0FAlNIhhphM8SETf+9243EVHMgBeYNK+AXzmxIezQ=;
-        b=CPZcSD1ne+/2ZvwdAq35/n1qrv5SoU9m8BPrShaFt2o1M2Byqkh17JQJ9L3rFf6JBT
-         EGDJi7HKC54TwnN8xqzZPyrng+lZicEhOhKQmxdkN6MxNTquulpEw4FEp5x/Caimm2kN
-         2UqCPotwheGptzEi3C3/bJZS82QbGUXhjXoAi6xiSXptRMvamEYHogkhqErGqBccctNn
-         hKTmWea+l1OPUI0pJG/IjUnt0gIaI/jwiVoVwhJJrWKLJky3tKa3r2l27XDe9q4EuZE5
-         dt3vmCE61THWJmENHvQVsNSCK0j4g0Sn7ZlwCEVZ+b1/s4Qgxfztqv18Xwj3N4m7RZR8
-         Tq+A==
-X-Gm-Message-State: ABy/qLbQiQQ50d2qcZ6jBtQDVas18s/ziUMh3FdYUUbST7x3KNm4QJmO
-        AKCCNQ3uIjNRMDYG6W/OUIOpDg==
-X-Google-Smtp-Source: APBJJlGW4+fw6ZDbsnwnWtlRY7yHkFW5IEHW5elDNTPh+ZvgkUhUSx4grfoYhobvAlLuy2pBiwekLg==
-X-Received: by 2002:a17:902:dacf:b0:1b8:9215:9163 with SMTP id q15-20020a170902dacf00b001b892159163mr12201959plx.6.1690192218573;
-        Mon, 24 Jul 2023 02:50:18 -0700 (PDT)
+        bh=h5Pgz5o85vjRJX2NAYGHXGIfrVWxEYXMNean3UujJOE=;
+        b=ZU3UJyStwwhY5JOcJu8SXqMt/dAnvyMUQvmYlBl0LICWxWW1n9v7KbJGDpfOK5qj38
+         qmuuiV6mmPohQ9j/E3Jlc3xn6WXN1bHfQdcO2j0RA5TeRmavFs8OfTCN+rrCdx90oQd9
+         Tg1Xb0STSNVPfeD4HOOQlYxJzu2RNmRMLq+VkOZkbSxgibkHsgQ7QeGAzgFIoioZtCfJ
+         4o48PDwDhD7M1koQ7W5T4wUS+pseYmlQycgkd2SJ0BsaHgLDqDIyCvXgb3Y5utRq8qrQ
+         X5+NagFt3QXHuG/aWJ2xegP/wYw6Z2kxlVyIgsvjiqQCDftsqPdVD4APMeSqV9b7RDJI
+         CJOA==
+X-Gm-Message-State: ABy/qLY7pXYF+QvS66KCPSqun68eo1mNYle1Dc3nrf6ckf3bNq5vOA9r
+        hq4a/IOaGQBdieUsVfa3uOUB3A==
+X-Google-Smtp-Source: APBJJlEuFsN94AIprk7ia8ABwlM0Slt2XXWIAtSq+6lqm1qdEZFYXWzDVMuJVyeP2h9BJXp/48ZO1g==
+X-Received: by 2002:a17:90a:5a4c:b0:263:1e82:2dc7 with SMTP id m12-20020a17090a5a4c00b002631e822dc7mr8465919pji.0.1690192230524;
+        Mon, 24 Jul 2023 02:50:30 -0700 (PDT)
 Received: from C02DW0BEMD6R.bytedance.net ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id d5-20020a170902c18500b001bb20380bf2sm8467233pld.13.2023.07.24.02.50.07
+        by smtp.gmail.com with ESMTPSA id d5-20020a170902c18500b001bb20380bf2sm8467233pld.13.2023.07.24.02.50.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 02:50:18 -0700 (PDT)
+        Mon, 24 Jul 2023 02:50:30 -0700 (PDT)
 From:   Qi Zheng <zhengqi.arch@bytedance.com>
 To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
         vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
@@ -70,16 +70,16 @@ Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
         linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
         linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
         Qi Zheng <zhengqi.arch@bytedance.com>
-Subject: [PATCH v2 26/47] dm zoned: dynamically allocate the dm-zoned-meta shrinker
-Date:   Mon, 24 Jul 2023 17:43:33 +0800
-Message-Id: <20230724094354.90817-27-zhengqi.arch@bytedance.com>
+Subject: [PATCH v2 27/47] md/raid5: dynamically allocate the md-raid5 shrinker
+Date:   Mon, 24 Jul 2023 17:43:34 +0800
+Message-Id: <20230724094354.90817-28-zhengqi.arch@bytedance.com>
 X-Mailer: git-send-email 2.24.3 (Apple Git-128)
 In-Reply-To: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
 References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,87 +89,90 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 In preparation for implementing lockless slab shrink, use new APIs to
-dynamically allocate the dm-zoned-meta shrinker, so that it can be freed
+dynamically allocate the md-raid5 shrinker, so that it can be freed
 asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
-read-side critical section when releasing the struct dmz_metadata.
+read-side critical section when releasing the struct r5conf.
 
 Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
 ---
- drivers/md/dm-zoned-metadata.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/md/raid5.c | 25 ++++++++++++++-----------
+ drivers/md/raid5.h |  2 +-
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/md/dm-zoned-metadata.c b/drivers/md/dm-zoned-metadata.c
-index 9d3cca8e3dc9..657f274e4e84 100644
---- a/drivers/md/dm-zoned-metadata.c
-+++ b/drivers/md/dm-zoned-metadata.c
-@@ -187,7 +187,7 @@ struct dmz_metadata {
- 	struct rb_root		mblk_rbtree;
- 	struct list_head	mblk_lru_list;
- 	struct list_head	mblk_dirty_list;
--	struct shrinker		mblk_shrinker;
-+	struct shrinker		*mblk_shrinker;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 85b3004594e0..12443dfb7aeb 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -7414,7 +7414,7 @@ static void free_conf(struct r5conf *conf)
  
- 	/* Zone allocation management */
- 	struct mutex		map_lock;
-@@ -615,7 +615,7 @@ static unsigned long dmz_shrink_mblock_cache(struct dmz_metadata *zmd,
- static unsigned long dmz_mblock_shrinker_count(struct shrinker *shrink,
- 					       struct shrink_control *sc)
+ 	log_exit(conf);
+ 
+-	unregister_shrinker(&conf->shrinker);
++	shrinker_unregister(conf->shrinker);
+ 	free_thread_groups(conf);
+ 	shrink_stripes(conf);
+ 	raid5_free_percpu(conf);
+@@ -7462,7 +7462,7 @@ static int raid5_alloc_percpu(struct r5conf *conf)
+ static unsigned long raid5_cache_scan(struct shrinker *shrink,
+ 				      struct shrink_control *sc)
  {
--	struct dmz_metadata *zmd = container_of(shrink, struct dmz_metadata, mblk_shrinker);
-+	struct dmz_metadata *zmd = shrink->private_data;
+-	struct r5conf *conf = container_of(shrink, struct r5conf, shrinker);
++	struct r5conf *conf = shrink->private_data;
+ 	unsigned long ret = SHRINK_STOP;
  
- 	return atomic_read(&zmd->nr_mblks);
- }
-@@ -626,7 +626,7 @@ static unsigned long dmz_mblock_shrinker_count(struct shrinker *shrink,
- static unsigned long dmz_mblock_shrinker_scan(struct shrinker *shrink,
- 					      struct shrink_control *sc)
+ 	if (mutex_trylock(&conf->cache_size_mutex)) {
+@@ -7483,7 +7483,7 @@ static unsigned long raid5_cache_scan(struct shrinker *shrink,
+ static unsigned long raid5_cache_count(struct shrinker *shrink,
+ 				       struct shrink_control *sc)
  {
--	struct dmz_metadata *zmd = container_of(shrink, struct dmz_metadata, mblk_shrinker);
-+	struct dmz_metadata *zmd = shrink->private_data;
- 	unsigned long count;
+-	struct r5conf *conf = container_of(shrink, struct r5conf, shrinker);
++	struct r5conf *conf = shrink->private_data;
  
- 	spin_lock(&zmd->mblk_lock);
-@@ -2936,19 +2936,23 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
+ 	if (conf->max_nr_stripes < conf->min_nr_stripes)
+ 		/* unlikely, but not impossible */
+@@ -7718,18 +7718,21 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+ 	 * it reduces the queue depth and so can hurt throughput.
+ 	 * So set it rather large, scaled by number of devices.
  	 */
- 	zmd->min_nr_mblks = 2 + zmd->nr_map_blocks + zmd->zone_nr_bitmap_blocks * 16;
- 	zmd->max_nr_mblks = zmd->min_nr_mblks + 512;
--	zmd->mblk_shrinker.count_objects = dmz_mblock_shrinker_count;
--	zmd->mblk_shrinker.scan_objects = dmz_mblock_shrinker_scan;
--	zmd->mblk_shrinker.seeks = DEFAULT_SEEKS;
- 
- 	/* Metadata cache shrinker */
--	ret = register_shrinker(&zmd->mblk_shrinker, "dm-zoned-meta:(%u:%u)",
--				MAJOR(dev->bdev->bd_dev),
--				MINOR(dev->bdev->bd_dev));
+-	conf->shrinker.seeks = DEFAULT_SEEKS * conf->raid_disks * 4;
+-	conf->shrinker.scan_objects = raid5_cache_scan;
+-	conf->shrinker.count_objects = raid5_cache_count;
+-	conf->shrinker.batch = 128;
+-	conf->shrinker.flags = 0;
+-	ret = register_shrinker(&conf->shrinker, "md-raid5:%s", mdname(mddev));
 -	if (ret) {
--		dmz_zmd_err(zmd, "Register metadata cache shrinker failed");
-+	zmd->mblk_shrinker = shrinker_alloc(0,  "dm-zoned-meta:(%u:%u)",
-+					    MAJOR(dev->bdev->bd_dev),
-+					    MINOR(dev->bdev->bd_dev));
-+	if (!zmd->mblk_shrinker) {
-+		dmz_zmd_err(zmd, "Allocate metadata cache shrinker failed");
- 		goto err;
+-		pr_warn("md/raid:%s: couldn't register shrinker.\n",
++	conf->shrinker = shrinker_alloc(0, "md-raid5:%s", mdname(mddev));
++	if (!conf->shrinker) {
++		pr_warn("md/raid:%s: couldn't allocate shrinker.\n",
+ 			mdname(mddev));
+ 		goto abort;
  	}
  
-+	zmd->mblk_shrinker->count_objects = dmz_mblock_shrinker_count;
-+	zmd->mblk_shrinker->scan_objects = dmz_mblock_shrinker_scan;
-+	zmd->mblk_shrinker->seeks = DEFAULT_SEEKS;
-+	zmd->mblk_shrinker->private_data = zmd;
++	conf->shrinker->seeks = DEFAULT_SEEKS * conf->raid_disks * 4;
++	conf->shrinker->scan_objects = raid5_cache_scan;
++	conf->shrinker->count_objects = raid5_cache_count;
++	conf->shrinker->batch = 128;
++	conf->shrinker->private_data = conf;
 +
-+	shrinker_register(zmd->mblk_shrinker);
++	shrinker_register(conf->shrinker);
 +
- 	dmz_zmd_info(zmd, "DM-Zoned metadata version %d", zmd->sb_version);
- 	for (i = 0; i < zmd->nr_devs; i++)
- 		dmz_print_dev(zmd, i);
-@@ -2995,7 +2999,7 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
-  */
- void dmz_dtr_metadata(struct dmz_metadata *zmd)
- {
--	unregister_shrinker(&zmd->mblk_shrinker);
-+	shrinker_unregister(zmd->mblk_shrinker);
- 	dmz_cleanup_metadata(zmd);
- 	kfree(zmd);
- }
+ 	sprintf(pers_name, "raid%d", mddev->new_level);
+ 	rcu_assign_pointer(conf->thread,
+ 			   md_register_thread(raid5d, mddev, pers_name));
+diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
+index 97a795979a35..22bea20eccbd 100644
+--- a/drivers/md/raid5.h
++++ b/drivers/md/raid5.h
+@@ -670,7 +670,7 @@ struct r5conf {
+ 	wait_queue_head_t	wait_for_stripe;
+ 	wait_queue_head_t	wait_for_overlap;
+ 	unsigned long		cache_state;
+-	struct shrinker		shrinker;
++	struct shrinker		*shrinker;
+ 	int			pool_size; /* number of disks in stripeheads in pool */
+ 	spinlock_t		device_lock;
+ 	struct disk_info	*disks;
 -- 
 2.30.2
 
