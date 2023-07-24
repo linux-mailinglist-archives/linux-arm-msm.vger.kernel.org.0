@@ -2,98 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0066875F23B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:10:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AACDC75F356
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 12:31:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbjGXKKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 06:10:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42236 "EHLO
+        id S231132AbjGXKba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 06:31:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231124AbjGXKKN (ORCPT
+        with ESMTP id S231597AbjGXKbQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 06:10:13 -0400
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBC29EED
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:02:44 -0700 (PDT)
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-682ae5d4184so1051759b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:02:44 -0700 (PDT)
+        Mon, 24 Jul 2023 06:31:16 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A0C10D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:31:10 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b743161832so58338321fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 03:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1690192601; x=1690797401;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=am2eIoStEhYj6reS+R983QZxh6h3W0xYr71gNNToCQ8=;
-        b=OlJHj1/yO42yQ42YyfDdqtfuDdXGGV/WQ0GpL38YIfO5RJZmkcdCx+PepLtkyGVzEN
-         bTK4LhGsJI+OJKO7VuvlEDj/aPd3bZAexndKWivptO/xeLBD7J/JCOubjicjaVNWXLQ5
-         H6fB+0YsEx63uc5TiCs20sSEjZ3JxRWkjZHG3LQbatv3J9k4pmh0VpqAg7R562nbzzly
-         s71ebLgHH+wdbZuHYfqIuXfOS4H3wCLtxZ6Rqc556hBiF9jLddR68NJcthdMi5JsNo9F
-         fUAZvFHEDsznNwsCMgykOwv5P0YMuteT/vvRsXd6nvRv9Clc/Ic3a7YeuRAtFe+vPCu7
-         EZug==
+        d=linaro.org; s=google; t=1690194669; x=1690799469;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=RiHIilmtHLP/QavO+OGO0GXl45X3ep1zM9w6gfMfPkI=;
+        b=hb13hJgDOvjkCYKa88uF+9cle2s96UA6EUmELfaeULfNKkImo3jN7y6WVsFAZIhKGS
+         /wn7vUinRseTBqMz6b1uSvW6etMkD+xtfiONU6KDJU8ss7W+r/QNIx4Ga7h1DCbDqlKp
+         7BaJ7GpNlXoHJNNGNAiaqpPvy/TtkVOdgX01W0VNKMMbzIRy1u9toFWkUzY+aArm3egc
+         qNfhJ0Ulj2cBHN/ftuQnjzhFXLHZR5711P7pEzwC4/EmAKsCCM9bofj3s8eiXqUlvuWS
+         Y1zc8El9RX6ikctkQjzI5fkATFaq1lctpvdShJkhWYQOyB31ins7IZ2B8ObXu9wdPsG4
+         p8Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690192601; x=1690797401;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=am2eIoStEhYj6reS+R983QZxh6h3W0xYr71gNNToCQ8=;
-        b=PGKrE6hNda6nlseJ/AmpQdj/hkITCIJDlzwFEQEOEGze+xoYEvw6dB5ruC6ph+Vvzr
-         4uf9uLfIp8xHULMRMlYMjKgw6QBQyjkmiscE881UfnxuHqS21O0ENUEwOq0M2x/ipmDz
-         74coTpoWqKxyFE46sIsO8vgRTQbDE65OGz0a0eNFC6xN9h3KmYqyePPc4BoN6SAgp/a8
-         DXaWhxdzCRtSgzRbeabe2C5CKojM9Yvdlyz6Rd55Py9/l8/rvK9tLsG/je6gJWMTf8xg
-         xYClGgB9a8LfKvhBe3qJi0TJ1iZVf7Pq0HHjuuRIsBSK46L+7zmiEr/8VcCs8WAgOQbn
-         kvJQ==
-X-Gm-Message-State: ABy/qLaMiU2Bdguiku+QiVErUhlUQ7EhF1CFIJU8RUbpA47x0wM/YoqX
-        cQGZz/FJJCYjsfQhm7Zho9W9cA==
-X-Google-Smtp-Source: APBJJlEtnCzvJ6I1rkWEELadVXHfZtUE/plpWIuGp/MFKpOvTS509ssN84iHDxA1POdeL3+D21rKQg==
-X-Received: by 2002:a05:6a20:8e04:b0:137:3941:17b3 with SMTP id y4-20020a056a208e0400b00137394117b3mr14532126pzj.6.1690192601020;
-        Mon, 24 Jul 2023 02:56:41 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id y1-20020aa78541000000b00682aac1e2b8sm7356787pfn.60.2023.07.24.02.56.29
+        d=1e100.net; s=20221208; t=1690194669; x=1690799469;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RiHIilmtHLP/QavO+OGO0GXl45X3ep1zM9w6gfMfPkI=;
+        b=cvflCfX9dUL2VPS0InKUQBnGwXfa2FkwvCj3uWOWWqTmqaXnzPsGTarpEcMADaSXn1
+         0H1q4lLdmJ2m2usKhOEO+5+KhOb3n8n3wjlf4J85/mOI7HWqLKio53BUEG3q3wPNqvLL
+         ayXEe6kU25U/Vj8B7HE7jGkWFxG9sKelh3R4ushobRWDXC3AyxQaAFkBKCiultC0aKg8
+         MFm1s166eqGJ65js9Frfa+nVluW2jGdCLDEDZAEHUVZ6a9mV60hMFdKMSdmFU3HthCZL
+         lJjWGpU73BHJL8Si+PvGGv4cSQ+iYRJ2DBJ1/CVqtwO3aiXufPhtekwz4pE0qUkGSFSR
+         MQ5g==
+X-Gm-Message-State: ABy/qLYreQ+SQrvjywCAlH9820fW3wIm5BOEFghgJimN/JCckvgGT3f9
+        pIF3WqYOGmuOGGkQc//JFYzVBEs4Lxe1WvYG/4HAYw==
+X-Google-Smtp-Source: APBJJlHKAzgTcZxkzYS3fSGQXQBlZ9mX3fhV1WNe2d3EY3lX3vQxMHj32kTI+ExC1ULbKMplpm78QA==
+X-Received: by 2002:a2e:8097:0:b0:2b7:339c:f791 with SMTP id i23-20020a2e8097000000b002b7339cf791mr5860487ljg.25.1690194669057;
+        Mon, 24 Jul 2023 03:31:09 -0700 (PDT)
+Received: from [192.168.1.101] (abyl203.neoplus.adsl.tpnet.pl. [83.9.31.203])
+        by smtp.gmail.com with ESMTPSA id w12-20020a2e998c000000b002b724063010sm2774991lji.47.2023.07.24.03.31.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 02:56:40 -0700 (PDT)
-Message-ID: <7b4eb3fa-1ebd-de07-1a16-9533b069a66e@bytedance.com>
-Date:   Mon, 24 Jul 2023 17:56:27 +0800
+        Mon, 24 Jul 2023 03:31:08 -0700 (PDT)
+Message-ID: <96573f47-d38c-2886-e408-ce463550308e@linaro.org>
+Date:   Mon, 24 Jul 2023 12:31:04 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v2 05/47] binder: dynamically allocate the android-binder
- shrinker
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] interconnect: qcom: qcm2290: Enable sync state
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230720-topic-qcm2290_icc-v1-0-7f67f2e259c1@linaro.org>
+ <20230720-topic-qcm2290_icc-v1-2-7f67f2e259c1@linaro.org>
+ <ZLmQdjDgIbbhyTMJ@gerhold.net>
+ <3e1d650d-7c5b-381c-464f-3c464c056a1b@linaro.org>
+ <ZL0InL6slLRNcVkI@gerhold.net>
 Content-Language: en-US
-To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-6-zhengqi.arch@bytedance.com>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <20230724094354.90817-6-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZL0InL6slLRNcVkI@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 23.07.2023 13:01, Stephan Gerhold wrote:
+> On Fri, Jul 21, 2023 at 02:03:16PM +0200, Konrad Dybcio wrote:
+>> On 20.07.2023 21:52, Stephan Gerhold wrote:
+>>> On Thu, Jul 20, 2023 at 08:24:01PM +0200, Konrad Dybcio wrote:
+>>>> Very surprisingly, qcm2290 does not seem to require any interface
+>>>> clocks.
+>>>
+>>> What does this mean exactly? The interconnect .sync_state() is
+>>> responsible to drop the initial maximum bandwidth votes, with the
+>>> assumption that all active devices have voted for the bandwidth they
+>>> need. How does this relate to "requiring interface clocks"?
+>> If it required such clocks to be present, sync_state could not
+>> complete, as trying to access some nodes would crash the platform
+>> due to unclocked access.
+> 
+> You mean something like the IPA clock that must be active to do the QoS
+> writes?
+> 
+> Wouldn't it already crash before .sync_state() then, when the initial
+> max bandwidth votes are being made?
+No, the bandwidth votes are fully handled by RPM with no external deps.
 
-This patch depends on the patch: 
-https://lore.kernel.org/lkml/20230625154937.64316-1-qi.zheng@linux.dev/
+Only accessing the QoS registers from the AP seems to trigger crashes
+on unclocked access. But surprisingly, not on this SoC.
 
+>>>> It's therefore safe to enable sync_state to park unused devices.
+>>>> Do so.
+>>>
+>>> Doesn't this make everything painfully slow? There are no interconnect
+>>> consumers at all in qcm2290.dtsi. I would expect that all bandwidths
+>>> end up at minimum.
+>> There are no interconnect providers defined in qcm2290.dtsi.
+> 
+> Ack, so I guess you're going to add them together with the actual
+> consumers?
+Correct.
+
+> 
+> I think the patch itself is fine. Only the commit message is a bit
+> misleading. The actual change that is being done here is enabling the
+> bandwidth scaling (dropping the max bandwidth votes after
+> .sync_state()). Can you try to clarify the commit message a bit?
+Yes, I'll resend.
+
+Konrad
