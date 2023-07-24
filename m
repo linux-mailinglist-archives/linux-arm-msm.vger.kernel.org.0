@@ -2,115 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02C0575F661
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 14:31:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75D4875F66B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 14:36:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbjGXMb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 08:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57732 "EHLO
+        id S229745AbjGXMgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 08:36:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbjGXMbU (ORCPT
+        with ESMTP id S229498AbjGXMgc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 08:31:20 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDEDE67
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:31:18 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51a52a7d859so11167319a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 05:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690201877; x=1690806677;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/UW5QG5EK8EFq9Kf9r3pRK64G0FJddSL3ap9VTpE+yM=;
-        b=NjyBNzn2JvnSbPJ4WJpFzGjKjs0qCPoaEzSaS7SB3P++lH4FGNylZcfl1YhnJIfNnz
-         +3yFjDcovv38bjI7MDj8g+a4bxnWQTv5KQuIc0MEP8FNPf5yChr5p/E3JSl+EVn02BfV
-         CH02cmkaLcWzPGILhn6zYpIuQ3yzVcQwvgX8UTSzgOVhjoEMqf1xrmT5SZG0oNzCcTLW
-         jWmD1R6STVN2reTymIbKGAvMSZf10Na+4kS+yrjSnAYECFTT6+NKct15E8ryT9H/wNnc
-         Gpn8aO6F/yBQWDpKuBusKwkPhWsED2k0cWj137ehpemOWeTs7I+fUwcwQzNDXXYpoIfe
-         0xWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690201877; x=1690806677;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/UW5QG5EK8EFq9Kf9r3pRK64G0FJddSL3ap9VTpE+yM=;
-        b=H4sKhMMVtVlsrqeWTfFDtLkO+4Hr/Ngz/vElg3SPSFMb+o+VgOV48uF67COAVJLyzy
-         zyjR+8FjPChrUuZLZ85NR0WBg2o9b7U0Wr4mfZlPTNQu7XZKxyGkQFalqw9R9SHtKPbn
-         z/jmiZjKPo1GCBZT2R/azlQGV+T/NiESa0758MIUkeTyHud8AArQNCqDP1HkVDLhvYv7
-         0NP6WGiqZfEiUoRdEMkMbTcZ6H689Mo5fPxwDVh1KwZ+AMHDcBsXpj4x2NfwAbvsBiDc
-         Le4FSmmKGyvNluXLuN0BhQMIehihupZfFpdOheRpmTdj/A6c7e968st800vL5pPtpIn+
-         vV9Q==
-X-Gm-Message-State: ABy/qLY6T5ZawfXuScf9G7eaBroEFzLsd5/YuzrM9wLzCcXxQX6EbSyM
-        Xfq7lo5S8GEl7srCNSE/tI1aQPK41rNgSjMD6NA=
-X-Google-Smtp-Source: APBJJlG5b9k5cgyD+0ffu2Qj73f/dLmguMMYab/SdI8PD/EX62Idamj2Ews2ZFPj3mY1PyoEmm2Q7w==
-X-Received: by 2002:a05:6402:3492:b0:521:ab08:46dc with SMTP id v18-20020a056402349200b00521ab0846dcmr17628048edc.0.1690201877137;
-        Mon, 24 Jul 2023 05:31:17 -0700 (PDT)
-Received: from linaro.org ([82.78.74.213])
-        by smtp.gmail.com with ESMTPSA id y19-20020aa7ccd3000000b0051df54c6a27sm6119079edt.56.2023.07.24.05.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 05:31:16 -0700 (PDT)
-Date:   Mon, 24 Jul 2023 15:31:15 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Ziqi Chen <quic_ziqichen@quicinc.com>,
-        Can Guo <quic_cang@quicinc.com>, Arnd Bergmann <arnd@arndb.de>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] scsi: ufs: qcom: remove unused variable
-Message-ID: <ZL5vExzF6vOP2G6E@linaro.org>
-References: <20230724122029.1430482-1-arnd@kernel.org>
+        Mon, 24 Jul 2023 08:36:32 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00920E67;
+        Mon, 24 Jul 2023 05:36:31 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36OAB0Tn005534;
+        Mon, 24 Jul 2023 12:36:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=J2mcK1X0LS3CTeGUXCeCWuXi+cjpz6nauAIC4bjbcTQ=;
+ b=eAi7XggkEMRQf1s3s6Da3wc8snet9WXYlUoTr/Ndb/xrZybCg62fMOrox2L9t5hv5mSk
+ 1z+LuxC51w9ZGk2nvp2rLpPGge80qHqLWQfB4GhvxX2ZERbmGit3++tKGm7lRlditawQ
+ ASitDOFh2t0aJQJgUE+DjBPDuFPQ+Y18dwJaMVkaI59OXe1gJE/d2uErqlS47x66wrAR
+ TxcZgQXl5B+PSXfZpz3EAyU57Clfs4mClpRlUcR1pAzEaz8Qx5Fr90bhLOrU6vsYcqqG
+ OSbTYAiM7cC/mZ16hAGY7Iu/y00eX+Ih87vx5D8RRbnntyjGBAk+4cBP/TNA+fbSk/s2 5g== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1qasr91j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Jul 2023 12:36:28 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36OCaR9B005814
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Jul 2023 12:36:27 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 24 Jul
+ 2023 05:36:23 -0700
+Message-ID: <3e193791-613f-b500-75a1-5f36cefe0ddc@quicinc.com>
+Date:   Mon, 24 Jul 2023 18:06:15 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230724122029.1430482-1-arnd@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v5 3/6] nvmem: core: Add stub for nvmem_cell_read_u8
+Content-Language: en-US
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <srinivas.kandagatla@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230724084155.8682-1-quic_kbajaj@quicinc.com>
+ <20230724084155.8682-4-quic_kbajaj@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230724084155.8682-4-quic_kbajaj@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: IkpTrAG2Qi8JunNAm-2WUAkYou-DQswO
+X-Proofpoint-GUID: IkpTrAG2Qi8JunNAm-2WUAkYou-DQswO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-24_09,2023-07-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ impostorscore=0 mlxscore=0 mlxlogscore=957 adultscore=0 priorityscore=1501
+ clxscore=1015 spamscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307240111
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-07-24 14:19:58, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> A recent change removed the only user of a local variable that needs
-> to now also be removed:
-> 
-> drivers/ufs/host/ufs-qcom.c: In function 'ufs_qcom_mcq_esi_handler':
-> drivers/ufs/host/ufs-qcom.c:1652:31: error: unused variable 'host' [-Werror=unused-variable]
-> 
-> Fixes: 8f2b78652d055 ("scsi: ufs: qcom: Get queue ID from MSI index in ESI handler")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
+On 7/24/2023 2:11 PM, Komal Bajaj wrote:
+> This change add the stub function for nvmem_cell_read_u8.
+
+"Add the stub nvmem_cell_read_u8() function for drivers running with
+CONFIG_NVMEM disabled"
+
+-Mukesh
+
+> This will be helpful when a driver uses this function and
+
+
+
+-Mukesh
+
+> CONFIG_NVMEM is not enabled.
+> 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->  drivers/ufs/host/ufs-qcom.c | 1 -
->  1 file changed, 1 deletion(-)
+>   include/linux/nvmem-consumer.h | 6 ++++++
+>   1 file changed, 6 insertions(+)
 > 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 3ee5ff905f9a6..5728e94b6527b 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1649,7 +1649,6 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *data)
->  	struct msi_desc *desc = data;
->  	struct device *dev = msi_desc_to_dev(desc);
->  	struct ufs_hba *hba = dev_get_drvdata(dev);
-> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	u32 id = desc->msi_index;
->  	struct ufs_hw_queue *hwq = &hba->uhq[id];
->  
-> -- 
-> 2.39.2
-> 
+> diff --git a/include/linux/nvmem-consumer.h b/include/linux/nvmem-consumer.h
+> index fa030d93b768..5c88635d4c2b 100644
+> --- a/include/linux/nvmem-consumer.h
+> +++ b/include/linux/nvmem-consumer.h
+> @@ -125,6 +125,12 @@ static inline int nvmem_cell_write(struct nvmem_cell *cell,
+>   	return -EOPNOTSUPP;
+>   }
+>   
+> +static inline int nvmem_cell_read_u8(struct device *dev,
+> +				     const char *cell_id, u8 *val)
+> +{
+> +	return -EOPNOTSUPP;
+> +}
+> +
+>   static inline int nvmem_cell_read_u16(struct device *dev,
+>   				      const char *cell_id, u16 *val)
+>   {
