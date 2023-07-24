@@ -2,109 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24939760229
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 00:23:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A00D76024F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 00:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229748AbjGXWXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 18:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51224 "EHLO
+        id S230297AbjGXWb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 18:31:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231448AbjGXWW6 (ORCPT
+        with ESMTP id S230251AbjGXWb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 18:22:58 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE197199C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 15:22:21 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b962535808so68666621fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 15:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690237333; x=1690842133;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=358vZqiTvej61X45civfUiKJd7hpr9GfM3mB5tO/1oY=;
-        b=CWyKsn+fyo8A461uDHxlWqqNhJomz0p6jdiOowLbkzTOopNmfoNhBambSUtyEO5LNP
-         8ZQxB7OKJaeWWTdMhye3/FhUuSUb6YLLGS6tLS8eTeyjps6Os2KMTEOOdQUN1ADiCs3y
-         tA0O7NC2tWbxVi7BepJAcNSNZkhixC7NKrkyP0vhsnEwjCiYipyYGlcql329pVK4BS47
-         IfmJj/dcHadTRR7pUVMVGXVFDeOJiREG11Vvrqk5HFB7zqjuhkzKS+VYHT76+UwT2Gws
-         qaFPHFJZm9lmjfRt0gfHRI/55a+4obs2xjmHv1pvycZ69nHjRtSM9uYLS680TirWHpGK
-         c0cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690237333; x=1690842133;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=358vZqiTvej61X45civfUiKJd7hpr9GfM3mB5tO/1oY=;
-        b=gScZnML4+9CycDLd+rXY3cWV/MhORMEIV8jSpk1oG/Ud82DgtDoEve48rp5Q0Mmm4o
-         +UoB5s3eUqJiFUUd1yLn9HxWvfKYSdDaukI1G7I6IOLjaT6AbUsTlSpDbA0f8HEOvfhO
-         KGItMMby5B5QaJ61iEzwzmRatJycajs3go7Xd3doGXsTRGJOvmeGqMSeyfx1n2Na8bfT
-         jdClZ32ezofmmY3HxUB/bjNA0FBBn0Djl12vjB53sua4TuaL0nL8/KBAeZ3v/hDPU1+X
-         mRRPoTwxmzYJFU6kjSN+SF46u5JzixwvVkfNufgxocaiZ59OtBTGm+FCKOGe9sCyR7PS
-         kgbg==
-X-Gm-Message-State: ABy/qLb/0hsM74WaH663lPoj336JEJBIKZGx7OermDw0mpLpJwRyqHpP
-        gmbNsjfMNZnLHRLOfAzJUnLSHw==
-X-Google-Smtp-Source: APBJJlGRGPfacjmUq1tdWpenzld24E4eJsyR1C29jO0mKIDTugwb8qJZ+ixEzpUc6MmlTv/TGWeMgQ==
-X-Received: by 2002:a05:6512:2036:b0:4f6:d7b:2f19 with SMTP id s22-20020a056512203600b004f60d7b2f19mr5787071lfs.24.1690237332390;
-        Mon, 24 Jul 2023 15:22:12 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id x27-20020ac25ddb000000b004fbb69d8791sm2391586lfq.79.2023.07.24.15.22.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jul 2023 15:22:11 -0700 (PDT)
-Message-ID: <7b250095-8245-53be-e593-cecbc3cc6763@linaro.org>
-Date:   Tue, 25 Jul 2023 01:22:11 +0300
+        Mon, 24 Jul 2023 18:31:28 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 335BD10E3;
+        Mon, 24 Jul 2023 15:31:26 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36OMIQEw029962;
+        Mon, 24 Jul 2023 22:31:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=tgztBj0/mJz03MJdJCZ9JHhqYfeG+XgYMvyAdd3/QYQ=;
+ b=Jolm/4Pto6H89NYXkiAY7sBP8McF6X5D9RAED5RaPWKCwo+tYb5IKqLr+XFMNtMTImxU
+ v3qJM0Wh54TbYkdZE8XdI0IFNy7zGmbi2xxz0Fkih90YqWfSTBD66xncYYTU/9W88nWU
+ 3EjL7oCmuaX9XvuP2ie1MBnWiKm75Z38e+jerYhu4f9+1COlGo6bVR9x+HpZheZVX8yb
+ Pp9ERQ2abZHJ99Vg6l3lXEt2k/tcekPjt//TXmDv/t72w1TcXj2pRGlT6V7O3tCMqDVG
+ IhMecU7/iAWvixQcBzOgqDMjom+vBHQXPtE7JAnQuaj1IrU+ZnUsJnfWTuyYS0yzgCaq mQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1v6u8w4c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Jul 2023 22:31:16 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36OMVE3b005283
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Jul 2023 22:31:14 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 24 Jul 2023 15:31:14 -0700
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        "Prasad Sodagudi" <quic_psodagud@quicinc.com>
+Subject: [RFC PATCH 0/4] Implement a PSCI SYSTEM_RESET2 reboot-mode driver
+Date:   Mon, 24 Jul 2023 15:30:50 -0700
+Message-ID: <20230724223057.1208122-1-quic_eberman@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 14/25] iommu/msm: Implement an IDENTITY domain
-Content-Language: en-GB
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-References: <14-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <14-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: AJZTyLSqDAycFmRx5BX6rUgsWlnPQb9X
+X-Proofpoint-GUID: AJZTyLSqDAycFmRx5BX6rUgsWlnPQb9X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-24_16,2023-07-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ priorityscore=1501 mlxlogscore=844 lowpriorityscore=0 impostorscore=0
+ mlxscore=0 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307240196
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -113,85 +85,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/07/2023 20:22, Jason Gunthorpe wrote:
-> What msm does during omap_iommu_set_platform_dma() is actually putting the
+PSCI implements a restart notifier for architectural defined resets.
+The SYSTEM_RESET2 call allows vendor firmware to define additional reset
+types which could be mapped to the reboot reason.
 
-typo: msm driver doesn't use/provide omap_iommu_set_platform_dma().
+Implement a driver to wire the reboot-mode framework to make vendor
+SYSTEM_RESET2 calls on reboot.
 
-> iommu into identity mode.
-> 
-> Move to the new core support for ARM_DMA_USE_IOMMU by defining
-> ops->identity_domain.
-> 
-> This driver does not support IOMMU_DOMAIN_DMA, however it cannot be
-> compiled on ARM64 either. Most likely it is fine to support dma-iommu.c
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/msm_iommu.c | 23 +++++++++++++++++++----
->   1 file changed, 19 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-> index 79d89bad5132b7..26ed81cfeee897 100644
-> --- a/drivers/iommu/msm_iommu.c
-> +++ b/drivers/iommu/msm_iommu.c
-> @@ -443,15 +443,20 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
->   	return ret;
->   }
->   
-> -static void msm_iommu_set_platform_dma(struct device *dev)
-> +static int msm_iommu_identity_attach(struct iommu_domain *identity_domain,
-> +				     struct device *dev)
->   {
->   	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
-> -	struct msm_priv *priv = to_msm_priv(domain);
-> +	struct msm_priv *priv;
->   	unsigned long flags;
->   	struct msm_iommu_dev *iommu;
->   	struct msm_iommu_ctx_dev *master;
-> -	int ret;
-> +	int ret = 0;
->   
-> +	if (domain == identity_domain || !domain)
-> +		return 0;
-> +
-> +	priv = to_msm_priv(domain);
->   	free_io_pgtable_ops(priv->iop);
->   
->   	spin_lock_irqsave(&msm_iommu_lock, flags);
-> @@ -468,8 +473,18 @@ static void msm_iommu_set_platform_dma(struct device *dev)
->   	}
->   fail:
->   	spin_unlock_irqrestore(&msm_iommu_lock, flags);
-> +	return ret;
->   }
->   
-> +static struct iommu_domain_ops msm_iommu_identity_ops = {
-> +	.attach_dev = msm_iommu_identity_attach,
-> +};
-> +
-> +static struct iommu_domain msm_iommu_identity_domain = {
-> +	.type = IOMMU_DOMAIN_IDENTITY,
-> +	.ops = &msm_iommu_identity_ops,
-> +};
-> +
->   static int msm_iommu_map(struct iommu_domain *domain, unsigned long iova,
->   			 phys_addr_t pa, size_t pgsize, size_t pgcount,
->   			 int prot, gfp_t gfp, size_t *mapped)
-> @@ -675,10 +690,10 @@ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
->   }
->   
->   static struct iommu_ops msm_iommu_ops = {
-> +	.identity_domain = &msm_iommu_identity_domain,
->   	.domain_alloc = msm_iommu_domain_alloc,
->   	.probe_device = msm_iommu_probe_device,
->   	.device_group = generic_device_group,
-> -	.set_platform_dma_ops = msm_iommu_set_platform_dma,
->   	.pgsize_bitmap = MSM_IOMMU_PGSIZES,
->   	.of_xlate = qcom_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
+This is a continuation from https://lore.kernel.org/all/4a679542-b48d-7e11-f33a-63535a5c68cb@quicinc.com/
 
+Elliot Berman (4):
+  power: reset: reboot-mode: Allow magic to be 0
+  power: reset: reboot-mode: Wire reboot_mode enum to magic
+  dt-bindings: power: reset: Document arm,psci-vendor-reset
+  power: reset: Implement a PSCI SYSTEM_RESET2 reboot-mode driver
+
+ .../power/reset/arm,psci-vendor-reset.yaml    | 35 +++++++++++++
+ MAINTAINERS                                   |  2 +
+ drivers/firmware/psci/psci.c                  |  9 ++++
+ drivers/power/reset/Kconfig                   |  9 ++++
+ drivers/power/reset/Makefile                  |  1 +
+ drivers/power/reset/psci-vendor-reset.c       | 49 +++++++++++++++++++
+ drivers/power/reset/reboot-mode.c             | 44 ++++++++++++-----
+ include/linux/psci.h                          |  2 +
+ 8 files changed, 139 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+ create mode 100644 drivers/power/reset/psci-vendor-reset.c
+
+
+base-commit: 6eaae198076080886b9e7d57f4ae06fa782f90ef
 -- 
-With best wishes
-Dmitry
+2.41.0
 
