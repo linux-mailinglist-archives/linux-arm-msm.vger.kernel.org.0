@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 386C175FB04
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 17:41:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BE8375FB33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jul 2023 17:51:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbjGXPlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 11:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56312 "EHLO
+        id S231203AbjGXPvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 11:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjGXPlk (ORCPT
+        with ESMTP id S229557AbjGXPvy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 11:41:40 -0400
+        Mon, 24 Jul 2023 11:51:54 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7DAB7;
-        Mon, 24 Jul 2023 08:41:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0A1B0;
+        Mon, 24 Jul 2023 08:51:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D571560C49;
-        Mon, 24 Jul 2023 15:41:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBE2C433C8;
-        Mon, 24 Jul 2023 15:41:38 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8D33C6121B;
+        Mon, 24 Jul 2023 15:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1141C433C7;
+        Mon, 24 Jul 2023 15:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690213298;
-        bh=FwmJyUFEwRmW6GyLKrRzaoOIFKD1ZixYyekFLFBjYm8=;
+        s=k20201202; t=1690213913;
+        bh=b5CSWJ2CN7mIvSTFkNHVm5+ARyCjUmz+Ym1Av0lBizM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KxZNmLvGWF0DcvPN5zy994G1T8upsOy4oNv0aa5nIm9dPf/QVVpQZn848TRZ1rklg
-         3W1Bdkz6crdOaUKTZJTf63y+9/GThMSsqtya4Gl9U9YgsTgm0RLlGuHo6H6C5/1VaI
-         9zWORpzVrZesTnVYEsypK7vADRQiw93qJVtLfSG/JjoSJ1ZfB0015D7Sf5a4wKrXe/
-         kGnkkRJY/FoAVIib6/IqSS/08ZYLBSqS8CQiwQ60ySUCkGDBDg5Xc9nf4w7qQK40yc
-         siMJJO9hrCcKMdsVuPTxhP/ROnUDZe+VLzRnAYTnPhxlJIsHxIQqHdOGfX/Oe4wP9Y
-         91yoKaZiERL/Q==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qNxgz-0005Ey-0h;
-        Mon, 24 Jul 2023 17:41:49 +0200
-Date:   Mon, 24 Jul 2023 17:41:49 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 03/10] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <ZL6bvQkBUsFErpXd@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-4-quic_kriskura@quicinc.com>
- <ZJrL5SXrSiYbvq2o@hovoldconsulting.com>
- <e225fa01-c3be-8bfc-03de-59b507c70d3b@quicinc.com>
+        b=TXD5MB8XPeAVQ/uXBgeHPBx+SqOjCq6GTFGrB6hIgMgSUrUcZNh6Nz0OWy7hZ4VdQ
+         YhgrI9Z+5iMFqBWgw1L7wV8nDCErRGq92kM9BGX2fpg6p1JOUPrDNX4DvTeG6jUs7o
+         vd6/jrEII0DKAIKJWzaV5K1kLEmLnhMroDzXKS2qQEIXMdhhgOK7DJtxMcNCbNsW4y
+         e8LPpjAwMH+VSlelMlK/BJTWB0NRNZVG0Ora84ArsSitiyCPWAoU7qDspCs4q7KF46
+         Fx2Zr11O2Kt95eAeqWwDtMwPF9LkgOoUugm/tob1I3PrT79Sc/D6fs7dp1grmX/ukl
+         nHro6ZYCWUZ/g==
+Received: (nullmailer pid 3607201 invoked by uid 1000);
+        Mon, 24 Jul 2023 15:51:48 -0000
+Date:   Mon, 24 Jul 2023 09:51:48 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     conor+dt@kernel.org, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_ziqichen@quicinc.com,
+        linux-pm@vger.kernel.org, nm@ti.com, quic_bhaskarv@quicinc.com,
+        martin.petersen@oracle.com, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, quic_asutoshd@quicinc.com,
+        alim.akhtar@samsung.com, vireshk@kernel.org,
+        kyungmin.park@samsung.com, jejb@linux.ibm.com, bvanassche@acm.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        quic_cang@quicinc.com, linux-arm-msm@vger.kernel.org,
+        myungjoo.ham@samsung.com, andersson@kernel.org, sboyd@kernel.org,
+        linux-scsi@vger.kernel.org, cw00.choi@samsung.com,
+        krzysztof.kozlowski@linaro.org, avri.altman@wdc.com,
+        bmasney@redhat.com, quic_narepall@quicinc.com
+Subject: Re: [PATCH v2 02/15] dt-bindings: opp: Increase maxItems for opp-hz
+ property
+Message-ID: <169021390783.3607138.9583713600185509839.robh@kernel.org>
+References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+ <20230720054100.9940-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e225fa01-c3be-8bfc-03de-59b507c70d3b@quicinc.com>
+In-Reply-To: <20230720054100.9940-3-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,27 +71,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[ Please remember to trim your replies. ]
 
-On Sun, Jul 23, 2023 at 08:29:47PM +0530, Krishna Kurapati PSSNV wrote:
-> On 6/27/2023 5:15 PM, Johan Hovold wrote:
-> > On Wed, Jun 21, 2023 at 10:06:21AM +0530, Krishna Kurapati wrote:
-
-> >> +#define XHCI_EXT_PORT_MAJOR(x)	(((x) >> 24) & 0xff)
-> >> +#define XHCI_EXT_PORT_MINOR(x)	(((x) >> 16) & 0xff)
-> >> +#define XHCI_EXT_PORT_COUNT(x)	(((x) >> 8) & 0xff)
-> > 
-> > Again, don't copy defines from xhci.
-> > 
-> > Looks like these should be moved to the xhci-ext-caps.h header along
-> > with struct xhci_protocol_caps.
+On Thu, 20 Jul 2023 11:10:47 +0530, Manivannan Sadhasivam wrote:
+> Current limit of 16 will be exhausted by platforms specifying the frequency
+> for 9 clocks using opp-hz, like Qcom SDM845 SoC. For instance, specifying
+> the frequency for 9 clocks with 64bit specifier as below would consume
+> (9 * 2 = 18) items.
 > 
-> Moving the defines would be sufficient right ? Just wanted to know if 
-> there is any reason you are suggesting to move the structure as well so 
-> that I can update commit text accordingly.
+> 	opp-50000000 {
+> 		opp-hz = /bits/ 64 <50000000>,
+> 			 /bits/ 64 <0>,
+> 			 /bits/ 64 <0>,
+> 			 /bits/ 64 <37500000>,
+> 			 /bits/ 64 <0>,
+> 			 /bits/ 64 <0>,
+> 			 /bits/ 64 <0>,
+> 			 /bits/ 64 <0>,
+> 			 /bits/ 64 <75000000>;
+> 	};
+> 
+> So let's increase the limit to 32 which should be enough for most platforms
+> (hopefully).
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/opp/opp-v2-base.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-The defines are used for parsing the members of struct
-xhci_protocol_caps and they belong together even if no driver has
-apparently ever used the structure.
+Acked-by: Rob Herring <robh@kernel.org>
 
-Johan
