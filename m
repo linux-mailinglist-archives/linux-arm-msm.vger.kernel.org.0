@@ -2,154 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C8B9761D0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 17:13:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E29E761DF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 18:03:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbjGYPNY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 11:13:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42690 "EHLO
+        id S229969AbjGYQDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 12:03:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbjGYPNX (ORCPT
+        with ESMTP id S229623AbjGYQDl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 11:13:23 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EF8B199E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 08:13:22 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso83502201fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 08:13:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1690298000; x=1690902800;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NZUa3uDyejgNax81C3rf+wIL3cUgqBQKB2P7I+aBclw=;
-        b=NQOD2mWnBowq+ozvEKVBIM+8v7Qy1UbZrB+FkUXRPEsdZffMYs2hxTj/EH+lXgqiFP
-         Ewz8znFmQoP+t01nNMzyyS1KAIgYVRAfV0P0DLFXNm01yyjqLz69Dao/wnGXDpFOMtEZ
-         nqaw/dnNCKw+9ojsBIjvgeEL7EewJQANuHaQU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690298000; x=1690902800;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NZUa3uDyejgNax81C3rf+wIL3cUgqBQKB2P7I+aBclw=;
-        b=bWHW6C4NsLHQEz+Z/R3m/Nvza+UsM/GIFD1ZZjFuXmwxmYtw7VNxH4l2s8z2kdZDER
-         2N7MWs/FFAonnjLYlxlFTgprVAJ1a7KW0+OLaYbLZjDbYd5AmEGtwM6goqUWht/ANWGN
-         dpsxX039O/f79arMCwpU9WuoChNpqytJAwdQHueoQWFBNBrCVubLC7ddvAPR7Y19sl7P
-         slDOsoQyO9pWav4hGEM1G1gpJGSk8JHvOmov8YTmMzqHiHOPRIdWqVowqItVq1YdxhtU
-         cLw1xXEZMtvd8h2OM6uD2GQajktH9/CNNQ+h5Vn0VozOj2AdhmVjgHuZsOLcSC8OFg17
-         kfMA==
-X-Gm-Message-State: ABy/qLauolCXkxdneDXdZwPsWJdbHuN2vxjN6IhehG65BtrzyMvzsuNj
-        +R8rNwENX888Lz9pYNEKSM1Jp0/H3lKpqkNkQZ8bKmVd
-X-Google-Smtp-Source: APBJJlHCYEoUPGIw2h7dPKLXQfbdz2+IpR61XyuEsYeqzdvjVyea/4MCe6c20j6RghOHYr+NSqbHEQ==
-X-Received: by 2002:a05:651c:1036:b0:2b5:7a87:a85a with SMTP id w22-20020a05651c103600b002b57a87a85amr7720678ljm.13.1690297999997;
-        Tue, 25 Jul 2023 08:13:19 -0700 (PDT)
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com. [209.85.167.52])
-        by smtp.gmail.com with ESMTPSA id f17-20020a2ea0d1000000b002b97fe43238sm2555954ljm.19.2023.07.25.08.13.19
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 08:13:19 -0700 (PDT)
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-4f14865fcc0so3289e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 08:13:19 -0700 (PDT)
-X-Received: by 2002:a50:d55c:0:b0:51e:16c5:2004 with SMTP id
- f28-20020a50d55c000000b0051e16c52004mr113153edj.6.1690297603084; Tue, 25 Jul
- 2023 08:06:43 -0700 (PDT)
+        Tue, 25 Jul 2023 12:03:41 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F00E77;
+        Tue, 25 Jul 2023 09:03:40 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PBT4fa008504;
+        Tue, 25 Jul 2023 16:03:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Kp0a7lNAXCXaM8NaCeuOTfXgKtq0h3njcXHRACkc6RA=;
+ b=pVeOUDSNgLJjyyxwjIZh/WhGaMLec4TRU8/x/Whd5Ua08QMVlZ8amakEE4KsX4KqUusS
+ eQhWd9Hz6++7ew8S7MDwaMvGwceV52GeNDNDDjkpPKctB7jROXmM64XBse22V7Y36PVz
+ QZk0/s8yok98T+ISn1xkORO/8fhekpSU3x+PNjsZXUQQtBFjda7abKNFqcZT25E/1Tua
+ hcqy7lGUewx1CwqxGfWgsFkQdEfCwkxK14Oc/blRFNJ0nbYtgriyzHj+hI//Vl0Y8EXw
+ Z0jqF6A+2coI6/+0pvXIc+PfcM/n3UlMIrk3AHCD5t3qkE+cTl21OE+DCehQpc0WWwmv mA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s29j5ha4a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 16:03:35 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PG3X9c012883
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 16:03:33 GMT
+Received: from [10.110.68.194] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
+ 2023 09:03:32 -0700
+Message-ID: <1276e614-0c2a-f8a6-d7a0-1fa228eea476@quicinc.com>
+Date:   Tue, 25 Jul 2023 09:03:26 -0700
 MIME-Version: 1.0
-References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org> <20230627-topic-more_bindings-v1-1-6b4b6cd081e5@linaro.org>
-In-Reply-To: <20230627-topic-more_bindings-v1-1-6b4b6cd081e5@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 25 Jul 2023 08:06:25 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WsWyTWk8W23PEgw7vXWpLDCih1kGZHkqYCNHLFOPrkGw@mail.gmail.com>
-Message-ID: <CAD=FV=WsWyTWk8W23PEgw7vXWpLDCih1kGZHkqYCNHLFOPrkGw@mail.gmail.com>
-Subject: Re: [PATCH 01/11] arm64: dts: qcom: sc7180: Fix DSI0_PHY reg-names
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Benjamin Li <benl@squareup.com>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Zac Crosby <zac@squareup.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Jun Nie <jun.nie@linaro.org>, Max Chen <mchen@squareup.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        alsa-devel@alsa-project.org, iommu@lists.linux.dev,
-        linux-usb@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh@kernel.org>,
-        Andy Gross <andy.gross@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH][next] accel/qaic: remove redundant assignment to pointer
+ pexec
+Content-Language: en-US
+To:     Colin Ian King <colin.i.king@gmail.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+CC:     <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230725114037.36806-1-colin.i.king@gmail.com>
+From:   Carl Vanderlip <quic_carlv@quicinc.com>
+In-Reply-To: <20230725114037.36806-1-colin.i.king@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yn6pno17VELBkxADUY_tmokJEazIHOMG
+X-Proofpoint-GUID: yn6pno17VELBkxADUY_tmokJEazIHOMG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_08,2023-07-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=692 phishscore=0 clxscore=1011
+ mlxscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250140
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Tue, Jun 27, 2023 at 9:24=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> Commit 2b616f86d51b ("arm64: dts: qcom: sc7180: rename labels for DSI
-> nodes") broke reg-names, possibly with search-and-replace. Fix it.
->
-> Fixes: 2b616f86d51b ("arm64: dts: qcom: sc7180: rename labels for DSI nod=
-es")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> index 34eff97f8630..b9640574e73b 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3120,8 +3120,8 @@ mdss_dsi0_phy: phy@ae94400 {
->                                 reg =3D <0 0x0ae94400 0 0x200>,
->                                       <0 0x0ae94600 0 0x280>,
->                                       <0 0x0ae94a00 0 0x1e0>;
-> -                               reg-names =3D "dsi0_phy",
-> -                                           "dsi0_phy_lane",
-> +                               reg-names =3D "dsi_phy",
-> +                                           "dsi_phy_lane",
+On 7/25/2023 4:40 AM, Colin Ian King wrote:
+> Pointer pexec is being assigned a value however it is never read. The
+> assignment is redundant and can be removed.
+> 
+> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
 
-I noticed that this patch got applied [1], but I think it got put into
-a branch targeting 6.6 instead of 6.5. Specifically I see it in
-"arm64-for-6.6" but not "arm64-fixes-for-6.5". Any chance it could be
-landed in a "Fixes" tree and get sent out sooner rather than later?
-v6.5 will be pretty broken without it and it would be nice to see it
-in Linus's tree sooner rather than later.
-
-[1] https://lore.kernel.org/r/168896565982.1376307.13166434967387866925.b4-=
-ty@kernel.org
-
-Thanks!
-
--Doug
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
