@@ -2,190 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7A8F76239F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:38:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3337F762362
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:36:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231396AbjGYUh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 16:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35122 "EHLO
+        id S230323AbjGYUgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 16:36:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229874AbjGYUhi (ORCPT
+        with ESMTP id S229495AbjGYUgH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 16:37:38 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D39752D4E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:20 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-55b22f82ac8so172175a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1690317440; x=1690922240;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kZ7YK7+MOq9X+RTweOdEeLPvYNyqsXxq2qSFOs1mT3s=;
-        b=BuN5tKldtTLx2sEHuuuAagR2QfiguR7+L5jScpcBlZCtNRwzluFw4euj+TZAsdvP26
-         EDACAv0XTZF3vF/p2//utmh8C9vbXaUnVYNuAmPvGVxAktKJPkiFXYmd2itCZRx075gV
-         Jy580G+wiVMstRe0Eq3zIfvwRU2mZmMau5NKA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690317440; x=1690922240;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kZ7YK7+MOq9X+RTweOdEeLPvYNyqsXxq2qSFOs1mT3s=;
-        b=c8NGXZyrk3+Fbq04eD6zC7/9XUM2G7CBzKNJBEsCPLMd32OGviu93qvoY/1GomCwtP
-         Q1ljn3cFtiogc8MALJ6NCNUfK+Aa4ydb56+y8mucKxurIFwP39pRxrADVb5Asake3hve
-         nEFKi0/Suf8rnv0OCJDMVIyES8SE6bsGXEDcvXcF6vIsaEiLRTxHYiH0NWJxoq2u6j0y
-         +esqnZiJjw98Ry3tf88SGNaZ+hO8VHiSu7VtapLGqE9fbf6RgKDSKYB6B2pK3BC2C67f
-         VHLxvKPapblt0hXtsVYmau2dX2EUker+P+TDDrQLpHbiPhzCSu7D0u/ZdbgDsHYGVIUe
-         OPbA==
-X-Gm-Message-State: ABy/qLbOblhiYXJOUuUSgpGpxdpfJgFOThqazeutXug2AJs1oo7vcmSc
-        YfxUY6++woWmf9T5IQotG8/41A==
-X-Google-Smtp-Source: APBJJlEgCBbPkr5YZubPWhaNBGqUI6g2VhIUIc6BoH6rzAKhCVoah7Aeybahr/mZ0cE03NvH+GwQSA==
-X-Received: by 2002:a17:90b:1d90:b0:268:3ca4:6152 with SMTP id pf16-20020a17090b1d9000b002683ca46152mr180277pjb.15.1690317439920;
-        Tue, 25 Jul 2023 13:37:19 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:c363:4681:f5b8:301])
-        by smtp.gmail.com with ESMTPSA id bg1-20020a17090b0d8100b002676e961261sm1396951pjb.1.2023.07.25.13.37.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 13:37:18 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Chris Morgan <macroalpha82@gmail.com>,
-        linux-input@vger.kernel.org, hsinyi@google.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Tue, 25 Jul 2023 16:36:07 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4287910F7;
+        Tue, 25 Jul 2023 13:36:06 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C7DF1618E6;
+        Tue, 25 Jul 2023 20:36:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E588C433C7;
+        Tue, 25 Jul 2023 20:36:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690317365;
+        bh=1WJsY6Fxk5xmArM3laXI1PCdA9a886qjCfbmt+ZVyyU=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=VqyStHAFMnUrprjRv35DS+uFXeG+gFpuZOWQdNng/kOiXg70JjB4ON3htuYfUOH3A
+         yqF0dbOi7V+HNHoN1gwYpimZ9mAIs+PWwIFDVPTzweN12pfyBDzoJH01exIKVJRQWd
+         UALFhYuZwor7CTdpigNZkXpDOiEUAwnHrit7dNsD3clAq7tUW7+kPb8pNaKm9WIOBR
+         KKrx++EqECbVYkb8BRN/3+ZUf/YCOjxjoDPapbqqSqYGCXXA/RN5ct5jj8Hi5tmgUd
+         K/KokBnm4R2mmbmu7Fz+dGv0dhItGmT1tZYmHGvhSK14ftvA8wuvcF6+a88ZTOdXIR
+         LL+xvxFwOSX1Q==
+From:   Mark Brown <broonie@kernel.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        yangcong5@huaqin.corp-partner.google.com,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v3 10/10] arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
-Date:   Tue, 25 Jul 2023 13:34:45 -0700
-Message-ID: <20230725133443.v3.10.Ia06c340e3482563e6bfd3106ecd0d3139f173ca4@changeid>
-X-Mailer: git-send-email 2.41.0.487.g6d72f3e995-goog
-In-Reply-To: <20230725203545.2260506-1-dianders@chromium.org>
-References: <20230725203545.2260506-1-dianders@chromium.org>
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com,
+        dan.carpenter@linaro.org
+In-Reply-To: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com>
+References: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com>
+Subject: Re: [PATCH 0/4] spi: spi-qcom-qspi: Follow-up patches to DMA mode
+ support
+Message-Id: <169031736194.1617289.5213259488916570827.b4-ty@kernel.org>
+Date:   Tue, 25 Jul 2023 21:36:01 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-099c9
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's provide the proper link from the touchscreen to the panel on
-trogdor devices where the touchscreen support it. This allows the OS
-to power sequence the touchscreen more properly.
+On Tue, 25 Jul 2023 17:18:05 +0530, Vijaya Krishna Nivarthi wrote:
+> This patch series adds 4 follow-up changes to DMA mode support.
+> 1. Handles write failure in some cases by averting a race condition
+> 2. Handles static checker warning
+> 3. Adds a memory barrier to avoid a possible data out of sync case
+> 4. Book keeping change
+> 
+> Vijaya Krishna Nivarthi (4):
+>   spi: spi-qcom-qspi: Ignore disabled interrupts' status in isr
+>   spi: spi-qcom-qspi: Use GFP_ATOMIC flag while allocating for
+>     descriptor
+>   spi: spi-qcom-qspi: Call dma_wmb() after setting up descriptors
+>   spi: spi-qcom-qspi: Add DMA_CHAIN_DONE to ALL_IRQS
+> 
+> [...]
 
-For the most part, this is just expected to marginally improve power
-consumption while the screen is off. However, in at least one trogdor
-model (wormdingler) it's suspected that this will fix some behavorial
-corner cases when the panel power cycles (like for a modeset) without
-the touchscreen power cycling.
+Applied to
 
-NOTE: some trogdor variants use touchscreens that don't (yet) support
-linking the touchscreen and the panel. Those variants are left alone.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+Thanks!
 
-(no changes since v1)
+[1/4] spi: spi-qcom-qspi: Ignore disabled interrupts' status in isr
+      commit: 17aaf9ea07b656016316dc37716e987742b3e296
+[2/4] spi: spi-qcom-qspi: Use GFP_ATOMIC flag while allocating for descriptor
+      commit: f7ba36d399c4558f36886adff9400be591b245f6
+[3/4] spi: spi-qcom-qspi: Call dma_wmb() after setting up descriptors
+      commit: cfb81f2243b25a0d79accc6510ad66c5c5ad99ba
+[4/4] spi: spi-qcom-qspi: Add DMA_CHAIN_DONE to ALL_IRQS
+      commit: 916a4edf3daed845b1e5d6cf0578a7e43c6f520e
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi        | 1 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi      | 1 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi         | 1 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi        | 1 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi   | 1 +
- 6 files changed, 6 insertions(+)
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 8b8ea8af165d..b4f328d3e1f6 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -104,6 +104,7 @@ ap_ts: touchscreen@5d {
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
- 
-+		panel = <&panel>;
- 		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
- 
- 		vdd-supply = <&pp3300_ts>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index b3ba23a88a0b..88aeb415bd5b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -116,6 +116,7 @@ ap_ts: touchscreen@14 {
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
- 
-+		panel = <&panel>;
- 		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
- 
- 		vdd-supply = <&pp3300_touch>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 269007d73162..c65f18ea3e5c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -43,6 +43,7 @@ ap_ts: touchscreen@10 {
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
- 
-+		panel = <&panel>;
- 		post-power-on-delay-ms = <20>;
- 		hid-descr-addr = <0x0001>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index 6c5287bd27d6..d2aafd1ea672 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -102,6 +102,7 @@ ap_ts: touchscreen@10 {
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
- 
-+		panel = <&panel>;
- 		post-power-on-delay-ms = <20>;
- 		hid-descr-addr = <0x0001>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-index 62ab6427dd65..e5d6a7898f8c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-@@ -69,6 +69,7 @@ ap_ts: touchscreen@10 {
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
- 
-+		panel = <&panel>;
- 		post-power-on-delay-ms = <20>;
- 		hid-descr-addr = <0x0001>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-index 2efa8a4bcda6..0e2b4d06b490 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-@@ -123,6 +123,7 @@ ap_ts: touchscreen@1 {
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <9 IRQ_TYPE_EDGE_FALLING>;
- 
-+		panel = <&panel>;
- 		post-power-on-delay-ms = <70>;
- 		hid-descr-addr = <0x0001>;
- 
--- 
-2.41.0.487.g6d72f3e995-goog
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
