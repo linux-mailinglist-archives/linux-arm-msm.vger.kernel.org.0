@@ -2,151 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 964D6762258
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 21:36:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE305762299
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 21:47:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230321AbjGYTgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 15:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34746 "EHLO
+        id S230226AbjGYTrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 15:47:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230193AbjGYTf7 (ORCPT
+        with ESMTP id S229587AbjGYTrV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 15:35:59 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BD611FF7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 12:35:58 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51e619bcbf9so7819913a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 12:35:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1690313754; x=1690918554;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gclOxOI7R55sgWeaMlz/Z0n4pJQKGgWmP/XSgabn5CQ=;
-        b=d4QLpyD3un3dapKm8HJW4wcTeMoP9vd5EQ+cG7vzlfCbHWgToVF5CWS67zGoWKtKHJ
-         qHx5QaJW0dPKK7BH7Cn9VZAo83DkRuMDBW8nyIUls5EWqwi8MZQmqEalSS1iTVlLnc/P
-         CPGDShTPMcYfjCWofWuc2iEXLIZ07cwS8gD/c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690313754; x=1690918554;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gclOxOI7R55sgWeaMlz/Z0n4pJQKGgWmP/XSgabn5CQ=;
-        b=ct+RR8cZC96VeUtWDa6+dfgWKXfRuN+doOCK5VlAFStJ3CBL6yo6phSVgOKYVJ6Fbg
-         J4G5ujdlfYjbvjMQl4HuWVO4BRxIsL5i4xCoTlR2YIy6bjMnrbHWqnNINyRAWea93aPV
-         gTmsVFlNZ6bxNMPfJ+43HAOYJahysJqUZP0dpyJ9NJblN//hAIgVgX5yz669TZQPP/Ac
-         YZfQ5SY3FU1IQkZaffyfRGkteZvN6bqqkvzXKz7ji9yYpI5qV+f99OwqfD1KwrDc4LTl
-         gqJIEuwFonBsKL6XVQlfZQy1V+32qZiTbTIaMfGOuKuqiNBhJn3lGLGQojTpBxONHLmK
-         2AdQ==
-X-Gm-Message-State: ABy/qLZzMk551zDOyEGXhfecM59ia4vWREarkJrFkns/22Jf3odh7OkT
-        EdSX4R5dB7gIBb0aW++82a6oonSRmwQ0xBQcxL3bYDnt
-X-Google-Smtp-Source: APBJJlF3De/+8paWmD6HIUgxIhg01/vDUhwaW7+cTYWFT3FvEvZgM5bdl9fBGn0NkMvKimXtLFe3Lg==
-X-Received: by 2002:a17:906:259:b0:965:6075:d0e1 with SMTP id 25-20020a170906025900b009656075d0e1mr13478333ejl.72.1690313753603;
-        Tue, 25 Jul 2023 12:35:53 -0700 (PDT)
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com. [209.85.208.51])
-        by smtp.gmail.com with ESMTPSA id lv19-20020a170906bc9300b00989257be620sm8465145ejb.200.2023.07.25.12.35.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 12:35:52 -0700 (PDT)
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5223910acf2so3135a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 12:35:52 -0700 (PDT)
-X-Received: by 2002:a50:9514:0:b0:519:7d2:e256 with SMTP id
- u20-20020a509514000000b0051907d2e256mr170514eda.0.1690313752109; Tue, 25 Jul
- 2023 12:35:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230725084633.67179-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230725084633.67179-1-krzysztof.kozlowski@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 25 Jul 2023 12:35:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xt26=rBf99mzkAuwwtb2f-jnKtnHaEhXnthz0a5zke4Q@mail.gmail.com>
-Message-ID: <CAD=FV=Xt26=rBf99mzkAuwwtb2f-jnKtnHaEhXnthz0a5zke4Q@mail.gmail.com>
-Subject: Re: [PATCH RFT] arm64: dts: qcom: sc7280: drop incorrect EUD port on
- SoC side
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Tue, 25 Jul 2023 15:47:21 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8141FF7;
+        Tue, 25 Jul 2023 12:47:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690314440; x=1721850440;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=iYyiH/seA0PV9vabelhVPt3S47rffBj5ZGMDDUyw+Zc=;
+  b=lgQqLgIuTEXosrHhlKsc7suUSA3sgt61TiUH8+MkdYLPr1iKBAGATHD8
+   JCqK1nguofoaIz7285Y9ZtTjr7B5ec9jSUMsuVSRjGuXWgzx8shDTTbJa
+   ARAade3SCXncaNy5Ft1QpBxhIhlWfVAXb3FMWLXKCL+lmV7OvjZAPm+Ag
+   AggiUNvjsfyAskoD1uST/CIOFuTrkeByUAi26+TVaqS+5BfxbH0AFy/1J
+   afOyUeaTFlRVUzywe+GxEbAAWurTY6Nsz7nOQK0csq9Yw7TLRl61cBa7h
+   13tvhEPTPno/6fr/kK1oaDtwLAfeMbBcQvPSUz6DI/wsN2+1sO3sWDy3t
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10782"; a="366710901"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="366710901"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 12:47:19 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10782"; a="839957352"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="839957352"
+Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
+  by fmsmga002.fm.intel.com with ESMTP; 25 Jul 2023 12:47:15 -0700
+Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qOO02-0000IH-1J;
+        Tue, 25 Jul 2023 19:47:14 +0000
+Date:   Wed, 26 Jul 2023 03:46:55 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev, Tao Zhang <quic_taozha@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+Subject: Re: [PATCH v7 08/13] coresight-tpdm: Add node to set dsb programming
+ mode
+Message-ID: <202307260312.vf3OCV58-lkp@intel.com>
+References: <1690269353-10829-9-git-send-email-quic_taozha@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1690269353-10829-9-git-send-email-quic_taozha@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Tao,
 
-On Tue, Jul 25, 2023 at 1:46=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Qualcomm Embedded USB Debugger (EUD) second port should point to Type-C
-> USB connector.  Such connector was defined directly in root node of
-> sc7280.dtsi which is clearly wrong.  SC7280 is a chip, so physically it
-> does not have USB Type-C port.  The connector is usually accessible
-> through some USB switch or controller.
->
-> Correct the EUD/USB connector topology by removing the top-level fake
-> USB connector and adding appropriate ports in boards having actual USB
-> Type-C connector defined (Herobrine, IDP).  All other boards will have
-> this EUD port missing.
->
-> This fixes also dtbs_check warnings:
->
->   sc7280-herobrine-crd.dtb: connector: ports:port@0: 'reg' is a required =
-property
->
-> Fixes: 9ee402ccfeb1 ("arm64: dts: qcom: sc7280: Fix EUD dt node syntax")
-> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> ---
->
-> Not tested on hardware.
-> ---
->  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 15 +++++++++++++
->  .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi | 15 +++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          | 21 +------------------
->  3 files changed, 31 insertions(+), 20 deletions(-)
+kernel test robot noticed the following build warnings:
 
-FWIW, I've always been very intrigued about the embedded USB port but
-never managed to find any way to get it actually enabled. :( ...so I'm
-probably not the best person to actually review this. That being said:
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on linus/master v6.5-rc3 next-20230725]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-1. I'm nearly certain that this is completely unusable on herobrine
-boards. Specifically on herobrine there's a USB hub between the SoC
-and all the physical ports on the device and (I think?) that prevents
-EUD from working. It is possible that hoglin/zoglin is an exception
-here and Qualcomm might have some backdoor way to access EUD on these
-devices since this is hardware that they built.
+url:    https://github.com/intel-lab-lkp/linux/commits/Tao-Zhang/coresight-tpdm-Remove-the-unnecessary-lock/20230725-152235
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/1690269353-10829-9-git-send-email-quic_taozha%40quicinc.com
+patch subject: [PATCH v7 08/13] coresight-tpdm: Add node to set dsb programming mode
+reproduce: (https://download.01.org/0day-ci/archive/20230726/202307260312.vf3OCV58-lkp@intel.com/reproduce)
 
-2. I've always been pretty baffled about the sc7280 EUD stuff since
-the device tree shows the EUD on "usb_2". For some background: there
-are two USB controllers on sc7280. There's "usb_1" which is USB
-2.0/3.0 capable and, at an SoC level, is the "Type C" port.
-Specifically the pins on the SoC for the USB 3.0 signals are the same
-pins on the SoC as two of the DisplayPort lanes. Then there's "usb_2"
-which is USB 2.0 only. If you'll notice, "usb_2" is not set to status
-"okay" on any boards except "sc7280-idp.dts".
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202307260312.vf3OCV58-lkp@intel.com/
 
-I asked Qualcomm at least a few times in the past if the EUD is truly
-on the USB 2.0 port (which means it isn't connected to anything on
-herobrine boards) or if it's actually on the "type C" port (which
-means there's a hub in between) and never got a ton of clarify...
+All warnings (new ones prefixed by >>):
 
-Given how baffling everything is, I wouldn't be opposed to just
-deleting the EUD from the device tree until there is more clarity
-here. If you don't want to just delete it, at least I'd say that it
-shouldn't be hooked up for herobrine.
+>> Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm:50: WARNING: Unexpected indentation.
+>> Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm:50: WARNING: Block quote ends without a blank line; unexpected unindent.
 
--Doug
+vim +50 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+
+  > 50	Date:		March 2023
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
