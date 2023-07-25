@@ -2,112 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3337F762362
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:36:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73B247623A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:38:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230323AbjGYUgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 16:36:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34006 "EHLO
+        id S231531AbjGYUiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 16:38:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbjGYUgH (ORCPT
+        with ESMTP id S231437AbjGYUhs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 16:36:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4287910F7;
-        Tue, 25 Jul 2023 13:36:06 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C7DF1618E6;
-        Tue, 25 Jul 2023 20:36:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E588C433C7;
-        Tue, 25 Jul 2023 20:36:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690317365;
-        bh=1WJsY6Fxk5xmArM3laXI1PCdA9a886qjCfbmt+ZVyyU=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=VqyStHAFMnUrprjRv35DS+uFXeG+gFpuZOWQdNng/kOiXg70JjB4ON3htuYfUOH3A
-         yqF0dbOi7V+HNHoN1gwYpimZ9mAIs+PWwIFDVPTzweN12pfyBDzoJH01exIKVJRQWd
-         UALFhYuZwor7CTdpigNZkXpDOiEUAwnHrit7dNsD3clAq7tUW7+kPb8pNaKm9WIOBR
-         KKrx++EqECbVYkb8BRN/3+ZUf/YCOjxjoDPapbqqSqYGCXXA/RN5ct5jj8Hi5tmgUd
-         K/KokBnm4R2mmbmu7Fz+dGv0dhItGmT1tZYmHGvhSK14ftvA8wuvcF6+a88ZTOdXIR
-         LL+xvxFwOSX1Q==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com,
-        dan.carpenter@linaro.org
-In-Reply-To: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com>
-Subject: Re: [PATCH 0/4] spi: spi-qcom-qspi: Follow-up patches to DMA mode
- support
-Message-Id: <169031736194.1617289.5213259488916570827.b4-ty@kernel.org>
-Date:   Tue, 25 Jul 2023 21:36:01 +0100
+        Tue, 25 Jul 2023 16:37:48 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A341F30D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:24 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-51ff0e3d8c1so8543109a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690317442; x=1690922242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i8EFcfDJur6Q/cyUGY8oZE5QsCZxjq5T48R8GlfFPEw=;
+        b=R29tX040z+qe2Vlrxhn1pwbhDNdOW5WzGO/cPAmsxXlQ2FIJM7pjqlseW1dpyltcEW
+         12J+Y0fyBDfrjfAVs2exBN46xd5H0r3RHJUp3yPGj3261ECMAwQcZ5ti2fyADw4zEtln
+         FgRh8WLaSAFdyAUAxZz5wF6Wafrgg8dof6xfHJCs7BkElz52x0FhSEva8NwluWj6wgc4
+         z0oCXCammOjUc31D0Gx4x5JsLRo/V9XoHVFjK2Afc69d64giQM1sBBHKjdN2zq2y1/QP
+         Y2U4G9rofhgktXpOpVlJ9zArQ/0C6W6lueB6r2f8i0ZDdnupVebVmdRtZCNAetKieDtt
+         MB1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690317442; x=1690922242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i8EFcfDJur6Q/cyUGY8oZE5QsCZxjq5T48R8GlfFPEw=;
+        b=Jda+sCz0ONFYVPt2tSj5PJeThfBfqXcA6utrsKbl3AwHhd5ZRra468U245LNh7RBVv
+         jeqnc6dkfEJ8jlDE4iJViLVzHlSYTW/WCejGYkq+mk87u2Rp4dqqIVRscL+KKutOuIfF
+         8Sj64TEgsQZay4aZzsbnOpPmwGp+1oixdRm993APWHAhq9oPFYtcg/OTxc9rygIkykbV
+         XE6bVNULglMAUk5jhAG9XhMwnajm7y5BKNJUb9wWiCBPvyYQMf5sFBcXCoCi2dVkBUeS
+         G7M/oHPlW/V58dqRKkT6pFY+xk5U33U2DjvevFB0ezLCFemJVVLZm3mgYuNCMMX6p2yk
+         FSVQ==
+X-Gm-Message-State: ABy/qLYgtyV4neNajj2w39/WZzlxTOPA58UEKvtYm1FHOAMr6L52V2KE
+        dBmFSeNWSpbQED/2mUoaRO2VsQ==
+X-Google-Smtp-Source: APBJJlHouXij+Cjl+4lvV6lM3MzJYZz6FGESDA4/HPSPunUv+BrddOvplajXI9EyPZVAn2Qfkog5Fw==
+X-Received: by 2002:a50:ee97:0:b0:522:2d1b:5a38 with SMTP id f23-20020a50ee97000000b005222d1b5a38mr19784edr.10.1690317442552;
+        Tue, 25 Jul 2023 13:37:22 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id y11-20020a056402134b00b0051de018af1esm773834edw.59.2023.07.25.13.37.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 13:37:22 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] ARM: dts: qcom: mdm9615: populate vsdcc fixed regulator
+Date:   Tue, 25 Jul 2023 22:37:18 +0200
+Message-Id: <20230725203718.513724-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Jul 2023 17:18:05 +0530, Vijaya Krishna Nivarthi wrote:
-> This patch series adds 4 follow-up changes to DMA mode support.
-> 1. Handles write failure in some cases by averting a race condition
-> 2. Handles static checker warning
-> 3. Adds a memory barrier to avoid a possible data out of sync case
-> 4. Book keeping change
-> 
-> Vijaya Krishna Nivarthi (4):
->   spi: spi-qcom-qspi: Ignore disabled interrupts' status in isr
->   spi: spi-qcom-qspi: Use GFP_ATOMIC flag while allocating for
->     descriptor
->   spi: spi-qcom-qspi: Call dma_wmb() after setting up descriptors
->   spi: spi-qcom-qspi: Add DMA_CHAIN_DONE to ALL_IRQS
-> 
-> [...]
+Fixed regulator put under "regulators" node will not be populated,
+unless simple-bus or something similar is used.  Drop the "regulators"
+wrapper node to fix this.
 
-Applied to
+Fixes: 2c5e596524e7 ("ARM: dts: Add MDM9615 dtsi")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[1/4] spi: spi-qcom-qspi: Ignore disabled interrupts' status in isr
-      commit: 17aaf9ea07b656016316dc37716e987742b3e296
-[2/4] spi: spi-qcom-qspi: Use GFP_ATOMIC flag while allocating for descriptor
-      commit: f7ba36d399c4558f36886adff9400be591b245f6
-[3/4] spi: spi-qcom-qspi: Call dma_wmb() after setting up descriptors
-      commit: cfb81f2243b25a0d79accc6510ad66c5c5ad99ba
-[4/4] spi: spi-qcom-qspi: Add DMA_CHAIN_DONE to ALL_IRQS
-      commit: 916a4edf3daed845b1e5d6cf0578a7e43c6f520e
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
+index b40c52ddf9b4..bfcb4fcf6546 100644
+--- a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
+@@ -46,14 +46,12 @@ cxo_board {
+ 		};
+ 	};
+ 
+-	regulators {
+-		vsdcc_fixed: vsdcc-regulator {
+-			compatible = "regulator-fixed";
+-			regulator-name = "SDCC Power";
+-			regulator-min-microvolt = <2700000>;
+-			regulator-max-microvolt = <2700000>;
+-			regulator-always-on;
+-		};
++	vsdcc_fixed: vsdcc-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "SDCC Power";
++		regulator-min-microvolt = <2700000>;
++		regulator-max-microvolt = <2700000>;
++		regulator-always-on;
+ 	};
+ 
+ 	soc: soc {
+-- 
+2.34.1
 
