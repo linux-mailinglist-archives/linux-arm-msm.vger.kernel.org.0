@@ -2,183 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55D08761093
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 12:23:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A93376109F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 12:24:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233380AbjGYKXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 06:23:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45420 "EHLO
+        id S233552AbjGYKYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 06:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233226AbjGYKXd (ORCPT
+        with ESMTP id S233577AbjGYKYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 06:23:33 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D370610D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:23:30 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-991f956fb5aso791400266b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:23:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690280609; x=1690885409;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ja4+MqHfl9X0tKSYm800u8KwnOGZLdpwubmp8VoMlQQ=;
-        b=O+18cz9q0RR58TDgOKYgTYov+m+0R9fEuoRTb6OKJoK/JGW+YcI61YlQXhZeL8biQ0
-         hjUeozP4G0k7EXRCF17f9p+lMPNvY65hgqBjWzvS+v8yFLQ7ZIwKzB9mBh/zcVrcw58G
-         ct8ilL7SjMYd8PL+cl/3sh6HAMag3kGAmuMbDkwjzG/1eeODZxzrS8ixlkEfVha6HlQ4
-         HEU7vujNoVLlk0xRdEpCFowLT0lNwMj192ZwOvAPto93q5y/HjPskn4unYEVzpcFTkt0
-         upP4RTpxzxX6ZlM/o+C/bn68fQmHNDvshFHy+TPTPkzVn8icoNXAJoArG4epe3jnzFF+
-         jGIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690280609; x=1690885409;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ja4+MqHfl9X0tKSYm800u8KwnOGZLdpwubmp8VoMlQQ=;
-        b=QQ2kY8zMhk2U5R4RKauAa8vN5dLmhFGreu1c0YfD5NY2tIBodY96anhxlYmYpJ5cbv
-         tsBrHTO86EYfEmot2PTWocmfVZWN2Rdgw21RaoWyStKjm8FfBYxzCzr2/BTKPNr32mW8
-         HuZmToloxKL2iVFrCOUjH//yIIdSn5QwoqMVGJfLoby63sD1JDgL4lScxHzHr+lQowke
-         FsmADC+LGb55inzzmTMQ7sd3ijkKk+tLi9E8PehgxUqZcb5M6LWC+WwEUC8xYjLkDtRz
-         mb3sV50QyfcC07KDchWwNp/CD1PPR/OG4Pbj3d8ip2IA80S05bEaE0icLbwchGULPGjI
-         VlnQ==
-X-Gm-Message-State: ABy/qLYZA0H9A6sbkt4tgE0BxYLUoWeJf8jhuOlX9n6w46VU/CHWpY2T
-        lY7vTUrKtfd+N1sGUctbL71qiw==
-X-Google-Smtp-Source: APBJJlEnJZpNRqox/mI/F+UVFWcjxKilSCWS+31W6pOEKBcwwQ2PZ/TVSqbTP/NQeP//kD5YeBtq2A==
-X-Received: by 2002:a17:906:300d:b0:973:d06d:545f with SMTP id 13-20020a170906300d00b00973d06d545fmr11568811ejz.24.1690280609327;
-        Tue, 25 Jul 2023 03:23:29 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id m26-20020a170906849a00b00982a352f078sm7832471ejx.124.2023.07.25.03.23.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 03:23:28 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
+        Tue, 25 Jul 2023 06:24:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91211999;
+        Tue, 25 Jul 2023 03:24:30 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36P8CZm8016022;
+        Tue, 25 Jul 2023 10:24:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LIDESBazjCw78yAhdu5pUDpDabOEq3/ROBQDdIP1mJ0=;
+ b=A4k2L1PNlF/10bwJGSo56zIeh+huOdsyQVMX3bGYEIPb7ZseY8zNzTcqIY5y75mrmVb8
+ UnO0HR0nOHGNq07MSlhzlsT55FrMJGt1AJuDtGKe9jT8suwXhWNIr99LAXGW4l6gVyhQ
+ PEA7O6BX2+4qQrzYh/V+5tFPPqxG4/lztJ4vOknYT4Yh70oO1ye3IF8rDS4fgBcLFxZz
+ mCnowQuX3lc/qq7dXuxKqejzonej6/wjv+6e9uAToun1+2dGA2hEpTOxCkxY23p//UUr
+ +Fp0Ioa1u5Hf2lN1sr+A5gR19lz2So8aY/zqEKx+5ARobeoAMbxikklfzbbG7eHQTnOG ZA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1s1jtfbu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 10:24:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PAOQ7E004096
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 10:24:26 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
+ 2023 03:24:21 -0700
+Message-ID: <6b6a383f-4a3a-e55b-dc86-b1abb8c7acab@quicinc.com>
+Date:   Tue, 25 Jul 2023 15:54:17 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V5 3/3] firmware: scm: Modify only the download bits in
+ TCSR register
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Prashant Malani <pmalani@chromium.org>,
-        Wayne Chang <waynec@nvidia.com>, devicetree@vger.kernel.org,
-        chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] dt-bindings: usb: connector: disallow additional properties
-Date:   Tue, 25 Jul 2023 12:23:25 +0200
-Message-Id: <20230725102325.76336-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Mukesh Ojha" <quic_mojha@quicinc.com>,
+        Kalle Valo <kvalo@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_saahtoma@quicinc.com>,
+        Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+References: <20230720070408.1093698-1-quic_kathirav@quicinc.com>
+ <20230720070408.1093698-4-quic_kathirav@quicinc.com>
+ <5c56cc3c-13d0-d9d8-0209-5b6e8d7a4dac@quicinc.com>
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <5c56cc3c-13d0-d9d8-0209-5b6e8d7a4dac@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VyznCL38aiVkAVYp3259z1FGRn0Er_Oo
+X-Proofpoint-ORIG-GUID: VyznCL38aiVkAVYp3259z1FGRn0Er_Oo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_05,2023-07-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ mlxlogscore=999 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ suspectscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250090
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-USB connector bindings is complete, thus no additional properties should
-be allowed.  Add missing 'reg' property and change additionalProperties
-to false, so the schema will check for anything not unexpected.  This
-also allows to drop the 'reg' from other bindings referencing the
-usb-connector.yaml and make it required.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 7/25/2023 12:35 AM, Elliot Berman wrote:
+>
+>
+> On 7/20/2023 12:04 AM, Kathiravan T wrote:
+>> From: Mukesh Ojha <quic_mojha@quicinc.com>
+>>
+>> CrashDump collection is based on the DLOAD bit of TCSR register. To 
+>> retain
+>> other bits, we read the register and modify only the DLOAD bit as the
+>> other bits have their own significance.
+>>
+>> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>> Changes in V5:
+>>     - Added the Signed-off-by tag for user Poovendhan
+>>     - Dropped the macro QCOM_DOWNLOAD_MODE_SHIFT in the favor of
+>>       PREP_FIELD
+>>
+>>   drivers/firmware/qcom_scm.c | 11 +++++++++--
+>>   1 file changed, 9 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index 104d86e49b97..3830dcf14326 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -30,6 +30,10 @@ module_param(download_mode, bool, 0);
+>>   #define SCM_HAS_IFACE_CLK    BIT(1)
+>>   #define SCM_HAS_BUS_CLK        BIT(2)
+>>   +#define QCOM_DOWNLOAD_FULLDUMP        0x1
+>> +#define QCOM_DOWNLOAD_NODUMP        0x0
+>> +#define QCOM_DOWNLOAD_MODE_MASK        BIT(4)
+>> +
+>
+> Can you update __qcom_scm_set_dload_mode to use the FIELD_PREP bits as 
+> well? Ideally, you should be able to have no duplicate logic in 
+> __qcom_scm_set_dload_mode and in qcom_scm_set_download_mode. Before 
+> your patch, it was duplicated and we probably should've had it 
+> de-duplicated. With this patch, the logic and constants used have 
+> diverged when they don't need to.
 
----
 
-Changes in v2:
-1. Make usb-connector.yaml additionalProperties:false (Rob)
+Sure, will check this.
 
-v1:
-https://lore.kernel.org/all/20230723071105.40157-1-krzysztof.kozlowski@linaro.org/
----
- .../devicetree/bindings/chrome/google,cros-ec-typec.yaml    | 6 ++----
- .../devicetree/bindings/connector/usb-connector.yaml        | 5 ++++-
- .../devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml       | 6 ------
- Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml | 6 ++----
- 4 files changed, 8 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml b/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
-index 3b0548c34791..9f9816fbecbc 100644
---- a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
-+++ b/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
-@@ -29,10 +29,8 @@ properties:
- patternProperties:
-   '^connector@[0-9a-f]+$':
-     $ref: /schemas/connector/usb-connector.yaml#
--    unevaluatedProperties: false
--    properties:
--      reg:
--        maxItems: 1
-+    required:
-+      - reg
- 
- required:
-   - compatible
-diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-index 1c4d3eb87763..e1b8b8b63120 100644
---- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
-+++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-@@ -30,6 +30,9 @@ properties:
-           - const: samsung,usb-connector-11pin
-           - const: usb-b-connector
- 
-+  reg:
-+    maxItems: 1
-+
-   label:
-     description: Symbolic name for the connector.
- 
-@@ -264,7 +267,7 @@ anyOf:
-         - typec-power-opmode
-         - new-source-frs-typec-current
- 
--additionalProperties: true
-+additionalProperties: false
- 
- examples:
-   # Micro-USB connector with HS lines routed via controller (MUIC).
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
-index 6440dc801387..bceb479f74c5 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
-@@ -38,15 +38,9 @@ properties:
- patternProperties:
-   '^connector@\d$':
-     $ref: /schemas/connector/usb-connector.yaml#
--
--    properties:
--      reg: true
--
-     required:
-       - reg
- 
--    unevaluatedProperties: false
--
- required:
-   - compatible
- 
-diff --git a/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml b/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
-index 75eec4a9a020..89fc9a434d05 100644
---- a/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
-+++ b/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
-@@ -43,10 +43,8 @@ properties:
- patternProperties:
-   '^connector@[01]$':
-     $ref: /schemas/connector/usb-connector.yaml#
--    unevaluatedProperties: false
--    properties:
--      reg:
--        maxItems: 1
-+    required:
-+      - reg
- 
- required:
-   - compatible
--- 
-2.34.1
-
+>
+>>   struct qcom_scm {
+>>       struct device *dev;
+>>       struct clk *core_clk;
+>> @@ -440,6 +444,7 @@ static int __qcom_scm_set_dload_mode(struct 
+>> device *dev, bool enable)
+>>   static void qcom_scm_set_download_mode(bool enable)
+>>   {
+>>       bool avail;
+>> +    int val;
+>>       int ret = 0;
+>>         avail = __qcom_scm_is_call_available(__scm->dev,
+>> @@ -448,8 +453,10 @@ static void qcom_scm_set_download_mode(bool enable)
+>>       if (avail) {
+>>           ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>>       } else if (__scm->dload_mode_addr) {
+>> -        ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+>> -                enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+>> +        val = enable ? QCOM_DOWNLOAD_FULLDUMP : QCOM_DOWNLOAD_NODUMP;
+>> +        ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
+>> +                           QCOM_DOWNLOAD_MODE_MASK,
+>> +                           FIELD_PREP(QCOM_DOWNLOAD_MODE_MASK, val));
+>>       } else {
+>>           dev_err(__scm->dev,
+>>               "No available mechanism for setting download mode\n");
