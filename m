@@ -2,132 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78483760D80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85076760E47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:19:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231917AbjGYIqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 04:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33042 "EHLO
+        id S233155AbjGYJTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:19:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232244AbjGYIqB (ORCPT
+        with ESMTP id S233102AbjGYJTB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 04:46:01 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A933AB1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:44:43 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fbc77e76abso42944645e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690274677; x=1690879477;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lvR6rub+9duf7nx9W/8a24Rc1YmvAVHDfFG2zjK3XY0=;
-        b=NOysYy1wO/LZrUx0c4Xsn14mxW1p458xRIILlfmpfqmLJA98us6St9qYLuLGMs83ou
-         J0rRRwwb9DTnknXVlzrR/MXRJaFn3CFwJZi9ywlEDUAdYVadyF3OSdNHd+L/mV68a7IG
-         9mv0g62qydKd6nZ00Mng35Uk7IfG5uHhDsIg3P01dcTIIVCJ5hHwrq5d93pEpZhAFW5/
-         mS86OTF5g6vgFdEePwHXiGcLNnE7Kn+YfrGQBw7ECdS5S1vLV+0CqHQ5gvP0boNoc8p5
-         enhb0NaBcGksFZQhtXQgO56YqkZCbTYYeg4SzhP6nu6Fq2BT5hSWEW6f6bhh2nTr701B
-         e+Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690274677; x=1690879477;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lvR6rub+9duf7nx9W/8a24Rc1YmvAVHDfFG2zjK3XY0=;
-        b=YYYusTqxwbNZ5wi/megQ8XaKaRLv0utbEVr7N/K74gqSsQCYDWAbe9L5ORo/k1X3/f
-         I9ei3yN7x5Vs3lKfozMqu2H2C+9Tl4fYAmcotv9EUZGxSjP2lUe+eKwiEraKIM2DY9ne
-         yiQG96VYZ73X4ZDsk1+GhJP6JolQhoC/iPPf4LMML/g+6pCwibxNC3gvzYV215rjD97D
-         jEsM/eVDl7lZTCEbo2Qt1fPiv7UIL0KkKshREsrFtIlMU5QB4jNkpt0VXKDzrnMSF4i8
-         35+typp6bXpRrf/DIm9VNIWW2KU7CnxBKUEuXnxqgAWPA2qzDnaRbHsTbCC4WHKufuJn
-         z3Ww==
-X-Gm-Message-State: ABy/qLZFx7qLHdn1IXy79Rkg0x/RsvJ35TkSG+KNU9DUiNDeDBiXQd62
-        d6T1IvTpEKsvdpiI0dNVZxNGWg==
-X-Google-Smtp-Source: APBJJlEAskAc1V3TVk77zXM/5qcda9+gxdB2bskSYs/Vo2nBJ+b++XWTh6JXNuwv0wXDXA4O2ZfNig==
-X-Received: by 2002:a05:600c:ac8:b0:3fb:9ef2:157 with SMTP id c8-20020a05600c0ac800b003fb9ef20157mr8136776wmr.28.1690274677481;
-        Tue, 25 Jul 2023 01:44:37 -0700 (PDT)
-Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
-        by smtp.gmail.com with ESMTPSA id y15-20020a7bcd8f000000b003fbdd5d0758sm12370627wmj.22.2023.07.25.01.44.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 01:44:37 -0700 (PDT)
-Message-ID: <fda13f70-1062-c3dc-b3ed-c7f1ad9a07db@linaro.org>
-Date:   Tue, 25 Jul 2023 10:44:35 +0200
+        Tue, 25 Jul 2023 05:19:01 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECE7137;
+        Tue, 25 Jul 2023 02:18:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690276725; x=1721812725;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=cEx0YFjbS+47DP8snw5II73lOU4UjH+3LeeDhBenEk8=;
+  b=McFI5equ+Me8nzBp+mR4N6ulLdVIp4egxVmKGDuV7pUIuS6m+Sg0G34e
+   48YUSJTIU64sWCedCiAqoZt4plvKHQjn4ClhloXDkHYSZ2BDahqBCeeqe
+   /jNzlJXHOpK9Ob6buUIhXd3dAR7DRyMMEeEPT+/VxttKv9emt5ph5CVG5
+   5y5ZtPOom0WqWspD2rU1E9CkUw/8wy2Ss9G530L+QiAHX3iGEkMIv2BOB
+   qyLVm8HOdpo/a9lIbeqED/gJBBIn2WVNTbVUnhA8t+15osvOqgTybD56M
+   /8kRA9icY+XHeFr2p4Ho+qMKTltyvJLf3KTHFhOlktZShiHxehpEkIxVO
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="454048886"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="454048886"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980363"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="719980363"
+Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:37 -0700
+Message-ID: <37018459-ee43-d853-1d73-3c6234a265b2@linux.intel.com>
+Date:   Tue, 25 Jul 2023 10:45:01 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: msm8976: Split lpass region
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
+Subject: Re: [PATCH v4 10/32] ASoC: qcom: Add USB backend ASoC driver for Q6
 Content-Language: en-US
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230723160827.22660-1-a39.skl@gmail.com>
- <20230723160827.22660-7-a39.skl@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230723160827.22660-7-a39.skl@gmail.com>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
+        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
+        o-takashi@sakamocchi.jp
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-11-quic_wcheng@quicinc.com>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20230725023416.11205-11-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.07.2023 18:08, Adam Skladowski wrote:
-> Some devices like Sony Loire uses Broadcom module over sdc3 however others
-> utilize qcom WCNSS, split shared region based on downstream pil-tz loader.
-> 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
-Looks like 0x1800000 is the generic configuration:
 
-https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26-05300-8976.0/arch/arm/boot/dts/qcom/msm8976.dtsi#L93-98
+> +struct q6usb_port_data {
+> +	struct q6afe_usb_cfg usb_cfg;
+> +	struct snd_soc_usb *usb;
+> +	struct q6usb_offload priv;
+> +	int active_idx;
 
-Konrad
+what is an 'active_idx' ?
+
+
+> +static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
+> +			int connected)
+> +{
+> +	struct snd_soc_dapm_context *dapm;
+> +	struct q6usb_port_data *data;
+> +
+> +	dapm = snd_soc_component_get_dapm(usb->component);
+> +	data = dev_get_drvdata(usb->component->dev);
+
+shouldn't you test that 'dapm' and 'data' are not NULL ?
+
+> +
+> +	if (connected) {
+
+this goes back to my earlier comment that you treat 'connected' as a
+boolean.
+
+> +		snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
+> +		/* We only track the latest USB headset plugged in */
+> +		data->active_idx = card_idx;
+> +	} else {
+> +		snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
+> +	}
+> +	snd_soc_dapm_sync(dapm);
+> +
+> +	return 0;
+> +}
+> +
+> +static int q6usb_component_probe(struct snd_soc_component *component)
+> +{
+> +	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
+> +	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
+> +
+> +	snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
+> +	snd_soc_dapm_sync(dapm);
+> +
+> +	data->usb = snd_soc_usb_add_port(component->dev, &data->priv, q6usb_alsa_connection_cb);
+> +	if (IS_ERR(data->usb)) {
+> +		dev_err(component->dev, "failed to add usb port\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	data->usb->component = component;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct snd_soc_component_driver q6usb_dai_component = {
+> +	.probe = q6usb_component_probe,
+
+erm, if you have a .probe that adds a port, don't you need a remove that
+removes the same port, and sets the pin state as well?
+
+> +	.name = "q6usb-dai-component",
+> +	.dapm_widgets = q6usb_dai_widgets,
+> +	.num_dapm_widgets = ARRAY_SIZE(q6usb_dai_widgets),
+> +	.dapm_routes = q6usb_dapm_routes,
+> +	.num_dapm_routes = ARRAY_SIZE(q6usb_dapm_routes),
+> +	.of_xlate_dai_name = q6usb_audio_ports_of_xlate_dai_name,
+> +};
+> +
+> +static int q6usb_dai_dev_probe(struct platform_device *pdev)
+> +{
+> +	struct device_node *node = pdev->dev.of_node;
+> +	struct q6usb_port_data *data;
+> +	struct device *dev = &pdev->dev;
+> +	struct of_phandle_args args;
+> +	int ret;
+> +
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	ret = of_property_read_u32(node, "qcom,usb-audio-intr-num",
+> +				&data->priv.intr_num);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to read intr num.\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = of_parse_phandle_with_fixed_args(node, "iommus", 1, 0, &args);
+> +	if (ret < 0)
+> +		data->priv.sid = -1;
+> +	else
+> +		data->priv.sid = args.args[0] & SID_MASK;
+> +
+> +	data->priv.domain = iommu_get_domain_for_dev(&pdev->dev);
+> +
+> +	data->priv.dev = dev;
+> +	dev_set_drvdata(dev, data);
+> +
+> +	ret = devm_snd_soc_register_component(dev, &q6usb_dai_component,
+> +					q6usb_be_dais, ARRAY_SIZE(q6usb_be_dais));
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return 0;
+
+return devm_snd_soc_register_component
+
+> +}
+> +
+> +static int q6usb_dai_dev_remove(struct platform_device *pdev)
+> +{
+> +	snd_soc_usb_remove_port(&pdev->dev);
+
+that seems wrong, the port is added in the component probe, not the
+platform device probe.
+
+> +
+> +	return 0;
+> +}> +
+
