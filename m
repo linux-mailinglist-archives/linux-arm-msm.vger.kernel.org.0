@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B52A776237D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B06BE76238C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:37:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbjGYUhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 16:37:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34568 "EHLO
+        id S231341AbjGYUhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 16:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231254AbjGYUhI (ORCPT
+        with ESMTP id S231209AbjGYUhL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 16:37:08 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DDF3212D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:05 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-55b0e7efb1cso3107299a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:05 -0700 (PDT)
+        Tue, 25 Jul 2023 16:37:11 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAAC1BC3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:07 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-55b1238a013so4216753a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1690317424; x=1690922224;
+        d=chromium.org; s=google; t=1690317427; x=1690922227;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EhdEP47Q6zcMA0F+PcMkdWz/9ABzj35GTZZYW72E4F8=;
-        b=FK9uzQr2XJHv+OfyWZgjtunriUloqdtwx+ivv6sQ2PO2zuBkv8MqfPI9lg7syKN0Lc
-         jKh6qXFqfVPH+Q6qa2kQ3Ihe8Ymc8CsB/6MVMGNgfmzaEbLiMCXZ6tlj4sYCiIfzo2r1
-         6Fdvc5Qyo+4UaTFF7lBNW7PLpmXbQKhBDUpMg=
+        bh=Tppdylk0o3RU6iRFgC5acPR+he8rkEb+eKspBj7RST0=;
+        b=CDswuo0Ppz/RMLI26l0suYt7iqnZQQL9jsIa7tvwwvzx5N2EWZMkh61eSE4a3jgY1L
+         RyUarTsCyibpS4rymF0dFRninecA2fWPvhT+ttJQqlJQC9wf43OfkU90OE14LY4hojeK
+         VSljfpYLBp6w/EA/YeVmI046LSOuunRgKG6OA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690317424; x=1690922224;
+        d=1e100.net; s=20221208; t=1690317427; x=1690922227;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EhdEP47Q6zcMA0F+PcMkdWz/9ABzj35GTZZYW72E4F8=;
-        b=NsLb52fhKw967PihYGQbQuhmIoGcGZSWUeig0a4AlVJAz7NbsE3lNaNLQq5R7tm+xJ
-         HEDHQL6741BK4iJ5fOsMPZpA2dNPfuo3uSfudRJWt7CItIk+T692UBYQOMDTtIDG9fk4
-         Haxh+jdOYJpB9db2CaQKAMkDZAy11L3gR9W37mujfiCcfo9E16N3P67c+hAUHxvgsYMk
-         kodJUvcIbZM3HGlnEkdDgbY7fnXStOXZmLSXZ22MfeSo/5E5TSt4v6B1BJTGdV1+aQ4B
-         1U7RZ1fC2KwhetNK3mCq+ZAo8eOK0S+65WeloyZPAsIS2pE7mScpedDZmoeHbz0nMiTc
-         ZcOw==
-X-Gm-Message-State: ABy/qLbHDZsikyMWB7l6cuopiGNH2nH70hRbKRmWUbUY9q6407iUDTMF
-        5R0Xk+HXzqaLlVaxjLq2NxnZfw==
-X-Google-Smtp-Source: APBJJlE8zLseGuuhjbzBKd+iAHZds3QfI6mF3Uc1x/psuvBXvHbIdzRDRpl9iZDO7dZ4AOPJ1TwALg==
-X-Received: by 2002:a17:90b:4b89:b0:268:2d6:74d6 with SMTP id lr9-20020a17090b4b8900b0026802d674d6mr235219pjb.16.1690317424748;
-        Tue, 25 Jul 2023 13:37:04 -0700 (PDT)
+        bh=Tppdylk0o3RU6iRFgC5acPR+he8rkEb+eKspBj7RST0=;
+        b=BKhaQ196VoSR5nkz3FqOUtJg/gxIebqqG5OOavOTyFIHgtv6C1YxN6fa7SDvyWRQ3R
+         cwqTRUxxSlN5eYysgCH8V1zUH7PYTeclWXWBqYMdjBqu0ctJVUhIFG91cWeJkPzziGrz
+         eZRb4v1xSDR8uRb3UVA6XRZjdHnGFLU5H5qVZd4j8yK4g3qo78WO0EQLscXH7jW7/oCG
+         c9XCvdVf05wDtrCrSBrrpZ23VAUvlhy+HQBJmYLkGKVEPuUyMRT3Gn7aEoTLmhWjhyhO
+         RGgFuS88RvSI/22oVQ9VwD9FNIQH5FshE9GIu1N9RLX5YO9iQ/CP4KXCD54P92QU+fd3
+         ggbQ==
+X-Gm-Message-State: ABy/qLZpE7PY7PkKHA36mByjgAyrL9ND91tjULj/VFkTRf7W2RR5TA4a
+        QVgmGp+q/TAe3iHFXkhbhByfcE9EebUmZlhaGhi4WuY0
+X-Google-Smtp-Source: APBJJlFfGf6KWy8ToVhqAbS/rsUst92w7QBVdZCQBHQ7ANjrR2W54ngdHfWKPhtYtcS946Ocwz2MkQ==
+X-Received: by 2002:a17:90a:d58f:b0:267:f9da:4611 with SMTP id v15-20020a17090ad58f00b00267f9da4611mr266815pju.14.1690317427135;
+        Tue, 25 Jul 2023 13:37:07 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:c363:4681:f5b8:301])
-        by smtp.gmail.com with ESMTPSA id bg1-20020a17090b0d8100b002676e961261sm1396951pjb.1.2023.07.25.13.37.02
+        by smtp.gmail.com with ESMTPSA id bg1-20020a17090b0d8100b002676e961261sm1396951pjb.1.2023.07.25.13.37.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 13:37:03 -0700 (PDT)
+        Tue, 25 Jul 2023 13:37:06 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Jiri Kosina <jikos@kernel.org>,
         Benjamin Tissoires <benjamin.tissoires@redhat.com>,
@@ -69,11 +69,10 @@ Cc:     cros-qcom-dts-watchers@chromium.org,
         Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
         yangcong5@huaqin.corp-partner.google.com,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 04/10] of: property: fw_devlink: Add a devlink for panel followers
-Date:   Tue, 25 Jul 2023 13:34:39 -0700
-Message-ID: <20230725133443.v3.4.Ibf8e1342b5b7906279db2365aca45e6253857bb3@changeid>
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH v3 05/10] HID: i2c-hid: Switch to SYSTEM_SLEEP_PM_OPS()
+Date:   Tue, 25 Jul 2023 13:34:40 -0700
+Message-ID: <20230725133443.v3.5.Ib2a2865bd3c0b068432259dfc7d76cebcbb512be@changeid>
 X-Mailer: git-send-email 2.41.0.487.g6d72f3e995-goog
 In-Reply-To: <20230725203545.2260506-1-dianders@chromium.org>
 References: <20230725203545.2260506-1-dianders@chromium.org>
@@ -89,49 +88,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Inform fw_devlink of the fact that a panel follower (like a
-touchscreen) is effectively a consumer of the panel from the purposes
-of fw_devlink.
+The SYSTEM_SLEEP_PM_OPS() allows us to get rid of '#ifdef
+CONFIG_PM_SLEEP', as talked about in commit 1a3c7bb08826 ("PM: core:
+Add new *_PM_OPS macros, deprecate old ones").
 
-NOTE: this patch isn't required for correctness but instead optimizes
-probe order / helps avoid deferrals.
+This change is expected to have no functional effect.
 
-Acked-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-Since this is so small, I'd presume it's OK for it to go through a DRM
-tree with the proper Ack. That being said, this patch is just an
-optimization and thus it could land completely separately from the
-rest and they could all meet up in mainline.
 
-(no changes since v2)
+(no changes since v1)
 
-Changes in v2:
-- ("Add a devlink for panel followers") new for v2.
+ drivers/hid/i2c-hid/i2c-hid-core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
- drivers/of/property.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index ddc75cd50825..cf8dacf3e3b8 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -1266,6 +1266,7 @@ DEFINE_SIMPLE_PROP(pwms, "pwms", "#pwm-cells")
- DEFINE_SIMPLE_PROP(resets, "resets", "#reset-cells")
- DEFINE_SIMPLE_PROP(leds, "leds", NULL)
- DEFINE_SIMPLE_PROP(backlight, "backlight", NULL)
-+DEFINE_SIMPLE_PROP(panel, "panel", NULL)
- DEFINE_SUFFIX_PROP(regulators, "-supply", NULL)
- DEFINE_SUFFIX_PROP(gpio, "-gpio", "#gpio-cells")
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index efbba0465eef..19d985c20a5c 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -1085,7 +1085,6 @@ void i2c_hid_core_shutdown(struct i2c_client *client)
+ }
+ EXPORT_SYMBOL_GPL(i2c_hid_core_shutdown);
  
-@@ -1354,6 +1355,7 @@ static const struct supplier_bindings of_supplier_bindings[] = {
- 	{ .parse_prop = parse_resets, },
- 	{ .parse_prop = parse_leds, },
- 	{ .parse_prop = parse_backlight, },
-+	{ .parse_prop = parse_panel, },
- 	{ .parse_prop = parse_gpio_compat, },
- 	{ .parse_prop = parse_interrupts, },
- 	{ .parse_prop = parse_regulators, },
+-#ifdef CONFIG_PM_SLEEP
+ static int i2c_hid_core_suspend(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+@@ -1138,10 +1137,9 @@ static int i2c_hid_core_resume(struct device *dev)
+ 
+ 	return hid_driver_reset_resume(hid);
+ }
+-#endif
+ 
+ const struct dev_pm_ops i2c_hid_core_pm = {
+-	SET_SYSTEM_SLEEP_PM_OPS(i2c_hid_core_suspend, i2c_hid_core_resume)
++	SYSTEM_SLEEP_PM_OPS(i2c_hid_core_suspend, i2c_hid_core_resume)
+ };
+ EXPORT_SYMBOL_GPL(i2c_hid_core_pm);
+ 
 -- 
 2.41.0.487.g6d72f3e995-goog
 
