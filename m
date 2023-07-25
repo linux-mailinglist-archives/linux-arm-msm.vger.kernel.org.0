@@ -2,182 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97E597620DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 20:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 208EC7620E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 20:03:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232659AbjGYSCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 14:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53546 "EHLO
+        id S231329AbjGYSDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 14:03:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232533AbjGYSB7 (ORCPT
+        with ESMTP id S229828AbjGYSDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 14:01:59 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 836482109;
-        Tue, 25 Jul 2023 11:01:50 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PGv6AZ019543;
-        Tue, 25 Jul 2023 18:01:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=87ewkxmXGU9fTm3pk1VsONTeYZjew0gno6Af9/9sDdU=;
- b=F81Eo92xhxRD8HaYCaS+Ui7JriaGz4V8ljLvXUFoiab3v13lmWgBXEPFkowCKh4vFqjJ
- pXHuG/kGf5u+Mi2hB//gFIBTGLSMrKkzj3Ch8lRatfyVvyPCxAWhF2asEXGQFNCXRSr6
- GqeEZvFz+xMacih3ut/S8K1KmSuJ5xPPQUvdfPVO/JoPmg7OaJgj+IIh2eAmri+aqw7T
- aodJrvMw19KJ9O6q6Xjhr6jZc6klM45cO34v4ZH/TLpqpJ6vapym30lNuuqmuNrsDIMN
- T4sdPOsoAqs8pank3X10Zis2VZyzCf4Ya5oSm9uaiRQuKkAoHMDQPfDCPhbDmoebSkwu kQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1y6m2pcv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 18:01:40 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PI1d9m010756
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 18:01:39 GMT
-Received: from [10.71.109.50] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
- 2023 11:01:38 -0700
-Message-ID: <0e72a1a0-611c-9667-866e-a4a1f67f10f6@quicinc.com>
-Date:   Tue, 25 Jul 2023 11:01:38 -0700
+        Tue, 25 Jul 2023 14:03:38 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 643FE1FE2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 11:03:36 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-6686ef86110so3305768b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 11:03:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1690308216; x=1690913016;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A3wk98CPhmXaucfW3yFy0X9veK7c7V/LOvkjR4lZXDk=;
+        b=mdgqGoEyde5ufR0v0DwdbxwxdHa372uxZ0WCuZCPFnP2tWnW3cD+aRMsF3UhDkW2W8
+         JRNRLtjBkoPm/8J+2v8HL3qRmFef49+Bom+JO5Ec/knUI7wtUTiCn7WGM+yUu0pprK9T
+         lf5uswnmIi0XpGMFOBgRcHhnhqrYFfANyRFJY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690308216; x=1690913016;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A3wk98CPhmXaucfW3yFy0X9veK7c7V/LOvkjR4lZXDk=;
+        b=BJs+LxbqsykDtH4FnCTxkthTbW/nblzDMo7bwHdvVaCRO+rsQsYF7rgpGv536wL+4l
+         9qNgnLL1QI3SZTf1uAzCkhkHCCCwLqZibH+amNX4qOTr8QzAhrmEXML59+eBiwNT4u1/
+         Fe8VACO3eDEQik8PdF5Uhjea2lLqtxS/YbRD1vzm4KxiyLIEKZhGaT3q7oq/zv9MXgBO
+         wh5bzAJJvFJtFIQDS1mxeksKjGcPxIpollGyezpDuDepGYtZKB3FhjrZzGUpitFxZFm1
+         xcAYr4/ynbnqbj4E2CVDH93wEgPsLztv+LnzZzs1ADst7CUYItG1DNqbO7UdEDvSgG6n
+         CN5w==
+X-Gm-Message-State: ABy/qLZ21yGuNtH4mPBDzxfWxfDUCFghl62j6vRYePdpVpu1cXMDl6o9
+        5nU08BslXqSfRBBkbx8ke7u1AQ==
+X-Google-Smtp-Source: APBJJlHM3LA5e8y9FJWQ5S6qBfzNrEBCpsSXTklOVDUtXJMwIuGCv66gAUEtztxROBRKSmqdn+oUoQ==
+X-Received: by 2002:a17:902:d487:b0:1b8:8069:d432 with SMTP id c7-20020a170902d48700b001b88069d432mr23474plg.16.1690308215805;
+        Tue, 25 Jul 2023 11:03:35 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:c363:4681:f5b8:301])
+        by smtp.gmail.com with ESMTPSA id jl14-20020a170903134e00b001b54a88e4a6sm11305254plb.51.2023.07.25.11.03.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 11:03:35 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: [PATCH 1/2] spi: spi-qcom-qspi: Fallback to PIO for xfers that aren't multiples of 4 bytes
+Date:   Tue, 25 Jul 2023 11:02:26 -0700
+Message-ID: <20230725110226.1.Ia2f980fc7cd0b831e633391f0bb1272914d8f381@changeid>
+X-Mailer: git-send-email 2.41.0.487.g6d72f3e995-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-From:   Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [RFC PATCH 3/4] dt-bindings: power: reset: Document
- arm,psci-vendor-reset
-To:     Rob Herring <robh@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        "Prasad Sodagudi" <quic_psodagud@quicinc.com>
-References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
- <20230724223057.1208122-4-quic_eberman@quicinc.com>
- <20230724232328.GA1101352-robh@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20230724232328.GA1101352-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bq68nSqt_QqiZqlWsItJqqPUd-g87kMq
-X-Proofpoint-ORIG-GUID: bq68nSqt_QqiZqlWsItJqqPUd-g87kMq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-25_09,2023-07-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- mlxlogscore=999 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307250154
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The Qualcomm QSPI driver appears to require that any reads using DMA
+are a mutliple of 4 bytes. If this isn't true then the controller will
+clobber any extra bytes in memory following the last word. Let's
+detect this and falback to PIO.
 
+This fixes problems reported by slub_debug=FZPUA, which would complain
+about "kmalloc Redzone overwritten". One such instance said:
 
-On 7/24/2023 4:23 PM, Rob Herring wrote:
-> On Mon, Jul 24, 2023 at 03:30:53PM -0700, Elliot Berman wrote:
->> Add devicetree bindings for using PSCI SYSTEM_RESET2 with vendor reset  types.
->>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>   .../power/reset/arm,psci-vendor-reset.yaml    | 35 +++++++++++++++++++
->>   MAINTAINERS                                   |  1 +
->>   2 files changed, 36 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
->> new file mode 100644
->> index 000000000000..18b0b8c167a1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
->> @@ -0,0 +1,35 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +# Copyright 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/power/reset/arm,psci-vendor-reset.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: PSCI SYSTEM_RESET2 Vendor Resets
->> +
->> +maintainers:
->> +  - Elliot Berman <quic_eberman@quicinc.com>
->> +
->> +description: |
->> +  PSCI SYSTEM_RESET2 supports vendor-defined reset types. This describes
->> +  the conversion of reboot modes to the reset types.
->> +
->> +properties:
->> +  compatible:
->> +    const: arm,psci-vendor-reset
->> +
->> +allOf:
->> +  - $ref: reboot-mode.yaml#
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    firmware {
->> +      psci-vendor-resets {
->> +        compatible = "arm,psci-vendor-reset";
-> 
-> We already have a node for PSCI, we don't need a second one. You can
-> have a separate driver without a separate node.
-> 
+  0xffffff80c29d541a-0xffffff80c29d541b @offset=21530. First byte 0x0 instead of 0xcc
+  Allocated in mtd_kmalloc_up_to+0x98/0xac age=36 cpu=3 pid=6658
 
-I could also place the reboot-mode functionality straight into 
-drivers/firwmare/psci/? I thought that might be more controversial than 
-separate driver, but maybe not?
+Tracing through what was happening I saw that, while we often did DMA
+tranfers of 0x1000 bytes, sometimes we'd end up doing ones of 0x41a
+bytes. Those 0x41a byte transfers were the problem.
 
-Mark/Loreno, do you have any concerns to add the reboot-mode driver 
-functionality directly in drivers/firmware/psci/psci.c?
+NOTE: a future change will enable the SPI "mem ops" to help avoid this
+case, but it still seems good to add the extra check in the transfer.
 
-Sebastian, do you have any concerns to have this reboot-mode driver 
-outside drivers/power/reset/?
+Fixes: b5762d95607e ("spi: spi-qcom-qspi: Add DMA mode support")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
->> +        reboot-normal = <0x100>;
-> 
-> Wouldn't 'normal' be the normal PSCI reset?
-> 
+ drivers/spi/spi-qcom-qspi.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Ah, right. I had my head buried in the reboot-mode code when creating 
-the example. I can remove from the example.
+diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+index a0ad9802b606..39b4d8a8107a 100644
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -355,10 +355,22 @@ static int qcom_qspi_setup_dma_desc(struct qcom_qspi *ctrl,
+ 
+ 	for (i = 0; i < sgt->nents; i++) {
+ 		dma_ptr_sg = sg_dma_address(sgt->sgl + i);
++		dma_len_sg = sg_dma_len(sgt->sgl + i);
+ 		if (!IS_ALIGNED(dma_ptr_sg, QSPI_ALIGN_REQ)) {
+ 			dev_warn_once(ctrl->dev, "dma_address not aligned to %d\n", QSPI_ALIGN_REQ);
+ 			return -EAGAIN;
+ 		}
++		/*
++		 * When reading with DMA the controller writes to memory 1 word
++		 * at a time. If the length isn't a multiple of 4 bytes then
++		 * the controller can clobber the things later in memory.
++		 * Fallback to PIO to be safe.
++		 */
++		if (ctrl->xfer.dir == QSPI_READ && (dma_len_sg & 0x03)) {
++			dev_warn_once(ctrl->dev, "fallback to PIO for read of size %#010x\n",
++				      dma_len_sg);
++			return -EAGAIN;
++		}
+ 	}
+ 
+ 	for (i = 0; i < sgt->nents; i++) {
+-- 
+2.41.0.487.g6d72f3e995-goog
 
->> +        reboot-bootloader = <0x101>;
->> +        reboot-fastboot = <0x102>;
->> +      };
->> +    };
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index d516295978a4..2da4c5f1917b 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -16982,6 +16982,7 @@ M:	Mark Rutland <mark.rutland@arm.com>
->>   M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
->>   L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
->>   S:	Maintained
->> +F:	Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
->>   F:	drivers/firmware/psci/
->>   F:	include/linux/psci.h
->>   F:	include/uapi/linux/psci.h
->> -- 
->> 2.41.0
->>
