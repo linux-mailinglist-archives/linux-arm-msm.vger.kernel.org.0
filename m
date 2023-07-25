@@ -2,130 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C7A4760959
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 07:35:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F25F760976
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 07:40:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231701AbjGYFfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 01:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47856 "EHLO
+        id S230010AbjGYFkf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 01:40:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjGYFfr (ORCPT
+        with ESMTP id S230523AbjGYFkd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 01:35:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400B21737;
-        Mon, 24 Jul 2023 22:35:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D24FE61536;
-        Tue, 25 Jul 2023 05:35:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE699C433C7;
-        Tue, 25 Jul 2023 05:35:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1690263345;
-        bh=oEqOvaYTtYD0cDhlp47C+7XbAkxvJEjRKWIZtt4DxJc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=i9kVXjf1HBDSjHedbx4wMwqTpNqKR8EFUdQJlMmhXfBLthblmuZkU77Z1IhdaR0wK
-         x1OLHGpuEV3kutCyQ2/LY1/oaReoB/VEuw+Gs4FrtcJVkBIZkitCPYTSkInvuDJmCG
-         SETBLrckjO2tXk+VvPn76Wm6pQeqppYZjuaQHbRk=
-Date:   Tue, 25 Jul 2023 07:35:42 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
-        lgirdwood@gmail.com, broonie@kernel.org, perex@perex.cz,
-        tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
-        quic_jackp@quicinc.com, pierre-louis.bossart@linux.intel.com,
-        oneukum@suse.com, albertccwang@google.com, o-takashi@sakamocchi.jp,
-        Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v4 01/32] xhci: add support to allocate several
- interrupters
-Message-ID: <2023072520-footbath-pessimist-670d@gregkh>
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-2-quic_wcheng@quicinc.com>
+        Tue, 25 Jul 2023 01:40:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1241F199F;
+        Mon, 24 Jul 2023 22:40:17 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36P4nfHU031536;
+        Tue, 25 Jul 2023 05:40:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=COHe3LDQmKpdXE+KtpoZP+UYF9boMe2h9XYUp/wFUqQ=;
+ b=nq3qhNIl7biaBeGfWRBY9mfCAJp/lKel2R4hMmwPJQDgwul1kSaJDcZY9miIOlS4cRmV
+ TPf9xByVXcrcCNVZIh71WkFgBfcBa4TZ+C3MT7aSOQCdVzi3KU6MXC/J5ylIcCSYjLiZ
+ RnxEXVvEjad5EKICdPb03+ZMdHuwXukEsjHIROKyq5SwYB4JbS1vXcoSbh30FiB5CPRw
+ cefCodLe/0lFtd+3NVqZJyRdAFsLdO145PRtyeKluq4I9SmqRc9yXBZqG9TQFfKvdR1o
+ Twjl7sdKIRffwowzua4tyHcpVcbQ6lrdq3a9oW89Lnu0wORJM4ak4R/Kpjfer8sIwmfQ sQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1y6m0yjs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 05:40:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36P5e6Wm000543
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 05:40:06 GMT
+Received: from [10.216.16.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 24 Jul
+ 2023 22:40:00 -0700
+Message-ID: <abdd4284-948d-b03d-7b60-cca0229457dc@quicinc.com>
+Date:   Tue, 25 Jul 2023 11:09:57 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230725023416.11205-2-quic_wcheng@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v9 03/10] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+To:     Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-4-quic_kriskura@quicinc.com>
+ <ZJrL5SXrSiYbvq2o@hovoldconsulting.com>
+ <e225fa01-c3be-8bfc-03de-59b507c70d3b@quicinc.com>
+ <ZL6bvQkBUsFErpXd@hovoldconsulting.com>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZL6bvQkBUsFErpXd@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2BVdpLFSNGIWtpYPBLCraSCJkGIZz3Nw
+X-Proofpoint-ORIG-GUID: 2BVdpLFSNGIWtpYPBLCraSCJkGIZz3Nw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_02,2023-07-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ mlxlogscore=840 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250050
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 07:33:45PM -0700, Wesley Cheng wrote:
-> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+
+
+On 7/24/2023 9:11 PM, Johan Hovold wrote:
+> [ Please remember to trim your replies. ]
 > 
-> Modify the XHCI drivers to accommodate for handling multiple event rings in
-> case there are multiple interrupters.  Add the required APIs so clients are
-> able to allocate/request for an interrupter ring, and pass this information
-> back to the client driver.  This allows for users to handle the resource
-> accordingly, such as passing the event ring base address to an audio DSP.
-> There is no actual support for multiple MSI/MSI-X vectors.
+> On Sun, Jul 23, 2023 at 08:29:47PM +0530, Krishna Kurapati PSSNV wrote:
+>> On 6/27/2023 5:15 PM, Johan Hovold wrote:
+>>> On Wed, Jun 21, 2023 at 10:06:21AM +0530, Krishna Kurapati wrote:
 > 
-> Factoring out XHCI interrupter APIs and structures done by Wesley Cheng, in
-> order to allow for USB class drivers to utilze them.
+>>>> +#define XHCI_EXT_PORT_MAJOR(x)	(((x) >> 24) & 0xff)
+>>>> +#define XHCI_EXT_PORT_MINOR(x)	(((x) >> 16) & 0xff)
+>>>> +#define XHCI_EXT_PORT_COUNT(x)	(((x) >> 8) & 0xff)
+>>>
+>>> Again, don't copy defines from xhci.
+>>>
+>>> Looks like these should be moved to the xhci-ext-caps.h header along
+>>> with struct xhci_protocol_caps.
+>>
+>> Moving the defines would be sufficient right ? Just wanted to know if
+>> there is any reason you are suggesting to move the structure as well so
+>> that I can update commit text accordingly.
 > 
-> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-> Co-developed-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi.rej | 14 ++++
->  arch/arm64/configs/defconfig.rej         | 24 ++++++
->  drivers/usb/host/xhci-debugfs.c          |  2 +-
->  drivers/usb/host/xhci-mem.c              | 93 ++++++++++++++++++++++--
->  drivers/usb/host/xhci-ring.c             |  2 +-
->  drivers/usb/host/xhci.c                  | 49 ++++++++-----
->  drivers/usb/host/xhci.h                  | 77 +-------------------
->  include/linux/usb/xhci-intr.h            | 86 ++++++++++++++++++++++
->  8 files changed, 245 insertions(+), 102 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8350.dtsi.rej
->  create mode 100644 arch/arm64/configs/defconfig.rej
->  create mode 100644 include/linux/usb/xhci-intr.h
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi.rej b/arch/arm64/boot/dts/qcom/sm8350.dtsi.rej
-> new file mode 100644
-> index 000000000000..e96ef1120160
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi.rej
-> @@ -0,0 +1,14 @@
-> +--- arch/arm64/boot/dts/qcom/sm8350.dtsi
-> ++++ arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +@@ -2254,9 +2254,9 @@
-> + 				iommus = <&apps_smmu 0x0 0x0>;
-> + 				snps,dis_u2_susphy_quirk;
-> + 				snps,dis_enblslpm_quirk;
-> +-				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
-> ++				phys = <&usb_1_hsphy>, <&usb_1_qmpphy>;
-> + 				phy-names = "usb2-phy", "usb3-phy";
-> +-
-> ++				dr_mode = "host";
-> + 				ports {
-> + 					#address-cells = <1>;
-> + 					#size-cells = <0>;
-> diff --git a/arch/arm64/configs/defconfig.rej b/arch/arm64/configs/defconfig.rej
+> The defines are used for parsing the members of struct
+> xhci_protocol_caps and they belong together even if no driver has
+> apparently ever used the structure.
+Hi Johan,
 
-<snip>
+Thanks for the suggestions. Will push out v10 today.
 
-I think you need to look at this patch series a bit better and clean it
-up before sending it out.  These files obviously are not going to work,
-and prevent any of this from being able to be applied or tested by any
-bots or test systems :(
-
-I've stopped here in my review of this series (except for the obvious
-global symbol name comment.)
-
-thanks,
-
-greg k-h
+Regards,
+Krishna,
