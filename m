@@ -2,82 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96227760F13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:29:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDA3B760F30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:31:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbjGYJ3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33920 "EHLO
+        id S233333AbjGYJbH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:31:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233174AbjGYJ1s (ORCPT
+        with ESMTP id S233332AbjGYJax (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:27:48 -0400
-Received: from out-33.mta1.migadu.com (out-33.mta1.migadu.com [IPv6:2001:41d0:203:375::21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46E71FF5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 02:26:20 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1690277165;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
+        Tue, 25 Jul 2023 05:30:53 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5A92129;
+        Tue, 25 Jul 2023 02:28:51 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 4325821D19;
+        Tue, 25 Jul 2023 09:27:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1690277248; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=kJwBPug4K2o2Rsg3Nl512ID6Vx26wyYZeksPouOPBIo=;
-        b=UsXWV/BrmTb/Mzt4qG2L6aakkxaQdFwUIWYXPaL2lks9qA3so8IOOprpfwKsyfOszGQNhK
-        441qHddwlHklaskCeo1UAHikFDlDH211gEZQvhiMM0ozG4kf9A5oDb6k5ulzt7O+uqRDww
-        PXrlU0RxHN6exb+unDnSMMStapEjRew=
-MIME-Version: 1.0
-Subject: Re: [PATCH v2 09/47] f2fs: dynamically allocate the f2fs-shrinker
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20230724094354.90817-10-zhengqi.arch@bytedance.com>
-Date:   Tue, 25 Jul 2023 17:25:26 +0800
-Cc:     Andrew Morton <akpm@linux-foundation.org>, david@fromorbit.com,
-        tkhai@ya.ru, Vlastimil Babka <vbabka@suse.cz>,
-        Roman Gushchin <roman.gushchin@linux.dev>, djwong@kernel.org,
-        Christian Brauner <brauner@kernel.org>,
-        "Paul E. McKenney" <paulmck@kernel.org>, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org,
-        Sergey Senozhatsky <senozhatsky@chromium.org>,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <3D511473-EBD7-4FDF-B85E-AD911A31A260@linux.dev>
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-10-zhengqi.arch@bytedance.com>
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-X-Migadu-Flow: FLOW_OUT
+        bh=dlmzFCGGYQOm0hww9I94vhrQZ+jHyAZdm6rRpIEjF90=;
+        b=PRo+S7RmJ6Cc6bdhtacBMBVPU0SqboE3Y7rpFnOiK1Mq9XIrUJP3fSFbZsy9kfFcUwujD5
+        WAvLiRQ8NOGIh1o3Ewx9MCTnAAf/Ygz6kKruXb7xNcO4nHY6HHOCwUzydKccfWZjjhOAnQ
+        D5GnYf0ugpBwpFhA0yMmZBBMuaJsaq0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1690277248;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=dlmzFCGGYQOm0hww9I94vhrQZ+jHyAZdm6rRpIEjF90=;
+        b=YgzmBwsIwCX1597u5bMv1SYnvoyq1qC84nN2STKtgbnSxaX9bLFt9yxYC1ntPATTKOE1F2
+        uFivkNfbgRwy6UCQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AE02A13487;
+        Tue, 25 Jul 2023 09:27:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id GCooKX+Vv2RgWQAAMHmgww
+        (envelope-from <tiwai@suse.de>); Tue, 25 Jul 2023 09:27:27 +0000
+Date:   Tue, 25 Jul 2023 11:27:27 +0200
+Message-ID: <87wmyotk74.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
+        alsa-devel@alsa-project.org, quic_jackp@quicinc.com,
+        oneukum@suse.com, albertccwang@google.com, o-takashi@sakamocchi.jp
+Subject: Re: [PATCH v4 31/32] sound: usb: card: Allow for rediscovery of connected USB SND devices
+In-Reply-To: <671a524d-b4c8-78d8-33de-40170a23d189@linux.intel.com>
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+        <20230725023416.11205-32-quic_wcheng@quicinc.com>
+        <671a524d-b4c8-78d8-33de-40170a23d189@linux.intel.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-> On Jul 24, 2023, at 17:43, Qi Zheng <zhengqi.arch@bytedance.com> wrote:
+On Tue, 25 Jul 2023 11:15:11 +0200,
+Pierre-Louis Bossart wrote:
 > 
-> Use new APIs to dynamically allocate the f2fs-shrinker.
 > 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> 
+> On 7/25/23 04:34, Wesley Cheng wrote:
+> > In case of notifying SND platform drivers of connection events, some of
+> > these use cases, such as offloading, require an ASoC USB backend device to
+> > be initialized before the events can be handled.  If the USB backend device
+> > has not yet been probed, this leads to missing initial USB audio device
+> > connection events.
+> > 
+> > Expose an API that traverses the usb_chip array for connected devices, and
+> > to call the respective connection callback registered to the SND platform
+> > driver.
+> > 
+> > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> > ---
+> >  sound/usb/card.c | 19 +++++++++++++++++++
+> >  sound/usb/card.h |  2 ++
+> >  2 files changed, 21 insertions(+)
+> > 
+> > diff --git a/sound/usb/card.c b/sound/usb/card.c
+> > index 365f6d978608..27a89aaa0bf3 100644
+> > --- a/sound/usb/card.c
+> > +++ b/sound/usb/card.c
+> > @@ -170,6 +170,25 @@ struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
+> >  }
+> >  EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
+> >  
+> > +/*
+> > + * in case the platform driver was not ready at the time of USB SND
+> > + * device connect, expose an API to discover all connected USB devices
+> > + * so it can populate any dependent resources/structures.
+> > + */
+> > +void snd_usb_rediscover_devices(void)
+> > +{
+> > +	int i;
+> > +
+> > +	mutex_lock(&register_mutex);
+> > +	for (i = 0; i < SNDRV_CARDS; i++) {
+> > +		if (usb_chip[i])
+> > +			if (platform_ops && platform_ops->connect_cb)
+> > +				platform_ops->connect_cb(usb_chip[i]);
+> 
+> what happens if the USB device is removed while the platform device adds
+> a port?
 
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+That should be protected by the register_mutex.  But there can be
+other races (see below :)
 
-Thanks.
+> This sounds super-racy to me. It's the same set of problems we're having
+> between audio and display/DRM, I would be surprised if this function
+> dealt with all corner cases of insertion/removal, bind/unbind.
 
+Yes, we need to be more careful about binding.
+
+For example, in the current patch set, I see no way to prevent
+unloading snd-usb-audio-qmi module, and it allows user to cut off the
+stuff during operation, which may break things while the kernel is
+running the code of the unloaded module.  You need to have a proper
+module refcount management for avoiding such a scenario.  Most of
+drivers don't need it because ALSA core part already takes care of
+it.  But in this case, it requires a manual adjustment.
+
+
+Takashi
