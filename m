@@ -2,97 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E1827616A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 13:41:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3836D76173E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 13:46:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235084AbjGYLlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 07:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46502 "EHLO
+        id S232343AbjGYLqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 07:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234961AbjGYLkx (ORCPT
+        with ESMTP id S232201AbjGYLqU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 07:40:53 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2904F3;
-        Tue, 25 Jul 2023 04:40:40 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbc244d384so45099215e9.0;
-        Tue, 25 Jul 2023 04:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690285239; x=1690890039;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oIwK4vNakYsmHhWk3gPu9jeD67klp1zgcobWm0hLfMM=;
-        b=qzWmo+ENoePc/UCYjokwm8n28ajtGiHJ8cBotYdjFTxBLJ3ZyGwp4fhCr1uKAe0qgg
-         eCHqn/SNWsBHo1OO75pdizfTIc4oGRcS2hA1Nmc4UeW+MqGByA5PCewlnvGbjn89sxLs
-         1028IIY0p9O+5piV+G92YSigAUjgbbkKvVLoImuT+mIcTACzEL1rPKR+Mb2bREQ5VSno
-         pprqhzm8/IkUTHEitJwsR9QKc9aiSzDX6ADuw2GNbIaHLlNlgJIVRBcD4L+h8EnEHT1v
-         gFYo9UVtuoKT7YI2Yd9nHXrcBo3xrf0gpd701I0UozteYywqEJuyggJI07Dod8VFivHi
-         lOTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690285239; x=1690890039;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oIwK4vNakYsmHhWk3gPu9jeD67klp1zgcobWm0hLfMM=;
-        b=DMrtKbJG0ZieEC742BOODrSL1TASnO6AdySL5iGHkzl+p+i8rkqB0KwFKi8yjxulKO
-         obKp5wmAMnugrcJtw86BDfXylKp62GtG66kZFNeLCb7n9hBOFMZP+YprNDFMUqjF3l8d
-         z0XBqjwZu0lpt1KSwWqrnEDC+lbd3pt2B72sKejL9EYMl7EFdtrbv3II80IjgQ2lySpA
-         JSuOanm/s4jDh5WArF6WFOC9tsT8wOo4N5S96FirZERr1GBsjPVHoXjupuveehLP6q8B
-         U/jDiUCyUEERGQtEFqkP4J+qqDGocxGeiMeWXhCXDWIBPrzQtbcnJxlEp0ndyKNtDKjQ
-         pBNA==
-X-Gm-Message-State: ABy/qLYxSfg8kBtSQDKV7HS5PF9JFcsOMuhogE0LPsL5jLS1l02VfRVZ
-        MfMXO3uOgnTtk+9/bOHUCnA=
-X-Google-Smtp-Source: APBJJlEHMeV1GT0gHESC09Zjy+axUc4imX5ZHprKSvGpdZB+jCUtQ1yHI/p8VsPGTg9IdOvMJtAw0g==
-X-Received: by 2002:a05:6000:4c:b0:313:e456:e64a with SMTP id k12-20020a056000004c00b00313e456e64amr8961163wrx.21.1690285238976;
-        Tue, 25 Jul 2023 04:40:38 -0700 (PDT)
-Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.gmail.com with ESMTPSA id q3-20020adfea03000000b0031435c2600esm16177847wrm.79.2023.07.25.04.40.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 04:40:38 -0700 (PDT)
-From:   Colin Ian King <colin.i.king@gmail.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH][next] accel/qaic: remove redundant assignment to pointer pexec
-Date:   Tue, 25 Jul 2023 12:40:37 +0100
-Message-Id: <20230725114037.36806-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.39.2
+        Tue, 25 Jul 2023 07:46:20 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F7610B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 04:46:14 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0C0CC20231;
+        Tue, 25 Jul 2023 13:46:09 +0200 (CEST)
+Date:   Tue, 25 Jul 2023 13:46:06 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: display: msm: sm6125-mdss: drop unneeded
+ status from examples
+Message-ID: <5w2hvzmwzqm4ffopzewveaviebq2ig7awimeo6ipcehx5a43ae@mlwffkf2ctn5>
+References: <20230725101610.75122-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230725101610.75122-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pointer pexec is being assigned a value however it is never read. The
-assignment is redundant and can be removed.
+On 2023-07-25 12:16:10, Krzysztof Kozlowski wrote:
+> Example DTS should not have 'status' property.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml   | 6 ------
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
----
- drivers/accel/qaic/qaic_data.c | 1 -
- 1 file changed, 1 deletion(-)
+This is not needed: it has already been corrected in v3 and v4 of the
+respective series (among other changes) and the patches were only picked
+to a preliminary (draft) pull to get an overview of the outstanding work
+for this subsystem.  That branch happens to be included in regular -next
+releases though.
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index e9a1cb779b30..8a6cb14f490e 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1320,7 +1320,6 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 	user_data = u64_to_user_ptr(args->data);
- 
- 	exec = kcalloc(args->hdr.count, size, GFP_KERNEL);
--	pexec = (struct qaic_partial_execute_entry *)exec;
- 	if (!exec)
- 		return -ENOMEM;
- 
--- 
-2.39.2
+6.6 drm/msm display pull: https://gitlab.freedesktop.org/drm/msm/-/merge_requests/69
+v3: https://lore.kernel.org/linux-arm-msm/20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org/
+v4: https://lore.kernel.org/linux-arm-msm/20230723-sm6125-dpu-v4-0-a3f287dd6c07@somainline.org/
 
+- Marijn
+
+>  1 file changed, 6 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml
+> index 2525482424cb..479c82e6a0d8 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml
+> @@ -95,8 +95,6 @@ examples:
+>          #size-cells = <1>;
+>          ranges;
+>  
+> -        status = "disabled";
+> -
+>          display-controller@5e01000 {
+>              compatible = "qcom,sm6125-dpu";
+>              reg = <0x05e01000 0x83208>,
+> @@ -170,8 +168,6 @@ examples:
+>              #address-cells = <1>;
+>              #size-cells = <0>;
+>  
+> -            status = "disabled";
+> -
+>              ports {
+>                  #address-cells = <1>;
+>                  #size-cells = <0>;
+> @@ -210,8 +206,6 @@ examples:
+>  
+>              required-opps = <&rpmpd_opp_svs>;
+>              power-domains = <&rpmpd SM6125_VDDMX>;
+> -
+> -            status = "disabled";
+>          };
+>      };
+>  ...
+> -- 
+> 2.34.1
+> 
