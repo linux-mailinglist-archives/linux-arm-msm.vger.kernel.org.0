@@ -2,83 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67A6B760FA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:46:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD464760FD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:56:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbjGYJqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:46:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
+        id S232856AbjGYJ4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:56:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232128AbjGYJqe (ORCPT
+        with ESMTP id S232395AbjGYJ4J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:46:34 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 724A711B;
-        Tue, 25 Jul 2023 02:46:30 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-313e742a787so3393289f8f.1;
-        Tue, 25 Jul 2023 02:46:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690278389; x=1690883189;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x1dn5lNZqmwY15rBpdBpJTcWOK1VivmrD2jmZ3IZxi4=;
-        b=Z51pyJ5/nycopIH5zIHEHDVQYAq2V7diulALk4BHl55COuR7x6J3JGUbbWKheci3xm
-         r/E9pwlUU3X/vKswxR1612lmt3jgGeAkK5G3sswsGwgGUMJoExBpw1iiunb4qPGV4vWn
-         L8RnuaU143TlsB1OPR9NN5V9HtbJxVHwiKOWB5i44PKcRKpD6v1PC6diyvYqiL7ca+TR
-         Zpr0I0PtBzXF/d2NnxjUBkIk1/0PFNiGZjKufaiWoBca0thMIkaE4qZyYY2/m1WD7pL/
-         lXdLZAjx6nf4QnTgNRz0gfeHhbMp/JaSAjCzIvQ46qXSJalSw54O7cCoKzTlinyTMB1Z
-         9RGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690278389; x=1690883189;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x1dn5lNZqmwY15rBpdBpJTcWOK1VivmrD2jmZ3IZxi4=;
-        b=NW3n+SIdNP9xThCogwNDqBcy9AeTZr5+n95xDntktA0aqbxePNwqyFf0+gmQC1Mr7u
-         zFSkEpllE8q9ATGha5wgoW08e8j+CC19thMmXzDXjq6zVCK2ZPJvCYfVoq7VdIl3C9jv
-         hSWzKgcU7A9VTjfelsVxwejc14jfBzAWEsVhECqfXBZ3iJgjLasHM+31OKYJqc1Dvjdf
-         yayK9uxX3GkKVwXJxQhscGFGJm6l13VcEfB0tSH/wbZ3Wtvl1vN1st+PC2Nk+VACuxHu
-         //LSfDx0Gn60cPxoDcnuZw5TNZOY0FFpMLdOEaooUuwy6jWpsWvMOTfy8lozq4siTrrw
-         TYRw==
-X-Gm-Message-State: ABy/qLaguNYFuCjDKGd4WhS8xe8GFYKwO/VB/WQApipeTvmm9FKG4IIx
-        3M0+srKdRQzOlvPntBudjF8TGnxCkpTAqw==
-X-Google-Smtp-Source: APBJJlEssHXAU9u+CHEEFVKJsaYPTIj+RSJJ0AdcGXaasOWgN4UXMrXvvemxECzYlMn5VGYiBrXiIQ==
-X-Received: by 2002:adf:f8c7:0:b0:311:360e:ea3a with SMTP id f7-20020adff8c7000000b00311360eea3amr1706865wrq.34.1690278388631;
-        Tue, 25 Jul 2023 02:46:28 -0700 (PDT)
-Received: from [192.168.1.107] (ccx116.neoplus.adsl.tpnet.pl. [83.30.147.116])
-        by smtp.gmail.com with ESMTPSA id q17-20020adff511000000b0031272fced4dsm15728148wro.52.2023.07.25.02.46.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 02:46:28 -0700 (PDT)
-Message-ID: <6008bc09-7746-546f-2c00-9b9812854ff7@gmail.com>
-Date:   Tue, 25 Jul 2023 11:46:26 +0200
+        Tue, 25 Jul 2023 05:56:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38DFDE56;
+        Tue, 25 Jul 2023 02:56:08 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36P89NFk011752;
+        Tue, 25 Jul 2023 09:56:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oxANqKL3T6h0PO+T/varJLfD1W31Y6md6sTVyawLt0c=;
+ b=hIlZNY1UEgblcNX5hiQZTsLsTmfDjhETS64aUjtOxoenZcRN5FpPJZXz8UZoz8PGEsfq
+ c5Xxws/r8JRXtEOVUtr0gAi4/gAdcHmXvyPfDgfoWs/qcJL/5LjBC9pGxwdKAahgsdsQ
+ z22TK/ReFNIlgRa7Saa8HoSQZ9SpbWxRnd+2KGDQgd5HfegkUQy3fqBzuc+LSbE6oIiF
+ PC8svfzfjsJhQruR4W/0VPT2kNaEp+xy3Hnjaw6EGOsEfQKSgD6sdNyl9u0Oi+j32aK9
+ DfuHH3rXeogeKZFrmCW4sITde3vKvErUzhKyimxYB+sPf0Tmx2fos2rd0eUCPcdHEN8f OQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s29xmgaa5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 09:56:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36P9u3De028457
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 09:56:03 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
+ 2023 02:55:58 -0700
+Message-ID: <eb723e27-de44-ed19-b331-41441c5cc755@quicinc.com>
+Date:   Tue, 25 Jul 2023 15:25:55 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: msm8976: Split lpass region
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V5 0/3] Introduce the read-modify-write API to collect
+To:     Elliot Berman <quic_eberman@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230723160827.22660-1-a39.skl@gmail.com>
- <20230723160827.22660-7-a39.skl@gmail.com>
- <fda13f70-1062-c3dc-b3ed-c7f1ad9a07db@linaro.org>
-From:   Adam Skladowski <a39.skl@gmail.com>
-In-Reply-To: <fda13f70-1062-c3dc-b3ed-c7f1ad9a07db@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Mukesh Ojha" <quic_mojha@quicinc.com>,
+        Kalle Valo <kvalo@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_saahtoma@quicinc.com>
+References: <20230720070408.1093698-1-quic_kathirav@quicinc.com>
+ <cc1fec2c-1356-2716-86cf-5b76c18ec1dd@quicinc.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <cc1fec2c-1356-2716-86cf-5b76c18ec1dd@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CYYs4OKS_Uwbelfl__4nPIsMvAtEufbt
+X-Proofpoint-GUID: CYYs4OKS_Uwbelfl__4nPIsMvAtEufbt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_05,2023-07-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ mlxlogscore=823 impostorscore=0 adultscore=0 mlxscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250086
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,35 +90,63 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 25.07.2023 10:44, Konrad Dybcio wrote:
-> On 23.07.2023 18:08, Adam Skladowski wrote:
->> Some devices like Sony Loire uses Broadcom module over sdc3 however others
->> utilize qcom WCNSS, split shared region based on downstream pil-tz loader.
+On 7/25/2023 12:35 AM, Elliot Berman wrote:
+>
+>
+> On 7/20/2023 12:04 AM, Kathiravan T wrote:
+>> On IPQ platforms, to collect the crashdump, we need to just modify the
+>> DLOAD bit in the TCSR register. Current infrastructure, overwrites the
+>> entire regiter value when enabling the crashdump feature, which leads to
+>> crashdump not gets collected. This series introduce the
+>> qcom_scm_io_update_field API to achieve the same.
 >>
->> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
->> ---
-> Looks like 0x1800000 is the generic configuration:
 >
-> https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26-05300-8976.0/arch/arm/boot/dts/qcom/msm8976.dtsi#L93-98
+> I don't think you describe patch 2 in the subject line or cover 
+> letter. As best I can tell, Patches 2 and 3 are independent. They're 
+> similar only in that they both depend on patch 1.
+
+
+Yeah. I missed that part. I'm thinking of dropping the 2nd patch and 
+send only the patch 1 and patch 3 in the next spin. Once the patch 1 and 
+the another pinctrl patch which Bjorn's is referring [1] (Hopefully, If 
+I am not wrong) is landed in linux-next, I can send out the patch 2 
+separately. Do let me know if this okay.
+
+[1] 
+https://lore.kernel.org/linux-arm-msm/2d790f7e-b373-f0ee-d978-fb78bc4f1ed1@quicinc.com/
+
+
 >
-> Konrad
-
-Yes, indeed however as you probably noticed this region isn't called lpass rather reloc.
-
-Downstream sometimes tends to define pools of memory where loader will do its own job.
-
-If you read later wcnss/lpass both point to same shared memory which im not sure without reworks will work with mainline.
-
-On top it's not really that it will even hurt Loire at the end, if you browse around internet you can easily find gists
-from Pavel which have logs of pil-tz loading of lpass:
-
-https://gist.github.com/bartcubbins/c2ff215f39fe2b3ed5d3f8444bcec83b#file-gistfile1-txt-L1289
-
-As you can see even on loire where region is bigger it only loads first 0x1000000.
-Do we really need to complicate things just for everyone else for sake of not ending with one platform having to adjust
-or even not(it probably wouldn't even make a difference for loader as it will fit anyway)
-
-On the ending note i apologize if this msg gets broken formatting first time using thunderbird
-and after redesign im unable to find most options mentioned in guide.
-.
-
+>> Intially this approach is posted by Poovendhan[1], later Mukesh
+>> integrated this patch in his minidump support series[2]. Based on the
+>> current feedback on the minidump series, seems it will take sometime to
+>> get into a good shape, in the meantime these patches doesn't have any
+>> dependency with the minidump series. As discussed with the Mukesh[3],
+>> posting these 3 patches to enable the crashdump on IPQ chipsets.
+>>
+>> Since the current version of minidump series is V4, I'm posting this as
+>> a V5. Please let me know if this should be V1.
+>>
+>> [1]
+>> https://lore.kernel.org/linux-arm-msm/20230113160012.14893-4-quic_poovendh@quicinc.com/ 
+>>
+>>
+>> [2]
+>> https://lore.kernel.org/linux-arm-msm/1676990381-18184-3-git-send-email-quic_mojha@quicinc.com/ 
+>>
+>>
+>> [3]
+>> https://lore.kernel.org/linux-arm-msm/d77f5601-2b08-a7c7-1400-7ab68b8add3a@quicinc.com/ 
+>>
+>>
+>>
+>> Mukesh Ojha (3):
+>>    firmware: qcom_scm: provide a read-modify-write function
+>>    pinctrl: qcom: Use qcom_scm_io_update_field()
+>>    firmware: scm: Modify only the download bits in TCSR register
+>>
+>>   drivers/firmware/qcom_scm.c            | 26 ++++++++++++++++++++++++--
+>>   drivers/pinctrl/qcom/pinctrl-msm.c     | 12 +++++-------
+>>   include/linux/firmware/qcom/qcom_scm.h |  2 ++
+>>   3 files changed, 31 insertions(+), 9 deletions(-)
+>>
