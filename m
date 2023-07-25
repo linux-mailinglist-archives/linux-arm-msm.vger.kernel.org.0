@@ -2,142 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 061E2760312
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 01:23:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A561D7604C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 03:40:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjGXXXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jul 2023 19:23:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
+        id S229550AbjGYBkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jul 2023 21:40:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjGXXXd (ORCPT
+        with ESMTP id S229479AbjGYBkC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jul 2023 19:23:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E69E78;
-        Mon, 24 Jul 2023 16:23:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8E84961464;
-        Mon, 24 Jul 2023 23:23:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73206C433C8;
-        Mon, 24 Jul 2023 23:23:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690241010;
-        bh=w+olyalJrA2gi25MoSVwqGzWtB2JIt1pQxhluX5W+Yw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nJc8ruOzyTk4j/2MU65pdXVSBNePXOjfJn1GAqDAjq5sbiE0IyPpKKA3joaKxm8xw
-         2QFh18yk2eZA+SFagsz/5dbmVRZ5AfxNblF+eoSnRn99ayhJXlMQ8AsP/TBySyIcHH
-         +iNTF+ypyENR1dXI2Zs1M206yEQx7xVapAbVznq5kMlLO+TGmjF2clTs9i5rcnCYn6
-         OLvNuo0hu/aJ5gz1BKme3Hfs48jBnDrPKgMrxAjdh0uVLgPDqIvuwUxZVWU0XFe+a/
-         diMktUHpPOPOs9ixdVT4QdRqHhqO+A8bHogIooFxoWDuOThVVPM5DzmJ90G+xpC7I+
-         AyjzLXxz7ikZA==
-Received: (nullmailer pid 1109815 invoked by uid 1000);
-        Mon, 24 Jul 2023 23:23:28 -0000
-Date:   Mon, 24 Jul 2023 17:23:28 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Prasad Sodagudi <quic_psodagud@quicinc.com>
-Subject: Re: [RFC PATCH 3/4] dt-bindings: power: reset: Document
- arm,psci-vendor-reset
-Message-ID: <20230724232328.GA1101352-robh@kernel.org>
-References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
- <20230724223057.1208122-4-quic_eberman@quicinc.com>
+        Mon, 24 Jul 2023 21:40:02 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A0910C3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 18:40:01 -0700 (PDT)
+Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.57])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4R904Z1H7JztRBW;
+        Tue, 25 Jul 2023 09:36:46 +0800 (CST)
+Received: from cgs.huawei.com (10.244.148.83) by
+ kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Tue, 25 Jul 2023 09:39:58 +0800
+From:   Gaosheng Cui <cuigaosheng1@huawei.com>
+To:     <liviu.dudau@arm.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>,
+        <sam@ravnborg.org>, <quic_eberman@quicinc.com>,
+        <a39.skl@gmail.com>, <quic_gurus@quicinc.com>,
+        <cuigaosheng1@huawei.com>,
+        <angelogioacchino.delregno@somainline.org>,
+        <james.qian.wang@arm.com>
+CC:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>
+Subject: [PATCH v6 0/3] Fix IS_ERR() vs NULL check for drm
+Date:   Tue, 25 Jul 2023 09:39:54 +0800
+Message-ID: <20230725013957.1237590-1-cuigaosheng1@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230724223057.1208122-4-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.244.148.83]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemi500012.china.huawei.com (7.221.188.12)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 03:30:53PM -0700, Elliot Berman wrote:
-> Add devicetree bindings for using PSCI SYSTEM_RESET2 with vendor reset  types.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  .../power/reset/arm,psci-vendor-reset.yaml    | 35 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 36 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
-> new file mode 100644
-> index 000000000000..18b0b8c167a1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
-> @@ -0,0 +1,35 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +# Copyright 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/reset/arm,psci-vendor-reset.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: PSCI SYSTEM_RESET2 Vendor Resets
-> +
-> +maintainers:
-> +  - Elliot Berman <quic_eberman@quicinc.com>
-> +
-> +description: |
-> +  PSCI SYSTEM_RESET2 supports vendor-defined reset types. This describes
-> +  the conversion of reboot modes to the reset types.
-> +
-> +properties:
-> +  compatible:
-> +    const: arm,psci-vendor-reset
-> +
-> +allOf:
-> +  - $ref: reboot-mode.yaml#
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    firmware {
-> +      psci-vendor-resets {
-> +        compatible = "arm,psci-vendor-reset";
+v6:
+- Update the first patch, return dev_err_probe(...), Thanks!
 
-We already have a node for PSCI, we don't need a second one. You can 
-have a separate driver without a separate node. 
+v5:
+- Update the third patch, change IS_ERR to IS_ERR_OR_NULL.
+  Thanks!
 
-> +        reboot-normal = <0x100>;
+v4:
+- 1. Update the second patch's commit messages.
+  2. Update the first patch, use dev_err_probe() instead of dev_err().
 
-Wouldn't 'normal' be the normal PSCI reset?
+  Thanks!
 
-> +        reboot-bootloader = <0x101>;
-> +        reboot-fastboot = <0x102>;
-> +      };
-> +    };
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index d516295978a4..2da4c5f1917b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -16982,6 +16982,7 @@ M:	Mark Rutland <mark.rutland@arm.com>
->  M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
->  L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
->  S:	Maintained
-> +F:	Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
->  F:	drivers/firmware/psci/
->  F:	include/linux/psci.h
->  F:	include/uapi/linux/psci.h
-> -- 
-> 2.41.0
-> 
+v3:
+- Update the second patch:
+  1. change IS_ERR to IS_ERR_OR_NULL
+  2. add Dmitry's R-b in this revision:
+  link: https://patchwork.freedesktop.org/patch/511035/?series=110745&rev=1
+
+  Thanks!
+
+v2:
+- I'm sorry I missed some emails, these patches were submitted last year,
+  now let me resend it with the following changes:
+  1. remove the patch: "drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in msm_icc_get()"
+  2. remove the patch: "drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms"
+  3. add "Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>" to the second patch.
+
+  Thanks!
+
+v1:
+- This series contains a few fixup patches, to fix IS_ERR() vs NULL check
+  for drm, and avoid a potential null-ptr-defer issue, too. Thanks!
+
+Gaosheng Cui (3):
+  drm/panel: Fix IS_ERR() vs NULL check in nt35950_probe()
+  drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in a5xx_submit_in_rb()
+  drm/komeda: Fix IS_ERR_OR_NULL() vs NULL check in
+    komeda_component_get_avail_scaler()
+
+ drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c | 2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c                      | 2 +-
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c              | 6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+-- 
+2.25.1
+
