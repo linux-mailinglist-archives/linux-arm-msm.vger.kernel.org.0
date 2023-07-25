@@ -2,58 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 200907611E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 12:57:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 013707613F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 13:15:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233254AbjGYK5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 06:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
+        id S234213AbjGYLPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 07:15:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231247AbjGYK5A (ORCPT
+        with ESMTP id S234238AbjGYLPD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 06:57:00 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59051421D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:54:30 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-991ef0b464cso1370230666b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:54:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690282469; x=1690887269;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lAPnBy51KY5Q8W0jZaxn8YJPMIA4zGpT3GqFQVuAjXs=;
-        b=ftj1qHH7PHX8G+ykrJfin4oovgfvLbfYfj7bwo5GgaP4bmYWLh0tcp3FrI1Ja7zqc+
-         y4t1CNKaafAqBumyPuxilT1jw0hHJAxXMqHIdTVgEEoEjl1l2tXFBYxe2w6AQ0p+ANZg
-         7UTjPky1q/FKXknDniZsGRduKSJ3YExWd/j8s4Tieri3qf+6eA37ktghPiUxP0UQ1hOp
-         buFKIjd41TOWT4hX2dvrCJVlcsRxr4UgU5ZyOd+pmNmiHfcaIQ+wpfhueJNGpLCkS+L7
-         g1UfkP4g6dKPzH+HGPUWBcDjNivjpM51y36d8k3O2dwF7Yhd2oRLfaa/5OP9dhMwMfOR
-         PXNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690282469; x=1690887269;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lAPnBy51KY5Q8W0jZaxn8YJPMIA4zGpT3GqFQVuAjXs=;
-        b=IQidJRpq5w6UWla9rPvz+odomcRABDMg15Ib02Bp808WRDKDFzdtIJROy8VLEeF0Co
-         DAW93alYYa7gWc/jNcDDGzXEzMNp3dJKPncxdvxyJvcU1p5UyAI9Bk0VhJWQd1NalhCT
-         K7RX2U9xojeh9Y8FPeRIpJ3dsdo8/u4F2DsSt5c+hBaL+eLlAAjLE6qYCfQdVF2WF6Jg
-         EVcN5X66UA5nag8t9u9orHYKwYmyN25i7mMMixr6gHNTdIIFGXglxwiY/fVbqf3YkLIP
-         sn8hU1JWIzw7JHNRKhsYzPYggshQsfyMHo1SwtFA32jAoimfYqzaObv42QuEbxduqwvg
-         jPWA==
-X-Gm-Message-State: ABy/qLaSxeQFlASSyioxGlPpy8pDBF6x7JXFedhpGp6+dQ4csY4Xg9N8
-        S8uIVtHiFM2iRGpeJnKSUJ5LnQ==
-X-Google-Smtp-Source: APBJJlHF8N1dX3cLQ6BhBFDlptyqeZ0jbLRdvDgQ93gz6dgJ4jr5wU6kWig1k8fcud6m2UiE+efWow==
-X-Received: by 2002:a17:907:77d1:b0:99b:b506:76d with SMTP id kz17-20020a17090777d100b0099bb506076dmr1070876ejc.24.1690282469541;
-        Tue, 25 Jul 2023 03:54:29 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id xo22-20020a170907bb9600b0098860721959sm7980597ejc.198.2023.07.25.03.54.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 03:54:28 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Saravanan Sekar <sravanhome@gmail.com>,
+        Tue, 25 Jul 2023 07:15:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB28E1BF5;
+        Tue, 25 Jul 2023 04:14:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AC42561692;
+        Tue, 25 Jul 2023 11:14:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049E1C433C7;
+        Tue, 25 Jul 2023 11:14:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690283654;
+        bh=kZj42ScISmz4li2JKwWSsvJeodC1GyqO823+DqOgMQA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=d5pB4XYyX/A8pr8IKx/l1JTHeGyCZ2SsK+MNAA9OCo/+yt8nQFOIhMhkTmboBCRIa
+         Xp3ihxmefa6W674THia7xXWtAM4Yu9bl2wwIPl/yRUdSuPeS2PaiCf2/9Akd1BvwnO
+         cBstWGkYYCUsI/kBZzFxICr5JZiR7a1ULiUjF506GGI3bbeMGQheJcr1ksxZQ1bkDF
+         7Z1QGX91AdC1rjoDmqEqPlRMxXWYaMMeKB0JO7l7zw9fPVenA03NcMAyeaZgYCv3d/
+         qicSz1l6Hjc9RPBvMhCH/EEIJn7dl2AEvM6ZwemBYHzAES6yfKS5ai4M4KeehoFAD9
+         edIEpusA7+FWA==
+Date:   Tue, 25 Jul 2023 12:14:07 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Saravanan Sekar <sravanhome@gmail.com>,
         Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
@@ -68,47 +52,57 @@ To:     Saravanan Sekar <sravanhome@gmail.com>,
         - <patches@opensource.cirrus.com>, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] regulator: dt-bindings: mps,mpq7920: drop incorrect ref to regulator.yaml
-Date:   Tue, 25 Jul 2023 12:54:21 +0200
-Message-Id: <20230725105421.99160-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230725105421.99160-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-kernel@lists.infradead.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 1/2] regulator: dt-bindings: add missing
+ unevaluatedProperties for each regulator
+Message-ID: <246eea6e-dd34-426f-9fc7-427d808fe8f0@sirena.org.uk>
 References: <20230725105421.99160-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pU6qgD5QqpPaeXtO"
+Content-Disposition: inline
+In-Reply-To: <20230725105421.99160-1-krzysztof.kozlowski@linaro.org>
+X-Cookie: BARBARA STANWYCK makes me nervous!!
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-"regulators" node is just grouping regulators, but itself is not
-describing one regulator, thus reference to regulator.yaml schema is
-incorrect.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml | 1 -
- 1 file changed, 1 deletion(-)
+--pU6qgD5QqpPaeXtO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml b/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml
-index 38475a568451..6de5b027f990 100644
---- a/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml
-+++ b/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml
-@@ -21,7 +21,6 @@ properties:
- 
-   regulators:
-     type: object
--    $ref: regulator.yaml#
- 
-     description: |
-       list of regulators provided by this controller, must be named
--- 
-2.34.1
+On Tue, Jul 25, 2023 at 12:54:20PM +0200, Krzysztof Kozlowski wrote:
+> Each regulator node, which references common regulator.yaml schema,
+> should disallow additional or unevaluated properties.  Otherwise
+> mistakes in properties will go unnoticed.
 
+This doesn't apply against current code, please check and resend.
+
+>  Documentation/devicetree/bindings/regulator/ti,tps65090.yaml  | 1 +
+
+This doesn't seem to be upstream.
+
+--pU6qgD5QqpPaeXtO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmS/rn4ACgkQJNaLcl1U
+h9Aqggf/aDeIQ1IKzvUqzKpJJNCra6EytL7wUkPxFef7t8RGjNvn50RLK+/3lwv6
+iQvyVaumklG1HDAgEHWjfQd6nOOzvoRxmX057o9Tq7cTt57Btvvo6/Oqd8qmMKgK
+j0+UTFnUtRp2K2IJ7BB5Apv8aOSvp0yRjqXuZ+U4Eb75NrjHKzpNB2Izroh/Jipt
+M8DeS5IYFX/hDBqWt/DJ7IbwoP7HWkTqcR/7uNjnamhgK13y3Snq2TN1R2GuG+YO
+CxwwBz4b+xImipL+7fNZRKWE0vz1L5VtyVwwcSfCYwDBNDnObJVmeL2nDM0ndPXD
+r1+ge6uWiU507QcyrTs0YVStltnPEQ==
+=jUXK
+-----END PGP SIGNATURE-----
+
+--pU6qgD5QqpPaeXtO--
