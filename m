@@ -2,91 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E29E761DF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 18:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B06F1761EBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 18:40:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229969AbjGYQDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 12:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42236 "EHLO
+        id S229971AbjGYQkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 12:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbjGYQDl (ORCPT
+        with ESMTP id S229582AbjGYQky (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 12:03:41 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F00E77;
-        Tue, 25 Jul 2023 09:03:40 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PBT4fa008504;
-        Tue, 25 Jul 2023 16:03:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Kp0a7lNAXCXaM8NaCeuOTfXgKtq0h3njcXHRACkc6RA=;
- b=pVeOUDSNgLJjyyxwjIZh/WhGaMLec4TRU8/x/Whd5Ua08QMVlZ8amakEE4KsX4KqUusS
- eQhWd9Hz6++7ew8S7MDwaMvGwceV52GeNDNDDjkpPKctB7jROXmM64XBse22V7Y36PVz
- QZk0/s8yok98T+ISn1xkORO/8fhekpSU3x+PNjsZXUQQtBFjda7abKNFqcZT25E/1Tua
- hcqy7lGUewx1CwqxGfWgsFkQdEfCwkxK14Oc/blRFNJ0nbYtgriyzHj+hI//Vl0Y8EXw
- Z0jqF6A+2coI6/+0pvXIc+PfcM/n3UlMIrk3AHCD5t3qkE+cTl21OE+DCehQpc0WWwmv mA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s29j5ha4a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 16:03:35 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PG3X9c012883
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 16:03:33 GMT
-Received: from [10.110.68.194] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
- 2023 09:03:32 -0700
-Message-ID: <1276e614-0c2a-f8a6-d7a0-1fa228eea476@quicinc.com>
-Date:   Tue, 25 Jul 2023 09:03:26 -0700
+        Tue, 25 Jul 2023 12:40:54 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A931BE1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 09:40:53 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52222562f1eso4588406a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 09:40:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690303252; x=1690908052;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lZ1gnj/eC9nPxCfASLTwleokcx+2HhZFD7BYZMiPCig=;
+        b=yshi3Yy26azevSvOfouSdf9Wu4rv7nf7RJxkOLZE9hEzz8eGGgT2wjQ0tab+JthoyV
+         aX5ZX6m2opqmjqwp8Yh+QqDyz3TNiF7t6Ax5rmOPmOKNs8TEarkcEACu07DY6P0HiLhz
+         XxBFEh2CB17X/WhdlPZGUfks0TLdQcr2V/S31bdb2A/HBrmO+KfAfEet+pYPbQXZbIea
+         Sr3A/EPLN5R0HtqJEMv4mVQbBBay9VJncju5kpfBYeUDFEq/CZ7fxoFvvIlPb/C4gZKi
+         NhqhhnGNlX6WUSUvf6V14vvEv/SCcow6UqYakh1AUt8kjX/uKs+7QcaBQ1Z76f7djd0U
+         QZbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690303252; x=1690908052;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lZ1gnj/eC9nPxCfASLTwleokcx+2HhZFD7BYZMiPCig=;
+        b=QIHqvHTx+XUCuoBSSaKhqhkt83uJOVTeeBLjAcxGPiscqAjfMCwpPzvF1VoxoDAFRs
+         ipZTCx95Q2Rthn2yc9XxHRhyzjsYgrC7RpuKx/y6VtifmxR8+eizGQaKoR6vI0zbB7Il
+         6aJd9u1HOLEJTMnkMFirHrhsnU7FrPU3Qp1MLao9QpDg9/6nAbMIAyY9q3q/1UZi4EUF
+         e4iftMy9yCQsV5b8HCu0CyvEACD1XCPKF6uq7kkFkluTHrnUTmsMsLxwXReIt77mr1yR
+         ucA10geM26904KjTTSl+NLJMZdf4xK6B6rP+o0ok1byyKAAe+xNtDZX9ysRjOQVgSgUb
+         by2Q==
+X-Gm-Message-State: ABy/qLZ6DZXMTCGepKvb6Gt5kKnwBnTsK6lRxbwoSvTxEDbkfL1iByY5
+        YVaWEC4zdzZH3SOUdmItc2Vy3Q==
+X-Google-Smtp-Source: APBJJlG4Sl5G/jl6rzAdn8mnLSMnXi6DUFJxmlhJ0JxMpiqnb3gh+i39RHSwylVMpVzM1pcbHLbIXg==
+X-Received: by 2002:a17:906:649a:b0:993:d616:7ca9 with SMTP id e26-20020a170906649a00b00993d6167ca9mr13955552ejm.23.1690303251816;
+        Tue, 25 Jul 2023 09:40:51 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id s8-20020a170906960800b0099316c56db9sm8331201ejx.127.2023.07.25.09.40.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 09:40:51 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] regulator: dt-bindings: qcom,rpm: fix pattern for children
+Date:   Tue, 25 Jul 2023 18:40:47 +0200
+Message-Id: <20230725164047.368892-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH][next] accel/qaic: remove redundant assignment to pointer
- pexec
-Content-Language: en-US
-To:     Colin Ian King <colin.i.king@gmail.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
-CC:     <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230725114037.36806-1-colin.i.king@gmail.com>
-From:   Carl Vanderlip <quic_carlv@quicinc.com>
-In-Reply-To: <20230725114037.36806-1-colin.i.king@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yn6pno17VELBkxADUY_tmokJEazIHOMG
-X-Proofpoint-GUID: yn6pno17VELBkxADUY_tmokJEazIHOMG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-25_08,2023-07-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- adultscore=0 malwarescore=0 mlxlogscore=692 phishscore=0 clxscore=1011
- mlxscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307250140
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The "or" (|) in regular expression must be within parentheses,
+otherwise it is not really an "or" and it matches supplies:
 
-On 7/25/2023 4:40 AM, Colin Ian King wrote:
-> Pointer pexec is being assigned a value however it is never read. The
-> assignment is redundant and can be removed.
-> 
-> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+  qcom-apq8060-dragonboard.dtb: regulators-1: vdd_ncp-supply: [[34]] is not of type 'object'
 
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Fixes: fde0e25b71a9 ("dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../devicetree/bindings/regulator/qcom,rpm-regulator.yaml       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml
+index 8a08698e3484..b4eb4001eb3d 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml
+@@ -49,7 +49,7 @@ patternProperties:
+   ".*-supply$":
+     description: Input supply phandle(s) for this node
+ 
+-  "^((s|l|lvs)[0-9]*)|(s[1-2][a-b])|(ncp)|(mvs)|(usb-switch)|(hdmi-switch)$":
++  "^((s|l|lvs)[0-9]*|s[1-2][a-b]|ncp|mvs|usb-switch|hdmi-switch)$":
+     description: List of regulators and its properties
+     $ref: regulator.yaml#
+     unevaluatedProperties: false
+-- 
+2.34.1
+
