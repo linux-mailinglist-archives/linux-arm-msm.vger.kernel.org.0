@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62F0C760CBE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:15:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D6CC760E3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:18:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232323AbjGYIPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 04:15:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45276 "EHLO
+        id S233071AbjGYJSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:18:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232399AbjGYIPR (ORCPT
+        with ESMTP id S233082AbjGYJSm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 04:15:17 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F9E8E7B;
-        Tue, 25 Jul 2023 01:15:16 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36P88xAK009682;
-        Tue, 25 Jul 2023 08:15:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PCz3mEeQgque/FOOfchegotNtCY9cjznSwkh8xlUE6w=;
- b=VEUputmX7WLBs0Z5vbz8qjRSVucxS/15nHFR9d103lbpDrdozJy2+nvXx5j+DSTMqwUq
- 8HPsYpbr6RJ3I5Fc37RvB4r+99HyvmkR/Jn4q0EziultKVKSByBfJlNKulCMTmzB9uKj
- 4AFu5euWC/yz8THaETSA/Gyu/PzoW3AMX4eGQGz1ExNQsE6FxjwF7X62tUXobLPyo1/P
- 1/KMWJyDlbRddwC5R8X9yy7jDQqcNFbIWV9YcMGe6qpBKYk2ntw4G5idhv3rO7233NrT
- TH30Glbx1o0KOlb96wM/6KTym/B/PVszgVfhhvpfZTkhUQcOBnkXkZo3FMWscO4ksNtU EA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1s1jt6b1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 08:15:12 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36P8F2ct005670
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 08:15:02 GMT
-Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
- 2023 01:14:59 -0700
-Message-ID: <a3a401fe-dbc6-03dd-ce6f-13abf30ef984@quicinc.com>
-Date:   Tue, 25 Jul 2023 13:44:55 +0530
+        Tue, 25 Jul 2023 05:18:42 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A5E10E7;
+        Tue, 25 Jul 2023 02:18:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690276715; x=1721812715;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=LKtaiWNgDWK8U+v+CSkjSmMLNgc+6CwnEmQrVA3o6hk=;
+  b=X9Tnq3Mqr7hSM1pYrZe4MDh+iteuG93bMGwcd0dwbhDzbXB6dKtQ8wwC
+   GFbgh8yfuPPUl9X/8hxurecx98oDSAzdDcC/KMxqjQYGQD23nQWVa22fa
+   vjuCsCxuKaj/BUvZqtoY/Az8MPYTRLV0mLlzpii4mKt7fQzjFHY7n79qC
+   NQBTuMNMtkNAwpdFo/5SHcyuop6C8zpMhxbizzhP+rgntiwBZw+bX32HP
+   //4vyJ6W+lDNn2o2oYofPa/6X7A4jlCSkSWImL32c5I7gzLQRRM/yrSss
+   3pfiCKNMynqbCYbxMTiDCHrKZOGl04ZqJhAG4Z9K87KF6Ss7wjzmND6xK
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="454048830"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="454048830"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980312"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="719980312"
+Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:28 -0700
+Message-ID: <eb1c679b-f50b-1f20-c7c8-da3f4857bec1@linux.intel.com>
+Date:   Tue, 25 Jul 2023 10:27:00 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 1/2] dt-bindings: power: qcom,rpmhpd: Add Generic RPMh PD
- indexes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
+Subject: Re: [PATCH v4 08/32] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <1689744162-9421-1-git-send-email-quic_rohiagar@quicinc.com>
- <1689744162-9421-2-git-send-email-quic_rohiagar@quicinc.com>
- <e77c39fe-b7cf-49b3-9260-ecf4872e8fdf@quicinc.com>
- <7517b2ca-7d7f-dc0c-7f60-a6281b37ab40@quicinc.com>
- <a4zztrn6jhblozdswba7psqtvjt5l765mfr3yl4llsm5gsyqef@7x6q7yabydvm>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <a4zztrn6jhblozdswba7psqtvjt5l765mfr3yl4llsm5gsyqef@7x6q7yabydvm>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
+        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
+        o-takashi@sakamocchi.jp
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-9-quic_wcheng@quicinc.com>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20230725023416.11205-9-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c6-FyxMlGSQV51UxzQhwKxX-VDQo3ZmI
-X-Proofpoint-ORIG-GUID: c6-FyxMlGSQV51UxzQhwKxX-VDQo3ZmI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-25_04,2023-07-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- mlxlogscore=899 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- suspectscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307250072
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,42 +77,156 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 7/22/2023 8:35 AM, Bjorn Andersson wrote:
-> On Fri, Jul 21, 2023 at 06:47:42PM +0530, Rohit Agarwal wrote:
->> On 7/21/2023 11:14 AM, Pavan Kondeti wrote:
->>> On Wed, Jul 19, 2023 at 10:52:41AM +0530, Rohit Agarwal wrote:
->>>> diff --git a/include/dt-bindings/power/qcom,rpmhpd.h b/include/dt-bindings/power/qcom,rpmhpd.h
-> [..]
->>>> +
->>>> +#endif
->>>> -- 
->>> I see the PD performance levels (RPMH_REGULATOR_LEVEL_xxx) are still
->>> coming from qcom-rpmpd.h. Which means Socs with RPMh also need to
->>> include the older header for these definitions along with this newly
->>> created header. something to improve for the clarity sake?
->> Agreed. I think we can move these to the new header so that the new SoC with
->> RPMH can completely
->> move to rpmhpd.h.
-> Sounds very reasonable, please do that in a follow up patch.
-> I'm picking this as is.
-I have a doubt related to this about sending the patches.
+> +static const struct snd_soc_dai_ops q6usb_ops = {
+> +	.prepare	= q6afe_dai_prepare,
+> +	.hw_params	= q6usb_hw_params,
+> +	.shutdown	= q6afe_dai_shutdown,
 
-Since I will be moving the regulators level into the same rpmhpd.h 
-header, we
-would need to update all the qcom soc dtsi file changes as well. Also 
-there is a
-remaining dt-bindings patch that update the older rpmhpd bindings to 
-these new
-ones basically the cleanup is remaining.
-Shall I create a unified series updating all these in one and tagging 
-all the the
-related maintainers in the CC
-OR
-should I create separate series where the dt changes are updated first 
-then the
-followup cleanup dt-bindings series?
+it's a bit odd to see a .shutdown without a .startup?
 
-Thanks,
-Rohit.
-> Thanks,
-> Bjorn
+Is this intentional and should a comment be added?
+
+
+> +/* device token of actual end USB aduio device */
+
+audio
+
+> +	u32                  dev_token;
+> +/* endianness of this interface */
+> +	u32                   endian;
+> +/* service interval */
+> +	u32                  service_interval;
+> +} __packed;
+> +
+> +/**
+> + * struct afe_param_id_usb_audio_dev_params
+> + * @cfg_minor_version: Minor version used for tracking USB audio device
+> + * configuration.
+> + * Supported values:
+> + *     AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
+> + * @dev_token: device token of actual end USB aduio device
+
+audio. please run a spell-checker.
+
+
+> +	svc_int.cfg_minor_version = AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG;
+> +	svc_int.svc_interval = pcfg->usb_cfg.service_interval;
+> +	ret = q6afe_port_set_param_v2(port, &svc_int,
+> +				      AFE_PARAM_ID_USB_AUDIO_SVC_INTERVAL,
+> +				      AFE_MODULE_AUDIO_DEV_INTERFACE, sizeof(svc_int));
+> +	if (ret) {
+> +		dev_err(port->afe->dev, "%s: AFE device param cmd svc_interval failed %d\n",
+> +			__func__, ret);
+> +		ret = -EINVAL;
+
+why do you override the return value?
+
+> +		goto exit;
+
+not necessary, this is a jump to the next line. Looks like copy-paste ...
+
+> +	}
+> +exit:
+> +	return ret;
+> +}
+> +
+> +/**
+> + * q6afe_usb_port_prepare() - Prepare usb afe port.
+> + *
+> + * @port: Instance of afe port
+> + * @cfg: USB configuration for the afe port
+> + *
+> + */
+> +void q6afe_usb_port_prepare(struct q6afe_port *port,
+> +			     struct q6afe_usb_cfg *cfg)
+> +{
+> +	union afe_port_config *pcfg = &port->port_cfg;
+> +
+> +	pcfg->usb_cfg.cfg_minor_version = AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG;
+> +	pcfg->usb_cfg.sample_rate = cfg->sample_rate;
+> +	pcfg->usb_cfg.num_channels = cfg->num_channels;
+> +	pcfg->usb_cfg.bit_width = cfg->bit_width;
+> +
+> +	afe_port_send_usb_dev_param(port, cfg);
+> +}
+> +EXPORT_SYMBOL_GPL(q6afe_usb_port_prepare);
+> +
+>  /**
+>   * q6afe_hdmi_port_prepare() - Prepare hdmi afe port.
+>   *
+> @@ -1611,7 +1791,10 @@ struct q6afe_port *q6afe_port_get_from_id(struct device *dev, int id)
+>  		break;
+>  	case AFE_PORT_ID_WSA_CODEC_DMA_RX_0 ... AFE_PORT_ID_RX_CODEC_DMA_RX_7:
+>  		cfg_type = AFE_PARAM_ID_CODEC_DMA_CONFIG;
+> -	break;
+> +		break;
+> +	case AFE_PORT_ID_USB_RX:
+> +		cfg_type = AFE_PARAM_ID_USB_AUDIO_CONFIG;
+> +		break;
+>  	default:
+>  		dev_err(dev, "Invalid port id 0x%x\n", port_id);
+>  		return ERR_PTR(-EINVAL);
+> diff --git a/sound/soc/qcom/qdsp6/q6afe.h b/sound/soc/qcom/qdsp6/q6afe.h
+> index 30fd77e2f458..e098a3e15135 100644
+> --- a/sound/soc/qcom/qdsp6/q6afe.h
+> +++ b/sound/soc/qcom/qdsp6/q6afe.h
+> @@ -5,7 +5,7 @@
+>  
+>  #include <dt-bindings/sound/qcom,q6afe.h>
+>  
+> -#define AFE_PORT_MAX		129
+> +#define AFE_PORT_MAX		130
+>  
+>  #define MSM_AFE_PORT_TYPE_RX 0
+>  #define MSM_AFE_PORT_TYPE_TX 1
+> @@ -205,6 +205,47 @@ struct q6afe_cdc_dma_cfg {
+>  	u16	active_channels_mask;
+>  };
+>  
+> +/**
+> + * struct q6afe_usb_cfg
+> + * @cfg_minor_version: Minor version used for tracking USB audio device
+> + * configuration.
+> + * Supported values:
+> + *     AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
+> + * @sample_rate: Sampling rate of the port
+> + *    Supported values:
+> + *      AFE_PORT_SAMPLE_RATE_8K
+> + *      AFE_PORT_SAMPLE_RATE_11025
+> + *      AFE_PORT_SAMPLE_RATE_12K
+> + *      AFE_PORT_SAMPLE_RATE_16K
+> + *      AFE_PORT_SAMPLE_RATE_22050
+> + *      AFE_PORT_SAMPLE_RATE_24K
+> + *      AFE_PORT_SAMPLE_RATE_32K
+> + *      AFE_PORT_SAMPLE_RATE_44P1K
+> + *      AFE_PORT_SAMPLE_RATE_48K
+> + *      AFE_PORT_SAMPLE_RATE_96K
+> + *      AFE_PORT_SAMPLE_RATE_192K
+> + * @bit_width: Bit width of the sample.
+> + *    Supported values: 16, 24
+> + * @num_channels: Number of channels
+> + *    Supported values: 1, 2
+> + * @data_format: Data format supported by the USB
+> + *    Supported values: 0
+> + * @reserved: this field must be 0
+> + * @dev_token: device token of actual end USB audio device
+> + * @endian: endianness of this interface
+> + * @service_interval: service interval
+> + **/
+> +struct q6afe_usb_cfg {
+> +	u32	cfg_minor_version;
+> +	u32     sample_rate;
+> +	u16	bit_width;
+> +	u16	num_channels;
+> +	u16	data_format;
+> +	u16	reserved;
+> +	u32	dev_token;
+> +	u32	endian;
+> +	u32	service_interval;
+> +};
+
+this definition looks exactly the same as
+struct afe_param_id_usb_cfg
+??
+
+
