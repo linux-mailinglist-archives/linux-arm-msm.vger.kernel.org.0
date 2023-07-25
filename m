@@ -2,87 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 893EC760A50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 08:26:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34330760AED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 08:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbjGYG0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 02:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46900 "EHLO
+        id S230017AbjGYGvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 02:51:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbjGYG0s (ORCPT
+        with ESMTP id S231147AbjGYGvT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 02:26:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7982CF;
-        Mon, 24 Jul 2023 23:26:47 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36P4poQT004251;
-        Tue, 25 Jul 2023 06:26:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8RcjJCCsQwRpsPqjhjQqQfhBDHGif3SbicAU1EnQ+KY=;
- b=oPJ1YB34WWql6kgGSsTR6ckev+vhINjLujGrFdB1TWV6edezVz8/HZLDBf2P4Guq9yWE
- GzMHtwpWzo/9XW98nqQUkw6O1kXHIVfmhIqb/39X+5Vb57/Jtw1R9eVic8L1SvqiTw14
- MLdSjh7cqqsT7VTGkEhz53i1x/MTZ0h7IyxRyRe+qhTEgMVCtVM9zXn/e6v5eIyn7JMp
- 3DWYjNueSIoTTbt+xZ5gWf2hi3GFzWwaPdeUrACh54g0OtbZ34pwZGEbvxFVfjeYbSAp
- ZIWHoQ4FtL01aaUzo3Tn/X8H+3q3GL7ujacRoS+5lUREJQyXwM5hj/irTxG4LlQh/xsC eA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1y6m11s9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 06:26:43 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36P6Qg5G032391
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 06:26:42 GMT
-Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 24 Jul
- 2023 23:26:38 -0700
-Message-ID: <3aaccc94-59b3-31d3-eac7-f8926f8c88ff@quicinc.com>
-Date:   Tue, 25 Jul 2023 14:26:36 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 2/3] dt-bindings: input: qcom,pm8xxx-vib: add new SPMI
- vibrator module
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <dmitry.baryshkov@linaro.org>,
+        Tue, 25 Jul 2023 02:51:19 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16B0BD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 23:51:18 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qOBsF-0008CR-QE; Tue, 25 Jul 2023 08:50:23 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qOBs7-001wAn-Vc; Tue, 25 Jul 2023 08:50:15 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qOBs7-007bOg-45; Tue, 25 Jul 2023 08:50:15 +0200
+Date:   Tue, 25 Jul 2023 08:50:14 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Russell King <linux@armlinux.org.uk>,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Jacky Huang <ychuang3@nuvoton.com>,
+        Shan-Chun Hung <schung@nuvoton.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        <linux-input@vger.kernel.org>, <devicetree@vger.kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>
-References: <20230725054138.129497-1-quic_fenglinw@quicinc.com>
- <20230725054138.129497-3-quic_fenglinw@quicinc.com>
- <b2ad4863-a38b-7fb6-65b1-ea336c4fc876@linaro.org>
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <b2ad4863-a38b-7fb6-65b1-ea336c4fc876@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0oBRzHngtBu9p4ihuaZRfygs2w4tfkos
-X-Proofpoint-ORIG-GUID: 0oBRzHngtBu9p4ihuaZRfygs2w4tfkos
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-25_02,2023-07-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- mlxlogscore=999 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307250057
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
+        sparclinux@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2] tty: Explicitly include correct DT includes
+Message-ID: <20230725065014.kjdcos77kzepprvw@pengutronix.de>
+References: <20230724205440.767071-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="egg3m5pjvujeb37y"
+Content-Disposition: inline
+In-Reply-To: <20230724205440.767071-1-robh@kernel.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,79 +90,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--egg3m5pjvujeb37y
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 7/25/2023 1:53 PM, Krzysztof Kozlowski wrote:
-> On 25/07/2023 07:41, Fenglin Wu wrote:
->> Add compatible string 'qcom,spmi-vib-gen2' for vibrator module inside
->> PMI632, PMI7250B, PM7325B, PM7550BA. Also, add 'qcom,spmi-vib-gen1'
->> string for the SPMI vibrator inside PM8916 to maintain the completeness
->> of the hardware version history for SPMI vibrators.
->>
->> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->> ---
->>   .../bindings/input/qcom,pm8xxx-vib.yaml        | 18 ++++++++++++++----
->>   1 file changed, 14 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
->> index c8832cd0d7da..ab778714ad29 100644
->> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
->> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
->> @@ -11,10 +11,20 @@ maintainers:
->>   
->>   properties:
->>     compatible:
->> -    enum:
->> -      - qcom,pm8058-vib
->> -      - qcom,pm8916-vib
->> -      - qcom,pm8921-vib
->> +    oneOf:
->> +      - enum:
->> +          - qcom,pm8058-vib
->> +          - qcom,pm8916-vib
->> +          - qcom,pm8921-vib
->> +          - qcom,spmi-vib-gen1
->> +          - qcom,spmi-vib-gen2
-> 
-> Generic compatibles should not be alone. Drop both lines.
+Hello Rob,
 
-Sure. I will remove 'qcom,spmi-vib-gen2'.
-Should I also keep 'qcom,spmi-vib-gen1' as generic compatible and move 
-'qcom,pm8916-vib' as its fallback as following?
+On Mon, Jul 24, 2023 at 02:54:38PM -0600, Rob Herring wrote:
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
+>=20
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-   compatible:
-     oneOf:
-       - enum:
-           - qcom,pm8058-vib
-           - qcom,pm8921-vib
-       - items:
-           - enum:
-               - qcom,pm8916-vib
-           - const: qcom,spmi-vib-gen1
-       - items:
-           - enum:
-               - qcom,pmi632-vib
-               - qcom,pm7250b-vib
-               - qcom,pm7325b-vib
-               - qcom,pm7550b-vib
-           - const: qcom,spmi-vib-gen2
+Acked-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> # for imx
 
-I saw 'qcom,pm8916-vib' has been used in multiple DTS files and updating 
-it as a fallback will result updating those DTS files as well.
-Or please help to suggest if there is any way to keep 'qcom,pm8916-vib' 
-and 'qcom,spmi-vib-gen1' compatible without updating existing DTS nodes.
+Thanks for your efforts!
 
-Thanks
+Best regards
+Uwe
 
-> 
->> +      - items:
->> +          - enum:
->> +              - qcom,pmi632-vib
->> +              - qcom,pm7250b-vib
->> +              - qcom,pm7325b-vib
->> +              - qcom,pm7550b-vib
->> +          - const: qcom,spmi-vib-gen2
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--egg3m5pjvujeb37y
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmS/cKYACgkQj4D7WH0S
+/k5DeQf/XZ9i2MKupQ474foZd/xSXDoeGP/mzcur4EO3Bu06s1VDyknWODS3IU5p
+VGN/GNMpV8QCC4UBbhddhyqP60D9vYNBqbyw6ZsVZTH5+9Ld4Dmfi8jTYeTNiYYc
++EmM4HrAdY1GVXkdkip00c1GWdcPsHQA6JgSwV1z2cjiJU/7AeRdF6FTB7LPtxCO
+lHZ+at0pra4cRma7o2dZyjIZCa3M05OFqBIX5FAbCCptQsRYlnfTJbOuA2Fr3aTq
+mn7uHJbHPuX+r4PnWXzeq/IC4eEynkYfcINsTmQtG2H2ecI+GvJGttDpTrZstKr7
+ThQy424A1jo0R00lnwmfFmOG/Q7gKQ==
+=p7gV
+-----END PGP SIGNATURE-----
+
+--egg3m5pjvujeb37y--
