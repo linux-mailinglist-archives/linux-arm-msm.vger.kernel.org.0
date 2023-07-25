@@ -2,164 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ABD4760E4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74D52760DCF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:01:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233144AbjGYJTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
+        id S232624AbjGYJBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233142AbjGYJTL (ORCPT
+        with ESMTP id S231972AbjGYJBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:19:11 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60631173B;
-        Tue, 25 Jul 2023 02:18:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690276736; x=1721812736;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=R72RUzt3QoJsOVNYAWhWO4uGyKekfMANgpOv6MYiNDY=;
-  b=ZshymxI/qlzFeBc7F5F9wyg+kfwmFx+3sgiES9v6HqdFi6JeiyJv2U5b
-   qxeM2LLVABDS2pQYWldGcdnVIxtpwOMmcUAMjpIE4Gg505XW7KPksS0WV
-   K0M38ZY/Uko9gJid7dgw1+iUAVWJQVlfuj7NuriG7e5jyLoWu5d9SnSXF
-   zgRD2FFEpTmQsh4JvNh0cyLmp8ZowekaFTx21OXQ0kdXMLjbLB9IyWpQx
-   PvyCD/LfqVFl+xefi9VblnRcf4EQDAQgoREuFcC89AfK/lruPZGFAUhWp
-   8ZXKbqoKcdkDFz33Gc4xKyb1JfvlyOOlrHvbyuNnZEIgobGym/LNbu+ac
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="454048958"
-X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="454048958"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980425"
-X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="719980425"
-Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:48 -0700
-Message-ID: <2ac68f83-6300-fa61-e1ca-80df07fc1494@linux.intel.com>
-Date:   Tue, 25 Jul 2023 10:59:31 +0200
+        Tue, 25 Jul 2023 05:01:09 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574B81FE3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 02:00:41 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3fbd33a57dcso51767885e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 02:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690275634; x=1690880434;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j7Qh4SLEY1eLgJVS8m4AG3+oVzUXdrRAOvEVED2PMdU=;
+        b=qAmEn5KU8WaxCdLJKYsT6B7H3MTGmTKWRj4CjmcCMDAC7t8j4iL/ALonYKoRqOdqFy
+         vuh2ueNCHD8Z9tGVV45pdlWu0yg8jAg/5m/btZQHBUCf7WfUqTVORU+N1969jlOfwlHu
+         7h7lv2qQQtoi5xUKT4c6nFJN/VUC9zwfFCtsZpldsHpepW7T8VJ26WboW0J4nbRLV2Aa
+         yZsCLHwubAY+ll28aPUUXRPyRi5S6E6/EUuvPjAAUHpl46ipxDwd1sHqL+IDkQw0ag8y
+         YCyOFT/EazzY//gEefkEGsSLAM1X39ozh0R+G2g9o+Fg9hRWeS+3pCZXd9Kd671Myhe/
+         cLpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690275634; x=1690880434;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j7Qh4SLEY1eLgJVS8m4AG3+oVzUXdrRAOvEVED2PMdU=;
+        b=jZpfbdr1NE5Vi8PoI5iOs6elxOI5lz/kSfuuTPnW39V/ASHNBSeKX0zdOWZRjUe7f9
+         he+yK7AgEMFIdkZjDEx9vAqCUdB9yu950pCG4BGYgasralNbK8r7t2ZEdEXaiZeSuj2w
+         h2Vzm0RBnxTDU2Sv/PtP+xuljXbMz3ijxZ6hm1U8y0uepkVGiyL2CncF4K4vAgF2mIZx
+         +kcNW7hdqpOkNrotI8Bfbaz4Tdy+Oae6JQPG50iNB3jsMppYH5KEw9D0QwBxex9idpFl
+         Pbo3ES8oQfnihYPtRjmomBf+WMkuTKKYCUg0NiiMguOoCt6ILCRhp6urqLxFIO6nrlo5
+         ZoSw==
+X-Gm-Message-State: ABy/qLa79sD/alutctu930K8C4i87VvkjV92CfIWZPySgCLw65k/Ougn
+        57XAOlINmQyR+Xs3uZnfeEfvCg==
+X-Google-Smtp-Source: APBJJlGI2bvBb8cUMLfFKTvfQy/8j2HbRp6KngSO9LZm27HZyh5fpzLeuHCrPJJ07fcGW6ABaS5oRQ==
+X-Received: by 2002:a7b:c453:0:b0:3fa:99d6:4798 with SMTP id l19-20020a7bc453000000b003fa99d64798mr10044249wmi.37.1690275633845;
+        Tue, 25 Jul 2023 02:00:33 -0700 (PDT)
+Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
+        by smtp.gmail.com with ESMTPSA id f5-20020a1c6a05000000b003fc015ae1e1sm12648420wmc.3.2023.07.25.02.00.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 02:00:33 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v4 0/3] SM6375 remoteprocs
+Date:   Tue, 25 Jul 2023 11:00:27 +0200
+Message-Id: <20230725-topic-6375_rproc-v4-0-d55e8a6d0f5f@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v4 26/32] sound: Pass USB SND card and PCM information to
- SOC USB
-Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
-        Thinh.Nguyen@synopsys.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
-        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
-        o-takashi@sakamocchi.jp
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-27-quic_wcheng@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20230725023416.11205-27-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIACuPv2QC/0WNQQ6CMBBFr2K6dkhpCw2uvIcxZigtNGKHTNFoC
+ He3cePy/eS9v4nsOfosTodNsH/FHCkVMMeDcBOm0UMcCgsllZZWNbDSEh202jY3XpgcmCCtwU4
+ FbIIoWo/ZQ8+Y3FTE9JznMi7sQ3z/fi7XwoHpAevEHv/1Wna1blpjK607pQzUcKfEOFTDp3eRz
+ nNMyFQRj2LfvwyNBA+6AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690275632; l=1779;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=fw4ZCgvUkpz8oGonNg5rYSidS90Y7mSsueusBESngNc=;
+ b=2nrR5I4qmkcWiMkQisBkgUu7tnSNSdqmhYswI/yyOAVzvqnc/9hyS2ImF5EtZPoKup89aXn1j
+ SAmn8O8VuJgB3zZgHxIs0HDVA/WHnwOwYpgLaYh7RZYW8bD7K6s7MH+
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Resending as the previous revision was mostly ignored on the rproc side.
 
+Changes since v3:
+- Pick up krzk's rb on bindings
+- Drop patch 4 (applied)
+Link to v3: https://lore.kernel.org/linux-arm-msm/20230109135647.339224-1-konrad.dybcio@linaro.org/
 
-On 7/25/23 04:34, Wesley Cheng wrote:
-> Currently, only the index to the USB SND card array is passed to the USB
-> backend.  Pass through more information, specifically the USB SND card
-> number and the number of PCM devices available.  The USB backend should
-> know about which sound resources are being shared between the ASoC and USB
-> SND paths.  This can be utilized to properly select and maintain the
-> offloading devices.
-> 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  include/sound/soc-usb.h           |  9 +++++----
->  sound/soc/qcom/qdsp6/q6usb.c      | 20 ++++++++++++++++++--
->  sound/soc/soc-usb.c               | 12 +++++++-----
->  sound/usb/qcom/qc_audio_offload.c |  9 +++++----
->  4 files changed, 35 insertions(+), 15 deletions(-)
-> 
-> diff --git a/include/sound/soc-usb.h b/include/sound/soc-usb.h
-> index 71e6e75e600a..606128332044 100644
-> --- a/include/sound/soc-usb.h
-> +++ b/include/sound/soc-usb.h
-> @@ -19,20 +19,21 @@ struct snd_soc_usb {
->  	struct device *dev;
->  	struct snd_soc_component *component;
->  	int (*connection_status_cb)(struct snd_soc_usb *usb, int card_idx,
-> -				int connected);
-> +				int chip_idx, int num_pcm, int connected);
+This revision merges two [1] [2] previously separate series,
+adding SM6375's ADSP, CDSP, MPSS and related bindings.
 
-I don't know what 'chip_idx' is.
+[1] https://lore.kernel.org/linux-arm-msm/20230107120623.1903056-1-konrad.dybcio@linaro.org/T/#m89d629bd788593dfd27e4dbf0cf0bf94ffd0a7ce
+[2] https://lore.kernel.org/linux-arm-msm/622afd8b-a469-4c95-d2b8-030e47b0cac2@linaro.org/T/#m17aee8f3a51cfbd3f92fe2b4dd48b3722a6a0a7e
 
-The 'num_pcm' sounds problematic if there are different devices for
-playback and capture. I would guess this is for playback only, but this
-doesn't scale.
+Konrad Dybcio (4):
+  dt-bindings: remoteproc: qcom,sm6375-pas: Document remoteprocs
+  remoteproc: qcom: pas: Add SM6375 ADSP & CDSP
+  remoteproc: qcom: pas: Add SM6375 MPSS
+  arm64: dts: qcom: sm6375: Add missing power-domain-named to CDSP
 
->  	void *priv_data;
->  };
+ .../bindings/remoteproc/qcom,sm6375-pas.yaml  | 137 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm6375.dtsi          |   1 +
+ drivers/remoteproc/qcom_q6v5_pas.c            |  18 +++
+ 3 files changed, 156 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
 
-> +struct q6usb_status {
-> +	unsigned int num_pcm;
-> +	unsigned int chip_index;
-> +	unsigned int pcm_index;
-> +};
-> +
->  struct q6usb_port_data {
->  	struct q6afe_usb_cfg usb_cfg;
->  	struct snd_soc_usb *usb;
->  	struct q6usb_offload priv;
-> +	unsigned long available_card_slot;
+--
+2.39.0
 
-what is a card slot?
+---
+Konrad Dybcio (3):
+      dt-bindings: remoteproc: qcom,sm6375-pas: Document remoteprocs
+      remoteproc: qcom: pas: Add SM6375 ADSP & CDSP
+      remoteproc: qcom: pas: Add SM6375 MPSS
 
-> +	struct q6usb_status status[SNDRV_CARDS];
->  	int active_idx;
->  };
->  
-> @@ -97,7 +105,7 @@ static int q6usb_audio_ports_of_xlate_dai_name(struct snd_soc_component *compone
->  }
->  
->  static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
-> -			int connected)
-> +			int chip_idx, int num_pcm, int connected)
->  {
->  	struct snd_soc_dapm_context *dapm;
->  	struct q6usb_port_data *data;
-> @@ -109,8 +117,16 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
->  		snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
->  		/* We only track the latest USB headset plugged in */
->  		data->active_idx = card_idx;
-> +
-> +		set_bit(card_idx, &data->available_card_slot);
-> +		data->status[card_idx].num_pcm = num_pcm;
-> +		data->status[card_idx].chip_index = chip_idx;
->  	} else {
-> -		snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
-> +		clear_bit(card_idx, &data->available_card_slot);
-> +		data->status[card_idx].num_pcm = 0;
-> +		data->status[card_idx].chip_index = 0;
-> +		if (!data->available_card_slot)
-> +			snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
+ .../bindings/remoteproc/qcom,sm6375-pas.yaml       | 137 +++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 |  18 +++
+ 2 files changed, 155 insertions(+)
+---
+base-commit: 1e25dd7772483f477f79986d956028e9f47f990a
+change-id: 20230725-topic-6375_rproc-4f074a92fa5f
 
-not able to follow what this does, this patch is rather unclear and
-lacks comments.
-
->  	}
->  	snd_soc_dapm_sync(dapm);
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
