@@ -2,64 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8111E760DEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:03:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CC0760E51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:19:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232897AbjGYJDe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:03:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44904 "EHLO
+        id S233040AbjGYJTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:19:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233186AbjGYJDV (ORCPT
+        with ESMTP id S233131AbjGYJTQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:03:21 -0400
-Received: from out-34.mta1.migadu.com (out-34.mta1.migadu.com [IPv6:2001:41d0:203:375::22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 164EE1FFE;
-        Tue, 25 Jul 2023 02:03:05 -0700 (PDT)
-Message-ID: <3648ca69-d65e-8431-135a-a5738586bc25@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1690275782;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=jkjBh/Kp2KZsbd5A9bxpjAJZxN02Eft+lFTspqPnOCk=;
-        b=C86+NnAgVOWWduY0bypLj9pEd8+f7K2hQWQRdMiOl+4lNoex/sNqQF/OzRY+XF6R/pQj3x
-        RJfrwmBw/U62Xz7gGIQfDrsff33dmTRFy6JUY2ZoASoV8vvmjWXkOHfSOC62P8ONIDS3dq
-        14Z/qjc5TC07VTaeF50qDKBsNsdzhz4=
-Date:   Tue, 25 Jul 2023 17:02:47 +0800
+        Tue, 25 Jul 2023 05:19:16 -0400
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7E62100;
+        Tue, 25 Jul 2023 02:19:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690276748; x=1721812748;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=3ftlTnZLDKGNw8f2OS/kJtQKY7p+STDvyqbF9dlRCEA=;
+  b=jEswhuXsF+3gcluUA76NV7Ww2hZ1njxfxw33M5+FrtFaAdnkPPT39rfu
+   /7pb/TPFVhRwk+xagQ7sV0RQbE3Jah4zCr8ogUarxP73WtfvQiVWICWg+
+   +UUIzm9rjqVBI/PB981QwCV6qIKImQcUDxZZPaCydbW51Smam88zP/iKJ
+   3Ls0K/EPJs46EwtGo9RGL9uda4qhC1FAn1cTsiDlIK9PjGVZIHE6G0F3E
+   zqZexdbCPQIz2UHLxokHprzh00Qq9Neu5ozV/TPmXs1LoUWRCWrHeKong
+   RBkL+8iohGYPU4gglsgbC8SX+TrJHHtjZEqWyjHsWO3yukndMErc0DXMG
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="367690997"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="367690997"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:19:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980480"
+X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
+   d="scan'208";a="719980480"
+Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:58 -0700
+Message-ID: <987394fd-9724-aa42-37fe-be9707565405@linux.intel.com>
+Date:   Tue, 25 Jul 2023 11:10:52 +0200
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 03/47] mm: shrinker: add infrastructure for dynamically
- allocating shrinker
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-4-zhengqi.arch@bytedance.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20230724094354.90817-4-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
+Subject: Re: [PATCH v4 29/32] sound: soc: qcom: q6usb: Add headphone jack for
+ offload connection status
+Content-Language: en-US
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
+        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
+        o-takashi@sakamocchi.jp
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-30-quic_wcheng@quicinc.com>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20230725023416.11205-30-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -68,266 +78,88 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2023/7/24 17:43, Qi Zheng wrote:
-> Currently, the shrinker instances can be divided into the following three
-> types:
->
-> a) global shrinker instance statically defined in the kernel, such as
->     workingset_shadow_shrinker.
->
-> b) global shrinker instance statically defined in the kernel modules, such
->     as mmu_shrinker in x86.
->
-> c) shrinker instance embedded in other structures.
->
-> For case a, the memory of shrinker instance is never freed. For case b,
-> the memory of shrinker instance will be freed after synchronize_rcu() when
-> the module is unloaded. For case c, the memory of shrinker instance will
-> be freed along with the structure it is embedded in.
->
-> In preparation for implementing lockless slab shrink, we need to
-> dynamically allocate those shrinker instances in case c, then the memory
-> can be dynamically freed alone by calling kfree_rcu().
->
-> So this commit adds the following new APIs for dynamically allocating
-> shrinker, and add a private_data field to struct shrinker to record and
-> get the original embedded structure.
->
-> 1. shrinker_alloc()
->
-> Used to allocate shrinker instance itself and related memory, it will
-> return a pointer to the shrinker instance on success and NULL on failure.
->
-> 2. shrinker_free_non_registered()
->
-> Used to destroy the non-registered shrinker instance.
+On 7/25/23 04:34, Wesley Cheng wrote:
+> The headphone jack framework has a well defined intrastructure for
 
-At least I don't like this name. I know you want to tell others
-this function only should be called when shrinker has not been
-registed but allocated. Maybe shrinker_free() is more simple.
-And and a comment to tell the users when to use it.
+infrastructure
 
->
-> 3. shrinker_register()
->
-> Used to register the shrinker instance, which is same as the current
-> register_shrinker_prepared().
->
-> 4. shrinker_unregister()
->
-> Used to unregister and free the shrinker instance.
->
-> In order to simplify shrinker-related APIs and make shrinker more
-> independent of other kernel mechanisms, subsequent submissions will use
-> the above API to convert all shrinkers (including case a and b) to
-> dynamically allocated, and then remove all existing APIs.
->
-> This will also have another advantage mentioned by Dave Chinner:
->
-> ```
-> The other advantage of this is that it will break all the existing
-> out of tree code and third party modules using the old API and will
-> no longer work with a kernel using lockless slab shrinkers. They
-> need to break (both at the source and binary levels) to stop bad
-> things from happening due to using uncoverted shrinkers in the new
-> setup.
-> ```
->
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> notifying userspace entities through input devices.  Expose a jack device
+> that carries information about if an offload capable device is connected.
+> Applications can further identify specific offloading information through
+> other SND kcontrols.
+
+What if you connect a set of USB speakers? Would they show as a
+headphone/headset?
+
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
->   include/linux/shrinker.h |   6 +++
->   mm/shrinker.c            | 113 +++++++++++++++++++++++++++++++++++++++
->   2 files changed, 119 insertions(+)
->
-> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
-> index 961cb84e51f5..296f5e163861 100644
-> --- a/include/linux/shrinker.h
-> +++ b/include/linux/shrinker.h
-> @@ -70,6 +70,8 @@ struct shrinker {
->   	int seeks;	/* seeks to recreate an obj */
->   	unsigned flags;
->   
-> +	void *private_data;
+>  sound/soc/qcom/qdsp6/q6usb.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sound/soc/qcom/qdsp6/q6usb.c b/sound/soc/qcom/qdsp6/q6usb.c
+> index e4ccb9d912b0..860dff8c1438 100644
+> --- a/sound/soc/qcom/qdsp6/q6usb.c
+> +++ b/sound/soc/qcom/qdsp6/q6usb.c
+> @@ -20,6 +20,7 @@
+>  #include <sound/pcm_params.h>
+>  #include <sound/asound.h>
+>  #include <sound/q6usboffload.h>
+> +#include <sound/jack.h>
+>  
+>  #include "q6dsp-lpass-ports.h"
+>  #include "q6afe.h"
+> @@ -37,6 +38,7 @@ struct q6usb_status {
+>  struct q6usb_port_data {
+>  	struct q6afe_usb_cfg usb_cfg;
+>  	struct snd_soc_usb *usb;
+> +	struct snd_soc_jack hs_jack;
+>  	struct q6usb_offload priv;
+>  	struct mutex mutex;
+>  	unsigned long available_card_slot;
+> @@ -279,6 +281,7 @@ static const struct snd_kcontrol_new q6usb_offload_control = {
+>  /* Build a mixer control for a UAC connector control (jack-detect) */
+>  static void q6usb_connector_control_init(struct snd_soc_component *component)
+>  {
+> +	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
+>  	int ret;
+>  
+>  	ret = snd_ctl_add(component->card->snd_card,
+> @@ -290,6 +293,11 @@ static void q6usb_connector_control_init(struct snd_soc_component *component)
+>  				snd_ctl_new1(&q6usb_offload_dev_ctrl, component));
+>  	if (ret < 0)
+>  		return;
 > +
->   	/* These are for internal use */
->   	struct list_head list;
->   #ifdef CONFIG_MEMCG
-> @@ -98,6 +100,10 @@ struct shrinker {
->   
->   unsigned long shrink_slab(gfp_t gfp_mask, int nid, struct mem_cgroup *memcg,
->   			  int priority);
-> +struct shrinker *shrinker_alloc(unsigned int flags, const char *fmt, ...);
-> +void shrinker_free_non_registered(struct shrinker *shrinker);
-> +void shrinker_register(struct shrinker *shrinker);
-> +void shrinker_unregister(struct shrinker *shrinker);
->   
->   extern int __printf(2, 3) prealloc_shrinker(struct shrinker *shrinker,
->   					    const char *fmt, ...);
-> diff --git a/mm/shrinker.c b/mm/shrinker.c
-> index 0a32ef42f2a7..d820e4cc5806 100644
-> --- a/mm/shrinker.c
-> +++ b/mm/shrinker.c
-> @@ -548,6 +548,119 @@ unsigned long shrink_slab(gfp_t gfp_mask, int nid, struct mem_cgroup *memcg,
->   	return freed;
->   }
->   
-> +struct shrinker *shrinker_alloc(unsigned int flags, const char *fmt, ...)
-> +{
-> +	struct shrinker *shrinker;
-> +	unsigned int size;
-> +	va_list __maybe_unused ap;
-> +	int err;
-> +
-> +	shrinker = kzalloc(sizeof(struct shrinker), GFP_KERNEL);
-> +	if (!shrinker)
-> +		return NULL;
-> +
-> +#ifdef CONFIG_SHRINKER_DEBUG
-> +	va_start(ap, fmt);
-> +	shrinker->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
-> +	va_end(ap);
-> +	if (!shrinker->name)
-> +		goto err_name;
-> +#endif
+> +	ret = snd_soc_card_jack_new(component->card, "USB offload",
+> +					SND_JACK_HEADSET, &data->hs_jack);
 
-So why not introduce another helper to handle this and declare it
-as a void function when !CONFIG_SHRINKER_DEBUG? Something like the
-following:
+not all USB devices are headsets...
 
-#ifdef CONFIG_SHRINKER_DEBUG
-static int shrinker_debugfs_name_alloc(struct shrinker *shrinker, const 
-char *fmt,
-                                        va_list vargs)
-
-{
-     shrinker->name = kvasprintf_const(GFP_KERNEL, fmt, vargs);
-     return shrinker->name ? 0 : -ENOMEM;
-}
-#else
-static int shrinker_debugfs_name_alloc(struct shrinker *shrinker, const 
-char *fmt,
-                                        va_list vargs)
-{
-     return 0;
-}
-#endif
-
-> +	shrinker->flags = flags;
-> +
-> +	if (flags & SHRINKER_MEMCG_AWARE) {
-> +		err = prealloc_memcg_shrinker(shrinker);
-> +		if (err == -ENOSYS)
-> +			shrinker->flags &= ~SHRINKER_MEMCG_AWARE;
-> +		else if (err == 0)
-> +			goto done;
-> +		else
-> +			goto err_flags;
-> +	}
-> +
-> +	/*
-> +	 * The nr_deferred is available on per memcg level for memcg aware
-> +	 * shrinkers, so only allocate nr_deferred in the following cases:
-> +	 *  - non memcg aware shrinkers
-> +	 *  - !CONFIG_MEMCG
-> +	 *  - memcg is disabled by kernel command line
-> +	 */
-> +	size = sizeof(*shrinker->nr_deferred);
-> +	if (flags & SHRINKER_NUMA_AWARE)
-> +		size *= nr_node_ids;
-> +
-> +	shrinker->nr_deferred = kzalloc(size, GFP_KERNEL);
-> +	if (!shrinker->nr_deferred)
-> +		goto err_flags;
-> +
-> +done:
-> +	return shrinker;
-> +
-> +err_flags:
-> +#ifdef CONFIG_SHRINKER_DEBUG
-> +	kfree_const(shrinker->name);
-> +	shrinker->name = NULL;
-
-This could be shrinker_debugfs_name_free()
-
-> +err_name:
-> +#endif
-> +	kfree(shrinker);
-> +	return NULL;
-> +}
-> +EXPORT_SYMBOL(shrinker_alloc);
-> +
-> +void shrinker_free_non_registered(struct shrinker *shrinker)
-> +{
-> +#ifdef CONFIG_SHRINKER_DEBUG
-> +	kfree_const(shrinker->name);
-> +	shrinker->name = NULL;
-
-This could be shrinker_debugfs_name_free()
-
-> +#endif
-> +	if (shrinker->flags & SHRINKER_MEMCG_AWARE) {
-> +		down_write(&shrinker_rwsem);
-> +		unregister_memcg_shrinker(shrinker);
-> +		up_write(&shrinker_rwsem);
-> +	}
-> +
-> +	kfree(shrinker->nr_deferred);
-> +	shrinker->nr_deferred = NULL;
-> +
-> +	kfree(shrinker);
-> +}
-> +EXPORT_SYMBOL(shrinker_free_non_registered);
-> +
-> +void shrinker_register(struct shrinker *shrinker)
-> +{
-> +	down_write(&shrinker_rwsem);
-> +	list_add_tail(&shrinker->list, &shrinker_list);
-> +	shrinker->flags |= SHRINKER_REGISTERED;
-> +	shrinker_debugfs_add(shrinker);
-> +	up_write(&shrinker_rwsem);
-> +}
-> +EXPORT_SYMBOL(shrinker_register);
-> +
-> +void shrinker_unregister(struct shrinker *shrinker)
-
-You have made all shrinkers to be dynamically allocated, so
-we should prevent users from allocating shrinkers statically and
-use this function to unregister it. It is better to add a
-flag like SHRINKER_ALLOCATED which is set in shrinker_alloc(),
-and check whether it is set in shrinker_unregister(), if not
-maybe a warning should be added to tell the users what happened.
-
-> +{
-> +	struct dentry *debugfs_entry;
-> +	int debugfs_id;
-> +
-> +	if (!shrinker || !(shrinker->flags & SHRINKER_REGISTERED))
+> +	if (ret)
 > +		return;
-> +
-> +	down_write(&shrinker_rwsem);
-> +	list_del(&shrinker->list);
-> +	shrinker->flags &= ~SHRINKER_REGISTERED;
-> +	if (shrinker->flags & SHRINKER_MEMCG_AWARE)
-> +		unregister_memcg_shrinker(shrinker);
-> +	debugfs_entry = shrinker_debugfs_detach(shrinker, &debugfs_id);
-
-In the internal of this function, you also could use
-shrinker_debugfs_name_free().
-
-Thanks.
-
-> +	up_write(&shrinker_rwsem);
-> +
-> +	shrinker_debugfs_remove(debugfs_entry, debugfs_id);
-> +
-> +	kfree(shrinker->nr_deferred);
-> +	shrinker->nr_deferred = NULL;
-> +
-> +	kfree(shrinker);
-> +}
-> +EXPORT_SYMBOL(shrinker_unregister);
-> +
->   /*
->    * Add a shrinker callback to be called from the vm.
->    */
-
+>  }
+>  
+>  static int q6usb_audio_ports_of_xlate_dai_name(struct snd_soc_component *component,
+> @@ -322,7 +330,10 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
+>  
+>  	mutex_lock(&data->mutex);
+>  	if (connected) {
+> -		snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
+> +		if (!data->available_card_slot) {
+> +			snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
+> +			snd_jack_report(data->hs_jack.jack, 1);
+> +		}
+>  		/*
+>  		 * Update the latest USB headset plugged in, if session is
+>  		 * idle.
+> @@ -338,8 +349,10 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
+>  		clear_bit(card_idx, &data->available_card_slot);
+>  		data->status[card_idx].num_pcm = 0;
+>  		data->status[card_idx].chip_index = 0;
+> -		if (!data->available_card_slot)
+> +		if (!data->available_card_slot) {
+>  			snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
+> +			snd_jack_report(data->hs_jack.jack, 0);
+> +		}
+>  	}
+>  	snd_soc_dapm_sync(dapm);
+>  	mutex_unlock(&data->mutex);
