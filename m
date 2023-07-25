@@ -2,242 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F5AC76209B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 19:52:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C32A07620B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 19:58:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229620AbjGYRwh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 13:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S231288AbjGYR6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 13:58:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjGYRwg (ORCPT
+        with ESMTP id S230444AbjGYR6D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 13:52:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 534911FFC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:51:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1690307507;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Ht71+ytnrpXSHx2moGem4zAvWEqI+p9KhmtDtZeMjAg=;
-        b=YarrbDZjrAnB1oc5u0x0YNImnV4vkV3Etu+yGGiJJQWCOOd67SNLlUIb0D1Zcr66Di18g+
-        9nYq5hYbv6vnu0GdNRSRbOwQR2sL9q7DnGZJ3N+5F7UU+6jE4u9J24n130JR5Q/qIr8WsY
-        met8KaskBW7oC534mTnTX9QJw4gQ98c=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-OqzWzZ2JNb2zntkJ22IxhA-1; Tue, 25 Jul 2023 13:51:46 -0400
-X-MC-Unique: OqzWzZ2JNb2zntkJ22IxhA-1
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-40558c0dc8bso33559581cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:51:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690307505; x=1690912305;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        Tue, 25 Jul 2023 13:58:03 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A69D91FE2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:58:02 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b6fdaf6eefso86814901fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:58:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1690307879; x=1690912679;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ht71+ytnrpXSHx2moGem4zAvWEqI+p9KhmtDtZeMjAg=;
-        b=dN0y+00NWkQ13dZJxcF55MJhanjIk844eqaPupAqA3gKfuIWl2h0fd/WaxxBg9yYNe
-         p30rtFHKfAGgwQtuTyqIVcXbqQxMXdgv/Ji7rGS+M0edrAIJVo63o6RaL7ABRDIJxTQX
-         RhFotN01wCML4+rikVZ8YOLfGnN46A9bw9A7/TI/jS+TBMc1Pxcn2PLQjmx3+YuQqRid
-         ADvpAobLZzInG7uGXFZ6t5CEz4HjmNvU7fEgpaRjQieDXa25xVeXgIvGEF8ZuNV9Nft3
-         Y2XLr5NSmOSBohKfpgvFK38lLEaK+6+Lgd8dU8IkSeI2QFO2jJG4s5qI4BvcBqPKSp9E
-         HnkQ==
-X-Gm-Message-State: ABy/qLbY53X+uaqXE32zabc4sr/Dv1sFNrryYT1rO21eJTztFN+GAWLU
-        epKtrKVjdug4V6waQeXfdM1yBc9+4G3RSrLrLr2HqOstXxXxIiNVcQepgwbY1mg2l3kTOEsdbGa
-        prGytdx2f7yYi3HxRvZ2ZwagMOg==
-X-Received: by 2002:a05:622a:1488:b0:403:cd14:8f with SMTP id t8-20020a05622a148800b00403cd14008fmr3326833qtx.57.1690307505557;
-        Tue, 25 Jul 2023 10:51:45 -0700 (PDT)
-X-Google-Smtp-Source: APBJJlGSa0nCWmMbPWJbZR6wFN48R9hc4qEYNSaYYTSwy4C5YEFIRwnrCb6WaT328GKqxkr0FeDhCQ==
-X-Received: by 2002:a05:622a:1488:b0:403:cd14:8f with SMTP id t8-20020a05622a148800b00403cd14008fmr3326816qtx.57.1690307505290;
-        Tue, 25 Jul 2023 10:51:45 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::17])
-        by smtp.gmail.com with ESMTPSA id ff20-20020a05622a4d9400b00403f1a7be90sm4221230qtb.88.2023.07.25.10.51.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 10:51:44 -0700 (PDT)
-Date:   Tue, 25 Jul 2023 12:51:42 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, mani@kernel.org,
-        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        dmitry.baryshkov@linaro.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,qmp: Add sa8775p QMP PCIe
- PHY
-Message-ID: <y7tuvgc7r4o6jhe7hhyqxaksalld4zn5ou53ywdkwfrp2y773v@z3nvbgd2i6lz>
-References: <1689311319-22054-1-git-send-email-quic_msarkar@quicinc.com>
- <1689311319-22054-3-git-send-email-quic_msarkar@quicinc.com>
- <132e9514-7eb9-8915-6130-5bf656c1aaac@linaro.org>
- <ca51b1dc-5805-5b01-01e0-a7dff535cb6c@quicinc.com>
+        bh=42J2rYX3ygekl+Lm1gBSOe+L4cZsEBuPyMx4AtD46Z4=;
+        b=X8Cth7TDXv7+PAUN1Yhi4ZyUQGtY/znGHjsI9oaJQ+ngh/9kS2dpBimjXxVTm+2LES
+         rC3rce7v71stZ9gm+u1t4SdN3+GtXtEsdlJ5D6LqkUmUBcu4x9nxXkT+RQu7tvo4dq4M
+         9caP86PyNEoZk9Lq7fnS71kjm5cQti5ZS6OTQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690307879; x=1690912679;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=42J2rYX3ygekl+Lm1gBSOe+L4cZsEBuPyMx4AtD46Z4=;
+        b=L6SBUxX/knzblsiBJGIPDIHUnu1UVRyH9oExys5rVRGyfey+aV03cgg4b3QOE+Rtu2
+         mTvIyQ2YH+QC2RRKkoWY1rvf2nvBo0Us6DtuCA337aMQnotWpAfmX3fnJujSPUo9dkd6
+         fwI9ovsFDOgJpyH/SffbJdX+JHn+U5/Qb8o9CzuE8k1mjcGwtK86OetZ1Ba2/VIPeuZL
+         bLTBxQSolJySV1EQQ6/NlIrlW5asxiVmUqfqUbmQf1nefj3WeTGub45V3wgXq1LnXXFv
+         0EeOiyv3h7J3krZ57OqVAQE/U33nLoF2CMOHJgIS0tDF6T0Mm3N9ZJYDTP5NEvsHvopq
+         /47Q==
+X-Gm-Message-State: ABy/qLYjoOk36lWZHpGhfUTJgkW6X4OeAwZ8ziOvmODIrUone8zevyaV
+        HWrh3ZUFypKHy6zneTrEZHFMPSwOSIURokH3P+6bZng0
+X-Google-Smtp-Source: APBJJlE6LvWDgzzR5BpfFKSbbcBA7daKSa56TDXUjJuHJXEUQ+8BKQfvddUQbG/T0Q+D6bKzsDlsjA==
+X-Received: by 2002:a05:6512:2036:b0:4fb:cab9:ddf with SMTP id s22-20020a056512203600b004fbcab90ddfmr7532146lfs.57.1690307879484;
+        Tue, 25 Jul 2023 10:57:59 -0700 (PDT)
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com. [209.85.208.43])
+        by smtp.gmail.com with ESMTPSA id q13-20020aa7da8d000000b0051e0f8aac74sm7852669eds.8.2023.07.25.10.57.58
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jul 2023 10:57:59 -0700 (PDT)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5223910acf2so1679a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:57:58 -0700 (PDT)
+X-Received: by 2002:a50:d6de:0:b0:522:4741:d992 with SMTP id
+ l30-20020a50d6de000000b005224741d992mr145840edj.4.1690307878480; Tue, 25 Jul
+ 2023 10:57:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca51b1dc-5805-5b01-01e0-a7dff535cb6c@quicinc.com>
+References: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com> <1690285689-30233-2-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1690285689-30233-2-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 25 Jul 2023 10:57:46 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wh76-1JNsaC-++9mkg1dswAgpN=ynHwNdJ997g0hCRew@mail.gmail.com>
+Message-ID: <CAD=FV=Wh76-1JNsaC-++9mkg1dswAgpN=ynHwNdJ997g0hCRew@mail.gmail.com>
+Subject: Re: [PATCH 1/4] spi: spi-qcom-qspi: Ignore disabled interrupts'
+ status in isr
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com, dan.carpenter@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 21, 2023 at 04:33:20PM +0530, Mrinmay Sarkar wrote:
-> 
-> On 7/17/2023 12:55 PM, Krzysztof Kozlowski wrote:
-> > On 14/07/2023 07:08, Mrinmay Sarkar wrote:
-> > > Add devicetree YAML binding for Qualcomm QMP PCIe PHY
-> > > for SA8775p platform.
-> > > 
-> > > Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> > > ---
-> > >   .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml      | 19 ++++++++++++++++++-
-> > >   1 file changed, 18 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> > > index a0407fc..ca55ed9 100644
-> > > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> > > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> > > @@ -16,6 +16,8 @@ description:
-> > >   properties:
-> > >     compatible:
-> > >       enum:
-> > > +      - qcom,sa8775p-qmp-gen4x2-pcie-phy
-> > > +      - qcom,sa8775p-qmp-gen4x4-pcie-phy
-> > >         - qcom,sc8280xp-qmp-gen3x1-pcie-phy
-> > >         - qcom,sc8280xp-qmp-gen3x2-pcie-phy
-> > >         - qcom,sc8280xp-qmp-gen3x4-pcie-phy
-> > > @@ -30,7 +32,7 @@ properties:
-> > >     clocks:
-> > >       minItems: 5
-> > > -    maxItems: 6
-> > > +    maxItems: 7
-> > >     clock-names:
-> > >       minItems: 5
-> > > @@ -41,6 +43,7 @@ properties:
-> > >         - const: rchng
-> > >         - const: pipe
-> > >         - const: pipediv2
-> > > +      - const: phy_aux
-> > >     power-domains:
-> > >       maxItems: 1
-> > > @@ -141,6 +144,20 @@ allOf:
-> > >           compatible:
-> > >             contains:
-> > >               enum:
-> > > +              - qcom,sa8775p-qmp-gen4x2-pcie-phy
-> > > +              - qcom,sa8775p-qmp-gen4x4-pcie-phy
-> > > +    then:
-> > > +      properties:
-> > > +        clocks:
-> > > +          minItems: 7
-> > > +        clock-names:
-> > > +          minItems: 7
-> > > +
-> > > +  - if:
-> > > +      properties:
-> > > +        compatible:
-> > > +          contains:
-> > > +            enum:
-> > This probably works but is not obvious and easy to read. You have here
-> > if:then:else: block, so else applies to your variant. Change all these
-> > if clauses for clocks into separate clauses per matching variant
-> > (if:then: ... if:then:... if:then:...)
+Hi,
 
-As far as I can tell, this actually doesn't work :(
+On Tue, Jul 25, 2023 at 4:48=E2=80=AFAM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> During FIFO/DMA modes dynamic switching, only corresponding interrupts ar=
+e
+> enabled. However its possible that FIFO related interrupt status register=
+s
+> get set during DMA mode. For example WR_FIFO_EMPTY bit is set during DMA
+> TX.
+>
+> Ignore such status bits so that they don't trip unwanted operations.
+>
+> Suggested-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  drivers/spi/spi-qcom-qspi.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-> > 
-> > Best regards,
-> > Krzysztof
-> 
-> My Bad here, This patch already applied we will take care this in next patch
-> set.
-> 
-> Thanks,
-> Mrinmay
-> 
+Things are pretty broken without this fix, so it definitely needs a
+Fixes tag so it can find its way to mainline as soon as possible:
 
-Mrinmay, do you plan on spinning what Krzysztof suggested? I grabbed
-linux-next today and ran into this (looks like clocks, clock-names in
-binding is broken and looks like we're either missing the required
-power-domain in the dts or it isn't actually required):
+Fixes: b5762d95607e ("spi: spi-qcom-qspi: Add DMA mode support")
 
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % git diff
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make CHECK_DTBS=1 DT_SCHEMA_FILES=phy/qcom,sc8280xp-qmp-pcie-phy.yaml qcom/sa8775p-ride.dtb
-      UPD     include/config/kernel.release
-      LINT    Documentation/devicetree/bindings
-      CHKDT   Documentation/devicetree/bindings/processed-schema.json
-      SCHEMA  Documentation/devicetree/bindings/processed-schema.json
-    /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml: ignoring, error parsing file
-      DTC_CHK arch/arm64/boot/dts/qcom/sa8775p-ride.dtb
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: phy@1c04000: 'power-domains' is a required property
-        from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: phy@1c04000: clocks: [[31, 66], [31, 68], [31, 94], [31, 72], [31, 74], [31, 77], [31, 70]] is too long
-        from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: phy@1c04000: clock-names: ['aux', 'cfg_ahb', 'ref', 'rchng', 'pipe', 'pipediv2', 'phy_aux'] is too long
-        from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: phy@1c14000: 'power-domains' is a required property
-        from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: phy@1c14000: clocks: [[31, 80], [31, 82], [31, 94], [31, 86], [31, 88], [31, 91], [31, 84]] is too long
-        from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: phy@1c14000: clock-names: ['aux', 'cfg_ahb', 'ref', 'rchng', 'pipe', 'pipediv2', 'phy_aux'] is too long
-        from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-    ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make CHECK_DTBS=1    7.65s user 0.52s system 99% cpu 8.231 total
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % 
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % 
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % 
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % # Total hack just to show our issues in current binding
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % git diff
-    diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-    index ca55ed9d74ac..5476cf2422da 100644
-    --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-    +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-    @@ -87,7 +87,6 @@ required:
-       - reg
-       - clocks
-       - clock-names
-    -  - power-domains
-       - resets
-       - reset-names
-       - vdda-phy-supply
-    @@ -132,12 +131,6 @@ allOf:
-               maxItems: 5
-             clock-names:
-               maxItems: 5
-    -    else:
-    -      properties:
-    -        clocks:
-    -          minItems: 6
-    -        clock-names:
-    -          minItems: 6
-     
-       - if:
-           properties:
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make CHECK_DTBS=1 DT_SCHEMA_FILES=phy/qcom,sc8280xp-qmp-pcie-phy.yaml qcom/sa8775p-ride.dtb
-      UPD     include/config/kernel.release
-      LINT    Documentation/devicetree/bindings
-      CHKDT   Documentation/devicetree/bindings/processed-schema.json
-      SCHEMA  Documentation/devicetree/bindings/processed-schema.json
-    /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml: ignoring, error parsing file
-      DTC_CHK arch/arm64/boot/dts/qcom/sa8775p-ride.dtb
-    ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make CHECK_DTBS=1    7.58s user 0.87s system 98% cpu 8.618 total
-    (dtb-checker) ahalaney@fedora ~/git/linux-next (git)-[tags/next-20230724] % 
+Looks good to me and also works fixes the problem for me. Thus I'm
+happy with any of these tags:
 
-
-Thanks,
-Andrew
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
