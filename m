@@ -2,132 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40924760D62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:44:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78483760D80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:46:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231572AbjGYIoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 04:44:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
+        id S231917AbjGYIqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 04:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233061AbjGYIn3 (ORCPT
+        with ESMTP id S232244AbjGYIqB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 04:43:29 -0400
-Received: from AUS01-SY4-obe.outbound.protection.outlook.com (mail-sy4aus01olkn2144.outbound.protection.outlook.com [40.92.62.144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0FF1212B;
-        Tue, 25 Jul 2023 01:42:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ar6g+MGm4RF4OwPIndoQuDooOOcz52PiY8DFJbGdCws1HBLO9qGUPPvGxkPcGVM0SNlXJ0hs8mNEh7SUae6V803DrBxW9OviElORNn5U/gwyGYia92sz4ibWItzILx7PwSID52w/mn2EpIVA0n+4gATNydbvNT33GZlenCe/Gi/L0MtgowYwkW+L9XCdtWqqgnpBp9zP24WSStZ+FrFsnq1FKRXsuigt4KKbBuaL2SqjZjaohf6/FhHnElhTxts/i6oRZygDWNmM3Iq7buCTnyir1gm9WtXEitzfi2Vcqphq1d5AQaqFa3/+SwBZ+LsbHm0Ww+oY0aj44kLAR+1+oQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=B/dApoG4wxjN+GmCz5K5Pfvm2B2FhAGa7a66D/EvpHg=;
- b=a42TMBKoyIgV4G0ovYJGToWjokI6oHE+NdahfLiOc4kSsy2L9KvMWFT9TSB/h36qcYFepnFKvwVbOFZQH312y/1C/5HrX9SWkWgL42uNvjPkeDHp+7qiEkqm4rlK9LSG5yE8qBQsHLf1FZyCcMXfUYscj06miJ01+BpkjOpj2+77JE6d67odU8MMiyxJsOuLL36hM6SOA6W4icZ++9HELloCSgWyScf1EdVin/4zgQHhXmTa4g4oRyYpPukbI5PGMv1dqn+7XX0zMaHmONXaqT+mPpKUJotIoxo2V8hW8cn/Z0n974gNvRDKaKKW9rt7UixS63lvgYjcbUzpe1SxsA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B/dApoG4wxjN+GmCz5K5Pfvm2B2FhAGa7a66D/EvpHg=;
- b=IaKPRb2eReZSBrp++MBmmeOUJmn7SEoqYWBvU0cICK5W1HiCNgBP7Ijnu3uHbwNCiuFR4NX+BJI7A42fFBBvOQCOpdkYFXrAGaVzr7IjlE6JXAHJSg+KYL0AY1l0BkzU5LSBjY+yU4gq6h3eM0TIXQ7cOXJtXH2oqhZu2SwqoBc6dI8Bj9Yhw25kNbEKAlNjeFaRz6kp94rB/+DYRB7WxcMmmSuxGSN9tb5xCbl3vEyI8g7g9dXhgxdiwQyIc/Zy6KoQ5UnFf3/N9ThwPJG6eDFd00jAOvnSQoi0vxUwvX9W1U/ahuC+PWZRLSslUYkjreOMSKfDjb9CXrjT+52gaQ==
-Received: from SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:1e3::6) by
- SYBP282MB0634.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:19::16) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6609.31; Tue, 25 Jul 2023 08:42:21 +0000
-Received: from SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
- ([fe80::67bc:436f:32c5:3cd9]) by SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
- ([fe80::67bc:436f:32c5:3cd9%3]) with mapi id 15.20.6609.032; Tue, 25 Jul 2023
- 08:42:21 +0000
-From:   qaz6750 lzy <qaz6750@outlook.com>
-To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, qaz6750 lzy <qaz6750@outlook.com>
-Subject: [PATCH V2] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
-Date:   Tue, 25 Jul 2023 16:42:07 +0800
-Message-ID: <SY7P282MB378740C6070900BEBF5D0D7CB203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN:  [gdxIVWp+TGE076DYqADzFU5GBzoJ4IHO]
-X-ClientProxiedBy: TYCPR01CA0103.jpnprd01.prod.outlook.com
- (2603:1096:405:4::19) To SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:10:1e3::6)
-X-Microsoft-Original-Message-ID: <20230725084207.14241-1-qaz6750@outlook.com>
+        Tue, 25 Jul 2023 04:46:01 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A933AB1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:44:43 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fbc77e76abso42944645e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:44:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690274677; x=1690879477;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lvR6rub+9duf7nx9W/8a24Rc1YmvAVHDfFG2zjK3XY0=;
+        b=NOysYy1wO/LZrUx0c4Xsn14mxW1p458xRIILlfmpfqmLJA98us6St9qYLuLGMs83ou
+         J0rRRwwb9DTnknXVlzrR/MXRJaFn3CFwJZi9ywlEDUAdYVadyF3OSdNHd+L/mV68a7IG
+         9mv0g62qydKd6nZ00Mng35Uk7IfG5uHhDsIg3P01dcTIIVCJ5hHwrq5d93pEpZhAFW5/
+         mS86OTF5g6vgFdEePwHXiGcLNnE7Kn+YfrGQBw7ECdS5S1vLV+0CqHQ5gvP0boNoc8p5
+         enhb0NaBcGksFZQhtXQgO56YqkZCbTYYeg4SzhP6nu6Fq2BT5hSWEW6f6bhh2nTr701B
+         e+Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690274677; x=1690879477;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lvR6rub+9duf7nx9W/8a24Rc1YmvAVHDfFG2zjK3XY0=;
+        b=YYYusTqxwbNZ5wi/megQ8XaKaRLv0utbEVr7N/K74gqSsQCYDWAbe9L5ORo/k1X3/f
+         I9ei3yN7x5Vs3lKfozMqu2H2C+9Tl4fYAmcotv9EUZGxSjP2lUe+eKwiEraKIM2DY9ne
+         yiQG96VYZ73X4ZDsk1+GhJP6JolQhoC/iPPf4LMML/g+6pCwibxNC3gvzYV215rjD97D
+         jEsM/eVDl7lZTCEbo2Qt1fPiv7UIL0KkKshREsrFtIlMU5QB4jNkpt0VXKDzrnMSF4i8
+         35+typp6bXpRrf/DIm9VNIWW2KU7CnxBKUEuXnxqgAWPA2qzDnaRbHsTbCC4WHKufuJn
+         z3Ww==
+X-Gm-Message-State: ABy/qLZFx7qLHdn1IXy79Rkg0x/RsvJ35TkSG+KNU9DUiNDeDBiXQd62
+        d6T1IvTpEKsvdpiI0dNVZxNGWg==
+X-Google-Smtp-Source: APBJJlEAskAc1V3TVk77zXM/5qcda9+gxdB2bskSYs/Vo2nBJ+b++XWTh6JXNuwv0wXDXA4O2ZfNig==
+X-Received: by 2002:a05:600c:ac8:b0:3fb:9ef2:157 with SMTP id c8-20020a05600c0ac800b003fb9ef20157mr8136776wmr.28.1690274677481;
+        Tue, 25 Jul 2023 01:44:37 -0700 (PDT)
+Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
+        by smtp.gmail.com with ESMTPSA id y15-20020a7bcd8f000000b003fbdd5d0758sm12370627wmj.22.2023.07.25.01.44.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jul 2023 01:44:37 -0700 (PDT)
+Message-ID: <fda13f70-1062-c3dc-b3ed-c7f1ad9a07db@linaro.org>
+Date:   Tue, 25 Jul 2023 10:44:35 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY7P282MB3787:EE_|SYBP282MB0634:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4a2eed19-2f35-4243-53c1-08db8ceb0fca
-X-MS-Exchange-SLBlob-MailProps: YfhX3sd/0TWbjtb71ZXpDr6mXuErGSY3k3IhA0xAW7zo6Z8Gn6R0SBEdAVjtdq/zVrrkOu98fceRkBUwwwCgxeiYWKP+qtg79YWmZ/qCOzh1msww0nqk81XbXk96ZwHu+xOEtU/2vbrnk+4IDXeCcfxazCYIaTp9HDl7VSkCwi3XT1nOUDO0IkieX0dbtzwgGxMF8o5PE4nRb9VtfDlR6AjXEt2bWOTsMU9rcZcS9UQH3RydQldPE7enuBdKf/e/vK86yLixfqbKl0COeJNwJ8c0FxHTehCMlcjehY3dKKst8NYKbJsQfx7EUN0wGEi3vdLKZ+jn/chuzyo6xzw6vzUcemGH/twA9IV1/ofzWO3TcaDLPDSnSKzH0wkY4fztSRx7V9Bjvxdj+tGGtiJ4BHzjl2JZ/gT1zyyjsTzz8f4smItFTdzobtshTL+/pVY6ImiDAFeZfNw+l6mC6kaaGIUH0XLTJi1M43qVdy7VvhxIjkd7taDoEuOUTx/XOoPle4gHc3x8umBia+ml8fYOhD8YQXkKAmY9ZsoGtGgEF3p4QwjDJ15oBgAa2JdED6t9Ja73ig7dxgx2NXzcLRcwNg9PyquiaqJn2dEraCnHovxlAvKDdXuUNiuu6dQfQUxYwhMcTkahN1mUkzvpjresLYoDBkUxXb/jge4cyddvchHFamKttBse3TLi/B646IjdHiwnO6SYY+qfh6BOqpWbXoXu0Gdzn2CvyrOEnYEqqj0R/Az2fgxuKyAgnLrCXA407jd7tbBtzBzKemNQLUHWWxrNNePBe99asHQaUQVZELs=
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: wlIUHXEcw0C0qUgR6P5KNJ0rGt6p6I1sTi2F1BdiqhtXisNVd6IG+9dM8TrU8pCoWGb++D8opqEV0pMPpkhHOFptWa0I/2nOb7a0oOO48GGK6/OkX9X/09Ivj8NyrPIEfNXNmvLN3RSsOguBoz1ZPc30bVW7WiAMSFQFvPNeQs9uM0xMEx5PP0kGAMWbq3dzY3TnsWlFufhNeWdlzJxNNEw1AQSX22bRNngFocRnwa3SsJ1jAR7Ogs70Y2JRZTeakJY+yysaaiJQHvNqYdIDEL6/0de9bpj20Szw3bxVdbV7FUVSoCKW+K6F1ppq9TlOueJEH/p3zW2Ep9EBbMld4Oe6YIpdFz5VIowCN5lX6YPgDYG679rnDDwVNkqIRQDxorcqJBGJG1GPAUERUp7eAOA+19k4wgTq1bqnbX233K5dLP+dIZXH9WvydI3CUssWOjBn15Oc8wPxjCURFIkssqOl3lALtSdfEPohZL+4R37xX4v8kERSsg0HiIIETGOvlMYmy/8EpN4lT6hmpdtWf8KGDCqKUyNSBeqS2NtQ98hGm2WHYSo4ixUJu2EFqBjV0i5Ea+Irj7puhUE9r2FkY4rfiiZvLUsWXadjsStW3c41MqLOz7Mmj7G70ZNLyk7X
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?AC7WcqaFWs/Ltx8tGpXxLO0kuX+rWOALRnkifCPOX4BJ3k3lXpPPAa/3MhxQ?=
- =?us-ascii?Q?j4NqxTXuhMHvSw/U4H1ZG6XR6Sr/ac61CTlQUiYm7+6iJOySPfDp+giB+NfA?=
- =?us-ascii?Q?bMfbeIGE9O3JU2Dr0G5r4tVzGqRt69R1UUFiG/7KEqzyRzcF101pPSVr3ZGk?=
- =?us-ascii?Q?quiyugCWLaAFaiWP+WHoTteiXSNH/onhsdeWiP319BbHKu6YKaiVqgpNFKNE?=
- =?us-ascii?Q?HplIdxXONEn91GwH627QFJxsPUKeN+fW16fdX6bq008eCCq8BWo7KoWwHIST?=
- =?us-ascii?Q?PkBXYVnSyC8LCQgDvXfCOi0sQdegJMK7qdpM8w4fi8zdsPCsbD4EtKplQAdj?=
- =?us-ascii?Q?vz74VXtxnzAAePgCIU5JSbYcOf+UfO8rh6e8dc/ulU4KF034NWFzOGy7TbX5?=
- =?us-ascii?Q?+M/EDbdBFc9oSz3QaEIG0LSq+731Gu+jppbzytRDMqf6ZdTosgVgsAJXRPpu?=
- =?us-ascii?Q?4cJ8BPGeg4kc8t9CgBAAXW80fV+VAficaGlMDYQG1vAu/5tRPgLkNfVtYUYL?=
- =?us-ascii?Q?G9rZy0nEDEPZPbEDEOHG6zPFvRyEEjqivvrMf4J7UeYy0uvODrTKUfGgWCif?=
- =?us-ascii?Q?mE5S3FZCQNCf0+x32/PproYiTLd1fawwsizjIDPhkvgICoXR7iJRVKfiqqAD?=
- =?us-ascii?Q?mnZznoPYutKRhiUlVAjqaJIDrKH220z/ev38s6cTaha3nKyht90DXfaUXAa9?=
- =?us-ascii?Q?9G8joP6WEUKqAtUJYV1l3OhIVdKSdFjrzTniS4fNgBJuN7BZI9NUxypKMdQJ?=
- =?us-ascii?Q?MNva44hKslizpNWSs/dOiCteDMAn/1qiPlBlGCYgzoAnn60EjBdYs1B25GCf?=
- =?us-ascii?Q?YStZUZthEUPTBu680x0d++B+LNd9NgEOdEusgNMsZe+D9nrZW8mA+Hn3FfSq?=
- =?us-ascii?Q?SBIugr/KJAZjy9g9fIW68gZlT0YrsigFH+NC7+bhI3VnKeg9DwwTTInLtmpC?=
- =?us-ascii?Q?NR+qTnK60uAhKRpqLcgAGR3MCPDyYrnO54NPW4xDqf67cGU5Vlq4eF1F+iWD?=
- =?us-ascii?Q?S/nHNSHN30hUE5StWh0JqBsQytDoSykAgVyFNARRq4u0Ti6PM1q/HZc4/erW?=
- =?us-ascii?Q?a8mr2i2Q2j+Kejharg7LEpw01dGoGEGnoi1OLpblFXd/4TsTTD6k/MBgQ5Wj?=
- =?us-ascii?Q?REpJn55YitBng622eGqb6d04I6BHv3WK2KLYy91ZJo86afuNbHy5JGkAr/Nv?=
- =?us-ascii?Q?NInM6Q6HSDgbJC39vy7ykBBi1X5c85JB+eax9w=3D=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4a2eed19-2f35-4243-53c1-08db8ceb0fca
-X-MS-Exchange-CrossTenant-AuthSource: SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2023 08:42:21.6412
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SYBP282MB0634
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: msm8976: Split lpass region
+Content-Language: en-US
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230723160827.22660-1-a39.skl@gmail.com>
+ <20230723160827.22660-7-a39.skl@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230723160827.22660-7-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I2C6 and I2C7 use the same interrupts, which is incorrect.
-In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
+On 23.07.2023 18:08, Adam Skladowski wrote:
+> Some devices like Sony Loire uses Broadcom module over sdc3 however others
+> utilize qcom WCNSS, split shared region based on downstream pil-tz loader.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+Looks like 0x1800000 is the generic configuration:
 
-Fixes: 81bee6953b58 ("arm64: dts: qcom: sm8150: add i2c nodes")
-Signed-off-by: qaz6750 lzy <qaz6750@outlook.com>
----
- [v2] Fixed issue of not using full name
+https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26-05300-8976.0/arch/arm/boot/dts/qcom/msm8976.dtsi#L93-98
 
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 837bdb574743..560b758b0a06 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1231,7 +1231,7 @@ i2c7: i2c@89c000 {
- 				dma-names = "tx", "rx";
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_i2c7_default>;
--				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				status = "disabled";
--- 
-2.34.1
-
+Konrad
