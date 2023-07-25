@@ -2,88 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA8E176234B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:27:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC4F2762366
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 22:36:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230054AbjGYU1h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 16:27:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59638 "EHLO
+        id S230444AbjGYUg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 16:36:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjGYU1g (ORCPT
+        with ESMTP id S229721AbjGYUg5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 16:27:36 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CFD268D;
-        Tue, 25 Jul 2023 13:27:25 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PJIShn014114;
-        Tue, 25 Jul 2023 20:27:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=J5GVlSSAhoTLUBI0opme3fy6DfaiQXzK/JQ14KRTgTA=;
- b=VAUQPq/07BwSx3yufgPtX0+B4xfVOQcfTu1xWdxvpu0kh8gKJntGo+XY33a4pagDrt1t
- guxwtmO7r4HhObzuSV/W1kZCo6c+9wxw/iDJJW75Qb4m9B+OeCaqKxckyXB5LR5FXaME
- Vm/F4FuDzvD+XpQ3k3LeRB+1mWtzGzy9c8zv/5k2GYafla/J+FaXwDJ1EAHDTcnase8P
- PMTBHlS+sy+2EWMilbFunmSnGj7ceWpBwTTR5Xj9MXVoQ4qflH/Ueypn+JG+90AfFJyz
- blT/5nsvFUQS+BW/OMMdyX9rsWAYMMCOAQkRozE2GUhvZ1Zp2z5UjAW5/1khl+7rBkde Zg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1v6ubdem-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 20:27:16 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PKRFJq031949
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 20:27:15 GMT
-Received: from [10.71.109.50] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
- 2023 13:27:14 -0700
-Message-ID: <7b2f5af5-a704-ede7-1c6f-a2f0eb5b988f@quicinc.com>
-Date:   Tue, 25 Jul 2023 13:27:14 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [RFC PATCH 0/4] Implement a PSCI SYSTEM_RESET2 reboot-mode driver
-Content-Language: en-US
-To:     Florian Fainelli <florian.fainelli@broadcom.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Sebastian Reichel" <sre@kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+        Tue, 25 Jul 2023 16:36:57 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6622619A7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:36:55 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-563df158ecaso209320a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 13:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1690317415; x=1690922215;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=t38LAy3XUaR4J5EOGa4yFGEcqNsMLyxWnJ7wsD34WsQ=;
+        b=iHRPLkhXJdKw3dpQvYmFjC/99lHj3UOs9u/D/w3Bpfc5fxoExuczXi6MvTCu9QgPPN
+         qy38o6HYVeTpHNYl1XXdCDM5fWKtxbXaZ+YvftsbGZWubrYe40uFfE8B/076OY49NsoG
+         URvenrNwJwLsWwhi7GtNTwxo2dpPx2XWXbzwo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690317415; x=1690922215;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t38LAy3XUaR4J5EOGa4yFGEcqNsMLyxWnJ7wsD34WsQ=;
+        b=Uh5ie32xWfD8nflEM5T0Pw7kMM5JL1LDJVylBMxzJJ78IMJ9I6Awl18E1hKuEn5n2i
+         A6bVeeiQoY2egJMC1WZFiY2fpsg1msb+RjaTE3RxCMxVroLuT7sj4OfXvSpauphOc93g
+         WOjjuQjpNsotMPCcRUPgzHsFItzccw0VlcDexK7XiWrVH8qoiUWMFTAa/CvieO+kTMM6
+         RsOXq/8xPkmorBo4W9sdpaMmi7Yn3PBeOX3Cb+bPMvfAwZSPvnkIOcGFlRag9+lZAQzD
+         66SAjWCLtIrrv/AiXGy3a3TgE9oKoSss2s6BJqkOZ7+dw/lLK39x1sFD8hOEZZ08Ga0I
+         JZhg==
+X-Gm-Message-State: ABy/qLayvL40RE6KV0dL/mO1x5CoLA9fV5ZmzuHiaMD0t9DnxEQS9XEa
+        olwv6lJwa6YUtXChCRbLt8hkiQ==
+X-Google-Smtp-Source: APBJJlHGw8vWHsfZZ+Btmj+3nGK1dEOwr1gwf2QSLbSYYMWU4/ntcLarTpDHFPdMc18qiaoU1rliKw==
+X-Received: by 2002:a17:90a:7e15:b0:268:2b5c:14d with SMTP id i21-20020a17090a7e1500b002682b5c014dmr228765pjl.36.1690317414860;
+        Tue, 25 Jul 2023 13:36:54 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:c363:4681:f5b8:301])
+        by smtp.gmail.com with ESMTPSA id bg1-20020a17090b0d8100b002676e961261sm1396951pjb.1.2023.07.25.13.36.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 13:36:54 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Prasad Sodagudi <quic_psodagud@quicinc.com>
-References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
- <65afff8f-fd02-1344-56b5-f9e3deda1d47@broadcom.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <65afff8f-fd02-1344-56b5-f9e3deda1d47@broadcom.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: NwQAFfX2ImznLSH0lf6YCxdXCdTwQvZe
-X-Proofpoint-GUID: NwQAFfX2ImznLSH0lf6YCxdXCdTwQvZe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-25_11,2023-07-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
- mlxscore=0 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307250173
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Chris Morgan <macroalpha82@gmail.com>,
+        linux-input@vger.kernel.org, hsinyi@google.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        yangcong5@huaqin.corp-partner.google.com,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH v3 00/10] drm/panel and i2c-hid: Allow panels and touchscreens to power sequence together
+Date:   Tue, 25 Jul 2023 13:34:35 -0700
+Message-ID: <20230725203545.2260506-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.41.0.487.g6d72f3e995-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -91,39 +86,88 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+The big motivation for this patch series is mostly described in the patch
+("drm/panel: Add a way for other devices to follow panel state"), but to
+quickly summarize here: for touchscreens that are connected to a panel we
+need the ability to power sequence the two device together. This is not a
+new need, but so far we've managed to get by through a combination of
+inefficiency, added costs, or perhaps just a little bit of brokenness.
+It's time to do better. This patch series allows us to do better.
 
-On 7/25/2023 12:12 PM, Florian Fainelli wrote:
-> Hello,
-> 
-> On 7/24/23 15:30, Elliot Berman wrote:
->> PSCI implements a restart notifier for architectural defined resets.
->> The SYSTEM_RESET2 call allows vendor firmware to define additional reset
->> types which could be mapped to the reboot reason.
->>
->> Implement a driver to wire the reboot-mode framework to make vendor
->> SYSTEM_RESET2 calls on reboot.
->>
->> This is a continuation from 
->> https://lore.kernel.org/all/4a679542-b48d-7e11-f33a-63535a5c68cb@quicinc.com/
-> 
-> Would appreciate being CC'd on a the non-RFC postings of this patch. 
-> FWIW, my use case is better described with this earlier submission:
-> 
-> https://lore.kernel.org/lkml/20220122035421.4086618-1-f.fainelli@gmail.com/T/#m74e4243c1af3a8d896e19b573b58f562fa09961d
-> 
-> It would be neat if I could leverage your driver in order to implement 
-> this custom "reboot powercycle" implementation. Towards that goal, we 
-> would likely need to specify the desired reboot "sub" operation 
-> alongside its PSCI SYSTEM_RESET2 reboot type argument?
-> 
-> Thanks!
+Assuming that people think this patch series looks OK, we'll have to
+figure out the right way to land it. The panel patches and i2c-hid
+patches will go through very different trees and so either we'll need
+an Ack from one side or the other or someone to create a tag for the
+other tree to pull in. This will _probably_ require the true drm-misc
+maintainers to get involved, not a lowly committer. ;-)
 
-I think you you want to describe the PSCI vendor reset under a warm 
-reboot with command "powercycle"? In other words, my series only lets DT 
-describe either reboot_mode (warm) or cmd (powercycle) but not both 
-simultaneously?
+Version 3 of this patch was a long time coming after v2. Maxime and I
+had a very long discussion trying to figure out if there was a beter
+way and in the end we didn't find one so he was OK with the series in
+general [1]. After that got resolved, I tried to resolve Benjamin's
+feedback but got stuck [2]. Presumably Benjamin is busy at the moment,
+so I've done my best to try to resolve things. The end result is a v3
+that's not that different from v2 but that has a tiny bit more code
+split out.
 
-Please correct me if I got it wrong! Otherwise, I can incorporate way to 
-describe vendor reset type matching both reboot_mode and cmd in the DT.
+Version 2 of this patch series didn't change too much. At a high level:
+* I added all the forgotten "static" to functions.
+* I've hopefully made the bindings better.
+* I've integrated into fw_devlink.
+* I cleaned up a few descriptions / comments.
 
-- Elliot
+This still needs someone to say that the idea looks OK or to suggest
+an alternative that solves the problems. ;-)
+
+[1] https://lore.kernel.org/r/gkwymmfkdy2p2evz22wmbwgw42ii4wnvmvu64m3bghmj2jhv7x@4mbstjxnagxd
+[2] https://lore.kernel.org/r/CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com
+
+Changes in v3:
+- Add is_panel_follower() as a convenience for clients.
+- Add "depends on DRM || !DRM" to Kconfig to avoid randconfig error.
+- Split more of the panel follower code out of the core.
+
+Changes in v2:
+- Move the description to the generic touchscreen.yaml.
+- Update the desc to make it clearer it's only for integrated devices.
+- Add even more text to the commit message.
+- A few comment cleanups.
+- ("Add a devlink for panel followers") new for v2.
+- i2c_hid_core_initial_power_up() is now static.
+- i2c_hid_core_panel_prepared() and ..._unpreparing() are now static.
+- ihid_core_panel_prepare_work() is now static.
+- Improve documentation for smp_wmb().
+
+Douglas Anderson (10):
+  dt-bindings: HID: i2c-hid: Add "panel" property to i2c-hid backed
+    touchscreens
+  drm/panel: Check for already prepared/enabled in drm_panel
+  drm/panel: Add a way for other devices to follow panel state
+  of: property: fw_devlink: Add a devlink for panel followers
+  HID: i2c-hid: Switch to SYSTEM_SLEEP_PM_OPS()
+  HID: i2c-hid: Rearrange probe() to power things up later
+  HID: i2c-hid: Make suspend and resume into helper functions
+  HID: i2c-hid: Support being a panel follower
+  HID: i2c-hid: Do panel follower work on the system_wq
+  arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
+
+ .../bindings/input/elan,ekth6915.yaml         |   5 +
+ .../bindings/input/goodix,gt7375p.yaml        |   5 +
+ .../bindings/input/hid-over-i2c.yaml          |   2 +
+ .../input/touchscreen/touchscreen.yaml        |   7 +
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |   1 +
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |   1 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |   1 +
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |   1 +
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    |   1 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   1 +
+ drivers/gpu/drm/drm_panel.c                   | 218 ++++++++++-
+ drivers/hid/i2c-hid/Kconfig                   |   2 +
+ drivers/hid/i2c-hid/i2c-hid-core.c            | 338 +++++++++++++-----
+ drivers/of/property.c                         |   2 +
+ include/drm/drm_panel.h                       |  94 +++++
+ 15 files changed, 583 insertions(+), 96 deletions(-)
+
+-- 
+2.41.0.487.g6d72f3e995-goog
+
