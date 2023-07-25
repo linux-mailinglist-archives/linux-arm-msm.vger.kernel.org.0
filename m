@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4CC0760E51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:19:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C664760E55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:19:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233040AbjGYJTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56460 "EHLO
+        id S233046AbjGYJTw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 05:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233131AbjGYJTQ (ORCPT
+        with ESMTP id S233116AbjGYJTW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:19:16 -0400
+        Tue, 25 Jul 2023 05:19:22 -0400
 Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7E62100;
-        Tue, 25 Jul 2023 02:19:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABB5819BD;
+        Tue, 25 Jul 2023 02:19:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690276748; x=1721812748;
+  t=1690276754; x=1721812754;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=3ftlTnZLDKGNw8f2OS/kJtQKY7p+STDvyqbF9dlRCEA=;
-  b=jEswhuXsF+3gcluUA76NV7Ww2hZ1njxfxw33M5+FrtFaAdnkPPT39rfu
-   /7pb/TPFVhRwk+xagQ7sV0RQbE3Jah4zCr8ogUarxP73WtfvQiVWICWg+
-   +UUIzm9rjqVBI/PB981QwCV6qIKImQcUDxZZPaCydbW51Smam88zP/iKJ
-   3Ls0K/EPJs46EwtGo9RGL9uda4qhC1FAn1cTsiDlIK9PjGVZIHE6G0F3E
-   zqZexdbCPQIz2UHLxokHprzh00Qq9Neu5ozV/TPmXs1LoUWRCWrHeKong
-   RBkL+8iohGYPU4gglsgbC8SX+TrJHHtjZEqWyjHsWO3yukndMErc0DXMG
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="367690997"
+  bh=OmPXnBpjFbasw+T9ea6wqRGGLgB3z7Oa0ef3fv0n3bc=;
+  b=U1TZhelfw7Bd9rL2Kfl4Gxa2LGz6DR30Sxjx3zbuebejLxkM2miE53Y1
+   sigEhynVmBSJrZUYIW2yiLYMNUYv01bGJWbiB+yYU+x9QbU70DYzTAJ8z
+   4gq1KrKQsJgTg2/kYRALT64ZiHrA9TmUeBkP34dW13uq0UdnLNDRIkFWb
+   PQ46+qIDKvFXzdhWFX4Ln4+66HlSuOVmjZtJZfHUoaTVo9umsfSGTZ7uG
+   ++cVY9/XQjVAEWAJtkblyK+MvFycCkjbiJbqhkGfhDQsgYfrFqZj7SX0t
+   S9UtSMycNsOEYVuQNKgyzTP1ndT6IULsmna0qgHsY9Ylg04Kv3XSGAKHc
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="367691068"
 X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="367690997"
+   d="scan'208";a="367691068"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:19:06 -0700
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:19:14 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980480"
+X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980536"
 X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="719980480"
+   d="scan'208";a="719980536"
 Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:58 -0700
-Message-ID: <987394fd-9724-aa42-37fe-be9707565405@linux.intel.com>
-Date:   Tue, 25 Jul 2023 11:10:52 +0200
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:19:07 -0700
+Message-ID: <671a524d-b4c8-78d8-33de-40170a23d189@linux.intel.com>
+Date:   Tue, 25 Jul 2023 11:15:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v4 29/32] sound: soc: qcom: q6usb: Add headphone jack for
- offload connection status
+Subject: Re: [PATCH v4 31/32] sound: usb: card: Allow for rediscovery of
+ connected USB SND devices
 Content-Language: en-US
 To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -61,9 +61,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
         o-takashi@sakamocchi.jp
 References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-30-quic_wcheng@quicinc.com>
+ <20230725023416.11205-32-quic_wcheng@quicinc.com>
 From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20230725023416.11205-30-quic_wcheng@quicinc.com>
+In-Reply-To: <20230725023416.11205-32-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -79,87 +79,77 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 7/25/23 04:34, Wesley Cheng wrote:
-> The headphone jack framework has a well defined intrastructure for
-
-infrastructure
-
-> notifying userspace entities through input devices.  Expose a jack device
-> that carries information about if an offload capable device is connected.
-> Applications can further identify specific offloading information through
-> other SND kcontrols.
-
-What if you connect a set of USB speakers? Would they show as a
-headphone/headset?
-
+> In case of notifying SND platform drivers of connection events, some of
+> these use cases, such as offloading, require an ASoC USB backend device to
+> be initialized before the events can be handled.  If the USB backend device
+> has not yet been probed, this leads to missing initial USB audio device
+> connection events.
+> 
+> Expose an API that traverses the usb_chip array for connected devices, and
+> to call the respective connection callback registered to the SND platform
+> driver.
+> 
 > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
->  sound/soc/qcom/qdsp6/q6usb.c | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
+>  sound/usb/card.c | 19 +++++++++++++++++++
+>  sound/usb/card.h |  2 ++
+>  2 files changed, 21 insertions(+)
 > 
-> diff --git a/sound/soc/qcom/qdsp6/q6usb.c b/sound/soc/qcom/qdsp6/q6usb.c
-> index e4ccb9d912b0..860dff8c1438 100644
-> --- a/sound/soc/qcom/qdsp6/q6usb.c
-> +++ b/sound/soc/qcom/qdsp6/q6usb.c
-> @@ -20,6 +20,7 @@
->  #include <sound/pcm_params.h>
->  #include <sound/asound.h>
->  #include <sound/q6usboffload.h>
-> +#include <sound/jack.h>
->  
->  #include "q6dsp-lpass-ports.h"
->  #include "q6afe.h"
-> @@ -37,6 +38,7 @@ struct q6usb_status {
->  struct q6usb_port_data {
->  	struct q6afe_usb_cfg usb_cfg;
->  	struct snd_soc_usb *usb;
-> +	struct snd_soc_jack hs_jack;
->  	struct q6usb_offload priv;
->  	struct mutex mutex;
->  	unsigned long available_card_slot;
-> @@ -279,6 +281,7 @@ static const struct snd_kcontrol_new q6usb_offload_control = {
->  /* Build a mixer control for a UAC connector control (jack-detect) */
->  static void q6usb_connector_control_init(struct snd_soc_component *component)
->  {
-> +	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
->  	int ret;
->  
->  	ret = snd_ctl_add(component->card->snd_card,
-> @@ -290,6 +293,11 @@ static void q6usb_connector_control_init(struct snd_soc_component *component)
->  				snd_ctl_new1(&q6usb_offload_dev_ctrl, component));
->  	if (ret < 0)
->  		return;
-> +
-> +	ret = snd_soc_card_jack_new(component->card, "USB offload",
-> +					SND_JACK_HEADSET, &data->hs_jack);
-
-not all USB devices are headsets...
-
-> +	if (ret)
-> +		return;
+> diff --git a/sound/usb/card.c b/sound/usb/card.c
+> index 365f6d978608..27a89aaa0bf3 100644
+> --- a/sound/usb/card.c
+> +++ b/sound/usb/card.c
+> @@ -170,6 +170,25 @@ struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
 >  }
+>  EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
 >  
->  static int q6usb_audio_ports_of_xlate_dai_name(struct snd_soc_component *component,
-> @@ -322,7 +330,10 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
->  
->  	mutex_lock(&data->mutex);
->  	if (connected) {
-> -		snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
-> +		if (!data->available_card_slot) {
-> +			snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
-> +			snd_jack_report(data->hs_jack.jack, 1);
-> +		}
->  		/*
->  		 * Update the latest USB headset plugged in, if session is
->  		 * idle.
-> @@ -338,8 +349,10 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
->  		clear_bit(card_idx, &data->available_card_slot);
->  		data->status[card_idx].num_pcm = 0;
->  		data->status[card_idx].chip_index = 0;
-> -		if (!data->available_card_slot)
-> +		if (!data->available_card_slot) {
->  			snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
-> +			snd_jack_report(data->hs_jack.jack, 0);
-> +		}
->  	}
->  	snd_soc_dapm_sync(dapm);
->  	mutex_unlock(&data->mutex);
+> +/*
+> + * in case the platform driver was not ready at the time of USB SND
+> + * device connect, expose an API to discover all connected USB devices
+> + * so it can populate any dependent resources/structures.
+> + */
+> +void snd_usb_rediscover_devices(void)
+> +{
+> +	int i;
+> +
+> +	mutex_lock(&register_mutex);
+> +	for (i = 0; i < SNDRV_CARDS; i++) {
+> +		if (usb_chip[i])
+> +			if (platform_ops && platform_ops->connect_cb)
+> +				platform_ops->connect_cb(usb_chip[i]);
+
+what happens if the USB device is removed while the platform device adds
+a port?
+
+This sounds super-racy to me. It's the same set of problems we're having
+between audio and display/DRM, I would be surprised if this function
+dealt with all corner cases of insertion/removal, bind/unbind.
+
+
+> +	}
+> +	mutex_unlock(&register_mutex);
+> +}
+> +EXPORT_SYMBOL_GPL(snd_usb_rediscover_devices);
+> +
+>  /*
+>   * disconnect streams
+>   * called from usb_audio_disconnect()
+> diff --git a/sound/usb/card.h b/sound/usb/card.h
+> index db735680d155..dfd241334e3d 100644
+> --- a/sound/usb/card.h
+> +++ b/sound/usb/card.h
+> @@ -219,6 +219,7 @@ int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops);
+>  int snd_usb_unregister_platform_ops(void);
+>  struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
+>  			struct snd_pcm_hw_params *params, int direction);
+> +void snd_usb_rediscover_devices(void);
+>  #else
+>  static int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
+>  {
+> @@ -235,5 +236,6 @@ static struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
+>  {
+>  	return NULL;
+>  }
+> +void snd_usb_rediscover_devices(void) { }
+>  #endif /* IS_ENABLED(CONFIG_SND_USB_AUDIO) */
+>  #endif /* __USBAUDIO_CARD_H */
