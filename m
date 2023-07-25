@@ -2,68 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACCAA760C2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 09:42:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40DD2760C92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232759AbjGYHmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 03:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54766 "EHLO
+        id S232045AbjGYICf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 04:02:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbjGYHmS (ORCPT
+        with ESMTP id S231879AbjGYICe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 03:42:18 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260CB1BCC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 00:42:10 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-316eabffaa6so3810750f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 00:42:09 -0700 (PDT)
+        Tue, 25 Jul 2023 04:02:34 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0BF411B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:02:32 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3144bf65ce9so4085749f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690270928; x=1690875728;
+        d=linaro.org; s=google; t=1690272151; x=1690876951;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pCLjIbifB+cFFCdOAXQbgUeQlBxUTUV54U2xtQznvec=;
-        b=MX9Rn57dbYz+wSb43zZ55vSVx6eMgursjCMvkflhjADtn0IW4Ox6cYs4BG4m4VrOz1
-         zKJRsY0C1uJbmNNtzxu6BxwE7JervFt5XWg/KyzakWLH0YOQG8aQTzlEkvKN7AixNPr1
-         wiXXORSqPMWtFWhoFD1Byl1y2+pmhdhZlSkgNhxwLlhTuFyCJOt2vcV4TJBwVfI0jE/H
-         zJfQDWDtTd/uR/Oxy+lkGflfsX56gcjHxLagC2g4ZAxNiovEarEtDz5DNnX2OcQeTjWJ
-         L1WzFySNqJgADfFNFTdSCgRK2G5m4CUGNjycvAsJsWi5RrLtXcfMaV3O1ju1iHluijmT
-         UYag==
+        bh=I3v1BVqEhAVeW2Xqs0OD6SXxWEo7Q/+yKV1QI3AwLLc=;
+        b=aaouEtYVEjE4zRDsvpzoWGwzwSPV9SDD1pdljgK9gA6Ri9rLr2Jtspbzv88hJH6cwe
+         AVZnBOkQavqOPMfV6TY3c9I04noNBrNguGJwH3S2e/Obw9vzkgwiDWRKRQ4oR0YHJ/j/
+         cT2fBeH8JuNBmwaribj7aGrIcV333QfISME4Q8HbQSxwlj1pfHisUfDLtDt270Z7YDqS
+         +vRtDUw+up8/afHH4b5AjRJ6k4xDZGR//8ifsJiCtsEZ1Ha1MHpnYS0KORtR4oJ49Vic
+         Gp/qRnAxs/b/TgS/xX+QN5bBIYIGnIAKizuPJp89fVG002GPkmH2CZkkonoMcyOIvkdm
+         +12w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690270928; x=1690875728;
+        d=1e100.net; s=20221208; t=1690272151; x=1690876951;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pCLjIbifB+cFFCdOAXQbgUeQlBxUTUV54U2xtQznvec=;
-        b=XwC+se3NH3txE4qgsRDZ9nir3xgS9BfvwnC8ZsSNtlJFF1lRTbzQFTXdTAONdwdPeI
-         D0zh61zHnDFlnyC/Cvf1U6q0rGU3mHvWfUqP3sRxPH/u+C3D0aqcIo3gT+bDlZmTdGdj
-         heQ5jZtQFJ3LkUCCuAz9SpSzN6op6kWK+aGRe6BbfyIMdn5vak1c3hH++pG4Gzz80DJB
-         feReWrtDju4QcUNTr1dSPkgjjIP4fwvKIZg69O0H1NKCrlbLWE2iArKGBPajM7w8gISs
-         THPRVAi5hIy47BbbU0NFjJpWgJ+HUI8gRwmvGdRfdljNzXJPIEj/aI3knzxKCnKDh95B
-         JymA==
-X-Gm-Message-State: ABy/qLbz1zIRSSui/L2d6DnUSk+mn4/kTjXi6TC54f8aPWvGCE/ip6am
-        EfYfHlKIWigLB51kemR7RZP6WEnevH0XYR9ZNEQfuw==
-X-Google-Smtp-Source: APBJJlHCacu3b/duH9zwAoc05ArR+CSHw0jYnqggcZYd89yRr/pLJqEWApy4T0OfxoxetcmJjFW11g==
-X-Received: by 2002:a05:6000:86:b0:317:389b:1a2d with SMTP id m6-20020a056000008600b00317389b1a2dmr6339640wrx.8.1690270928383;
-        Tue, 25 Jul 2023 00:42:08 -0700 (PDT)
+        bh=I3v1BVqEhAVeW2Xqs0OD6SXxWEo7Q/+yKV1QI3AwLLc=;
+        b=hMjTqxEtAuGeG63taJTONWOpTwh2WFmvHrKAnoDvrOcg14cA5GtPmCtsTh40+lOxLl
+         eR4d/NZPWVJnavxL5UlBoLVVP7UMbux2ix3S7O8lW/tNpKru2nTjWDwfgYbUzSw7O2NL
+         ROzEhT0yklH2octSnrRyYXNeXCRV+Fow/Vkk/JUXI39x4mDfdWZqdcOgfWBNbzWDjyxA
+         PBfz5RQBSb/I8q2ummxsIeDwjQtaA424xpm3hQmiB5pZndsQvgi7B97HOi2/AYDbBQXw
+         ZmF3WrThdAmMGchJm8R1w2t68YuKf7xCeaopCqnFWhDQ2Z9MelBtgoM5gNxwOoLe+F6j
+         0Qkg==
+X-Gm-Message-State: ABy/qLZZ0YqQxOgbfR1ORWoODj/CpxZhDrKJdxr+YPU6Pj9V0ws//msr
+        v60jsMhsdv+j/8NwTeqCBx6Trw==
+X-Google-Smtp-Source: APBJJlFyrzW0659tWRjxTEp4UbibdlARF8lOgeGhcIJ5aGAk4vGcxVsE/S/rge44cR0Qz14H3wkvxg==
+X-Received: by 2002:adf:ec86:0:b0:317:67bf:337f with SMTP id z6-20020adfec86000000b0031767bf337fmr1758860wrn.2.1690272151075;
+        Tue, 25 Jul 2023 01:02:31 -0700 (PDT)
 Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
-        by smtp.gmail.com with ESMTPSA id z17-20020a5d4411000000b003176eab8868sm556942wrq.82.2023.07.25.00.42.06
+        by smtp.gmail.com with ESMTPSA id x12-20020a5d650c000000b003143aa0ca8asm15394656wru.13.2023.07.25.01.02.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 00:42:07 -0700 (PDT)
-Message-ID: <f71c6097-9e9c-0edd-6d96-262ba34712e2@linaro.org>
-Date:   Tue, 25 Jul 2023 09:42:06 +0200
+        Tue, 25 Jul 2023 01:02:30 -0700 (PDT)
+Message-ID: <411da19f-10f3-6dc1-a708-cdf06be9c4d8@linaro.org>
+Date:   Tue, 25 Jul 2023 10:02:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
+Subject: Re: [PATCH v2 5/7] clk: qcom: hfpll: Add MSM8976 PLL data
 Content-Language: en-US
-To:     qaz6750 lzy <qaz6750@outlook.com>, agross@kernel.org,
-        andersson@kernel.org
-Cc:     conor+dt@kernel.org, devicetree@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org
-References: <40e3d1d7-468a-c822-6f2c-6c46f4a02f5d@linaro.org>
- <SY7P282MB3787D64A586E9DC55547BB2DB203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230723160827.22660-1-a39.skl@gmail.com>
+ <20230723160827.22660-6-a39.skl@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,36 +107,56 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <SY7P282MB3787D64A586E9DC55547BB2DB203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <20230723160827.22660-6-a39.skl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.07.2023 07:55, qaz6750 lzy wrote:
-> On 25/07/2023 13:50, qaz6750 lzy wrote:
->> On 25/07/2023 04:33, qaz6750 lzy wrote:
->>> I2C6 and I2C7 use the same interrupts, which is incorrect.
->>> In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
->>>
->>> Signed-off-by: qaz6750 lzy <qaz6750@outlook.com>
->>
->> Neither From field nor Signed-off-by have the full name you mentioned
-> before.
->>
->> Also: Do not attach (thread) your patchsets to some other threads
->> (unrelated or older versions). This buries them deep in the mailbox and
->> might interfere with applying entire sets.
+On 23.07.2023 18:08, Adam Skladowski wrote:
+> Add PLL configuration for MSM8976 SoC, this SoC offers 3 HFPLL.
+> Small cluster offers two presets for 652-902Mhz range and 902Mhz-1.47Ghz.
+> For simplicity only add second range as smaller frequencies can be obtained
+> via apcs divider or safe parent this also saves us
+> a hassle of reconfiguring VCO bit and config_val.
+> A72 and CCI cluster only use single frequency range with their
+> outputs/post_dividers/vco_bits being static.
 > 
-> I'm sorry, this is my problem. As this is my first time submitting a patch,
-> I made some mistakes. So, what else do I need to do now? Thank you
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+[...]
+
+> +static const struct hfpll_data msm8976_a72 = {
+> +	.mode_reg = 0x00,
+> +	.l_reg = 0x04,
+> +	.m_reg = 0x08,
+> +	.n_reg = 0x0c,
+> +	.user_reg = 0x10,
+> +	.config_reg = 0x14,
+> +	.config_val = 0x4e0405d,
+> +	.status_reg = 0x1c,
+> +	.lock_bit = 16,
+> +
+> +	.l_val = 0x3e,
+> +	.user_val = 0x100109,
+> +	.min_rate = 940800000UL,
+> +	.max_rate = 1843200000UL,
+2016000000?
+
+[...]
+
+>  static const struct of_device_id qcom_hfpll_match_table[] = {
+>  	{ .compatible = "qcom,hfpll", &hdata },
+> +	{ .compatible = "qcom,msm8976-hfpll-a53", &msm8976_a53 },
+> +	{ .compatible = "qcom,msm8976-hfpll-a72", &msm8976_a72 },
+> +	{ .compatible = "qcom,msm8976-hfpll-cci", &msm8976_cci },
+.data = is missing
 
 Konrad
