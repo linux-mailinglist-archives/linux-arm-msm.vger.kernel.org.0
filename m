@@ -2,320 +2,348 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADD8876273A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 01:18:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3927F762749
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 01:26:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231611AbjGYXSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 19:18:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35776 "EHLO
+        id S230113AbjGYX02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 19:26:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231379AbjGYXSn (ORCPT
+        with ESMTP id S230211AbjGYX02 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 19:18:43 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A376E1988;
-        Tue, 25 Jul 2023 16:18:41 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PNDIAD000405;
-        Tue, 25 Jul 2023 23:18:00 GMT
+        Tue, 25 Jul 2023 19:26:28 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AB6173F;
+        Tue, 25 Jul 2023 16:26:21 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PMTQ9K024879;
+        Tue, 25 Jul 2023 23:26:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UMPzc15goQAkKTvtJQP8mTOXbx53Fh755mAgUKkn7NA=;
- b=A/8Eh6NU7hbAYFO38boyndeemQnUR7GSAKFGhhRbLSzjFHv02fdbMjuf/8o0RGcfmggI
- +Ey+sKcLiion2iLezUjmZOAbLWBBZoColEfw1mPQuNWKs5tfdArK7srwQjr9qjPe2WAd
- QRWolZfJrHw2g8rUGKXjsWKgR7B+u2FpKnQoVGKbzLWWnbNu0fosZSo0fl2pp4k0hOjF
- SAphLIByDogpGagDAPkmN8PUbmsFf//F3tC0cmsP7WHQhGRDj6p4QE9vt+e032npsUMM
- mzMBpujc1oiuXMlN/dg6eJxqPjPx8FMk5mrDG5aNLdoiSmQTYF2HwNMYivzO/todAz3T Xg== 
+ bh=VuEIIAxM2lQ9Q0t00KUCTYqHXSeeGPOis37f2lzmaMI=;
+ b=Xpi1/Jt5L5pF0BtwtNLYfQf6aua5aIbXSRpqiZKggeFSJ/Q2Q8LALWZhXIXaPPTA73yy
+ D0PKVe+vgMT1UKqESR/W0NosaoUJsM/aT+++ZikrY+eAXcjZF9tQq0V4Dx+LTCPW51CU
+ XqDIkns5VN49Td40XbPMEp0VUOjn6eKF8hcD563XR4fhDABUNebLnP0iv86vRz5+8/nI
+ kioR21qCE2PgNJvFPgRNykvDhbtBIh7TOgQmSpWvPhMJ6Kd17JN/El3zzN68z395aTth
+ DsMSzNFsI8PRIFiqTiH4D6nLCUhLLt9q7okQj6bAuoD333tZFxCtdXMvgjWdxK9wEZQo Bg== 
 Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s29xmj2k7-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s2mxrgb4g-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 23:18:00 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PNHx6w016007
+        Tue, 25 Jul 2023 23:26:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PNQ9HQ025700
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 25 Jul 2023 23:17:59 GMT
-Received: from [10.110.23.161] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 25 Jul 2023 23:26:09 GMT
+Received: from [10.71.108.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
- 2023 16:17:58 -0700
-Message-ID: <8ae1928e-4b38-e7e1-162b-144a07efde9f@quicinc.com>
-Date:   Tue, 25 Jul 2023 16:17:57 -0700
+ 2023 16:26:09 -0700
+Message-ID: <d52f78f4-f36c-b905-edbc-1795fd7ba96f@quicinc.com>
+Date:   Tue, 25 Jul 2023 16:26:08 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v4 06/32] ASoC: Add SOC USB APIs for adding an USB backend
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [Freedreno] [PATCH v1 2/5] drm/msm/dp: incorporate pm_runtime
+ framework into DP driver
 Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <quic_jackp@quicinc.com>, <oneukum@suse.com>,
-        <albertccwang@google.com>, <o-takashi@sakamocchi.jp>
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-7-quic_wcheng@quicinc.com>
- <9e391c7d-f45b-42f4-fae4-72fba32482db@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <9e391c7d-f45b-42f4-fae4-72fba32482db@linux.intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     <freedreno@lists.freedesktop.org>, <quic_sbillaka@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <airlied@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <robdclark@gmail.com>,
+        <dri-devel@lists.freedesktop.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <agross@kernel.org>, <daniel@ffwll.ch>,
+        <marijn.suijten@somainline.org>, <quic_jesszhan@quicinc.com>,
+        <swboyd@chromium.org>, <sean@poorly.run>,
+        <linux-kernel@vger.kernel.org>
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-3-git-send-email-quic_khsieh@quicinc.com>
+ <oc6cohs6pbiuyirdxgepoharuzdra2hzy3kwfqjmdfcq36y367@ah3bal2jqncb>
+ <0ac305d2-d0a9-cdfb-9be8-243402d865e7@quicinc.com>
+ <44299d05-d411-e9c4-7b96-84efb28d47c9@quicinc.com>
+ <a7405272-6a9e-b0c4-f749-060dbe716148@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <a7405272-6a9e-b0c4-f749-060dbe716148@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HLJLsNhZptWr3FYhyaZw9fl2vAXuZvXW
-X-Proofpoint-GUID: HLJLsNhZptWr3FYhyaZw9fl2vAXuZvXW
+X-Proofpoint-GUID: f-VUN0nMHfNKiVyr7h5JPWyGlW0WXX5Q
+X-Proofpoint-ORIG-GUID: f-VUN0nMHfNKiVyr7h5JPWyGlW0WXX5Q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-25_12,2023-07-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- mlxlogscore=823 impostorscore=0 adultscore=0 mlxscore=0 bulkscore=0
- phishscore=0 suspectscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307250197
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ clxscore=1015 mlxlogscore=999 mlxscore=0 bulkscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250198
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
 
-On 7/25/2023 1:10 AM, Pierre-Louis Bossart wrote:
-> 
->> +/**
->> + * struct snd_soc_usb
->> + * @list - list head for SND SOC struct list
->> + * @dev - USB backend device reference
->> + * @component - reference to DAPM component
-> 
-> ASoC component, not DAPM.
-> 
+On 7/25/2023 3:33 PM, Dmitry Baryshkov wrote:
+> On 26/07/2023 01:25, Kuogee Hsieh wrote:
+>>
+>> On 7/10/2023 9:22 AM, Kuogee Hsieh wrote:
+>>>
+>>> On 7/8/2023 7:52 PM, Bjorn Andersson wrote:
+>>>> On Fri, Jul 07, 2023 at 04:52:20PM -0700, Kuogee Hsieh wrote:
+>>>>> Incorporating pm runtime framework into DP driver so that power
+>>>>> and clock resource handling can be centralized allowing easier
+>>>>> control of these resources in preparation of registering aux bus
+>>>>> uring probe.
+>>>>>
+>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>>> ---
+>>>>>   drivers/gpu/drm/msm/dp/dp_aux.c     |  3 ++
+>>>>>   drivers/gpu/drm/msm/dp/dp_display.c | 75 
+>>>>> +++++++++++++++++++++++++++++--------
+>>>>>   2 files changed, 63 insertions(+), 15 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c 
+>>>>> b/drivers/gpu/drm/msm/dp/dp_aux.c
+>>>>> index 8e3b677..c592064 100644
+>>>>> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
+>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+>>>>> @@ -291,6 +291,7 @@ static ssize_t dp_aux_transfer(struct 
+>>>>> drm_dp_aux *dp_aux,
+>>>>>           return -EINVAL;
+>>>>>       }
+>>>>>   +    pm_runtime_get_sync(dp_aux->dev);
+>>>>>       mutex_lock(&aux->mutex);
+>>>>>       if (!aux->initted) {
+>>>>>           ret = -EIO;
+>>>>> @@ -364,6 +365,8 @@ static ssize_t dp_aux_transfer(struct 
+>>>>> drm_dp_aux *dp_aux,
+>>>>>     exit:
+>>>>>       mutex_unlock(&aux->mutex);
+>>>>> +    pm_runtime_mark_last_busy(dp_aux->dev);
+>>>>> +    pm_runtime_put_autosuspend(dp_aux->dev);
+>>>>>         return ret;
+>>>>>   }
+>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>>>>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>> index 76f1395..2c5706a 100644
+>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>> @@ -309,6 +309,10 @@ static int dp_display_bind(struct device 
+>>>>> *dev, struct device *master,
+>>>>>           goto end;
+>>>>>       }
+>>>>>   +    pm_runtime_enable(dev);
+>>>>> +    pm_runtime_set_autosuspend_delay(dev, 1000);
+>>>>> +    pm_runtime_use_autosuspend(dev);
+>>>>> +
+>>>>>       return 0;
+>>>>>   end:
+>>>>>       return rc;
+>>>>> @@ -320,9 +324,8 @@ static void dp_display_unbind(struct device 
+>>>>> *dev, struct device *master,
+>>>>>       struct dp_display_private *dp = 
+>>>>> dev_get_dp_display_private(dev);
+>>>>>       struct msm_drm_private *priv = dev_get_drvdata(master);
+>>>>>   -    /* disable all HPD interrupts */
+>>>>> -    if (dp->core_initialized)
+>>>>> -        dp_catalog_hpd_config_intr(dp->catalog, 
+>>>>> DP_DP_HPD_INT_MASK, false);
+>>>>> +    pm_runtime_dont_use_autosuspend(dev);
+>>>>> +    pm_runtime_disable(dev);
+>>>>>         kthread_stop(dp->ev_tsk);
+>>>>>   @@ -466,10 +469,12 @@ static void dp_display_host_init(struct 
+>>>>> dp_display_private *dp)
+>>>>>           dp->dp_display.connector_type, dp->core_initialized,
+>>>>>           dp->phy_initialized);
+>>>>>   -    dp_power_init(dp->power);
+>>>>> -    dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+>>>>> -    dp_aux_init(dp->aux);
+>>>>> -    dp->core_initialized = true;
+>>>>> +    if (!dp->core_initialized) {
+>>>>> +        dp_power_init(dp->power);
+>>>>> +        dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+>>>>> +        dp_aux_init(dp->aux);
+>>>>> +        dp->core_initialized = true;
+>>>> There are two cases that queries core_initialized, both of those are
+>>>> done to avoid accessing the DP block without it first being powered 
+>>>> up.
+>>>> With the introduction of runtime PM, it seems reasonable to just power
+>>>> up the block in those two code paths (and remove the variable).
+>>>>
+>>>>> +    }
+>>>>>   }
+>>>>>     static void dp_display_host_deinit(struct dp_display_private *dp)
+>>>>> @@ -478,10 +483,12 @@ static void dp_display_host_deinit(struct 
+>>>>> dp_display_private *dp)
+>>>>>           dp->dp_display.connector_type, dp->core_initialized,
+>>>>>           dp->phy_initialized);
+>>>>>   -    dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+>>>>> -    dp_aux_deinit(dp->aux);
+>>>>> -    dp_power_deinit(dp->power);
+>>>>> -    dp->core_initialized = false;
+>>>>> +    if (dp->core_initialized) {
+>>>>> +        dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+>>>>> +        dp_aux_deinit(dp->aux);
+>>>>> +        dp_power_deinit(dp->power);
+>>>>> +        dp->core_initialized = false;
+>>>>> +    }
+>>>>>   }
+>>>>>     static int dp_display_usbpd_configure_cb(struct device *dev)
+>>>>> @@ -1304,6 +1311,39 @@ static int dp_display_remove(struct 
+>>>>> platform_device *pdev)
+>>>>>       dp_display_deinit_sub_modules(dp);
+>>>>>         platform_set_drvdata(pdev, NULL);
+>>>>> +    pm_runtime_put_sync_suspend(&pdev->dev);
+>>>>> +
+>>>>> +    return 0;
+>>>>> +}
+>>>>> +
+>>>>> +static int dp_pm_runtime_suspend(struct device *dev)
+>>>>> +{
+>>>>> +    struct platform_device *pdev = to_platform_device(dev);
+>>>>> +    struct msm_dp *dp_display = platform_get_drvdata(pdev);
+>>>> platform_get_drvdata() is a wrapper for 
+>>>> dev_get_drvdata(&pdev->dev), so
+>>>> there's no need to resolve the platform_device first...
+>>>>
+>>>>> +    struct dp_display_private *dp;
+>>>>> +
+>>>>> +    dp = container_of(dp_display, struct dp_display_private, 
+>>>>> dp_display);
+>>>>> +
+>>>>> +    dp_display_host_phy_exit(dp);
+>>>>> +    dp_catalog_ctrl_hpd_enable(dp->catalog);
+>>>>> +    dp_display_host_deinit(dp);
+>>>>> +
+>>>>> +    return 0;
+>>>>> +}
+>>>>> +
+>>>>> +static int dp_pm_runtime_resume(struct device *dev)
+>>>>> +{
+>>>>> +    struct platform_device *pdev = to_platform_device(dev);
+>>>>> +    struct msm_dp *dp_display = platform_get_drvdata(pdev);
+>>>>> +    struct dp_display_private *dp;
+>>>>> +
+>>>>> +    dp = container_of(dp_display, struct dp_display_private, 
+>>>>> dp_display);
+>>>>> +
+>>>>> +    dp_display_host_init(dp);
+>>>>> +    if (dp_display->is_edp) {
+>>>>> +        dp_catalog_ctrl_hpd_enable(dp->catalog);
+>>>>> +        dp_display_host_phy_init(dp);
+>>>>> +    }
+>>>>>         return 0;
+>>>>>   }
+>>>>> @@ -1409,6 +1449,7 @@ static int dp_pm_suspend(struct device *dev)
+>>>>>   }
+>>>>>     static const struct dev_pm_ops dp_pm_ops = {
+>>>>> +    SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, 
+>>>>> dp_pm_runtime_resume, NULL)
+>>>>>       .suspend = dp_pm_suspend,
+>>>>>       .resume =  dp_pm_resume,
+>>>>>   };
+>>>>> @@ -1493,10 +1534,6 @@ static int 
+>>>>> dp_display_get_next_bridge(struct msm_dp *dp)
+>>>>>       aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
+>>>>>         if (aux_bus && dp->is_edp) {
+>>>>> -        dp_display_host_init(dp_priv);
+>>>>> -        dp_catalog_ctrl_hpd_enable(dp_priv->catalog);
+>>>>> -        dp_display_host_phy_init(dp_priv);
+>>>> I'm probably just missing it, but how do we get here with the host
+>>>> powered up and the phy initialized?
+>>>
+>>> if (!dp->core_initialized)  is at dp_display_host_init()
+>>>
+>>>>
+>>>>> -
+>>>>>           /*
+>>>>>            * The code below assumes that the panel will finish 
+>>>>> probing
+>>>>>            * by the time devm_of_dp_aux_populate_ep_devices() 
+>>>>> returns.
+>>>>> @@ -1604,6 +1641,7 @@ void dp_bridge_atomic_enable(struct 
+>>>>> drm_bridge *drm_bridge,
+>>>>>           dp_hpd_plug_handle(dp_display, 0);
+>>>>>         mutex_lock(&dp_display->event_mutex);
+>>>>> + pm_runtime_get_sync(&dp_display->pdev->dev);
+>>>>>         state = dp_display->hpd_state;
+>>>>>       if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+>>>>> @@ -1684,6 +1722,8 @@ void dp_bridge_atomic_post_disable(struct 
+>>>>> drm_bridge *drm_bridge,
+>>>>>       }
+>>>>>         drm_dbg_dp(dp->drm_dev, "type=%d Done\n", 
+>>>>> dp->connector_type);
+>>>>> +
+>>>>> + pm_runtime_put_sync(&dp_display->pdev->dev);
+>>>>>       mutex_unlock(&dp_display->event_mutex);
+>>>>>   }
+>>>>>   @@ -1723,6 +1763,8 @@ void dp_bridge_hpd_enable(struct 
+>>>>> drm_bridge *bridge)
+>>>>>       struct dp_display_private *dp = container_of(dp_display, 
+>>>>> struct dp_display_private, dp_display);
+>>>>>         mutex_lock(&dp->event_mutex);
+>>>>> +    pm_runtime_get_sync(&dp->pdev->dev);
+>>>>> +
+>>>>>       dp_catalog_ctrl_hpd_enable(dp->catalog);
+>>>>>         /* enable HDP interrupts */
+>>>>> @@ -1744,6 +1786,9 @@ void dp_bridge_hpd_disable(struct drm_bridge 
+>>>>> *bridge)
+>>>>>       dp_catalog_ctrl_hpd_disable(dp->catalog);
+>>>>>         dp_display->internal_hpd = false;
+>>>>> +
+>>>>> +    pm_runtime_mark_last_busy(&dp->pdev->dev);
+>>>>> +    pm_runtime_put_autosuspend(&dp->pdev->dev);
+>>>>>       mutex_unlock(&dp->event_mutex);
+>>>>>   }
+>>>> The runtime_get/put in dp_bridge_hpd_enable() and disable matches my
+>>>> expectations. But in the case that we have an external HPD source, 
+>>>> where
+>>>> will the power be turned on?
+>>>>
+>>>> Note that you can test this on your device by routing the HPD GPIO 
+>>>> to a
+>>>> display-connector instance and wiring this to the DP node. In the same
+>>>> way it's done here:
+>>>>
+>>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sa8295p-adp.dts#n28 
+>>>>
+>>
+>> at sc7280, gpio-47 has function 2 as dp-hot-plug pin. but it does not 
+>> has function for general purpose pin.
+>
+> It has a 'gpio' function, so that the pin can be used as a generic 
+> GPIO with a dp-connector device.
+function 0 is for PBL_DEBUG2,  which function # should I use?
+>
+>>
+>> Just curious,  to work with external HPD source,
+>>
+>> 1) which DRM_BRIDGE_OP_xxx should be used for bridge->ops?
+>
+> There is no difference. The drm_bridge_connector will select the 
+> bridges according to the needs. E.g. the dp-connector can provide 
+> DRM_BRIDGE_OP_DETECT / OP_HPD (if the hpd-gpios property is 
+> configured). If it does, it will be selected for detection/HPD 
+> handling. If not, the main dp bridge will handle these operations.
 
-Thanks for the detailed review. Will fix this.
+can you please point me out where  "hpd-gpios" info get parsed and 
+during polling where the gpio status get read from?
 
->> + * @connection_status_cb - callback to notify connection events
->> + * @priv_data - driver data
->> + **/
->> +struct snd_soc_usb {
->> +	struct list_head list;
->> +	struct device *dev;
->> +	struct snd_soc_component *component;
->> +	int (*connection_status_cb)(struct snd_soc_usb *usb, int card_idx,
->> +				int connected);
-> 
-> It's not clear what 'connected' really refers to, is this a boolean
-> really or is this a "connection_event?
-> 
-> 
+Thanks,
 
-I'll change it to boolean for now, since its currently only 
-connected/disconnected.  If more states are required, then we can add 
-that in the future.
-
->> +	void *priv_data;
->> +};
->> +
->> +int snd_soc_usb_connect(struct device *usbdev, int card_idx);
->> +int snd_soc_usb_disconnect(struct device *usbdev);
->> +void snd_soc_usb_set_priv_data(struct device *dev, void *priv);
-> 
-> this function is not part of this patch, is this intentional to have a
-> get but not a set?
-> 
->> +void *snd_soc_usb_get_priv_data(struct device *usbdev);
-> 
-> you are using 'usbdev' and 'dev' for the same type of parameters, why
-> not align on one set of definition with a consistent naming.
-> 
-> 
-
-I'll take a look at this and see what happened.  I think Greg mentioned 
-something similar and I made the change to remove the set priv, and 
-moved it elsewhere.
-
->> +static struct snd_soc_usb *snd_soc_find_usb_ctx(struct device *dev)
->> +{
->> +	struct device_node *node;
->> +	struct snd_soc_usb *ctx = NULL;
-> 
-> this init doesn't seem required?
-> 
-
-Yes, not needed.
-
->> +
->> +	node = snd_soc_find_phandle(dev);
->> +	if (IS_ERR(node))
->> +		return NULL;
->> +
->> +	mutex_lock(&ctx_mutex);
->> +	list_for_each_entry(ctx, &usb_ctx_list, list) {
->> +		if (ctx->dev->of_node == node) {
->> +			of_node_put(node);
->> +			mutex_unlock(&ctx_mutex);
->> +			return ctx;
->> +		}
->> +	}
->> +	of_node_put(node);
->> +	mutex_unlock(&ctx_mutex);
->> +
->> +	return NULL;
->> +}
->> +
->> +/**
->> + * snd_soc_usb_get_priv_data() - Retrieve private data stored
->> + * @dev: device reference
->> + *
->> + * Fetch the private data stored in the USB SND SOC structure.
->> + *
->> + */
->> +void *snd_soc_usb_get_priv_data(struct device *dev)
->> +{
->> +	struct snd_soc_usb *ctx;
->> +
->> +	ctx = snd_soc_find_usb_ctx(dev);
-> 
-> so in this function you walk through the usb_ctx_list with locking...
-> 
->> +	if (!ctx) {
->> +		/* Check if backend device */
->> +		list_for_each_entry(ctx, &usb_ctx_list, list) {
-> 
-> ... and here you walk again through the list without locking.
-> 
-> Something's weird here, if this was intentional you need to add comments.
-> 
-
-Yes, needs a lock here.
-
->> +			if (dev->of_node == ctx->dev->of_node)
->> +				goto out;
->> +		}
->> +		ctx = NULL;
->> +	}
->> +out:
->> +	return ctx ? ctx->priv_data : NULL;
->> +}
->> +EXPORT_SYMBOL_GPL(snd_soc_usb_get_priv_data);
->> +
->> +/**
->> + * snd_soc_usb_add_port() - Add a USB backend port
->> + * @dev: USB backend device
->> + * @priv: private data
->> + * @connection_cb: connection status callback
->> + *
->> + * Register a USB backend device to the SND USB SOC framework.  Memory is
->> + * allocated as part of the USB backend device.
->> + *
->> + */
->> +struct snd_soc_usb *snd_soc_usb_add_port(struct device *dev, void *priv,
->> +			int (*connection_cb)(struct snd_soc_usb *usb, int card_idx,
->> +			int connected))
->> +{
->> +	struct snd_soc_usb *usb;
->> +
->> +	usb = devm_kzalloc(dev, sizeof(*usb), GFP_KERNEL);
->> +	if (!usb)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	usb->connection_status_cb = connection_cb;
->> +	usb->dev = dev;
->> +	usb->priv_data = priv;
-> 
-> back to my comment above, you don't seem to need the set_priv_data() ?
-> 
-
-And yes, this is where I moved the priv data setting.
-
->> +
->> +	mutex_lock(&ctx_mutex);
->> +	list_add_tail(&usb->list, &usb_ctx_list);
->> +	mutex_unlock(&ctx_mutex);
->> +
->> +	return usb;
->> +}
->> +EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
-> 
->> +/**
->> + * snd_soc_usb_connect() - Notification of USB device connection
->> + * @usbdev: USB bus device
->> + * @card_idx: USB SND card instance
->> + *
->> + * Notify of a new USB SND device connection.  The card_idx can be used to
->> + * handle how the USB backend selects, which device to enable offloading on.
-> 
-> "USB backend" is confusing, not sure if this is the same concept as DPCM
-> "backend" or something else. Please try to avoid overloaded terms.
-> 
-
-Sure, I meant DPCM backend.
-
->> + *
->> + */
->> +int snd_soc_usb_connect(struct device *usbdev, int card_idx)
->> +{
->> +	struct snd_soc_usb *ctx;
->> +
->> +	if (!usbdev)
->> +		return -ENODEV;
->> +
->> +	ctx = snd_soc_find_usb_ctx(usbdev);
->> +	if (!ctx)
->> +		return -ENODEV;
->> +
->> +	if (ctx->connection_status_cb)
->> +		ctx->connection_status_cb(ctx, card_idx, 1);
-> 
-> so either the 'connected' value is 1...
->> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL_GPL(snd_soc_usb_connect);
->> +
->> +/**
->> + * snd_soc_usb_disconnect() - Notification of USB device disconnection
->> + * @usbdev: USB bus device
->> + *
->> + * Notify of a new USB SND device disconnection to the USB backend.
->> + *
->> + */
->> +int snd_soc_usb_disconnect(struct device *usbdev)
->> +{
->> +	struct snd_soc_usb *ctx;
->> +
->> +	if (!usbdev)
->> +		return -ENODEV;
->> +
->> +	ctx = snd_soc_find_usb_ctx(usbdev);
->> +	if (!ctx)
->> +		return -ENODEV;
->> +
->> +	if (ctx->connection_status_cb)
->> +		ctx->connection_status_cb(ctx, -1, 0);
-> 
-> ...and here it's zero.
-> 
-> should this 'connected' parameter be a boolean then with true/false
-> value, or do you want to add enums/defines for more flexibility down the
-> road?
-> 
-
-As mentioned above, will switch to boolean for now.  I don't see a need 
-to have other enums.
-
-Thanks
-Wesley Cheng
+>
+>>
+>> 2) are both .hpd_enable and .hpd_disable  have to be populated?
+>
+> No, they are both optional.
+>
