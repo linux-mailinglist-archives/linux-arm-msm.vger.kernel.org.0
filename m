@@ -2,137 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBC18760BB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 09:28:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED2ED760BB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 09:28:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232457AbjGYH2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 03:28:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45450 "EHLO
+        id S232482AbjGYH2T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 03:28:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232648AbjGYH10 (ORCPT
+        with ESMTP id S232554AbjGYH13 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 03:27:26 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 116BA1FFD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 00:26:23 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fbea147034so41404615e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 00:26:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690269981; x=1690874781;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ctKPTZVA5JAnO1QCm83pGKahNYV6N8xKq+MfSYhHTZg=;
-        b=GGm+9s9O0PDvmQXjUthwTmyRansAWxUk3b4PPXbDLMXGtxOFneH6HkZpuEa3u8I1AF
-         LJhwMWUOPTe3PQRsNWmKdPhDkqnjNN1br5aQqju0cPpjok2py2/TVh61MtlYB882Jwcu
-         AlITD3UL8DwGYrrFpdhpc2c1mPh2LjUCS4Qevjs/cNGCi4nDZttGmxj2V0uq4eoBOqmp
-         55mfQ51DeewhdpqvR8bT+k2HV0XweNwuRqvU5kNgGxpm/dKzWkV+29ed6Qfe/TRonueF
-         ZbQ6eCRyS1yFKt5W7toMw9a92Nn1yp2F5XX+aX4xKrQRVD7ntaZJJZXD3dIUOnZEckh3
-         1RrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690269981; x=1690874781;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ctKPTZVA5JAnO1QCm83pGKahNYV6N8xKq+MfSYhHTZg=;
-        b=LHQcJi/IoEAhsmZOPeNv0NPxl0j84+nF0jCjEOlfPz7UVkqtPQW2m06puI11h+3M8+
-         KKVwKpMzeW0/T7lEUdtejNEkwNbW+yJpRIzF+sgtyke9IzwoXADm9Fj+pTInHzWiYuvp
-         vpQWwIX1LJ1eMKY+gWqP+X8eR33Tp38FzxxZkh56VqGQwPuSITKFc4LQFHOtbFsKJZGp
-         akOD1p94juNSF/Q+kKDn+9bVGxNt4grcSySpQCqzkSpsnCTdlB4bfQEoC5NMI1qmYH9Q
-         pp3Plsnqpvel2wIprxxC2LZHPdJ99jhIek/7qixuA2MGoug5ml3S3CHr/M1u50u2fDsX
-         +EQQ==
-X-Gm-Message-State: ABy/qLZSd/rkY3InS7kjaWP3xETJvgrGl298B7htXuWCuoKQKBDVx4GE
-        5hGCFWGCokhqEaKM/lXnhlB5JA==
-X-Google-Smtp-Source: APBJJlEiJh2Ep18b54stnn59zJ7xhnC2DTPp+/fLlgNLcS93CtxGninDVQWAiGhSDgO6vdyrCfkybQ==
-X-Received: by 2002:a05:600c:224b:b0:3fb:b34f:6cd4 with SMTP id a11-20020a05600c224b00b003fbb34f6cd4mr7524204wmm.36.1690269981593;
-        Tue, 25 Jul 2023 00:26:21 -0700 (PDT)
-Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
-        by smtp.gmail.com with ESMTPSA id l5-20020a1ced05000000b003fc02219081sm12167079wmh.33.2023.07.25.00.26.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 00:26:21 -0700 (PDT)
-Message-ID: <e6b0c188-9078-af38-39db-8551fcbf39a5@linaro.org>
-Date:   Tue, 25 Jul 2023 09:26:19 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sdm670: add cpu frequency scaling
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230724214209.208699-6-mailingradian@gmail.com>
- <20230724214209.208699-9-mailingradian@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230724214209.208699-9-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 25 Jul 2023 03:27:29 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 893B7E0;
+        Tue, 25 Jul 2023 00:26:59 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 29D9C1F8B3;
+        Tue, 25 Jul 2023 07:26:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1690270018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=7Xc+x3bm0aDx5lBbs4AFmDsPjM7vKL6WtyoQNR4tK/E=;
+        b=dUBWqyHbQwKYt2wSpE/zBet21VuJXKX0vml+r+fr2TY7T0eNHKfjOMemkdeLEOF3L8t7tD
+        6HYrViDDuEocyARFPTuFhzfMHOJHE0vbuvYbxVmAqeI6bwngqbxoa0Tjnd/7Qcg3CuRNh0
+        kHIUixZr03XkU2opCeRtl5ZU0EyhlpM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1690270018;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=7Xc+x3bm0aDx5lBbs4AFmDsPjM7vKL6WtyoQNR4tK/E=;
+        b=fPskUvashiZyTcb/ryCu/ZVCVXchmvSf2JCtlKNdPCRNZFa5H3oOqKqkTxEVVkooX0Rx2q
+        Y4nZGIVy99swIbAQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9CED513487;
+        Tue, 25 Jul 2023 07:26:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id /chyJUF5v2SZFAAAMHmgww
+        (envelope-from <tiwai@suse.de>); Tue, 25 Jul 2023 07:26:57 +0000
+Date:   Tue, 25 Jul 2023 09:26:57 +0200
+Message-ID: <87bkg0v4ce.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <quic_jackp@quicinc.com>, <pierre-louis.bossart@linux.intel.com>,
+        <oneukum@suse.com>, <albertccwang@google.com>,
+        <o-takashi@sakamocchi.jp>
+Subject: Re: [PATCH v4 18/32] sound: usb: Introduce QC USB SND offloading support
+In-Reply-To: <20230725023416.11205-19-quic_wcheng@quicinc.com>
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+        <20230725023416.11205-19-quic_wcheng@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.07.2023 23:42, Richard Acayan wrote:
-> Add CPU frequency scaling and the operating performance points for the
-> CPUs.
+On Tue, 25 Jul 2023 04:34:02 +0200,
+Wesley Cheng wrote:
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
-You should also mention you're adding DDR scaling here (the APPS-EBI path)
-
-[...]
-
+> --- a/sound/usb/Kconfig
+> +++ b/sound/usb/Kconfig
+> @@ -165,6 +165,21 @@ config SND_BCD2000
+>  	  To compile this driver as a module, choose M here: the module
+>  	  will be called snd-bcd2000.
 >  
-> +	cpu0_opp_table: opp-table-cpu0 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		// 576 mV
-Drop these comments.
+> +config QC_USB_AUDIO_OFFLOAD
+> +	tristate "Qualcomm Audio Offload driver"
+> +	depends on QCOM_QMI_HELPERS
+> +	select SND_PCM
 
-Konrad
+So the driver can be enabled without CONFIG_SND_USB_AUDIO?  It makes
+little sense without it.
+Or is it set so intentionally for testing purpose?
+
+About the code:
+
+> +/* Offloading IOMMU management */
+> +static unsigned long uaudio_get_iova(unsigned long *curr_iova,
+> +	size_t *curr_iova_size, struct list_head *head, size_t size)
+> +{
+> +	struct iova_info *info, *new_info = NULL;
+> +	struct list_head *curr_head;
+> +	unsigned long va = 0;
+> +	size_t tmp_size = size;
+> +	bool found = false;
+> +
+> +	if (size % PAGE_SIZE) {
+> +		dev_err(uaudio_qdev->dev, "size %zu is not page size multiple\n",
+> +			size);
+> +		goto done;
+
+This can be easily triggered by user-space as it's passed directly
+from the mmap call, and it implies that you can fill up the messages
+easily.  It's safer to make it debug message or add the rate limit.
+
+Ditto for other error messages.
+
+> +static void disable_audio_stream(struct snd_usb_substream *subs)
+> +{
+> +	struct snd_usb_audio *chip = subs->stream->chip;
+> +
+> +	if (subs->data_endpoint || subs->sync_endpoint) {
+> +		close_endpoints(chip, subs);
+> +
+> +		mutex_lock(&chip->mutex);
+> +		subs->cur_audiofmt = NULL;
+> +		mutex_unlock(&chip->mutex);
+> +	}
+
+Now looking at this and...
+
+> +static int enable_audio_stream(struct snd_usb_substream *subs,
+> +				snd_pcm_format_t pcm_format,
+> +				unsigned int channels, unsigned int cur_rate,
+> +				int datainterval)
+> +{
+
+... this implementation, I wonder whether it'd be better to modify and
+export  snd_usb_hw_params() snd snd_usb_hw_free() to fit with qcom
+driver.  Then you can avoid lots of open code.
+
+In general, if you see a direct use of chip->mutex, it can be often
+done better in a different form.  The use of an internal lock or such
+from an external driver is always fragile and error-prone.
+
+Also, the current open-code misses the potential race against the
+disconnection during the operation.  In snd-usb-audio, it protects
+with snd_usb_lock_shutdown() and snd_usb_unlock_shutdown() pairs.
+
+> +static int __init qc_usb_audio_offload_init(void)
+> +{
+> +	struct uaudio_qmi_svc *svc;
+> +	int ret;
+> +
+> +	ret = snd_usb_register_platform_ops(&offload_ops);
+> +	if (ret < 0)
+> +		return ret;
+
+Registering the ops at the very first opens a potential access to the
+uninitialized stuff.  Imagine a suspend happens right after this
+point.  As the ops is already registered, it'll enter to the
+suspend_cb callback and straight to Oops.
+
+> +static void __exit qc_usb_audio_offload_exit(void)
+> +{
+> +	struct uaudio_qmi_svc *svc = uaudio_svc;
+> +
+> +	qmi_handle_release(svc->uaudio_svc_hdl);
+> +	flush_workqueue(svc->uaudio_wq);
+> +	destroy_workqueue(svc->uaudio_wq);
+> +	kfree(svc);
+> +	uaudio_svc = NULL;
+> +	snd_usb_unregister_platform_ops();
+
+Similarly, the unregister order has to be careful, too.
+
+
+thanks,
+
+Takashi
