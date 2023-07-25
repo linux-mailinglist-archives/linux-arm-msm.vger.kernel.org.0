@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85076760E47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:19:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A87BF760D8D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:49:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233155AbjGYJTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:19:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56156 "EHLO
+        id S231347AbjGYItS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 04:49:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233102AbjGYJTB (ORCPT
+        with ESMTP id S232926AbjGYIsV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:19:01 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECE7137;
-        Tue, 25 Jul 2023 02:18:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690276725; x=1721812725;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=cEx0YFjbS+47DP8snw5II73lOU4UjH+3LeeDhBenEk8=;
-  b=McFI5equ+Me8nzBp+mR4N6ulLdVIp4egxVmKGDuV7pUIuS6m+Sg0G34e
-   48YUSJTIU64sWCedCiAqoZt4plvKHQjn4ClhloXDkHYSZ2BDahqBCeeqe
-   /jNzlJXHOpK9Ob6buUIhXd3dAR7DRyMMEeEPT+/VxttKv9emt5ph5CVG5
-   5y5ZtPOom0WqWspD2rU1E9CkUw/8wy2Ss9G530L+QiAHX3iGEkMIv2BOB
-   qyLVm8HOdpo/a9lIbeqED/gJBBIn2WVNTbVUnhA8t+15osvOqgTybD56M
-   /8kRA9icY+XHeFr2p4Ho+qMKTltyvJLf3KTHFhOlktZShiHxehpEkIxVO
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="454048886"
-X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="454048886"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980363"
-X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="719980363"
-Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:37 -0700
-Message-ID: <37018459-ee43-d853-1d73-3c6234a265b2@linux.intel.com>
-Date:   Tue, 25 Jul 2023 10:45:01 +0200
+        Tue, 25 Jul 2023 04:48:21 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B061BE9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:46:43 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so13077268a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690274798; x=1690879598;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HlbuF9GW/UUiryYl6cWoqRYe+aX6OM3eYgKK9vJEYOw=;
+        b=M3iBy29puoxXZ6rM8EV9glS1Zn1pRGPsaw6LOOahZUz959whS8lkcXeS2+NK1aqPq0
+         5f+cFOtECynFkB7aX4pb9L4TMfZpad4918vlV3F792Cyr/cCrSTPKmcEKhlqogRaGqJl
+         y6+m8dfYviHqGh4JMY6DIchB4Z31U7xFt/uAiqkX0HB2MOC9CI6P7WoX0yHvNzu8PJyw
+         hKS4bonZKIkj0FHMWSBYviNBRxRO1UYcitJVHm9ItgKoKEH3cI6dpA0/S33S4iwpTQ/H
+         uxuFOTLFUNtkHalKNhrQsrI+FHsnf7Gj06S7T1rCsUaP1LTzyBQ/iNSOEf22WTdwvGBd
+         5AMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690274798; x=1690879598;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HlbuF9GW/UUiryYl6cWoqRYe+aX6OM3eYgKK9vJEYOw=;
+        b=ISC3MoGaxrUhCiEVONwkvCFhpdbuiMocG6+FF8xA9w1DvKAggL/V5DkLYQJrJHQyZU
+         tjJcI+gNHVEGYrNMx2kxRbO9zH6ZbmhOmAZSeZp6wv1eNRG+YcOQnQImMEbr4sLoAdk3
+         QdQg2NAibBpi3mMJ5exfAApw3aLmMSLINtEuK7aBgMXPWCZCRmLV4J/eqjGY+iPVSTry
+         cRtcVOwjLkvlg8cdGos2BdIe9a9jbE2yVvpIh7Uweg6Xz77HfXizOjpLVcbIN2KdAAND
+         ziW16b5jFv4Lw4IjdGnKGTA6Vl7NOiSbviXfKHxeKUhRUjFXjo+AGODACnDW4Ow0QyeH
+         q85Q==
+X-Gm-Message-State: ABy/qLaUJbDGgR36aUP5Y2Jh6Hhx7s59U/tJg//WL2uDKLlvj9+ru9Ua
+        pm1reYkTa0cOshUO2W05B8FHCw==
+X-Google-Smtp-Source: APBJJlFxcW0FY0WW1nnu3wIeqn0GpE6VrHe1OIkrOLE2pvGcYdsYyn7CCgeDKAS72F8B00VeN9yN6g==
+X-Received: by 2002:a05:6402:4412:b0:51e:48e7:72ca with SMTP id y18-20020a056402441200b0051e48e772camr1910946eda.13.1690274797759;
+        Tue, 25 Jul 2023 01:46:37 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id w22-20020a056402071600b005221b918e33sm4472526edx.22.2023.07.25.01.46.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 01:46:36 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH RFT] arm64: dts: qcom: sc7280: drop incorrect EUD port on SoC side
+Date:   Tue, 25 Jul 2023 10:46:33 +0200
+Message-Id: <20230725084633.67179-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v4 10/32] ASoC: qcom: Add USB backend ASoC driver for Q6
-Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
-        Thinh.Nguyen@synopsys.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
-        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
-        o-takashi@sakamocchi.jp
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-11-quic_wcheng@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20230725023416.11205-11-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,126 +77,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Qualcomm Embedded USB Debugger (EUD) second port should point to Type-C
+USB connector.  Such connector was defined directly in root node of
+sc7280.dtsi which is clearly wrong.  SC7280 is a chip, so physically it
+does not have USB Type-C port.  The connector is usually accessible
+through some USB switch or controller.
 
-> +struct q6usb_port_data {
-> +	struct q6afe_usb_cfg usb_cfg;
-> +	struct snd_soc_usb *usb;
-> +	struct q6usb_offload priv;
-> +	int active_idx;
+Correct the EUD/USB connector topology by removing the top-level fake
+USB connector and adding appropriate ports in boards having actual USB
+Type-C connector defined (Herobrine, IDP).  All other boards will have
+this EUD port missing.
 
-what is an 'active_idx' ?
+This fixes also dtbs_check warnings:
 
+  sc7280-herobrine-crd.dtb: connector: ports:port@0: 'reg' is a required property
 
-> +static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
-> +			int connected)
-> +{
-> +	struct snd_soc_dapm_context *dapm;
-> +	struct q6usb_port_data *data;
-> +
-> +	dapm = snd_soc_component_get_dapm(usb->component);
-> +	data = dev_get_drvdata(usb->component->dev);
+Fixes: 9ee402ccfeb1 ("arm64: dts: qcom: sc7280: Fix EUD dt node syntax")
+Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-shouldn't you test that 'dapm' and 'data' are not NULL ?
+---
 
-> +
-> +	if (connected) {
+Not tested on hardware.
+---
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 15 +++++++++++++
+ .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi | 15 +++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 21 +------------------
+ 3 files changed, 31 insertions(+), 20 deletions(-)
 
-this goes back to my earlier comment that you treat 'connected' as a
-boolean.
-
-> +		snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
-> +		/* We only track the latest USB headset plugged in */
-> +		data->active_idx = card_idx;
-> +	} else {
-> +		snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
-> +	}
-> +	snd_soc_dapm_sync(dapm);
-> +
-> +	return 0;
-> +}
-> +
-> +static int q6usb_component_probe(struct snd_soc_component *component)
-> +{
-> +	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
-> +	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
-> +
-> +	snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
-> +	snd_soc_dapm_sync(dapm);
-> +
-> +	data->usb = snd_soc_usb_add_port(component->dev, &data->priv, q6usb_alsa_connection_cb);
-> +	if (IS_ERR(data->usb)) {
-> +		dev_err(component->dev, "failed to add usb port\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	data->usb->component = component;
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct snd_soc_component_driver q6usb_dai_component = {
-> +	.probe = q6usb_component_probe,
-
-erm, if you have a .probe that adds a port, don't you need a remove that
-removes the same port, and sets the pin state as well?
-
-> +	.name = "q6usb-dai-component",
-> +	.dapm_widgets = q6usb_dai_widgets,
-> +	.num_dapm_widgets = ARRAY_SIZE(q6usb_dai_widgets),
-> +	.dapm_routes = q6usb_dapm_routes,
-> +	.num_dapm_routes = ARRAY_SIZE(q6usb_dapm_routes),
-> +	.of_xlate_dai_name = q6usb_audio_ports_of_xlate_dai_name,
-> +};
-> +
-> +static int q6usb_dai_dev_probe(struct platform_device *pdev)
-> +{
-> +	struct device_node *node = pdev->dev.of_node;
-> +	struct q6usb_port_data *data;
-> +	struct device *dev = &pdev->dev;
-> +	struct of_phandle_args args;
-> +	int ret;
-> +
-> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	ret = of_property_read_u32(node, "qcom,usb-audio-intr-num",
-> +				&data->priv.intr_num);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "failed to read intr num.\n");
-> +		return ret;
-> +	}
-> +
-> +	ret = of_parse_phandle_with_fixed_args(node, "iommus", 1, 0, &args);
-> +	if (ret < 0)
-> +		data->priv.sid = -1;
-> +	else
-> +		data->priv.sid = args.args[0] & SID_MASK;
-> +
-> +	data->priv.domain = iommu_get_domain_for_dev(&pdev->dev);
-> +
-> +	data->priv.dev = dev;
-> +	dev_set_drvdata(dev, data);
-> +
-> +	ret = devm_snd_soc_register_component(dev, &q6usb_dai_component,
-> +					q6usb_be_dais, ARRAY_SIZE(q6usb_be_dais));
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	return 0;
-
-return devm_snd_soc_register_component
-
-> +}
-> +
-> +static int q6usb_dai_dev_remove(struct platform_device *pdev)
-> +{
-> +	snd_soc_usb_remove_port(&pdev->dev);
-
-that seems wrong, the port is added in the component probe, not the
-platform device probe.
-
-> +
-> +	return 0;
-> +}> +
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 9ea6636125ad..2a4f239c5632 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -573,6 +573,12 @@ usb_c0: connector@0 {
+ 				power-role = "dual";
+ 				data-role = "host";
+ 				try-power-role = "source";
++
++				port {
++					usb_c0_ep: endpoint {
++						remote-endpoint = <&eud_con>;
++					};
++				};
+ 			};
+ 
+ 			usb_c1: connector@1 {
+@@ -590,6 +596,15 @@ usb_c1: connector@1 {
+ #include <arm/cros-ec-keyboard.dtsi>
+ #include <arm/cros-ec-sbs.dtsi>
+ 
++&eud_ports {
++	port@1 {
++		reg = <1>;
++		eud_con: endpoint {
++			remote-endpoint = <&usb_c0_ep>;
++		};
++	};
++};
++
+ &keyboard_controller {
+ 	function-row-physmap = <
+ 		MATRIX_KEY(0x00, 0x02, 0)	/* T1 */
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
+index ebae545c587c..ffc469431340 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
+@@ -44,6 +44,12 @@ usb_c0: connector@0 {
+ 				power-role = "dual";
+ 				data-role = "host";
+ 				try-power-role = "source";
++
++				port {
++					usb_c0_ep: endpoint {
++						remote-endpoint = <&eud_con>;
++					};
++				};
+ 			};
+ 
+ 			usb_c1: connector@1 {
+@@ -78,6 +84,15 @@ cr50: tpm@0 {
+ 	};
+ };
+ 
++&eud_ports {
++	port@1 {
++		reg = <1>;
++		eud_con: endpoint {
++			remote-endpoint = <&usb_c0_ep>;
++		};
++	};
++};
++
+ &tlmm {
+ 	ap_ec_int_l: ap-ec-int-l-state {
+ 		pins = "gpio18";
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 925428a5f6ae..af9bb2ebcaa1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -649,18 +649,6 @@ cpu7_opp_3014mhz: opp-3014400000 {
+ 		};
+ 	};
+ 
+-	eud_typec: connector {
+-		compatible = "usb-c-connector";
+-
+-		ports {
+-			port@0 {
+-				con_eud: endpoint {
+-					remote-endpoint = <&eud_con>;
+-				};
+-			};
+-		};
+-	};
+-
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
+@@ -3624,7 +3612,7 @@ eud: eud@88e0000 {
+ 			      <0 0x88e2000 0 0x1000>;
+ 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+ 
+-			ports {
++			eud_ports: ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3634,13 +3622,6 @@ eud_ep: endpoint {
+ 						remote-endpoint = <&usb2_role_switch>;
+ 					};
+ 				};
+-
+-				port@1 {
+-					reg = <1>;
+-					eud_con: endpoint {
+-						remote-endpoint = <&con_eud>;
+-					};
+-				};
+ 			};
+ 		};
+ 
+-- 
+2.34.1
 
