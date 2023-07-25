@@ -2,113 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 974587610FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 12:35:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A48867611E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 12:57:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233551AbjGYKfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 06:35:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52482 "EHLO
+        id S232775AbjGYK5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 06:57:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbjGYKfh (ORCPT
+        with ESMTP id S231671AbjGYK45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 06:35:37 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2193D188
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:35:36 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9924ac01f98so913865566b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:35:36 -0700 (PDT)
+        Tue, 25 Jul 2023 06:56:57 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D324214
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:54:29 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-992dcae74e0so888076366b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 03:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690281334; x=1690886134;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xRSCjzoFlf7+1pwK2274OEG2qCHzv1zVFI3OEYWB7Ic=;
-        b=L1ESNfLDThRmEQmyq3QCUnymgcDRa9+iMV1l0gch6YrnemwC+/tkPL+B7TmaO6Pvh/
-         5cd2FDEeuJQZIe2/kkjbqTU/2w1ChrWHkTx17VDsvmmaxwtSdMzHv8SdYlfffCAvLpL4
-         cxK4SgaE4gUXapWGotW0u05hBwCqeOqqr8mV/isGLZ2NC/QJ4mKTs+EXHZhceS3HCwfT
-         KQMmYBIfazv7GjgIue973VYyYpM1JrkbDjTTwfSc0+9WUkdHDR41tItjmPoQ3FzHg+V+
-         74mH8j3bp0zDZxr+Vu30SMhl4s8eMqlBL9R681gqSTTacMQzTHLLYslGKHjsMmBwrSGi
-         BRRw==
+        d=linaro.org; s=google; t=1690282467; x=1690887267;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9XvBEhiljLAJfGUeTgW+OPWzjRV1YWWycztsm2LeLB0=;
+        b=b9hrnVX60q2msck+zlotnWfv+WZ6UUe6Uz7mE/Vb/cIRkkFqtz4GMg/RjfBwHccixd
+         sP8lVu84VCqhiPUkkcxkpghJLxFYLbXTzdascqZgmbjJoIlkKUGWrBXZuqRT5JWzOX7E
+         p2GkntswKBF8g/zBsgJqoYy9UD4YgCkzzrQQ+BVwYQSlSI4chmPWv0DK1qNjQF7/NoFG
+         fO7OidQS8XYJ52/iGzLEb2/5/Wx0EEQb+puiE66GIAJeeVCfCia0wBOzkxZJdbi1Ei/D
+         42KBWqzoxYtCvS9eKAvj8fTaCpRgx6mUvEMSHqDpg99Imf/spk68/9eAbWyNApv1r3fF
+         bWoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690281334; x=1690886134;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xRSCjzoFlf7+1pwK2274OEG2qCHzv1zVFI3OEYWB7Ic=;
-        b=ebBwf133qmmcuPZ2tEQr7Semz8tRfGqBjcJXQ5b7UqL4Mnhz5B2HY3lRu5E1bN3uz4
-         YxuOuqDO31rpLUeAZs8hAwQx0314ynfiCLmxOb/taf71eW2FkHMgqXA0wj961JlRR/g2
-         mHbaCdBFIhmA0N76uLokEHu60xn18gC/lR6ptl0FmVG6D+GEi8e00VW8tW6TOp38zTqI
-         VaZ8KfHZxHwYNIkLDwiFs7YjUJSf3DGMpyHJp9lz26aVgG0LsF68qqjyVMJs50AHuLBB
-         Q6UMWdk0PL4H9hCqge5oOc3S6p0GaS9Ad6xr5/jtm+IJGkevtY6ox5bMxc+SlU9n5J89
-         +kng==
-X-Gm-Message-State: ABy/qLYWizAJd2QeIt7+ulU/8DyEl3yCmdXSZWtpVx6A8kOY+5ppZ2w7
-        wizEUVxV+75AJ3xTC5OK13CipA==
-X-Google-Smtp-Source: APBJJlEeAYXZil/XyuB5ylTiwIPKbvsDFmDdl0tv2VrAlD7DtAQVb1lRFLJxpnumFOyiReYDJEeKFg==
-X-Received: by 2002:a17:906:cc0e:b0:99b:465c:fb9f with SMTP id ml14-20020a170906cc0e00b0099b465cfb9fmr12834886ejb.8.1690281334516;
-        Tue, 25 Jul 2023 03:35:34 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id dt19-20020a170906b79300b0098242730348sm8090252ejb.72.2023.07.25.03.35.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 03:35:28 -0700 (PDT)
-Message-ID: <00980fa2-5f8c-d616-ef3f-957090c25d48@linaro.org>
-Date:   Tue, 25 Jul 2023 12:35:25 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] dt-bindings: usb: connector: disallow additional
- properties
-Content-Language: en-US
-To:     Rob Herring <robh+dt@kernel.org>,
+        d=1e100.net; s=20221208; t=1690282467; x=1690887267;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9XvBEhiljLAJfGUeTgW+OPWzjRV1YWWycztsm2LeLB0=;
+        b=ixMTeRGYJ8ORTHFp6Ensy3tUaPaEMlNBl9ngN3qqdqbi5PbmcvR6qEM7ObxafFsQCu
+         r362OZ6ktCVG2rBxvmxeTqVnVc2BQD4brUqkZG/z+4DM6qQVm6Fhc1WX+YW4WY7UPY8X
+         Th5y9XxpKB5T8t3ymEogGa5Ek3sIfgvmUnPgC7jeO23YTooEzvXRDhiZ4uqkogB7dYaZ
+         yhng/136zxs3T17r+0qTGyu9UGpdN2YLLRvRmplQUzvDrCm1qXpe4Yvw3AQOk47SE3Jq
+         I66D4PRW5HC6RkxHK2+d4gnZ5tuyy3NFN60JWgp2HKlBhpZvdzEnQkvamWhXqRy94p1G
+         HcLQ==
+X-Gm-Message-State: ABy/qLZ4oCoQAUTrhTIqxOcUF3P3pkpxv74omKL+Qvzoy2od/b66aDH9
+        9nX9O8QMy8HKmpl8hqKzwUTYEA==
+X-Google-Smtp-Source: APBJJlEBd79V8FzekDC8zmB2dcU2i30PcbnQL6AH3k5NC4ZMeRGeosc90mmA7pJqtzUE02K6QQ4Mpg==
+X-Received: by 2002:a17:906:289:b0:99b:237e:6ee with SMTP id 9-20020a170906028900b0099b237e06eemr12860028ejf.30.1690282467322;
+        Tue, 25 Jul 2023 03:54:27 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id xo22-20020a170907bb9600b0098860721959sm7980597ejc.198.2023.07.25.03.54.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jul 2023 03:54:26 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Saravanan Sekar <sravanhome@gmail.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Prashant Malani <pmalani@chromium.org>,
-        Wayne Chang <waynec@nvidia.com>, devicetree@vger.kernel.org,
-        chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20230725102325.76336-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230725102325.76336-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Robin Gong <yibin.gong@nxp.com>,
+        ChiYuan Huang <cy_huang@richtek.com>,
+        Pascal Paillet <p.paillet@foss.st.com>,
+        - <patches@opensource.cirrus.com>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 1/2] regulator: dt-bindings: add missing unevaluatedProperties for each regulator
+Date:   Tue, 25 Jul 2023 12:54:20 +0200
+Message-Id: <20230725105421.99160-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/07/2023 12:23, Krzysztof Kozlowski wrote:
-> USB connector bindings is complete, thus no additional properties should
-> be allowed.  Add missing 'reg' property and change additionalProperties
-> to false, so the schema will check for anything not unexpected.  This
+Each regulator node, which references common regulator.yaml schema,
+should disallow additional or unevaluated properties.  Otherwise
+mistakes in properties will go unnoticed.
 
-An MIT linguistics professor was lecturing his class the other day. "In
-English," he said, "a double negative forms a positive. However, in some
-languages, such as Polish, a double negative remains a negative. But
-there isn't a single language, not one, in which a double positive can
-express a negative."
+Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Closes: https://git.codelinaro.org/linaro/qcomlt/kernel/-/commit/1c8aeef8a6e84520b77f0c270d99c8bf692c5933
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-A voice from the back of the room piped up, "Yeah, right."
+---
 
-Obviously:
-"... will check for anything unexpected".
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ Documentation/devicetree/bindings/regulator/mps,mp5416.yaml   | 2 ++
+ Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml  | 2 ++
+ Documentation/devicetree/bindings/regulator/pfuze100.yaml     | 4 ++++
+ .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml    | 2 ++
+ .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml | 1 +
+ .../bindings/regulator/richtek,rt4831-regulator.yaml          | 1 +
+ .../bindings/regulator/richtek,rtmv20-regulator.yaml          | 1 +
+ .../bindings/regulator/richtek,rtq6752-regulator.yaml         | 1 +
+ .../devicetree/bindings/regulator/st,stm32mp1-pwr-reg.yaml    | 2 +-
+ Documentation/devicetree/bindings/regulator/ti,tps65090.yaml  | 1 +
+ Documentation/devicetree/bindings/regulator/ti,tps6586x.yaml  | 1 +
+ Documentation/devicetree/bindings/regulator/wlf,arizona.yaml  | 2 ++
+ 12 files changed, 19 insertions(+), 1 deletion(-)
 
-
-> also allows to drop the 'reg' from other bindings referencing the
-> usb-connector.yaml and make it required.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/regulator/mps,mp5416.yaml b/Documentation/devicetree/bindings/regulator/mps,mp5416.yaml
+index 2e720d152890..0221397eb51e 100644
+--- a/Documentation/devicetree/bindings/regulator/mps,mp5416.yaml
++++ b/Documentation/devicetree/bindings/regulator/mps,mp5416.yaml
+@@ -29,10 +29,12 @@ properties:
+     patternProperties:
+       "^buck[1-4]$":
+         $ref: regulator.yaml#
++        unevaluatedProperties: false
+         type: object
+ 
+       "^ldo[1-4]$":
+         $ref: regulator.yaml#
++        unevaluatedProperties: false
+         type: object
+ 
+     additionalProperties: false
+diff --git a/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml b/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml
+index f3fcfc8be72f..38475a568451 100644
+--- a/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml
++++ b/Documentation/devicetree/bindings/regulator/mps,mpq7920.yaml
+@@ -39,11 +39,13 @@ properties:
+       ldortc:
+         type: object
+         $ref: regulator.yaml#
++        unevaluatedProperties: false
+ 
+     patternProperties:
+       "^ldo[1-4]$":
+         type: object
+         $ref: regulator.yaml#
++        unevaluatedProperties: false
+ 
+       "^buck[1-4]$":
+         type: object
+diff --git a/Documentation/devicetree/bindings/regulator/pfuze100.yaml b/Documentation/devicetree/bindings/regulator/pfuze100.yaml
+index e384e4953f0a..0eda44752cdd 100644
+--- a/Documentation/devicetree/bindings/regulator/pfuze100.yaml
++++ b/Documentation/devicetree/bindings/regulator/pfuze100.yaml
+@@ -68,18 +68,22 @@ properties:
+       "^sw([1-4]|[1-4][a-c]|[1-4][a-c][a-c])$":
+         $ref: regulator.yaml#
+         type: object
++        unevaluatedProperties: false
+ 
+       "^vgen[1-6]$":
+         $ref: regulator.yaml#
+         type: object
++        unevaluatedProperties: false
+ 
+       "^vldo[1-4]$":
+         $ref: regulator.yaml#
+         type: object
++        unevaluatedProperties: false
+ 
+       "^(vsnvs|vref|vrefddr|swbst|coin|v33|vccsd)$":
+         $ref: regulator.yaml#
+         type: object
++        unevaluatedProperties: false
+ 
+     additionalProperties: false
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+index 72b533c3761a..e758093365bc 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+@@ -111,6 +111,7 @@ properties:
+   bob:
+     type: object
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+     description: BOB regulator node.
+     dependencies:
+       regulator-allow-set-load: [ regulator-allowed-modes ]
+@@ -119,6 +120,7 @@ patternProperties:
+   "^(smps|ldo|lvs|bob)[0-9]+$":
+     type: object
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+     description: smps/ldo regulator nodes(s).
+     dependencies:
+       regulator-allow-set-load: [ regulator-allowed-modes ]
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+index a8ca8e0b27f8..9ea8ac0786ac 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+@@ -110,6 +110,7 @@ patternProperties:
+   "^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$":
+     description: List of regulators and its properties
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+ 
+ additionalProperties: false
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/richtek,rt4831-regulator.yaml b/Documentation/devicetree/bindings/regulator/richtek,rt4831-regulator.yaml
+index d9c23333e157..cd06e957b9db 100644
+--- a/Documentation/devicetree/bindings/regulator/richtek,rt4831-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/richtek,rt4831-regulator.yaml
+@@ -29,6 +29,7 @@ patternProperties:
+   "^DSV(LCM|P|N)$":
+     type: object
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+     description:
+       Properties for single Display Bias Voltage regulator.
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/richtek,rtmv20-regulator.yaml b/Documentation/devicetree/bindings/regulator/richtek,rtmv20-regulator.yaml
+index 446ec5127d1f..fec3d396ca50 100644
+--- a/Documentation/devicetree/bindings/regulator/richtek,rtmv20-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/richtek,rtmv20-regulator.yaml
+@@ -121,6 +121,7 @@ properties:
+     description: load switch current regulator description.
+     type: object
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+ 
+ required:
+   - compatible
+diff --git a/Documentation/devicetree/bindings/regulator/richtek,rtq6752-regulator.yaml b/Documentation/devicetree/bindings/regulator/richtek,rtq6752-regulator.yaml
+index e6e5a9a7d940..ef62c618de67 100644
+--- a/Documentation/devicetree/bindings/regulator/richtek,rtq6752-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/richtek,rtq6752-regulator.yaml
+@@ -35,6 +35,7 @@ properties:
+       "^(p|n)avdd$":
+         type: object
+         $ref: regulator.yaml#
++        unevaluatedProperties: false
+         description: |
+           regulator description for pavdd and navdd.
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/st,stm32mp1-pwr-reg.yaml b/Documentation/devicetree/bindings/regulator/st,stm32mp1-pwr-reg.yaml
+index 7d53cfa2c288..c9586d277f41 100644
+--- a/Documentation/devicetree/bindings/regulator/st,stm32mp1-pwr-reg.yaml
++++ b/Documentation/devicetree/bindings/regulator/st,stm32mp1-pwr-reg.yaml
+@@ -25,8 +25,8 @@ properties:
+ patternProperties:
+   "^(reg11|reg18|usb33)$":
+     type: object
+-
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+ 
+ required:
+   - compatible
+diff --git a/Documentation/devicetree/bindings/regulator/ti,tps65090.yaml b/Documentation/devicetree/bindings/regulator/ti,tps65090.yaml
+index 0ae95ac6de57..8ae8de7fe3de 100644
+--- a/Documentation/devicetree/bindings/regulator/ti,tps65090.yaml
++++ b/Documentation/devicetree/bindings/regulator/ti,tps65090.yaml
+@@ -67,6 +67,7 @@ properties:
+     patternProperties:
+       "^dcdc[1-3]|fet[1-7]|ldo[1-2]$":
+         $ref: regulator.yaml
++        unevaluatedProperties: false
+         properties:
+           ti,enable-ext-control:
+             $ref: /schemas/types.yaml#/definitions/flag
+diff --git a/Documentation/devicetree/bindings/regulator/ti,tps6586x.yaml b/Documentation/devicetree/bindings/regulator/ti,tps6586x.yaml
+index c5ea7012c653..ef093344c7bc 100644
+--- a/Documentation/devicetree/bindings/regulator/ti,tps6586x.yaml
++++ b/Documentation/devicetree/bindings/regulator/ti,tps6586x.yaml
+@@ -64,6 +64,7 @@ properties:
+     patternProperties:
+       "^sys|sm[0-2]|ldo[0-9]|ldo_rtc$":
+         $ref: regulator.yaml
++        unevaluatedProperties: false
+ 
+ allOf:
+   - $ref: /schemas/gpio/gpio.yaml
+diff --git a/Documentation/devicetree/bindings/regulator/wlf,arizona.yaml b/Documentation/devicetree/bindings/regulator/wlf,arizona.yaml
+index 011819c10988..11e378648b3f 100644
+--- a/Documentation/devicetree/bindings/regulator/wlf,arizona.yaml
++++ b/Documentation/devicetree/bindings/regulator/wlf,arizona.yaml
+@@ -29,11 +29,13 @@ properties:
+       Initial data for the LDO1 regulator.
+     $ref: regulator.yaml#
+     type: object
++    unevaluatedProperties: false
+ 
+   micvdd:
+     description:
+       Initial data for the MICVDD regulator.
+     $ref: regulator.yaml#
+     type: object
++    unevaluatedProperties: false
+ 
+ additionalProperties: true
+-- 
+2.34.1
 
