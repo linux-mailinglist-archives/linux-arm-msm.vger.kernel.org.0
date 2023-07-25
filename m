@@ -2,221 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A87BF760D8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:49:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C521760D9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:53:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231347AbjGYItS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 04:49:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32986 "EHLO
+        id S230208AbjGYIxk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 04:53:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232926AbjGYIsV (ORCPT
+        with ESMTP id S232742AbjGYIxA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 04:48:21 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B061BE9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:46:43 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so13077268a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:46:43 -0700 (PDT)
+        Tue, 25 Jul 2023 04:53:00 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22757268F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:52:02 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-3159d5e409dso4081845f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 01:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690274798; x=1690879598;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HlbuF9GW/UUiryYl6cWoqRYe+aX6OM3eYgKK9vJEYOw=;
-        b=M3iBy29puoxXZ6rM8EV9glS1Zn1pRGPsaw6LOOahZUz959whS8lkcXeS2+NK1aqPq0
-         5f+cFOtECynFkB7aX4pb9L4TMfZpad4918vlV3F792Cyr/cCrSTPKmcEKhlqogRaGqJl
-         y6+m8dfYviHqGh4JMY6DIchB4Z31U7xFt/uAiqkX0HB2MOC9CI6P7WoX0yHvNzu8PJyw
-         hKS4bonZKIkj0FHMWSBYviNBRxRO1UYcitJVHm9ItgKoKEH3cI6dpA0/S33S4iwpTQ/H
-         uxuFOTLFUNtkHalKNhrQsrI+FHsnf7Gj06S7T1rCsUaP1LTzyBQ/iNSOEf22WTdwvGBd
-         5AMg==
+        d=linaro.org; s=google; t=1690275120; x=1690879920;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SO2fJhdIilzQKSUOeloEP2TDsXS2dBpxn1k7xAINQDE=;
+        b=Sa6/7jmR6HjLFfJOReKmBDHqp0oS7SanRctcQNx34dqi05GjH7X5j5Urm5cm/f97/c
+         LBXeln34oj+AaQTNQpcQPpkQiSf/C+8XprS0/5cua/cNGmjXQ2KWKIlXlRGqEUsoqw6i
+         6pWZLkduJ8BA7ijAUsLE4T6fvOQmSdAHROxi4T7WNwLIn3zxEbli1WTH4YpVjvULxnaU
+         1Xb0VjHWhDQoA43vGGpWGTD4KG/ztapc/nLqvxXlJbqwwy6j+Ynf8yvpw83WW5T9SLyF
+         7W1SqFBxn83aYAQ+St5WhbpOi0f2vS8L4q1LZxx1g5M9KASHz2FR+0ezk3mybESegiWd
+         OSXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690274798; x=1690879598;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1690275120; x=1690879920;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HlbuF9GW/UUiryYl6cWoqRYe+aX6OM3eYgKK9vJEYOw=;
-        b=ISC3MoGaxrUhCiEVONwkvCFhpdbuiMocG6+FF8xA9w1DvKAggL/V5DkLYQJrJHQyZU
-         tjJcI+gNHVEGYrNMx2kxRbO9zH6ZbmhOmAZSeZp6wv1eNRG+YcOQnQImMEbr4sLoAdk3
-         QdQg2NAibBpi3mMJ5exfAApw3aLmMSLINtEuK7aBgMXPWCZCRmLV4J/eqjGY+iPVSTry
-         cRtcVOwjLkvlg8cdGos2BdIe9a9jbE2yVvpIh7Uweg6Xz77HfXizOjpLVcbIN2KdAAND
-         ziW16b5jFv4Lw4IjdGnKGTA6Vl7NOiSbviXfKHxeKUhRUjFXjo+AGODACnDW4Ow0QyeH
-         q85Q==
-X-Gm-Message-State: ABy/qLaUJbDGgR36aUP5Y2Jh6Hhx7s59U/tJg//WL2uDKLlvj9+ru9Ua
-        pm1reYkTa0cOshUO2W05B8FHCw==
-X-Google-Smtp-Source: APBJJlFxcW0FY0WW1nnu3wIeqn0GpE6VrHe1OIkrOLE2pvGcYdsYyn7CCgeDKAS72F8B00VeN9yN6g==
-X-Received: by 2002:a05:6402:4412:b0:51e:48e7:72ca with SMTP id y18-20020a056402441200b0051e48e772camr1910946eda.13.1690274797759;
-        Tue, 25 Jul 2023 01:46:37 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id w22-20020a056402071600b005221b918e33sm4472526edx.22.2023.07.25.01.46.35
+        bh=SO2fJhdIilzQKSUOeloEP2TDsXS2dBpxn1k7xAINQDE=;
+        b=TU73Yl8+qRjL11sM0gy3AsYrwWI9RaJpXQZ2yElrfW1F96Cav+6DbrNKcBKIeg6DG8
+         UQGz+QMONMahpZagE3Otm0EaA12it4Ej8KsCJTDI7LZJY1fjAReEEeE6W17gn+bJW0tn
+         YQSMzwOB4+hSWY6GNxGgGKTigk4x1tZjjds0zlXSedanKAu33kshzZ820nObPRWftyzX
+         p9MnIXN9F4r/2xry10IfsaXAVM0XSsIMo+rHz5DimRSGsyKDStDMHJCGL+gMLdE65TnG
+         W/OFyDTYq0NP3Ya3CEviFDzDQOGzRGMiVIfDY9Ok3k/YGHb39O59t0BslOVWYLKWQqSi
+         UCog==
+X-Gm-Message-State: ABy/qLYQTNz7CAOEYJMV40tFGA1hCtisQK5i9jpS4s2SPfUeaH9BfN2c
+        k/BMZhSoMVtAaU4L4PcOcjoWFg==
+X-Google-Smtp-Source: APBJJlGddeMpp0ssush6Q0wqtfS47dG4nR00hXv48WU3nXs23OHZlCKw4jpcwuiHKEP/SG7rKaXHFw==
+X-Received: by 2002:a05:6000:1204:b0:317:6855:dc24 with SMTP id e4-20020a056000120400b003176855dc24mr1284761wrx.21.1690275120494;
+        Tue, 25 Jul 2023 01:52:00 -0700 (PDT)
+Received: from [192.168.1.101] (abxj221.neoplus.adsl.tpnet.pl. [83.9.3.221])
+        by smtp.gmail.com with ESMTPSA id r5-20020a5d52c5000000b003143bb5ecd5sm15672475wrv.69.2023.07.25.01.51.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 01:46:36 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH RFT] arm64: dts: qcom: sc7280: drop incorrect EUD port on SoC side
-Date:   Tue, 25 Jul 2023 10:46:33 +0200
-Message-Id: <20230725084633.67179-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Tue, 25 Jul 2023 01:52:00 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Tue, 25 Jul 2023 10:51:56 +0200
+Subject: [PATCH] clk: qcom: dispcc-sc8280xp: Use ret registers on GDSCs
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230725-topic-8280_dispcc_gdsc-v1-1-236590060531@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACuNv2QC/x2NWwqDMBAAryL73UAeiNKrlCLJZqMLEkO2LQXx7
+ l36OQPDnCDUmQTuwwmdPix8VAV3GwC3WFcynJXBWx/s5EfzOhqjmf1sl8zSEJc1C5rk4lQCja4
+ EBI1TFDKpx4qb5vW97ypbp8Lf/+3xvK4fo7t4CX0AAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690275119; l=1704;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=3kl4LXmb8XT+BmJFp1ldVHzPBlPIncVLnyDnPvEkf+U=;
+ b=OUIRvNEgX4mC28YR+Lg3sgPwTO4sdyfWZs7WgYm63ie8AJiVdyBxq3nOkWtMbdnUlSjXvW1VN
+ to8vJ7tWhJZDCNh9fljTcFCgpy9PbRI09R5iqleWDk5lgCbrZrXqRH4
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm Embedded USB Debugger (EUD) second port should point to Type-C
-USB connector.  Such connector was defined directly in root node of
-sc7280.dtsi which is clearly wrong.  SC7280 is a chip, so physically it
-does not have USB Type-C port.  The connector is usually accessible
-through some USB switch or controller.
+The DISP_CC GDSCs have not been instructed to use the ret registers.
+Fix that.
 
-Correct the EUD/USB connector topology by removing the top-level fake
-USB connector and adding appropriate ports in boards having actual USB
-Type-C connector defined (Herobrine, IDP).  All other boards will have
-this EUD port missing.
-
-This fixes also dtbs_check warnings:
-
-  sc7280-herobrine-crd.dtb: connector: ports:port@0: 'reg' is a required property
-
-Fixes: 9ee402ccfeb1 ("arm64: dts: qcom: sc7280: Fix EUD dt node syntax")
-Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+Fixes: 4a66e76fdb6d ("clk: qcom: Add SC8280XP display clock controller")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
+ drivers/clk/qcom/dispcc-sc8280xp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Not tested on hardware.
----
- .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 15 +++++++++++++
- .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi | 15 +++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi          | 21 +------------------
- 3 files changed, 31 insertions(+), 20 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-index 9ea6636125ad..2a4f239c5632 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-@@ -573,6 +573,12 @@ usb_c0: connector@0 {
- 				power-role = "dual";
- 				data-role = "host";
- 				try-power-role = "source";
-+
-+				port {
-+					usb_c0_ep: endpoint {
-+						remote-endpoint = <&eud_con>;
-+					};
-+				};
- 			};
- 
- 			usb_c1: connector@1 {
-@@ -590,6 +596,15 @@ usb_c1: connector@1 {
- #include <arm/cros-ec-keyboard.dtsi>
- #include <arm/cros-ec-sbs.dtsi>
- 
-+&eud_ports {
-+	port@1 {
-+		reg = <1>;
-+		eud_con: endpoint {
-+			remote-endpoint = <&usb_c0_ep>;
-+		};
-+	};
-+};
-+
- &keyboard_controller {
- 	function-row-physmap = <
- 		MATRIX_KEY(0x00, 0x02, 0)	/* T1 */
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
-index ebae545c587c..ffc469431340 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
-@@ -44,6 +44,12 @@ usb_c0: connector@0 {
- 				power-role = "dual";
- 				data-role = "host";
- 				try-power-role = "source";
-+
-+				port {
-+					usb_c0_ep: endpoint {
-+						remote-endpoint = <&eud_con>;
-+					};
-+				};
- 			};
- 
- 			usb_c1: connector@1 {
-@@ -78,6 +84,15 @@ cr50: tpm@0 {
- 	};
+diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
+index 167470beb369..30f636b9f0ec 100644
+--- a/drivers/clk/qcom/dispcc-sc8280xp.c
++++ b/drivers/clk/qcom/dispcc-sc8280xp.c
+@@ -3057,7 +3057,7 @@ static struct gdsc disp0_mdss_gdsc = {
+ 		.name = "disp0_mdss_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
  };
  
-+&eud_ports {
-+	port@1 {
-+		reg = <1>;
-+		eud_con: endpoint {
-+			remote-endpoint = <&usb_c0_ep>;
-+		};
-+	};
-+};
-+
- &tlmm {
- 	ap_ec_int_l: ap-ec-int-l-state {
- 		pins = "gpio18";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 925428a5f6ae..af9bb2ebcaa1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -649,18 +649,6 @@ cpu7_opp_3014mhz: opp-3014400000 {
- 		};
- 	};
+ static struct gdsc disp1_mdss_gdsc = {
+@@ -3069,7 +3069,7 @@ static struct gdsc disp1_mdss_gdsc = {
+ 		.name = "disp1_mdss_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
--	eud_typec: connector {
--		compatible = "usb-c-connector";
--
--		ports {
--			port@0 {
--				con_eud: endpoint {
--					remote-endpoint = <&eud_con>;
--				};
--			};
--		};
--	};
--
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -3624,7 +3612,7 @@ eud: eud@88e0000 {
- 			      <0 0x88e2000 0 0x1000>;
- 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+ static struct gdsc disp0_mdss_int2_gdsc = {
+@@ -3081,7 +3081,7 @@ static struct gdsc disp0_mdss_int2_gdsc = {
+ 		.name = "disp0_mdss_int2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
--			ports {
-+			eud_ports: ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+ static struct gdsc disp1_mdss_int2_gdsc = {
+@@ -3093,7 +3093,7 @@ static struct gdsc disp1_mdss_int2_gdsc = {
+ 		.name = "disp1_mdss_int2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL,
++	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
-@@ -3634,13 +3622,6 @@ eud_ep: endpoint {
- 						remote-endpoint = <&usb2_role_switch>;
- 					};
- 				};
--
--				port@1 {
--					reg = <1>;
--					eud_con: endpoint {
--						remote-endpoint = <&con_eud>;
--					};
--				};
- 			};
- 		};
- 
+ static struct gdsc *disp0_cc_sc8280xp_gdscs[] = {
+
+---
+base-commit: 1e25dd7772483f477f79986d956028e9f47f990a
+change-id: 20230725-topic-8280_dispcc_gdsc-b1a7f3e51f3c
+
+Best regards,
 -- 
-2.34.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
