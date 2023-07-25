@@ -2,136 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 096DB7609D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 07:53:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 477E77609D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 07:54:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231966AbjGYFxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 01:53:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60892 "EHLO
+        id S231859AbjGYFyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 01:54:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232011AbjGYFxf (ORCPT
+        with ESMTP id S232030AbjGYFxu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 01:53:35 -0400
-Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054F21BDF;
-        Mon, 24 Jul 2023 22:53:26 -0700 (PDT)
+        Tue, 25 Jul 2023 01:53:50 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9511BE1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 22:53:40 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b9338e4695so75027611fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jul 2023 22:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
-  t=1690264407; x=1721800407;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=Tw6AmluQo9H+50YOZ8VzyqlQ1Px/nXDHyihqohOhOtQ=;
-  b=PXFeu5Foswzjxj5aWZZpAp690B2ldHM7JEu0sUtRpv922LhsgKqJ1paK
-   pc3cdjNtmoc98CmgQyDCHSncHwkmVS91TAdf/BBpz8xLhbwZB2AqAOUn3
-   Ro0BOnQ2oif0pCPGZnA9VvdD3Cc9C6XTF68og01KucCJGHIhfxpaDKozf
-   STov44wW3NGPP2r2DXscdhhk4DI/s8m53VEXKB1PWRHVIgCgI2s3MR4Zg
-   nafXilZuaJO49uGXWd1FqgUDsoJXCn4bxCbznvBoVgjh6m1lPC0zqGw/S
-   r+aHuor4SYpVsAxwH8KLDBjCqm/BvK3mikU38QrCw4l2rG9QaqsL8NMUz
-   A==;
-X-IronPort-AV: E=Sophos;i="6.01,229,1684792800"; 
-   d="scan'208";a="32093229"
-Received: from vtuxmail01.tq-net.de ([10.115.0.20])
-  by mx1.tq-group.com with ESMTP; 25 Jul 2023 07:53:24 +0200
-Received: from steina-w.localnet (unknown [10.123.53.21])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 6A288280075;
-        Tue, 25 Jul 2023 07:53:24 +0200 (CEST)
-From:   Alexander Stein <alexander.stein@ew.tq-group.com>
-To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        =?ISO-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>
-Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: Replace deprecated extcon-usb-gpio id-gpio/vbus-gpio properties
-Date:   Tue, 25 Jul 2023 07:53:24 +0200
-Message-ID: <45689756.fMDQidcC6G@steina-w>
-Organization: TQ-Systems GmbH
-In-Reply-To: <6220628.iIbC2pHGDl@phil>
-References: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com> <20230724103914.1779027-7-alexander.stein@ew.tq-group.com> <6220628.iIbC2pHGDl@phil>
+        d=linaro.org; s=google; t=1690264418; x=1690869218;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yGtjY2I6IJJ57ajiFTOVXjH7nBwULBGZDd/HJCAdG7c=;
+        b=nPlzFgRdvGYkC6362bgv18FBpP4eBTQE/J3iNMHDYXTJ86+Gw2Af9cgcYP4zDcXKZc
+         J0f+J5vLvxNN1uijkdROMOclFVgjcxOGOfzoiWtp64fAy3Dao6lZyMlouKjUx15aECi2
+         smxSI7YO0B7PcTTsVn++SYfqGPDNlc25fR1cTo9x5cpGrLiTHC3dXmdB7WGLYMscz3UL
+         Fid0hYeZnjlcwEHRbbgMUbCiDSBefZmFNyNs7YdC0lok8dLIOq/rJOSX+JBqelILTUv4
+         lAxQHVTEuDtPcwFg5ZaId3BnRSenE+/7zagsArP6D+CHu22Btwf8l7ZzLkAQcNOk/ep9
+         Kp3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690264418; x=1690869218;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yGtjY2I6IJJ57ajiFTOVXjH7nBwULBGZDd/HJCAdG7c=;
+        b=EbO27Bqws+c7bXDRndl3sgbiyBk4MCiYpcblUptoTnWQftpc6zUADXxU2URELN7C+1
+         7h3a63aMlDOtl2LMDJiRYwsr+GtIKD043LwtjEIi1IcDNCw2Nb56FkNM3W+imYUVZPSA
+         vM4+gfKri7zPzgtHwUgbP0qEl81fNmE5aK2OD+ssAMYDR7uLqQUrNkQQc5dsjw4DDmHV
+         c06KRiip300VMLALR2ZdTYLOJVfHLzSrtql4kYaepxYSdayJlUSDv4XBe+Rb7/M7HqI1
+         nBRfXeh9O3I9BjsZTXrej/wzpNvDqCRyohV3mfLXCutLqbOcBUnZuYjINddopW4zMRme
+         MIgQ==
+X-Gm-Message-State: ABy/qLaaqtdUWjh+rcA3Az2ZIVzPiMvc5lpl9krzQaGVS94IfQH5Rq+y
+        HBl3Nucj6+iCp4wdaw50pP5zbk65nrgIk3iIaKs=
+X-Google-Smtp-Source: APBJJlE6aL0qKjjw/dnLiqEek1XnS/5MAywE2WBCtv90rs+MfwAQzpO22Pb9BsLgwbwCq5d8WtP02w==
+X-Received: by 2002:a2e:9f09:0:b0:2b9:4ac9:6071 with SMTP id u9-20020a2e9f09000000b002b94ac96071mr7086785ljk.10.1690264418421;
+        Mon, 24 Jul 2023 22:53:38 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id lx26-20020a170906af1a00b0099b76c3041csm5352044ejb.7.2023.07.24.22.53.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jul 2023 22:53:27 -0700 (PDT)
+Message-ID: <b2ad4863-a38b-7fb6-65b1-ea336c4fc876@linaro.org>
+Date:   Tue, 25 Jul 2023 07:53:25 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/3] dt-bindings: input: qcom,pm8xxx-vib: add new SPMI
+ vibrator module
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org,
+        dmitry.baryshkov@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
+References: <20230725054138.129497-1-quic_fenglinw@quicinc.com>
+ <20230725054138.129497-3-quic_fenglinw@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230725054138.129497-3-quic_fenglinw@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Montag, 24. Juli 2023, 20:04:00 CEST schrieb Heiko Stuebner:
-> Am Montag, 24. Juli 2023, 12:39:13 CEST schrieb Alexander Stein:
-> > Use id-gpios and vbus-gpios instead.
-> >=20
-> > Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-> > Reviewed-by: AngeloGioacchino Del Regno
-> > <angelogioacchino.delregno@collabora.com> Acked-by: Shawn Guo
-> > <shawnguo@kernel.org>
-> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > ---
-> >=20
-> >  arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi                 | 2 +-
->=20
-> sorry to be a spoilsport, but Rockchip is not part of qcom ;-) .
+On 25/07/2023 07:41, Fenglin Wu wrote:
+> Add compatible string 'qcom,spmi-vib-gen2' for vibrator module inside
+> PMI632, PMI7250B, PM7325B, PM7550BA. Also, add 'qcom,spmi-vib-gen1'
+> string for the SPMI vibrator inside PM8916 to maintain the completeness
+> of the hardware version history for SPMI vibrators.
+> 
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  .../bindings/input/qcom,pm8xxx-vib.yaml        | 18 ++++++++++++++----
+>  1 file changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> index c8832cd0d7da..ab778714ad29 100644
+> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> @@ -11,10 +11,20 @@ maintainers:
+>  
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,pm8058-vib
+> -      - qcom,pm8916-vib
+> -      - qcom,pm8921-vib
+> +    oneOf:
+> +      - enum:
+> +          - qcom,pm8058-vib
+> +          - qcom,pm8916-vib
+> +          - qcom,pm8921-vib
+> +          - qcom,spmi-vib-gen1
+> +          - qcom,spmi-vib-gen2
 
-Oh, I'm pretty sure I splitted them properly, so I probably accidentally=20
-squashed them again somehow :(
+Generic compatibles should not be alone. Drop both lines.
 
-> I don't have a massive problem with this going through the qcom tree
-> though, so if you don't respin,
->=20
-> Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
+> +      - items:
+> +          - enum:
+> +              - qcom,pmi632-vib
+> +              - qcom,pm7250b-vib
+> +              - qcom,pm7325b-vib
+> +              - qcom,pm7550b-vib
+> +          - const: qcom,spmi-vib-gen2
 
-Okay, thanks
 
 Best regards,
-Alexander
-
-> > diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-> > b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi index
-> > aa3e21bd6c8f..20e3f41efe97 100644
-> > --- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-> > +++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-> > @@ -27,7 +27,7 @@ module_led: led-0 {
-> >=20
-> >  	extcon_usb3: extcon-usb3 {
-> >  =09
-> >  		compatible =3D "linux,extcon-usb-gpio";
-> >=20
-> > -		id-gpio =3D <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
-> > +		id-gpios =3D <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
-> >=20
-> >  		pinctrl-names =3D "default";
-> >  		pinctrl-0 =3D <&usb3_id>;
-> >  =09
-> >  	};
-
-
-=2D-=20
-TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
-Amtsgericht M=FCnchen, HRB 105018
-Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
-http://www.tq-group.com/
-
+Krzysztof
 
