@@ -2,102 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6576C7620C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 19:58:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97E597620DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 20:02:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232087AbjGYR6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 13:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51152 "EHLO
+        id S232659AbjGYSCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 14:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232123AbjGYR6o (ORCPT
+        with ESMTP id S232533AbjGYSB7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 13:58:44 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DB4F2688
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:58:39 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fde022de07so7961609e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:58:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1690307915; x=1690912715;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GMKz+TTfcKiqAZL/r0ZMj0g0KndoteFH21pGmnEW37o=;
-        b=Fx/HAWViQYXbLSWPN4TDWSm+xGmkKajrRZBKgKzNAQjTjA4BLlOBUSFvzQHA+Dux9o
-         7BLa5Lxm7a8nfFLM0/Dd3yRACTU1Kc7XCvlyX1XnSc2AgF0WU6v8qXULtFGN3S1KM894
-         QxxcY3JZeihzx6NZiXJuGibHGvK4kA073L/xQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690307915; x=1690912715;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GMKz+TTfcKiqAZL/r0ZMj0g0KndoteFH21pGmnEW37o=;
-        b=CpXEcCCY4yVgxXPTDmugMhAb6v0Ax8OscntcWWKJFdAm39MbunyJYuadvXkMRMBojF
-         Wz0qH1DwGRSulqXZENRjY9jDvxOFAOAWy1wx/+GIZf71ZGFl505vqOtEoV3CG5eNeYap
-         9G8imLkWVOVY2RgdNcuw9lnqPqFUQCdB0nyIb4qaWQcrpCPQtTo6++4+JekE4JqYJyLR
-         TtdVp0+LlW5S9cXhkgbR70I0rrmvf2NYDk58LyXWlGieFRxGxIU/KHM6Ce3jQ7fztoLo
-         hu4W95SZUyQKpCOpbi5NlGdTbNFwIt4yRRg5FUutpMciUYAKiVGyXKcIweqyFjBb67Dc
-         Ichg==
-X-Gm-Message-State: ABy/qLZNcRHruZT33iLs9u0f8NpRfZE7YCEIl+vrbh03PLFmdWPpjX2b
-        Z3L493LH7NBJk7nQpsjymfijd/vbbOfBkjTbLzmLY59h
-X-Google-Smtp-Source: APBJJlFKiiXP87VXr0W3EB1V829/3H8U04B5mzJj20+gBJbneV4I+5ixi04iGB+VN+uY5BcOIHTPAQ==
-X-Received: by 2002:a05:6512:31d4:b0:4fb:f2d5:467f with SMTP id j20-20020a05651231d400b004fbf2d5467fmr8972049lfe.13.1690307914858;
-        Tue, 25 Jul 2023 10:58:34 -0700 (PDT)
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
-        by smtp.gmail.com with ESMTPSA id b10-20020a170906038a00b009929ab17bdfsm8497360eja.168.2023.07.25.10.58.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jul 2023 10:58:34 -0700 (PDT)
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-51e24210395so1501a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 10:58:33 -0700 (PDT)
-X-Received: by 2002:a50:d6de:0:b0:51e:5773:891d with SMTP id
- l30-20020a50d6de000000b0051e5773891dmr136155edj.4.1690307913684; Tue, 25 Jul
- 2023 10:58:33 -0700 (PDT)
+        Tue, 25 Jul 2023 14:01:59 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 836482109;
+        Tue, 25 Jul 2023 11:01:50 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PGv6AZ019543;
+        Tue, 25 Jul 2023 18:01:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=87ewkxmXGU9fTm3pk1VsONTeYZjew0gno6Af9/9sDdU=;
+ b=F81Eo92xhxRD8HaYCaS+Ui7JriaGz4V8ljLvXUFoiab3v13lmWgBXEPFkowCKh4vFqjJ
+ pXHuG/kGf5u+Mi2hB//gFIBTGLSMrKkzj3Ch8lRatfyVvyPCxAWhF2asEXGQFNCXRSr6
+ GqeEZvFz+xMacih3ut/S8K1KmSuJ5xPPQUvdfPVO/JoPmg7OaJgj+IIh2eAmri+aqw7T
+ aodJrvMw19KJ9O6q6Xjhr6jZc6klM45cO34v4ZH/TLpqpJ6vapym30lNuuqmuNrsDIMN
+ T4sdPOsoAqs8pank3X10Zis2VZyzCf4Ya5oSm9uaiRQuKkAoHMDQPfDCPhbDmoebSkwu kQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1y6m2pcv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 18:01:40 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36PI1d9m010756
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 18:01:39 GMT
+Received: from [10.71.109.50] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
+ 2023 11:01:38 -0700
+Message-ID: <0e72a1a0-611c-9667-866e-a4a1f67f10f6@quicinc.com>
+Date:   Tue, 25 Jul 2023 11:01:38 -0700
 MIME-Version: 1.0
-References: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com> <1690285689-30233-5-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1690285689-30233-5-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 25 Jul 2023 10:58:21 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X+LULPZW7fccz2aMqfrR=fuOvBAb7LN-mGYeppuxAQZw@mail.gmail.com>
-Message-ID: <CAD=FV=X+LULPZW7fccz2aMqfrR=fuOvBAb7LN-mGYeppuxAQZw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] spi: spi-qcom-qspi: Add DMA_CHAIN_DONE to ALL_IRQS
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com, dan.carpenter@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+From:   Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [RFC PATCH 3/4] dt-bindings: power: reset: Document
+ arm,psci-vendor-reset
+To:     Rob Herring <robh@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        "Prasad Sodagudi" <quic_psodagud@quicinc.com>
+References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
+ <20230724223057.1208122-4-quic_eberman@quicinc.com>
+ <20230724232328.GA1101352-robh@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20230724232328.GA1101352-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: bq68nSqt_QqiZqlWsItJqqPUd-g87kMq
+X-Proofpoint-ORIG-GUID: bq68nSqt_QqiZqlWsItJqqPUd-g87kMq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_09,2023-07-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ mlxlogscore=999 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250154
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Tue, Jul 25, 2023 at 4:48=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> Add latest added DMA_CHAIN_DONE irq to QSPI_ALL_IRQS that encompasses all
-> of the qspi IRQs.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  drivers/spi/spi-qcom-qspi.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 
-I don't think this really does anything since the interrupts shouldn't
-really be "hanging around" when a PIO transfer starts and that's the
-only place it's used. I suspect we could actually fully remove that
-bit of "Ack any previous interrupts that might be hanging around" code
-and everything would be fine.
+On 7/24/2023 4:23 PM, Rob Herring wrote:
+> On Mon, Jul 24, 2023 at 03:30:53PM -0700, Elliot Berman wrote:
+>> Add devicetree bindings for using PSCI SYSTEM_RESET2 with vendor reset  types.
+>>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   .../power/reset/arm,psci-vendor-reset.yaml    | 35 +++++++++++++++++++
+>>   MAINTAINERS                                   |  1 +
+>>   2 files changed, 36 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+>> new file mode 100644
+>> index 000000000000..18b0b8c167a1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+>> @@ -0,0 +1,35 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +# Copyright 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/power/reset/arm,psci-vendor-reset.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: PSCI SYSTEM_RESET2 Vendor Resets
+>> +
+>> +maintainers:
+>> +  - Elliot Berman <quic_eberman@quicinc.com>
+>> +
+>> +description: |
+>> +  PSCI SYSTEM_RESET2 supports vendor-defined reset types. This describes
+>> +  the conversion of reboot modes to the reset types.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: arm,psci-vendor-reset
+>> +
+>> +allOf:
+>> +  - $ref: reboot-mode.yaml#
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    firmware {
+>> +      psci-vendor-resets {
+>> +        compatible = "arm,psci-vendor-reset";
+> 
+> We already have a node for PSCI, we don't need a second one. You can
+> have a separate driver without a separate node.
+> 
 
-In any case, I don't have any huge objections, thus:
+I could also place the reboot-mode functionality straight into 
+drivers/firwmare/psci/? I thought that might be more controversial than 
+separate driver, but maybe not?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Mark/Loreno, do you have any concerns to add the reboot-mode driver 
+functionality directly in drivers/firmware/psci/psci.c?
+
+Sebastian, do you have any concerns to have this reboot-mode driver 
+outside drivers/power/reset/?
+
+>> +        reboot-normal = <0x100>;
+> 
+> Wouldn't 'normal' be the normal PSCI reset?
+> 
+
+Ah, right. I had my head buried in the reboot-mode code when creating 
+the example. I can remove from the example.
+
+>> +        reboot-bootloader = <0x101>;
+>> +        reboot-fastboot = <0x102>;
+>> +      };
+>> +    };
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index d516295978a4..2da4c5f1917b 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -16982,6 +16982,7 @@ M:	Mark Rutland <mark.rutland@arm.com>
+>>   M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
+>>   L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+>>   S:	Maintained
+>> +F:	Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+>>   F:	drivers/firmware/psci/
+>>   F:	include/linux/psci.h
+>>   F:	include/uapi/linux/psci.h
+>> -- 
+>> 2.41.0
+>>
