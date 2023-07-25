@@ -2,134 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 104E97624D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 23:51:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 789F47624E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 23:53:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230314AbjGYVvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 17:51:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42162 "EHLO
+        id S230297AbjGYVx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 17:53:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbjGYVvm (ORCPT
+        with ESMTP id S231285AbjGYVx0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 17:51:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBE82126
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 14:50:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1690321854;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Melm6/J1BB5km5pizgjvl9Yb8xIN/1Veuqiikhv3KRo=;
-        b=EmZ4uDqezYqZCmUJozcqVQZCLAZnNsK3LRMK0hRDqVcN5AcZwp4IuYT6t3A+K4V+7nypSs
-        hk47kl4z+PEgwq7+rqkqy77H4I+0vb+/aAKUxQmPvacc323UbdBqX643FmYMeg6LVCqGbZ
-        Fe/1BLwffgyCl46fmC7JlcmhviU3iSQ=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-M_i_Rc66P3iUk8gDy1NPVA-1; Tue, 25 Jul 2023 17:50:53 -0400
-X-MC-Unique: M_i_Rc66P3iUk8gDy1NPVA-1
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7656c94fc4eso810652585a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 14:50:53 -0700 (PDT)
+        Tue, 25 Jul 2023 17:53:26 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D162139
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 14:53:25 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-668730696a4so3470753b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 14:53:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1690322005; x=1690926805;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FKEGWqR+0CcbBPqsp+sUK+ljfwl+CRQxiq3hvwMVKVA=;
+        b=Ezfa2u2HhaeTgeNqBXH8xd9D2MI9qrfjH69Xx0NPM6zHyCWs9yXApqOJjRZsQ2UDbz
+         W5bfiOhd1Fb85DDr8JX3eRtQglvAbMRqN3GnL/Ub5AiuUZXguuhlCyAAGo+cPMdCU/+e
+         xaU/5GEExeo0ujzemcSnB48J8FP8ET8E5sJ1b8ATpaOKJqBUt4egPXvjvxAwEpMcaZku
+         tE8gf9AgqNJGWst37Eld3kg6IjbjwTyiXqocqs20vIJ977nLEJO9d84cPSSSS6vcSPyN
+         g8dBcW6QgoMaVclfJ4fQ+sO7HEAjj8N9XOl65pRVUTqID4zH0pi4V8vz3CcGj7r4WGRU
+         3eYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690321852; x=1690926652;
+        d=1e100.net; s=20221208; t=1690322005; x=1690926805;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Melm6/J1BB5km5pizgjvl9Yb8xIN/1Veuqiikhv3KRo=;
-        b=M12NtDJoF/m0bzXWcb5s9B5TS0QEUYOt9DWoIO71yJcnD9Nmtt2RVoNGykzt9V7MRT
-         qfZLtYZ/t2arptflZnOfCjppKVlgQkdf9hYjlchAXrdGzec4SuR0Nr8XVH1TSCour8d9
-         jIH3dNpY03oPz2xVw6iirq45d1k56me22fjRrpaQQIRDiVF+QdJmXbCEM6bQaf2iwqec
-         lco1zu7NmIzPl710xJaQOYY8HnfdNVex2UiuyEaIfIB0BO+KTZu4cWMdTWRXbQEX3W9l
-         5XGRojFOvy4cEsSUkvzfy+jmbmdp4Liy1NiWH1vnL1BgqGQjVkkdm2CKnOw3HFqpRhna
-         o+kw==
-X-Gm-Message-State: ABy/qLZSv7vJcVlREUsmCGJKSIJN1M8neSZRgVHd7sQPYsxza17LBcVT
-        nZZ2GCjykfA5wlBzcbW41SMufsdk1lf/EyBCADGd8TBLawBskgllwVkUrGVkT2bm17vE4oTfN1K
-        MjuzJASldnf54Dden3a42k5ykLb+wl4zJQA==
-X-Received: by 2002:a37:9387:0:b0:768:75c:a323 with SMTP id v129-20020a379387000000b00768075ca323mr189184qkd.30.1690321852560;
-        Tue, 25 Jul 2023 14:50:52 -0700 (PDT)
-X-Google-Smtp-Source: APBJJlGuBc9mQtcoAYsLLrcNS6U1ILe3WgtPfau5n+XH3C2PfNIkwun1XLJekdm58rMjVAJD2sduAg==
-X-Received: by 2002:a37:9387:0:b0:768:75c:a323 with SMTP id v129-20020a379387000000b00768075ca323mr189174qkd.30.1690321852320;
-        Tue, 25 Jul 2023 14:50:52 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::17])
-        by smtp.gmail.com with ESMTPSA id q29-20020a05620a039d00b00767177a5bebsm3909301qkm.56.2023.07.25.14.50.51
+        bh=FKEGWqR+0CcbBPqsp+sUK+ljfwl+CRQxiq3hvwMVKVA=;
+        b=eeaxKNYfOdN2/7mPhr5KG7esu9vPQqx9f8HiL+jjnWyhJcHU0f/l1oA16wXF9UCoju
+         hnqBHrRU1bUxbn1bqkil1DiWwuMWUjB5zXR7etcxbtm3k5ebdoI88DlIJLCEoewVy+Ws
+         s6lzp/0tM3/LAhy3SChapPiPPO8vupvjle5Fs10yKcYyJ02dlUv2o9Dgg+Gvs1L0MguD
+         soxladFYVp+QLL1S50xWdubPf3lf4JTrTyy7+U/susGZRPA2AYjRV5o/2+F87xAcANFG
+         TURnvSzTgwpMnthnPLi0QmUIX7xqTwRfT4H54OMBCInZbbOC9HNOdGj6YL0W7F3SaupM
+         ky5w==
+X-Gm-Message-State: ABy/qLbsdjMLrQRld2RWSjpOI2uGdmb3IvXTsQTCigWdx01UOy5ysDZC
+        ad+ra+ot08s+EvSVzrz19vZPVg==
+X-Google-Smtp-Source: APBJJlHquQuuWxLQmV9ZAeTnV8BBjL+QYV6S+sbeqEwRh0gcunK9cb74PhLG1/SldT8Yr7YBeJOujQ==
+X-Received: by 2002:a05:6a20:4406:b0:137:3eba:b7fb with SMTP id ce6-20020a056a20440600b001373ebab7fbmr343053pzb.2.1690322004749;
+        Tue, 25 Jul 2023 14:53:24 -0700 (PDT)
+Received: from google.com ([2620:15c:2d1:203:a7a4:bf67:c9d5:c1b7])
+        by smtp.gmail.com with ESMTPSA id i21-20020aa787d5000000b006829b28b393sm10097875pfo.199.2023.07.25.14.53.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 14:50:51 -0700 (PDT)
-Date:   Tue, 25 Jul 2023 16:50:49 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Cc:     quic_nitirawa@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V1] arm64: dts: qcom: sa8775p-ride: Remove min and max
- voltages for L8A
-Message-ID: <a3l7356miuuapf5dakgfchdjmxjp62ynvle4ta3hejd3tjvzd4@e2t2zm6jh7hb>
-References: <20230725100007.14775-1-quic_narepall@quicinc.com>
+        Tue, 25 Jul 2023 14:53:24 -0700 (PDT)
+Date:   Tue, 25 Jul 2023 14:53:19 -0700
+From:   Nick Desaulniers <ndesaulniers@google.com>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Ziqi Chen <quic_ziqichen@quicinc.com>,
+        Can Guo <quic_cang@quicinc.com>, Arnd Bergmann <arnd@arndb.de>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev
+Subject: Re: [PATCH] scsi: ufs: qcom: remove unused variable
+Message-ID: <ZMBET5+0ooHfpJbS@google.com>
+References: <20230724122029.1430482-1-arnd@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230725100007.14775-1-quic_narepall@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230724122029.1430482-1-arnd@kernel.org>
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,FSL_HELO_FAKE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL,
+        USER_IN_DEF_SPF_WL autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 03:30:07PM +0530, Naveen Kumar Goud Arepalli wrote:
-> L8A is the supply for UFS VCC, UFS specification allows different VCC
-> configurations for UFS devices.
-> -UFS 2.x devices: 2.70V - 3.60V
-> -UFS 3.x devices: 2.40V - 2.70V
+On Mon, Jul 24, 2023 at 02:19:58PM +0200, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
-> As sa8775p-ride supports both ufs 2.x and ufs 3.x devices, remove min/max
-> voltages for L8A regulator. Initial voltage of L8A will be set to 2.504v
-> or 2.952v during PON depending on the UFS device type. On sa8775, UFS is
-> the only client in Linux for L8A and this regulator will be voted only
-> for enabling/disabling.
+> A recent change removed the only user of a local variable that needs
+> to now also be removed:
 > 
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> drivers/ufs/host/ufs-qcom.c: In function 'ufs_qcom_mcq_esi_handler':
+> drivers/ufs/host/ufs-qcom.c:1652:31: error: unused variable 'host' [-Werror=unused-variable]
+> 
+> Fixes: 8f2b78652d055 ("scsi: ufs: qcom: Get queue ID from MSI index in ESI handler")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+
+Thanks for the patch!
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Link: https://lore.kernel.org/llvm/64c00cd4.630a0220.6ad79.0eac@mx.google.com/
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 2 --
->  1 file changed, 2 deletions(-)
+>  drivers/ufs/host/ufs-qcom.c | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index ed76680410b4..6f3891a09e59 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -98,8 +98,6 @@
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 3ee5ff905f9a6..5728e94b6527b 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1649,7 +1649,6 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *data)
+>  	struct msi_desc *desc = data;
+>  	struct device *dev = msi_desc_to_dev(desc);
+>  	struct ufs_hba *hba = dev_get_drvdata(dev);
+> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>  	u32 id = desc->msi_index;
+>  	struct ufs_hw_queue *hwq = &hba->uhq[id];
 >  
->  		vreg_l8a: ldo8 {
->  			regulator-name = "vreg_l8a";
-> -			regulator-min-microvolt = <2504000>;
-> -			regulator-max-microvolt = <3300000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  			regulator-allow-set-load;
->  			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
 > -- 
-> 2.17.1
+> 2.39.2
 > 
-
-Reviewing with very little expertise in the area....
-A few questions below that would help me understand this a bit better.
-
-Does it make sense to *not* set the range of the regulator at all?:
-
-    1. A board dts knows its UFS device
-    2. Is UFS backwards compatible with respect to UFS2/UFS3?
-       I don't know how the version is determined, but if it's a
-       "start at UFS2, go to UFS3" should it be scaled as that goes?
-
-Relying on the bootloader to set up the device before the kernel starts
-seems like a direction that should be actively avoided instead of
-depended on in my opinion.
-
-Thanks,
-Andrew
-
