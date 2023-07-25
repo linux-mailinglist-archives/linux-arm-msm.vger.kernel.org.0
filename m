@@ -2,74 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D6CC760E3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 11:18:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C31FE760D00
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 10:30:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233071AbjGYJSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 05:18:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55916 "EHLO
+        id S232250AbjGYIaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 04:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233082AbjGYJSm (ORCPT
+        with ESMTP id S231948AbjGYIaV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 05:18:42 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A5E10E7;
-        Tue, 25 Jul 2023 02:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690276715; x=1721812715;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=LKtaiWNgDWK8U+v+CSkjSmMLNgc+6CwnEmQrVA3o6hk=;
-  b=X9Tnq3Mqr7hSM1pYrZe4MDh+iteuG93bMGwcd0dwbhDzbXB6dKtQ8wwC
-   GFbgh8yfuPPUl9X/8hxurecx98oDSAzdDcC/KMxqjQYGQD23nQWVa22fa
-   vjuCsCxuKaj/BUvZqtoY/Az8MPYTRLV0mLlzpii4mKt7fQzjFHY7n79qC
-   NQBTuMNMtkNAwpdFo/5SHcyuop6C8zpMhxbizzhP+rgntiwBZw+bX32HP
-   //4vyJ6W+lDNn2o2oYofPa/6X7A4jlCSkSWImL32c5I7gzLQRRM/yrSss
-   3pfiCKNMynqbCYbxMTiDCHrKZOGl04ZqJhAG4Z9K87KF6Ss7wjzmND6xK
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="454048830"
-X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="454048830"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10781"; a="719980312"
-X-IronPort-AV: E=Sophos;i="6.01,230,1684825200"; 
-   d="scan'208";a="719980312"
-Received: from mongola-mobl.ger.corp.intel.com (HELO [10.249.37.129]) ([10.249.37.129])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2023 02:18:28 -0700
-Message-ID: <eb1c679b-f50b-1f20-c7c8-da3f4857bec1@linux.intel.com>
-Date:   Tue, 25 Jul 2023 10:27:00 +0200
+        Tue, 25 Jul 2023 04:30:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FA2E57;
+        Tue, 25 Jul 2023 01:30:20 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36P88bVt010810;
+        Tue, 25 Jul 2023 08:30:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+7rrkjJuBqZ+dK/U917Z4pPyFYVdFap3OBvQjDRjYo4=;
+ b=ZneSAAV6OZV6cUvgo/JI1O70NxBDLz9pbaDFrslTEmxFWHOGjSTobY3lBivJymzV09KI
+ Uu6LlopwjzyFWbyZ8H4rD/7zzvz0UQEMqli4CRu1IRzFRCgMgUCZGcn5khR0xGgDfTIV
+ A8XaTPzjrtFRqEQ01xxd+2/o4K0C6mngKQCbzPBRbANojje/RssiXCFzso8PO/10zet5
+ MKJWNYEqlqpVBN2aXBJid5ZdxejRFfFWEThyKXyM6BG3paPYbCSA727roohaZYgf/1Gl
+ EcO//S0vj+MyGAaRlWUa4PF9vKj3sLhMKjxoP0p5ydNvf7Z+hAleG0otRSsskFxQtYy5 qg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1v6u9s79-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 08:30:06 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36P8U1ui000442
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 08:30:01 GMT
+Received: from [10.216.12.191] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 25 Jul
+ 2023 01:29:56 -0700
+Message-ID: <9c989e91-741c-72d7-413c-b727e7d107d7@quicinc.com>
+Date:   Tue, 25 Jul 2023 13:59:46 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v4 08/32] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC PATCH 3/4] dt-bindings: power: reset: Document
+ arm,psci-vendor-reset
 Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
-        Thinh.Nguyen@synopsys.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
-        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
-        o-takashi@sakamocchi.jp
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-9-quic_wcheng@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20230725023416.11205-9-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Sebastian Reichel" <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Prasad Sodagudi <quic_psodagud@quicinc.com>
+References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
+ <20230724223057.1208122-4-quic_eberman@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230724223057.1208122-4-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PybqWDFxuBdzp8HvWWPaM3Lt-rZxQzza
+X-Proofpoint-GUID: PybqWDFxuBdzp8HvWWPaM3Lt-rZxQzza
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_04,2023-07-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ mlxscore=0 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307250074
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -77,156 +92,71 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-> +static const struct snd_soc_dai_ops q6usb_ops = {
-> +	.prepare	= q6afe_dai_prepare,
-> +	.hw_params	= q6usb_hw_params,
-> +	.shutdown	= q6afe_dai_shutdown,
 
-it's a bit odd to see a .shutdown without a .startup?
-
-Is this intentional and should a comment be added?
-
-
-> +/* device token of actual end USB aduio device */
-
-audio
-
-> +	u32                  dev_token;
-> +/* endianness of this interface */
-> +	u32                   endian;
-> +/* service interval */
-> +	u32                  service_interval;
-> +} __packed;
+On 7/25/2023 4:00 AM, Elliot Berman wrote:
+> Add devicetree bindings for using PSCI SYSTEM_RESET2 with vendor reset  types.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>   .../power/reset/arm,psci-vendor-reset.yaml    | 35 +++++++++++++++++++
+>   MAINTAINERS                                   |  1 +
+>   2 files changed, 36 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+> new file mode 100644
+> index 000000000000..18b0b8c167a1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+> @@ -0,0 +1,35 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +# Copyright 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/reset/arm,psci-vendor-reset.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +/**
-> + * struct afe_param_id_usb_audio_dev_params
-> + * @cfg_minor_version: Minor version used for tracking USB audio device
-> + * configuration.
-> + * Supported values:
-> + *     AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
-> + * @dev_token: device token of actual end USB aduio device
-
-audio. please run a spell-checker.
-
-
-> +	svc_int.cfg_minor_version = AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG;
-> +	svc_int.svc_interval = pcfg->usb_cfg.service_interval;
-> +	ret = q6afe_port_set_param_v2(port, &svc_int,
-> +				      AFE_PARAM_ID_USB_AUDIO_SVC_INTERVAL,
-> +				      AFE_MODULE_AUDIO_DEV_INTERFACE, sizeof(svc_int));
-> +	if (ret) {
-> +		dev_err(port->afe->dev, "%s: AFE device param cmd svc_interval failed %d\n",
-> +			__func__, ret);
-> +		ret = -EINVAL;
-
-why do you override the return value?
-
-> +		goto exit;
-
-not necessary, this is a jump to the next line. Looks like copy-paste ...
-
-> +	}
-> +exit:
-> +	return ret;
-> +}
+> +title: PSCI SYSTEM_RESET2 Vendor Resets
 > +
-> +/**
-> + * q6afe_usb_port_prepare() - Prepare usb afe port.
-> + *
-> + * @port: Instance of afe port
-> + * @cfg: USB configuration for the afe port
-> + *
-> + */
-> +void q6afe_usb_port_prepare(struct q6afe_port *port,
-> +			     struct q6afe_usb_cfg *cfg)
-> +{
-> +	union afe_port_config *pcfg = &port->port_cfg;
+> +maintainers:
+> +  - Elliot Berman <quic_eberman@quicinc.com>
 > +
-> +	pcfg->usb_cfg.cfg_minor_version = AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG;
-> +	pcfg->usb_cfg.sample_rate = cfg->sample_rate;
-> +	pcfg->usb_cfg.num_channels = cfg->num_channels;
-> +	pcfg->usb_cfg.bit_width = cfg->bit_width;
+> +description: |
+> +  PSCI SYSTEM_RESET2 supports vendor-defined reset types. This describes
+> +  the conversion of reboot modes to the reset types.
 > +
-> +	afe_port_send_usb_dev_param(port, cfg);
-> +}
-> +EXPORT_SYMBOL_GPL(q6afe_usb_port_prepare);
+> +properties:
+> +  compatible:
+> +    const: arm,psci-vendor-reset
 > +
->  /**
->   * q6afe_hdmi_port_prepare() - Prepare hdmi afe port.
->   *
-> @@ -1611,7 +1791,10 @@ struct q6afe_port *q6afe_port_get_from_id(struct device *dev, int id)
->  		break;
->  	case AFE_PORT_ID_WSA_CODEC_DMA_RX_0 ... AFE_PORT_ID_RX_CODEC_DMA_RX_7:
->  		cfg_type = AFE_PARAM_ID_CODEC_DMA_CONFIG;
-> -	break;
-> +		break;
-> +	case AFE_PORT_ID_USB_RX:
-> +		cfg_type = AFE_PARAM_ID_USB_AUDIO_CONFIG;
-> +		break;
->  	default:
->  		dev_err(dev, "Invalid port id 0x%x\n", port_id);
->  		return ERR_PTR(-EINVAL);
-> diff --git a/sound/soc/qcom/qdsp6/q6afe.h b/sound/soc/qcom/qdsp6/q6afe.h
-> index 30fd77e2f458..e098a3e15135 100644
-> --- a/sound/soc/qcom/qdsp6/q6afe.h
-> +++ b/sound/soc/qcom/qdsp6/q6afe.h
-> @@ -5,7 +5,7 @@
->  
->  #include <dt-bindings/sound/qcom,q6afe.h>
->  
-> -#define AFE_PORT_MAX		129
-> +#define AFE_PORT_MAX		130
->  
->  #define MSM_AFE_PORT_TYPE_RX 0
->  #define MSM_AFE_PORT_TYPE_TX 1
-> @@ -205,6 +205,47 @@ struct q6afe_cdc_dma_cfg {
->  	u16	active_channels_mask;
->  };
->  
-> +/**
-> + * struct q6afe_usb_cfg
-> + * @cfg_minor_version: Minor version used for tracking USB audio device
-> + * configuration.
-> + * Supported values:
-> + *     AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
-> + * @sample_rate: Sampling rate of the port
-> + *    Supported values:
-> + *      AFE_PORT_SAMPLE_RATE_8K
-> + *      AFE_PORT_SAMPLE_RATE_11025
-> + *      AFE_PORT_SAMPLE_RATE_12K
-> + *      AFE_PORT_SAMPLE_RATE_16K
-> + *      AFE_PORT_SAMPLE_RATE_22050
-> + *      AFE_PORT_SAMPLE_RATE_24K
-> + *      AFE_PORT_SAMPLE_RATE_32K
-> + *      AFE_PORT_SAMPLE_RATE_44P1K
-> + *      AFE_PORT_SAMPLE_RATE_48K
-> + *      AFE_PORT_SAMPLE_RATE_96K
-> + *      AFE_PORT_SAMPLE_RATE_192K
-> + * @bit_width: Bit width of the sample.
-> + *    Supported values: 16, 24
-> + * @num_channels: Number of channels
-> + *    Supported values: 1, 2
-> + * @data_format: Data format supported by the USB
-> + *    Supported values: 0
-> + * @reserved: this field must be 0
-> + * @dev_token: device token of actual end USB audio device
-> + * @endian: endianness of this interface
-> + * @service_interval: service interval
-> + **/
-> +struct q6afe_usb_cfg {
-> +	u32	cfg_minor_version;
-> +	u32     sample_rate;
-> +	u16	bit_width;
-> +	u16	num_channels;
-> +	u16	data_format;
-> +	u16	reserved;
-> +	u32	dev_token;
-> +	u32	endian;
-> +	u32	service_interval;
-> +};
+> +allOf:
+> +  - $ref: reboot-mode.yaml#
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    firmware {
+> +      psci-vendor-resets {
+> +        compatible = "arm,psci-vendor-reset";
+> +        reboot-normal = <0x100>;
+> +        reboot-bootloader = <0x101>;
+> +        reboot-fastboot = <0x102>;
 
-this definition looks exactly the same as
-struct afe_param_id_usb_cfg
-??
+Should it start with mode-* ?
 
-
+-Mukesh
+> +      };
+> +    };
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d516295978a4..2da4c5f1917b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -16982,6 +16982,7 @@ M:	Mark Rutland <mark.rutland@arm.com>
+>   M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
+>   L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+>   S:	Maintained
+> +F:	Documentation/devicetree/bindings/power/reset/arm,psci-vendor-reset.yaml
+>   F:	drivers/firmware/psci/
+>   F:	include/linux/psci.h
+>   F:	include/uapi/linux/psci.h
