@@ -2,108 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3836D76173E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 13:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A63B761767
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jul 2023 13:48:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232343AbjGYLqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jul 2023 07:46:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53842 "EHLO
+        id S230356AbjGYLsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jul 2023 07:48:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbjGYLqU (ORCPT
+        with ESMTP id S235125AbjGYLsY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jul 2023 07:46:20 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F7610B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jul 2023 04:46:14 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0C0CC20231;
-        Tue, 25 Jul 2023 13:46:09 +0200 (CEST)
-Date:   Tue, 25 Jul 2023 13:46:06 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: display: msm: sm6125-mdss: drop unneeded
- status from examples
-Message-ID: <5w2hvzmwzqm4ffopzewveaviebq2ig7awimeo6ipcehx5a43ae@mlwffkf2ctn5>
-References: <20230725101610.75122-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230725101610.75122-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Tue, 25 Jul 2023 07:48:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1420410E2;
+        Tue, 25 Jul 2023 04:48:24 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36PAYktD019048;
+        Tue, 25 Jul 2023 11:48:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=clDcQqjrv+FXeXzp9dqtQs5Snq+9ZGR37NVMAlAyCgw=;
+ b=kIFh256eTdoyZzhDtphEWLmJf3mO7QNU5kTvftjTRha3dkK3WmqNGkyUJaXf+TVpu1I3
+ S591jkbvraA4SCJb6CKEu0ohGZ5yhX7/2kZmB4FkDYWMm+0YE1kz4zFKAQibEdiEQEWX
+ l2EgkjerBXyPRINQiHcOYinl7DLcvusIP6YcbohTVeMDdVNO11EvMgAxxZSAupH0Z//m
+ 9AFfaMjZYBfYGAgMF6ArL2DgmwrPakkGrSGmNg6g6mZWFjyMoTDPVJv9ogVEhKLvnf7+
+ Ua8DCJmh5a4zu+7lGOKOtpJ04yMZimD6I8oAnwNKAp7la5s16BQHhFh4wosVrPoFHp1R 9g== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s1u3taayd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Jul 2023 11:48:19 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36PBmFHn008429;
+        Tue, 25 Jul 2023 11:48:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3s086kv0xy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 25 Jul 2023 11:48:15 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36PBmFbo008424;
+        Tue, 25 Jul 2023 11:48:15 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36PBmFE1008423;
+        Tue, 25 Jul 2023 11:48:15 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id A6E743434; Tue, 25 Jul 2023 17:18:14 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com,
+        dan.carpenter@linaro.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [PATCH 0/4] spi: spi-qcom-qspi: Follow-up patches to DMA mode support
+Date:   Tue, 25 Jul 2023 17:18:05 +0530
+Message-Id: <1690285689-30233-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fWeRQ_8UFhZKKIxNLeebMjjvl2G24nOb
+X-Proofpoint-ORIG-GUID: fWeRQ_8UFhZKKIxNLeebMjjvl2G24nOb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-25_06,2023-07-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=636 clxscore=1011 impostorscore=0 suspectscore=0 spamscore=0
+ phishscore=0 adultscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307250103
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-07-25 12:16:10, Krzysztof Kozlowski wrote:
-> Example DTS should not have 'status' property.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml   | 6 ------
+This patch series adds 4 follow-up changes to DMA mode support.
+1. Handles write failure in some cases by averting a race condition
+2. Handles static checker warning
+3. Adds a memory barrier to avoid a possible data out of sync case
+4. Book keeping change
 
-This is not needed: it has already been corrected in v3 and v4 of the
-respective series (among other changes) and the patches were only picked
-to a preliminary (draft) pull to get an overview of the outstanding work
-for this subsystem.  That branch happens to be included in regular -next
-releases though.
+Vijaya Krishna Nivarthi (4):
+  spi: spi-qcom-qspi: Ignore disabled interrupts' status in isr
+  spi: spi-qcom-qspi: Use GFP_ATOMIC flag while allocating for
+    descriptor
+  spi: spi-qcom-qspi: Call dma_wmb() after setting up descriptors
+  spi: spi-qcom-qspi: Add DMA_CHAIN_DONE to ALL_IRQS
 
-6.6 drm/msm display pull: https://gitlab.freedesktop.org/drm/msm/-/merge_requests/69
-v3: https://lore.kernel.org/linux-arm-msm/20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org/
-v4: https://lore.kernel.org/linux-arm-msm/20230723-sm6125-dpu-v4-0-a3f287dd6c07@somainline.org/
+ drivers/spi/spi-qcom-qspi.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-- Marijn
+-- 
 
->  1 file changed, 6 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml
-> index 2525482424cb..479c82e6a0d8 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml
-> @@ -95,8 +95,6 @@ examples:
->          #size-cells = <1>;
->          ranges;
->  
-> -        status = "disabled";
-> -
->          display-controller@5e01000 {
->              compatible = "qcom,sm6125-dpu";
->              reg = <0x05e01000 0x83208>,
-> @@ -170,8 +168,6 @@ examples:
->              #address-cells = <1>;
->              #size-cells = <0>;
->  
-> -            status = "disabled";
-> -
->              ports {
->                  #address-cells = <1>;
->                  #size-cells = <0>;
-> @@ -210,8 +206,6 @@ examples:
->  
->              required-opps = <&rpmpd_opp_svs>;
->              power-domains = <&rpmpd SM6125_VDDMX>;
-> -
-> -            status = "disabled";
->          };
->      };
->  ...
-> -- 
-> 2.34.1
-> 
