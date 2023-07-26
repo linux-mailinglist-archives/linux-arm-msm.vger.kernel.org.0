@@ -2,186 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC99576424F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 00:59:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6491D764255
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 01:07:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230075AbjGZW7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 18:59:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42884 "EHLO
+        id S229577AbjGZXHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 19:07:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjGZW7G (ORCPT
+        with ESMTP id S229552AbjGZXHX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 18:59:06 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A662719
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 15:59:05 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d18566dc0c1so300009276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 15:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690412344; x=1691017144;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LLPxlJY6xMNij1uxNCT+9JnGOcfjMwxi0ypn4kc4QcI=;
-        b=sGsJW/DXs0JW1/Y5dDHNFxcGOHCXYlCLqtnXO2cW6DVNTcYjm+3NFC03qwZK6Dw785
-         cff2pdY9nWocIt5Sv0qtguxPYDT67ATu0SpPYAVJeq5Bz+QEsYtcMCzuHhXu+hgy9XVD
-         PU9eHCm3pAt7qm0iET1TiHlrcd8T/MEduaMAmxYp06ZOlat40YXQrI+bIJGfgWUyMS9Q
-         8XlfAD06WNpxJC3mISQN5ErtIGEsjetGmjyvlRwUQVdyzrrMn7lbzMoVZtosDM0yolXK
-         xElKzvY+ZfquZ7xO7kR7T4P5hqE5Q3c5JdmYoS8juI7hGmUGFlRwy9/4KYMbWKj4slcB
-         vqkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690412344; x=1691017144;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LLPxlJY6xMNij1uxNCT+9JnGOcfjMwxi0ypn4kc4QcI=;
-        b=GG0htS/ZTkx/V9LxqUNfTVBuFGJlQ86IUPZq2TkextCiuRX0GaokFJnPSy+rqH834K
-         VqWGNwo2GYl86dF3ymlA2/nL+t2Qm92npCsXt+YzOhEA6R7nGP824vlkxxHuH/6m6Zh5
-         JmBqfAJPY5Ui2jzFaWXgZUom9fg/a0Em7FVf6diw5NZL53CtAFQtuAht+c8cDQLZUOKB
-         93p68s6pingHsUwzpN3CNv+i2Nl0X8DdWD+VMyIVMfCH1UDtr61yfZGWP59QW5/JsuYH
-         kUKuDxMl3T7Mw1D7TAze7WvCZmOurLuLXQpVDixRZDj8nQ3YF43/PXAorV8NPIM2CUKv
-         z1ZQ==
-X-Gm-Message-State: ABy/qLYoPSDR/rsra36WHeJY/Hg2XDThyqYFYHV8v1pKJRBovVr56hyy
-        LIrwQch3ReXUjRp8JIx0Hfkfw5fAyB+/qGtcRN4RCw==
-X-Google-Smtp-Source: APBJJlEhMIIJoDGx1VebdDsKuEknBTMFauNXvw2DPBpUTgTScfeiZkBukCTHaKhe0y90KSQm9unWqbnhQGCyDKLDgNs=
-X-Received: by 2002:a25:ca13:0:b0:d0b:f845:c831 with SMTP id
- a19-20020a25ca13000000b00d0bf845c831mr3393948ybg.13.1690412344670; Wed, 26
- Jul 2023 15:59:04 -0700 (PDT)
+        Wed, 26 Jul 2023 19:07:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12271737;
+        Wed, 26 Jul 2023 16:07:18 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36QN1hxG022941;
+        Wed, 26 Jul 2023 23:06:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hst80EK+5jLT39EI5q3/zwn9B9Ep+cXarB3YmbOzyXc=;
+ b=k+D9BFUC0fJBW78f71nfk0im2alc0BGH1qMBS4AYsZnYbJloNpoqDNB9xDoR+QBuGCmy
+ y3h7ItHHHOurVFQnRhiGXo3yCkpI/vjB6yWNMrO3k+IJ+OzxHs7GzA2jyeg5va8SwJsg
+ EazS5Yaj0LfyuVpRU82PCm0q/XB/ExbaVVx+WQgPuH99DR50k7HtrQup43hoKUTxEDJb
+ uWyfFCg5bz3S6nfwTkmj2jHD4je+AWd/bm8cfH88ScAh0bv3AnlTkw09ndIwTx251Si3
+ Amnh0dqAC7dwY+9crEGIa0DQE4swWFSl3IqJIpaVFLOHLCM4YUExeiiG1rNJSHRqfZ5Z ug== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3afyr785-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Jul 2023 23:06:44 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36QN6hoF031629
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Jul 2023 23:06:43 GMT
+Received: from [10.110.23.161] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 26 Jul
+ 2023 16:06:42 -0700
+Message-ID: <e0167cad-6af7-fc2a-f783-609a114d94fd@quicinc.com>
+Date:   Wed, 26 Jul 2023 16:06:41 -0700
 MIME-Version: 1.0
-References: <20230521171026.4159495-1-dmitry.baryshkov@linaro.org>
- <20230521171026.4159495-5-dmitry.baryshkov@linaro.org> <61b0792d-aa62-03ea-bb2c-aa9392251519@quicinc.com>
-In-Reply-To: <61b0792d-aa62-03ea-bb2c-aa9392251519@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 27 Jul 2023 01:58:53 +0300
-Message-ID: <CAA8EJpp+uO_BZVQ9A+ZjKe3+b_H=xJc_yCfd8bKSPenU8Mf5FQ@mail.gmail.com>
-Subject: Re: [PATCH 4/6] drm/msm/mdss: populate missing data
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v4 27/32] sound: soc: qdsp6: Add SND kcontrol to select
+ offload device
+Content-Language: en-US
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <quic_jackp@quicinc.com>, <oneukum@suse.com>,
+        <albertccwang@google.com>, <o-takashi@sakamocchi.jp>
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-28-quic_wcheng@quicinc.com>
+ <82568c9d-05b8-54dc-47e9-05c74a9260be@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <82568c9d-05b8-54dc-47e9-05c74a9260be@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zHrkparVg1APzQLo3hBS0lfjhvKXkqdF
+X-Proofpoint-ORIG-GUID: zHrkparVg1APzQLo3hBS0lfjhvKXkqdF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ mlxscore=0 phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307260207
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Jul 2023 at 01:30, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 5/21/2023 10:10 AM, Dmitry Baryshkov wrote:
-> > As we are going to use MDSS data for DPU programming, populate missing
-> > MDSS data. The UBWC 1.0 and no UBWC cases do not require MDSS
-> > programming, so skip them.
-> >
->
-> Can you pls point me to the downstream references you used for msm8998?
+Hi Pierre,
 
-msm-3.18, drivers/video/msm/mdss/mdss_mdp.c
+On 7/25/2023 2:16 AM, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 7/25/23 04:34, Wesley Cheng wrote:
+>> Expose a kcontrol on the platform sound card, which will allow for
+>> userspace to determine which USB card number and PCM device to offload.
+>> This allows for userspace to potentially tag an alternate path for a
+>> specific USB SND card and PCM device.  Previously, control was absent, and
+>> the offload path would be enabled on the last USB SND device which was
+>> connected.  This logic will continue to be applicable if no mixer input is
+>> received for specific device selection.
+>>
+>> An example to configure the offload device using tinymix:
+>> tinymix -D 0 set 'Q6USB offload SND device select' 1 0
+>>
+>> The above will set the Q6AFE device token to choose offload on card#1 and
+>> pcm#0.  Device selection is made possible by setting the Q6AFE device
+>> token.  The audio DSP utilizes this parameter, and will pass this field
+>> back to the USB offload driver within the QMI stream requests.
+> 
+> I must be missing something... If you have a card 0 which exposes a
+> control to change what the card1 does, then it means you have a card0
+> with a PCM device what can potentially be used concurrently with the
+> card1 exposing an offload device.
+> 
+> Is there any sort of mutual exclusion to make sure the same USB endpoint
+> is not used twice?
+> > One would hope that when a device is opened the matching non-offloaded
+> one (or ones in the case of implicit feedback) is disabled or marked as
+> used?
+> 
+> I would guess in your Android setup you have control on such behavior at
+> the HAL level, but in the more generic Linux use I don't see what
+> would orchestrate the use of two devices, and at the kernel level what
+> would prevent it.
+> 
+Still going through the comments and trying to address the suggestions 
+in the code, so will reply pack to those as I make the needed changes.
 
-See the function mdss_mdp_hw_rev_caps_init(). It sets has_ubwc for MDP
-1.07 (msm8996), 1.14 (msm8937) / 1.16  (msm8953) and 3.0 (msm8998).
+As for the above question, the following change was made with the 
+intention to prevent the above scenario.
 
-> Was that just taken from catalog? If so I would ask for the reference
-> for the catalog too.
->
-> As per the register the decoder version is 0x0 and not 1.
->
-> Even encoder version is 0 from what i see and not 1. Thats why a
-> dec_version of UBWC_1_0 is not doing anything i assume.
->
-> Some additional questions:
->
-> 1) Does the whole chunk in dpu_hw_sspp_setup_format() which handles ubwc
-> programming need to be protected by if (ctx->ubwc) now ?
+https://lore.kernel.org/linux-usb/20230725023416.11205-23-quic_wcheng@quicinc.com/
 
-It's hard to discuss the question which is irrelevant for this patch.
-Nevertheless, yes, it needs to be protected because e.g. qcm2290
-doesn't have UBWC support.
-
-> 2) The values of UBWC_x_x dont match the values of DPU_HW_UBWC_VER_xx.
-> What was the reason for the catalog to go with DPU_HW_UBWC_VER_xx in the
-> catalog for the encoder version in the first place? Because looking at
-> the registers UBWC_x_x is the correct value.
-
-Huh. This definitely should be asked next to the code that you wish to
-discuss. The DPU_HW_UBWC_VER_xx values come from the first DPU
-revision.
-
->
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/msm_mdss.c | 21 +++++++++++++++++++--
-> >   1 file changed, 19 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> > index ed836c659688..9bb7be4b9ebb 100644
-> > --- a/drivers/gpu/drm/msm/msm_mdss.c
-> > +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> > @@ -264,6 +264,10 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
-> >        * UBWC_n and the rest of params comes from hw data.
-> >        */
-> >       switch (msm_mdss->mdss_data->ubwc_dec_version) {
-> > +     case 0: /* no UBWC */
-> > +     case UBWC_1_0:
-> > +             /* do nothing */
-> > +             break;
-> >       case UBWC_2_0:
-> >               msm_mdss_setup_ubwc_dec_20(msm_mdss);
-> >               break;
-> > @@ -502,10 +506,22 @@ static int mdss_remove(struct platform_device *pdev)
-> >       return 0;
-> >   }
-> >
-> > +static const struct msm_mdss_data msm8998_data = {
-> > +     .ubwc_enc_version = UBWC_1_0,
-> > +     .ubwc_dec_version = UBWC_1_0,
-> > +     .highest_bank_bit = 1,
-> > +};
-> > +
-> > +static const struct msm_mdss_data qcm2290_data = {
-> > +     /* no UBWC */
-> > +     .highest_bank_bit = 0x2,
-> > +};
-> > +
-> >   static const struct msm_mdss_data sc7180_data = {
-> >       .ubwc_enc_version = UBWC_2_0,
-> >       .ubwc_dec_version = UBWC_2_0,
-> >       .ubwc_static = 0x1e,
-> > +     .highest_bank_bit = 0x3,
-> >   };
-> >
-> >   static const struct msm_mdss_data sc7280_data = {
-> > @@ -550,6 +566,7 @@ static const struct msm_mdss_data sm6115_data = {
-> >       .ubwc_dec_version = UBWC_2_0,
-> >       .ubwc_swizzle = 7,
-> >       .ubwc_static = 0x11f,
-> > +     .highest_bank_bit = 0x1,
-> >   };
-> >
-> >   static const struct msm_mdss_data sm8250_data = {
-> > @@ -574,8 +591,8 @@ static const struct msm_mdss_data sm8550_data = {
-> >
-> >   static const struct of_device_id mdss_dt_match[] = {
-> >       { .compatible = "qcom,mdss" },
-> > -     { .compatible = "qcom,msm8998-mdss" },
-> > -     { .compatible = "qcom,qcm2290-mdss" },
-> > +     { .compatible = "qcom,msm8998-mdss", .data = &msm8998_data },
-> > +     { .compatible = "qcom,qcm2290-mdss", .data = &qcm2290_data },
-> >       { .compatible = "qcom,sdm845-mdss", .data = &sdm845_data },
-> >       { .compatible = "qcom,sc7180-mdss", .data = &sc7180_data },
-> >       { .compatible = "qcom,sc7280-mdss", .data = &sc7280_data },
-
-
-
--- 
-With best wishes
-Dmitry
+Thanks
+Wesley Cheng
