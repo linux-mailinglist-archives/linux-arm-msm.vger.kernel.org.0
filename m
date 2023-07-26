@@ -2,115 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5180D763E9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:35:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F826763ECD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjGZSfI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 14:35:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36656 "EHLO
+        id S229567AbjGZSqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 14:46:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229705AbjGZSfH (ORCPT
+        with ESMTP id S232029AbjGZSqU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 14:35:07 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED5A926A8;
-        Wed, 26 Jul 2023 11:35:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1690396503; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=QyOAP2eo59cwJDs6ShfwuykvNo0nk3ej712WKvJc1joiuh3WbOkXOCAqrbSQqB59TR
-    3FPuG1gRSZgpNfpxg/IGuw+kIjdpENBzBU6uGcodkH53vbds1hLYKDSZQIbEGVE/kNRZ
-    tRkNohR3mstsY9IDzB3hGwZXpC68CqY3vN/kMzAQvulmnqVYVZjv2vSWcOqih6Qs8bCW
-    tqAVHDRmskVWpWLxgI4dr5FoxMJYJ1nt3yt4R8Lo+b8A7jPWnclPsJYfYDTA5O3gKtsN
-    +j31FdQFFhdKVSKLznAwjKnD+yLt0AvKaS46aov/qxaNuqa/eX86hefnIE0f7aKj2HUF
-    /v+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1690396503;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=kFXFMS4BMfM6mg4NHfeRlpd9uswdZDJ9dYi+CYWBFts=;
-    b=elmBU8C4lepOujV1sMO2CCUzp1UCWRfAUbXM+luLWa2bX3P0HFjwDcHH/ahIvj8o7d
-    E+qYwlMyX+qW1z0JvhhPkvhkvoAQz7dUKUV5sDYoZiRVXwnm5JxSD7fM9j1Eq3cZi7Ol
-    SPsK/xNvwmxUbV/fDhH3VZSWgw2FAgmkWX1lAwB8Gj0qoe83FPbJFjqmWiz5CD2cUhh/
-    1np0iPT0O43+xbN6RyZPw7w4UkUfDfTF6n5a0KuIIvnlRZxieHjHYOMF1j+FOC4x7a85
-    kE2NQczranv9euwevBmSM6JXzHE1dFd21h05lsnDiV4PRNz5xw40qVN68UGXWxeUv7bW
-    P69w==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1690396503;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=kFXFMS4BMfM6mg4NHfeRlpd9uswdZDJ9dYi+CYWBFts=;
-    b=GNwFEvfNmkBtREQ7fHqaXyYaU4bODl8MmjNOj8dBNRAES2q2W3/nujjyzVVkz20ru4
-    OVXmD8Fz2YLztYWC8pyOZP3ZAl2Ia+mEscTS2oGwfdECh4maZQu3kjuw9GlDgA4Xw9VM
-    azjdWZp6Ee4nQT9CH0DBWO79t0eR6N0JqgKwP7bsiBsJh8UZHKPBXXbInxndSlAStxjd
-    iwfxcKtKO0I7sR9s8s5+qCq+1fOTqDnBuwrgH/KQNnJhCoSIdoopWG6j6btlmPXtFGYG
-    2zewzcrnUUrhrG55tZV8dE3YnLVL/ELtU9rQAomMbvkDTb2ZDTKw+r7+SFYR1VCmKbMA
-    gH1g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1690396503;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=kFXFMS4BMfM6mg4NHfeRlpd9uswdZDJ9dYi+CYWBFts=;
-    b=8CfnZo4coMlBARC3w7wPitd/sME6CxTnKhmEanE0D3JyMEGAFHdUORQLTjS7aRkmSf
-    mzUHL3ks9FN0CTa71ZDg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA95vh"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.6 DYNA|AUTH)
-    with ESMTPSA id k61817z6QIZ38Le
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 26 Jul 2023 20:35:03 +0200 (CEST)
-Date:   Wed, 26 Jul 2023 20:35:01 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] clk: qcom: reset: Increase max reset delay
-Message-ID: <ZMFmvp9UwCxpsLf7@gerhold.net>
-References: <20230726-topic-qcom_reset-v1-0-92de6d3e4c7c@linaro.org>
- <20230726-topic-qcom_reset-v1-1-92de6d3e4c7c@linaro.org>
- <ZMFkO5aAT5I5kBac@gerhold.net>
- <9ea4f4ed-8be0-859f-4f5d-d3bd0a727cb9@linaro.org>
+        Wed, 26 Jul 2023 14:46:20 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C690826BB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:46:14 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-31758eb5db8so110616f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:46:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690397173; x=1691001973;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iIA6tFVPEntX943eMtnDQw8/WnIhuSeyz957fgQQqX8=;
+        b=lX6sERAD4wcvWMyA4J84ZRhjADmLtuE5k4rBD1HZHR8UkmkzFNXEXEOKg3v5e9r7yh
+         jD+SFFs3nkGh6U1m8v45pXXwbGnw2qhn35drwAtJ7P9pOb29VJU3GtNWbPUtywIMY7R0
+         trHwx+XMi8Spz+Z/IWMM3vkhtP63zxmHpnMdk+4ahFhh/sgTmN2C5mh44YyMXCJUrx/7
+         MFa6xFvsEsO/A4e3rmRkH5khO09hPbQQOPSJg1bW/6jrMglV3BRqrJZc3P1VlO1bCZ1p
+         Q8hePQg3KBY8QWvDUcMti8L7y1mEPZ9eVFK8wcOc3i9Xo4EKR3KNVPFxa+ak9PxmEuR4
+         FNJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690397173; x=1691001973;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iIA6tFVPEntX943eMtnDQw8/WnIhuSeyz957fgQQqX8=;
+        b=R2ebOLt9E+3/lu1Gu47zozSTfIKdvMh+it/ROJbxJz4aUD44iwV5MO33uTj1TFf3RZ
+         WanCgLOiAflPQsUrzs09I+LU9Z7h33BQdNnkSdSAiT7VncSNcxwQPjIV7XWkUU8X6Buy
+         mf63HzbZDxgzR3QzrGXow+s2PDotU+pEAWNHtKIxH7Tv3EMyaoK0yCpAb70Ga2N58tl9
+         gmjcmMrp5xCr3JnQgZeEUU4/gKAyDjYxVCJ54RaNMKpyYaDN/yscQrnUIdmyXQTmTA84
+         2fhcEfoD2kj2kzAgZmiVFjOzjmEsOvw/Iz6b0zRo+wLUyDOgAnfajzB1AAzEWpyPT1vp
+         DLaQ==
+X-Gm-Message-State: ABy/qLbVVF6cdjAKFxmkQVq/rxkcoSeE0kuq5o9hzC0TxDXl2oF+Ladj
+        bgCf3+fDCgBS6ld5Dd66tz5Nrg==
+X-Google-Smtp-Source: APBJJlGW4bH5/K7JaooshRZKm4IUB76EFrDboLrwrdIOUTH+aSUijKHPgZDjSB07D7Aki8ddkV1S+Q==
+X-Received: by 2002:a5d:6184:0:b0:317:6220:ac13 with SMTP id j4-20020a5d6184000000b003176220ac13mr1005wru.32.1690397173194;
+        Wed, 26 Jul 2023 11:46:13 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id q4-20020a170906a08400b00992d0de8762sm9921111ejy.216.2023.07.26.11.46.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 11:46:12 -0700 (PDT)
+Message-ID: <8bd8fa38-551b-35dc-cb6b-7c5fd79dc0a0@linaro.org>
+Date:   Wed, 26 Jul 2023 20:46:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9ea4f4ed-8be0-859f-4f5d-d3bd0a727cb9@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH V2] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
+Content-Language: en-US
+To:     qaz6750 lzy <qaz6750@outlook.com>, andersson@kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <SY7P282MB378740C6070900BEBF5D0D7CB203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <SY7P282MB378740C6070900BEBF5D0D7CB203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 08:24:33PM +0200, Konrad Dybcio wrote:
-> On 26.07.2023 20:21, Stephan Gerhold wrote:
-> > On Wed, Jul 26, 2023 at 03:26:19PM +0200, Konrad Dybcio wrote:
-> >> u8 limits us to 255 microseconds of delay. Promote the delay variable to
-> >> u16 to hold bigger values.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > 
-> > It would be clearer to change this together with an actual user that
-> > needs > 255us. AFAICT atm MSM8909 is the only user of this and it has
-> > just 15us.
-> Some LPASS resets ask for 500, but I'm still working on that driver.
+On 25/07/2023 10:42, qaz6750 lzy wrote:
+> I2C6 and I2C7 use the same interrupts, which is incorrect.
+> In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
 > 
+> Fixes: 81bee6953b58 ("arm64: dts: qcom: sm8150: add i2c nodes")
+> Signed-off-by: qaz6750 lzy <qaz6750@outlook.com>
+> ---
+>  [v2] Fixed issue of not using full name
 
-Maybe send it together with that driver then? This feels close to the
-typical "no API changes without also adding the user" rule.
+You mentioned your full name as a bit different, so I am not sure what
+improved here.
 
-Thanks,
-Stephan
+Best regards,
+Krzysztof
+
