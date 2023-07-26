@@ -2,154 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15B0176370D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DAA176371A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:08:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230405AbjGZNHH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 09:07:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34084 "EHLO
+        id S232704AbjGZNIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 09:08:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbjGZNHF (ORCPT
+        with ESMTP id S232680AbjGZNIS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:07:05 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EBEF1BF2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:07:04 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b74fa5e7d7so98667741fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:07:04 -0700 (PDT)
+        Wed, 26 Jul 2023 09:08:18 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857701FDA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:08:16 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe0fe622c3so1177735e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690376823; x=1690981623;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3wsh3ywboypSR9IxavTMFwQ0boo9RTAm9WcxI76p9a0=;
-        b=On8Lm3TQuDsqs6FLqYifzbrx1zVIb+8FK1Wv7zFU5QCkStu92wqu6+CMBrGHeYZW5c
-         tAiUG+PXvQXlNbeHJWd6SkUYcCQAZAOoa/iZvt/sRsck7Vuw0Qh3ncJqqPePGuOUtLMT
-         QhsxYyH6w3YUVSCdczi36mv0wzLS2nE5UNOcptd5nj2xpa3zZ8XQfAyz0/46BtgY+oQL
-         zCZ6GHdSxSBp8LeqTifhQEDSM2kjcmn7EGM+zPhK21VyhmNCuQcYEim/+I98JnorxdOs
-         oZ6Axsst7JUaUZx3Sgh6ff+BHpVawV0bsR5GVe47oLeHAd6hOT+d0hEae92AqxovWzeT
-         xrog==
+        d=linaro.org; s=google; t=1690376895; x=1690981695;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CwDRugYXGkOI3Cx38rg/Y2SOw9AyVjS4MggNl8S5mhM=;
+        b=mgpyLwRHj0bG96RXD6JimAHYLV9MEMyrwrFmUkjBP+tymvwOwvNGpTwuURAm5bEa3w
+         pNPyTqrLKGsrdD5Zl+4ZsCTc52S89/XfTAjVS9ptCE7FRGSjaTziGc3w41BravfTPWNP
+         /23NtOuDjyGssJXsF1jaj6IckxhWU86spp/8ditSpynHhd/8aW8/3vTwcNWE6P+ZPDxj
+         T594vtrh+Sg1dY8J5oXGXbLXZjrErRBXImZOMQ+G5H+ksHI+mKKpUXNLQlzKEMRn51TQ
+         xlWbZrjNPYmRzyEo+6hsYt2SBP572t+F9cGgrpSub4P0vjoDu//pGEzxJORGpB34kvjk
+         OAOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690376823; x=1690981623;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3wsh3ywboypSR9IxavTMFwQ0boo9RTAm9WcxI76p9a0=;
-        b=E0Y2GvY8pGjNqvkIBWN8kbkBJiW7yeljxMPBGnZijs0T7XhEkbyW5tOk+ajAWk4rI7
-         QdRlmVTzOLgcDlTDIYEot7ibHh9OMm4iz4+PxuU6wcuFpyzgJfM56+tCOT79ifJxRN8+
-         lXXww4yoTxZfgGZ2HZ1AWqfiWaZPT9icrRf8xMvX4GETRBHTqDMysS6tpXDh7tOIE3zb
-         OZFbJ2cr+ct7zcXBY5JvzwxdaBSc9z7bDbnNmbx1d4PVQQm1CzIL1W8zOEXxhWlZClTf
-         /6c70sJ4/cmdr99yS8sOhC3TS6aVJESV6cW+3S8xIZW7Z9gnGwg8OhuaeB/bZdH1sS6C
-         xP9g==
-X-Gm-Message-State: ABy/qLZV1/GcQxfYEhOXHwi9HYskHzUqAPCAM+abhCz4Vtp/kkGBzel4
-        Ch73s7BHSjRXNbiyDXUTjHFgOA==
-X-Google-Smtp-Source: APBJJlG98W5tRZK9vG8UqmQ9KZqEsLF80l499aQXx/tbGOR5Yk1+QO2D3mq3YniowdDSnIVOuAT7JQ==
-X-Received: by 2002:a2e:95c6:0:b0:2b6:da88:a2d0 with SMTP id y6-20020a2e95c6000000b002b6da88a2d0mr1449694ljh.47.1690376822773;
-        Wed, 26 Jul 2023 06:07:02 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id r27-20020a17090638db00b009786c8249d6sm9661395ejd.175.2023.07.26.06.07.01
+        d=1e100.net; s=20221208; t=1690376895; x=1690981695;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CwDRugYXGkOI3Cx38rg/Y2SOw9AyVjS4MggNl8S5mhM=;
+        b=ln4mPNKBEoVG6I8J0gU54zOd95FzTualG7fRan7icCO3bIJadCSQ6j5khs387XUkhp
+         X6DGR9vvJg0pc97oj6Ryh5/VXN+dULcO55h5gFlnbdxurPh1zgd8t5RwTuwyNR332HZs
+         UhAre1vttJ+nnmj2pmXrKQPNkkkrCIo5EhaI+5auKk2x+QQbOC3N2pKCWg6nplyTyW+c
+         MH5ppVEIJqG5FL2U1HTT4n2Lthm95AkfXVhgYC0BYOR1C7TCn4I52BIInsGQvg0Fx2pf
+         61cJ5r9G0gMnL+UB2j5eJwVT7z9bC9hvDHKfiD5j/JUcjiDMirLi82UFvLqzYLAJcmBT
+         ZX9A==
+X-Gm-Message-State: ABy/qLYH0lYDnuoXxYHtiQ9iaOdvXmPdzECb+h4JfqCiFZ/0R+DeApdJ
+        JRDL+AOHxGiKbKREv6pufXlobw==
+X-Google-Smtp-Source: APBJJlFA6PJNxdOxoH/scYFi1LLXFwRFVjbF4FyiXaUPX47T04DQln62ymKCV5ssdcV2KdJ0Z39xfg==
+X-Received: by 2002:ac2:510b:0:b0:4fa:d147:9df with SMTP id q11-20020ac2510b000000b004fad14709dfmr1406414lfb.19.1690376894676;
+        Wed, 26 Jul 2023 06:08:14 -0700 (PDT)
+Received: from [192.168.1.101] (abyl59.neoplus.adsl.tpnet.pl. [83.9.31.59])
+        by smtp.gmail.com with ESMTPSA id l14-20020ac2430e000000b004fce9e8c390sm3308070lfh.63.2023.07.26.06.08.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 06:07:02 -0700 (PDT)
-Message-ID: <33232e22-1014-2670-47f6-712b0acc929d@linaro.org>
-Date:   Wed, 26 Jul 2023 15:07:00 +0200
+        Wed, 26 Jul 2023 06:08:14 -0700 (PDT)
+Message-ID: <c0429ce4-3d18-bbf8-db96-8b4363fffd0e@linaro.org>
+Date:   Wed, 26 Jul 2023 15:08:12 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH V1] arm64: dts: qcom: sa8775p-ride: Remove min and max
- voltages for L8A
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: apq8064: drop incorrect
+ regulator-type
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230725164917.371714-1-krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-To:     "Naveen Kumar Goud Arepalli (QUIC)" <quic_narepall@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>
-Cc:     "Nitin Rawat (QUIC)" <quic_nitirawa@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "krzysztof.kozlowski+dt@linaro.org" 
-        <krzysztof.kozlowski+dt@linaro.org>,
-        "conor+dt@kernel.org" <conor+dt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20230725100007.14775-1-quic_narepall@quicinc.com>
- <a3l7356miuuapf5dakgfchdjmxjp62ynvle4ta3hejd3tjvzd4@e2t2zm6jh7hb>
- <516a54da44724001895f7e50634ad884@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <516a54da44724001895f7e50634ad884@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230725164917.371714-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/07/2023 14:32, Naveen Kumar Goud Arepalli (QUIC) wrote:
-> On Tue, Jul 25, 2023 at 03:30:07PM +0530, Naveen Kumar Goud Arepalli wrote:
->> L8A is the supply for UFS VCC, UFS specification allows different VCC 
->> configurations for UFS devices.
->> -UFS 2.x devices: 2.70V - 3.60V
->> -UFS 3.x devices: 2.40V - 2.70V
->>
->> As sa8775p-ride supports both ufs 2.x and ufs 3.x devices, remove 
->> min/max voltages for L8A regulator. Initial voltage of L8A will be set 
->> to 2.504v or 2.952v during PON depending on the UFS device type. On 
->> sa8775, UFS is the only client in Linux for L8A and this regulator 
->> will be voted only for enabling/disabling.
->>
->> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 2 --
->>  1 file changed, 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts 
->> b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->> index ed76680410b4..6f3891a09e59 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->> @@ -98,8 +98,6 @@
->>  
->>  		vreg_l8a: ldo8 {
->>  			regulator-name = "vreg_l8a";
->> -			regulator-min-microvolt = <2504000>;
->> -			regulator-max-microvolt = <3300000>;
->>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->>  			regulator-allow-set-load;
->>  			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
->> --
->> 2.17.1
->>
+On 25.07.2023 18:49, Krzysztof Kozlowski wrote:
+> regulator-fixed does not have a "regulator-type" property:
 > 
-> Reviewing with very little expertise in the area....
-> A few questions below that would help me understand this a bit better.
+>   qcom-apq8064-ifc6410.dtb: regulator-ext-3p3v: Unevaluated properties are not allowed ('regulator-type' was unexpected)
 > 
-> Does it make sense to *not* set the range of the regulator at all?:
->>>> Yes, we are removing the range of the regulator.
-> 
->     1. A board dts knows its UFS device
->     2. Is UFS backwards compatible with respect to UFS2/UFS3?
->        I don't know how the version is determined, but if it's a
->        "start at UFS2, go to UFS3" should it be scaled as that goes?
->        >>>> For a UFS device 3.x, we cannot start as UFS 2.0. vcc has to be as per UFS 3.x recommendations.
-> 
-> Relying on the bootloader to set up the device before the kernel starts
-> seems like a direction that should be actively avoided instead of
-> depended on in my opinion.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-I have trouble finding which part is your reply and which is quote of
-Andrew. Please reconfigure your mail client.
-
->>>>> As per upstream UFS driver,  voltage voting is not there and we vote only for enable/disable . 
-> Since UFS is the only client in Linux for this rail (L8A ), we don't need min and max range to support
-> UFS 2.x and 3.x cards.
-
-I would assume some reasonable range is always desired. Why it cannot be
-the wider range from both? 2.4 - 3.6?
-
-Best regards,
-Krzysztof
+Konrad
 
