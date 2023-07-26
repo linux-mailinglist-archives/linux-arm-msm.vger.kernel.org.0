@@ -2,79 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EC93763B63
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:42:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BF37763B8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:48:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234849AbjGZPm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 11:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47034 "EHLO
+        id S234954AbjGZPsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 11:48:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234734AbjGZPmZ (ORCPT
+        with ESMTP id S234952AbjGZPsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 11:42:25 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0341EB5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:42:22 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fbb281eec6so10948786e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:42:22 -0700 (PDT)
+        Wed, 26 Jul 2023 11:48:41 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49480212B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:48:39 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b962c226ceso101396201fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690386141; x=1690990941;
+        d=linaro.org; s=google; t=1690386517; x=1690991317;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pXkM6RQt02/mcXYbX3u5d6aDLN/tgGUKvs7vtieBQ5U=;
-        b=udhTke+Nkxkx1CBE5T2vLkv9FauIZCWSIYWzo6TDW6FU9ENTudzgaITN3X39tWBmL+
-         BBQaA1OZNi5Zht3G4ms/8sr+u4CswC8zq1zFHi2rLfAoIZxr1SV8xOLAb3iicPulBhhn
-         JyZ4+v84gaSqKlQbelbZzkkNkozJOdHiyqvC/GS6IT4qia5X8oURr/bvjp/RnQW/N1+n
-         m1CTuF31NcwZ8WvTeDYeQZ4oUsMhuO/32IqIg0Bwk5Qf+b2P4LY0Y6DbVtbOftCJttCa
-         V8fDo8FoBFgc1mJy68A00zdW99ktAbEZ63Dgc3AOR/UDFIku8Or00bv68ztSLwlIW5k1
-         YqwA==
+        bh=GdRBaqWQcDzdroYiVTw4ku8PnAMCge9liG5VCXR9gfQ=;
+        b=dYNtyQZDZwn1aFHm3OwTwze9ruXrIWPulcIqsVIOTpGLTuUyb3A11h+x544Y4vO6no
+         ELxTYoBX/S73v9i/w/RazYLCQlZ1Ih9SYhqozIJ9/fCpOiswRQfGCRFdW1pjoh/AYbaD
+         zsTyRgWIHaR+lCVaXkM21iNuFauElpelDGSHbLAsIpIDefLWTX2BYckI2S1QhGrArS2c
+         azr498Td3h6FYfSoEdEKO+IgcMZ3l1ovQtfKNqUW2n3Ui2mkTsvwjlYMAbIqgyGmmeGC
+         gOa5ykYX8+GohbAN+LmXh8E6jTVICsXJasTjv3rMBoVZoghgPwrPye3IKI33uhYt8dQA
+         RZEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690386141; x=1690990941;
+        d=1e100.net; s=20221208; t=1690386517; x=1690991317;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pXkM6RQt02/mcXYbX3u5d6aDLN/tgGUKvs7vtieBQ5U=;
-        b=UbOsenxhaeopEzyjsyMYF1kvDUwA0D8juNICVXiqYfTvCDlrmSJGsBDzCsgUxNxBYa
-         WMCrdKZurGtirv3XTdHoIRYMIpNmz8CWB1kqFV5VZft/VM1V0JRyf8/lUXWjE7oLin2y
-         dFJOObkfG1gSp/QF0DNB3jLF1l9MCPCch+ZHmN2HYFW/wFDoovxbyXyLv7pw6zicm+Xo
-         p5uvm8tB0/pbiRtPQrWFSObp4eS4UBu0WIQsVTWYY+s8GeGVmIuuN+WKlz/tBl4kTEVC
-         XJa1MO4Oy9Pr3TGuFxcEgxnNBA0Rl6RCJ4NEkguGUUj1fycvD7b4uRpGKo3aRbwpmLHV
-         7w0A==
-X-Gm-Message-State: ABy/qLZsBJoI70I3GIEHZh6DSKOZ0E21SZ/uRfSvVHhrpIqytzxaFBFB
-        4BFx7b9+QdGR375WgkRzeoWSMw==
-X-Google-Smtp-Source: APBJJlEIEp+n4hXZmCTHCrNmwP/mqi6VL/iLjS590fFD/743rc0ikYBYmLA8PTrc/RZuHd7idT21+g==
-X-Received: by 2002:a05:6512:2253:b0:4fe:788:66fe with SMTP id i19-20020a056512225300b004fe078866femr1941513lfu.68.1690386140872;
-        Wed, 26 Jul 2023 08:42:20 -0700 (PDT)
+        bh=GdRBaqWQcDzdroYiVTw4ku8PnAMCge9liG5VCXR9gfQ=;
+        b=W1RhvAHRG7SryjPwyqooMYHwh5kpjGzc70ZJvB7NOC/kAXS+REHEBpyp96JUzh8rFX
+         URkR3VNNSqCf7yjkSiYZftaAzfFaXZrAoihVqVDdF6m7Yb56GzY568uchD2trWmOdZC6
+         i15vh3YkuqvhkeIcCqNJkJpQU8ZJJLK+eBhyK6kUqWb8ZNA8rvoQPc9GJ/Jpn3jaWTfT
+         iF2y6YEpYVWxCJHej9ZwcjbGfGEs79k10nzDvGjH127dMbqDrt5+/gdq+BMziWriA02j
+         +9u67ohFVN/sCp2zbXTanjUg2KxMymtsm5TGZSrst7213b5SOyPOKSvDJXtBb7Lig/9I
+         tjuw==
+X-Gm-Message-State: ABy/qLZIl441Xz2rAHDe8VmUK4eXo115j94tEs70qWbVz63niqXSaU/8
+        IyPMDdoJLXc+MjTSkHKyLEs/uw==
+X-Google-Smtp-Source: APBJJlG6AXimO2Nl+jP69zgKErNHATS6Nc6zK4sujiqR9jeRne7RNuy+p1FVCSNQsM7L8I/hIPcQEQ==
+X-Received: by 2002:a2e:3001:0:b0:2b5:8a21:5627 with SMTP id w1-20020a2e3001000000b002b58a215627mr1697229ljw.51.1690386517242;
+        Wed, 26 Jul 2023 08:48:37 -0700 (PDT)
 Received: from [192.168.1.101] (abxh240.neoplus.adsl.tpnet.pl. [83.9.1.240])
-        by smtp.gmail.com with ESMTPSA id m2-20020a195202000000b004fe0ec5596bsm460666lfb.54.2023.07.26.08.42.19
+        by smtp.gmail.com with ESMTPSA id u23-20020a2e8557000000b002b6e13fcedcsm4256170ljj.122.2023.07.26.08.48.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 08:42:20 -0700 (PDT)
-Message-ID: <b3175a93-0b41-49d7-ca29-bc4ca9b5c8fc@linaro.org>
-Date:   Wed, 26 Jul 2023 17:42:19 +0200
+        Wed, 26 Jul 2023 08:48:36 -0700 (PDT)
+Message-ID: <df363ae5-cd45-6c9c-51dc-fa915dddde2d@linaro.org>
+Date:   Wed, 26 Jul 2023 17:48:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 4/7] clk: qcom: gcc-qdu1000: Update GCC clocks as per
- the latest hw version
+Subject: Re: [PATCH 09/11] arm64: dts: qcom: msm8998: Remove AGGRE2 clock from
+ SLPI
 Content-Language: en-US
-To:     Imran Shaik <quic_imrashai@quicinc.com>,
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230719041450.737929-1-quic_imrashai@quicinc.com>
- <20230719041450.737929-5-quic_imrashai@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230721-topic-rpm_clk_cleanup-v1-0-cf6cd5c621d5@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v1-9-cf6cd5c621d5@linaro.org>
+ <43afe706-5765-a8e7-2bbe-d9b21ec7a06e@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,9 +108,9 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230719041450.737929-5-quic_imrashai@quicinc.com>
+In-Reply-To: <43afe706-5765-a8e7-2bbe-d9b21ec7a06e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -124,20 +121,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19.07.2023 06:14, Imran Shaik wrote:
-> Update the GCC clocks as per the latest hw version of QDU1000 and
-> QRU100 SoCs.
+On 21.07.2023 17:50, Jeffrey Hugo wrote:
+> On 7/21/2023 9:36 AM, Konrad Dybcio wrote:
+>> The AGGRE2 clock is a clock for the entire AGGRE2 bus, managed from
+>> within the interconnect driver. Attaching it to SLPI was a total hack.
+>> Get rid of it.
 > 
-> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-> ---
-[...]
-
-> +	[GCC_GPLL1_OUT_EVEN] = &gcc_gpll1_out_even.clkr,
-So, this clock was there before, but it was never registered with the
-clock framework, even though it was referenced as a parent..
-
-Sounds like a bug!
+> Nit - why do we care what driver manages the clock?  DT describes hardware...
+> 
+> The entire SLPI block hangs off the AGGRE2 bus, so that bus needs to be on for the SLPI.  I agree that AGGRE2 is really an interconnect device and SLPI should be a consumer of that, but we don't have 8998 interconnects defined yet.  Seems like this hack is still needed.
+I'll try to get somebody to check on a device with working SLPI, but
+the DT-side explanation here is: this is not a clock. It's previously
+been misrepresented as such, but it lies within the "interconnect"
+class.
 
 Konrad
+> 
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/msm8998.dtsi | 5 ++---
+>>   1 file changed, 2 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> index 360fe3edcc08..547c3f9654a6 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> @@ -1599,9 +1599,8 @@ remoteproc_slpi: remoteproc@5800000 {
+>>                 px-supply = <&vreg_lvs2a_1p8>;
+>>   -            clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+>> -                 <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+>> -            clock-names = "xo", "aggre2";
+>> +            clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>> +            clock-names = "xo";
+>>                 memory-region = <&slpi_mem>;
+>>  
+> 
