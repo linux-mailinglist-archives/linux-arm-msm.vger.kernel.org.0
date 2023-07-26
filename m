@@ -2,58 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A10762C7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:05:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECB11762CAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:08:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229654AbjGZHFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 03:05:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40340 "EHLO
+        id S230071AbjGZHId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 03:08:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232257AbjGZHEc (ORCPT
+        with ESMTP id S232199AbjGZHHi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 03:04:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDDA449C;
-        Wed, 26 Jul 2023 00:02:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 08E3061528;
-        Wed, 26 Jul 2023 07:02:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A108C433C7;
-        Wed, 26 Jul 2023 07:02:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690354974;
-        bh=lHXQIHzrvHwVsw2n8ho3OKgRL8uci99i0feTnOVSPXM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ldqMKqfu+uSVk/J2jwEuL29Q229yBjLU/PPwJs1j3nmCYIM1QcKUtwlATQ140U8PA
-         14OiMJVvfx9UHTvclH0jwM4ARgTDCAZ2YUNUZPjNyKAeTjlNuMcGwRkJhHjZ5eyhHG
-         Dr+6Gyw2jH5d/P5EP8blBX7+c3KuygsTVFowAjnEEZ+Qv0kaaaNY2AGPhR4aQEnt6O
-         u+olCAGloQKCDRePaqWiINXzZ2NikvEjE13BSwt0TL2rqwrl5jH7qeIPUqfQKKTEVO
-         +ptSf5CQhwHT8m3qmO9VShSPvvv8aew/UBPbueNsCwkKgGQ0Rjii39cLiAjmkQW9sm
-         J591R745bZWMQ==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qOYYA-0003RY-1L;
-        Wed, 26 Jul 2023 09:03:10 +0200
-Date:   Wed, 26 Jul 2023 09:03:10 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Tim Jiang <quic_tjiang@quicinc.com>
-Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_bgodavar@quicinc.com, quic_hemantg@quicinc.com
-Subject: Re: [PATCH v12 0/2] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC QCA2066
-Message-ID: <ZMDFLl1iAHrcQkt_@hovoldconsulting.com>
-References: <20230726052245.609987-1-quic_tjiang@quicinc.com>
+        Wed, 26 Jul 2023 03:07:38 -0400
+Received: from out-6.mta1.migadu.com (out-6.mta1.migadu.com [IPv6:2001:41d0:203:375::6])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1BEC448D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:05:10 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+        t=1690355108;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=KXYamYs9irq65yhoLRu1td82YuFMeMDqOuwaU+oDyHM=;
+        b=USoqEnOQU6eM3+N9zIAHCDwhNC+8+UNIWLHIgerhexBlGJCaVmSRSO1wU4o3mjHNGYO9Rs
+        DYRZMApHrS1Pjvb6NJH1mJ50Vk6voJ6kQPH4oorM80xUHt6/RAFEITooiN15iQlceLlIh+
+        2SDmjYt2iC3yWxkOb7vPU57vNB82awk=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230726052245.609987-1-quic_tjiang@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Subject: Re: [PATCH v2 17/47] rcu: dynamically allocate the rcu-lazy shrinker
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <20230724094354.90817-18-zhengqi.arch@bytedance.com>
+Date:   Wed, 26 Jul 2023 15:04:30 +0800
+Cc:     Andrew Morton <akpm@linux-foundation.org>, david@fromorbit.com,
+        tkhai@ya.ru, Vlastimil Babka <vbabka@suse.cz>,
+        Roman Gushchin <roman.gushchin@linux.dev>, djwong@kernel.org,
+        Christian Brauner <brauner@kernel.org>,
+        "Paul E. McKenney" <paulmck@kernel.org>, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
+        yujie.liu@intel.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3A164818-56E1-4EB4-A927-1B2D23B81659@linux.dev>
+References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
+ <20230724094354.90817-18-zhengqi.arch@bytedance.com>
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+X-Migadu-Flow: FLOW_OUT
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,39 +68,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 01:22:43PM +0800, Tim Jiang wrote:
 
-Thanks for adding the changelog.
 
-You should also add a sentence or two here that describes what the
-series does (e.g. just say "This series adds support for ...").
+> On Jul 24, 2023, at 17:43, Qi Zheng <zhengqi.arch@bytedance.com> =
+wrote:
+>=20
+> Use new APIs to dynamically allocate the rcu-lazy shrinker.
+>=20
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> ---
+> kernel/rcu/tree_nocb.h | 19 +++++++++++--------
+> 1 file changed, 11 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+> index 43229d2b0c44..919f17561733 100644
+> --- a/kernel/rcu/tree_nocb.h
+> +++ b/kernel/rcu/tree_nocb.h
+> @@ -1397,12 +1397,7 @@ lazy_rcu_shrink_scan(struct shrinker *shrink, =
+struct shrink_control *sc)
+> return count ? count : SHRINK_STOP;
+> }
+>=20
+> -static struct shrinker lazy_rcu_shrinker =3D {
+> -	.count_objects =3D lazy_rcu_shrink_count,
+> -	.scan_objects =3D lazy_rcu_shrink_scan,
+> -	.batch =3D 0,
+> -	.seeks =3D DEFAULT_SEEKS,
+> -};
+> +static struct shrinker *lazy_rcu_shrinker;
 
-Also make sure to run scripts/get_maintainer.pl on your series. Looks
-like you're still missing some maintainers on CC.
+Seems there is no users of this variable, maybe we could drop
+this.
 
-You also did not CC at least on person providing review feedback on
-earlier versions.
-
-> Changes in v12
->  - fix compile error issue for patch 1/2
-> 
-> Changes in v11
->  - reverse two patches order
-> 
-> Changes in v10
->  - break out btsoc type print into seperate patch
-> 
-> Changes in v2-v9
->  - solve review comments for code style and commit message context
-
-This is not detailed enough for a changelog, but ok, let's forget about
-v2-v9 this time, but remember it for your future submissions.
-
-> Tim Jiang (2):
->   Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
->   Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
-
-As I mentioned elsewhere, these Subjects should be distinct and
-summarise what each patch does.
-
-Johan
