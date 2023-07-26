@@ -2,132 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A478B7637D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5344C7637E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:45:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231652AbjGZNmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 09:42:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50160 "EHLO
+        id S233592AbjGZNpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 09:45:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232619AbjGZNm3 (ORCPT
+        with ESMTP id S230310AbjGZNpl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:42:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14133118;
-        Wed, 26 Jul 2023 06:42:29 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36QD1f6B032532;
-        Wed, 26 Jul 2023 13:41:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=v3fJG4hcwnQVClC9EqYXRi1q8buYQM/N3AKD0PIMSv8=;
- b=nPqdlHybAlxKpVTFKcgta9RsIPtkRZ+JZdH2nRyLP6iyf0RJkwb7uyRCQLDmbtZMOTuT
- zLST+rj/Yg5ZZeyLOBbRUEnRoJhD/ORrZ80QB+rFY4ZghJV+kipmwvnVcwzIVyNwq+ct
- kC4ZGnDUwrjznSQtnc3+WdCwjAqLBhn2qLvombXEmxxoYQ/76198STiIShHXSq6A5mTP
- dkPznSu9hvQ0ec6ObV40shfmkajprwTpPFdyoZGSQ/NkOl5punSz7MGaq7snauHhGSSF
- 72PLOV9elvUOIQF5OF+XRY9Jc6ehKz1ByzawKumCY/yM5V0my77pf78rrCpwxw/Y1wms hA== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s2fms2mg9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 26 Jul 2023 13:41:48 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36QDfjqQ017649;
-        Wed, 26 Jul 2023 13:41:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3s086kxdvw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 26 Jul 2023 13:41:45 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36QDfi8M017644;
-        Wed, 26 Jul 2023 13:41:44 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 36QDfigO017642;
-        Wed, 26 Jul 2023 13:41:44 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-        id E85455001B7; Wed, 26 Jul 2023 19:11:43 +0530 (+0530)
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-To:     powen.kao@mediatek.com, bvanassche@acm.org,
-        alim.akhtar@samsung.com, adrian.hunter@intel.com,
-        jejb@linux.ibm.com, stanley.chu@mediatek.com,
-        asutoshd@codeaurora.org, quic_cang@quicinc.com, mani@kernel.org,
-        martin.petersen@oracle.com, beanhuo@micron.com,
-        ebiggers@google.com, agross@kernel.org, Arthur.Simchaev@wdc.com,
-        konrad.dybcio@linaro.org
-Cc:     quic_ziqichen@quicinc.com, quic_nguyenb@quicinc.com,
-        quic_narepall@quicinc.com, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Manish Pandey <quic_mapa@quicinc.com>
-Subject: [PATCH V2 2/2] scsi: ufs: ufs-qcom: check host controller state
-Date:   Wed, 26 Jul 2023 19:11:40 +0530
-Message-Id: <20230726134140.7180-3-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230726134140.7180-1-quic_nitirawa@quicinc.com>
-References: <20230726134140.7180-1-quic_nitirawa@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qZ1nNmFTooGi6Xevl3uv6A18fTLficFb
-X-Proofpoint-ORIG-GUID: qZ1nNmFTooGi6Xevl3uv6A18fTLficFb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-26_06,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- bulkscore=0 phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
- clxscore=1015 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307260121
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 26 Jul 2023 09:45:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC5FA2;
+        Wed, 26 Jul 2023 06:45:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 849F961AB8;
+        Wed, 26 Jul 2023 13:45:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05A5C433CD;
+        Wed, 26 Jul 2023 13:45:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690379138;
+        bh=FOQK4XupUueLaNuwpuP0faSyRRZ9Ava/fzIG0kPjV6s=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=VQ1uGrM8ufwEpC/UFWp8UzjNmqbvFqIsLch0zqvicmfaxseB037IDLW7WoNqO32cu
+         kg+Fhg8k4ilIfkc3JNyAWklI7ymMQjIXcURrst1dTdy6TIyqbwtPZcEaOrWk+/JY0/
+         6XxCF4rVeYnmq7ozKou5MEmI4fVZe42/Gb/CJ2HeJqGs//iuGL9CF8HT+SkQNH80uM
+         mlXwqFkXiDJKkvO6Z4jWQvX2LI3JUXrOAGI3Ji1nNGxUqXWxW9Xn6+hUaE4k6BvCUb
+         hHNNqlR4O5BvW6Q+WdZglqJxYzONVdwAwqXrxTDTGzmfBel5S2+R6SxXX8y0S/IjMe
+         cei8RgORE71QQ==
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2b93fba1f62so99636431fa.1;
+        Wed, 26 Jul 2023 06:45:38 -0700 (PDT)
+X-Gm-Message-State: ABy/qLacKGHI7dsLoTjbyyN3vh70sW3F/E+HmM8vvaVECFvF3iX3ToE0
+        wpPuX8FbuCmOtRxz0Ste3cNcZxHuH43WzYLsbg==
+X-Google-Smtp-Source: APBJJlHtGl5j2c/e/mnOniJPq+lRHYhMLejBouuRyKWw85jTV/364HGUPhNajn5iaUQM6XiYkevkAJ/FVEAJkjl8aT4=
+X-Received: by 2002:a2e:3c09:0:b0:2b6:e625:ba55 with SMTP id
+ j9-20020a2e3c09000000b002b6e625ba55mr1536023lja.41.1690379136685; Wed, 26 Jul
+ 2023 06:45:36 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
+ <20230724223057.1208122-4-quic_eberman@quicinc.com> <20230724232328.GA1101352-robh@kernel.org>
+ <0e72a1a0-611c-9667-866e-a4a1f67f10f6@quicinc.com>
+In-Reply-To: <0e72a1a0-611c-9667-866e-a4a1f67f10f6@quicinc.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 26 Jul 2023 07:45:24 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+wJbp7-xoUqorkoieLcxRVnEKDeFNYtdZQdBTg3gWSew@mail.gmail.com>
+Message-ID: <CAL_Jsq+wJbp7-xoUqorkoieLcxRVnEKDeFNYtdZQdBTg3gWSew@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/4] dt-bindings: power: reset: Document arm,psci-vendor-reset
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Prasad Sodagudi <quic_psodagud@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit <52a518019ca1> (Fix missing clk change notification) added UFS
-clock scaling notification to ufshcd_host_reset_and_restore. This
-invokes hibern8 enter and exit on qualcomm platform which fails because
-controller is in reset state.
+On Tue, Jul 25, 2023 at 12:01=E2=80=AFPM Elliot Berman <quic_eberman@quicin=
+c.com> wrote:
+>
+>
+>
+> On 7/24/2023 4:23 PM, Rob Herring wrote:
+> > On Mon, Jul 24, 2023 at 03:30:53PM -0700, Elliot Berman wrote:
+> >> Add devicetree bindings for using PSCI SYSTEM_RESET2 with vendor reset=
+  types.
+> >>
+> >> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> >> ---
+> >>   .../power/reset/arm,psci-vendor-reset.yaml    | 35 +++++++++++++++++=
+++
+> >>   MAINTAINERS                                   |  1 +
+> >>   2 files changed, 36 insertions(+)
+> >>   create mode 100644 Documentation/devicetree/bindings/power/reset/arm=
+,psci-vendor-reset.yaml
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/power/reset/arm,psci-ve=
+ndor-reset.yaml b/Documentation/devicetree/bindings/power/reset/arm,psci-ve=
+ndor-reset.yaml
+> >> new file mode 100644
+> >> index 000000000000..18b0b8c167a1
+> >> --- /dev/null
+> >> +++ b/Documentation/devicetree/bindings/power/reset/arm,psci-vendor-re=
+set.yaml
+> >> @@ -0,0 +1,35 @@
+> >> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> >> +# Copyright 2023 Qualcomm Innovation Center, Inc. All Rights Reserved=
+.
+> >> +%YAML 1.2
+> >> +---
+> >> +$id: http://devicetree.org/schemas/power/reset/arm,psci-vendor-reset.=
+yaml#
+> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >> +
+> >> +title: PSCI SYSTEM_RESET2 Vendor Resets
+> >> +
+> >> +maintainers:
+> >> +  - Elliot Berman <quic_eberman@quicinc.com>
+> >> +
+> >> +description: |
+> >> +  PSCI SYSTEM_RESET2 supports vendor-defined reset types. This descri=
+bes
+> >> +  the conversion of reboot modes to the reset types.
+> >> +
+> >> +properties:
+> >> +  compatible:
+> >> +    const: arm,psci-vendor-reset
+> >> +
+> >> +allOf:
+> >> +  - $ref: reboot-mode.yaml#
+> >> +
+> >> +additionalProperties: false
+> >> +
+> >> +examples:
+> >> +  - |
+> >> +    firmware {
+> >> +      psci-vendor-resets {
+> >> +        compatible =3D "arm,psci-vendor-reset";
+> >
+> > We already have a node for PSCI, we don't need a second one. You can
+> > have a separate driver without a separate node.
+> >
+>
+> I could also place the reboot-mode functionality straight into
+> drivers/firwmare/psci/? I thought that might be more controversial than
+> separate driver, but maybe not?
+>
+> Mark/Loreno, do you have any concerns to add the reboot-mode driver
+> functionality directly in drivers/firmware/psci/psci.c?
 
-Fix this by checking the Host controller state before sending
-hibern8 command.
+I'm talking about the binding. Why are you talking about driver
+design? They are independent.
 
-__ufshcd_wl_resume()
-ufshcd_reset_and_restore()
-ufshcd_host_reset_and_restore()
-ufshcd_scale_clks()
-ufshcd_vops_clk_scale_notify()
-ufs_qcom_clk_scale_notify()
-ufshcd_uic_hibern8_enter()
-
-Fixes: 52a518019ca1 ("scsi: ufs: core: Fix missing clk change notification on host reset")
-
-Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
-Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 8d6fd4c3324f..95412e98a598 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1254,6 +1254,10 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
- 	struct ufs_pa_layer_attr *dev_req_params = &host->dev_req_params;
- 	int err = 0;
-
-+	/* check the host controller state before sending hibern8 cmd */
-+	if (!ufshcd_is_hba_active(hba))
-+		return 0;
-+
- 	if (status == PRE_CHANGE) {
- 		err = ufshcd_uic_hibern8_enter(hba);
- 		if (err)
---
-2.17.1
-
+Rob
