@@ -2,71 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6368D7640DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 23:02:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 869627640EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 23:09:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230430AbjGZVCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 17:02:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38016 "EHLO
+        id S229873AbjGZVId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 17:08:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjGZVB7 (ORCPT
+        with ESMTP id S231833AbjGZVI1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 17:01:59 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5632519AD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 14:01:57 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99342a599e9so19870066b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 14:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690405316; x=1691010116;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=s650GH6eqpBwEm+o4kr4JN+XIhsv0wSwVJ8bWoio1M0=;
-        b=V4huKQW1iXcJZ7ZqqAMakZlUy6tukW9IceMpH7GfJA09rbHbAhygEHK8VhXQUMtzm3
-         TM7dpVLtZ+HvhCT3HLssQN5t/0ANpM2lh1GeWvlDMxjRigpZZ4KBu2ixNqkz8a2X4jNW
-         zLn2490EpgVS/Q22YjOwCYIDZCKcq2NoTgBgVBQYh8xovv7Pitq9a24n2yY/aX8EHkkw
-         8PUoY9+evWhSgqhp0fycBN7Mb2iSdKmjtxtWNKQBANGqA3MGx4CFjVm/ZlUHMyDWUrjQ
-         V+i6hJgO0rkbnwV7FiWuxtjOpWm9H+hdj77TAe/UMjYWkYRdnJBdd7R97u/6XnruaNds
-         +UqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690405316; x=1691010116;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s650GH6eqpBwEm+o4kr4JN+XIhsv0wSwVJ8bWoio1M0=;
-        b=KxrzQVPVg8RPjOb9aCSWz42ftPgdpZiFqtaLpZ32W7F7wG7lrVM7kiB6Gvv3QYyiuN
-         +igvJcTWeccgUBpnLFg3wBejHT0CsSA33wPcVSqlsfSg8eMCaiw6GIhGA0Eh8gudpoTs
-         0Tt9G+qceOQdsJ/5wE9gxrI5AQtF7LdpvvOPPd3MLnJC+DLE83dR0uw8Am06NjaGgAwS
-         6UlO8LMV1F4vew0xRaZjQ/MHzEgpkQP3D/xVVCQZP72zYNfijhozN4RTWE+wz/Ba58Dp
-         YO70yu/0afZhSo/41Ie6ac6a89rBL465QKqpesHz83zOSUH2/crTTbGWsRNJkEDFkGr4
-         vP0Q==
-X-Gm-Message-State: ABy/qLaUBWJwJ1PSMetpNC1W4PyH7SC0Je/cAb1eaQuGhn4rFX+nYxLW
-        1gz/f0yK2S7PNV5V8oSXbXOnVPwUbpPt1iHio5c=
-X-Google-Smtp-Source: APBJJlGjFW1+WlPCquzPat2j2ADFTGHWCOc785NkIw/63RfTKsC/l1WUcfbz3p1p5WTIIwL07/x69A==
-X-Received: by 2002:a17:906:53d2:b0:99a:e756:57bf with SMTP id p18-20020a17090653d200b0099ae75657bfmr256465ejo.7.1690405315831;
-        Wed, 26 Jul 2023 14:01:55 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id d10-20020a17090648ca00b0099b6b8a0d04sm8749227ejt.157.2023.07.26.14.01.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jul 2023 14:01:55 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ARM: dts: qcom: ipq8064: move keys and leds out of soc node
-Date:   Wed, 26 Jul 2023 23:01:52 +0200
-Message-Id: <20230726210152.273161-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Wed, 26 Jul 2023 17:08:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C70D1BE2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 14:08:26 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36QJxad9032282;
+        Wed, 26 Jul 2023 21:08:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=RDT4y8jep5SxiYU+ubXStOfwIUHntx8B3vxshCpbyao=;
+ b=gtDC227i0Z1c0j91TOnf90AbVlERVk/LUzL+8/qGCsmgpih2DNJMJ/EV7vpq+J28ZqWC
+ zxz4tghm6lyE61d2Bz/ojM+2/e58l8JaeKwWdK6eFVbJdBZ7feGlFCrzvaa6ATIjtcIE
+ XbHFCMPeoKLfbDiH0iE2jieZ0J41qZDplILIsJNSd/WokdrnNMQd25ziWYtT05ad4JrF
+ z6uOvzeWxXIbqtGJUPofHEwwEYptl+zsg9E0oAzAsm56VSE0fL2yiv1rfzzDA7uXlFL6
+ DhqH0nxvOjxZwzRGLSPvwt9xD++a0lhp8y8TbXXL2O/OlOj1WSpZxu62ifWNKkw1wpvM 7w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s2daukwm0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Jul 2023 21:08:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36QL86NJ028683
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Jul 2023 21:08:06 GMT
+Received: from [10.110.29.149] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 26 Jul
+ 2023 14:08:06 -0700
+Message-ID: <1582c537-5a11-80fa-4ebd-6ef31277d0c2@quicinc.com>
+Date:   Wed, 26 Jul 2023 14:07:35 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/6] drm/msm/mdss: rename ubwc_version to ubwc_enc_version
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230521171026.4159495-1-dmitry.baryshkov@linaro.org>
+ <20230521171026.4159495-3-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230521171026.4159495-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: AdhKNE8-BG4OVHTsiFKMkQL8XNSKoE89
+X-Proofpoint-ORIG-GUID: AdhKNE8-BG4OVHTsiFKMkQL8XNSKoE89
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ spamscore=0 mlxscore=0 phishscore=0 mlxlogscore=998 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307260188
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,230 +86,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-GPIO keys and LEDs are not part of the SoC, so move them to top-level to
-fix dtbs_check warnings like:
 
-  qcom-ipq8064-rb3011.dtb: soc: gpio-keys: {'compatible': ['gpio-keys'], ... should not be valid under {'type': 'object'}
-        from schema $id: http://devicetree.org/schemas/simple-bus.yaml#
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts |  55 ++++----
- arch/arm/boot/dts/qcom/qcom-ipq8064-v1.0.dtsi | 122 +++++++++---------
- 2 files changed, 88 insertions(+), 89 deletions(-)
+On 5/21/2023 10:10 AM, Dmitry Baryshkov wrote:
+> Rename the ubwc_version field to ubwc_enc_version, it denotes the
+> version of the UBWC encoder, not the "UBWC version".
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/msm_mdss.c | 26 +++++++++++++-------------
+>   1 file changed, 13 insertions(+), 13 deletions(-)
+> 
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts b/arch/arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts
-index 1796ded31d17..12e806adcda8 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts
-@@ -20,6 +20,33 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-0 = <&buttons_pins>;
-+		pinctrl-names = "default";
-+
-+		button {
-+			label = "reset";
-+			linux,code = <KEY_RESTART>;
-+			gpios = <&qcom_pinmux 66 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			debounce-interval = <60>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		pinctrl-0 = <&leds_pins>;
-+		pinctrl-names = "default";
-+
-+		led-0 {
-+			label = "rb3011:green:user";
-+			color = <LED_COLOR_ID_GREEN>;
-+			gpios = <&qcom_pinmux 33 GPIO_ACTIVE_HIGH>;
-+			default-state = "off";
-+		};
-+	};
-+
- 	memory@42000000 {
- 		reg = <0x42000000 0x3e000000>;
- 		device_type = "memory";
-@@ -302,34 +329,6 @@ partition@0 {
- 				};
- 			};
- 		};
--
--		gpio-keys {
--			compatible = "gpio-keys";
--			pinctrl-0 = <&buttons_pins>;
--			pinctrl-names = "default";
--
--			button {
--				label = "reset";
--				linux,code = <KEY_RESTART>;
--				gpios = <&qcom_pinmux 66 GPIO_ACTIVE_LOW>;
--				linux,input-type = <1>;
--				debounce-interval = <60>;
--			};
--		};
--
--		leds {
--			compatible = "gpio-leds";
--			pinctrl-0 = <&leds_pins>;
--			pinctrl-names = "default";
--
--			led-0 {
--				label = "rb3011:green:user";
--				color = <LED_COLOR_ID_GREEN>;
--				gpios = <&qcom_pinmux 33 GPIO_ACTIVE_HIGH>;
--				default-state = "off";
--			};
--		};
--
- 	};
- };
- 
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064-v1.0.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8064-v1.0.dtsi
-index 17f65e140e02..49de9752632f 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq8064-v1.0.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq8064-v1.0.dtsi
-@@ -14,6 +14,67 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-0 = <&buttons_pins>;
-+		pinctrl-names = "default";
-+
-+		button-1 {
-+			label = "reset";
-+			linux,code = <KEY_RESTART>;
-+			gpios = <&qcom_pinmux 54 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			debounce-interval = <60>;
-+		};
-+		button-2 {
-+			label = "wps";
-+			linux,code = <KEY_WPS_BUTTON>;
-+			gpios = <&qcom_pinmux 65 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			debounce-interval = <60>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		pinctrl-0 = <&leds_pins>;
-+		pinctrl-names = "default";
-+
-+		led-0 {
-+			label = "led_usb1";
-+			gpios = <&qcom_pinmux 7 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "usbdev";
-+			default-state = "off";
-+		};
-+
-+		led-1 {
-+			label = "led_usb3";
-+			gpios = <&qcom_pinmux 8 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "usbdev";
-+			default-state = "off";
-+		};
-+
-+		led-2 {
-+			label = "status_led_fail";
-+			function = LED_FUNCTION_STATUS;
-+			gpios = <&qcom_pinmux 9 GPIO_ACTIVE_HIGH>;
-+			default-state = "off";
-+		};
-+
-+		led-3 {
-+			label = "sata_led";
-+			gpios = <&qcom_pinmux 26 GPIO_ACTIVE_HIGH>;
-+			default-state = "off";
-+		};
-+
-+		led-4 {
-+			label = "status_led_pass";
-+			function = LED_FUNCTION_STATUS;
-+			gpios = <&qcom_pinmux 53 GPIO_ACTIVE_HIGH>;
-+			default-state = "off";
-+		};
-+	};
-+
- 	soc {
- 		gsbi@16300000 {
- 			qcom,mode = <GSBI_PROT_I2C_UART>;
-@@ -64,66 +125,5 @@ sata@29000000 {
- 			ports-implemented = <0x1>;
- 			status = "okay";
- 		};
--
--		gpio-keys {
--			compatible = "gpio-keys";
--			pinctrl-0 = <&buttons_pins>;
--			pinctrl-names = "default";
--
--			button-1 {
--				label = "reset";
--				linux,code = <KEY_RESTART>;
--				gpios = <&qcom_pinmux 54 GPIO_ACTIVE_LOW>;
--				linux,input-type = <1>;
--				debounce-interval = <60>;
--			};
--			button-2 {
--				label = "wps";
--				linux,code = <KEY_WPS_BUTTON>;
--				gpios = <&qcom_pinmux 65 GPIO_ACTIVE_LOW>;
--				linux,input-type = <1>;
--				debounce-interval = <60>;
--			};
--		};
--
--		leds {
--			compatible = "gpio-leds";
--			pinctrl-0 = <&leds_pins>;
--			pinctrl-names = "default";
--
--			led-0 {
--				label = "led_usb1";
--				gpios = <&qcom_pinmux 7 GPIO_ACTIVE_HIGH>;
--				linux,default-trigger = "usbdev";
--				default-state = "off";
--			};
--
--			led-1 {
--				label = "led_usb3";
--				gpios = <&qcom_pinmux 8 GPIO_ACTIVE_HIGH>;
--				linux,default-trigger = "usbdev";
--				default-state = "off";
--			};
--
--			led-2 {
--				label = "status_led_fail";
--				function = LED_FUNCTION_STATUS;
--				gpios = <&qcom_pinmux 9 GPIO_ACTIVE_HIGH>;
--				default-state = "off";
--			};
--
--			led-3 {
--				label = "sata_led";
--				gpios = <&qcom_pinmux 26 GPIO_ACTIVE_HIGH>;
--				default-state = "off";
--			};
--
--			led-4 {
--				label = "status_led_pass";
--				function = LED_FUNCTION_STATUS;
--				gpios = <&qcom_pinmux 53 GPIO_ACTIVE_HIGH>;
--				default-state = "off";
--			};
--		};
- 	};
- };
--- 
-2.34.1
+Yes, this is the encoder version
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
