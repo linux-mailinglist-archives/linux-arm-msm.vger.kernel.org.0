@@ -2,131 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4173F763E56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:24:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 693F2763E70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:29:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231600AbjGZSYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 14:24:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58876 "EHLO
+        id S229714AbjGZS3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 14:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230172AbjGZSYk (ORCPT
+        with ESMTP id S229562AbjGZS3B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 14:24:40 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C541FC4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:24:38 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fba03becc6so1709843e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:24:38 -0700 (PDT)
+        Wed, 26 Jul 2023 14:29:01 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114AB2691
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:29:00 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-5221f3affe4so105111a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690395877; x=1691000677;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DMm+MukByH/bngQDWKuculviOTh1bUuwstlQEscD59I=;
-        b=jR5ta4KXGrccAKVEC2MgSliubflD3OrhlooylN4hMy/Jhf6cWJ9W3gYKmTTwVWVxj1
-         zLwshMd1VShyLFptZVe2Xxbn4JBE8PZ029Wvxwpr8CGD29GVRqA+svEZcblDGDIklDJj
-         lmoap2aX5Q74drwCaWBWtBVFYqcTlwQaOS42wX0ajIzHp2TXyicgd6461jA6SAaxL6ht
-         d2/J2cvgztCC0GVWyQKIybee39ZlxMlrwBUAWkUPvuAYYlqNi+pltu7K6Xzlqb8M89A6
-         QJ/K+KPKqIwPNnNSwlwkS6R9GVjTrVUdBBt11gWO5In1AHvgPMH16Ux0VFSCm6bFrMAq
-         vcSw==
+        d=gmail.com; s=20221208; t=1690396138; x=1691000938;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qu9zNqX4VmDKwn332jpa0Ay8l+J8PiNno6QtiCjLIoY=;
+        b=Li+Yi8yUhbUSXHxNjD53IFp6Sug0nk7tnqPcdex5l+y9JaZuSMVRjeOxmxs8WDAssl
+         1u9JdL+ZQbnBRGfJiQhR8NHrqs8LP9qHfE8TO8sidb/tSFAoUDjqd4han9vcttdYy6jW
+         cRm2kn+i19oAEJK0nGykh/8AK4UPrxARSTHl1uAceAkRIvlxE/mYDjOHlfWCoazZMydy
+         1zeMVLWu6p6TCU29fOWIZOlzccO96B8FC77HaJsprAqWZIXjZqpkJG/jP1qkP0KdYG6Q
+         6G3jARi2tdLbUbZm3og+U9Hfe9IsOdAy574NrCjmY2XqEhCeQLE5ccZ/a0g31O4rsvJ6
+         TBag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690395877; x=1691000677;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DMm+MukByH/bngQDWKuculviOTh1bUuwstlQEscD59I=;
-        b=j4R5Ra/jYLX1/ols+sPQwLzZRFvEjrZSLPsqM2vbDkS9CAXlMEEEU9Q/XbtMcdQfDw
-         HbN0OxHrk9mPpAQKb5iLwZRNpCcjP6YazrCx4TxaOQMJCV7e0aSWvW0bVTuhq/ag99j4
-         /74tKTdNOLLBybZHMb8oRlVDb1FNW9/nnSAP/0ito6B4k4elhyzf0uBuKfpJa0WK7EyI
-         Esb7UgbA08dKeh9Zlr+Z1XSmKKUXExWtbdJQtobHSlWiileSpGqTDU1SlTvZ501qJM7u
-         GyGMf4G7TsRdRrS2Z2wzNcBjqmyID6IdAkmofu/24rpPl8ffX0ZbwsiDBuShjPdJvy9z
-         6JmA==
-X-Gm-Message-State: ABy/qLYC5w4MaGMHN8ci3fwhLz36BdVy42DYigU2pIXtznzABSgbCX/y
-        eJUnw826dli2MOBTdShA294x+Q==
-X-Google-Smtp-Source: APBJJlEC4KK34ke9StScpXn5HQIKp4rixX7PSMR2RamZGbcI/hdvdvZ/spxTurGWaQ+Aa3lvHDKLsQ==
-X-Received: by 2002:a05:6512:2038:b0:4fe:993:2220 with SMTP id s24-20020a056512203800b004fe09932220mr86936lfs.27.1690395876709;
-        Wed, 26 Jul 2023 11:24:36 -0700 (PDT)
-Received: from [192.168.1.101] (abxi164.neoplus.adsl.tpnet.pl. [83.9.2.164])
-        by smtp.gmail.com with ESMTPSA id e28-20020ac2547c000000b004f755ceafbcsm3408784lfn.217.2023.07.26.11.24.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 11:24:36 -0700 (PDT)
-Message-ID: <9ea4f4ed-8be0-859f-4f5d-d3bd0a727cb9@linaro.org>
-Date:   Wed, 26 Jul 2023 20:24:33 +0200
+        d=1e100.net; s=20221208; t=1690396138; x=1691000938;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Qu9zNqX4VmDKwn332jpa0Ay8l+J8PiNno6QtiCjLIoY=;
+        b=M4YBYcSgnfqJFb02nHTUKu8al/G1fvLjRGgcEziv70gKxVlivS45uNVMCnUoePYxH3
+         Tx+woIrcIuJOIecoxWwPXDdCdG1bdmWIbnc7FfQlkJTKY7GXWt5+frkBndvC1o99Ju7x
+         QNEJORbdjVkdXotMbPLhTxEXtho06ATCvktCIYpgPMvGqOyYro0zRG4AOvoTCkddJ3jE
+         SifIbEAtujjbe1z3j2J2A8BHyX1sGqi9fadhJFcK5MYYb2YHM2UFfXjQWxZTezt+hY3/
+         o3ha7NVwWEg2ohmyAtZOun6NiDbzqrJMW8aiIxQCpIuJjSkAHRAuiEVACwS7QuX2N4GM
+         TbWA==
+X-Gm-Message-State: ABy/qLb5a5vaj1G8YPesZg6YlzSlJskGGT4sR9sP0DvfvUcbb4oGOPFp
+        DKGqhvY4zfs7nXq6ZbZNvDkk0MeGzymFKe0ZD7A=
+X-Google-Smtp-Source: APBJJlEh7CL+MXt1w4kJadHNuDTm0TzdNmaywlkcOJBgicIvuHLY//zktJVSQtGZQxLwqW0MHg1lFEHfvxnq3nasqWc=
+X-Received: by 2002:aa7:cd13:0:b0:522:27c4:3865 with SMTP id
+ b19-20020aa7cd13000000b0052227c43865mr1912666edw.41.1690396138273; Wed, 26
+ Jul 2023 11:28:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] clk: qcom: reset: Increase max reset delay
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mike Turquette <mturquette@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>
-References: <20230726-topic-qcom_reset-v1-0-92de6d3e4c7c@linaro.org>
- <20230726-topic-qcom_reset-v1-1-92de6d3e4c7c@linaro.org>
- <ZMFkO5aAT5I5kBac@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZMFkO5aAT5I5kBac@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-7-robdclark@gmail.com>
+ <ccbe9ed4-7def-b0d1-2d1c-e2550d212943@linaro.org> <fpwpc7oyxzbfndojr2o2rkv2i66is4ylrtxh4equms7eyu4afc@cwyfgqanhlbo>
+In-Reply-To: <fpwpc7oyxzbfndojr2o2rkv2i66is4ylrtxh4equms7eyu4afc@cwyfgqanhlbo>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 26 Jul 2023 11:28:45 -0700
+Message-ID: <CAF6AEGt+qnUBAq3CHS4eTO1YQsbLjj3Urtt2LuSwRJ7XpzPBww@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 06/12] drm/msm/adreno: Allow SoC specific gpu
+ device table entries
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.07.2023 20:21, Stephan Gerhold wrote:
-> On Wed, Jul 26, 2023 at 03:26:19PM +0200, Konrad Dybcio wrote:
->> u8 limits us to 255 microseconds of delay. Promote the delay variable to
->> u16 to hold bigger values.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> It would be clearer to change this together with an actual user that
-> needs > 255us. AFAICT atm MSM8909 is the only user of this and it has
-> just 15us.
-Some LPASS resets ask for 500, but I'm still working on that driver.
+On Thu, Jul 13, 2023 at 1:26=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quicin=
+c.com> wrote:
+>
+> On Fri, Jul 07, 2023 at 05:34:04AM +0300, Dmitry Baryshkov wrote:
+> >
+> > On 07/07/2023 00:10, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > There are cases where there are differences due to SoC integration.
+> > > Such as cache-coherency support, and (in the next patch) e-fuse to
+> > > speedbin mappings.
+> >
+> > I have the feeling that we are trying to circumvent the way DT works. I=
+'d
+> > suggest adding explicit SoC-compatible strings to Adreno bindings and t=
+hen
+> > using of_device_id::data and then of_device_get_match_data().
+> >
+> Just thinking, then how about a unique compatible string which we match
+> to identify gpu->info and drop chip-id check completely here?
 
-Konrad
+Ok, I think we could do this, so something like:
+
+  compatible =3D "qcom,sm4350-adreno-619.0", qcom,adreno-619.0", "qcom,adre=
+no"
+
+?
+
+It looks like we don't have gpu dt bits upstream yet for either sm4350
+or sm6375, so I suppose we could get away with this change
+
+BR,
+-R
+
+> -Akhil
+>
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >   drivers/gpu/drm/msm/adreno/adreno_device.c | 34 +++++++++++++++++++=
+---
+> > >   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  1 +
+> > >   2 files changed, 31 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu=
+/drm/msm/adreno/adreno_device.c
+> > > index 3c531da417b9..e62bc895a31f 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > @@ -258,6 +258,32 @@ static const struct adreno_info gpulist[] =3D {
+> > >             .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > >             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
+> > >             .init =3D a6xx_gpu_init,
+> > > +   }, {
+> > > +           .machine =3D "qcom,sm4350",
+> > > +           .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
+> > > +           .revn =3D 619,
+> > > +           .fw =3D {
+> > > +                   [ADRENO_FW_SQE] =3D "a630_sqe.fw",
+> > > +                   [ADRENO_FW_GMU] =3D "a619_gmu.bin",
+> > > +           },
+> > > +           .gmem =3D SZ_512K,
+> > > +           .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > > +           .init =3D a6xx_gpu_init,
+> > > +           .zapfw =3D "a615_zap.mdt",
+> > > +           .hwcg =3D a615_hwcg,
+> > > +   }, {
+> > > +           .machine =3D "qcom,sm6375",
+> > > +           .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
+> > > +           .revn =3D 619,
+> > > +           .fw =3D {
+> > > +                   [ADRENO_FW_SQE] =3D "a630_sqe.fw",
+> > > +                   [ADRENO_FW_GMU] =3D "a619_gmu.bin",
+> > > +           },
+> > > +           .gmem =3D SZ_512K,
+> > > +           .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > > +           .init =3D a6xx_gpu_init,
+> > > +           .zapfw =3D "a615_zap.mdt",
+> > > +           .hwcg =3D a615_hwcg,
+> > >     }, {
+> > >             .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
+> > >             .revn =3D 619,
+> > > @@ -409,6 +435,8 @@ const struct adreno_info *adreno_info(struct adre=
+no_rev rev)
+> > >     /* identify gpu: */
+> > >     for (i =3D 0; i < ARRAY_SIZE(gpulist); i++) {
+> > >             const struct adreno_info *info =3D &gpulist[i];
+> > > +           if (info->machine && !of_machine_is_compatible(info->mach=
+ine))
+> > > +                   continue;
+> > >             if (adreno_cmp_rev(info->rev, rev))
+> > >                     return info;
+> > >     }
+> > > @@ -563,6 +591,8 @@ static int adreno_bind(struct device *dev, struct=
+ device *master, void *data)
+> > >             config.rev.minor, config.rev.patchid);
+> > >     priv->is_a2xx =3D config.rev.core =3D=3D 2;
+> > > +   priv->has_cached_coherent =3D
+> > > +           !!(info->quirks & ADRENO_QUIRK_HAS_CACHED_COHERENT);
+> > >     gpu =3D info->init(drm);
+> > >     if (IS_ERR(gpu)) {
+> > > @@ -574,10 +604,6 @@ static int adreno_bind(struct device *dev, struc=
+t device *master, void *data)
+> > >     if (ret)
+> > >             return ret;
+> > > -   priv->has_cached_coherent =3D
+> > > -           !!(info->quirks & ADRENO_QUIRK_HAS_CACHED_COHERENT) &&
+> > > -           !adreno_has_gmu_wrapper(to_adreno_gpu(gpu));
+> > > -
+> > >     return 0;
+> > >   }
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/dr=
+m/msm/adreno/adreno_gpu.h
+> > > index e08d41337169..d5335b99c64c 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > @@ -61,6 +61,7 @@ extern const struct adreno_reglist a612_hwcg[], a61=
+5_hwcg[], a630_hwcg[], a640_h
+> > >   extern const struct adreno_reglist a660_hwcg[], a690_hwcg[];
+> > >   struct adreno_info {
+> > > +   const char *machine;
+> > >     struct adreno_rev rev;
+> > >     uint32_t revn;
+> > >     const char *fw[ADRENO_FW_MAX];
+> >
+> > --
+> > With best wishes
+> > Dmitry
+> >
