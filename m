@@ -2,146 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86860762F38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 10:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF38A762F79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 10:18:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230396AbjGZIIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 04:08:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54080 "EHLO
+        id S233143AbjGZISD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 04:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233113AbjGZIHv (ORCPT
+        with ESMTP id S229939AbjGZIR1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 04:07:51 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63294686
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 01:00:45 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-99342a599e9so1093603766b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 01:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690358444; x=1690963244;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gBi4DXkLkJk2Dg/EkHSHB5+DOP2xfu33PAuJukEQqto=;
-        b=O0IeSms8+KrpFhWEWODiOcZPWu7XE/w7h3JOelgJ1u+V9ps8nlSF+lr+InbxFPs6XS
-         5nvks7NbBBTFP2kfFdwkLuFRlzvMd5WpBYuvWxZs2FPikTsRGX8CgpzMGrq3SDbW7/g/
-         cb+kDdUrgtqK7QEaDferyxoNRuu6OLW4vYujM9WN1+AXTaRlt0rsTDFZ4cTizKHLpNbg
-         4HMoyv718YERB/ONenjnlfdCd643YpVN60h2L5dy7AEfdiVG9B/NQhfXXeQe3dhMQXGU
-         MnlajdbDA63LmK4GWKRGcGxHSTIuhETxZ2M/Olf28mMWyJuJzV7koTwGJAWHtWb71u2i
-         9+hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690358444; x=1690963244;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gBi4DXkLkJk2Dg/EkHSHB5+DOP2xfu33PAuJukEQqto=;
-        b=k6Qx+qNxzi9GXYxKehM73epuI7xbKaceHKNMr1Ouw/f/WT2I74AS5JSL1u+QGvKgCq
-         POxkIN6hnuO0q3LWxn/G0nwVcVlMD1neRFEdJH2Ha30dhxv0oJQgpsRLnz5BhYqEW5aS
-         rGaoipdRBXbv8uHL1j84HcN1KLhe+BEcC3VuH5c6FElQMBO960imFv42/GJcdRssygbO
-         q4mdHxvl7o9Eqhy5e11Y0NHRdyfK5/pXhKTP0EuU9rvFtUgPdK0V0DP9mSVoVLOh9guV
-         ZlkWWd9oXBbHP1bfIA/+U+dCP+HexCuqPB8O17NbrnsjOp/2XHZpFl0BdsUnz2r0muwc
-         FCnQ==
-X-Gm-Message-State: ABy/qLaGcBUo75ewhrDZzIbfCiNXn/5JfUFnaek4vXXrJafn0QlZ2LHp
-        RQdyrrhE3WkciRrmSr4mE7IsoQ==
-X-Google-Smtp-Source: APBJJlEy6J8EY+FQdZGq40ZDRrTuULzJoDlHK38119KLstNODFT2nRCtqILtEmSUP2tSfvA4Ge7tJg==
-X-Received: by 2002:a17:906:7795:b0:991:c9da:70da with SMTP id s21-20020a170906779500b00991c9da70damr1212478ejm.61.1690358444448;
-        Wed, 26 Jul 2023 01:00:44 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id si1-20020a170906cec100b00992d70f8078sm9302120ejb.106.2023.07.26.01.00.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 01:00:44 -0700 (PDT)
-Message-ID: <b030ce33-afd1-7b11-db38-7d48f81690d6@linaro.org>
-Date:   Wed, 26 Jul 2023 10:00:41 +0200
+        Wed, 26 Jul 2023 04:17:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853D56199;
+        Wed, 26 Jul 2023 01:07:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1AD26617FE;
+        Wed, 26 Jul 2023 08:07:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE039C433C7;
+        Wed, 26 Jul 2023 08:07:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690358828;
+        bh=02/BpPWpwcY6qGVMejurwI2MWG0QRmzw+p5vHPciA24=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Si6mynfF/QLiJ9GIAhKKfRQiDSikeuZ873k10cyiYklhjlNSURbHevhJKwAb+l92S
+         Uf8Kj9aLuzyIeNRdJEPYMETFNTeYV7p1dx2Vzj/Dhtu3ViQam7sFC8KYLXJu3pR/42
+         z52VBElkQ3oAOQwDr5qrKtXFrBhQ9MGMVOlPQOvDKPv/oMiYspXZVkCwbnzcZIWT8a
+         yJ6xNx9UpPdJr/UbbthJW4jj1UAcJzkJy3UJnijsHT3DOx8yCTvAlxetVeb0C+5c9P
+         wfZPGkuZRxqTFUcenD3YoMUSuqJiBBFkMPKCv5urluIJDUJujg9A49V62hu32CLWhE
+         vo4Y0h1mZcXdw==
+Date:   Wed, 26 Jul 2023 10:07:00 +0200
+From:   Benjamin Tissoires <bentiss@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Jiri Kosina <jikos@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org, hsinyi@google.com,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        linux-arm-msm@vger.kernel.org,
+        Chris Morgan <macroalpha82@gmail.com>
+Subject: Re: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
+Message-ID: <wcilyqbh23xjscsvubxjnkwlctxuvyj5weix2opywkolg7udyb@gad2pmlazxx4>
+References: <20230607215224.2067679-1-dianders@chromium.org>
+ <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid>
+ <y3l4x3kv7jgog3miexati5wbveaynnryzqvj6sc4ul6625f2if@w7nqgojfavfw>
+ <CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com>
+ <CAD=FV=UUdc5xi-HoOye-a1Oki3brcX3V1+=zuxQKLAcrd3iTSA@mail.gmail.com>
+ <CAD=FV=WmpH6cB0oZOxbL+TUxjLRf3PM+kKvuYRAZSiEhS4o37A@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 23/32] ASoC: dt-bindings: Add Q6USB backend bindings
-Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
-        Thinh.Nguyen@synopsys.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
-        quic_jackp@quicinc.com, pierre-louis.bossart@linux.intel.com,
-        oneukum@suse.com, albertccwang@google.com, o-takashi@sakamocchi.jp
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-24-quic_wcheng@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230725023416.11205-24-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=WmpH6cB0oZOxbL+TUxjLRf3PM+kKvuYRAZSiEhS4o37A@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/07/2023 04:34, Wesley Cheng wrote:
-> Add a dt-binding to describe the definition of enabling the Q6 USB backend
-> device for audio offloading.  The node carries information, which is passed
-> along to the QC USB SND class driver counterpart.  These parameters will be
-> utilized during QMI stream enable requests.
+On Jul 25 2023, Doug Anderson wrote:
+> Hi,
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-
-A nit, subject: drop second/last, redundant "bindings". The
-"dt-bindings" prefix is already stating that these are bindings.
-
-> ---
->  .../bindings/sound/qcom,q6usb-dais.yaml       | 49 +++++++++++++++++++
->  1 file changed, 49 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml
+> On Mon, Jul 17, 2023 at 11:15 AM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > Benjamin,
+> >
+> > On Mon, Jun 26, 2023 at 3:49 PM Doug Anderson <dianders@chromium.org> wrote:
+> > >
+> > > Benjamin,
+> > >
+> > > On Thu, Jun 8, 2023 at 8:37 AM Benjamin Tissoires
+> > > <benjamin.tissoires@redhat.com> wrote:
+> > > >
+> > > > > +static const struct drm_panel_follower_funcs i2c_hid_core_panel_follower_funcs = {
+> > > > > +     .panel_prepared = i2c_hid_core_panel_prepared,
+> > > > > +     .panel_unpreparing = i2c_hid_core_panel_unpreparing,
+> > > > > +};
+> > > >
+> > > > Can we make that above block at least behind a Kconfig?
+> > > >
+> > > > i2c-hid is often used for touchpads, and the notion of drm panel has
+> > > > nothing to do with them. So I'd be more confident if we could disable
+> > > > that code if not required.
+> > >
+> > > Now that other concerns are addressed, I started trying to write up a
+> > > v3 and I found myself writing this as the description of the Kconfig
+> > > entry:
+> > >
+> > > --
+> > > config I2C_HID_SUPPORT_PANEL_FOLLOWER
+> > > bool "Support i2c-hid devices that must be power sequenced with a panel"
+> > >
+> > > Say Y here if you want support for i2c-hid devices that need to
+> > > coordinate power sequencing with a panel. This is typically important
+> > > when you have a panel and a touchscreen that share power rails or
+> > > reset GPIOs. If you say N here then the kernel will not try to honor
+> > > any shared power sequencing for your hardware. In the best case,
+> > > ignoring power sequencing when it's needed will draw extra power. In
+> > > the worst case this will prevent your hardware from functioning or
+> > > could even damage your hardware.
+> > >
+> > > If unsure, say Y.
+> > >
+> > > --
+> > >
+> > > I can certainly go that way, but I just wanted to truly make sure
+> > > that's what we want. Specifically:
+> > >
+> > > 1. If we put the panel follower code behind a Kconfig then we actually
+> > > have no idea if a touchscreen was intended to be a panel follower.
+> > > Specifically the panel follower API is the one that detects the
+> > > connection between the panel and the i2c-hid device, so without being
+> > > able to call the panel follower API we have no idea that an i2c-hid
+> > > device was supposed to be a panel follower.
+> > >
+> > > 2. It is conceivable that power sequencing a device incorrectly could
+> > > truly cause hardware damage.
+> > >
+> > > Together, those points mean that if you turn off the Kconfig entry and
+> > > then try to boot on a device that needed that Kconfig setting that you
+> > > might damage hardware. I can code it up that way if you want, but it
+> > > worries me...
+> > >
+> > >
+> > > Alternatives that I can think of:
+> > >
+> > > a) I could change the panel follower API so that panel followers are
+> > > in charge of detecting the panel that they follow. Today, that looks
+> > > like:
+> > >
+> > >        panel_np = of_parse_phandle(dev->of_node, "panel", 0);
+> > >        if (panel_np)
+> > >                /* It's a panel follower */
+> > >        of_node_put(panel_np);
+> > >
+> > > ...so we could put that code in each touchscreen driver and then fail
+> > > to probe i2c-hid if we detect that we're supposed to be a panel
+> > > follower but the Kconfig is turned off. The above doesn't seem
+> > > massively ideal since it duplicates code. Also, one reason why I put
+> > > that code in drm_panel_add_follower() is that I think this concept
+> > > will eventually be needed even for non-DT cases. I don't know how to
+> > > write the non-DT code right now, though...
+> > >
+> > >
+> > > b) I could open-code detect the panel follower case but leave the
+> > > actual linking to the panel follower API. AKA add to i2c-hid:
+> > >
+> > >        if (of_property_read_bool(dev->of_node, "panel"))
+> > >                /* It's a panel follower */
+> > >
+> > > ...that's a smaller bit of code, but feels like an abstraction
+> > > violation. It also would need to be updated if/when we added support
+> > > for non-DT panel followers.
+> > >
+> > >
+> > > c) I could add a "static inline" implementation of b) to "drm_panel.h".
+> > >
+> > > That sounds great and I started doing it. ...but then realized that it
+> > > means adding to drm_panel.h:
+> > >
+> > > #include <linux/device.h>
+> > > #include <linux/of.h>
+> > >
+> > > ...because otherwise of_property_read_bool() isn't defined and "struct
+> > > device" can't be dereferenced. That might be OK, but it looks as if
+> > > folks have been working hard to avoid things like this in header
+> > > files. Presumably it would get uglier if/when we added the non-DT
+> > > case, as well. That being said, I can give it a shot...
+> > >
+> > > --
+> > >
+> > > At this point, I'm hoping for some advice. How important is it for you
+> > > to have a Kconfig for "I2C_HID_SUPPORT_PANEL_FOLLOWER"?
+> > >
+> > > NOTE: even if I don't add the Kconfig, I could at least create a
+> > > function for registering the panel follower that would get most of the
+> > > panel follower logic out of the probe function. Would that be enough?
+> >
+> > I'd love to send a new version of this patch series, but I'm still
+> > stuck with the above issue. I'm hoping you might have a minute to
+> > provide your thoughts. If I don't hear anything, I'll try a v3 where I
+> > don't have the Kconfig for "I2C_HID_SUPPORT_PANEL_FOLLOWER" but just
+> > try to pull a little more of the code out of the probe function.
 > 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml b/Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml
-> new file mode 100644
-> index 000000000000..77bc9b4c3c90
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,q6usb-dais.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm ASoC DPCM USB backend DAI
-> +
-> +maintainers:
-> +  - Wesley Cheng <quic_wcheng@quicinc.com>
-> +
-> +description:
-> +  The USB port is a supported AFE path on the Q6 DSP.  This ASoC DPCM
-> +  backend DAI driver will communicate the required settings to the QC USB SND
-> +  class driver for properly enabling the audio stream.  Parameters defined
-> +  under this node will carry settings, which will be passed along during
-> +  the QMI stream enable request.
+> To provide breadcrumbs, I posted the v3 which pulls a bit more code
+> out of the probe function but is otherwise largely unchanged. The
+> cover letter for v3 can be found at:
 
-You still refer to the drivers. I said this should be rephrased and you
-confirmed that "driver" here means Linux. If you are adding bindings for
-Linux drivers, then it won't work. Bindings are for hardware.
+Apologies for the delay. Given that you received feedbacks from other
+folks I wanted things to settle down a little bit before returning to
+this discussion. Sorry.
 
+> 
+> https://lore.kernel.org/r/20230725203545.2260506-1-dianders@chromium.org/
 
-Also, missing $ref to dai-common.yaml
+I like the 8th patch of this series much more. If there is a risk of
+damaging the device, then we should not have the Kconfig to disable it.
 
+I have some comments on that particular patch (v3 8/10), but I; ll reply
+inline.
 
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,q6usb
-> +
-
-
-Best regards,
-Krzysztof
-
+Cheers,
+Benjamin
