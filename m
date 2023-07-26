@@ -2,131 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74B18763273
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 11:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE9E77632A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 11:43:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231593AbjGZJiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 05:38:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53462 "EHLO
+        id S231573AbjGZJnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 05:43:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233413AbjGZJhz (ORCPT
+        with ESMTP id S233857AbjGZJnF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 05:37:55 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15281273B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 02:37:29 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-98e39784a85so167879566b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 02:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690364247; x=1690969047;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FUdFsL7Rj7TOV3TMa/RIiUuM3Ig3WitH5zKl3a6zj7U=;
-        b=Yqeibz8Pw2C5YNjJ0AuM22nL0Sp6k5H8d9dIRNXCzP7danQnPgEFyI6KLsunRzDqLy
-         UEtoYBuNV6w6FvpPiqzVHPz/h2PzwWFYA3gRW9/zkD36tKMxFYaFQDLkC89tmN3fH6HG
-         0RMPWE5M7Txi1uqg+CwDyvoaum51xECSn77EqV4jphCfci2WHFfSNpjCnYd/sSOsZh9J
-         H+OVM5W1Qil609a8WNDzDbXsjxzhvD9neldH7sUlsdWR37ZiWGf6KpyWnRXoBGzr/j+2
-         QTJjWzOprLsE5FitgynFWdOkuNPHXihPEfwQxU2yZjPFWNexwx4Z5WG5qWJMweaq5VVm
-         q/dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690364247; x=1690969047;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FUdFsL7Rj7TOV3TMa/RIiUuM3Ig3WitH5zKl3a6zj7U=;
-        b=W1ekhkfskOxHkWlRBzrlxfsXPv5CI3IFxpGUcHRIGkn9+iUVwIC0pgexVCi0JlCCA9
-         79dmVrl981TSEUrKgZU9a/o+i4lHq9eH7v+n8YxqL7JHbRLxR77qvGhW+BcgtybQg+0H
-         zBEHBYiXQU5Kw9T8ZeGHZrwviq6hC9kHgz2bcuEXG5CJTAKFlwxnsNfSt62h/canBeY8
-         6h9kUxBuCRXCIx52uNjML84dfP4MGi+0MFRKM2UOf8ltc3jrytxUJuamkxxdV1FECoyv
-         79nzk5BnZGH7D9ZdhusWUGzcUqmZ2RrvfeYIx8RY+hduQUikV4Yv1tU2kHL1Il/V6lpe
-         mJeQ==
-X-Gm-Message-State: ABy/qLazCe53lP5yEilgWVp/9Nlb/8E16LyaV/iHl6ksFJiCxK69nVsT
-        ES256Ds64IAAyaNRRdOvuaS3Nw==
-X-Google-Smtp-Source: APBJJlGyMOlgcRnfytdUMxZAaSNwN60cSkk/EeAYqYSWHODAAc3zU54oBjgkiPE02PuuQim25n4HvQ==
-X-Received: by 2002:a17:906:64c6:b0:99b:c2ce:501c with SMTP id p6-20020a17090664c600b0099bc2ce501cmr1394736ejn.19.1690364247517;
-        Wed, 26 Jul 2023 02:37:27 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id z15-20020a170906240f00b0098921e1b064sm9306439eja.181.2023.07.26.02.37.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 02:37:27 -0700 (PDT)
-Message-ID: <fc55d5eb-1bc6-84b5-b9f2-daf24817b8b6@linaro.org>
-Date:   Wed, 26 Jul 2023 11:37:25 +0200
+        Wed, 26 Jul 2023 05:43:05 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2699FA;
+        Wed, 26 Jul 2023 02:43:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690364585; x=1721900585;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=c0BcRVLtfxhSDi5n/gkET17KUrY9Ggxrw5qlALdi7QY=;
+  b=OtAAcGpCeJ3qrzhVJ9jiL7kIc643jXnrOiAXi71peAcjMTTuhE3Mf98s
+   dm6Xl3IgIGO68KyqmRtfMgPK7ciNXf0ZJL4QfB4YdzaZT2w8+MWz/xKx7
+   qWYJGnh4ac52LK95MDCyn8kJRpoT/YMRMnFsNpWJ9emsxsIUp7VfsELU6
+   XlzCxSnZ/Uhsnxyc/yJw5gl8VJ549vm+sgOZaIYBCUY8c9MlRp5CX/dY0
+   hhUihZvnW/lnygD9W3Hfv4M6zBDZyiznWwEpFZox400iddeqcw0urF+UY
+   bpWfYvKz1H9Q4xe3cfe5UZkIGE9lK0mn6Qjc0SYDn4KpBZwlrcKpgKYJl
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10782"; a="431770835"
+X-IronPort-AV: E=Sophos;i="6.01,231,1684825200"; 
+   d="scan'208";a="431770835"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 02:43:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10782"; a="973055404"
+X-IronPort-AV: E=Sophos;i="6.01,231,1684825200"; 
+   d="scan'208";a="973055404"
+Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.254.208.129]) ([10.254.208.129])
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 02:42:48 -0700
+Message-ID: <ab5174e0-73b3-fcb1-bbc5-53cd82d52268@linux.intel.com>
+Date:   Wed, 26 Jul 2023 17:42:45 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
- TLMM
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230719192058.433517-1-krzysztof.kozlowski@linaro.org>
- <20230719192058.433517-2-krzysztof.kozlowski@linaro.org>
- <CACRpkdbK7gU36nVOm0J+HbLk5JRKki+30=UaJ6hZjF1DiB4bBw@mail.gmail.com>
- <34be3638-ed14-bb0b-eb2e-c44f43c582f2@linaro.org>
- <CACRpkdY=WYZEfHuYsJe3kxk4-E3r4wp-Ln=GyvSY2m=+-Ow47A@mail.gmail.com>
+Cc:     baolu.lu@linux.intel.com, Dmitry Osipenko <digetx@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v5 16/25] iommu: Remove ops->set_platform_dma_ops()
 Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CACRpkdY=WYZEfHuYsJe3kxk4-E3r4wp-Ln=GyvSY2m=+-Ow47A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+References: <16-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
+From:   Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <16-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/07/2023 20:18, Linus Walleij wrote:
-> On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->> On 24/07/2023 20:09, Linus Walleij wrote:
->>> On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski
->>> <krzysztof.kozlowski@linaro.org> wrote:
->>>
->>>> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
->>>> driver is similar to SM8250 LPASS pin controller, with difference in one
->>>> new pin (gpio14) belonging to swr_tx_data.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> This sure looks good to me.
->>>
->>> Krzystof, can you collect a branch with pin control changes for
->>> Qualcomm chips that I can pull? If it's OK with Bjorn that is.
->>
->> Sure, I can go through the lore search results and grab recent submissions.
+On 2023/7/25 1:22, Jason Gunthorpe wrote:
+> All drivers are now using IDENTITY or PLATFORM domains for what this did,
+> we can remove it now. It is no longer possible to attach to a NULL domain.
 > 
-> Thanks, I think you know better than me what is the stuff that is reviewed
-> and ready for merge.
-> 
-> I have this on my devel branch so far:
-> 59d612a3215c dt-bindings: pinctrl: qcom: lpass-lpi: Remove qcom,adsp-bypass-mode
-> abf02e132cb6 pinctrl: qcom: lpass-lpi: Make the clocks optional, always
-> 1e46c7430af7 pinctrl: qcom-pmic-gpio: Add support for pmx75
-> 8fff6514ff0a pinctrl: qcom-pmic-gpio: Add support for pm7550ba
-> 75ec058db332 dt-bindings: pinctrl: qcom-pmic-gpio: Add pmx75 support
-> 4bbee99da13a dt-bindings: pinctrl: qcom-pmic-gpio: Add pm7550ba support
-> 
-> Anything else is in some inbetween state and I'm not sure of the status
-> so it would really offload me if you could get it in order!
+> Tested-by: Heiko Stuebner<heiko@sntech.de>
+> Tested-by: Niklas Schnelle<schnelle@linux.ibm.com>
+> Tested-by: Steven Price<steven.price@arm.com>
+> Tested-by: Marek Szyprowski<m.szyprowski@samsung.com>
+> Tested-by: Nicolin Chen<nicolinc@nvidia.com>
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> ---
+>   drivers/iommu/iommu.c | 30 +++++-------------------------
+>   include/linux/iommu.h |  4 ----
+>   2 files changed, 5 insertions(+), 29 deletions(-)
 
-It seems only my patchset, SM6115 LPASS pinctrl and one my binding
-change were missing, so I took these.
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
