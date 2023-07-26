@@ -2,59 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90DF1762CC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:11:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C40F4762CE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:15:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232411AbjGZHLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 03:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44730 "EHLO
+        id S232561AbjGZHPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 03:15:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232439AbjGZHLU (ORCPT
+        with ESMTP id S232295AbjGZHOZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 03:11:20 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A88A3C24;
-        Wed, 26 Jul 2023 00:08:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3971A61709;
-        Wed, 26 Jul 2023 07:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4FEC433C8;
-        Wed, 26 Jul 2023 07:07:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690355245;
-        bh=7abV0l4C3qKzncBqw93/hcngzGzhBVF9y7thXLvQed0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CT3Qy7r2CYKduSMwIaVtpHDFiL0YN5NMei7s4lsNfvWhK9h9dg6iPDW3yqxOklL7m
-         DNTHNQUDPlAS/Dv3nbHjQpI8Zkscw56rgJ4sen9K3tXnEJDurjAIjpEMinK+rlHIob
-         uG5r6fefxNZIXhrVzbFhpt/3maXqHRod+wOLRbX7VwSggKc6Eqzo/vh8yJrLQk7pkC
-         27yFJeTHUmsMLRwqKzJU7NuPqJib5QVRlXzJONNzTNtvTJfZ3Q19DguOvg4iMtq+Qt
-         pBSeZgf8QVlnYZcyxBChqZPjPYRvTEbIEMbyqM3qiir09vgFQaPhf1KYa8tc6GG3jm
-         L92GIW6um5D8Q==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qOYcX-0003T7-1x;
-        Wed, 26 Jul 2023 09:07:41 +0200
-Date:   Wed, 26 Jul 2023 09:07:41 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Tim Jiang <quic_tjiang@quicinc.com>
-Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_bgodavar@quicinc.com, quic_hemantg@quicinc.com
-Subject: Re: [PATCH v12 2/2] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC QCA2066
-Message-ID: <ZMDGPTSEvfpHRDvh@hovoldconsulting.com>
-References: <20230726052245.609987-1-quic_tjiang@quicinc.com>
- <20230726052245.609987-3-quic_tjiang@quicinc.com>
+        Wed, 26 Jul 2023 03:14:25 -0400
+Received: from out-27.mta0.migadu.com (out-27.mta0.migadu.com [IPv6:2001:41d0:1004:224b::1b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7434455AF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:10:51 -0700 (PDT)
+Message-ID: <d41d09bc-7c1c-f708-ecfa-ffac59bf58ad@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+        t=1690355449;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Jvc7jyiFGsEgqDLQ8SvDwKCvjECMcl21zak/YPsttTU=;
+        b=MJNzwcgKcI8WMs1vcHIk9odpFzXJXYJZkCEqMlLlvbf0FvKHK96bLJs5XTXQyUPcTsHXLS
+        nIqAIZhilsKlD4q7ONNAKGG+YEnzT1SMJk3OhEOossreA6CsEZNAbhHhb/1A0W8D/Gm3Q3
+        yKiIjz335Q++bI56PmpRINRM4YbGaI0=
+Date:   Wed, 26 Jul 2023 15:10:21 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230726052245.609987-3-quic_tjiang@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Subject: Re: [PATCH v2 19/47] mm: thp: dynamically allocate the thp-related
+ shrinkers
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
+        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
+        yujie.liu@intel.com, gregkh@linuxfoundation.org
+References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
+ <20230724094354.90817-20-zhengqi.arch@bytedance.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <20230724094354.90817-20-zhengqi.arch@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,80 +66,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 01:22:45PM +0800, Tim Jiang wrote:
-> This patch adds support for QCA2066 firmware patch and NVM downloading.
-> as the RF performance of QCA2066 SOC chip from different foundries may
-> vary. Therefore we use different NVM to configure them based on board ID.
-> 
-> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+
+
+On 2023/7/24 17:43, Qi Zheng wrote:
+> Use new APIs to dynamically allocate the thp-zero and thp-deferred_split
+> shrinkers.
+>
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
 > ---
->  drivers/bluetooth/btqca.c   | 76 ++++++++++++++++++++++++++++++++++++-
->  drivers/bluetooth/btqca.h   |  3 +-
->  drivers/bluetooth/hci_qca.c |  7 ++++
->  3 files changed, 83 insertions(+), 3 deletions(-)
-  
-> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
-> +		   size_t max_size, struct qca_btsoc_version ver, u16 bid)
+>   mm/huge_memory.c | 69 +++++++++++++++++++++++++++++++-----------------
+>   1 file changed, 45 insertions(+), 24 deletions(-)
+>
+> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+> index 8c94b34024a2..4db5a1834d81 100644
+> --- a/mm/huge_memory.c
+> +++ b/mm/huge_memory.c
+> @@ -65,7 +65,11 @@ unsigned long transparent_hugepage_flags __read_mostly =
+>   	(1<<TRANSPARENT_HUGEPAGE_DEFRAG_KHUGEPAGED_FLAG)|
+>   	(1<<TRANSPARENT_HUGEPAGE_USE_ZERO_PAGE_FLAG);
+>   
+> -static struct shrinker deferred_split_shrinker;
+> +static struct shrinker *deferred_split_shrinker;
+> +static unsigned long deferred_split_count(struct shrinker *shrink,
+> +					  struct shrink_control *sc);
+> +static unsigned long deferred_split_scan(struct shrinker *shrink,
+> +					 struct shrink_control *sc);
+>   
+>   static atomic_t huge_zero_refcount;
+>   struct page *huge_zero_page __read_mostly;
+> @@ -229,11 +233,7 @@ static unsigned long shrink_huge_zero_page_scan(struct shrinker *shrink,
+>   	return 0;
+>   }
+>   
+> -static struct shrinker huge_zero_page_shrinker = {
+> -	.count_objects = shrink_huge_zero_page_count,
+> -	.scan_objects = shrink_huge_zero_page_scan,
+> -	.seeks = DEFAULT_SEEKS,
+> -};
+> +static struct shrinker *huge_zero_page_shrinker;
+
+Same as patch #17.
+
+>   
+>   #ifdef CONFIG_SYSFS
+>   static ssize_t enabled_show(struct kobject *kobj,
+> @@ -454,6 +454,40 @@ static inline void hugepage_exit_sysfs(struct kobject *hugepage_kobj)
+>   }
+>   #endif /* CONFIG_SYSFS */
+>   
+> +static int thp_shrinker_init(void)
+
+Better to declare it as __init.
+
 > +{
-> +	u8 rom_ver;
-> +	u32 soc_ver;
-> +	const char *variant;
+> +	huge_zero_page_shrinker = shrinker_alloc(0, "thp-zero");
+> +	if (!huge_zero_page_shrinker)
+> +		return -ENOMEM;
 > +
-> +	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
-> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+> +	deferred_split_shrinker = shrinker_alloc(SHRINKER_NUMA_AWARE |
+> +						 SHRINKER_MEMCG_AWARE |
+> +						 SHRINKER_NONSLAB,
+> +						 "thp-deferred_split");
+> +	if (!deferred_split_shrinker) {
+> +		shrinker_free_non_registered(huge_zero_page_shrinker);
+> +		return -ENOMEM;
+> +	}
 > +
-> +	if ((le32_to_cpu(ver.soc_id) & 0x0000ff00) == QCA_HSP_GF_SOC_ID)  /* hsp gf chip */
-> +		variant = "g";
-> +	else
-> +		variant = "";
+> +	huge_zero_page_shrinker->count_objects = shrink_huge_zero_page_count;
+> +	huge_zero_page_shrinker->scan_objects = shrink_huge_zero_page_scan;
+> +	huge_zero_page_shrinker->seeks = DEFAULT_SEEKS;
+> +	shrinker_register(huge_zero_page_shrinker);
 > +
-> +	if (bid == 0x0)
-> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
-> +	else
-> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
+> +	deferred_split_shrinker->count_objects = deferred_split_count;
+> +	deferred_split_shrinker->scan_objects = deferred_split_scan;
+> +	deferred_split_shrinker->seeks = DEFAULT_SEEKS;
+> +	shrinker_register(deferred_split_shrinker);
 > +
-> +	bt_dev_dbg(hdev, "%s: nvm name is %s", __func__, fwname);
-
-no need for "nvme name is" if you keep __func__ as a prefix
-
+> +	return 0;
 > +}
 > +
->  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->  		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
->  		   const char *firmware_name)
-> @@ -582,6 +645,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->  	int err;
->  	u8 rom_ver = 0;
->  	u32 soc_ver;
-> +	u16 boardid = 0;
->  
->  	bt_dev_dbg(hdev, "QCA setup on UART");
+> +static void thp_shrinker_exit(void)
 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 453000df7aec..353c775f53ef 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1939,6 +1939,11 @@ static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
->  	.num_vregs = 0,
->  };
->  
-> +static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
-> +	.soc_type = QCA_QCA2066,
-> +	.num_vregs = 0,
-> +};
+Same as here.
 
-Add before qca_soc_data_qca6390 to maintain some order.
-
+> +{
+> +	shrinker_unregister(huge_zero_page_shrinker);
+> +	shrinker_unregister(deferred_split_shrinker);
+> +}
 > +
->  static const struct qca_device_data qca_soc_data_wcn6750 __maybe_unused = {
->  	.soc_type = QCA_WCN6750,
->  	.vregs = (struct qca_vreg []) {
-> @@ -2429,6 +2434,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
->  	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
->  	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
->  	{ .compatible = "qcom,wcn6855-bt", .data = &qca_soc_data_wcn6855},
-> +	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+>   static int __init hugepage_init(void)
+>   {
+>   	int err;
+> @@ -482,12 +516,9 @@ static int __init hugepage_init(void)
+>   	if (err)
+>   		goto err_slab;
+>   
+> -	err = register_shrinker(&huge_zero_page_shrinker, "thp-zero");
+> -	if (err)
+> -		goto err_hzp_shrinker;
+> -	err = register_shrinker(&deferred_split_shrinker, "thp-deferred_split");
+> +	err = thp_shrinker_init();
+>   	if (err)
+> -		goto err_split_shrinker;
+> +		goto err_shrinker;
+>   
+>   	/*
+>   	 * By default disable transparent hugepages on smaller systems,
+> @@ -505,10 +536,8 @@ static int __init hugepage_init(void)
+>   
+>   	return 0;
+>   err_khugepaged:
+> -	unregister_shrinker(&deferred_split_shrinker);
+> -err_split_shrinker:
+> -	unregister_shrinker(&huge_zero_page_shrinker);
+> -err_hzp_shrinker:
+> +	thp_shrinker_exit();
+> +err_shrinker:
+>   	khugepaged_destroy();
+>   err_slab:
+>   	hugepage_exit_sysfs(hugepage_kobj);
+> @@ -2851,7 +2880,7 @@ void deferred_split_folio(struct folio *folio)
+>   #ifdef CONFIG_MEMCG
+>   		if (memcg)
+>   			set_shrinker_bit(memcg, folio_nid(folio),
+> -					 deferred_split_shrinker.id);
+> +					 deferred_split_shrinker->id);
+>   #endif
+>   	}
+>   	spin_unlock_irqrestore(&ds_queue->split_queue_lock, flags);
+> @@ -2925,14 +2954,6 @@ static unsigned long deferred_split_scan(struct shrinker *shrink,
+>   	return split;
+>   }
+>   
+> -static struct shrinker deferred_split_shrinker = {
+> -	.count_objects = deferred_split_count,
+> -	.scan_objects = deferred_split_scan,
+> -	.seeks = DEFAULT_SEEKS,
+> -	.flags = SHRINKER_NUMA_AWARE | SHRINKER_MEMCG_AWARE |
+> -		 SHRINKER_NONSLAB,
+> -};
+> -
+>   #ifdef CONFIG_DEBUG_FS
+>   static void split_huge_pages_all(void)
+>   {
 
-Keep the entries sorted by compatible.
-
-Johan
