@@ -2,53 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1348762B1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 08:08:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67C3A762B2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 08:14:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229949AbjGZGIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 02:08:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44222 "EHLO
+        id S229522AbjGZGOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 02:14:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjGZGIG (ORCPT
+        with ESMTP id S231815AbjGZGOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 02:08:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F465C0;
-        Tue, 25 Jul 2023 23:08:05 -0700 (PDT)
+        Wed, 26 Jul 2023 02:14:33 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722B3C0;
+        Tue, 25 Jul 2023 23:14:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1D279615D5;
-        Wed, 26 Jul 2023 06:08:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E55C433C8;
-        Wed, 26 Jul 2023 06:08:03 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0269C611CA;
+        Wed, 26 Jul 2023 06:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A91C433C7;
+        Wed, 26 Jul 2023 06:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690351684;
-        bh=qwTN9sZdB4un1rOE72fTxahHTpYGadYD3rVwkG7h6E0=;
+        s=k20201202; t=1690352071;
+        bh=dFBiRUa1PUFx/bkBA2j6cE/Og15W429JYSgQYgBCddE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WN5aRQ4p3eJ1+RE115+5rGf4t+kkhfxuVZSe3zb6C8dTxssB1okR+2XFaliZP/D/W
-         Eo/YjCAfCT3nD9ImPOxNhMEk605iefQjM8DNIRR+r7SeiFLA/CcA7+/CFmLSDeOkFp
-         THUUlJZdhYHl6sujllBp2Rqo7H/AMez+3I2KH7aY/TFARpXG3uzGwKoH45KceP/197
-         otRlzLjoIo9yUdIItT2QQmDcC29iArvUl52tsPEbT9/yCLZT2mWIpwUo9D3Kk46S0R
-         OMDeg3J4GPAZxp/alaT4EfurZXoEVWjfeWSHNqyKlNKIQdWxaZLZrOTIbGA7k2B/s9
-         TkSUP+nDZ+IlQ==
-Date:   Tue, 25 Jul 2023 23:11:17 -0700
+        b=Hbxq4eQuOLhDrPYAicRMhxkcpz74LBA/dMpk8NYZSzu5QypEGf4O+75AOm5vX7gwc
+         sanlY5BOigAC69//EOmcQ7tXfYVwHoZp9KDMh5/tLZg09VoF3E4nguSa309a+Yn97g
+         MzX7c6fl4bvi49lFA+amMV8WD/3R79vI9DYCOphGk+NC6vFV1OaQiVtcLL3PrOcLKh
+         tyM64mH3JrDv43yI0Amjw6CE0QXpK7pUFbaUBCAAdR/yYm8VH7ql0TYpXtcI8irA7s
+         H0qNsqlU4muX+4gP5ZF4zdYCAlGGZiG87c/eC4ETWLbCG6gKM+vUK8TT4yusxTe+sV
+         5zPP/RrLN9FIQ==
+Date:   Tue, 25 Jul 2023 23:17:44 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     qaz6750 lzy <qaz6750@outlook.com>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>
 Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8150: add uart13 node
-Message-ID: <vg4muvoornyxxs6oiepdr5lkkoobujxydixwu6n2mv3lezc3xn@vz675x4jc6t5>
-References: <SY7P282MB37870BD990E8EB855A735E15B203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
+ support
+Message-ID: <jnyn2wppuvn3b3tgssavuoyihbgr6mmmlz5ddsj3rhbrchk5ig@5qbuu22tw22t>
+References: <20230724083849.8277-1-quic_kbajaj@quicinc.com>
+ <20230724083849.8277-3-quic_kbajaj@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SY7P282MB37870BD990E8EB855A735E15B203A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20230724083849.8277-3-quic_kbajaj@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,12 +59,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 03:22:38PM +0800, qaz6750 lzy wrote:
-> Bluetooth on SM8150 requires uart13
+On Mon, Jul 24, 2023 at 02:08:49PM +0530, Komal Bajaj wrote:
+> For some of the Qualcomm SoC's, it is possible that
+> some of the fuse regions or entire qfprom region is
+> protected from non-secure access. In such situations,
+> Linux will have to use secure calls to read the region.
+> With that motivation, add secure qfprom driver.
 > 
-> Signed-off-by: qaz6750 lzy <qaz6750@outlook.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-Forgive me, but is that your actual name?
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
 Regards,
 Bjorn
