@@ -2,57 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72D7E762ADF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 07:38:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5039F762B07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 07:58:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjGZFiI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 01:38:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35724 "EHLO
+        id S231370AbjGZF6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 01:58:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbjGZFiH (ORCPT
+        with ESMTP id S230143AbjGZF6H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 01:38:07 -0400
+        Wed, 26 Jul 2023 01:58:07 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FFDCC;
-        Tue, 25 Jul 2023 22:38:06 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19F35170D;
+        Tue, 25 Jul 2023 22:58:07 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E55E661536;
-        Wed, 26 Jul 2023 05:38:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA2AC433C7;
-        Wed, 26 Jul 2023 05:38:03 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ACC65615F0;
+        Wed, 26 Jul 2023 05:58:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A48C433C8;
+        Wed, 26 Jul 2023 05:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690349885;
-        bh=iQOB7tO4loCykPUVe5qLzo1AABQ81jx4x3ex2u+OqVw=;
+        s=k20201202; t=1690351086;
+        bh=wdDUWWLGKY/0b5qmLazgZKL+qx2jfNkIERNSCJhI2Fc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jpnW0o5cWQAPGRay3/KJ3pkDcFQ3UnCpaTUMHth4tBTzUQCFfQto6RVnMH2L41ThT
-         R7G2nGWG74Y7HnjWztO7tiNvRGvX05jytcIsboKdjOro9tEKnwjb3orZgUmw2dJoz6
-         U45Wp8TCVk9sXLVpZev1F9gIGPqZHPIyEocbVmpwyIVxPUsv1oThiSLUs2MIJZA+QE
-         KW9tyBAidj5YOS3qUYPQeVUlUUmf/4MXHDjBC0FFivy4DMXF6dLh2P5LP0SAdS62ZY
-         hMrGvcQrwPVS5qpeXwriAVEBI3FDJe5ivffWBWpDA/kTQ6UUdHYLeO3Qlz9NcI0ODS
-         +VRdeN1lS5xPQ==
-Date:   Tue, 25 Jul 2023 22:41:17 -0700
+        b=Sf1W+CCwC50u6xijnDsJhrPB1Gr0HDAQQDnwsQ8ko3Hgn6/iFU7lI1Tx5SlUGIIU8
+         mFaTh1V5WK40BkCm/ih8timG+aKJ8DDPS3VaMeuSzWnlA9xQS1wiwrIFcXjCCLJ2lW
+         TVjfjuM+o9iAXN38g7jcX/be5b9pnrN448YX7yC/MpfKGFXVQKedNoBDmJAsT1M6Re
+         m6mpg2KdL7EmJ5Cv/hvPODuLxwBhVWy2r90IbUYyH2Y/g0n+nMNL4g1oHPYLj5maSd
+         w0rDP5klLRdht9DFiTzvo5oOy5RLPgBndjZsmOyZiX1xfjIrA1GP1VJNxJsM/AZM6k
+         Rj6nIdzWUzOSA==
+Date:   Tue, 25 Jul 2023 23:01:19 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     powen.kao@mediatek.com, bvanassche@acm.org,
-        alim.akhtar@samsung.com, adrian.hunter@intel.com,
-        jejb@linux.ibm.com, stanley.chu@mediatek.com,
-        asutoshd@codeaurora.org, quic_cang@quicinc.com, mani@kernel.org,
-        martin.petersen@oracle.com, beanhuo@micron.com,
-        ebiggers@google.com, agross@kernel.org, Arthur.Simchaev@wdc.com,
-        konrad.dybcio@linaro.org, quic_ziqichen@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_narepall@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V1 0/2] Fix hibern8 enter failure during host reset
-Message-ID: <h6icfhn6xi2iuibrnum5rfre3yeycilkxtowzfu5gwh6mptbua@nhhitqvbwzp4>
-References: <20230725192710.26698-1-quic_nitirawa@quicinc.com>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: Re: [PATCH 1/2] spi: spi-qcom-qspi: Fallback to PIO for xfers that
+ aren't multiples of 4 bytes
+Message-ID: <pofajdrzzajqlphg6om3b5clw6kmbpx2cbdasbcv3lwx6gxyja@urzrfcctthj7>
+References: <20230725110226.1.Ia2f980fc7cd0b831e633391f0bb1272914d8f381@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230725192710.26698-1-quic_nitirawa@quicinc.com>
+In-Reply-To: <20230725110226.1.Ia2f980fc7cd0b831e633391f0bb1272914d8f381@changeid>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,30 +60,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 12:57:08AM +0530, Nitin Rawat wrote:
-> Commit <52a518019c> ("Fix missing clk change notification on host reset")
-> added clock scaling notification to ufshcd_host_reset_and_restore.
-> This invokes hibern8 enter and exit on qualcomm platform which fails
-> because controller is in reset state.
+On Tue, Jul 25, 2023 at 11:02:26AM -0700, Douglas Anderson wrote:
+> The Qualcomm QSPI driver appears to require that any reads using DMA
+> are a mutliple of 4 bytes. If this isn't true then the controller will
+> clobber any extra bytes in memory following the last word. Let's
+> detect this and falback to PIO.
 > 
-> Fix this by checking the Host controller state before sending
-> hibern8 command.
+> This fixes problems reported by slub_debug=FZPUA, which would complain
+> about "kmalloc Redzone overwritten". One such instance said:
 > 
-> __ufshcd_wl_resume()
-> ufshcd_reset_and_restore()
-> ufshcd_host_reset_and_restore()
-> ufshcd_scale_clks()
-> ufshcd_vops_clk_scale_notify()
-> ufs_qcom_clk_scale_notify()
-> ufshcd_uic_hibern8_enter()
+>   0xffffff80c29d541a-0xffffff80c29d541b @offset=21530. First byte 0x0 instead of 0xcc
+>   Allocated in mtd_kmalloc_up_to+0x98/0xac age=36 cpu=3 pid=6658
 > 
-> Fixes: 52a518019ca1 ("scsi: ufs: core: Fix missing clk change notification on host reset")
+> Tracing through what was happening I saw that, while we often did DMA
+> tranfers of 0x1000 bytes, sometimes we'd end up doing ones of 0x41a
+> bytes. Those 0x41a byte transfers were the problem.
+> 
+> NOTE: a future change will enable the SPI "mem ops" to help avoid this
+> case, but it still seems good to add the extra check in the transfer.
+> 
+> Fixes: b5762d95607e ("spi: spi-qcom-qspi: Add DMA mode support")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Sorry, I missed this before I looked at the individual patches.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-The cover-letter is not included in the git history, so this information
-will be lost. This explains the reason for patch 2, so please put it
-there.
-
-Thanks,
+Regards,
 Bjorn
