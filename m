@@ -2,225 +2,490 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF38A762F79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 10:18:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 928DD762F8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 10:20:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233143AbjGZISD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 04:18:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
+        id S232992AbjGZIU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 04:20:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229939AbjGZIR1 (ORCPT
+        with ESMTP id S232552AbjGZIT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 04:17:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853D56199;
-        Wed, 26 Jul 2023 01:07:09 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1AD26617FE;
-        Wed, 26 Jul 2023 08:07:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE039C433C7;
-        Wed, 26 Jul 2023 08:07:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690358828;
-        bh=02/BpPWpwcY6qGVMejurwI2MWG0QRmzw+p5vHPciA24=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Si6mynfF/QLiJ9GIAhKKfRQiDSikeuZ873k10cyiYklhjlNSURbHevhJKwAb+l92S
-         Uf8Kj9aLuzyIeNRdJEPYMETFNTeYV7p1dx2Vzj/Dhtu3ViQam7sFC8KYLXJu3pR/42
-         z52VBElkQ3oAOQwDr5qrKtXFrBhQ9MGMVOlPQOvDKPv/oMiYspXZVkCwbnzcZIWT8a
-         yJ6xNx9UpPdJr/UbbthJW4jj1UAcJzkJy3UJnijsHT3DOx8yCTvAlxetVeb0C+5c9P
-         wfZPGkuZRxqTFUcenD3YoMUSuqJiBBFkMPKCv5urluIJDUJujg9A49V62hu32CLWhE
-         vo4Y0h1mZcXdw==
-Date:   Wed, 26 Jul 2023 10:07:00 +0200
-From:   Benjamin Tissoires <bentiss@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Jiri Kosina <jikos@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org, hsinyi@google.com,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        linux-arm-msm@vger.kernel.org,
-        Chris Morgan <macroalpha82@gmail.com>
-Subject: Re: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
-Message-ID: <wcilyqbh23xjscsvubxjnkwlctxuvyj5weix2opywkolg7udyb@gad2pmlazxx4>
-References: <20230607215224.2067679-1-dianders@chromium.org>
- <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid>
- <y3l4x3kv7jgog3miexati5wbveaynnryzqvj6sc4ul6625f2if@w7nqgojfavfw>
- <CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com>
- <CAD=FV=UUdc5xi-HoOye-a1Oki3brcX3V1+=zuxQKLAcrd3iTSA@mail.gmail.com>
- <CAD=FV=WmpH6cB0oZOxbL+TUxjLRf3PM+kKvuYRAZSiEhS4o37A@mail.gmail.com>
+        Wed, 26 Jul 2023 04:19:56 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 974FA9EFA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 01:08:54 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-686b879f605so725875b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 01:08:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fromorbit-com.20221208.gappssmtp.com; s=20221208; t=1690358934; x=1690963734;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rPtpzUEslahCE2fhb6v9FLtKmqwh/pul7nSSkK8nPUc=;
+        b=3FtP6nyx+rPcvJcblHl1Mu2LvC6NkDi8xEgEFylBPkAlQaYADspiGMJ27o0GgAuj9z
+         McDVZgCUGviszUiy5R0bXahfbrRAfjxnAxmHNnPbaM1LXdSCHnASLGDwytdN0by6FDcI
+         RpceDu/PcRlhyfyf4mYkuokxgwLuCVwRBZl0phBMBuXEmpOfHBU9f5yCZoh2dEO+7TTN
+         DCOxQvb0O++5gEaT2a05V97Ei89pJv+cbAW7+SqulKGKTdXaXFuVtxE2YrWoJBaFXRhx
+         fYB72/J5kZ33VcSsegtqBeEJQacLBG5vKC0M6tbbiCEw9x2oLmMOMSwg9ysSaFAgqAI5
+         sgYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690358934; x=1690963734;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rPtpzUEslahCE2fhb6v9FLtKmqwh/pul7nSSkK8nPUc=;
+        b=ippwmph5k42wIaQ1Pn0v/V+gTrcU190uyParerJ+ajeVyup16zLDZRPIy9whrtZRsv
+         iVvGkY2AM1fzPhO9dOiWDz7Gp21Z37AoMwss8I0onVdGMep6QeOuAYnO5j/Zpm7J1ia9
+         1Wwc/L2hIIopwsuIelJpuy/YNRkRuFZmPisZzpVQn4O26EM0IgIFuX5IzuUEffgkJrYY
+         WWq7h7Oehbo0Ea4HL6+LWxVFnTDoHrZqhwxuBtIRS/KTXIOVTKJIhG/Ji4p0oMb06To5
+         gg64SMBVfd0vKCkt/dLtBXQA1GY39QOjXU3njXq7Bm1KXUOJvGUMJtBoV0F3+qVk02VJ
+         VENg==
+X-Gm-Message-State: ABy/qLYYGr9f3Q6X4Ivjgawd15ap0tI4fpkpUKGeNdr37omnzf/g4l2g
+        T2KLIL1ONVsprGjTZ6sorfI2sw==
+X-Google-Smtp-Source: APBJJlGxMb49Gcu6ThVo/6V+1HjCftCctRIBl06nDIbsd9lTZYFUn832db0oPfgPkp12tATT7U4xCA==
+X-Received: by 2002:a05:6a20:1058:b0:138:dbff:f52b with SMTP id gt24-20020a056a20105800b00138dbfff52bmr934336pzc.22.1690358933657;
+        Wed, 26 Jul 2023 01:08:53 -0700 (PDT)
+Received: from dread.disaster.area (pa49-186-119-116.pa.vic.optusnet.com.au. [49.186.119.116])
+        by smtp.gmail.com with ESMTPSA id w2-20020a170902e88200b001a24cded097sm12426907plg.236.2023.07.26.01.08.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jul 2023 01:08:53 -0700 (PDT)
+Received: from dave by dread.disaster.area with local (Exim 4.96)
+        (envelope-from <david@fromorbit.com>)
+        id 1qOZZi-00Afxb-0y;
+        Wed, 26 Jul 2023 18:08:50 +1000
+Date:   Wed, 26 Jul 2023 18:08:50 +1000
+From:   Dave Chinner <david@fromorbit.com>
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+Cc:     akpm@linux-foundation.org, tkhai@ya.ru, vbabka@suse.cz,
+        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
+        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
+        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
+        gregkh@linuxfoundation.org, muchun.song@linux.dev,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
+Subject: Re: [PATCH v2 44/47] mm: shrinker: make global slab shrink lockless
+Message-ID: <ZMDUkoIXUlTkCSYL@dread.disaster.area>
+References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
+ <20230724094354.90817-45-zhengqi.arch@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=WmpH6cB0oZOxbL+TUxjLRf3PM+kKvuYRAZSiEhS4o37A@mail.gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230724094354.90817-45-zhengqi.arch@bytedance.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Jul 25 2023, Doug Anderson wrote:
-> Hi,
+On Mon, Jul 24, 2023 at 05:43:51PM +0800, Qi Zheng wrote:
+> The shrinker_rwsem is a global read-write lock in shrinkers subsystem,
+> which protects most operations such as slab shrink, registration and
+> unregistration of shrinkers, etc. This can easily cause problems in the
+> following cases.
 > 
-> On Mon, Jul 17, 2023 at 11:15 AM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Benjamin,
-> >
-> > On Mon, Jun 26, 2023 at 3:49 PM Doug Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Benjamin,
-> > >
-> > > On Thu, Jun 8, 2023 at 8:37 AM Benjamin Tissoires
-> > > <benjamin.tissoires@redhat.com> wrote:
-> > > >
-> > > > > +static const struct drm_panel_follower_funcs i2c_hid_core_panel_follower_funcs = {
-> > > > > +     .panel_prepared = i2c_hid_core_panel_prepared,
-> > > > > +     .panel_unpreparing = i2c_hid_core_panel_unpreparing,
-> > > > > +};
-> > > >
-> > > > Can we make that above block at least behind a Kconfig?
-> > > >
-> > > > i2c-hid is often used for touchpads, and the notion of drm panel has
-> > > > nothing to do with them. So I'd be more confident if we could disable
-> > > > that code if not required.
-> > >
-> > > Now that other concerns are addressed, I started trying to write up a
-> > > v3 and I found myself writing this as the description of the Kconfig
-> > > entry:
-> > >
-> > > --
-> > > config I2C_HID_SUPPORT_PANEL_FOLLOWER
-> > > bool "Support i2c-hid devices that must be power sequenced with a panel"
-> > >
-> > > Say Y here if you want support for i2c-hid devices that need to
-> > > coordinate power sequencing with a panel. This is typically important
-> > > when you have a panel and a touchscreen that share power rails or
-> > > reset GPIOs. If you say N here then the kernel will not try to honor
-> > > any shared power sequencing for your hardware. In the best case,
-> > > ignoring power sequencing when it's needed will draw extra power. In
-> > > the worst case this will prevent your hardware from functioning or
-> > > could even damage your hardware.
-> > >
-> > > If unsure, say Y.
-> > >
-> > > --
-> > >
-> > > I can certainly go that way, but I just wanted to truly make sure
-> > > that's what we want. Specifically:
-> > >
-> > > 1. If we put the panel follower code behind a Kconfig then we actually
-> > > have no idea if a touchscreen was intended to be a panel follower.
-> > > Specifically the panel follower API is the one that detects the
-> > > connection between the panel and the i2c-hid device, so without being
-> > > able to call the panel follower API we have no idea that an i2c-hid
-> > > device was supposed to be a panel follower.
-> > >
-> > > 2. It is conceivable that power sequencing a device incorrectly could
-> > > truly cause hardware damage.
-> > >
-> > > Together, those points mean that if you turn off the Kconfig entry and
-> > > then try to boot on a device that needed that Kconfig setting that you
-> > > might damage hardware. I can code it up that way if you want, but it
-> > > worries me...
-> > >
-> > >
-> > > Alternatives that I can think of:
-> > >
-> > > a) I could change the panel follower API so that panel followers are
-> > > in charge of detecting the panel that they follow. Today, that looks
-> > > like:
-> > >
-> > >        panel_np = of_parse_phandle(dev->of_node, "panel", 0);
-> > >        if (panel_np)
-> > >                /* It's a panel follower */
-> > >        of_node_put(panel_np);
-> > >
-> > > ...so we could put that code in each touchscreen driver and then fail
-> > > to probe i2c-hid if we detect that we're supposed to be a panel
-> > > follower but the Kconfig is turned off. The above doesn't seem
-> > > massively ideal since it duplicates code. Also, one reason why I put
-> > > that code in drm_panel_add_follower() is that I think this concept
-> > > will eventually be needed even for non-DT cases. I don't know how to
-> > > write the non-DT code right now, though...
-> > >
-> > >
-> > > b) I could open-code detect the panel follower case but leave the
-> > > actual linking to the panel follower API. AKA add to i2c-hid:
-> > >
-> > >        if (of_property_read_bool(dev->of_node, "panel"))
-> > >                /* It's a panel follower */
-> > >
-> > > ...that's a smaller bit of code, but feels like an abstraction
-> > > violation. It also would need to be updated if/when we added support
-> > > for non-DT panel followers.
-> > >
-> > >
-> > > c) I could add a "static inline" implementation of b) to "drm_panel.h".
-> > >
-> > > That sounds great and I started doing it. ...but then realized that it
-> > > means adding to drm_panel.h:
-> > >
-> > > #include <linux/device.h>
-> > > #include <linux/of.h>
-> > >
-> > > ...because otherwise of_property_read_bool() isn't defined and "struct
-> > > device" can't be dereferenced. That might be OK, but it looks as if
-> > > folks have been working hard to avoid things like this in header
-> > > files. Presumably it would get uglier if/when we added the non-DT
-> > > case, as well. That being said, I can give it a shot...
-> > >
-> > > --
-> > >
-> > > At this point, I'm hoping for some advice. How important is it for you
-> > > to have a Kconfig for "I2C_HID_SUPPORT_PANEL_FOLLOWER"?
-> > >
-> > > NOTE: even if I don't add the Kconfig, I could at least create a
-> > > function for registering the panel follower that would get most of the
-> > > panel follower logic out of the probe function. Would that be enough?
-> >
-> > I'd love to send a new version of this patch series, but I'm still
-> > stuck with the above issue. I'm hoping you might have a minute to
-> > provide your thoughts. If I don't hear anything, I'll try a v3 where I
-> > don't have the Kconfig for "I2C_HID_SUPPORT_PANEL_FOLLOWER" but just
-> > try to pull a little more of the code out of the probe function.
+> 1) When the memory pressure is high and there are many filesystems
+>    mounted or unmounted at the same time, slab shrink will be affected
+>    (down_read_trylock() failed).
 > 
-> To provide breadcrumbs, I posted the v3 which pulls a bit more code
-> out of the probe function but is otherwise largely unchanged. The
-> cover letter for v3 can be found at:
-
-Apologies for the delay. Given that you received feedbacks from other
-folks I wanted things to settle down a little bit before returning to
-this discussion. Sorry.
-
+>    Such as the real workload mentioned by Kirill Tkhai:
 > 
-> https://lore.kernel.org/r/20230725203545.2260506-1-dianders@chromium.org/
+>    ```
+>    One of the real workloads from my experience is start
+>    of an overcommitted node containing many starting
+>    containers after node crash (or many resuming containers
+>    after reboot for kernel update). In these cases memory
+>    pressure is huge, and the node goes round in long reclaim.
+>    ```
+> 
+> 2) If a shrinker is blocked (such as the case mentioned
+>    in [1]) and a writer comes in (such as mount a fs),
+>    then this writer will be blocked and cause all
+>    subsequent shrinker-related operations to be blocked.
+> 
+> Even if there is no competitor when shrinking slab, there may still be a
+> problem. The down_read_trylock() may become a perf hotspot with frequent
+> calls to shrink_slab(). Because of the poor multicore scalability of
+> atomic operations, this can lead to a significant drop in IPC
+> (instructions per cycle).
+> 
+> We used to implement the lockless slab shrink with SRCU [2], but then
+> kernel test robot reported -88.8% regression in
+> stress-ng.ramfs.ops_per_sec test case [3], so we reverted it [4].
+> 
+> This commit uses the refcount+RCU method [5] proposed by Dave Chinner
+> to re-implement the lockless global slab shrink. The memcg slab shrink is
+> handled in the subsequent patch.
+> 
+> For now, all shrinker instances are converted to dynamically allocated and
+> will be freed by kfree_rcu(). So we can use rcu_read_{lock,unlock}() to
+> ensure that the shrinker instance is valid.
+> 
+> And the shrinker instance will not be run again after unregistration. So
+> the structure that records the pointer of shrinker instance can be safely
+> freed without waiting for the RCU read-side critical section.
+> 
+> In this way, while we implement the lockless slab shrink, we don't need to
+> be blocked in unregister_shrinker().
+> 
+> The following are the test results:
+> 
+> stress-ng --timeout 60 --times --verify --metrics-brief --ramfs 9 &
+> 
+> 1) Before applying this patchset:
+> 
+> setting to a 60 second run per stressor
+> dispatching hogs: 9 ramfs
+> stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+>                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+> ramfs            735238     60.00     12.37    363.70     12253.05        1955.08
+> for a 60.01s run time:
+>    1440.27s available CPU time
+>      12.36s user time   (  0.86%)
+>     363.70s system time ( 25.25%)
+>     376.06s total time  ( 26.11%)
+> load average: 10.79 4.47 1.69
+> passed: 9: ramfs (9)
+> failed: 0
+> skipped: 0
+> successful run completed in 60.01s (1 min, 0.01 secs)
+> 
+> 2) After applying this patchset:
+> 
+> setting to a 60 second run per stressor
+> dispatching hogs: 9 ramfs
+> stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+>                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+> ramfs            746677     60.00     12.22    367.75     12443.70        1965.13
+> for a 60.01s run time:
+>    1440.26s available CPU time
+>      12.21s user time   (  0.85%)
+>     367.75s system time ( 25.53%)
+>     379.96s total time  ( 26.38%)
+> load average: 8.37 2.48 0.86
+> passed: 9: ramfs (9)
+> failed: 0
+> skipped: 0
+> successful run completed in 60.01s (1 min, 0.01 secs)
+> 
+> We can see that the ops/s has hardly changed.
+> 
+> [1]. https://lore.kernel.org/lkml/20191129214541.3110-1-ptikhomirov@virtuozzo.com/
+> [2]. https://lore.kernel.org/lkml/20230313112819.38938-1-zhengqi.arch@bytedance.com/
+> [3]. https://lore.kernel.org/lkml/202305230837.db2c233f-yujie.liu@intel.com/
+> [4]. https://lore.kernel.org/all/20230609081518.3039120-1-qi.zheng@linux.dev/
+> [5]. https://lore.kernel.org/lkml/ZIJhou1d55d4H1s0@dread.disaster.area/
+> 
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> ---
+>  include/linux/shrinker.h | 19 +++++++---
+>  mm/shrinker.c            | 75 ++++++++++++++++++++++++++--------------
+>  mm/shrinker_debug.c      | 52 +++++++++++++++++++++-------
+>  3 files changed, 104 insertions(+), 42 deletions(-)
+> 
+> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
+> index 36977a70bebb..335da93cccee 100644
+> --- a/include/linux/shrinker.h
+> +++ b/include/linux/shrinker.h
+> @@ -4,6 +4,7 @@
+>  
+>  #include <linux/atomic.h>
+>  #include <linux/types.h>
+> +#include <linux/refcount.h>
+>  
+>  #define SHRINKER_UNIT_BITS	BITS_PER_LONG
+>  
+> @@ -86,6 +87,10 @@ struct shrinker {
+>  	long batch;	/* reclaim batch size, 0 = default */
+>  	int seeks;	/* seeks to recreate an obj */
+>  	unsigned flags;
+> +	bool registered;
+> +
+> +	refcount_t refcount;
+> +	struct rcu_head rcu;
+>  
+>  	void *private_data;
+>  
+> @@ -106,14 +111,13 @@ struct shrinker {
+>  #define DEFAULT_SEEKS 2 /* A good number if you don't know better. */
+>  
+>  /* Flags */
+> -#define SHRINKER_REGISTERED	(1 << 0)
+> -#define SHRINKER_NUMA_AWARE	(1 << 1)
+> -#define SHRINKER_MEMCG_AWARE	(1 << 2)
+> +#define SHRINKER_NUMA_AWARE	(1 << 0)
+> +#define SHRINKER_MEMCG_AWARE	(1 << 1)
+>  /*
+>   * It just makes sense when the shrinker is also MEMCG_AWARE for now,
+>   * non-MEMCG_AWARE shrinker should not have this flag set.
+>   */
+> -#define SHRINKER_NONSLAB	(1 << 3)
+> +#define SHRINKER_NONSLAB	(1 << 2)
+>  
+>  unsigned long shrink_slab(gfp_t gfp_mask, int nid, struct mem_cgroup *memcg,
+>  			  int priority);
+> @@ -122,6 +126,13 @@ void shrinker_free_non_registered(struct shrinker *shrinker);
+>  void shrinker_register(struct shrinker *shrinker);
+>  void shrinker_unregister(struct shrinker *shrinker);
+>  
+> +static inline bool shrinker_try_get(struct shrinker *shrinker)
+> +{
+> +	return READ_ONCE(shrinker->registered) &&
+> +	       refcount_inc_not_zero(&shrinker->refcount);
+> +}
 
-I like the 8th patch of this series much more. If there is a risk of
-damaging the device, then we should not have the Kconfig to disable it.
+Why do we care about shrinker->registered here? If we don't set
+the refcount to 1 until we have fully initialised everything, then
+the shrinker code can key entirely off the reference count and
+none of the lookup code needs to care about whether the shrinker is
+registered or not.
 
-I have some comments on that particular patch (v3 8/10), but I; ll reply
-inline.
+> +void shrinker_put(struct shrinker *shrinker);
+> +
+>  #ifdef CONFIG_SHRINKER_DEBUG
+>  extern int shrinker_debugfs_add(struct shrinker *shrinker);
+>  extern struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
+> diff --git a/mm/shrinker.c b/mm/shrinker.c
+> index 8a1fe844f1a4..8e3334749552 100644
+> --- a/mm/shrinker.c
+> +++ b/mm/shrinker.c
+> @@ -2,10 +2,13 @@
+>  #include <linux/memcontrol.h>
+>  #include <linux/rwsem.h>
+>  #include <linux/shrinker.h>
+> +#include <linux/rculist.h>
+> +#include <linux/spinlock.h>
+>  #include <trace/events/vmscan.h>
+>  
+>  LIST_HEAD(shrinker_list);
+>  DECLARE_RWSEM(shrinker_rwsem);
+> +DEFINE_SPINLOCK(shrinker_lock);
+>  
+>  #ifdef CONFIG_MEMCG
+>  static int shrinker_nr_max;
+> @@ -450,6 +453,18 @@ static unsigned long do_shrink_slab(struct shrink_control *shrinkctl,
+>  	return freed;
+>  }
+>  
+> +void shrinker_put(struct shrinker *shrinker)
+> +{
+> +	if (refcount_dec_and_test(&shrinker->refcount)) {
+> +		spin_lock(&shrinker_lock);
+> +		list_del_rcu(&shrinker->list);
+> +		spin_unlock(&shrinker_lock);
+> +
+> +		kfree(shrinker->nr_deferred);
+> +		kfree_rcu(shrinker, rcu);
+> +	}
+> +}
 
-Cheers,
-Benjamin
+Urk, no.
+
+We want the shrinker_free() code to block waiting for the shrinker
+reference count to go to zero, because the shrinkers can reference
+structures that are associated with the path that is freeing the
+shrinker.
+
+i.e. we do not want to free the superblock of a filesystem whilst
+the shrinker is still running, but the way you've done this is that
+the shrinker can run whilst the structure that contains it has been
+torn down.
+
+This should use a completion, then it is always safe under
+rcu_read_lock().  This also gets rid of the shrinker_lock spin lock,
+which only exists because we can't take a blocking lock under
+rcu_read_lock(). i.e:
+
+
+void shrinker_put(struct shrinker *shrinker)
+{
+	if (refcount_dec_and_test(&shrinker->refcount))
+		complete(&shrinker->done);
+}
+
+void shrinker_free()
+{
+	.....
+	refcount_dec(&shrinker->refcount);
+	wait_for_completion(&shrinker->done);
+	/*
+	 * lookups on the shrinker will now all fail as refcount has
+	 * fallen to zero. We can now remove it from the lists and
+	 * free it.
+	 */
+	down_write(shrinker_rwsem);
+	list_del_rcu(&shrinker->list);
+	up_write(&shrinker_rwsem);
+	call_rcu(shrinker->rcu_head, shrinker_free_rcu_cb);
+}
+
+....
+
+> @@ -686,11 +711,14 @@ EXPORT_SYMBOL(shrinker_free_non_registered);
+>  
+>  void shrinker_register(struct shrinker *shrinker)
+>  {
+> -	down_write(&shrinker_rwsem);
+> -	list_add_tail(&shrinker->list, &shrinker_list);
+> -	shrinker->flags |= SHRINKER_REGISTERED;
+> +	refcount_set(&shrinker->refcount, 1);
+> +
+> +	spin_lock(&shrinker_lock);
+> +	list_add_tail_rcu(&shrinker->list, &shrinker_list);
+> +	spin_unlock(&shrinker_lock);
+> +
+>  	shrinker_debugfs_add(shrinker);
+> -	up_write(&shrinker_rwsem);
+> +	WRITE_ONCE(shrinker->registered, true);
+>  }
+>  EXPORT_SYMBOL(shrinker_register);
+
+This just looks wrong - you are trying to use WRITE_ONCE() as a
+release barrier to indicate that the shrinker is now set up fully.
+That's not necessary - the refcount is an atomic and along with the
+rcu locks they should provides all the barriers we need. i.e.
+
+void shrinker_register(struct shrinker *shrinker)
+{
+	down_write(&shrinker_rwsem);
+	list_add_tail_rcu(&shrinker->list, &shrinker_list);
+	shrinker->flags |= SHRINKER_REGISTERED;
+	shrinker_debugfs_add(shrinker);
+	up_write(&shrinker_rwsem);
+
+	/*
+	 * now the shrinker is fully set up, take the first
+	 * reference to it to indicate that lookup operations are
+	 * now allowed to use it via shrinker_try_get().
+	 */
+	refcount_set(&shrinker->refcount, 1);
+}
+
+> diff --git a/mm/shrinker_debug.c b/mm/shrinker_debug.c
+> index f1becfd45853..c5573066adbf 100644
+> --- a/mm/shrinker_debug.c
+> +++ b/mm/shrinker_debug.c
+> @@ -5,6 +5,7 @@
+>  #include <linux/seq_file.h>
+>  #include <linux/shrinker.h>
+>  #include <linux/memcontrol.h>
+> +#include <linux/rculist.h>
+>  
+>  /* defined in vmscan.c */
+>  extern struct rw_semaphore shrinker_rwsem;
+> @@ -161,17 +162,21 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
+>  {
+>  	struct dentry *entry;
+>  	char buf[128];
+> -	int id;
+> -
+> -	lockdep_assert_held(&shrinker_rwsem);
+> +	int id, ret = 0;
+>  
+>  	/* debugfs isn't initialized yet, add debugfs entries later. */
+>  	if (!shrinker_debugfs_root)
+>  		return 0;
+>  
+> +	down_write(&shrinker_rwsem);
+> +	if (shrinker->debugfs_entry)
+> +		goto fail;
+> +
+>  	id = ida_alloc(&shrinker_debugfs_ida, GFP_KERNEL);
+> -	if (id < 0)
+> -		return id;
+> +	if (id < 0) {
+> +		ret = id;
+> +		goto fail;
+> +	}
+>  	shrinker->debugfs_id = id;
+>  
+>  	snprintf(buf, sizeof(buf), "%s-%d", shrinker->name, id);
+> @@ -180,7 +185,8 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
+>  	entry = debugfs_create_dir(buf, shrinker_debugfs_root);
+>  	if (IS_ERR(entry)) {
+>  		ida_free(&shrinker_debugfs_ida, id);
+> -		return PTR_ERR(entry);
+> +		ret = PTR_ERR(entry);
+> +		goto fail;
+>  	}
+>  	shrinker->debugfs_entry = entry;
+>  
+> @@ -188,7 +194,10 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
+>  			    &shrinker_debugfs_count_fops);
+>  	debugfs_create_file("scan", 0220, entry, shrinker,
+>  			    &shrinker_debugfs_scan_fops);
+> -	return 0;
+> +
+> +fail:
+> +	up_write(&shrinker_rwsem);
+> +	return ret;
+>  }
+>  
+>  int shrinker_debugfs_rename(struct shrinker *shrinker, const char *fmt, ...)
+> @@ -243,6 +252,11 @@ struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
+>  	shrinker->name = NULL;
+>  
+>  	*debugfs_id = entry ? shrinker->debugfs_id : -1;
+> +	/*
+> +	 * Ensure that shrinker->registered has been set to false before
+> +	 * shrinker->debugfs_entry is set to NULL.
+> +	 */
+> +	smp_wmb();
+>  	shrinker->debugfs_entry = NULL;
+>  
+>  	return entry;
+> @@ -266,14 +280,26 @@ static int __init shrinker_debugfs_init(void)
+>  	shrinker_debugfs_root = dentry;
+>  
+>  	/* Create debugfs entries for shrinkers registered at boot */
+> -	down_write(&shrinker_rwsem);
+> -	list_for_each_entry(shrinker, &shrinker_list, list)
+> +	rcu_read_lock();
+> +	list_for_each_entry_rcu(shrinker, &shrinker_list, list) {
+> +		if (!shrinker_try_get(shrinker))
+> +			continue;
+> +		rcu_read_unlock();
+> +
+>  		if (!shrinker->debugfs_entry) {
+> -			ret = shrinker_debugfs_add(shrinker);
+> -			if (ret)
+> -				break;
+> +			/* Paired with smp_wmb() in shrinker_debugfs_detach() */
+> +			smp_rmb();
+> +			if (READ_ONCE(shrinker->registered))
+> +				ret = shrinker_debugfs_add(shrinker);
+>  		}
+> -	up_write(&shrinker_rwsem);
+> +
+> +		rcu_read_lock();
+> +		shrinker_put(shrinker);
+> +
+> +		if (ret)
+> +			break;
+> +	}
+> +	rcu_read_unlock();
+>  
+>  	return ret;
+>  }
+
+And all this churn and complexity can go away because the
+shrinker_rwsem is still used to protect shrinker_register()
+entirely....
+
+-Dave.
+-- 
+Dave Chinner
+david@fromorbit.com
