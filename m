@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DAA176371A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:08:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8560F763724
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:08:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232704AbjGZNIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 09:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34888 "EHLO
+        id S233628AbjGZNIw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 09:08:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbjGZNIS (ORCPT
+        with ESMTP id S233726AbjGZNIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:08:18 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857701FDA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:08:16 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe0fe622c3so1177735e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:08:16 -0700 (PDT)
+        Wed, 26 Jul 2023 09:08:44 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909C22D55
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:08:38 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so10509103e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690376895; x=1690981695;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CwDRugYXGkOI3Cx38rg/Y2SOw9AyVjS4MggNl8S5mhM=;
-        b=mgpyLwRHj0bG96RXD6JimAHYLV9MEMyrwrFmUkjBP+tymvwOwvNGpTwuURAm5bEa3w
-         pNPyTqrLKGsrdD5Zl+4ZsCTc52S89/XfTAjVS9ptCE7FRGSjaTziGc3w41BravfTPWNP
-         /23NtOuDjyGssJXsF1jaj6IckxhWU86spp/8ditSpynHhd/8aW8/3vTwcNWE6P+ZPDxj
-         T594vtrh+Sg1dY8J5oXGXbLXZjrErRBXImZOMQ+G5H+ksHI+mKKpUXNLQlzKEMRn51TQ
-         xlWbZrjNPYmRzyEo+6hsYt2SBP572t+F9cGgrpSub4P0vjoDu//pGEzxJORGpB34kvjk
-         OAOw==
+        d=linaro.org; s=google; t=1690376916; x=1690981716;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rDlNh04GTdfMcjpPCWLhZbu9vBr/naG66l5UTK4CINA=;
+        b=taSAKLkG1Uf7G+5bzGIHp+Sm/qb5W3DyBh54bSK4DaDV5uzkvHePA85+2B6c6z85Un
+         Pv5IzXcMiIDBN9gkVNQeqAGC9XJbfM6cFoNuG8F0hGIzz5iD8xp3HS3ANtQFWdQBGlct
+         JYA3uE4FuPpoXvvP2xeKEjK4JT3Vn+8sppR0yM8s4nomiQZGlzz0Uv8wkiKs2dFE5gJm
+         5ogAt2bZEio44becmAYVj+z7GUd7rPSpKd9TbYhzDE1reLR/IdttLOslGMoqM0GpCxaH
+         fCX4+nY/DcgjAFeMkT40/uXNibqftYDF0iR7BHwh8COLcClCI9+wyg+G9DXomVFB02B8
+         zUOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690376895; x=1690981695;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CwDRugYXGkOI3Cx38rg/Y2SOw9AyVjS4MggNl8S5mhM=;
-        b=ln4mPNKBEoVG6I8J0gU54zOd95FzTualG7fRan7icCO3bIJadCSQ6j5khs387XUkhp
-         X6DGR9vvJg0pc97oj6Ryh5/VXN+dULcO55h5gFlnbdxurPh1zgd8t5RwTuwyNR332HZs
-         UhAre1vttJ+nnmj2pmXrKQPNkkkrCIo5EhaI+5auKk2x+QQbOC3N2pKCWg6nplyTyW+c
-         MH5ppVEIJqG5FL2U1HTT4n2Lthm95AkfXVhgYC0BYOR1C7TCn4I52BIInsGQvg0Fx2pf
-         61cJ5r9G0gMnL+UB2j5eJwVT7z9bC9hvDHKfiD5j/JUcjiDMirLi82UFvLqzYLAJcmBT
-         ZX9A==
-X-Gm-Message-State: ABy/qLYH0lYDnuoXxYHtiQ9iaOdvXmPdzECb+h4JfqCiFZ/0R+DeApdJ
-        JRDL+AOHxGiKbKREv6pufXlobw==
-X-Google-Smtp-Source: APBJJlFA6PJNxdOxoH/scYFi1LLXFwRFVjbF4FyiXaUPX47T04DQln62ymKCV5ssdcV2KdJ0Z39xfg==
-X-Received: by 2002:ac2:510b:0:b0:4fa:d147:9df with SMTP id q11-20020ac2510b000000b004fad14709dfmr1406414lfb.19.1690376894676;
-        Wed, 26 Jul 2023 06:08:14 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690376916; x=1690981716;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rDlNh04GTdfMcjpPCWLhZbu9vBr/naG66l5UTK4CINA=;
+        b=lLSWrmDskKMLoOXO51uub7ZQun8E/+l8O0Qh4F7bV7JLvbMfertlIJjoj0yLnHbegb
+         yJPqhV5cboh76fFAW7SldBw8ZA8ohYz4R5fVBm5H9BZZA//fdj53xeo01VpKTGC3790h
+         FYIwyADAAcum6lq3RpeXaUL9GN5pLkRmPhrcpOcvk3TFW6SvwxIm2cqoBX6/HwG38f1i
+         tnwe/fMJERiwvRH74guyBF4jZdwGEOhdRkaxmAegVjuqP85Ftukm8CnhG+IcS5Akl0Y6
+         Xra+r3Zk1ma20fUfIH+s05BGrmMUZqsWDOpnvEZO8KdfwhiAM9VjUlrkNKwgAfswYBeQ
+         PlJw==
+X-Gm-Message-State: ABy/qLaHj4n+9/kTP1S0DRi8GMJls1V+eR6PvwUMeleKk3aMzUjw5VV5
+        5QZwzi+YXNDqAikJkLQRZp7XHQ==
+X-Google-Smtp-Source: APBJJlHVvKdBgSYa2TrvobEWX31YTTv/1ZGgF8h/XtBS2Tva6OB4wESBiV51O4L+QytEDZQAACvcOA==
+X-Received: by 2002:a05:6512:54b:b0:4f8:7333:d1fd with SMTP id h11-20020a056512054b00b004f87333d1fdmr1437801lfl.34.1690376916500;
+        Wed, 26 Jul 2023 06:08:36 -0700 (PDT)
 Received: from [192.168.1.101] (abyl59.neoplus.adsl.tpnet.pl. [83.9.31.59])
-        by smtp.gmail.com with ESMTPSA id l14-20020ac2430e000000b004fce9e8c390sm3308070lfh.63.2023.07.26.06.08.13
+        by smtp.gmail.com with ESMTPSA id l14-20020ac2430e000000b004fce9e8c390sm3308070lfh.63.2023.07.26.06.08.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 06:08:14 -0700 (PDT)
-Message-ID: <c0429ce4-3d18-bbf8-db96-8b4363fffd0e@linaro.org>
-Date:   Wed, 26 Jul 2023 15:08:12 +0200
+        Wed, 26 Jul 2023 06:08:36 -0700 (PDT)
+Message-ID: <8276b56a-3223-b81a-e667-16ab9e7cc84b@linaro.org>
+Date:   Wed, 26 Jul 2023 15:08:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: apq8064: drop incorrect
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: apq8060: drop incorrect
  regulator-type
+Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -66,7 +66,7 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230725164917.371714-1-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
+ <20230725164917.371714-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230725164917.371714-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230725164917.371714-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -119,11 +119,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 25.07.2023 18:49, Krzysztof Kozlowski wrote:
 > regulator-fixed does not have a "regulator-type" property:
 > 
->   qcom-apq8064-ifc6410.dtb: regulator-ext-3p3v: Unevaluated properties are not allowed ('regulator-type' was unexpected)
+>   qcom-apq8060-dragonboard.dtb: regulator-fixed: Unevaluated properties are not allowed ('regulator-type' was unexpected)
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
