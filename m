@@ -2,120 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 321A8763852
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 16:06:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7946763A81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:11:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232716AbjGZOGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 10:06:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35086 "EHLO
+        id S234798AbjGZPLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 11:11:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232311AbjGZOGb (ORCPT
+        with ESMTP id S233188AbjGZPLg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 10:06:31 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F61211F;
-        Wed, 26 Jul 2023 07:06:29 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fbc5d5742eso68023645e9.3;
-        Wed, 26 Jul 2023 07:06:29 -0700 (PDT)
+        Wed, 26 Jul 2023 11:11:36 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A724D2D57
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:11:10 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb7589b187so10764897e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690380388; x=1690985188;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9CExGnNyyTMqIBKgfK9jLWHHsLv2lLgzC/iVvVseu6I=;
-        b=Ht2si9k7sgQ4FHp41Xh1A2JRiS/sAP7mdGhwnc82tNBq2KhiDxPAVt0aK1A2VTj/XL
-         nKkWfon54v9QVETu+4fnEDvnhNnBXu0k5Gjhzmeykacz160OyXbdRQqNNrJCvs+d75cN
-         RJSh8S/UYpiNUYzZn+/dx/NnjJVCLrviDsiyHYAzoIN+cIAGo1Svk3ZBw8tq1EZ6H+NQ
-         S/SvRXJSWsOqTHMKEmeuOyYb2dRTNpYw3qN/MMDIB5QY/2i14OhKwTGiO2iM1F4KAUdk
-         Cbo/9PRDySRvy2vGVOTd42gYrMA3Oig9enZ2Cdbtol9jr7U6zljhvbpXtiXY+B8Y5DWH
-         h0tA==
+        d=chromium.org; s=google; t=1690384248; x=1690989048;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b/ROWfJuXH2cVv0Y621ig/G+mxiEtHeeKT7it0Legy4=;
+        b=g4OVpkY5Ir5YWVBJTehv4LORcVfoZSnYQ8SHXz4X7usRpYm/V1nwK06H1DpDAopAj+
+         bY0L0J4aytloCqvGBV2t2QNdeM9fM7spqBOLg3BNQohijbhWQNos6RrYW+SuPqqwM+oS
+         wtrt2n9xCu1TXJehS4MoM66jTwdzk7UjRM5KA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690380388; x=1690985188;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9CExGnNyyTMqIBKgfK9jLWHHsLv2lLgzC/iVvVseu6I=;
-        b=i+44yP5V1daNO/EVMinSQxlR8jc2B4fMaEcwAKMrMMqbGaQF8JmAvlSa+1CoQx+i2g
-         GFTr91meuGkDzcOpYRwuGMmxoY6McwMjOnREQjM2sF1RBrYKcO8oj18R4EzHBUAJspAg
-         6726qSgzxqEa3fnRUwcy4Fq8hs6Fo2zp1bszTig1tEI/ckkz8O7tPmCS/mhGH4/VeqTY
-         4vd/25toPetGNo4NxrZ3+8jxEwvQj80Y02KPVRCW0tHSKEKnpwSu1Lz6y5EW+rbekvGK
-         GlRtZWqyaFYjXeNPQTc2Can7e+6lGLSBM/ZWq7tiqcK3dA0K9307ITdm8YzILRNQFByA
-         mqhw==
-X-Gm-Message-State: ABy/qLbpZhH+bCRQWWk0jNEKoThnvu7MncTkr8+xt96YrqSsDEjDO7yJ
-        Xls1F+LM5DmXJDaTy3j4hFg=
-X-Google-Smtp-Source: APBJJlGdNjDudSlbDDSi8kE8qRRQF0XYpEHL6Oi54V8yNv6mrteRqEmoKAod05XfMB4/ihqfy+LAQQ==
-X-Received: by 2002:a05:600c:20d3:b0:3fd:3006:410a with SMTP id y19-20020a05600c20d300b003fd3006410amr1444089wmm.25.1690380387879;
-        Wed, 26 Jul 2023 07:06:27 -0700 (PDT)
-Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.gmail.com with ESMTPSA id e15-20020a5d4e8f000000b0031432f1528csm20078420wru.45.2023.07.26.07.06.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jul 2023 07:06:27 -0700 (PDT)
-From:   Colin Ian King <colin.i.king@gmail.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH][V2][next] accel/qaic: remove redundant pointer pexec
-Date:   Wed, 26 Jul 2023 15:06:26 +0100
-Message-Id: <20230726140626.264952-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.39.2
+        d=1e100.net; s=20221208; t=1690384248; x=1690989048;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b/ROWfJuXH2cVv0Y621ig/G+mxiEtHeeKT7it0Legy4=;
+        b=aICDoKef+0eIhlaX1HkNJOT9BdVIlWqNZ2ZQlH26HwSUTVYkZlfQxMViUtl5O9q3An
+         9HKA348ajtzVncuPOW3mLcswHiglKRKL8iF4GXGQ7FKMbBMgz/2W8muPYQBskC086XOF
+         6Vz4NfLMk059MIMm330cp3wvwDCKpA1zXrg+0Q52N1Vj9tWFkGZJ9nCJ7jr+G91G5gMA
+         YI31Mi7jIipkyPQ6F8AOqrLaopFs3gapqnIjezMp62QJweBxWXuaIHY6cEqjWd2tABgV
+         qnzCH6/QrPotSRxQqTe9Gw0NOAXFYfTOhO3mT0cohRAE3x4Hc3N5Q643LuJ13/K1MYxW
+         PWPQ==
+X-Gm-Message-State: ABy/qLZyVj+isJrZe2XhTi1yk7u0Y1DjWMU/FQqKRNdKzfquXRsmdxEl
+        Ivc1mrj78LfM0TJ1FbpsJ85PGmuHQPfMoIcWTAqgqap1
+X-Google-Smtp-Source: APBJJlFt2LB6FCmnvKjfHRc+7ceOAyCeBp3qNz4f5ihZWGzccnZwhz/J1kLsqZkguKwiMeI7siWatQ==
+X-Received: by 2002:ac2:4836:0:b0:4fb:7381:4c69 with SMTP id 22-20020ac24836000000b004fb73814c69mr1601329lft.28.1690384248210;
+        Wed, 26 Jul 2023 08:10:48 -0700 (PDT)
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com. [209.85.167.47])
+        by smtp.gmail.com with ESMTPSA id v27-20020a056512049b00b004fdc8e52ddasm3360073lfq.129.2023.07.26.08.10.46
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 08:10:46 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-4fb0336ed4fso2756e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:10:46 -0700 (PDT)
+X-Received: by 2002:ac2:5494:0:b0:4f2:7840:e534 with SMTP id
+ t20-20020ac25494000000b004f27840e534mr170963lfk.0.1690384246218; Wed, 26 Jul
+ 2023 08:10:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230725203545.2260506-1-dianders@chromium.org>
+ <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid> <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
+In-Reply-To: <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 26 Jul 2023 08:10:33 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VcsTik+HD11xeDM2Jq9ispcX0-j5QtK8D1qUkrGabRGg@mail.gmail.com>
+Message-ID: <CAD=FV=VcsTik+HD11xeDM2Jq9ispcX0-j5QtK8D1qUkrGabRGg@mail.gmail.com>
+Subject: Re: [PATCH v3 02/10] drm/panel: Check for already prepared/enabled in drm_panel
+To:     Maxime Ripard <mripard@kernel.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        cros-qcom-dts-watchers@chromium.org,
+        Chris Morgan <macroalpha82@gmail.com>,
+        linux-input@vger.kernel.org, hsinyi@google.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        yangcong5@huaqin.corp-partner.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pointer pexec is being assigned a value however it is never read. The
-assignment is redundant and can be removed. Replace sizeof(*pexec)
-with sizeof the type and remove the declaration of pointer pexec.
+Hi,
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
----
+On Wed, Jul 26, 2023 at 5:41=E2=80=AFAM Maxime Ripard <mripard@kernel.org> =
+wrote:
+>
+> Hi,
+>
+> On Tue, Jul 25, 2023 at 01:34:37PM -0700, Douglas Anderson wrote:
+> > NOTE: arguably, the right thing to do here is actually to skip this
+> > patch and simply remove all the extra checks from the individual
+> > drivers. Perhaps the checks were needed at some point in time in the
+> > past but maybe they no longer are? Certainly as we continue
+> > transitioning over to "panel_bridge" then we expect there to be much
+> > less variety in how these calls are made. When we're called as part of
+> > the bridge chain, things should be pretty simple. In fact, there was
+> > some discussion in the past about these checks [1], including a
+> > discussion about whether the checks were needed and whether the calls
+> > ought to be refcounted. At the time, I decided not to mess with it
+> > because it felt too risky.
+>
+> Yeah, I'd agree here too. I've never found evidence that it was actually
+> needed and it really looks like cargo cult to me.
+>
+> And if it was needed, then I'm not sure we need refcounting either. We
+> don't have refcounting for atomic_enable / disable, we have a sound API
+> design that makes sure we don't fall into that trap :)
+>
+> > Looking closer at it now, I'm fairly certain that nothing in the
+> > existing codebase is expecting these calls to be refcounted. The only
+> > real question is whether someone is already doing something to ensure
+> > prepare()/unprepare() match and enabled()/disable() match. I would say
+> > that, even if there is something else ensuring that things match,
+> > there's enough complexity that adding an extra bool and an extra
+> > double-check here is a good idea. Let's add a drm_warn() to let people
+> > know that it's considered a minor error to take advantage of
+> > drm_panel's double-checking but we'll still make things work fine.
+>
+> I'm ok with this, if we follow-up in a couple of releases and remove it
+> and all the calls.
+>
+> Could you add a TODO item so that we can keep a track of it? A follow-up
+> is fine if you don't send a new version of that series.
 
-V2: completely remove the declaration of pexec and replace sizeof(*pexec)
-with size of the type.
+By this, I think you mean to add a "TODO" comment inline in the code?
 
----
- drivers/accel/qaic/qaic_data.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Also: I was thinking that we'd keep the check in "drm_panel.c" with
+the warning message indefinitely. You think it should be eventually
+removed? If we are truly thinking of removing it eventually, this
+feels like it should be a more serious warning message like a WARN(1,
+...) to make it really obvious to people that they're relying on
+behavior that will eventually go away.
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index e9a1cb779b30..a90b64b325b4 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1292,7 +1292,6 @@ static void update_profiling_data(struct drm_file *file_priv,
- static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv,
- 				   bool is_partial)
- {
--	struct qaic_partial_execute_entry *pexec;
- 	struct qaic_execute *args = data;
- 	struct qaic_execute_entry *exec;
- 	struct dma_bridge_chan *dbc;
-@@ -1312,7 +1311,7 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 
- 	received_ts = ktime_get_ns();
- 
--	size = is_partial ? sizeof(*pexec) : sizeof(*exec);
-+	size = is_partial ? sizeof(struct qaic_partial_execute_entry) : sizeof(*exec);
- 	n = (unsigned long)size * args->hdr.count;
- 	if (args->hdr.count == 0 || n / args->hdr.count != size)
- 		return -EINVAL;
-@@ -1320,7 +1319,6 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 	user_data = u64_to_user_ptr(args->data);
- 
- 	exec = kcalloc(args->hdr.count, size, GFP_KERNEL);
--	pexec = (struct qaic_partial_execute_entry *)exec;
- 	if (!exec)
- 		return -ENOMEM;
- 
--- 
-2.39.2
 
+-Doug
