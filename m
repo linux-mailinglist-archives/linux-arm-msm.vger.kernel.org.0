@@ -2,92 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FCB276365F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 14:32:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E8C976368A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 14:42:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232805AbjGZMca (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 08:32:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41940 "EHLO
+        id S233820AbjGZMmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 08:42:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232842AbjGZMc3 (ORCPT
+        with ESMTP id S230296AbjGZMl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 08:32:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B71E61;
-        Wed, 26 Jul 2023 05:32:19 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36QC63rH025552;
-        Wed, 26 Jul 2023 12:32:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=qcppdkim1;
- bh=V482rUNBz4tTIra7kuTC3bWBRLk0bTH53l6xwHFMRjc=;
- b=QTPA6wbWn7DDJ8uzueWNWs5CgG3GtdO1v+6FKnsBU0jp5rW2RSsZ/PRQr2qFaX9bX5a2
- 5vA9MaN3ivETmNLi8gqP8Mu2ijHrn5dZlvfE4+nQlDScyrDPCbtn5AcmiH6iJwJofrCN
- KeQYRbXebZAd3PSRektg4weeBMbEFSSicb/OEk0x9lb6oyPBivHSJ5JXXg6H/Rr/75B9
- 7x1dIZzTputaAxmkyWJqpB0rCFQLbYk98CLiZMjU+50D+qKupSD8wIpRBm1AERl5oUoR
- jAp30C006LcUwPRKdXPbCSARg22dQGL7cql//xwYqRPq0QcyHXSijnajMAawPrpJo9/P og== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s336t018g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 26 Jul 2023 12:32:13 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36QCWDRb002272
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 26 Jul 2023 12:32:13 GMT
-Received: from nasanex01a.na.qualcomm.com (10.52.223.231) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 26 Jul 2023 05:32:12 -0700
-Received: from nasanex01a.na.qualcomm.com ([fe80::482d:250d:70b6:e1c5]) by
- nasanex01a.na.qualcomm.com ([fe80::482d:250d:70b6:e1c5%12]) with mapi id
- 15.02.1118.030; Wed, 26 Jul 2023 05:32:12 -0700
-From:   "Naveen Kumar Goud Arepalli (QUIC)" <quic_narepall@quicinc.com>
-To:     Andrew Halaney <ahalaney@redhat.com>
-CC:     "Nitin Rawat (QUIC)" <quic_nitirawa@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "krzysztof.kozlowski+dt@linaro.org" 
-        <krzysztof.kozlowski+dt@linaro.org>,
-        "conor+dt@kernel.org" <conor+dt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH V1] arm64: dts: qcom: sa8775p-ride: Remove min and max
- voltages for L8A
-Thread-Topic: [PATCH V1] arm64: dts: qcom: sa8775p-ride: Remove min and max
- voltages for L8A
-Thread-Index: AQHZvt7QYX0nSDdHt02LA98zFub0Fa/Le8CAgACAp6A=
-Date:   Wed, 26 Jul 2023 12:32:12 +0000
-Message-ID: <516a54da44724001895f7e50634ad884@quicinc.com>
-References: <20230725100007.14775-1-quic_narepall@quicinc.com>
- <a3l7356miuuapf5dakgfchdjmxjp62ynvle4ta3hejd3tjvzd4@e2t2zm6jh7hb>
-In-Reply-To: <a3l7356miuuapf5dakgfchdjmxjp62ynvle4ta3hejd3tjvzd4@e2t2zm6jh7hb>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.216.44.194]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        Wed, 26 Jul 2023 08:41:58 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D381E2129;
+        Wed, 26 Jul 2023 05:41:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6B45C61AE9;
+        Wed, 26 Jul 2023 12:41:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1F1C433C7;
+        Wed, 26 Jul 2023 12:41:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690375314;
+        bh=bALS92dZEp6Bog/IDgTHSkowfaf9shZJRJWKE/3Rzp4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=K522A7YUIGm7SR5p/ijItVCD+05Na78v0dHvP6RrW5JDm7ocD8s+++3FsBW8zCpCN
+         YCYw7f0JDV6tPpmtPpErRRqlfR0RwAge3HzBCoQ9Af/F9h9z2E+58+4Vw9X1x+LsPx
+         brSuyzhawBS3vJEvDQEKEvjEsX6xEqCE9wZ3lfxucpuzxeF5ix9CWN+KJDMsX/tTnM
+         /A5ClEgYaWPfeez2AMkgkIfesVaiHKxxmElImvFZjrGbW3Qw/ViVkE3UL+kGB0BrLN
+         Qeaq5YJIvU0QGCNBQi0eUSoz59sADEaMRgyFu6TARgzDEhRkthXLxa7Sp8dRmYo0M7
+         zUas4sryFDWNA==
+Date:   Wed, 26 Jul 2023 14:41:51 +0200
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        cros-qcom-dts-watchers@chromium.org,
+        Chris Morgan <macroalpha82@gmail.com>,
+        linux-input@vger.kernel.org, hsinyi@google.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        yangcong5@huaqin.corp-partner.google.com
+Subject: Re: [PATCH v3 02/10] drm/panel: Check for already prepared/enabled
+ in drm_panel
+Message-ID: <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
+References: <20230725203545.2260506-1-dianders@chromium.org>
+ <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
 MIME-Version: 1.0
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SFfrn_nuT72KcPszkf7lbYsfAdFtc54t
-X-Proofpoint-GUID: SFfrn_nuT72KcPszkf7lbYsfAdFtc54t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-26_06,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- clxscore=1011 mlxlogscore=999 adultscore=0 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307260110
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="fea6cqcwqp7wzipv"
+Content-Disposition: inline
+In-Reply-To: <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,62 +76,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 03:30:07PM +0530, Naveen Kumar Goud Arepalli wrote:
-> L8A is the supply for UFS VCC, UFS specification allows different VCC=20
-> configurations for UFS devices.
-> -UFS 2.x devices: 2.70V - 3.60V
-> -UFS 3.x devices: 2.40V - 2.70V
->=20
-> As sa8775p-ride supports both ufs 2.x and ufs 3.x devices, remove=20
-> min/max voltages for L8A regulator. Initial voltage of L8A will be set=20
-> to 2.504v or 2.952v during PON depending on the UFS device type. On=20
-> sa8775, UFS is the only client in Linux for L8A and this regulator=20
-> will be voted only for enabling/disabling.
->=20
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 2 --
->  1 file changed, 2 deletions(-)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts=20
-> b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index ed76680410b4..6f3891a09e59 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -98,8 +98,6 @@
-> =20
->  		vreg_l8a: ldo8 {
->  			regulator-name =3D "vreg_l8a";
-> -			regulator-min-microvolt =3D <2504000>;
-> -			regulator-max-microvolt =3D <3300000>;
->  			regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
->  			regulator-allow-set-load;
->  			regulator-allowed-modes =3D <RPMH_REGULATOR_MODE_LPM
-> --
-> 2.17.1
->=20
 
-Reviewing with very little expertise in the area....
-A few questions below that would help me understand this a bit better.
+--fea6cqcwqp7wzipv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Does it make sense to *not* set the range of the regulator at all?:
->>> Yes, we are removing the range of the regulator.
+Hi,
 
-    1. A board dts knows its UFS device
-    2. Is UFS backwards compatible with respect to UFS2/UFS3?
-       I don't know how the version is determined, but if it's a
-       "start at UFS2, go to UFS3" should it be scaled as that goes?
-       >>>> For a UFS device 3.x, we cannot start as UFS 2.0. vcc has to be=
- as per UFS 3.x recommendations.
+On Tue, Jul 25, 2023 at 01:34:37PM -0700, Douglas Anderson wrote:
+> NOTE: arguably, the right thing to do here is actually to skip this
+> patch and simply remove all the extra checks from the individual
+> drivers. Perhaps the checks were needed at some point in time in the
+> past but maybe they no longer are? Certainly as we continue
+> transitioning over to "panel_bridge" then we expect there to be much
+> less variety in how these calls are made. When we're called as part of
+> the bridge chain, things should be pretty simple. In fact, there was
+> some discussion in the past about these checks [1], including a
+> discussion about whether the checks were needed and whether the calls
+> ought to be refcounted. At the time, I decided not to mess with it
+> because it felt too risky.
 
-Relying on the bootloader to set up the device before the kernel starts
-seems like a direction that should be actively avoided instead of
-depended on in my opinion.
->>>> As per upstream UFS driver,  voltage voting is not there and we vote o=
-nly for enable/disable .=20
-Since UFS is the only client in Linux for this rail (L8A ), we don't need m=
-in and max range to support
-UFS 2.x and 3.x cards.
+Yeah, I'd agree here too. I've never found evidence that it was actually
+needed and it really looks like cargo cult to me.
 
-Thanks,
-Naveen
+And if it was needed, then I'm not sure we need refcounting either. We
+don't have refcounting for atomic_enable / disable, we have a sound API
+design that makes sure we don't fall into that trap :)
+
+> Looking closer at it now, I'm fairly certain that nothing in the
+> existing codebase is expecting these calls to be refcounted. The only
+> real question is whether someone is already doing something to ensure
+> prepare()/unprepare() match and enabled()/disable() match. I would say
+> that, even if there is something else ensuring that things match,
+> there's enough complexity that adding an extra bool and an extra
+> double-check here is a good idea. Let's add a drm_warn() to let people
+> know that it's considered a minor error to take advantage of
+> drm_panel's double-checking but we'll still make things work fine.
+
+I'm ok with this, if we follow-up in a couple of releases and remove it
+and all the calls.
+
+Could you add a TODO item so that we can keep a track of it? A follow-up
+is fine if you don't send a new version of that series.
+
+Maxime
+
+--fea6cqcwqp7wzipv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZMEUjwAKCRDj7w1vZxhR
+xanPAP4voVmceTn00DRIp62vuGdOHci+svLi/7f8l6Z6NuyYrQD9Ewfs//FjcPgH
+B/1NNtCNPIdGky8NtXB4QU3dP2Nq4AA=
+=15yF
+-----END PGP SIGNATURE-----
+
+--fea6cqcwqp7wzipv--
