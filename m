@@ -2,85 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22623762D89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:29:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7CED762D82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:29:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232642AbjGZH3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 03:29:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58136 "EHLO
+        id S232327AbjGZH3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 03:29:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230484AbjGZH3T (ORCPT
+        with ESMTP id S232186AbjGZH2u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 03:29:19 -0400
-Received: from out-13.mta0.migadu.com (out-13.mta0.migadu.com [IPv6:2001:41d0:1004:224b::d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82A32D61
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:27:56 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1690356475;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=kddOZo1OB/dnx2Sd2Hp9HvVcJFH2vK8XN/l3RDrCzYA=;
-        b=a/sL/5lBqKAXrNPPoGDoF4xs326hzfVSG6fDcE24LmH82hZ/SqypmSeuU9lQJ3KTx+xcp1
-        7al1E8o2xtQTLBYQCCJl5EzU27s8InsUsoNIWntcSz8ycucQarnPdtrwtOYnknCdh1RCgu
-        fJXvZ2Nwuby67i5oc/L72SWSvxqIPXA=
+        Wed, 26 Jul 2023 03:28:50 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C7D269A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:27:49 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51bece5d935so9512915a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690356467; x=1690961267;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BWEre0pLcOLYcd4FD5EnL9dsQ10qbvUWSP37/zR61D0=;
+        b=y1y4UoR49VvO/j/vrmNwbquCfSyLDlgw3j9InOuwgigjZpxTDRdXipG5bYoZyd3opy
+         xpSLGavxsiWFni8Z2JjG0cXg27Y58zhTRMD2R5HfHDZGXCvrsyAMRu/TrI+uaB4SQJK1
+         A1a/wiZcZYJsXfKdG9kaGpGpfTyKOQlnANSr4QOpNHaZvJG7CuMpiStJi/5JKxf3F3K7
+         2Yx5T8Mkz9UNra3VOzryRtiIM0jyEfrlHS+Ya9aHYX/9loaWUFt1+ARCRiWyn6NbVr/x
+         Hnp97I11lJZMkQgwn/AhEszY1COsbYlN7H/OBzYLPCtvrhCIB8f/yaSAyztTrCWuUKoq
+         uFNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690356467; x=1690961267;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BWEre0pLcOLYcd4FD5EnL9dsQ10qbvUWSP37/zR61D0=;
+        b=CJGISgjuJ1lHqkSLZp08HJvPBDJ829Z6cxVMVWB+pFhKP6RW/OMAfKp/pNI8/H5w+W
+         OqEw69V6LSjEkQZs73ENmlH1XzwB7TO4qCUGC08pOPhP+N8Bki4fCYYcAJNDZDeuJTDa
+         ZZsipACsVOSa40vrL69FYkFRK6VDxPLcV15xiQzokg95MZLAQvlibKzI7/bhzB0aOthm
+         Ky63uTwR1LjJNWwXq7ERM4OTPqNryhKJaECFRdijC3bBr5UijBxu47QkN/sqSiwKq5RN
+         mKTz0fW2OswRlhkwTbPmaKxalf0o0z2OQOohphPgThJfRnMg127+gHyGKZCCL1DiU/ON
+         ve0A==
+X-Gm-Message-State: ABy/qLYxXqgMN+c59geMY80+TRoKPhue3s9xm7Y1LWbvfiJWsqX0H+7d
+        Qc4ctEqi5JKEXa0TWlWBYpBjDQ==
+X-Google-Smtp-Source: APBJJlHaQ6NqQh4t7ZcAf3OfzxoJXhkRZpG1HFLke+5OkK90xm5aTlP0C8KtPZf532soYkXSt4uFIw==
+X-Received: by 2002:aa7:d7d0:0:b0:51d:e1cf:dc8a with SMTP id e16-20020aa7d7d0000000b0051de1cfdc8amr918375eds.22.1690356467436;
+        Wed, 26 Jul 2023 00:27:47 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id v12-20020a056402184c00b005224d960e66sm1711008edy.96.2023.07.26.00.27.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 00:27:46 -0700 (PDT)
+Message-ID: <11eca956-9e91-f645-9cc7-4c9f534d9821@linaro.org>
+Date:   Wed, 26 Jul 2023 09:27:45 +0200
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 27/47] md/raid5: dynamically allocate the md-raid5
- shrinker
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20230724094354.90817-28-zhengqi.arch@bytedance.com>
-Date:   Wed, 26 Jul 2023 15:27:13 +0800
-Cc:     Andrew Morton <akpm@linux-foundation.org>, david@fromorbit.com,
-        tkhai@ya.ru, Vlastimil Babka <vbabka@suse.cz>,
-        Roman Gushchin <roman.gushchin@linux.dev>, djwong@kernel.org,
-        Christian Brauner <brauner@kernel.org>,
-        "Paul E. McKenney" <paulmck@kernel.org>, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org,
-        Sergey Senozhatsky <senozhatsky@chromium.org>,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] dt-bindings: display: msm: sm6125-mdss: drop unneeded
+ status from examples
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230725101610.75122-1-krzysztof.kozlowski@linaro.org>
+ <5w2hvzmwzqm4ffopzewveaviebq2ig7awimeo6ipcehx5a43ae@mlwffkf2ctn5>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <5w2hvzmwzqm4ffopzewveaviebq2ig7awimeo6ipcehx5a43ae@mlwffkf2ctn5>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <8A1603B9-570E-45DE-9597-90C3E2825A7A@linux.dev>
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-28-zhengqi.arch@bytedance.com>
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-> On Jul 24, 2023, at 17:43, Qi Zheng <zhengqi.arch@bytedance.com> wrote:
+On 25/07/2023 13:46, Marijn Suijten wrote:
+> On 2023-07-25 12:16:10, Krzysztof Kozlowski wrote:
+>> Example DTS should not have 'status' property.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../devicetree/bindings/display/msm/qcom,sm6125-mdss.yaml   | 6 ------
 > 
-> In preparation for implementing lockless slab shrink, use new APIs to
-> dynamically allocate the md-raid5 shrinker, so that it can be freed
-> asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
-> read-side critical section when releasing the struct r5conf.
+> This is not needed: it has already been corrected in v3 and v4 of the
+> respective series (among other changes) and the patches were only picked
+> to a preliminary (draft) pull to get an overview of the outstanding work
+> for this subsystem.  That branch happens to be included in regular -next
+> releases though.
 > 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> 6.6 drm/msm display pull: https://gitlab.freedesktop.org/drm/msm/-/merge_requests/69
+> v3: https://lore.kernel.org/linux-arm-msm/20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org/
+> v4: https://lore.kernel.org/linux-arm-msm/20230723-sm6125-dpu-v4-0-a3f287dd6c07@somainline.org/
 
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+What do you mean? The old code (one I am fixing) is in current next...
 
+If this was fixed, why next gets some outdated branches of drm next?
+Each maintainers next tree is supposed to be fed into the next, without
+delays.
+
+Best regards,
+Krzysztof
 
