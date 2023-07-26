@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F320763816
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:52:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 321A8763852
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 16:06:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232632AbjGZNwF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 09:52:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55978 "EHLO
+        id S232716AbjGZOGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 10:06:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232108AbjGZNwE (ORCPT
+        with ESMTP id S232311AbjGZOGb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:52:04 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F35E2118;
-        Wed, 26 Jul 2023 06:52:03 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3fb4146e8fcso7546965e9.0;
-        Wed, 26 Jul 2023 06:52:03 -0700 (PDT)
+        Wed, 26 Jul 2023 10:06:31 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F61211F;
+        Wed, 26 Jul 2023 07:06:29 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fbc5d5742eso68023645e9.3;
+        Wed, 26 Jul 2023 07:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690379522; x=1690984322;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NbfW0N1EHg8LOIbiDZBCl2zrM+4CsT7HnV7dWADAoqs=;
-        b=kYzo7L2O7pRSVlNwaklHki4LcUsRc3JHXcJA4c/ruBb3y5/0QG1CM3Ddmb0Gi66XFp
-         Xhr/+dyGtPg128h+XpxakXvi9Vq+5fxMQqiVnhh9FSEqFL5An35srShVnyfgDTyEqt6n
-         GHvsELKvdiUFKPBpTjuNVi6aRcPBAt+NdCKILnyH6cnWmSJy5s/VtJkDpBFgJ4SHw+7N
-         3arFkAhmIz6+a+EPmO10f1VC7ywb2ev7j/PSLyLCr6oAR2aUdGUwvEc16hspysTomt+9
-         tKd8wqpWG7Mg/N1PWfALmcFg8LqqHFTrcec5CjYQbvCrzIpnuYpn9gdTjuwzyerrRKuv
-         FB2A==
+        d=gmail.com; s=20221208; t=1690380388; x=1690985188;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9CExGnNyyTMqIBKgfK9jLWHHsLv2lLgzC/iVvVseu6I=;
+        b=Ht2si9k7sgQ4FHp41Xh1A2JRiS/sAP7mdGhwnc82tNBq2KhiDxPAVt0aK1A2VTj/XL
+         nKkWfon54v9QVETu+4fnEDvnhNnBXu0k5Gjhzmeykacz160OyXbdRQqNNrJCvs+d75cN
+         RJSh8S/UYpiNUYzZn+/dx/NnjJVCLrviDsiyHYAzoIN+cIAGo1Svk3ZBw8tq1EZ6H+NQ
+         S/SvRXJSWsOqTHMKEmeuOyYb2dRTNpYw3qN/MMDIB5QY/2i14OhKwTGiO2iM1F4KAUdk
+         Cbo/9PRDySRvy2vGVOTd42gYrMA3Oig9enZ2Cdbtol9jr7U6zljhvbpXtiXY+B8Y5DWH
+         h0tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690379522; x=1690984322;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NbfW0N1EHg8LOIbiDZBCl2zrM+4CsT7HnV7dWADAoqs=;
-        b=eYagbXWs92uiSgwcGynsQXQPnv2bASMyltAs8WFXG3Y4+SDm6A+in1d+DRGGLOpNqi
-         /JGwmzl/k8pGn0LcHyFVx+ImBFMP4C3tZIdW/Xm897txNe/wilMLe0HxqktatZ0m/saq
-         wmYdnVJK099b06+wwjW04ZGFsEhVVf7tvjoJYl1HoeByUJvzaD5h+6Jjo5s8ZxNQKa6S
-         pqUOnCsQh6Qt5PR0oEuZBR83gBcW/QBGNsI0PyAuoY+5guxSBhHai7Quwof0mmGBhFac
-         G+BLOLxoy/MGBKVhWhXbipcSHzYNnKhNrsiGj6e0ODFwdy5dKQlyBxpd95EQFOmeou9B
-         84gg==
-X-Gm-Message-State: ABy/qLYsxsa7kmLR82FUml85TMPOjj7Cjsf+WFwKJE1HbXqHTOcGpcLO
-        FcYzzSpMmCGu0zU58FcVw3Y=
-X-Google-Smtp-Source: APBJJlEsd0Wc7zCB/Slio2qe6Rve/NHUsRJn82qdYKWEvmI4Ht+aOyal05u4oDWx5QGmAdP//tILQA==
-X-Received: by 2002:a05:600c:b59:b0:3f7:c92:57a0 with SMTP id k25-20020a05600c0b5900b003f70c9257a0mr2074345wmr.14.1690379522199;
-        Wed, 26 Jul 2023 06:52:02 -0700 (PDT)
-Received: from [192.168.0.101] (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.googlemail.com with ESMTPSA id v1-20020a5d6781000000b0031434c08bb7sm19841025wru.105.2023.07.26.06.52.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 06:52:01 -0700 (PDT)
-Message-ID: <721c0d6e-0a28-ae84-1425-a04d95349e05@gmail.com>
-Date:   Wed, 26 Jul 2023 14:52:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH][next] accel/qaic: remove redundant assignment to pointer
- pexec
-Content-Language: en-US
-To:     Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        d=1e100.net; s=20221208; t=1690380388; x=1690985188;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9CExGnNyyTMqIBKgfK9jLWHHsLv2lLgzC/iVvVseu6I=;
+        b=i+44yP5V1daNO/EVMinSQxlR8jc2B4fMaEcwAKMrMMqbGaQF8JmAvlSa+1CoQx+i2g
+         GFTr91meuGkDzcOpYRwuGMmxoY6McwMjOnREQjM2sF1RBrYKcO8oj18R4EzHBUAJspAg
+         6726qSgzxqEa3fnRUwcy4Fq8hs6Fo2zp1bszTig1tEI/ckkz8O7tPmCS/mhGH4/VeqTY
+         4vd/25toPetGNo4NxrZ3+8jxEwvQj80Y02KPVRCW0tHSKEKnpwSu1Lz6y5EW+rbekvGK
+         GlRtZWqyaFYjXeNPQTc2Can7e+6lGLSBM/ZWq7tiqcK3dA0K9307ITdm8YzILRNQFByA
+         mqhw==
+X-Gm-Message-State: ABy/qLbpZhH+bCRQWWk0jNEKoThnvu7MncTkr8+xt96YrqSsDEjDO7yJ
+        Xls1F+LM5DmXJDaTy3j4hFg=
+X-Google-Smtp-Source: APBJJlGdNjDudSlbDDSi8kE8qRRQF0XYpEHL6Oi54V8yNv6mrteRqEmoKAod05XfMB4/ihqfy+LAQQ==
+X-Received: by 2002:a05:600c:20d3:b0:3fd:3006:410a with SMTP id y19-20020a05600c20d300b003fd3006410amr1444089wmm.25.1690380387879;
+        Wed, 26 Jul 2023 07:06:27 -0700 (PDT)
+Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
+        by smtp.gmail.com with ESMTPSA id e15-20020a5d4e8f000000b0031432f1528csm20078420wru.45.2023.07.26.07.06.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jul 2023 07:06:27 -0700 (PDT)
+From:   Colin Ian King <colin.i.king@gmail.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
         Carl Vanderlip <quic_carlv@quicinc.com>,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
         Oded Gabbay <ogabbay@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
 Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230725114037.36806-1-colin.i.king@gmail.com>
- <e457b416-3e63-0bae-0cd7-7788b43f30c1@quicinc.com>
- <c0b314db-bd29-7211-2a70-667405eb5bd0@quicinc.com>
-From:   "Colin King (gmail)" <colin.i.king@gmail.com>
-In-Reply-To: <c0b314db-bd29-7211-2a70-667405eb5bd0@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: [PATCH][V2][next] accel/qaic: remove redundant pointer pexec
+Date:   Wed, 26 Jul 2023 15:06:26 +0100
+Message-Id: <20230726140626.264952-1-colin.i.king@gmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,39 +73,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/07/2023 14:38, Pranjal Ramajor Asha Kanojiya wrote:
-> 
-> 
-> On 7/26/2023 8:30 AM, Jeffrey Hugo wrote:
->> On 7/25/2023 5:40 AM, Colin Ian King wrote:
->>> Pointer pexec is being assigned a value however it is never read. The
->>> assignment is redundant and can be removed.
->>>
->>> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
->>> ---
->>>   drivers/accel/qaic/qaic_data.c | 1 -
->>>   1 file changed, 1 deletion(-)
->>>
->>> diff --git a/drivers/accel/qaic/qaic_data.c 
->>> b/drivers/accel/qaic/qaic_data.c
->>> index e9a1cb779b30..8a6cb14f490e 100644
->>> --- a/drivers/accel/qaic/qaic_data.c
->>> +++ b/drivers/accel/qaic/qaic_data.c
->>> @@ -1320,7 +1320,6 @@ static int __qaic_execute_bo_ioctl(struct 
->>> drm_device *dev, void *data, struct dr
->>>       user_data = u64_to_user_ptr(args->data);
->>>       exec = kcalloc(args->hdr.count, size, GFP_KERNEL);
->>> -    pexec = (struct qaic_partial_execute_entry *)exec;
->>>       if (!exec)
->>>           return -ENOMEM;
->>
->> It does look like pexec is not used in this function after it was 
->> refactored.  Shouldn't the declaration at the beginning of the 
->> function also be removed?
-> 
-> Yeah we should remove the declaration as well. Although it is used some 
-> where to calculate its size i.e. sizeof(*pexec). We need to directly use 
-> the type in sizeof() i.e. sizeof(struct qaic_partial_execute_entry).
+Pointer pexec is being assigned a value however it is never read. The
+assignment is redundant and can be removed. Replace sizeof(*pexec)
+with sizeof the type and remove the declaration of pointer pexec.
 
-I didn't remove the variable because of the sizeof(), but it makes sense 
-to remove it. I'll send a V2 today
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+---
+
+V2: completely remove the declaration of pexec and replace sizeof(*pexec)
+with size of the type.
+
+---
+ drivers/accel/qaic/qaic_data.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index e9a1cb779b30..a90b64b325b4 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -1292,7 +1292,6 @@ static void update_profiling_data(struct drm_file *file_priv,
+ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv,
+ 				   bool is_partial)
+ {
+-	struct qaic_partial_execute_entry *pexec;
+ 	struct qaic_execute *args = data;
+ 	struct qaic_execute_entry *exec;
+ 	struct dma_bridge_chan *dbc;
+@@ -1312,7 +1311,7 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
+ 
+ 	received_ts = ktime_get_ns();
+ 
+-	size = is_partial ? sizeof(*pexec) : sizeof(*exec);
++	size = is_partial ? sizeof(struct qaic_partial_execute_entry) : sizeof(*exec);
+ 	n = (unsigned long)size * args->hdr.count;
+ 	if (args->hdr.count == 0 || n / args->hdr.count != size)
+ 		return -EINVAL;
+@@ -1320,7 +1319,6 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
+ 	user_data = u64_to_user_ptr(args->data);
+ 
+ 	exec = kcalloc(args->hdr.count, size, GFP_KERNEL);
+-	pexec = (struct qaic_partial_execute_entry *)exec;
+ 	if (!exec)
+ 		return -ENOMEM;
+ 
+-- 
+2.39.2
+
