@@ -2,100 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C0DC763AB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C85763ADB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:22:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234936AbjGZPRX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 11:17:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58488 "EHLO
+        id S232537AbjGZPWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 11:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234340AbjGZPRB (ORCPT
+        with ESMTP id S232388AbjGZPWf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 11:17:01 -0400
+        Wed, 26 Jul 2023 11:22:35 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42EB8213F;
-        Wed, 26 Jul 2023 08:16:43 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F8F2FC;
+        Wed, 26 Jul 2023 08:22:33 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9672C61B19;
-        Wed, 26 Jul 2023 15:16:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057A0C433C8;
-        Wed, 26 Jul 2023 15:16:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B122A61B3B;
+        Wed, 26 Jul 2023 15:22:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F00C433C8;
+        Wed, 26 Jul 2023 15:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690384601;
-        bh=jXmlPNBNKU/m6JnEaxERgV4+Wjg7gBsUypiX9XsIgXM=;
+        s=k20201202; t=1690384952;
+        bh=9zDz3SagJCMaLUegWEGoTDA+cWb/pILa/bDTQy9G+xY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bdNnh1nWVplqfOpP1fTLlWY2pNs7zfk4AqckXmX8HWQ/oXGppHQ8m7g9+qB8jz68r
-         RBEPZoBGZhM8vItiWYu4N4MtJUS8gQ5Ceon1DqUb6VZDZ1aFOfWbw+LSvubfA3NkgT
-         D6JtEOAE2M+eRRT8sTw6M9jTCJc+2qjgQqgqcROhhKr+3lLIEGgozDqDeNGavJGAC1
-         aBJunax+8eIwjQGQVztHaeaEw14alyvu6kfz0J96+DIEWRHU+fItzAFQRIUaND7B66
-         mzzI1DoKRh1nFgHr/vMhwiAwXH/CF7uvtwOTUn97UXdfTblX/VTo6xksaT7IEVY625
-         2awRO955WfAnQ==
-Received: (nullmailer pid 1463673 invoked by uid 1000);
-        Wed, 26 Jul 2023 15:16:38 -0000
-Date:   Wed, 26 Jul 2023 09:16:38 -0600
+        b=FQDxUytPwExrxnMDK1NoeR5aEUldj5zSKlNSNR6ZZCSMbwQjpQasj3kzix52ujS+4
+         L0W2QvjR865awdef3Owd2xrvr/BEMNLPJgblfqrYM/28fNdVf8hwHCMIQXfnrsjECw
+         7wWs18fNf5FWiIIHPxRcU/4iUGM/EqNubKYP4ISthJwOH1LnUQyTkP6gtOmXBA/yi5
+         gkBWeihHXrM/uHdrie0MZ/6z8SYYbmz74RIT0zKsUiN9JsCeLJIbOW5m25NPEqRfVR
+         +EEk9AR60RVgxJx9oJPZzY0ELPPRgvBfQdX9R3RIYOLGj/hq29H0hOReg4PE/4OWaG
+         XF6oKUslZC3ow==
+Received: (nullmailer pid 1471317 invoked by uid 1000);
+        Wed, 26 Jul 2023 15:22:28 -0000
+Date:   Wed, 26 Jul 2023 09:22:28 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Tao Zhang <quic_taozha@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        andersson@kernel.org, linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>, coresight@lists.linaro.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v7 12/13] dt-bindings: arm: Add support for DSB MSR
- register
-Message-ID: <169038457610.1463167.3960750985842576776.robh@kernel.org>
-References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
- <1690269353-10829-13-git-send-email-quic_taozha@quicinc.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, linux-clk@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Lux Aliaga <they@mint.lgbt>, devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        David Airlie <airlied@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>
+Subject: Re: [PATCH v4 04/17] dt-bindings: display/msm: Remove DSI1 ports
+ from SM6350/SM6375 example
+Message-ID: <169038494815.1471241.4131859739067244773.robh@kernel.org>
+References: <20230723-sm6125-dpu-v4-0-a3f287dd6c07@somainline.org>
+ <20230723-sm6125-dpu-v4-4-a3f287dd6c07@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1690269353-10829-13-git-send-email-quic_taozha@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230723-sm6125-dpu-v4-4-a3f287dd6c07@somainline.org>
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Jul 2023 15:15:52 +0800, Tao Zhang wrote:
-> Add property "qcom,dsb-msrs-num" to support DSB(Discrete Single
-> Bit) MSR(mux select register) for TPDM. It specifies the number
-> of MSR registers supported by the DSB TDPM.
+
+On Sun, 23 Jul 2023 18:08:42 +0200, Marijn Suijten wrote:
+> Both SM6350 and SM6375 support only a single DSI link, and don't have a
+> corresponding dsi1 node in DTS.  Their examples should not suggest an
+> output interface port on the display-controller node to this inexistant
+> DSI host, with a dsi1_in label reference that doesn't exist in the
+> example either.
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Fixes: 3b7502b0c205 ("dt-bindings: display/msm: Add SM6350 MDSS")
+> Fixes: 2a5c1021bc77 ("dt-bindings: display/msm: Add SM6375 MDSS")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  .../devicetree/bindings/display/msm/qcom,sm6350-mdss.yaml          | 7 -------
+>  .../devicetree/bindings/display/msm/qcom,sm6375-mdss.yaml          | 7 -------
+>  2 files changed, 14 deletions(-)
 > 
-
-
-Please add Acked-by/Reviewed-by tags when posting new versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
-
-If a tag was not added on purpose, please state why and what changed.
-
-Missing tags:
 
 Acked-by: Rob Herring <robh@kernel.org>
-
-
 
