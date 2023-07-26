@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 695CF763B59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:41:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EC93763B63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:42:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234522AbjGZPlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 11:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46182 "EHLO
+        id S234849AbjGZPm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 11:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233947AbjGZPlM (ORCPT
+        with ESMTP id S234734AbjGZPmZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 11:41:12 -0400
+        Wed, 26 Jul 2023 11:42:25 -0400
 Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFEE2213A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:41:10 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fdfefdf5abso3867566e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:41:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0341EB5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:42:22 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fbb281eec6so10948786e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690386069; x=1690990869;
+        d=linaro.org; s=google; t=1690386141; x=1690990941;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lspuiTKxGPl7j3zN6foG0gANrbHRCSknpl5fapbBSQk=;
-        b=EHw23ByepeGBCexOes07Hu/K6F/NlA8JJRWdzYHIKy0ySrnu6K1mrIQz6MhquTdbOu
-         /u35XkOQWKL18HRQPDnk4AvVm9sE+hI2YjPPnUvl0cCgGRnlFKf/K8elEoH1qJa3NbKL
-         rovy2iW1ATOZtkqZk1KZrrr10kFkAKopD+M3W1Dv0mkjaK41gXrttJPHavrrm+wdtHgY
-         8Fp6w11xrnDyNra0wZ42Iq0rvdqyQnPwz+a+MJVre7LOk1HUmFBrZrJEuMYdCNasViF/
-         5Rks3opXZ3A8z+YgxoLRL8BbhaLTiSY/Uwsh0kWcbbeMirAaxHHdAIRHFV3Msyosbuj9
-         mGBQ==
+        bh=pXkM6RQt02/mcXYbX3u5d6aDLN/tgGUKvs7vtieBQ5U=;
+        b=udhTke+Nkxkx1CBE5T2vLkv9FauIZCWSIYWzo6TDW6FU9ENTudzgaITN3X39tWBmL+
+         BBQaA1OZNi5Zht3G4ms/8sr+u4CswC8zq1zFHi2rLfAoIZxr1SV8xOLAb3iicPulBhhn
+         JyZ4+v84gaSqKlQbelbZzkkNkozJOdHiyqvC/GS6IT4qia5X8oURr/bvjp/RnQW/N1+n
+         m1CTuF31NcwZ8WvTeDYeQZ4oUsMhuO/32IqIg0Bwk5Qf+b2P4LY0Y6DbVtbOftCJttCa
+         V8fDo8FoBFgc1mJy68A00zdW99ktAbEZ63Dgc3AOR/UDFIku8Or00bv68ztSLwlIW5k1
+         YqwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690386069; x=1690990869;
+        d=1e100.net; s=20221208; t=1690386141; x=1690990941;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lspuiTKxGPl7j3zN6foG0gANrbHRCSknpl5fapbBSQk=;
-        b=QnEH8k/krJxP3f/Kh7V3CMx/QAjeHRTtt9kuR1y71tAcsqNF3/T1o5IqU+3M2fsjnI
-         3WxVEd71FRQwr6Vzh1dOD2MWCvu8p/kU2tkuO3fYsb39OUXdXEVzl/IB2NzaoW98qyiq
-         hAE4J6wVV+Dk/KFFmldPoSW04JjLH9RmKMnxS5Rl+5sdOTjRh6Ze2oCcBdkBx2d+975p
-         I5gF0qvIhLkmW78NXWEEfu8D9BMeE4I1Uc+DnaCRz7jUyT4D6nq/Jsg5WRShIFeHw/LO
-         D7nk1AKr6OOBvAz+kT+dGYwWlrFZiUmMLcMTRV0WgvRgg8hnfaktAm/AZ7dpYPeeSorQ
-         al+A==
-X-Gm-Message-State: ABy/qLZH7yISPw9ekvKjA3XsbgTBGBy2pZlVNyrH49w/hUPL7q2k2weR
-        Mq8utWtVkD5FyekqbkOUuiiFig==
-X-Google-Smtp-Source: APBJJlH4UGlitOcXYoqLf5xUMxwbnSm6R7p/LxoXekvEVVt6ZRyYjSJYGCNiKNWerSo4/3TNLlefyA==
-X-Received: by 2002:a19:915b:0:b0:4fb:8948:2b8e with SMTP id y27-20020a19915b000000b004fb89482b8emr1797720lfj.8.1690386069331;
-        Wed, 26 Jul 2023 08:41:09 -0700 (PDT)
+        bh=pXkM6RQt02/mcXYbX3u5d6aDLN/tgGUKvs7vtieBQ5U=;
+        b=UbOsenxhaeopEzyjsyMYF1kvDUwA0D8juNICVXiqYfTvCDlrmSJGsBDzCsgUxNxBYa
+         WMCrdKZurGtirv3XTdHoIRYMIpNmz8CWB1kqFV5VZft/VM1V0JRyf8/lUXWjE7oLin2y
+         dFJOObkfG1gSp/QF0DNB3jLF1l9MCPCch+ZHmN2HYFW/wFDoovxbyXyLv7pw6zicm+Xo
+         p5uvm8tB0/pbiRtPQrWFSObp4eS4UBu0WIQsVTWYY+s8GeGVmIuuN+WKlz/tBl4kTEVC
+         XJa1MO4Oy9Pr3TGuFxcEgxnNBA0Rl6RCJ4NEkguGUUj1fycvD7b4uRpGKo3aRbwpmLHV
+         7w0A==
+X-Gm-Message-State: ABy/qLZsBJoI70I3GIEHZh6DSKOZ0E21SZ/uRfSvVHhrpIqytzxaFBFB
+        4BFx7b9+QdGR375WgkRzeoWSMw==
+X-Google-Smtp-Source: APBJJlEIEp+n4hXZmCTHCrNmwP/mqi6VL/iLjS590fFD/743rc0ikYBYmLA8PTrc/RZuHd7idT21+g==
+X-Received: by 2002:a05:6512:2253:b0:4fe:788:66fe with SMTP id i19-20020a056512225300b004fe078866femr1941513lfu.68.1690386140872;
+        Wed, 26 Jul 2023 08:42:20 -0700 (PDT)
 Received: from [192.168.1.101] (abxh240.neoplus.adsl.tpnet.pl. [83.9.1.240])
-        by smtp.gmail.com with ESMTPSA id m2-20020a195202000000b004fe0ec5596bsm460666lfb.54.2023.07.26.08.41.07
+        by smtp.gmail.com with ESMTPSA id m2-20020a195202000000b004fe0ec5596bsm460666lfb.54.2023.07.26.08.42.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 08:41:08 -0700 (PDT)
-Message-ID: <be9e1745-82aa-ece9-c387-fc19e4dd2eae@linaro.org>
-Date:   Wed, 26 Jul 2023 17:41:07 +0200
+        Wed, 26 Jul 2023 08:42:20 -0700 (PDT)
+Message-ID: <b3175a93-0b41-49d7-ca29-bc4ca9b5c8fc@linaro.org>
+Date:   Wed, 26 Jul 2023 17:42:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 7/7] clk: qcom: gcc-qdu1000: Update the RCGs ops
+Subject: Re: [PATCH V4 4/7] clk: qcom: gcc-qdu1000: Update GCC clocks as per
+ the latest hw version
 Content-Language: en-US
 To:     Imran Shaik <quic_imrashai@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -73,7 +74,7 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
 References: <20230719041450.737929-1-quic_imrashai@quicinc.com>
- <20230719041450.737929-8-quic_imrashai@quicinc.com>
+ <20230719041450.737929-5-quic_imrashai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,13 +111,13 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230719041450.737929-8-quic_imrashai@quicinc.com>
+In-Reply-To: <20230719041450.737929-5-quic_imrashai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -124,13 +125,19 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19.07.2023 06:14, Imran Shaik wrote:
-> Update the clock RCG ops to shared_ops to park them
-> at safe clock(XO) during disable.
+> Update the GCC clocks as per the latest hw version of QDU1000 and
+> QRU100 SoCs.
 > 
 > Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[...]
+
+> +	[GCC_GPLL1_OUT_EVEN] = &gcc_gpll1_out_even.clkr,
+So, this clock was there before, but it was never registered with the
+clock framework, even though it was referenced as a parent..
+
+Sounds like a bug!
 
 Konrad
