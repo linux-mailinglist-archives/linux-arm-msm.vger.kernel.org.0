@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 384DF763737
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B96DE763750
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233567AbjGZNLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 09:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
+        id S233773AbjGZNQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 09:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233424AbjGZNLu (ORCPT
+        with ESMTP id S233821AbjGZNQA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:11:50 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 039851FF3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:11:49 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b70404a5a0so100202851fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:11:48 -0700 (PDT)
+        Wed, 26 Jul 2023 09:16:00 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92407213F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:15:52 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f954d7309fso1302351e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690377107; x=1690981907;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1690377351; x=1690982151;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=fceTjpt0I0GGZpZu52Ezsa57vvTP8Gp9bGJwFbhqqGA=;
-        b=hnc/7QYLXegSTTrqPCWDJAMwZzKgKLMN6+Sp2VeHlN51DGhEn5Fkot9WWtEOG44BHa
-         SsaojGGRKewUVbsUEEa40KN/UteJZK+UejhcZ3gGVYDYuTv9+F+SW9wSuFfuvCxYJgQX
-         vpAxWTaxl//FFA532s9j38xlygbcNMyaaWAFyyMOmkg9ZMHsvylF+tPPvi7slPVIIkYF
-         F9nzaUnk3tspmhI8rhU0aSIE6HZYzMPgEjotAEr2A6q6NEwTcQtLp/01LJ6+mfMjFUri
-         Ft/QTR8K9nBHOYTGXd98T9KKWfX6ElC5kSlkgfnON9rusiqEdCEYia1xLskDspLn3oty
-         mxag==
+        bh=kCgEAnQldbWSshS+6UesBxXb+/eschag6NjEzTyYfa8=;
+        b=CseQ0KYHYZZa0X7rrG4Bskpw5tABmqHqvo11Bhw7TtDzn+9/b9PUChRsCy2XbZn2It
+         X8LWcmsD2kHeqvHKBNbHrvC+vwIwWHN3TnyvWLtiEtOJ8n383x8cjtiYJL9OuEAsu9vE
+         lW8bdq9pqLdLNexP3eZdpJedZeJIeBAZNPOW0e7L3EUILqlQ2gdMgDrQ7pAmDIs0VxjW
+         rUHqZ2JJHMzvHDs92k2rv0jIVv+nJOLpSFWYKYdEZVFuqixpQqOxZsCO4iGgPXJFEenT
+         QZLFtDQ/o9lAXJZyJYHOOBmKJB30xl8BcN2fI2ypAXFyM3pApgDnXouSXMM5BdwBww6k
+         TzAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690377107; x=1690981907;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1690377351; x=1690982151;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fceTjpt0I0GGZpZu52Ezsa57vvTP8Gp9bGJwFbhqqGA=;
-        b=kzmCJUOsaq6NNE4NJwaqqn4urJxLOjC/C1W4OMp41yeH6WUbakZOZBw7sRjVMc5/CE
-         ZrIDIZQ/pYWuhxXpFWhT7n+Zu3hPSIkP74gIyp3TmtrVaJVc7LS9G9yevRX/noDbpkZu
-         A++HMVK3d3NnOs/M73oEvzim8QCO4MTAOpInNvxEBHEz8UyGTdnKwZkHggCLOkYW9yCZ
-         9ZxqTyotK04oplKGbKrf6onBchBevNLR20sL/F86Gft9mWm4OD6TPkkHpIFmntzWsV6i
-         voesWuVxbHpchesF7j6ap7aflmMzrvNAjPTscl5PyF5AwT6sNgQoh4ueHmfzJOsT6Vwk
-         pPxQ==
-X-Gm-Message-State: ABy/qLaPR4/PpcKKuMGXVl1pF2h3oSLhE4y575HLcQapHfDxgPC5dhyW
-        KTvqqx82gbFAyEOTFuGIxe73DQ==
-X-Google-Smtp-Source: APBJJlG2tXGyjq2mq5mQTNGBeDOefLv6/VRlZq36AOlisG3kUf9aOrXYT8K0yPi5VmKet9j2TnOslA==
-X-Received: by 2002:a2e:9bd4:0:b0:2b9:2e85:2fa0 with SMTP id w20-20020a2e9bd4000000b002b92e852fa0mr1465699ljj.15.1690377107231;
-        Wed, 26 Jul 2023 06:11:47 -0700 (PDT)
+        bh=kCgEAnQldbWSshS+6UesBxXb+/eschag6NjEzTyYfa8=;
+        b=B5CjeDs8M49GweZvijee7aR1iGQBhHbnB6T9sWXX9XcPrS2sk4+DIP/qcKs3DmPIGX
+         J8J+dp90AQX4WsGvJ7GBt8qp5+oK4VyvzskbZkTKpaUjxa/wD48ewR77XiItwt/N9isc
+         QPTycvKxkuxVVikqlRMmkh3RI2ihQJQaIUeN5IFQardaHxxqeWqStK8kixUAbDZYElVI
+         tMn2LeUzi+c/rs/9Xb1in66JutfuFi0be2yzyQszWnJc49psCSrIym3/0izh1nF1Vx9R
+         C4MMH8fWdMmitrYHzIW50cfRDRmi0OvmavcJ0GBr80DGDFoFHEcvVHgBYUWBKCiZWrgW
+         sFZg==
+X-Gm-Message-State: ABy/qLbwKySKtD/2YjthNwokwVcEw9Zt8lTtl1u8fSN3sBq8L4ZMf6yo
+        BQd9AxcD1YNM5FIwxh6WChYBgQ==
+X-Google-Smtp-Source: APBJJlFPqqbf4K9dM5wgRbIKUsSBqxqeeMPrkrrT0+xpxgRCvU3YrZK42DFyjtViSnUsFS86ouqtpQ==
+X-Received: by 2002:a05:6512:31d1:b0:4fb:7371:3db6 with SMTP id j17-20020a05651231d100b004fb73713db6mr1699084lfe.29.1690377350680;
+        Wed, 26 Jul 2023 06:15:50 -0700 (PDT)
 Received: from [192.168.1.101] (abyl59.neoplus.adsl.tpnet.pl. [83.9.31.59])
-        by smtp.gmail.com with ESMTPSA id e18-20020a2e9852000000b002b6d7682050sm4175159ljj.89.2023.07.26.06.11.44
+        by smtp.gmail.com with ESMTPSA id m9-20020a056512014900b004fb8ff1f531sm3248476lfo.70.2023.07.26.06.15.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 06:11:45 -0700 (PDT)
-Message-ID: <8023c595-5257-4ec3-a7d3-08ca115a0421@linaro.org>
-Date:   Wed, 26 Jul 2023 15:11:43 +0200
+        Wed, 26 Jul 2023 06:15:50 -0700 (PDT)
+Message-ID: <2bcad16b-ed94-357f-5153-372a216ce958@linaro.org>
+Date:   Wed, 26 Jul 2023 15:15:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: mdm9615: populate vsdcc fixed regulator
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add BQ Aquaris M5
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230725203718.513724-1-krzysztof.kozlowski@linaro.org>
+References: <20230724-bq_m5-v1-0-17a0870a73be@apitzsch.eu>
+ <20230724-bq_m5-v1-1-17a0870a73be@apitzsch.eu>
+ <877c6d2c-430f-b1fb-4267-18be5d7256dc@linaro.org>
+ <d51dee67-02f4-1256-877f-61629c04b08f@linaro.org>
+ <a90461fa-8319-5b87-397f-53ba169a3d31@linaro.org>
+ <1717ccb1-46b3-8ac3-2c09-9558bd12cc40@linaro.org>
+ <d9cb0908-4074-2f01-efaf-cdd863a039f2@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,11 +108,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230725203718.513724-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d9cb0908-4074-2f01-efaf-cdd863a039f2@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,31 +121,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.07.2023 22:37, Krzysztof Kozlowski wrote:
-> Fixed regulator put under "regulators" node will not be populated,
-> unless simple-bus or something similar is used.  Drop the "regulators"
-> wrapper node to fix this.
+On 26.07.2023 09:34, Krzysztof Kozlowski wrote:
+> On 25/07/2023 12:03, Konrad Dybcio wrote:
+>> On 25.07.2023 11:43, Krzysztof Kozlowski wrote:
+>>> On 25/07/2023 10:13, Konrad Dybcio wrote:
+>>>> On 25.07.2023 07:46, Krzysztof Kozlowski wrote:
+>>>>> On 24/07/2023 22:52, André Apitzsch wrote:
+>>>>>> Add a compatible for BQ Aquaris M5 (Longcheer L9100).
+>>>>>>
+>>>>>> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+>>>>>> ---
+>>>>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>>>>>>  1 file changed, 1 insertion(+)
+>>>>>
+>>>>>
+>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>>
+>>>>>
+>>>>> ---
+>>>>>
+>>>>> This is an automated instruction, just in case, because many review tags
+>>>>> are being ignored. If you do not know the process, here is a short
+>>>>> explanation:
+>>>>>
+>>>>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+>>>>> versions, under or above your Signed-off-by tag. Tag is "received", when
+>>>>> provided in a message replied to you on the mailing list. Tools like b4
+>>>>> can help here. However, there's no need to repost patches *only* to add
+>>>>> the tags. The upstream maintainer will do that for acks received on the
+>>>>> version they apply.
+>>>>>
+>>>>> https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
+>>>> Krzysztof, update your bot to paste this link with s/v5.17/latest/g
+>>>
+>>> Is there any difference? :) I would need to update links in all my
+>>> templates and re-check the links...
+>> Don't know, but the keyword "latest" in the link always points to the..
+>> latest available release
 > 
-> Fixes: 2c5e596524e7 ("ARM: dts: Add MDM9615 dtsi")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-> index b40c52ddf9b4..bfcb4fcf6546 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-> @@ -46,14 +46,12 @@ cxo_board {
->  		};
->  	};
->  
-> -	regulators {
-> -		vsdcc_fixed: vsdcc-regulator {
-> -			compatible = "regulator-fixed";
-> -			regulator-name = "SDCC Power";
-Neil, do we know if there's some a/o regulator coming from the SoC
-or something?
+> And how do you update the line marker in "latest" version, so it points
+> to exact line I want? I could switch to latest kernel doc and point to
+> chapters, but then not to specific lines.
+Hm, right. Didn't think about that.
 
 Konrad
-
