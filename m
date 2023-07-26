@@ -2,79 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD28B763F18
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:56:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5865764014
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 22:00:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbjGZS4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 14:56:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49834 "EHLO
+        id S229581AbjGZUAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 16:00:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbjGZS4T (ORCPT
+        with ESMTP id S229520AbjGZUAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 14:56:19 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 238D41710
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:56:17 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-977e0fbd742so4024066b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:56:17 -0700 (PDT)
+        Wed, 26 Jul 2023 16:00:33 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5540E1BC1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 13:00:32 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-c5ffb6cda23so181040276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 13:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690397775; x=1691002575;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s9TNH7rN4X9jpMQPTCMF3nIKFqvH8qBSBTAhAKjOMj4=;
-        b=wg8lmXgWMte3pwdxKKPlZRCYxwSSF52uu/3BnHBhIqnPp3BBeCjUkU91c+w+JAq7xk
-         zwUKtBrWU9rdWhxjZVdHGTLotMfTFqx3b4FAAHnrC7sFtOvIIkgSvmyHzktfZrMzBbIL
-         epWcHPl5lUZ/T8li4I+2ZAUcC3WfqmRnJezQvsKmBWgeAa37DJAnCtsYCe5uYZoiT6ZY
-         REdCc1/lSqX3x+vbqA3u4bCgPfXxWsM6lpsUqU36M+6z/fKuYp0N4PFvNSDO8Xm/gRUA
-         PPgxm59uXELgsARLTacPD5DCTImeEni+wl4b+sWGP4SAHPm2ciEv4tmVb2qdEB4hGcAn
-         SuaA==
+        d=linaro.org; s=google; t=1690401631; x=1691006431;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d2u8cAjsBTaS3O0e8Q9FK3b/6H8xr7sbQ+ScHjOs04k=;
+        b=QfaIxvkNovkPi80GloFA076qkhVGC9CwCCmO6Gg+Z6WNhjf4dYzSvNECEp8+EzLFD1
+         SNq6CriETQE0wn37lc1KQdq1fdNgKN10k9QF0D0jXV16MN0Kmr+jNuADgZcZ1fphMe5z
+         CGnrmY6aqMcUi2wf0XDFC0bonVaGklZmZmzwfGxomP9c/8jRcmygtKZdCSP+hIwMJAjM
+         zHHvPpSVfYr+f0vaexyeJzbmPNH7ZUzpGx34sK2Y3NRTPdnLn2c6zApsHvP0YB/spYcp
+         silNV67dREV4+ZMXCPgIo5R9RYxkVrYYAl7iIDr+N3S0Py2taSqT2TgAAuE4fs/5vqwV
+         4jeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690397775; x=1691002575;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s9TNH7rN4X9jpMQPTCMF3nIKFqvH8qBSBTAhAKjOMj4=;
-        b=GNG2K0sK+TNFC7JpIFLg/O6M6+TvwZCkZpSiXT1o1ibr3KA6m3iTEPsp4eE/ANmmyw
-         K3f+LMKf8j3n0XshQ2Qhaptv+ZotxWMw2GdC7r3Y2rvvoJ2ok2N8gZW1LqxabNRsYgm/
-         JZEwCPj0VBPO6lvzAsx9iHXMvrXko+LC/eNtJPv1qyvNGBNyA4VjOtHcMjwMchH+RetQ
-         pKyQtu08dUeO+y4g2XQTMLFuUSiZ2WPGnqoXh21dSXyKOy4wpUWKswvYo+4ReKXLz8hs
-         3QRX/ocBid3hGmrxVwVDL210vUiIJH0NTFDNKwaeMdX14PdJ7TgVS/2fxHEPsXy+dsNV
-         fZCQ==
-X-Gm-Message-State: ABy/qLY9hamkkVV8a/3OqAb9THIb2keKxv6WXQ5LapwWvTyQcwqiJwE3
-        w4Bm6Yc9yEWo1n6BcjFOT5TJyg==
-X-Google-Smtp-Source: APBJJlGh2w5f+EQQtrt4UZ96x5E9mC6mEOFaqoZGru1fRrfgLZKS2d0h/3bkDc7eR8ENEr0A5CRxBg==
-X-Received: by 2002:a17:906:310f:b0:99b:431b:a5e9 with SMTP id 15-20020a170906310f00b0099b431ba5e9mr43984ejx.45.1690397775536;
-        Wed, 26 Jul 2023 11:56:15 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id kd7-20020a17090798c700b00992a8a54f32sm9814652ejc.139.2023.07.26.11.56.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 11:56:15 -0700 (PDT)
-Message-ID: <d7380f31-8ac6-7c7b-b2b8-11d497e0de00@linaro.org>
-Date:   Wed, 26 Jul 2023 20:56:13 +0200
+        d=1e100.net; s=20221208; t=1690401631; x=1691006431;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d2u8cAjsBTaS3O0e8Q9FK3b/6H8xr7sbQ+ScHjOs04k=;
+        b=HyOmbZeHdcAZHixqGSUBYfVfb9v8a0dhhiSXW/Y4/dU+HIQSRLJzlKDKwq3Uekr6zS
+         NPJJOzeJDsqx+CxSZmLW7S0oviUzlQdH5pt2DYP0K1woCssGRJfoavuCVB/r+6oBjymY
+         sdxkHbYiPTVps+yAjAOrJtHkaU1Nd4Ehq87sQVKo7w8ZBh9IsdPCz4eaSh+t/szbEONG
+         JmgAfs0/zMlxDXM5UtjtgE/PRco0NEsK5bL9zHh0ldILhp6OS9hCoKMMPVbasKt9zrL1
+         GsMUll00U2anVXBRbnjwoaRhmjS82cxE1BwZ1XJ5f0vicLpBokwBTQ97RIyfegmAWccZ
+         8Dbg==
+X-Gm-Message-State: ABy/qLYxR7ZYM8IP+wbwUB7zG7ydW/WNqUcRkbKWA5B/lOg6RNUWp2/r
+        9Q+oWeTm4su3N1MO8Jaf4GMOj4qipHX9FZEHhgy/+A==
+X-Google-Smtp-Source: APBJJlEjxLQzHmA+EtnewFmPDBjE5NDz2TErWbOtdZOzZlYWS/JdmMLQYv5PrY5YdT0vX5B/Y+SfA2H1R6UteJTCigw=
+X-Received: by 2002:a25:8506:0:b0:c6d:e3e3:5592 with SMTP id
+ w6-20020a258506000000b00c6de3e35592mr2503877ybk.54.1690401631504; Wed, 26 Jul
+ 2023 13:00:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] ARM: dts: nuvoton: Add Fii Mori system
-Content-Language: en-US
-To:     Charles Boyer <Charles.Boyer@fii-usa.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-7-robdclark@gmail.com>
+ <ccbe9ed4-7def-b0d1-2d1c-e2550d212943@linaro.org> <fpwpc7oyxzbfndojr2o2rkv2i66is4ylrtxh4equms7eyu4afc@cwyfgqanhlbo>
+ <CAF6AEGt+qnUBAq3CHS4eTO1YQsbLjj3Urtt2LuSwRJ7XpzPBww@mail.gmail.com>
+In-Reply-To: <CAF6AEGt+qnUBAq3CHS4eTO1YQsbLjj3Urtt2LuSwRJ7XpzPBww@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 26 Jul 2023 23:00:20 +0300
+Message-ID: <CAA8EJppJNrcXp8yswDycqA5HuK6bDCKrAkT4ttkGJvsWqD_YMg@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 06/12] drm/msm/adreno: Allow SoC specific gpu
+ device table entries
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        dri-devel@lists.freedesktop.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Vivekanand Veeracholan <vveerach@google.com>,
-        Lancelot Kao <lancelot.cy.kao@fii-na.com>
-References: <20230726184651.1221-1-Charles.Boyer@fii-usa.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230726184651.1221-1-Charles.Boyer@fii-usa.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,649 +75,154 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/07/2023 20:46, Charles Boyer wrote:
-> Add the device tree for Mori BMC, which is an Ampere server platform
-> manufactured by Fii. The device tree is based on Nuvoton NPCM730 SoC.
-> 
-> Signed-off-by: Charles Boyer <Charles.Boyer@fii-usa.com>
-> ---
->  arch/arm/boot/dts/nuvoton/Makefile            |    1 +
->  .../boot/dts/nuvoton/nuvoton-npcm730-mori.dts | 1491 +++++++++++++++++
+On Wed, 26 Jul 2023 at 21:28, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Thu, Jul 13, 2023 at 1:26=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quic=
+inc.com> wrote:
+> >
+> > On Fri, Jul 07, 2023 at 05:34:04AM +0300, Dmitry Baryshkov wrote:
+> > >
+> > > On 07/07/2023 00:10, Rob Clark wrote:
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > There are cases where there are differences due to SoC integration.
+> > > > Such as cache-coherency support, and (in the next patch) e-fuse to
+> > > > speedbin mappings.
+> > >
+> > > I have the feeling that we are trying to circumvent the way DT works.=
+ I'd
+> > > suggest adding explicit SoC-compatible strings to Adreno bindings and=
+ then
+> > > using of_device_id::data and then of_device_get_match_data().
+> > >
+> > Just thinking, then how about a unique compatible string which we match
+> > to identify gpu->info and drop chip-id check completely here?
+>
+> Ok, I think we could do this, so something like:
+>
+>   compatible =3D "qcom,sm4350-adreno-619.0", qcom,adreno-619.0", "qcom,ad=
+reno"
+>
+> ?
+>
+> It looks like we don't have gpu dt bits upstream yet for either sm4350
+> or sm6375, so I suppose we could get away with this change
 
-Thank you for your patch. There is something to discuss/improve.
+I think we can even skip the 619.0 part in the SoC compat string.
+So it will be:
 
+compatible =3D "qcom,sm4350-adreno", qcom,adreno-619.0", "qcom,adreno";
 
->  2 files changed, 1492 insertions(+)
->  create mode 100644 arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts
-> 
-> diff --git a/arch/arm/boot/dts/nuvoton/Makefile b/arch/arm/boot/dts/nuvoton/Makefile
-> index 89c157dad312..ab74184b0283 100644
-> --- a/arch/arm/boot/dts/nuvoton/Makefile
-> +++ b/arch/arm/boot/dts/nuvoton/Makefile
-> @@ -3,6 +3,7 @@ dtb-$(CONFIG_ARCH_NPCM7XX) += \
->  	nuvoton-npcm730-gsj.dtb \
->  	nuvoton-npcm730-gbs.dtb \
->  	nuvoton-npcm730-kudo.dtb \
-> +	nuvoton-npcm730-mori.dtb \
->  	nuvoton-npcm750-evb.dtb \
->  	nuvoton-npcm750-runbmc-olympus.dtb
->  dtb-$(CONFIG_ARCH_WPCM450) += \
-> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts b/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts
-> new file mode 100644
-> index 000000000000..45ef0b29d6ba
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts
-> @@ -0,0 +1,1491 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2023 Fii USA Inc.
-> +
-> +/dts-v1/;
-> +#include "nuvoton-npcm730.dtsi"
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +
-> +/ {
-> +        model = "Fii mori Board";
-> +        compatible = "fii,mori", "nuvoton,npcm730";
+In future we can drop the chipid part completely and handle that as a
+part of SoC data:
 
-Missing bindings patch (don't forget about running checkpatch).
+compatible =3D "qcom,sm4350-adreno", "qcom,adreno";
 
-> +
-> +        aliases {
-> +                serial0 = &serial0;
+With the driver knowing that sm4350-adreno means ADRENO_ID(6,1,9,0)
 
-...
-
-> +
-> +        iio-hwmon {
-> +                compatible = "iio-hwmon";
-> +                io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-> +                        <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
-> +        };
-> +
-> +        leds {
-> +                compatible = "gpio-leds";
-> +                BMC_ALIVE {
-
-Eh... so many things to say...
-
-1. Please base your work on already upstreamed code, so you will not
-repeat the same errors we already fixed. It can happen though that this
-Nuvoton boards are in terrible shape...
-
-2. Underscores and capital letters are not allowed.
-
-3. It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-
-> +                        gpios = <&gpio9 4 0>;
-
-Use appropriate defines for flags.
-
-> +                };
-> +                boot_status_led {
-
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-
-> +                        gpios = <&gpio10 15 0>;
-
-Define
-
-> +                };
-> +        };
-> +
-> +        pinctrl: pinctrl@f0800000 {
-
-Weird placement... but okay...
-
-> +
-> +        ahb {
-> +                udc5: udc@f0835000 {
-> +                        compatible = "nuvoton,npcm750-udc";
-> +                        reg = <0xf0835000 0x1000
-> +                                   0xfffd2800 0x800>;
-
-Aren't these two items?
-
-> +                        interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
-> +                        status = "okay";
-
-Are you adding new node or overriding? Why board defines compatible for
-SoC component? This is confusing...
-
-> +                        clocks = <&clk NPCM7XX_CLK_SU>;
-> +                        clock-names = "clk_usb_bridge";
-> +                };
-> +        };
-> +
-> +        pcie-slot {
-> +                pcie0: pcie-slot@0 {
-> +                        label = "slot0";
-> +                };
-> +                pcie1: pcie-slot@1 {
-> +                        label = "slot1";
-> +                };
-> +                pcie2: pcie-slot@2 {
-> +                        label = "slot2";
-> +                };
-> +                pcie3: pcie-slot@3 {
-> +                        label = "slot3";
-> +                };
-> +        };
-> +};
-
-Missing blank line.
-
-> +&gmac0 {
-> +        phy-mode = "rgmii-id";
-> +        snps,eee-force-disable;
-> +        status = "okay";
-> +};
-> +
-> +&emc0 {
-> +        phy-mode = "rmii";
-> +        status = "okay";
-> +        fixed-link {
-> +                speed = <100>;
-> +                full-duplex;
-> +        };
-> +};
-> +
-> +&ehci1 {
-> +        status = "okay";
-> +};
-> +
-> +&ohci1 {
-> +        status = "okay";
-> +};
-> +
-> +&aes {
-> +        status = "okay";
-> +};
-> +
-> +&sha {
-> +        status = "okay";
-> +};
-> +
-> +&spi1 {
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&gpio177_pins &gpio176o_pins
-> +                        &gpio175ol_pins>;
-> +        status = "okay";
-> +        jtag_master {
-
-Nope, nope. Don't use reviewers as tools. Use tools for this:
-
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-
-`make dtbs W=1`
-
-> +                compatible = "nuvoton,npcm750-jtag-master";
-> +                spi-max-frequency = <25000000>;
-> +                reg = <0>;
-> +
-> +                pinctrl-names = "pspi", "gpio";
-> +                pinctrl-0 = <&pspi1_pins>;
-> +                pinctrl-1 = <&gpio177_pins &gpio176o_pins
-> +                                                &gpio175ol_pins>;
-> +
-> +                tck-gpios = <&gpio5 15 GPIO_ACTIVE_HIGH>;
-> +                tdi-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH>;
-> +                tdo-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
-> +                tms-gpios = <&gpio6 11 GPIO_ACTIVE_HIGH>;
-> +                status = "okay";
-
-okay is by default, why do you need it?
-
-> +        };
-> +};
-> +
-> +&fiu0 {
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&spi0cs1_pins>;
-> +        status = "okay";
-> +        spi-nor@0 {
-> +                compatible = "jedec,spi-nor";
-> +                #address-cells = <1>;
-> +                #size-cells = <1>;
-> +                reg = <0>;
-> +                spi-max-frequency = <5000000>;
-> +                spi-rx-bus-width = <2>;
-> +                label = "bmc";
-> +                partitions@80000000 {
-> +                        compatible = "fixed-partitions";
-> +                        #address-cells = <1>;
-> +                        #size-cells = <1>;
-> +                        u-boot@0 {
-> +                                label = "u-boot";
-> +                                reg = <0x0000000 0xC0000>;
-> +                                read-only;
-> +                        };
-> +                        image-descriptor@f0000 {
-> +                                label = "image-descriptor";
-> +                                reg = <0xf0000 0x10000>;
-> +                        };
-> +                        hoth-update@100000 {
-> +                                label = "hoth-update";
-> +                                reg = <0x100000 0x100000>;
-> +                        };
-> +                        kernel@200000 {
-> +                                label = "kernel";
-> +                                reg = <0x200000 0x500000>;
-> +                        };
-> +                        rofs@700000 {
-> +                                label = "rofs";
-> +                                reg = <0x700000 0x35f0000>;
-> +                        };
-> +                        rwfs@3cf0000 {
-> +                                label = "rwfs";
-> +                                reg = <0x3cf0000 0x300000>;
-> +                        };
-> +                        hoth-mailbox@3ff0000 {
-> +                                label = "hoth-mailbox";
-> +                                reg = <0x3ff0000 0x10000>;
-> +                        };
-> +                };
-> +        };
-> +};
-> +
-> +&fiu3 {
-> +        pinctrl-0 = <&spi3_pins>;
-> +        status = "okay";
-> +
-> +        spi-nor@0 {
-> +                compatible = "jedec,spi-nor";
-> +                #address-cells = <1>;
-> +                #size-cells = <1>;
-> +                spi-rx-bus-width = <2>;
-> +                reg = <0>;
-> +                label = "hnor";
-> +        };
-> +};
-> +
-> +// emmc
-> +&sdhci0 {
-> +        status = "okay";
-> +};
-> +// USB
-> +&ehci1 {
-> +        status = "okay";
-> +};
-> +
-> +&ohci1 {
-> +        status = "okay";
-> +};
-> +
-> +&vdma {
-> +        status = "okay";
-> +};
-> +
-> +&pcimbox {
-> +        status = "okay";
-> +};
-> +
-> +&vcd {
-> +        status = "okay";
-> +};
-> +
-> +&ece {
-> +        status = "okay";
-> +};
-> +
-> +&watchdog1 {
-> +        status = "okay";
-> +};
-> +
-> +&rng {
-> +        status = "okay";
-> +};
-> +
-> +&serial0 {
-> +        status = "okay";
-> +};
-> +
-> +&serial1 {
-> +        status = "okay";
-> +};
-> +
-> +&serial2 {
-> +        status = "okay";
-> +};
-> +
-> +&serial3 {
-> +        status = "okay";
-> +};
-> +
-> +&adc {
-> +        #io-channel-cells = <1>;
-> +        status = "okay";
-> +};
-> +
-> +&otp {
-> +        status = "okay";
-> +};
-> +
-> +&i2c0 {
-> +        status = "okay";
-> +        clock-frequency = <400000>;
-> +};
-> +
-> +&i2c1 {
-> +        status = "okay";
-> +        clock-frequency = <400000>;
-> +        i2c-switch@75 {
-> +                compatible = "nxp,pca9548";
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +                reg = <0x75>;
-> +                i2c-mux-idle-disconnect;
-> +
-> +                i2c16: i2c@0 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <0>;
-> +                };
-> +                i2c17: i2c@1 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <1>;
-> +                };
-> +                i2c18: i2c@2 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <2>;
-> +                };
-> +                i2c19: i2c@3 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <3>;
-> +
-> +                        cpu@50 {
-
-cpu? Is it really a CPU on I2C bus?
-
-> +                                compatible = "atmel,24c64";
-> +                                reg = <0x50>;
-> +                        };
-> +                };
-> +                i2c20: i2c@4 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <4>;
-> +                };
-> +                i2c21: i2c@5 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <5>;
-> +                };
-> +                i2c22: i2c@6 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <6>;
-> +                };
-> +                i2c23: i2c@7 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <7>;
-> +                };
-> +        };
-
-Here and in all other places - missing blank line after node.
-
-> +        i2c-switch@77 {
-> +                compatible = "nxp,pca9548";
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +                reg = <0x77>;
-> +                i2c-mux-idle-disconnect;
-> +
-> +                i2c24: i2c@0 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <0>;
-> +                };
-> +                i2c25: i2c@1 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <1>;
-> +
-> +                        adm1272@1f {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +                                compatible = "adi,adm1272";
-> +                                reg = <0x1f>;
-> +                                shunt-resistor-micro-ohms = <333>;
-> +                        };
-> +
-> +                };
-> +                i2c26: i2c@2 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <2>;
-> +                };
-> +                i2c27: i2c@3 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <3>;
-> +                };
-> +                i2c28: i2c@4 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <4>;
-> +                };
-> +                i2c29: i2c@5 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <5>;
-> +                };
-> +                i2c30: i2c@6 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <6>;
-> +                };
-> +                i2c31: i2c@7 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <7>;
-> +                };
-> +        };
-> +};
-> +
-> +&i2c2 {
-> +        status = "okay";
-> +        clock-frequency = <400000>;
-> +        i2c-switch@77 {
-> +                compatible = "nxp,pca9548";
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +                reg = <0x77>;
-> +                i2c-mux-idle-disconnect;
-> +
-> +                i2c32: i2c@0 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <0>;
-> +                };
-> +                i2c33: i2c@1 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <1>;
-> +                };
-> +                i2c34: i2c@2 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <2>;
-> +                };
-> +                i2c35: i2c@3 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <3>;
-> +
-> +                        //REAR FAN
-
-Fix the comments to match Linux coding style.
-
-> +                        max31790@2c {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +                                compatible = "maxim,max31790";
-> +                                reg = <0x2c>;
-> +                        };
-> +                };
-> +                i2c36: i2c@4 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <4>;
-> +                };
-> +                i2c37: i2c@5 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <5>;
-> +
-> +                        //OUTLET1_T
-> +                        lm75@5c {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +                                compatible = "ti,lm75";
-> +                                reg = <0x5c>;
-> +                        };
-> +                };
-> +                i2c38: i2c@6 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <6>;
-> +
-> +                        //INLET1_T
-> +                        lm75@5c {
-> +                                compatible = "ti,lm75";
-> +                                reg = <0x5c>;
-> +                        };
-> +                };
-> +                i2c39: i2c@7 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <7>;
-> +                };
-> +        };
-> +};
-> +
-> +&i2c3 {
-> +        status = "okay";
-> +        clock-frequency = <400000>;
-> +        pcie-slot = &pcie0;
-> +};
-> +
-> +&i2c4 {
-> +        status = "okay";
-> +        clock-frequency = <400000>;
-> +        mbfru@50 {
-> +                compatible = "atmel,24c64";
-> +                reg = <0x50>;
-> +        };
-> +
-> +        i2c-switch@77 {
-> +                compatible = "nxp,pca9548";
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +                reg = <0x77>;
-> +                i2c-mux-idle-disconnect;
-> +
-> +                i2c40: i2c@0 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <0>;
-> +
-> +                        //Power Sequencer
-> +                        adm1266@40 {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +                                compatible = "adi,adm1266";
-> +                                reg = <0x40>;
-> +                        };
-> +                };
-> +                i2c41: i2c@1 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <1>;
-> +                };
-> +                i2c42: i2c@2 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <2>;
-> +
-> +                        //SKM EEPROM
-> +                        skm@55 {
-
-Come on... eeprom
-
-
-> +                                compatible = "atmel,24c64";
-> +                                reg = <0x55>;
-> +                                pagesize = <0x20>;
-> +                        };
-> +                };
-> +                i2c43: i2c@3 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <3>;
-> +
-> +                        gpio10: pca6416@20 {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +                                compatible = "nxp,pca6416";
-> +                                reg = <0x20>;
-> +                                pinctrl-names = "default";
-> +                                gpio-controller;
-> +                                #gpio-cells = <2>;
-> +                                gpio-line-names =
-> +                                        "P12V_PCIE_PE0_ON", "P12V_PCIE_PE1_ON", "P12V_PCIE_PE2_ON", "P12V_PCIE_PE3_ON", "P13V5_NBM_S0_PGD",
-> +                                        "P12V_EFUSE_ABCD_EN", "P12V_EFUSE_EFGH_EN", "NC_P0_7", "MB_JTAG_MUX_SEL", "JTAG_SCM_MUX_OE_N",
-> +                                        "FM_BMC_IO_CPLD_PROGRAM_N", "FM_BMC_IO_CPLD_HITLESS_N", "FM_IOEXP_DRAM_P12V_EN", "MB_CPLD_INIT",
-> +                                        "NCSI_CX_PRSNT_N", "SYS_BOOT_STATUS_LED";
-> +                        };
-> +                };
-> +                i2c44: i2c@4 {
-> +                        #address-cells = <1>;
-> +                        #size-cells = <0>;
-> +                        reg = <4>;
-> +
-> +                        gpio12: pca6416@21 {
-
-Enough. This DTS should have basic things first cleaned up.
+>
+> BR,
+> -R
+>
+> > -Akhil
+> >
+> > > >
+> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > ---
+> > > >   drivers/gpu/drm/msm/adreno/adreno_device.c | 34 +++++++++++++++++=
+++---
+> > > >   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  1 +
+> > > >   2 files changed, 31 insertions(+), 4 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/g=
+pu/drm/msm/adreno/adreno_device.c
+> > > > index 3c531da417b9..e62bc895a31f 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > @@ -258,6 +258,32 @@ static const struct adreno_info gpulist[] =3D =
+{
+> > > >             .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > > >             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
+> > > >             .init =3D a6xx_gpu_init,
+> > > > +   }, {
+> > > > +           .machine =3D "qcom,sm4350",
+> > > > +           .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
+> > > > +           .revn =3D 619,
+> > > > +           .fw =3D {
+> > > > +                   [ADRENO_FW_SQE] =3D "a630_sqe.fw",
+> > > > +                   [ADRENO_FW_GMU] =3D "a619_gmu.bin",
+> > > > +           },
+> > > > +           .gmem =3D SZ_512K,
+> > > > +           .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > > > +           .init =3D a6xx_gpu_init,
+> > > > +           .zapfw =3D "a615_zap.mdt",
+> > > > +           .hwcg =3D a615_hwcg,
+> > > > +   }, {
+> > > > +           .machine =3D "qcom,sm6375",
+> > > > +           .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
+> > > > +           .revn =3D 619,
+> > > > +           .fw =3D {
+> > > > +                   [ADRENO_FW_SQE] =3D "a630_sqe.fw",
+> > > > +                   [ADRENO_FW_GMU] =3D "a619_gmu.bin",
+> > > > +           },
+> > > > +           .gmem =3D SZ_512K,
+> > > > +           .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > > > +           .init =3D a6xx_gpu_init,
+> > > > +           .zapfw =3D "a615_zap.mdt",
+> > > > +           .hwcg =3D a615_hwcg,
+> > > >     }, {
+> > > >             .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
+> > > >             .revn =3D 619,
+> > > > @@ -409,6 +435,8 @@ const struct adreno_info *adreno_info(struct ad=
+reno_rev rev)
+> > > >     /* identify gpu: */
+> > > >     for (i =3D 0; i < ARRAY_SIZE(gpulist); i++) {
+> > > >             const struct adreno_info *info =3D &gpulist[i];
+> > > > +           if (info->machine && !of_machine_is_compatible(info->ma=
+chine))
+> > > > +                   continue;
+> > > >             if (adreno_cmp_rev(info->rev, rev))
+> > > >                     return info;
+> > > >     }
+> > > > @@ -563,6 +591,8 @@ static int adreno_bind(struct device *dev, stru=
+ct device *master, void *data)
+> > > >             config.rev.minor, config.rev.patchid);
+> > > >     priv->is_a2xx =3D config.rev.core =3D=3D 2;
+> > > > +   priv->has_cached_coherent =3D
+> > > > +           !!(info->quirks & ADRENO_QUIRK_HAS_CACHED_COHERENT);
+> > > >     gpu =3D info->init(drm);
+> > > >     if (IS_ERR(gpu)) {
+> > > > @@ -574,10 +604,6 @@ static int adreno_bind(struct device *dev, str=
+uct device *master, void *data)
+> > > >     if (ret)
+> > > >             return ret;
+> > > > -   priv->has_cached_coherent =3D
+> > > > -           !!(info->quirks & ADRENO_QUIRK_HAS_CACHED_COHERENT) &&
+> > > > -           !adreno_has_gmu_wrapper(to_adreno_gpu(gpu));
+> > > > -
+> > > >     return 0;
+> > > >   }
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/=
+drm/msm/adreno/adreno_gpu.h
+> > > > index e08d41337169..d5335b99c64c 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > > @@ -61,6 +61,7 @@ extern const struct adreno_reglist a612_hwcg[], a=
+615_hwcg[], a630_hwcg[], a640_h
+> > > >   extern const struct adreno_reglist a660_hwcg[], a690_hwcg[];
+> > > >   struct adreno_info {
+> > > > +   const char *machine;
+> > > >     struct adreno_rev rev;
+> > > >     uint32_t revn;
+> > > >     const char *fw[ADRENO_FW_MAX];
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+> > >
 
 
 
-Best regards,
-Krzysztof
-
+--=20
+With best wishes
+Dmitry
