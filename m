@@ -2,166 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B96DE763750
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:16:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B92C76377A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 15:26:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233773AbjGZNQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 09:16:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38966 "EHLO
+        id S234049AbjGZN01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 09:26:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbjGZNQA (ORCPT
+        with ESMTP id S233982AbjGZN00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 09:16:00 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92407213F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:15:52 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f954d7309fso1302351e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:15:52 -0700 (PDT)
+        Wed, 26 Jul 2023 09:26:26 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6243EF7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:26:24 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fba8f2197bso10765925e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 06:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690377351; x=1690982151;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kCgEAnQldbWSshS+6UesBxXb+/eschag6NjEzTyYfa8=;
-        b=CseQ0KYHYZZa0X7rrG4Bskpw5tABmqHqvo11Bhw7TtDzn+9/b9PUChRsCy2XbZn2It
-         X8LWcmsD2kHeqvHKBNbHrvC+vwIwWHN3TnyvWLtiEtOJ8n383x8cjtiYJL9OuEAsu9vE
-         lW8bdq9pqLdLNexP3eZdpJedZeJIeBAZNPOW0e7L3EUILqlQ2gdMgDrQ7pAmDIs0VxjW
-         rUHqZ2JJHMzvHDs92k2rv0jIVv+nJOLpSFWYKYdEZVFuqixpQqOxZsCO4iGgPXJFEenT
-         QZLFtDQ/o9lAXJZyJYHOOBmKJB30xl8BcN2fI2ypAXFyM3pApgDnXouSXMM5BdwBww6k
-         TzAg==
+        d=linaro.org; s=google; t=1690377982; x=1690982782;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/9yUKgO7zKJYMgcYFPgPnTgcVnPYS9vz4JlLdoJUgN4=;
+        b=Njl9CrBgAO7Rr5VrsMHnMrLdagHNqOSSpMGhNbK8LKS4tfwFBD9OvRLp9binQG7L20
+         hVBdZjBJPj4yxpYiIzPriS2EzbHTvgEYS/g0Xz/84L4G0FB4y3jlRi6AoAFos0/TfRJn
+         Cs3MKkkGXJ2S1F4gDF9bAk6HtFYiDBEvP6rDX5N5KyeghMiWEXziT4fVQkG5LxDKggTn
+         UBGxfZgQMOi5I3QVvRcQJLqLb6wlWs/sHd0HHG8rOadkAnotSsJ0c9aB1TGwFcJt8OyO
+         8XUo6P/1U1AxMpb4h6LyXtB1gqSoMwqAUZ/KOM8x3Tnvt6RAchcmQCkYnADW+Yoz8/6i
+         k6BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690377351; x=1690982151;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kCgEAnQldbWSshS+6UesBxXb+/eschag6NjEzTyYfa8=;
-        b=B5CjeDs8M49GweZvijee7aR1iGQBhHbnB6T9sWXX9XcPrS2sk4+DIP/qcKs3DmPIGX
-         J8J+dp90AQX4WsGvJ7GBt8qp5+oK4VyvzskbZkTKpaUjxa/wD48ewR77XiItwt/N9isc
-         QPTycvKxkuxVVikqlRMmkh3RI2ihQJQaIUeN5IFQardaHxxqeWqStK8kixUAbDZYElVI
-         tMn2LeUzi+c/rs/9Xb1in66JutfuFi0be2yzyQszWnJc49psCSrIym3/0izh1nF1Vx9R
-         C4MMH8fWdMmitrYHzIW50cfRDRmi0OvmavcJ0GBr80DGDFoFHEcvVHgBYUWBKCiZWrgW
-         sFZg==
-X-Gm-Message-State: ABy/qLbwKySKtD/2YjthNwokwVcEw9Zt8lTtl1u8fSN3sBq8L4ZMf6yo
-        BQd9AxcD1YNM5FIwxh6WChYBgQ==
-X-Google-Smtp-Source: APBJJlFPqqbf4K9dM5wgRbIKUsSBqxqeeMPrkrrT0+xpxgRCvU3YrZK42DFyjtViSnUsFS86ouqtpQ==
-X-Received: by 2002:a05:6512:31d1:b0:4fb:7371:3db6 with SMTP id j17-20020a05651231d100b004fb73713db6mr1699084lfe.29.1690377350680;
-        Wed, 26 Jul 2023 06:15:50 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690377982; x=1690982782;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/9yUKgO7zKJYMgcYFPgPnTgcVnPYS9vz4JlLdoJUgN4=;
+        b=NkB4qI3fg2Xij5pXr4qk28GJjKsPRCYmqku5fg3839wle+LksKFVw3U3o5toPm/j6E
+         jLR7OL7l6XmWjcf8dPdBWRJpgyJlFn74cjJvYtPfMCWsnkR1U6j414M16zo2YCuKBanw
+         Ms6bQ2pp18amsgH15pGY8GIdV0unLfqL+LYksYfd5OFNSvX3+dC+TeRBTn7JU2QPKtaa
+         L3KnzIv99ZY/acNKFCQQyY7zC12YgVtgWt/o6i91xZ0dmJwf/xnaHyBGnUFJ0jFV6e1y
+         t6BxZCAOpo4nzh1nJF6+4YxcPjZKEDcJUckahXbgVs9GXB4zHfGcqJnmdgRkr9j/Zffb
+         MKsw==
+X-Gm-Message-State: ABy/qLY6V3Dp54cnVfXm74/A4W0NybP2xbOuFPVkYKoOez3KT7cyPw5Z
+        2bTwWwfSMfGXPlEPUH74qlMQ0w==
+X-Google-Smtp-Source: APBJJlH+kC6rd4R61LgSmhssguQXkIwdrZWO8+aCxP+Kf7NtYbY6SsJQ8uAmKMjyCbpanVwsBI1daQ==
+X-Received: by 2002:a05:6512:3594:b0:4fc:4f3e:9cbf with SMTP id m20-20020a056512359400b004fc4f3e9cbfmr1266932lfr.50.1690377982608;
+        Wed, 26 Jul 2023 06:26:22 -0700 (PDT)
 Received: from [192.168.1.101] (abyl59.neoplus.adsl.tpnet.pl. [83.9.31.59])
-        by smtp.gmail.com with ESMTPSA id m9-20020a056512014900b004fb8ff1f531sm3248476lfo.70.2023.07.26.06.15.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 06:15:50 -0700 (PDT)
-Message-ID: <2bcad16b-ed94-357f-5153-372a216ce958@linaro.org>
-Date:   Wed, 26 Jul 2023 15:15:48 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add BQ Aquaris M5
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230724-bq_m5-v1-0-17a0870a73be@apitzsch.eu>
- <20230724-bq_m5-v1-1-17a0870a73be@apitzsch.eu>
- <877c6d2c-430f-b1fb-4267-18be5d7256dc@linaro.org>
- <d51dee67-02f4-1256-877f-61629c04b08f@linaro.org>
- <a90461fa-8319-5b87-397f-53ba169a3d31@linaro.org>
- <1717ccb1-46b3-8ac3-2c09-9558bd12cc40@linaro.org>
- <d9cb0908-4074-2f01-efaf-cdd863a039f2@linaro.org>
+        by smtp.gmail.com with ESMTPSA id q20-20020ac24a74000000b004fe08e7dfbdsm742265lfp.44.2023.07.26.06.26.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jul 2023 06:26:21 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <d9cb0908-4074-2f01-efaf-cdd863a039f2@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH 0/2] Fix up qcom reset controller
+Date:   Wed, 26 Jul 2023 15:26:18 +0200
+Message-Id: <20230726-topic-qcom_reset-v1-0-92de6d3e4c7c@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPoewWQC/x2N0QqDMAwAf0XyvEBXxbr9yhijZtkMuFYTNwTx3
+ y17vIPjNjBWYYNrtYHyT0xyKnA+VUBDTG9GeRYG73ztgm9xyZMQzpQ/D2XjBZumCxdydReohZL
+ 10Rh7jYmGEqbvOBY5Kb9k/X9u930/AO6P51t3AAAA
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Mike Turquette <mturquette@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690377980; l=616;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=JJt+Fx5O226avAjx6F2X4Jc0LTcX/nKTaSByt/k1+Xs=;
+ b=p6z11iaQFY/T+4Sub7vRp5W9X18CTYVuqf2wMgbG/XwvZZ+woM4lZYAXdoqqVueQ9EHfoB1qx
+ F1LjJg46SiLBEeFR12vFBE3esrs16e0zlHW3R2hpLzg57ITeLydE3rT
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.07.2023 09:34, Krzysztof Kozlowski wrote:
-> On 25/07/2023 12:03, Konrad Dybcio wrote:
->> On 25.07.2023 11:43, Krzysztof Kozlowski wrote:
->>> On 25/07/2023 10:13, Konrad Dybcio wrote:
->>>> On 25.07.2023 07:46, Krzysztof Kozlowski wrote:
->>>>> On 24/07/2023 22:52, André Apitzsch wrote:
->>>>>> Add a compatible for BQ Aquaris M5 (Longcheer L9100).
->>>>>>
->>>>>> Signed-off-by: André Apitzsch <git@apitzsch.eu>
->>>>>> ---
->>>>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->>>>>>  1 file changed, 1 insertion(+)
->>>>>
->>>>>
->>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>>
->>>>>
->>>>> ---
->>>>>
->>>>> This is an automated instruction, just in case, because many review tags
->>>>> are being ignored. If you do not know the process, here is a short
->>>>> explanation:
->>>>>
->>>>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
->>>>> versions, under or above your Signed-off-by tag. Tag is "received", when
->>>>> provided in a message replied to you on the mailing list. Tools like b4
->>>>> can help here. However, there's no need to repost patches *only* to add
->>>>> the tags. The upstream maintainer will do that for acks received on the
->>>>> version they apply.
->>>>>
->>>>> https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
->>>> Krzysztof, update your bot to paste this link with s/v5.17/latest/g
->>>
->>> Is there any difference? :) I would need to update links in all my
->>> templates and re-check the links...
->> Don't know, but the keyword "latest" in the link always points to the..
->> latest available release
-> 
-> And how do you update the line marker in "latest" version, so it points
-> to exact line I want? I could switch to latest kernel doc and point to
-> chapters, but then not to specific lines.
-Hm, right. Didn't think about that.
+Let the toggle include a bigger delay and make sure it's using the
+correct function to achieve that.
 
-Konrad
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      clk: qcom: reset: Increase max reset delay
+      clk: qcom: reset: Use the correct type of sleep/delay based on length
+
+ drivers/clk/qcom/reset.c | 8 +++++++-
+ drivers/clk/qcom/reset.h | 2 +-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+---
+base-commit: 0ba5d07205771c50789fd9063950aa75e7f1183f
+change-id: 20230726-topic-qcom_reset-44879c0387c6
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
