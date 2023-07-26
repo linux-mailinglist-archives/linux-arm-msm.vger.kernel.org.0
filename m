@@ -2,137 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C5B4763C60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 18:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A73F8763CA8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 18:40:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233306AbjGZQ0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 12:26:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46812 "EHLO
+        id S229896AbjGZQko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 12:40:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233508AbjGZQZ5 (ORCPT
+        with ESMTP id S230236AbjGZQkn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 12:25:57 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2492126A1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 09:25:56 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f95bf5c493so10963154e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 09:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690388754; x=1690993554;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3kHqku5aNQeOxuldOBfASzBzbj6SzACN6ErkOb1f60g=;
-        b=F8wR/OPNTELiTI/jFK2rOQwmDvyvhHjc5hVtNFt079Ia2Ih6YDf5QS7Ebngx3hQl60
-         KUyDZzq9Qxn1ucRI5w4K9+V5FlxcsDAP7BT9QrUcMhVen9MUbyPguv7cuyZ3cjo6cAa8
-         IyuWv8CVjVyBQ+eRYnd7NQWWu6Slok5QYjnelLrIEhyYCgx/x/DpC0+Bchz8Vn5bK5s9
-         PLi42pGzq3Zz3PLimCJ7rj/72mcNllW687zNpxP8UAz0Y5KQUAKP37G+dihw00Csx0hy
-         0zr7zkA65rZ47n6OcFbuiXvywvk4PgLBPOyJ0LnKd+viJfBS7lcQx3McGi+SGz2zmQm3
-         86eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690388754; x=1690993554;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3kHqku5aNQeOxuldOBfASzBzbj6SzACN6ErkOb1f60g=;
-        b=JycJd3Yy8xLs1wfTDKFV8o7WdEOOV+VE5vyIcAfSgXTbZHwDwkd/iR+tDiazjaga6B
-         r4WF+ymPzMTDOHg7kUzC/RcFHZQkpdk44ObEVUjVf7ysCdDO3qRweszdhdC/YfdBuG/p
-         JzEW7stzBcqjmiepOH+McPp1d2aqbWqRAWdQpskKzhHK1CG4p4Uw1oTzdI5ScBLjh6FK
-         t2t/Kj2R3Bzm1dXW4RAJ5TPFniTdDxAlEyvd8RCA+itNDwQ2zVgOlzC61f4ecSBtgbux
-         wXS0QnQDM0rYYpPHA+zqpRVTUoSABNKatyS6nVv3tHhauRABnFIkT0ek6Fk26NaUcM9q
-         BC/Q==
-X-Gm-Message-State: ABy/qLal77GmQp+KoUrrJK6jaoyp4dth3ynN+MNX38c/SVe7eGk+KxZw
-        zj8RyE408GFHa0AUndQOVv/96Q==
-X-Google-Smtp-Source: APBJJlHuKggQDB2ovgqHgCPkyjHAAmZHbLpbQLy2mdBr4cT7QGRK/KXm70jTydFRJaOCkxHL/fj6GQ==
-X-Received: by 2002:a05:6512:b97:b0:4fb:7b2a:78de with SMTP id b23-20020a0565120b9700b004fb7b2a78demr2629017lfv.45.1690388754550;
-        Wed, 26 Jul 2023 09:25:54 -0700 (PDT)
-Received: from [192.168.1.101] (abxh240.neoplus.adsl.tpnet.pl. [83.9.1.240])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512374e00b004fba5c20ab1sm3336299lfs.167.2023.07.26.09.25.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jul 2023 09:25:54 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 26 Jul 2023 18:25:46 +0200
-Subject: [PATCH 4/4] interconnect: qcom: msm8996: Set AB/IB coefficients
+        Wed, 26 Jul 2023 12:40:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1C926AE;
+        Wed, 26 Jul 2023 09:40:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 03B3A61B68;
+        Wed, 26 Jul 2023 16:40:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F047C433C9;
+        Wed, 26 Jul 2023 16:40:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690389641;
+        bh=xi5pkQ9Tg9na29dO/s5rHGt9JpISIfvqy22VjzX/1gA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QdpTr3VBWsh7BRv21+96+VTltIOXif1+4R+Ybp42rMF7CLq9VJfCyYHhXoZHNiaB4
+         GXBVIbocKFgsA1eq6WnRYIzjweWSxxYeshz7FyDvOZxPqoLAKv33YEBFS968fVdTZP
+         NhF1iCRQdoEVRp3pvCDLTAphmkMm83oOfWsky90NRQHcCDXooaxeylXqP40n3AlpOA
+         qaUa3+EYQlkfdLjuNqrPNpjp0pJaY8cU1WYXP9kynym9ovQjD6wxhsMPOSmz6TrMBc
+         ZCsaJmWFxb82lt34u++ew2HUAUbaT99b64iIqI8pNK5+x/Mbg+dPQOwwdBEd8+NIb6
+         1DquZ87IVdCeA==
+Received: (nullmailer pid 1562148 invoked by uid 1000);
+        Wed, 26 Jul 2023 16:40:39 -0000
+Date:   Wed, 26 Jul 2023 10:40:39 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 1/2] dt-bindings: nvmem: sec-qfprom: Add bindings for
+ secure qfprom
+Message-ID: <20230726164039.GA1558299-robh@kernel.org>
+References: <20230724083849.8277-1-quic_kbajaj@quicinc.com>
+ <20230724083849.8277-2-quic_kbajaj@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230726-topic-icc_coeff-v1-4-31616960818c@linaro.org>
-References: <20230726-topic-icc_coeff-v1-0-31616960818c@linaro.org>
-In-Reply-To: <20230726-topic-icc_coeff-v1-0-31616960818c@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690388749; l=1692;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=I9w13v27Aktl2g4cGZ4p21IhyuK82Ydc8kkNnjHFsco=;
- b=WruiJaJP7hlv2UhaxaXdLLtdz+JP25qA4MCyDJxiNOx6zBdH09zVzQ6VBM2nr37TViPtC3vg3
- Q1OwksZty/gA+5z+Sb3szlLVKP17JoNNIxi8BVokl6gtwohvt/rZ245
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230724083849.8277-2-quic_kbajaj@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some buses and nodes need additional manual adjustments atop the usual
-calculations. Fill in the missing coefficients.
+On Mon, Jul 24, 2023 at 02:08:48PM +0530, Komal Bajaj wrote:
+> This patch adds bindings for secure qfprom found in QCOM SOCs.
+> Secure QFPROM driver is based on simple nvmem framework.
+> 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  .../bindings/nvmem/qcom,sec-qfprom.yaml       | 58 +++++++++++++++++++
+>  1 file changed, 58 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+> new file mode 100644
+> index 000000000000..1425ced36fdf
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+> @@ -0,0 +1,58 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/nvmem/qcom,sec-qfprom.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies Inc, Secure QFPROM Efuse
+> +
+> +maintainers:
+> +  - Komal Bajaj <quic_kbajaj@quicinc.com>
+> +
+> +description: |
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/msm8996.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Don't need '|'
 
-diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
-index 88683dfa468f..dec38cd42df4 100644
---- a/drivers/interconnect/qcom/msm8996.c
-+++ b/drivers/interconnect/qcom/msm8996.c
-@@ -448,6 +448,7 @@ static struct qcom_icc_node mas_mdp_p0 = {
- 	.name = "mas_mdp_p0",
- 	.id = MSM8996_MASTER_MDP_PORT0,
- 	.buswidth = 32,
-+	.ib_percent = 400,
- 	.mas_rpm_id = 8,
- 	.slv_rpm_id = -1,
- 	.qos.ap_owned = true,
-@@ -463,6 +464,7 @@ static struct qcom_icc_node mas_mdp_p1 = {
- 	.name = "mas_mdp_p1",
- 	.id = MSM8996_MASTER_MDP_PORT1,
- 	.buswidth = 32,
-+	.ib_percent = 400,
- 	.mas_rpm_id = 61,
- 	.slv_rpm_id = -1,
- 	.qos.ap_owned = true,
-@@ -1889,7 +1891,8 @@ static const struct qcom_icc_desc msm8996_bimc = {
- 	.nodes = bimc_nodes,
- 	.num_nodes = ARRAY_SIZE(bimc_nodes),
- 	.bus_clk_desc = &bimc_clk,
--	.regmap_cfg = &msm8996_bimc_regmap_config
-+	.regmap_cfg = &msm8996_bimc_regmap_config,
-+	.ab_percent = 154,
- };
- 
- static struct qcom_icc_node * const cnoc_nodes[] = {
-@@ -2004,7 +2007,8 @@ static const struct qcom_icc_desc msm8996_mnoc = {
- 	.bus_clk_desc = &mmaxi_0_clk,
- 	.intf_clocks = mm_intf_clocks,
- 	.num_intf_clocks = ARRAY_SIZE(mm_intf_clocks),
--	.regmap_cfg = &msm8996_mnoc_regmap_config
-+	.regmap_cfg = &msm8996_mnoc_regmap_config,
-+	.ab_percent = 154,
- };
- 
- static struct qcom_icc_node * const pnoc_nodes[] = {
+> +  For some of the Qualcomm SoC's, it is possible that
+> +  the qfprom region is protected from non-secure access.
+> +  In such situations, linux will have to use secure calls
 
--- 
-2.41.0
+s/linux/the OS/
 
+> +  to read the region.
+
+Wrap lines at 80
+
+The wording for this is strange. Only sometimes for this binding do 
+secure calls have to be used? If you are using secure calls, does that 
+mean the 'reg' address is not directly accessible.
+
+> +
+> +allOf:
+> +  - $ref: nvmem.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,qdu1000-sec-qfprom
+> +      - const: qcom,sec-qfprom
+> +
+> +  reg:
+> +    items:
+> +      - description: The secure qfprom corrected region.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+> +
+> +    soc {
+> +      #address-cells = <2>;
+> +      #size-cells = <2>;
+> +
+> +      efuse@221c8000 {
+> +        compatible = "qcom,qdu1000-sec-qfprom", "qcom,sec-qfprom";
+> +        reg = <0 0x221c8000 0 0x1000>;
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +
+> +        multi_chan_ddr: multi-chan-ddr@12b {
+> +          reg = <0x12b 0x1>;
+> +          bits = <0 2>;
+> +        };
+> +      };
+> +    };
+> +
+> --
+> 2.40.1
+> 
