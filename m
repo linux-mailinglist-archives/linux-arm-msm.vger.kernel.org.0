@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3CBD763B56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:40:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 695CF763B59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:41:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234594AbjGZPkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 11:40:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45776 "EHLO
+        id S234522AbjGZPlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 11:41:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234490AbjGZPkq (ORCPT
+        with ESMTP id S233947AbjGZPlM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 11:40:46 -0400
+        Wed, 26 Jul 2023 11:41:12 -0400
 Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F6212681
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:40:43 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe0d5f719dso2061311e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:40:43 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFEE2213A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:41:10 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fdfefdf5abso3867566e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690386041; x=1690990841;
+        d=linaro.org; s=google; t=1690386069; x=1690990869;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KplhcUyr+a1N4r+Y/pmyU6xHt5t27rt7tOY6RCWOd88=;
-        b=O55heUCWiODOAdA6MXYGkXM5ZIFZFbNEDUWx1/QfnXEUhImtO+edbK2y3mGrxPNc7D
-         /G40JHGGjzGxKXFVA85sv5rdydmIKt/1LJIzVUbG1WmQdA6yLbQ9VF88i5Axcjem7SSU
-         ETFItO7gti+Y/EnF6vhM16h2rkxRQp8u2to9rulwzGRD6y48XURH9EhNqPCAvtYVpQ6p
-         2I+2BluTQwHaFddUSWIPLBqE9whnq89t8VM/DjYGDgw2RQL8wPbfMczSxpT6iY+N000f
-         KCW+Qqxoktk1zXNzPsPZZw0Bt7WN5oZOHuJpdBw117+3qY4OH79ntLpfHxk5nyJZ0adg
-         WGBQ==
+        bh=lspuiTKxGPl7j3zN6foG0gANrbHRCSknpl5fapbBSQk=;
+        b=EHw23ByepeGBCexOes07Hu/K6F/NlA8JJRWdzYHIKy0ySrnu6K1mrIQz6MhquTdbOu
+         /u35XkOQWKL18HRQPDnk4AvVm9sE+hI2YjPPnUvl0cCgGRnlFKf/K8elEoH1qJa3NbKL
+         rovy2iW1ATOZtkqZk1KZrrr10kFkAKopD+M3W1Dv0mkjaK41gXrttJPHavrrm+wdtHgY
+         8Fp6w11xrnDyNra0wZ42Iq0rvdqyQnPwz+a+MJVre7LOk1HUmFBrZrJEuMYdCNasViF/
+         5Rks3opXZ3A8z+YgxoLRL8BbhaLTiSY/Uwsh0kWcbbeMirAaxHHdAIRHFV3Msyosbuj9
+         mGBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690386041; x=1690990841;
+        d=1e100.net; s=20221208; t=1690386069; x=1690990869;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KplhcUyr+a1N4r+Y/pmyU6xHt5t27rt7tOY6RCWOd88=;
-        b=LmTmTAi5coFbb6AQQgVtfTIeJLAm8GR32ZvzBkFtxdNoxIMQOqXa/fvq9KEP8TqYQU
-         yqJ4qUim8vJTbRQB3XXk8ADryFnguFm/Gorq8/a1STlUUWh1kJtTZ6m9V6tpRXlWCiCe
-         pfFWeoQAOmxYoYDH484231YHPdhxN1GwiZr5Y9YbZ3sB2d9EgipPyQf/IreER91xouf6
-         pW6CVbiOV3EL/5HveFWjfTodLZnT2HvDOA3HOhWnm0cWUpbuBlqmDN5UMvIgR1vaszPO
-         Hcj97eTTGUuwW+z5g0Gr5qVD1a/GQ6ajEQH5JxmkPoREZAr7YuZyYUC1A48v0Zwqx0MF
-         AxGQ==
-X-Gm-Message-State: ABy/qLZRdLtduse4JQKcuTeYJ64mL9E9G2GVs1pDAowWzYiOIkCCymZO
-        3OEmvhqEa4LWv84vX2/17FWDqw==
-X-Google-Smtp-Source: APBJJlGhAJNUZpRYD34/PQXolEbfsK/i7MHHnLRA6vVEoDBbzdAdlCb2T96zve1VTQRDkV3pxITeFQ==
-X-Received: by 2002:a05:6512:15a5:b0:4f8:6e52:68ae with SMTP id bp37-20020a05651215a500b004f86e5268aemr1942920lfb.31.1690386041312;
-        Wed, 26 Jul 2023 08:40:41 -0700 (PDT)
+        bh=lspuiTKxGPl7j3zN6foG0gANrbHRCSknpl5fapbBSQk=;
+        b=QnEH8k/krJxP3f/Kh7V3CMx/QAjeHRTtt9kuR1y71tAcsqNF3/T1o5IqU+3M2fsjnI
+         3WxVEd71FRQwr6Vzh1dOD2MWCvu8p/kU2tkuO3fYsb39OUXdXEVzl/IB2NzaoW98qyiq
+         hAE4J6wVV+Dk/KFFmldPoSW04JjLH9RmKMnxS5Rl+5sdOTjRh6Ze2oCcBdkBx2d+975p
+         I5gF0qvIhLkmW78NXWEEfu8D9BMeE4I1Uc+DnaCRz7jUyT4D6nq/Jsg5WRShIFeHw/LO
+         D7nk1AKr6OOBvAz+kT+dGYwWlrFZiUmMLcMTRV0WgvRgg8hnfaktAm/AZ7dpYPeeSorQ
+         al+A==
+X-Gm-Message-State: ABy/qLZH7yISPw9ekvKjA3XsbgTBGBy2pZlVNyrH49w/hUPL7q2k2weR
+        Mq8utWtVkD5FyekqbkOUuiiFig==
+X-Google-Smtp-Source: APBJJlH4UGlitOcXYoqLf5xUMxwbnSm6R7p/LxoXekvEVVt6ZRyYjSJYGCNiKNWerSo4/3TNLlefyA==
+X-Received: by 2002:a19:915b:0:b0:4fb:8948:2b8e with SMTP id y27-20020a19915b000000b004fb89482b8emr1797720lfj.8.1690386069331;
+        Wed, 26 Jul 2023 08:41:09 -0700 (PDT)
 Received: from [192.168.1.101] (abxh240.neoplus.adsl.tpnet.pl. [83.9.1.240])
-        by smtp.gmail.com with ESMTPSA id m2-20020a195202000000b004fe0ec5596bsm460666lfb.54.2023.07.26.08.40.39
+        by smtp.gmail.com with ESMTPSA id m2-20020a195202000000b004fe0ec5596bsm460666lfb.54.2023.07.26.08.41.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 08:40:40 -0700 (PDT)
-Message-ID: <2e47ad4b-dd5c-d89f-185f-3465a6efa0e0@linaro.org>
-Date:   Wed, 26 Jul 2023 17:40:38 +0200
+        Wed, 26 Jul 2023 08:41:08 -0700 (PDT)
+Message-ID: <be9e1745-82aa-ece9-c387-fc19e4dd2eae@linaro.org>
+Date:   Wed, 26 Jul 2023 17:41:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 3/7] clk: qcom: gcc-qdu1000: Fix clkref clocks handling
+Subject: Re: [PATCH V4 7/7] clk: qcom: gcc-qdu1000: Update the RCGs ops
 Content-Language: en-US
 To:     Imran Shaik <quic_imrashai@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -73,7 +73,7 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
 References: <20230719041450.737929-1-quic_imrashai@quicinc.com>
- <20230719041450.737929-4-quic_imrashai@quicinc.com>
+ <20230719041450.737929-8-quic_imrashai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,13 +110,13 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230719041450.737929-4-quic_imrashai@quicinc.com>
+In-Reply-To: <20230719041450.737929-8-quic_imrashai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -124,10 +124,9 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19.07.2023 06:14, Imran Shaik wrote:
-> Fix the gcc clkref clock ops and update the halt_check as per the
-> latest hw version of QDU1000 and QRU1000 SoCs.
+> Update the clock RCG ops to shared_ops to park them
+> at safe clock(XO) during disable.
 > 
-> Fixes: 1c9efb0bc040 ("clk: qcom: Add QDU1000 and QRU1000 GCC support")
 > Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
