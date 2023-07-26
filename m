@@ -2,70 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8986763B2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:36:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE3FF763B3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 17:38:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233873AbjGZPgQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 11:36:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43030 "EHLO
+        id S233612AbjGZPiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 11:38:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233146AbjGZPgP (ORCPT
+        with ESMTP id S234104AbjGZPh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 11:36:15 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B1411F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:36:13 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fdfefdf5abso3858262e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:36:13 -0700 (PDT)
+        Wed, 26 Jul 2023 11:37:59 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94389F2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:37:57 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b9b50be31aso13935931fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 08:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690385771; x=1690990571;
+        d=linaro.org; s=google; t=1690385876; x=1690990676;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O+W+dqmHY3oDSoUaAbXjHwkO+njuNaAcS/shrCuC458=;
-        b=ewcXk2PXdG1aOg6qArX1EO342l5M19dX0BLwzHZCzO7wpvr5cGN/ecB5JnRyDp5S26
-         gafBet5LduTLPF/IZ2ubc4YaMfhO8TJz8pn6Zj9l3vIDUKQKIaOLNA1KdKF7xiTQg2vQ
-         4APNbu3QTrQIqDkxv6a6SfTVW9DUvpyiSiFRBJIHK4FIZgYQtWZXtPHfC1BUGbjZMdXu
-         B9OOiv6h3S4SuXBp2/7uHKkYHbgqQ8ouTIW1rMdvbmz0XI0ys5po9brQBFXKO2o0NyM6
-         EERvsi/eIm+Yr/3VQv5pzN0B9OCvdJvC32yPEP18zhTqjdR9G8s7vWB/L9gIRn0StNM3
-         bxwA==
+        bh=EmBWJuNz3Xx88K6hY2rbiOhgaOpqje9Puiq+sg34Aj0=;
+        b=QGwHFvP8/GyyjKVQEbUaYbyjOv4kaxWrqHnIdRJAB6uYz+FF2dsJU8VfOvQ4gfMr1n
+         ohtoFiYmnncwqfPx1F9fMFYsKa3SNf+J5+ijAGKtL7Dk6o63vj+z7Ze0rZW7xIrtHqRo
+         6aItGIcHkprPTLrYV4wVDfnlEoRul8rJW4gVvsosG99Q6Z63SPXZKgkOSPZxUUos14Ew
+         W4KcsAkht1at8t8wL5TKzYWQZauxmFJx/TD2Lw4eMHw2irtcGzQ7nPadvfYn7neiBNYo
+         lR6LBq1xRJ/X2KMhYTPknlfmThA3JVrbjxfd+mKgSewTMYCAhVS3vhqJzNFZno/JKVPK
+         ZR1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690385771; x=1690990571;
+        d=1e100.net; s=20221208; t=1690385876; x=1690990676;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O+W+dqmHY3oDSoUaAbXjHwkO+njuNaAcS/shrCuC458=;
-        b=SxqtwpuatCRkLAHr7NIjC/1WLlRGBj1ZM4czKE7jyMpw4k+G5yrgGcdx6YiDxXHzt/
-         Jv2NDgE1dQ0s63RqQpzdbp7FFhaOMeiL5IYBWjg5bO5obIMt7jHr/JRyFChIcHI80CBd
-         TQL/2QoQnFd+xvsXB3MsEHGCS2YhJ7TvHz/ON6GHKZMF010/nfebl5GjSWdSflMNiGjG
-         p/43CmA4YjkoIS4rJ1SIoR9pZSqZUv3sBf3kzMKXNdmzKOj37AklpjdjdNI4Oax9+4RZ
-         fY0gzP7tXUqOVOaWPNwjvKx170+75EHCMFnaSe9H8S2Dqtg9+U73IOiVvE3pKrL0P7jx
-         KJlg==
-X-Gm-Message-State: ABy/qLahHkV9uj0b2YKOemo1d/5bGxwWcLdGaCxZRR0cp+mg1pAn6GC6
-        o2nYAX1yg5RFrM4g/n7o2dAxtw==
-X-Google-Smtp-Source: APBJJlH3ju/ljQnYzFrocTUuL5yUFlXhlzmd5VWmTIfmjUtDw2OQ1peSH70SIuEgmqApvpDo9O+R7w==
-X-Received: by 2002:a05:6512:44d:b0:4f9:596d:c803 with SMTP id y13-20020a056512044d00b004f9596dc803mr1836717lfk.53.1690385771119;
-        Wed, 26 Jul 2023 08:36:11 -0700 (PDT)
+        bh=EmBWJuNz3Xx88K6hY2rbiOhgaOpqje9Puiq+sg34Aj0=;
+        b=MrMxzjuKmpYOzmHy4qM/qmtPzo6SZE+OzfeefocxxyjgxIMXVS/3PY32CHVYQeJsB9
+         t7fBQ2N+gfvD1A0qa01+jOMRCodkAstEz49fX9VmdgAogFkiGBif1q3pozE7ImunjPu3
+         c3H738cir8QE+AsJJZT3SY2eZ/qvpGcnrwqlhzG8tTfRsFmXxQfrn/DwlFV99/YGhU84
+         ze9g7VzWHLsvX8HquJgMZ3b4NpjL4Hr99wCJoXXhsSzR4mzqqfSfjpFvVhZXjz0Usxbe
+         wgcRc4xKedjSzQmKzkTzr31Xd0T1vbMw9nytj3y1azBwD71BDK3XvkGK29gggWhlh0eH
+         YRYA==
+X-Gm-Message-State: ABy/qLboAes32gBSRplaRVnuckLyBuV36664485r/ivNflNcvrteDD+9
+        zYo3RHx3rGl1EyibFk7SPoR1LQ==
+X-Google-Smtp-Source: APBJJlFOpaetD5YJcyZxCNTeXWrlJcOp//wSthqk/u5qJqC73XwPdta6gEjdkdDprwKxB05zuF2EKg==
+X-Received: by 2002:ac2:5f63:0:b0:4fe:df7:bcf1 with SMTP id c3-20020ac25f63000000b004fe0df7bcf1mr1600519lfc.57.1690385875781;
+        Wed, 26 Jul 2023 08:37:55 -0700 (PDT)
 Received: from [192.168.1.101] (abxh240.neoplus.adsl.tpnet.pl. [83.9.1.240])
-        by smtp.gmail.com with ESMTPSA id s7-20020a19ad47000000b004fbbef8d4dbsm3368900lfd.121.2023.07.26.08.36.09
+        by smtp.gmail.com with ESMTPSA id a25-20020a056512021900b004f85628ec34sm355780lfo.33.2023.07.26.08.37.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 08:36:10 -0700 (PDT)
-Message-ID: <de3b4739-5446-c1ab-571f-a36c4aff5e0f@linaro.org>
-Date:   Wed, 26 Jul 2023 17:36:08 +0200
+        Wed, 26 Jul 2023 08:37:55 -0700 (PDT)
+Message-ID: <7d8220b3-baf4-e0fc-b20a-1e672e2664e6@linaro.org>
+Date:   Wed, 26 Jul 2023 17:37:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] soc: qcom: add QCOM PBS driver
+Subject: Re: [PATCH V4 6/7] clk: qcom: gcc-qdu1000: Update the SDCC clock RCG
+ ops
 Content-Language: en-US
-To:     Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
-        lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org
-Cc:     luca.weiss@fairphone.com, u.kleine-koenig@pengutronix.de,
-        quic_subbaram@quicinc.com, linux-leds@vger.kernel.org,
+To:     Imran Shaik <quic_imrashai@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
-References: <20230725193423.25047-1-quic_amelende@quicinc.com>
- <20230725193423.25047-4-quic_amelende@quicinc.com>
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230719041450.737929-1-quic_imrashai@quicinc.com>
+ <20230719041450.737929-7-quic_imrashai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,173 +111,27 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230725193423.25047-4-quic_amelende@quicinc.com>
+In-Reply-To: <20230719041450.737929-7-quic_imrashai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.07.2023 21:34, Anjelique Melendez wrote:
-> Add the Qualcomm PBS (Programmable Boot Sequencer) driver. The QCOM PBS
-> driver supports configuring software PBS trigger events through PBS RAM
-> on Qualcomm Technologies, Inc (QTI) PMICs.
+On 19.07.2023 06:14, Imran Shaik wrote:
+> Update the GCC SDCC clock RCG ops to floor_ops to avoid
+> the overclocking issues on QDU1000 and QRU1000 SoCs.
 > 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 > ---
-[...]
-
-> +
-> +	u32			base;
-> +};
-> +
-> +static int qcom_pbs_read(struct pbs_dev *pbs, u32 address, u8 *val)
-> +{
-> +	int ret;
-> +
-> +	address += pbs->base;
-Any reason not to just keep the base address in struct pbs_dev and use
-normal regmap r/w helpers?
-
-[...]
-
-> +
-> +static int qcom_pbs_wait_for_ack(struct pbs_dev *pbs, u8 bit_pos)
-> +{
-> +	u16 retries = 2000, delay = 1000;
-> +	int ret;
-> +	u8 val;
-> +
-> +	while (retries--) {
-> +		ret = qcom_pbs_read(pbs, PBS_CLIENT_SCRATCH2, &val);
-> +		if (ret < 0)
-> +			return ret;
-> +
-> +		if (val == 0xFF) {
-This should be a constant, not a magic value
-
-> +			/* PBS error - clear SCRATCH2 register */
-> +			ret = qcom_pbs_write(pbs, PBS_CLIENT_SCRATCH2, 0);
-> +			if (ret < 0)
-> +				return ret;
-> +
-> +			dev_err(pbs->dev, "NACK from PBS for bit %u\n", bit_pos);
-> +			return -EINVAL;
-> +		}
-> +
-> +		if (val & BIT(bit_pos)) {
-> +			dev_dbg(pbs->dev, "PBS sequence for bit %u executed!\n", bit_pos);
-> +			break;
-> +		}
-> +
-> +		usleep_range(delay, delay + 100);
-So worst case scenario this will wait for over 2 seconds?
-
-> +	}
-> +
-> +	if (!retries) {
-> +		dev_err(pbs->dev, "Timeout for PBS ACK/NACK for bit %u\n", bit_pos);
-> +		return -ETIMEDOUT;
-> +	}
-> +
-> +	return 0;
-return 0 instead of break above?
-
-> +}
-> +
-> +/**
-> + * qcom_pbs_trigger_event() - Trigger the PBS RAM sequence
-> + * @pbs: Pointer to PBS device
-> + * @bitmap: bitmap
-> + *
-> + * This function is used to trigger the PBS RAM sequence to be
-> + * executed by the client driver.
-> + *
-> + * The PBS trigger sequence involves
-> + * 1. setting the PBS sequence bit in PBS_CLIENT_SCRATCH1
-> + * 2. Initiating the SW PBS trigger
-> + * 3. Checking the equivalent bit in PBS_CLIENT_SCRATCH2 for the
-> + *    completion of the sequence.
-> + * 4. If PBS_CLIENT_SCRATCH2 == 0xFF, the PBS sequence failed to execute
-> + *
-> + * Returns: 0 on success, < 0 on failure
-> + */
-> +int qcom_pbs_trigger_event(struct pbs_dev *pbs, u8 bitmap)
-> +{
-> +	u8 val, mask;
-> +	u16 bit_pos;
-> +	int ret;
-> +
-> +	if (!bitmap) {
-> +		dev_err(pbs->dev, "Invalid bitmap passed by client\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (IS_ERR_OR_NULL(pbs))
-> +		return -EINVAL;
-> +
-> +	mutex_lock(&pbs->lock);
-> +	ret = qcom_pbs_read(pbs, PBS_CLIENT_SCRATCH2, &val);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	if (val == 0xFF) {
-> +		/* PBS error - clear SCRATCH2 register */
-> +		ret = qcom_pbs_write(pbs, PBS_CLIENT_SCRATCH2, 0);
-> +		if (ret < 0)
-> +			goto out;
-> +	}
-> +
-> +	for (bit_pos = 0; bit_pos < 8; bit_pos++) {
-> +		if (bitmap & BIT(bit_pos)) {
-> +			/*
-> +			 * Clear the PBS sequence bit position in
-> +			 * PBS_CLIENT_SCRATCH2 mask register.
-> +			 */
-Don't think the "in the X register" parts are useful.
-
-> +			ret = qcom_pbs_masked_write(pbs, PBS_CLIENT_SCRATCH2, BIT(bit_pos), 0);
-> +			if (ret < 0)
-> +				goto error;
-> +
-> +			/*
-> +			 * Set the PBS sequence bit position in
-> +			 * PBS_CLIENT_SCRATCH1 register.
-> +			 */
-> +			val = mask = BIT(bit_pos);
-You're using mask/val for half the function calls..
-Stick with one approach.
-
-[...]
-
-> +struct pbs_dev *get_pbs_client_device(struct device *dev)
-> +{
-> +	struct device_node *pbs_dev_node;
-> +	struct platform_device *pdev;
-> +	struct pbs_dev *pbs;
-> +
-> +	pbs_dev_node = of_parse_phandle(dev->of_node, "qcom,pbs", 0);
-> +	if (!pbs_dev_node) {
-> +		dev_err(dev, "Missing qcom,pbs property\n");
-> +		return ERR_PTR(-ENODEV);
-> +	}
-> +
-> +	pdev = of_find_device_by_node(pbs_dev_node);
-> +	if (!pdev) {
-> +		dev_err(dev, "Unable to find PBS dev_node\n");
-> +		pbs = ERR_PTR(-EPROBE_DEFER);
-> +		goto out;
-> +	}
-> +
-> +	pbs = platform_get_drvdata(pdev);
-> +	if (!pbs) {
-This check seems unnecessary, the PBS driver would have had to fail
-probing if set_drvdata never got called.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
