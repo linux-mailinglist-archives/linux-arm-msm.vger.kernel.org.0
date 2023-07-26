@@ -2,176 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21336762DD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:35:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E84C3762DDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 09:36:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbjGZHf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 03:35:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60816 "EHLO
+        id S232756AbjGZHgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 03:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232442AbjGZHe5 (ORCPT
+        with ESMTP id S230245AbjGZHfo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 03:34:57 -0400
-Received: from out-10.mta1.migadu.com (out-10.mta1.migadu.com [IPv6:2001:41d0:203:375::a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F9AF26A5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:32:27 -0700 (PDT)
-Message-ID: <4ee26da4-314e-0517-5d9a-31fb107368ef@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1690356746;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=OYGRVTqgscFQdcJoAIv1RQJgZK2J3Xems6RanwsA4o0=;
-        b=GCsKw+CqeG0NLvU5JG9vhNLkiCqBIozjq4+mghrN4n54qEc8Ada19ZBzziy+rqbgGP2UKc
-        TRnfIbI6wQqD1XzBynZ64zgbT937OIDi9314tjiKBhNwZptVDCqjhQglYT3NeOO47ZzKdD
-        /L1dy0OB1iSvzxJ2Vh5k44+kOPJOpuA=
-Date:   Wed, 26 Jul 2023 15:32:10 +0800
+        Wed, 26 Jul 2023 03:35:44 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4DD30ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:34:19 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-52227142a27so4625907a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 00:34:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690356857; x=1690961657;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X+2Iliu7olik+NE8AfcvBGi3cE5KanWV2uC3MeiDPS0=;
+        b=KlbDSOyYOBAThy3vB3vgl/3WnwAqdpLGHR77DAe4G0S14mkuzuFvWUPp9oZx7cx/OT
+         P0lMKSm380e+eVPZjLbuFlR+a9eyRKKPUwtPMw9MsKE8ljq4ElNQhrSbLEGO0jTNxKrw
+         ZnRGBCi6omqYmQyhFU0VuJ7VwgrlCaYvSWi9gKwAgVmKvFDNMtEtnGeVvN04827uwu4q
+         Ho1fQQJv4ucUZoc6ZUXFLXHyBBGw5zIAj6PmafAN/HMBtTVrRysoS9JSYaYCU1vAmHNc
+         x7bj43PSH4rTLxRfkyxaLSvxHVwthO6XswOuLLxw1eZTk3HhexY+Si+DRP7d4XZJnXOd
+         lpAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690356857; x=1690961657;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X+2Iliu7olik+NE8AfcvBGi3cE5KanWV2uC3MeiDPS0=;
+        b=H/76l/TbHpv4GU1PjRYIWVVlmNEQkXp9jaHBKZqcIcE/OP8q850otdlQJG+5xPylVV
+         NdT7icnbFJXdojbD1yfmXXZEzw9+wvQAxZ+PsLGrTQNxWvI0BK3P7CR6sSO40Z2w29+F
+         j8mccJV5Am28/1VFDm6xdMO0cIM8Bj/4Thgx0tVmXqXNTMy6fwYkWL0chhN+VNpKTy0t
+         T40zo5uyoA8ylhzahS/67BZFAAmt/JGg45px+f25gsc4cYo2fugc/pS4NjAknczfUwuK
+         GeVl47EahH3SLV4uzcoc5/h98H2I/9LfR0OoX9zghxlaUM1SIYQ7Ags6ASp6pqoKDf8z
+         29dg==
+X-Gm-Message-State: ABy/qLYuxTt+9fDwZEGTeZsi+uBF5A+tBCPDguD750uxhlwQ6l1ky9Oa
+        hhHrG6AEa1XUXnwh9Q90hMaIS9Ep+BdJO1GagFs=
+X-Google-Smtp-Source: APBJJlGR74zoKSYMwGskCgm5We2h4GhUdIEQdlH5TbM9FGnhgnA8mXhCNaiYrij4RkXzRuiIheq8iQ==
+X-Received: by 2002:aa7:da0b:0:b0:522:2111:1063 with SMTP id r11-20020aa7da0b000000b0052221111063mr815433eds.18.1690356857657;
+        Wed, 26 Jul 2023 00:34:17 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id d14-20020aa7d5ce000000b00521cb435d54sm8575934eds.37.2023.07.26.00.34.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 00:34:17 -0700 (PDT)
+Message-ID: <d9cb0908-4074-2f01-efaf-cdd863a039f2@linaro.org>
+Date:   Wed, 26 Jul 2023 09:34:15 +0200
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 28/47] bcache: dynamically allocate the md-bcache
- shrinker
-To:     Qi Zheng <zhengqi.arch@bytedance.com>, akpm@linux-foundation.org,
-        david@fromorbit.com, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
-        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
-        gregkh@linuxfoundation.org
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-29-zhengqi.arch@bytedance.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20230724094354.90817-29-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add BQ Aquaris M5
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        =?UTF-8?Q?Andr=c3=a9_Apitzsch?= <git@apitzsch.eu>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230724-bq_m5-v1-0-17a0870a73be@apitzsch.eu>
+ <20230724-bq_m5-v1-1-17a0870a73be@apitzsch.eu>
+ <877c6d2c-430f-b1fb-4267-18be5d7256dc@linaro.org>
+ <d51dee67-02f4-1256-877f-61629c04b08f@linaro.org>
+ <a90461fa-8319-5b87-397f-53ba169a3d31@linaro.org>
+ <1717ccb1-46b3-8ac3-2c09-9558bd12cc40@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1717ccb1-46b3-8ac3-2c09-9558bd12cc40@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/07/2023 12:03, Konrad Dybcio wrote:
+> On 25.07.2023 11:43, Krzysztof Kozlowski wrote:
+>> On 25/07/2023 10:13, Konrad Dybcio wrote:
+>>> On 25.07.2023 07:46, Krzysztof Kozlowski wrote:
+>>>> On 24/07/2023 22:52, André Apitzsch wrote:
+>>>>> Add a compatible for BQ Aquaris M5 (Longcheer L9100).
+>>>>>
+>>>>> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+>>>>> ---
+>>>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>>>>>  1 file changed, 1 insertion(+)
+>>>>
+>>>>
+>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>
+>>>>
+>>>> ---
+>>>>
+>>>> This is an automated instruction, just in case, because many review tags
+>>>> are being ignored. If you do not know the process, here is a short
+>>>> explanation:
+>>>>
+>>>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+>>>> versions, under or above your Signed-off-by tag. Tag is "received", when
+>>>> provided in a message replied to you on the mailing list. Tools like b4
+>>>> can help here. However, there's no need to repost patches *only* to add
+>>>> the tags. The upstream maintainer will do that for acks received on the
+>>>> version they apply.
+>>>>
+>>>> https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
+>>> Krzysztof, update your bot to paste this link with s/v5.17/latest/g
+>>
+>> Is there any difference? :) I would need to update links in all my
+>> templates and re-check the links...
+> Don't know, but the keyword "latest" in the link always points to the..
+> latest available release
 
+And how do you update the line marker in "latest" version, so it points
+to exact line I want? I could switch to latest kernel doc and point to
+chapters, but then not to specific lines.
 
-On 2023/7/24 17:43, Qi Zheng wrote:
-> In preparation for implementing lockless slab shrink, use new APIs to
-> dynamically allocate the md-bcache shrinker, so that it can be freed
-> asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
-> read-side critical section when releasing the struct cache_set.
->
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-> ---
->   drivers/md/bcache/bcache.h |  2 +-
->   drivers/md/bcache/btree.c  | 27 ++++++++++++++++-----------
->   drivers/md/bcache/sysfs.c  |  3 ++-
->   3 files changed, 19 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/md/bcache/bcache.h b/drivers/md/bcache/bcache.h
-> index 5a79bb3c272f..c622bc50f81b 100644
-> --- a/drivers/md/bcache/bcache.h
-> +++ b/drivers/md/bcache/bcache.h
-> @@ -541,7 +541,7 @@ struct cache_set {
->   	struct bio_set		bio_split;
->   
->   	/* For the btree cache */
-> -	struct shrinker		shrink;
-> +	struct shrinker		*shrink;
->   
->   	/* For the btree cache and anything allocation related */
->   	struct mutex		bucket_lock;
-> diff --git a/drivers/md/bcache/btree.c b/drivers/md/bcache/btree.c
-> index fd121a61f17c..c176c7fc77d9 100644
-> --- a/drivers/md/bcache/btree.c
-> +++ b/drivers/md/bcache/btree.c
-> @@ -667,7 +667,7 @@ static int mca_reap(struct btree *b, unsigned int min_order, bool flush)
->   static unsigned long bch_mca_scan(struct shrinker *shrink,
->   				  struct shrink_control *sc)
->   {
-> -	struct cache_set *c = container_of(shrink, struct cache_set, shrink);
-> +	struct cache_set *c = shrink->private_data;
->   	struct btree *b, *t;
->   	unsigned long i, nr = sc->nr_to_scan;
->   	unsigned long freed = 0;
-> @@ -734,7 +734,7 @@ static unsigned long bch_mca_scan(struct shrinker *shrink,
->   static unsigned long bch_mca_count(struct shrinker *shrink,
->   				   struct shrink_control *sc)
->   {
-> -	struct cache_set *c = container_of(shrink, struct cache_set, shrink);
-> +	struct cache_set *c = shrink->private_data;
->   
->   	if (c->shrinker_disabled)
->   		return 0;
-> @@ -752,8 +752,8 @@ void bch_btree_cache_free(struct cache_set *c)
->   
->   	closure_init_stack(&cl);
->   
-> -	if (c->shrink.list.next)
-> -		unregister_shrinker(&c->shrink);
-> +	if (c->shrink)
-> +		shrinker_unregister(c->shrink);
->   
->   	mutex_lock(&c->bucket_lock);
->   
-> @@ -828,14 +828,19 @@ int bch_btree_cache_alloc(struct cache_set *c)
->   		c->verify_data = NULL;
->   #endif
->   
-> -	c->shrink.count_objects = bch_mca_count;
-> -	c->shrink.scan_objects = bch_mca_scan;
-> -	c->shrink.seeks = 4;
-> -	c->shrink.batch = c->btree_pages * 2;
-> +	c->shrink = shrinker_alloc(0, "md-bcache:%pU", c->set_uuid);
-> +	if (!c->shrink) {
-> +		pr_warn("bcache: %s: could not allocate shrinker\n", __func__);
-> +		return -ENOMEM;
-
-Seems you have cheanged the semantic of this. In the past,
-it is better to have a shrinker, but now it becomes a mandatory.
-Right? I don't know if it is acceptable. From my point of view,
-just do the cleanup, don't change any behaviour.
-
-> +	}
-> +
-> +	c->shrink->count_objects = bch_mca_count;
-> +	c->shrink->scan_objects = bch_mca_scan;
-> +	c->shrink->seeks = 4;
-> +	c->shrink->batch = c->btree_pages * 2;
-> +	c->shrink->private_data = c;
->   
-> -	if (register_shrinker(&c->shrink, "md-bcache:%pU", c->set_uuid))
-> -		pr_warn("bcache: %s: could not register shrinker\n",
-> -				__func__);
-> +	shrinker_register(c->shrink);
->   
->   	return 0;
->   }
-> diff --git a/drivers/md/bcache/sysfs.c b/drivers/md/bcache/sysfs.c
-> index 0e2c1880f60b..45d8af755de6 100644
-> --- a/drivers/md/bcache/sysfs.c
-> +++ b/drivers/md/bcache/sysfs.c
-> @@ -866,7 +866,8 @@ STORE(__bch_cache_set)
->   
->   		sc.gfp_mask = GFP_KERNEL;
->   		sc.nr_to_scan = strtoul_or_return(buf);
-> -		c->shrink.scan_objects(&c->shrink, &sc);
-> +		if (c->shrink)
-> +			c->shrink->scan_objects(c->shrink, &sc);
->   	}
->   
->   	sysfs_strtoul_clamp(congested_read_threshold_us,
+Best regards,
+Krzysztof
 
