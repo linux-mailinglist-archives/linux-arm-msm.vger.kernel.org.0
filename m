@@ -2,90 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 430717631D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 11:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17D777631E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 11:25:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233093AbjGZJYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 05:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
+        id S232910AbjGZJZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 05:25:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232688AbjGZJYF (ORCPT
+        with ESMTP id S232062AbjGZJZ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 05:24:05 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE10411B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 02:22:15 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-66d6a9851f3so1487674b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 02:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1690363335; x=1690968135;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xHFf+qIXuXcHU2hnpeM9isQldhnSqSauyHf1oBu4R8I=;
-        b=jAMndxc3vAfZ9MlugwiN2m1td4+ENgo1ZcEkULNu4w0l2e+7SjL15Aj8xsnH/hg6mq
-         Yuh7Pj+WIpy+9FKbmqcmIZPowwXwCsZ/HE/uYPa/USpf5RWRvsmKXdX1EOhGqDHtCRhA
-         5Tx4ycmmPjyUjagwQ6weN00EPkG2yYEGVkFAeT+5NL38WWOxpIAWxDe7x+TtdzGSmFXw
-         AaN6OIhFdWcuFQV9AajQEHTHNR/HQhAWIjBkgsz+1GmBQBDd2nNKfKbDgsLcpETIdF18
-         CdbQtqtDxhcETBnzscklNfC8QDSVXvKpexDlKf4G6IIrjU6vkXpbe5y1T2yEBA/OqHN2
-         vBww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690363335; x=1690968135;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xHFf+qIXuXcHU2hnpeM9isQldhnSqSauyHf1oBu4R8I=;
-        b=YSRr7jA1FAQY1vBn2E9zdc5FB97GU5EwrKfOoeNYNBtCwPiLYk0TMvumlCs8YdaUs+
-         cq0Tjp3+pDTfI2+OkCLW2h8v1SzYmnrXcwS9shLpSgezf9gKyg19N2KumntcO9FdZvlM
-         wtKCTCzS+KH9qTvedASKHB/37gSeNXZg+ueUys5R/tXn9UFsgyX24PX9sDmEBbWjdZCZ
-         CcmhFvafvhqvy0mEGK71X0seOVsbHBkrwkgT2OK3iXMIy/hy6toytc80EZhGuo/TYkL5
-         5mSb81IBkR1m68rIaoi/EScUjK5M7AtVd/PtxsDhbmZuJPh4SBwlyINk6K26yJcYDZUv
-         PmXA==
-X-Gm-Message-State: ABy/qLYO+KL5TuuIm7uuB89/lgjAdDWIwAmkVYnHzKQA3c9PK0dXwqaX
-        2wDGj4iR01BAdzhUPX7VAmrB8A==
-X-Google-Smtp-Source: APBJJlGzKLkoeooTK7rnc1fJ6mfD6dUCrzzNETRC7Ci4c1Yh8zXhisYlXfajH5gn3qqQbLizO8XVQA==
-X-Received: by 2002:a05:6a20:729a:b0:100:b92b:e8be with SMTP id o26-20020a056a20729a00b00100b92be8bemr1779967pzk.2.1690363335131;
-        Wed, 26 Jul 2023 02:22:15 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id k11-20020aa790cb000000b006827c26f147sm10955045pfk.138.2023.07.26.02.22.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 02:22:14 -0700 (PDT)
-Message-ID: <d96777ce-be8a-1665-dd00-1e696e5575a8@bytedance.com>
-Date:   Wed, 26 Jul 2023 17:22:02 +0800
+        Wed, 26 Jul 2023 05:25:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0020844A3;
+        Wed, 26 Jul 2023 02:23:46 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36Q712cq019132;
+        Wed, 26 Jul 2023 09:23:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=vAPpEIr0isn/71/ioYM8Fd1GJjkXSLk8Q5T4v1mFx40=;
+ b=iyyNAMk+p6QI5cSYHInQIO/ZyLoDLPHAkWEtDMPliouzlXWq4YWfup5pNBLiKiBDcZce
+ 1N5XQ20WG0i415gbiCkUC8TogjEH/dIjHZ8OX4sgJwIcZHfjNWj1uDNNjhpkSpTql0Wp
+ lA7nqKRIBFkPL5VAjCZmb72d+A5SC7tt5/O7zEH8HTPEap5A6UBfI+C9JZUjsqwjI70r
+ /uHuL3swTaL7GDcPR0WvwE6gSqEyL2Xuy8QMItw6WzLtW7NAr7R8R/pMVgDC9QWDskx3
+ 2//dBmbuO3Dl/cpiaW5v41aMQQIpE9iO12z00zxghqJ28Hu6+rEMBUbQ0XZOSx9sZYz6 WQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s2dqajfar-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Jul 2023 09:23:34 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36Q9NXrs002590
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Jul 2023 09:23:33 GMT
+Received: from [10.201.3.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 26 Jul
+ 2023 02:23:05 -0700
+Message-ID: <c93f7705-c7c0-c03d-aa46-e1c6c1177b25@quicinc.com>
+Date:   Wed, 26 Jul 2023 14:52:49 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v2 11/47] gfs2: dynamically allocate the gfs2-qd shrinker
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/1] PCI: qcom: Add early fixup to set the max payload
+ size for IPQ9574
 Content-Language: en-US
-To:     Muchun Song <muchun.song@linux.dev>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org
-References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
- <20230724094354.90817-12-zhengqi.arch@bytedance.com>
- <e7204276-9de5-17eb-90ae-e51657d73ef4@linux.dev>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <e7204276-9de5-17eb-90ae-e51657d73ef4@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <bhelgaas@google.com>,
+        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_varada@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+References: <20230724124711.2346886-1-quic_ipkumar@quicinc.com>
+ <20230724124711.2346886-2-quic_ipkumar@quicinc.com>
+ <af7d1db2-8bbe-e078-6b17-7f841fb7f475@linaro.org>
+ <20230724130855.GO6291@thinkpad> <20230724140940.GP6291@thinkpad>
+ <172de6f2-ea61-568e-2845-d1334fb49cb6@quicinc.com>
+ <20230725060635.GA22139@thinkpad>
+From:   Praveenkumar I <quic_ipkumar@quicinc.com>
+In-Reply-To: <20230725060635.GA22139@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1ITb65FFLeFwiPp3j4FYx7-aTC3Zt4IY
+X-Proofpoint-ORIG-GUID: 1ITb65FFLeFwiPp3j4FYx7-aTC3Zt4IY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_03,2023-07-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ bulkscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 suspectscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307260082
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,101 +90,65 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 7/25/2023 11:36 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jul 25, 2023 at 10:16:04AM +0530, Praveenkumar I wrote:
+>> On 7/24/2023 7:39 PM, Manivannan Sadhasivam wrote:
+>>> On Mon, Jul 24, 2023 at 06:38:55PM +0530, Manivannan Sadhasivam wrote:
+>>>> On Mon, Jul 24, 2023 at 02:53:37PM +0200, Konrad Dybcio wrote:
+>>>>> On 24.07.2023 14:47, Praveenkumar I wrote:
+>>>>>> Set 256 bytes as payload size for IPQ9574 via early fixup. This allows
+>>>>>> PCIe RC to use the max payload size when a capable link partner is
+>>>>>> connected.
+>>>>>>
+>>>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>>>> ---
+>>>>> [...]
+>>>>>
+>>>>>> +static void qcom_fixup_mps_256(struct pci_dev *dev)
+>>>>>> +{
+>>>>>> +	pcie_set_mps(dev, 256);
+>>>>> Looks like setting "dev->pcie_mpss = 1" here would make the PCIe generic
+>>>>> code take care of this.
+>>>>>
+>>>> Right, also this setting should not be PCI-PCI bridge specific but rather
+>>>> controller specific.
+>>>>
+>>> Wait, have you tested this patch with PCIe devices having MPS < 256 i.e.,
+>>> default 128?
+>>>
+>>> Take a look at this discussion: https://lore.kernel.org/all/20230608093652.1409485-1-vidyas@nvidia.com/
+>>>
+>>> - Mani
+>> Yes, tested this patch with PCIe devices having default 128 and RC is
+>> falling back to 128 when pci device is added.
+>> This is handled inside pci_configure_mps().
+>> /        mpss = 128 << dev->pcie_mpss;/
+>> /        if (mpss < p_mps && pci_pcie_type(bridge) ==
+>> PCI_EXP_TYPE_ROOT_PORT) {/
+>> /                pcie_set_mps(bridge, mpss);/
+>> /                pci_info(dev, "Upstream bridge's Max Payload Size set to %d
+>> (was %d, max %d)\n",/
+>> /                         mpss, p_mps, 128 << bridge->pcie_mpss);/
+>> /                p_mps = pcie_get_mps(bridge);/
+>> /        }/
+>> //
+>> Also getting the below print,
+>> /[    2.011963] pci 0003:01:00.0: Upstream bridge's Max Payload Size set to
+>> 128 (was 256, max 256)/
+> Ok. But for setting MPS, you need to change the DEVCTL register in post_init
+> sequence for IPQ9574. It is not a quirk, so you cannot use fixups.
+Sorry, if I do so, then the above mentioned issue will come here as well 
+right?
 
-On 2023/7/26 14:49, Muchun Song wrote:
-> 
-> 
-> On 2023/7/24 17:43, Qi Zheng wrote:
->> Use new APIs to dynamically allocate the gfs2-qd shrinker.
->>
->> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
->> ---
->>   fs/gfs2/main.c  |  6 +++---
->>   fs/gfs2/quota.c | 26 ++++++++++++++++++++------
->>   fs/gfs2/quota.h |  3 ++-
->>   3 files changed, 25 insertions(+), 10 deletions(-)
->>
->> diff --git a/fs/gfs2/main.c b/fs/gfs2/main.c
->> index afcb32854f14..e47b1cc79f59 100644
->> --- a/fs/gfs2/main.c
->> +++ b/fs/gfs2/main.c
->> @@ -147,7 +147,7 @@ static int __init init_gfs2_fs(void)
->>       if (!gfs2_trans_cachep)
->>           goto fail_cachep8;
->> -    error = register_shrinker(&gfs2_qd_shrinker, "gfs2-qd");
->> +    error = gfs2_qd_shrinker_init();
->>       if (error)
->>           goto fail_shrinker;
->> @@ -196,7 +196,7 @@ static int __init init_gfs2_fs(void)
->>   fail_wq2:
->>       destroy_workqueue(gfs_recovery_wq);
->>   fail_wq1:
->> -    unregister_shrinker(&gfs2_qd_shrinker);
->> +    gfs2_qd_shrinker_exit();
->>   fail_shrinker:
->>       kmem_cache_destroy(gfs2_trans_cachep);
->>   fail_cachep8:
->> @@ -229,7 +229,7 @@ static int __init init_gfs2_fs(void)
->>   static void __exit exit_gfs2_fs(void)
->>   {
->> -    unregister_shrinker(&gfs2_qd_shrinker);
->> +    gfs2_qd_shrinker_exit();
->>       gfs2_glock_exit();
->>       gfs2_unregister_debugfs();
->>       unregister_filesystem(&gfs2_fs_type);
->> diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
->> index 704192b73605..bc9883cea847 100644
->> --- a/fs/gfs2/quota.c
->> +++ b/fs/gfs2/quota.c
->> @@ -186,13 +186,27 @@ static unsigned long gfs2_qd_shrink_count(struct 
->> shrinker *shrink,
->>       return vfs_pressure_ratio(list_lru_shrink_count(&gfs2_qd_lru, sc));
->>   }
->> -struct shrinker gfs2_qd_shrinker = {
->> -    .count_objects = gfs2_qd_shrink_count,
->> -    .scan_objects = gfs2_qd_shrink_scan,
->> -    .seeks = DEFAULT_SEEKS,
->> -    .flags = SHRINKER_NUMA_AWARE,
->> -};
->> +static struct shrinker *gfs2_qd_shrinker;
->> +
->> +int gfs2_qd_shrinker_init(void)
-> 
-> It's better to declare this as __init.
+This one: https://lore.kernel.org/all/20230608093652.1409485-1-vidyas@nvidia.com/
 
-OK, Will do.
-
-> 
->> +{
->> +    gfs2_qd_shrinker = shrinker_alloc(SHRINKER_NUMA_AWARE, "gfs2-qd");
->> +    if (!gfs2_qd_shrinker)
->> +        return -ENOMEM;
->> +
->> +    gfs2_qd_shrinker->count_objects = gfs2_qd_shrink_count;
->> +    gfs2_qd_shrinker->scan_objects = gfs2_qd_shrink_scan;
->> +    gfs2_qd_shrinker->seeks = DEFAULT_SEEKS;
->> +
->> +    shrinker_register(gfs2_qd_shrinker);
->> +    return 0;
->> +}
->> +
->> +void gfs2_qd_shrinker_exit(void)
->> +{
->> +    shrinker_unregister(gfs2_qd_shrinker);
->> +}
->>   static u64 qd2index(struct gfs2_quota_data *qd)
->>   {
->> diff --git a/fs/gfs2/quota.h b/fs/gfs2/quota.h
->> index 21ada332d555..f9cb863373f7 100644
->> --- a/fs/gfs2/quota.h
->> +++ b/fs/gfs2/quota.h
->> @@ -59,7 +59,8 @@ static inline int gfs2_quota_lock_check(struct 
->> gfs2_inode *ip,
->>   }
->>   extern const struct quotactl_ops gfs2_quotactl_ops;
->> -extern struct shrinker gfs2_qd_shrinker;
->> +int gfs2_qd_shrinker_init(void);
->> +void gfs2_qd_shrinker_exit(void);
->>   extern struct list_lru gfs2_qd_lru;
->>   extern void __init gfs2_quota_hash_init(void);
-> 
+> - Mani
+>
+>>>> - Mani
+>>>>
+>>>>> Konrad
+>>>> -- 
+>>>> மணிவண்ணன் சதாசிவம்
+>> --
+>> Thanks,
+>> Praveenkumar
