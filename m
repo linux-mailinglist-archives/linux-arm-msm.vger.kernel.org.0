@@ -2,70 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA906763E50
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:22:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4173F763E56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jul 2023 20:24:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjGZSWD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 14:22:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57790 "EHLO
+        id S231600AbjGZSYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 14:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjGZSWC (ORCPT
+        with ESMTP id S230172AbjGZSYk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 14:22:02 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CAE69B;
-        Wed, 26 Jul 2023 11:22:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1690395714; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=QKDUeY2c4KMFmPhWbOh17l3C3JCuHOnrKsMPyR3JQw0SXsdtGKQScgX9PElA09VXQH
-    CAKtxNUScJlkaOlKmY+lsvLFXR7/+9cIsQHR3qUS0u7EH0UeqGUuMBlKA1htbSe2aMLb
-    nf1BiwX5XxZq3trnDh2lCxkz5chVGxy6nnnParfnXGBegDq2/PaOptiPdtWy/yWBWyR9
-    sh/+vik6NMuMl2xjD7kZWOB17kxLBWnJ65E429M0SkHOqe3ZahCio6Shkr1bFo9wl7/x
-    FgYwWsQ+V3UcxNm6QL8L6n6QPza8YIKEsfb8CMDGqVlTaAjY9QRQUEiw/Fx9rkKBTnrk
-    0LCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1690395714;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=pAxjLnIoaNbujX0TER+0fFkItda8fdcC2Nx7HZvipWU=;
-    b=PEHVxDqsDduVF047VhmXBM5LB8R/mg70nVhpDJckSu2QHmwo195a5Pkb14Fb5W6dkU
-    3+NxK3J5OVHhunakVLWY353nMzcECxHeCrXvrJ8IeL4ZiiDIfJsSqmFjGzTxP5ZOQyX0
-    ZIdZAO5LB025h9meYYsWOC+ssdSIDlr3s+FLDLN8U1hlrKyGfmAe+RuiMPrcEDTXappQ
-    VgMWXzqZmeoupvOhtVyW2wtc7D3Ar/KytAlT8tceURIKQ00qF9HjmwNZJtIGd4zbZj9v
-    w7YIShDZnVU+Khv89QGPBv8RwuXVu34Q242A97jzR1Mk1xZhEnSbNvem89y8ZNZFtetj
-    QxSA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1690395714;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=pAxjLnIoaNbujX0TER+0fFkItda8fdcC2Nx7HZvipWU=;
-    b=KPaMD6gee/+/3sSj2zd4CCW6CV64fAXhZMU85T6kmu4tdV1Ur3ZnGS2eAnyQYcqWI7
-    OjU2VFwzXzHQU8x5u/aNVZe4p7IsUmPAFF8E0VsyiZR7Fl0my6zp+H1ACFushBUg6ALD
-    3GifpjZg1JIjV7dPwjZh0lws8cjC1cx1c0tXKA4w1POEI+J7BU5T05Q+ZJLMEc7twXXr
-    K7a1dItccBAaxuN01wydfK4JwRdUpM3aYcWztq3Axgb9JufA4s/2WuJVdzSjkVQa2TFk
-    WZMEQWJB5RsQwASy3q8kMYguuXjH++QmVonT14S4VqpzPO7ICIZiO499B9KOPDy5WTUy
-    SRNA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1690395714;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=pAxjLnIoaNbujX0TER+0fFkItda8fdcC2Nx7HZvipWU=;
-    b=tZCt7VeO50i5IwJTy/HTGAj5p8Y3QO7kDQFoZa+0CyGCy9zYv0uOyB8FunRJrTLMg3
-    OceV0WbSZACFQzmQ7+Dw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA95vh"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.6 DYNA|AUTH)
-    with ESMTPSA id k61817z6QILr8Kd
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 26 Jul 2023 20:21:53 +0200 (CEST)
-Date:   Wed, 26 Jul 2023 20:21:47 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+        Wed, 26 Jul 2023 14:24:40 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C541FC4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:24:38 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fba03becc6so1709843e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 11:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690395877; x=1691000677;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DMm+MukByH/bngQDWKuculviOTh1bUuwstlQEscD59I=;
+        b=jR5ta4KXGrccAKVEC2MgSliubflD3OrhlooylN4hMy/Jhf6cWJ9W3gYKmTTwVWVxj1
+         zLwshMd1VShyLFptZVe2Xxbn4JBE8PZ029Wvxwpr8CGD29GVRqA+svEZcblDGDIklDJj
+         lmoap2aX5Q74drwCaWBWtBVFYqcTlwQaOS42wX0ajIzHp2TXyicgd6461jA6SAaxL6ht
+         d2/J2cvgztCC0GVWyQKIybee39ZlxMlrwBUAWkUPvuAYYlqNi+pltu7K6Xzlqb8M89A6
+         QJ/K+KPKqIwPNnNSwlwkS6R9GVjTrVUdBBt11gWO5In1AHvgPMH16Ux0VFSCm6bFrMAq
+         vcSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690395877; x=1691000677;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DMm+MukByH/bngQDWKuculviOTh1bUuwstlQEscD59I=;
+        b=j4R5Ra/jYLX1/ols+sPQwLzZRFvEjrZSLPsqM2vbDkS9CAXlMEEEU9Q/XbtMcdQfDw
+         HbN0OxHrk9mPpAQKb5iLwZRNpCcjP6YazrCx4TxaOQMJCV7e0aSWvW0bVTuhq/ag99j4
+         /74tKTdNOLLBybZHMb8oRlVDb1FNW9/nnSAP/0ito6B4k4elhyzf0uBuKfpJa0WK7EyI
+         Esb7UgbA08dKeh9Zlr+Z1XSmKKUXExWtbdJQtobHSlWiileSpGqTDU1SlTvZ501qJM7u
+         GyGMf4G7TsRdRrS2Z2wzNcBjqmyID6IdAkmofu/24rpPl8ffX0ZbwsiDBuShjPdJvy9z
+         6JmA==
+X-Gm-Message-State: ABy/qLYC5w4MaGMHN8ci3fwhLz36BdVy42DYigU2pIXtznzABSgbCX/y
+        eJUnw826dli2MOBTdShA294x+Q==
+X-Google-Smtp-Source: APBJJlEC4KK34ke9StScpXn5HQIKp4rixX7PSMR2RamZGbcI/hdvdvZ/spxTurGWaQ+Aa3lvHDKLsQ==
+X-Received: by 2002:a05:6512:2038:b0:4fe:993:2220 with SMTP id s24-20020a056512203800b004fe09932220mr86936lfs.27.1690395876709;
+        Wed, 26 Jul 2023 11:24:36 -0700 (PDT)
+Received: from [192.168.1.101] (abxi164.neoplus.adsl.tpnet.pl. [83.9.2.164])
+        by smtp.gmail.com with ESMTPSA id e28-20020ac2547c000000b004f755ceafbcsm3408784lfn.217.2023.07.26.11.24.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 11:24:36 -0700 (PDT)
+Message-ID: <9ea4f4ed-8be0-859f-4f5d-d3bd0a727cb9@linaro.org>
+Date:   Wed, 26 Jul 2023 20:24:33 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] clk: qcom: reset: Increase max reset delay
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -74,57 +65,68 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>
-Subject: Re: [PATCH 1/2] clk: qcom: reset: Increase max reset delay
-Message-ID: <ZMFkO5aAT5I5kBac@gerhold.net>
 References: <20230726-topic-qcom_reset-v1-0-92de6d3e4c7c@linaro.org>
  <20230726-topic-qcom_reset-v1-1-92de6d3e4c7c@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230726-topic-qcom_reset-v1-1-92de6d3e4c7c@linaro.org>
+ <ZMFkO5aAT5I5kBac@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZMFkO5aAT5I5kBac@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 03:26:19PM +0200, Konrad Dybcio wrote:
-> u8 limits us to 255 microseconds of delay. Promote the delay variable to
-> u16 to hold bigger values.
+On 26.07.2023 20:21, Stephan Gerhold wrote:
+> On Wed, Jul 26, 2023 at 03:26:19PM +0200, Konrad Dybcio wrote:
+>> u8 limits us to 255 microseconds of delay. Promote the delay variable to
+>> u16 to hold bigger values.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> It would be clearer to change this together with an actual user that
+> needs > 255us. AFAICT atm MSM8909 is the only user of this and it has
+> just 15us.
+Some LPASS resets ask for 500, but I'm still working on that driver.
 
-It would be clearer to change this together with an actual user that
-needs > 255us. AFAICT atm MSM8909 is the only user of this and it has
-just 15us.
-
-Thanks,
-Stephan
-
-> ---
->  drivers/clk/qcom/reset.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/reset.h b/drivers/clk/qcom/reset.h
-> index 9a47c838d9b1..fe0561bf53d4 100644
-> --- a/drivers/clk/qcom/reset.h
-> +++ b/drivers/clk/qcom/reset.h
-> @@ -11,7 +11,7 @@
->  struct qcom_reset_map {
->  	unsigned int reg;
->  	u8 bit;
-> -	u8 udelay;
-> +	u16 udelay;
->  	u32 bitmask;
->  };
->  
-> 
-> -- 
-> 2.41.0
-> 
+Konrad
