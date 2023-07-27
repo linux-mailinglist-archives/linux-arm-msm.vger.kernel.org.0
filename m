@@ -2,140 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F95F764848
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 09:18:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00A737648C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 09:36:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbjG0HSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 03:18:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35942 "EHLO
+        id S232519AbjG0HgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 03:36:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233093AbjG0HRq (ORCPT
+        with ESMTP id S232659AbjG0Hfq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 03:17:46 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CD583F6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 00:11:20 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-522382c4840so785933a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 00:11:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690441819; x=1691046619;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JYep43itLi484JjMyR1Wqkn5aeEi0wNHqtDvsnoQYt4=;
-        b=RaE6n6Gunpftj1GFdzPxvEQGGy7My9xgpFOh6jjNMx/KowsR5Y0kSZkZRQL09KuQYC
-         zMCxNx9RFmxzi6qI4yJB4CoMLKhrBvtSSQJGHPVUedhxrUCDByurJNzpVJgl5Q0QTKcz
-         /x4UIDy91I8FGK0knJdeG9Z3ldoMfts5Y27ixiYbYFjg2vJmxGMEmDAKle9APuEZZ/NO
-         F93o8Vw6H4WoTV+RMzhCB6N+7/qNDvLXr1k/op93IGLdQUNTwxCzxthxHrUdkfpps74i
-         gq8X0GNB97I9HuWAVUX2/Q7O1yk+ooPfMHzFcjvXaH57X2hahZQbRjLbWXNGu6B896mE
-         hsOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690441819; x=1691046619;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JYep43itLi484JjMyR1Wqkn5aeEi0wNHqtDvsnoQYt4=;
-        b=GfxEJG1jTzrNkHJ57JrPM0AWaQlBQ9o3SBuggC8nUaI42TKuDCuhEkTM3X6KcxXcDQ
-         GE38GHRrWG3vjvUEPMGfpQKrIIBI+pUrifbWBnN2MjTRYpQjGxe2wtyT3fztgbKRo/2n
-         MYI9fF8ptEHP9HMVYsOOAeSIsd1gRKccyN2q+vM+6CPna5KTPLbVnxPRqmmLPRixKjB6
-         Quts5xWdETXuH+tZ4YyY8bE4P2SbWdrFCrSILww0mEYlNEy3/4p0olqvDBPx5b++6sUk
-         DNdP1KiAQgYkWpMXNqBni3ohG2T8VWsTXDb1GT9S2+rH4+t+AOvP99h+eq6Nb2LnfRvu
-         W4uw==
-X-Gm-Message-State: ABy/qLYe//kdgdPoE+ooxMyAnLg31NmpYFATgbgMrukqjXNVT6OZ1ELR
-        K+hjuaehNUJWQt7aGm3/96eJNQ==
-X-Google-Smtp-Source: APBJJlFreRkEmmdoQULIo/F/9SCFJqDWq8XA7O8D6UDXTNRm9pXQfR/6rmweX5nXwqD4Bz+951NBMA==
-X-Received: by 2002:aa7:d689:0:b0:521:d23b:f2c5 with SMTP id d9-20020aa7d689000000b00521d23bf2c5mr1110718edr.14.1690441819273;
-        Thu, 27 Jul 2023 00:10:19 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id a18-20020aa7d752000000b0051dd16f7e50sm310445eds.44.2023.07.27.00.10.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jul 2023 00:10:18 -0700 (PDT)
-Message-ID: <2fa3f27d-ff08-b923-2fb1-cf7cc888e5d5@linaro.org>
-Date:   Thu, 27 Jul 2023 09:10:16 +0200
+        Thu, 27 Jul 2023 03:35:46 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F3EAD29;
+        Thu, 27 Jul 2023 00:25:13 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AEF0761D46;
+        Thu, 27 Jul 2023 07:25:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14945C433C8;
+        Thu, 27 Jul 2023 07:25:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690442712;
+        bh=lEyPRYCO9N1DUUoHfYju2Ygxeyp6MfQG8t7Xckc9aEQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Q6NgDr31vXG/KzGtmo1L6ZoZLewtye/NCs6+BZIXXUw/kDHMGE1gny67p2IENliCW
+         qw2WlC147TZmwq+ZzzstJHLfvAfUCfMmbuBAb34PDhQCy3AOjU9g9Su2rgvRVkDfXn
+         WNbFq41sD2V3gL20zh5rOSlLDHOa/KHK1IXfSdcYTyskh8o7XhxDJqrXOuZlLbQC2L
+         bjZe9zYdNDT2de3rlpqd7mG9jM7lu0eTNcrrAFRIQZSbC2sFdVGL27MpLT1jl0Ivtv
+         Bg87i4Mr45M5BnORhWg7wKJCs0fSaT7l/ryvYxx3kEl/uFEuAtQsBVtJd6gr9tQ9BR
+         nxWoSSt3UQHKw==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qOvNJ-0008UQ-2J;
+        Thu, 27 Jul 2023 09:25:29 +0200
+Date:   Thu, 27 Jul 2023 09:25:29 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        quic_hemantg@quicinc.com
+Subject: Re: [PATCH v13 0/2] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA2066
+Message-ID: <ZMIb6RWvhvtteRXE@hovoldconsulting.com>
+References: <20230727044011.965205-1-quic_tjiang@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
- support
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com,
-        quic_huliu@quicinc.com
-References: <20230718062639.2339589-1-quic_fenglinw@quicinc.com>
- <20230718062639.2339589-2-quic_fenglinw@quicinc.com>
- <cb534cdb-508e-b03e-4e39-50cd6654377a@linaro.org>
- <4cb9f443-bdea-695a-f1b7-3963747e9a17@quicinc.com>
- <5b7e624b-5d06-826d-92d1-2a721b7c83b7@quicinc.com>
- <fec38f3a-f103-ff0f-138c-cffa3a808001@linaro.org>
- <4210b137-2d5d-a467-ea8c-d047701fdcc2@quicinc.com>
- <dd5864ee-7df2-eb64-c7f2-0fb234900d6a@linaro.org>
-In-Reply-To: <dd5864ee-7df2-eb64-c7f2-0fb234900d6a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230727044011.965205-1-quic_tjiang@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 10:02, Krzysztof Kozlowski wrote:
-> On 18/07/2023 09:59, Fenglin Wu wrote:
+On Thu, Jul 27, 2023 at 12:40:09PM +0800, Tim Jiang wrote:
+> This series adds support for qualcomm bluetooth soc qca2066
 > 
->>>> Just FYI,the change log was updated in the cover letter here:
->>>> https://lore.kernel.org/linux-arm-msm/20230718062639.2339589-1-quic_fenglinw@quicinc.com/T/#m3819b50503ef19e0933a10bf797351a4af35537f
->>>>
->>>> Also the commit text and the driver change were also updated accordingly
->>>> to address your review comment by removing 'pm7550ba-vib' compatible string.
->>>
->>> Removing compatible was never my feedback. Did you read:
->>> https://elixir.bootlin.com/linux/v6.1-rc1/source/Documentation/devicetree/bindings/writing-bindings.rst#L42
->>> ?
->>>
->> Okay, so do you want me to add 'pm7550ba-vib' as a fallback compatible 
->> like this?
->>
->>   properties:
->>     compatible:
->> -    enum:
->> -      - qcom,pm8058-vib
->> -      - qcom,pm8916-vib
->> -      - qcom,pm8921-vib
->> -      - qcom,pmi632-vib
->> -      - qcom,pm7250b-vib
->> -      - qcom,pm7325b-vib
->> +    oneOf:
->> +      - enum:
->> +          - qcom,pm8058-vib
->> +          - qcom,pm8916-vib
->> +          - qcom,pm8921-vib
->> +          - qcom,pmi632-vib
->> +          - qcom,pm7250b-vib
->> +          - qcom,pm7325b-vib
->> +      - items:
->> +          - enum:
->> +              - qcom,pm7550ba-vib
->> +          - const: qcom,pm7325b-vib
->>
-> 
-> Yes
+> Changes in v13
+>  - change the subject name for patch 1/2
+>  - solve review comments for patch 2/2
 
-I wonder why this approved change turned out to something incorrect in
-your v3 patch...
+Again, this is not specific enough and essentially only explains why you
+changed something, but doesn't say what you changed.
 
-Best regards,
-Krzysztof
+You also again ignored some of my review comments without even
+explaining why.
 
+Seriously, you Qualcomm engineers really need to get your act together
+and stop wasting other people's time.
+
+Johan
