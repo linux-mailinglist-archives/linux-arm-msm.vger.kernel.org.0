@@ -2,81 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F27765780
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 17:26:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C66D76586F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 18:21:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233356AbjG0P0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 11:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38832 "EHLO
+        id S231512AbjG0QVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 12:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234587AbjG0P0r (ORCPT
+        with ESMTP id S229824AbjG0QVJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 11:26:47 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 266B82D7E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 08:26:43 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5221ee899a0so1412094a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 08:26:43 -0700 (PDT)
+        Thu, 27 Jul 2023 12:21:09 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4871419B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:21:08 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so2023702e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:21:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690471601; x=1691076401;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=od4dDMOYFKmSK2nDsYcadLvFPYR/WS8PvJDqoO5zV3o=;
-        b=MjDu5xGKr8AQ65AeTIuSEWC6NCB3lxLSX5axU+i4kloNTAnlLGR914i9H5wf5tu/el
-         M1QZZpCRCVHCL6YtaXR1sVlG1JmTWg6DQ4H0CIv/c1c5Ff8wwjno7XOaXueWTdYQ9Qpv
-         0EjV/mSCpaJ20i1uAICJZ9hDE2Ua1oleb2GA5vTCHv/G91+AIWAHiEvfTzO4S4WhHxfz
-         DEIxlsPjuRWjdlSez2ZE4FBx+Q9hjgPZG8kkqksN2SI78ZQSnrVKnZYD1fhGEGkA4f2p
-         +tXZsei/jr81irL3vLL7k4taj2xyL5aCob3fzUqXiF5YseK8BdoUgWyDzOKYZHLauDHN
-         pC3Q==
+        d=linaro.org; s=google; t=1690474866; x=1691079666;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O0gt2sdyxSe9SAFA2SDfY3lBMsGmyCB+Vdw8rRnEe68=;
+        b=QIG5tKsDUgFBn2kqXi5MYBxoqcZ2xUc8fRZ7xG7aWI9GyZNEVy2RcYR3MnoSUT4OE1
+         /utlg3qREKBJ/ONlCF5h6J7PTJ3DN2dU8uvGy/YAgePVwoSZpg1D6S2afo5SiV5pfWqE
+         K/l0AA1gek0oTFU3yz4G8WX3dmICMXm8Q9Be16MbU96F37TcvKzyApL664OXUlvjOTyP
+         nWPJhU3IIyHwHh/RgeAwVKfojocxySGzdDdTUyS1WuGh3uXDQluEWWtU0BvQNiTIGrtW
+         tbcbatHMdfpXF7Af8rSq9BOOP3X6APg0NLjLoNujzzx630ZsnFBQypwZHT3FwqfHbgY3
+         N/ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690471601; x=1691076401;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=od4dDMOYFKmSK2nDsYcadLvFPYR/WS8PvJDqoO5zV3o=;
-        b=XGWuWm2ukSWNrpqvITa9fqr7fgHsaSHQJgWNSLmvy9KMGuavooyYhxN8Jj6CvllmVT
-         ON49YyanR7NuMa9uDD/lSa1l1ZhNTZeJzPkqcL01TzDbjTsQE9diL2k46vc5EOKAw0RE
-         cqMs7uSn++41W3lV2r8jgH6KCzbkOr8uUw4rdT9EJAIylT/hZ5lGetpQBrmAehq1lxBI
-         GVv8yEQXzhooy6wpNPJrCgwj1e6Jlzi+XdWuzbC+fj8opIlpbgjKl7TG7IQILBYaiUUM
-         s2EkZRnp1YwdS/yTnGehdcOq+xdZeivVCSSnzhTCPZM8py//Hom5U9GHxcLwynoY9MqY
-         uU8g==
-X-Gm-Message-State: ABy/qLbOq2eP8jo8pu84QQ04vON/eL8X94LVG9LhmE7MCpDpZXty1Xn3
-        V5nKBqvNOkWYPqga2zkbjNV1+Yk9Bi/QkobU3Cc=
-X-Google-Smtp-Source: APBJJlEGFYyBK6bCKx12cpjZBXzsD3OOLv2xWyhS9LwN4W/6FLop61ZQg6MU6dYQMuw8tUVaF+LjQg==
-X-Received: by 2002:aa7:c25a:0:b0:522:1b93:4cf3 with SMTP id y26-20020aa7c25a000000b005221b934cf3mr1919071edo.27.1690471601584;
-        Thu, 27 Jul 2023 08:26:41 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id p4-20020a056402044400b00521d2f7459fsm766911edw.49.2023.07.27.08.26.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jul 2023 08:26:41 -0700 (PDT)
-Message-ID: <ddb70b1e-57bb-a72f-018a-75da62cedb3a@linaro.org>
-Date:   Thu, 27 Jul 2023 18:26:39 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 5/6] drm/msm/dpu: use MDSS data for programming SSPP
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        d=1e100.net; s=20221208; t=1690474866; x=1691079666;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O0gt2sdyxSe9SAFA2SDfY3lBMsGmyCB+Vdw8rRnEe68=;
+        b=Et2Q3dNfhbz5dan7rxmo8VVTmmMZ2DVfnntQaLsI/ZDdTVov5jciFOT4c8qOyCORHy
+         1dDPEinQGiqLZzR6mQmXE89NsbnjS/xhFqldEbV45v0dtPT8eIfn8dFiaMe5S7s1o/H2
+         9YQtboWpr6mNn3Sb0EH7T2I0zyxt+ecNKsv648VcOEAd2vXtXxVaBaojCbyI72ayQH3N
+         5x1OxJ76fLbdDjChizIl8fKyiaHunUWoewarufDhXUBS9ph5nkRUkpWBp0CHV0BSoM+2
+         SKqwyo4EpwOKTCnv7RQeXwzO9823m8EH8F0SpSGPBhoEVNWMz4dAzFAQ+R1kv3f488JK
+         frXA==
+X-Gm-Message-State: ABy/qLbsqDzc2GpvicUdcJlpQca55StP+xjVRurXSDq2gX9zZvZe7ICS
+        DCpl1Py1ZoURX8UyzcHHVmGwqg==
+X-Google-Smtp-Source: APBJJlETnhEDO8TnnPl/jyIZKBXXZr8KA1fPpMS+inlVZ9cs/XGYFOf8dVrwWDIW7yoT1IytBZo0aw==
+X-Received: by 2002:a05:6512:3e02:b0:4f8:77f1:299a with SMTP id i2-20020a0565123e0200b004f877f1299amr3079932lfv.42.1690474866435;
+        Thu, 27 Jul 2023 09:21:06 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id a15-20020aa7d90f000000b00521953ce6e0sm808027edr.93.2023.07.27.09.21.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jul 2023 09:21:05 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-References: <20230521171026.4159495-1-dmitry.baryshkov@linaro.org>
- <20230521171026.4159495-6-dmitry.baryshkov@linaro.org>
- <4e35dabb-640e-8de6-d98a-619b2f80cfb6@quicinc.com>
- <CAA8EJpoYc5M7GpTAUggjDhs+UQ8GcFcW7Y7xNs_zrNNN3Th-7A@mail.gmail.com>
- <81e527a4-f394-1bb5-769f-8b1f3eb01f40@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <81e527a4-f394-1bb5-769f-8b1f3eb01f40@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: [PATCH 0/7] drm/msm/dpu: drop DPU_INTF_TE and DPU_PINGPONG_TE
+Date:   Thu, 27 Jul 2023 19:20:57 +0300
+Message-Id: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,82 +75,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/07/2023 18:24, Abhinav Kumar wrote:
-> 
-> 
-> On 7/27/2023 1:39 AM, Dmitry Baryshkov wrote:
->> On Thu, 27 Jul 2023 at 02:20, Abhinav Kumar 
->> <quic_abhinavk@quicinc.com> wrote:
->>>
->>>
->>>
->>> On 5/21/2023 10:10 AM, Dmitry Baryshkov wrote:
->>>> Switch to using data from MDSS driver to program the SSPP fetch and 
->>>> UBWC
->>>> configuration.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 18 +++++++++++-------
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  7 +++++--
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 16 +++++++++++++++-
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  3 ++-
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  2 ++
->>>>    6 files changed, 36 insertions(+), 11 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>>> index cf70a9bd1034..bfd82c2921af 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>>> @@ -8,6 +8,8 @@
->>>>    #include "dpu_hw_sspp.h"
->>>>    #include "dpu_kms.h"
->>>>
->>>> +#include "msm_mdss.h"
->>>> +
->>>>    #include <drm/drm_file.h>
->>>>
->>>>    #define DPU_FETCH_CONFIG_RESET_VALUE   0x00000087
->>>> @@ -308,26 +310,26 @@ static void dpu_hw_sspp_setup_format(struct 
->>>> dpu_sw_pipe *pipe,
->>>>                DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
->>>>                        DPU_FETCH_CONFIG_RESET_VALUE |
->>>>                        ctx->ubwc->highest_bank_bit << 18);
->>>
->>> Does this needs to be protected with if ctx->ubwc check?
->>
->> Yes... And it should have been already.
->>
->>>
->>>> -             switch (ctx->ubwc->ubwc_version) {
->>>> -             case DPU_HW_UBWC_VER_10:
->>>> +             switch (ctx->ubwc->ubwc_enc_version) {
->>>> +             case UBWC_1_0:
->>>
->>> The values of UBWC_x_x dont match the values of DPU_HW_UBWC_VER_xx.
->>> What was the reason for the catalog to go with DPU_HW_UBWC_VER_xx in the
->>> catalog for the encoder version in the first place? Because looking at
->>> the registers UBWC_x_x is the correct value.
->>>
->>> If we cannot find the reason why, it should be noted in the commit text
->>> that the values we are using did change.
->>
->> Huh? This is just an enum. It isn't a part of uABI, nor it is written
->> to the hardware.
->>
-> 
-> The reason is that, this switch case is moving from comparing one set of 
-> values to totally different ones. So atleast that should be noted.
-> 
-> First thing that struck me was this point because the enums UBWC_x_x and 
-> DPU_HW_UBWC_VER_xx dont match.
-> 
+Drop two feature flags, DPU_INTF_TE and DPU_PINGPONG_TE, in favour of
+performing the MDSS revision checks instead.
 
-Do you have any proposed text in mind?
+Dependencies: [1], [2]
 
+[1] https://patchwork.freedesktop.org/series/118088/
+[2] https://patchwork.freedesktop.org/series/118836/
+
+Dmitry Baryshkov (7):
+  drm/msm/dpu: enable PINGPONG TE operations only when supported by HW
+  drm/msm/dpu: drop the DPU_PINGPONG_TE flag
+  drm/msm/dpu: inline _setup_intf_ops()
+  drm/msm/dpu: enable INTF TE operations only when supported by HW
+  drm/msm/dpu: drop DPU_INTF_TE feature flag
+  drm/msm/dpu: drop useless check from
+    dpu_encoder_phys_cmd_te_rd_ptr_irq()
+  drm/msm/dpu: move INTF tearing checks to dpu_encoder_phys_cmd_init
+
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 49 +++++++++----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  3 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  6 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 47 ++++++++----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  2 +-
+ 5 files changed, 47 insertions(+), 60 deletions(-)
+
+
+base-commit: be4dacf4eee1c4e2e91586e75e95b2852274dc58
+prerequisite-patch-id: be3f3e5df89f9f2cc6b6289a83422d65e29d4900
+prerequisite-patch-id: 59cd61ccd3cde7218fe3db6a8c672faafb7167f5
+prerequisite-patch-id: d493b9bd85d518c15ca94f22174cb5ab2e2443d9
+prerequisite-patch-id: 6a5bf3083c3da70ca110c17d54027e96c0335636
+prerequisite-patch-id: 670883101f3b5dca122501f2828d8e45a6843b38
+prerequisite-patch-id: 5dacdaf8ba4b369b966ca341db6691b208476fa1
+prerequisite-patch-id: 5d8ff96e0fbea3358931d9d1fcb1bf114ae172df
+prerequisite-patch-id: 9d7a4964337aee22c325fa04424f1e20946e1bb4
+prerequisite-patch-id: 7310e0a9f3aa611cb080930a4c8247ced69ed5d5
+prerequisite-patch-id: ec7e1b84ef2780c43cf59e2c2bf638d7eff188fd
 -- 
-With best wishes
-Dmitry
+2.39.2
 
