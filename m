@@ -2,134 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49CBC765A62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 19:33:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4679765BEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 21:15:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231791AbjG0Rde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 13:33:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32934 "EHLO
+        id S231299AbjG0TPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 15:15:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231485AbjG0Rdd (ORCPT
+        with ESMTP id S229445AbjG0TPk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 13:33:33 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15A22D71
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:33:31 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b72161c6e9so31810951fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:33:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690479210; x=1691084010;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=icO3d3uWVI1Ske0MIHcKUIP285+5TQhyvGKynKcarCg=;
-        b=UghMswEkqCLq7uFW0vg1z0BCw4oUeIeSnbl7RRVXmD+R4LSrBowDwJ2xk4rBk/1c3N
-         YVcSqboHoiKkB54P3hXlJZfbr6wTvzZBtZvjMump/NpjjuE2Cvb/3G2+r+2Zdib0o/O2
-         EIkq5mkmozwuiBAJ7bztpa+UXln0i8suBJKJbi2VvNwlPJFYhvk+NLNPf2ecwds/QnbA
-         PNSLX8ihTygl7/ACrKad7aIoL2qPhLCgtBCW2jFPYiQ91FH22K7bvs4hpkidx/mNykqf
-         aJCm/sBp5AyvV+ME9S2eODDb+PPR6ID4Vn9FX54ONbs3VXRmWLe1RVDAYAYDvgpjozb4
-         s2Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690479210; x=1691084010;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=icO3d3uWVI1Ske0MIHcKUIP285+5TQhyvGKynKcarCg=;
-        b=L4/2RyImL37yDhW/cGfUVOKBU4eWvxUJV+uaNbMmbexBeMfXqbQzLmXDqZLyR3IYVA
-         KMsnHobFBLwVYVwWW9bb5kR1YkVmya8t7IWzJUF2yIwewv6gke8Bg3qehU5AqvfGKBTQ
-         gP3YlMTCnnm08ndkdMOOJUmLWGIJ5I7ii0XDMMdvcv9L8Q1IEnP3koa3uaQeybz3170m
-         0RbJlLAEdUfatG/UzZF/UM7aO9+vyfNrnjuDJpZ8hxuT176Nq+JKgy870ewj5CrAdMqj
-         c2T5nEoAxX6FsG8p7xJGgEjPf4UR4pRYSCN7r/iowWQ2PUNywQMT71Lt4ULS0bf61VKm
-         1MAQ==
-X-Gm-Message-State: ABy/qLbxpTQ5MDBwOPdao2e+by3xjEH+1eNk+oB9Q9nrLq+EPwqYPzC5
-        YN75j22TkFlYwvq+tK7z7D7zXA==
-X-Google-Smtp-Source: APBJJlENla/qWI/wubCIydlyspuaQuIsyTFQVi7DDpSPzq+fSIyNg8Oh8dUZnwie0i6o4USOpEQXOA==
-X-Received: by 2002:ac2:57c8:0:b0:4fd:f6db:a7d9 with SMTP id k8-20020ac257c8000000b004fdf6dba7d9mr2060lfo.32.1690479210117;
-        Thu, 27 Jul 2023 10:33:30 -0700 (PDT)
-Received: from [192.168.1.101] (abxi99.neoplus.adsl.tpnet.pl. [83.9.2.99])
-        by smtp.gmail.com with ESMTPSA id g4-20020a19ac04000000b004fe07f06337sm412089lfc.53.2023.07.27.10.33.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jul 2023 10:33:28 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 27 Jul 2023 19:33:23 +0200
-Subject: [PATCH v5 3/3] remoteproc: qcom: pas: Add SM6375 MPSS
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230725-topic-6375_rproc-v5-3-a8e9cde56a20@linaro.org>
-References: <20230725-topic-6375_rproc-v5-0-a8e9cde56a20@linaro.org>
-In-Reply-To: <20230725-topic-6375_rproc-v5-0-a8e9cde56a20@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 27 Jul 2023 15:15:40 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4105C2735
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 12:15:38 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 956F920215;
+        Thu, 27 Jul 2023 21:15:35 +0200 (CEST)
+Date:   Thu, 27 Jul 2023 21:15:33 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690479202; l=1570;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=sj7Uy3Esp9/kv46p/vCH0qMBjFc8YM0n5pfjJE2JRcc=;
- b=pwCv/rsLcc3qhJEeFtI+WrIDbwPG+xDQNkdjonSUEWRcDMWOxqw6LamKTxlr5pRFwGeBJZl6C
- 28XhYu1QvlKCk6fdUsPaJ9if6YEffEAsLoY5D3x1lj3hPWevlUYXCJ2
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 0/5] drm/msm/dpu: rework interrupt handling
+Message-ID: <hlfikr2mhsqjoydcfwaveexafnwbubehyluibx23cpsgu3stcm@dgxnhps34ys2>
+References: <20230727144543.1483630-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230727144543.1483630-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a config for the MPSS present on SM6375.
+On 2023-07-27 17:45:38, Dmitry Baryshkov wrote:
+> Please exuse me for the spam, I missed the triggered WARN_ON because of
+> the dropped patch.
+> 
+> Declaring the mask of supported interrupts proved to be error-prone. It
+> is very easy to add a bit with no corresponding backing block or to miss
+> the INTF TE bit. Replace this static configuration with the irq mask
+> calculated from the HW catalog data.
+> 
+> Changes since v3:
+>  - Rework INTF_TE handling. Stop depending on DPU_INTF_TE and enable the
+>    relevant interrupt explicitly.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Yeah that seems like a good idea.  I had at some point considered, but
+it would be much more messy, to collect all the `.intr_` members of
+every cfg structure to accumulate the used flags instead.  But that's
+more cumbersome especially since everything uses TOP0 etc anyway.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 0d58b5be9a77..1c87ae9cec9e 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -813,6 +813,21 @@ static const struct adsp_data sm6350_adsp_resource = {
- 	.ssctl_id = 0x14,
- };
- 
-+static const struct adsp_data sm6375_mpss_resource = {
-+	.crash_reason_smem = 421,
-+	.firmware_name = "modem.mdt",
-+	.pas_id = 4,
-+	.minidump_id = 3,
-+	.auto_boot = false,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		NULL
-+	},
-+	.ssr_name = "mpss",
-+	.sysmon_name = "modem",
-+	.ssctl_id = 0x12,
-+};
-+
- static const struct adsp_data sm8150_adsp_resource = {
- 		.crash_reason_smem = 423,
- 		.firmware_name = "adsp.mdt",
-@@ -1182,6 +1197,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm6350-mpss-pas", .data = &mpss_resource_init},
- 	{ .compatible = "qcom,sm6375-adsp-pas", .data = &sm6350_adsp_resource},
- 	{ .compatible = "qcom,sm6375-cdsp-pas", .data = &sm8150_cdsp_resource},
-+	{ .compatible = "qcom,sm6375-mpss-pas", .data = &sm6375_mpss_resource},
- 	{ .compatible = "qcom,sm8150-adsp-pas", .data = &sm8150_adsp_resource},
- 	{ .compatible = "qcom,sm8150-cdsp-pas", .data = &sm8150_cdsp_resource},
- 	{ .compatible = "qcom,sm8150-mpss-pas", .data = &mpss_resource_init},
+I do miss b4 inserting links to lore.kernel.org for earlier series
+revisions though.
 
--- 
-2.41.0
+Finally I retested this whole series on sdm845 (PP TE) and sm6125 (INTF
+TE) and both behave fine.
 
+- Marijn
+
+> Changes since v2:
+>  - Rebased on top of msm-next-lumag to be able to use core_major_ver
+>    instead of adding yet another flag.
+>  - Dropped the DPU_INTF_TE movement patch, useless after rebasing.
+> 
+> Changes since v1:
+>  - Enable dpu_caps::has_7xxx_intr for DPU >= 7.0 (Neil)
+> 
+> Dmitry Baryshkov (5):
+>   drm/msm/dpu: inline __intr_offset
+>   drm/msm/dpu: split interrupt address arrays
+>   drm/msm/dpu: autodetect supported interrupts
+>   drm/msm/dpu: drop now-unused mdss_irqs field from hw catalog
+>   drm/msm/dpu: drop compatibility INTR defines
+> 
+>  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |   8 --
+>  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |   9 --
+>  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  11 --
+>  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  13 ---
+>  .../msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |   6 -
+>  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  10 --
+>  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |   6 -
+>  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   5 -
+>  .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |   6 -
+>  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   5 -
+>  .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |   5 -
+>  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  13 +--
+>  .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |   9 +-
+>  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  18 +--
+>  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  13 +--
+>  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  13 +--
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 -
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 106 ++++++++++++------
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  18 ++-
+>  19 files changed, 87 insertions(+), 190 deletions(-)
+> 
+> -- 
+> 2.39.2
+> 
