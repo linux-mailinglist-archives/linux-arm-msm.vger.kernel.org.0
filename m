@@ -2,94 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 375C9764DD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 10:41:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1A27764DF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 10:46:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231671AbjG0Ilb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 04:41:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50150 "EHLO
+        id S234273AbjG0Iqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 04:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231959AbjG0IlM (ORCPT
+        with ESMTP id S233102AbjG0IqN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 04:41:12 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6AE819AD;
-        Thu, 27 Jul 2023 01:24:28 -0700 (PDT)
-Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.54])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4RBNzL3sg7zVjtB;
-        Thu, 27 Jul 2023 16:22:06 +0800 (CST)
-Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Thu, 27 Jul
- 2023 16:23:41 +0800
-From:   Ruan Jinjie <ruanjinjie@huawei.com>
-To:     <sre@kernel.org>, <matthias.bgg@gmail.com>,
-        <angelogioacchino.delregno@collabora.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-pm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <ruanjinjie@huawei.com>
-Subject: [PATCH -next] power: supply: Remove redundant dev_err_probe()
-Date:   Thu, 27 Jul 2023 16:23:01 +0800
-Message-ID: <20230727082301.741821-1-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
+        Thu, 27 Jul 2023 04:46:13 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE1AA8A64
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 01:29:05 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-992dcae74e0so87675766b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 01:29:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690446543; x=1691051343;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Vqiw6r+PHEVT+EztfpBhphT+HL4dVYUe7akOolTO95E=;
+        b=WB43hr/c+d+z9E1dr3O2n9Zrk01bgQhVrkcBz0BXQqEIXbQ1+GpUeBUpJF41KFf5Tf
+         lNm4rdRmMREzcf3LvomOfI21YpbvM6rACW4qqCaREo4hE9yZVqNV07X0NRrbSwuz/Off
+         egSFoZU1aXCiBuVzWNAUurp8glWLA6xEfQudURruUH1gBHIdxawSOyfxGL5Ck1I2okdP
+         1JEbf8n5QIkdeImRZLBDq54nXlEyFyEm5PgeYjggQPBUMMAaYCpvAz7nfz+b6F8205Y0
+         YudRzdIN6RPjy2EbEcLaYpmmMhFPTkcjZB/G7W3F9eI6T4CWb894X7wzJwyhIYdJnxcJ
+         MAGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690446543; x=1691051343;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vqiw6r+PHEVT+EztfpBhphT+HL4dVYUe7akOolTO95E=;
+        b=AqCUCEWv6S/2VIoI/Z/vqsZbsMWSmRNpMQJPyijPjw8grjnreOlxgsEiy0ab59KMcC
+         6V6/z7lBW3HNEx/8GKZf784TcppG5BOKBoaLliT//tRerxz45DzJSuFp6WXvSH+JRRL4
+         TKNpIrgGKbl6ZVyP8SrHYL+jtc5wKDYPS6ljJea1Mc0y171mff0yW/azArDoBEtGb6Ba
+         fWaL/zACT52j92HOF0JivU75zWv4X8VSWIlwMs6qkdiKA3SEjPgVxejDUN98qBj2KM2Z
+         QvqwKEddxo2YbHfa2yDfpVLFriVy19kk2sifOSkY/RkzM65cVD4Ytbaz87RkB4Jvmd7W
+         cTCg==
+X-Gm-Message-State: ABy/qLYa02VFAb11pFSWlCLO+/vLCXHuqgXX18WC3ia6J77KxnXcMbPT
+        +Dh7zNsAumnw9nXm6Leff+gGDw==
+X-Google-Smtp-Source: APBJJlEePlD/dAhfTCyMhSnx6fASNBNWb1h9K0gW1jyicnQaTG11W03to93lZljkXpeSk7Uf1M9P1A==
+X-Received: by 2002:a17:906:5356:b0:99b:d5fd:c924 with SMTP id j22-20020a170906535600b0099bd5fdc924mr1511323ejo.66.1690446542830;
+        Thu, 27 Jul 2023 01:29:02 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id cw25-20020a170906c79900b0098d2d219649sm488322ejb.174.2023.07.27.01.29.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jul 2023 01:29:02 -0700 (PDT)
+Message-ID: <b0999940-8cd1-349d-9bf4-d6494145254c@linaro.org>
+Date:   Thu, 27 Jul 2023 10:29:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.90.53.73]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
+ support
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com,
+        quic_huliu@quicinc.com
+References: <20230718062639.2339589-1-quic_fenglinw@quicinc.com>
+ <20230718062639.2339589-2-quic_fenglinw@quicinc.com>
+ <cb534cdb-508e-b03e-4e39-50cd6654377a@linaro.org>
+ <4cb9f443-bdea-695a-f1b7-3963747e9a17@quicinc.com>
+ <5b7e624b-5d06-826d-92d1-2a721b7c83b7@quicinc.com>
+ <fec38f3a-f103-ff0f-138c-cffa3a808001@linaro.org>
+ <4210b137-2d5d-a467-ea8c-d047701fdcc2@quicinc.com>
+ <dd5864ee-7df2-eb64-c7f2-0fb234900d6a@linaro.org>
+ <2fa3f27d-ff08-b923-2fb1-cf7cc888e5d5@linaro.org>
+ <f1286da7-05a6-c8aa-d13b-075c0fd45b77@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <f1286da7-05a6-c8aa-d13b-075c0fd45b77@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to call the dev_err_probe() function directly to print
-a custom message when handling an error from platform_get_irq_byname()
-function as it is going to display an appropriate error message
-in case of a failure.
+On 27/07/2023 09:54, Fenglin Wu wrote:
+>>>> +          - enum:
+>>>> +              - qcom,pm7550ba-vib
+>>>> +          - const: qcom,pm7325b-vib
+>>>>
+>>>
+>>> Yes
+>>
+>> I wonder why this approved change turned out to something incorrect in
+>> your v3 patch...
+>>
+> Since I got review comments in the driver change and I was told to 
+> refactor the driver before adding new HW support. I added the HW type 
+> logic in the driver and I was thinking it might be good to add some 
+> generic compatible strings to match with the HW type introduced in the 
+> driver change.
+> 
+> Anyway, I will update it to what you suggested in next patch.
 
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
----
- drivers/power/supply/mt6370-charger.c       | 4 +---
- drivers/power/supply/qcom_pmi8998_charger.c | 3 +--
- 2 files changed, 2 insertions(+), 5 deletions(-)
+Drivers are not really related to bindings, so whatever HW type you add
+in driver, is not a reason to change bindings. Reason to change bindings
+could be for example: because hardware is like that.
 
-diff --git a/drivers/power/supply/mt6370-charger.c b/drivers/power/supply/mt6370-charger.c
-index f27dae5043f5..571cf00dde07 100644
---- a/drivers/power/supply/mt6370-charger.c
-+++ b/drivers/power/supply/mt6370-charger.c
-@@ -849,9 +849,7 @@ static int mt6370_chg_init_irq(struct mt6370_priv *priv)
- 		ret = platform_get_irq_byname(to_platform_device(priv->dev),
- 					      mt6370_chg_irqs[i].name);
- 		if (ret < 0)
--			return dev_err_probe(priv->dev, ret,
--					     "Failed to get irq %s\n",
--					     mt6370_chg_irqs[i].name);
-+			return ret;
- 
- 		priv->irq_nums[i] = ret;
- 		ret = devm_request_threaded_irq(priv->dev, ret, NULL,
-diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
-index d16c5ee17249..ce7392e7d8b8 100644
---- a/drivers/power/supply/qcom_pmi8998_charger.c
-+++ b/drivers/power/supply/qcom_pmi8998_charger.c
-@@ -922,8 +922,7 @@ static int smb2_init_irq(struct smb2_chip *chip, int *irq, const char *name,
- 
- 	irqnum = platform_get_irq_byname(to_platform_device(chip->dev), name);
- 	if (irqnum < 0)
--		return dev_err_probe(chip->dev, irqnum,
--				     "Couldn't get irq %s byname\n", name);
-+		return irqnum;
- 
- 	rc = devm_request_threaded_irq(chip->dev, irqnum, NULL, handler,
- 				       IRQF_ONESHOT, name, chip);
--- 
-2.34.1
+Best regards,
+Krzysztof
 
