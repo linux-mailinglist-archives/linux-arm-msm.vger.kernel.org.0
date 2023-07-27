@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CC61765CD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 22:03:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E120C765CE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 22:06:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232640AbjG0UDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 16:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
+        id S230223AbjG0UGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 16:06:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232561AbjG0UDv (ORCPT
+        with ESMTP id S230144AbjG0UGE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 16:03:51 -0400
+        Thu, 27 Jul 2023 16:06:04 -0400
 Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A152680
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 13:03:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778B6213F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 13:05:56 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C1D873F335;
-        Thu, 27 Jul 2023 22:03:15 +0200 (CEST)
-Date:   Thu, 27 Jul 2023 22:03:14 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A47213F311;
+        Thu, 27 Jul 2023 22:05:54 +0200 (CEST)
+Date:   Thu, 27 Jul 2023 22:05:53 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -34,7 +34,7 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         freedreno@lists.freedesktop.org
 Subject: Re: [PATCH 1/7] drm/msm/dpu: enable PINGPONG TE operations only when
  supported by HW
-Message-ID: <byxscievxgqwcdu56mebkoy4jpgogzy3euddz73u2qryh3itwb@to3pyltcqqxg>
+Message-ID: <hfbtvuvsha4gwlkxz4slcj6zyshuzcrq2sa3j24ymoqwo6wmib@46idblfyif7m>
 References: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
  <20230727162104.1497483-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
@@ -56,22 +56,6 @@ On 2023-07-27 19:20:58, Dmitry Baryshkov wrote:
 > corresponding interrupt line.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-That's a smart use of the interrupt field.  I both like it, and I do
-not.  While we didn't do any validation for consistency previously, this
-means we now have multiple ways of controlling available "features":
-
-- Feature flags on hardware blocks;
-- Presence of certain IRQs;
-- DPU core revision.
-
-Maybe that is more confusing to follow?  Regardless of that I'm
-convinced that this patch does what it's supposed to and gets rid of
-some ambiguity.  Maybe a comment above the IF explaining the "PP TE"
-feature could alleviate the above concerns thoo.  Hence:
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
 > ---
 >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -83,6 +67,14 @@ Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > @@ -296,7 +296,7 @@ struct dpu_hw_pingpong *dpu_hw_pingpong_init(const struct dpu_pingpong_cfg *cfg,
 >  	c->idx = cfg->id;
 >  	c->caps = cfg;
+
+In hindsight, maybe there's one patch missing from this series.  You
+inlined _setup_intf_ops() later, but there's no patch inlining
+_setup_pingpong_ops() which looks to be required for applying this
+patch.
+
+- Marijn
+
 >  
 > -	if (test_bit(DPU_PINGPONG_TE, &cfg->features)) {
 > +	if (cfg->intr_rdptr) {
