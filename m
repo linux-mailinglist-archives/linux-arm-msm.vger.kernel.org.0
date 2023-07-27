@@ -2,207 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71793764ECD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:10:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04EA4764EFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:13:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233564AbjG0JKn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 05:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35434 "EHLO
+        id S232770AbjG0JNu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 05:13:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233273AbjG0JKX (ORCPT
+        with ESMTP id S234586AbjG0JNT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 05:10:23 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5860349EC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 01:55:42 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6862d4a1376so198471b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 01:55:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1690448142; x=1691052942;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WiPjRg1/kjwO6K5zl232SDHPqYtmZOtFvHbsJXMq+7g=;
-        b=Umb+YV+a9lWFhAL8II9iFkMStUOOBYcco6VfVBA99lXKZrqzVwUjfYjnKm4Dm0LFjT
-         qdoJauj14z5/Q/ALZNZe4hty9eUQzFUzAPUNYhh89WT1GQpVMRyZmNBBpLKeWi1ZbclH
-         LZhMvQeV3S/E/ICy+9O5ITOO1Phn4D+1/k/6DGPG+fLuYZVwP+5BQnq4IpnQhN9xTXZe
-         rfTcvD1n0zxeVBrWB1YcR+3kK3++SSPnDRJs7hwNhsakSHiwU6PBsTieOJN2pDWuMDWg
-         xnIMDcCLv5tsUy7qwBc5TOF+eIq3rIHBy6gcXooMjKSZ0a9wuV4u6V1UPp0vjKeCWB6q
-         aakQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690448142; x=1691052942;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WiPjRg1/kjwO6K5zl232SDHPqYtmZOtFvHbsJXMq+7g=;
-        b=OU3SdprDduXuaSvbtohKeEMfM+x/2SPZEvAqfqqlRfAESjO9iPac0mGex82vhVa0th
-         t2H4CRy8ozqieoel02/j4cyDX7OGAlFxyEmxRFBsLcWrYipgl/E0yD+eOnrQ2ZNestZd
-         z3C/ZTvoI40oAGnBzbj9VjQPRtrMk+Lt6gG+WdGy6wEXPxfQAk5g/z2ZVy8hTzwIfw89
-         WcKvrVqZx0RyBc9oAvDYPXnFlEc8iEw3Lb+fBIA1g7hm5vCUbdsH+pxXzanAaNj2T2EU
-         r/WvbvlOoaUN6L2n1Ldhdz1Obdr9tUjT1rMUtgHL6T0TVU2rhEbdx31s6Skc/xyDCqcl
-         0IjQ==
-X-Gm-Message-State: ABy/qLaxxU+gmgFJuS1t9HIiYEnfNAFhlHlBKpJZDI30gboOjyx+rhio
-        7/RT0imm2gYtRNZY6NKw3Wm+fw==
-X-Google-Smtp-Source: APBJJlGwmdjot/rbtwF9nTotnOmqaOAtVmCVUqRrFxhkDx7eGx5gFUYRsJSjv9frk6zdjI0egP1lkA==
-X-Received: by 2002:a17:902:e891:b0:1b3:d4bb:3515 with SMTP id w17-20020a170902e89100b001b3d4bb3515mr5854967plg.0.1690448141745;
-        Thu, 27 Jul 2023 01:55:41 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id iy15-20020a170903130f00b001bbb1eec92esm1023927plb.281.2023.07.27.01.55.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jul 2023 01:55:41 -0700 (PDT)
-Message-ID: <56ee1d92-28ee-81cb-9c41-6ca7ea6556b0@bytedance.com>
-Date:   Thu, 27 Jul 2023 16:55:27 +0800
+        Thu, 27 Jul 2023 05:13:19 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83FEE3594;
+        Thu, 27 Jul 2023 02:02:51 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R80pa7016828;
+        Thu, 27 Jul 2023 09:02:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pzwGFj1DoyxQIuBQv1J+4RIab4lfvzFS295ihCETh+Y=;
+ b=e+c5HFLyJhQ9Rxk0x6P931rC1oYzVqsgZagwmHnxmI0XxEZDToNqGITSV344YPXcgc5l
+ BPkLV3yN4k/Y6JmnPnCDxf+iAVlp87vs+wD6enzhYn/aWI8yPUzzET8Vmp2eyxWv8TsH
+ IxTzDvIwxBREytyIyG+ITWYUSa+Ema1aD9I128tLE5HCLql3i0KrcMpc23UPz9M50ICy
+ SoAaHgdxGcb1ioz7TUqyRtj0/BBvZqHhczgyHdpHvGJLdVsoUANQswjGEVZ6Q/BMwv9O
+ z7+Etj2pwePqJfHp2aryOhKti9ZhWQhGMmQdg8p1X4TvM/kdUGCbsDixsiIRz0XU67dD VA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3mpt06b6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 09:02:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R92iw2019173
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 09:02:46 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
+ 2023 02:02:16 -0700
+Message-ID: <f0f94ea9-94b1-ccd1-0a43-3cb119fc5d94@quicinc.com>
+Date:   Thu, 27 Jul 2023 17:02:14 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v3 28/49] dm zoned: dynamically allocate the dm-zoned-meta
- shrinker
-Content-Language: en-US
-To:     Damien Le Moal <dlemoal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        Muchun Song <songmuchun@bytedance.com>,
-        akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev
-References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
- <20230727080502.77895-29-zhengqi.arch@bytedance.com>
- <baaf7de4-9a0e-b953-2b6a-46e60c415614@kernel.org>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <baaf7de4-9a0e-b953-2b6a-46e60c415614@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: Add base SM4450 QRD DTS
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
+        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230727023508.18002-1-quic_tengfan@quicinc.com>
+ <20230727023508.18002-5-quic_tengfan@quicinc.com>
+ <f974f48a-05b0-530d-25a0-7ccf1b1ad113@linaro.org>
+ <dba27a60-8681-e2e7-b89f-608bfbc05e93@quicinc.com>
+ <e20781ea-09ba-2190-7318-dc62e713302d@linaro.org>
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <e20781ea-09ba-2190-7318-dc62e713302d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Pehz4Zp3NqpLt4gTAgGGvTyqJktE1_LP
+X-Proofpoint-GUID: Pehz4Zp3NqpLt4gTAgGGvTyqJktE1_LP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxlogscore=896
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2307270079
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On 2023/7/27 16:30, Damien Le Moal wrote:
-> On 7/27/23 17:04, Qi Zheng wrote:
->> In preparation for implementing lockless slab shrink, use new APIs to
->> dynamically allocate the dm-zoned-meta shrinker, so that it can be freed
->> asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
->> read-side critical section when releasing the struct dmz_metadata.
+
+在 7/27/2023 4:50 PM, Krzysztof Kozlowski 写道:
+> On 27/07/2023 10:27, Tengfei Fan wrote:
 >>
->> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
->> Reviewed-by: Muchun Song <songmuchun@bytedance.com>
->> ---
->>   drivers/md/dm-zoned-metadata.c | 28 ++++++++++++++++------------
->>   1 file changed, 16 insertions(+), 12 deletions(-)
 >>
->> diff --git a/drivers/md/dm-zoned-metadata.c b/drivers/md/dm-zoned-metadata.c
->> index 9d3cca8e3dc9..0bcb26a43578 100644
->> --- a/drivers/md/dm-zoned-metadata.c
->> +++ b/drivers/md/dm-zoned-metadata.c
->> @@ -187,7 +187,7 @@ struct dmz_metadata {
->>   	struct rb_root		mblk_rbtree;
->>   	struct list_head	mblk_lru_list;
->>   	struct list_head	mblk_dirty_list;
->> -	struct shrinker		mblk_shrinker;
->> +	struct shrinker		*mblk_shrinker;
->>   
->>   	/* Zone allocation management */
->>   	struct mutex		map_lock;
->> @@ -615,7 +615,7 @@ static unsigned long dmz_shrink_mblock_cache(struct dmz_metadata *zmd,
->>   static unsigned long dmz_mblock_shrinker_count(struct shrinker *shrink,
->>   					       struct shrink_control *sc)
->>   {
->> -	struct dmz_metadata *zmd = container_of(shrink, struct dmz_metadata, mblk_shrinker);
->> +	struct dmz_metadata *zmd = shrink->private_data;
->>   
->>   	return atomic_read(&zmd->nr_mblks);
->>   }
->> @@ -626,7 +626,7 @@ static unsigned long dmz_mblock_shrinker_count(struct shrinker *shrink,
->>   static unsigned long dmz_mblock_shrinker_scan(struct shrinker *shrink,
->>   					      struct shrink_control *sc)
->>   {
->> -	struct dmz_metadata *zmd = container_of(shrink, struct dmz_metadata, mblk_shrinker);
->> +	struct dmz_metadata *zmd = shrink->private_data;
->>   	unsigned long count;
->>   
->>   	spin_lock(&zmd->mblk_lock);
->> @@ -2936,19 +2936,23 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
->>   	 */
->>   	zmd->min_nr_mblks = 2 + zmd->nr_map_blocks + zmd->zone_nr_bitmap_blocks * 16;
->>   	zmd->max_nr_mblks = zmd->min_nr_mblks + 512;
->> -	zmd->mblk_shrinker.count_objects = dmz_mblock_shrinker_count;
->> -	zmd->mblk_shrinker.scan_objects = dmz_mblock_shrinker_scan;
->> -	zmd->mblk_shrinker.seeks = DEFAULT_SEEKS;
->>   
->>   	/* Metadata cache shrinker */
->> -	ret = register_shrinker(&zmd->mblk_shrinker, "dm-zoned-meta:(%u:%u)",
->> -				MAJOR(dev->bdev->bd_dev),
->> -				MINOR(dev->bdev->bd_dev));
->> -	if (ret) {
->> -		dmz_zmd_err(zmd, "Register metadata cache shrinker failed");
->> +	zmd->mblk_shrinker = shrinker_alloc(0,  "dm-zoned-meta:(%u:%u)",
->> +					    MAJOR(dev->bdev->bd_dev),
->> +					    MINOR(dev->bdev->bd_dev));
->> +	if (!zmd->mblk_shrinker) {
->> +		dmz_zmd_err(zmd, "Allocate metadata cache shrinker failed");
+>> 在 7/27/2023 2:56 PM, Krzysztof Kozlowski 写道:
+>>> On 27/07/2023 04:35, Tengfei Fan wrote:
+>>>> Add DTS for Qualcomm QRD platform which uses SM4450 SoC.
+>>>>
+>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/Makefile       |  1 +
+>>>>    arch/arm64/boot/dts/qcom/sm4450-qrd.dts | 18 ++++++++++++++++++
+>>>>    2 files changed, 19 insertions(+)
+>>>>    create mode 100644 arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>>> index 337abc4ceb17..db805d0929c8 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>>> @@ -186,6 +186,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
+>>>> +dtb-$(CONFIG_ARCH_QCOM)	+= sm4450-qrd.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+>>>> new file mode 100644
+>>>> index 000000000000..04ad1dd4285a
+>>>> --- /dev/null
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+>>>> @@ -0,0 +1,18 @@
+>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>> +/*
+>>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>>>> + */
+>>>> +
+>>>> +/dts-v1/;
+>>>> +
+>>>> +#include "sm4450.dtsi"
+>>>> +/ {
+>>>> +	model = "Qualcomm Technologies, Inc. SM4450 QRD";
+>>>> +	compatible = "qcom,sm4450-qrd", "qcom,sm4450";
+>>>> +
+>>>> +	aliases { };
+>>>> +
+>>>> +	chosen {
+>>>> +		bootargs = "console=hvc0 earlycon=hvc0 hvc_dcc.enable=1 cpuidle.off=1";
+>>>
+>>> No earlycon, no hvc.enable (there is no such parameter), no cpuidle.off
+>>> (again don't add fake stuff). So the only suitable argument is console,
+>>> but this should be actually used via stdout path, although it seems
+>>> there is no device node for such usage?
+>> Hi Krzysztof,
+>> Checked upstream linux kernel code, there is not "hvc_dcc.enable", but
+>> have other parameters, like earlycon, cpuidle.off.
+>> Do you mean we should not set "earlycon=hvc0 cpuidle.off=1" parameters,
 > 
-> ret is not set here, so dmz_ctr_metadata() will return success. You need to add:
-> 		ret = -ENOMEM;
-> or something.
-
-Indeed, will fix.
-
->>   		goto err;
->>   	}
->>   
->> +	zmd->mblk_shrinker->count_objects = dmz_mblock_shrinker_count;
->> +	zmd->mblk_shrinker->scan_objects = dmz_mblock_shrinker_scan;
->> +	zmd->mblk_shrinker->seeks = DEFAULT_SEEKS;
->> +	zmd->mblk_shrinker->private_data = zmd;
->> +
->> +	shrinker_register(zmd->mblk_shrinker);
+> Of course not. Why production code would have earlycon? This is debug
+> argument, not suitable for each user of this DTS.
 > 
-> I fail to see how this new shrinker API is better... Why isn't there a
-> shrinker_alloc_and_register() function ? That would avoid adding all this code
-> all over the place as the new API call would be very similar to the current
-> shrinker_register() call with static allocation.
-
-In some registration scenarios, memory needs to be allocated in advance.
-So we continue to use the previous prealloc/register_prepared()
-algorithm. The shrinker_alloc_and_register() is just a helper function
-that combines the two, and this increases the number of APIs that
-shrinker exposes to the outside, so I choose not to add this helper.
-
-Thanks,
-Qi
-
+> cpuidle.off is neither explained nor needed. Otherwise please add a
+> comment why this is part of hardware description.
 > 
->> +
->>   	dmz_zmd_info(zmd, "DM-Zoned metadata version %d", zmd->sb_version);
->>   	for (i = 0; i < zmd->nr_devs; i++)
->>   		dmz_print_dev(zmd, i);
->> @@ -2995,7 +2999,7 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
->>    */
->>   void dmz_dtr_metadata(struct dmz_metadata *zmd)
->>   {
->> -	unregister_shrinker(&zmd->mblk_shrinker);
->> +	shrinker_free(zmd->mblk_shrinker);
->>   	dmz_cleanup_metadata(zmd);
->>   	kfree(zmd);
->>   }
+>> right? only need: bootargs = "console=hvc0" ?
 > 
+> You should use stdout-path if possible. If not, then only console.
+> 
+> Best regards,
+> Krzysztof
+> 
+Sure, will update this patch for have right boorargs parameter.
+
+-- 
+Thx and BRs,
+Tengfei Fan
