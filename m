@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64370765F04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 00:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32DEA765F23
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 00:15:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232601AbjG0WND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 18:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40400 "EHLO
+        id S232815AbjG0WPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 18:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbjG0WNC (ORCPT
+        with ESMTP id S232803AbjG0WPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 18:13:02 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3099C106
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:13:01 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-583f65806f8so15208647b3.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:13:01 -0700 (PDT)
+        Thu, 27 Jul 2023 18:15:51 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADEB19B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:15:50 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-cf284f4d7afso1373506276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690495980; x=1691100780;
+        d=linaro.org; s=google; t=1690496149; x=1691100949;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mgs3XoyVKvSXYQJGdno5tMM7wH8/lhpHnXzFG3+f28I=;
-        b=k/+0Thgxr5YSZb4Hx0Scbv5fsz0foyW+ghVPq4QJwRqo0AwQodJcZ7LT72n8vuQmfY
-         Pg0wxIkowCMCxaL8QOcgt6jXZtzYNR1rphLXCLpiP+pIgFpeLFvz5SpmzMCGoZ9YpBha
-         pbwTv8t44a7YF+gbTsbx+d/8VYSKeik3htYipYXqs2Ec2gdwEMQNttqkRH00XciWTIkk
-         K+K5iUeKOzaJqxQiYBpIK+bjOl69GTRKz+KQo/C6ik5Y9luIsf7tr/wL8pjW8nODfdB3
-         5SB0fV1bxoc+S6IqkKV5h0kNcbTGzx+5bqTlGtmmqoYDTHzCEjXDZo0Dczu2KLmfo0A3
-         M4IQ==
+        bh=wOD8KgEEEOPljbiXkTM7e1vfVTCZeMVuNm+H/5ZnzWI=;
+        b=GF4vQe9Q2QXiQ5WqN59LH2CNoeRi202CwB4ya41H6AykiczHuvb3xG7B9i0XkWfSfu
+         Q373vkJ0dfBCgTbdj2Ah4chkhSclTnE9x/rRp6Nw0C51Wg23bAfqRJl5nMDYR/TgyfCw
+         8ei61KySxvKUxN8R/Mvg48HyG2oHfvYRGHRfXVsXl6O1HFcJbkPpLFVUP3ZkEEtpGFQC
+         35dCp96KyFPyZ3wVBzADGxTnXGR7/J7j6duhBE7cT04CsstMEbrEihLsYTKQPxe/7ceI
+         Wu1Fs2DXxGwUGe9W6MBfBuoDYMkANMrNUHoh0KHRSEbofSezXX6mX/rC0Vilgz4OPWpy
+         0M3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690495980; x=1691100780;
+        d=1e100.net; s=20221208; t=1690496149; x=1691100949;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mgs3XoyVKvSXYQJGdno5tMM7wH8/lhpHnXzFG3+f28I=;
-        b=Uo8aRLvNXqo964YvMMkKGPfTlMGH6Jj+I+KAMUAfGPzabXyuBE8sCN3ffDkTCks2i4
-         onNfz9hkKmqb2GinT6LVSaUOaermb4f99cua0z1qcSXVpr3OYSaHV/Y53prfwXcNM6C4
-         6ybmpYLCRF4p263ZVWcsthvUXeA+WhIY4c1Kf45sfkkstmBaFUfgeTlmWQpd6gJcjtIw
-         66PA3QqyE3Dwml8nr9lg67S6g1o6Njw/NQl+ODz/KUiDMBiSz8I8PtX9jxJO1/gbJgo+
-         u7gDDWcdJPqKFvIF1bnmXn9LxIhS6c7nW+eXgZnCssC51zjdTfLWIF2oc/8aGPluZPUl
-         TE9w==
-X-Gm-Message-State: ABy/qLYWl3Rh1OvPwCF1JGVwpWo525skvKuMALlUUFP/LKJZK5uYzwS9
-        K9lbHR1hRXHb+p+n1jHBWmXakdAN2VtE4iD+X6LW/w==
-X-Google-Smtp-Source: APBJJlETuE77rCp86MlShR/Cytch8bHfXHvuB6FjIXw2Ps7T35UKvb3xqfOxLvgy3n+kh/fDi1WBtt0rVJHyRIwj8+o=
-X-Received: by 2002:a25:ad9c:0:b0:d12:1094:2036 with SMTP id
- z28-20020a25ad9c000000b00d1210942036mr658573ybi.43.1690495980400; Thu, 27 Jul
- 2023 15:13:00 -0700 (PDT)
+        bh=wOD8KgEEEOPljbiXkTM7e1vfVTCZeMVuNm+H/5ZnzWI=;
+        b=NWRwN3ruWQTTT0odGF8heNwdGSzlG9ngqruMp62S8L2EZtFpSVawnzcV3KbtJcB7af
+         mhgaiWM4hUAvxpOpDiUIeVOGCuOeyL6iFRYZPI1gWADjTiGZWbUho78n26u2EWbly0X/
+         60qIXCn5GSty42aVhfH0bWIalXSZdXjDPH6bnKj51yY0xVZmygdJtVov5NerycebqiRZ
+         y2wdverNc6p3/MNoPdHtObkGCye8pe6wsa2CQh2WQM4X60H6frmI1xzyuUwWTfH+beFl
+         eLewXs9jtvupuUyg0FvMROgHKvm3duVul2p64lTERRX8RNfS7y+TF6a/x90d8QVd79WG
+         ec+w==
+X-Gm-Message-State: ABy/qLaCxufDL0czituFtLFWpSxNwxQdYLMfi9kVHp8W5nPN78sVsHHq
+        h3gLidCWy8vTvVOa380ulNa7D+n5g4pD31h58Nc4kBzsGLKARS6NT/Y=
+X-Google-Smtp-Source: APBJJlFzvXJKovMYoMWH82NS6t0YgsjfzUuSbj76qs0bG32xlSJYCovy3Xv5KwXJHF2gt393R3/Esr0VFOB/cKbMMZM=
+X-Received: by 2002:a25:c78b:0:b0:d12:25d:fd5c with SMTP id
+ w133-20020a25c78b000000b00d12025dfd5cmr698418ybe.13.1690496149389; Thu, 27
+ Jul 2023 15:15:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230727212208.102501-1-robdclark@gmail.com> <20230727212208.102501-8-robdclark@gmail.com>
-In-Reply-To: <20230727212208.102501-8-robdclark@gmail.com>
+References: <20230727212208.102501-1-robdclark@gmail.com> <20230727212208.102501-10-robdclark@gmail.com>
+In-Reply-To: <20230727212208.102501-10-robdclark@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 28 Jul 2023 01:12:49 +0300
-Message-ID: <CAA8EJpouv1nAH1HfVBpAXfCK0Ub0-Jb-xpH=XuWa4CBOZ9abxg@mail.gmail.com>
-Subject: Re: [PATCH v2 07/13] drm/msm/adreno: Move speedbin mapping to device table
+Date:   Fri, 28 Jul 2023 01:15:38 +0300
+Message-ID: <CAA8EJpo4hGkB=DMyCM+gU11Mfiqd2S9J660P+GtVUZSuDBCCNA@mail.gmail.com>
+Subject: Re: [PATCH v2 09/13] drm/msm/adreno: Add adreno family
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org,
@@ -64,14 +64,15 @@ Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Rob Herring <robh@kernel.org>,
         open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,18 +84,133 @@ On Fri, 28 Jul 2023 at 00:23, Rob Clark <robdclark@gmail.com> wrote:
 >
 > From: Rob Clark <robdclark@chromium.org>
 >
-> This simplifies the code.
+> Sometimes it is useful to know the sub-generation (or "family").  And in
+> any case, this helps us get away from infering the generation from the
+
+Nit: inferring
+
+> numerical chip-id.
 >
-> v2: Use a table of structs instead of flat uint32_t[]
+> v2: Fix is_a2xx() typo
 >
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 171 ++-------------------
->  drivers/gpu/drm/msm/adreno/adreno_device.c |  51 ++++++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  30 ++++
->  3 files changed, 97 insertions(+), 155 deletions(-)
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 31 ++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 11 +++---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 46 ++++++++++++++++------
+>  3 files changed, 70 insertions(+), 18 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+>
+
+[skipped]
+
+
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index fe7afac5b059..14af16080bd0 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -29,6 +29,25 @@ enum {
+>         ADRENO_FW_MAX,
+>  };
+>
+> +/**
+> + * @enum adreno_family: identify generation and possibly sub-generation
+> + *
+> + * In some cases there are distinct sub-generations within a major revision
+> + * so it helps to be able to group the GPU devices by generation and if
+> + * necessary sub-generation.
+> + */
+> +enum adreno_family {
+> +       ADRENO_2XX_GEN1,  /* a20x */
+> +       ADRENO_2XX_GEN2,  /* a22x */
+> +       ADRENO_3XX,
+> +       ADRENO_4XX,
+> +       ADRENO_5XX,
+
+reserves himself a right to glance at splitting 3xx and 5xx later on.
+
+> +       ADRENO_6XX_GEN1,  /* a630 family */
+> +       ADRENO_6XX_GEN2,  /* a640 family */
+> +       ADRENO_6XX_GEN3,  /* a650 family */
+> +       ADRENO_6XX_GEN4,  /* a660 family */
+> +};
+> +
+>  #define ADRENO_QUIRK_TWO_PASS_USE_WFI          BIT(0)
+>  #define ADRENO_QUIRK_FAULT_DETECT_MASK         BIT(1)
+>  #define ADRENO_QUIRK_LMLOADKILL_DISABLE                BIT(2)
+> @@ -68,6 +87,7 @@ struct adreno_speedbin {
+>  struct adreno_info {
+>         const char *machine;
+>         struct adreno_rev rev;
+> +       enum adreno_family family;
+>         uint32_t revn;
+>         const char *fw[ADRENO_FW_MAX];
+>         uint32_t gmem;
+> @@ -193,14 +213,14 @@ static inline bool adreno_is_a2xx(const struct adreno_gpu *gpu)
+>  {
+>         if (WARN_ON_ONCE(!gpu->info))
+>                 return false;
+> -       return (gpu->info->revn < 300);
+> +       return gpu->info->family <= ADRENO_2XX_GEN2;
+>  }
+>
+>  static inline bool adreno_is_a20x(const struct adreno_gpu *gpu)
+>  {
+>         if (WARN_ON_ONCE(!gpu->info))
+>                 return false;
+> -       return (gpu->info->revn < 210);
+> +       return gpu->info->family == ADRENO_2XX_GEN1;
+>  }
+>
+>  static inline bool adreno_is_a225(const struct adreno_gpu *gpu)
+> @@ -343,29 +363,31 @@ static inline int adreno_is_a690(const struct adreno_gpu *gpu)
+>  /* check for a615, a616, a618, a619 or any a630 derivatives */
+>  static inline int adreno_is_a630_family(const struct adreno_gpu *gpu)
+>  {
+> -       return adreno_is_revn(gpu, 630) ||
+> -               adreno_is_revn(gpu, 615) ||
+> -               adreno_is_revn(gpu, 616) ||
+> -               adreno_is_revn(gpu, 618) ||
+> -               adreno_is_revn(gpu, 619);
+> +       if (WARN_ON_ONCE(!gpu->info))
+> +               return false;
+> +       return gpu->info->family == ADRENO_6XX_GEN1;
+>  }
+>
+>  static inline int adreno_is_a660_family(const struct adreno_gpu *gpu)
+>  {
+> -       return adreno_is_a660(gpu) || adreno_is_a690(gpu) || adreno_is_7c3(gpu);
+> +       if (WARN_ON_ONCE(!gpu->info))
+> +               return false;
+> +       return gpu->info->family == ADRENO_6XX_GEN4;
+>  }
+>
+>  /* check for a650, a660, or any derivatives */
+>  static inline int adreno_is_a650_family(const struct adreno_gpu *gpu)
+>  {
+> -       return adreno_is_revn(gpu, 650) ||
+> -               adreno_is_revn(gpu, 620) ||
+> -               adreno_is_a660_family(gpu);
+> +       if (WARN_ON_ONCE(!gpu->info))
+> +               return false;
+> +       return gpu->info->family >= ADRENO_6XX_GEN3;
+>  }
+>
+>  static inline int adreno_is_a640_family(const struct adreno_gpu *gpu)
+>  {
+> -       return adreno_is_a640(gpu) || adreno_is_a680(gpu);
+> +       if (WARN_ON_ONCE(!gpu->info))
+> +               return false;
+> +       return gpu->info->family == ADRENO_6XX_GEN2;
+>  }
+>
+>  u64 adreno_private_address_space_size(struct msm_gpu *gpu);
+> --
+> 2.41.0
+>
+
 
 -- 
 With best wishes
