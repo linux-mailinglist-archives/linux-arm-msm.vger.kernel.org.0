@@ -2,177 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6928E764E08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 10:48:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43D8E764E47
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 10:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbjG0Is0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 04:48:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
+        id S234150AbjG0I4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 04:56:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232598AbjG0IrW (ORCPT
+        with ESMTP id S234210AbjG0Izp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 04:47:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A92E59D1;
-        Thu, 27 Jul 2023 01:30:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A03F61DA8;
-        Thu, 27 Jul 2023 08:30:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06711C433C7;
-        Thu, 27 Jul 2023 08:30:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690446606;
-        bh=lgMwb11ItIJ27YCsuj2akQ0e0AMgpISaoiuOUrGiITY=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=Tr4M7HQ3pxhso0Q/eg4xKtwD0lUURtq4zUL2WnDxbX7YJArr/oNtVx0HKmYWbVJCj
-         uZ3CjjOq76HigUmfxsBIfU5BJp2UCC8gXysiCMyY4oUiNa0NyuYtXgOb+GgYI2e2UD
-         q/DMid3QMY2nJGias56vfjnyYrQ2kAGyvOg7az/lKKcQPYsllW1cAnQl1FfA/ktsaA
-         ypQoOxGNqaMUpP2GFbXa8+1QKt5gSsrAShH7O9rxadTFuFxweU5IvbZDayprJj2afQ
-         IGlbjA9TtQP0FcoHyTXu4yjcQ81VS0g2mOFp+HrXHsn6/kAwTiNlXyj4HVftm6tXbg
-         kxbv5Cd7EwHzQ==
-Message-ID: <baaf7de4-9a0e-b953-2b6a-46e60c415614@kernel.org>
-Date:   Thu, 27 Jul 2023 17:30:01 +0900
+        Thu, 27 Jul 2023 04:55:45 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56AB56EAB;
+        Thu, 27 Jul 2023 01:36:23 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R815AH017015;
+        Thu, 27 Jul 2023 08:36:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=jzs5shYSZEN3HBx98PZkGJRGQooHn1deSpD5bbutirM=;
+ b=NLtOTyQaZzR0Xc/GLpiPbZ1OIeSVHszrNAonEyjuxANWihwxBPatJVwnklho/BuDZyz6
+ qW64LRjCfyBP/iYdPODtvwmuoqziJygn5SdViJ/+NxK+RvWYoOzIBbxoB9MVnuDzmmid
+ u9PvDyyica8MLkQcHCmvDnGyNeAw/Eaz/79YSZvlVYSO4mG9MWBMqtmyWkWDJPH6OaTS
+ ba1jW6aNk1eyiak6TTkEZp9fnNPJDJcEYESxqkVGnabl9o8jJYF4218R9NZzKinUZras
+ OkGAIEja1uSWHE0SjvHusGvM2rSqFJf6GD+iBCcpwobvOTqRge7kc2u+7pPi1RB1fssn ZQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3mpt03a5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 08:36:11 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R8a8PR021443
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 08:36:09 GMT
+Received: from tjiang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 27 Jul 2023 01:36:05 -0700
+From:   Tim Jiang <quic_tjiang@quicinc.com>
+To:     <johan@kernel.org>
+CC:     <marcel@holtmann.org>, <luiz.dentz@gmail.com>,
+        <johan.hedberg@gmail.com>, <linux-kernel@vger.kernel.org>,
+        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_tjiang@quicinc.com>, <quic_bgodavar@quicinc.com>,
+        <quic_hemantg@quicinc.com>
+Subject: [PATCH v14 0/2] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
+Date:   Thu, 27 Jul 2023 16:35:53 +0800
+Message-ID: <20230727083555.1023992-1-quic_tjiang@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 28/49] dm zoned: dynamically allocate the dm-zoned-meta
- shrinker
-Content-Language: en-US
-To:     Qi Zheng <zhengqi.arch@bytedance.com>, akpm@linux-foundation.org,
-        david@fromorbit.com, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
-        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
-        gregkh@linuxfoundation.org, muchun.song@linux.dev
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        Muchun Song <songmuchun@bytedance.com>
-References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
- <20230727080502.77895-29-zhengqi.arch@bytedance.com>
-From:   Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20230727080502.77895-29-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2vdeeyeQZhtH8ctKjW23tOctWw7f6X7S
+X-Proofpoint-GUID: 2vdeeyeQZhtH8ctKjW23tOctWw7f6X7S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxlogscore=763
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2307270075
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/27/23 17:04, Qi Zheng wrote:
-> In preparation for implementing lockless slab shrink, use new APIs to
-> dynamically allocate the dm-zoned-meta shrinker, so that it can be freed
-> asynchronously using kfree_rcu(). Then it doesn't need to wait for RCU
-> read-side critical section when releasing the struct dmz_metadata.
-> 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-> Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-> ---
->  drivers/md/dm-zoned-metadata.c | 28 ++++++++++++++++------------
->  1 file changed, 16 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/md/dm-zoned-metadata.c b/drivers/md/dm-zoned-metadata.c
-> index 9d3cca8e3dc9..0bcb26a43578 100644
-> --- a/drivers/md/dm-zoned-metadata.c
-> +++ b/drivers/md/dm-zoned-metadata.c
-> @@ -187,7 +187,7 @@ struct dmz_metadata {
->  	struct rb_root		mblk_rbtree;
->  	struct list_head	mblk_lru_list;
->  	struct list_head	mblk_dirty_list;
-> -	struct shrinker		mblk_shrinker;
-> +	struct shrinker		*mblk_shrinker;
->  
->  	/* Zone allocation management */
->  	struct mutex		map_lock;
-> @@ -615,7 +615,7 @@ static unsigned long dmz_shrink_mblock_cache(struct dmz_metadata *zmd,
->  static unsigned long dmz_mblock_shrinker_count(struct shrinker *shrink,
->  					       struct shrink_control *sc)
->  {
-> -	struct dmz_metadata *zmd = container_of(shrink, struct dmz_metadata, mblk_shrinker);
-> +	struct dmz_metadata *zmd = shrink->private_data;
->  
->  	return atomic_read(&zmd->nr_mblks);
->  }
-> @@ -626,7 +626,7 @@ static unsigned long dmz_mblock_shrinker_count(struct shrinker *shrink,
->  static unsigned long dmz_mblock_shrinker_scan(struct shrinker *shrink,
->  					      struct shrink_control *sc)
->  {
-> -	struct dmz_metadata *zmd = container_of(shrink, struct dmz_metadata, mblk_shrinker);
-> +	struct dmz_metadata *zmd = shrink->private_data;
->  	unsigned long count;
->  
->  	spin_lock(&zmd->mblk_lock);
-> @@ -2936,19 +2936,23 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
->  	 */
->  	zmd->min_nr_mblks = 2 + zmd->nr_map_blocks + zmd->zone_nr_bitmap_blocks * 16;
->  	zmd->max_nr_mblks = zmd->min_nr_mblks + 512;
-> -	zmd->mblk_shrinker.count_objects = dmz_mblock_shrinker_count;
-> -	zmd->mblk_shrinker.scan_objects = dmz_mblock_shrinker_scan;
-> -	zmd->mblk_shrinker.seeks = DEFAULT_SEEKS;
->  
->  	/* Metadata cache shrinker */
-> -	ret = register_shrinker(&zmd->mblk_shrinker, "dm-zoned-meta:(%u:%u)",
-> -				MAJOR(dev->bdev->bd_dev),
-> -				MINOR(dev->bdev->bd_dev));
-> -	if (ret) {
-> -		dmz_zmd_err(zmd, "Register metadata cache shrinker failed");
-> +	zmd->mblk_shrinker = shrinker_alloc(0,  "dm-zoned-meta:(%u:%u)",
-> +					    MAJOR(dev->bdev->bd_dev),
-> +					    MINOR(dev->bdev->bd_dev));
-> +	if (!zmd->mblk_shrinker) {
-> +		dmz_zmd_err(zmd, "Allocate metadata cache shrinker failed");
+This series adds support for qualcomm bluetooth soc qca2066
 
-ret is not set here, so dmz_ctr_metadata() will return success. You need to add:
-		ret = -ENOMEM;
-or something.
->  		goto err;
->  	}
->  
-> +	zmd->mblk_shrinker->count_objects = dmz_mblock_shrinker_count;
-> +	zmd->mblk_shrinker->scan_objects = dmz_mblock_shrinker_scan;
-> +	zmd->mblk_shrinker->seeks = DEFAULT_SEEKS;
-> +	zmd->mblk_shrinker->private_data = zmd;
-> +
-> +	shrinker_register(zmd->mblk_shrinker);
+Changes in v14
+ - remove stray newline
 
-I fail to see how this new shrinker API is better... Why isn't there a
-shrinker_alloc_and_register() function ? That would avoid adding all this code
-all over the place as the new API call would be very similar to the current
-shrinker_register() call with static allocation.
+Changes in v13
+ - change the subject name for patch 1/2, and move the qca066 type code to patch 2/2.
+ - correct log style and sort qca2066 btsoc type for patch 2/2
 
-> +
->  	dmz_zmd_info(zmd, "DM-Zoned metadata version %d", zmd->sb_version);
->  	for (i = 0; i < zmd->nr_devs; i++)
->  		dmz_print_dev(zmd, i);
-> @@ -2995,7 +2999,7 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
->   */
->  void dmz_dtr_metadata(struct dmz_metadata *zmd)
->  {
-> -	unregister_shrinker(&zmd->mblk_shrinker);
-> +	shrinker_free(zmd->mblk_shrinker);
->  	dmz_cleanup_metadata(zmd);
->  	kfree(zmd);
->  }
+Changes in v12
+ - fix compile error issue for patch 1/2
+
+Changes in v11
+ - reverse two patches order
+
+Changes in v10
+ - break out btsoc type print into seperate patch
+
+Changes in v2-v9
+ - solve review comments for code style and commit message context
+
+
+Tim Jiang (2):
+  Bluetooth: hci_qca: adjust qca btsoc type print expression
+  Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
+
+ drivers/bluetooth/btqca.c   | 76 ++++++++++++++++++++++++++++++++++++-
+ drivers/bluetooth/btqca.h   |  4 +-
+ drivers/bluetooth/hci_qca.c | 41 ++++++++++++++++++--
+ 3 files changed, 114 insertions(+), 7 deletions(-)
 
 -- 
-Damien Le Moal
-Western Digital Research
+2.41.0
 
