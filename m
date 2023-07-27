@@ -2,76 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49E577650A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 12:11:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DD017650DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 12:20:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233185AbjG0KLd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 06:11:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47544 "EHLO
+        id S233570AbjG0KU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 06:20:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231274AbjG0KLc (ORCPT
+        with ESMTP id S233571AbjG0KUy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 06:11:32 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC36897;
-        Thu, 27 Jul 2023 03:11:31 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        Thu, 27 Jul 2023 06:20:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A385619AF;
+        Thu, 27 Jul 2023 03:20:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id EA056660702D;
-        Thu, 27 Jul 2023 11:11:29 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1690452690;
-        bh=FyMX1Fm7JT1B1+S2v/xtvGbFc/F+jQacw+dZrBbBQzs=;
-        h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=n/bwER6jg3CkEOmqAapF2bzO1Zp/7N05FVt6SLMUrAM4LmU6PUPX6iU/b8vROvX55
-         SXQqIMAXy3vvncho4zdJokepyG3ryPuOGgzZ+P52Tb5zzzVEN32WfM6EaT2cjmAM4Q
-         VTcK/qSh/dX1B383PnaVVAysKTok6zyOuuSx2bSVZQ1uHtXr2E0cBUh4hWYOBAuFmt
-         l/9JRP7ZWK+LNdT2QffWRvrT5uciVBuMxlF4ByCvXJ9NK5Uw7/cynv5/4QlvgGGHHa
-         EwMZujxilUqerbZ7YK8XGIXUj1NZmdmMePkEFLJXlHt5U9KpR0RbDuLhFI3vJ1JRom
-         eiYK7gnIUmurQ==
-Message-ID: <4ccda73e-760d-243c-d02d-7b79ce7d4890@collabora.com>
-Date:   Thu, 27 Jul 2023 12:11:27 +0200
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 38C6E61DED;
+        Thu, 27 Jul 2023 10:20:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9266C433C8;
+        Thu, 27 Jul 2023 10:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690453251;
+        bh=Uv0jglg4XDxm5uiOcl1Fs0VDdmS3vnj5J06IHksC3j0=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=VjGCTE5fXWQGMkstr5mWfG/olGcukHbx9MJ5gIHM1kJfwo/BiFcjiuEaiA2TxQad6
+         b/CL9D78jYHhDiLBxLD9gCBB6CtR9Pngnq1E4RM+cWQl1ITCzXzhPBEMorh0UStJGb
+         V5QypMia7H1mT7Yv9W7oIRfkDRB1G3xJIxfo7Y/Lymzj+mXx3lcBAFmRFbWxhh8lk9
+         h4N9LjcMkMC3/ZfJEah0qCVly/fWQ4ostsbFgLI1m7GG/WQbkHJ87BAgn9cUsNUERW
+         XrnUyEDaK9+tFU+Iukly/qv+tfC9IZiVkgJJJYsmEkH+2gmJEivzAz4IAcCpkEsNUW
+         WY8rxT9ubVHrA==
+Message-ID: <ba0868b2-9f90-3d81-1c91-8810057fb3ce@kernel.org>
+Date:   Thu, 27 Jul 2023 19:20:46 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH -next] power: supply: Remove redundant dev_err_probe()
+Subject: Re: [PATCH v3 28/49] dm zoned: dynamically allocate the dm-zoned-meta
+ shrinker
 Content-Language: en-US
-To:     Ruan Jinjie <ruanjinjie@huawei.com>, sre@kernel.org,
-        matthias.bgg@gmail.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20230727082301.741821-1-ruanjinjie@huawei.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230727082301.741821-1-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        Muchun Song <songmuchun@bytedance.com>,
+        akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
+        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
+        yujie.liu@intel.com, gregkh@linuxfoundation.org,
+        muchun.song@linux.dev
+References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
+ <20230727080502.77895-29-zhengqi.arch@bytedance.com>
+ <baaf7de4-9a0e-b953-2b6a-46e60c415614@kernel.org>
+ <56ee1d92-28ee-81cb-9c41-6ca7ea6556b0@bytedance.com>
+From:   Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <56ee1d92-28ee-81cb-9c41-6ca7ea6556b0@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 27/07/23 10:23, Ruan Jinjie ha scritto:
-> There is no need to call the dev_err_probe() function directly to print
-> a custom message when handling an error from platform_get_irq_byname()
-> function as it is going to display an appropriate error message
-> in case of a failure.
+On 7/27/23 17:55, Qi Zheng wrote:
+>>>           goto err;
+>>>       }
+>>>   +    zmd->mblk_shrinker->count_objects = dmz_mblock_shrinker_count;
+>>> +    zmd->mblk_shrinker->scan_objects = dmz_mblock_shrinker_scan;
+>>> +    zmd->mblk_shrinker->seeks = DEFAULT_SEEKS;
+>>> +    zmd->mblk_shrinker->private_data = zmd;
+>>> +
+>>> +    shrinker_register(zmd->mblk_shrinker);
+>>
+>> I fail to see how this new shrinker API is better... Why isn't there a
+>> shrinker_alloc_and_register() function ? That would avoid adding all this code
+>> all over the place as the new API call would be very similar to the current
+>> shrinker_register() call with static allocation.
 > 
-> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+> In some registration scenarios, memory needs to be allocated in advance.
+> So we continue to use the previous prealloc/register_prepared()
+> algorithm. The shrinker_alloc_and_register() is just a helper function
+> that combines the two, and this increases the number of APIs that
+> shrinker exposes to the outside, so I choose not to add this helper.
 
-power: supply: Remove redundant dev_err_probe() for platform_get_irq_byname()
+And that results in more code in many places instead of less code + a simple
+inline helper in the shrinker header file... So not adding that super simple
+helper is not exactly the best choice in my opinion.
 
-After clarifying the commit title,
-
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-
+-- 
+Damien Le Moal
+Western Digital Research
 
