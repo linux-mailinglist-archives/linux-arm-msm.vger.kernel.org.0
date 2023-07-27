@@ -2,180 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7F627647BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 09:06:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13AE476482D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 09:14:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232010AbjG0HGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 03:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51054 "EHLO
+        id S233206AbjG0HOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 03:14:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233006AbjG0HF6 (ORCPT
+        with ESMTP id S233858AbjG0HON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 03:05:58 -0400
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on20709.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::709])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7726844A0;
-        Thu, 27 Jul 2023 00:03:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IrRkVKHEoxamx9QXYM5DjP7JvZYT6rylLnkwqbCe62vIUzy7qVxQ5p0pVeiQoCOsXDtSsfFmivbn/h8uGpZn7L2Kr8tFuwTYeZ1C1bgpjnMHLlTwXss7PjT7h1SiUQEZRgnbTWL1SvS0l6uNz85jMXuUtiFK7qkbFyzRw4LZVuB++ZItgAZp9BoNbf92cEQcVjQTVGudycJ/KkZFH3ZMF2xo9pHtWecZZ1iWvV6s3KXLj4xZ2ljFciHebPzzC11TdXqLrxQHYkq38oQglQHiKbqt8gbpJ+ulk+AH1NM6mgDFyNW9rbcE9jZ9lHD0TEC9TRQAiqQp6txefYFp06RhSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Km5SLI9CwGIZCQi+0pIE2z3vwwmcgtBqTHQpN6fP90g=;
- b=ePTjRbphOzp1xBq4Ik4JgqYyTq/Zoos3pemFweUIr7gqKHmxECDqwdFILrLNmmVSO7Wmqpsn2ubosBoMvngE7bkdNs0w4SVxUSUi1RRRq/pwwETZKRFxxf8GfpzNZOWdm91A8NL7uWBsg/AEpI3mH8g6CxQpkp6knl5X+RGYcKp4ir6FOmdB9IoxMsH48BNjHBDuz48ZquZj6CmTtiLGxenAg4bu83J2J7Kx+Nw8GotArMD/zzhzO4j1jdZIAcSK/2JQVQZkN0sNTRwmX0HsmmK+6NTu13X8TFQJ16iBy3Blj3TFmb61r19+l0j6+p4uc3/JB4FhZVCGY3dwq2KW3w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Km5SLI9CwGIZCQi+0pIE2z3vwwmcgtBqTHQpN6fP90g=;
- b=LG0fl5uWqI07gVDrSSsxev8xPeFsLo0BoI5OP8IrW7wMdTgRhKfzWYy5dSv9HTmoDTqI2QwwQ6r8EmdW24PV2Wlhcsu9yq2lBQW4vCzPsBkj9bKcE5TT/k1bq7vtdTSgPNFBjpE6+TJgpf10xfiUankEWdL/GcVGjQfx8Jhpxz5N7D45uE6YvspTVm6YhrGvMRMt6UHRShvown2EquvSekOWGIykKGaHwW+/azW8+hgjYWuU6wLA31RpdXYc+wliKCTsHS/1OWLShFYJ8wXSYybsx/FsjtMiJD2xgOqjAv8IWXpMIHzfFvuRsfxIfAZFz6+hyWP2W9XwEDyjVIHBSw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
- by KL1PR0601MB4276.apcprd06.prod.outlook.com (2603:1096:820:78::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6631.29; Thu, 27 Jul
- 2023 07:02:37 +0000
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::732f:ea1d:45a1:1e0b]) by SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::732f:ea1d:45a1:1e0b%3]) with mapi id 15.20.6631.026; Thu, 27 Jul 2023
- 07:02:37 +0000
-From:   Yangtao Li <frank.li@vivo.com>
-To:     Adrian Hunter <adrian.hunter@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Yangtao Li <frank.li@vivo.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 39/62] mmc: sdhci-msm: Convert to platform remove callback returning void
-Date:   Thu, 27 Jul 2023 15:00:28 +0800
-Message-Id: <20230727070051.17778-39-frank.li@vivo.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230727070051.17778-1-frank.li@vivo.com>
-References: <20230727070051.17778-1-frank.li@vivo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2P153CA0017.APCP153.PROD.OUTLOOK.COM
- (2603:1096:4:140::10) To SEZPR06MB5269.apcprd06.prod.outlook.com
- (2603:1096:101:78::6)
+        Thu, 27 Jul 2023 03:14:13 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3BA065BD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 00:08:51 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5227e5d9d96so745208a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 00:08:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690441644; x=1691046444;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oJ3iHUocjz5azHHmivuhMASDBNzfIodCAVzG/5NiGO0=;
+        b=VW+SUZtz34/K5jgfTm0codxNzt5XD4i6BqDFLscYtjf3V/OGGZeiwsD7WuofDFe/oG
+         6MVeHKxa7o5PvJlhMd/ZghRYdR5/2Cy2rcMJbNDeJLyIsNfmhvvowPJSZFeLFUSSZyV9
+         B6DxzR2aIkPBsC762JB+W6zZEMnVFIqBWA+zrZkJfvSuynBeFEB1axvXlGKD6rUD9zLZ
+         /prwQZEH5BxeMAHEKAUpQlZ0/xKC5NTtkOlUkQuBmJTWzIynJ3G3n7S54bAMrvOK4ivw
+         xewg0+dKtVAqDYmShfPpYnY+g+JwtzZdBT4XcyX1p7NWI66VdTMymnNIrKJXjGJ6zWoq
+         OhfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690441644; x=1691046444;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oJ3iHUocjz5azHHmivuhMASDBNzfIodCAVzG/5NiGO0=;
+        b=MoP761F8tH1z+C0MCK9RGluMBbR8l/ANov1Qmt1Y6mVEuva5c2B0E4b7M2PqP52ec+
+         tfhFzvQD1M9cyAkpA9FUzILwQNZRsxNQE3dbv1PeWm0MXeuBd+nQamc/A4gZ5ITmMm+r
+         oeUYuknzeP04mlaGxRGRI/XOQrO+176vieO39J8ndwP5+tIUW/KXGpU3DoQjei9PgnpI
+         I90lk6z+kPDX/b9GZd9LkYRuDwR6tQzuoGH19+22ckApMgXNMylmp+RdV0E7dbAPIm0l
+         RrU8Cwq2wrjtR+FMRhY9KmWHzVbRVsT5BvMkrniXh+8IviprVrwvabo8g28SLYGnxAig
+         rBSg==
+X-Gm-Message-State: ABy/qLYrE4cQihEvp+QtFu4YYM5pICSzmatpw0DwqyCH39xJHOAe2ZrR
+        1FkzlXbj3q0eG+DozcynbAF+vg==
+X-Google-Smtp-Source: APBJJlGPpR6s2Rl0aQaM0oE5CwW2zNznwrxl8Dr87b4TcA4rBfJQ5WUmas85Y+U7Wv67dFHSs9jLig==
+X-Received: by 2002:a50:ed91:0:b0:522:55bf:21af with SMTP id h17-20020a50ed91000000b0052255bf21afmr1117154edr.7.1690441644127;
+        Thu, 27 Jul 2023 00:07:24 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id a18-20020aa7d752000000b0051dd16f7e50sm308004eds.44.2023.07.27.00.07.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jul 2023 00:07:23 -0700 (PDT)
+Message-ID: <2a09e743-7423-65b0-c70d-87ae8105182a@linaro.org>
+Date:   Thu, 27 Jul 2023 09:07:21 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|KL1PR0601MB4276:EE_
-X-MS-Office365-Filtering-Correlation-Id: ebd6aef8-6ee5-4147-b2a0-08db8e6f64d0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: yKtsxXqBGSe7s8f9/ibhccb3492unw8jK/arkaEKvkJqfizEsMavQ2GWHCmtfYY9/ugTNTKE81k7hP5GY459OQwtyg3FU96hwSf0KPET4yG8zCDdZNAvGwrTpctuBFabDTw8n3e9QzmgK9Pb9loeLAqIHfqOW2fLahVNq9nHtS2BnjeSL4vyVVSviZ/+0HB0uHoK0GpRu3t+T2gMHrEGXS3//OUF/XSHyW48s0qPKrCoxQPp8HKJZ6y3kjgAIoRpsYySW+3snOhd36UM7187iLbgFZmTp0u1QnmT1+aGFNhvQUpgXv5rTGhIe/pF5mads7Lz9BrIBY3cOYJL/IJA/5ByvGmLqC/Qx5f4vm4mJA3NQ5QexBcA07vaUjhP2P5+o48EmrulMFsZ+xqUzBd1mDmrJdrr8oOhNqV0mpDoXu5b30T4LL3UcXMNpZmwvzMpLdT9bv9zbmeJjN0RRJTago0JLMddT8c2LxDQt9Kai5Muj1XalIiiBKfSILuu8jLLe4bCpFuBS0GHKL7x1h70Vh5zaEI+kPzLYL1Y/dmRFESKFPgTKAetvq6B+zKax39sMrCv4fosHZCQs5gdwoDuEtUSmnqXU2gjdVbJZl+uclPjLWHvBoAyBE8OsCGeROQP
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(136003)(366004)(376002)(396003)(346002)(451199021)(6512007)(6666004)(6486002)(52116002)(66946007)(66556008)(4326008)(316002)(54906003)(66476007)(110136005)(478600001)(38100700002)(83380400001)(38350700002)(26005)(66574015)(186003)(6506007)(1076003)(2616005)(36756003)(2906002)(8936002)(8676002)(5660300002)(86362001)(41300700001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QWVtYlJhQVh4T29MVDdBY21FQ1poUnRxZ2ZrZXNvWkcrb1B6ckZoclliSXlz?=
- =?utf-8?B?b0xxSHhrdFR2enFxUndCSUZoL1o5aDE0M01SL2s3RXZpNW1HY1dGNFNqM0E3?=
- =?utf-8?B?Y0NXekFQRlJTVzNPWVE3RUhxa1UrSXRRTEVqOGRhU1FobTRyV2QydHJ0WUZ3?=
- =?utf-8?B?UXlxNFk5TW5jOWhhaVk4U09DMUllbWRtMit1QUNwRCs0QlpRZ3pOTGw5MVp6?=
- =?utf-8?B?b2hWcUV0bGZqK3pZM29sRzQvMzRhTm9NUnMyaHQ2Q0IxcXBERm9sVTBQa3V6?=
- =?utf-8?B?U2FoSmpONjlpRTMrNDhybm5sb3VUYVIwWlc3ZGlaYzV4MUhMTUNzRklkWTN3?=
- =?utf-8?B?NjgzVk9pamVJV2ZtVzFoWlFQLy9hOWZVazBNWHZqc0NiRzR0MVpzR0xlQk1t?=
- =?utf-8?B?MC9GOVNVaVZoSlQ1ZVdCY1Y5eUlPMUpiYjZDdUZtY0NWNUk5cVZrM2U5UENp?=
- =?utf-8?B?NldxMlpia0RUd2F1VExIekZ4S05TNG45bmxNRzZjNGVoWUFnNWlsVTM1ZUtB?=
- =?utf-8?B?RXQyMmdjYUh1dWVIMFZYWDhwQXBza0R2MTRRNDhpc2dHTUNUSno0eHRocjFh?=
- =?utf-8?B?N3RQUWpSWGNZMm14Y3hHM1A1clg1WGdYanl0cS9aVzBGTVhmTDhKY0VCaEdV?=
- =?utf-8?B?Y0wza1hoanZLblMrNndyUm9lZHZaTkwvdUU1OG5YOHBWUk13UG1FcXVrcE5G?=
- =?utf-8?B?czh5cEYvRzlQQ0MyaDBzOWVNNnJ0OWV3MlNjcmhoOVlXSlJVL05KUnFXbXRU?=
- =?utf-8?B?a05uRUR6UlJjYXltRkZIbUFOYk9pS2UvNHhHUmVTQnlYM0ZrTkJGKzM3YU9B?=
- =?utf-8?B?T3NnWWZuQmdsSm9aMmlsZ0ltdmtZNUxHZ2J5Ri9kSERIaWJleWd5S1c3VVpu?=
- =?utf-8?B?N25yVk15L2xLZ1lreStJWS9iK3czR3R0SzQ4SnBFU2YveGxaU3FJK1pKQzEw?=
- =?utf-8?B?SVBHV3lhMmh5dnZ0eUZpMDBadFJyUVkvOE9tUjZPeE04MWQySGFYakczZWJs?=
- =?utf-8?B?eFZvMWhMMHNhQVI5bEpiMGxsaWxPN1gxQkR1dzBCRitoakQzNHA4Q3c5TUZZ?=
- =?utf-8?B?UjBqSHhyQWt4ZUh1VFpDNElqUXZSR29SKzQxMkRDcnBiZDRVRnFST1I2YWNr?=
- =?utf-8?B?WElPY2dPSUMveWtVc0JhZmhIQjFjYVJoSjM2KytQVDhKSU80SDg4UktaNlBt?=
- =?utf-8?B?V0dXMkpzYy9xdTJJczdHMENBTCtzeGxNeC85SGxaNWpzR3NhVWpFcXFIWUw4?=
- =?utf-8?B?MG5wOEdmVndxMDVsWWdUU2VQVXk2d2dXWFVzNFZ5N1hGaDVmUy9lWU9DMXkw?=
- =?utf-8?B?VWFKdXR0d09VMnpWd2ZhVHUybXp4TXNXc2FkdjhDTzZKbTBjM3dVdUNzTnJ1?=
- =?utf-8?B?WllIc2Z5NCtwWjE3WUp5SzVodDVyVFB4Y3dISnJnSmxLRlVyTnJHMllFaHFl?=
- =?utf-8?B?NGVsL0w5Zy9SMnNWQVZscGc0eml4UXgwc2xBR0w2c2lTMjJIa2tHQnNKMEZN?=
- =?utf-8?B?by9MVVZzcWY4RFVsTFlLSlRjanNzNUNWaG9iMU5rU2NmWklYcVI0MTZMelFw?=
- =?utf-8?B?bU5aRWsrNk9ZTnZjLzY4SnZ6K1JGVzNDVytLdEVRand0ZWhFbnp2bnh5V2Q3?=
- =?utf-8?B?U2FORERKMVRkMlBMemxHMzBGdTZ3ZW9ydHFXNWFuT2pYQjFTZW5NVGlWcENt?=
- =?utf-8?B?eWJ2T2hacTF5ZjVZV0d0YVlsL2pnaW8vcHE3MC9HMTJNU004NDJ0Y3dnTnJL?=
- =?utf-8?B?Zk11TVYrQTVkS01HSnh1RUZiSFdoVTlQbmdQR3BDMEgvQUdacHB6THZzRTBm?=
- =?utf-8?B?VDVvbis1ZTR5RFZHc1lXelplTjRRZ3QzWjVnU3Z1OGxGbENNaWQ1NlNROHFq?=
- =?utf-8?B?bnMwUGRWc3grSkI0NkpCamlsTTBnU1RhZ09aZTJUNThHY0pabW5tbUNBV3VL?=
- =?utf-8?B?Q1piNWowQXlNQWtNbUJDb2VTZU9tL3hFOER4QmJVL3BTWHZRWmRWVW82STdh?=
- =?utf-8?B?QktWL3ArRDJNWjhWK0FicURiZE9icjQ1T0hmNVIyMDNZNjFKQjI4b1JHeWth?=
- =?utf-8?B?Y3FvbEpzVE54UzRnNkNOekE1VVVtOHdseFVFazhtU3UwN21ZQmlzKzd1OTgv?=
- =?utf-8?Q?qQaHgoCq/XqjyNCI5K77XxNG2?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ebd6aef8-6ee5-4147-b2a0-08db8e6f64d0
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2023 07:02:08.9240
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: U/v5oBPRnWDVpQKHQi87fnp2GlnSk69uvAjuYbxSIcA1XZUTPFTsPcy7T3lJPgXubBccH6cTRvMTpPt6M8urjQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0601MB4276
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 1/3] input: pm8xxx-vib: refactor to easily support new
+ SPMI vibrator
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org,
+        dmitry.baryshkov@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
+References: <20230725054138.129497-1-quic_fenglinw@quicinc.com>
+ <20230725054138.129497-2-quic_fenglinw@quicinc.com>
+ <5dd56c31-7ca3-dd39-0623-e4fd18ac6f68@linaro.org>
+ <053c9571-d709-2826-fced-a00dd7255b8b@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <053c9571-d709-2826-fced-a00dd7255b8b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+On 25/07/2023 08:16, Fenglin Wu wrote:
+>>>   
+>>> -static const struct pm8xxx_regs pm8058_regs = {
+>>> -	.drv_addr = 0x4A,
+>>> -	.drv_mask = 0xf8,
+>>> -	.drv_shift = 3,
+>>> -	.drv_en_manual_mask = 0xfc,
+>>> +static struct reg_field ssbi_vib_regs[VIB_MAX_REG] = {
+>>
+>> Change from const to non-const is wrong. How do you support multiple
+>> devices? No, this is way too fragile now.
+>>
+> 
+> The register definition is no longer used as the match data, hw_type is 
+> used.
+> 
+> The last suggestion was getting the register base address from the DT 
+> and it has to be added into the offset of SPMI vibrator registers 
+> (either in the previous hard-coded format or the later the reg_filed 
+> data structure), so it's not appropriated to make it constant.
+> 
+> I don't understand this question: "How do you support multiple devices?" 
+> For SSBI vibrator, since all the registers are fixed, and I would assume 
+> that there is no chance to support multiple vibrator devices on the same 
+> SSBI bus. If they are not on the same bus, the regmap device will be 
+> different while the registers definition is the same, and we are still 
+> able to support multiple devices, right?
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+No, you have static memory. One device probes and changes static memory
+to reg+=base1. Second device probes and changes the same to reg+=base2.
 
-Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
----
- drivers/mmc/host/sdhci-msm.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+> The similar story for SPMI vibrators and it can support multiple devices 
+> if they are located on different SPMI bus, or even if they are on the 
+> same SPMI bus but just having different SID or PID.
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 1c935b5bafe1..80e376802ee0 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2668,7 +2668,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int sdhci_msm_remove(struct platform_device *pdev)
-+static void sdhci_msm_remove(struct platform_device *pdev)
- {
- 	struct sdhci_host *host = platform_get_drvdata(pdev);
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-@@ -2687,7 +2687,6 @@ static int sdhci_msm_remove(struct platform_device *pdev)
- 	if (!IS_ERR(msm_host->bus_clk))
- 		clk_disable_unprepare(msm_host->bus_clk);
- 	sdhci_pltfm_free(pdev);
--	return 0;
- }
- 
- static __maybe_unused int sdhci_msm_runtime_suspend(struct device *dev)
-@@ -2740,7 +2739,7 @@ static const struct dev_pm_ops sdhci_msm_pm_ops = {
- 
- static struct platform_driver sdhci_msm_driver = {
- 	.probe = sdhci_msm_probe,
--	.remove = sdhci_msm_remove,
-+	.remove_new = sdhci_msm_remove,
- 	.driver = {
- 		   .name = "sdhci_msm",
- 		   .of_match_table = sdhci_msm_dt_match,
--- 
-2.39.0
+Sorry, such code cannot go in. These must stay const and you must write
+driver without any static allocations or singleton-like patterns.
+
+
+Best regards,
+Krzysztof
 
