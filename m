@@ -2,92 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17DE676474B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 08:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A979764758
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 08:56:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231340AbjG0Gys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 02:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45284 "EHLO
+        id S231926AbjG0G44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 02:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231674AbjG0Gyp (ORCPT
+        with ESMTP id S229580AbjG0G4z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 02:54:45 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254BA2691;
-        Wed, 26 Jul 2023 23:54:44 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R56NQi013675;
-        Thu, 27 Jul 2023 06:54:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nh4cklR1APrVPPa2bvf47yHK9cYInyXrXll/6iQHCK4=;
- b=Chhum91iAkxlwWW1DbciVCRTfcQyDvO0aggc+E0b1yZ5ahvc/CZMfb5eK14VnGE76EvW
- qLstrCaTY4EFNboOLKd5MPJZ1EU7gEzWjJgrnGBrcaV5Dfo0s3cwKrIfpxlDDDpQ3tuJ
- V8kWFUfSbmMfetSVOotR1QRG231OTFLAYmgvTi0KK8LmkccnUzymnctzqbr5aoHdKAuh
- 7V9TpjqrYEY/VBFdkVAl1gm/U5j4WrZtozYTeRzKexGJFgzwxAFl3BbevR9N8lRm1DpB
- tjQZThTCxJhuw3SPGBr2ottrqrweh9rGjjDpEr9Ba23qKUBZ+Bqpd9yXQOSrwSH3DQXQ yg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s2fms4e03-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 06:54:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R6sQw4029194
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 06:54:26 GMT
-Received: from [10.216.40.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 26 Jul
- 2023 23:54:14 -0700
-Message-ID: <86c6e8b1-d286-6858-5de6-b8faf6557fe4@quicinc.com>
-Date:   Thu, 27 Jul 2023 12:24:10 +0530
+        Thu, 27 Jul 2023 02:56:55 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E40CC268B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 23:56:53 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5227799c224so743156a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 23:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690441012; x=1691045812;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l6cPtMEPBxlBiHf/EIzV/+O7GL0ZnIZPX9tstH2PvO4=;
+        b=IMkVrWgafqnnFUibpUTCAHk0wQuhTQFyuEyzXwJPL5LDBnEdYLqv0fJAAw1icgOr5C
+         ap5GO0oKKpRxZJflqvBRIUR1hwBgxPgBZejk+NzafCVhL5Xvmt0lWHnq5/GTZZBByfZ/
+         vapJVetgc3KcWMRx8YKsKW43OdYniWMNX/DB295Kzd2iq7nZzCwJMQRB6TzpFL+JaXKF
+         OGLJdWf5hV5vTQRnr/rAz48ietGMEyjowMCXMJ6YcnIo/o/oBGK28LhlR4OdWXEfOYIG
+         JCnZNxv2sQoUFQ/fjcbSUEKlzz2uoCYkgr4T7NNPss7a55Ri4KKf3D7lQnpPfccdf/Cj
+         kqtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690441012; x=1691045812;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l6cPtMEPBxlBiHf/EIzV/+O7GL0ZnIZPX9tstH2PvO4=;
+        b=MW8cd6OoBZHyyo7baWu9cINBYauPvizZVePFvKjrBgtNQiqJF7Bazowanyx+mCu0HL
+         +oomU6cqSStcszK2835xxjf3Q4/RrgDfyw3Lfj2Z0IhZrbTVU6Uad3NbrX15aDnzfEop
+         Cv+hLr5/yshtjYhQlm7ZMrOo6GA49u15K4lIcksiXIBW1xJuq0P03tRX6s2BQLvnCB6p
+         MIMwIwl+EUmsTpq564r4zdga8uo2L0h7oKDb2LgJ9nV4IHahkjiA5SkzhZfwVt9mcbnj
+         ZB6d6bZ+upulVkk5IAr1Y0CdrvkxY5a9BKYy7KbkZbIvJkyB+ONx4vf5jk9oSzbCQfYr
+         OgKg==
+X-Gm-Message-State: ABy/qLY5zaua4L16GndX9kHeYsEgOlmdU978YnSt8p7s4LBoT/iBkTOF
+        xge0kC2H8y8ffywc9ft1IFpVzg==
+X-Google-Smtp-Source: APBJJlGFbW4wB9NS8ig+/D62uIMcuf+bTA4t6Gegu+0aVI9luFRvDJ3idhIyOJyTxqwz4BNytwFDBQ==
+X-Received: by 2002:a05:6402:326:b0:522:2111:105d with SMTP id q6-20020a056402032600b005222111105dmr1071856edw.20.1690441012198;
+        Wed, 26 Jul 2023 23:56:52 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id o5-20020a056402038500b005221b918e33sm292546edv.22.2023.07.26.23.56.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 23:56:51 -0700 (PDT)
+Message-ID: <f974f48a-05b0-530d-25a0-7ccf1b1ad113@linaro.org>
+Date:   Thu, 27 Jul 2023 08:56:49 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] dt-bindings: qcom: Update RPMHPD entries for some SoCs
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: Add base SM4450 QRD DTS
 Content-Language: en-US
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <conor+dt@kernel.org>, <robdclark@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <sean@poorly.run>, <marijn.suijten@somainline.org>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <stanimir.k.varbanov@gmail.com>, <quic_vgarodia@quicinc.com>,
-        <mchehab@kernel.org>, <ulf.hansson@linaro.org>,
-        <mathieu.poirier@linaro.org>, <jonathan@marek.ca>,
-        <vladimir.zapolskiy@linaro.org>, <quic_tdas@quicinc.com>,
-        <neil.armstrong@linaro.org>, <rfoss@kernel.org>,
-        <bhupesh.sharma@linaro.org>, <mani@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-media@vger.kernel.org>,
-        <linux-mmc@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-References: <1690433470-24102-1-git-send-email-quic_rohiagar@quicinc.com>
- <edac596d-2b3d-4632-9468-4af863aff6f4@quicinc.com>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <edac596d-2b3d-4632-9468-4af863aff6f4@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230727023508.18002-1-quic_tengfan@quicinc.com>
+ <20230727023508.18002-5-quic_tengfan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230727023508.18002-5-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gaxiB93QjZMYayGJXBoahVT6HAHoooVe
-X-Proofpoint-ORIG-GUID: gaxiB93QjZMYayGJXBoahVT6HAHoooVe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- bulkscore=0 phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=819
- clxscore=1015 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307270061
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -96,68 +81,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 27/07/2023 04:35, Tengfei Fan wrote:
+> Add DTS for Qualcomm QRD platform which uses SM4450 SoC.
+> 
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile       |  1 +
+>  arch/arm64/boot/dts/qcom/sm4450-qrd.dts | 18 ++++++++++++++++++
+>  2 files changed, 19 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 337abc4ceb17..db805d0929c8 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -186,6 +186,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm4450-qrd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+> new file mode 100644
+> index 000000000000..04ad1dd4285a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+> @@ -0,0 +1,18 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm4450.dtsi"
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. SM4450 QRD";
+> +	compatible = "qcom,sm4450-qrd", "qcom,sm4450";
+> +
+> +	aliases { };
+> +
+> +	chosen {
+> +		bootargs = "console=hvc0 earlycon=hvc0 hvc_dcc.enable=1 cpuidle.off=1";
 
-On 7/27/2023 11:06 AM, Pavan Kondeti wrote:
-> On Thu, Jul 27, 2023 at 10:21:10AM +0530, Rohit Agarwal wrote:
->> Update the RPMHPD references with new bindings defined in rpmhpd.h
->> for Qualcomm SoCs SM8[2345]50.
->>
->> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml    | 3 ++-
->>   Documentation/devicetree/bindings/clock/qcom,sm8350-videocc.yaml   | 3 ++-
->>   Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml     | 3 ++-
->>   Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml    | 3 ++-
->>   Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml   | 3 ++-
->>   Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml    | 3 ++-
->>   Documentation/devicetree/bindings/clock/qcom,videocc.yaml          | 3 ++-
->>   Documentation/devicetree/bindings/display/msm/qcom,sm8250-dpu.yaml | 3 ++-
->>   .../devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml          | 7 ++++---
->>   Documentation/devicetree/bindings/display/msm/qcom,sm8350-dpu.yaml | 3 ++-
->>   .../devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml          | 5 +++--
->>   Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml | 3 ++-
->>   .../devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml          | 7 ++++---
->>   Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml | 3 ++-
->>   .../devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml          | 7 ++++---
->>   Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml     | 3 ++-
->>   Documentation/devicetree/bindings/mmc/sdhci-msm.yaml               | 3 ++-
->>   Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.yaml  | 5 +++--
->>   18 files changed, 44 insertions(+), 26 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
->> index d6774db..d6b81c0 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
->> @@ -83,6 +83,7 @@ examples:
->>     - |
->>       #include <dt-bindings/clock/qcom,rpmh.h>
->>       #include <dt-bindings/power/qcom-rpmpd.h>
->> +    #include <dt-bindings/power/qcom,rpmhpd.h>
->>       clock-controller@af00000 {
->>         compatible = "qcom,sm8250-dispcc";
->>         reg = <0x0af00000 0x10000>;
->> @@ -103,7 +104,7 @@ examples:
->>         #clock-cells = <1>;
->>         #reset-cells = <1>;
->>         #power-domain-cells = <1>;
->> -      power-domains = <&rpmhpd SM8250_MMCX>;
->> +      power-domains = <&rpmhpd RPMHPD_MMCX>;
->>         required-opps = <&rpmhpd_opp_low_svs>;
->>       };
->>   ...
-> Does this file still need to include old header? The same is applicable
-> to some of the other files in the patch also.
->
-> We also discussed on the other thread [1] to move the regulator level
-> definitions to new header. should this change be done after that, so that
-> we don't end up touching the very same files again?
->
-> [1]
-> https://lore.kernel.org/all/a4zztrn6jhblozdswba7psqtvjt5l765mfr3yl4llsm5gsyqef@7x6q7yabydvm/
-Removing this header directly would also be fine as we are not using any 
-macro defined directly in these
-bindings.
-I already checked with dt_binding_check by removing this header.
+No earlycon, no hvc.enable (there is no such parameter), no cpuidle.off
+(again don't add fake stuff). So the only suitable argument is console,
+but this should be actually used via stdout path, although it seems
+there is no device node for such usage?
 
-Thanks,
-Rohit.
+
+
+Best regards,
+Krzysztof
+
