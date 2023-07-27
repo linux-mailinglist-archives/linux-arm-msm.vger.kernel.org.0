@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5544176587A
+	by mail.lfdr.de (Postfix) with ESMTP id A602B76587C
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 18:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233598AbjG0QVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 12:21:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
+        id S233675AbjG0QVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 12:21:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232380AbjG0QVO (ORCPT
+        with ESMTP id S233524AbjG0QVP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 12:21:14 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B29822D4B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:21:13 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-522382c4840so1519579a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:21:13 -0700 (PDT)
+        Thu, 27 Jul 2023 12:21:15 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E56E19B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:21:14 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe0fe622c3so2010024e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690474872; x=1691079672;
+        d=linaro.org; s=google; t=1690474873; x=1691079673;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IAO+D5NMJTNgq7oxICRJMihelHd0A/dupTNabM/INjg=;
-        b=nTbsfxmpsMq+10/C/3jN78hzseUIeoBGPTpCNV/NgPdpK6SB52b7eF/QqeqqmxiWbH
-         cyUj5opl/D8INNxEMtLIF6vSItt6H30YjVnPpEpLueOGTZa6pzH7K/SvQcCgR9y3SPU6
-         NHQqn8asiJ1qlKxM//cPq0nJo1MB7ZoucmhBJD9Ymyp3RdIBz78f6J2lbn8cf7xqgdp6
-         7TJYDWzP6fIywxdBXyk5IonQ43yyAjfWe4iaQe1InUGDa+0D2v9qQi8Zfr9M43xgBowO
-         +ZGYMKZ6ZJKBovRlvS6e/zZUIChpdKLC4kPVxdAxtSb7PsXqORGobeGHSursQxytJUHc
-         EJKg==
+        bh=k6RuNhMjGuYTebSwzychmeBGRpmSV/TMmOX+Xvl9+Bc=;
+        b=hWh+ClRXxKBLO8OLzvZ3V78VX/0pCeIMl0m9xrXg86cEgWTcEIMYJA7s10hlvEwYGT
+         1qMQZEMJaMFk0/Vurc4KD9x6mXVQBwkNoIcpR2lxBdbvKC2O7oi/qV08v0d5jUmxvf8M
+         CdqclkXvmfxFq84AxiEuC7/xmlBUmJEr2LMbvR/GViUvcNRmGv92MkXMwIkVD6dg1vye
+         +mMHF3B+ykGgXRJGZWKMY+f7HBH/K1dHTcN91veuxNy2Mye4sHksfa2kzwYVLMoCqFDk
+         gu4Hiy2vs80y/3z9rf5MDm13LCs3RQoFN9VAUi59fFa7mnVS7Wal4tU7AnMHmLQuwZQl
+         wIgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690474872; x=1691079672;
+        d=1e100.net; s=20221208; t=1690474873; x=1691079673;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IAO+D5NMJTNgq7oxICRJMihelHd0A/dupTNabM/INjg=;
-        b=dI++ont0Yi7X8iQcMmVxXZ8tb6uuQclKMYHsonW9ArP1zZCdOAZof3uh2JTzy5d+wq
-         SdwVsm1nwOslDnfRzT7F8jWA0M6hqvKMBOA08swE0R8G0UCjfOR7zNNFKoOVUP3pJ0jx
-         Ihi4icrJWlJY3xlrJgxio2QUAsbl6icCW0ncoTBxQ12EJpoDs++Ve3SWiNPbosFl563L
-         HGyq/WZxe9SLa8zJPQWgveLdYaeKeyqXC1sU21L/pjsCnVXCDcn1RFVFZzYTEXWKiuYs
-         +H3UBar6ZYeON33lwImwywfZ31neXyHXo8pR45TE3EdND+RdetRal7th06y4720DGike
-         8wgg==
-X-Gm-Message-State: ABy/qLbH0c90iMM2EfNnkDYUjFI3Ac5HOLAGlym/VosSOgGr15fS2F1C
-        EDRZVho5iFoxhki6yRgSqibPOQ==
-X-Google-Smtp-Source: APBJJlHCv2u8VglBAcBOLLPFkBcIselPzpXHPs1zWQ8D07gQIhCJPSIE2bZas8AEOWcDi0qTlZuqMg==
-X-Received: by 2002:aa7:d94e:0:b0:51e:404:1e6d with SMTP id l14-20020aa7d94e000000b0051e04041e6dmr2094325eds.38.1690474872108;
-        Thu, 27 Jul 2023 09:21:12 -0700 (PDT)
+        bh=k6RuNhMjGuYTebSwzychmeBGRpmSV/TMmOX+Xvl9+Bc=;
+        b=YhKAjWcFM0fGDGiUycvztSpGDQxmBCufEnIcH8PG8hcaslSB1KNJhL+QNzU7SgaALA
+         GKqsGm9Iw4GMyW5TBGe35f1XP8um9pnoFqO+f/q31+yK5XAhltp/jBQFDlPjyB54gNQk
+         7d5V+7+SCs6P7aPC3WLWWO5ZOyWUfNZElhuhWBF2jrmNLs+7Co1ho/zPG2VR/WK0E3hk
+         +juOR5GYOdiQ/Dm6SFLoSOAtvQbKDgaTZu6s/Z1QNywOOh0/CgNiGDdtcdBe8981pRot
+         Mct7RhUH+uCw1KAi+5QkzHePGGWG9nbjvbTInTSwLQTX6DcMYnQsLs9xxANoS6PdO90l
+         Q68A==
+X-Gm-Message-State: ABy/qLaPxsfUp7M61VPJi0ONdrtk6UAPPHohyFixGnDX70bEi7p9x2ah
+        BUJtEFcA/DypkDI8lH3EF/inYw==
+X-Google-Smtp-Source: APBJJlFhuVF3dar1Q85kZVZI/DnSddUpRi3j/echqLX5rwVYduApQc1u6H+2yOX4R2Vnetdnwj9KVA==
+X-Received: by 2002:a05:6512:32a7:b0:4fb:7da3:de4 with SMTP id q7-20020a05651232a700b004fb7da30de4mr2484529lfe.13.1690474873032;
+        Thu, 27 Jul 2023 09:21:13 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a15-20020aa7d90f000000b00521953ce6e0sm808027edr.93.2023.07.27.09.21.11
+        by smtp.gmail.com with ESMTPSA id a15-20020aa7d90f000000b00521953ce6e0sm808027edr.93.2023.07.27.09.21.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jul 2023 09:21:11 -0700 (PDT)
+        Thu, 27 Jul 2023 09:21:12 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 5/7] drm/msm/dpu: drop DPU_INTF_TE feature flag
-Date:   Thu, 27 Jul 2023 19:21:02 +0300
-Message-Id: <20230727162104.1497483-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6/7] drm/msm/dpu: drop useless check from dpu_encoder_phys_cmd_te_rd_ptr_irq()
+Date:   Thu, 27 Jul 2023 19:21:03 +0300
+Message-Id: <20230727162104.1497483-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
 References: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
@@ -78,63 +78,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace the only user of the DPU_INTF_TE feature flag with the direct
-DPU version comparison.
+The dpu_encoder_phys_cmd_te_rd_ptr_irq() function uses neither hw_intf
+nor hw_pp data, so we can drop the corresponding check.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h       | 2 --
- 3 files changed, 2 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 9589fe719452..60d4dd88725e 100644
+index 60d4dd88725e..04a1106101a7 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -776,8 +776,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- 	phys_enc->intf_mode = INTF_MODE_CMD;
- 	cmd_enc->stream_sel = 0;
+@@ -108,14 +108,6 @@ static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg)
+ 	struct dpu_encoder_phys *phys_enc = arg;
+ 	struct dpu_encoder_phys_cmd *cmd_enc;
  
--	phys_enc->has_intf_te = test_bit(DPU_INTF_TE,
--					 &phys_enc->hw_intf->cap->features);
-+	if (phys_enc->dpu_kms->catalog->mdss_ver->core_major_ver >= 5)
-+		phys_enc->has_intf_te = true;
+-	if (phys_enc->has_intf_te) {
+-		if (!phys_enc->hw_intf)
+-			return;
+-	} else {
+-		if (!phys_enc->hw_pp)
+-			return;
+-	}
+-
+ 	DPU_ATRACE_BEGIN("rd_ptr_irq");
+ 	cmd_enc = to_dpu_encoder_phys_cmd(phys_enc);
  
- 	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
- 	init_waitqueue_head(&cmd_enc->pending_vblank_wq);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index c19dc70d4456..17426f0f981e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -100,7 +100,6 @@
- 
- #define INTF_SC7180_MASK \
- 	(BIT(DPU_INTF_INPUT_CTRL) | \
--	 BIT(DPU_INTF_TE) | \
- 	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
- 	 BIT(DPU_DATA_HCTL_EN))
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index a6f8eee58b92..69c9099cf5a6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -175,7 +175,6 @@ enum {
-  * INTF sub-blocks
-  * @DPU_INTF_INPUT_CTRL             Supports the setting of pp block from which
-  *                                  pixel data arrives to this INTF
-- * @DPU_INTF_TE                     INTF block has TE configuration support
-  * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
-  *                                  than video timing
-  * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
-@@ -183,7 +182,6 @@ enum {
-  */
- enum {
- 	DPU_INTF_INPUT_CTRL = 0x1,
--	DPU_INTF_TE,
- 	DPU_DATA_HCTL_EN,
- 	DPU_INTF_STATUS_SUPPORTED,
- 	DPU_INTF_MAX
 -- 
 2.39.2
 
