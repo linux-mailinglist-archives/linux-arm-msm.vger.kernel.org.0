@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DEB07649B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 10:01:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D34D7649BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 10:02:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233144AbjG0IBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 04:01:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35110 "EHLO
+        id S232680AbjG0ICn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 04:02:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233512AbjG0IBD (ORCPT
+        with ESMTP id S233682AbjG0ICV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 04:01:03 -0400
+        Thu, 27 Jul 2023 04:02:21 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C12D35A6;
-        Thu, 27 Jul 2023 00:58:29 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R6MHWP022930;
-        Thu, 27 Jul 2023 07:58:25 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E248E75;
+        Thu, 27 Jul 2023 00:59:25 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R5rsTZ014922;
+        Thu, 27 Jul 2023 07:59:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=syafepGkFy0zwA7WJbckphmJpQGIQy+5lFV2B64xJNc=;
- b=myZdpTti5t7poGG2OugYGxftmhT2NQSyTZvG0FHhAUaVN1Q4Ee1/AWCafDNVyoa5Dyaw
- rZLgqaj0bHLFZY2SReQhD9iJoZjNahWgf1qsDjBu9fsTgBjAtRXj1mOyDIFi/Aoijgeg
- eT/ztugiw3e+Rcpf6d6DcMqEHhf2uO98UJqpy+9V/UdBuHjnnQTS/86oZWgEg5Rx/V6u
- 5TMgipLVbi3i0UU0mGXdlDzzhOGYiK2H2d6yK9TPxYGD+TlpVwaA3rpyIlcRb6gk7RB3
- p9fClFYEea8Cs9ZtR2P3lWT+t8ZrVDuYDI8aN9x5gbIn/Y1LePy8fyAESAsZyp0a7ZL8 eg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3k7u05vb-1
+ bh=Q0ykBBNySJCPMw26rnWI68NVW/qNpNO064lUzDh2JoU=;
+ b=JTql6W3FvAIIyaHaoVt8OEB/h2jH7oQEp2OROyvnvAOs5RqDMZwpyR909IGz0i8/BYXk
+ +fs/3x/dvjeXJ6xrPjDIp8nFuL2zSgc6jsTk5078m0kmptPnDe6wE2njn5iCb+S0rTeJ
+ W+GvyZP6+DJ9AoFJfMycijIt8VEeekXklqrJylpjs01YIkwkiql1Xcwr6UwiC9G+eW4k
+ 0DI2u/TjJj+oXsWwVBTVL3Tl2y+lNASKKXn27HAp+gCMnKwdiovq7kwH1Xzp0l+eH9kE
+ 72VTn4YGprcB7/jMwxK/elwW1idRL37jksZFUr2tN76HCS9BawJccKb0XueIbOl6H+Sn RQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s2v4tjx55-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 07:58:25 +0000
+        Thu, 27 Jul 2023 07:59:15 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R7wNR7006527
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R7xCVF000733
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 07:58:23 GMT
+        Thu, 27 Jul 2023 07:59:13 GMT
 Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
- 2023 00:57:45 -0700
-Message-ID: <9ce4a279-83b8-5fbe-564c-22e33cd37124@quicinc.com>
-Date:   Thu, 27 Jul 2023 15:57:43 +0800
+ 2023 00:58:37 -0700
+Message-ID: <f8fc5b62-c414-37fc-4c8c-b191626442e7@quicinc.com>
+Date:   Thu, 27 Jul 2023 15:58:37 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] dt-bindings: arm: qcom,ids: add SoC ID for SM4450
+Subject: Re: [PATCH v2 6/6] soc: qcom: socinfo: add SM4450 ID
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
@@ -54,10 +54,10 @@ CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
         <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
 References: <20230727023508.18002-1-quic_tengfan@quicinc.com>
- <20230727023508.18002-6-quic_tengfan@quicinc.com>
- <bd0a6b77-96ef-f9c3-8f51-ee57699294cd@linaro.org>
+ <20230727023508.18002-7-quic_tengfan@quicinc.com>
+ <8b43115b-150c-bada-f847-1544bccc28c6@linaro.org>
 From:   Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <bd0a6b77-96ef-f9c3-8f51-ee57699294cd@linaro.org>
+In-Reply-To: <8b43115b-150c-bada-f847-1544bccc28c6@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -65,16 +65,16 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Ck8yrDs3-7mJeRQ56qu6ZMQ6jx7wu_cZ
-X-Proofpoint-ORIG-GUID: Ck8yrDs3-7mJeRQ56qu6ZMQ6jx7wu_cZ
+X-Proofpoint-ORIG-GUID: 3-taVw1v1a2ZKCEmUAD7-thUpqTJPGNy
+X-Proofpoint-GUID: 3-taVw1v1a2ZKCEmUAD7-thUpqTJPGNy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0 mlxlogscore=616
- suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307270069
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0 spamscore=0
+ lowpriorityscore=0 mlxlogscore=881 malwarescore=0 adultscore=0
+ phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2307270069
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
@@ -92,24 +92,21 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 >>
 >> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 >> ---
->>   include/dt-bindings/arm/qcom,ids.h | 1 +
+>>   drivers/soc/qcom/socinfo.c | 1 +
 >>   1 file changed, 1 insertion(+)
 >>
->> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
->> index bcbe9ee2cdaf..72dccbc7a777 100644
->> --- a/include/dt-bindings/arm/qcom,ids.h
->> +++ b/include/dt-bindings/arm/qcom,ids.h
->> @@ -250,6 +250,7 @@
->>   #define QCOM_ID_QRU1000			539
->>   #define QCOM_ID_QDU1000			545
->>   #define QCOM_ID_QDU1010			587
->> +#define QCOM_ID_SM4450			568
+>> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+>> index 4d49945b3a35..ca3c08d67a32 100644
+>> --- a/drivers/soc/qcom/socinfo.c
+>> +++ b/drivers/soc/qcom/socinfo.c
+>> @@ -406,6 +406,7 @@ static const struct soc_id soc_id[] = {
+>>   	{ qcom_board_id(QRU1000) },
+>>   	{ qcom_board_id(QDU1000) },
+>>   	{ qcom_board_id(QDU1010) },
+>> +	{ qcom_board_id(SM4450) },
 > 
-> Does not look correctly placed.
-sure, will update place.
-Due to this below have "#define QCOM_ID_IPQ5019                 569", so 
-placed this location, next will update the place of QCOM_ID_IPQ5019 and 
-QCOM_ID_SM4450.
+> Neither here...
+Also will update.
 > 
 > Best regards,
 > Krzysztof
