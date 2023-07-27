@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2C18765EED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 00:08:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F506765EF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 00:09:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231378AbjG0WIN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 18:08:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38630 "EHLO
+        id S229541AbjG0WJK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 18:09:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbjG0WIM (ORCPT
+        with ESMTP id S229949AbjG0WJJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 18:08:12 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06C682723
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:08:11 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d18566dc0c1so1375153276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:08:10 -0700 (PDT)
+        Thu, 27 Jul 2023 18:09:09 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AEAB2727
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:09:08 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-c4cb4919bb9so1412984276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690495690; x=1691100490;
+        d=linaro.org; s=google; t=1690495747; x=1691100547;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+2IjmivRCtMcrXslDZzF29Xyje6HiUV9PZE6DYj4MOo=;
-        b=Ddqs+tEIFAQmWVgSpA2HO3JhjyPBrXmx7P1l3G5yhqPIMAPS+HCploEk4tcywGOlRy
-         wuki/er+3CGUVIVAbx7jGuHAVnTgZVOb+wwaXTnJ1L3x4CuyEpm6Kbo8fDjQTWFLQ+mc
-         rGaEje8CHlpREzXqqRifE0190bCEslzyBKrgMW5J027DvFvgic2nQ7cIykmu743yqAvx
-         ASJIWm0LW/TYOhoOUZ2HwDRVNtPWO6GZCbAhAHOwiu4adzptkFfFAasw4tHotjyZw+Hy
-         O/qe8FBnbgGWWd184VtsPxnsXq1lRJHjK+ZifNRBbDjUJ+hkght6QTPmEDcdAmLBLoYL
-         Og2w==
+        bh=h0wVom04GMDKcuNzd42eSW5osukOzn074rAOX4nx/mE=;
+        b=EbmuNAaDXyGwbqCD/muQimOyfxSBpvYN2K/FI3F/GVaLDlGWZ/WWenFJOc49qWfLXc
+         lX91OHbiBodLskrvE2qqx1NxiZRh9RWmJrRtWp00NgMiaHSkSS2NBg9b3NMnWsRAJv6v
+         URClsMUaG4yp/jB18PvhV6cQ/lPe5IpPlAFSnCjx94dTqbYXjHH2hvUwudMiJx5LR3F+
+         XiGJpRXmOn4+wbFdJJlCoKJX+k2HeUIg21EzInhCCYkLQQc5r9tN9IGmXUYq50DYjMiM
+         6Zbmmg/HIgNcci3XV0lGjvcVFbWaTDw1fuZJLJpjOwhAVbkOfg5Ksp+kOzJITxz1HATM
+         2I1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690495690; x=1691100490;
+        d=1e100.net; s=20221208; t=1690495747; x=1691100547;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+2IjmivRCtMcrXslDZzF29Xyje6HiUV9PZE6DYj4MOo=;
-        b=WOkhPbPn4thE2vT9RBmfbbmGYpG/5uHSUPZ9POefI2PYVrwwF53dqp2rc1my/BCZe2
-         5raDDJ5mFYaYcvzi2LUrzZjx2c1zu/4Lmu+talyrsjVAnv04JvVgae35s+GhXt2FYqYT
-         n/MhxhILcPuSSj2VjH61/gbi9Bcl6BCYQe58RtOn4yajg4cqDQzPwfQaXeFDMmMH+SwA
-         C0V6s/uocjMQt8pFlFl3Ma082cCahZhg1Z3sxttYxxEC3czo7DIlruOCU52n+3f8ukk6
-         v+s3qoKxs0G6Rl/uxLjNMx8JxHN+sYJ4Bbq0suUHmcnE7+GWw1FW70XXh8zeH3AWGjhq
-         8pnQ==
-X-Gm-Message-State: ABy/qLZ2KGUzJ9SSEmJOu5SqiKKvqKEXEZHEeDesyGhLcMs1aYP2xkZR
-        6PrN1P3hZGLAUPbcxdN3wr1V3paAYTpbFunkScUZwA==
-X-Google-Smtp-Source: APBJJlHBIIMAJ/ccI1kOpZr6XWoU3xgPN3WOGa37WESD3rOsm3Xd5njhAWAX6+cWBM02TW1GnKNEVDRVqpaJGYQFGpg=
-X-Received: by 2002:a25:d1d3:0:b0:ce7:ee46:debd with SMTP id
- i202-20020a25d1d3000000b00ce7ee46debdmr629930ybg.16.1690495690152; Thu, 27
- Jul 2023 15:08:10 -0700 (PDT)
+        bh=h0wVom04GMDKcuNzd42eSW5osukOzn074rAOX4nx/mE=;
+        b=YNCqFbF1lvtv+y1nXGcU3T0bxRrJV0yfW6Tny5krwfXAxd/sUBJgCE80A7RuAJiT48
+         ZpcAWMmWPsn8MuMt+NmrG6iv/ojE4/oxf2dI2WpIblDoqXp50gJqCtlUZj7epWUw1CXB
+         8giKl2jLHhmRXmO5aUGn1R4oDcslbZtiqVL8OLRuIcEvhqbHo1sCc/nXFoPYn0NflVXN
+         nkfg/v29D1sE5wy62aYRF/fcmEtOTedbrfqJRlYK9noaM7TjaffbS68SHQZo/YJcNIQG
+         RzNvbOn7CHQB6nAe7jITGZJGFlyFoaCj4jKtwfWk9frLs2e4lRFg+/qv+0lXq2IXsA+J
+         R3lg==
+X-Gm-Message-State: ABy/qLamCDHFTlwg5u0anBL+ASmpxaQ/dXD0eVkYWmlXNchYEl5njdzi
+        Eu7OPtMUku167GwjFnnGbrZIHf37ALqzX/759nj+Cg==
+X-Google-Smtp-Source: APBJJlFAi5tghS8JIzpHOdP9kRkZXKZ+m78Uiw0vg8yIxL/6rMQxbJPtoScEb5cP0QoPnCFHOhj9pdrGaDCxg6YHpK0=
+X-Received: by 2002:a25:ad9c:0:b0:d12:1094:2036 with SMTP id
+ z28-20020a25ad9c000000b00d1210942036mr650769ybi.43.1690495747368; Thu, 27 Jul
+ 2023 15:09:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230727212208.102501-1-robdclark@gmail.com> <20230727212208.102501-3-robdclark@gmail.com>
-In-Reply-To: <20230727212208.102501-3-robdclark@gmail.com>
+References: <20230727212208.102501-1-robdclark@gmail.com> <20230727212208.102501-6-robdclark@gmail.com>
+In-Reply-To: <20230727212208.102501-6-robdclark@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 28 Jul 2023 01:07:59 +0300
-Message-ID: <CAA8EJprScB_Nv_Qwt6t8WZW4a8-qNphUPqTuVX4YRXowaWdoiQ@mail.gmail.com>
-Subject: Re: [PATCH v2 02/13] drm/msm/adreno: Remove redundant gmem size param
+Date:   Fri, 28 Jul 2023 01:08:56 +0300
+Message-ID: <CAA8EJprc-6i7LWMk+ptXfRRfiv4_WoGc=cwWwuFdS5d+ZAnH-A@mail.gmail.com>
+Subject: Re: [PATCH v2 05/13] drm/msm/adreno: Use quirk to identify
+ cached-coherent support
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org,
@@ -64,17 +65,13 @@ Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
         open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,122 +79,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 28 Jul 2023 at 00:22, Rob Clark <robdclark@gmail.com> wrote:
+On Fri, 28 Jul 2023 at 00:23, Rob Clark <robdclark@gmail.com> wrote:
 >
 > From: Rob Clark <robdclark@chromium.org>
 >
-> Even in the ocmem case, the allocated ocmem buffer size should match the
-> requested size.
->
-> v2: Move stray hunk to previous patch, make OCMEM size mismatch an error
->     condition.
+> It is better to explicitly list it.  With the move to opaque chip-id's
+> for future devices, we should avoid trying to infer things like
+> generation from the numerical value.
 >
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 23 +++++++++++++++-------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  1 +
+>  2 files changed, 17 insertions(+), 7 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.c   | 2 +-
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 2 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 2 +-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 9 +++++----
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 1 -
->  5 files changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-> index c67089a7ebc1..50ee03bc94b4 100644
-> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-> @@ -205,7 +205,7 @@ static int a2xx_hw_init(struct msm_gpu *gpu)
->                 A2XX_MH_INTERRUPT_MASK_MMU_PAGE_FAULT);
->
->         for (i = 3; i <= 5; i++)
-> -               if ((SZ_16K << i) == adreno_gpu->gmem)
-> +               if ((SZ_16K << i) == adreno_gpu->info->gmem)
->                         break;
->         gpu_write(gpu, REG_A2XX_RB_EDRAM_INFO, i);
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index a99310b68793..f0803e94ebe5 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -749,7 +749,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
->         gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
->         gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_HI, 0x00000000);
->         gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MAX_LO,
-> -               0x00100000 + adreno_gpu->gmem - 1);
-> +               0x00100000 + adreno_gpu->info->gmem - 1);
->         gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MAX_HI, 0x00000000);
->
->         if (adreno_is_a506(adreno_gpu) || adreno_is_a508(adreno_gpu) ||
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index b3ada1e7b598..edbade75020f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1270,7 +1270,7 @@ static int hw_init(struct msm_gpu *gpu)
->                 gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN, 0x00100000);
->
->                 gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MAX,
-> -                       0x00100000 + adreno_gpu->gmem - 1);
-> +                       0x00100000 + adreno_gpu->info->gmem - 1);
->         }
->
->         gpu_write(gpu, REG_A6XX_UCHE_FILTER_CNTL, 0x804);
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index e3cd9ff6ff1d..ef98d51d237f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -320,7 +320,7 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
->                 *value = adreno_gpu->info->revn;
->                 return 0;
->         case MSM_PARAM_GMEM_SIZE:
-> -               *value = adreno_gpu->gmem;
-> +               *value = adreno_gpu->info->gmem;
->                 return 0;
->         case MSM_PARAM_GMEM_BASE:
->                 *value = !adreno_is_a650_family(adreno_gpu) ? 0x100000 : 0;
-> @@ -1041,14 +1041,16 @@ int adreno_gpu_ocmem_init(struct device *dev, struct adreno_gpu *adreno_gpu,
->                 return PTR_ERR(ocmem);
->         }
->
-> -       ocmem_hdl = ocmem_allocate(ocmem, OCMEM_GRAPHICS, adreno_gpu->gmem);
-> +       ocmem_hdl = ocmem_allocate(ocmem, OCMEM_GRAPHICS, adreno_gpu->info->gmem);
->         if (IS_ERR(ocmem_hdl))
->                 return PTR_ERR(ocmem_hdl);
->
->         adreno_ocmem->ocmem = ocmem;
->         adreno_ocmem->base = ocmem_hdl->addr;
->         adreno_ocmem->hdl = ocmem_hdl;
-> -       adreno_gpu->gmem = ocmem_hdl->len;
-> +
-> +       if (WARN_ON(ocmem_hdl->len != adreno_gpu->info->gmem))
-> +               return -ENOMEM;
->
->         return 0;
->  }
-> @@ -1097,7 +1099,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->
->         adreno_gpu->funcs = funcs;
->         adreno_gpu->info = adreno_info(config->rev);
-> -       adreno_gpu->gmem = adreno_gpu->info->gmem;
->         adreno_gpu->revn = adreno_gpu->info->revn;
->         adreno_gpu->rev = *rev;
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index 6830c3776c2d..aaf09c642dc6 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -77,7 +77,6 @@ struct adreno_gpu {
->         struct msm_gpu base;
->         struct adreno_rev rev;
->         const struct adreno_info *info;
-> -       uint32_t gmem;  /* actual gmem size */
->         uint32_t revn;  /* numeric revision name */
->         uint16_t speedbin;
->         const struct adreno_gpu_funcs *funcs;
-> --
-> 2.41.0
->
 
 
 -- 
