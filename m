@@ -2,94 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ABF276513D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 12:32:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54AB176518A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 12:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231772AbjG0Kcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 06:32:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60296 "EHLO
+        id S231927AbjG0KoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 06:44:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233966AbjG0Kcc (ORCPT
+        with ESMTP id S231890AbjG0KoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 06:32:32 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2569C1995
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 03:32:26 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id 98e67ed59e1d1-2659b1113c2so160335a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 03:32:26 -0700 (PDT)
+        Thu, 27 Jul 2023 06:44:10 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 549951FF0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 03:44:09 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-991da766865so108010766b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 03:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1690453945; x=1691058745;
+        d=linaro.org; s=google; t=1690454648; x=1691059448;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4VsKgOIlO7JTMbURB3u+V7Qr/QzOpc+0Bt56AjhAYAM=;
-        b=Zr/NhsMbDbdIdSqoueTQTw00LusmUmyLrdR7MeDx+ZO5Q+75jdmzv373GL0Ee5CtKr
-         W6fluKiuFJCg5ZU3kW0Km101UvphMU1vBCY7hDEO6TFqab4XzqrIV8fVDPR2Owpqim7U
-         N3OX4eAxVQVjc5z6Zvv7YweV9TAIgzv2mVUZoaytYD45Z4tHHiC7Kn023GaYmi5v6RKy
-         g9n+r/2KPb5qfD2ZK/MDUQIwCLsfUVl7c4q/2XRu1uefpNinWMEwlZLohyik+zojbFUF
-         urJtl81vW3ulTBjRT5ht+WLfC03kh8PaMNuzZ2kESl6uu5dT49u0KrVoAN4kKuQ8SPSD
-         k2iA==
+        bh=SnWKErK3zLv3fa3cgBV53I392/gHvMJGHqSQ8OYW9hU=;
+        b=LgE++r/Sumr6b+xq5qBd5x39kS5MLVffOScuMgDhlhI7EA/39BgJuSo1UckalOEI9S
+         hoiSfgNqH5cR/9j7vsotArp0dE/m/7I8DH2/i7QDSqg2pvICIS+S1yqX4234cQNl0Qfx
+         0sZKzpLkLFVaEThuun6gfAwc1hT/8vHTUOyRmxfVe1gaIUn44+88OXLMT40nfqiI9414
+         ldtbuTJIhmdzQrlqKxdlfPrtNct+opilao8mKMnExMS2vqrmvmi2QXdKNN3EoIof4R5k
+         R7WVY4ouDg8VT4Qag9M88f1/ikliODaqSJIfxO2y+HF9DqYwNU7Y6mQ1XHJs5nDNRvOH
+         cG/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690453945; x=1691058745;
+        d=1e100.net; s=20221208; t=1690454648; x=1691059448;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4VsKgOIlO7JTMbURB3u+V7Qr/QzOpc+0Bt56AjhAYAM=;
-        b=d1y1peaYpEzGhfV+taEr/FPhlMQiRfi6jnteNArwHciYwMFccG3kLBBwt0uUEjgdyb
-         QE/3414iP6fpZOr5d+1BiJhtWQm4DbqiOyJEKI+sX+TgvH1pQIoBTro1Ml5GTz19Sijo
-         cu2HyqS7cKLFYN4Jxj/PgEZcBXgzVAYY9g5zunXfgbNqDI9jtY2RZADVRJrO+cuPBRSP
-         xgau/OAzeHvBwd0qIjF5d3BQbs9a7sQoBASZYP0GcLPt4Z/0lP7Pag4BS7pc2hqC5izs
-         MKB7bVpmkgnhjewUR8RsgGSIHM+Anv0/P3LFQnNh4xAZFOC55NlAX/ZqYiDPJiCF4eWW
-         Ihzg==
-X-Gm-Message-State: ABy/qLaXmwSZNnr9WyLIAkwVH2Gf27BXHAzqMTN3S3p8697Ko+C6BFd3
-        00MfuJqWmDpBkzCkWuBRQ0GlEQ==
-X-Google-Smtp-Source: APBJJlGmzPZn88CMJAqpsojyTb97uikW28yo5O3pi8rH8SDlSH8BwjASuoOudfeGFyxgCSRxAf0mLA==
-X-Received: by 2002:a17:90a:1b06:b0:263:2312:60c2 with SMTP id q6-20020a17090a1b0600b00263231260c2mr4299433pjq.3.1690453945653;
-        Thu, 27 Jul 2023 03:32:25 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id 8-20020a17090a018800b0026309d57724sm2755058pjc.39.2023.07.27.03.32.13
+        bh=SnWKErK3zLv3fa3cgBV53I392/gHvMJGHqSQ8OYW9hU=;
+        b=RwYsUrEwnZHIOIaymTGW2pAs8Y8f/HPU+1wR4bj9h4qOBJh6BUSo0P/G/wERhVPOSv
+         U0+1IUq6aokGjd5NbWIXNbyyi/IewSo/VNAgMkiGVMLUVsOfaXEMpP2Bb/Dp/o2lM/dW
+         ZlnqN2OI/1ibQ01MF0PdOLny/ZU+Lgegm2BsC2+YmkkvBq237wqmakGzBJDxRKnPf//R
+         nUH36WOkxLQegQEQjUV+luitrjvdu+Rr5yvX1582j0G5v6Pd2jfF86RGWyP8AkTKi0b4
+         5PUHv9oKrOKZrVzif8gpiTAJ6+7X0t2uQhs78wu2pvpfU6hHks8jq1n766528+U7L30W
+         Wpjw==
+X-Gm-Message-State: ABy/qLZBv5mp6LW/OUcf+Y7NrQwZgChlyc/Dxa6zwwPu4AmcBdTsGr5Q
+        goirAEV+HzrPVGnurcAMp4xmNg==
+X-Google-Smtp-Source: APBJJlGuLK4tiPTUPs0SC4M5utpwMeT583KSVJlvEjgxvc1rVWcFxi9dGuC5aBoxS/hDLPLtWthXfA==
+X-Received: by 2002:a17:906:3092:b0:98e:37fe:691b with SMTP id 18-20020a170906309200b0098e37fe691bmr1659057ejv.34.1690454647186;
+        Thu, 27 Jul 2023 03:44:07 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id b10-20020a170906490a00b0099bd6ef67e8sm618404ejq.78.2023.07.27.03.44.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jul 2023 03:32:25 -0700 (PDT)
-Message-ID: <cc819e13-cb25-ddaa-e0e3-7328f5ea3a4f@bytedance.com>
-Date:   Thu, 27 Jul 2023 18:32:10 +0800
+        Thu, 27 Jul 2023 03:44:06 -0700 (PDT)
+Message-ID: <f6fab6b7-0cfb-6aa5-2043-6c789709d04a@linaro.org>
+Date:   Thu, 27 Jul 2023 11:44:05 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v3 28/49] dm zoned: dynamically allocate the dm-zoned-meta
- shrinker
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v5 2/2] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
+ support
 Content-Language: en-US
-To:     Damien Le Moal <dlemoal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        Muchun Song <songmuchun@bytedance.com>,
-        akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev
-References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
- <20230727080502.77895-29-zhengqi.arch@bytedance.com>
- <baaf7de4-9a0e-b953-2b6a-46e60c415614@kernel.org>
- <56ee1d92-28ee-81cb-9c41-6ca7ea6556b0@bytedance.com>
- <ba0868b2-9f90-3d81-1c91-8810057fb3ce@kernel.org>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <ba0868b2-9f90-3d81-1c91-8810057fb3ce@kernel.org>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230724083849.8277-1-quic_kbajaj@quicinc.com>
+ <20230724083849.8277-3-quic_kbajaj@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230724083849.8277-3-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -99,36 +81,102 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2023/7/27 18:20, Damien Le Moal wrote:
-> On 7/27/23 17:55, Qi Zheng wrote:
->>>>            goto err;
->>>>        }
->>>>    +    zmd->mblk_shrinker->count_objects = dmz_mblock_shrinker_count;
->>>> +    zmd->mblk_shrinker->scan_objects = dmz_mblock_shrinker_scan;
->>>> +    zmd->mblk_shrinker->seeks = DEFAULT_SEEKS;
->>>> +    zmd->mblk_shrinker->private_data = zmd;
->>>> +
->>>> +    shrinker_register(zmd->mblk_shrinker);
->>>
->>> I fail to see how this new shrinker API is better... Why isn't there a
->>> shrinker_alloc_and_register() function ? That would avoid adding all this code
->>> all over the place as the new API call would be very similar to the current
->>> shrinker_register() call with static allocation.
->>
->> In some registration scenarios, memory needs to be allocated in advance.
->> So we continue to use the previous prealloc/register_prepared()
->> algorithm. The shrinker_alloc_and_register() is just a helper function
->> that combines the two, and this increases the number of APIs that
->> shrinker exposes to the outside, so I choose not to add this helper.
+On 24/07/2023 09:38, Komal Bajaj wrote:
+> For some of the Qualcomm SoC's, it is possible that
+> some of the fuse regions or entire qfprom region is
+> protected from non-secure access. In such situations,
+> Linux will have to use secure calls to read the region.
+> With that motivation, add secure qfprom driver.
 > 
-> And that results in more code in many places instead of less code + a simple
-> inline helper in the shrinker header file... So not adding that super simple
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>   drivers/nvmem/Kconfig      |  13 +++++
+>   drivers/nvmem/Makefile     |   2 +
+>   drivers/nvmem/sec-qfprom.c | 101 +++++++++++++++++++++++++++++++++++++
+>   3 files changed, 116 insertions(+)
+>   create mode 100644 drivers/nvmem/sec-qfprom.c
+> 
 
-It also needs to be exported to the driver for use.
+> diff --git a/drivers/nvmem/sec-qfprom.c b/drivers/nvmem/sec-qfprom.c
+> new file mode 100644
+> index 000000000000..bc68053b7d94
+> --- /dev/null
+> +++ b/drivers/nvmem/sec-qfprom.c
+> @@ -0,0 +1,101 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/nvmem-provider.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pm_runtime.h>
 
-> helper is not exactly the best choice in my opinion.
+> +
+> +static int sec_qfprom_probe(struct platform_device *pdev)
+> +{
+> +	struct nvmem_config econfig = {
+> +		.name = "sec-qfprom",
+> +		.stride = 1,
+> +		.word_size = 1,
+> +		.id = NVMEM_DEVID_AUTO,
+> +		.reg_read = sec_qfprom_reg_read,
+> +	};
+> +	struct device *dev = &pdev->dev;
+> +	struct nvmem_device *nvmem;
+> +	struct sec_qfprom *priv;
+> +	struct resource *res;
+> +	int ret;
+> +
+> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	if (!res)
+> +		return -EINVAL;
+> +
+> +	priv->base = res->start;
+> +
+> +	econfig.size = resource_size(res);
+> +	econfig.dev = dev;
+> +	econfig.priv = priv;
+> +
+> +	priv->dev = dev;
+> +
+> +	ret = devm_pm_runtime_enable(dev);
+> +	if (ret)
+> +		return ret;
 
-Hm, either one is fine for me. If no one else objects, I can add this
-helper. ;)
+Any reason why we need to enable pm runtime for this driver? As Am not 
+seeing any pm runtime handlers or users in this driver.
 
+
+--srini
+> +
+> +	nvmem = devm_nvmem_register(dev, &econfig);
+> +
+> +	return PTR_ERR_OR_ZERO(nvmem);
+> +}
+> +
+> +static const struct of_device_id sec_qfprom_of_match[] = {
+> +	{ .compatible = "qcom,sec-qfprom" },
+> +	{/* sentinel */},
+> +};
+> +MODULE_DEVICE_TABLE(of, sec_qfprom_of_match);
+> +
+> +static struct platform_driver qfprom_driver = {
+> +	.probe = sec_qfprom_probe,
+> +	.driver = {
+> +		.name = "qcom_sec_qfprom",
+> +		.of_match_table = sec_qfprom_of_match,
+> +	},
+> +};
+> +module_platform_driver(qfprom_driver);
+> +MODULE_DESCRIPTION("Qualcomm Secure QFPROM driver");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.40.1
 > 
