@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC8D765CBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 22:00:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CC61765CD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 22:03:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232135AbjG0UAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 16:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39212 "EHLO
+        id S232640AbjG0UDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 16:03:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232371AbjG0UAB (ORCPT
+        with ESMTP id S232561AbjG0UDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 16:00:01 -0400
+        Thu, 27 Jul 2023 16:03:51 -0400
 Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CBD30EB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 12:59:43 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A152680
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 13:03:17 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B19A63F1EB;
-        Thu, 27 Jul 2023 21:59:40 +0200 (CEST)
-Date:   Thu, 27 Jul 2023 21:59:39 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C1D873F335;
+        Thu, 27 Jul 2023 22:03:15 +0200 (CEST)
+Date:   Thu, 27 Jul 2023 22:03:14 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -32,18 +32,15 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 3/4] drm/msm/dpu: add helper to get IRQ-related data
-Message-ID: <zpzboxlhbsfw7kz5zkthzeuitwvnq4wwbziedgmpuqaghofuag@acg5r76x5vvq>
-References: <20230727150455.1489575-1-dmitry.baryshkov@linaro.org>
- <20230727150455.1489575-4-dmitry.baryshkov@linaro.org>
- <hdenbea53reesjrin4szoq64ja63ryjznsllvmicuzdftmk5u7@lows7neacgm2>
- <7b7e0a8a-392c-19c3-6642-7479c28d4ed8@linaro.org>
- <zilvhfz4qgvnz4thp6wlbg6al7hahen2gw2k5el5o6pi2ysxb6@qhwzla4zmze5>
- <2e20d0ac-0fb5-3f33-910c-438d34d8109e@linaro.org>
+Subject: Re: [PATCH 1/7] drm/msm/dpu: enable PINGPONG TE operations only when
+ supported by HW
+Message-ID: <byxscievxgqwcdu56mebkoy4jpgogzy3euddz73u2qryh3itwb@to3pyltcqqxg>
+References: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
+ <20230727162104.1497483-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2e20d0ac-0fb5-3f33-910c-438d34d8109e@linaro.org>
+In-Reply-To: <20230727162104.1497483-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
@@ -53,31 +50,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-07-27 22:51:32, Dmitry Baryshkov wrote:
-> On 27/07/2023 22:41, Marijn Suijten wrote:
-> > On 2023-07-27 22:34:59, Dmitry Baryshkov wrote:
-> >> On 27/07/2023 22:29, Marijn Suijten wrote:
-> >>> On 2023-07-27 18:04:54, Dmitry Baryshkov wrote:
-> >>>> In preparation to reworking the IRQ indices, move irq_tbl access to
-> >>>> separate helper.
-> >>>
-> >>> I am not seeing the advantage of the helper, but making every function
-> >>> look up dpu_kms->hw_intr->irq_tbl[irq_idx] only once and storing that in
-> >>> a local dpu_hw_intr_entry pointer is much tidier.
-> >>
-> >> There was a bonus point when I tried to do a irq_idx-1 in the next
-> >> patch. But since that code has gone, maybe I can drop this patch too.
-> > 
-> > Don't drop the whole patch though.  While maybe not necessary, having
-> > the lookup only once is much easier to follow.
+On 2023-07-27 19:20:58, Dmitry Baryshkov wrote:
+> The DPU_PINGPONG_TE bit is set for all PINGPONG blocks on DPU < 5.0.
+> Rather than checking for the flag, check for the presense of the
+> corresponding interrupt line.
 > 
-> Then it's easier to keep it as is.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-While reviewing patch 4/4 though, the -1 might be missing after all.
-You still allocate "nirq = total_irqs" spots in the table, but then
-allow any number 0 < irq_idx <= total_irqs.  Indexing irq_idx ==
-total_irqs would be out of bounds?
+That's a smart use of the interrupt field.  I both like it, and I do
+not.  While we didn't do any validation for consistency previously, this
+means we now have multiple ways of controlling available "features":
 
-- Marijn
+- Feature flags on hardware blocks;
+- Presence of certain IRQs;
+- DPU core revision.
 
-<snip>
+Maybe that is more confusing to follow?  Regardless of that I'm
+convinced that this patch does what it's supposed to and gets rid of
+some ambiguity.  Maybe a comment above the IF explaining the "PP TE"
+feature could alleviate the above concerns thoo.  Hence:
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> index 9298c166b213..912a3bdf8ad4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> @@ -296,7 +296,7 @@ struct dpu_hw_pingpong *dpu_hw_pingpong_init(const struct dpu_pingpong_cfg *cfg,
+>  	c->idx = cfg->id;
+>  	c->caps = cfg;
+>  
+> -	if (test_bit(DPU_PINGPONG_TE, &cfg->features)) {
+> +	if (cfg->intr_rdptr) {
+>  		c->ops.enable_tearcheck = dpu_hw_pp_enable_te;
+>  		c->ops.disable_tearcheck = dpu_hw_pp_disable_te;
+>  		c->ops.connect_external_te = dpu_hw_pp_connect_external_te;
+> -- 
+> 2.39.2
+> 
