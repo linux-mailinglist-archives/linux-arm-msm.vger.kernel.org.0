@@ -2,84 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 256407659C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 19:15:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08A0E7659DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 19:18:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232453AbjG0RPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 13:15:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46252 "EHLO
+        id S231161AbjG0RSe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 13:18:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232821AbjG0RPA (ORCPT
+        with ESMTP id S230425AbjG0RSd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 13:15:00 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 698D93A99
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:14:55 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b974031aeaso18480481fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:14:55 -0700 (PDT)
+        Thu, 27 Jul 2023 13:18:33 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47FEC30E3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:18:30 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-686e0213c0bso932851b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690478093; x=1691082893;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iSpTHH/r1JxU23dgkFFzwt7+DPhsvuwAB7Ss8YvVGLg=;
-        b=qv+50epRJW2m0RTQy24stBR7Ea6w4jVRUZlsjKhN/t5rJRrulcqqJzDeLkWfL/8N1X
-         Cl86IJZG5FGTz6SXAIncvYXWm6Fm8DbuUSk/5ojAr4dJ/0c5YPKN2I6D7Iy5w+stYGGA
-         Skqu66Q4X7EmBIQ5811GQNsamCAzKoDbW0XUAePqr506lMRvMD49+YE16ZJv6pIeTpyP
-         KYyXjBdWoJrZeZf/IQSRMqXdNzmuc1/PQnQ/E+8NFnZwR2+Mj8JkbdPchwB+Hxt/Frnn
-         DLH/CdihVw0vlyWRR+SLWw+wqP5VzgNaaiE6ojbWk4sF4N346J3LLACw8rnAafKh2Cnc
-         bqww==
+        d=chromium.org; s=google; t=1690478310; x=1691083110;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NKU1yBs0msHXwREPYd0SDWl2QoMQpyRkOYWlocB0jV8=;
+        b=hrjc6QVjkTWq756/oBU5TwOfxXFlfrddRZA3xgCdnzV3H8TGz7rkhyiWq26zrqPRy4
+         dUbD98OflDDDsAwomLX59QoDRh2aBaZ6gDfSuQPxPNA61kkKhjuO1MR9BECRlWkGujeC
+         PFGzR5Ye6qlpD1WUGuSmfDuHJJxFGc3WklA5Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690478093; x=1691082893;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1690478310; x=1691083110;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iSpTHH/r1JxU23dgkFFzwt7+DPhsvuwAB7Ss8YvVGLg=;
-        b=CY8qJS70iOJoe54O2ueMfGW7gZybWSAz3SWueE00RsbZvrFV4M7UMeX3h6OdMN53/j
-         LQ8qQug+ubCYXQbS8N7jbhrQPlwlFSPkx0C9J+MBTgiMtV4wXErln/p3sVzOyKO+75Wg
-         owUnAt11MHwZQtqVtPA3oiU+73aT6NrLWJm7qOshoRYdzdDkq+7BcblP0Vz+9GgWLz5M
-         +NM2MGLbt9jqFtPEWlMfZ3NE2mWukOrluqn+Zdauo/z1Pk94TKPfb+g0rrpkF+MxHFYL
-         dv/vo4eI0QMdFvsbfJSH1wgPBoEI1DGCZDYiLnfdr2xDS4CPRYc+IDYspTVPzFSQIgvF
-         iHJw==
-X-Gm-Message-State: ABy/qLYjcMNYxWUazyRN989MJ49WMVTML/u3d/0QuUpFa1tcLL7t37Qz
-        /OYFVTi6KkTWM57bnptXYKT1qg==
-X-Google-Smtp-Source: APBJJlFu9VD0E0i2KH9s/aAi/qiNd2Vbshj9rmBQFUbqvoo6crNI0X2M5zMLVxEuNt4ntJsMxvXN0g==
-X-Received: by 2002:a05:6512:31c8:b0:4fb:79b5:5512 with SMTP id j8-20020a05651231c800b004fb79b55512mr2543259lfe.66.1690478093616;
-        Thu, 27 Jul 2023 10:14:53 -0700 (PDT)
-Received: from [192.168.1.101] (abxi99.neoplus.adsl.tpnet.pl. [83.9.2.99])
-        by smtp.gmail.com with ESMTPSA id w3-20020ac25983000000b004fb745fd22fsm396321lfn.32.2023.07.27.10.14.52
+        bh=NKU1yBs0msHXwREPYd0SDWl2QoMQpyRkOYWlocB0jV8=;
+        b=CBxn0m6yd1CKuzNKSp4Eznz4GPJ5iivT+96KFtkIT8Hvz1FvxDw9RKiQTzF2OJHrHi
+         WnZ3mvnL0glhD4XmnlR0i5+mVNh0XD+GU1RN3Xh44ReJScpRdHn7fLNlpM6baW7JBIYt
+         u/MMg5+jEkjGRTPS7Ea5PZbFSzJgqPOFllJClUIRO5syVVbPbRJ9z7A+QPIzfdW0rtQV
+         kxHqGE+V+jqKHRVmVLkcrY64RP9GHLdvW04EC8qSR+fOY6NoxX5Z6QpgQFDG2fRw2XGu
+         RzXoDrnNjB4lwd39gSlebGPsIwbDoLTBKBMeRdnYCaRYBJB/R1xJIE4JNj5b6HlCCjgV
+         XFYw==
+X-Gm-Message-State: ABy/qLaJornhrViCrx7yjOJn7nyYllHLYJrwsxIi7zXo5hNYfTYOji7F
+        Q+XlLCV/sHw2ptlNIVpQLvVtWw==
+X-Google-Smtp-Source: APBJJlGl8SynkgJTMJXL2V6Y++i5cfJeXPU6WuoXupbSwRd2SlAsHeaos+4AwL8PeR0DpLWnchlWNw==
+X-Received: by 2002:a05:6a00:14c4:b0:686:49b0:21ca with SMTP id w4-20020a056a0014c400b0068649b021camr6341987pfu.7.1690478310361;
+        Thu, 27 Jul 2023 10:18:30 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:2339:954b:b98f:611a])
+        by smtp.gmail.com with ESMTPSA id 17-20020aa79111000000b0064f76992905sm1702524pfh.202.2023.07.27.10.18.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jul 2023 10:14:53 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 27 Jul 2023 19:14:52 +0200
-Subject: [PATCH v2] clk: qcom: reset: Use the correct type of sleep/delay
- based on length
+        Thu, 27 Jul 2023 10:18:29 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     linux-arm-msm@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        hsinyi@google.com, Chris Morgan <macroalpha82@gmail.com>,
+        linux-input@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH v4 00/11] drm/panel and i2c-hid: Allow panels and touchscreens to power sequence together
+Date:   Thu, 27 Jul 2023 10:16:27 -0700
+Message-ID: <20230727171750.633410-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.41.0.487.g6d72f3e995-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230726-topic-qcom_reset-v2-1-4a6e1b1d0439@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAAumwmQC/32NQQ6CMBAAv2J6dk0phIIn/2GIKcsKm2CLWyQaw
- t+tPMDjTDKZVUUSpqjOh1UJLRw5+ATmeFA4ON8TcJdYGW1ybU0Jc5gY4YnhcROKNENRVLZGnVc
- WS5Wy1kWCVpzHIYX+NY5JTkJ3fu+fa5N44DgH+ezbJfvZP4clAw216ajscirQ4mVk7yScgvSq2
- bbtC7Upw0XGAAAA
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mike Turquette <mturquette@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690478092; l=1491;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=xqeqeSVrD0FBd4SOIFWeQ28YnpPrZTJ5YRxUYScajcU=;
- b=9sr4XmOp/nvWERoHxxSOCtWnpIp7SRhiQaK9RL70JkydIWtsE/EDWgOxa94U8MeYcBjq8s8gf
- OtpNeD7j0kWCvQVcTDzKi+WnZU6s51PcElo3QvVSYPF9YTxz86PEvdT
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,46 +84,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Based on the length of the delay (see: [1]), use the correct sleep/delay
-functions.
 
-[1] https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
+The big motivation for this patch series is mostly described in the patch
+("drm/panel: Add a way for other devices to follow panel state"), but to
+quickly summarize here: for touchscreens that are connected to a panel we
+need the ability to power sequence the two device together. This is not a
+new need, but so far we've managed to get by through a combination of
+inefficiency, added costs, or perhaps just a little bit of brokenness.
+It's time to do better. This patch series allows us to do better.
 
-Fixes: 2cb8a39b6781 ("clk: qcom: reset: Allow specifying custom reset delay")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-Let the toggle include a bigger delay and make sure it's using the
-correct function to achieve that.
----
+Assuming that people think this patch series looks OK, we'll have to
+figure out the right way to land it. The panel patches and i2c-hid
+patches will go through very different trees and so either we'll need
+an Ack from one side or the other or someone to create a tag for the
+other tree to pull in. This will _probably_ require the true drm-misc
+maintainers to get involved, not a lowly committer. ;-)
+
+Version 4 of this series adds a new patch that suspends i2c-hid
+devices at remove time even for non panel-followers to make things
+consistent. It also attempts to isolate the panel follower code a bit
+more as per Benjamin's feedback on v3 and adds an item to the DRM todo
+list as per Maxime's request. As per Maxime's response to my v3 cover
+letter, I added his Reviewed-by tag to all 10 patches that were part
+of v3 (but left it off of the new i2c-hid patch in v4).
+
+Version 3 of this series was a long time coming after v2. Maxime and I
+had a very long discussion trying to figure out if there was a beter
+way and in the end we didn't find one so he was OK with the series in
+general [1]. After that got resolved, I tried to resolve Benjamin's
+feedback but got stuck [2]. Eventually I made my best guess. The end
+result was a v3 that wasn't that different from v2 but that had a tiny
+bit more code split out.
+
+Version 2 of this patch series didn't change too much. At a high level:
+* I added all the forgotten "static" to functions.
+* I've hopefully made the bindings better.
+* I've integrated into fw_devlink.
+* I cleaned up a few descriptions / comments.
+
+As far as I can tell, as of v4 everyone is on the same page that this
+patch series looks like a reasonable solution to the problem and we
+just need to get all the nits fixed and figure out how to land it.
+
+[1] https://lore.kernel.org/r/gkwymmfkdy2p2evz22wmbwgw42ii4wnvmvu64m3bghmj2jhv7x@4mbstjxnagxd
+[2] https://lore.kernel.org/r/CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com
+
+Changes in v4:
+- Document further cleanup in the official DRM todo list.
+- ("Suspend i2c-hid devices in remove") new for v4.
+- Move panel follower alternative checks to wrapper functions.
+- Rebase atop ("Suspend i2c-hid devices in remove").
+
+Changes in v3:
+- Add is_panel_follower() as a convenience for clients.
+- Add "depends on DRM || !DRM" to Kconfig to avoid randconfig error.
+- Split more of the panel follower code out of the core.
+
 Changes in v2:
-- Drop the "allow bigger delay" until there's a user
-- Use fsleep instead of open-coding effectively the same
-- Fix the fixes tag
-- Link to v1: https://lore.kernel.org/r/20230726-topic-qcom_reset-v1-0-92de6d3e4c7c@linaro.org
----
- drivers/clk/qcom/reset.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+- Move the description to the generic touchscreen.yaml.
+- Update the desc to make it clearer it's only for integrated devices.
+- Add even more text to the commit message.
+- A few comment cleanups.
+- ("Add a devlink for panel followers") new for v2.
+- i2c_hid_core_initial_power_up() is now static.
+- i2c_hid_core_panel_prepared() and ..._unpreparing() are now static.
+- ihid_core_panel_prepare_work() is now static.
+- Improve documentation for smp_wmb().
 
-diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
-index 0e914ec7aeae..e45e32804d2c 100644
---- a/drivers/clk/qcom/reset.c
-+++ b/drivers/clk/qcom/reset.c
-@@ -16,7 +16,8 @@ static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
- 	struct qcom_reset_controller *rst = to_qcom_reset_controller(rcdev);
- 
- 	rcdev->ops->assert(rcdev, id);
--	udelay(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
-+	fsleep(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
-+
- 	rcdev->ops->deassert(rcdev, id);
- 	return 0;
- }
+Douglas Anderson (11):
+  dt-bindings: HID: i2c-hid: Add "panel" property to i2c-hid backed
+    touchscreens
+  drm/panel: Check for already prepared/enabled in drm_panel
+  drm/panel: Add a way for other devices to follow panel state
+  of: property: fw_devlink: Add a devlink for panel followers
+  HID: i2c-hid: Switch to SYSTEM_SLEEP_PM_OPS()
+  HID: i2c-hid: Rearrange probe() to power things up later
+  HID: i2c-hid: Make suspend and resume into helper functions
+  HID: i2c-hid: Suspend i2c-hid devices in remove
+  HID: i2c-hid: Support being a panel follower
+  HID: i2c-hid: Do panel follower work on the system_wq
+  arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
 
----
-base-commit: 451cc82bd11eb6a374f4dbcfc1cf007eafea91ab
-change-id: 20230726-topic-qcom_reset-44879c0387c6
+ .../bindings/input/elan,ekth6915.yaml         |   5 +
+ .../bindings/input/goodix,gt7375p.yaml        |   5 +
+ .../bindings/input/hid-over-i2c.yaml          |   2 +
+ .../input/touchscreen/touchscreen.yaml        |   7 +
+ Documentation/gpu/todo.rst                    |  24 ++
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |   1 +
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |   1 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |   1 +
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |   1 +
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    |   1 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   1 +
+ drivers/gpu/drm/drm_panel.c                   | 218 ++++++++++-
+ drivers/hid/i2c-hid/Kconfig                   |   2 +
+ drivers/hid/i2c-hid/i2c-hid-core.c            | 349 +++++++++++++-----
+ drivers/of/property.c                         |   2 +
+ include/drm/drm_panel.h                       |  94 +++++
+ 16 files changed, 617 insertions(+), 97 deletions(-)
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.41.0.487.g6d72f3e995-goog
 
