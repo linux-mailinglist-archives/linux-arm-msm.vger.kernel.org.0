@@ -2,101 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 445F4764404
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 04:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C41C76441A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 05:01:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbjG0Cxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 22:53:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53972 "EHLO
+        id S231294AbjG0DBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 23:01:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229737AbjG0Cxo (ORCPT
+        with ESMTP id S229655AbjG0DBA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 22:53:44 -0400
-Received: from AUS01-ME3-obe.outbound.protection.outlook.com (mail-me3aus01olkn2179.outbound.protection.outlook.com [40.92.63.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 210711BC6;
-        Wed, 26 Jul 2023 19:53:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gcEOEcnAAeq251wl5L13lyFQSnAYrtRF8KM+MU8fS5vdq8PEujHH+hKoC++mdyFI0Lm556DJ8rjBxAaYosgyNeszPlYBsk8iEgBGsfvq79jAinD3F1sWen6z8SR8mXHaDQuMVI8fP8vQ+egeH7ikN1PgiK8vY1Avx1ypOKVHc8ZMIrjS4XtEHzh+o4Pu6LkNKPf04PCkLK0YWTUVPHn0aElKkWcWRfPnOGyWmfx/9lXPP1TSJGEWGFY6uKO5sWEkrqxiq9q0HGKsdR0+O1yBtsoBTlZGyd0S+eEQZslBrYYdd34hRhG3xYO2PTcrTJoneFW+kNJ1f493Q+KcVLoO1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1wGxkkEv/bqDo2FqsafpURzTserxWrJGFj8jW4N8vl4=;
- b=mhPQBFDs8EesN4P4yyIaaOclqnfpaaTMuCO7t38UX1UiJ5N7nt/PR0YeFYWTbswN/mxQjumSuP9y3AzI/a0g0J66JFmFeSpm+kx/XYN50cUZ+p1MtIpTcqTMbjmc9dJ8wSBap5UC025w/m4RhajAeQDP/OPp7tPeGXViEqaKB3DYkhtdtap0gv2G+fDN6gaGgIxtuIY1HIPDKu6bPx0uZbBC0/KjD4LVpX5CqAySrU+gcI4WX1d2rvbW04f25b/oj5VCbv9FX5aWTeYEGpaqOZ3+VtWiVZWGeo/rZU8v9mZgreFx1GYKKGVy6Qi/KX7dC0+bdMWPwxTj+7pnFQqkFA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1wGxkkEv/bqDo2FqsafpURzTserxWrJGFj8jW4N8vl4=;
- b=N42wTqcHZRBfrFCUiwpruyRR03yAAARXNwCLh3URko7DHnkv/ExuQZjB+8fak31S19HfbtU4tarG5scYK2j3VJWraleyWd29fZUwqXNI4i3bSzRmLJcbuP3OQfgbQUISKFffaFf+e3J2iNVaqaYHPIQROf3Pmg/THn+RYFP8sG9JFp5LHSU8K44VcnDu6R2+mNuVW9j5oKnjDS3JOa3w2zKg4f0ygkTaYrqFTZK/V4yllhX85J1TuA7j8tuOABxqcCdG+VKm6s38Rv9azIfdT8TQ4Z/lxYJdjlZoZVz3ztqkeJH6frYL1ym4/tD3vdLSQT2Way/oQoPH0IAzuvug4w==
-Received: from SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:1e3::6) by
- MEAP282MB0165.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:70::22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6631.29; Thu, 27 Jul 2023 02:53:36 +0000
-Received: from SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
- ([fe80::67bc:436f:32c5:3cd9]) by SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
- ([fe80::67bc:436f:32c5:3cd9%3]) with mapi id 15.20.6631.026; Thu, 27 Jul 2023
- 02:53:36 +0000
-From:   Zeyan Li <qaz6750@outlook.com>
-To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Zeyan Li <qaz6750@outlook.com>
-Subject: [PATCH V3] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
-Date:   Thu, 27 Jul 2023 10:53:21 +0800
-Message-ID: <SY7P282MB378712225CBCEA95FE71554DB201A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN:  [38AyjQir+pCzIUxx+yxku5O6OL2A/82c]
-X-ClientProxiedBy: SI1PR02CA0053.apcprd02.prod.outlook.com
- (2603:1096:4:1f5::8) To SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:10:1e3::6)
-X-Microsoft-Original-Message-ID: <20230727025321.8094-1-qaz6750@outlook.com>
+        Wed, 26 Jul 2023 23:01:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F741BCB;
+        Wed, 26 Jul 2023 20:00:59 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R2JCa1009162;
+        Thu, 27 Jul 2023 03:00:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=j4aARu0MkArEU5RCLOwlPl8+9JwP9fo0BEv/2Jdj1/g=;
+ b=mSaSXrcpOO7LNktBZnxbNwhcmsY7qcvu8dX6CejE5OEuSp1vdXarOu96D2h1Rs20pJuP
+ MbS3MsZ4smx3LLAn7O6UjZ7bJL5URvw0bKg5+h4VquRp1YNlEE8LGMozCzAcwr5lh9pm
+ 3dwmS4asu5+Oxr7biROh75QS0DB9TXULNnrtlnFPU/rjJG3sN1VW5jRmV2HaFhSAFZCh
+ WRXQuy8v0b6oyYd4CyWDWpH6BsWxoz3QGXc8vqvTl5S/ezwRa9HetgichqQJAqEIJcyq
+ ekpzEfDrDyYhguMgU4+M1ABUOu7oEC5WjhatUPmIqM9+5QIxFndThjLgEMW9Q3UoZB2g HQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s336t1j6h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 03:00:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R30mM4013784
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 03:00:48 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Wed, 26 Jul 2023 20:00:43 -0700
+Date:   Thu, 27 Jul 2023 08:30:39 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Sebastian Reichel" <sre@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        "Prasad Sodagudi" <quic_psodagud@quicinc.com>
+Subject: Re: [RFC PATCH 4/4] power: reset: Implement a PSCI SYSTEM_RESET2
+ reboot-mode driver
+Message-ID: <c1c2653e-4f3b-45f2-9325-d0ed8572a346@quicinc.com>
+References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
+ <20230724223057.1208122-5-quic_eberman@quicinc.com>
+ <46744a2e-139c-4e4e-89b2-66346f64c3f2@quicinc.com>
+ <6a0ea31d-814b-6745-d301-c1f6dadf9718@quicinc.com>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY7P282MB3787:EE_|MEAP282MB0165:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5234396c-83c0-4192-5f8c-08db8e4cac4d
-X-MS-Exchange-SLBlob-MailProps: YfhX3sd/0TX8qw5XTx6nNoIP9Rg/0Gg/5WvOI6S+E26z/K385q2EMUeShxWT/JJAqD8cbtSr/ipE81jL7fAEDY26bkxH5Mj8P/ESzAaEsMQ7qsLdx+gcRD5qPxLzUxukN3keKSxsbFepsIGLdr/781VbLl5fMrbWAVBHS44gzpMJEcjUCX42qIowoIv/P4Pp99np+vpYXTz3jPM18wpcHcsmSfw2Gx/kNO+hhiVPHVXZCtlvcN0ksgz4hHmjEzB56yx8nXuTzy8yFE1RQ/uKaF5ebYtNj7aggTtBlEKf2T6oxAkLj3ThyZe0Z7pNDlJy8wtQVm/dcsuzkxSZY9pFK9ZkH9aXB5y8xTrCmutFuQPz2lYsBwn+iOCpsJYxSqMQ3gsK1VVwxk4K9hsw2XDq72WfAzJBpnWhyRR+sDVIIgPyg95S/tF3qEV5McCLg0C4BlhkQdGW+dGMK+bYtExhi2ORBSNxzXGrhnV/axWKR2xU+1hdiFiVHzMRsN+jxtRDhKqUkyS9+g6kvczzMacNtlfxs0aREeRNMpO5m9zIdL4xbVfy0ZxukPZkRuM0SVtHYp5UF18TYOAw47fP3G4AtE+SS5rzUA9n57uvWVGwcT2LfOsqDHqqV+H07EJoJDBXVSsAOuUEePD0WOzTd6HjLFTQ67Qz8QgT6CvbB7BPw0FxBJ/mqNYPCLCgKQU03D9Ow0ys7/yuhGDO3PdPVWhlsGLe8Frq50T7nSelZRxwozzOjtjNlUw+7yqHiHHSmHAIN+Np0oltzE/Quvc1ra4ZUzbZwuyIKtjfhxARGEBXCtQ=
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: zaDW204u0dCD0Xpx+wYH9/rfBMQC7SaOrGrFN2nXNxFzbuBUPWjZ93WEhaffV+QuTQBjjGatSAp+icR/dsEh/muBATQfSJ53RzJ8vGAfBqplz5ooANNRHnCCrY6GMWwT48thfBH8k6GiePwlunG4RC6wc7Pfzo1qkTMiArxLspO3W3TGOSmcINfUVkd5vVuWZ3Iylw/Ozy/zhYMyxRiOn8PHG60uZAnwhqKNDv3IKYj6ltaZbOqXsKjNrG28Kd+is10imn8wrVEvgggILjFAXpPtsqty5KD7w05Sg9W5Bo74stq35JgHFHcxDPkx0i065ZtazUPWAIaN1dXSKdjsP4RrwYMAdQF/ntC8ggW1rL/xiuTg60hfX1VcFMAsrQtepNN3QirrKb+G5nsiaoJ6cLB5XJXx8aFXTa5BSaeJ8BNg6Wa3vzWBCissWREgszcMkr95qXlOzkgVE8jET+n1wRhfP/d9Ihl5u3zud90BMnr51aEHEF/Sme3poee1X5lnyLT+KsSFmNrNhPCyqSh5FsKGARoHAs7TJB9D2Wd2fzZrks1KA0SB7xfsctmX11BahAaNTErGpjyTSKxNF6NSn4furhSBW1qER/4DIYn7QGevveQ5Igdi6V2OMny4Rn3X
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?miwmx92SK1if6OchxN8PjbxZ/HEiYGvAORnU8Gd1LD4wYQV/WercQ6IxXn9Z?=
- =?us-ascii?Q?ZRGdhbwd0wP9t9VeMH++lo0fvf81Kc3XAYxzbl6bjjmLskdMQYop3bKn3uag?=
- =?us-ascii?Q?P3/5yVkegTNm0POklytUgCu/H6wRvWjiXWIxIK6jl9VaIONuc6z/AhL4SybB?=
- =?us-ascii?Q?xYkx5CV0UMVQF9RdgNiBEeezVt0eJDXtiE3niY2vvc4LDUYp09o8/j5gA6iS?=
- =?us-ascii?Q?KrRDCatG3BhIge26LWY6ztu7V+x9E18y25vcZRMgYjdPUxnnS8miyo6CfFAQ?=
- =?us-ascii?Q?g7IDOGFi+fVE63yBsMrCpE5kwSKJ6NjS81OqfAEO+/6FbJK/iz70np+5P10u?=
- =?us-ascii?Q?SC0HV9V6QPEz/qAxweEb3QGkwEfs+u/ey5+YYZu+L74ClVtplEMWNBnw2p1j?=
- =?us-ascii?Q?ViDI27KtMyydbyOenFVB1IQgzVbFSiYA+Kj3nh0oOXvTtNENcaDS0ND/PutQ?=
- =?us-ascii?Q?w+yq9kxmtiagKhbWz6b5X5W916SwXJjs4lvsnylpGusQKyJ3ma7wxo1KpFVR?=
- =?us-ascii?Q?+BvqurzMURftiXmt0V6b9ueFqQFSD8gEEMtHzqxfeIkj+XE6bNixVytkHKec?=
- =?us-ascii?Q?a57hBO0DkRbKazWA9UJedHAol+7tp1PXPKSTCl/lD+0c1QpyXBs0Nxt3Dr8j?=
- =?us-ascii?Q?gWDqV+E7QFGbSLKuCCbtDkBUpgq3HLhYgdLk1iDvUM/xB8mCPTqhJzbw+JuI?=
- =?us-ascii?Q?eQpAd3tvHjXoKpQsgjYl/S2gaTBrZ+G9y/CB10lX7O2TW7Nr3ZCVxXFES5R9?=
- =?us-ascii?Q?sOlwoavDoGmOsmgBqdTXkLLpAbCkrG/ZBPlOVJfk5qQ51tW9Bt9va5cGETGF?=
- =?us-ascii?Q?aUMDtlQbxznWvx8xKkSQtWbUk3BgrcVbiXiA1cSBZ30ByUAw6Eszd0a3lsi+?=
- =?us-ascii?Q?3SbQh87Eb5U4r3cx3T4l/FaxA2P9vuAuQXZjgDiH/n6VMBeLXwWMQQqwm8ew?=
- =?us-ascii?Q?AnxOs68mS5yA3Sn8gyhshG6CgbalsJV3ME164GLryK2YKLXRbGxCZJ6v76CY?=
- =?us-ascii?Q?JLwm/mtjYQ1e29vWu7vXM3gaJJy0ZgQB+ZZX4kttM1CgxL1zAH3yA2cxvjB7?=
- =?us-ascii?Q?bgW/NObpqybkui18tqUDFk8QbNHfVag4eJEhkVKR1frnPJkwa5fCvRjDGPTu?=
- =?us-ascii?Q?15KtIqOqtCmP9rxW4LDYreJZZHUFCspwgZrwIAIk30Oxqn1m+KRahCB7KO0t?=
- =?us-ascii?Q?TekM3RcotYjAKfhQUSB3I+ZIQxhTck4qGeBJjg=3D=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5234396c-83c0-4192-5f8c-08db8e4cac4d
-X-MS-Exchange-CrossTenant-AuthSource: SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2023 02:53:36.7385
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEAP282MB0165
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6a0ea31d-814b-6745-d301-c1f6dadf9718@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5uIHP9ddzcxBs_J2QaGvp2NLe92urYsY
+X-Proofpoint-GUID: 5uIHP9ddzcxBs_J2QaGvp2NLe92urYsY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ clxscore=1015 mlxlogscore=794 adultscore=0 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307270026
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -105,31 +90,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I2C6 and I2C7 use the same interrupts, which is incorrect.
-In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
+On Wed, Jul 26, 2023 at 10:19:01AM -0700, Elliot Berman wrote:
+> 
+> 
+> On 7/26/2023 3:41 AM, Pavan Kondeti wrote:
+> > On Mon, Jul 24, 2023 at 03:30:54PM -0700, Elliot Berman wrote:
+> > > PSCI implements a restart notifier for architectural defined resets.
+> > > The SYSTEM_RESET2 allows vendor firmware to define additional reset
+> > > types which could be mapped to the reboot reason.
+> > > 
+> > > Implement a driver to wire the reboot-mode framework to make vendor
+> > > SYSTEM_RESET2 calls on reboot.
+> > > 
+> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > 
+> > Do we need to skip the PSCI call from the existing PSCI restart notifier
+> > which gets called after your newly introduced callback from reboot mode
+> > notifier?
+> > 
+> 
+> No need, the vendor SYSTEM_RESET2 call shouldn't return if the call worked.
+> 
 
-Fixes: 81bee6953b58 ("arm64: dts: qcom: sm8150: add i2c nodes")
-Signed-off-by: Zeyan Li <qaz6750@outlook.com>
----
- [v3] Change to use my real name
- [v2] Fixed issue of not using full name
+From the documentation of restart handlers, restarting from reboot
+notifiers may not be correct. Since you hooked it up with reboot-mode
+driver framework, you may restart the system much early before the
+actual machine restart kicks in. Pls check. 
 
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 18c822abdb88..214f6e028f3c 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1231,7 +1231,7 @@ i2c7: i2c@89c000 {
- 				dma-names = "tx", "rx";
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_i2c7_default>;
--				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				status = "disabled";
--- 
-2.34.1
-
+Thanks,
+Pavan
