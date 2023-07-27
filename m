@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F3407658BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 18:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBA7A765992
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 19:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbjG0Qb5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 12:31:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44328 "EHLO
+        id S229995AbjG0RKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 13:10:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230219AbjG0Qbv (ORCPT
+        with ESMTP id S229664AbjG0RKr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 12:31:51 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C06B3AA2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:31:21 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b9cbaee7a9so2940231fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 09:31:21 -0700 (PDT)
+        Thu, 27 Jul 2023 13:10:47 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD512D75
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:10:44 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b962c226ceso18179131fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 10:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690475460; x=1691080260;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1690477843; x=1691082643;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yW+tb6QFhlbLr0bi96ZSf05YZeaSfV3/8CB+PE4cSW0=;
-        b=jET9iRXPww1h2fUwvAPI4hd2QprWiYQGOs/Lw39zD+h5jhpak6vpe5dqMBqIpDhmTS
-         QuE1GE/YW2r9eKew2hzQ9Zc5TmafwIpNe1Ty+r9ZSZUk1n/k45R2JCKS2H0I14CL02HL
-         vFzferwT7eKxTQaUdfhkV6Gsjpblv0dm5b6O5MQ7bxx3JseG2oL8z1IsfrUSvnx3HAY4
-         ZzaFZYjup0Is0ySxU+pzMSDP/+ZmiYolAfz4BgfYUNGU6juMZwDCGHXfRL5kQw2j8jKX
-         ZHAjDmSmvXkQzZI1JIQG4DKVMiaRpa9g7CQRdgU1EW2UCor7SgSscdRObUbq/Zyn5IcH
-         nZEA==
+        bh=YA4KY7APNBoaVIsE8pbZuVrmfLiy26uq1i7pnH5Zurc=;
+        b=kU9RvC9MMM1jkXnKHDH9Y7YHb/jOhWaYDV+48W6Vp1QVRVT5IN1Nbx2J3fu7lxkgxk
+         bXHpKj/a9cTgAWSocNtrGS2015UQWdKNmAnaaCM/GNB/VTIoO3JnopGz/neyutp/SNz0
+         HttdyOVb9DnvYuA5Eq8kwtAIOnojFWbJJ7tp54kx35OUeLlv11MmbhtD/ZxW+/bGoC74
+         L2We5/1bmS4V2nVaCDcX+5n/T2En8pyA5sIpVNhcrv0qSRr+NoAHPI4qSjvDhXR+32B4
+         739OCJFYQ7fq8XXBViQNHYEI5IJZQUl2TUW+jXEWQ8Dbs1U5EDXB1ZDFrtoTOiNZlpN3
+         qMcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690475460; x=1691080260;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1690477843; x=1691082643;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yW+tb6QFhlbLr0bi96ZSf05YZeaSfV3/8CB+PE4cSW0=;
-        b=NF9bqJb5kMVBkXcj6ARdSNoemCevMpld9OYTXHx7hAVSm2Yl3YmNIqTizjv3+m4KYw
-         3rAAu0YRO3qHMSXUZLYs16dygqJ13D0NJB1By8NylkVhe1z8uNWjATMmVSwxPNRSChq5
-         hOnTk9KvubcgqsMJ62BYMp+EvayasOEq57PuNFirEUP0shOiQkryp1y/keNDf5bIZ8bp
-         ebgDSyV9H0tgPfwuM2jDPRkgcu73d9FFFQfQv6AYKI1ooNydqah4yrT6GBXSIXYx+f+1
-         vHIMVAj/oUCnLs2wYFnVxazOjHh6CxUvGObIpsFINht8Wnhc0D7EZ70R1fkfEYDTZONo
-         lz/g==
-X-Gm-Message-State: ABy/qLbvlLrdM2sPvi/8VZqg2cgAkX8irBFW7VADZzUTkrZVgj/dGWEt
-        9Oxut8I6pDDAUe7Pw2CFpL6SxQ==
-X-Google-Smtp-Source: APBJJlGshqd84PTlVeLYvCfWWjBYjaC7Kh9xR7rMineoibtJfIWFBE3MlYSGFDd+a2fyhsjv0YIp8g==
-X-Received: by 2002:a2e:8490:0:b0:2b6:9afe:191c with SMTP id b16-20020a2e8490000000b002b69afe191cmr2179709ljh.7.1690475459666;
-        Thu, 27 Jul 2023 09:30:59 -0700 (PDT)
+        bh=YA4KY7APNBoaVIsE8pbZuVrmfLiy26uq1i7pnH5Zurc=;
+        b=cbArqT3X2FJn+9fij8PxK/0gTzCYXXHsp2ez+778mDC01r+nxCCN+G9RMlD28PHnFD
+         /i4SkCI6s1UG38EN7Paov/1q/BPEgjWBL4t0mQfmqP5KRSJQCtAsOcS4RQ79d0QKxXr9
+         l1dDvEFAnxItRREpSBCdj7gvaOnwE+Y/e5k5OUcE1mKxZHDFyYL5kOwtkERY1oAy2KlG
+         3aAN5NqP7H0svmUnvFa65wPA6YF/8YoCIgIWdGoRGBAf3kYQCm4FAEG/6uMyhSnY69+C
+         EsYpHWFHKiTbfT22pFGGPmKxgqfXYDCTCuLJJ55oVUsoLarKgVXwst/63fQWu2t3OAjb
+         yoJg==
+X-Gm-Message-State: ABy/qLaL5Vqm/4Quhkz+mFfOhwemkV85hLQIgVk57Y8alf+XOFNfszWz
+        83gJWkOEuW8UCjANdnJcMJTxhA==
+X-Google-Smtp-Source: APBJJlFaJ8HKfLfLui9GCTpqO9VRb6s9gu3E4pmdbVXWA9rs8zr5ttu0hEFBNa46OOcBduEXOCgc4A==
+X-Received: by 2002:a2e:3613:0:b0:2b6:dec9:2812 with SMTP id d19-20020a2e3613000000b002b6dec92812mr2191782lja.33.1690477842958;
+        Thu, 27 Jul 2023 10:10:42 -0700 (PDT)
 Received: from [192.168.1.101] (abxi99.neoplus.adsl.tpnet.pl. [83.9.2.99])
-        by smtp.gmail.com with ESMTPSA id n6-20020a2e8786000000b002b97fe43238sm431551lji.19.2023.07.27.09.30.58
+        by smtp.gmail.com with ESMTPSA id y4-20020a2eb004000000b002b944151da5sm441863ljk.81.2023.07.27.10.08.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jul 2023 09:30:59 -0700 (PDT)
-Message-ID: <d2863160-c63a-62ec-2231-4ead640978aa@linaro.org>
-Date:   Thu, 27 Jul 2023 18:30:57 +0200
+        Thu, 27 Jul 2023 10:09:12 -0700 (PDT)
+Message-ID: <df947545-23ef-2ee9-72cc-8e54bbe46be1@linaro.org>
+Date:   Thu, 27 Jul 2023 19:08:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: ipq8064: move keys and leds out of soc
- node
+Subject: Re: [PATCH 1/4] venus: hfi: add checks to perform sanity on queue
+ pointers
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230726210152.273161-1-krzysztof.kozlowski@linaro.org>
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, bryan.odonoghue@linaro.org,
+        agross@kernel.org, andersson@kernel.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, tfiga@chromium.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <1690432469-14803-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690432469-14803-2-git-send-email-quic_vgarodia@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230726210152.273161-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1690432469-14803-2-git-send-email-quic_vgarodia@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,15 +114,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.07.2023 23:01, Krzysztof Kozlowski wrote:
-> GPIO keys and LEDs are not part of the SoC, so move them to top-level to
-> fix dtbs_check warnings like:
+On 27.07.2023 06:34, Vikash Garodia wrote:
+> Read and write pointers are used to track the packet index in the memory
+> shared between video driver and firmware. There is a possibility of OOB
+> access if the read or write pointer goes beyond the queue memory size.
+> Add checks for the read and write pointer to avoid OOB access.
 > 
->   qcom-ipq8064-rb3011.dtb: soc: gpio-keys: {'compatible': ['gpio-keys'], ... should not be valid under {'type': 'object'}
->         from schema $id: http://devicetree.org/schemas/simple-bus.yaml#
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Cc: stable@vger.kernel.org
+> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  drivers/media/platform/qcom/venus/hfi_venus.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index f0b4638..dc228c4 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -206,6 +206,10 @@ static int venus_write_queue(struct venus_hfi_device *hdev,
+>  
+>  	new_wr_idx = wr_idx + dwords;
+>  	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
+> +
+> +	if (wr_ptr < (u32 *)queue->qmem.kva || wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size))
+Shouldn't the cases on the right side of the OR operator include a
+"- 1"?
 
 Konrad
