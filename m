@@ -2,120 +2,370 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C41C76441A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 05:01:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D945764466
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 05:35:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbjG0DBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jul 2023 23:01:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58562 "EHLO
+        id S231429AbjG0De6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jul 2023 23:34:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjG0DBA (ORCPT
+        with ESMTP id S229721AbjG0Dev (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jul 2023 23:01:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F741BCB;
-        Wed, 26 Jul 2023 20:00:59 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R2JCa1009162;
-        Thu, 27 Jul 2023 03:00:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=j4aARu0MkArEU5RCLOwlPl8+9JwP9fo0BEv/2Jdj1/g=;
- b=mSaSXrcpOO7LNktBZnxbNwhcmsY7qcvu8dX6CejE5OEuSp1vdXarOu96D2h1Rs20pJuP
- MbS3MsZ4smx3LLAn7O6UjZ7bJL5URvw0bKg5+h4VquRp1YNlEE8LGMozCzAcwr5lh9pm
- 3dwmS4asu5+Oxr7biROh75QS0DB9TXULNnrtlnFPU/rjJG3sN1VW5jRmV2HaFhSAFZCh
- WRXQuy8v0b6oyYd4CyWDWpH6BsWxoz3QGXc8vqvTl5S/ezwRa9HetgichqQJAqEIJcyq
- ekpzEfDrDyYhguMgU4+M1ABUOu7oEC5WjhatUPmIqM9+5QIxFndThjLgEMW9Q3UoZB2g HQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s336t1j6h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 03:00:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R30mM4013784
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 03:00:48 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 26 Jul 2023 20:00:43 -0700
-Date:   Thu, 27 Jul 2023 08:30:39 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Sebastian Reichel" <sre@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        "Prasad Sodagudi" <quic_psodagud@quicinc.com>
-Subject: Re: [RFC PATCH 4/4] power: reset: Implement a PSCI SYSTEM_RESET2
- reboot-mode driver
-Message-ID: <c1c2653e-4f3b-45f2-9325-d0ed8572a346@quicinc.com>
-References: <20230724223057.1208122-1-quic_eberman@quicinc.com>
- <20230724223057.1208122-5-quic_eberman@quicinc.com>
- <46744a2e-139c-4e4e-89b2-66346f64c3f2@quicinc.com>
- <6a0ea31d-814b-6745-d301-c1f6dadf9718@quicinc.com>
+        Wed, 26 Jul 2023 23:34:51 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091A02127
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 20:34:47 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-682eef7d752so141127b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 20:34:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1690428886; x=1691033686;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pSHiqW/1Kwa6XMfrutppYGKtzk0jA+6GZMwxRhGaywI=;
+        b=JH3Gdn8erluTpD0SiBv0fHlvH29QoJbVthZHImXx40T/IvgK0JIjZ0GSYiuzzLmgEA
+         bHXNFFpOY9uD+vNkdeoyqNVINpCZUHYDiHMEBDkcaaYiJnpqdxqxP9HCH+uCZSOxVPaX
+         a40KLwmD/5OmsTBlZF8d2TLCkDFfaCI3tBilLI9wA3S9O/RNu5Wh5IyCFOIuf9bbZc9M
+         BojY8O58Av3dHh2cjAZwQFUo45GIDCrR2qRfQCljzavnidON0gNgsmWW0OgyxUqV3yLa
+         +g0Rro6R0vH8urzZTF9hLw+CTeEMI8A36Bu5e/fFgdet0UR9Esy2HUMsL8V+5OEcbFBS
+         k6XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690428886; x=1691033686;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pSHiqW/1Kwa6XMfrutppYGKtzk0jA+6GZMwxRhGaywI=;
+        b=OfdcX/c8INMmzU4JPe9zm0/X8CcFqqVNGxacTsunQ54x/PL5BUi7FQQSZb0eCi8S3c
+         g+aHz1/r6lw4RSWr26mpdwWJ1g6jBq1BL36ZGnxzaJ0lKwmHB3uJHXE/MpEZ/B7my0OK
+         Xv8GMm7kRSJSNXqhdFcQ5YCMokKoBlo+iYVwTFv+ofadYGWGTSL+pSk20fXoXFWOdkpT
+         77ko1PWdZDO7YXhdicJy+3OSglh1r0oOLpIipT2kRdT/fB9JTX0ztiq7phMB4iEmZkTq
+         PAuECGdya1S9bKbRRzXl935nuw7K37QHNpxUFWqYDiecSGThziy5jlAaONndLsJSFXju
+         1/zA==
+X-Gm-Message-State: ABy/qLafcgpq6xCZb0u0mktxuVPwG0tVeM8x8Ap7Z97ELNvW8JCMdkh+
+        YsxGTZEwT/dqJKCHPVshJjnd1g==
+X-Google-Smtp-Source: APBJJlGnfHXNUKtpZ8goterp0kPe1+GeF2c87BsTqhWXyrNp01VQ9DDS/+17IDHKN7LAqAttouOeag==
+X-Received: by 2002:a05:6a21:339b:b0:137:4fd0:e2e6 with SMTP id yy27-20020a056a21339b00b001374fd0e2e6mr5017607pzb.6.1690428886364;
+        Wed, 26 Jul 2023 20:34:46 -0700 (PDT)
+Received: from [10.70.252.135] ([203.208.167.147])
+        by smtp.gmail.com with ESMTPSA id z25-20020aa791d9000000b006828ee9fa69sm328803pfa.206.2023.07.26.20.34.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jul 2023 20:34:46 -0700 (PDT)
+Message-ID: <c942e424-276d-4df7-4917-d61063ab8502@bytedance.com>
+Date:   Thu, 27 Jul 2023 11:34:30 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <6a0ea31d-814b-6745-d301-c1f6dadf9718@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5uIHP9ddzcxBs_J2QaGvp2NLe92urYsY
-X-Proofpoint-GUID: 5uIHP9ddzcxBs_J2QaGvp2NLe92urYsY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- clxscore=1015 mlxlogscore=794 adultscore=0 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307270026
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: Re: [PATCH v2 44/47] mm: shrinker: make global slab shrink lockless
+Content-Language: en-US
+To:     Dave Chinner <david@fromorbit.com>
+Cc:     akpm@linux-foundation.org, tkhai@ya.ru, vbabka@suse.cz,
+        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
+        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
+        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
+        gregkh@linuxfoundation.org, muchun.song@linux.dev,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
+References: <20230724094354.90817-1-zhengqi.arch@bytedance.com>
+ <20230724094354.90817-45-zhengqi.arch@bytedance.com>
+ <ZMDUkoIXUlTkCSYL@dread.disaster.area>
+ <19ad6d06-8a14-6102-5eae-2134dc2c5061@bytedance.com>
+ <ZMGnthZAh48JF+eV@dread.disaster.area>
+From:   Qi Zheng <zhengqi.arch@bytedance.com>
+In-Reply-To: <ZMGnthZAh48JF+eV@dread.disaster.area>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 26, 2023 at 10:19:01AM -0700, Elliot Berman wrote:
-> 
-> 
-> On 7/26/2023 3:41 AM, Pavan Kondeti wrote:
-> > On Mon, Jul 24, 2023 at 03:30:54PM -0700, Elliot Berman wrote:
-> > > PSCI implements a restart notifier for architectural defined resets.
-> > > The SYSTEM_RESET2 allows vendor firmware to define additional reset
-> > > types which could be mapped to the reboot reason.
-> > > 
-> > > Implement a driver to wire the reboot-mode framework to make vendor
-> > > SYSTEM_RESET2 calls on reboot.
-> > > 
-> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> > 
-> > Do we need to skip the PSCI call from the existing PSCI restart notifier
-> > which gets called after your newly introduced callback from reboot mode
-> > notifier?
-> > 
-> 
-> No need, the vendor SYSTEM_RESET2 call shouldn't return if the call worked.
-> 
+Hi Dave,
 
-From the documentation of restart handlers, restarting from reboot
-notifiers may not be correct. Since you hooked it up with reboot-mode
-driver framework, you may restart the system much early before the
-actual machine restart kicks in. Pls check. 
+On 2023/7/27 07:09, Dave Chinner wrote:
+> On Wed, Jul 26, 2023 at 05:14:09PM +0800, Qi Zheng wrote:
+>> On 2023/7/26 16:08, Dave Chinner wrote:
+>>> On Mon, Jul 24, 2023 at 05:43:51PM +0800, Qi Zheng wrote:
+>>>> @@ -122,6 +126,13 @@ void shrinker_free_non_registered(struct shrinker *shrinker);
+>>>>    void shrinker_register(struct shrinker *shrinker);
+>>>>    void shrinker_unregister(struct shrinker *shrinker);
+>>>> +static inline bool shrinker_try_get(struct shrinker *shrinker)
+>>>> +{
+>>>> +	return READ_ONCE(shrinker->registered) &&
+>>>> +	       refcount_inc_not_zero(&shrinker->refcount);
+>>>> +}
+>>>
+>>> Why do we care about shrinker->registered here? If we don't set
+>>> the refcount to 1 until we have fully initialised everything, then
+>>> the shrinker code can key entirely off the reference count and
+>>> none of the lookup code needs to care about whether the shrinker is
+>>> registered or not.
+>>
+>> The purpose of checking shrinker->registered here is to stop running
+>> shrinker after calling shrinker_free(), which can prevent the following
+>> situations from happening:
+>>
+>> CPU 0                 CPU 1
+>>
+>> shrinker_try_get()
+>>
+>>                         shrinker_try_get()
+>>
+>> shrinker_put()
+>> shrinker_try_get()
+>>                         shrinker_put()
+> 
+> I don't see any race here? What is wrong with having multiple active
+> users at once?
+
+Maybe I'm overthinking. What I think is that if there are multiple users
+at once, it may cause the above-mentioned livelock, which will cause
+shrinker_free() to wait for a long time. But this probability should be
+very low.
+
+> 
+>>>
+>>> This should use a completion, then it is always safe under
+>>> rcu_read_lock().  This also gets rid of the shrinker_lock spin lock,
+>>> which only exists because we can't take a blocking lock under
+>>> rcu_read_lock(). i.e:
+>>>
+>>>
+>>> void shrinker_put(struct shrinker *shrinker)
+>>> {
+>>> 	if (refcount_dec_and_test(&shrinker->refcount))
+>>> 		complete(&shrinker->done);
+>>> }
+>>>
+>>> void shrinker_free()
+>>> {
+>>> 	.....
+>>> 	refcount_dec(&shrinker->refcount);
+>>
+>> I guess what you mean is shrinker_put(), because here may be the last
+>> refcount.
+> 
+> Yes, I did.
+> 
+>>> 	wait_for_completion(&shrinker->done);
+>>> 	/*
+>>> 	 * lookups on the shrinker will now all fail as refcount has
+>>> 	 * fallen to zero. We can now remove it from the lists and
+>>> 	 * free it.
+>>> 	 */
+>>> 	down_write(shrinker_rwsem);
+>>> 	list_del_rcu(&shrinker->list);
+>>> 	up_write(&shrinker_rwsem);
+>>> 	call_rcu(shrinker->rcu_head, shrinker_free_rcu_cb);
+>>> }
+>>>
+>>> ....
+>>>
+>>>> @@ -686,11 +711,14 @@ EXPORT_SYMBOL(shrinker_free_non_registered);
+>>>>    void shrinker_register(struct shrinker *shrinker)
+>>>>    {
+>>>> -	down_write(&shrinker_rwsem);
+>>>> -	list_add_tail(&shrinker->list, &shrinker_list);
+>>>> -	shrinker->flags |= SHRINKER_REGISTERED;
+>>>> +	refcount_set(&shrinker->refcount, 1);
+>>>> +
+>>>> +	spin_lock(&shrinker_lock);
+>>>> +	list_add_tail_rcu(&shrinker->list, &shrinker_list);
+>>>> +	spin_unlock(&shrinker_lock);
+>>>> +
+>>>>    	shrinker_debugfs_add(shrinker);
+>>>> -	up_write(&shrinker_rwsem);
+>>>> +	WRITE_ONCE(shrinker->registered, true);
+>>>>    }
+>>>>    EXPORT_SYMBOL(shrinker_register);
+>>>
+>>> This just looks wrong - you are trying to use WRITE_ONCE() as a
+>>> release barrier to indicate that the shrinker is now set up fully.
+>>> That's not necessary - the refcount is an atomic and along with the
+>>> rcu locks they should provides all the barriers we need. i.e.
+>>
+>> The reason I used WRITE_ONCE() here is because the shrinker->registered
+>> will be read and written concurrently (read in shrinker_try_get() and
+>> written in shrinker_free()), which is why I added shrinker::registered
+>> field instead of using SHRINKER_REGISTERED flag (this can reduce the
+>> addition of WRITE_ONCE()/READ_ONCE()).
+> 
+> Using WRITE_ONCE/READ_ONCE doesn't provide memory barriers needed to
+> use the field like this. You need release/acquire memory ordering
+> here. i.e. smp_store_release()/smp_load_acquire().
+> 
+> As it is, the refcount_inc_not_zero() provides a control dependency,
+> as documented in include/linux/refcount.h, refcount_dec_and_test()
+> provides release memory ordering. The only thing I think we may need
+> is a write barrier before refcount_set(), such that if
+> refcount_inc_not_zero() sees a non-zero value, it is guaranteed to
+> see an initialised structure...
+> 
+> i.e. refcounts provide all the existence and initialisation
+> guarantees. Hence I don't see the need to use shrinker->registered
+> like this and it can remain a bit flag protected by the
+> shrinker_rwsem().
+
+Ah, I didn't consider the memory order with refcount when I added
+WRITE_ONCE/READ_ONCE to shrinker->registered, just didn't want KCSAN
+to complain (there are multiple visitors at the same time, one of which
+is a writer).
+
+And the livelock case mentioned above is indeed unlikely to happen, so
+I will delete shrinker->registered in the next version.
+
+> 
+> 
+>>> void shrinker_register(struct shrinker *shrinker)
+>>> {
+>>> 	down_write(&shrinker_rwsem);
+>>> 	list_add_tail_rcu(&shrinker->list, &shrinker_list);
+>>> 	shrinker->flags |= SHRINKER_REGISTERED;
+>>> 	shrinker_debugfs_add(shrinker);
+>>> 	up_write(&shrinker_rwsem);
+>>>
+>>> 	/*
+>>> 	 * now the shrinker is fully set up, take the first
+>>> 	 * reference to it to indicate that lookup operations are
+>>> 	 * now allowed to use it via shrinker_try_get().
+>>> 	 */
+>>> 	refcount_set(&shrinker->refcount, 1);
+>>> }
+>>>
+>>>> diff --git a/mm/shrinker_debug.c b/mm/shrinker_debug.c
+>>>> index f1becfd45853..c5573066adbf 100644
+>>>> --- a/mm/shrinker_debug.c
+>>>> +++ b/mm/shrinker_debug.c
+>>>> @@ -5,6 +5,7 @@
+>>>>    #include <linux/seq_file.h>
+>>>>    #include <linux/shrinker.h>
+>>>>    #include <linux/memcontrol.h>
+>>>> +#include <linux/rculist.h>
+>>>>    /* defined in vmscan.c */
+>>>>    extern struct rw_semaphore shrinker_rwsem;
+>>>> @@ -161,17 +162,21 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
+>>>>    {
+>>>>    	struct dentry *entry;
+>>>>    	char buf[128];
+>>>> -	int id;
+>>>> -
+>>>> -	lockdep_assert_held(&shrinker_rwsem);
+>>>> +	int id, ret = 0;
+>>>>    	/* debugfs isn't initialized yet, add debugfs entries later. */
+>>>>    	if (!shrinker_debugfs_root)
+>>>>    		return 0;
+>>>> +	down_write(&shrinker_rwsem);
+>>>> +	if (shrinker->debugfs_entry)
+>>>> +		goto fail;
+>>>> +
+>>>>    	id = ida_alloc(&shrinker_debugfs_ida, GFP_KERNEL);
+>>>> -	if (id < 0)
+>>>> -		return id;
+>>>> +	if (id < 0) {
+>>>> +		ret = id;
+>>>> +		goto fail;
+>>>> +	}
+>>>>    	shrinker->debugfs_id = id;
+>>>>    	snprintf(buf, sizeof(buf), "%s-%d", shrinker->name, id);
+>>>> @@ -180,7 +185,8 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
+>>>>    	entry = debugfs_create_dir(buf, shrinker_debugfs_root);
+>>>>    	if (IS_ERR(entry)) {
+>>>>    		ida_free(&shrinker_debugfs_ida, id);
+>>>> -		return PTR_ERR(entry);
+>>>> +		ret = PTR_ERR(entry);
+>>>> +		goto fail;
+>>>>    	}
+>>>>    	shrinker->debugfs_entry = entry;
+>>>> @@ -188,7 +194,10 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
+>>>>    			    &shrinker_debugfs_count_fops);
+>>>>    	debugfs_create_file("scan", 0220, entry, shrinker,
+>>>>    			    &shrinker_debugfs_scan_fops);
+>>>> -	return 0;
+>>>> +
+>>>> +fail:
+>>>> +	up_write(&shrinker_rwsem);
+>>>> +	return ret;
+>>>>    }
+>>>>    int shrinker_debugfs_rename(struct shrinker *shrinker, const char *fmt, ...)
+>>>> @@ -243,6 +252,11 @@ struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
+>>>>    	shrinker->name = NULL;
+>>>>    	*debugfs_id = entry ? shrinker->debugfs_id : -1;
+>>>> +	/*
+>>>> +	 * Ensure that shrinker->registered has been set to false before
+>>>> +	 * shrinker->debugfs_entry is set to NULL.
+>>>> +	 */
+>>>> +	smp_wmb();
+>>>>    	shrinker->debugfs_entry = NULL;
+>>>>    	return entry;
+>>>> @@ -266,14 +280,26 @@ static int __init shrinker_debugfs_init(void)
+>>>>    	shrinker_debugfs_root = dentry;
+>>>>    	/* Create debugfs entries for shrinkers registered at boot */
+>>>> -	down_write(&shrinker_rwsem);
+>>>> -	list_for_each_entry(shrinker, &shrinker_list, list)
+>>>> +	rcu_read_lock();
+>>>> +	list_for_each_entry_rcu(shrinker, &shrinker_list, list) {
+>>>> +		if (!shrinker_try_get(shrinker))
+>>>> +			continue;
+>>>> +		rcu_read_unlock();
+>>>> +
+>>>>    		if (!shrinker->debugfs_entry) {
+>>>> -			ret = shrinker_debugfs_add(shrinker);
+>>>> -			if (ret)
+>>>> -				break;
+>>>> +			/* Paired with smp_wmb() in shrinker_debugfs_detach() */
+>>>> +			smp_rmb();
+>>>> +			if (READ_ONCE(shrinker->registered))
+>>>> +				ret = shrinker_debugfs_add(shrinker);
+>>>>    		}
+>>>> -	up_write(&shrinker_rwsem);
+>>>> +
+>>>> +		rcu_read_lock();
+>>>> +		shrinker_put(shrinker);
+>>>> +
+>>>> +		if (ret)
+>>>> +			break;
+>>>> +	}
+>>>> +	rcu_read_unlock();
+>>>>    	return ret;
+>>>>    }
+>>>
+>>> And all this churn and complexity can go away because the
+>>> shrinker_rwsem is still used to protect shrinker_register()
+>>> entirely....
+>>
+>> My consideration is that during this process, there may be a
+>> driver probe failure and then shrinker_free() is called (the
+>> shrinker_debugfs_init() is called in late_initcall stage). In
+>> this case, we need to use RCU+refcount to ensure that the shrinker
+>> is not freed.
+> 
+> Yeah, you're trying to work around the lack of a
+> wait_for_completion() call in shrinker_free().
+> 
+> With that, this doesn't need RCU at all, and the iteration can be
+> done fully under the shrinker_rwsem() safely and so none of this
+> code needs to change.
+
+Oh, indeed, here does not need to be changed.
 
 Thanks,
-Pavan
+Qi
+
+> 
+> Cheers,
+> 
+> Dave.
