@@ -2,132 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5488F76468B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 08:15:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E0C37646E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 08:35:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232143AbjG0GPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 02:15:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53348 "EHLO
+        id S232303AbjG0GfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 02:35:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbjG0GPc (ORCPT
+        with ESMTP id S232363AbjG0GfR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 02:15:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CBD61731;
-        Wed, 26 Jul 2023 23:15:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 126C161D2B;
-        Thu, 27 Jul 2023 06:15:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA23C433C9;
-        Thu, 27 Jul 2023 06:15:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690438530;
-        bh=0avH5gvbw67Ci8LFP+nYOnJ5qQ+S+HY6Dkvu0dVqhts=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=rMJhdGGgF+AI7bDWkmjrp93bwc1Je+98YwrKdWl1osVO+ouwoXUVtMpb+en7J+nmd
-         lh97XOr+1GWPY+h5JkBnHn2sz00vpvPrltwh6tAGUugdtaSiUGIDGmKjxg7HiLRi6K
-         ADw5OHFKYNkGGL12mdbNZtlfk8GvTHvRSee+yEAa3syZK0DHjXD0Zfr2Fc3M/ZCnku
-         TlnjLYh42zSExLCFsaedek+FU6Ap7Q0WTqvwBidnRs2XTfnWnvM6uKHNGPLnZ1EmAv
-         qAH+KIXBx0Pe5XZxLF34wUhJgnJymfXBOS18NG1x+zmNrIh+45+R+gqYZ/eVlhyMOc
-         OFXnuVSONyurg==
-Received: (nullmailer pid 389051 invoked by uid 1000);
-        Thu, 27 Jul 2023 06:15:20 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Thu, 27 Jul 2023 02:35:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977742D73;
+        Wed, 26 Jul 2023 23:35:03 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R4wbop021720;
+        Thu, 27 Jul 2023 06:34:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=6CKATzv0G8sbjDaxb4lDXf4tA5pU2fqAwEA8flKJmLI=;
+ b=ItJxkeoQwmzKynprAKIs7q3xE/54dGEdPoA3w0Xy9iCb1b0+jZnEFDWhcm885dYqv9rs
+ jyrmzaQsM3Yj3yDy7J2IEahv91JaNUizkZCNSTQqNPtfRkhOvhz1aXINvyB8VVDWfl/M
+ T2fpkVxwwl4ZeveK+KWVodkuHcB2Tg/71xfpN26gkT8gsKhuWCTbhiMTkFM/KPnTS5mE
+ 9ifx+n1mVbX9Zz9aJT8jqhbG63fxf5exBhN1OtiHNIhhkBF5B5X+hHsQLZTI/J4bXn/B
+ 83XSG75A/iTHyFSKGCgpVB8/sweUtY7rYdeZcnSzxjfQL+05nIpesyX4lX3v9jA+/ZYD Tw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s34x6hnrh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 06:34:24 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R6Xusj023060
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 06:33:56 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Wed, 26 Jul 2023 23:33:49 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <rafal@milecki.pl>,
+        <john.garry@huawei.com>, <peng.fan@nxp.com>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH v6 0/5] Enable IPQ5332 USB2
+Date:   Thu, 27 Jul 2023 12:03:13 +0530
+Message-ID: <cover.1690439352.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     bhupesh.sharma@linaro.org, quic_tdas@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com,
-        rfoss@kernel.org, daniel@ffwll.ch, stanimir.k.varbanov@gmail.com,
-        mani@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, airlied@gmail.com,
-        linux-media@vger.kernel.org, sboyd@kernel.org,
-        ulf.hansson@linaro.org, sean@poorly.run, konrad.dybcio@linaro.org,
-        freedreno@lists.freedesktop.org, linux-remoteproc@vger.kernel.org,
-        agross@kernel.org, quic_vgarodia@quicinc.com, robh+dt@kernel.org,
-        vladimir.zapolskiy@linaro.org, marijn.suijten@somainline.org,
-        linux-mmc@vger.kernel.org, mathieu.poirier@linaro.org,
-        mchehab@kernel.org, mturquette@baylibre.com,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
-        jonathan@marek.ca, andersson@kernel.org, robdclark@gmail.com,
-        dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org
-In-Reply-To: <1690433470-24102-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1690433470-24102-1-git-send-email-quic_rohiagar@quicinc.com>
-Message-Id: <169043852071.389034.2408155277675671058.robh@kernel.org>
-Subject: Re: [PATCH] dt-bindings: qcom: Update RPMHPD entries for some SoCs
-Date:   Thu, 27 Jul 2023 00:15:20 -0600
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xPRBMIhZmcLiTXoTRtSWlP2ZVZd8BxDW
+X-Proofpoint-ORIG-GUID: xPRBMIhZmcLiTXoTRtSWlP2ZVZd8BxDW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=367
+ lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 mlxscore=0
+ bulkscore=0 spamscore=0 clxscore=1015 phishscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307270059
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch series adds the relevant phy and controller
+configurations for enabling USB2 on IPQ5332
 
-On Thu, 27 Jul 2023 10:21:10 +0530, Rohit Agarwal wrote:
-> Update the RPMHPD references with new bindings defined in rpmhpd.h
-> for Qualcomm SoCs SM8[2345]50.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml    | 3 ++-
->  Documentation/devicetree/bindings/clock/qcom,sm8350-videocc.yaml   | 3 ++-
->  Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml     | 3 ++-
->  Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml    | 3 ++-
->  Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml   | 3 ++-
->  Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml    | 3 ++-
->  Documentation/devicetree/bindings/clock/qcom,videocc.yaml          | 3 ++-
->  Documentation/devicetree/bindings/display/msm/qcom,sm8250-dpu.yaml | 3 ++-
->  .../devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml          | 7 ++++---
->  Documentation/devicetree/bindings/display/msm/qcom,sm8350-dpu.yaml | 3 ++-
->  .../devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml          | 5 +++--
->  Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml | 3 ++-
->  .../devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml          | 7 ++++---
->  Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml | 3 ++-
->  .../devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml          | 7 ++++---
->  Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml     | 3 ++-
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml               | 3 ++-
->  Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.yaml  | 5 +++--
->  18 files changed, 44 insertions(+), 26 deletions(-)
-> 
+v6:
+	Binding and dts:-
+		Dropped the qcom,dwc3.yaml patch as it has been picked up for linux-next
+		Add const to compatible, vdd-supply
+		Move nodes per register address
+	Driver:-
+		Add vdd-supply
+		Cleanup error paths in probe with dev_err_probe
+v5:
+	Binding and dts:-
+		Fix email id
+		Removed 'Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>'
+		as had to change bindings file to be able to use generic phy instead of
+		usb-phy
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+	Driver:-
+		Remove unused definition
+		Use generic phy instead of usb-phy
+v4:
+	Binding and dts:-
+		Change node name (bindings & dts)
+	Driver:-
+		Remove unused enum
+		static const for '.data'
+		Error handling for devm_clk_get
+v3:
+	Fix bindings file based on review comments
 
-yamllint warnings/errors:
+v1:
+	Cleanup DTS
+	Combine driver, kconfig and makefile patches
+	Remove unused functions from M31 driver
+	Drop the clock driver changes
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.example.dts:22:18: fatal error: dt-bindings/power/qcom,rpmhpd.h: No such file or directory
-   22 |         #include <dt-bindings/power/qcom,rpmhpd.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
+Varadarajan Narayanan (5):
+  dt-bindings: phy: qcom,m31: Document qcom,m31 USB phy
+  phy: qcom-m31: Introduce qcom,m31 USB phy driver
+  arm64: dts: qcom: ipq5332: Add USB related nodes
+  arm64: dts: qcom: ipq5332: Enable USB
+  arm64: defconfig: Enable M31 USB phy driver
 
-doc reference errors (make refcheckdocs):
+ .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml       |  59 +++++
+ arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts        |  23 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |  55 +++++
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/phy/qualcomm/Kconfig                       |  11 +
+ drivers/phy/qualcomm/Makefile                      |   1 +
+ drivers/phy/qualcomm/phy-qcom-m31.c                | 248 +++++++++++++++++++++
+ 7 files changed, 398 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-m31.c
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1690433470-24102-1-git-send-email-quic_rohiagar@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+-- 
+2.7.4
 
