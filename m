@@ -2,153 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB610765D4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 22:26:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A379765D6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 22:33:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232893AbjG0U0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 16:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51658 "EHLO
+        id S229590AbjG0UdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 16:33:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230460AbjG0UZu (ORCPT
+        with ESMTP id S231755AbjG0Uc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 16:25:50 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA971422B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 13:25:32 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1811F204BA;
-        Thu, 27 Jul 2023 22:25:30 +0200 (CEST)
-Date:   Thu, 27 Jul 2023 22:25:28 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 7/7] drm/msm/dpu: move INTF tearing checks to
- dpu_encoder_phys_cmd_init
-Message-ID: <b2uzkzfoj4sfg3fx3ufjd7i2x5dbbnsccodrgk7cnfvjf3yak4@tbesdrg2tke4>
-References: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
- <20230727162104.1497483-8-dmitry.baryshkov@linaro.org>
- <bmmqdo6dyewxrgcfk3vcuff3tgrb6iqgzby3ionl4shaido2vw@cqc2qnvu3fnj>
+        Thu, 27 Jul 2023 16:32:57 -0400
+Received: from smtprelay08.ispgateway.de (smtprelay08.ispgateway.de [134.119.228.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5412C94;
+        Thu, 27 Jul 2023 13:32:53 -0700 (PDT)
+Received: from [77.64.243.219] (helo=note-book.lan)
+        by smtprelay08.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <git@apitzsch.eu>)
+        id 1qP7fB-000859-S1; Thu, 27 Jul 2023 22:32:45 +0200
+From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+Subject: [PATCH v3 0/2] arm64: dts: qcom: msm8939-longcheer-l9100: Add
+ initial dts
+Date:   Thu, 27 Jul 2023 22:32:16 +0200
+Message-Id: <20230727-bq_m5-v3-0-df5e227c79d0@apitzsch.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bmmqdo6dyewxrgcfk3vcuff3tgrb6iqgzby3ionl4shaido2vw@cqc2qnvu3fnj>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAFDUwmQC/12Myw6CMBBFf4XM2po+IKWu/A9jTFsGmYWILTYq4
+ d8tJCbq8tzccyaIGAgj7IoJAiaKdO0zqE0BvrP9GRk1mUFyqbiWJXO306VizhvbotJ1WzeQv0P
+ Alh5r53DM3FEcr+G5ZpNY1v9CEowzoS2vNbdaOdzbgcZX9N0W77A0kvz2qo8ns2e0Nl6WxqITv
+ 948z2+RvlnG1AAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-07-27 22:22:20, Marijn Suijten wrote:
-> On 2023-07-27 19:21:04, Dmitry Baryshkov wrote:
-> > As the INTF is fixed at the encoder creation time, we can move the
-> > check whether INTF supports tearchck to dpu_encoder_phys_cmd_init().
-> > This function can return an error if INTF doesn't have required feature.
-> > Performing this check in dpu_encoder_phys_cmd_tearcheck_config() is less
-> > useful, as this function returns void.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 37 +++++++++++--------
-> >  1 file changed, 21 insertions(+), 16 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > index 04a1106101a7..e1dd0e1b4793 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > @@ -325,24 +325,17 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
-> >  	unsigned long vsync_hz;
-> >  	struct dpu_kms *dpu_kms;
-> >  
-> > -	if (phys_enc->has_intf_te) {
-> > -		if (!phys_enc->hw_intf ||
-> > -		    !phys_enc->hw_intf->ops.enable_tearcheck) {
-> > -			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > -			return;
-> > -		}
-> > -
-> > -		DPU_DEBUG_CMDENC(cmd_enc, "");
-> > -	} else {
-> > -		if (!phys_enc->hw_pp ||
-> > -		    !phys_enc->hw_pp->ops.enable_tearcheck) {
-> > -			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > -			return;
-> > -		}
-> > -
-> > -		DPU_DEBUG_CMDENC(cmd_enc, "pp %d\n", phys_enc->hw_pp->idx - PINGPONG_0);
-> > +	if (!phys_enc->has_intf_te &&
-> > +	    (!phys_enc->hw_pp ||
-> > +	     !phys_enc->hw_pp->ops.enable_tearcheck)) {
-> 
-> when is hw_pp assigned?  Can't we also check that somewhere in an init
-> phase?
+This dts adds support for BQ Aquaris M5 (Longcheer L9100) released in
+2015.
 
-It would happen right before dpu_encoder_phys_cmd_atomic_mode_set()
-where we already happen to check has_intf_te to switch on PP
-intr_readptr vs INTF intr_tear_rd_ptr.  Might be the perfect place for
-the pingpong callback checks?
+Add a device tree with initial support for:
 
-- Marijn
+- GPIO keys
+- Hall sensor
+- SDHCI
+- WCNSS (BT/WIFI)
+- Accelerometer/Magnetometer
+- Vibrator
+- Touchscreen
+- Front flash
 
-> 
-> Also, you won't go over 100 chars (not even 80) by having the (!... ||
-> !...) on a single line.
-> 
-> > +		DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > +		return;
-> >  	}
-> >  
-> > +	DPU_DEBUG_CMDENC(cmd_enc, "intf %d pp %d\n",
-> > +			 phys_enc->hw_intf->idx - INTF_0,
-> > +			 phys_enc->hw_pp->idx - PINGPONG_0);
-> > +
-> >  	mode = &phys_enc->cached_mode;
-> >  
-> >  	dpu_kms = phys_enc->dpu_kms;
-> > @@ -768,9 +761,21 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
-> >  	phys_enc->intf_mode = INTF_MODE_CMD;
-> >  	cmd_enc->stream_sel = 0;
-> >  
-> > +	if (!phys_enc->hw_intf) {
-> > +		DPU_ERROR_CMDENC(cmd_enc, "no INTF provided\n");
-> > +
-> > +		return ERR_PTR(-EINVAL);
-> > +	}
-> > +
-> >  	if (phys_enc->dpu_kms->catalog->mdss_ver->core_major_ver >= 5)
-> >  		phys_enc->has_intf_te = true;
-> >  
-> > +	if (phys_enc->has_intf_te && !phys_enc->hw_intf->ops.enable_tearcheck) {
-> 
-> Any other callbacks we could check here, and remove the checks
-> elsewhere?
-> 
-> As with enable_tearcheck() though, it does make the code less consistent
-> with its PP counterpart, which is checked ad-hoc everywhere (but maybe
-> that is fixable too).
-> 
-> - Marijn
-> 
-> > +		DPU_ERROR_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > +
-> > +		return ERR_PTR(-EINVAL);
-> > +	}
-> > +
-> >  	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
-> >  	init_waitqueue_head(&cmd_enc->pending_vblank_wq);
-> >  
-> > -- 
-> > 2.39.2
-> > 
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+---
+Changes in v3:
+- use "id-gpios" instead of "id-gpio" to avoid conflicts with
+  https://lore.kernel.org/linux-arm-msm/20230724103914.1779027-7-alexander.stein@ew.tq-group.com/
+  (v2 only contained the changelog entry, but not the actual change) 
+- Link to v2: https://lore.kernel.org/r/20230725-bq_m5-v2-0-9779c249aeb1@apitzsch.eu
+
+Changes in v2:
+- add R-b to first patch
+- sort node extends/overrides by name, but keep &tlmm last, as done in
+  msm8939-samsung-a7.dts
+- use id-gpios, to avoid conflict with
+  https://lore.kernel.org/linux-arm-msm/20230724103914.1779027-7-alexander.stein@ew.tq-group.com/
+- don't enable mdss for now; postpone it till display support is added
+- Link to v1: https://lore.kernel.org/r/20230724-bq_m5-v1-0-17a0870a73be@apitzsch.eu
+
+---
+André Apitzsch (2):
+      dt-bindings: arm: qcom: Add BQ Aquaris M5
+      arm64: dts: qcom: msm8939-longcheer-l9100: Add initial device tree
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 336 +++++++++++++++++++++
+ 3 files changed, 338 insertions(+)
+---
+base-commit: 451cc82bd11eb6a374f4dbcfc1cf007eafea91ab
+change-id: 20230724-bq_m5-bc9afe378f8d
+
+Best regards,
+-- 
+André Apitzsch <git@apitzsch.eu>
+
