@@ -2,157 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B270E764540
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 07:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D77137645D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 07:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbjG0FGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 01:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43348 "EHLO
+        id S232345AbjG0Fj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 01:39:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230236AbjG0FGu (ORCPT
+        with ESMTP id S231907AbjG0Fiu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 01:06:50 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E56271B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 22:06:48 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3177163aa97so566301f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jul 2023 22:06:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690434407; x=1691039207;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=milfg91uG9nlhd9aFLAx/8EHBpoWNiimDW9/5MxR5qE=;
-        b=SqR9wDcJ/K9nwJZJepovao+MkVJ0TdNofeVh2YnRg6VO5GiudH5oFn9h/1FfQVVRvE
-         8ZlNCHSEvsdhsZZLJ/5/Qf6CQU21Up1ossb+IZGHnWbf3PBHoWsebzYMi7f6OFiplMtg
-         vxOHMSqN7wXgOitTUOvdlJvqxngxskbpjADUWJ5O9YwOwTDGd5d65DZWQXSIRGR3uIvh
-         eJFw4HlIr+gmRESJdtIIdDKmvInlWwYviZwGGR/2npA+DAy/Vx2D9df3Cyh2YOuxOaUw
-         UrJW3ILC8IxAsiSNhTUwdSZjzW5ONxcy9Uev32d5oWZE0JPFcth5s74HwccZfDhaNYbq
-         PLug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690434407; x=1691039207;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=milfg91uG9nlhd9aFLAx/8EHBpoWNiimDW9/5MxR5qE=;
-        b=bOYrzAZPS86l7wAhC1X/pppgRAu+pOY4xBp1gPQqWKP2nQ4M9fnB9lLPBCfU1H8NM3
-         0AcznjQ/6636RLMHdSZlPvKWNHYpTt5QMyahvvuM1+6bEVAPShavAxrjlnBIDOkV+8aW
-         p5g0I1XHXxAmbEvl9VwRp81vJ3iuIuYf/Gewl5Mxq8Nt4ovmFutNLOdTj7jL39E2EXYx
-         mFlFtmMWf5KnuNQoIXYcLrXYyVi7LKSNm5/VJuEYMS7M+j2foScDt41Fr+y00gDqBXPE
-         DRNAfQIXRUfbUbgDvFU0tS1eE5rMcfIyiV82qa3Ac9ljHW8wtqPxwa9mnjtKD8nT7j1E
-         u8bw==
-X-Gm-Message-State: ABy/qLZvNPKtG697ollV8ylyK+QKbVnL9zrsWj3i1zK9BaMT7V+5NPNP
-        jDcxXT53JYNKzmf082hMqEAZ/A==
-X-Google-Smtp-Source: APBJJlG46aaIJPrxFkx4O+Yb8zxZMWWUWxRjBLDV7QlqtwQ/xfDUhdChhPo0mRSZ0sY0wDCljBBp8w==
-X-Received: by 2002:adf:f4c6:0:b0:314:ca7:f30b with SMTP id h6-20020adff4c6000000b003140ca7f30bmr767822wrp.54.1690434407115;
-        Wed, 26 Jul 2023 22:06:47 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id n7-20020a5d6b87000000b003175fef2a32sm820827wrx.55.2023.07.26.22.06.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jul 2023 22:06:46 -0700 (PDT)
-Date:   Thu, 27 Jul 2023 08:06:44 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     oe-kbuild@lists.linux.dev,
-        Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
-        lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        luca.weiss@fairphone.com, konrad.dybcio@linaro.org,
-        u.kleine-koenig@pengutronix.de, quic_subbaram@quicinc.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org,
-        Anjelique Melendez <quic_amelende@quicinc.com>
-Subject: Re: [PATCH v2 3/7] soc: qcom: add QCOM PBS driver
-Message-ID: <85e4f0ef-baf8-4588-a10c-d64821c8c518@kadam.mountain>
+        Thu, 27 Jul 2023 01:38:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4AE30C5;
+        Wed, 26 Jul 2023 22:37:46 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R5FnFU027445;
+        Thu, 27 Jul 2023 05:36:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=LnO6JVSt8v4KBBrvn0hKrjbS5yc5Y5fnC+BDhyBGdv4=;
+ b=Ers8qz/M4XD2XWeBZ4t4RRfcPqQrtuy0tPDwm1aVRlEkdSQfCeWB9D14M5s2GKWcvtvB
+ ejYg2LiZ1FtXS3zXYbzK8F2t0EA0c9RUECkg5nOWAfGsTlVI1BPB0hzBUfSuVzVlFJ6p
+ 4A1Y+k8pHhwrKu3MPTlfK/cak0TFBZvAyQPPscXV/jGTsozlpYRo0Az1tROMNgBpVv+h
+ it1F1mv4PnZWzVhR/pWnf5mwt9Qg0hmmPGhhQR3fqvVRD8xumW+owCSkjcCW42slgu4w
+ UXNr091WFXd8iSa47K29vzzc7r0U3ABg9MZH/jnM66J6ujxwJI74k/rJsBF5NAc8L203 kg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3b0g0q3f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 05:36:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R5aT1t009107
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 05:36:29 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Wed, 26 Jul 2023 22:36:19 -0700
+Date:   Thu, 27 Jul 2023 11:06:16 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+CC:     <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <conor+dt@kernel.org>, <robdclark@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <sean@poorly.run>, <marijn.suijten@somainline.org>,
+        <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <stanimir.k.varbanov@gmail.com>, <quic_vgarodia@quicinc.com>,
+        <mchehab@kernel.org>, <ulf.hansson@linaro.org>,
+        <mathieu.poirier@linaro.org>, <jonathan@marek.ca>,
+        <vladimir.zapolskiy@linaro.org>, <quic_tdas@quicinc.com>,
+        <neil.armstrong@linaro.org>, <rfoss@kernel.org>,
+        <bhupesh.sharma@linaro.org>, <mani@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-media@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+Subject: Re: [PATCH] dt-bindings: qcom: Update RPMHPD entries for some SoCs
+Message-ID: <edac596d-2b3d-4632-9468-4af863aff6f4@quicinc.com>
+References: <1690433470-24102-1-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20230725193423.25047-4-quic_amelende@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <1690433470-24102-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 57CqSPJ2zRgDhBnuohIC8xe-8JXgN930
+X-Proofpoint-ORIG-GUID: 57CqSPJ2zRgDhBnuohIC8xe-8JXgN930
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0 mlxlogscore=722
+ mlxscore=0 adultscore=0 clxscore=1011 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307270049
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Anjelique,
+On Thu, Jul 27, 2023 at 10:21:10AM +0530, Rohit Agarwal wrote:
+> Update the RPMHPD references with new bindings defined in rpmhpd.h
+> for Qualcomm SoCs SM8[2345]50.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml    | 3 ++-
+>  Documentation/devicetree/bindings/clock/qcom,sm8350-videocc.yaml   | 3 ++-
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml     | 3 ++-
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml    | 3 ++-
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml   | 3 ++-
+>  Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml    | 3 ++-
+>  Documentation/devicetree/bindings/clock/qcom,videocc.yaml          | 3 ++-
+>  Documentation/devicetree/bindings/display/msm/qcom,sm8250-dpu.yaml | 3 ++-
+>  .../devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml          | 7 ++++---
+>  Documentation/devicetree/bindings/display/msm/qcom,sm8350-dpu.yaml | 3 ++-
+>  .../devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml          | 5 +++--
+>  Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml | 3 ++-
+>  .../devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml          | 7 ++++---
+>  Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml | 3 ++-
+>  .../devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml          | 7 ++++---
+>  Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml     | 3 ++-
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml               | 3 ++-
+>  Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.yaml  | 5 +++--
+>  18 files changed, 44 insertions(+), 26 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> index d6774db..d6b81c0 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> @@ -83,6 +83,7 @@ examples:
+>    - |
+>      #include <dt-bindings/clock/qcom,rpmh.h>
+>      #include <dt-bindings/power/qcom-rpmpd.h>
+> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+>      clock-controller@af00000 {
+>        compatible = "qcom,sm8250-dispcc";
+>        reg = <0x0af00000 0x10000>;
+> @@ -103,7 +104,7 @@ examples:
+>        #clock-cells = <1>;
+>        #reset-cells = <1>;
+>        #power-domain-cells = <1>;
+> -      power-domains = <&rpmhpd SM8250_MMCX>;
+> +      power-domains = <&rpmhpd RPMHPD_MMCX>;
+>        required-opps = <&rpmhpd_opp_low_svs>;
+>      };
+>  ...
 
-kernel test robot noticed the following build warnings:
+Does this file still need to include old header? The same is applicable
+to some of the other files in the patch also. 
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+We also discussed on the other thread [1] to move the regulator level 
+definitions to new header. should this change be done after that, so that 
+we don't end up touching the very same files again?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Anjelique-Melendez/dt-bindings-soc-qcom-Add-qcom-pbs-bindings/20230726-034011
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230725193423.25047-4-quic_amelende%40quicinc.com
-patch subject: [PATCH v2 3/7] soc: qcom: add QCOM PBS driver
-config: parisc-randconfig-m041-20230726 (https://download.01.org/0day-ci/archive/20230727/202307270539.1JVFQf6W-lkp@intel.com/config)
-compiler: hppa-linux-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230727/202307270539.1JVFQf6W-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202307270539.1JVFQf6W-lkp@intel.com/
-
-smatch warnings:
-drivers/soc/qcom/qcom-pbs.c:97 qcom_pbs_wait_for_ack() warn: should this be 'retries == -1'
-
-vim +97 drivers/soc/qcom/qcom-pbs.c
-
-c261225d90e1d3 Anjelique Melendez 2023-07-25   68  static int qcom_pbs_wait_for_ack(struct pbs_dev *pbs, u8 bit_pos)
-c261225d90e1d3 Anjelique Melendez 2023-07-25   69  {
-c261225d90e1d3 Anjelique Melendez 2023-07-25   70  	u16 retries = 2000, delay = 1000;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   71  	int ret;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   72  	u8 val;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   73  
-c261225d90e1d3 Anjelique Melendez 2023-07-25   74  	while (retries--) {
-
-Change this to while (--retries) {
-
-c261225d90e1d3 Anjelique Melendez 2023-07-25   75  		ret = qcom_pbs_read(pbs, PBS_CLIENT_SCRATCH2, &val);
-c261225d90e1d3 Anjelique Melendez 2023-07-25   76  		if (ret < 0)
-c261225d90e1d3 Anjelique Melendez 2023-07-25   77  			return ret;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   78  
-c261225d90e1d3 Anjelique Melendez 2023-07-25   79  		if (val == 0xFF) {
-c261225d90e1d3 Anjelique Melendez 2023-07-25   80  			/* PBS error - clear SCRATCH2 register */
-c261225d90e1d3 Anjelique Melendez 2023-07-25   81  			ret = qcom_pbs_write(pbs, PBS_CLIENT_SCRATCH2, 0);
-c261225d90e1d3 Anjelique Melendez 2023-07-25   82  			if (ret < 0)
-c261225d90e1d3 Anjelique Melendez 2023-07-25   83  				return ret;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   84  
-c261225d90e1d3 Anjelique Melendez 2023-07-25   85  			dev_err(pbs->dev, "NACK from PBS for bit %u\n", bit_pos);
-c261225d90e1d3 Anjelique Melendez 2023-07-25   86  			return -EINVAL;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   87  		}
-c261225d90e1d3 Anjelique Melendez 2023-07-25   88  
-c261225d90e1d3 Anjelique Melendez 2023-07-25   89  		if (val & BIT(bit_pos)) {
-c261225d90e1d3 Anjelique Melendez 2023-07-25   90  			dev_dbg(pbs->dev, "PBS sequence for bit %u executed!\n", bit_pos);
-c261225d90e1d3 Anjelique Melendez 2023-07-25   91  			break;
-c261225d90e1d3 Anjelique Melendez 2023-07-25   92  		}
-c261225d90e1d3 Anjelique Melendez 2023-07-25   93  
-c261225d90e1d3 Anjelique Melendez 2023-07-25   94  		usleep_range(delay, delay + 100);
-c261225d90e1d3 Anjelique Melendez 2023-07-25   95  	}
-c261225d90e1d3 Anjelique Melendez 2023-07-25   96  
-c261225d90e1d3 Anjelique Melendez 2023-07-25  @97  	if (!retries) {
-
-Otherwise this check needs to be: "if (retries == USHRT_MAX)".
-
-Btw, I really feel like people are generally better off declaring list
-iterators as int whenever possible.  I have written a very rude blog
-to that effect.
-https://staticthinking.wordpress.com/2022/06/01/unsigned-int-i-is-stupid/
-
-c261225d90e1d3 Anjelique Melendez 2023-07-25   98  		dev_err(pbs->dev, "Timeout for PBS ACK/NACK for bit %u\n", bit_pos);
-c261225d90e1d3 Anjelique Melendez 2023-07-25   99  		return -ETIMEDOUT;
-c261225d90e1d3 Anjelique Melendez 2023-07-25  100  	}
-c261225d90e1d3 Anjelique Melendez 2023-07-25  101  
-c261225d90e1d3 Anjelique Melendez 2023-07-25  102  	return 0;
-c261225d90e1d3 Anjelique Melendez 2023-07-25  103  }
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
-
+[1]
+https://lore.kernel.org/all/a4zztrn6jhblozdswba7psqtvjt5l765mfr3yl4llsm5gsyqef@7x6q7yabydvm/
