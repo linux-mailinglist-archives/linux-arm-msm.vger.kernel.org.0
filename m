@@ -2,211 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FBB9765FED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 00:50:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3FBD766008
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 00:59:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230478AbjG0Wub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 18:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56786 "EHLO
+        id S233150AbjG0W7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 18:59:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233029AbjG0Wua (ORCPT
+        with ESMTP id S229870AbjG0W7n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 18:50:30 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB391FCD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:50:29 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-583c48a9aa1so16761947b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:50:29 -0700 (PDT)
+        Thu, 27 Jul 2023 18:59:43 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7968D270F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:59:41 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-686ba29ccb1so940085b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 15:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690498228; x=1691103028;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IacxlEjz7I0pKANVMIoEfAvY9SNWx/TOEgfD76ScziE=;
-        b=hTRIUAovwyusBAov6dP/PzlxQdpp53Dx8/9qF1r/Nbocte5YooJVA/yXssgaa6Zspx
-         IqydTk2G8nj9CaIe0nWup+8mBFa/2Ge33I4TT4By4DikcwdpsHDVkevS1HqN3XPFdDvh
-         Bz+SQU86HD3QMd4Gm5T0x7iUHfh4S2RzKdYlCzQAsEcGWr8e4alopWWZNZXqsWjxw4L7
-         QjaBynrimhUKZHjGA46gfCgoZTIUevARZRpoa4qfMdLUWX/3WEIFqybipguKOlARnCy1
-         oqO0IxeLf05qB/ZsThWkC42mPTV61TJVJVNg78D6Xb0RBJYiQC+PtC3cT3Xu2gM4GFAn
-         coxA==
+        d=fromorbit-com.20221208.gappssmtp.com; s=20221208; t=1690498781; x=1691103581;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8CTrna5t3S7P99W+zrM1I2ApZYIkXTVQedDFVAI6oIw=;
+        b=X7pt5OuyEbf8f6R9fnvI9dxfnaaqjP1RGRY8ZMiJ1wEZkopGyRUZXV3N7HE87n67xj
+         XeLWxsKHlNX6ErnVJUF/xO5BY5VT61hhmCqWCbxit+6W6UUMx7WmvB86s0q+wgGSoL6W
+         koucWxrpBOYNBJME5+HxRa/lXlSreJXWQaoDeJrNnWxYMUw7bNkMz2551ucFVRtsjQZW
+         0ldvdZqoq1ohkP2t1Jbzv+uf1kwplqapkGN1TtrTmsgZICGsR0gfv1ElN5pvcVjNfGjj
+         OPatiCTf9mYCZ8F6QAcUCONXn7kELLjAWaYShbgFOaFFniHTDeIvjRJJRIf4kK+rSYkZ
+         RVyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690498228; x=1691103028;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IacxlEjz7I0pKANVMIoEfAvY9SNWx/TOEgfD76ScziE=;
-        b=PUBqnrOK+fKPfQEEnWx5bsRSkqn6BRWAr6/kJZTSsr8uF/mUtgf5kJ6dNdDU2ANfx8
-         IFierIS1nM4kLJ1Y0TDyFy9uXqx7ZCf6XSxpPSZMgfgl6Bn72wGRUn3SxKmQSZS7dVXv
-         FyF0K+94OFitTNK68reSWqXi+4ZLZdy3q0R32KVJfaLQh9SZMMch4LEjB8+QZ0WwiuEh
-         Na87KuYW/gonrLSNNrkj9Lz3xvjop8l6+OgW7LsJ+LWOgNchHtx+tD00uwouHUQNWVZR
-         EXSZ+kX2czjS654gHIOdTKepj2W+Oh7ZGyDFAu58pXDdf9oPE5hIlXJ3DzJTSBAV21YI
-         jLnA==
-X-Gm-Message-State: ABy/qLa9taJTOpxqgwclAxQimvtwmTsb7TdlkT5KfT2hyOc9NP5rbHuw
-        mo6cSCZ6L2y0jY9pXupjZzvyNQWsyRbcWKvt7GjpmQ==
-X-Google-Smtp-Source: APBJJlEiSr802YZ16rdHuXKHxTCkHUN85vRlxaGAzoACRRi7R+TLr1ZB+C5cOeKBxtuibFykQpiiqrAIl567cV846CM=
-X-Received: by 2002:a0d:e647:0:b0:576:91e0:b8c5 with SMTP id
- p68-20020a0de647000000b0057691e0b8c5mr45212ywe.0.1690498228308; Thu, 27 Jul
- 2023 15:50:28 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690498781; x=1691103581;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8CTrna5t3S7P99W+zrM1I2ApZYIkXTVQedDFVAI6oIw=;
+        b=ekcG/j4bEs0cU8Keaxdgi4kV54b2I5LhIfeh/djiH/UInQzHhE0kIkuVmTnNBMu8RE
+         Q4K9nOB0RJCk2J1rEyMwzxgTv2mXKwypxxPjMQiNDgLu3vJ3foAei3FDX4MLJ9KJzZiw
+         yxcWMaqg7ZpfbZo1YeGrqx1HU2PNoybm21j2iZB82+rIJrgyEJMmjoE4rxrZ4mz2ZTNj
+         f7X4hu7QBc3CMJDrscEJMVcNaGm51fEVRdohAMnyUFNLXOcyHQCseeFFJpZEMKr4FgG1
+         /LSq0s0WXY7RwMdJl9DdWhr5UdWF4nvWycViIxNlqFp6eZvStzUuPfdnX3ll7+Y+55V9
+         szWQ==
+X-Gm-Message-State: ABy/qLaIXihrsNy7atGCoPzZH5TVoQTQv9NlmY2jQuBXnunwP6iNnARJ
+        k7R/9GMq9toab6Dg/3UwYTZxuA==
+X-Google-Smtp-Source: APBJJlGFE8oAcAZu2XvzWjC5bjR81v7OIjjTfZ8m+EaEe6Rjpq3cuwvHN3I08mErFwOZJpneP9Ly1g==
+X-Received: by 2002:a05:6a00:17a8:b0:64d:42b9:6895 with SMTP id s40-20020a056a0017a800b0064d42b96895mr61072pfg.5.1690498780930;
+        Thu, 27 Jul 2023 15:59:40 -0700 (PDT)
+Received: from dread.disaster.area (pa49-186-119-116.pa.vic.optusnet.com.au. [49.186.119.116])
+        by smtp.gmail.com with ESMTPSA id p24-20020aa78618000000b0068702b66ab1sm1115813pfn.174.2023.07.27.15.59.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jul 2023 15:59:40 -0700 (PDT)
+Received: from dave by dread.disaster.area with local (Exim 4.96)
+        (envelope-from <david@fromorbit.com>)
+        id 1qP9xJ-00BKKZ-1O;
+        Fri, 28 Jul 2023 08:59:37 +1000
+Date:   Fri, 28 Jul 2023 08:59:37 +1000
+From:   Dave Chinner <david@fromorbit.com>
+To:     Damien Le Moal <dlemoal@kernel.org>
+Cc:     Qi Zheng <zhengqi.arch@bytedance.com>,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        Muchun Song <songmuchun@bytedance.com>,
+        akpm@linux-foundation.org, tkhai@ya.ru, vbabka@suse.cz,
+        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
+        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
+        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
+        gregkh@linuxfoundation.org, muchun.song@linux.dev
+Subject: Re: [PATCH v3 28/49] dm zoned: dynamically allocate the
+ dm-zoned-meta shrinker
+Message-ID: <ZML22YJi5vPBDEDj@dread.disaster.area>
+References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
+ <20230727080502.77895-29-zhengqi.arch@bytedance.com>
+ <baaf7de4-9a0e-b953-2b6a-46e60c415614@kernel.org>
+ <56ee1d92-28ee-81cb-9c41-6ca7ea6556b0@bytedance.com>
+ <ba0868b2-9f90-3d81-1c91-8810057fb3ce@kernel.org>
 MIME-Version: 1.0
-References: <20230727212208.102501-1-robdclark@gmail.com> <20230727212208.102501-12-robdclark@gmail.com>
-In-Reply-To: <20230727212208.102501-12-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 28 Jul 2023 01:50:17 +0300
-Message-ID: <CAA8EJpoECsKVgat85LFyWaibOZ+O9t8GFBwxsFhOFf7GTf6DzQ@mail.gmail.com>
-Subject: Re: [PATCH v2 11/13] drm/msm/adreno: Move adreno info to config
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Rob Herring <robh@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ba0868b2-9f90-3d81-1c91-8810057fb3ce@kernel.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 28 Jul 2023 at 00:23, Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Let's just stash it in adreno_platform_config rather than looking it up
-> in N different places.
+On Thu, Jul 27, 2023 at 07:20:46PM +0900, Damien Le Moal wrote:
+> On 7/27/23 17:55, Qi Zheng wrote:
+> >>>           goto err;
+> >>>       }
+> >>>   +    zmd->mblk_shrinker->count_objects = dmz_mblock_shrinker_count;
+> >>> +    zmd->mblk_shrinker->scan_objects = dmz_mblock_shrinker_scan;
+> >>> +    zmd->mblk_shrinker->seeks = DEFAULT_SEEKS;
+> >>> +    zmd->mblk_shrinker->private_data = zmd;
+> >>> +
+> >>> +    shrinker_register(zmd->mblk_shrinker);
+> >>
+> >> I fail to see how this new shrinker API is better... Why isn't there a
+> >> shrinker_alloc_and_register() function ? That would avoid adding all this code
+> >> all over the place as the new API call would be very similar to the current
+> >> shrinker_register() call with static allocation.
+> > 
+> > In some registration scenarios, memory needs to be allocated in advance.
+> > So we continue to use the previous prealloc/register_prepared()
+> > algorithm. The shrinker_alloc_and_register() is just a helper function
+> > that combines the two, and this increases the number of APIs that
+> > shrinker exposes to the outside, so I choose not to add this helper.
+> 
+> And that results in more code in many places instead of less code + a simple
+> inline helper in the shrinker header file...
 
-This leaves me with the feeling that we are abusing the
-dev->platform_data, but we were doing it anyway even before the patch.
-So:
+It's not just a "simple helper" - it's a function that has to take 6
+or 7 parameters with a return value that must be checked and
+handled.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This was done in the first versions of the patch set - the amount of
+code in each caller does not go down and, IMO, was much harder to
+read and determine "this is obviously correct" that what we have
+now.
 
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 15 +++------------
->  drivers/gpu/drm/msm/adreno/adreno_device.c |  5 +++--
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  2 +-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  3 +--
->  4 files changed, 8 insertions(+), 17 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index a81a6459c656..9be3260c8033 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -2316,7 +2316,6 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->         struct msm_drm_private *priv = dev->dev_private;
->         struct platform_device *pdev = priv->gpu_pdev;
->         struct adreno_platform_config *config = pdev->dev.platform_data;
-> -       const struct adreno_info *info;
->         struct device_node *node;
->         struct a6xx_gpu *a6xx_gpu;
->         struct adreno_gpu *adreno_gpu;
-> @@ -2341,20 +2340,12 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->
->         adreno_gpu->gmu_is_wrapper = of_device_is_compatible(node, "qcom,adreno-gmu-wrapper");
->
-> -       /*
-> -        * We need to know the platform type before calling into adreno_gpu_init
-> -        * so that the hw_apriv flag can be correctly set. Snoop into the info
-> -        * and grab the revision number
-> -        */
-> -       info = adreno_info(config->rev);
-> -       if (!info)
-> -               return ERR_PTR(-EINVAL);
-> -
-> -       adreno_gpu->base.hw_apriv = !!(info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
-> +       adreno_gpu->base.hw_apriv =
-> +               !!(config->info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
->
->         a6xx_llc_slices_init(pdev, a6xx_gpu);
->
-> -       ret = a6xx_set_supported_hw(&pdev->dev, info);
-> +       ret = a6xx_set_supported_hw(&pdev->dev, config->info);
->         if (ret) {
->                 a6xx_destroy(&(a6xx_gpu->base.base));
->                 return ERR_PTR(ret);
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 7448f299b77c..332cb804a45d 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -508,7 +508,7 @@ bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2)
->                 _rev_match(rev1.patchid, rev2.patchid);
->  }
->
-> -const struct adreno_info *adreno_info(struct adreno_rev rev)
-> +static const struct adreno_info *adreno_info(struct adreno_rev rev)
->  {
->         int i;
->
-> @@ -659,13 +659,14 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->         priv->gpu_pdev = to_platform_device(dev);
->
->         info = adreno_info(config.rev);
-> -
->         if (!info) {
->                 dev_warn(drm->dev, "Unknown GPU revision: %"ADRENO_CHIPID_FMT"\n",
->                         ADRENO_CHIPID_ARGS(config.rev));
->                 return -ENXIO;
->         }
->
-> +       config.info = info;
-> +
->         DBG("Found GPU: %"ADRENO_CHIPID_FMT, ADRENO_CHIPID_ARGS(config.rev));
->
->         priv->is_a2xx = info->family < ADRENO_3XX;
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index a775b4d82735..865ff4c1eaf6 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -1079,7 +1079,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->         int ret;
->
->         adreno_gpu->funcs = funcs;
-> -       adreno_gpu->info = adreno_info(config->rev);
-> +       adreno_gpu->info = config->info;
->         adreno_gpu->rev = *rev;
->
->         /* Only handle the core clock when GMU is not in use (or is absent). */
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index c6fd6f9016d3..81a1396e124d 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -130,8 +130,6 @@ struct adreno_info {
->   */
->  #define ADRENO_SPEEDBINS(tbl...) (struct adreno_speedbin[]) { tbl {SHRT_MAX, 0} }
->
-> -const struct adreno_info *adreno_info(struct adreno_rev rev);
-> -
->  struct adreno_gpu {
->         struct msm_gpu base;
->         struct adreno_rev rev;
-> @@ -185,6 +183,7 @@ struct adreno_ocmem {
->  /* platform config data (ie. from DT, or pdata) */
->  struct adreno_platform_config {
->         struct adreno_rev rev;
-> +       const struct adreno_info *info;
->  };
->
->  #define ADRENO_IDLE_TIMEOUT msecs_to_jiffies(1000)
-> --
-> 2.41.0
->
+> So not adding that super simple
+> helper is not exactly the best choice in my opinion.
 
+Each to their own - I much prefer the existing style/API over having
+to go look up a helper function every time I want to check some
+random shrinker has been set up correctly....
 
+-Dave.
 -- 
-With best wishes
-Dmitry
+Dave Chinner
+david@fromorbit.com
