@@ -2,90 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D10FA76500F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:42:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95FE3765051
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:53:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233944AbjG0Jm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 05:42:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58642 "EHLO
+        id S231178AbjG0JxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 05:53:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233919AbjG0JmN (ORCPT
+        with ESMTP id S232469AbjG0Jw5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 05:42:13 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A19FE11D;
-        Thu, 27 Jul 2023 02:40:52 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R3rD6p017424;
-        Thu, 27 Jul 2023 09:40:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=y6/44QTLWbiB4LbDr07Sx5U/16Pd/jpvUSpYN2bQdxs=;
- b=gYZt2ZfL6LwJWxxUVjny7lpsOUcdJMhhb+CVn0tYn0sust3Iz3x9DgdaT653JCGBu24V
- 3LtDSRcRuW/Sd1zqJbNtyPIGlQuR1+AaaB398k9gEocN/CCWyJAd7Dw55xq8tpclSRDr
- ohiSPviFBHaZPktl4LIAjovPEJf/cXDekvBZrQe5ewFh9LIF24HE3sl5gQK1xUSE2aBH
- nPbwLvm1GVr2W4rgB0UDGZupHvcvec9yw90qZufPG9rARXA53lfeaSYFxCv1IaSjcHb9
- w9TPQoLH1wonveNP98ztMgbiB0SDkxGX/csXvZrsxHcA3g/3I0lLBQtbCFzBSuRhjO8n Iw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3b0g19be-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 09:40:46 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R9egR2005800
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 09:40:42 GMT
-Received: from [10.253.74.152] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
- 2023 02:40:38 -0700
-Message-ID: <a9199018-cbc4-e545-5321-ebc2d3096ff3@quicinc.com>
-Date:   Thu, 27 Jul 2023 17:40:36 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 1/3] input: pm8xxx-vib: refactor to easily support new
- SPMI vibrator
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <dmitry.baryshkov@linaro.org>,
+        Thu, 27 Jul 2023 05:52:57 -0400
+Received: from mgamail.intel.com (unknown [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 358E194;
+        Thu, 27 Jul 2023 02:52:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690451576; x=1721987576;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7ywYBQt+k0wWV597TPC4S52IE0VKtrqKZaO1M88iGqQ=;
+  b=ZoqLQTuCqQoSMKHc2mLAeOKUKM5TmN+Tvvfh3ZTzHkUOwtXeTobIzYol
+   6I/DqqfzwOGLFbw3zws3J3t2AZNRdwBC/p5pgV/crRuDh9qIUK0MTEDgZ
+   1Raw9nbOH7AdJdfWtWmwoCJmc5lV7EtYCc9/PgpIQOq4DaG6cFkjUemAh
+   16UJvlGFzk2H2UzjL46ONxIiWyYrN88BENvs8qJmRNnCSxf6vfIjfJHMI
+   8VqK5BC7HyAPAaqnF1WKnoH8AfmLvDLpHv+J1m/lylIzX8grFvVUSycFi
+   OdB7oFnpTa7EOSZC1aq2blikyunJLVcX2Uvo8jh0QQfmJB9udOZdEY2qT
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="347876600"
+X-IronPort-AV: E=Sophos;i="6.01,234,1684825200"; 
+   d="scan'208";a="347876600"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2023 02:52:55 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="973478188"
+X-IronPort-AV: E=Sophos;i="6.01,234,1684825200"; 
+   d="scan'208";a="973478188"
+Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
+  by fmsmga006.fm.intel.com with ESMTP; 27 Jul 2023 02:52:51 -0700
+Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qOxfU-00029Z-13;
+        Thu, 27 Jul 2023 09:52:32 +0000
+Date:   Thu, 27 Jul 2023 17:50:41 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Charles Boyer <Charles.Boyer@fii-usa.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        <linux-input@vger.kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>
-References: <20230725054138.129497-1-quic_fenglinw@quicinc.com>
- <20230725054138.129497-2-quic_fenglinw@quicinc.com>
- <5dd56c31-7ca3-dd39-0623-e4fd18ac6f68@linaro.org>
- <053c9571-d709-2826-fced-a00dd7255b8b@quicinc.com>
- <2a09e743-7423-65b0-c70d-87ae8105182a@linaro.org>
- <4e416602-8dea-fa6d-d083-f93b730552c3@quicinc.com>
- <a27ad44c-bbc9-0a2e-44fe-ee9b787d0cd4@linaro.org>
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <a27ad44c-bbc9-0a2e-44fe-ee9b787d0cd4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xnrdet9_Y86kZS0WAXZWIhjT-cegNBkJ
-X-Proofpoint-ORIG-GUID: xnrdet9_Y86kZS0WAXZWIhjT-cegNBkJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0 mlxlogscore=472
- mlxscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307270086
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Vivekanand Veeracholan <vveerach@google.com>,
+        Lancelot Kao <lancelot.cy.kao@fii-na.com>
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        Charles Boyer <Charles.Boyer@fii-usa.com>
+Subject: Re: [PATCH] ARM: dts: nuvoton: Add Fii Mori system
+Message-ID: <202307271704.EqCiK6kd-lkp@intel.com>
+References: <20230726184651.1221-1-Charles.Boyer@fii-usa.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230726184651.1221-1-Charles.Boyer@fii-usa.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,71 +75,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Charles,
 
+kernel test robot noticed the following build errors:
 
-On 7/27/2023 5:22 PM, Krzysztof Kozlowski wrote:
-> On 27/07/2023 09:43, Fenglin Wu wrote:
->>
->>
->> On 7/27/2023 3:07 PM, Krzysztof Kozlowski wrote:
->>> On 25/07/2023 08:16, Fenglin Wu wrote:
->>>>>>     
->>>>>> -static const struct pm8xxx_regs pm8058_regs = {
->>>>>> -	.drv_addr = 0x4A,
->>>>>> -	.drv_mask = 0xf8,
->>>>>> -	.drv_shift = 3,
->>>>>> -	.drv_en_manual_mask = 0xfc,
->>>>>> +static struct reg_field ssbi_vib_regs[VIB_MAX_REG] = {
->>>>>
->>>>> Change from const to non-const is wrong. How do you support multiple
->>>>> devices? No, this is way too fragile now.
->>>>>
->>>>
->>>> The register definition is no longer used as the match data, hw_type is
->>>> used.
->>>>
->>>> The last suggestion was getting the register base address from the DT
->>>> and it has to be added into the offset of SPMI vibrator registers
->>>> (either in the previous hard-coded format or the later the reg_filed
->>>> data structure), so it's not appropriated to make it constant.
->>>>
->>>> I don't understand this question: "How do you support multiple devices?"
->>>> For SSBI vibrator, since all the registers are fixed, and I would assume
->>>> that there is no chance to support multiple vibrator devices on the same
->>>> SSBI bus. If they are not on the same bus, the regmap device will be
->>>> different while the registers definition is the same, and we are still
->>>> able to support multiple devices, right?
->>>
->>> No, you have static memory. One device probes and changes static memory
->>> to reg+=base1. Second device probes and changes the same to reg+=base2.
->>
->> Thanks, got it.  I can update it with following 2 options:
->>
->> 1) keep the register definition in 'reg_filed' data structure and make
->> it constant, copy it to a dynamically allocated memory before adding the
->> 'reg_base' to the '.reg' variable.
->>
->> 2) Define the register offsets as constant data and add the 'reg_base'
->> to the 'reg' while using 'regmap_read()'/'regmap_write()' functions.
->>
->> which one is the preferred way?
-> 
-> Depends on the code. I am not sure if 2 would work with regmap_fields.
-> OTOH, I wonder if the device could just create its own regmap instead of
-> using parents? Then there would be no need of this offset dance.
-> 
-> Anyway, adding offset only for some variants seems also not needed. You
-> should add offset to each variant, because each device has this offset.
-> 
-> Best regards,
-> Krzysztof
-> Thanks for the suggestion.
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.5-rc3 next-20230727]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-The Qualcomm SPMI device has to use the 'regmap' from its parent with 16 
-'reg_bits' and 8 'val_bits' config, the higher 8-bit 'reg_bits' is the 
-peripheral ID (PID) and it could be different in different PMICs even 
-for the same type of HW module, and (PID << 8) is the 'reg_base' here.
+url:    https://github.com/intel-lab-lkp/linux/commits/Charles-Boyer/ARM-dts-nuvoton-Add-Fii-Mori-system/20230727-024931
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230726184651.1221-1-Charles.Boyer%40fii-usa.com
+patch subject: [PATCH] ARM: dts: nuvoton: Add Fii Mori system
+config: arm-randconfig-r004-20230726 (https://download.01.org/0day-ci/archive/20230727/202307271704.EqCiK6kd-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
+reproduce: (https://download.01.org/0day-ci/archive/20230727/202307271704.EqCiK6kd-lkp@intel.com/reproduce)
 
-I assume that you are not in favor of copying the constant data into a 
-dynamic allocated memory, so I will go with option 2.
-Thanks
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202307271704.EqCiK6kd-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:649.1-6 Label or path emc0 not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:662.1-7 Label or path ohci1 not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:666.1-5 Label or path aes not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:670.1-5 Label or path sha not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:761.1-8 Label or path sdhci0 not found
+   Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:769.1-7 Label or path ohci1 not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:773.1-6 Label or path vdma not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:777.1-9 Label or path pcimbox not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:781.1-5 Label or path vcd not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:785.1-5 Label or path ece not found
+>> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:818.1-5 Label or path otp not found
+>> FATAL ERROR: Syntax error parsing input tree
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
