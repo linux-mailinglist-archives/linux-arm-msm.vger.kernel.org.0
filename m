@@ -2,117 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95FE3765051
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:53:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 457BA765097
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 12:09:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbjG0JxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 05:53:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37280 "EHLO
+        id S233041AbjG0KJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 06:09:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232469AbjG0Jw5 (ORCPT
+        with ESMTP id S232889AbjG0KJe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 05:52:57 -0400
-Received: from mgamail.intel.com (unknown [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 358E194;
-        Thu, 27 Jul 2023 02:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690451576; x=1721987576;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7ywYBQt+k0wWV597TPC4S52IE0VKtrqKZaO1M88iGqQ=;
-  b=ZoqLQTuCqQoSMKHc2mLAeOKUKM5TmN+Tvvfh3ZTzHkUOwtXeTobIzYol
-   6I/DqqfzwOGLFbw3zws3J3t2AZNRdwBC/p5pgV/crRuDh9qIUK0MTEDgZ
-   1Raw9nbOH7AdJdfWtWmwoCJmc5lV7EtYCc9/PgpIQOq4DaG6cFkjUemAh
-   16UJvlGFzk2H2UzjL46ONxIiWyYrN88BENvs8qJmRNnCSxf6vfIjfJHMI
-   8VqK5BC7HyAPAaqnF1WKnoH8AfmLvDLpHv+J1m/lylIzX8grFvVUSycFi
-   OdB7oFnpTa7EOSZC1aq2blikyunJLVcX2Uvo8jh0QQfmJB9udOZdEY2qT
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="347876600"
-X-IronPort-AV: E=Sophos;i="6.01,234,1684825200"; 
-   d="scan'208";a="347876600"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2023 02:52:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="973478188"
-X-IronPort-AV: E=Sophos;i="6.01,234,1684825200"; 
-   d="scan'208";a="973478188"
-Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
-  by fmsmga006.fm.intel.com with ESMTP; 27 Jul 2023 02:52:51 -0700
-Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qOxfU-00029Z-13;
-        Thu, 27 Jul 2023 09:52:32 +0000
-Date:   Thu, 27 Jul 2023 17:50:41 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Charles Boyer <Charles.Boyer@fii-usa.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Vivekanand Veeracholan <vveerach@google.com>,
-        Lancelot Kao <lancelot.cy.kao@fii-na.com>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Charles Boyer <Charles.Boyer@fii-usa.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Add Fii Mori system
-Message-ID: <202307271704.EqCiK6kd-lkp@intel.com>
-References: <20230726184651.1221-1-Charles.Boyer@fii-usa.com>
+        Thu, 27 Jul 2023 06:09:34 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69181188;
+        Thu, 27 Jul 2023 03:09:33 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R7cTsa032098;
+        Thu, 27 Jul 2023 08:27:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NKlYr7maXj2MJlJF1PrrQfxtQxlWjxAOJLnutsD0eOA=;
+ b=p0UG6d8WqV5cWQeZ6PBmorZIQhKZXlWDgfSqqyty0lqLJN8yodbiVUVLCfpK+L6iY3rP
+ ZRkp39Ap/wEHf6TDqY0Nz4b0uUOM4h4FuUKEZ8hMpnWsBzh3uUcEHoyZe4eGATBfOcTX
+ OEKGXVFyDDALoIPcwex8jhT4awgLgOWb4TMCAlJMS+Oq9m5r1dPvfeiMSe3m+cEZ9t0O
+ nLbV0/3ab3vOyYpbR1C0rkJqXCZUxX5eMQpSznrc1JYDA5qO2TjYfSYVp/t0zPckX2Hq
+ 1rbxjvszsiEU5aSdJBx5t6S10UAlxm5e7F1h+7zo5ZUkL578lOj/Vk31TFW/pctGFfE8 Ag== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s32jn27hq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 08:27:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R8RLA7002405
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Jul 2023 08:27:21 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
+ 2023 01:27:17 -0700
+Message-ID: <dba27a60-8681-e2e7-b89f-608bfbc05e93@quicinc.com>
+Date:   Thu, 27 Jul 2023 16:27:15 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230726184651.1221-1-Charles.Boyer@fii-usa.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: Add base SM4450 QRD DTS
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
+        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230727023508.18002-1-quic_tengfan@quicinc.com>
+ <20230727023508.18002-5-quic_tengfan@quicinc.com>
+ <f974f48a-05b0-530d-25a0-7ccf1b1ad113@linaro.org>
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <f974f48a-05b0-530d-25a0-7ccf1b1ad113@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 03ngIXWe5bw-E65YUbgeox1yOR1wCtu1
+X-Proofpoint-ORIG-GUID: 03ngIXWe5bw-E65YUbgeox1yOR1wCtu1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1015 suspectscore=0 mlxscore=0 phishscore=0 bulkscore=0
+ mlxlogscore=926 lowpriorityscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307270074
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Charles,
 
-kernel test robot noticed the following build errors:
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.5-rc3 next-20230727]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Charles-Boyer/ARM-dts-nuvoton-Add-Fii-Mori-system/20230727-024931
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230726184651.1221-1-Charles.Boyer%40fii-usa.com
-patch subject: [PATCH] ARM: dts: nuvoton: Add Fii Mori system
-config: arm-randconfig-r004-20230726 (https://download.01.org/0day-ci/archive/20230727/202307271704.EqCiK6kd-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
-reproduce: (https://download.01.org/0day-ci/archive/20230727/202307271704.EqCiK6kd-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202307271704.EqCiK6kd-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:649.1-6 Label or path emc0 not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:662.1-7 Label or path ohci1 not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:666.1-5 Label or path aes not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:670.1-5 Label or path sha not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:761.1-8 Label or path sdhci0 not found
-   Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:769.1-7 Label or path ohci1 not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:773.1-6 Label or path vdma not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:777.1-9 Label or path pcimbox not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:781.1-5 Label or path vcd not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:785.1-5 Label or path ece not found
->> Error: arch/arm/boot/dts/nuvoton/nuvoton-npcm730-mori.dts:818.1-5 Label or path otp not found
->> FATAL ERROR: Syntax error parsing input tree
+在 7/27/2023 2:56 PM, Krzysztof Kozlowski 写道:
+> On 27/07/2023 04:35, Tengfei Fan wrote:
+>> Add DTS for Qualcomm QRD platform which uses SM4450 SoC.
+>>
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile       |  1 +
+>>   arch/arm64/boot/dts/qcom/sm4450-qrd.dts | 18 ++++++++++++++++++
+>>   2 files changed, 19 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 337abc4ceb17..db805d0929c8 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -186,6 +186,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= sm4450-qrd.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+>> new file mode 100644
+>> index 000000000000..04ad1dd4285a
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+>> @@ -0,0 +1,18 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include "sm4450.dtsi"
+>> +/ {
+>> +	model = "Qualcomm Technologies, Inc. SM4450 QRD";
+>> +	compatible = "qcom,sm4450-qrd", "qcom,sm4450";
+>> +
+>> +	aliases { };
+>> +
+>> +	chosen {
+>> +		bootargs = "console=hvc0 earlycon=hvc0 hvc_dcc.enable=1 cpuidle.off=1";
+> 
+> No earlycon, no hvc.enable (there is no such parameter), no cpuidle.off
+> (again don't add fake stuff). So the only suitable argument is console,
+> but this should be actually used via stdout path, although it seems
+> there is no device node for such usage?
+Hi Krzysztof,
+Checked upstream linux kernel code, there is not "hvc_dcc.enable", but 
+have other parameters, like earlycon, cpuidle.off.
+Do you mean we should not set "earlycon=hvc0 cpuidle.off=1" parameters, 
+right? only need: bootargs = "console=hvc0" ?
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thx and BRs,
+Tengfei Fan
