@@ -2,97 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 570A67651AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 12:52:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAED9765210
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 13:16:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231792AbjG0KwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 06:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
+        id S231874AbjG0LQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 07:16:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229801AbjG0KwH (ORCPT
+        with ESMTP id S231404AbjG0LQn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 06:52:07 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E118F2688;
-        Thu, 27 Jul 2023 03:52:02 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R6Kkdu019067;
-        Thu, 27 Jul 2023 10:51:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=C5RYwUGjBtTl+5dNSpZ5G/v7elv+x3Dv1cSvaxxti00=;
- b=CEs4QFqqlOSJIZ2XHwnxKUKPFwfqKl5jqZ5uO4D+FZd261MpQdai32vT24itIVqHdyqh
- m0hwlgm0HDtripDdVIOBR8mUoOL8tCnD+PtFUdKSAHJU9qSgXJD/FnJiSe++GoQaC8hF
- ChyJ8LeHMo5NeSn/TNVajeKIbDxkum2ebYsUc/ht7EeVeMZLPdSYUCmU2l1TIZlcFNdT
- je+59zTqzozd0iwXE4MEXqHhpC1LRVVMK7SaLiD1U8I+Cp1yPEmF85iXxXae6VS3hYfo
- 1XGx+cEfZnd5jL4uy4/Dz4ujQ+URC9qyWf/T3Ow7ddj2+jNMbmVkHxgnsOigu4bz3mmB Og== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3k7u0kpp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 10:51:52 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36RApS5S031807
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 10:51:28 GMT
-Received: from [10.253.74.152] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
- 2023 03:51:24 -0700
-Message-ID: <b5e58172-beb5-0be3-834f-3f1db3e8b3b3@quicinc.com>
-Date:   Thu, 27 Jul 2023 18:51:22 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
- support
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-input@vger.kernel.org>, <devicetree@vger.kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>,
-        <quic_huliu@quicinc.com>
-References: <20230718062639.2339589-1-quic_fenglinw@quicinc.com>
- <20230718062639.2339589-2-quic_fenglinw@quicinc.com>
- <cb534cdb-508e-b03e-4e39-50cd6654377a@linaro.org>
- <4cb9f443-bdea-695a-f1b7-3963747e9a17@quicinc.com>
- <5b7e624b-5d06-826d-92d1-2a721b7c83b7@quicinc.com>
- <fec38f3a-f103-ff0f-138c-cffa3a808001@linaro.org>
- <4210b137-2d5d-a467-ea8c-d047701fdcc2@quicinc.com>
- <dd5864ee-7df2-eb64-c7f2-0fb234900d6a@linaro.org>
- <2fa3f27d-ff08-b923-2fb1-cf7cc888e5d5@linaro.org>
- <f1286da7-05a6-c8aa-d13b-075c0fd45b77@quicinc.com>
- <b0999940-8cd1-349d-9bf4-d6494145254c@linaro.org>
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <b0999940-8cd1-349d-9bf4-d6494145254c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Thu, 27 Jul 2023 07:16:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C585C106;
+        Thu, 27 Jul 2023 04:16:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 63A8861E36;
+        Thu, 27 Jul 2023 11:16:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7892C433C9;
+        Thu, 27 Jul 2023 11:16:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690456601;
+        bh=cZkz1oo7ETQltYgDElF9VKUnqpQf2BVJHGb003Z9HnI=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=ABZFhD2nUoRyN8felpz/f4jZtwY2dEKPrcqpX+SpvDEi9T+KMEq4fAV1/EWh2YcE7
+         sVX5Ar5i0P+GGmXCR3c5nfO0z/1IbXIAzv8OWZSVIxzy45OO2IabEYS9LCzl9121/R
+         E8R38PAc4WWHKdhX5GaKLCa4SQAdfkf9nDXuNaqrlNJE+IgyuJxHf4iJMiZyFFN5+t
+         D4kiTzTnVgoOsAg+SzxangBo+WmsjrDZUdSNipY2GEv7jkZpIfL7ZrsL4BB17a0+fD
+         N4TiERBxuHwF5f4F5E+Qd3QAmeGFKWh6/j9VuTPSnONEFm9bIlm7wTiVy5mS7sPpOU
+         kCB/ymedX3baQ==
+Received: (nullmailer pid 1058759 invoked by uid 1000);
+        Thu, 27 Jul 2023 11:16:37 -0000
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mVup8Z_5NoWlGBgLcsqKSsJupBSPeNZN
-X-Proofpoint-ORIG-GUID: mVup8Z_5NoWlGBgLcsqKSsJupBSPeNZN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-27_06,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999
- suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307270097
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     mathieu.poirier@linaro.org, mchehab@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, quic_vgarodia@quicinc.com,
+        konrad.dybcio@linaro.org, agross@kernel.org,
+        freedreno@lists.freedesktop.org, daniel@ffwll.ch,
+        dri-devel@lists.freedesktop.org, jonathan@marek.ca,
+        conor+dt@kernel.org, robh+dt@kernel.org, airlied@gmail.com,
+        linux-mmc@vger.kernel.org, quic_tdas@quicinc.com,
+        stanimir.k.varbanov@gmail.com, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        mturquette@baylibre.com, dmitry.baryshkov@linaro.org,
+        linux-remoteproc@vger.kernel.org, sean@poorly.run,
+        ulf.hansson@linaro.org, devicetree@vger.kernel.org,
+        vladimir.zapolskiy@linaro.org, rfoss@kernel.org, mani@kernel.org,
+        linux-media@vger.kernel.org, sboyd@kernel.org,
+        quic_abhinavk@quicinc.com, bhupesh.sharma@linaro.org,
+        linux-arm-msm@vger.kernel.org, marijn.suijten@somainline.org,
+        neil.armstrong@linaro.org, robdclark@gmail.com
+In-Reply-To: <1690448953-23425-1-git-send-email-quic_rohiagar@quicinc.com>
+References: <1690448953-23425-1-git-send-email-quic_rohiagar@quicinc.com>
+Message-Id: <169045659774.1058731.6391693092002547810.robh@kernel.org>
+Subject: Re: [PATCH v2] dt-bindings: qcom: Update RPMHPD entries for some
+ SoCs
+Date:   Thu, 27 Jul 2023 05:16:37 -0600
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -100,42 +74,62 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 7/27/2023 4:29 PM, Krzysztof Kozlowski wrote:
-> On 27/07/2023 09:54, Fenglin Wu wrote:
->>>>> +          - enum:
->>>>> +              - qcom,pm7550ba-vib
->>>>> +          - const: qcom,pm7325b-vib
->>>>>
->>>>
->>>> Yes
->>>
->>> I wonder why this approved change turned out to something incorrect in
->>> your v3 patch...
->>>
->> Since I got review comments in the driver change and I was told to
->> refactor the driver before adding new HW support. I added the HW type
->> logic in the driver and I was thinking it might be good to add some
->> generic compatible strings to match with the HW type introduced in the
->> driver change.
->>
->> Anyway, I will update it to what you suggested in next patch.
+On Thu, 27 Jul 2023 14:39:13 +0530, Rohit Agarwal wrote:
+> Update the RPMHPD references with new bindings defined in rpmhpd.h
+> for Qualcomm SoCs SM8[2345]50.
 > 
-> Drivers are not really related to bindings, so whatever HW type you add
-> in driver, is not a reason to change bindings. Reason to change bindings
-> could be for example: because hardware is like that.
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml   | 4 ++--
+>  Documentation/devicetree/bindings/clock/qcom,sm8350-videocc.yaml  | 4 ++--
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml    | 4 ++--
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml   | 4 ++--
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml  | 4 ++--
+>  Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml   | 4 ++--
+>  Documentation/devicetree/bindings/clock/qcom,videocc.yaml         | 4 ++--
+>  .../devicetree/bindings/display/msm/qcom,sm8250-dpu.yaml          | 4 ++--
+>  .../devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml         | 8 ++++----
+>  .../devicetree/bindings/display/msm/qcom,sm8350-dpu.yaml          | 4 ++--
+>  .../devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml         | 6 +++---
+>  .../devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml          | 4 ++--
+>  .../devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml         | 8 ++++----
+>  .../devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml          | 4 ++--
+>  .../devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml         | 8 ++++----
+>  Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml    | 4 ++--
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml              | 4 ++--
+>  Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.yaml | 6 +++---
+>  18 files changed, 44 insertions(+), 44 deletions(-)
 > 
-Understood.
 
-Sorry, I forgot to mention, in v3, I added the 'reg' value to the 
-register offset and no longer hard code the 16-bit register address, 
-that makes the vibrators inside PMI632/PM7250B/PM7325B/PM7550BA all 
-compatible, and that was another motivation of adding a generic 
-compatible string and make the others as the fallback.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-This will be still the case in v4, I might keep it similar in v3 but 
-just drop "qcom,spmi-vib-gen1"
+yamllint warnings/errors:
 
-> Best regards,
-> Krzysztof
-> 
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.example.dts:21:18: fatal error: dt-bindings/power/qcom,rpmhpd.h: No such file or directory
+   21 |         #include <dt-bindings/power/qcom,rpmhpd.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: dt_binding_check] Error 2
+make: *** [Makefile:234: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1690448953-23425-1-git-send-email-quic_rohiagar@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
