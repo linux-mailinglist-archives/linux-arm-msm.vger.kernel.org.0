@@ -2,84 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04EA4764EFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:13:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8686E764F2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 11:16:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232770AbjG0JNu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 05:13:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
+        id S231874AbjG0JQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 05:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234586AbjG0JNT (ORCPT
+        with ESMTP id S231617AbjG0JQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 05:13:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83FEE3594;
-        Thu, 27 Jul 2023 02:02:51 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36R80pa7016828;
-        Thu, 27 Jul 2023 09:02:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pzwGFj1DoyxQIuBQv1J+4RIab4lfvzFS295ihCETh+Y=;
- b=e+c5HFLyJhQ9Rxk0x6P931rC1oYzVqsgZagwmHnxmI0XxEZDToNqGITSV344YPXcgc5l
- BPkLV3yN4k/Y6JmnPnCDxf+iAVlp87vs+wD6enzhYn/aWI8yPUzzET8Vmp2eyxWv8TsH
- IxTzDvIwxBREytyIyG+ITWYUSa+Ema1aD9I128tLE5HCLql3i0KrcMpc23UPz9M50ICy
- SoAaHgdxGcb1ioz7TUqyRtj0/BBvZqHhczgyHdpHvGJLdVsoUANQswjGEVZ6Q/BMwv9O
- z7+Etj2pwePqJfHp2aryOhKti9ZhWQhGMmQdg8p1X4TvM/kdUGCbsDixsiIRz0XU67dD VA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3mpt06b6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 09:02:47 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36R92iw2019173
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Jul 2023 09:02:46 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
- 2023 02:02:16 -0700
-Message-ID: <f0f94ea9-94b1-ccd1-0a43-3cb119fc5d94@quicinc.com>
-Date:   Thu, 27 Jul 2023 17:02:14 +0800
+        Thu, 27 Jul 2023 05:16:31 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7115A7EC6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 02:07:13 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-686f74a8992so86347b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 02:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1690448833; x=1691053633;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UKiGuCYavgdrONYSlKU+hjlx/AzCB2LKMORbFgw7HEo=;
+        b=DjrROq91sf6Va+7++jhnZLLfMfZ3NpR+vs103Gffs3+O08HW6byjEgnIqMIjx7XVVU
+         6Esw8LCCRNx5FIzgZD2yLlNtiJ3fWUXbMzLdc62rKZLebfjHSG7L7jgEMl0D1hE7ZoNg
+         HZ2c9Q9i+LL0tt0iImhvHFOK+Hduw2G0dP+6wK+guSG8W2Nz3BegBODQY1lmNQJ14Dz4
+         uuXi2h/k5/64PvGOHou6Defqpklm1cGUHs8RqpArf+xI1YmvbpRswY34ry3JAORO90Jx
+         4NSzh0j5w+vqWxK/Ia35MiibA4wNxyya8QHOgB3QIdRRJ50Wt48gZu09EVgownqRkh1E
+         f6DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690448833; x=1691053633;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UKiGuCYavgdrONYSlKU+hjlx/AzCB2LKMORbFgw7HEo=;
+        b=K778L+QlP8RAtt66mSargNiPvUPD3BiYKZzFqdl0J/KLc9mv5S69FDN95O64PGBdzD
+         8ecw/4XuCo38jxjMO0klQVP+QoBwYq8MyqUtMolnOFRJuYoDPZq/s8aBH2Ff5injo1VY
+         Wtg/oVLsRJL0NnQR+cxXU60T665IeI5eSZGsBcJDCnC4DD3qRtSHiYsMXRrQszAUacyl
+         Ac4JjnjPtIwlw6d5jvgki0N8M8ixIJPeRRHF/uuS/509iVJ+zOJ7cufVk5JIYpNjhDCA
+         Tm54Y5VYUqO5wPQ8Lu3V6iPGXpMGaDbuE4VfQslbKscALxAnqrWFN2KMBVo4IKZG6cKW
+         fKaw==
+X-Gm-Message-State: ABy/qLbKW7gpH0ZAAvSLCOfrtha7vO87QNJq7iuQdY55J7tTBMT9wXZN
+        vxlLe/wLnkBs+QxG32X8wdWNHQ==
+X-Google-Smtp-Source: APBJJlEquEzidizjgrmS1e55j2UU3CMKKyxPnlaVqAXQYQ+ePfvdxx8A4f9JU/BbmCjGKzVhoGuchQ==
+X-Received: by 2002:a17:90a:128e:b0:263:25f9:65b2 with SMTP id g14-20020a17090a128e00b0026325f965b2mr4139877pja.4.1690448832920;
+        Thu, 27 Jul 2023 02:07:12 -0700 (PDT)
+Received: from [10.70.252.135] ([203.208.167.147])
+        by smtp.gmail.com with ESMTPSA id a11-20020a170902ee8b00b001b7e63cfa19sm1063627pld.234.2023.07.27.02.07.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jul 2023 02:07:12 -0700 (PDT)
+Message-ID: <19461737-db63-2ab5-110b-e65035881ae2@bytedance.com>
+Date:   Thu, 27 Jul 2023 17:06:57 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: Add base SM4450 QRD DTS
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
-        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230727023508.18002-1-quic_tengfan@quicinc.com>
- <20230727023508.18002-5-quic_tengfan@quicinc.com>
- <f974f48a-05b0-530d-25a0-7ccf1b1ad113@linaro.org>
- <dba27a60-8681-e2e7-b89f-608bfbc05e93@quicinc.com>
- <e20781ea-09ba-2190-7318-dc62e713302d@linaro.org>
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <e20781ea-09ba-2190-7318-dc62e713302d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Pehz4Zp3NqpLt4gTAgGGvTyqJktE1_LP
-X-Proofpoint-GUID: Pehz4Zp3NqpLt4gTAgGGvTyqJktE1_LP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-26_08,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxlogscore=896
- malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2307270079
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: Re: [PATCH v3 15/49] nfs: dynamically allocate the nfs-acl shrinker
+Content-Language: en-US
+To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
+        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
+        yujie.liu@intel.com, gregkh@linuxfoundation.org,
+        muchun.song@linux.dev
+Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        Muchun Song <songmuchun@bytedance.com>
+References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
+ <20230727080502.77895-16-zhengqi.arch@bytedance.com>
+From:   Qi Zheng <zhengqi.arch@bytedance.com>
+In-Reply-To: <20230727080502.77895-16-zhengqi.arch@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,80 +94,61 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-在 7/27/2023 4:50 PM, Krzysztof Kozlowski 写道:
-> On 27/07/2023 10:27, Tengfei Fan wrote:
->>
->>
->> 在 7/27/2023 2:56 PM, Krzysztof Kozlowski 写道:
->>> On 27/07/2023 04:35, Tengfei Fan wrote:
->>>> Add DTS for Qualcomm QRD platform which uses SM4450 SoC.
->>>>
->>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/Makefile       |  1 +
->>>>    arch/arm64/boot/dts/qcom/sm4450-qrd.dts | 18 ++++++++++++++++++
->>>>    2 files changed, 19 insertions(+)
->>>>    create mode 100644 arch/arm64/boot/dts/qcom/sm4450-qrd.dts
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>>> index 337abc4ceb17..db805d0929c8 100644
->>>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>>> @@ -186,6 +186,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
->>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
->>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
->>>> +dtb-$(CONFIG_ARCH_QCOM)	+= sm4450-qrd.dtb
->>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
->>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
->>>>    dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
->>>> new file mode 100644
->>>> index 000000000000..04ad1dd4285a
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
->>>> @@ -0,0 +1,18 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +
->>>> +/dts-v1/;
->>>> +
->>>> +#include "sm4450.dtsi"
->>>> +/ {
->>>> +	model = "Qualcomm Technologies, Inc. SM4450 QRD";
->>>> +	compatible = "qcom,sm4450-qrd", "qcom,sm4450";
->>>> +
->>>> +	aliases { };
->>>> +
->>>> +	chosen {
->>>> +		bootargs = "console=hvc0 earlycon=hvc0 hvc_dcc.enable=1 cpuidle.off=1";
->>>
->>> No earlycon, no hvc.enable (there is no such parameter), no cpuidle.off
->>> (again don't add fake stuff). So the only suitable argument is console,
->>> but this should be actually used via stdout path, although it seems
->>> there is no device node for such usage?
->> Hi Krzysztof,
->> Checked upstream linux kernel code, there is not "hvc_dcc.enable", but
->> have other parameters, like earlycon, cpuidle.off.
->> Do you mean we should not set "earlycon=hvc0 cpuidle.off=1" parameters,
+On 2023/7/27 16:04, Qi Zheng wrote:
+> Use new APIs to dynamically allocate the nfs-acl shrinker.
 > 
-> Of course not. Why production code would have earlycon? This is debug
-> argument, not suitable for each user of this DTS.
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+> ---
+>   fs/nfs/super.c | 20 ++++++++++++--------
+>   1 file changed, 12 insertions(+), 8 deletions(-)
 > 
-> cpuidle.off is neither explained nor needed. Otherwise please add a
-> comment why this is part of hardware description.
-> 
->> right? only need: bootargs = "console=hvc0" ?
-> 
-> You should use stdout-path if possible. If not, then only console.
-> 
-> Best regards,
-> Krzysztof
-> 
-Sure, will update this patch for have right boorargs parameter.
+> diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+> index 2284f749d892..072d82e1be06 100644
+> --- a/fs/nfs/super.c
+> +++ b/fs/nfs/super.c
+> @@ -129,11 +129,7 @@ static void nfs_ssc_unregister_ops(void)
+>   }
+>   #endif /* CONFIG_NFS_V4_2 */
+>   
+> -static struct shrinker acl_shrinker = {
+> -	.count_objects	= nfs_access_cache_count,
+> -	.scan_objects	= nfs_access_cache_scan,
+> -	.seeks		= DEFAULT_SEEKS,
+> -};
+> +static struct shrinker *acl_shrinker;
+>   
+>   /*
+>    * Register the NFS filesystems
+> @@ -153,9 +149,17 @@ int __init register_nfs_fs(void)
+>   	ret = nfs_register_sysctl();
+>   	if (ret < 0)
+>   		goto error_2;
+> -	ret = register_shrinker(&acl_shrinker, "nfs-acl");
+> -	if (ret < 0)
+> +
+> +	acl_shrinker = shrinker_alloc(0, "nfs-acl");
+> +	if (!acl_shrinker)
+>   		goto error_3;
 
--- 
-Thx and BRs,
-Tengfei Fan
+Here should set ret to -ENOMEM, will fix.
+
+> +
+> +	acl_shrinker->count_objects = nfs_access_cache_count;
+> +	acl_shrinker->scan_objects = nfs_access_cache_scan;
+> +	acl_shrinker->seeks = DEFAULT_SEEKS;
+> +
+> +	shrinker_register(acl_shrinker);
+> +
+>   #ifdef CONFIG_NFS_V4_2
+>   	nfs_ssc_register_ops();
+>   #endif
+> @@ -175,7 +179,7 @@ int __init register_nfs_fs(void)
+>    */
+>   void __exit unregister_nfs_fs(void)
+>   {
+> -	unregister_shrinker(&acl_shrinker);
+> +	shrinker_free(acl_shrinker);
+>   	nfs_unregister_sysctl();
+>   	unregister_nfs4_fs();
+>   #ifdef CONFIG_NFS_V4_2
