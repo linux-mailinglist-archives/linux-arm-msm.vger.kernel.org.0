@@ -2,61 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A47E676496F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 09:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A19764977
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 09:56:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231403AbjG0Hy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 03:54:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
+        id S233436AbjG0Hz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 03:55:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjG0Hyh (ORCPT
+        with ESMTP id S233502AbjG0Hzj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 03:54:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A5BA5252;
-        Thu, 27 Jul 2023 00:50:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DB0F361D93;
-        Thu, 27 Jul 2023 07:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FECC433C8;
-        Thu, 27 Jul 2023 07:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690444222;
-        bh=lWGwY1QhsymOYMK/LuXKj9gYqKYIQIFk/HwFmgDO3HU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MHTKxkLl4FLueg27w9rlU6X20u/MmWpNKiN2jUxJU6n3ksprFcwkrsKnIuGUXHOhE
-         vsNJfq58fPH85c3exh34dqOFYKur2HzW1QJF1xg7a4hquL+OL2j8bEisYNe2azUPLf
-         tu2b9ZCwQF3Zjr+dKgKcetNENV8IOcBEVG7jgaXFDZBqWg2+M31+CWKj+st8bgorCS
-         Q7ucBgDfZpx76xNFgM66BpAIaYiOS77rwU7TGFQXxzskiZkJrGARxOqkvrxdlmw4fQ
-         J4oTZ8+G+ATubDqBsxyy+9OKC+jNWVzQQCongrFjAiRzbkxKDgI1LjSYVG8rwkbeuX
-         W/h/JmcWI9MLA==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qOvlf-00007v-1i;
-        Thu, 27 Jul 2023 09:50:40 +0200
-Date:   Thu, 27 Jul 2023 09:50:39 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Tim Jiang <quic_tjiang@quicinc.com>
-Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        quic_hemantg@quicinc.com
-Subject: Re: [PATCH v13 1/2] Bluetooth: hci_qca: adjust qca btsoc type print
- expression
-Message-ID: <ZMIhz_ULbfwxZjZ8@hovoldconsulting.com>
-References: <20230727044011.965205-1-quic_tjiang@quicinc.com>
- <20230727044011.965205-2-quic_tjiang@quicinc.com>
- <ZMIcZqpN-CBgCFS8@hovoldconsulting.com>
- <11643479-3411-381e-4708-7259f6a15668@quicinc.com>
+        Thu, 27 Jul 2023 03:55:39 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AFBC5FED
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 00:51:26 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe10f0f4d1so1126413e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 00:51:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690444284; x=1691049084;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HgW3/NRO1z7s/S3jKPbCiUySKA2trXiqdFCNmZAzOjk=;
+        b=uaAZmFTo2b/nVU7o5KnvPdEzgzP0tFgFMlIj9YiEOCzrCDEmJeNkaV4gla3HcVngUE
+         0PDKT5cW1h7CfxAaVT+Kqlae9A6SuWFeSYv5d9F/e4LuWijlqg4cTs3/1XkJ3vrBS+j8
+         SnbUKtWBNBD9U1+kCCK5pIlXQaSctlycW/IKB91VBkDEynC94PmGYpmVUgsSdpWxkWBK
+         OX4qYYKUjuA23Go6q7JPXRtBiU1GDhX/xgzdyCnvHYP4EJgevg9rju4wooG3sRjRTjYl
+         hivb68aShqzY8YU6wi3FOv3EvvIUrELuls/YDhjDhzfE5qk1ySqjL2s8zLVSTmHA1vvK
+         sOqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690444284; x=1691049084;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HgW3/NRO1z7s/S3jKPbCiUySKA2trXiqdFCNmZAzOjk=;
+        b=XDkD1UW2jq4elOzVEu2oAFyLY1gBjBkI29JGC+DeDUoCzRq/9omXYXZIzMciiz7HFn
+         1s9ecQ7zM9CWH39onMIvdaDCmM6sUxg1X8Bm6R/DhdC7Xl96SZPJzZDkemDlX3jkwJb4
+         sDPiUAIISr30mk17k00xYbUFZQXLQ9T8G8x6vTaoTsCGFX+q5Ms3hAPWMZ17Sqoxb2l4
+         n+bPSO724ihXftfCrZ57/BBCSXwATtWWyqfzDMUu9KR5mRFCuNimyuKMDIyTFt4Nmdxo
+         eIiFjGDyaE8/svUpCpTD2V/PlyzJmJ/GeDkenoIeZvxaZ3VIl06/PS5p88gO8b+ZdV8n
+         Oo5w==
+X-Gm-Message-State: ABy/qLYwCU9dMkUxrgcBncypTIz2vKq+DYDwkN6lQegFdd3X+s9dx62I
+        A5Q2idyWg0FLMecBUNMphT7v+g==
+X-Google-Smtp-Source: APBJJlF/gI/5ruTJjzW3hVYUDitPZu8brrimMpRC1GxkRrNjH0pPXco1RRmW9Dx5e6eXUn2k5jBX/g==
+X-Received: by 2002:a19:6917:0:b0:4fc:6e21:ff50 with SMTP id e23-20020a196917000000b004fc6e21ff50mr1067788lfc.55.1690444284503;
+        Thu, 27 Jul 2023 00:51:24 -0700 (PDT)
+Received: from [192.168.1.101] (abxj4.neoplus.adsl.tpnet.pl. [83.9.3.4])
+        by smtp.gmail.com with ESMTPSA id c9-20020a05651221a900b004f864690901sm188251lft.244.2023.07.27.00.51.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jul 2023 00:51:24 -0700 (PDT)
+Message-ID: <111f5e38-6f6a-33bc-d17c-c85ae4a57aa8@linaro.org>
+Date:   Thu, 27 Jul 2023 09:51:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <11643479-3411-381e-4708-7259f6a15668@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Freedreno] [PATCH 06/12] drm/msm/adreno: Allow SoC specific gpu
+ device table entries
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org
+References: <20230706211045.204925-1-robdclark@gmail.com>
+ <20230706211045.204925-7-robdclark@gmail.com>
+ <ccbe9ed4-7def-b0d1-2d1c-e2550d212943@linaro.org>
+ <fpwpc7oyxzbfndojr2o2rkv2i66is4ylrtxh4equms7eyu4afc@cwyfgqanhlbo>
+ <CAF6AEGt+qnUBAq3CHS4eTO1YQsbLjj3Urtt2LuSwRJ7XpzPBww@mail.gmail.com>
+ <CAA8EJppJNrcXp8yswDycqA5HuK6bDCKrAkT4ttkGJvsWqD_YMg@mail.gmail.com>
+ <CAF6AEGtLcwKRCMGgLAuABEbSR1CeYKF+D=ffsQLRo-f1BiprbA@mail.gmail.com>
+ <f58998c9-82d3-d2fe-6f1c-801e616467be@linaro.org>
+ <CAF6AEGu4_9kWyHCV0TOOU0vCqLBmrtEZDm9fAeMHNeDei7K8aQ@mail.gmail.com>
+ <CAA8EJpr7Ed3ZBXfFxPV4u0t5obsP8yL5h3vwPMZSHjAMDQaA9w@mail.gmail.com>
+ <CAF6AEGsHw2pkROZoBf=ucMUyk5B_nudHLM0hOJiJbYcawTFNdA@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <CAF6AEGsHw2pkROZoBf=ucMUyk5B_nudHLM0hOJiJbYcawTFNdA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -65,59 +123,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 27, 2023 at 03:34:53PM +0800, Tim Jiang wrote:
-> On 7/27/23 15:27, Johan Hovold wrote:
-> > On Thu, Jul 27, 2023 at 12:40:10PM +0800, Tim Jiang wrote:
+On 27.07.2023 00:53, Rob Clark wrote:
+> On Wed, Jul 26, 2023 at 3:33 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On Thu, 27 Jul 2023 at 01:04, Rob Clark <robdclark@gmail.com> wrote:
+>>>
+>>> On Wed, Jul 26, 2023 at 2:43 PM Dmitry Baryshkov
+>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>
+>>>> On 26/07/2023 23:11, Rob Clark wrote:
+>>>>> On Wed, Jul 26, 2023 at 1:00 PM Dmitry Baryshkov
+>>>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>>>
+>>>>>> On Wed, 26 Jul 2023 at 21:28, Rob Clark <robdclark@gmail.com> wrote:
+>>>>>>>
+>>>>>>> On Thu, Jul 13, 2023 at 1:26 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>>>>>>>>
+>>>>>>>> On Fri, Jul 07, 2023 at 05:34:04AM +0300, Dmitry Baryshkov wrote:
+>>>>>>>>>
+>>>>>>>>> On 07/07/2023 00:10, Rob Clark wrote:
+>>>>>>>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>>>>>>>
+>>>>>>>>>> There are cases where there are differences due to SoC integration.
+>>>>>>>>>> Such as cache-coherency support, and (in the next patch) e-fuse to
+>>>>>>>>>> speedbin mappings.
+>>>>>>>>>
+>>>>>>>>> I have the feeling that we are trying to circumvent the way DT works. I'd
+>>>>>>>>> suggest adding explicit SoC-compatible strings to Adreno bindings and then
+>>>>>>>>> using of_device_id::data and then of_device_get_match_data().
+>>>>>>>>>
+>>>>>>>> Just thinking, then how about a unique compatible string which we match
+>>>>>>>> to identify gpu->info and drop chip-id check completely here?
+>>>>>>>
+>>>>>>> Ok, I think we could do this, so something like:
+>>>>>>>
+>>>>>>>    compatible = "qcom,sm4350-adreno-619.0", qcom,adreno-619.0", "qcom,adreno"
+>>>>>>>
+>>>>>>> ?
+>>>>>>>
+>>>>>>> It looks like we don't have gpu dt bits upstream yet for either sm4350
+>>>>>>> or sm6375, so I suppose we could get away with this change
+>>>>>>
+>>>>>> I think we can even skip the 619.0 part in the SoC compat string.
+>>>>>> So it will be:
+>>>>>>
+>>>>>> compatible = "qcom,sm4350-adreno", qcom,adreno-619.0", "qcom,adreno";
+>>>>>>
+>>>>>> In future we can drop the chipid part completely and handle that as a
+>>>>>> part of SoC data:
+>>>>>>
+>>>>>> compatible = "qcom,sm4350-adreno", "qcom,adreno";
+>>>>>>
+>>>>>> With the driver knowing that sm4350-adreno means ADRENO_ID(6,1,9,0)
+>>>>>>
+>>>>>
+>>>>> I don't think we can do that, there are cases where the same SoC had
+>>>>> multiple revisions of adreno.
+>>>>
+>>>> Is that the case for the production versions of the SoC? In other
+>>>> subsystems what we usually do is that we add support only for the latest
+>>>> SoC revision (which would probably mean the latest GPU patch revision).
+>>>> Previous GPU revisions can be added in the following way (pure example):
+>>>>
+>>>> qcom,sm4350-adreno -> 6,1,9,1 // assuming v2.0 or v1.1 is the commercial
+>>>> sample
+>>>> qcom,sm4350-v1-adreno -> 6,1,9,0
+>>>>
+>>>
+>>> My recollection was that nexus4 shipped with an early version of 8064
+>>> which needed userspace workarounds that later 8064 did not.  Not sure
+>>> if that is the only such example, but it is one that userspace needed
+>>> to be aware of.
+>>
+>> Good question. I don't have nexus4, and both nexus7 and ifc6410 work fine.
+>>
+>> And this is a perfect use case for "qcom,apq8064-v1.1-adreno" compat string.
+> 
+> I no longer have a n4 that boots.. but if I did both it and the later
+> ones should work properly if they expose the appropriate chip id
+> 
+> I do still prefer parsing the chip-id out of the compatible.  It
+> avoids needing separate table entries just to have a different
+> chip-id.  Maybe the scheme that is used elsewhere makes sense when it
+> is only the kernel that needs to be aware of the device-id.  And maybe
+> we could just done matching based on compat-id in userspace as well,
+> but (a) msm and freedreno pre-date dt, and (b) that ship has already
+> sailed.
+I think a per-soc dt would be the better approach..
 
-> >> @@ -1762,10 +1763,32 @@ static int qca_setup(struct hci_uart *hu)
-> >>   	 */
-> >>   	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
-> >>   
-> >> -	bt_dev_info(hdev, "setting up %s",
-> >> -		qca_is_wcn399x(soc_type) ? "wcn399x" :
-> >> -		(soc_type == QCA_WCN6750) ? "wcn6750" :
-> >> -		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
-> >> +	switch (soc_type) {
-> >> +	case QCA_AR3002:
-> >> +		soc_name = "ar300x";
-> >> +		break;
-> >> +	case QCA_ROME:
-> >> +		soc_name = "ROME";
-> >> +		break;
-> >> +	case QCA_QCA6390:
-> >> +		soc_name = "QCA6390";
-> >> +		break;
-> >> +	case QCA_WCN3990:
-> >> +	case QCA_WCN3991:
-> >> +	case QCA_WCN3998:
-> >> +		soc_name = "wcn399x";
-> >> +		break;
-> >> +	case QCA_WCN6750:
-> >> +		soc_name = "wcn6750";
-> >> +		break;
-> >> +	case QCA_WCN6855:
-> >> +		soc_name = "wcn6855";
-> >> +		break;
-> > I still think the above should be sorted (alphabetically) as maintaining
-> > these lists otherwise soon becomes harder than it should be. And similar
-> > throughout the driver.
+We could probably solve the revision issue with a socid readout of
+the silicon revision and override based on that?
 
-> [Tim] Hi Johan: I think we no need to sort it, we only add the new btsoc 
-> name following the older one, for example , ar300x is the oldest , ROME 
-> is new than ar300x, actually qca2066 is newer version chip than qca6390, 
-> so I does not think we need to sort it.
+Konrad
 
-Possibly, but generally this becomes hard to maintain and eventually
-someone will need to sort these entries anyway. Therefore it's generally
-a good idea to just do so from the start.
-
-But it was good that you replied so that we know that this comment was
-not just missed or ignored.
-
-> >> +	default:
-> >> +		soc_name = "unknown soc";
-> >> +		break;
-> >> +	}
-> >> +	bt_dev_info(hdev, "setting up %s", soc_name);
-
-Johan
