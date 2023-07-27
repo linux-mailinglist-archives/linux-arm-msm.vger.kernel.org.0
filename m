@@ -2,76 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 964BA76550C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 15:32:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62D15765528
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jul 2023 15:34:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232399AbjG0NcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 09:32:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35444 "EHLO
+        id S233645AbjG0Ne5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 09:34:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232196AbjG0NcD (ORCPT
+        with ESMTP id S233521AbjG0Ne4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 09:32:03 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E031F2726
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 06:32:00 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fba8f2197bso1601867e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 06:32:00 -0700 (PDT)
+        Thu, 27 Jul 2023 09:34:56 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35742D4F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 06:34:53 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b9ba3d6157so14198041fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 06:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690464719; x=1691069519;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UPE4TBElDR4y39lTmG7JZpz2ESdKsKwdorqzx2sJXLk=;
-        b=VjGQP1G8bE6Yo9Wis2AmqBqq+Ohbe9w47dUzYYg0XKyyTPx4ZNTouG0dcmMOf6iPbf
-         /LSAUgAmtk+Mgn0w1jILRq5n3gFt5N7VDFznOwlzn1Pt+7SdILRrqGRka3cZTq7PVDt2
-         KgmEGlJ7+3sZ71iJPJRpCcVAonL3y4KWYaY9/0A9TE6c8u9oqrtMXw7pmdlT2bcEdMYY
-         JpH/tobBWXwE438coBX2BIJNQM6oEa0PENz+Jp5DKF9cPlVpMNkrHceiwVDJRdnoWhkv
-         G8BvElLnQ36AfDSR/p46x5Pu4Gct7225SVQI2cgCxy2TrA3wMlPw1vXjrKjEfuk48Rwm
-         FKig==
+        d=linaro.org; s=google; t=1690464892; x=1691069692;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9uwU8ola2qkLcSKy+1rI5aYJOesLH456/lp3WB7O6aM=;
+        b=C50x3UuXGGD+pywiK4+NxP6WrckJr3mb0tanueA232jGBD3tAJBugCLuZMBPwUmVXL
+         fGKbEqxDdprS+Ycgh/dvbY/2g8e05/FJ1Fqo1akjAeZBvXX1+bwtLWS/iq5Rfw3B8x1p
+         DNtAH0CCgf5///3MQ6sz/ERGZ5DhnkjJSIyIB8Ss68SfJGp/suJ6mOUrsfCw1A7FvpUW
+         ivAedLk2G7Z1T4sgNqpMPjbkLSkvznYIQN5hPV6Iv8/8XP2uiLHCFJxLShHCLmtRXNqJ
+         +cQqJ0DrrioMojCP/C+WEAaRT52km+9KUOYuzvn9Zc0YsmC2TaMfczDr41G9UaT/8fld
+         9QWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690464719; x=1691069519;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UPE4TBElDR4y39lTmG7JZpz2ESdKsKwdorqzx2sJXLk=;
-        b=GXpeBuLeP3Nflo2Ikjyx0yOJbTj1lqnWIA3d9YAvO5oQGShHh5WLlBqdftNnpc/Kv2
-         0O28kI+HJ09PO8tE58+raGzuihEgUU2YM59RetLL2rMJ2QAPptwEpgx2UxKw4uKmZKm5
-         GMU7JK9S4YefayRQW4/QUiBX48PGjFheAoSKBNQOq6TNDtSwE+z/Meut1Bk5YgkbQTEA
-         JsCgm6lmfbJcGtRU4rlZmGR93FYQ6WNCX8EV+qPY96DbxrIMVf+LzDKT+ORTPbetEXdP
-         rmpY8IDXD3OxlVnuBTiRxEbAu29rIohCZy8JBgOtvGA5EFiahQCWBT5NoeLH/AljCEvw
-         /5fA==
-X-Gm-Message-State: ABy/qLaJ0AVrH9wifmX+KT9v41kBO2QlfLUv1rsJFw/HkKNw+o1UH71F
-        6Rq7TvhshkL2WkJsFaKk9v1TMA==
-X-Google-Smtp-Source: APBJJlEDmM1BSpqzVe6Y3lmlxHjlkfkJ6hm/eI5liACr3UamJt1tnyQaYCGWWKFEV6NcgMuafhg/oQ==
-X-Received: by 2002:a19:771d:0:b0:4fe:1b7a:dfc9 with SMTP id s29-20020a19771d000000b004fe1b7adfc9mr592877lfc.64.1690464719265;
-        Thu, 27 Jul 2023 06:31:59 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05651204c900b004f85628ec34sm313511lfq.33.2023.07.27.06.31.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jul 2023 06:31:58 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v3 5/5] drm/msm/dpu: drop compatibility INTR defines
-Date:   Thu, 27 Jul 2023 16:31:54 +0300
-Message-Id: <20230727133154.1421721-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230727133154.1421721-1-dmitry.baryshkov@linaro.org>
-References: <20230727133154.1421721-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1690464892; x=1691069692;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9uwU8ola2qkLcSKy+1rI5aYJOesLH456/lp3WB7O6aM=;
+        b=cA9alJh/TtKoa8kgB0yoQFvmsndxANfT9f3zlnlHdEP13y0TL5lSd1N2jElv6dzLP1
+         YGnsJNFBO2n1zxXzadFkdmdrKH7kcRH9xyj8Fhr2VHHqrYbXHqlWlRzq8XEpka6PO3aP
+         m6b90WzKEt+bGyNYmezV5ebObxrEiJGLPUBTshwarL1rYh8MT/CZSmznqy7k2ruLPJcj
+         nTLps226K1ty458vgi2rinlfGjxs2fmYyr3bNKxWK8bhbbQ87D2pjCxAJwXYS5QSAtd/
+         PthyEDh0r3CtK21B0f/561qcf2qWcGiY+ls6j0bO0pFAqz0nLBWvK52PEh51vZOIaix8
+         JHpA==
+X-Gm-Message-State: ABy/qLak1hLwhPFjpkci/LJp2wrK9b8eYwUfSlB41ZVNzguhoCdEnA/S
+        u7Ob3YG7DRLSifNwKN3WL8lwoA==
+X-Google-Smtp-Source: APBJJlH0Y3VkQ0iBH2aM2WoMWRGBLQjYtW2yB9AaM+gkBgYJjEPBCW9UH2E6x4JfNXt58uxxP3R1kQ==
+X-Received: by 2002:a2e:8310:0:b0:2b6:f1ad:d535 with SMTP id a16-20020a2e8310000000b002b6f1add535mr1641588ljh.14.1690464892041;
+        Thu, 27 Jul 2023 06:34:52 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id lt5-20020a170906fa8500b0098f99048053sm792492ejb.148.2023.07.27.06.34.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jul 2023 06:34:51 -0700 (PDT)
+Message-ID: <6c5197c9-e24d-70ac-fd75-2c72369d8b7f@linaro.org>
+Date:   Thu, 27 Jul 2023 16:34:49 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 00/17] drm/msm: Add SM6125 MDSS/DPU hardware and enable
+ Sony Xperia 10 II panel
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20230723-sm6125-dpu-v4-0-a3f287dd6c07@somainline.org>
+ <169046051039.1413710.12901529844343078449.b4-ty@linaro.org>
+In-Reply-To: <169046051039.1413710.12901529844343078449.b4-ty@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,147 +102,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While reworking interrupts masks, it was easier to keep old
-MDP_INTFn_7xxx_INTR and MDP_INTFn_7xxx_TEAR_INTR symbols. Now it is time
-to drop them and use unified symbol names.
+On 27/07/2023 15:22, Dmitry Baryshkov wrote:
+> 
+> On Sun, 23 Jul 2023 18:08:38 +0200, Marijn Suijten wrote:
+>> Bring up the SM6125 DPU now that all preliminary series (such as INTF
+>> TE) have been merged (for me to test the hardware properly), and most
+>> other conflicting work (barring ongoing catalog *improvements*) has made
+>> its way in as well or is still being discussed.
+>>
+>> The second part of the series complements that by immediately utilizing
+>> this hardware in DT, and even enabling the MDSS/DSI nodes complete with
+>> a 6.0" 1080x2520 panel for Sony's Seine PDX201 (Xperia 10 II).
+>>
+>> [...]
+> 
+> Applied, thanks!
+> 
+> [01/17] drm/msm/dsi: Drop unused regulators from QCM2290 14nm DSI PHY config
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/a7e3fda5948a
+> [02/17] arm64: dts: qcom: sm6125: Pad APPS IOMMU address to 8 characters
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/b7d35a8eae54
+> [03/17] arm64: dts: qcom: sm6125: Sort spmi_bus node numerically by reg
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/2be52ca96a71
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  |  4 ++--
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h  |  2 +-
- .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h    |  4 ++--
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h  |  4 ++--
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h  |  4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h   | 13 -------------
- 6 files changed, 9 insertions(+), 22 deletions(-)
+Of course, these two patches sneaked in by the mistake, dropped them now.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index 90efde5e9da5..941b585bd56f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -329,7 +329,7 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x36000, .len = 0x2c4,
-@@ -339,7 +339,7 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 0a5dcec343fc..b18bb7ce2f94 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -210,7 +210,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_5", .id = INTF_5,
- 		.base = 0x39000, .len = 0x280,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 7b1395f9e710..b08096f0d50b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -344,7 +344,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x36000, .len = 0x300,
-@@ -354,7 +354,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 4999f3d8f2e2..9e0ad71c12a8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -352,7 +352,7 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x36000, .len = 0x300,
-@@ -362,7 +362,7 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 401c6c2da367..2a19e4c0af1a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -366,7 +366,7 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x36000, .len = 0x300,
-@@ -376,7 +376,7 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-index f0b92c9e3b09..4a46c0900e04 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-@@ -39,19 +39,6 @@ enum dpu_hw_intr_reg {
- 				   intf == INTF_2 ? MDP_INTF2_TEAR_INTR : \
- 				   -1)
- 
--/* compatibility */
--#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
--#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
--#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
--#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
--#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
--#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
--#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
--#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
--#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
--#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
--#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
--
- #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
- 
- /**
+> [04/17] dt-bindings: display/msm: Remove DSI1 ports from SM6350/SM6375 example
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/4be2c19261fc
+> [05/17] dt-bindings: clock: qcom,dispcc-sm6125: Require GCC PLL0 DIV clock
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/4f86e343f3c6
+> [06/17] dt-bindings: clock: qcom,dispcc-sm6125: Allow power-domains property
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/91043642f28c
+> [07/17] dt-bindings: display/msm: dsi-controller-main: Document SM6125
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/cf5859476e5d
+> [08/17] dt-bindings: display/msm: sc7180-dpu: Describe SM6125
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/04a664dffd19
+> [09/17] dt-bindings: display/msm: Add SM6125 MDSS
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/3bde3b8f8a04
+> [10/17] drm/msm/dpu: Add SM6125 support
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/76c5dffd0bc4
+> [11/17] drm/msm/mdss: Add SM6125 support
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/de50357565d3
+> [12/17] dt-bindings: msm: dsi-phy-14nm: Document SM6125 variant
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/cdac445883cc
+> [13/17] drm/msm/dsi: Reuse QCM2290 14nm DSI PHY configuration for SM6125
+>          https://gitlab.freedesktop.org/lumag/msm/-/commit/7638d8059ace
+> 
+> Best regards,
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
