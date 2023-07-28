@@ -2,176 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 140BF7666DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 10:20:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A05F4766706
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 10:27:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234903AbjG1IUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 04:20:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56062 "EHLO
+        id S234241AbjG1I0p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 04:26:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234904AbjG1ITq (ORCPT
+        with ESMTP id S234585AbjG1IZx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 04:19:46 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC1E43C05
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 01:19:15 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6862d4a1376so444351b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 01:19:15 -0700 (PDT)
+        Fri, 28 Jul 2023 04:25:53 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319A14217
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 01:24:37 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-99bc0da5684so249442866b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 01:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1690532355; x=1691137155;
+        d=linaro.org; s=google; t=1690532675; x=1691137475;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0Vz5i3f1KwBqEHtOj3kkD+u+idA4hMEDLOXYQ/Zmb7I=;
-        b=L2+elQ31DoTndDMbULUpYhAiCoRfDRGWwRsLhePlw7WW3kXFI6RoGNteAO7MNCCxPK
-         FYWrT0NCxgniYdOvtk354oC7lAaEYLaI5+6nbBgCsJS7Z9F7PQNW+ZUGwlLgRq4XIWCd
-         IlyzJlPUeNX37jF32KJvYLJePzYsZ7ze/fbSuG8EqYw256JXY3KCKzS1wluS9KcnHJgS
-         wVJn5VLovDZDoJav6s/8z2Nev3fZMa4BKzS6r7L/dPmXUhh82k37p3M1JnHGLMc145hK
-         MLBcl9i8u/Uj6MSDKzSJ+fdKEdHQ4PpsFlNhyTOhfKom9VA3y6JlxMc/+2lHqKKi6hTK
-         U83g==
+        bh=6xZMW8v9WDlw5tXvogvREezExsu09Z2EBvflkVtH5j0=;
+        b=lvuGezwBo7w6YoCoMR2ywp7hjte4FF8EiqJz0bhyi6O9yeMvQ4Gt0UTRflgv/oq67+
+         hiuHmjO8G4Lkzu9WL58EdPdzdRFZnbJcxXDrgo58liQRD3BDtBsdCOG3OVkRQq5Pn0Nb
+         iu3y3Yy9XW4pOYzypJ0Jbd96Df63y0WIoUNGEB3onWAp8cX3RvJ3eyJwXCudnqgh23sV
+         W+MtsCMgaWDIXP0kw/+5zmrY2EkyEXCg9vZw28AFuQfTyR+k9OkX1DrVHNY0pNueGG2z
+         sZHHFaIp2y5UhNP7OtZSZgu8tGCmyifcLUdZICPGhVD7BxfEij6j6Efdinci4cCqIC+1
+         uleQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690532355; x=1691137155;
+        d=1e100.net; s=20221208; t=1690532675; x=1691137475;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Vz5i3f1KwBqEHtOj3kkD+u+idA4hMEDLOXYQ/Zmb7I=;
-        b=BWVXBwn1Eb+DkMR3RZIyoXXe5W/1jGhptsfTPZ7/51qZh96nMBmviFLq1yanVeIXrW
-         gJ9OIVkF7NVNbVdDIq6kn7gSqzpXqhicQNICMZauKkkiB37JvpmPuYV3iQaCgasyR6Rv
-         tXINO5Nt88qqDPBDn72mRcnAuXsQEU04vP0rD+ljxN3DBbHTmGwJAMSOXq3X1kyJl7r7
-         tA21T/i68XgqTz0+IqofJKcYSIyWzjb4X8SGYvCtDvbYtsJstA7p1jDlSzSUI+TvzHvF
-         +R+1ky+2D1cftHZtUMVXvPLgdSXzIvXgFUKpwxaGxpjTb49j5gs/+QtMY6tYpGl5IvdH
-         90KQ==
-X-Gm-Message-State: ABy/qLbEVACCCpLznkN/cGFdxV4PKPNlF7vHuvCVZzknVFVmx6pwyiWo
-        4oZVK6KsoCs0CvwEMlPD31e7ow==
-X-Google-Smtp-Source: APBJJlFUUUMvBrf6ibd1LKjgOpEN2XEkSNdXdEqaA3c50PeJDSflhjqiMTE27IMY1LDD8QpZTvY8yg==
-X-Received: by 2002:a05:6a21:329f:b0:134:76d6:7f7 with SMTP id yt31-20020a056a21329f00b0013476d607f7mr2068612pzb.4.1690532355159;
-        Fri, 28 Jul 2023 01:19:15 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id j63-20020a638b42000000b005637030d00csm2862658pge.30.2023.07.28.01.19.03
+        bh=6xZMW8v9WDlw5tXvogvREezExsu09Z2EBvflkVtH5j0=;
+        b=QwB5FrgVIZ0K+h6ee81SjwSHhywQ2svHSKjhvArxVhlRg6qesrE1p1pXiqljKPwBkB
+         8A6/K0y6ySqJ+LzeLyzotUZ7oQgaOg5vbt9O4fvjQNEmH29CIAGOE3nqbLqB65spJWkk
+         bET8ks+pypDk6Rjitb36EdHbouOFmwDVEbkzE5kuP5Gzgr7KZhuyXHhmY0D1jXsl9UEn
+         lskqXafHrw4vABR6MkWHIlsX9//dMl6OfX5Bbt0p+yxy+APFSlAnTv7xOo8PaQy18s/m
+         Nayfn9MGkP9bowJI4O8Wym2qo9bYRo5UP12thHKno87o+0ksKkWCYoSOc1kUuixZhsZz
+         +qhQ==
+X-Gm-Message-State: ABy/qLZ3xFDZYWz+RxGgsscbnks0fWka5t1sMb/UZBwH2rS5jfrff9yZ
+        IsQEVE6lH2A9kKzL2Bm/IGHmIg==
+X-Google-Smtp-Source: APBJJlEdbpuC1Nw6chKfD8DpvTXtK/jYFNYuoDSG1/AORvF94aI8p6IXkC/PwQhjZ0y2M9Wm+58Y4A==
+X-Received: by 2002:a17:907:7611:b0:99b:ddac:d9d9 with SMTP id jx17-20020a170907761100b0099bddacd9d9mr1333134ejc.53.1690532675673;
+        Fri, 28 Jul 2023 01:24:35 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id by24-20020a170906a2d800b00993b381f808sm1760451ejb.38.2023.07.28.01.24.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 01:19:14 -0700 (PDT)
-Message-ID: <99d0958d-8446-6fe9-a0fb-f562cb04c7c8@bytedance.com>
-Date:   Fri, 28 Jul 2023 16:19:01 +0800
+        Fri, 28 Jul 2023 01:24:35 -0700 (PDT)
+Message-ID: <65098077-8876-6acb-c3e8-2f582745fe82@linaro.org>
+Date:   Fri, 28 Jul 2023 10:24:32 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v3 04/49] mm: shrinker: remove redundant shrinker_rwsem in
- debugfs operations
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 04/11] dt-bindings: clock: qcom: gcc-ipq5332: remove q6
+ bring up clock macros
 Content-Language: en-US
-To:     Simon Horman <simon.horman@corigine.com>
-Cc:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev, linux-kernel@vger.kernel.org,
-        linux-mm@kvack.org, x86@kernel.org, kvm@vger.kernel.org,
-        xen-devel@lists.xenproject.org, linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        Muchun Song <songmuchun@bytedance.com>
-References: <20230727080502.77895-1-zhengqi.arch@bytedance.com>
- <20230727080502.77895-5-zhengqi.arch@bytedance.com>
- <ZMN4mjsF1QEsvW7D@corigine.com>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <ZMN4mjsF1QEsvW7D@corigine.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mathieu.poirier@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_eberman@quicinc.com, kvalo@kernel.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_varada@quicinc.com
+References: <20230728063412.1641856-1-quic_mmanikan@quicinc.com>
+ <20230728063412.1641856-5-quic_mmanikan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230728063412.1641856-5-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Simon,
+On 28/07/2023 08:34, Manikanta Mylavarapu wrote:
+> In multipd model Q6 firmware takes care of bringup clocks,
+> so remove them.
+> 
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> ---
 
-On 2023/7/28 16:13, Simon Horman wrote:
-> On Thu, Jul 27, 2023 at 04:04:17PM +0800, Qi Zheng wrote:
->> The debugfs_remove_recursive() will wait for debugfs_file_put() to return,
->> so the shrinker will not be freed when doing debugfs operations (such as
->> shrinker_debugfs_count_show() and shrinker_debugfs_scan_write()), so there
->> is no need to hold shrinker_rwsem during debugfs operations.
->>
->> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
->> Reviewed-by: Muchun Song <songmuchun@bytedance.com>
->> ---
->>   mm/shrinker_debug.c | 14 --------------
->>   1 file changed, 14 deletions(-)
->>
->> diff --git a/mm/shrinker_debug.c b/mm/shrinker_debug.c
->> index 3ab53fad8876..f1becfd45853 100644
->> --- a/mm/shrinker_debug.c
->> +++ b/mm/shrinker_debug.c
->> @@ -55,11 +55,6 @@ static int shrinker_debugfs_count_show(struct seq_file *m, void *v)
->>   	if (!count_per_node)
->>   		return -ENOMEM;
->>   
->> -	ret = down_read_killable(&shrinker_rwsem);
->> -	if (ret) {
->> -		kfree(count_per_node);
->> -		return ret;
->> -	}
->>   	rcu_read_lock();
-> 
-> Hi Qi Zheng,
-> 
-> As can be seen in the next hunk, this function returns 'ret'.
-> However, with this change 'ret' is uninitialised unless
-> signal_pending() returns non-zero in the while loop below.
 
-Thanks for your feedback, the 'ret' should be initialized to 0,
-will fix it.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks,
-Qi
+Best regards,
+Krzysztof
 
-> 
-> This is flagged in a clan-16 W=1 build.
-> 
->   mm/shrinker_debug.c:87:11: warning: variable 'ret' is used uninitialized whenever 'do' loop exits because its condition is false [-Wsometimes-uninitialized]
->           } while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
->                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   mm/shrinker_debug.c:92:9: note: uninitialized use occurs here
->           return ret;
->                  ^~~
->   mm/shrinker_debug.c:87:11: note: remove the condition if it is always true
->           } while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
->                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->                    1
->   mm/shrinker_debug.c:77:7: warning: variable 'ret' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
->                   if (!memcg_aware) {
->                       ^~~~~~~~~~~~
->   mm/shrinker_debug.c:92:9: note: uninitialized use occurs here
->           return ret;
->                  ^~~
->   mm/shrinker_debug.c:77:3: note: remove the 'if' if its condition is always false
->                   if (!memcg_aware) {
->                   ^~~~~~~~~~~~~~~~~~~
->   mm/shrinker_debug.c:52:9: note: initialize the variable 'ret' to silence this warning
->           int ret, nid;
->                  ^
->                   = 0
-> 
->>   
->>   	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
->> @@ -92,7 +87,6 @@ static int shrinker_debugfs_count_show(struct seq_file *m, void *v)
->>   	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
->>   
->>   	rcu_read_unlock();
->> -	up_read(&shrinker_rwsem);
->>   
->>   	kfree(count_per_node);
->>   	return ret;
-> 
-> ...
