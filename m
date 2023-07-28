@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43BC6766E2F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 15:26:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E55E9766E35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 15:26:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236743AbjG1N0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 09:26:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42614 "EHLO
+        id S233787AbjG1N0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 09:26:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234277AbjG1N0G (ORCPT
+        with ESMTP id S235541AbjG1N0V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 09:26:06 -0400
+        Fri, 28 Jul 2023 09:26:21 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6544483;
-        Fri, 28 Jul 2023 06:25:51 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36S9Kvwj008893;
-        Fri, 28 Jul 2023 13:25:43 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A0544BE;
+        Fri, 28 Jul 2023 06:25:58 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36SAwYtg016027;
+        Fri, 28 Jul 2023 13:25:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-type; s=qcppdkim1;
- bh=tI8WQiJsc3snSCqoYqTYhp9DaiBIcpXw30eJ4gxkENw=;
- b=JF8iePRd7nkSd1oFJqhCbPRAKDOqTVh7PoZF61YjcR0BGbW7XM8qa6apY963LUQUqtgm
- GavePD2pZQMj97nQRTfvBRZIQGr/z5+mViQK1NVQcjZcEGf4jNCX/ebba3amayrH3ZaJ
- OvDfZqIasUMPQSpD5UWpgntDzX773dxCcziuhfnTaI9xmrGG2V/78mNqj//cta8Pge+k
- FzrxEtWXMEnvy6h3ylpvBi36UHYZ3MHCVlhMkpEOoTwz+p61g3VV1/1uQXkobjRRfube
- ksSB5iNl34eYe/2LXln8dFdWJnMK5W372LOMhRCyCXprbMPYC+DFZvJTg7JgMQyFw8o+ nA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s447kh7td-1
+ bh=NcpVwYAYWvyLubX5f4uViQg1+53y1qmun0CSgg3fc/M=;
+ b=DoSoL2GUDKa1DnnN8NHeB+HlT5xAJHk/NIyBGeeDjK1i7r+8wH6OgXZeG7mwsWFf/e3l
+ msg6OU8UsIc3FUqRdMxKulezkN0jKmMnrtQlp4pJoAY83C7rp78Rc9jdKOTrUQQIKbT6
+ q0Zn5T10XCykOXgeQdt5Qa7AeW00MNbPrD9UTK3sk6JA8zMI+bhbj+D3lXx5jNaembSD
+ jloxR3Ye/ZP+WagQpoSX7A31w30upRgsO3NHS9GHuGhXMB8zojl2xY2LBIW12HPmt2DM
+ NwdGC+eEYNX0rFaaNAXl2VpJeW1dvax7u284joWrU8ZrrhL2j5aP/Vq4yjnugca3j/75 zQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s448hh7h9-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Jul 2023 13:25:42 +0000
+        Fri, 28 Jul 2023 13:25:49 +0000
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36SDPgMe002901
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36SDPnWA013610
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Jul 2023 13:25:42 GMT
+        Fri, 28 Jul 2023 13:25:49 GMT
 Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
  nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Fri, 28 Jul 2023 06:25:38 -0700
+ 15.2.1118.30; Fri, 28 Jul 2023 06:25:45 -0700
 From:   Vikash Garodia <quic_vgarodia@quicinc.com>
 To:     <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
         <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
@@ -47,9 +47,9 @@ To:     <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
         <linux-arm-msm@vger.kernel.org>
 CC:     <quic_dikshita@quicinc.com>,
         Vikash Garodia <quic_vgarodia@quicinc.com>
-Subject: [PATCH 09/33] iris: vidc: add control files
-Date:   Fri, 28 Jul 2023 18:53:20 +0530
-Message-ID: <1690550624-14642-10-git-send-email-quic_vgarodia@quicinc.com>
+Subject: [PATCH 11/33] iris: vidc: add helpers for memory management
+Date:   Fri, 28 Jul 2023 18:53:22 +0530
+Message-ID: <1690550624-14642-12-git-send-email-quic_vgarodia@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
 References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
@@ -60,15 +60,15 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3BQuUU7g_UxNy4uQga8ZNF_Hp8PqPr7X
-X-Proofpoint-GUID: 3BQuUU7g_UxNy4uQga8ZNF_Hp8PqPr7X
+X-Proofpoint-GUID: nFoIX4ORq1G0wP8kDvqtB-J-vyPJ3cLK
+X-Proofpoint-ORIG-GUID: nFoIX4ORq1G0wP8kDvqtB-J-vyPJ3cLK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- clxscore=1015 malwarescore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
+ mlxscore=0 priorityscore=1501 mlxlogscore=958 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2306200000 definitions=main-2307280124
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
@@ -80,878 +80,562 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This implements supported v4l2 encoder and decoder controls.
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+
+This implements helper functions for allocating, freeing,
+mapping and unmapping memory.
 
 Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 ---
- .../platform/qcom/iris/vidc/inc/msm_vidc_control.h |  26 +
- .../platform/qcom/iris/vidc/src/msm_vidc_control.c | 824 +++++++++++++++++++++
- 2 files changed, 850 insertions(+)
- create mode 100644 drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_control.h
- create mode 100644 drivers/media/platform/qcom/iris/vidc/src/msm_vidc_control.c
+ .../platform/qcom/iris/vidc/inc/msm_vidc_memory.h  |  83 ++++
+ .../platform/qcom/iris/vidc/src/msm_vidc_memory.c  | 448 +++++++++++++++++++++
+ 2 files changed, 531 insertions(+)
+ create mode 100644 drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_memory.h
+ create mode 100644 drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c
 
-diff --git a/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_control.h b/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_control.h
+diff --git a/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_memory.h b/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_memory.h
 new file mode 100644
-index 0000000..08ba77d
+index 0000000..d6d244a
 --- /dev/null
-+++ b/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_control.h
-@@ -0,0 +1,26 @@
++++ b/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_memory.h
+@@ -0,0 +1,83 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
 + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
 +
-+#ifndef _MSM_VIDC_CONTROL_H_
-+#define _MSM_VIDC_CONTROL_H_
++#ifndef _MSM_VIDC_MEMORY_H_
++#define _MSM_VIDC_MEMORY_H_
 +
-+#include "msm_vidc_inst.h"
 +#include "msm_vidc_internal.h"
 +
-+int msm_vidc_ctrl_handler_init(struct msm_vidc_inst *inst, bool init);
-+int msm_vidc_ctrl_handler_deinit(struct msm_vidc_inst *inst);
-+int msm_v4l2_op_s_ctrl(struct v4l2_ctrl *ctrl);
-+int msm_v4l2_op_g_volatile_ctrl(struct v4l2_ctrl *ctrl);
-+int msm_vidc_s_ctrl(struct msm_vidc_inst *inst, struct v4l2_ctrl *ctrl);
-+int msm_vidc_prepare_dependency_list(struct msm_vidc_inst *inst);
-+int msm_vidc_adjust_v4l2_properties(struct msm_vidc_inst *inst);
-+int msm_vidc_set_v4l2_properties(struct msm_vidc_inst *inst);
-+bool is_valid_cap_id(enum msm_vidc_inst_capability_type cap_id);
-+bool is_valid_cap(struct msm_vidc_inst *inst,
-+		  enum msm_vidc_inst_capability_type cap_id);
-+enum msm_vidc_inst_capability_type msm_vidc_get_cap_id(struct msm_vidc_inst *inst,
-+						       u32 id);
-+#endif
-diff --git a/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_control.c b/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_control.c
++struct msm_memory_dmabuf {
++	struct list_head       list;
++	struct dma_buf        *dmabuf;
++	u32                    refcount;
++};
++
++enum msm_memory_pool_type {
++	MSM_MEM_POOL_BUFFER  = 0,
++	MSM_MEM_POOL_ALLOC_MAP,
++	MSM_MEM_POOL_TIMESTAMP,
++	MSM_MEM_POOL_DMABUF,
++	MSM_MEM_POOL_BUF_TIMER,
++	MSM_MEM_POOL_BUF_STATS,
++	MSM_MEM_POOL_MAX,
++};
++
++struct msm_memory_alloc_header {
++	struct list_head       list;
++	u32                    type;
++	bool                   busy;
++	void                  *buf;
++};
++
++struct msm_memory_pool {
++	u32                    size;
++	char                  *name;
++	struct list_head       free_pool; /* list of struct msm_memory_alloc_header */
++	struct list_head       busy_pool; /* list of struct msm_memory_alloc_header */
++};
++
++void *msm_vidc_pool_alloc(struct msm_vidc_inst *inst,
++			  enum msm_memory_pool_type type);
++void msm_vidc_pool_free(struct msm_vidc_inst *inst, void *vidc_buf);
++int msm_vidc_pools_init(struct msm_vidc_inst *inst);
++void msm_vidc_pools_deinit(struct msm_vidc_inst *inst);
++
++#define call_mem_op(c, op, ...)                  \
++	(((c) && (c)->mem_ops && (c)->mem_ops->op) ? \
++	((c)->mem_ops->op(__VA_ARGS__)) : 0)
++
++struct msm_vidc_memory_ops {
++	struct dma_buf *(*dma_buf_get)(struct msm_vidc_inst *inst,
++				       int fd);
++	void (*dma_buf_put)(struct msm_vidc_inst *inst,
++			    struct dma_buf *dmabuf);
++	void (*dma_buf_put_completely)(struct msm_vidc_inst *inst,
++				       struct msm_memory_dmabuf *buf);
++	struct dma_buf_attachment *(*dma_buf_attach)(struct msm_vidc_core *core,
++						     struct dma_buf *dbuf,
++						     struct device *dev);
++	int (*dma_buf_detach)(struct msm_vidc_core *core, struct dma_buf *dbuf,
++			      struct dma_buf_attachment *attach);
++	struct sg_table *(*dma_buf_map_attachment)(struct msm_vidc_core *core,
++						   struct dma_buf_attachment *attach);
++	int (*dma_buf_unmap_attachment)(struct msm_vidc_core *core,
++					struct dma_buf_attachment *attach,
++					struct sg_table *table);
++	int (*memory_alloc_map)(struct msm_vidc_core *core,
++				struct msm_vidc_mem *mem);
++	int (*memory_unmap_free)(struct msm_vidc_core *core,
++				 struct msm_vidc_mem *mem);
++	int (*mem_dma_map_page)(struct msm_vidc_core *core,
++				struct msm_vidc_mem *mem);
++	int (*mem_dma_unmap_page)(struct msm_vidc_core *core,
++				  struct msm_vidc_mem *mem);
++	u32 (*buffer_region)(struct msm_vidc_inst *inst,
++			     enum msm_vidc_buffer_type buffer_type);
++};
++
++const struct msm_vidc_memory_ops *get_mem_ops(void);
++
++#endif // _MSM_VIDC_MEMORY_H_
+diff --git a/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c b/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c
 new file mode 100644
-index 0000000..73b0db6
+index 0000000..c97d9c7
 --- /dev/null
-+++ b/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_control.c
-@@ -0,0 +1,824 @@
++++ b/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c
+@@ -0,0 +1,448 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
 +
-+#include "msm_venc.h"
++#include <linux/dma-buf.h>
++#include <linux/dma-heap.h>
++#include <linux/dma-mapping.h>
++
++#include "msm_vidc_core.h"
 +#include "msm_vidc_debug.h"
 +#include "msm_vidc_driver.h"
 +#include "msm_vidc_internal.h"
++#include "msm_vidc_memory.h"
 +#include "msm_vidc_platform.h"
++#include "venus_hfi.h"
 +
-+static inline bool has_children(struct msm_vidc_inst_cap *cap)
++MODULE_IMPORT_NS(DMA_BUF);
++
++struct msm_vidc_type_size_name {
++	enum msm_memory_pool_type type;
++	u32                       size;
++	char                     *name;
++};
++
++static const struct msm_vidc_type_size_name buftype_size_name_arr[] = {
++	{MSM_MEM_POOL_BUFFER,     sizeof(struct msm_vidc_buffer),     "MSM_MEM_POOL_BUFFER"     },
++	{MSM_MEM_POOL_ALLOC_MAP,  sizeof(struct msm_vidc_mem),        "MSM_MEM_POOL_ALLOC_MAP"  },
++	{MSM_MEM_POOL_TIMESTAMP,  sizeof(struct msm_vidc_timestamp),  "MSM_MEM_POOL_TIMESTAMP"  },
++	{MSM_MEM_POOL_DMABUF,     sizeof(struct msm_memory_dmabuf),   "MSM_MEM_POOL_DMABUF"     },
++	{MSM_MEM_POOL_BUF_TIMER,  sizeof(struct msm_vidc_input_timer), "MSM_MEM_POOL_BUF_TIMER" },
++	{MSM_MEM_POOL_BUF_STATS,  sizeof(struct msm_vidc_buffer_stats), "MSM_MEM_POOL_BUF_STATS"},
++};
++
++void *msm_vidc_pool_alloc(struct msm_vidc_inst *inst, enum msm_memory_pool_type type)
 +{
-+	return !!cap->children[0];
++	struct msm_memory_alloc_header *hdr = NULL;
++	struct msm_memory_pool *pool;
++
++	if (type < 0 || type >= MSM_MEM_POOL_MAX) {
++		d_vpr_e("%s: Invalid params\n", __func__);
++		return NULL;
++	}
++	pool = &inst->pool[type];
++
++	if (!list_empty(&pool->free_pool)) {
++		/* get 1st node from free pool */
++		hdr = list_first_entry(&pool->free_pool, struct msm_memory_alloc_header, list);
++
++		/* move node from free pool to busy pool */
++		list_move_tail(&hdr->list, &pool->busy_pool);
++
++		/* reset existing data */
++		memset((char *)hdr->buf, 0, pool->size);
++
++		/* set busy flag to true. This is to catch double free request */
++		hdr->busy = true;
++
++		return hdr->buf;
++	}
++
++	hdr = vzalloc(pool->size + sizeof(struct msm_memory_alloc_header));
++
++	INIT_LIST_HEAD(&hdr->list);
++	hdr->type = type;
++	hdr->busy = true;
++	hdr->buf = (void *)(hdr + 1);
++	list_add_tail(&hdr->list, &pool->busy_pool);
++
++	return hdr->buf;
 +}
 +
-+static inline bool is_leaf(struct msm_vidc_inst_cap *cap)
++void msm_vidc_pool_free(struct msm_vidc_inst *inst, void *vidc_buf)
 +{
-+	return !has_children(cap);
++	struct msm_memory_alloc_header *hdr;
++	struct msm_memory_pool *pool;
++
++	if (!vidc_buf) {
++		d_vpr_e("%s: Invalid params\n", __func__);
++		return;
++	}
++	hdr = (struct msm_memory_alloc_header *)vidc_buf - 1;
++
++	/* sanitize buffer addr */
++	if (hdr->buf != vidc_buf) {
++		i_vpr_e(inst, "%s: invalid buf addr %p\n", __func__, vidc_buf);
++		return;
++	}
++
++	/* sanitize pool type */
++	if (hdr->type < 0 || hdr->type >= MSM_MEM_POOL_MAX) {
++		i_vpr_e(inst, "%s: invalid pool type %#x\n", __func__, hdr->type);
++		return;
++	}
++	pool = &inst->pool[hdr->type];
++
++	/* catch double-free request */
++	if (!hdr->busy) {
++		i_vpr_e(inst, "%s: double free request. type %s, addr %p\n", __func__,
++			pool->name, vidc_buf);
++		return;
++	}
++	hdr->busy = false;
++
++	/* move node from busy pool to free pool */
++	list_move_tail(&hdr->list, &pool->free_pool);
 +}
 +
-+bool is_valid_cap_id(enum msm_vidc_inst_capability_type cap_id)
++static void msm_vidc_destroy_pool_buffers(struct msm_vidc_inst *inst,
++					  enum msm_memory_pool_type type)
 +{
-+	return cap_id > INST_CAP_NONE && cap_id < INST_CAP_MAX;
++	struct msm_memory_alloc_header *hdr, *dummy;
++	struct msm_memory_pool *pool;
++	u32 fcount = 0, bcount = 0;
++
++	if (type < 0 || type >= MSM_MEM_POOL_MAX) {
++		d_vpr_e("%s: Invalid params\n", __func__);
++		return;
++	}
++	pool = &inst->pool[type];
++
++	/* detect memleak: busy pool is expected to be empty here */
++	if (!list_empty(&pool->busy_pool))
++		i_vpr_e(inst, "%s: destroy request on active buffer. type %s\n",
++			__func__, pool->name);
++
++	/* destroy all free buffers */
++	list_for_each_entry_safe(hdr, dummy, &pool->free_pool, list) {
++		list_del(&hdr->list);
++		vfree(hdr);
++		fcount++;
++	}
++
++	/* destroy all busy buffers */
++	list_for_each_entry_safe(hdr, dummy, &pool->busy_pool, list) {
++		list_del(&hdr->list);
++		vfree(hdr);
++		bcount++;
++	}
++
++	i_vpr_h(inst, "%s: type: %23s, count: free %2u, busy %2u\n",
++		__func__, pool->name, fcount, bcount);
 +}
 +
-+bool is_valid_cap(struct msm_vidc_inst *inst,
-+		  enum msm_vidc_inst_capability_type cap_id)
++int msm_vidc_pools_init(struct msm_vidc_inst *inst)
 +{
-+	if (cap_id <= INST_CAP_NONE || cap_id >= INST_CAP_MAX)
-+		return false;
++	u32 i;
 +
-+	return !!inst->capabilities[cap_id].cap_id;
++	if (ARRAY_SIZE(buftype_size_name_arr) != MSM_MEM_POOL_MAX) {
++		i_vpr_e(inst, "%s: num elements mismatch %lu %u\n", __func__,
++			ARRAY_SIZE(buftype_size_name_arr), MSM_MEM_POOL_MAX);
++		return -EINVAL;
++	}
++
++	for (i = 0; i < MSM_MEM_POOL_MAX; i++) {
++		if (i != buftype_size_name_arr[i].type) {
++			i_vpr_e(inst, "%s: type mismatch %u %u\n", __func__,
++				i, buftype_size_name_arr[i].type);
++			return -EINVAL;
++		}
++		inst->pool[i].size = buftype_size_name_arr[i].size;
++		inst->pool[i].name = buftype_size_name_arr[i].name;
++		INIT_LIST_HEAD(&inst->pool[i].free_pool);
++		INIT_LIST_HEAD(&inst->pool[i].busy_pool);
++	}
++
++	return 0;
 +}
 +
-+static inline bool is_all_childrens_visited(struct msm_vidc_inst_cap *cap,
-+					    bool lookup[INST_CAP_MAX])
++void msm_vidc_pools_deinit(struct msm_vidc_inst *inst)
 +{
-+	bool found = true;
-+	int i;
++	u32 i = 0;
 +
-+	for (i = 0; i < MAX_CAP_CHILDREN; i++) {
-+		if (cap->children[i] == INST_CAP_NONE)
-+			continue;
++	/* destroy all buffers from all pool types */
++	for (i = 0; i < MSM_MEM_POOL_MAX; i++)
++		msm_vidc_destroy_pool_buffers(inst, i);
++}
 +
-+		if (!lookup[cap->children[i]]) {
-+			found = false;
++static struct dma_buf *msm_vidc_dma_buf_get(struct msm_vidc_inst *inst, int fd)
++{
++	struct msm_memory_dmabuf *buf = NULL;
++	struct dma_buf *dmabuf = NULL;
++	bool found = false;
++
++	/* get local dmabuf ref for tracking */
++	dmabuf = dma_buf_get(fd);
++	if (IS_ERR_OR_NULL(dmabuf)) {
++		d_vpr_e("Failed to get dmabuf for %d, error %d\n",
++			fd, PTR_ERR_OR_ZERO(dmabuf));
++		return NULL;
++	}
++
++	/* track dmabuf - inc refcount if already present */
++	list_for_each_entry(buf, &inst->dmabuf_tracker, list) {
++		if (buf->dmabuf == dmabuf) {
++			buf->refcount++;
++			found = true;
 +			break;
 +		}
 +	}
-+	return found;
++	if (found) {
++		/* put local dmabuf ref */
++		dma_buf_put(dmabuf);
++		return dmabuf;
++	}
++
++	/* get tracker instance from pool */
++	buf = msm_vidc_pool_alloc(inst, MSM_MEM_POOL_DMABUF);
++	if (!buf) {
++		i_vpr_e(inst, "%s: dmabuf alloc failed\n", __func__);
++		dma_buf_put(dmabuf);
++		return NULL;
++	}
++	/* hold dmabuf strong ref in tracker */
++	buf->dmabuf = dmabuf;
++	buf->refcount = 1;
++	INIT_LIST_HEAD(&buf->list);
++
++	/* add new dmabuf entry to tracker */
++	list_add_tail(&buf->list, &inst->dmabuf_tracker);
++
++	return dmabuf;
 +}
 +
-+static int add_node_list(struct list_head *list, enum msm_vidc_inst_capability_type cap_id)
++static void msm_vidc_dma_buf_put(struct msm_vidc_inst *inst, struct dma_buf *dmabuf)
 +{
-+	struct msm_vidc_inst_cap_entry *entry = NULL;
++	struct msm_memory_dmabuf *buf = NULL;
++	bool found = false;
 +
-+	entry = vzalloc(sizeof(*entry));
-+	if (!entry) {
-+		d_vpr_e("%s: allocation failed\n", __func__);
++	if (!dmabuf) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return;
++	}
++
++	/* track dmabuf - dec refcount if already present */
++	list_for_each_entry(buf, &inst->dmabuf_tracker, list) {
++		if (buf->dmabuf == dmabuf) {
++			buf->refcount--;
++			found = true;
++			break;
++		}
++	}
++	if (!found) {
++		i_vpr_e(inst, "%s: invalid dmabuf %p\n", __func__, dmabuf);
++		return;
++	}
++
++	/* non-zero refcount - do nothing */
++	if (buf->refcount)
++		return;
++
++	/* remove dmabuf entry from tracker */
++	list_del(&buf->list);
++
++	/* release dmabuf strong ref from tracker */
++	dma_buf_put(buf->dmabuf);
++
++	/* put tracker instance back to pool */
++	msm_vidc_pool_free(inst, buf);
++}
++
++static void msm_vidc_dma_buf_put_completely(struct msm_vidc_inst *inst,
++					    struct msm_memory_dmabuf *buf)
++{
++	if (!buf) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return;
++	}
++
++	while (buf->refcount) {
++		buf->refcount--;
++		if (!buf->refcount) {
++			/* remove dmabuf entry from tracker */
++			list_del(&buf->list);
++
++			/* release dmabuf strong ref from tracker */
++			dma_buf_put(buf->dmabuf);
++
++			/* put tracker instance back to pool */
++			msm_vidc_pool_free(inst, buf);
++			break;
++		}
++	}
++}
++
++static struct dma_buf_attachment *msm_vidc_dma_buf_attach(struct msm_vidc_core *core,
++							  struct dma_buf *dbuf,
++							  struct device *dev)
++{
++	int rc = 0;
++	struct dma_buf_attachment *attach = NULL;
++
++	if (!dbuf || !dev) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return NULL;
++	}
++
++	attach = dma_buf_attach(dbuf, dev);
++	if (IS_ERR_OR_NULL(attach)) {
++		rc = PTR_ERR_OR_ZERO(attach) ? PTR_ERR_OR_ZERO(attach) : -1;
++		d_vpr_e("Failed to attach dmabuf, error %d\n", rc);
++		return NULL;
++	}
++
++	return attach;
++}
++
++static int msm_vidc_dma_buf_detach(struct msm_vidc_core *core, struct dma_buf *dbuf,
++				   struct dma_buf_attachment *attach)
++{
++	int rc = 0;
++
++	if (!dbuf || !attach) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return -EINVAL;
++	}
++
++	dma_buf_detach(dbuf, attach);
++
++	return rc;
++}
++
++static int msm_vidc_dma_buf_unmap_attachment(struct msm_vidc_core *core,
++					     struct dma_buf_attachment *attach,
++					     struct sg_table *table)
++{
++	int rc = 0;
++
++	if (!attach || !table) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return -EINVAL;
++	}
++
++	dma_buf_unmap_attachment(attach, table, DMA_BIDIRECTIONAL);
++
++	return rc;
++}
++
++static struct sg_table *msm_vidc_dma_buf_map_attachment(struct msm_vidc_core *core,
++							struct dma_buf_attachment *attach)
++{
++	int rc = 0;
++	struct sg_table *table = NULL;
++
++	if (!attach) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return NULL;
++	}
++
++	table = dma_buf_map_attachment(attach, DMA_BIDIRECTIONAL);
++	if (IS_ERR_OR_NULL(table)) {
++		rc = PTR_ERR_OR_ZERO(table) ? PTR_ERR_OR_ZERO(table) : -1;
++		d_vpr_e("Failed to map table, error %d\n", rc);
++		return NULL;
++	}
++	if (!table->sgl) {
++		d_vpr_e("%s: sgl is NULL\n", __func__);
++		msm_vidc_dma_buf_unmap_attachment(core, attach, table);
++		return NULL;
++	}
++
++	return table;
++}
++
++static int msm_vidc_memory_alloc_map(struct msm_vidc_core *core, struct msm_vidc_mem *mem)
++{
++	int size = 0;
++	struct context_bank_info *cb = NULL;
++
++	if (!mem) {
++		d_vpr_e("%s: invalid params\n", __func__);
++		return -EINVAL;
++	}
++
++	size = ALIGN(mem->size, SZ_4K);
++	mem->attrs = DMA_ATTR_WRITE_COMBINE;
++
++	cb = msm_vidc_get_context_bank_for_region(core, mem->region);
++	if (!cb) {
++		d_vpr_e("%s: failed to get context bank device\n", __func__);
++		return -EIO;
++	}
++
++	mem->kvaddr = dma_alloc_attrs(cb->dev, size, &mem->device_addr, GFP_KERNEL,
++				      mem->attrs);
++	if (!mem->kvaddr) {
++		d_vpr_e("%s: dma_alloc_attrs returned NULL\n", __func__);
 +		return -ENOMEM;
 +	}
 +
-+	INIT_LIST_HEAD(&entry->list);
-+	entry->cap_id = cap_id;
-+	list_add(&entry->list, list);
++	d_vpr_h("%s: dmabuf %pK, size %d, buffer_type %s, secure %d, region %d\n",
++		__func__, mem->kvaddr, mem->size, buf_name(mem->type),
++		mem->secure, mem->region);
 +
 +	return 0;
 +}
 +
-+static int add_node(struct list_head *list, struct msm_vidc_inst_cap *lcap,
-+		    bool lookup[INST_CAP_MAX])
++static int msm_vidc_memory_unmap_free(struct msm_vidc_core *core, struct msm_vidc_mem *mem)
 +{
 +	int rc = 0;
++	struct context_bank_info *cb = NULL;
 +
-+	if (lookup[lcap->cap_id])
-+		return 0;
-+
-+	rc = add_node_list(list, lcap->cap_id);
-+	if (rc)
-+		return rc;
-+
-+	lookup[lcap->cap_id] = true;
-+	return 0;
-+}
-+
-+static int msm_vidc_add_capid_to_fw_list(struct msm_vidc_inst *inst,
-+					 enum msm_vidc_inst_capability_type cap_id)
-+{
-+	struct msm_vidc_inst_cap_entry *entry = NULL;
-+	int rc = 0;
-+
-+	/* skip adding if cap_id already present in firmware list */
-+	list_for_each_entry(entry, &inst->firmware_list, list) {
-+		if (entry->cap_id == cap_id) {
-+			i_vpr_l(inst,
-+				"%s: cap[%d] %s already present in fw list\n",
-+				__func__, cap_id, cap_name(cap_id));
-+			return 0;
-+		}
-+	}
-+
-+	rc = add_node_list(&inst->firmware_list, cap_id);
-+	if (rc)
-+		return rc;
-+
-+	return 0;
-+}
-+
-+static int msm_vidc_add_children(struct msm_vidc_inst *inst,
-+				 enum msm_vidc_inst_capability_type cap_id)
-+{
-+	struct msm_vidc_inst_cap *cap;
-+	int i, rc = 0;
-+
-+	cap = &inst->capabilities[cap_id];
-+
-+	for (i = 0; i < MAX_CAP_CHILDREN; i++) {
-+		if (!cap->children[i])
-+			break;
-+
-+		if (!is_valid_cap_id(cap->children[i]))
-+			continue;
-+
-+		rc = add_node_list(&inst->children_list, cap->children[i]);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return rc;
-+}
-+
-+static int msm_vidc_adjust_cap(struct msm_vidc_inst *inst,
-+			       enum msm_vidc_inst_capability_type cap_id,
-+			       struct v4l2_ctrl *ctrl, const char *func)
-+{
-+	struct msm_vidc_inst_cap *cap;
-+	int rc = 0;
-+
-+	/* validate cap_id */
-+	if (!is_valid_cap_id(cap_id))
-+		return 0;
-+
-+	/* validate cap */
-+	cap = &inst->capabilities[cap_id];
-+	if (!is_valid_cap(inst, cap->cap_id))
-+		return 0;
-+
-+	/* check if adjust supported */
-+	if (!cap->adjust) {
-+		if (ctrl)
-+			msm_vidc_update_cap_value(inst, cap_id, ctrl->val, func);
-+		return 0;
-+	}
-+
-+	/* call adjust */
-+	rc = cap->adjust(inst, ctrl);
-+	if (rc) {
-+		i_vpr_e(inst, "%s: adjust cap failed for %s\n", func, cap_name(cap_id));
-+		return rc;
-+	}
-+
-+	return rc;
-+}
-+
-+static int msm_vidc_set_cap(struct msm_vidc_inst *inst,
-+			    enum msm_vidc_inst_capability_type cap_id,
-+			    const char *func)
-+{
-+	struct msm_vidc_inst_cap *cap;
-+	int rc = 0;
-+
-+	/* validate cap_id */
-+	if (!is_valid_cap_id(cap_id))
-+		return 0;
-+
-+	/* validate cap */
-+	cap = &inst->capabilities[cap_id];
-+	if (!is_valid_cap(inst, cap->cap_id))
-+		return 0;
-+
-+	/* check if set supported */
-+	if (!cap->set)
-+		return 0;
-+
-+	/* call set */
-+	rc = cap->set(inst, cap_id);
-+	if (rc) {
-+		i_vpr_e(inst, "%s: set cap failed for %s\n", func, cap_name(cap_id));
-+		return rc;
-+	}
-+
-+	return rc;
-+}
-+
-+static int msm_vidc_adjust_dynamic_property(struct msm_vidc_inst *inst,
-+					    enum msm_vidc_inst_capability_type cap_id,
-+					    struct v4l2_ctrl *ctrl)
-+{
-+	struct msm_vidc_inst_cap_entry *entry = NULL, *temp = NULL;
-+	struct msm_vidc_inst_cap *cap;
-+	s32 prev_value;
-+	int rc = 0;
-+
-+	cap = &inst->capabilities[0];
-+
-+	/* sanitize cap_id */
-+	if (!is_valid_cap_id(cap_id)) {
-+		i_vpr_e(inst, "%s: invalid cap_id %u\n", __func__, cap_id);
++	if (!mem || !mem->device_addr || !mem->kvaddr) {
++		d_vpr_e("%s: invalid params\n", __func__);
 +		return -EINVAL;
 +	}
 +
-+	if (!(cap[cap_id].flags & CAP_FLAG_DYNAMIC_ALLOWED)) {
-+		i_vpr_h(inst,
-+			"%s: dynamic setting of cap[%d] %s is not allowed\n",
-+			__func__, cap_id, cap_name(cap_id));
-+		return -EBUSY;
-+	}
-+	i_vpr_h(inst, "%s: cap[%d] %s\n", __func__, cap_id, cap_name(cap_id));
++	d_vpr_h("%s: dmabuf %pK, size %d, kvaddr %pK, buffer_type %s, secure %d, region %d\n",
++		__func__, (void *)mem->device_addr, mem->size, mem->kvaddr,
++		buf_name(mem->type), mem->secure, mem->region);
 +
-+	prev_value = cap[cap_id].value;
-+	rc = msm_vidc_adjust_cap(inst, cap_id, ctrl, __func__);
-+	if (rc)
-+		return rc;
-+
-+	if (cap[cap_id].value == prev_value && cap_id == GOP_SIZE) {
-+		/*
-+		 * Ignore setting same GOP size value to firmware to avoid
-+		 * unnecessary generation of IDR frame.
-+		 */
-+		return 0;
++	cb = msm_vidc_get_context_bank_for_region(core, mem->region);
++	if (!cb) {
++		d_vpr_e("%s: failed to get context bank device\n", __func__);
++		return -EIO;
 +	}
 +
-+	/* add cap_id to firmware list always */
-+	rc = msm_vidc_add_capid_to_fw_list(inst, cap_id);
-+	if (rc)
-+		goto error;
++	dma_free_attrs(cb->dev, mem->size, mem->kvaddr, mem->device_addr, mem->attrs);
 +
-+	/* add children only if cap value modified */
-+	if (cap[cap_id].value == prev_value)
-+		return 0;
-+
-+	rc = msm_vidc_add_children(inst, cap_id);
-+	if (rc)
-+		goto error;
-+
-+	list_for_each_entry_safe(entry, temp, &inst->children_list, list) {
-+		if (!is_valid_cap_id(entry->cap_id)) {
-+			rc = -EINVAL;
-+			goto error;
-+		}
-+
-+		if (!cap[entry->cap_id].adjust) {
-+			i_vpr_e(inst, "%s: child cap must have ajdust function %s\n",
-+				__func__, cap_name(entry->cap_id));
-+			rc = -EINVAL;
-+			goto error;
-+		}
-+
-+		prev_value = cap[entry->cap_id].value;
-+		rc = msm_vidc_adjust_cap(inst, entry->cap_id, NULL, __func__);
-+		if (rc)
-+			goto error;
-+
-+		/* add children if cap value modified */
-+		if (cap[entry->cap_id].value != prev_value) {
-+			/* add cap_id to firmware list always */
-+			rc = msm_vidc_add_capid_to_fw_list(inst, entry->cap_id);
-+			if (rc)
-+				goto error;
-+
-+			rc = msm_vidc_add_children(inst, entry->cap_id);
-+			if (rc)
-+				goto error;
-+		}
-+
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
-+
-+	/* expecting children_list to be empty */
-+	if (!list_empty(&inst->children_list)) {
-+		i_vpr_e(inst, "%s: child_list is not empty\n", __func__);
-+		rc = -EINVAL;
-+		goto error;
-+	}
-+
-+	return 0;
-+error:
-+	list_for_each_entry_safe(entry, temp, &inst->children_list, list) {
-+		i_vpr_e(inst, "%s: child list: %s\n", __func__, cap_name(entry->cap_id));
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
-+	list_for_each_entry_safe(entry, temp, &inst->firmware_list, list) {
-+		i_vpr_e(inst, "%s: fw list: %s\n", __func__, cap_name(entry->cap_id));
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
++	mem->kvaddr = NULL;
++	mem->device_addr = 0;
 +
 +	return rc;
 +}
 +
-+static int msm_vidc_set_dynamic_property(struct msm_vidc_inst *inst)
++static u32 msm_vidc_buffer_region(struct msm_vidc_inst *inst, enum msm_vidc_buffer_type buffer_type)
 +{
-+	struct msm_vidc_inst_cap_entry *entry = NULL, *temp = NULL;
-+	int rc = 0;
-+
-+	list_for_each_entry_safe(entry, temp, &inst->firmware_list, list) {
-+		rc = msm_vidc_set_cap(inst, entry->cap_id, __func__);
-+		if (rc)
-+			goto error;
-+
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
-+
-+	return 0;
-+error:
-+	list_for_each_entry_safe(entry, temp, &inst->firmware_list, list) {
-+		i_vpr_e(inst, "%s: fw list: %s\n", __func__, cap_name(entry->cap_id));
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
-+
-+	return rc;
++	return MSM_VIDC_NON_SECURE;
 +}
 +
-+int msm_vidc_ctrl_handler_deinit(struct msm_vidc_inst *inst)
++static const struct msm_vidc_memory_ops msm_mem_ops = {
++	.dma_buf_get                    = msm_vidc_dma_buf_get,
++	.dma_buf_put                    = msm_vidc_dma_buf_put,
++	.dma_buf_put_completely         = msm_vidc_dma_buf_put_completely,
++	.dma_buf_attach                 = msm_vidc_dma_buf_attach,
++	.dma_buf_detach                 = msm_vidc_dma_buf_detach,
++	.dma_buf_map_attachment         = msm_vidc_dma_buf_map_attachment,
++	.dma_buf_unmap_attachment       = msm_vidc_dma_buf_unmap_attachment,
++	.memory_alloc_map               = msm_vidc_memory_alloc_map,
++	.memory_unmap_free              = msm_vidc_memory_unmap_free,
++	.buffer_region                  = msm_vidc_buffer_region,
++};
++
++const struct msm_vidc_memory_ops *get_mem_ops(void)
 +{
-+	i_vpr_h(inst, "%s(): num ctrls %d\n", __func__, inst->num_ctrls);
-+	v4l2_ctrl_handler_free(&inst->ctrl_handler);
-+	memset(&inst->ctrl_handler, 0, sizeof(struct v4l2_ctrl_handler));
-+
-+	return 0;
-+}
-+
-+int msm_vidc_ctrl_handler_init(struct msm_vidc_inst *inst, bool init)
-+{
-+	int rc = 0;
-+	struct msm_vidc_inst_cap *cap;
-+	struct msm_vidc_core *core;
-+	int idx = 0;
-+	struct v4l2_ctrl_config ctrl_cfg = {0};
-+	int num_ctrls = 0, ctrl_idx = 0;
-+	u64 codecs_count, step_or_mask;
-+
-+	core = inst->core;
-+	cap = &inst->capabilities[0];
-+
-+	if (!core->v4l2_ctrl_ops) {
-+		i_vpr_e(inst, "%s: no control ops\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	for (idx = 0; idx < INST_CAP_MAX; idx++) {
-+		if (cap[idx].v4l2_id)
-+			num_ctrls++;
-+	}
-+	if (!num_ctrls) {
-+		i_vpr_e(inst, "%s: no ctrls available in cap database\n",
-+			__func__);
-+		return -EINVAL;
-+	}
-+
-+	if (init) {
-+		codecs_count = is_encode_session(inst) ?
-+			core->enc_codecs_count :
-+			core->dec_codecs_count;
-+		rc = v4l2_ctrl_handler_init(&inst->ctrl_handler,
-+					    INST_CAP_MAX * codecs_count);
-+		if (rc) {
-+			i_vpr_e(inst, "control handler init failed, %d\n",
-+				inst->ctrl_handler.error);
-+			goto error;
-+		}
-+	}
-+
-+	for (idx = 0; idx < INST_CAP_MAX; idx++) {
-+		struct v4l2_ctrl *ctrl;
-+
-+		if (!cap[idx].v4l2_id)
-+			continue;
-+
-+		if (ctrl_idx >= num_ctrls) {
-+			i_vpr_e(inst,
-+				"%s: invalid ctrl %#x, max allowed %d\n",
-+				__func__, cap[idx].v4l2_id,
-+				num_ctrls);
-+			rc = -EINVAL;
-+			goto error;
-+		}
-+		i_vpr_l(inst,
-+			"%s: cap[%d] %24s, value %d min %d max %d step_or_mask %#x flags %#x v4l2_id %#x hfi_id %#x\n",
-+			__func__, idx, cap_name(idx),
-+			cap[idx].value,
-+			cap[idx].min,
-+			cap[idx].max,
-+			cap[idx].step_or_mask,
-+			cap[idx].flags,
-+			cap[idx].v4l2_id,
-+			cap[idx].hfi_id);
-+
-+		memset(&ctrl_cfg, 0, sizeof(struct v4l2_ctrl_config));
-+
-+		/*
-+		 * few controls might have been already initialized in instance initialization,
-+		 * so modify the range values for them instead of initializing them again
-+		 */
-+		if (!init) {
-+			struct msm_vidc_ctrl_data ctrl_priv_data;
-+
-+			ctrl = v4l2_ctrl_find(&inst->ctrl_handler, cap[idx].v4l2_id);
-+			if (ctrl) {
-+				step_or_mask = (cap[idx].flags & CAP_FLAG_MENU) ?
-+					~(cap[idx].step_or_mask) :
-+					cap[idx].step_or_mask;
-+				memset(&ctrl_priv_data, 0, sizeof(struct msm_vidc_ctrl_data));
-+				ctrl_priv_data.skip_s_ctrl = true;
-+				ctrl->priv = &ctrl_priv_data;
-+				v4l2_ctrl_modify_range(ctrl,
-+						       cap[idx].min,
-+						       cap[idx].max,
-+						       step_or_mask,
-+						       cap[idx].value);
-+				/* reset private data to null to ensure s_ctrl not skipped */
-+				ctrl->priv = NULL;
-+				continue;
-+			}
-+		}
-+
-+		if (cap[idx].flags & CAP_FLAG_MENU) {
-+			ctrl = v4l2_ctrl_new_std_menu(&inst->ctrl_handler,
-+						      core->v4l2_ctrl_ops,
-+						      cap[idx].v4l2_id,
-+						      cap[idx].max,
-+						      ~(cap[idx].step_or_mask),
-+						      cap[idx].value);
-+		} else {
-+			ctrl = v4l2_ctrl_new_std(&inst->ctrl_handler,
-+						 core->v4l2_ctrl_ops,
-+						 cap[idx].v4l2_id,
-+						 cap[idx].min,
-+						 cap[idx].max,
-+						 cap[idx].step_or_mask,
-+						 cap[idx].value);
-+		}
-+		if (!ctrl) {
-+			i_vpr_e(inst, "%s: invalid ctrl %#x cap %24s\n", __func__,
-+				cap[idx].v4l2_id, cap_name(idx));
-+			rc = -EINVAL;
-+			goto error;
-+		}
-+
-+		rc = inst->ctrl_handler.error;
-+		if (rc) {
-+			i_vpr_e(inst,
-+				"error adding ctrl (%#x) to ctrl handle, %d\n",
-+				cap[idx].v4l2_id,
-+				inst->ctrl_handler.error);
-+			goto error;
-+		}
-+
-+		if (cap[idx].flags & CAP_FLAG_VOLATILE)
-+			ctrl->flags |= V4L2_CTRL_FLAG_VOLATILE;
-+
-+		ctrl->flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-+		ctrl_idx++;
-+	}
-+	inst->num_ctrls = num_ctrls;
-+	i_vpr_h(inst, "%s(): num ctrls %d\n", __func__, inst->num_ctrls);
-+
-+	return 0;
-+error:
-+	msm_vidc_ctrl_handler_deinit(inst);
-+
-+	return rc;
-+}
-+
-+static int
-+msm_vidc_update_buffer_count_if_needed(struct msm_vidc_inst *inst,
-+				       enum msm_vidc_inst_capability_type cap_id)
-+{
-+	int rc = 0;
-+	bool update_input_port = false, update_output_port = false;
-+
-+	switch (cap_id) {
-+	case LAYER_TYPE:
-+	case ENH_LAYER_COUNT:
-+	case LAYER_ENABLE:
-+		update_input_port = true;
-+		break;
-+	default:
-+		update_input_port = false;
-+		update_output_port = false;
-+		break;
-+	}
-+
-+	if (update_input_port) {
-+		rc = msm_vidc_update_buffer_count(inst, INPUT_PORT);
-+		if (rc)
-+			return rc;
-+	}
-+	if (update_output_port) {
-+		rc = msm_vidc_update_buffer_count(inst, OUTPUT_PORT);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return rc;
-+}
-+
-+int msm_v4l2_op_g_volatile_ctrl(struct v4l2_ctrl *ctrl)
-+{
-+	int rc = 0;
-+	struct msm_vidc_inst *inst;
-+
-+	if (!ctrl) {
-+		d_vpr_e("%s: invalid ctrl parameter\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	inst = container_of(ctrl->handler,
-+			    struct msm_vidc_inst, ctrl_handler);
-+	inst = get_inst_ref(g_core, inst);
-+	if (!inst) {
-+		d_vpr_e("%s: could not find inst for ctrl %s id %#x\n",
-+			__func__, ctrl->name, ctrl->id);
-+		return -EINVAL;
-+	}
-+	client_lock(inst, __func__);
-+	inst_lock(inst, __func__);
-+
-+	rc = msm_vidc_get_control(inst, ctrl);
-+	if (rc) {
-+		i_vpr_e(inst, "%s: failed for ctrl %s id %#x\n",
-+			__func__, ctrl->name, ctrl->id);
-+		goto unlock;
-+	} else {
-+		i_vpr_h(inst, "%s: ctrl %s id %#x, value %d\n",
-+			__func__, ctrl->name, ctrl->id, ctrl->val);
-+	}
-+
-+unlock:
-+	inst_unlock(inst, __func__);
-+	client_unlock(inst, __func__);
-+	put_inst(inst);
-+	return rc;
-+}
-+
-+static int
-+msm_vidc_update_static_property(struct msm_vidc_inst *inst,
-+				enum msm_vidc_inst_capability_type cap_id,
-+				struct v4l2_ctrl *ctrl)
-+{
-+	int rc = 0;
-+
-+	/* update value to db */
-+	msm_vidc_update_cap_value(inst, cap_id, ctrl->val, __func__);
-+
-+	if (cap_id == ROTATION) {
-+		struct v4l2_format *output_fmt;
-+
-+		output_fmt = &inst->fmts[OUTPUT_PORT];
-+		rc = msm_venc_s_fmt_output(inst, output_fmt);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	if (cap_id == BITSTREAM_SIZE_OVERWRITE) {
-+		rc = msm_vidc_update_bitstream_buffer_size(inst);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	if (cap_id == ENH_LAYER_COUNT && inst->codec == MSM_VIDC_HEVC) {
-+		u32 enable;
-+
-+		/* enable LAYER_ENABLE cap if HEVC_HIER enh layers > 0 */
-+		if (ctrl->val > 0)
-+			enable = 1;
-+		else
-+			enable = 0;
-+
-+		msm_vidc_update_cap_value(inst, LAYER_ENABLE, enable, __func__);
-+	}
-+
-+	rc = msm_vidc_update_buffer_count_if_needed(inst, cap_id);
-+
-+	return rc;
-+}
-+
-+int msm_vidc_s_ctrl(struct msm_vidc_inst *inst, struct v4l2_ctrl *ctrl)
-+{
-+	enum msm_vidc_inst_capability_type cap_id;
-+	struct msm_vidc_inst_cap *cap;
-+	int rc = 0;
-+	u32 port;
-+
-+	cap = &inst->capabilities[0];
-+
-+	i_vpr_h(inst, FMT_STRING_SET_CTRL,
-+		__func__, state_name(inst->state), ctrl->name, ctrl->id, ctrl->val);
-+
-+	cap_id = msm_vidc_get_cap_id(inst, ctrl->id);
-+	if (!is_valid_cap_id(cap_id)) {
-+		i_vpr_e(inst, "%s: invalid cap_id for ctrl %s\n", __func__, ctrl->name);
-+		return -EINVAL;
-+	}
-+
-+	/* mark client set flag */
-+	cap[cap_id].flags |= CAP_FLAG_CLIENT_SET;
-+
-+	port = is_encode_session(inst) ? OUTPUT_PORT : INPUT_PORT;
-+	if (!inst->bufq[port].vb2q->streaming) {
-+		/* static case */
-+		rc = msm_vidc_update_static_property(inst, cap_id, ctrl);
-+		if (rc)
-+			return rc;
-+	} else {
-+		/* dynamic case */
-+		rc = msm_vidc_adjust_dynamic_property(inst, cap_id, ctrl);
-+		if (rc)
-+			return rc;
-+
-+		rc = msm_vidc_set_dynamic_property(inst);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return rc;
-+}
-+
-+int msm_v4l2_op_s_ctrl(struct v4l2_ctrl *ctrl)
-+{
-+	struct msm_vidc_inst *inst;
-+	struct msm_vidc_ctrl_data *priv_ctrl_data;
-+	int rc = 0;
-+
-+	if (!ctrl) {
-+		d_vpr_e("%s: invalid ctrl parameter\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	/*
-+	 * v4l2_ctrl_modify_range may internally call s_ctrl
-+	 * which will again try to acquire lock leading to deadlock,
-+	 * Add check to avoid such scenario.
-+	 */
-+	priv_ctrl_data = ctrl->priv ? ctrl->priv : NULL;
-+	if (priv_ctrl_data && priv_ctrl_data->skip_s_ctrl) {
-+		d_vpr_l("%s: skip s_ctrl (%s)\n", __func__, ctrl->name);
-+		return 0;
-+	}
-+
-+	inst = container_of(ctrl->handler, struct msm_vidc_inst, ctrl_handler);
-+	inst = get_inst_ref(g_core, inst);
-+	if (!inst) {
-+		d_vpr_e("%s: invalid instance\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	client_lock(inst, __func__);
-+	inst_lock(inst, __func__);
-+	rc = inst->event_handle(inst, MSM_VIDC_S_CTRL, ctrl);
-+	if (rc)
-+		goto unlock;
-+
-+unlock:
-+	inst_unlock(inst, __func__);
-+	client_unlock(inst, __func__);
-+	put_inst(inst);
-+	return rc;
-+}
-+
-+int msm_vidc_prepare_dependency_list(struct msm_vidc_inst *inst)
-+{
-+	struct list_head leaf_list, opt_list;
-+	struct msm_vidc_inst_cap *cap, *lcap, *temp_cap;
-+	struct msm_vidc_inst_cap_entry *entry = NULL, *temp = NULL;
-+	bool leaf_visited[INST_CAP_MAX];
-+	bool opt_visited[INST_CAP_MAX];
-+	int tmp_count_total, tmp_count, num_nodes = 0;
-+	int i, rc = 0;
-+
-+	cap = &inst->capabilities[0];
-+
-+	if (!list_empty(&inst->caps_list)) {
-+		i_vpr_h(inst, "%s: dependency list already prepared\n", __func__);
-+		return 0;
-+	}
-+
-+	/* init local list and lookup table entries */
-+	INIT_LIST_HEAD(&leaf_list);
-+	INIT_LIST_HEAD(&opt_list);
-+	memset(&leaf_visited, 0, sizeof(leaf_visited));
-+	memset(&opt_visited, 0, sizeof(opt_visited));
-+
-+	/* populate leaf nodes first */
-+	for (i = 1; i < INST_CAP_MAX; i++) {
-+		lcap = &cap[i];
-+		if (!is_valid_cap(inst, lcap->cap_id))
-+			continue;
-+
-+		/* sanitize cap value */
-+		if (i != lcap->cap_id) {
-+			i_vpr_e(inst, "%s: cap id mismatch. expected %s, actual %s\n",
-+				__func__, cap_name(i), cap_name(lcap->cap_id));
-+			rc = -EINVAL;
-+			goto error;
-+		}
-+
-+		/* add all leaf nodes */
-+		if (is_leaf(lcap)) {
-+			rc = add_node(&leaf_list, lcap, leaf_visited);
-+			if (rc)
-+				goto error;
-+		} else {
-+			rc = add_node(&opt_list, lcap, opt_visited);
-+			if (rc)
-+				goto error;
-+		}
-+	}
-+
-+	/* find total optional list entries */
-+	list_for_each_entry(entry, &opt_list, list)
-+		num_nodes++;
-+
-+	/* used for loop detection */
-+	tmp_count_total = num_nodes;
-+	tmp_count = num_nodes;
-+
-+	/* sort final outstanding nodes */
-+	list_for_each_entry_safe(entry, temp, &opt_list, list) {
-+		/* initially remove entry from opt list */
-+		list_del_init(&entry->list);
-+		opt_visited[entry->cap_id] = false;
-+		tmp_count--;
-+		temp_cap = &cap[entry->cap_id];
-+
-+		/**
-+		 * if all child are visited then add this entry to
-+		 * leaf list else add it to the end of optional list.
-+		 */
-+		if (is_all_childrens_visited(temp_cap, leaf_visited)) {
-+			list_add(&entry->list, &leaf_list);
-+			leaf_visited[entry->cap_id] = true;
-+			tmp_count_total--;
-+		} else {
-+			list_add_tail(&entry->list, &opt_list);
-+			opt_visited[entry->cap_id] = true;
-+		}
-+
-+		/* detect loop */
-+		if (!tmp_count) {
-+			if (num_nodes == tmp_count_total) {
-+				i_vpr_e(inst, "%s: loop detected in subgraph %d\n",
-+					__func__, num_nodes);
-+				rc = -EINVAL;
-+				goto error;
-+			}
-+			num_nodes = tmp_count_total;
-+			tmp_count = tmp_count_total;
-+		}
-+	}
-+
-+	/* expecting opt_list to be empty */
-+	if (!list_empty(&opt_list)) {
-+		i_vpr_e(inst, "%s: opt_list is not empty\n", __func__);
-+		rc = -EINVAL;
-+		goto error;
-+	}
-+
-+	/* move elements to &inst->caps_list from local */
-+	list_replace_init(&leaf_list, &inst->caps_list);
-+
-+	return 0;
-+error:
-+	list_for_each_entry_safe(entry, temp, &opt_list, list) {
-+		i_vpr_e(inst, "%s: opt_list: %s\n", __func__, cap_name(entry->cap_id));
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
-+	list_for_each_entry_safe(entry, temp, &leaf_list, list) {
-+		i_vpr_e(inst, "%s: leaf_list: %s\n", __func__, cap_name(entry->cap_id));
-+		list_del_init(&entry->list);
-+		vfree(entry);
-+	}
-+	return rc;
-+}
-+
-+int msm_vidc_adjust_v4l2_properties(struct msm_vidc_inst *inst)
-+{
-+	struct msm_vidc_inst_cap_entry *entry = NULL, *temp = NULL;
-+	int rc = 0;
-+
-+	/* adjust all possible caps from caps_list */
-+	list_for_each_entry_safe(entry, temp, &inst->caps_list, list) {
-+		i_vpr_l(inst, "%s: cap: id %3u, name %s\n", __func__,
-+			entry->cap_id, cap_name(entry->cap_id));
-+
-+		rc = msm_vidc_adjust_cap(inst, entry->cap_id, NULL, __func__);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return rc;
-+}
-+
-+int msm_vidc_set_v4l2_properties(struct msm_vidc_inst *inst)
-+{
-+	struct msm_vidc_inst_cap_entry *entry = NULL, *temp = NULL;
-+	int rc = 0;
-+
-+	/* set all caps from caps_list */
-+	list_for_each_entry_safe(entry, temp, &inst->caps_list, list) {
-+		rc = msm_vidc_set_cap(inst, entry->cap_id, __func__);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return rc;
++	return &msm_mem_ops;
 +}
 -- 
 2.7.4
