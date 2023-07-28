@@ -2,164 +2,263 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7A7C76686B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 11:13:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9846D76690B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 11:37:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233896AbjG1JNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 05:13:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
+        id S235552AbjG1Jhb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 05:37:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235225AbjG1JMl (ORCPT
+        with ESMTP id S235541AbjG1Jha (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 05:12:41 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D593A97;
-        Fri, 28 Jul 2023 02:10:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A8B1762088;
-        Fri, 28 Jul 2023 09:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF74C433C7;
-        Fri, 28 Jul 2023 09:10:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690535437;
-        bh=jsukJ3h2ilmz083UcYGengZNcUIJYlLHWk6g/LKxW1A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Jq54e2P2vabTsv0/ZkCTu/TtAKcPA/986KlVzpTtjaLAFsettUVGxIIEhV012qHmY
-         XjZnDjmAeW2ab1ZsUURkM7jE4L/524t63e/2b+AR7jZDEQXiyB3jMa2BRjo+JEpwRs
-         l3QdUPJ8w/4urXWddV+VETsCyali7ZkVGVcRJ/K6g+RVz5T9C+bf9WioC+uygEDa9I
-         Rh3AvZFW0PdulmDiZySwu0Xy2XsI/jHB3Xyi77hPM/dAwa7KUnEsd9+KEupPqjueWP
-         u1x3RpBtfjI/oksjIHjYF89qn/jUU3ZW18drI+6RQKSDrQ5SYoMzV9cMfadNlCraZU
-         lW9h48LazI1/g==
-Date:   Fri, 28 Jul 2023 10:10:24 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Thor Thayer <thor.thayer@linux.intel.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matti Vaittinen <mazziesaccount@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, patches@opensource.cirrus.com,
-        linux-actions@lists.infradead.org, chrome-platform@lists.linux.dev,
-        alsa-devel@alsa-project.org, linux-mediatek@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-mtd@lists.infradead.org
-Subject: Re: [PATCH] mfd: Explicitly include correct DT includes
-Message-ID: <20230728091024.GE8175@google.com>
-References: <20230714174731.4059811-1-robh@kernel.org>
+        Fri, 28 Jul 2023 05:37:30 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D51E310EC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 02:37:28 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-d1c988afebfso1792047276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 02:37:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690537048; x=1691141848;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JlZf2RL3i6UDORQb9mZw6fYIEm2cS2iGuc+pwaym0fI=;
+        b=uUz/3R3iJOplNYB1AkkHSjLhoozRziAFHJjM631Jfbue8Cm+UFJjT0tGZCToZB1gcU
+         4IyPWiViAfuq6WdsCO23qHimmlsX0XzNNE7K9OxEU99kmjk/fxyA37ByIf5gDDICcBuZ
+         Q3G++K7KkaqCZkMCXAnPkDuDlyX1mjsAf8wyXiPqrLxA/AW9GcLzl6ul3rk4iSreEC2Y
+         BUcIoCMXwphAz8I2/h1BC0TWhRmmjf/MaixUsxb72SuMSdj5ejdQ5q5s7usOup9rK+Zk
+         XZtxodYYQYsWVhwofTSMzWCoUFFIWxU99JPF7pIOkpCn1Gi67VBlsruBKj9D7FR3Sfiq
+         DRLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690537048; x=1691141848;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JlZf2RL3i6UDORQb9mZw6fYIEm2cS2iGuc+pwaym0fI=;
+        b=jU/AATLuPJsqQYN+RcGETQiqzkFB6NQwXnXynpQ6BPLMMozu3ab1p2xu5nV/VttR+6
+         1SbH+5mDFbyT1V4LqJP4ONP1Sz08RiEsVVc5nMpZQf74XM0AHH62v3meSl7QF+l1e5hI
+         MjL4F9Bv0dJjkFgFmOfY/YMJwvoBCF0WCfCKlu1G/YqQumbbtfNCNcAoJlatdn9X7vy9
+         PIqWvMiH2JHcrDTfo2VEQY8x5OzegAKARU6P7vcQP7JZdlPtZ+A/Hzc1QHQXCGbwEGfL
+         wR8ZAooN6X1jhYcar5wY7cVZEyRIKY0YTocQ45xLRbyOer4WVbhiuUt96f24WFxaC14R
+         wLsQ==
+X-Gm-Message-State: ABy/qLaCj/Tw1zxtL+/jc3Eu+c9OSocbYxBuHByK71Wdo/Ovv4kQgAAx
+        uu9UCAss4Kw/w44ttffNhdZVjDlxB1Mq/qAiD0Macw==
+X-Google-Smtp-Source: APBJJlHP+0vhBr5pqqSindcVAEKtPZL7T+Mqdb+FcAqoZgG9TNDCetnFMDUrGRwkofjLPfASs0KY9UC1k96BrCfnA5Q=
+X-Received: by 2002:a5b:88c:0:b0:bca:7cd:7f32 with SMTP id e12-20020a5b088c000000b00bca07cd7f32mr1208001ybq.48.1690537048006;
+ Fri, 28 Jul 2023 02:37:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230714174731.4059811-1-robh@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230728012623.22991-1-quic_parellan@quicinc.com>
+In-Reply-To: <20230728012623.22991-1-quic_parellan@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 28 Jul 2023 12:37:17 +0300
+Message-ID: <CAA8EJpqPgzd4ZSP948MQW=f4EVBHxajj4nwYq5s-OConBP7Vvg@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/panel: Enable DSC and CMD mode for Visionox
+ VTDR6130 panel
+To:     Paloma Arellano <quic_parellan@quicinc.com>
+Cc:     neil.armstrong@linaro.org, sam@ravnborg.org, airlied@gmail.com,
+        daniel@ffwll.ch, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        marijn.suijten@somainline.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 14 Jul 2023, Rob Herring wrote:
-
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On Fri, 28 Jul 2023 at 04:26, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+>
+> Enable display compression (DSC v1.2) and CMD mode for 1080x2400 Visionox
+> VTDR6130 AMOLED DSI panel. In addition, this patch will set the default
+> to command mode with DSC enabled.
+>
+> Note: This patch has only been validated DSC over command mode as DSC over
+> video mode has never been validated for the MSM driver before.
+>
+> Depends on: "Add prepare_prev_first flag to Visionox VTDR6130" [1]
+>
+> Changes since v1:
+>  - Changed from email address
+>
+> [1] https://patchwork.freedesktop.org/series/121337/
+>
+> Suggested-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
 > ---
->  drivers/mfd/ab8500-core.c           | 1 -
->  drivers/mfd/acer-ec-a500.c          | 2 +-
->  drivers/mfd/act8945a.c              | 2 +-
->  drivers/mfd/altera-sysmgr.c         | 3 +--
->  drivers/mfd/arizona-core.c          | 1 -
->  drivers/mfd/atc260x-core.c          | 1 -
->  drivers/mfd/bcm590xx.c              | 1 -
->  drivers/mfd/cros_ec_dev.c           | 2 +-
->  drivers/mfd/da9052-i2c.c            | 5 +----
->  drivers/mfd/da9055-i2c.c            | 1 -
->  drivers/mfd/da9062-core.c           | 2 +-
->  drivers/mfd/hi655x-pmic.c           | 4 ++--
->  drivers/mfd/iqs62x.c                | 2 +-
->  drivers/mfd/lp873x.c                | 2 +-
->  drivers/mfd/madera-i2c.c            | 1 -
->  drivers/mfd/madera-spi.c            | 1 -
->  drivers/mfd/max77620.c              | 1 -
->  drivers/mfd/max77686.c              | 1 -
->  drivers/mfd/max77843.c              | 2 +-
->  drivers/mfd/max8907.c               | 1 -
->  drivers/mfd/max8925-core.c          | 1 -
->  drivers/mfd/max8997.c               | 1 -
->  drivers/mfd/max8998.c               | 1 -
->  drivers/mfd/mt6358-irq.c            | 5 ++---
->  drivers/mfd/mt6397-core.c           | 5 +++--
->  drivers/mfd/mt6397-irq.c            | 5 ++---
->  drivers/mfd/palmas.c                | 3 ++-
->  drivers/mfd/qcom-pm8008.c           | 2 +-
->  drivers/mfd/rave-sp.c               | 2 +-
->  drivers/mfd/rk8xx-core.c            | 2 +-
->  drivers/mfd/rohm-bd71828.c          | 2 +-
->  drivers/mfd/rohm-bd718x7.c          | 2 +-
->  drivers/mfd/rohm-bd9576.c           | 2 +-
->  drivers/mfd/rt5033.c                | 2 +-
->  drivers/mfd/rz-mtu3.c               | 4 +++-
->  drivers/mfd/sec-core.c              | 2 --
->  drivers/mfd/sprd-sc27xx-spi.c       | 2 +-
->  drivers/mfd/ssbi.c                  | 6 +++---
->  drivers/mfd/stm32-lptimer.c         | 1 +
->  drivers/mfd/stm32-timers.c          | 1 +
->  drivers/mfd/sun4i-gpadc.c           | 4 ++--
->  drivers/mfd/ti-lmu.c                | 1 -
->  drivers/mfd/ti_am335x_tscadc.c      | 2 +-
->  drivers/mfd/tps6507x.c              | 1 -
->  drivers/mfd/tps65090.c              | 1 -
->  drivers/mfd/tps65217.c              | 1 -
->  drivers/mfd/tps65218.c              | 1 -
->  drivers/mfd/tps6594-core.c          | 2 +-
->  drivers/mfd/twl6040.c               | 2 --
->  drivers/mfd/wm831x-core.c           | 3 +--
->  drivers/mtd/chips/cfi_cmdset_0002.c | 3 +--
->  51 files changed, 42 insertions(+), 66 deletions(-)
+>  .../gpu/drm/panel/panel-visionox-vtdr6130.c   | 77 ++++++++++++++++++-
+>  1 file changed, 73 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+> index e1363e128e7e..5658d39a3a6b 100644
+> --- a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+> +++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+> @@ -9,6 +9,7 @@
+>  #include <linux/of.h>
+>
+>  #include <drm/display/drm_dsc.h>
+> +#include <drm/display/drm_dsc_helper.h>
+>  #include <drm/drm_mipi_dsi.h>
+>  #include <drm/drm_modes.h>
+>  #include <drm/drm_panel.h>
+> @@ -20,7 +21,8 @@ struct visionox_vtdr6130 {
+>         struct mipi_dsi_device *dsi;
+>         struct gpio_desc *reset_gpio;
+>         struct regulator_bulk_data supplies[3];
+> -       bool prepared;
+> +       bool prepared, enabled;
+> +       bool video_mode;
+>  };
+>
+>  static inline struct visionox_vtdr6130 *to_visionox_vtdr6130(struct drm_panel *panel)
+> @@ -50,12 +52,18 @@ static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
+>         if (ret)
+>                 return ret;
+>
+> +       mipi_dsi_dcs_write_seq(dsi, 0x03, 0x01);
+>         mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY, 0x20);
+>         mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_SET_DISPLAY_BRIGHTNESS, 0x00, 0x00);
+>         mipi_dsi_dcs_write_seq(dsi, 0x59, 0x09);
+>         mipi_dsi_dcs_write_seq(dsi, 0x6c, 0x01);
+>         mipi_dsi_dcs_write_seq(dsi, 0x6d, 0x00);
+> -       mipi_dsi_dcs_write_seq(dsi, 0x6f, 0x01);
+> +
+> +       if (ctx->video_mode)
+> +               mipi_dsi_dcs_write_seq(dsi, 0x6f, 0x01);
+> +       else
+> +               mipi_dsi_dcs_write_seq(dsi, 0x6f, 0x02);
+> +
+>         mipi_dsi_dcs_write_seq(dsi, 0x70,
+>                                0x12, 0x00, 0x00, 0xab, 0x30, 0x80, 0x09, 0x60, 0x04,
+>                                0x38, 0x00, 0x28, 0x02, 0x1c, 0x02, 0x1c, 0x02, 0x00,
+> @@ -214,6 +222,42 @@ static const struct drm_display_mode visionox_vtdr6130_mode = {
+>         .height_mm = 157,
+>  };
+>
+> +static int visionox_vtdr6130_enable(struct drm_panel *panel)
+> +{
+> +       struct visionox_vtdr6130 *ctx = to_visionox_vtdr6130(panel);
+> +       struct mipi_dsi_device *dsi = ctx->dsi;
+> +       struct drm_dsc_picture_parameter_set pps;
+> +       int ret;
+> +
+> +       if (ctx->enabled)
+> +               return 0;
+> +
+> +       if (!dsi->dsc) {
+> +               dev_err(&dsi->dev, "DSC not attached to DSI\n");
+> +               return -ENODEV;
+> +       }
 
-Applied, thanks
+The error message is misleading. Also, if you don't want to enable DSC
+for the video mode, this will break.
+
+> +
+> +       drm_dsc_pps_payload_pack(&pps, dsi->dsc);
+> +       ret = mipi_dsi_picture_parameter_set(dsi, &pps);
+> +       if (ret) {
+> +               dev_err(&dsi->dev, "Failed to set PPS\n");
+> +               return ret;
+> +       }
+> +
+> +       ctx->enabled = true;
+
+Do we need this refcount just for PPS upload? What will happen if PPS
+is uploaded several times?
+
+> +
+> +       return 0;
+> +}
+> +
+> +static int visionox_vtdr6130_disable(struct drm_panel *panel)
+> +{
+> +       struct visionox_vtdr6130 *ctx = to_visionox_vtdr6130(panel);
+> +
+> +       ctx->enabled = false;
+> +
+> +       return 0;
+> +}
+> +
+>  static int visionox_vtdr6130_get_modes(struct drm_panel *panel,
+>                                        struct drm_connector *connector)
+>  {
+> @@ -237,6 +281,8 @@ static const struct drm_panel_funcs visionox_vtdr6130_panel_funcs = {
+>         .prepare = visionox_vtdr6130_prepare,
+>         .unprepare = visionox_vtdr6130_unprepare,
+>         .get_modes = visionox_vtdr6130_get_modes,
+> +       .enable = visionox_vtdr6130_enable,
+> +       .disable = visionox_vtdr6130_disable,
+>  };
+>
+>  static int visionox_vtdr6130_bl_update_status(struct backlight_device *bl)
+> @@ -269,11 +315,31 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
+>  {
+>         struct device *dev = &dsi->dev;
+>         struct visionox_vtdr6130 *ctx;
+> +       struct drm_dsc_config *dsc;
+>         int ret;
+>
+>         ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+>         if (!ctx)
+>                 return -ENOMEM;
+> +
+> +       ctx->video_mode = of_property_read_bool(dev->of_node, "enforce-video-mode");
+
+Please also add a DT bindings patch.
+
+> +
+> +       dsc = devm_kzalloc(dev, sizeof(*dsc), GFP_KERNEL);
+> +       if (!dsc)
+> +               return -ENOMEM;
+
+You can add struct drm_dsc_config to struct visionox_vtdr6130 instead
+of allocating it.
+
+> +
+> +       /* Set DSC params */
+> +       dsc->dsc_version_major = 0x1;
+> +       dsc->dsc_version_minor = 0x2;
+> +
+> +       dsc->slice_height = 40;
+> +       dsc->slice_width = 540;
+> +       dsc->slice_count = 2;
+> +       dsc->bits_per_component = 8;
+> +       dsc->bits_per_pixel = 8 << 4;
+> +       dsc->block_pred_enable = true;
+> +
+> +       dsi->dsc = dsc;
+
+Only in command mode?
+
+>
+>         ctx->supplies[0].supply = "vddio";
+>         ctx->supplies[1].supply = "vci";
+> @@ -294,8 +360,11 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
+>
+>         dsi->lanes = 4;
+>         dsi->format = MIPI_DSI_FMT_RGB888;
+> -       dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_NO_EOT_PACKET |
+> -                         MIPI_DSI_CLOCK_NON_CONTINUOUS;
+> +
+> +       dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET | MIPI_DSI_CLOCK_NON_CONTINUOUS;
+
+Keep the line split please.
+
+> +       if (ctx->video_mode)
+> +               dsi->mode_flags |= MIPI_DSI_MODE_VIDEO;
+> +
+>         ctx->panel.prepare_prev_first = true;
+>
+>         drm_panel_init(&ctx->panel, dev, &visionox_vtdr6130_panel_funcs,
+> --
+> 2.41.0
+>
+
 
 -- 
-Lee Jones [李琼斯]
+With best wishes
+Dmitry
