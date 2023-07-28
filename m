@@ -2,135 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AAE0766539
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 09:25:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E42AA766547
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 09:27:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234202AbjG1HZF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 03:25:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54500 "EHLO
+        id S234236AbjG1H1B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 03:27:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234212AbjG1HZB (ORCPT
+        with ESMTP id S234244AbjG1H0m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 03:25:01 -0400
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2055.outbound.protection.outlook.com [40.107.93.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB8AF7;
-        Fri, 28 Jul 2023 00:24:59 -0700 (PDT)
+        Fri, 28 Jul 2023 03:26:42 -0400
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2049.outbound.protection.outlook.com [40.107.93.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F41B3A8B;
+        Fri, 28 Jul 2023 00:26:39 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mfOjJBtymi9AltTjmjAp2A+kKjFdd2Fpl2Pbocw507NOCLKQ5ONYRYkusDgLdd/qnpotFvsocu8EQVmVTwSpKFt1hj4ycxGMiHLZEDrfm5eX9aDqO2o/oHyLXiW19C/t6Dr52PfWCMqZ7cSdAdgM2d89vTKpOEphFWIx6iwJ+eAPpDfTM2F4OhRhYqqIGIk6j+bl+QJDtGv1cGcv39tVck5Wn9MqNBGf58iiDt/pvB48V2dALkq7yigpUVNSlmFVroupWt1xWz1psTiPChZWtVabAElqZtp31Z5JE/wtAeEruS3pZ58UesLtoeO49gW5M2wso/W5xGCu91gWdbjs/g==
+ b=EF+fGvR4OBiI6LMCZJvdVuJ+iNd13Qq2Ngg5vlgoi1dXxbb1S9h6INGivzhNgn+yXgrg3RZfyO3MaNBVzxd/o94UpFrbK4O8SK/GvCkupw1VHMfCgcVbnrf7AdCwdED4XYGfGztNTP91VZs9VzCFX5CvCX63H/glbQnCTcjxF4GbgoVocFCCFAU1/7Xs/Hiqtlwa5Mt7C//5esLxljhnPlpHOkKyhvLSt4VaLpV1mwyfOZ8Q8cC1TQWn+FGd+3U126mJ1jDzsOFjNrfSpn9njHPLMHJkpsUAClO/JWX9ChObmnWFpTJSxqZKBK4Q6bAg2IwbFAPUnIj3kfGvmV8hrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=I1zH5iD06uIN2Df8J/5dWEnKGxnn5hK5qU/cZ/CVX/g=;
- b=c9ODCKn/KOoAAaSAwyU1zMMacuYGIEULFm0pnb6WigJ8UqvzPnKkCFOeTJNZDzcHvDqVNjTFbmwV3h+5RMXj18y4W1h4XQ5rtGpud85PrAxfMwQ8QFa6FfuMD8dxSmpyQmcWCDURqVlQEoQpH+Aa2BkmZzu7wDsdzbpNGRNKRJWEuDEg59Bhl7vZ5tH7C3MwzCuzxmBWODqGuvUqZzjHMRrAxHb6+j2sN4ezLBEhvD9bu9HZxjUaFRhK04m2ojlOqlxpj8Esnp8x7qr8GNZW6iTzq8AngMdkSSYPykOJVkZpn8uYJ9IKIb6iuxYQ1O57nzlzP9MGK1ojyMDirbMN1Q==
+ bh=6YnMa943IaLT1zPYOXIwbj9Uh3YFWLDIQg6XYWGD3Kw=;
+ b=g4T4WOG5fF7rtAyhH0FEkVGR+vOX8Mx6u2dfBuRdJkQCdrDvZBQrvqt0EOM87WkuQVorgAFXbXFA5GcjXfG1HCojYXDKf1OorxsCWNTGYbR6rtzWhmVgnoGi4f8RlXuwk1LeZ9EDWO1Jd8nVNfVWZArxohRnh2LL9FLS9oHYzYlOzkD+6JHYlkdtpUvNPMTqnGhFhQGjo3YrfA31d7dOu3Eal/RwV6wwcilPMpRuYGGkpTXMNZ/MGq3+FXiaT2xeSYP5sBUfTBNiPmykjMNEq+QzvDeg0TtQj4RJ9GG88O7RGn3mqm2ef9ZGKPmCjK/6mdUtvQbjErBOzYmSsB+PnA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=synaptics.com; dmarc=pass action=none
  header.from=synaptics.com; dkim=pass header.d=synaptics.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=Synaptics.onmicrosoft.com; s=selector2-Synaptics-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I1zH5iD06uIN2Df8J/5dWEnKGxnn5hK5qU/cZ/CVX/g=;
- b=l6gubXuWMMTmrcgqiNbEPR3eeMEGf1b8PRgzaxbAeEuJ67mF/Ku90rPn+ublMB2Nr8jUCgi5tpfvXDBDJM4aXf7rPm3FK4RP5HJKcrPY9sYZwLji1NxiLmIdTgoCCmu/316KOv7uwdQjYSb+2ZvaQPks03oa/Jb2AVRIMhDBgyc=
+ bh=6YnMa943IaLT1zPYOXIwbj9Uh3YFWLDIQg6XYWGD3Kw=;
+ b=jnoK+NsZ4sQ6gnFJ5Pim1iqQgizOuVisdwpdf+7iH0O9G1Uf6MiMGOA9YrwwSuUpFTw4rV6ZxcIy4d2tiYdFEY38G/1yIQccshTSTBUp4Ml7VWzH75a4JuBUGZOm4XDfg3VveCFdxCu/IKCwUTJX5V2xZWRn4gGYAqT0joqhU6c=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=synaptics.com;
 Received: from DM6PR03MB5196.namprd03.prod.outlook.com (2603:10b6:5:24a::19)
  by CH2PR03MB5285.namprd03.prod.outlook.com (2603:10b6:610:9c::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6631.29; Fri, 28 Jul
- 2023 07:24:54 +0000
+ 2023 07:26:37 +0000
 Received: from DM6PR03MB5196.namprd03.prod.outlook.com
  ([fe80::411c:e486:3837:cc25]) by DM6PR03MB5196.namprd03.prod.outlook.com
  ([fe80::411c:e486:3837:cc25%3]) with mapi id 15.20.6631.026; Fri, 28 Jul 2023
- 07:24:53 +0000
-Message-ID: <9bc67e88-bce1-b812-aa57-76eca764cb38@synaptics.com>
-Date:   Fri, 28 Jul 2023 15:24:42 +0800
+ 07:26:37 +0000
+Message-ID: <08588eb0-0e3f-828a-65be-50460560095d@synaptics.com>
+Date:   Fri, 28 Jul 2023 15:26:28 +0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v3 04/11] media: videobuf2: Stop define VB2_MAX_FRAME as
- global
+Subject: Re: [PATCH v3 10/11] media: v4l2: Add DELETE_BUF ioctl
 Content-Language: en-GB
 To:     Tomasz Figa <tfiga@chromium.org>
 Cc:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
         linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com,
+        p.zabel@pengutronix.de, ming.qian@nxp.com,
+        hverkuil-cisco@xs4all.nl, gregkh@linuxfoundation.org,
+        ezequiel@vanguardiasur.com.ar,
+        linux-arm-kernel@lists.infradead.org,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        hverkuil-cisco@xs4all.nl, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, linux-rockchip@lists.infradead.org,
-        mchehab@kernel.org, linux-staging@lists.linux.dev,
-        ming.qian@nxp.com, kernel@collabora.com,
-        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
+        linux-rockchip@lists.infradead.org, nicolas.dufresne@collabora.com,
+        linux-staging@lists.linux.dev, kernel@collabora.com,
+        mchehab@kernel.org, m.szyprowski@samsung.com,
+        ayaka <ayaka@soulik.info>
 References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
- <20230622131349.144160-5-benjamin.gaignard@collabora.com>
- <e7444263-0ce5-1575-8cca-1e51b1cfbe9a@synaptics.com>
- <5cb3f216-5041-a155-5d2c-059dc1f15024@collabora.com>
- <25b21252-0d3a-3e50-0012-57055f386fee@synaptics.com>
- <20230712104801.tgawhexpm53ocgd6@chromium.org>
- <2d239d33-b05d-1b51-2268-43b2839b64ea@synaptics.com>
- <CAAFQd5D7oNG8oZB66qEW720fR79paw_q0LGBg7X4jK-ZkgYD_g@mail.gmail.com>
- <f6a3e3e5-14be-6d5c-48d3-009424e1a49a@synaptics.com>
- <CAAFQd5D3NUqvkJFYgystFVFRQvq-5S0ZNUOrv1LJqmCA_8+a_w@mail.gmail.com>
+ <20230622131349.144160-11-benjamin.gaignard@collabora.com>
+ <80a03c29-6f3d-43f1-755c-10f3ae2c2756@synaptics.com>
+ <42a45bad-09c7-ffb6-49cb-29ec0826599d@collabora.com>
+ <3b22fda9-4a0e-2c03-2f12-19e5e3239235@synaptics.com>
+ <54833256-7d88-9316-4f0f-b8c57552cd7b@synaptics.com>
+ <20230713090944.3gxrxt7lqnozhu7r@chromium.org>
+ <e4bb9520-489f-2bb3-4a17-668c3f448668@synaptics.com>
+ <CAAFQd5D8bTdqT4tS5R4P60+T+qLcqQ-JMeA3vSN6TRLQXCazWw@mail.gmail.com>
 From:   Hsia-Jun Li <Randy.Li@synaptics.com>
-In-Reply-To: <CAAFQd5D3NUqvkJFYgystFVFRQvq-5S0ZNUOrv1LJqmCA_8+a_w@mail.gmail.com>
+In-Reply-To: <CAAFQd5D8bTdqT4tS5R4P60+T+qLcqQ-JMeA3vSN6TRLQXCazWw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PH7PR17CA0024.namprd17.prod.outlook.com
- (2603:10b6:510:324::21) To DM6PR03MB5196.namprd03.prod.outlook.com
+X-ClientProxiedBy: BY5PR03CA0021.namprd03.prod.outlook.com
+ (2603:10b6:a03:1e0::31) To DM6PR03MB5196.namprd03.prod.outlook.com
  (2603:10b6:5:24a::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR03MB5196:EE_|CH2PR03MB5285:EE_
-X-MS-Office365-Filtering-Correlation-Id: 09a49eb5-c132-451d-776c-08db8f3bbcc8
+X-MS-Office365-Filtering-Correlation-Id: 98d06053-9ca0-43fa-a022-08db8f3bfa71
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: npyHke5+ySPVqx0QcR4NNBzhsFTeQs2pj4R9cg+pYwWF7nQT7etAMuWYtmYyT0h0ug0anU7QFGqHK5SeqYpQXFtjQ40sv0OeG3Zl7nhDCo0uC6Hq7ZhFH12NQd80iD2f7JrN5Qkw8jquW/FnnMd6F2aBwT+JdSWxE9kYPRNI5pr0yQJFf/PBGZloOmc2JkbEKrLwoyZvSPeXFYU/XdKa7mtfa4SWO7NWxkWXdSV2Vtaz61+e7fkDjGcR+/sXtYbaLqORzy86jtBnI61WIOEinkUhdNd8/dsEDfurYMN+Gt3k4QBxjuet+e2/6alTgChAu1dXxSOavhSnaPEiLn8ZiUTFQoMYr24CwFlxiD6UwAvQqQylSCZlzLEZopce6nY+alwyR9KtxTuSTPo9f9jOAiX/3T1CEgRzustDHkZpY8Egip/eM2HEFII14wHGHmquFYejNhtDNcvIoxrn6B2aTIZ/vOuSsfsTJgVARDpEIEXxgHssAzjHrEYYTJ6er/ZOs0NwgfOsC9V8EyWtpDFKvB4nB25HECS5WSOydrxinerujLNcS+ksUfrhIqoKbS9gMDmTfcUpi+P8Kpb5cJhXId5DBov0bI3+HyTMOw6gl83S59CY9l+9mQ58J9hyBHHggtxdVNNoxz3EaqdK73ziwHuKy679brVDV/HNhgqdPsDCUFz6E1Z7AIrQ8X28aBq8
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR03MB5196.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(346002)(396003)(39850400004)(376002)(136003)(366004)(451199021)(38100700002)(6666004)(6486002)(478600001)(38350700002)(52116002)(316002)(8676002)(41300700001)(6916009)(2616005)(66476007)(66946007)(8936002)(66556008)(5660300002)(4326008)(186003)(66574015)(83380400001)(26005)(53546011)(6506007)(6512007)(31696002)(86362001)(30864003)(2906002)(7416002)(36756003)(66899021)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: cX0GFrYIXEyUlnpjP5NAFHGx5vOv2QKdNYE2VouHFADOSMRyjATFeQjE82USjmYfBXGfMiqaOYSaVFJsMNeroTpOXWxx4Vl2fkNxKnGU5drZ8kcgO3uqmaShF5TiOcoTsJ9uDDuHPXVB4eFGT1PtPsk0Y+NZEJTK/85UDVMCdJzsnHqWjE1SKfIi2xWd1jqSs0qPZHKOOi+l0wSqeM6Eg7xeMHVsxtpgvdpuz0m83bIRqdSIXiCswa0sH4QUNwYIYsSbE3PgNyYmW22vxyD6cUjEQrZhANhO11BTotblEHRQlLSjD033rcd/Iir8isbax9jy12Hj8S6aIYqhgeciTQettM8GNxvq/+9tlxJmDSuTDc/9FBdowXqsDexwv+kMHS8jHn9BWhQ2zGHnpT5NdSjpviw5841l7pLlMT/Up6ydwun6SAd5beszEmXVzUZjl5wTO0ZDDHpB5BNCHJjxRsmuHxKWWhhvkt6pijnxSfUTwvtJMVby8RZkdpnpTNy1As1MSBAbVi7ajiu67jVMznDIkAfNcXu7+DFE0uQRB1fXgPnz71djUHmPO2gidIY9qlz2yDr49fJaohVQSzjGBefV6/m3G9Vm5lglVi7GYsdglnmTQN5TEI1ZO8Ux+3pE002fAEtWyEZZno/7xEf/Yl/wExDkbX1J+Y8J45dbqkQIfBXkxGn1R93lM/CKDMMt
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR03MB5196.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(346002)(396003)(39850400004)(376002)(136003)(366004)(451199021)(38100700002)(54906003)(6666004)(6486002)(478600001)(38350700002)(52116002)(316002)(8676002)(41300700001)(6916009)(2616005)(66476007)(66946007)(8936002)(66556008)(5660300002)(4326008)(186003)(66574015)(83380400001)(26005)(53546011)(6506007)(6512007)(31696002)(86362001)(30864003)(2906002)(7416002)(36756003)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?LzkvVHZiRE1pQytmQk1YdU83YjIrN3ZveDFwbTcyQ2oybHEyaE1jc1lOM2FB?=
- =?utf-8?B?SCtwZ3B2RjVZa1dRZnpLOGUzUU9RNnpkL1NYUTBIelJ4SlJyZXR1ZW1RcEV0?=
- =?utf-8?B?WFkzY0VWaGxKZ0Rrb2xuNm1iK3lqU2ZTdG5aK1Zscm5nTUFZelg3OW9PUk5i?=
- =?utf-8?B?d0pLWlJOanlTUjNxVU5rc1JNbjFSZWMzUUt2ZDNlNlZaYUFWZ1dFb1lRLzRy?=
- =?utf-8?B?ZFFqekRoN1pwcktoSklnTlVDRVBhaXlmNVcyakpwaFRzTERudndpcHI2anZU?=
- =?utf-8?B?a0VPR2RJZ2k3b0pYcmhQbThUMm1GK2o3UmJSVCtUa3JIaXgzVmc0eDloMzUw?=
- =?utf-8?B?eFdBTDg0Zmk3RFg3VWs3cm9LN2taeS9GV2ExeTZEREZVRU1veENCUllYWk1S?=
- =?utf-8?B?bmM4T0p1MDBNTTZ3Z0ttV0h1bWdDbjBPK0NEVE9hdXBqR0IvSzJxRStxWjNr?=
- =?utf-8?B?T3pYMUJUU0NJVndQQmtFNlBINzByNGVMU0pQVVRQWjhXRm5VK2t0dm9CeEZi?=
- =?utf-8?B?ekczVCttRHEycGpWMVl4cUp3MmxkQmVIbHloMU80dGl5UnZTY2V1em1MRDVl?=
- =?utf-8?B?Smd0LzNsMFMzWkpjNzFGN2ppa094QjZ1MkMwMVp5eDlHd2gzUHo2aUhRMHhh?=
- =?utf-8?B?UmlnMDZ1a1JJa0JwZ1laUkpHekhSK05uS2d4bWViM3JqUGxPVmJ6SUxwbFNX?=
- =?utf-8?B?cG9rWUNFNGdkekVNZnY1TFN2SVR3cmRkTm0rQlE2dVBsb1BSWndGMFo3dnVw?=
- =?utf-8?B?cTVWaGJSS2ZBMmNKN1VBSXU5bFdGeEJqL21rZStiRmdvMW1CQXU2OUxtWDF6?=
- =?utf-8?B?TlJ1a0d1SS9lYURjeWVIRCs2R2prZVhidW9WRzNESHZhL2hINjAyWXVSMkJW?=
- =?utf-8?B?WkVkR09SeTc1RjFIOHE2VFBYamtQd2JkQXJHeFNmVW1kSXl4VTZ2WFMycTQw?=
- =?utf-8?B?M2pvT3JYY1BlWTJadTV3VzZwTk9HYlYzdGx4eWdKSEdrNDhSYUpFSUNkd2dX?=
- =?utf-8?B?UTVVWGV1SktMU1BlL2p0bHdmMEVsZlZ3NUdHOVhPY3JQM3RFcGdkNHl6ME5l?=
- =?utf-8?B?My8wWDBCNm9ubnJ1Zm95NHEvdUVkS2xHWk80OGgzbXBud1VhMXVRRk41dm1F?=
- =?utf-8?B?OS9OQTFxOFc4b2pFN3pkYTBVRFNjMGdWRnlOS29Xay9oQVN0MDlzcW9oQjcx?=
- =?utf-8?B?R2xzWTdtMTJPZ0E3OU5lKzV2QS8wMGFJSGlObkFtRDZiOEF0bjhlNTkwb1Az?=
- =?utf-8?B?Vi94L2toeXJwdUhPRUdzZXZYK29iWWkwN01Lci8yNmR1WUo5dkRIQ2RnKzdX?=
- =?utf-8?B?L2lCbElEUzk0akNqVUUzU3hDLzRISVJhNHJRZC9BaFBwc3Vva1lTS1NVVlhu?=
- =?utf-8?B?eExzR1VDM09TaG1uTUNqRzRzb1U2TG43S2c4OGUzWU9ZU3hGbWJUMEdwbnBO?=
- =?utf-8?B?bTBHWmx1VnhkNlZ4TGsvOEhhMkFGMUJaSG00NHdicjFhL2Zxa0pMcTJJQVAw?=
- =?utf-8?B?NkNQT3ZCOHhIRFJaam1yWUNLS3JwL2duZ0wwUURVVFk3T2V4MnhiUXNCUDYy?=
- =?utf-8?B?ei9sUllQZ2JZM0xBcnFhYlB5K1h4TDlTVTBsQzZpcnZhczA2OTEzWkZsRzkv?=
- =?utf-8?B?RDdXMUs3RHI5R0JsV3FXQ0xaVHBuMVJsbXhVWWE5dnlmL2JOVStPdFgrNHd2?=
- =?utf-8?B?Q0NtdHQvNGdueUdGZUl2NHJoNW5XOE4rd1ZMVitXbXRsQ2lmSFJWRk1yQnJQ?=
- =?utf-8?B?RG9nRXRRV3JYQ3ZUeHIwRHVHVTl6S1hJZmRKRkN5WWs4REM4RGJ2ZlNjYTBx?=
- =?utf-8?B?WlNyT1ZFSmhhY3BGN2hHOFZvODdOTG5iYVpGRm9IcTNGMWNsT0R4Zytacmsv?=
- =?utf-8?B?ckJCNHdvL1dQMEsxcmRCcUw5RDZ3ODBxZVk3Yi9NMnRBQk5sc1dranR1MEZa?=
- =?utf-8?B?cHdCd3MybVRjNzM3dUoxU1FiWHlnSlhJNjg5SEhMcGFma05ReFhHRm12TUNn?=
- =?utf-8?B?WWtQS1ZKbDdmcjRSU1liNjFKVUtsZWJpUkJ2VitCRS9aYk9Kb1NrZzJBSzRH?=
- =?utf-8?B?TDJjRHlxSzNQUHNkdXUxSlZsSVBqOFJTVHFSaVJ3VSs4LzhiSEMzQkdaemw4?=
- =?utf-8?Q?itliqyqjF6k4OyjcLlX7XeuGc?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QWxiM2NCK2s3NzRRdjhCMnBERCs4R1NDR3lmWDU4SUNzeFhuMXdpc0ZZcndC?=
+ =?utf-8?B?amVCMzBDM3pORnBCT1FoVWN4U01NZStSTjJpY1M4Lzg2cWorSG1VNDkyVXpv?=
+ =?utf-8?B?bm5KM09HVFBreHdrLzFKbW45U3pwWkVVOGI5eFV0U2l5c3dSS1Vpc0ZoUU5P?=
+ =?utf-8?B?aitxZUFlYVBIaXpGaFBUWUIzV2VEWm5jOVhEUGh1cVFjenRIYnlHZG1vUG1G?=
+ =?utf-8?B?aXhTZWh0T3BmN3VmenlpSFNmSUJyMk01TCtuTE01ZzVVcDRkMStVL2JRR2xn?=
+ =?utf-8?B?d1J4SmVpNHhCaCtpZXV6L0JlTnlRSW1UYzIzSnE5S3N6d0hRS01hTGNCUTNB?=
+ =?utf-8?B?SXBZbStHQ3gvaXQwRWVjZEFtZXRPd2Z2RXFodktuV2VyaE9xRXhSUTg4RnQw?=
+ =?utf-8?B?d1grRVVWZ2JTZ1pPL0Jsdk1ITkJDNkNsbFc4aDMrTjB3RTc4SjVZUms5TGJk?=
+ =?utf-8?B?M2tPTDBZT2dmVUdsV0xkN3hwcHd6UWVDejFQMjZHb29aYW5ldCt5bzBrSlNt?=
+ =?utf-8?B?eWpycUgzTGVQREQ2TmMvSEUwSUdwTTdGR0RqWEtWNk1NbU5YRUxTVDhURGdE?=
+ =?utf-8?B?Z1p3bDVaT0hxT2hjNDJrZHdkeVAybXg1Y3h5QWVMUCtUcGJzUktWMXBjcFF5?=
+ =?utf-8?B?cHRxSUVJQjV2QjhQOGRGYW00MUZiWkdpUTI0UGcwR0RRVisyWlFDYkI2Nkhy?=
+ =?utf-8?B?bmJrbnBwMTBzcElTYnVhVTdwSm4vTWdxNXRGaFNmK2FyZEpudndpZ1ZVcWpm?=
+ =?utf-8?B?bjdqUlNJdTEvaW5taHNMQTU2S21qYnZCQjRpajZhSUNHQmwxM0FmZDNwWGg2?=
+ =?utf-8?B?OU83dVZieFZkLzYycEJFQlpsaFMrd1hGOXpvTS9LVllaTytSWnRaV01RN2la?=
+ =?utf-8?B?V3k3UXVzVzZYbGNhT2MycXJrN1E0T1FGejQ5Slh6eWdsRm8rUmptQ3pMNkF0?=
+ =?utf-8?B?Qi9mUW9VRGxXLy9jSFFxVmlkRW05S3lHYUhJK0k0WURTa0ZyQkgyd2JUbjVh?=
+ =?utf-8?B?NHBDd0hOdWtiNWduN2w5QmxGZWIyMzBIdCtYVW1ibXJaZzRqbm5PYk4reTQw?=
+ =?utf-8?B?Q1VmMkd2NElPNHRVbElPTHMyaUErNXdLNTdnTjBlMWxRbDR0cUl4WHBLVFp2?=
+ =?utf-8?B?Sk5wU2VYcTZ6bnZ3V1lrQ2FGeFhiM2JtZmhBZHhkNTlqQnRLTU9XWG4rU0kz?=
+ =?utf-8?B?QmRtVDQxZEhwQVk3OWRDUlFZZU9seWNBLzg2MXhsbTFMdDYyeStHM0Z5YlI0?=
+ =?utf-8?B?R295R3pBVGk0Z1N4SWp6WkZxZ0N5R2FPc0xUQ0JlanM3T2kxVzE2S2hyYjVT?=
+ =?utf-8?B?Sm9jNkg1R2UzSHVNS0NLTTZ0Y1ViQzRKOG9NVFY5VGZCTDNneEhCYXZxNWNx?=
+ =?utf-8?B?dG9nNk1Rd0RZQ1VsME55Yk5Nd1dvUFZPQzdVQmpZcUkzRjIvNjZGOXV0M1cw?=
+ =?utf-8?B?U1hwUUZKRVZXU2oyS3ZDeHJRNFduZkZZV1JIT3NxM2x2REErTm8zS1d4MkNN?=
+ =?utf-8?B?K1BpbzkwUERnbm5SNFBuVVoxYVlXNSswVzQxQmttRHk0ZUszQzBNQXkva0s1?=
+ =?utf-8?B?THNQc1VZZ2JsZVlkeFU4RlhVZUR1N01DV2FaMVBFUGp2Ukp3ZzgzUGp6eXFV?=
+ =?utf-8?B?TXJDYlNObUhkRnhoV3hkY1VjUHhwN3hHQ1N0ZWtRdkM3MjZZTGNlNktIdjll?=
+ =?utf-8?B?SjJuWmVEZGUvUGRmSE80MkJvTHRlL05QN3AvcmxXWWtZbHlydEpPakVIQmVp?=
+ =?utf-8?B?ZlovcHo2UERvcGxzejJ1VjIwZklQV1pQRmZwaFM3RHc4ZUdHbmNzS2VieURF?=
+ =?utf-8?B?aDRKZDlCMGNDRndCeE5ScklVVXpZV05YV0hObTdtL0Vsck04SUMyNEdxeFNR?=
+ =?utf-8?B?aHFVNHF4dHNZakN5NTNhU3ZocjJUTUI0WTdrZTJjQk1tNnhuRUJJWmJqM3Jq?=
+ =?utf-8?B?ditYaW9NdUVMNkpmWTY4N3dwN0V4S1dyaEltZGd2VEFqZWY0ajVmTmQ4OTBs?=
+ =?utf-8?B?bXhoU29xMXpXVjBoM0dEQWdkMlZ4RXVSUG5YazVoZXFBZStjNHB1QWE5TjdO?=
+ =?utf-8?B?dEpEVWRoQjRHcmwvaUJOb0E4dHpNcms2R0kxcTJqTUJzYkNwNS8wQm1HeEZt?=
+ =?utf-8?Q?GhZaippR+VM3KtrszN2Il4Os/?=
 X-OriginatorOrg: synaptics.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 09a49eb5-c132-451d-776c-08db8f3bbcc8
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98d06053-9ca0-43fa-a022-08db8f3bfa71
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR03MB5196.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2023 07:24:53.7477
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2023 07:26:37.1878
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 335d1fbc-2124-4173-9863-17e7051a2a0e
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DYwdoWjzfndJPJWxiMZFbYqm4ySecghsEnDcqRXI2MFOPKrqFmgDckWQR364EVSISrggzsFT6wZQBsnfZca4qw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 70xINtGZSwR9QjsuWKfdgxt8L+XNzrZlnWVSu2OOFpAy8A6aze7tkjKNq3YkY5tNxRtMXPwrsK0ME1clt9lmvQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR03MB5285
 X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -144,303 +144,415 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7/28/23 15:03, Tomasz Figa wrote:
+On 7/28/23 14:57, Tomasz Figa wrote:
 > CAUTION: Email originated externally, do not click links or open attachments unless you recognize the sender and know the content is safe.
 > 
 > 
-> On Fri, Jul 28, 2023 at 3:55 PM Hsia-Jun Li <Randy.Li@synaptics.com> wrote:
+> On Mon, Jul 17, 2023 at 11:17 AM Hsia-Jun Li <Randy.Li@synaptics.com> wrote:
 >>
 >>
->>
->> On 7/28/23 14:46, Tomasz Figa wrote:
+>> On 7/13/23 17:09, Tomasz Figa wrote:
 >>> CAUTION: Email originated externally, do not click links or open attachments unless you recognize the sender and know the content is safe.
 >>>
 >>>
->>> On Mon, Jul 17, 2023 at 4:44 PM Hsia-Jun Li <Randy.Li@synaptics.com> wrote:
->>>>
->>>>
->>>> On 7/12/23 18:48, Tomasz Figa wrote:
->>>>> CAUTION: Email originated externally, do not click links or open attachments unless you recognize the sender and know the content is safe.
+>>> On Fri, Jun 30, 2023 at 05:43:51PM +0800, Hsia-Jun Li wrote:
+>>>> On 6/27/23 16:47, Hsia-Jun Li wrote:
+>>>>> CAUTION: Email originated externally, do not click links or open
+>>>>> attachments unless you recognize the sender and know the content is
+>>>>> safe.
 >>>>>
 >>>>>
->>>>> On Mon, Jul 03, 2023 at 04:35:30PM +0800, Hsia-Jun Li wrote:
->>>>>> On 7/3/23 16:09, Benjamin Gaignard wrote:
->>>>>>> CAUTION: Email originated externally, do not click links or open
->>>>>>> attachments unless you recognize the sender and know the content is
->>>>>>> safe.
->>>>>>>
->>>>>>>
->>>>>>> Le 30/06/2023 à 11:51, Hsia-Jun Li a écrit :
->>>>>>>> On 6/22/23 21:13, Benjamin Gaignard wrote:
->>>>>>>>> CAUTION: Email originated externally, do not click links or open
->>>>>>>>> attachments unless you recognize the sender and know the content is
->>>>>>>>> safe.
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> After changing bufs arrays to a dynamic allocated array
->>>>>>>>> VB2_MAX_FRAME doesn't mean anything for videobuf2 core.
->>>>>>>> I think make it 64 which is the VB2_MAX_FRAME in Android GKI kernel is
->>>>>>>> more reasonable.
+>>>>> On 6/27/23 16:43, Benjamin Gaignard wrote:
+>>>>>> CAUTION: Email originated externally, do not click links or open
+>>>>>> attachments unless you recognize the sender and know the content is
+>>>>>> safe.
+>>>>>>
+>>>>>>
+>>>>>> Le 27/06/2023 à 09:30, Hsia-Jun Li a écrit :
+>>>>>>> On 6/22/23 21:13, Benjamin Gaignard wrote:
+>>>>>>>> CAUTION: Email originated externally, do not click links or open
+>>>>>>>> attachments unless you recognize the sender and know the content is
+>>>>>>>> safe.
 >>>>>>>>
->>>>>>>> It would be hard to iterate the whole array, it would go worse with a
->>>>>>>> filter. Such iterate may need to go twice because you mix
->>>>>>>> post-processing buffer and decoding buffer(with MV) in the same array.
->>>>>>> Here I don't want to change drivers behavior so I keep the same value.
->>>>>>> If it happens that they need more buffers, like for dynamic resolution
->>>>>>> change
->>>>>>> feature for Verisilicon VP9 decoder, case by case patches will be needed.
->>>>>>>
->>>>>> I just don't like the idea that using a variant length array here.
->>>>>>
->>>>> "I don't like" is not an argument. We had a number of arguments for
->>>>> using a generic helper (originally idr, but later decided to go with
->>>>> XArray, because the former is now deprecated) that we pointed out in
->>>>> our review comments for previous revisions. It wasn't really about the
->>>>> size being variable, but rather avoiding open coding things in vb2 and
->>>>> duplicating what's already implemented in generic code.
->>>>
->>>> I just want to say I don't think we need a variable length array to
->>>> store the buffer here.
->>>>
->>>> And the below is the reason that such a case could be avoided in the
->>>> first place.
->>>>
+>>>>>>>>
+>>>>>>>> VIDIOC_DELETE_BUF ioctl allows to delete a buffer from a queue.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>>>>>>>> ---
+>>>>>>>>     .../userspace-api/media/v4l/user-func.rst     |  1 +
+>>>>>>>>     .../media/v4l/vidioc-delete-buf.rst           | 51
+>>>>>>>> +++++++++++++++++++
+>>>>>>>>     .../media/common/videobuf2/videobuf2-core.c   | 33 ++++++++++++
+>>>>>>>>     .../media/common/videobuf2/videobuf2-v4l2.c   |  6 +++
+>>>>>>>>     drivers/media/v4l2-core/v4l2-dev.c            |  1 +
+>>>>>>>>     drivers/media/v4l2-core/v4l2-ioctl.c          | 10 ++++
+>>>>>>>>     include/media/v4l2-ioctl.h                    |  4 ++
+>>>>>>>>     include/media/videobuf2-core.h                |  9 ++++
+>>>>>>>>     include/media/videobuf2-v4l2.h                | 11 ++++
+>>>>>>>>     include/uapi/linux/videodev2.h                |  2 +
+>>>>>>>>     10 files changed, 128 insertions(+)
+>>>>>>>>     create mode 100644
+>>>>>>>> Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
+>>>>>>>>
+>>>>>>>> diff --git a/Documentation/userspace-api/media/v4l/user-func.rst
+>>>>>>>> b/Documentation/userspace-api/media/v4l/user-func.rst
+>>>>>>>> index 15ff0bf7bbe6..8c74016e12fd 100644
+>>>>>>>> --- a/Documentation/userspace-api/media/v4l/user-func.rst
+>>>>>>>> +++ b/Documentation/userspace-api/media/v4l/user-func.rst
+>>>>>>>> @@ -17,6 +17,7 @@ Function Reference
+>>>>>>>>         vidioc-dbg-g-chip-info
+>>>>>>>>         vidioc-dbg-g-register
+>>>>>>>>         vidioc-decoder-cmd
+>>>>>>>> +    vidioc-delete-buf
+>>>>>>>>         vidioc-dqevent
+>>>>>>>>         vidioc-dv-timings-cap
+>>>>>>>>         vidioc-encoder-cmd
+>>>>>>>> diff --git
+>>>>>>>> a/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
+>>>>>>>> b/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
+>>>>>>>> new file mode 100644
+>>>>>>>> index 000000000000..0e7ce58f91bc
+>>>>>>>> --- /dev/null
+>>>>>>>> +++ b/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
+>>>>>>>> @@ -0,0 +1,51 @@
+>>>>>>>> +.. SPDX-License-Identifier: GFDL-1.1-no-invariants-or-later
+>>>>>>>> +.. c:namespace:: V4L
+>>>>>>>> +
+>>>>>>>> +.. _VIDIOC_DELETE_BUF:
+>>>>>>>> +
+>>>>>>>> +************************
+>>>>>>>> +ioctl VIDIOC_DELETE_BUF
+>>>>>>>> +************************
+>>>>>>>> +
+>>>>>>>> +Name
+>>>>>>>> +====
+>>>>>>>> +
+>>>>>>>> +VIDIOC_DELETE_BUF - Delete a buffer from a queue
+>>>>>>>> +
+>>>>>>>> +Synopsis
+>>>>>>>> +========
+>>>>>>>> +
+>>>>>>>> +.. c:macro:: VIDIOC_DELETE_BUF
+>>>>>>>> +
+>>>>>>>> +``int ioctl(int fd, VIDIOC_DELETE_BUF, struct v4l2_buffer *argp)``
+>>>>>>>> +
+>>>>>>>> +Arguments
+>>>>>>>> +=========
+>>>>>>>> +
+>>>>>>>> +``fd``
+>>>>>>>> +    File descriptor returned by :c:func:`open()`.
+>>>>>>>> +
+>>>>>>>> +``argp``
+>>>>>>>> +    Pointer to struct :c:type:`v4l2_buffer`.
+>>>>>>>> +
+>>>>>>>> +Description
+>>>>>>>> +===========
+>>>>>>>> +
+>>>>>>>> +Applications can optionally call the
+>>>>>>>> :ref:`VIDIOC_DELETE_BUF` ioctl to
+>>>>>>>> +delete a buffer from a queue.
+>>>>>>>> +
+>>>>>>>> +The struct :c:type:`v4l2_buffer` structure is specified in
+>>>>>>>> +:ref:`buffer`.
+>>>>>>>> +
+>>>>>>>> +Return Value
+>>>>>>>> +============
+>>>>>>>> +
+>>>>>>>> +On success 0 is returned, on error -1 and the ``errno`` variable is
+>>>>>>>> set
+>>>>>>>> +appropriately. The generic error codes are described at the
+>>>>>>>> +:ref:`Generic Error Codes <gen-errors>` chapter.
+>>>>>>>> +
+>>>>>>>> +EBUSY
+>>>>>>>> +    File I/O is in progress.
+>>>>>>>> +
+>>>>>>>> +EINVAL
+>>>>>>>> +    The buffer ``index`` doesn't exist in the queue.
+>>>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>>>> b/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>>>> index 899783f67580..aa546c972c3d 100644
+>>>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>>>> @@ -1637,6 +1637,39 @@ int vb2_core_prepare_buf(struct vb2_queue *q,
+>>>>>>>> unsigned int index, void *pb)
+>>>>>>>>     }
+>>>>>>>>     EXPORT_SYMBOL_GPL(vb2_core_prepare_buf);
+>>>>>>>>
+>>>>>>>> +int vb2_core_delete_buf(struct vb2_queue *q, unsigned int index)
+>>>>>>>> +{
+>>>>>>>> +       struct vb2_buffer *vb;
+>>>>>>>> +
+>>>>>>>> +       vb = vb2_get_buffer(q, index);
+>>>>>>>> +       if (!vb) {
+>>>>>>>> +               dprintk(q, 1, "invalid buffer index %d\n", index);
+>>>>>>>> +               return -EINVAL;
+>>>>>>>> +       }
+>>>>>>>> +
+>>>>>>>> +       if (vb->state != VB2_BUF_STATE_DEQUEUED) {
+>>>>>>>> +               dprintk(q, 1, "can't delete non dequeued buffer index
+>>>>>>>> %d\n", index);
+>>>>>>>> +               return -EINVAL;
+>>>>>>>> +       }
+>>>>>>>> +
+>>>>>>> I know the driver could implement its own
+>>>>>>> v4l2_ioctl_ops->vidioc_delete_buf() that check whether a buffer is
+>>>>>>> used by the hardware as a future reference frame.
+>>>>>>> But I think we need a flag to let the user know which buffer is still
+>>>>>>> used by the hardware.
+>>>>>>> Alternative ref case is safe, we only know it's existing when it is
+>>>>>>> dequeued in current V4L2 buffer mechanism.
+>>>>>>> While the Golden reference frame, such long term reference frame could
+>>>>>>> last much longer.
+>>>>>> It is up to userland stack to know frames life time, it got the
+>>>>>> information for that.
+>>>>> That is true for the stateless codec driver.
 >>>>>
->>>>>> And I could explain why you won't need so many buffers for the performance
->>>>>> of decoding.
->>>>>>
->>>>>> VP9 could support 10 reference frames in dpb.
->>>>>>
->>>>>> Even for those frequent resolution changing test set, it would only happen
->>>>>> to two resolutions,
->>>>>>
->>>>>> 32 would be enough for 20 buffers of two resolution plus golden frames. It
->>>>>> also leaves enough slots for re-order latency.
->>>>>>
->>>>>> If your case had more two resolutions, likes low->medium->high.
->>>>>>
->>>>>> I would suggest just skip the medium resolutions, just allocate the lower
->>>>>> one first for fast playback then the highest for all the possible
->>>>>>
->>>>>> medium cases. Reallocation happens frequently would only cause memory
->>>>>> fragment, nothing benefits your performance.
->>>>>>
->>>>> We have mechanisms in the kernel to deal with memory fragmentation
->>>>> (migration/compaction) and it would still only matters for the
->>>>> pathologic cases of hardware that require physically contiguous memory.
->>>>> Modern hardware with proper DMA capabilities can either scatter-gather
->>>>> or are equipped with an IOMMU, so the allocation always happens in page
->>>>> granularity and fragmentation is avoided.
+>>>>> While application for stateful decoder could never do that. It also
+>>>>> breaks what the document said:
+>>>>>
+>>>>> "The backing memory of |CAPTURE| buffers that are used as reference
+>>>>> frames by the stream may be read by the hardware even after they are
+>>>>> dequeued. Consequently, the client should avoid writing into this memory
+>>>>> while the |CAPTURE| queue is streaming. Failure to observe this may
+>>>>> result in corruption of decoded frames."
+>>>>>
+>>>>>>>> +       if (vb->planes[0].mem_priv)
+>>>>>>>> +               call_void_vb_qop(vb, buf_cleanup, vb);
+>>>>>>>> +
+>>>>>>>> +       /* Free MMAP buffers or release USERPTR buffers */
+>>>>>>>> +       if (q->memory == VB2_MEMORY_MMAP)
+>>>>>>>> +               __vb2_buf_mem_free(vb);
+>>>> Here is another problem for the existing application, the mmap() from the
+>>>> mmap offset or exportbuffer fd would not create a reference to buffer in
+>>>> this step(while the exportbuffer would create one itself).
 >>>>
->>>> Unfortunately, there are more devices that didn't have a IOMMU attached
->>>> to it, supporting scatter gather is more odd.
->>>>
->>>> It would be more likely that IOMMU would be disabled for the performance
->>>> reason.
->>>
->>> These days IOMMU is totally mandatory if you want to think about
->>> having any level of security in your system. Sure, there could be some
->>> systems that are completely isolated from any external environment,
->>> like some offline industry automation machines, but then arguably
->>> their running conditions would also be quite static and require very
->>> little memory re-allocation.
->> Vendor just decided not to included such hardware.
->> That is why From ION to DMA-heap, people like to allocate from a cavout
->> out memory.
->>>
->>> I also don't buy the performance reason. CPUs have been behind MMUs
->>> for ages and nobody is running them with paging disabled for
->>> performance reasons. Similarly, most of the modern consumer systems
->> Page lookup would increase the delay. Besides a few upstream devices
->> prove them only use a level 1 page table without TBL.
+>>>> When you delete a buffer, you may not release it from its virtual memory
+>>>> space, leaving a corrupted virtual memory space.
+>>> What do you mean? __vb2_buf_mem_free() doesn't unconditionally free the
+>>> memory, it just decrements a reference counter.
+>>
+>> struct dma_buf_ops->mmap() may not increase a reference to its buffer.
+I think we are talking the same refcount.
+That is vb2_vmarea_handler->refcount.
+While, I am thinking about refcount from vb2_dc_buf.
 > 
-> That's just an excuse for a bad hardware design/implementation. As I
-> said, there are good IOMMU implementations out there that don't suffer
-> from performance issues.
+> Both V4L2 mmap() and DMA-buf mmap() of buffers exported from V4L2
+> would increase a reference to the buffer. They both lead to
+> vb2_{dc,sg,vmalloc}_mmap() which open the VMA, which in turn calls
+> vb2_common_vm_open() that increases the buffer refcount.
 > 
-I could do nothing about that.
-Besides, even with TLB, cache missing could happen frequently, 
-especially we need to access many (5~16, 10 usually) buffers and more 
-11MBytes each in a hardware processing.
-You can't have a very large TLB.
->>> (mobile phones, PCs) run with IOMMUs enabled for pretty much anything
->>> because of the security reason and they don't seem to be having any
->> If the page is secure, you can't operate it in a insecure IOMMU or MMU.
->> The most security way here, we should use a dedicated memory(or a zone
->> in unified memory).
+> Best regards,
+> Tomasz
 > 
-> You still need something to enforce that the hardware is not accessing
-> memory that it's not supposed to access. How do you do that without an
-> IOMMU?
-> 
-If you know the arm security pipeline and security controller, you could 
-found we could reserved a range of memory for a security id(devices in 
-secure world may be a different security domain).
-Besides, a MMU or security MPU could mark some pages for the secure 
-world access only, it doesn't mean the device need an IOMMU to access 
-them. The MPU could filter the access through the AXI id.
->> I believe there are more users in mobile for DMA-heap than kernel's dma
->> allocation API.
-> 
-> Yes, but that's completely separate from whether there is an IOMMU or
-> not. It's just a different allocation API.
-> 
-The memory heap would mean a dedicated memory usually(we don't talk 
-about system heap or why there are many vendor heaps). Dedicated memory 
-means contiguous memory in the most of cases.
->>> performance issues. In fact, it can improve the performance, because
->>> memory allocation is much easier and without contiguous careouts (as
->>> we used to have long ago on Android devices) the extra memory can be
->>> used for buffers and caches to improve system performance.
+>>
+>> While struct vb2_mem_ops->get_dmabuf() would.
+>>
+>>> The VMA holds its own,
+>>> so the buffer is only fully released when the application calls
+>>> munmap().
+>>
+>> DELETE_BUF ioctl() didn't answer to this problem. Should the DELETE_BUF
+>> ioctl() make the no other user could access to this.
+>>
 >>>
 >>> Best regards,
 >>> Tomasz
 >>>
+>>>> Also this behavior is
+>>>> right, because mmap(2) says:
 >>>>
+>>>> "After  the  mmap()  call has returned, the file descriptor, fd, can be
+>>>> closed immediately without invalidating the map‐ping."
+>>>>
+>>>>>>>> +       else if (q->memory == VB2_MEMORY_DMABUF)
+>>>>>>>> +               __vb2_buf_dmabuf_put(vb);
+>>>>>>>> +       else
+>>>>>>>> +               __vb2_buf_userptr_put(vb);
+>>>>>>>> +
+>>>>>>>> +       vb2_queue_remove_buffer(q, vb);
+>>>>>>>> +       kfree(vb);
+>>>>>>>> +
+>>>>>>>> +       dprintk(q, 2, "buffer %d deleted\n", index);
+>>>>>>>> +       return 0;
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>>     /*
+>>>>>>>>      * vb2_start_streaming() - Attempt to start streaming.
+>>>>>>>>      * @q:         videobuf2 queue
+>>>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>>>> b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>>>> index 724135d41f7f..cea666c17b41 100644
+>>>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>>>> @@ -751,6 +751,12 @@ int vb2_prepare_buf(struct vb2_queue *q, struct
+>>>>>>>> media_device *mdev,
+>>>>>>>>     }
+>>>>>>>>     EXPORT_SYMBOL_GPL(vb2_prepare_buf);
+>>>>>>>>
+>>>>>>>> +int vb2_delete_buf(struct vb2_queue *q, struct v4l2_buffer *b)
+>>>>>>>> +{
+>>>>>>>> +       return vb2_core_delete_buf(q, b->index);
+>>>>>>>> +}
+>>>>>>>> +EXPORT_SYMBOL_GPL(vb2_delete_buf);
+>>>>>>>> +
+>>>>>>>>     int vb2_create_bufs(struct vb2_queue *q, struct v4l2_create_buffers
+>>>>>>>> *create)
+>>>>>>>>     {
+>>>>>>>>            unsigned requested_planes = 1;
+>>>>>>>> diff --git a/drivers/media/v4l2-core/v4l2-dev.c
+>>>>>>>> b/drivers/media/v4l2-core/v4l2-dev.c
+>>>>>>>> index f81279492682..80ace2e1e932 100644
+>>>>>>>> --- a/drivers/media/v4l2-core/v4l2-dev.c
+>>>>>>>> +++ b/drivers/media/v4l2-core/v4l2-dev.c
+>>>>>>>> @@ -720,6 +720,7 @@ static void determine_valid_ioctls(struct
+>>>>>>>> video_device *vdev)
+>>>>>>>>                    SET_VALID_IOCTL(ops, VIDIOC_PREPARE_BUF,
+>>>>>>>> vidioc_prepare_buf);
+>>>>>>>>                    SET_VALID_IOCTL(ops, VIDIOC_STREAMON,
+>>>>>>>> vidioc_streamon);
+>>>>>>>>                    SET_VALID_IOCTL(ops, VIDIOC_STREAMOFF,
+>>>>>>>> vidioc_streamoff);
+>>>>>>>> +               SET_VALID_IOCTL(ops, VIDIOC_DELETE_BUF,
+>>>>>>>> vidioc_delete_buf);
+>>>>>>>>            }
+>>>>>>>>
+>>>>>>>>            if (is_vid || is_vbi || is_meta) {
+>>>>>>>> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c
+>>>>>>>> b/drivers/media/v4l2-core/v4l2-ioctl.c
+>>>>>>>> index a858acea6547..1c737279d3ef 100644
+>>>>>>>> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+>>>>>>>> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+>>>>>>>> @@ -2156,6 +2156,15 @@ static int v4l_prepare_buf(const struct
+>>>>>>>> v4l2_ioctl_ops *ops,
+>>>>>>>>            return ret ? ret : ops->vidioc_prepare_buf(file, fh, b);
+>>>>>>>>     }
+>>>>>>>>
+>>>>>>>> +static int v4l_delete_buf(const struct v4l2_ioctl_ops *ops,
+>>>>>>>> +                         struct file *file, void *fh, void *arg)
+>>>>>>>> +{
+>>>>>>>> +       struct v4l2_buffer *b = arg;
+>>>>>>>> +       int ret = check_fmt(file, b->type);
+>>>>>>>> +
+>>>>>>>> +       return ret ? ret : ops->vidioc_delete_buf(file, fh, b);
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>>     static int v4l_g_parm(const struct v4l2_ioctl_ops *ops,
+>>>>>>>>                                    struct file *file, void *fh, void
+>>>>>>>> *arg)
+>>>>>>>>     {
+>>>>>>>> @@ -2905,6 +2914,7 @@ static const struct v4l2_ioctl_info
+>>>>>>>> v4l2_ioctls[] = {
+>>>>>>>>            IOCTL_INFO(VIDIOC_ENUM_FREQ_BANDS, v4l_enum_freq_bands,
+>>>>>>>> v4l_print_freq_band, 0),
+>>>>>>>>            IOCTL_INFO(VIDIOC_DBG_G_CHIP_INFO, v4l_dbg_g_chip_info,
+>>>>>>>> v4l_print_dbg_chip_info, INFO_FL_CLEAR(v4l2_dbg_chip_info, match)),
+>>>>>>>>            IOCTL_INFO(VIDIOC_QUERY_EXT_CTRL, v4l_query_ext_ctrl,
+>>>>>>>> v4l_print_query_ext_ctrl, INFO_FL_CTRL |
+>>>>>>>> INFO_FL_CLEAR(v4l2_query_ext_ctrl, id)),
+>>>>>>>> +       IOCTL_INFO(VIDIOC_DELETE_BUF, v4l_delete_buf,
+>>>>>>>> v4l_print_buffer, INFO_FL_QUEUE),
+>>>>>>>>     };
+>>>>>>>>     #define V4L2_IOCTLS ARRAY_SIZE(v4l2_ioctls)
+>>>>>>>>
+>>>>>>>> diff --git a/include/media/v4l2-ioctl.h b/include/media/v4l2-ioctl.h
+>>>>>>>> index edb733f21604..2f232ed884c7 100644
+>>>>>>>> --- a/include/media/v4l2-ioctl.h
+>>>>>>>> +++ b/include/media/v4l2-ioctl.h
+>>>>>>>> @@ -163,6 +163,8 @@ struct v4l2_fh;
+>>>>>>>>      *     :ref:`VIDIOC_CREATE_BUFS <vidioc_create_bufs>` ioctl
+>>>>>>>>      * @vidioc_prepare_buf: pointer to the function that implements
+>>>>>>>>      *     :ref:`VIDIOC_PREPARE_BUF <vidioc_prepare_buf>` ioctl
+>>>>>>>> + * @vidioc_delete_buf: pointer to the function that implements
+>>>>>>>> + *     :ref:`VIDIOC_DELETE_BUF <vidioc_delete_buf>` ioctl
+>>>>>>>>      * @vidioc_overlay: pointer to the function that implements
+>>>>>>>>      *     :ref:`VIDIOC_OVERLAY <vidioc_overlay>` ioctl
+>>>>>>>>      * @vidioc_g_fbuf: pointer to the function that implements
+>>>>>>>> @@ -422,6 +424,8 @@ struct v4l2_ioctl_ops {
+>>>>>>>>                                      struct v4l2_create_buffers *b);
+>>>>>>>>            int (*vidioc_prepare_buf)(struct file *file, void *fh,
+>>>>>>>>                                      struct v4l2_buffer *b);
+>>>>>>>> +       int (*vidioc_delete_buf)(struct file *file, void *fh,
+>>>>>>>> +                                struct v4l2_buffer *b);
+>>>>>>>>
+>>>>>>>>            int (*vidioc_overlay)(struct file *file, void *fh, unsigned
+>>>>>>>> int i);
+>>>>>>>>            int (*vidioc_g_fbuf)(struct file *file, void *fh,
+>>>>>>>> diff --git a/include/media/videobuf2-core.h
+>>>>>>>> b/include/media/videobuf2-core.h
+>>>>>>>> index 080b783d608d..0f9e68f76b77 100644
+>>>>>>>> --- a/include/media/videobuf2-core.h
+>>>>>>>> +++ b/include/media/videobuf2-core.h
+>>>>>>>> @@ -840,6 +840,15 @@ int vb2_core_create_bufs(struct vb2_queue *q,
+>>>>>>>> enum vb2_memory memory,
+>>>>>>>>      */
+>>>>>>>>     int vb2_core_prepare_buf(struct vb2_queue *q, unsigned int index,
+>>>>>>>> void *pb);
+>>>>>>>>
+>>>>>>>> +/**
+>>>>>>>> + * vb2_core_delete_buf() -
+>>>>>>>> + * @q: pointer to &struct vb2_queue with videobuf2 queue.
+>>>>>>>> + * @index:     id number of the buffer.
+>>>>>>>> + *
+>>>>>>>> + *  Return: returns zero on success; an error code otherwise.
+>>>>>>>> + */
+>>>>>>>> +int vb2_core_delete_buf(struct vb2_queue *q, unsigned int index);
+>>>>>>>> +
+>>>>>>>>     /**
+>>>>>>>>      * vb2_core_qbuf() - Queue a buffer from userspace
+>>>>>>>>      *
+>>>>>>>> diff --git a/include/media/videobuf2-v4l2.h
+>>>>>>>> b/include/media/videobuf2-v4l2.h
+>>>>>>>> index 88a7a565170e..3beeb4c735f0 100644
+>>>>>>>> --- a/include/media/videobuf2-v4l2.h
+>>>>>>>> +++ b/include/media/videobuf2-v4l2.h
+>>>>>>>> @@ -114,6 +114,17 @@ int vb2_create_bufs(struct vb2_queue *q, struct
+>>>>>>>> v4l2_create_buffers *create);
+>>>>>>>>      */
+>>>>>>>>     int vb2_prepare_buf(struct vb2_queue *q, struct media_device *mdev,
+>>>>>>>>                        struct v4l2_buffer *b);
+>>>>>>>> +/**
+>>>>>>>> + * vb2_delete_buf() - Delete the buffer from the queue
+>>>>>>>> + *
+>>>>>>>> + * @q:         pointer to &struct vb2_queue with videobuf2 queue.
+>>>>>>>> + * @b:         buffer structure passed from userspace to
+>>>>>>>> + *             &v4l2_ioctl_ops->vidioc_delete_buf handler in driver
+>>>>>>>> + *
+>>>>>>>> + * The return values from this function are intended to be directly
+>>>>>>>> returned
+>>>>>>>> + * from &v4l2_ioctl_ops->vidioc_delete_buf handler in driver.
+>>>>>>>> + */
+>>>>>>>> +int vb2_delete_buf(struct vb2_queue *q, struct v4l2_buffer *b);
+>>>>>>>>
+>>>>>>>>     /**
+>>>>>>>>      * vb2_qbuf() - Queue a buffer from userspace
+>>>>>>>> diff --git a/include/uapi/linux/videodev2.h
+>>>>>>>> b/include/uapi/linux/videodev2.h
+>>>>>>>> index aee75eb9e686..31bba1915642 100644
+>>>>>>>> --- a/include/uapi/linux/videodev2.h
+>>>>>>>> +++ b/include/uapi/linux/videodev2.h
+>>>>>>>> @@ -2702,6 +2702,8 @@ struct v4l2_create_buffers {
+>>>>>>>>     #define VIDIOC_DBG_G_CHIP_INFO  _IOWR('V', 102, struct
+>>>>>>>> v4l2_dbg_chip_info)
+>>>>>>>>
+>>>>>>>>     #define VIDIOC_QUERY_EXT_CTRL  _IOWR('V', 103, struct
+>>>>>>>> v4l2_query_ext_ctrl)
+>>>>>>>> +#define VIDIOC_DELETE_BUF      _IOWR('V', 104, struct v4l2_buffer)
+>>>>>>>> +
+>>>>>>>>
+>>>>>>>>     /* Reminder: when adding new ioctls please add support for them to
+>>>>>>>>        drivers/media/v4l2-core/v4l2-compat-ioctl32.c as well! */
+>>>>>>>> --
+>>>>>>>> 2.39.2
+>>>>>>>>
+>>>>> --
+>>>>> Hsia-Jun(Randy) Li
 >>>>>
->>>>> Best regards,
->>>>> Tomasz
->>>>>
->>>>>>>>> Remove it from the core definitions but keep it for drivers internal
->>>>>>>>> needs.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->>>>>>>>> ---
->>>>>>>>>      drivers/media/common/videobuf2/videobuf2-core.c | 2 ++
->>>>>>>>>      drivers/media/platform/amphion/vdec.c | 1 +
->>>>>>>>> .../media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c | 2 ++
->>>>>>>>>      drivers/media/platform/qcom/venus/hfi.h | 2 ++
->>>>>>>>>      drivers/media/platform/verisilicon/hantro_hw.h | 2 ++
->>>>>>>>>      drivers/staging/media/ipu3/ipu3-v4l2.c | 2 ++
->>>>>>>>>      include/media/videobuf2-core.h | 1 -
->>>>>>>>>      include/media/videobuf2-v4l2.h | 4 ----
->>>>>>>>>      8 files changed, 11 insertions(+), 5 deletions(-)
->>>>>>>>>
->>>>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>> b/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>> index 86e1e926fa45..899783f67580 100644
->>>>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>> @@ -31,6 +31,8 @@
->>>>>>>>>
->>>>>>>>>      #include <trace/events/vb2.h>
->>>>>>>>>
->>>>>>>>> +#define VB2_MAX_FRAME  32
->>>>>>>>> +
->>>>>>>>>      static int debug;
->>>>>>>>>      module_param(debug, int, 0644);
->>>>>>>>>
->>>>>>>>> diff --git a/drivers/media/platform/amphion/vdec.c
->>>>>>>>> b/drivers/media/platform/amphion/vdec.c
->>>>>>>>> index 3fa1a74a2e20..b3219f6d17fa 100644
->>>>>>>>> --- a/drivers/media/platform/amphion/vdec.c
->>>>>>>>> +++ b/drivers/media/platform/amphion/vdec.c
->>>>>>>>> @@ -28,6 +28,7 @@
->>>>>>>>>
->>>>>>>>>      #define VDEC_MIN_BUFFER_CAP            8
->>>>>>>>>      #define VDEC_MIN_BUFFER_OUT            8
->>>>>>>>> +#define VB2_MAX_FRAME                  32
->>>>>>>>>
->>>>>>>>>      struct vdec_fs_info {
->>>>>>>>>             char name[8];
->>>>>>>>> diff --git
->>>>>>>>> a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
->>>>>>>>> b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
->>>>>>>>> index 6532a69f1fa8..a1e0f24bb91c 100644
->>>>>>>>> --- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
->>>>>>>>> +++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
->>>>>>>>> @@ -16,6 +16,8 @@
->>>>>>>>>      #include "../vdec_drv_if.h"
->>>>>>>>>      #include "../vdec_vpu_if.h"
->>>>>>>>>
->>>>>>>>> +#define VB2_MAX_FRAME  32
->>>>>>>>> +
->>>>>>>>>      /* reset_frame_context defined in VP9 spec */
->>>>>>>>>      #define VP9_RESET_FRAME_CONTEXT_NONE0 0
->>>>>>>>>      #define VP9_RESET_FRAME_CONTEXT_NONE1 1
->>>>>>>>> diff --git a/drivers/media/platform/qcom/venus/hfi.h
->>>>>>>>> b/drivers/media/platform/qcom/venus/hfi.h
->>>>>>>>> index f25d412d6553..bd5ca5a8b945 100644
->>>>>>>>> --- a/drivers/media/platform/qcom/venus/hfi.h
->>>>>>>>> +++ b/drivers/media/platform/qcom/venus/hfi.h
->>>>>>>>> @@ -10,6 +10,8 @@
->>>>>>>>>
->>>>>>>>>      #include "hfi_helper.h"
->>>>>>>>>
->>>>>>>>> +#define VB2_MAX_FRAME                          32
->>>>>>>>> +
->>>>>>>>>      #define VIDC_SESSION_TYPE_VPE                  0
->>>>>>>>>      #define VIDC_SESSION_TYPE_ENC                  1
->>>>>>>>>      #define VIDC_SESSION_TYPE_DEC                  2
->>>>>>>>> diff --git a/drivers/media/platform/verisilicon/hantro_hw.h
->>>>>>>>> b/drivers/media/platform/verisilicon/hantro_hw.h
->>>>>>>>> index e83f0c523a30..9e8faf7ba6fb 100644
->>>>>>>>> --- a/drivers/media/platform/verisilicon/hantro_hw.h
->>>>>>>>> +++ b/drivers/media/platform/verisilicon/hantro_hw.h
->>>>>>>>> @@ -15,6 +15,8 @@
->>>>>>>>>      #include <media/v4l2-vp9.h>
->>>>>>>>>      #include <media/videobuf2-core.h>
->>>>>>>>>
->>>>>>>>> +#define VB2_MAX_FRAME  32
->>>>>>>>> +
->>>>>>>>>      #define DEC_8190_ALIGN_MASK    0x07U
->>>>>>>>>
->>>>>>>>>      #define MB_DIM                 16
->>>>>>>>> diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c
->>>>>>>>> b/drivers/staging/media/ipu3/ipu3-v4l2.c
->>>>>>>>> index e530767e80a5..6627b5c2d4d6 100644
->>>>>>>>> --- a/drivers/staging/media/ipu3/ipu3-v4l2.c
->>>>>>>>> +++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
->>>>>>>>> @@ -10,6 +10,8 @@
->>>>>>>>>      #include "ipu3.h"
->>>>>>>>>      #include "ipu3-dmamap.h"
->>>>>>>>>
->>>>>>>>> +#define VB2_MAX_FRAME  32
->>>>>>>>> +
->>>>>>>>>      /******************** v4l2_subdev_ops ********************/
->>>>>>>>>
->>>>>>>>>      #define IPU3_RUNNING_MODE_VIDEO                0
->>>>>>>>> diff --git a/include/media/videobuf2-core.h
->>>>>>>>> b/include/media/videobuf2-core.h
->>>>>>>>> index 77921cf894ef..080b783d608d 100644
->>>>>>>>> --- a/include/media/videobuf2-core.h
->>>>>>>>> +++ b/include/media/videobuf2-core.h
->>>>>>>>> @@ -20,7 +20,6 @@
->>>>>>>>>      #include <media/media-request.h>
->>>>>>>>>      #include <media/frame_vector.h>
->>>>>>>>>
->>>>>>>>> -#define VB2_MAX_FRAME  (32)
->>>>>>>>>      #define VB2_MAX_PLANES (8)
->>>>>>>>>
->>>>>>>>>      /**
->>>>>>>>> diff --git a/include/media/videobuf2-v4l2.h
->>>>>>>>> b/include/media/videobuf2-v4l2.h
->>>>>>>>> index 5a845887850b..88a7a565170e 100644
->>>>>>>>> --- a/include/media/videobuf2-v4l2.h
->>>>>>>>> +++ b/include/media/videobuf2-v4l2.h
->>>>>>>>> @@ -15,10 +15,6 @@
->>>>>>>>>      #include <linux/videodev2.h>
->>>>>>>>>      #include <media/videobuf2-core.h>
->>>>>>>>>
->>>>>>>>> -#if VB2_MAX_FRAME != VIDEO_MAX_FRAME
->>>>>>>>> -#error VB2_MAX_FRAME != VIDEO_MAX_FRAME
->>>>>>>>> -#endif
->>>>>>>>> -
->>>>>>>>>      #if VB2_MAX_PLANES != VIDEO_MAX_PLANES
->>>>>>>>>      #error VB2_MAX_PLANES != VIDEO_MAX_PLANES
->>>>>>>>>      #endif
->>>>>>>>> --
->>>>>>>>> 2.39.2
->>>>>>>>>
->>>>>> --
->>>>>> Hsia-Jun(Randy) Li
->>>>>>
 >>>> --
 >>>> Hsia-Jun(Randy) Li
 >>>>
->>
 >> --
 >> Hsia-Jun(Randy) Li
+>>
 
 -- 
 Hsia-Jun(Randy) Li
