@@ -2,154 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B04DE76703C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:11:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A44AF767078
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:25:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235120AbjG1PLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 11:11:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46004 "EHLO
+        id S237343AbjG1PZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 11:25:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233488AbjG1PL3 (ORCPT
+        with ESMTP id S237206AbjG1PZ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 11:11:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 740DE10CB;
-        Fri, 28 Jul 2023 08:11:28 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36SCxYmu021467;
-        Fri, 28 Jul 2023 15:11:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+M1QcnslsutWlO5X/4Ecy8tXoGFGslAYbFb1EjhoPe8=;
- b=fD2x+4iEWo2Y5j6649zpeBgY5WzVO1ojQBHFIwRUiKHm56AxvceZfr8faNNeYQa4ND0Y
- 8lPjSndLvM0HytKxLIvZAVD1xBolDnYbR5zM+57pV5axGDp/ZAMs8eXchKw2zjf7g0Mi
- 5uu3ujBjMePVuyLStoo8/sNfG0W49ICP/n3TUZhxZAcFcArqwCcedImeoze1/IU2gK+G
- 0IydaomdgAOkiNsZYuLJ3jL/nI/Jgsyh1nvrPGcl6/QoSfhiUxhs2WlSl/N/2J8mkwbK
- BSrkXVEOofw73EZWDtlPpUPOu8m3Pd/KFsDNFa0WmiTKw0GWGOSBMBiH7tuS1ayOvGkE +g== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s469hha2a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Jul 2023 15:11:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36SFBKJM008061
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Jul 2023 15:11:20 GMT
-Received: from [10.216.26.20] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
- 2023 08:10:58 -0700
-Message-ID: <f3d5c72d-90d3-b091-f995-5ad0bf93ae1d@quicinc.com>
-Date:   Fri, 28 Jul 2023 20:40:54 +0530
+        Fri, 28 Jul 2023 11:25:27 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD7C235AF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 08:25:25 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fbc5d5742eso24708465e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 08:25:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690557924; x=1691162724;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p88Nz4aiaNVDn50m16T/KmFwj/8wZh1FcbIhem0oQa4=;
+        b=qUrDN5dXvCPI9oi0VyQallvgjskKpeDxWvY1kJJXknZ/lZVxhjXZ7AywV/0e6wvPz5
+         ozF9AnzZIeSv3gFUflvy7wacf/cqS9RLDEAcfiexTHVHdEC22PSxgUASZL4g9vowfOsC
+         rNn/WsYIZrXI8WXh3sNQnBI8pLmuHXPwew4NZLjtdV/p+iB0MADg0kQ/I/sEiCwTiLiG
+         fPCfUVOYeVVI4zBHD+yJ3SJtAg8QsC7RZhHOgAs5GzR1RoWjIJbFXZUGdJMdGp20BVpZ
+         6tco+bCYOzDf2HdH3b1mHkG5zdjUV8f5RPOW3DsNvHF64EvK8HWgzAjpKZFw8/lTUKC4
+         jBAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690557924; x=1691162724;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p88Nz4aiaNVDn50m16T/KmFwj/8wZh1FcbIhem0oQa4=;
+        b=I7305B3yXGQWz9Px6Jpv7cA+2YV7rz7pYxBBL6l/EldEJhkm2QVIkqUauE2lzr6nlV
+         gIqb11nHgJa/JFvoyg78LATU2E+64zcIBS4wrClyLIM2741FHO0Zl9LGTZ5Cn5CfUkdE
+         gM1defox6tMyfdiYqbUJtQQpZ2GBrNifdAaZTIaSY/BoAEG0nxxZf22rfq9eqZiQtNeH
+         DUMSpLzHdsgVPV4Cz3CGT8lPy0eDiAbS4YhVCOWd4/RTYdaStzbVdxS3Y8+hZ/l5Gczg
+         Cgyk8dg/hlTT20Bug5q6HjgahTImlur64gsf53HRpx/k1/EA2N6ozMtXkdyBnPFZBCZR
+         XbMA==
+X-Gm-Message-State: ABy/qLZeNB0aNS7zBwUgC8uh3meNheiHElhTUr+hrWc1wYY8pW/90Ynh
+        RnIGvVrSH9aZVD8YXS8eCc+gq2iF8tnWrumVpn8=
+X-Google-Smtp-Source: APBJJlHY5Oa5Rvo7n/XhzdBMJCsn0Sy6qy0jwUz+QQHL4rc7cdrx+VTz8+bW1BNBNbAYEsCYbuyqOA==
+X-Received: by 2002:a1c:f70e:0:b0:3fd:2e89:31bd with SMTP id v14-20020a1cf70e000000b003fd2e8931bdmr1866493wmh.14.1690557924072;
+        Fri, 28 Jul 2023 08:25:24 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id n5-20020a1c7205000000b003fe11148055sm1042224wmc.27.2023.07.28.08.25.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Jul 2023 08:25:23 -0700 (PDT)
+Message-ID: <bbc22e71-d581-36c0-d5ac-24a2dc8d84fc@linaro.org>
+Date:   Fri, 28 Jul 2023 16:25:22 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add PCIe0 node
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 33/33] iris: enable building of iris video driver
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <manivannan.sadhasivam@linaro.org>
-CC:     <helgaas@kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_parass@quicinc.com>,
-        "reviewer:ARM/QUALCOMM CHROMEBOOK SUPPORT" 
-        <cros-qcom-dts-watchers@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <1690540760-20191-1-git-send-email-quic_krichai@quicinc.com>
- <17c2ba50-3b72-523c-d92b-1ecbf9be7450@linaro.org>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <17c2ba50-3b72-523c-d92b-1ecbf9be7450@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     quic_dikshita@quicinc.com
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-34-git-send-email-quic_vgarodia@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <1690550624-14642-34-git-send-email-quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hOlM99BQYESLq8VgbD3ILXuwJl74JUvh
-X-Proofpoint-GUID: hOlM99BQYESLq8VgbD3ILXuwJl74JUvh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 phishscore=0
- adultscore=0 clxscore=1015 mlxlogscore=999 mlxscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2307280140
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 28/07/2023 14:23, Vikash Garodia wrote:
+> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> 
+> This adds iris driver Makefile and Kconfig, also changes
+> v4l2 platform/qcom Makefile/Kconfig in order to
+> enable compilation of the driver.
 
-On 7/28/2023 5:33 PM, Krzysztof Kozlowski wrote:
-> On 28/07/2023 12:39, Krishna chaitanya chundru wrote:
->> Add PCIe dtsi node for PCIe0 controller on sc7280 platform.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Thank you for your patch. There is something to discuss/improve.
->
->
->> +		pcie0_phy: phy@1c06000 {
->> +			compatible = "qcom,sm8250-qmp-gen3x1-pcie-phy";
->> +			reg = <0 0x01c06000 0 0x1c0>;
->> +			#address-cells = <2>;
->> +			#size-cells = <2>;
->> +			ranges;
->> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
->> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
->> +				 <&gcc GCC_PCIE_CLKREF_EN>,
->> +				 <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
->> +			clock-names = "aux", "cfg_ahb", "ref", "refgen";
->> +
->> +			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
->> +			reset-names = "phy";
->> +
->> +			assigned-clocks = <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
->> +			assigned-clock-rates = <100000000>;
->> +
->> +			status = "disabled";
->> +
->> +			pcie0_lane: phy@1c0e6200 {
-> Isn't this old-style of bindings? Wasn't there a change? On what tree
-> did you base it?
-Let me rebase and send it again.
->> +
->> +			pcie0_wake_n: pcie0-wake-n {
-> It does not look like you tested the DTS against bindings. Please run
-> `make dtbs_check` (see
-> Documentation/devicetree/bindings/writing-schema.rst or
-> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-> for instructions).
->
-> Nodes end with 'state'.
+This is not a meaningfully bisectable patch.
 
-I will run it send it again.
+It should go with the addition of the driver. Its good practice to break 
+up incremental changes to a driver in a series but, I don't see why you 
+really need to do that when adding a whole new driver.
 
-Thanks,
+Just
 
-KC
+- Documentation
+- Bindings
+- Driver code
 
->
->> +				pins = "gpio89";
->> +				function = "gpio";
->> +
->> +				drive-strength = <2>;
->> +				bias-pull-up;
->> +			};
-> Best regards,
-> Krzysztof
->
+On the other hand if you were switching on IRIS in the default defconfig 
+then that should be a separate patch.
+
+If we were say adding inter-frame power-collapse to the existing venus 
+as part of a series, then that makes sense as a standalone patch but IMO 
+when adding a whole new driver, add it as one.
+
+Its easier to read that way
+
+---
+bod
