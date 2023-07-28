@@ -2,75 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99686766BAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 13:29:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52237766C7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 14:04:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236291AbjG1L3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 07:29:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35720 "EHLO
+        id S236451AbjG1MEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 08:04:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236272AbjG1L3A (ORCPT
+        with ESMTP id S236037AbjG1MD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 07:29:00 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B3EF3AAC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:28:55 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe1489ced6so3486489e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:28:55 -0700 (PDT)
+        Fri, 28 Jul 2023 08:03:58 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCEB4223
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 05:03:26 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fbc12181b6so22542075e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 05:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690543733; x=1691148533;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K2Jmh76fX0cC8X5svQlpl0lqLBg/8T7Qn+TkbmMn87g=;
-        b=S9h7ZBuCSi0Nut2p7zcsCvS49l7LMk2fQUD6ZCtk3vzETaAV/v/RbDrvVLeqW6KtKX
-         dFAfEfF+YpNY7jutfP9MhLts8g94NsTU2yWUwRGiZDREjalRpF72DjJUPD87fuXOvpek
-         db6axTaetmJVobJsOdNh5bVSpdIJv91xiwvfV/QM5cj6DSoRqW9bFjMI00ROFMcbfYXY
-         gmuy4+XDI8AEPi445GKoex3AnU7NMRn2YNVDHokT7AK2CgHmvAvEFOtcnQepRhBqzCta
-         JyO8cCRAr/7b6jIOi5nrjAtbUjeYzzvLQfXIf+AXNlV++0sKT1rDq/R7UI5nDKpfy64n
-         uuWQ==
+        d=linaro.org; s=google; t=1690545801; x=1691150601;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=A/vKoaITIyW9xcwG8PtxXcCtwnXHm7Y94zVK2jGbtSY=;
+        b=F8c164DEg1U2zHFVL6A881PvtLW8arBQxTSuYi6BsazIikM8FKwJt8677VhL/YR5mf
+         Yrfv6VsM7uTf7JAiIr8/yfKWx3erIUq+snXxdTpCLqgqBoA623kze3xRWtyjyn1P+hcr
+         4pcxiMf53FRCFPdyflSJvROwRCNscn92er3ClH8x/+exjTFmrAu8zKcaTUeSo+H6PlSd
+         G8/bUjD6pgiejWLBS1iZDqZxLhkEjcf22QXMUkEvIFjQSIVXOyWMjULvU3Q+xoyBVOWf
+         dm8ji7904cyWSd5XGhEjkClg5KYREauq7FmA9Xq5NhMUIOFPygk/wrb867ojZ08nS06C
+         ZP+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690543733; x=1691148533;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K2Jmh76fX0cC8X5svQlpl0lqLBg/8T7Qn+TkbmMn87g=;
-        b=fkX4VOkq58ytB9LLX7a01YdwMj/Cnx09tGBpMaj1JvVxDnbTBGQ1+BEusRgTKq/zWP
-         9vLdZUStTP+MEFBco6Z+or3OfdRzA8Aad3s4wXr+LSlwKQfj3HR7IaMIVvOdQaEAyJ8g
-         0pnHhapYg4kbk1lzxRdIJmAeY/sB3s2PllVTv/cK97b1D2AM/Di8G2VQOv7TaiUM+5tM
-         MfAo0Mx9MqUZUXvE0izR418MWpv3MAf7EJat71fGGk19iXP5zb66R9cjQsyxjDI3CrvC
-         DnGaggGafOPnOrsuG23HnaWkHZmgK1cz4Gq1uUyY6HhiiWn7UCnKc5OT6vywjLmxtaHG
-         kp4Q==
-X-Gm-Message-State: ABy/qLZsFhAXlE9hoBUsIFlNoHNX63g89+KLPp3/RHQAQeQj8iTA+rn1
-        Ulu0Hd8xV8uGRJaIHlBS/HxutA==
-X-Google-Smtp-Source: APBJJlE8LHHYDebc1KhpOSqEnYawJSpwTyAliGv5Ek3/yrFTWhjeqVKhn92X3qglPd/utyr8ietUhA==
-X-Received: by 2002:a05:6512:348f:b0:4fb:8616:7a03 with SMTP id v15-20020a056512348f00b004fb86167a03mr1331586lfr.4.1690543733205;
-        Fri, 28 Jul 2023 04:28:53 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id q10-20020a1cf30a000000b003fbb618f7adsm4011911wmq.15.2023.07.28.04.28.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jul 2023 04:28:52 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1690545801; x=1691150601;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=A/vKoaITIyW9xcwG8PtxXcCtwnXHm7Y94zVK2jGbtSY=;
+        b=I/843OXvifWk5Q+I2letrzZ+pfCr9hGXNdm7tHif6Tq4O8NaZ89xXfxeG0JkHuJhf3
+         Jn18Ax+BcbNF1RhDI4LvZNkXxLKEN04p3lKtpT5qRlCgt4syEE046Lc/qSiGnPOuNrlK
+         tU1ux8oYloBEzZ8xJe2TmJCc6HNg/AVte8G4pSfTHudD50qRtsSYoY6rAvyessmWDD13
+         mof7piBNU+dY2i/68bazGwEraQBV6wX7Wjsz0edZUEh6Qa4EMALwDDh33QCfSDIRumGh
+         amEqbzPID3pIz3GErJc9Fde78GgCKkUDKSyeDg4Y1/qG7AGlUnKwrDV3eTAH4ihg81JG
+         unYA==
+X-Gm-Message-State: ABy/qLbNoqau95VIA1pCa26tZJJqqZPf+lIVM4V1pAL3yOoO7D0Fre37
+        km3kUFm4FhRjanB7ud7cbFrlbw==
+X-Google-Smtp-Source: APBJJlEkuI6UTwqW0VTko2uWsPFht7OoyEgxGr2mGh5SPlgfnShLErAkXAEfZK43dAqhK7yX5s44Rw==
+X-Received: by 2002:a05:600c:d5:b0:3fb:e206:ca5f with SMTP id u21-20020a05600c00d500b003fbe206ca5fmr1392256wmm.31.1690545801567;
+        Fri, 28 Jul 2023 05:03:21 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id w17-20020a05600c015100b003fbfef555d2sm6778983wmm.23.2023.07.28.05.03.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Jul 2023 05:03:21 -0700 (PDT)
+Message-ID: <17c2ba50-3b72-523c-d92b-1ecbf9be7450@linaro.org>
+Date:   Fri, 28 Jul 2023 14:03:17 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add PCIe0 node
+Content-Language: en-US
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        quic_parass@quicinc.com,
+        "reviewer:ARM/QUALCOMM CHROMEBOOK SUPPORT" 
+        <cros-qcom-dts-watchers@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] soundwire: qcom: handle command ignored interrupt
-Date:   Fri, 28 Jul 2023 13:28:48 +0200
-Message-Id: <20230728112848.67092-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230728112848.67092-1-krzysztof.kozlowski@linaro.org>
-References: <20230728112848.67092-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1690540760-20191-1-git-send-email-quic_krichai@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1690540760-20191-1-git-send-email-quic_krichai@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,45 +89,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm Soundwire v2.0.0 controller comes with new interrupt bit for
-ignored commands.  Add code to handle it in the interrupt service
-routine.
+On 28/07/2023 12:39, Krishna chaitanya chundru wrote:
+> Add PCIe dtsi node for PCIe0 controller on sc7280 platform.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soundwire/qcom.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 3ae3e5896308..3061db6adac7 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -61,6 +61,7 @@
- #define SWRM_INTERRUPT_STATUS_BUS_RESET_FINISHED_V2		BIT(13)
- #define SWRM_INTERRUPT_STATUS_CLK_STOP_FINISHED_V2		BIT(14)
- #define SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP		BIT(16)
-+#define SWRM_INTERRUPT_STATUS_CMD_IGNORED_AND_EXEC_CONTINUED	BIT(19)
- #define SWRM_INTERRUPT_MAX					17
- #define SWRM_V1_3_INTERRUPT_MASK_ADDR				0x204
- #define SWRM_V1_3_INTERRUPT_CLEAR				0x208
-@@ -792,6 +793,17 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
- 				break;
- 			case SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP:
- 				break;
-+			case SWRM_INTERRUPT_STATUS_CMD_IGNORED_AND_EXEC_CONTINUED:
-+				ctrl->reg_read(ctrl,
-+					       ctrl->reg_layout[SWRM_REG_CMD_FIFO_STATUS],
-+					       &value);
-+				dev_err(ctrl->dev,
-+					"%s: SWR CMD ignored, fifo status %x\n",
-+					__func__, value);
-+
-+				/* Wait 3.5ms to clear */
-+				usleep_range(3500, 3505);
-+				break;
- 			default:
- 				dev_err_ratelimited(ctrl->dev,
- 						"%s: SWR unknown interrupt value: %d\n",
--- 
-2.34.1
+
+> +		pcie0_phy: phy@1c06000 {
+> +			compatible = "qcom,sm8250-qmp-gen3x1-pcie-phy";
+> +			reg = <0 0x01c06000 0 0x1c0>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_CLKREF_EN>,
+> +				 <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
+> +			clock-names = "aux", "cfg_ahb", "ref", "refgen";
+> +
+> +			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
+> +			reset-names = "phy";
+> +
+> +			assigned-clocks = <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
+> +			assigned-clock-rates = <100000000>;
+> +
+> +			status = "disabled";
+> +
+> +			pcie0_lane: phy@1c0e6200 {
+
+Isn't this old-style of bindings? Wasn't there a change? On what tree
+did you base it?
+
+> +
+> +			pcie0_wake_n: pcie0-wake-n {
+
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
+
+Nodes end with 'state'.
+
+
+> +				pins = "gpio89";
+> +				function = "gpio";
+> +
+> +				drive-strength = <2>;
+> +				bias-pull-up;
+> +			};
+Best regards,
+Krzysztof
 
