@@ -2,148 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D06C5766AEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 12:43:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8C9B766B16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 12:54:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235272AbjG1KnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 06:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42156 "EHLO
+        id S236033AbjG1Kyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 06:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234723AbjG1KnO (ORCPT
+        with ESMTP id S235178AbjG1Kyo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 06:43:14 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 348AC1B8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 03:43:13 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbc5d5746cso21080975e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 03:43:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690540991; x=1691145791;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0qcpfuVCMGDrdLqRszLnxUe+cmtYNnFPz1CO5kAvPCs=;
-        b=Kn6Eyadxs5TmmhGXwtb2w2a2hKu6nRGDFNi6ofLv7Xgs8evLF31c91xaW7GyFKUX7s
-         jKu2Yyo5YVqCloaGb9MCzYdczP5wdQZCSkuGie0dZfEMrsyenb9T5+cxj6HhyQaoKyDX
-         rEY4no0pvlXHpqS2QP1aKXenrorcxiyH805yfNxJj3h9k4IGxX9hcE5eOYzzesZ50e24
-         VjLKT7Ae8gptBbuOzclb2NWFgYiLsWl0GEDPvpo7mZ7ujBDtU2Y35RtFTccvGvCJZgW2
-         74uB+wM8alrGnGQdE0vEIWgIOACpboQ2q4S/qWPAzNgVRlqq+V4WLP6GWTjrwBgkA32r
-         Q7Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690540991; x=1691145791;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0qcpfuVCMGDrdLqRszLnxUe+cmtYNnFPz1CO5kAvPCs=;
-        b=c+uPp+NnDBmYfAW7nY2KNoWzcEMIuVXEmiAkC5fYoco5Xv2Aewar3f7eBrESk0SI5T
-         iOiL27HgdjXlIYS9+NHrt3WDvitB2G2ebmNhuTqqufGXBzxqxTOwA8jkS7IZngY5htdm
-         zY/+ch/Wykxnn1w+588qHgTIKK9FIsalWhQg09tZRMjUt/s8Yz8rPBbszS1RqB4mWvq4
-         Mln9xisb+1192dXMnJuWGPOphT7f9jFiQusKYckWTPwP2ebQKiY9uXMhGtU+MrTN9YH1
-         9JvNW3Hlzhxi2Il0KsfaMaqv6e7iM/oRYF1Ie8Vjn3KOAe3Qnzy7cw9niI6W1DM6YX/X
-         DkRg==
-X-Gm-Message-State: ABy/qLbYRzokp0BOhRQ4kbJEngEd/36jrKELaxQfnMAGqS9X6E3yuYM0
-        tnb8qAvRY4cOWBbaFCQXrM5W7Q==
-X-Google-Smtp-Source: APBJJlEJ4WGtWvMTHhF0N6xAI1lu6JltQyIEQMdnAl9JSRk+TAhydjZrfGGMjQeFXtiuF+iigEWRLQ==
-X-Received: by 2002:a7b:ce07:0:b0:3fe:e1e:5041 with SMTP id m7-20020a7bce07000000b003fe0e1e5041mr889214wmc.32.1690540991684;
-        Fri, 28 Jul 2023 03:43:11 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id l14-20020a1c790e000000b003fbc9371193sm3897602wme.13.2023.07.28.03.43.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 03:43:11 -0700 (PDT)
-Message-ID: <6a9cc326-06ea-dfce-6a48-043fd7ba0d50@linaro.org>
-Date:   Fri, 28 Jul 2023 11:43:10 +0100
+        Fri, 28 Jul 2023 06:54:44 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEF472680;
+        Fri, 28 Jul 2023 03:54:43 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 48323620E8;
+        Fri, 28 Jul 2023 10:54:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA10DC433C7;
+        Fri, 28 Jul 2023 10:54:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690541682;
+        bh=GrVo5rdpC3v6HS0sIdUz8Rz5/UMGf7Gur3+ENNLuLvE=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=IyRtGeBrBtzXwNMYwNT1RVORrQN1IGXgDCmVBm9XIhf/0Dfj9zzEtbQy5GIluUqcU
+         qll1FW/qh+Vh5VpaXAV2/cdK9NiPQsWgr/YSx0MPlD3g+l5XMmONd3tFMD7zifjZvo
+         C6LvxkkQzKLr6IFcP+pdxwO9aqHiFrSVN8uVp1MAwuzWjB7GxHrFQaXBRtVAXvsF9s
+         Y5JQrSoRdJL21y7c7d2gnHA9ZdUc/JKMNFc2KLZJTvJNVXWW/WTbce8rXOu5ye/zgz
+         9EF/B9yarjOZOHsJgjmCnbE1UtI1G7ghgzCMC9DiUskbDhF+PphGVy9RTRVelmBpH0
+         E/vQFc8gpqXew==
+From:   Lee Jones <lee@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230720083525.73622-1-krzysztof.kozlowski@linaro.org>
+References: <20230720083525.73622-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH] dt-bindings: mfd: qcom,spmi-pmic: document
+ PMC8180 and PMC8180C
+Message-Id: <169054167957.335784.17462397007717489314.b4-ty@kernel.org>
+Date:   Fri, 28 Jul 2023 11:54:39 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1] misc: fastrpc: Fix DSP capabilities request
-Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
-        stable <stable@kernel.org>
-References: <1687328900-3039-1-git-send-email-quic_ekangupt@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1687328900-3039-1-git-send-email-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 21/06/2023 07:28, Ekansh Gupta wrote:
-> Incorrect remote arguments are getting passed when requesting for
-> capabilities from DSP. Also there is no requirement to update the
-> PD type as it might cause problems for any PD other than user PD.
-> In addition to this, the collected capability information is not
-> getting copied properly to user. Add changes to address these
-> problems and get correct DSP capabilities.
+On Thu, 20 Jul 2023 10:35:25 +0200, Krzysztof Kozlowski wrote:
+> Document qcom,pmc8180 and qcom,pmc8180c compatibles already used in DTS:
 > 
-> Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
-> Cc: stable <stable@kernel.org>
-> Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->   drivers/misc/fastrpc.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
+>   sc8180x-primus.dtb: pmic@1: compatible:0: 'qcom,pmc8180' is not one of ...
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..776c596 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1693,9 +1693,8 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
->   	args[0].length = sizeof(dsp_attr_buf_len);
->   	args[0].fd = -1;
->   	args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
+> 
 
-<--snip
-> -	args[1].length = dsp_attr_buf_len;
-> +	args[1].length = dsp_attr_buf_len * sizeof(uint32_t);
--->
->   	args[1].fd = -1;
-> -	fl->pd = USER_PD;
+Applied, thanks!
 
-this looks fine.
->   
->   	return fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
->   				       FASTRPC_SCALARS(0, 1, 1), args);
-> @@ -1723,7 +1722,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
->   	if (!dsp_attributes)
->   		return -ENOMEM;
->   
+[1/1] dt-bindings: mfd: qcom,spmi-pmic: document PMC8180 and PMC8180C
+      commit: fbf6784f7bab600edc890e61438bb2674ee1ef66
 
-<-- snip
-> -	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES_LEN);
-> +	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
+--
+Lee Jones [李琼斯]
 
--->
-Before this change we passed a value which is already multipled now we 
-pass a value that will be mulitplied inside fastrpc_get_info_from_dsp, 
-both will work, but I dont see any value in doing this change.
-
-
->   	if (err == DSP_UNSUPPORTED_API) {
->   		dev_info(&cctx->rpdev->dev,
->   			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
-> @@ -1776,7 +1775,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
->   	if (err)
->   		return err;
->   
-> -	if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
-> +	if (copy_to_user(argp, &cap, sizeof(cap)))
-
-Can you explain this change, and what is it fixing exactly?
-
---srini
->   		return -EFAULT;
->   
->   	return 0;
