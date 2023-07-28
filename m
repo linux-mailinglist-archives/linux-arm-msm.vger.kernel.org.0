@@ -2,74 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9654A767334
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 19:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A97E76736B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 19:31:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233082AbjG1RYi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 13:24:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52054 "EHLO
+        id S231482AbjG1Rbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 13:31:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232876AbjG1RYh (ORCPT
+        with ESMTP id S233437AbjG1Rbi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 13:24:37 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0FA62135
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:24:35 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id 5614622812f47-3a426e70575so1608431b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:24:35 -0700 (PDT)
+        Fri, 28 Jul 2023 13:31:38 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3BC3A81
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:31:11 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b6f97c7115so38469901fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690565075; x=1691169875;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wJeVlocXBXh1Q6nOIAJsDIEk2F6znGH2kHNksLZzN1Q=;
-        b=Pg8gKO8/8Lwq3k8dGRLLauuvs5aW28j/op5TAaL8RsbhDAEpfzVkgGIj1iVjL4uTlk
-         lwXWpBUpeTw+2XZj7T8OE3EMMMA+jtRh/5Iio7xeLYZtKIhPlAq43sE5vOuWjmIErrnm
-         2hoAaTsKh4/DfvHHlm7X1s5uKKk2fOe6DxpV9mRLPv3YHyWyMmGetLpD33ahGSbUe3SV
-         JnGntjf1KLkzp0TxLqd7QJRIsKQBzUubEdtNvRH2wf6rK72EumZValrsI3d/oldcSaKb
-         RbOcOXvWWX0X3sBwKFQxjRX2M4+js8/GBSy+Dp85klqIeDGhxHFcruuLOnpHDmDhmPHE
-         mosw==
+        d=linaro.org; s=google; t=1690565459; x=1691170259;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y0KWziT1mxdmTj7u48lfqOSCiVjBr+WD1yIdlFS/Mwc=;
+        b=x8guTRcRIw9KKkzFxIpzfV3dkfInedxmUv4ClFVbFFf/94ioI7vTIcMLq/aplaaEF4
+         z2JXqZerlGswc3R/Ms3G6VCOi4aRYmOgryymZ6BJ0TGxzDgLkHcbJH83jgdE/H08XcgW
+         +Rn8KhsBvTz8pbvjCEfvDcJRZNBYCnlXca5HACQnUTXzDdS6Mhm7qWmP4o3pF86wx8iw
+         RFJX4vzHKtL99Y/A2u9Uoy4OCelU+OOOD4kFZqsb2Ik8zKx4ATIOrI409U06GtLTrvk/
+         ohiTwBfuQhxgEiZ6UzBrHXjOV3SlCa1vD/Mh6eND/LvN/rA+cel78qXMXzL3AHDIhsxe
+         Bh3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690565075; x=1691169875;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wJeVlocXBXh1Q6nOIAJsDIEk2F6znGH2kHNksLZzN1Q=;
-        b=B33xGO4c+75AAdME4714HMEldfFzVMi49aPBH0BExlyLeK/tSVWNBRq10wWH6WAni7
-         KN7dcuWSeEM5RD7Y+cQ4MqABw1RP8E3re+ilTI5jhTRBi2fJLIONvSP8DNpjhVqeaP1R
-         v/Os/b/2gD0NMwA53nX6fdBhzkAZaerfVl0W+KXutiFT6mOWXv1TMpgwgaZDsG2T5ora
-         SkKsfNdAZTv5AnstOX+yY6GUl7CzxlzEGVoAzD9RkGOe6jMyIIvVZVJeAh7pixnLnLDo
-         A/TRbDQ7vokVraZBCAZlgNkxSeEEsBO6mr4KzD3+8m9PGFDqcDXCoqDnRc9cX6DSziWz
-         FR5g==
-X-Gm-Message-State: ABy/qLbkBnaoaJj/CDiDWTRofdevmVBVNYexp1z/z0wmL/Z3S1jr4U1p
-        0dX36EzRQynD1N996wIaSoYzpFA1nGsIAm3hQdi/sNq0FH6BjQFk
-X-Google-Smtp-Source: APBJJlHHXAwUiUytYr6QPDMCF/le/8iTrYaSBFWAZaWtK4iX/GDCm63xmmDtaGIX5M+Lesi58xGKEtOs6ykxszpPntU=
-X-Received: by 2002:a05:6358:2808:b0:137:7803:7e37 with SMTP id
- k8-20020a056358280800b0013778037e37mr1465100rwb.15.1690565074711; Fri, 28 Jul
- 2023 10:24:34 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690565459; x=1691170259;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y0KWziT1mxdmTj7u48lfqOSCiVjBr+WD1yIdlFS/Mwc=;
+        b=VOcmkRV9Q0vZikEs5YbtcrkkU00BYU9xlT2myteZoZoHqZ1HhQmVqI9JIA1W/kWHVX
+         do8UfcqIr/6vyJWSyBdNLMpwDIsT4NLEQqhZlwl7Na1U1vw3AuPTwr1T6//d7G90UG06
+         GVv8OT6qWaXiHGyNFxc6rqUvbFdEUmjoNBVa1twQznQe972HFjzEvS5JGPSJlsDw5SNp
+         no9LM2v+2+Jn9V+FwlURIxWOzx635ekvv/Ubcm6U2XO33G5aiKMrDoM8nyM32mXvmSay
+         EcZbvtCMSmm6T3T2/2NqnEAJ0c7QMvdujv7hoFQs1vTBC0IgcrLCqZtr4oHMkYtAMPWq
+         uiCA==
+X-Gm-Message-State: ABy/qLYUMtkNtvPBPROnery8A+qovBwYns2g1WRl4WPkiHLUIBO/fX7P
+        0yyCAnzMIkWJcbyZ1uNqHARyMw==
+X-Google-Smtp-Source: APBJJlG3TGvZ06ORf17+8RqZPHRtc8pJ+i+eQUUDvWXAGMRdy4DHCDBVcrup1yk0V0K2JXwvktHnHg==
+X-Received: by 2002:a2e:9e89:0:b0:2b6:d5af:1160 with SMTP id f9-20020a2e9e89000000b002b6d5af1160mr2249527ljk.28.1690565459316;
+        Fri, 28 Jul 2023 10:30:59 -0700 (PDT)
+Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
+        by smtp.gmail.com with ESMTPSA id u22-20020a2ea176000000b002b6efce3f54sm1051032ljl.123.2023.07.28.10.30.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Jul 2023 10:30:58 -0700 (PDT)
+Message-ID: <f95fa8c8-1794-fcbc-809d-62bfcc667822@linaro.org>
+Date:   Fri, 28 Jul 2023 19:30:57 +0200
 MIME-Version: 1.0
-References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com> <20230728-solid-fill-v5-1-053dbefa909c@quicinc.com>
-In-Reply-To: <20230728-solid-fill-v5-1-053dbefa909c@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 28 Jul 2023 20:24:23 +0300
-Message-ID: <CAA8EJpqHyacAjdtsFrbp4gVOpVwCAPf0ZcCT1waxyfJ8cOW-Kg@mail.gmail.com>
-Subject: Re: [PATCH RFC v5 01/10] drm: Introduce pixel_source DRM plane property
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
-        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
-        sebastian.wick@redhat.com, ville.syrjala@linux.intel.com,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        wayland-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/33] iris: vidc: add helper functions for resource
+ management
+Content-Language: en-US
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, mchehab@kernel.org, hans.verkuil@cisco.com,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     quic_dikshita@quicinc.com
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-13-git-send-email-quic_vgarodia@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <1690550624-14642-13-git-send-email-quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,247 +114,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 28 Jul 2023 at 20:03, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->
-> Add support for pixel_source property to drm_plane and related
-> documentation. In addition, force pixel_source to
-> DRM_PLANE_PIXEL_SOURCE_FB in DRM_IOCTL_MODE_SETPLANE as to not break
-> legacy userspace.
->
-> This enum property will allow user to specify a pixel source for the
-> plane. Possible pixel sources will be defined in the
-> drm_plane_pixel_source enum.
->
-> The current possible pixel sources are DRM_PLANE_PIXEL_SOURCE_NONE and
-> DRM_PLANE_PIXEL_SOURCE_FB with *_PIXEL_SOURCE_FB being the default value.
->
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+On 28.07.2023 15:23, Vikash Garodia wrote:
+> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> 
+> This implements ops to initialize, enable and disable extrenal
+> resources needed by video driver like power domains, clocks etc.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 > ---
->  drivers/gpu/drm/drm_atomic_state_helper.c |  1 +
->  drivers/gpu/drm/drm_atomic_uapi.c         |  4 ++
->  drivers/gpu/drm/drm_blend.c               | 85 +++++++++++++++++++++++++++++++
->  drivers/gpu/drm/drm_plane.c               |  3 ++
->  include/drm/drm_blend.h                   |  2 +
->  include/drm/drm_plane.h                   | 21 ++++++++
->  6 files changed, 116 insertions(+)
->
-> diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/drm/drm_atomic_state_helper.c
-> index 784e63d70a42..01638c51ce0a 100644
-> --- a/drivers/gpu/drm/drm_atomic_state_helper.c
-> +++ b/drivers/gpu/drm/drm_atomic_state_helper.c
-> @@ -252,6 +252,7 @@ void __drm_atomic_helper_plane_state_reset(struct drm_plane_state *plane_state,
->
->         plane_state->alpha = DRM_BLEND_ALPHA_OPAQUE;
->         plane_state->pixel_blend_mode = DRM_MODE_BLEND_PREMULTI;
-> +       plane_state->pixel_source = DRM_PLANE_PIXEL_SOURCE_FB;
->
->         if (plane->color_encoding_property) {
->                 if (!drm_object_property_get_default_value(&plane->base,
-> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-> index d867e7f9f2cd..454f980e16c9 100644
-> --- a/drivers/gpu/drm/drm_atomic_uapi.c
-> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
-> @@ -544,6 +544,8 @@ static int drm_atomic_plane_set_property(struct drm_plane *plane,
->                 state->src_w = val;
->         } else if (property == config->prop_src_h) {
->                 state->src_h = val;
-> +       } else if (property == plane->pixel_source_property) {
-> +               state->pixel_source = val;
->         } else if (property == plane->alpha_property) {
->                 state->alpha = val;
->         } else if (property == plane->blend_mode_property) {
-> @@ -616,6 +618,8 @@ drm_atomic_plane_get_property(struct drm_plane *plane,
->                 *val = state->src_w;
->         } else if (property == config->prop_src_h) {
->                 *val = state->src_h;
-> +       } else if (property == plane->pixel_source_property) {
-> +               *val = state->pixel_source;
->         } else if (property == plane->alpha_property) {
->                 *val = state->alpha;
->         } else if (property == plane->blend_mode_property) {
-> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
-> index 6e74de833466..c500310a3d09 100644
-> --- a/drivers/gpu/drm/drm_blend.c
-> +++ b/drivers/gpu/drm/drm_blend.c
-> @@ -185,6 +185,21 @@
->   *              plane does not expose the "alpha" property, then this is
->   *              assumed to be 1.0
->   *
-> + * pixel_source:
-> + *     pixel_source is set up with drm_plane_create_pixel_source_property().
-> + *     It is used to toggle the active source of pixel data for the plane.
-> + *     The plane will only display data from the set pixel_source -- any
-> + *     data from other sources will be ignored.
-> + *
-> + *     Possible values:
-> + *
-> + *     "NONE":
-> + *             No active pixel source.
-> + *             Committing with a NONE pixel source will disable the plane.
-> + *
-> + *     "FB":
-> + *             Framebuffer source set by the "FB_ID" property.
-> + *
->   * Note that all the property extensions described here apply either to the
->   * plane or the CRTC (e.g. for the background color, which currently is not
->   * exposed and assumed to be black).
-> @@ -615,3 +630,73 @@ int drm_plane_create_blend_mode_property(struct drm_plane *plane,
->         return 0;
->  }
->  EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
-> +
-> +/**
-> + * drm_plane_create_pixel_source_property - create a new pixel source property
-> + * @plane: DRM plane
-> + * @extra_sources: Bitmask of additional supported pixel_sources for the driver.
-> + *                DRM_PLANE_PIXEL_SOURCE_FB always be enabled as a supported
-> + *                source.
-> + *
-> + * This creates a new property describing the current source of pixel data for the
-> + * plane. The pixel_source will be initialized as DRM_PLANE_PIXEL_SOURCE_FB by default.
-> + *
-> + * Drivers can set a custom default source by overriding the pixel_source value in
-> + * drm_plane_funcs.reset()
-> + *
-> + * The property is exposed to userspace as an enumeration property called
-> + * "pixel_source" and has the following enumeration values:
-> + *
-> + * "NONE":
-> + *      No active pixel source
-> + *
-> + * "FB":
-> + *     Framebuffer pixel source
-> + *
-> + * Returns:
-> + * Zero on success, negative errno on failure.
-> + */
-> +int drm_plane_create_pixel_source_property(struct drm_plane *plane,
-> +                                          unsigned long extra_sources)
-> +{
-> +       struct drm_device *dev = plane->dev;
-> +       struct drm_property *prop;
-> +       static const struct drm_prop_enum_list enum_list[] = {
-> +               { DRM_PLANE_PIXEL_SOURCE_NONE, "NONE" },
-> +               { DRM_PLANE_PIXEL_SOURCE_FB, "FB" },
-> +       };
-> +       static const unsigned int valid_source_mask = BIT(DRM_PLANE_PIXEL_SOURCE_FB);
-> +       int i;
-> +
-> +       /* FB is supported by default */
-> +       unsigned long supported_sources = extra_sources | BIT(DRM_PLANE_PIXEL_SOURCE_FB);
-> +
-> +       if (WARN_ON(supported_sources & ~valid_source_mask))
-> +               return -EINVAL;
-> +
-> +       prop = drm_property_create(dev, DRM_MODE_PROP_ENUM | DRM_MODE_PROP_ATOMIC, "pixel_source",
-> +                       hweight32(supported_sources));
-> +
-> +       if (!prop)
-> +               return -ENOMEM;
-> +
-> +       for (i = 0; i < ARRAY_SIZE(enum_list); i++) {
-> +               int ret;
-> +
-> +               if (!test_bit(enum_list[i].type, &supported_sources))
-> +                       continue;
-> +
-> +               ret = drm_property_add_enum(prop, enum_list[i].type, enum_list[i].name);
-> +               if (ret) {
-> +                       drm_property_destroy(dev, prop);
-> +
-> +                       return ret;
-> +               }
-> +       }
-> +
-> +       drm_object_attach_property(&plane->base, prop, DRM_PLANE_PIXEL_SOURCE_FB);
-> +       plane->pixel_source_property = prop;
-> +
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL(drm_plane_create_pixel_source_property);
-> diff --git a/drivers/gpu/drm/drm_plane.c b/drivers/gpu/drm/drm_plane.c
-> index 24e7998d1731..f342cf15412b 100644
-> --- a/drivers/gpu/drm/drm_plane.c
-> +++ b/drivers/gpu/drm/drm_plane.c
-> @@ -987,6 +987,9 @@ int drm_mode_setplane(struct drm_device *dev, void *data,
->                 return -ENOENT;
->         }
->
-> +       if (plane->state && plane->state->pixel_source != DRM_PLANE_PIXEL_SOURCE_FB)
-> +               plane->state->pixel_source = DRM_PLANE_PIXEL_SOURCE_FB;
+There's a whole bunch of kerneldoc abuses (comments should start with
+/* and not /**). Make sure you have proper spaces between single-line
+C-style comments (e.g. /*Get should be /* Get etc.)
 
-Nit: you are going to set the value anyway. So the second condition
-can be dropped.
-
-LGTM otherwise.
-
-> +
->         if (plane_req->fb_id) {
->                 fb = drm_framebuffer_lookup(dev, file_priv, plane_req->fb_id);
->                 if (!fb) {
-> diff --git a/include/drm/drm_blend.h b/include/drm/drm_blend.h
-> index 88bdfec3bd88..122bbfbaae33 100644
-> --- a/include/drm/drm_blend.h
-> +++ b/include/drm/drm_blend.h
-> @@ -58,4 +58,6 @@ int drm_atomic_normalize_zpos(struct drm_device *dev,
->                               struct drm_atomic_state *state);
->  int drm_plane_create_blend_mode_property(struct drm_plane *plane,
->                                          unsigned int supported_modes);
-> +int drm_plane_create_pixel_source_property(struct drm_plane *plane,
-> +                                          unsigned long extra_sources);
->  #endif
-> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
-> index 51291983ea44..89508b4dea4a 100644
-> --- a/include/drm/drm_plane.h
-> +++ b/include/drm/drm_plane.h
-> @@ -40,6 +40,12 @@ enum drm_scaling_filter {
->         DRM_SCALING_FILTER_NEAREST_NEIGHBOR,
->  };
->
-> +enum drm_plane_pixel_source {
-> +       DRM_PLANE_PIXEL_SOURCE_NONE,
-> +       DRM_PLANE_PIXEL_SOURCE_FB,
-> +       DRM_PLANE_PIXEL_SOURCE_MAX
-> +};
-> +
->  /**
->   * struct drm_plane_state - mutable plane state
->   *
-> @@ -116,6 +122,14 @@ struct drm_plane_state {
->         /** @src_h: height of visible portion of plane (in 16.16) */
->         uint32_t src_h, src_w;
->
-> +       /**
-> +        * @pixel_source:
-> +        *
-> +        * Source of pixel information for the plane. See
-> +        * drm_plane_create_pixel_source_property() for more details.
-> +        */
-> +       enum drm_plane_pixel_source pixel_source;
-> +
->         /**
->          * @alpha:
->          * Opacity of the plane with 0 as completely transparent and 0xffff as
-> @@ -699,6 +713,13 @@ struct drm_plane {
->          */
->         struct drm_plane_state *state;
->
-> +       /*
-> +        * @pixel_source_property:
-> +        * Optional pixel_source property for this plane. See
-> +        * drm_plane_create_pixel_source_property().
-> +        */
-> +       struct drm_property *pixel_source_property;
-> +
->         /**
->          * @alpha_property:
->          * Optional alpha property for this plane. See
->
-> --
-> 2.41.0
->
+Capitalizing the first word within the comment would be nice too.
 
 
--- 
-With best wishes
-Dmitry
+Do we need a separate bus table? i.e. does it make sense to adjust the
+bandwidth values separately from the clock rates?
+
+Do you think there will be more than one set of msm_vidc_resources_ops?
+Perhaps it'd make sense to drop that layer of abstraction if not. Many
+function names could drop the __ prefix.
+
+A whole bunch of d_vpr_h seem almost excessive.
+
+MSM_VIDC_CLKFLAG_* are unused.
+
+Konrad
