@@ -2,149 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 859FC767084
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:29:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D80D767092
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233697AbjG1P3f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 11:29:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54038 "EHLO
+        id S237347AbjG1Pb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 11:31:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjG1P3f (ORCPT
+        with ESMTP id S237332AbjG1Pb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 11:29:35 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9367735A8;
-        Fri, 28 Jul 2023 08:29:33 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe1c285690so2632369e87.3;
-        Fri, 28 Jul 2023 08:29:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690558172; x=1691162972;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sWY5MitYzqJ4d1bWl5n1gXmIbqPwv+V3mvdT6pw4Joo=;
-        b=spL3/dRcoa3f8wiIiP4KqpRnJi5z+v7W8ANf+zhQjBOBZZo931y9+BgkQkiNBesEtg
-         atYPhabihDsA3VLHbn7Dz08mDbJGqwdJPsliHSHanX0fVDB6WEFf1WnCiJjkrk195LtG
-         WimZisfkapB/STS57H7637OhqQ5SuV1fA3uiQCk5QwCD5Lc/bSizj6/trIl/g6AxU2H2
-         FiUnXlPE6e9l1sKVkqU0w9etFNmp1tDgw/etFEND+xo7SPaVF0cHQe0smbkpyBNQMLHS
-         quujH7k9Vk0rZwusd+jLvaKgIonLmUT/JCeO+57s/O/3oTEGSuPTvF3Khbc8HTkvrCxO
-         gBfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690558172; x=1691162972;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sWY5MitYzqJ4d1bWl5n1gXmIbqPwv+V3mvdT6pw4Joo=;
-        b=DdDZtkZQ2Rd5jZOpxE08fITE7wLVniAe7DsM5a2nm84nR+T0QqfY42MHyhdVGuYA3d
-         R94nX+3CIG+gL3xPgXPBXebQ1bkE3DimpTBS6GD9d3IR3/1UvEdKCc6RDwgOIojtitkO
-         h4b4hQ1n0MOU+Vd901VGAUH0OImVNEqd/0PBgy+IPPiRu360qkgE5Es8oT7k1RStcDGV
-         SHKZUUhMn1TBfhkJSr/DFHaMz6N4iJkXnKNfdNWT5PKSsehoPtk46tEOJPPO21rwAqjO
-         wPEFHUWaJmvDMpsL8bA1jpxUjRKEohDLKzeFFlq28Uie3MzHUKxK9QmYP57Eyv+BECus
-         m0gw==
-X-Gm-Message-State: ABy/qLYZwnwn46A8J3BuVxssVgY6i+98pS4ePF1+WeJW0/0sKKt8rmvK
-        aTDi8X0fI9emkmuWCTp7K6/ziAowT87ue/VgTsrmb2C13LtcTg==
-X-Google-Smtp-Source: APBJJlG9HA1renQSWWmK4jFIFA634+RbkACkuwQYa0S4sEwxKAw6D1WHjQhQGkb90LkAwDcSFZFj21mMVuuM+mbHCA4=
-X-Received: by 2002:a05:6512:2253:b0:4fd:faa5:64ed with SMTP id
- i19-20020a056512225300b004fdfaa564edmr2283534lfu.11.1690558171553; Fri, 28
- Jul 2023 08:29:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230727212208.102501-1-robdclark@gmail.com> <20230727212208.102501-13-robdclark@gmail.com>
- <08cd9bb5-678f-e03e-4598-dd1785f0d7a7@linaro.org>
-In-Reply-To: <08cd9bb5-678f-e03e-4598-dd1785f0d7a7@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 28 Jul 2023 08:29:19 -0700
-Message-ID: <CAF6AEGu-aRzi6ADqCnLU46DC0ZoWmSmhYU2sZj83wTyTbazbxg@mail.gmail.com>
-Subject: Re: [PATCH v2 12/13] dt-bindings: drm/msm/gpu: Extend bindings for chip-id
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Fri, 28 Jul 2023 11:31:58 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BBBF35AD;
+        Fri, 28 Jul 2023 08:31:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9213D62186;
+        Fri, 28 Jul 2023 15:31:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B03CC433C9;
+        Fri, 28 Jul 2023 15:31:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690558315;
+        bh=K6AA+vN45Net0ZpJHQ+4pBn99WhKXqI87QPut7I/m8I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mXENTxOxDoAS6oHWOIpD9ej7WQ6KZ2hnIpR9Nnak9jPfL4uatWv+mADAFZWrD+src
+         szSgXEqgr+Z5QpnirLO3q36oKICF06z2FMzAOQUxv2kjBYUWQP12VICa0Tpu1y+Em3
+         9qx16EnekEKcl0ZCUPz6NH4+fUTnG+kQq6KSguSGc0jLICbKKmcqD77/ZMrvo4oKNT
+         F1CITcfN65gUPuy1o4gpmx+FYpGEmV7Vhz20+xOpfRz5v5dLhcbtEsAqrgQHOn0a+e
+         m6YBzFWtdkbaQlhKhL/GcHgvhMKkGVFFQ9s1P7yt1DQw6cQ0lVGiIsCF7iJDndCXvi
+         MDDWiuPo2zr2Q==
+Date:   Fri, 28 Jul 2023 17:31:48 +0200
+From:   Benjamin Tissoires <bentiss@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-arm-msm@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        hsinyi@google.com, Chris Morgan <macroalpha82@gmail.com>,
+        linux-input@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v4 00/11] drm/panel and i2c-hid: Allow panels and
+ touchscreens to power sequence together
+Message-ID: <nn6cs4zvf27cxmtd3qcficyoyalcxi2iry6kgszb5oraplgaxy@sryeyseucdb3>
+References: <20230727171750.633410-1-dianders@chromium.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230727171750.633410-1-dianders@chromium.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 28, 2023 at 12:27=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 27/07/2023 23:20, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Upcoming GPUs use an opaque chip-id for identifying the GPU.
->
-> Examples?
+On Jul 27 2023, Douglas Anderson wrote:
+> 
+> The big motivation for this patch series is mostly described in the patch
+> ("drm/panel: Add a way for other devices to follow panel state"), but to
+> quickly summarize here: for touchscreens that are connected to a panel we
+> need the ability to power sequence the two device together. This is not a
+> new need, but so far we've managed to get by through a combination of
+> inefficiency, added costs, or perhaps just a little bit of brokenness.
+> It's time to do better. This patch series allows us to do better.
+> 
+> Assuming that people think this patch series looks OK, we'll have to
+> figure out the right way to land it. The panel patches and i2c-hid
+> patches will go through very different trees and so either we'll need
+> an Ack from one side or the other or someone to create a tag for the
+> other tree to pull in. This will _probably_ require the true drm-misc
+> maintainers to get involved, not a lowly committer. ;-)
+> 
+> Version 4 of this series adds a new patch that suspends i2c-hid
+> devices at remove time even for non panel-followers to make things
+> consistent. It also attempts to isolate the panel follower code a bit
+> more as per Benjamin's feedback on v3 and adds an item to the DRM todo
+> list as per Maxime's request. As per Maxime's response to my v3 cover
+> letter, I added his Reviewed-by tag to all 10 patches that were part
+> of v3 (but left it off of the new i2c-hid patch in v4).
+> 
+> Version 3 of this series was a long time coming after v2. Maxime and I
+> had a very long discussion trying to figure out if there was a beter
+> way and in the end we didn't find one so he was OK with the series in
+> general [1]. After that got resolved, I tried to resolve Benjamin's
+> feedback but got stuck [2]. Eventually I made my best guess. The end
+> result was a v3 that wasn't that different from v2 but that had a tiny
+> bit more code split out.
+> 
+> Version 2 of this patch series didn't change too much. At a high level:
+> * I added all the forgotten "static" to functions.
+> * I've hopefully made the bindings better.
+> * I've integrated into fw_devlink.
+> * I cleaned up a few descriptions / comments.
+> 
+> As far as I can tell, as of v4 everyone is on the same page that this
+> patch series looks like a reasonable solution to the problem and we
+> just need to get all the nits fixed and figure out how to land it.
 
-We'll know when we bring up the hw.  But the main point is that we
-shouldn't expect, for example, the high 8 bits to tell us the
-generation, any more than we could if it was a pci id.
+Thanks a lot for the new version. I like it much more on the HID side:
 
-We may not end up needing to use this new binding much, I _think_ we
-should be able to read it from the fw in most cases, at least for
-android devices.  I'm unsure at this point about windows/chromebooks.
+for the HID part:
+Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
 
-> Anyway, I think we should insist here of using something human-readable,
-> even if Qualcomm/Adreno internally use some weird numbers.
+I wouldn't mind having this series taken from the drm tree if that is
+easier. i2c-hid is a low patch rate driver, so having it updated through
+DRM should not be an issue.
 
-I mean qcom,sc8280cx-adreno is human readable but not really very
-informative.  Encoding the chip-id is just a way to avoid the
-qcom,chipid field in the bindings, which qcom used downstream.  The
-new pattern accomplishes the same thing as the existing one, but
-without trying to imply some meaning that becomes increasingly
-non-existent as qc moves to decouple the id from marketing names.
+In that case:
+Acked-by: Benjamin Tissoires <bentiss@kernel.org>
 
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  Documentation/devicetree/bindings/display/msm/gpu.yaml | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/D=
-ocumentation/devicetree/bindings/display/msm/gpu.yaml
-> > index 58ca8912a8c3..56b9b247e8c2 100644
-> > --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> > +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> > @@ -13,6 +13,12 @@ maintainers:
-> >  properties:
-> >    compatible:
-> >      oneOf:
-> > +      - description: |
-> > +          The driver is parsing the compat string for Adreno to
-> > +          figure out the chip-id.
-> > +        items:
-> > +          - pattern: '^qcom,adreno-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-=
-9a-f][0-9a-f][0-9a-f][0-9a-f]$'
->
-> {8} should work?
->
+Cheers,
+Benjamin
 
-so '^qcom,adreno-[0-9a-f]{8}$'
-
-BR,
--R
-
->
->
-> Best regards,
-> Krzysztof
->
+> 
+> [1] https://lore.kernel.org/r/gkwymmfkdy2p2evz22wmbwgw42ii4wnvmvu64m3bghmj2jhv7x@4mbstjxnagxd
+> [2] https://lore.kernel.org/r/CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com
+> 
+> Changes in v4:
+> - Document further cleanup in the official DRM todo list.
+> - ("Suspend i2c-hid devices in remove") new for v4.
+> - Move panel follower alternative checks to wrapper functions.
+> - Rebase atop ("Suspend i2c-hid devices in remove").
+> 
+> Changes in v3:
+> - Add is_panel_follower() as a convenience for clients.
+> - Add "depends on DRM || !DRM" to Kconfig to avoid randconfig error.
+> - Split more of the panel follower code out of the core.
+> 
+> Changes in v2:
+> - Move the description to the generic touchscreen.yaml.
+> - Update the desc to make it clearer it's only for integrated devices.
+> - Add even more text to the commit message.
+> - A few comment cleanups.
+> - ("Add a devlink for panel followers") new for v2.
+> - i2c_hid_core_initial_power_up() is now static.
+> - i2c_hid_core_panel_prepared() and ..._unpreparing() are now static.
+> - ihid_core_panel_prepare_work() is now static.
+> - Improve documentation for smp_wmb().
+> 
+> Douglas Anderson (11):
+>   dt-bindings: HID: i2c-hid: Add "panel" property to i2c-hid backed
+>     touchscreens
+>   drm/panel: Check for already prepared/enabled in drm_panel
+>   drm/panel: Add a way for other devices to follow panel state
+>   of: property: fw_devlink: Add a devlink for panel followers
+>   HID: i2c-hid: Switch to SYSTEM_SLEEP_PM_OPS()
+>   HID: i2c-hid: Rearrange probe() to power things up later
+>   HID: i2c-hid: Make suspend and resume into helper functions
+>   HID: i2c-hid: Suspend i2c-hid devices in remove
+>   HID: i2c-hid: Support being a panel follower
+>   HID: i2c-hid: Do panel follower work on the system_wq
+>   arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
+> 
+>  .../bindings/input/elan,ekth6915.yaml         |   5 +
+>  .../bindings/input/goodix,gt7375p.yaml        |   5 +
+>  .../bindings/input/hid-over-i2c.yaml          |   2 +
+>  .../input/touchscreen/touchscreen.yaml        |   7 +
+>  Documentation/gpu/todo.rst                    |  24 ++
+>  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |   1 +
+>  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |   1 +
+>  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |   1 +
+>  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |   1 +
+>  .../qcom/sc7180-trogdor-quackingstick.dtsi    |   1 +
+>  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   1 +
+>  drivers/gpu/drm/drm_panel.c                   | 218 ++++++++++-
+>  drivers/hid/i2c-hid/Kconfig                   |   2 +
+>  drivers/hid/i2c-hid/i2c-hid-core.c            | 349 +++++++++++++-----
+>  drivers/of/property.c                         |   2 +
+>  include/drm/drm_panel.h                       |  94 +++++
+>  16 files changed, 617 insertions(+), 97 deletions(-)
+> 
+> -- 
+> 2.41.0.487.g6d72f3e995-goog
+> 
