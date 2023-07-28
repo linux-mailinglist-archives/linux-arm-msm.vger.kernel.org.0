@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D56B57677B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 23:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28A647677B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 23:33:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234196AbjG1Vdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 17:33:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33136 "EHLO
+        id S233621AbjG1Vdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 17:33:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234420AbjG1Vdk (ORCPT
+        with ESMTP id S234180AbjG1Vdl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 17:33:40 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C7BD44BC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 14:33:29 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe11652b64so4528321e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 14:33:29 -0700 (PDT)
+        Fri, 28 Jul 2023 17:33:41 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 433F244AA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 14:33:31 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fe21e7f3d1so1651049e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 14:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690580007; x=1691184807;
+        d=linaro.org; s=google; t=1690580009; x=1691184809;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zfE1L2H8AJhwbvwdI3x7uxXE4yUvRsy3KKDO7xKa8+8=;
-        b=oPCh/MnViaN0eJIQ9zVxch8uKF324MPV/COzPKKr29yzx7GX4rBFlYGZ/tLCshFjei
-         2suiFGWvUIyn3cYrGMxgqpDmzX0lKnlSXNVFKIM2K/8m11AGtfDdJJ2iYIMCqU5z0K6U
-         HtTEhnJroBJ+8pcZpiH19ToDliE08V8Z80yOO1kXA6oTfo74MY4aGNkpaIJU1NvdVYKK
-         rKpwXAWVa05fnUIsUpoqYm6Nf1uykk9TrbdxthrNP21X5a3+4gWdxvoOVFPQZT1RtsTX
-         ifL79RkNJlrYyfFA+XsnB4cfssmwVdb7UiOxgMZYNCHJeMiDDbMZ55EojC91VYraOK53
-         MwOA==
+        bh=n0nmQkrFJ1qTPckiGBd/pQx7xzpmDvjfPbdpqRUAvKg=;
+        b=IZYBx41OdMDoVKczPPi9p+OFE/GF68QAiP/6RdFsxBz1dvHDdk1U6fApz34gJ1nkhq
+         qFmhuqPTRH9L9sknWaTZFh/2yvxpAX5svFrnlFh5R8N3YE55Qq/AU5JKDX6iBnAZPOCy
+         J+wOyPjYeeqAEn6AZLAZZeNZd/rH0ppH6sxk5YCrmG+N7Ypn1dKD7H+QP3CyymIRdIuz
+         bVoG0oH3OyfBgIoMOLuizs8uPrBMN9+ky6aRh0wXzf1Zh4vBNUceCHI1jUkUuY0VXFSe
+         tKmW5zlg1syNmrSJNEDyw2z+Z8DVkEGoX/3rggDP1V2uinIMxIM2i6yPgVyoyt9Qbf4r
+         T+MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690580007; x=1691184807;
+        d=1e100.net; s=20221208; t=1690580009; x=1691184809;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zfE1L2H8AJhwbvwdI3x7uxXE4yUvRsy3KKDO7xKa8+8=;
-        b=QRYGsPVuBP2a7fUTiWyzB6bV1VRQcBiVUEcGZf/zR/yNS2dyVOmMr8eWcsLIPMQAKC
-         hvny8ktDiTalrnCW4FIA8r1OFTKBeL9LAdUdHp8Co9M8U3fKAxgeFtFhBJaVOofrUDf5
-         K132iiiTNi5564myyydpzV+tX2YPuNIw9uTZ2H2Gdj2Y/Ki9HycCvFcAGjzjtvKKBG8V
-         qPpWvkgoH6rVS5rVifirhiOjQmkBEbnvvxM/+nkTmBU3X+fq8yazeHOlvF5rKwRzFSAU
-         7tdxkPlprPk7a2M5IU9S1Rvq+FX1DpsHq79jGlr4cWGwlbTNsPIAyBhuO7OF0iSMyWL2
-         tH7w==
-X-Gm-Message-State: ABy/qLawoi20nzxLRFIxWq1UW5sXoz+8Yu/q7VhPwe6JsaOqTWxf0v0G
-        W+mm7Ibs+Bip2XCv+V8nElGx3w==
-X-Google-Smtp-Source: APBJJlGt8RJK8xWb4OYVlKtW/lsZu2UwRnAUNXDIQOaNIt5YnkDoYcltwl6rIfU4HNpnK/q/d4A+rA==
-X-Received: by 2002:a19:7b14:0:b0:4f8:5755:5b22 with SMTP id w20-20020a197b14000000b004f857555b22mr2045199lfc.27.1690580007645;
-        Fri, 28 Jul 2023 14:33:27 -0700 (PDT)
+        bh=n0nmQkrFJ1qTPckiGBd/pQx7xzpmDvjfPbdpqRUAvKg=;
+        b=lVGMlXslIi+ldqjVgBaveHODscl/15g85Cy7l6muwLjraF9Gpe7OS08TgJDS7z1BMs
+         63VusP0S3IXL072RvviEtbHe0WyT8055khbSG6Uk61HkW1Qh5KvTN/zdRlnfy+chferi
+         iKZ35tqj3nvLbqvL1cFB5J8UWaQiCIph7gVNQnGFCX57CByK7n/DFoJap8XK+jaYw/eH
+         1dZUyK5XJgbET7r91Uw9HMwuu6+MHabgOgii3ot+q9LLi06pXZWfxED2KHjFC3N1mg4C
+         QX7Iq1yAj9k2NBHfWpbeRJLc3hAcZWgAV9IZeAFny4Efm/FYluG8NCy+1EVwWbHZ365c
+         jSRQ==
+X-Gm-Message-State: ABy/qLbfzmTeFbnDsWznddQY6JkjKhI4+tGSKKKejuS0gBo7bz84zSN+
+        qF77V2JnrCu0GectOBnaIpdPUQ==
+X-Google-Smtp-Source: APBJJlG2M61J+6qFH5o3JAMVC7nbKN6aqxJaAONR/c9d/dlPYtaMAQvSYGfPBTm2RiGt+Zk1b6+uJA==
+X-Received: by 2002:ac2:5f7a:0:b0:4fe:f24:cbf3 with SMTP id c26-20020ac25f7a000000b004fe0f24cbf3mr2431232lfc.63.1690580009632;
+        Fri, 28 Jul 2023 14:33:29 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id n16-20020a056512389000b004fe13318aeesm956832lft.166.2023.07.28.14.33.26
+        by smtp.gmail.com with ESMTPSA id n16-20020a056512389000b004fe13318aeesm956832lft.166.2023.07.28.14.33.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jul 2023 14:33:26 -0700 (PDT)
+        Fri, 28 Jul 2023 14:33:28 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 3/7] drm/msm/mdss: export UBWC data
-Date:   Sat, 29 Jul 2023 00:33:16 +0300
-Message-Id: <20230728213320.97309-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 4/7] drm/msm/mdss: populate missing data
+Date:   Sat, 29 Jul 2023 00:33:17 +0300
+Message-Id: <20230728213320.97309-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230728213320.97309-1-dmitry.baryshkov@linaro.org>
 References: <20230728213320.97309-1-dmitry.baryshkov@linaro.org>
@@ -78,113 +78,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DPU programming requires knowledge of some of UBWC parameters. This
-results in duplication of UBWC data between MDSS and DPU drivers. Export
-the required data from MDSS driver.
+As we are going to use MDSS data for DPU programming, populate missing
+MDSS data. The UBWC 1.0 and no UBWC cases do not require MDSS
+programming, so skip them.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_mdss.c | 30 +++++++++++++-----------------
- drivers/gpu/drm/msm/msm_mdss.h | 27 +++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 17 deletions(-)
- create mode 100644 drivers/gpu/drm/msm/msm_mdss.h
+ drivers/gpu/drm/msm/msm_mdss.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 67436a5a8cf1..0189811bce4d 100644
+index 0189811bce4d..c2b4cf9ad2eb 100644
 --- a/drivers/gpu/drm/msm/msm_mdss.c
 +++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -13,7 +13,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- 
--#include "msm_drv.h"
-+#include "msm_mdss.h"
- #include "msm_kms.h"
- 
- #define HW_REV				0x0
-@@ -26,16 +26,6 @@
- 
- #define MIN_IB_BW	400000000UL /* Min ib vote 400MB */
- 
--struct msm_mdss_data {
--	u32 ubwc_enc_version;
--	/* can be read from register 0x58 */
--	u32 ubwc_dec_version;
--	u32 ubwc_swizzle;
--	u32 ubwc_static;
--	u32 highest_bank_bit;
--	u32 macrotile_mode;
--};
--
- struct msm_mdss {
- 	struct device *dev;
- 
-@@ -185,12 +175,6 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+@@ -264,6 +264,10 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 	 * UBWC_n and the rest of params comes from hw data.
+ 	 */
+ 	switch (msm_mdss->mdss_data->ubwc_dec_version) {
++	case 0: /* no UBWC */
++	case UBWC_1_0:
++		/* do nothing */
++		break;
+ 	case UBWC_2_0:
+ 		msm_mdss_setup_ubwc_dec_20(msm_mdss);
+ 		break;
+@@ -502,10 +506,22 @@ static int mdss_remove(struct platform_device *pdev)
  	return 0;
  }
  
--#define UBWC_1_0 0x10000000
--#define UBWC_2_0 0x20000000
--#define UBWC_3_0 0x30000000
--#define UBWC_4_0 0x40000000
--#define UBWC_4_3 0x40030000
--
- static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
- {
- 	const struct msm_mdss_data *data = msm_mdss->mdss_data;
-@@ -236,6 +220,18 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
- 	}
- }
- 
-+const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev)
-+{
-+	struct msm_mdss *mdss;
-+
-+	if (!dev)
-+		return ERR_PTR(-EINVAL);
-+
-+	mdss = dev_get_drvdata(dev);
-+
-+	return mdss->mdss_data;
-+}
-+
- static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- {
- 	int ret;
-diff --git a/drivers/gpu/drm/msm/msm_mdss.h b/drivers/gpu/drm/msm/msm_mdss.h
-new file mode 100644
-index 000000000000..02bbab42adbc
---- /dev/null
-+++ b/drivers/gpu/drm/msm/msm_mdss.h
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2018, The Linux Foundation
-+ */
-+
-+#ifndef __MSM_MDSS_H__
-+#define __MSM_MDSS_H__
-+
-+struct msm_mdss_data {
-+	u32 ubwc_enc_version;
-+	/* can be read from register 0x58 */
-+	u32 ubwc_dec_version;
-+	u32 ubwc_swizzle;
-+	u32 ubwc_static;
-+	u32 highest_bank_bit;
-+	u32 macrotile_mode;
++static const struct msm_mdss_data msm8998_data = {
++	.ubwc_enc_version = UBWC_1_0,
++	.ubwc_dec_version = UBWC_1_0,
++	.highest_bank_bit = 1,
 +};
 +
-+#define UBWC_1_0 0x10000000
-+#define UBWC_2_0 0x20000000
-+#define UBWC_3_0 0x30000000
-+#define UBWC_4_0 0x40000000
-+#define UBWC_4_3 0x40030000
++static const struct msm_mdss_data qcm2290_data = {
++	/* no UBWC */
++	.highest_bank_bit = 0x2,
++};
 +
-+const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev);
-+
-+#endif /* __MSM_MDSS_H__ */
+ static const struct msm_mdss_data sc7180_data = {
+ 	.ubwc_enc_version = UBWC_2_0,
+ 	.ubwc_dec_version = UBWC_2_0,
+ 	.ubwc_static = 0x1e,
++	.highest_bank_bit = 0x3,
+ };
+ 
+ static const struct msm_mdss_data sc7280_data = {
+@@ -558,6 +574,7 @@ static const struct msm_mdss_data sm6115_data = {
+ 	.ubwc_dec_version = UBWC_2_0,
+ 	.ubwc_swizzle = 7,
+ 	.ubwc_static = 0x11f,
++	.highest_bank_bit = 0x1,
+ };
+ 
+ static const struct msm_mdss_data sm6125_data = {
+@@ -589,8 +606,8 @@ static const struct msm_mdss_data sm8550_data = {
+ 
+ static const struct of_device_id mdss_dt_match[] = {
+ 	{ .compatible = "qcom,mdss" },
+-	{ .compatible = "qcom,msm8998-mdss" },
+-	{ .compatible = "qcom,qcm2290-mdss" },
++	{ .compatible = "qcom,msm8998-mdss", .data = &msm8998_data },
++	{ .compatible = "qcom,qcm2290-mdss", .data = &qcm2290_data },
+ 	{ .compatible = "qcom,sdm845-mdss", .data = &sdm845_data },
+ 	{ .compatible = "qcom,sc7180-mdss", .data = &sc7180_data },
+ 	{ .compatible = "qcom,sc7280-mdss", .data = &sc7280_data },
 -- 
 2.39.2
 
