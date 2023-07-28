@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D80D767092
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECD297670A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:36:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237347AbjG1Pb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 11:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55348 "EHLO
+        id S234788AbjG1PgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 11:36:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237332AbjG1Pb6 (ORCPT
+        with ESMTP id S234637AbjG1PgG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 11:31:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BBBF35AD;
-        Fri, 28 Jul 2023 08:31:57 -0700 (PDT)
+        Fri, 28 Jul 2023 11:36:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB14E4F;
+        Fri, 28 Jul 2023 08:36:05 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9213D62186;
-        Fri, 28 Jul 2023 15:31:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B03CC433C9;
-        Fri, 28 Jul 2023 15:31:51 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8BF9662186;
+        Fri, 28 Jul 2023 15:36:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41073C433C9;
+        Fri, 28 Jul 2023 15:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690558315;
-        bh=K6AA+vN45Net0ZpJHQ+4pBn99WhKXqI87QPut7I/m8I=;
+        s=k20201202; t=1690558564;
+        bh=xlL7irx0XxMoQMLW110FKoqtUNnBYfDX+E4nKgTrbXw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mXENTxOxDoAS6oHWOIpD9ej7WQ6KZ2hnIpR9Nnak9jPfL4uatWv+mADAFZWrD+src
-         szSgXEqgr+Z5QpnirLO3q36oKICF06z2FMzAOQUxv2kjBYUWQP12VICa0Tpu1y+Em3
-         9qx16EnekEKcl0ZCUPz6NH4+fUTnG+kQq6KSguSGc0jLICbKKmcqD77/ZMrvo4oKNT
-         F1CITcfN65gUPuy1o4gpmx+FYpGEmV7Vhz20+xOpfRz5v5dLhcbtEsAqrgQHOn0a+e
-         m6YBzFWtdkbaQlhKhL/GcHgvhMKkGVFFQ9s1P7yt1DQw6cQ0lVGiIsCF7iJDndCXvi
-         MDDWiuPo2zr2Q==
-Date:   Fri, 28 Jul 2023 17:31:48 +0200
-From:   Benjamin Tissoires <bentiss@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        hsinyi@google.com, Chris Morgan <macroalpha82@gmail.com>,
-        linux-input@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v4 00/11] drm/panel and i2c-hid: Allow panels and
- touchscreens to power sequence together
-Message-ID: <nn6cs4zvf27cxmtd3qcficyoyalcxi2iry6kgszb5oraplgaxy@sryeyseucdb3>
-References: <20230727171750.633410-1-dianders@chromium.org>
+        b=VDY5OHK11AK6LgmgN7sPy1mHZvlmAHzAjbW7Pa7D8L9PUYcS/o2w3G0y3Mz4mgHRU
+         TSGCcO4q6Uey1bT+c4kMGqX7PwRXP4soV8t+ExeNX6+C7TJYLuUKBPgpal8NZYj2Or
+         XpZEy1wi65+UTRseDbg0ArfTYsWoEcCkLjD5jWPdw/TEaYGVNUIb57syFQtdcDQB8Y
+         5YWK75osKM3Gr6QwX/PVnuaTvet/pYCTwmdG/jUGN5SP2cqhX/YtDooWLh/A3GgMXl
+         Hb6sGLt//+pzI2psyNDg7SHuwLz2PLDKu3FsBhDt6AN2uALzUSsJDcvY05IiiWbDq8
+         7UhTO2bvBTTPA==
+Date:   Fri, 28 Jul 2023 21:05:55 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Dan Carpenter <dan.carpenter@linaro.org>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Dan Carpenter <error27@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "open list:MHI BUS" <mhi@lists.linux.dev>
+Subject: Re: [PATCH v4 9/9] bus: mhi: ep: wake up host if the MHI state is in
+ M3
+Message-ID: <20230728153555.GA9129@thinkpad>
+References: <1689232218-28265-1-git-send-email-quic_krichai@quicinc.com>
+ <1689232218-28265-10-git-send-email-quic_krichai@quicinc.com>
+ <20230728043452.GI4433@thinkpad>
+ <15a19a2d-d6e8-4fbc-a31d-561cff00b01a@kadam.mountain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230727171750.633410-1-dianders@chromium.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <15a19a2d-d6e8-4fbc-a31d-561cff00b01a@kadam.mountain>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,122 +69,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Jul 27 2023, Douglas Anderson wrote:
+On Fri, Jul 28, 2023 at 08:50:55AM +0300, Dan Carpenter wrote:
+> On Fri, Jul 28, 2023 at 10:04:52AM +0530, Manivannan Sadhasivam wrote:
+> > > @@ -464,6 +484,13 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
+> > >  	buf_left = skb->len;
+> > >  	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
+> > >  
+> > > +	if (mhi_cntrl->mhi_state == MHI_STATE_M3) {
+> > > +		if (mhi_ep_wake_host(mhi_cntrl)) {
+> > 
+> > Don't you need lock here in the case of multiple queue requests?
+> > 
+> > - Mani
+> > 
+> > > +			dev_err(dev, "Failed to wakeup host\n");
+> > > +			return -ENODEV;
+> > > +		}
+> > > +	}
+> > > +
+> > >  	mutex_lock(&mhi_chan->lock);
+>         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+> This lock isn't enough?
 > 
-> The big motivation for this patch series is mostly described in the patch
-> ("drm/panel: Add a way for other devices to follow panel state"), but to
-> quickly summarize here: for touchscreens that are connected to a panel we
-> need the ability to power sequence the two device together. This is not a
-> new need, but so far we've managed to get by through a combination of
-> inefficiency, added costs, or perhaps just a little bit of brokenness.
-> It's time to do better. This patch series allows us to do better.
-> 
-> Assuming that people think this patch series looks OK, we'll have to
-> figure out the right way to land it. The panel patches and i2c-hid
-> patches will go through very different trees and so either we'll need
-> an Ack from one side or the other or someone to create a tag for the
-> other tree to pull in. This will _probably_ require the true drm-misc
-> maintainers to get involved, not a lowly committer. ;-)
-> 
-> Version 4 of this series adds a new patch that suspends i2c-hid
-> devices at remove time even for non panel-followers to make things
-> consistent. It also attempts to isolate the panel follower code a bit
-> more as per Benjamin's feedback on v3 and adds an item to the DRM todo
-> list as per Maxime's request. As per Maxime's response to my v3 cover
-> letter, I added his Reviewed-by tag to all 10 patches that were part
-> of v3 (but left it off of the new i2c-hid patch in v4).
-> 
-> Version 3 of this series was a long time coming after v2. Maxime and I
-> had a very long discussion trying to figure out if there was a beter
-> way and in the end we didn't find one so he was OK with the series in
-> general [1]. After that got resolved, I tried to resolve Benjamin's
-> feedback but got stuck [2]. Eventually I made my best guess. The end
-> result was a v3 that wasn't that different from v2 but that had a tiny
-> bit more code split out.
-> 
-> Version 2 of this patch series didn't change too much. At a high level:
-> * I added all the forgotten "static" to functions.
-> * I've hopefully made the bindings better.
-> * I've integrated into fw_devlink.
-> * I cleaned up a few descriptions / comments.
-> 
-> As far as I can tell, as of v4 everyone is on the same page that this
-> patch series looks like a reasonable solution to the problem and we
-> just need to get all the nits fixed and figure out how to land it.
 
-Thanks a lot for the new version. I like it much more on the HID side:
+The position of this lock won't prevent cocurrent access to mhi_ep_wake_host().
 
-for the HID part:
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
+- Mani
 
-I wouldn't mind having this series taken from the drm tree if that is
-easier. i2c-hid is a low patch rate driver, so having it updated through
-DRM should not be an issue.
+> regards,
+> dan carpenter
 
-In that case:
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-
-Cheers,
-Benjamin
-
-> 
-> [1] https://lore.kernel.org/r/gkwymmfkdy2p2evz22wmbwgw42ii4wnvmvu64m3bghmj2jhv7x@4mbstjxnagxd
-> [2] https://lore.kernel.org/r/CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com
-> 
-> Changes in v4:
-> - Document further cleanup in the official DRM todo list.
-> - ("Suspend i2c-hid devices in remove") new for v4.
-> - Move panel follower alternative checks to wrapper functions.
-> - Rebase atop ("Suspend i2c-hid devices in remove").
-> 
-> Changes in v3:
-> - Add is_panel_follower() as a convenience for clients.
-> - Add "depends on DRM || !DRM" to Kconfig to avoid randconfig error.
-> - Split more of the panel follower code out of the core.
-> 
-> Changes in v2:
-> - Move the description to the generic touchscreen.yaml.
-> - Update the desc to make it clearer it's only for integrated devices.
-> - Add even more text to the commit message.
-> - A few comment cleanups.
-> - ("Add a devlink for panel followers") new for v2.
-> - i2c_hid_core_initial_power_up() is now static.
-> - i2c_hid_core_panel_prepared() and ..._unpreparing() are now static.
-> - ihid_core_panel_prepare_work() is now static.
-> - Improve documentation for smp_wmb().
-> 
-> Douglas Anderson (11):
->   dt-bindings: HID: i2c-hid: Add "panel" property to i2c-hid backed
->     touchscreens
->   drm/panel: Check for already prepared/enabled in drm_panel
->   drm/panel: Add a way for other devices to follow panel state
->   of: property: fw_devlink: Add a devlink for panel followers
->   HID: i2c-hid: Switch to SYSTEM_SLEEP_PM_OPS()
->   HID: i2c-hid: Rearrange probe() to power things up later
->   HID: i2c-hid: Make suspend and resume into helper functions
->   HID: i2c-hid: Suspend i2c-hid devices in remove
->   HID: i2c-hid: Support being a panel follower
->   HID: i2c-hid: Do panel follower work on the system_wq
->   arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
-> 
->  .../bindings/input/elan,ekth6915.yaml         |   5 +
->  .../bindings/input/goodix,gt7375p.yaml        |   5 +
->  .../bindings/input/hid-over-i2c.yaml          |   2 +
->  .../input/touchscreen/touchscreen.yaml        |   7 +
->  Documentation/gpu/todo.rst                    |  24 ++
->  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |   1 +
->  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |   1 +
->  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |   1 +
->  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |   1 +
->  .../qcom/sc7180-trogdor-quackingstick.dtsi    |   1 +
->  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   1 +
->  drivers/gpu/drm/drm_panel.c                   | 218 ++++++++++-
->  drivers/hid/i2c-hid/Kconfig                   |   2 +
->  drivers/hid/i2c-hid/i2c-hid-core.c            | 349 +++++++++++++-----
->  drivers/of/property.c                         |   2 +
->  include/drm/drm_panel.h                       |  94 +++++
->  16 files changed, 617 insertions(+), 97 deletions(-)
-> 
-> -- 
-> 2.41.0.487.g6d72f3e995-goog
-> 
+-- 
+மணிவண்ணன் சதாசிவம்
