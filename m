@@ -2,61 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E2997662AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 05:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2882F7662B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 06:05:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232728AbjG1D5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 23:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34290 "EHLO
+        id S232499AbjG1EFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 00:05:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232529AbjG1D5n (ORCPT
+        with ESMTP id S230009AbjG1EFt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 23:57:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9D52D64;
-        Thu, 27 Jul 2023 20:57:42 -0700 (PDT)
+        Fri, 28 Jul 2023 00:05:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AEA330DB;
+        Thu, 27 Jul 2023 21:05:48 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1732361FA2;
-        Fri, 28 Jul 2023 03:57:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB637C433C8;
-        Fri, 28 Jul 2023 03:57:36 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BCCEA61FB1;
+        Fri, 28 Jul 2023 04:05:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910D6C433C7;
+        Fri, 28 Jul 2023 04:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690516661;
-        bh=Wr4rn9Z46tsAaKd/EBJgh+7aUpkBCah5+HYfJ+AcNJU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CjD8+ykb3lknuHS1JP+ECFvx6jp8tng92qIm8DIwrjHrspC1JfmsTszaxl2XMJ20A
-         DyzCH6Q83Tzi7TTigJUGcK7XgcQFD68Iq9ObxhCBWiba/Mx96MG//Ue5zVYXtUvdqc
-         OAlxXjEb7h9t9Bk5Y/hMHBRm62CwDyaG+HO73gno8qWAbWSdNBL7zJ8hAM+DCrclvp
-         nEBa7GA01rsUnZSm+7j2/n3ercIHxV0TJ9iiSX2xIvzezu+TBKeVpwyTQS9i/xmq05
-         LuMu+wxz39HD3I/Y4lyL7puVZ9xrJo1LPASmYBDKMOBv6OSgVJ0bmXLduDC8VJbxZf
-         VJN4QC+cziC9A==
-Date:   Fri, 28 Jul 2023 09:27:31 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v4 2/9] PCI: qcom-ep: Add support for D-state change
- notification
-Message-ID: <20230728035731.GE4433@thinkpad>
-References: <1689232218-28265-1-git-send-email-quic_krichai@quicinc.com>
- <1689232218-28265-3-git-send-email-quic_krichai@quicinc.com>
+        s=k20201202; t=1690517147;
+        bh=2IkY25YAfB9fyvU9p02L4SvtbdbBgqTgi4g+lcXTQbY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=iueYcCS8E8vePhJayUOPdgR1Md/OQ7L2LVyLS4zKXI4p8c0fCE3Em+d2KDcj8UEPP
+         YiatY3D2gUxoY0bCsZHnRPBuhsfVUkO7WixC7qqq/EjWlxdUvTtBkEAUKDG33pbID+
+         dcCVgrPJpGXmu1ppcd9lCkHD2SbQX9wQ0TRbuJZVaxJUyeZdLoJYWT6y+eLAokFkOi
+         mcBVbHHY8SO26FO6pCbG5gM+CfCiXwWKktKdkuffF//o9a7MLlGSvpgX7uQ+AyGpsn
+         oNZme42d6ZeyFnnFXwnMt/DtIDb/Hw3nozS0TFa50/e1jD83VS8cNOazmhAUQhpxAG
+         2t8D4lxTLAC0w==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: Re: (subset) [PATCH v4 0/6] extcon-usb-gpio YAML conversion
+Date:   Thu, 27 Jul 2023 21:08:51 -0700
+Message-ID: <169051733320.1270972.17486978837874639727.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com>
+References: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1689232218-28265-3-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -65,57 +75,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 13, 2023 at 12:40:11PM +0530, Krishna chaitanya chundru wrote:
-> Add support to pass D-state change notification to Endpoint
-> function driver.
+
+On Mon, 24 Jul 2023 12:39:07 +0200, Alexander Stein wrote:
+> after some misunderstanding on my side, sorry for that and the noise, v4
+> series now includes now all the changes for the bindings and DT in
+> individual patches.
+> I've transferred the R-b and A-b tags to the individual patches in the
+> arch/arm64 patches. Only to specific patches, e.g. mediatek, if sent with
+> #mediatek inidicator, to all patches otherwise. arch/arm has still yet to
+> receive feedback.
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> [...]
 
-One nit below:
+Applied, thanks!
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+[6/6] arm64: dts: qcom: Replace deprecated extcon-usb-gpio id-gpio/vbus-gpio properties
+      commit: f648504139a6f91224276ab77be684ba3da649d2
 
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 0fe7f06..66fd421 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -561,6 +561,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->  	struct device *dev = pci->dev;
->  	u32 status = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_STATUS);
->  	u32 mask = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_MASK);
-> +	pci_power_t state;
->  	u32 dstate, val;
->  
->  	writel_relaxed(status, pcie_ep->parf + PARF_INT_ALL_CLEAR);
-> @@ -583,11 +584,16 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->  		dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
->  					   DBI_CON_STATUS_POWER_STATE_MASK;
->  		dev_dbg(dev, "Received D%d state event\n", dstate);
-> +		state = dstate;
->  		if (dstate == 3) {
->  			val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
->  			val |= PARF_PM_CTRL_REQ_EXIT_L1;
->  			writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
-
-Newline here.
-
-- Mani
-
-> +			state = PCI_D3hot;
-> +			if (gpiod_get_value(pcie_ep->reset))
-> +				state = PCI_D3cold;
->  		}
-> +		pci_epc_dstate_notify(pci->ep.epc, state);
->  	} else if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
->  		dev_dbg(dev, "Received Linkup event. Enumeration complete!\n");
->  		dw_pcie_ep_linkup(&pci->ep);
-> -- 
-> 2.7.4
-> 
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Bjorn Andersson <andersson@kernel.org>
