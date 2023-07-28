@@ -2,84 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB89D76617B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 03:48:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8258D766222
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 04:57:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232552AbjG1BsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jul 2023 21:48:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52126 "EHLO
+        id S231233AbjG1C47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jul 2023 22:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232517AbjG1Br5 (ORCPT
+        with ESMTP id S229704AbjG1C46 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jul 2023 21:47:57 -0400
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id AB6BFF2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 18:47:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
-        Content-Type; bh=L7KPycqqZvvt5Po5/qx4gXmbeJK82Cr7UFEfDRUG2jA=;
-        b=gBbG28mmErIhrbwPwVYJMK62kc840VDRSPKYR9hwiP1kgjzl43hlXEc9meqodm
-        dy6OFIkhmuS++tXZfCdq3Ey9da4ITy3tBbNhS3f8/Oa8PvxfEAPuNgN+AD0XUG1T
-        Uoe74+Ab0RATpPRVXpNURokGoiyax3blAA5UNGouSOXrw=
-Received: from ubuntu.localdomain (unknown [220.180.239.201])
-        by zwqz-smtp-mta-g2-0 (Coremail) with SMTP id _____wBn1SkaHsNk6Wv4BQ--.61399S2;
-        Fri, 28 Jul 2023 09:47:08 +0800 (CST)
-From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-To:     mani@kernel.org, loic.poulain@linaro.org, slark_xiao@163.com
-Cc:     fabio.porcedda@gmail.com, koen.vandeputte@citymesh.com,
-        bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
-        duke.xin@quectel.com,
-        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-Subject: [PATCH] bus: mhi: host: pci_generic: Add support for Lenovo RM520N-GL
-Date:   Thu, 27 Jul 2023 18:47:02 -0700
-Message-Id: <20230728014702.25775-1-duke_xinanwen@163.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 27 Jul 2023 22:56:58 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9CE213A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 19:56:54 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1bbdc05a93bso9867985ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 19:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690513014; x=1691117814;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ewkP+fmHss4rf5fbUWv/EEGxmt6BbWfLF1hqZGGiplc=;
+        b=QFRViFLG4n+6xeUQihXNdibwOjsEggW7wMy5EmI1udqq+jgL8F5EU5b2llFM3FvYSJ
+         WrnQjwXdVjwwVcWBuKigXquZFFcakgIE4xcsR4qKGFLciUgYWUxKoMBO01WXMW9SQv9W
+         lxpQrEsUpN0M3U71Ynl+ejCb1yFgruqQEKMZo1AiYyWW/NZ4v88wlyoLukM9ijQwGOJM
+         uy6TFPz53nUcc8Hg8DkQ4qmer3WegVso9gc7PG31ce0fFG6d/FrJltjVfqUNNjWu2XBM
+         lHbSx96ujkMSRfv7tV6WqSEDnaKiy4ZIRNfLeLT4H+ozIeXIoDGIbpze9s5xJqy6fyqo
+         S7yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690513014; x=1691117814;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ewkP+fmHss4rf5fbUWv/EEGxmt6BbWfLF1hqZGGiplc=;
+        b=QghnFhUcvB5UrLUEdm6MDlZGzPZD0MrmhdNkUm4+VrUY08OEpV07GZFL08kmQl6r4S
+         w9guvqNy2u9a38TKXyjQO64bPIdyNYGbOjRbzfZdMZk1QBkcG93naML8yFJ3MOdUAYgF
+         yQN9YsBgwGiwfBqwmgK+dsHDbUdTbFHoHacb7VoY2g330FeFiZW2a0xmiE5MccJlKamW
+         ZHVon4C/RMLYE8/xHuaIwyEH7f6JOKPUChsCQvmonRVVrXoJADHsL1R3oRih4zDnipCh
+         NxN3acppaGisYsB74wcQl/rGYvbwHnR1f2tANqQdpa1zWB5ZzkW/nPht47lDzAJVL0vJ
+         r8Mw==
+X-Gm-Message-State: ABy/qLY7T4+GL2coc7DPbMPPZtJOzYEG/wtAJt0SiZRD2lFwV+3zg/l+
+        zMcdWjQRZ6HF63qeoLPjo5HQ
+X-Google-Smtp-Source: APBJJlFxQ90Alx8AU5MexunkvV8ksiaGkHdDV8tqLd3yiYFBexMo7dJ4W53DRJTcP72UwBrWUmm97Q==
+X-Received: by 2002:a17:902:db06:b0:1b8:8670:541 with SMTP id m6-20020a170902db0600b001b886700541mr335799plx.25.1690513013775;
+        Thu, 27 Jul 2023 19:56:53 -0700 (PDT)
+Received: from thinkpad ([2405:201:e002:907b:3cd6:46d1:3de:9a66])
+        by smtp.gmail.com with ESMTPSA id g14-20020a1709029f8e00b001b9dab0397bsm2349682plq.29.2023.07.27.19.56.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jul 2023 19:56:53 -0700 (PDT)
+Date:   Fri, 28 Jul 2023 08:26:48 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH v10 0/4] PCI: qcom: ep: Add basic interconnect support
+Message-ID: <20230728025648.GC4433@thinkpad>
+References: <1689751218-24492-1-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wBn1SkaHsNk6Wv4BQ--.61399S2
-X-Coremail-Antispam: 1Uf129KBjvdXoWrtFW5AFWUXFyruFyUCrWxJFb_yoWkKFb_Cr
-        Z3WrsxCrnxWrnFvw40gw15Z34jk3WxXF1kGF1IqrZ5Jw17CrZ5Xan3Zr97A3Za93yF9F98
-        A3y5W34Fyw12yjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sRRrgWDUUUUU==
-X-Originating-IP: [220.180.239.201]
-X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/1tbiVwS6e1etrwuj3QAAsy
+In-Reply-To: <1689751218-24492-1-git-send-email-quic_krichai@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L4,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This modem is designed based on Qualcomm SDX6x and it will align with the quectel previous RM520N-GL modem settings.
-But this one is designed for lenovo laptop usecase, hence Quectel got a new PID.
+On Wed, Jul 19, 2023 at 12:50:14PM +0530, Krishna chaitanya chundru wrote:
+> Add basic support for managing "pcie-mem" interconnect path by setting
+> a low constraint before enabling clocks and updating it after the link
+> is up based on link speed and width the device got enumerated.
+> 
 
-Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
+Krzysztof, can this series be merged for 6.6? Bjorn A will pick the dts patches.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index fcd80bc92978..e4f2fb67dfaf 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -604,6 +604,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* RM520N-GL (sdx6x), eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
-+	/* RM520N-GL (sdx6x), Lenovo variant */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1007),
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x100d), /* EM160R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+- Mani
+
+> changes from v9:
+> 	- addressed the comments by mani.
+> changes from v8:
+>         - Added cpu to pcie path in dtsi and in dtsi binding.
+> changes from v7:
+>         - setting icc bw to '0' in disable resources as suggested by mani.
+> changes from v6:
+>         - addressed the comments as suggested by mani.
+> changes from v5:
+>         - addressed the comments by mani.
+> changes from v4:
+>         - rebased with linux-next.
+>         - Added comments as suggested by mani.
+>         - removed the arm: dts: qcom: sdx55: Add interconnect path
+>           as that patch is already applied.
+> changes from v3:
+>         - ran make DT_CHECKER_FLAGS=-m dt_binding_check and fixed
+>          errors.
+>         - Added macros in the qcom ep driver patch as suggested by Dmitry
+> changes from v2:
+>         - changed the logic for getting speed and width as suggested
+>          by bjorn.
+>         - fixed compilation errors.
+> 
+> 
+> Krishna chaitanya chundru (4):
+>   PCI: qcom-ep: Add ICC bandwidth voting support
+>   arm: dts: qcom: sdx65: Add PCIe EP interconnect path
+>   arm: dts: qcom: sdx55: Add CPU PCIe EP interconnect path
+>   dt-bindings: PCI: qcom: ep: Add interconnects path
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 15 +++++
+>  arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             |  5 +-
+>  arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |  4 ++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c          | 71 ++++++++++++++++++++++
+>  4 files changed, 93 insertions(+), 2 deletions(-)
+> 
+> -- 
+> 2.7.4
+> 
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
