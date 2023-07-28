@@ -2,150 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E128767640
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 21:24:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4284E767647
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 21:25:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230274AbjG1TX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 15:23:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45414 "EHLO
+        id S229509AbjG1TZK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 15:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbjG1TX5 (ORCPT
+        with ESMTP id S233297AbjG1TZI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 15:23:57 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A127911B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 12:23:55 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fdd31bf179so4228481e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 12:23:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690572234; x=1691177034;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SY1d5wIa9BD5pCOeSuyG+d8qQoBVP3BuAzu1zPc3yfQ=;
-        b=t8rQkGIstOW6a6z8cMNQd9WBVULdESVi8SDCs1uf8BnFolNWX52IQi1ULrDAlP1Af/
-         KYqQNHO27RfSUFmrjU/TjquMc+idWbFIVwHB1a5Sr0C6mhjVepidY/6I5F7/qkQezgU6
-         FiJvIUGi279ClgpIRuJGzmtKMxSTbH68Rzh1/vdu2KAnzAZ4mZ55emrpTCsWyzT3q0MU
-         Mv5q8JQTSNO4qF9u+hbqccPkuZEICkOydbh8UWOCUGJrIaek3kpAijaSDPv14HQoqARq
-         yAsLoN6ElCHgMeAEvwQotDmrJZvGGeULNBtzQVIEYdhx5I6iezVTj/lkv2vxssCjbL67
-         3iGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690572234; x=1691177034;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SY1d5wIa9BD5pCOeSuyG+d8qQoBVP3BuAzu1zPc3yfQ=;
-        b=g/fr9LMD0YM6SPUtHhU8vnm1dMD5dork6NXU6AYsjJ7PZcwfqy38BgD+CPZCIiOUNu
-         9oKudbksxMWgJBDzgzE7ZBWeyWLOABqiqDs0Qsx6hajo61fU1O8JP8qVKblSw1Bmyrsd
-         xBdpuHXR6Dmz5Uc3P9EcveenbpKcqVu0UU3pk14A7fhhV5W53KPgvTrUlk64mraQsW/O
-         5yJl8CbYHOfd1UbdEd0Z8RIHFDzMP/JScuDQDjtjHGafx9BdofaxqqC/7ko4bCHIuo72
-         IXjWnIX155mdvkFKBfFf2ZJ8k8le/v291ei3pGYDf5jtNIAsyOQHvY2oxZ+nUBcOJ2nY
-         rrKQ==
-X-Gm-Message-State: ABy/qLZsy2HP3re2XSsDzB035GCZDHILzYb2Eih9f+Pe7Yvg9j4YXpGw
-        8VHV+apDwXjewuOtGGRtGMzcxQ==
-X-Google-Smtp-Source: APBJJlE0EIoIyaW+mBuBlMDJko+t32lLNfXRPm97KFU2nTzguN8Xe/zlkzbh5MXdsnendkHwZDuXcg==
-X-Received: by 2002:a05:6512:2106:b0:4f7:6017:8fb with SMTP id q6-20020a056512210600b004f7601708fbmr2056218lfr.26.1690572233897;
-        Fri, 28 Jul 2023 12:23:53 -0700 (PDT)
-Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id u24-20020ac243d8000000b004fe142afd1esm918892lfl.152.2023.07.28.12.23.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 12:23:53 -0700 (PDT)
-Message-ID: <c1726d77-ef6e-e224-3c3e-2f982fd29b79@linaro.org>
-Date:   Fri, 28 Jul 2023 21:23:51 +0200
+        Fri, 28 Jul 2023 15:25:08 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850B3BF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 12:25:07 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36SBRXRY022444;
+        Fri, 28 Jul 2023 19:24:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+Ox4KhuAeFu3Cb2wUfhlkU/clsgNuOPkhPdip6aU90c=;
+ b=B9U/AmWHEV/PS97PxrlCK5eEdxtOu8sdinP0QJWBG3LIKhfafQk51BKpiQPZ6QFRZWu0
+ 9a58WeQikv0iCdXJk9QR/P0XlI8+Phoh4I9mTp1qPncn3uYa6Qv1Pp44ed+BoKzUsstt
+ LAED7QV1Nlo4YVJ6v1XzGSS5H+6q1EDw/upekDAEm5nfmIweHdPlb6Frangp2SOlO/S1
+ /kn+4/w60TxVLTcGsqINcWt7TLlmS3PNlS6BGk76wRwVpZub7SCr+co1MF2Q0tNJh1+N
+ swhIEGbWoJgXt79tHSAeXG5nxUwVYPmAoHLplFsIEbp07xHU3l4bizARdKd3SeLezWws jg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s403vjc6y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Jul 2023 19:24:58 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36SJOvO2007774
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Jul 2023 19:24:57 GMT
+Received: from [10.110.77.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
+ 2023 12:24:56 -0700
+Message-ID: <e9f9c27d-e3a1-0e47-6fc0-27d3755b853c@quicinc.com>
+Date:   Fri, 28 Jul 2023 12:24:55 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-sm8250: Fix gcc_sdcc2_apps_clk_src
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5/6] drm/msm/dpu: use MDSS data for programming SSPP
 Content-Language: en-US
-To:     Patrick Whewell <patrick.whewell@sightlineapplications.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        William Gray <william.gray@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230728191423.13837-1-patrick.whewell@sightlineapplications.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230728191423.13837-1-patrick.whewell@sightlineapplications.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>
+References: <20230521171026.4159495-1-dmitry.baryshkov@linaro.org>
+ <20230521171026.4159495-6-dmitry.baryshkov@linaro.org>
+ <4e35dabb-640e-8de6-d98a-619b2f80cfb6@quicinc.com>
+ <CAA8EJpoYc5M7GpTAUggjDhs+UQ8GcFcW7Y7xNs_zrNNN3Th-7A@mail.gmail.com>
+ <81e527a4-f394-1bb5-769f-8b1f3eb01f40@quicinc.com>
+ <ddb70b1e-57bb-a72f-018a-75da62cedb3a@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <ddb70b1e-57bb-a72f-018a-75da62cedb3a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _OO-jVoWVbeoPUyJt6eXQOTlyeBcC_jU
+X-Proofpoint-ORIG-GUID: _OO-jVoWVbeoPUyJt6eXQOTlyeBcC_jU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=999 mlxscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307280176
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.07.2023 21:14, Patrick Whewell wrote:
-> Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-> didn't update its configuration" error.
+
+
+On 7/27/2023 8:26 AM, Dmitry Baryshkov wrote:
+> On 27/07/2023 18:24, Abhinav Kumar wrote:
+>>
+>>
+>> On 7/27/2023 1:39 AM, Dmitry Baryshkov wrote:
+>>> On Thu, 27 Jul 2023 at 02:20, Abhinav Kumar 
+>>> <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 5/21/2023 10:10 AM, Dmitry Baryshkov wrote:
+>>>>> Switch to using data from MDSS driver to program the SSPP fetch and 
+>>>>> UBWC
+>>>>> configuration.
+>>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 18 +++++++++++-------
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  7 +++++--
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 16 +++++++++++++++-
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  3 ++-
+>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  2 ++
+>>>>>    6 files changed, 36 insertions(+), 11 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c 
+>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+>>>>> index cf70a9bd1034..bfd82c2921af 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+>>>>> @@ -8,6 +8,8 @@
+>>>>>    #include "dpu_hw_sspp.h"
+>>>>>    #include "dpu_kms.h"
+>>>>>
+>>>>> +#include "msm_mdss.h"
+>>>>> +
+>>>>>    #include <drm/drm_file.h>
+>>>>>
+>>>>>    #define DPU_FETCH_CONFIG_RESET_VALUE   0x00000087
+>>>>> @@ -308,26 +310,26 @@ static void dpu_hw_sspp_setup_format(struct 
+>>>>> dpu_sw_pipe *pipe,
+>>>>>                DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
+>>>>>                        DPU_FETCH_CONFIG_RESET_VALUE |
+>>>>>                        ctx->ubwc->highest_bank_bit << 18);
+>>>>
+>>>> Does this needs to be protected with if ctx->ubwc check?
+>>>
+>>> Yes... And it should have been already.
+>>>
+>>>>
+>>>>> -             switch (ctx->ubwc->ubwc_version) {
+>>>>> -             case DPU_HW_UBWC_VER_10:
+>>>>> +             switch (ctx->ubwc->ubwc_enc_version) {
+>>>>> +             case UBWC_1_0:
+>>>>
+>>>> The values of UBWC_x_x dont match the values of DPU_HW_UBWC_VER_xx.
+>>>> What was the reason for the catalog to go with DPU_HW_UBWC_VER_xx in 
+>>>> the
+>>>> catalog for the encoder version in the first place? Because looking at
+>>>> the registers UBWC_x_x is the correct value.
+>>>>
+>>>> If we cannot find the reason why, it should be noted in the commit text
+>>>> that the values we are using did change.
+>>>
+>>> Huh? This is just an enum. It isn't a part of uABI, nor it is written
+>>> to the hardware.
+>>>
+>>
+>> The reason is that, this switch case is moving from comparing one set 
+>> of values to totally different ones. So atleast that should be noted.
+>>
+>> First thing that struck me was this point because the enums UBWC_x_x 
+>> and DPU_HW_UBWC_VER_xx dont match.
+>>
 > 
-> Signed-off-by: Patrick Whewell <patrick.whewell@sightlineapplications.com>
-> Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-You could also mention that the error is caused by GPLL9 (the one
-providing the highest frequency in the freq table) not being on
-by default.
-
-And ultra nit: your s-o-b should go last
-
-Konrad
->  drivers/clk/qcom/gcc-sm8250.c | 1 +
->  1 file changed, 1 insertion(+)
+> Do you have any proposed text in mind?
 > 
-> diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
-> index b6cf4bc88d4d..d3c75bb55946 100644
-> --- a/drivers/clk/qcom/gcc-sm8250.c
-> +++ b/drivers/clk/qcom/gcc-sm8250.c
-> @@ -721,6 +721,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
->  		.name = "gcc_sdcc2_apps_clk_src",
->  		.parent_data = gcc_parent_data_4,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
-> +		.flags = CLK_OPS_PARENT_ENABLE,
->  		.ops = &clk_rcg2_floor_ops,
->  	},
->  };
+
+I was doing some checking about this. The issue was that when this enum 
+was made, it missed using the SDE_HW_UBWC_VER macro
+
+
+75 enum {
+76 	DPU_HW_UBWC_VER_10 = 0x100,
+77 	DPU_HW_UBWC_VER_20 = 0x200,
+78 	DPU_HW_UBWC_VER_30 = 0x300,
+79 	DPU_HW_UBWC_VER_40 = 0x400,
+80 };
+81
+
+so something like this:
+
+183  */
+184 enum {
+185 	SDE_HW_UBWC_VER_10 = SDE_HW_UBWC_VER(0x100),
+186 	SDE_HW_UBWC_VER_20 = SDE_HW_UBWC_VER(0x200),
+187 	SDE_HW_UBWC_VER_30 = SDE_HW_UBWC_VER(0x300),
+188 	SDE_HW_UBWC_VER_40 = SDE_HW_UBWC_VER(0x400),
+189 	SDE_HW_UBWC_VER_43 = SDE_HW_UBWC_VER(0x431),
+190 };
+
+This macro handles that conversion under the hood.
+
+So I would write something like this
+
+"This also corrects the usage of UBWC version which was incorrect from 
+the beginning because of the enum storing the DPU_HW_UBWC_*** missed out 
+the conversion to the full UBWC version"
