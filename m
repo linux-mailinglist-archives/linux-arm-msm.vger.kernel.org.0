@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FADC766B46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 13:02:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 656CF766B62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 13:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjG1LCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 07:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51850 "EHLO
+        id S235336AbjG1LJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 07:09:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236113AbjG1LCH (ORCPT
+        with ESMTP id S234770AbjG1LJi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 07:02:07 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1692035B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:02:06 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3177f520802so1286136f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:02:06 -0700 (PDT)
+        Fri, 28 Jul 2023 07:09:38 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A1D271D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:09:37 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fc0aecf15bso22136195e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690542124; x=1691146924;
+        d=linaro.org; s=google; t=1690542575; x=1691147375;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+vQ+N5lytyqHyKSN1hR/jEGr2fEX4jRxQzFS8KsCDQY=;
-        b=WEHFSd0MUzUXkVJ1R5LDxSvd3PFzvV0qP8ImKEDN8Njd/dTGXDDcmY0bZDv0VCX0yf
-         fjs3r/7kBm516yo8rHwCyZOmgziKW1/pYWoS+1VYIdSjATih3ZaBKZXQIqKWp28YggRp
-         hCDE0cKOquBUkWNUQScJeet0YkNAP5e5ueP/v2khlsTZtgn7ejiOCHzjaacRG5uMoxku
-         cWsXlZnIspl7lZnUSGjcHz/tyA1Uymoezqc/JWZ5/JjQhMOPKgKLnUI4GDXl2giYS7fO
-         9HhsheeMeUUSlytERV2QGFOBLb/lRerZ6eoKBWB+ROHMmvN89quPGEhO3qElFICMGrfU
-         GAsg==
+        bh=N97CKLpKQle5aHF+jRMwZEB+J33cTGVCbmmUv5JcbaE=;
+        b=wwv2jPvSfBya6TF/eA6QDrJ6pLMvp8lGy8013pkZZHOphLJ54z20l5g/E6BuFsN5IK
+         wH3zHo6qtnTvl4doh6IyaShDnXwfeQbGNXzfmriuA99NA+FHLSuVBKzpqHD9lIJmqhrt
+         RfwfLcBN3SRy0EtC3yAYWl1pn4I+qJPH4rDEOl0cStJx3IF0QcavIcW0xqPNRL1rqRm+
+         5Z9B2vq4Q9vNqP/3Qx7tD1A4bfUXKYWU2mv/4KYHsT+NCtlOh4sSx8J/m2+VyoNd5IfU
+         EsUYiUKpsR3Y2hoR5aelH1AUO/8MjCyHPpRFmxFOo1mCmEZ05a7wPDYswY8Fioj45Uer
+         /4Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690542124; x=1691146924;
+        d=1e100.net; s=20221208; t=1690542575; x=1691147375;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+vQ+N5lytyqHyKSN1hR/jEGr2fEX4jRxQzFS8KsCDQY=;
-        b=amV/edXvDDSJLcyXGGCP8QmPOBdY7GsSrW/LuPNZpY17mOt3/wiTAXDs4tDaAqFv32
-         VDHhxUaLjMXRxbQCkLuPj5Q4GygWX8huwQCszAYEISixLmrt+LtZO7mXQW7rsOXyaH3A
-         BV5qKzQr29c8xELbr/HV+wu+mhB1ngUgsx55iRNgGd6QfHc6B8kBA1ypeSLe2j8PdanD
-         rhiDQJ4jfTWmFg73SkXk1bndrT7tO4QjfBmlz3e8Zf/96tXrjflvOzn6WpouEpYT1/C/
-         0bs4bggF1jr1Yb2ZNbG+Xe6fameV4wqMS5r02K2x93g00OYQMRI4uPP13FXGuhIi9Bgn
-         +rqQ==
-X-Gm-Message-State: ABy/qLYX+SahCfImN3RWR7eiIpMOgjO2JobRJF5lkw0YoosmOos+Dako
-        gJLV7Icd2eQOgSTQPlS8VDBnLzeXNz3QLlvaUms=
-X-Google-Smtp-Source: APBJJlFkWfexu3YJQR+HcoQBw0fZHJ30PYfrMAN72GKhZPv+IaJtHM094TB1vE8vCumRy4ROoG9FOw==
-X-Received: by 2002:a5d:4534:0:b0:317:5cfb:44c7 with SMTP id j20-20020a5d4534000000b003175cfb44c7mr3727164wra.30.1690542124548;
-        Fri, 28 Jul 2023 04:02:04 -0700 (PDT)
+        bh=N97CKLpKQle5aHF+jRMwZEB+J33cTGVCbmmUv5JcbaE=;
+        b=gP/OV9mYLSnK/IGbs97SiB7qo8qjAd0y3T867THggXXDkTlWLRKSrm66z/RF9xCbip
+         xkyDLQxj73R94KfOQshlpskULk/LLBG0IMKiR5e/YRnWyY6owl3Y4eWNt83WV5JH9Hb9
+         bBJyC4K2GFp2ulCSHTmt7hcs4QB4RgOHI3yGEyaKJ3GK5TSkf8UkfDpGi7+HAPCdcp7X
+         OHYuMx9wHXSYDNVGrfpYHQdefUnPVou4SWEkdR6ywRTeyY4VEwTuT58MBDPNAdMDesSS
+         dnew5XTRwequH9Tmz+XT5pgRTQxngcrif34swLKxZwchnlnswMCxqM1JpgB8HmJg77fk
+         FSZg==
+X-Gm-Message-State: ABy/qLaH5IePaHv9PdbOCdQoNAeR92VP2SrRB+RVCfLoFEKDbELaZVWd
+        kq7e874Q+lGBLI6KpqBR3DtIog==
+X-Google-Smtp-Source: APBJJlFzvc37pRRumAOmPKcUhlCCFYO0XhE1TyXk7nTkgfKGx6isQVWUmOwqf+ElnSxybBY7I54VxQ==
+X-Received: by 2002:adf:fa12:0:b0:30f:d218:584a with SMTP id m18-20020adffa12000000b0030fd218584amr1638207wrr.23.1690542575680;
+        Fri, 28 Jul 2023 04:09:35 -0700 (PDT)
 Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id m22-20020a7bcb96000000b003f91e32b1ebsm6820675wmi.17.2023.07.28.04.02.02
+        by smtp.googlemail.com with ESMTPSA id x7-20020adff647000000b00317731a6e07sm4512868wrp.62.2023.07.28.04.09.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 04:02:03 -0700 (PDT)
-Message-ID: <a0ffc859-8c38-b149-7434-dd199fd22109@linaro.org>
-Date:   Fri, 28 Jul 2023 12:02:02 +0100
+        Fri, 28 Jul 2023 04:09:34 -0700 (PDT)
+Message-ID: <ae085a82-24d6-acdf-acad-81265aa75e6b@linaro.org>
+Date:   Fri, 28 Jul 2023 12:09:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v2] misc: fastrpc: Pass proper scm arguments for static
- process init
+Subject: Re: [PATCH v2] misc: fastrpc: Fix remote heap allocation request
 Content-Language: en-US
 To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
         linux-arm-msm@vger.kernel.org
 Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
         linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
         stable <stable@kernel.org>
-References: <1687528664-25235-1-git-send-email-quic_ekangupt@quicinc.com>
+References: <1687529062-25988-1-git-send-email-quic_ekangupt@quicinc.com>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1687528664-25235-1-git-send-email-quic_ekangupt@quicinc.com>
+In-Reply-To: <1687529062-25988-1-git-send-email-quic_ekangupt@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,18 +80,18 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23/06/2023 14:57, Ekansh Gupta wrote:
-> Memory is allocated for dynamic loading when audio daemon is trying
-> to attach to audioPD on DSP side. This memory is allocated from
-> reserved CMA memory region and needs ownership assignment to
-> new VMID in order to use it from audioPD.
+On 23/06/2023 15:04, Ekansh Gupta wrote:
+> Remote heap is used by DSP audioPD on need basis. This memory is
+> allocated from reserved CMA memory region and is then shared with
+> audioPD to use it for it's functionality.
 > 
-> In the current implementation, arguments are not correctly passed
-> to the scm call which might result in failure of dynamic loading
-> on audioPD. Added changes to pass correct arguments during daemon
-> attach request.
+> Current implementation of remote heap is not allocating the memory
+> from CMA region, instead it is allocating the memory from SMMU
+> context bank. The arguments passed to scm call for the reassignment
+> of ownership is also not correct. Added changes to allocate CMA
+> memory and have a proper ownership reassignment.
 > 
-> Fixes: 	0871561055e6 ("misc: fastrpc: Add support for audiopd")
+> Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
 > Cc: stable <stable@kernel.org>
 > Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
@@ -100,58 +99,43 @@ On 23/06/2023 14:57, Ekansh Gupta wrote:
 > Changes in v2:
 >    - Removed redundant code
 > 
->   drivers/misc/fastrpc.c | 18 ++++++++++++------
->   1 file changed, 12 insertions(+), 6 deletions(-)
+>   drivers/misc/fastrpc.c | 14 ++++++++------
+>   1 file changed, 8 insertions(+), 6 deletions(-)
 > 
 > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..9a7074a 100644
+> index 30d4d04..87a9096 100644
 > --- a/drivers/misc/fastrpc.c
 > +++ b/drivers/misc/fastrpc.c
-> @@ -1278,10 +1278,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+> @@ -1866,7 +1866,11 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>   		return -EINVAL;
+>   	}
 >   
->   		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
->   		if (fl->cctx->vmcount) {
-<--snip
-> +			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+> -	err = fastrpc_buf_alloc(fl, fl->sctx->dev, req.size, &buf);
+> +	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
+> +		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
+> +	else
+> +		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
 > +
->   			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->   							(u64)fl->cctx->remote_heap->size,
-> -							&fl->cctx->perms,
-> -							fl->cctx->vmperms, fl->cctx->vmcount);
-> +							&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
--->
-
-this change looks unnecessary channel context already sets its value to 
-BIT(QCOM_SCM_VMID_HLOS);
-
-
->   			if (err) {
->   				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
->   					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
-> @@ -1322,13 +1323,18 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   	return 0;
->   err_invoke:
->   	if (fl->cctx->vmcount) {
-> -		struct qcom_scm_vmperm perm;
-> +		u64 src_perms = 0;
-> +		struct qcom_scm_vmperm dst_perms;
-> +		u32 i;
+>   	if (err) {
+>   		dev_err(dev, "failed to allocate buffer\n");
+>   		return err;
+> @@ -1905,12 +1909,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
 >   
+>   	/* Add memory to static PD pool, protection thru hypervisor */
+>   	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+> -		struct qcom_scm_vmperm perm;
+> +		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+>   
+we do not need this,  channel context sets perms to this value at probe, 
+you could just reuse it.
+
+
 > -		perm.vmid = QCOM_SCM_VMID_HLOS;
 > -		perm.perm = QCOM_SCM_PERM_RWX;
-> +		for (i = 0; i < fl->cctx->vmcount; i++)
-> +			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
-> +
-> +		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
-> +		dst_perms.perm = QCOM_SCM_PERM_RWX;
->   		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->   						(u64)fl->cctx->remote_heap->size,
-> -						&fl->cctx->perms, &perm, 1);
-> +						&src_perms, &dst_perms, 1);
-
-this looks good.
-
---srini
->   		if (err)
+> -		err = qcom_scm_assign_mem(buf->phys, buf->size,
+> -			&fl->cctx->perms, &perm, 1);
+> +		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
+> +			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
+>   		if (err) {
 >   			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
->   				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+>   					buf->phys, buf->size, err);
