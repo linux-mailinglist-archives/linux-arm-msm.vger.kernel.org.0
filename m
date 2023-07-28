@@ -2,85 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3476B767143
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:58:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF027767147
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 17:58:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237581AbjG1P6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 11:58:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45666 "EHLO
+        id S236360AbjG1P6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 11:58:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236007AbjG1P5w (ORCPT
+        with ESMTP id S236639AbjG1P63 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 11:57:52 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75874420F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 08:57:50 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99bcd6c0282so315399666b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 08:57:50 -0700 (PDT)
+        Fri, 28 Jul 2023 11:58:29 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8AD423B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 08:58:26 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-317744867a6so2284882f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 08:58:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690559869; x=1691164669;
+        d=linaro.org; s=google; t=1690559905; x=1691164705;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=J3k2wrLxfWSkDK/Y1m8f2Pt0Rfn4qiNug0qbBZtToG0=;
-        b=byZzrObqM1awjhRH6ayU77OLhZUhdGlbuO5PvixRZZOczNwAGLCu6SNQS9aL83Gl1D
-         LiSSiJQulyfppGS8zrC5ATucF710+dD+DWjZZbAMr8b6CmFCFpC7lLa2ei0dkZVCBNDr
-         fDQRYCPK+u+p5yOpAocE+11ZybK0fhyt0pwJbQdjKq8cPhvUvZsS5+7AB6bJGVtPgKMO
-         iQbGf2/+p+46gt7sUkRMkXiQZpCtK7Frxk9Q8MWYPM5EEKCT9eAmZWolF4PEsxRWQr1l
-         thKCDhKCri1gFM9nPDwHNMzzgOEkQyIzgygmgamirCWcLiZo2VRoigzZNSAr5NE4jF/o
-         nGnA==
+        bh=d7fcq9Wxv4AEPI5+GHtEeD9t936v+W4TRrWVcahSl6o=;
+        b=twbZD6p5UVZ1hHG2O91qvAxiqy6Y+GYYkkoCpYIZJMvQMygyjgsPtFbGmNaDx7pcJt
+         CuIcSNx5GwX6pX5ewFUzTSeQNslrtVUAl1N09pdmKZ29DYeQXKsm1k5nF1iPjegQKQoU
+         ISw8hOMq8pKoUJOiDTHxL/YV9dmNDzKXA2wbt3BLA7ocmZwPubT7ATyxCQUVFHQa5vh5
+         tqFtcJbvTBGF4uiybSAUalGfJu1p+E0WmFjOyEcgaZBo1HSQm+NHi1E9+xrX10UNOk0G
+         cTexK7g39KXh5QqwSf+MOUl4FIfNGd1mu2muZbDmEeF+OVHCyJrq4Y8vIGkv8X3B/sgR
+         KdOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690559869; x=1691164669;
+        d=1e100.net; s=20221208; t=1690559905; x=1691164705;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J3k2wrLxfWSkDK/Y1m8f2Pt0Rfn4qiNug0qbBZtToG0=;
-        b=dkyMWXMQYmyHW38vDX/2tTczRf9kTCgFH5sv0/PM0mstcAaVzOhGj3M2FBgW9/OFpZ
-         ie1QP//ELfZB6hm2Ajz4ie6iXZlvfRzl+GpZ0+fEy7CheJZeZQbnQTPwalEzxts2eaBe
-         rKMJq1dg5CDzkMPWTd88Jo7Iqf/u0HbjTMKVYIa5wMrgZVGojl1lCyEp7PTgvUatB4+v
-         js3cqPh/Z70iAGIXDYrgh6vcP6cVOik4ln+3eH11OUt5NN4OEWZdT/FZuTfYbaUmbeQi
-         HoYzN3OO0ZE+mxhtnCuty6zdLnqKPLlsTpCuIf1dWmg5AcBEHpFgRs7npQICK5efa6sQ
-         pT3A==
-X-Gm-Message-State: ABy/qLaocp558OdIde6mYMHcc3Q8UTIx2nY7aarb1ueBdUwjzjKfAQmz
-        SViViRzP+Kfq2E7mmZ/FF/m2NQ==
-X-Google-Smtp-Source: APBJJlHFwTIAeiAKV/aZGLjJnIMrwD7AUm86fYh7o74TwOqlcm7xVzwDHHCwwMay/wyIZqIHJo/OUg==
-X-Received: by 2002:a17:906:8a45:b0:977:ecff:3367 with SMTP id gx5-20020a1709068a4500b00977ecff3367mr2317200ejc.40.1690559868653;
-        Fri, 28 Jul 2023 08:57:48 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id pw3-20020a17090720a300b00987e2f84768sm2197937ejb.0.2023.07.28.08.57.46
+        bh=d7fcq9Wxv4AEPI5+GHtEeD9t936v+W4TRrWVcahSl6o=;
+        b=FV133U2IGX4AiRkydikHF8Zy+50p6QkBmaNlj7WqIY0HIf9+yMnLtdfJCbPdx3p75J
+         rfZimVFkuF3xl319V0eCl2pVsNwl+YMr3zoIxu+/FXiC+9m5NdlFVjbWLjjuUkA9+AB7
+         3Jsu8WBtZDgszIDkF8U22PrtTQS4/Bd0baQrBqfHyxnqB48/u9cHjxJEkWDY7w2/NLgq
+         0a6VrGUN98mCUw3o65X98l9p6Y3ZNwz1pw5CKJOLuXnoyaYpyrvMylkv2ZNRwndLSUv0
+         hVM3aGFU1KRBk0mp2ZWze1ILqJu0VTb3/Iuwkgd+bJM/kFFCfYVuwhyKzekvpqN4j/Va
+         I4HA==
+X-Gm-Message-State: ABy/qLbDScKnf3GL7TQs5L6ziuO1cNOmU5MAP2bImAMMdJ1SjbdzHtXs
+        IHWvExlDetHPkL7Gupj/EcY2ww==
+X-Google-Smtp-Source: APBJJlF+T6NU2JDjjWZC3+SoMRZuFtVWX99/lY4GVDwkIqqKW8Ib9apLj6yZi8qtvwhpUjgsk57Z8g==
+X-Received: by 2002:a5d:50cf:0:b0:317:5b1b:1a40 with SMTP id f15-20020a5d50cf000000b003175b1b1a40mr2131659wrt.49.1690559905279;
+        Fri, 28 Jul 2023 08:58:25 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id j4-20020adfe504000000b003063a92bbf5sm5199752wrm.70.2023.07.28.08.58.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 08:57:48 -0700 (PDT)
-Message-ID: <a2024453-e749-b659-52a0-83ded8bb5c38@linaro.org>
-Date:   Fri, 28 Jul 2023 17:57:44 +0200
+        Fri, 28 Jul 2023 08:58:24 -0700 (PDT)
+Message-ID: <f31de68f-e64b-2b1d-7fbc-6bf7f94347af@linaro.org>
+Date:   Fri, 28 Jul 2023 16:58:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add PCIe0 node
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 18/33] iris: vidc: hfi: add Host Firmware Interface (HFI)
 Content-Language: en-US
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        quic_parass@quicinc.com,
-        "reviewer:ARM/QUALCOMM CHROMEBOOK SUPPORT" 
-        <cros-qcom-dts-watchers@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <1690540760-20191-1-git-send-email-quic_krichai@quicinc.com>
- <17c2ba50-3b72-523c-d92b-1ecbf9be7450@linaro.org>
- <f3d5c72d-90d3-b091-f995-5ad0bf93ae1d@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <f3d5c72d-90d3-b091-f995-5ad0bf93ae1d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     quic_dikshita@quicinc.com
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-19-git-send-email-quic_vgarodia@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <1690550624-14642-19-git-send-email-quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -92,50 +79,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/07/2023 17:10, Krishna Chaitanya Chundru wrote:
-> 
-> On 7/28/2023 5:33 PM, Krzysztof Kozlowski wrote:
->> On 28/07/2023 12:39, Krishna chaitanya chundru wrote:
->>> Add PCIe dtsi node for PCIe0 controller on sc7280 platform.
->>>
->>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> Thank you for your patch. There is something to discuss/improve.
->>
->>
->>> +		pcie0_phy: phy@1c06000 {
->>> +			compatible = "qcom,sm8250-qmp-gen3x1-pcie-phy";
->>> +			reg = <0 0x01c06000 0 0x1c0>;
->>> +			#address-cells = <2>;
->>> +			#size-cells = <2>;
->>> +			ranges;
->>> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
->>> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
->>> +				 <&gcc GCC_PCIE_CLKREF_EN>,
->>> +				 <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
->>> +			clock-names = "aux", "cfg_ahb", "ref", "refgen";
->>> +
->>> +			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
->>> +			reset-names = "phy";
->>> +
->>> +			assigned-clocks = <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
->>> +			assigned-clock-rates = <100000000>;
->>> +
->>> +			status = "disabled";
->>> +
->>> +			pcie0_lane: phy@1c0e6200 {
->> Isn't this old-style of bindings? Wasn't there a change? On what tree
->> did you base it?
+On 28/07/2023 14:23, Vikash Garodia wrote:
+> +	rc = hfi_packet_sys_intraframe_powercollapse(core, core->packet,
+> +						     core->packet_size, enable);
+> +	if (rc)
+> +		return rc;
 
-The work was here:
-https://lore.kernel.org/all/20230324022514.1800382-5-dmitry.baryshkov@linaro.org/
+I'm 99.9999999999 % sure this is misnamed.
 
-But I don't remember the status.
+"Inter" means in-between two things.
+"Intra" means inside of one thing.
 
-> Let me rebase and send it again.
+So "intraframe" means inside of one frame "interframe" would mean power 
+collapsing in-between two frames, which is what I think this does.
 
-This anyway looks like wrong compatible. You used sm8250.
+And I'd still rather be adding inter-frame power-collapse to as many 
+different versions of the existing silicon and new silicon as opposed to 
+segregating it off in a new driver.
 
+I'm assuming that more than sm8550 supports it since @ the end of the 
+day this is a firmware feature to power-collapse during an active 
+session when we aren't busy.
 
-Best regards,
-Krzysztof
-
+---
+bod
