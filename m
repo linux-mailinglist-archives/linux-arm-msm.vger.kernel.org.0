@@ -2,104 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8EA7767637
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 21:20:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCB6C767617
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 21:13:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233262AbjG1TUy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 15:20:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43856 "EHLO
+        id S231486AbjG1TNE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 15:13:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjG1TUt (ORCPT
+        with ESMTP id S231264AbjG1TNE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 15:20:49 -0400
-X-Greylist: delayed 1500 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 28 Jul 2023 12:20:48 PDT
-Received: from soltyk.jannau.net (soltyk.jannau.net [144.76.91.90])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74901FFA;
-        Fri, 28 Jul 2023 12:20:47 -0700 (PDT)
-Received: by soltyk.jannau.net (Postfix, from userid 1000)
-        id EBA2B2701FE; Fri, 28 Jul 2023 20:31:35 +0200 (CEST)
-Date:   Fri, 28 Jul 2023 20:31:35 +0200
-From:   Janne Grunau <j@jannau.net>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Ville =?iso-8859-1?Q?Syrj=E4l=E4?= 
-        <ville.syrjala@linux.intel.com>, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-usb@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        intel-gfx@lists.freedesktop.org
-Subject: Re: [PATCH v6 2/3] drm/bridge_connector: stop filtering events in
- drm_bridge_connector_hpd_cb()
-Message-ID: <ZMQJh6BIM2mQ9fCo@jannau.net>
-References: <20230709202511.287794-1-dmitry.baryshkov@linaro.org>
- <20230709202511.287794-3-dmitry.baryshkov@linaro.org>
+        Fri, 28 Jul 2023 15:13:04 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6061B3A81
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 12:13:02 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id e9e14a558f8ab-346392da0d6so9851515ab.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 12:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1690571581; x=1691176381;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T0cSKCDsFec9jKF2AJ3nQ86wH77574GnfwY7SlwGKHo=;
+        b=MPg+sN7VWGdi6B95aY+IzD+qUtm9q2ELjcef4VPjTXa8Rk4gaJWNAnoZPhubyvFaKY
+         u9EqqfvVuM0c8Lu2oVcbmaJp19N8892/bv5GOGu9emHbiAfGxipCuk1KxZlsexrcoArG
+         pNI80wRAxIATsKIkVtQJgqKJN+t0OwOWuB47Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690571581; x=1691176381;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T0cSKCDsFec9jKF2AJ3nQ86wH77574GnfwY7SlwGKHo=;
+        b=XTORfLCjIk5OsHuwUS4AG0nK0qfC+fCYfIHStTj/nGxLGO8HTyiIvtReEckCJwBc0Z
+         cKODOnEjKgXyTDT2Eam2P5WAJaPfpx6vvKRpHLXah+inA86YOxbqwD9IzCJKK/caCeI8
+         +r5UlinE0Yf7CVqrhOd0rwqX1kqqGYSqvNm3PsMcEQ9kdC7AuT2EM+7ggh+uKqC5fJJp
+         yzJqkHdRwzF4jN2oLifmY786lzyVXsLCDD1mzO3BESvbovhO8tmaTcN0GTdgtBJnd7ew
+         puJ5YpUfqdN1WYvr+pPhHLnxYL5Yoq6IfLV0ueia5RqwcMeHYYgfsVVn4iAAEmVd3TWw
+         7L2A==
+X-Gm-Message-State: ABy/qLbVp2gkanG9qzs7XqfW+mWGcgJUmfVnMnq3Nu77nLTG92kAAQcK
+        6Wqw1Cr8C0S4EkQHlkR7D1746vfD6ZqmXwgmZf9rPg==
+X-Google-Smtp-Source: APBJJlFlsvP5vNrHkLf6/gTIb7z8HrEClm/PeQ2X7vaKRhyl882D6829LPVg7T7J3o6TRA6KMMJk9IenW7jecPztm5A=
+X-Received: by 2002:a05:6e02:20ee:b0:349:191:af05 with SMTP id
+ q14-20020a056e0220ee00b003490191af05mr516334ilv.16.1690571581582; Fri, 28 Jul
+ 2023 12:13:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230709202511.287794-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <1690432469-14803-1-git-send-email-quic_vgarodia@quicinc.com> <1690432469-14803-3-git-send-email-quic_vgarodia@quicinc.com>
+In-Reply-To: <1690432469-14803-3-git-send-email-quic_vgarodia@quicinc.com>
+From:   Nathan Hebert <nhebert@chromium.org>
+Date:   Fri, 28 Jul 2023 12:12:50 -0700
+Message-ID: <CANHAJhFhT1EAL1hE7FdZU9sgxaaGoSjPar4ruEEhfz8Qa1YRwg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] venus: hfi: fix the check to handle session buffer requirement
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc:     stanimir.k.varbanov@gmail.com, bryan.odonoghue@linaro.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mchehab@kernel.org, hans.verkuil@cisco.com, tfiga@chromium.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-07-09 23:25:10 +0300, Dmitry Baryshkov wrote:
-> In some cases the bridge drivers would like to receive hotplug events
-> even in the case new status is equal to the old status. In the DP case
-> this is used to deliver "attention" messages to the DP host. Stop
-> filtering the events in the drm_bridge_connector_hpd_cb() and let
-> drivers decide whether they would like to receive the event or not.
-
-Worth mentioning in the commit message that all current bridges which 
-set .hpd_notify appear to be safe w.r.t multiple calls with the same 
-status. meson_encoder_hdmi.c will do unnecessary work when called 
-repeatedly with status connected. Not sure if it is worth adressing 
-since I don't expect multiple calls with connector_status_connected to 
-occur for this particular bridge.
-
-Reviewed-By: Janne Grunau <j@jannau.net>
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Wed, Jul 26, 2023 at 9:35=E2=80=AFPM Vikash Garodia
+<quic_vgarodia@quicinc.com> wrote:
+>
+> Buffer requirement, for different buffer type, comes from video firmware.
+> While copying these requirements, there is an OOB possibility when the
+> payload from firmware is more than expected size. Fix the check to avoid
+> the OOB possibility.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interf=
+ace (HFI)")
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 > ---
->  drivers/gpu/drm/drm_bridge_connector.c | 5 -----
->  1 file changed, 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
-> index 19ae4a177ac3..84d8d310ef04 100644
-> --- a/drivers/gpu/drm/drm_bridge_connector.c
-> +++ b/drivers/gpu/drm/drm_bridge_connector.c
-> @@ -113,16 +113,11 @@ static void drm_bridge_connector_hpd_cb(void *cb_data,
->  	struct drm_bridge_connector *drm_bridge_connector = cb_data;
->  	struct drm_connector *connector = &drm_bridge_connector->base;
->  	struct drm_device *dev = connector->dev;
-> -	enum drm_connector_status old_status;
->  
->  	mutex_lock(&dev->mode_config.mutex);
-> -	old_status = connector->status;
->  	connector->status = status;
->  	mutex_unlock(&dev->mode_config.mutex);
->  
-> -	if (old_status == status)
-> -		return;
-> -
->  	drm_bridge_connector_hpd_notify(connector, status);
->  
->  	drm_kms_helper_hotplug_event(dev);
-> -- 
-> 2.39.2
-> 
+>  drivers/media/platform/qcom/venus/hfi_msgs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media=
+/platform/qcom/venus/hfi_msgs.c
+> index 3d5dadf..3e85bd8 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> @@ -398,7 +398,7 @@ session_get_prop_buf_req(struct hfi_msg_session_prope=
+rty_info_pkt *pkt,
+>                 memcpy(&bufreq[idx], buf_req, sizeof(*bufreq));
+>                 idx++;
+>
+> -               if (idx > HFI_BUFFER_TYPE_MAX)
+> +               if (idx >=3D HFI_BUFFER_TYPE_MAX)
+>                         return HFI_ERR_SESSION_INVALID_PARAMETER;
+>
+>                 req_bytes -=3D sizeof(struct hfi_buffer_requirements);
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum=
+,
+> a Linux Foundation Collaborative Project
+>
+The fix makes sense to me.
+Reviewed-by: Nathan Hebert <nhebert@chromium.org>
+
+Best regards,
+Nathan Hebert
