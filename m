@@ -2,129 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88FA3766552
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 09:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D82176655C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 09:30:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234345AbjG1H21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 03:28:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56314 "EHLO
+        id S233697AbjG1HaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 03:30:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232975AbjG1H2L (ORCPT
+        with ESMTP id S232982AbjG1HaY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 03:28:11 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 447183C1D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 00:27:52 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b9a828c920so29401091fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 00:27:52 -0700 (PDT)
+        Fri, 28 Jul 2023 03:30:24 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105C4272A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 00:30:23 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-31783d02093so1289010f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 00:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690529270; x=1691134070;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YNafLEWKCWHk1Q/GCD8fpQN53csIuJxGCApzHzUl+J4=;
-        b=cvbyYal9w/8O6TpbNSfZiSB3NPbKpNrbwA0Pl8KoO5akeSN1cstQQ/3b0Fwq5nboJa
-         W08NUyupLmp7hVAHqGvmTwGWEGWFcoJkFHiRpf3aSGISo6EOlUr58+O1Pq8nh6qD8Vel
-         F5lc7uKMMCdsGa/lT6eEXEp2HB5NxHnf/6OgoZ3Rv+76Beok3p2FReGLgoN66L48ODYs
-         hZjqrlnys23DUbaZ/bMns+GJOosP8dE4lok2/iWDK2md5NnzBPteZaFOcZ8Gb4AdoOss
-         FmoH0YZQnBM8pZ2bpljO4kMA0tkUFV0HwoBUIlVCPZtQCZFk4ZEfRJ3gOOAFZGiRntch
-         9/mw==
+        d=linaro.org; s=google; t=1690529421; x=1691134221;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TuQnxh7MQh36hqhWZvA+gANo32GIzZNpZKmW5WUO/yA=;
+        b=C/1HiCTU+Mw+b3eoR6IdkYs/7otP+yYTwa6bk2vFBsbVXTxhoX/gVv2WD5gUWYMsLM
+         MHivd0SfexVStnz/IFab5nvIk/ZsO5nk1cH/Tk97Tdova/9aKS5Jf7jWd3r9X8TjgJJL
+         OpLxP+Z6TQb7XGQXvY5gGy11MROrouVDJDlj4HI6LuooGpQwgEaXN4KPa9l/7U9jVm98
+         lBQSsbN99Qd2tzmuAlrvS9EixejNQ7iD9OJShmho1xx3xhzADntx5Nkpb0ibhmNIB+VD
+         UFzXorGkVVGPc3HJBmUYPt1ME+0ZZlIftv/J2fhTe7fgxwlDDSxENQkru05grMLY7zyZ
+         NSqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690529270; x=1691134070;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YNafLEWKCWHk1Q/GCD8fpQN53csIuJxGCApzHzUl+J4=;
-        b=X88eloKqZGEWHxrgt7v99kPkU6yW/Trto31yhJLmykf/PuLn8t2mbLbhktCkEEROOx
-         G6sojbUEulJD78WfioTEKGtMjgs7K2pN7PzpBW8kfL7AQUMrDL/IjpMeAZJSLoP51JKW
-         eUB3khFZO2DLvJvi2adrjWRIsKBM4j2f3uXFi6AYcuLQsQ+40lr1OHjfz0SLWKARZUZN
-         iUoW/yTWhzQvg9avWRZZ8nB3MSwI3Qs9ylIOVnwEi9/xsHb8Kn7lbGiMyq7ZQdP15EZk
-         GZRqygQNDxupPZQe8wnEG7YSInyetzNui6Rbxl8h+5+ytpnvHFAiEA8mrAkyUL46Hz3u
-         1lKQ==
-X-Gm-Message-State: ABy/qLahHbTrFDdBUszfAWBtGFDkFgH81tUsioYNRDAqJqA7gWWXZLMy
-        2lhnXcDeIzFnIpIDFWiBNVFC4A==
-X-Google-Smtp-Source: APBJJlHbQY+iRJVVhNPkSxL+x0Z0ZzSaBO/HRp6/q5HSe9MRZCYGRTErk6fUi0vWZuvnX7tYEjn/Ew==
-X-Received: by 2002:a2e:2e17:0:b0:2b9:6d6e:df5c with SMTP id u23-20020a2e2e17000000b002b96d6edf5cmr1067297lju.5.1690529270007;
-        Fri, 28 Jul 2023 00:27:50 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id n5-20020a7bc5c5000000b003fbe4cecc3bsm6430037wmk.16.2023.07.28.00.27.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 00:27:49 -0700 (PDT)
-Message-ID: <08cd9bb5-678f-e03e-4598-dd1785f0d7a7@linaro.org>
-Date:   Fri, 28 Jul 2023 09:27:47 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 12/13] dt-bindings: drm/msm/gpu: Extend bindings for
- chip-id
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        d=1e100.net; s=20221208; t=1690529421; x=1691134221;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TuQnxh7MQh36hqhWZvA+gANo32GIzZNpZKmW5WUO/yA=;
+        b=CDCKVXLMe6U+2+RmDdjB7Jv2u8wAQtCo2AL7ikBZ1BL3q/cIC0ckMPdwx0WY1jjVP1
+         pEK1nQJ7fb3rbsQs1hDB10pf3DQK7onoXTTbZeopj40fKKP0MaZDdSRFAgWB+IE4KdAm
+         M07gDknziFNXBbn0psQ2P8LeE2q1Tvs7L6uvsNg5n9MGkXtkAO0ZRQjbnYf02xinDRPT
+         mKIH1S69h7mweBY99HGYgr1vaEAsDjkfWSFhDrG4bbrTrkr/4dBA20vnzcI1i1pWnhvx
+         jPacXr1yJBDBEgZFjWJAlq5IZTGajOgkdb70CrEsD0SiEe6Ousqpwdl9zAMoB74AuIjY
+         d6mA==
+X-Gm-Message-State: ABy/qLZDSeD+OeB0hcXbxshMl4LW7zq+vOITxjjwimkrxz9VFpzzinN6
+        xmgoAPgITsIbnyHfwbgoGygVwf7fbh/CDP48/BE=
+X-Google-Smtp-Source: APBJJlG3GwSdYyJ9ZD6wjq+xys2sTJGzxdr8OpaSe18YZrBjk762oIdLMk314un2krsQe8jIPFim+w==
+X-Received: by 2002:adf:db4a:0:b0:316:ef23:9276 with SMTP id f10-20020adfdb4a000000b00316ef239276mr1246966wrj.52.1690529421252;
+        Fri, 28 Jul 2023 00:30:21 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id d15-20020adfe84f000000b003174f6dc947sm4086945wrn.32.2023.07.28.00.30.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jul 2023 00:30:20 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230727212208.102501-1-robdclark@gmail.com>
- <20230727212208.102501-13-robdclark@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230727212208.102501-13-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>,
+        Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-sunxi@lists.linux.dev
+In-Reply-To: <20230714174820.4061387-1-robh@kernel.org>
+References: <20230714174820.4061387-1-robh@kernel.org>
+Subject: Re: [PATCH] nvmem: Explicitly include correct DT includes
+Message-Id: <169052941981.85384.18073685620993485850.b4-ty@linaro.org>
+Date:   Fri, 28 Jul 2023 08:30:19 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/07/2023 23:20, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+
+On Fri, 14 Jul 2023 11:48:19 -0600, Rob Herring wrote:
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
 > 
-> Upcoming GPUs use an opaque chip-id for identifying the GPU.
+> [...]
 
-Examples?
+Applied, thanks!
 
-Anyway, I think we should insist here of using something human-readable,
-even if Qualcomm/Adreno internally use some weird numbers.
-
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/gpu.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> index 58ca8912a8c3..56b9b247e8c2 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> @@ -13,6 +13,12 @@ maintainers:
->  properties:
->    compatible:
->      oneOf:
-> +      - description: |
-> +          The driver is parsing the compat string for Adreno to
-> +          figure out the chip-id.
-> +        items:
-> +          - pattern: '^qcom,adreno-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]$'
-
-{8} should work?
-
-
+[1/1] nvmem: Explicitly include correct DT includes
+      commit: 3e0558db94dbe5e5030a87bfd9a153d519d61b65
 
 Best regards,
-Krzysztof
+-- 
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
