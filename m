@@ -2,116 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1AAA7665CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 09:54:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64B3D7665DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 09:57:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234491AbjG1Hye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 03:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39236 "EHLO
+        id S234524AbjG1H51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 03:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232496AbjG1HyZ (ORCPT
+        with ESMTP id S234526AbjG1H5W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 03:54:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1294173F;
-        Fri, 28 Jul 2023 00:54:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3BAB762035;
-        Fri, 28 Jul 2023 07:54:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE90BC433C7;
-        Fri, 28 Jul 2023 07:54:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690530863;
-        bh=O1cNWXEo+9YOHgwHktZITvHAmMXU2sDKw5f8LCDKsEs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AGGC/2vlpzLcRfPtqNVhu8REJqrZ9oHbnDRVcCaYv/csppwg+D3IpWHxZVz05hDTg
-         PEb52eabt+Hzk7wvDNoAYBmnXlQNiCzrxKaEV0Hgu0dZ0Dn7yx8qq+TWLHTHZO9RR5
-         d8faLTTaj6BW1Qq6BqxASzOuS89qlTOdAFgP5vNc28FoaqxDWL4KHREpVMoz5pNQN6
-         1sDzXe2zwPIhD6Q/DYDdMV8Yfl3A96wSFYyAcTRc5+yr4+GEP/Ne59P7i48jzFLTC2
-         E/XFNKehofRueCgh4oMEObSOZoZkHoRCWKoMyznYKevJ0m5EdPNUW5iFQtOTZXjtNW
-         Bmq8QmP0sInUQ==
-Date:   Fri, 28 Jul 2023 08:54:16 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] treewide: Update Guru Das Srinagesh's email address
-Message-ID: <20230728075416.GC8175@google.com>
-References: <20230728001622.4938-1-quic_gurus@quicinc.com>
+        Fri, 28 Jul 2023 03:57:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB823582;
+        Fri, 28 Jul 2023 00:57:20 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36S7c2g0020753;
+        Fri, 28 Jul 2023 07:57:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=h8agajaLfWeXSOxgQ4Tqn5wqoCAvvaRjiSyfa4aGhpU=;
+ b=pVIwXsDa7ajs3/hOdLSqOsyyBXKCem93pdxTki0S6PNOOGpGZBJYp0598QuF5AB1sxNx
+ rUTA+7WPIWEDE9uKdTRSqzn8tDNWFDjDfWM1SV87KCLKWw6jtD0RGJBBsxOcDLFWOJk6
+ L07BDh75ELZwe+2ECA4gCbdSlZVOBQBm57hElFsS05zFxNczutvfUBSzxAcUX3Op1+v2
+ ca1/mQed0EgL/Jree3HuZFbemCYBck5uoJhtlRpIaf1mHH4bASG1hmteeVJICDWhkLRl
+ LopOdqq7/QAqJr4/KBZAkpGr8kJWM07KX/XlRfcAYglbPLT+Ttg2KPT3U+oqLs3O8H7q bQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3n2kapsp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Jul 2023 07:57:13 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36S7vCqY029525
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Jul 2023 07:57:12 GMT
+Received: from [10.50.27.108] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
+ 2023 00:57:02 -0700
+Message-ID: <6692f826-c2ca-3f8e-c6e5-d02a99150095@quicinc.com>
+Date:   Fri, 28 Jul 2023 13:26:58 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230728001622.4938-1-quic_gurus@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/4] venus: hfi: add checks to perform sanity on queue
+ pointers
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <stanimir.k.varbanov@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <mchehab@kernel.org>,
+        <hans.verkuil@cisco.com>, <tfiga@chromium.org>
+CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <1690432469-14803-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690432469-14803-2-git-send-email-quic_vgarodia@quicinc.com>
+ <df947545-23ef-2ee9-72cc-8e54bbe46be1@linaro.org>
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <df947545-23ef-2ee9-72cc-8e54bbe46be1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -6dzAtQqeXQpsT02Ey88kGVZfMtQ9ke-
+X-Proofpoint-ORIG-GUID: -6dzAtQqeXQpsT02Ey88kGVZfMtQ9ke-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 impostorscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 clxscore=1015 bulkscore=0 mlxlogscore=825 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307280071
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Jul 2023, Guru Das Srinagesh wrote:
 
-> Clean up my email address as the codeaurora.org address is not used
-> anymore.
-> 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 2 +-
->  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml         | 2 +-
+On 7/27/2023 10:38 PM, Konrad Dybcio wrote:
+> On 27.07.2023 06:34, Vikash Garodia wrote:
+>> Read and write pointers are used to track the packet index in the memory
+>> shared between video driver and firmware. There is a possibility of OOB
+>> access if the read or write pointer goes beyond the queue memory size.
+>> Add checks for the read and write pointer to avoid OOB access.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>  drivers/media/platform/qcom/venus/hfi_venus.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index f0b4638..dc228c4 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -206,6 +206,10 @@ static int venus_write_queue(struct venus_hfi_device *hdev,
+>>  
+>>  	new_wr_idx = wr_idx + dwords;
+>>  	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
+>> +
+>> +	if (wr_ptr < (u32 *)queue->qmem.kva || wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size))
+> Shouldn't the cases on the right side of the OR operator include a
+> "- 1"?
 
-2 patches isn't exactly 'treewide'.
+I see your point here. Possibly subtracting with sizeof(*wr_ptr) instead of "1"
+would be appropriate. Similarly for read queue handling.
 
-Anyway, since there are not dependencies between the changes, please
-separate them out, one per subsystem.
+- Vikash
 
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
-> index 2c8cf6aab19a..6b80518cbf62 100644
-> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
-> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
-> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
->  title: Qualcomm Technologies, Inc. PM8941 USB ID Extcon device
->  
->  maintainers:
-> -  - Guru Das Srinagesh <gurus@codeaurora.org>
-> +  - Guru Das Srinagesh <quic_gurus@quicinc.com>
->  
->  description: |
->    Some Qualcomm PMICs have a "misc" module that can be used to detect when
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-> index e6a2387d8650..9e4eed34dae8 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
->  title: Qualcomm Technologies, Inc. PM8008 PMIC
->  
->  maintainers:
-> -  - Guru Das Srinagesh <gurus@codeaurora.org>
-> +  - Guru Das Srinagesh <quic_gurus@quicinc.com>
->  
->  description: |
->    Qualcomm Technologies, Inc. PM8008 is a dedicated camera PMIC that integrates
-> 
-> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
-> -- 
-> 2.40.0
-> 
-
--- 
-Lee Jones [李琼斯]
+> Konrad
