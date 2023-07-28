@@ -2,140 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 656CF766B62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 13:09:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E723C766B65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 13:09:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235336AbjG1LJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 07:09:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55518 "EHLO
+        id S236169AbjG1LJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 07:09:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234770AbjG1LJi (ORCPT
+        with ESMTP id S236152AbjG1LJs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 07:09:38 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A1D271D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:09:37 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fc0aecf15bso22136195e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:09:37 -0700 (PDT)
+        Fri, 28 Jul 2023 07:09:48 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3453A81
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:09:45 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe0bb9500aso3427640e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 04:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690542575; x=1691147375;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N97CKLpKQle5aHF+jRMwZEB+J33cTGVCbmmUv5JcbaE=;
-        b=wwv2jPvSfBya6TF/eA6QDrJ6pLMvp8lGy8013pkZZHOphLJ54z20l5g/E6BuFsN5IK
-         wH3zHo6qtnTvl4doh6IyaShDnXwfeQbGNXzfmriuA99NA+FHLSuVBKzpqHD9lIJmqhrt
-         RfwfLcBN3SRy0EtC3yAYWl1pn4I+qJPH4rDEOl0cStJx3IF0QcavIcW0xqPNRL1rqRm+
-         5Z9B2vq4Q9vNqP/3Qx7tD1A4bfUXKYWU2mv/4KYHsT+NCtlOh4sSx8J/m2+VyoNd5IfU
-         EsUYiUKpsR3Y2hoR5aelH1AUO/8MjCyHPpRFmxFOo1mCmEZ05a7wPDYswY8Fioj45Uer
-         /4Wg==
+        d=linaro.org; s=google; t=1690542583; x=1691147383;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ErJXckq2r6r6mAwaTX3lXaPyb/fST8ASE4/gudVLaCE=;
+        b=MNDXkEYUX01x3ierPN6u4u3IPxU5b8oHs2ZYqAay7Qqxbsxc1mvsZJLdYOuWxjwWjZ
+         EIDF9pcWDEgGSHi2neD1D7asRng/InxeRQ+//TKJrDZ/TZI22E6GBZTlS/+sieyNHSwG
+         vNy2Xo+488COADZ7/koFjLpHIZgPMJ3CeY6HsJRREXF/WjmG+75Rh0RawnFmjhC9uIer
+         aYJwIwENms/1LAPju78hQJ8C8d2jA4/DHn5OQgJ9SF/1snjISL9JPdnK3L4xIaPGF0cY
+         /NwIPxntxyPgo6JeSbU/WozTPem3q2lJyUtHfSqwfnbSCEHfrtdjveqkvxYzONblubWc
+         GQuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690542575; x=1691147375;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N97CKLpKQle5aHF+jRMwZEB+J33cTGVCbmmUv5JcbaE=;
-        b=gP/OV9mYLSnK/IGbs97SiB7qo8qjAd0y3T867THggXXDkTlWLRKSrm66z/RF9xCbip
-         xkyDLQxj73R94KfOQshlpskULk/LLBG0IMKiR5e/YRnWyY6owl3Y4eWNt83WV5JH9Hb9
-         bBJyC4K2GFp2ulCSHTmt7hcs4QB4RgOHI3yGEyaKJ3GK5TSkf8UkfDpGi7+HAPCdcp7X
-         OHYuMx9wHXSYDNVGrfpYHQdefUnPVou4SWEkdR6ywRTeyY4VEwTuT58MBDPNAdMDesSS
-         dnew5XTRwequH9Tmz+XT5pgRTQxngcrif34swLKxZwchnlnswMCxqM1JpgB8HmJg77fk
-         FSZg==
-X-Gm-Message-State: ABy/qLaH5IePaHv9PdbOCdQoNAeR92VP2SrRB+RVCfLoFEKDbELaZVWd
-        kq7e874Q+lGBLI6KpqBR3DtIog==
-X-Google-Smtp-Source: APBJJlFzvc37pRRumAOmPKcUhlCCFYO0XhE1TyXk7nTkgfKGx6isQVWUmOwqf+ElnSxybBY7I54VxQ==
-X-Received: by 2002:adf:fa12:0:b0:30f:d218:584a with SMTP id m18-20020adffa12000000b0030fd218584amr1638207wrr.23.1690542575680;
-        Fri, 28 Jul 2023 04:09:35 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id x7-20020adff647000000b00317731a6e07sm4512868wrp.62.2023.07.28.04.09.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 04:09:34 -0700 (PDT)
-Message-ID: <ae085a82-24d6-acdf-acad-81265aa75e6b@linaro.org>
-Date:   Fri, 28 Jul 2023 12:09:33 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] misc: fastrpc: Fix remote heap allocation request
-Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        d=1e100.net; s=20221208; t=1690542583; x=1691147383;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ErJXckq2r6r6mAwaTX3lXaPyb/fST8ASE4/gudVLaCE=;
+        b=H9dEuDBtqa7Xt1vrg0v3ziGiQzGSirTlGpPAF+KeF6j6BwnPTpjFGLQw9Rx+s/E3x0
+         /U4MnF6WZMyNydDd1DwP2dNDLyITsdMmAzE9qexhmyJQfAih9c7u+EDu++aDR0x7Muhm
+         lnu8JjPDx9WPhwFTonbdcu7ZIy5vmc3ccIEQzXOnH9C32UMFCONJQzbiNyEhgCiTNe5x
+         vtVkvNjcMOsHi5yLN+n3l6224cCJY7DS9Eh89VnfuS9+MDQGggsEeVFwrcrwgdTJvOYx
+         KamQk1a/79XhyA5yPfBcIMqy0LVQ1CURDTcodCqhHV9qCs0wm3kL4xd+WJSartJ8tgKE
+         OKTw==
+X-Gm-Message-State: ABy/qLZ55IaxiJdwbbZW67/HfmVpF25vlv44mO2P+kXdktyuz1cjn8CB
+        6Tj6n9eEjhCvp0UIX8faX2YmBw==
+X-Google-Smtp-Source: APBJJlFs4OMw+wkoxBZjm2P0EflKKYLdF/K2AORx3W+hTkzZqLObAokxYeLDaZ2WegNvkhQakH0uRg==
+X-Received: by 2002:a05:6512:201b:b0:4fd:fadb:e6e4 with SMTP id a27-20020a056512201b00b004fdfadbe6e4mr1403301lfb.69.1690542583411;
+        Fri, 28 Jul 2023 04:09:43 -0700 (PDT)
+Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
+        by smtp.gmail.com with ESMTPSA id v11-20020a056512096b00b004fdc5557a70sm759854lft.141.2023.07.28.04.09.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jul 2023 04:09:43 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
-        stable <stable@kernel.org>
-References: <1687529062-25988-1-git-send-email-quic_ekangupt@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1687529062-25988-1-git-send-email-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Subject: [PATCH v4 0/2] usb: typec: qcom-pmic-typec: enable DP support
+Date:   Fri, 28 Jul 2023 14:09:40 +0300
+Message-Id: <20230728110942.485358-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+To enable DisplayPort on the platforms supported by qcom-pmic-typec
+driver, we need to register a corresponding drm_bridge for this device
+and also be able to send the OOB hotplug event to the corresponding DRM
+connector. All this is implemented by [1], but there is no direct
+dependency on that patchset.
+
+[1] https://patchwork.freedesktop.org/series/120393/
+
+Changes since v3:
+- Fixed changelog for v1 (Guenter)
+- After discussion on IRC, change connector type to
+  DRM_MODE_CONNECTOR_DisplayPort to follow i915 and amdgpu example.
+  The fact that this is a DP wrapped in the USB connector will be
+  handled separately via the subconnector property (Simon Ser, Janne
+  Grunau)
+
+Changes since v2:
+- Reworded commit message for the first patch to explicitly mention that
+  the "displayport" OF property was rejected (Bjorn)
+- Removed several #ifdefs from the qcom-pmic-typec patch (Bryan, Konrad,
+  Greg K-H)
+
+Changes since v1:
+- Properly handle CONFIG_DRM dependency. Disallow building
+  qcom-pmic-typec into the kernel if DRM is built as module (Bryan).
 
 
-On 23/06/2023 15:04, Ekansh Gupta wrote:
-> Remote heap is used by DSP audioPD on need basis. This memory is
-> allocated from reserved CMA memory region and is then shared with
-> audioPD to use it for it's functionality.
-> 
-> Current implementation of remote heap is not allocating the memory
-> from CMA region, instead it is allocating the memory from SMMU
-> context bank. The arguments passed to scm call for the reassignment
-> of ownership is also not correct. Added changes to allocate CMA
-> memory and have a proper ownership reassignment.
-> 
-> Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
-> Cc: stable <stable@kernel.org>
-> Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
-> Changes in v2:
->    - Removed redundant code
-> 
->   drivers/misc/fastrpc.c | 14 ++++++++------
->   1 file changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..87a9096 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1866,7 +1866,11 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->   		return -EINVAL;
->   	}
->   
-> -	err = fastrpc_buf_alloc(fl, fl->sctx->dev, req.size, &buf);
-> +	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
-> +		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
-> +	else
-> +		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
-> +
->   	if (err) {
->   		dev_err(dev, "failed to allocate buffer\n");
->   		return err;
-> @@ -1905,12 +1909,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->   
->   	/* Add memory to static PD pool, protection thru hypervisor */
->   	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
-> -		struct qcom_scm_vmperm perm;
-> +		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
->   
-we do not need this,  channel context sets perms to this value at probe, 
-you could just reuse it.
+Dmitry Baryshkov (2):
+  usb: typec: altmodes/displayport: add support for embedded DP cases
+  usb: typec: qcom-pmic-typec: register drm_bridge
 
+ drivers/usb/typec/altmodes/displayport.c      |  5 ++-
+ drivers/usb/typec/tcpm/Kconfig                |  1 +
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 35 +++++++++++++++++++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
 
-> -		perm.vmid = QCOM_SCM_VMID_HLOS;
-> -		perm.perm = QCOM_SCM_PERM_RWX;
-> -		err = qcom_scm_assign_mem(buf->phys, buf->size,
-> -			&fl->cctx->perms, &perm, 1);
-> +		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
-> +			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
->   		if (err) {
->   			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
->   					buf->phys, buf->size, err);
+-- 
+2.39.2
+
