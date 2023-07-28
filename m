@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1B976739F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 19:41:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A0657673C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 19:46:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234803AbjG1RlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 13:41:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37058 "EHLO
+        id S229669AbjG1Rqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 13:46:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234290AbjG1RlU (ORCPT
+        with ESMTP id S229592AbjG1Rqz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 13:41:20 -0400
+        Fri, 28 Jul 2023 13:46:55 -0400
 Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340D130F9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:41:19 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fb73ba3b5dso3957953e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:41:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C10BC2D60
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:46:53 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fe05fbe250so4060943e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 10:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690566077; x=1691170877;
+        d=linaro.org; s=google; t=1690566412; x=1691171212;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JVWjcXDl51I+C9UlnxCYGcAWrlhLisPeGOSprqX5qlI=;
-        b=yFySC/3xshuUNJw99b2CECHNYFBnjDLGeJDVlmDglxYcDHWRk+zN6AhheVvGHkMe0x
-         nZW2rdGH5fZcTZJu9G3RWGHy8/Chrx917YLctxwl4kC67DVsUrT0Nqi/YtWAKgJeeMjp
-         FnCILrkWg8AfQDMEHaMC6/n1SC1jERlmW+8oP5bzQPahZbq4sN+8rARdQBmleEsm7Jbc
-         p+Pvif3dmSWDcgsshGNZPjv4Ghd+0EM36E60IR7eGIk+RsX/4+fD8LD8zOQ02zzJuc4o
-         DdD1PEW3dvbCH8msshQmzK7MRCcC2ISiuVaL3kOBp/V7rS59ruYNr4nZwoA8/bEpqmQR
-         PX5A==
+        bh=PUOsuK9U4cZ6JZwfdNB+TmQHxYWxH/A53SQYnwAxe3c=;
+        b=nqfDkCoab4utHUbd/anH85Av0oTWL2HcyEIByGM13NbdM6gIR1d/rsHZ7hXlD2i8L8
+         GNxc8SY+uedXv64TvxFBY/QZGUk+Hm6z3fNfghbSZDci/jfvsWED7TecYKzYLi17iGxf
+         8JkCkyXYHx24sBhTA+DdqgYntE/uQw+y+LL48KBNdGofivN5jggSqsjLLVL13Xo+6oxs
+         IHhxe+7dow63bxvyqgkmYa5MjU0P3Lk+KCu/APhW2T1D6JcrC+mGDzMP5ovEm4+sWLid
+         LwyYf2GTkPOKO6zT0hyqAAvLGkCp/dFbM0zB3gUJqruMAWw8xWYRtfDnJnubB9RlP16u
+         +L1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690566077; x=1691170877;
+        d=1e100.net; s=20221208; t=1690566412; x=1691171212;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JVWjcXDl51I+C9UlnxCYGcAWrlhLisPeGOSprqX5qlI=;
-        b=Z7lHB+wkBS3Mh8pisr9M2uxM1HAmbFpxUyqjI8Xc+nbYZ5eYmYDKg38qV8DnA0NdB4
-         ckqQRRmvQRNn8/6GoUuFu9wEdmE/+SPYPi3jjtH2B/kWSlUsiXvasItlafFJ7edack7I
-         +QLwu19GAJ9sJbN3WR+EZ+t0Z64Nbuz4dEN+RPsIEQRokHBthHZfnzIcSAwElIxz7VFc
-         n18hMwXhZI0XhmrnTHA/AfCk2arXk+jJPKgD1y0KurZFWRpeHvkvPgWrvkKXpVnHtOtb
-         U5qDUpqZ9Pui+s6bWaZ4W12bKdWY7G5+fhxaDfGaYprcXGlTqGxWqpgDEzfmICcSPz2A
-         WPrA==
-X-Gm-Message-State: ABy/qLZ9i5qebZT7BcS1ZQcmDTmKYzxTv/0PVQx43Lh23kraapkWFe+u
-        0vmI5InBIfivedmnHjmWJVSniA==
-X-Google-Smtp-Source: APBJJlGEsdtEwWWJfacVcGi+Dsqd2b+jGFfvJ4z/rc3dtCIIxrqGuwRCY+tS+E4GlzN+3ut+SY007A==
-X-Received: by 2002:a05:6512:3d88:b0:4fe:18be:ef37 with SMTP id k8-20020a0565123d8800b004fe18beef37mr2678219lfv.61.1690566076947;
-        Fri, 28 Jul 2023 10:41:16 -0700 (PDT)
+        bh=PUOsuK9U4cZ6JZwfdNB+TmQHxYWxH/A53SQYnwAxe3c=;
+        b=KhKSfn3JJfBQyDC8W7L+CtpHUQFiTpF5ypJx2/SltmZVNo3EIr0jQOIxTMfkMgK5F+
+         Nf9HzYuT/DQibxK7/FIwVS+9Gg2R28Mh3HD/KsCeb2hdZhDehbPA9vbZLsz4016vmotM
+         bV5af/G2fSp+0VcLM5zme0v5FyP0Y6z13wy5LXNjg/kxcfILXt74XgQaq5Ok/wPpUPvH
+         O0EzLjDnjjQs2gjxNi1L8lugbk8ILTOK61g+LnG4dQ/lveZo9OzJBQEflz+5bUOrG20m
+         td4bmJxcimFP6lEGBdhY2gqcv2pkZcEVxRqmDuLZXnRCQti0NKvlVbAZEAHl7zA2vS4u
+         ua4g==
+X-Gm-Message-State: ABy/qLb1bnr8dx/qVG3N0JqMc0uCij9EO421GkF6i/mHpAoNjX3mmrrY
+        utkhuyxcmMVZR0shZcPINWWrYA==
+X-Google-Smtp-Source: APBJJlGnVjSw7A9DS3Za+2hl0ftYT1UQ5cn4KqOuMH5176hNY6DIv7UEGrIyoIsMuCy2H67BAkFgwQ==
+X-Received: by 2002:a05:6512:3c8c:b0:4fb:7da3:de4 with SMTP id h12-20020a0565123c8c00b004fb7da30de4mr2561530lfv.13.1690566412057;
+        Fri, 28 Jul 2023 10:46:52 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id q25-20020ac25299000000b004fbb1f7352csm888982lfm.72.2023.07.28.10.41.15
+        by smtp.gmail.com with ESMTPSA id w9-20020a05651204c900b004f85628ec34sm897120lfq.33.2023.07.28.10.46.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jul 2023 10:41:16 -0700 (PDT)
-Message-ID: <7a727add-6aa6-fe3d-b2bd-7e0bd2f93579@linaro.org>
-Date:   Fri, 28 Jul 2023 19:41:14 +0200
+        Fri, 28 Jul 2023 10:46:51 -0700 (PDT)
+Message-ID: <a8ebcacd-19c7-b5e7-f372-6abde311e17d@linaro.org>
+Date:   Fri, 28 Jul 2023 19:46:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/33] iris: vidc: add helper functions
+Subject: Re: [PATCH 13/33] iris: vidc: add helper functions for power
+ management
 Content-Language: en-US
 To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
         stanimir.k.varbanov@gmail.com, agross@kernel.org,
@@ -63,7 +64,7 @@ To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
         linux-arm-msm@vger.kernel.org
 Cc:     quic_dikshita@quicinc.com
 References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
- <1690550624-14642-11-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-14-git-send-email-quic_vgarodia@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,13 +101,13 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1690550624-14642-11-git-send-email-quic_vgarodia@quicinc.com>
+In-Reply-To: <1690550624-14642-14-git-send-email-quic_vgarodia@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -114,80 +115,93 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 28.07.2023 15:23, Vikash Garodia wrote:
-> This implements common helper functions for v4l2 to vidc and
-> vice versa conversion for different enums.
-> Add helpers for state checks, buffer management, locks etc.
+> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> 
+> this implements functions for calculating current load of the
+> hardware. Depending on the count of instances and
+> resolutions it selects the best clock rate for the video
+> core. Also it scales clocks, power and enable/disable dcvs.
 > 
 > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> ---
-[...]
+> ---[...]
 
 > +
-> +#define is_odd(val) ((val) % 2 == 1)
-> +#define in_range(val, min, max) (((min) <= (val)) && ((val) <= (max)))
-> +#define COUNT_BITS(a, out) {       \
-hweight.* functions?
-
-[...]
+> +/* TODO: Move to dtsi OR use source clock instead of branch clock.*/
+> +#define MSM_VIDC_CLOCK_SOURCE_SCALING_RATIO 3
+Seems unused in this patch.
 
 > +
-> +const char *cap_name(enum msm_vidc_inst_capability_type cap_id)
+> +enum vidc_bus_type {
+> +	PERF,
+> +	DDR,
+> +	LLCC,
+> +};
+> +
+> +/*
+> + * Minimum dimensions for which to calculate bandwidth.
+> + * This means that anything bandwidth(0, 0) ==
+> + * bandwidth(BASELINE_DIMENSIONS.width, BASELINE_DIMENSIONS.height)
+> + */
+> +static const struct {
+> +	int height, width;
+> +} BASELINE_DIMENSIONS = {
+> +	.width = 1280,
+> +	.height = 720,
+> +};
+> +
+> +/* converts Mbps to bps (the "b" part can be bits or bytes based on context) */
+if 'b', the multiplier must be 1024 or it makes no sense
+
+> +#define kbps(__mbps) ((__mbps) * 1000)
+> +#define bps(__mbps) (kbps(__mbps) * 1000)
+> +
+[...]
+
+> +void __dump(struct dump dump[], int len)
 > +{
-> +	const char *name = "UNKNOWN CAP";
-Perhaps it'd be worth to include the unknown cap id here
+> +	int c = 0;
+> +
+> +	for (c = 0; c < len; ++c) {
+> +		char format_line[128] = "", formatted_line[128] = "";
+That's a lot of bytes on the stack..
 
 > +
-> +	if (cap_id >= ARRAY_SIZE(cap_name_arr))
-> +		goto exit;
-> +
-> +	name = cap_name_arr[cap_id];
-> +
-> +exit:
-> +	return name;
-> +}
-[...]
-
-> +
-> +const char *buf_name(enum msm_vidc_buffer_type type)
-> +{
-> +	const char *name = "UNKNOWN BUF";
-Similarly here
-
-> +
-> +	if (type >= ARRAY_SIZE(buf_type_name_arr))
-> +		goto exit;
-> +
-> +	name = buf_type_name_arr[type];
-> +
-> +exit:
-> +	return name;
-> +}
-[...]
-
-> +const char *v4l2_type_name(u32 port)
-> +{
-> +	switch (port) {
-switch-case seems a bit excessive here.
-
-> +	case INPUT_MPLANE:      return "INPUT";
-> +	case OUTPUT_MPLANE:     return "OUTPUT";
+> +		if (dump[c].val == DUMP_HEADER_MAGIC) {
+> +			snprintf(formatted_line, sizeof(formatted_line), "%s\n",
+> +				 dump[c].key);
+> +		} else {
+> +			snprintf(format_line, sizeof(format_line),
+> +				 "    %-35s: %s\n", dump[c].key,
+> +					 dump[c].format);
+> +			snprintf(formatted_line, sizeof(formatted_line),
+> +				 format_line, dump[c].val);
+> +		}
+> +		d_vpr_b("%s", formatted_line);
 > +	}
-> +
-> +	return "UNKNOWN";
 > +}
+> +
+> +u64 msm_vidc_max_freq(struct msm_vidc_inst *inst)
+> +{
+> +	struct msm_vidc_core *core;
+> +	struct frequency_table *freq_tbl;
+> +	u64 freq = 0;
+> +
+> +	core = inst->core;
+> +
+> +	if (!core->resource || !core->resource->freq_set.freq_tbl ||
+> +	    !core->resource->freq_set.count) {
+> +		i_vpr_e(inst, "%s: invalid frequency table\n", __func__);
+> +		return freq;
+> +	}
+> +	freq_tbl = core->resource->freq_set.freq_tbl;
+Do we need a separate freuqency table if we have OPP?
 [...]
 
-There's some more stuff I'd comment on, but 4500 lines in a single patch
-is way too much to logically follow.
 
-Couple more style suggestions:
-- use Reverse-Christmas-tree sorting for variable declarations
-- some oneliner functions could possibly become preprocessor macros
-- when printing giant debug messages, you may want to use loops
-- make sure your indentation is in order, 100 chars per line is
-  totally fine
-- generally inline magic hex values are discouraged, but if they're
-  necessary, the hex should be lowercase
+> +	if (inst->power.fw_cf) {
+> +		cf = inst->power.fw_cf;
+> +		frame_size = (msm_vidc_get_mbs_per_frame(inst) / (32 * 8) * 3) / 2;
+too magic!
 
 Konrad
