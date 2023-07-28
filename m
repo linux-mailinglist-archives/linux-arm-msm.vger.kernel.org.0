@@ -2,201 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B507766719
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 10:28:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F25E9766717
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 10:28:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234010AbjG1I2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 04:28:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59890 "EHLO
+        id S233580AbjG1I2I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 04:28:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235002AbjG1I0y (ORCPT
+        with ESMTP id S234848AbjG1I1X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 04:26:54 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548723C29;
-        Fri, 28 Jul 2023 01:26:21 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36S5uwmT030949;
-        Fri, 28 Jul 2023 08:26:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nIhIpM+nZlYrVmhcjX6AZNM3fVpwRFqZHOP+wRj7lH0=;
- b=WMM5u4lot6b48e2dAOv0zj08J6H6mVWwG9/bYUzOCzpZP2+iz04huo0XkRy/kLCOBBVH
- 0zXCkIXJg71PTlKE+Oip1CjXNXdVrY0GC6En36FEGInZfvLVcwC9bOoQ7bpqg6t2A9sU
- uBTUWYmuzMzzhr/jcdDREKXnAalBSLJgHr5ILrN6yml31quYv9Z+GMhmscH1cM7b+SSy
- 0gp2BKGErGUER9WeQZOvHs1+y52Gy3AKalLQJ4vYrKoM5bhopRM4+FBL8wIPdrk1JouO
- jOft/XTsEFuMiK8uvxMrzWuWmq4aiNX3UWL67I9CrYkcQ7mMeNw0Gp4E0fxEynv+ZJKK MA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s3k7u2y7n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Jul 2023 08:26:17 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36S8Q51V015623
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Jul 2023 08:26:05 GMT
-Received: from [10.216.15.230] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
- 2023 01:26:00 -0700
-Message-ID: <f38f3a60-28c1-7566-3772-21edb70d4c9c@quicinc.com>
-Date:   Fri, 28 Jul 2023 13:55:57 +0530
+        Fri, 28 Jul 2023 04:27:23 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E205D3A8B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 01:27:21 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe1a35a135so2420984e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 01:27:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690532840; x=1691137640;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wjknMk9xDOdfH8tlcXEgST094q3tv+7K3A03BMiS3S8=;
+        b=yAWwa/GRLkDZZ4Rykif2uAUtYp20wQlJjIM/2pHOafKd8dC7tf2fAwuqDhVoCgwlQL
+         vFjNP8uv2Wp38EdfqcTxdkfiKmsLid5aBHt+ivLuJH7nkWcx3a/m8eLq7YGwtBcYgb6D
+         xPEYuwkxCtT8dKNQhFuyLGx576ny357Frkunl/FF2VY8p2FUO1ziVgp4sVVNgzzQHXJM
+         Q3U/qs0yM4pSB2soclGhm6Qt1KbVhfDj/eFtWUEdKKkJsnolCHV2XjflaTQr3lynn5f9
+         E8tD7Iflhv3cw3iKswUXQtpGqB+2jC2zEXHBGy+EnCs3PVowXfTMuzMvjq+JZ0oTYS5I
+         u+gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690532840; x=1691137640;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wjknMk9xDOdfH8tlcXEgST094q3tv+7K3A03BMiS3S8=;
+        b=RRPnYa9hg1wtqtB7uVbf2xIFbInBwxdXICmd2E5H762AEJZuU2PEBknPuSZqIZcKaT
+         FFexvWxcZo12/9uXcVGpb5gpYMr9zlwF7XZmXX3e0kZQ4/TJTbmxsWL5jZNcWDGRxh3V
+         XQmvbpzfHWHF8zJHJD3GQBxUe/HL/clxIw0MbVkvdu4o3/axg+VNW3NjqaccXLP/D+pW
+         4fmdmYfFrPGTv2PUlki8s/jZoCKLcH5nUFolK1+4CVomVCP0Lfdjt2/qODHngIKqCNZy
+         1xre/EnGPauI0DFo2bh4M+fJNafkBXKCrS1y2TgyoJpqN4DaGt18g0KkGrEMUttGfygj
+         Y+eQ==
+X-Gm-Message-State: ABy/qLa7tr/2S4iAKYFPqfzcZTEsLs6BCm5L5p3qcLtgvkLQxx/+UPTp
+        RJr7K3kpNrX2v60GOC1cb4ZLhw==
+X-Google-Smtp-Source: APBJJlF3I5wf7RWZJLYXn4nrVP+lvIHaqAMcKZc3ypHI+/2MRCVd46QbfOZh+nv/toPn/5epDiSLMg==
+X-Received: by 2002:ac2:5f4c:0:b0:4fb:a990:bb28 with SMTP id 12-20020ac25f4c000000b004fba990bb28mr1052611lfz.18.1690532840066;
+        Fri, 28 Jul 2023 01:27:20 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id w6-20020aa7dcc6000000b005223ad8d7d7sm1520005edu.30.2023.07.28.01.27.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Jul 2023 01:27:19 -0700 (PDT)
+Message-ID: <117f6341-55d7-601b-203f-8a09dd4bb22f@linaro.org>
+Date:   Fri, 28 Jul 2023 10:27:16 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v5 2/2] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
- support
+Subject: Re: [PATCH v4 09/11] remoteproc: qcom: Add Hexagon based multipd
+ rproc driver
 Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230724083849.8277-1-quic_kbajaj@quicinc.com>
- <20230724083849.8277-3-quic_kbajaj@quicinc.com>
- <f6fab6b7-0cfb-6aa5-2043-6c789709d04a@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <f6fab6b7-0cfb-6aa5-2043-6c789709d04a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Y0Y4DRVlxpxbObHMycyFLqwQl1XWOOsC
-X-Proofpoint-ORIG-GUID: Y0Y4DRVlxpxbObHMycyFLqwQl1XWOOsC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999
- suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307280076
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mathieu.poirier@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_eberman@quicinc.com, kvalo@kernel.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_varada@quicinc.com
+References: <20230728063412.1641856-1-quic_mmanikan@quicinc.com>
+ <20230728063412.1641856-10-quic_mmanikan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230728063412.1641856-10-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 28/07/2023 08:34, Manikanta Mylavarapu wrote:
+> +
+> +static int q6_get_inbound_irq(struct qcom_q6v5 *q6,
+> +			      struct platform_device *pdev,
+> +			      const char *int_name,
+> +			      int index, int *pirq,
+> +			      irqreturn_t (*handler)(int irq, void *data))
+> +{
+> +	int ret, irq;
+> +	char *interrupt, *tmp = (char *)int_name;
+> +	struct q6_wcss *wcss = q6->rproc->priv;
+> +
+> +	irq = platform_get_irq(pdev, index);
+> +	if (irq < 0) {
+> +		if (irq != -EPROBE_DEFER)
+
+Still not good... I think I am saying this the third time: drop this
+eprobe defer dance. It is not needed. Just open the definition of
+dev_err_probe().
+
+> +			return dev_err_probe(&pdev->dev, irq,
+> +					     "failed to retrieve %s IRQ: %d\n",
+> +					     int_name, irq);
+> +	}
+> +
 
 
-On 7/27/2023 4:14 PM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 24/07/2023 09:38, Komal Bajaj wrote:
->> For some of the Qualcomm SoC's, it is possible that
->> some of the fuse regions or entire qfprom region is
->> protected from non-secure access. In such situations,
->> Linux will have to use secure calls to read the region.
->> With that motivation, add secure qfprom driver.
->>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->> ---
->>   drivers/nvmem/Kconfig      |  13 +++++
->>   drivers/nvmem/Makefile     |   2 +
->>   drivers/nvmem/sec-qfprom.c | 101 +++++++++++++++++++++++++++++++++++++
->>   3 files changed, 116 insertions(+)
->>   create mode 100644 drivers/nvmem/sec-qfprom.c
->>
-> 
->> diff --git a/drivers/nvmem/sec-qfprom.c b/drivers/nvmem/sec-qfprom.c
->> new file mode 100644
->> index 000000000000..bc68053b7d94
->> --- /dev/null
->> +++ b/drivers/nvmem/sec-qfprom.c
->> @@ -0,0 +1,101 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + */
->> +
->> +#include <linux/firmware/qcom/qcom_scm.h>
->> +#include <linux/mod_devicetable.h>
->> +#include <linux/nvmem-provider.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/pm_runtime.h>
-> 
->> +
->> +static int sec_qfprom_probe(struct platform_device *pdev)
->> +{
->> +    struct nvmem_config econfig = {
->> +        .name = "sec-qfprom",
->> +        .stride = 1,
->> +        .word_size = 1,
->> +        .id = NVMEM_DEVID_AUTO,
->> +        .reg_read = sec_qfprom_reg_read,
->> +    };
->> +    struct device *dev = &pdev->dev;
->> +    struct nvmem_device *nvmem;
->> +    struct sec_qfprom *priv;
->> +    struct resource *res;
->> +    int ret;
->> +
->> +    priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
->> +    if (!priv)
->> +        return -ENOMEM;
->> +
->> +    res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
->> +    if (!res)
->> +        return -EINVAL;
->> +
->> +    priv->base = res->start;
->> +
->> +    econfig.size = resource_size(res);
->> +    econfig.dev = dev;
->> +    econfig.priv = priv;
->> +
->> +    priv->dev = dev;
->> +
->> +    ret = devm_pm_runtime_enable(dev);
->> +    if (ret)
->> +        return ret;
-> 
-> Any reason why we need to enable pm runtime for this driver? As Am not 
-> seeing any pm runtime handlers or users in this driver.
 
-Thanks..
-Yes, it is not needed as of now..
-looks like, it got inherited from qfprom.c by mistake.
+Best regards,
+Krzysztof
 
-Same need to be corrected in Device tree, if any
-unnecessary reference is there related to this..
-
--Mukesh
-> 
-> 
-> --srini
->> +
->> +    nvmem = devm_nvmem_register(dev, &econfig);
->> +
->> +    return PTR_ERR_OR_ZERO(nvmem);
->> +}
->> +
->> +static const struct of_device_id sec_qfprom_of_match[] = {
->> +    { .compatible = "qcom,sec-qfprom" },
->> +    {/* sentinel */},
->> +};
->> +MODULE_DEVICE_TABLE(of, sec_qfprom_of_match);
->> +
->> +static struct platform_driver qfprom_driver = {
->> +    .probe = sec_qfprom_probe,
->> +    .driver = {
->> +        .name = "qcom_sec_qfprom",
->> +        .of_match_table = sec_qfprom_of_match,
->> +    },
->> +};
->> +module_platform_driver(qfprom_driver);
->> +MODULE_DESCRIPTION("Qualcomm Secure QFPROM driver");
->> +MODULE_LICENSE("GPL");
->> -- 
->> 2.40.1
->>
