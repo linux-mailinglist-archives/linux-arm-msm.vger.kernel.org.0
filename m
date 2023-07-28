@@ -2,60 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAE077663CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 07:56:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 381AC7663DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jul 2023 08:03:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230404AbjG1F4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 01:56:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38916 "EHLO
+        id S231986AbjG1GDn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 02:03:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjG1F4N (ORCPT
+        with ESMTP id S231573AbjG1GDm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 01:56:13 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A057719BA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jul 2023 22:56:11 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qPGS0-0000hF-3c; Fri, 28 Jul 2023 07:55:44 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qPGRu-002dev-MD; Fri, 28 Jul 2023 07:55:38 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qPGRt-008QNG-PH; Fri, 28 Jul 2023 07:55:37 +0200
-Date:   Fri, 28 Jul 2023 07:55:35 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Liao Chang <liaochang1@huawei.com>
-Cc:     andi.shyti@kernel.org, florian.fainelli@broadcom.com,
-        rjui@broadcom.com, sbranden@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com, yangyicong@hisilicon.com,
-        aisheng.dong@nxp.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        kblaiech@nvidia.com, asmaa@nvidia.com, loic.poulain@linaro.org,
-        rfoss@kernel.org, ardb@kernel.org, gcherian@marvell.com,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org
-Subject: Re: [PATCH 8/9] i2c: imx-lpi2c: Use dev_err_probe in probe function
-Message-ID: <20230728055535.qoqq5syketmtduoy@pengutronix.de>
-References: <20230728013148.1720978-1-liaochang1@huawei.com>
- <20230728013148.1720978-9-liaochang1@huawei.com>
+        Fri, 28 Jul 2023 02:03:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A48271D;
+        Thu, 27 Jul 2023 23:03:41 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36S1gHAp008494;
+        Fri, 28 Jul 2023 06:03:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=7+9oIDVZ4iHF5uAqJ4m0LXvPESLhYEkJLouB8LuXRFM=;
+ b=kPE3XgzzDKn+B9rAaMtCWHD7f+XZAeUdjJFvPHp23La4s7afiM58I7eKBvrqPA7Cqxii
+ 070xz/dNmN0NOfnLkqyc9hnZ/mN9OhB+96+cIudlsrRzqr0ysmSqpuSEo7EYj9fmoODh
+ C/USNY8vgKc5xtteWbzgJOjGRFGhWvr1CU11BPCY3+N/0ciwlCcOrpQOXYg5/e3zr7kX
+ amCjlnkM6aQlnLbjgBloNAImjQuvajEG9I/8sUI+vXeHJZ9AUpfTWhzYKv/R6HL1pCDG
+ DX+D/6V9z9kG4oxJqxC9nNC38nQHncFkMXwLdNg5c4k48VTqh1ynXaSUbM0qVMhsmw5s qw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s447kgbku-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Jul 2023 06:03:32 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36S63VvA003160
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Jul 2023 06:03:32 GMT
+Received: from [10.216.15.230] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 27 Jul
+ 2023 23:03:26 -0700
+Message-ID: <01ef5a38-3902-6581-affa-eb68ba8b0d04@quicinc.com>
+Date:   Fri, 28 Jul 2023 11:33:22 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="u5yvvpqys3zvr2vr"
-Content-Disposition: inline
-In-Reply-To: <20230728013148.1720978-9-liaochang1@huawei.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] treewide: Update Guru Das Srinagesh's email address
+Content-Language: en-US
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        "Chanwoo Choi" <cw00.choi@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20230728001622.4938-1-quic_gurus@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230728001622.4938-1-quic_gurus@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aVzKI4LprVvp0giywU_VJCpyoPPx5jij
+X-Proofpoint-GUID: aVzKI4LprVvp0giywU_VJCpyoPPx5jij
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=907
+ clxscore=1011 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307280054
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -63,64 +88,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---u5yvvpqys3zvr2vr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
-
-On Fri, Jul 28, 2023 at 09:31:47AM +0800, Liao Chang wrote:
-> Use the dev_err_probe function instead of dev_err in the probe function
-> so that the printed messge includes the return value and also handles
-> -EPROBE_DEFER nicely.
->=20
-> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+On 7/28/2023 5:46 AM, Guru Das Srinagesh wrote:
+> Clean up my email address as the codeaurora.org address is not used
+> anymore.
+> 
+> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
 > ---
->  drivers/i2c/busses/i2c-imx-lpi2c.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-=
-imx-lpi2c.c
-> index c3287c887c6f..9021b8064ae4 100644
-> --- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-> +++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-> @@ -569,10 +569,8 @@ static int lpi2c_imx_probe(struct platform_device *p=
-dev)
->  		sizeof(lpi2c_imx->adapter.name));
-> =20
->  	ret =3D devm_clk_bulk_get_all(&pdev->dev, &lpi2c_imx->clks);
-> -	if (ret < 0) {
-> -		dev_err(&pdev->dev, "can't get I2C peripheral clock, ret=3D%d\n", ret);
-> -		return ret;
-> -	}
-> +	if (ret < 0)
-> +		return dev_err_probe(&pdev->dev, ret, "can't get I2C peripheral clock\=
-n");
+>   Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 2 +-
+>   Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml         | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> index 2c8cf6aab19a..6b80518cbf62 100644
+> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>   title: Qualcomm Technologies, Inc. PM8941 USB ID Extcon device
+>   
+>   maintainers:
+> -  - Guru Das Srinagesh <gurus@codeaurora.org>
+> +  - Guru Das Srinagesh <quic_gurus@quicinc.com>
+>   
+>   description: |
+>     Some Qualcomm PMICs have a "misc" module that can be used to detect when
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> index e6a2387d8650..9e4eed34dae8 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>   title: Qualcomm Technologies, Inc. PM8008 PMIC
+>   
+>   maintainers:
+> -  - Guru Das Srinagesh <gurus@codeaurora.org>
+> +  - Guru Das Srinagesh <quic_gurus@quicinc.com>
 
-The change looks good, however I wonder why you didn't convert the other
-dev_err() called by lpi2c_imx_probe() in the same way.
+Just a question, is this still needed after below change ?
 
-Best regards
-Uwe
+https://lore.kernel.org/lkml/20230720210256.1296567-1-quic_bjorande@quicinc.com/
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---u5yvvpqys3zvr2vr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmTDWFYACgkQj4D7WH0S
-/k4I2wf/eI0u/N5T1PYKnxNXv78Ur25Zop7D3UxjTLXWIpFQyXb9SYi3YxeRI+Yg
-MA7Kd/4uHuZuPCSFiiSZQyzqReMBW+hDp1b1NV6lFGIr7CEXTWnM9l9iWOTF6zkH
-eipX6d7fRKAnSaedWwYZxDQUn0MFra+kS6zdCrcxqEpGOXo1/x4kdhB0aBndYeuk
-J4fy4hLnxAmorYnIKMoDXvtRJonV7+xTzRO6xf+zOAwvvyGF7jRqdOjn6u43GCte
-5PFpoBQtMkPPpzKHPl0Bh1Q6oAJp1FtyQt5Vq1v3hlqJKRiYI8UWZ0el/qUh7RJt
-ab6qZ9yIp1T29962caCRtn2Lo52/+g==
-=mqMn
------END PGP SIGNATURE-----
-
---u5yvvpqys3zvr2vr--
+-Mukesh
+>   
+>   description: |
+>     Qualcomm Technologies, Inc. PM8008 is a dedicated camera PMIC that integrates
+> 
+> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
