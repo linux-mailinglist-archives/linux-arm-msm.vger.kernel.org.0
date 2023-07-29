@@ -2,81 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35CE576798E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 02:30:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA2997679A1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 02:34:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbjG2Aar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 20:30:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55350 "EHLO
+        id S232112AbjG2Aet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 20:34:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjG2Aaq (ORCPT
+        with ESMTP id S229592AbjG2Aer (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 20:30:46 -0400
+        Fri, 28 Jul 2023 20:34:47 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FB0E48;
-        Fri, 28 Jul 2023 17:30:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C11DC2;
+        Fri, 28 Jul 2023 17:34:46 -0700 (PDT)
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36T0QaJ3019726;
-        Sat, 29 Jul 2023 00:30:41 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36T0CUlm023961;
+        Sat, 29 Jul 2023 00:34:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
  cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=4ryQ4VY2iuPwio/zUiaUR4jB8wu6z2TdFVd/vX6F7v4=;
- b=AszBDm8PXwfmrMnprkeyAR2zxd08l1omk8EwLl12wS22evqwnpOymHOez2Xt2CnONJki
- eseDB5N/vE2Ylu3LGcOltFKu1KHZRpEwI1vJ4NKEB9wjejbX4m5Q5oyRO4eV2cyUVrxO
- dU/PL9FozlXdP9G76+p3D7tx4JJJBHzyUrKAVyypw4BI/ad1AYfieQAVj7QTnbbxXBYj
- SKVPf97Db84trQp5KX4LnQ3gB/IMlHTtQCQrnHik01j8TXfbWI+q1amVXEqXoGuQAzx/
- PLBiLo9zBkardGeYhWj7FEab8zNwTjXdd+04ehiOZQMi9xCQhqbJJI8B1PjIP3iVUrgo 2Q== 
+ content-transfer-encoding : in-reply-to; s=qcppdkim1;
+ bh=F27hwl9tI974THVrfkh2OErJAY/cWYVzivqDD+GiXXU=;
+ b=WEETP6ln7mRk5V1iU/Kn8ax0G0qg/AksUIgA8+CK3VGDFlohDR7IuZxMXVzuziDneYbI
+ F7KdhvJd1n9kS4lVqcErZfL8QBQFhXP+AllY1f0vE9Po+9sKhbKpDLEwdVqI/bfH8yix
+ aKE+qhX1bwf+o4rvJ4hqfG16A7y92FnBdCfmRElfDnaLIYS2p2E8e8b2f/jc8xUmoANZ
+ ELqfAFG4cDYS1iXchl14PFF+DP+T6mAVsyOZKLWgS5qM215Lvh7ij21bxKSA6s85njll
+ VjYxGDjQJyem0jU9G7uUsjvRfnd8qLiarXsLOlEVMQ6KPgG/LPxIyo7NTg80V1Y7gXdH jw== 
 Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4j0g0p69-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4j0g0phg-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 00:30:40 +0000
+        Sat, 29 Jul 2023 00:34:42 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T0Udxs006544
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T0YfNA012186
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 00:30:39 GMT
+        Sat, 29 Jul 2023 00:34:41 GMT
 Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
- 2023 17:30:38 -0700
-Date:   Fri, 28 Jul 2023 17:30:37 -0700
+ 2023 17:34:41 -0700
+Date:   Fri, 28 Jul 2023 17:34:40 -0700
 From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <quic_eberman@quicinc.com>, <kvalo@kernel.org>,
-        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_varada@quicinc.com>
-Subject: Re: [PATCH v4 07/11] firmware: qcom_scm: ipq5332: add msa
- lock/unlock support
-Message-ID: <20230729003037.GA25463@quicinc.com>
-References: <20230728063412.1641856-1-quic_mmanikan@quicinc.com>
- <20230728063412.1641856-8-quic_mmanikan@quicinc.com>
+To:     Kathiravan T <quic_kathirav@quicinc.com>
+CC:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Elliot Berman" <quic_eberman@quicinc.com>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
+        Kalle Valo <kvalo@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_saahtoma@quicinc.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH V5 1/3] firmware: qcom_scm: provide a read-modify-write
+ function
+Message-ID: <20230729003440.GB25463@quicinc.com>
+References: <20230720070408.1093698-1-quic_kathirav@quicinc.com>
+ <20230720070408.1093698-2-quic_kathirav@quicinc.com>
+ <fdd4bc8b-1349-485d-18c5-c6d69cd415a1@quicinc.com>
+ <3ab86e8d-cc00-d0bb-20f8-4c75c90a7db8@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <20230728063412.1641856-8-quic_mmanikan@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3ab86e8d-cc00-d0bb-20f8-4c75c90a7db8@quicinc.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rgHczPV4G-qsl8fDBqaZtPgFe6lm6HnU
-X-Proofpoint-ORIG-GUID: rgHczPV4G-qsl8fDBqaZtPgFe6lm6HnU
+X-Proofpoint-GUID: VTOhw3Imm0ZSF4_uivZokM8wlR6Naa3e
+X-Proofpoint-ORIG-GUID: VTOhw3Imm0ZSF4_uivZokM8wlR6Naa3e
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- lowpriorityscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 mlxlogscore=433 mlxscore=0 malwarescore=0 spamscore=0
  impostorscore=0 phishscore=0 adultscore=0 bulkscore=0 priorityscore=1501
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307290002
+ definitions=main-2307290003
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -87,117 +94,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Jul 28 2023 12:04, Manikanta Mylavarapu wrote:
-> IPQ5332 user pd remoteproc firmwares need to be locked
-> with MSA(modem secure access) features. This patch add
-> support to lock/unlock MSA features.
+On Jul 23 2023 19:25, Kathiravan T wrote:
 > 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
-> Changes in v4:
-> 	- Rebased on linux-next
+> On 7/22/2023 6:47 AM, Trilok Soni wrote:
+> >On 7/20/2023 12:04 AM, Kathiravan T wrote:
+> >>From: Mukesh Ojha <quic_mojha@quicinc.com>
+> >>
+> >>It was realized by Srinivas K. that there is a need of read-modify-write
+> >>scm exported function so that it can be used by multiple clients.
+> >>
+> >>Let's introduce qcom_scm_io_update_field() which masks out the bits and
+> >>write the passed value to that bit-offset.
+> >>
+> >>Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> >>Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> >>Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> >>---
+> >>Changes in V5:
+> >>    - No changes
+> >>
+> >>  drivers/firmware/qcom_scm.c            | 15 +++++++++++++++
+> >>  include/linux/firmware/qcom/qcom_scm.h |  2 ++
+> >>  2 files changed, 17 insertions(+)
+> >>
+> >>diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> >>index fde33acd46b7..104d86e49b97 100644
+> >>--- a/drivers/firmware/qcom_scm.c
+> >>+++ b/drivers/firmware/qcom_scm.c
+> >>@@ -407,6 +407,21 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+> >>  }
+> >>  EXPORT_SYMBOL(qcom_scm_set_remote_state);
+> >>  +int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask,
+> >>unsigned int val)
+> >>+{
+> >>+    unsigned int old, new;
+> >>+    int ret;
+> >>+
+> >>+    ret = qcom_scm_io_readl(addr, &old);
+> >>+    if (ret)
+> >>+        return ret;
+> >>+
+> >>+    new = (old & ~mask) | (val & mask);
+> >>+
+> >>+    return qcom_scm_io_writel(addr, new);
+> >>+}
+> >>+EXPORT_SYMBOL(qcom_scm_io_update_field);
+> >
+> >EXPORT_SYMBO_GPL please.
 > 
->  drivers/firmware/qcom_scm.c            | 78 ++++++++++++++++++++++++++
->  drivers/firmware/qcom_scm.h            |  2 +
->  include/linux/firmware/qcom/qcom_scm.h |  2 +
->  3 files changed, 82 insertions(+)
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 3bc8c63a997f..2275cf7bc887 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -676,6 +676,84 @@ bool qcom_scm_pas_supported(u32 peripheral)
->  }
->  EXPORT_SYMBOL(qcom_scm_pas_supported);
->  
-> +/**
-> + * qcom_scm_msa_lock() - Lock given peripheral firmware region as MSA
-> + *
-> + * @peripheral:	peripheral id
-> + *
-> + * Return 0 on success.
-> + */
-> +int qcom_scm_msa_lock(u32 peripheral)
-> +{
-> +	int ret;
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_PIL,
-> +		.cmd = QCOM_SCM_MSA_LOCK,
-> +		.arginfo = QCOM_SCM_ARGS(1),
-> +		.args[0] = peripheral,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +	struct qcom_scm_res res;
-> +
-> +	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
-> +					  QCOM_SCM_MSA_LOCK))
-> +		return 0;
-> +
-> +	ret = qcom_scm_clk_enable();
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = qcom_scm_bw_enable();
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	qcom_scm_bw_disable();
-> +	qcom_scm_clk_disable();
-> +
-> +	return ret ? : res.result[0];
-> +}
-> +EXPORT_SYMBOL(qcom_scm_msa_lock);
+> Sure, is it okay if I send the patch to convert the existing EXPORT_SYMBOL
+> to EXPORT_SYMBOL_GPL as well?
 
-Could you please convert this to EXPORT_SYMBOL_GPL? 
-
-> +
-> +/**
-> + * qcom_scm_msa_unlock() - Unlock given peripheral MSA firmware region
-> + *
-> + * @peripheral:	peripheral id
-> + *
-> + * Return 0 on success.
-> + */
-> +int qcom_scm_msa_unlock(u32 peripheral)
-> +{
-> +	int ret;
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_PIL,
-> +		.cmd = QCOM_SCM_MSA_UNLOCK,
-> +		.arginfo = QCOM_SCM_ARGS(1),
-> +		.args[0] = peripheral,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +	struct qcom_scm_res res;
-> +
-> +	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
-> +					  QCOM_SCM_MSA_UNLOCK))
-> +		return 0;
-> +
-> +	ret = qcom_scm_clk_enable();
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = qcom_scm_bw_enable();
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	qcom_scm_bw_disable();
-> +	qcom_scm_clk_disable();
-> +
-> +	return ret ? : res.result[0];
-> +}
-> +EXPORT_SYMBOL(qcom_scm_msa_unlock);
-
-This one too?
-
-Reference: [1]
-The whole driver has now moved to using EXPORT_SYMBOL_GPL() now.
+This is done already [1].
 
 [1] https://lore.kernel.org/lkml/19d9ac0bf79f957574ef9b3b73246ea0113cc0fd.1690503893.git.quic_gurus@quicinc.com/
-
-Thank you.
-
-Guru Das.
