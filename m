@@ -2,88 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA2997679A1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 02:34:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BAC4767B5F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 03:54:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232112AbjG2Aet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 20:34:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56996 "EHLO
+        id S231785AbjG2Byz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 21:54:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjG2Aer (ORCPT
+        with ESMTP id S229618AbjG2Byz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 20:34:47 -0400
+        Fri, 28 Jul 2023 21:54:55 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C11DC2;
-        Fri, 28 Jul 2023 17:34:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47C13C38
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 18:54:49 -0700 (PDT)
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36T0CUlm023961;
-        Sat, 29 Jul 2023 00:34:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=F27hwl9tI974THVrfkh2OErJAY/cWYVzivqDD+GiXXU=;
- b=WEETP6ln7mRk5V1iU/Kn8ax0G0qg/AksUIgA8+CK3VGDFlohDR7IuZxMXVzuziDneYbI
- F7KdhvJd1n9kS4lVqcErZfL8QBQFhXP+AllY1f0vE9Po+9sKhbKpDLEwdVqI/bfH8yix
- aKE+qhX1bwf+o4rvJ4hqfG16A7y92FnBdCfmRElfDnaLIYS2p2E8e8b2f/jc8xUmoANZ
- ELqfAFG4cDYS1iXchl14PFF+DP+T6mAVsyOZKLWgS5qM215Lvh7ij21bxKSA6s85njll
- VjYxGDjQJyem0jU9G7uUsjvRfnd8qLiarXsLOlEVMQ6KPgG/LPxIyo7NTg80V1Y7gXdH jw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4j0g0phg-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36SNPmPh004179;
+        Sat, 29 Jul 2023 00:49:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=L0qAJAZUF2TZuxT3ixsbyFq8VsBf1MHwL1g3Gwf7Ogg=;
+ b=G3Ke45nX8+kLqxuJhaJssJmAypQOm/VsPY/TjjGloQaxbxnKH5Vgstbb8TNwwC9vEG4V
+ PKxplWDnrWK+fRdBsycLK0U/jSBHlDlZPLOon/ZT4npOHi8Cx0ie/L5Z8slqGLIXqizw
+ 6C6Ygb+bTPxi4WSo6K66nFvKkvcpHoNwS9PnMPesZEE4sueFH7LVM4D47UHJrM1NolJk
+ 21jUbKiwJYbtqb+F7+Cd3ugbG3KSGtIEZCDnEK2EUX6Zu23fxl7cN7/vn0U5/hCctpAt
+ AmXyxKWNr+hve2ej/9Y35Fa4KUqY1m5TAQR69kifJnd/84nniBE3S5DCdUpECarJsjPV Lg== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4j0g0qj0-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 00:34:42 +0000
+        Sat, 29 Jul 2023 00:49:44 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T0YfNA012186
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T0nhfB010721
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 00:34:41 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+        Sat, 29 Jul 2023 00:49:43 GMT
+Received: from [10.110.51.188] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
- 2023 17:34:41 -0700
-Date:   Fri, 28 Jul 2023 17:34:40 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Kathiravan T <quic_kathirav@quicinc.com>
-CC:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "Elliot Berman" <quic_eberman@quicinc.com>,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        Kalle Valo <kvalo@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_saahtoma@quicinc.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH V5 1/3] firmware: qcom_scm: provide a read-modify-write
- function
-Message-ID: <20230729003440.GB25463@quicinc.com>
-References: <20230720070408.1093698-1-quic_kathirav@quicinc.com>
- <20230720070408.1093698-2-quic_kathirav@quicinc.com>
- <fdd4bc8b-1349-485d-18c5-c6d69cd415a1@quicinc.com>
- <3ab86e8d-cc00-d0bb-20f8-4c75c90a7db8@quicinc.com>
+ 2023 17:49:41 -0700
+Message-ID: <40e6772a-ddda-8d81-f01d-8c5524d40077@quicinc.com>
+Date:   Fri, 28 Jul 2023 17:49:40 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3ab86e8d-cc00-d0bb-20f8-4c75c90a7db8@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/13] drm/msm/dpu: use drmm-managed allocation for
+ dpu_plane
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230707231251.3849701-1-dmitry.baryshkov@linaro.org>
+ <20230707231251.3849701-10-dmitry.baryshkov@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230707231251.3849701-10-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VTOhw3Imm0ZSF4_uivZokM8wlR6Naa3e
-X-Proofpoint-ORIG-GUID: VTOhw3Imm0ZSF4_uivZokM8wlR6Naa3e
+X-Proofpoint-GUID: TyxjSAlo2pp9t27wAssTIKaUoSdoOwM6
+X-Proofpoint-ORIG-GUID: TyxjSAlo2pp9t27wAssTIKaUoSdoOwM6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- lowpriorityscore=0 mlxlogscore=433 mlxscore=0 malwarescore=0 spamscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0 spamscore=0
  impostorscore=0 phishscore=0 adultscore=0 bulkscore=0 priorityscore=1501
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307290003
+ definitions=main-2307290005
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -94,58 +87,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Jul 23 2023 19:25, Kathiravan T wrote:
-> 
-> On 7/22/2023 6:47 AM, Trilok Soni wrote:
-> >On 7/20/2023 12:04 AM, Kathiravan T wrote:
-> >>From: Mukesh Ojha <quic_mojha@quicinc.com>
-> >>
-> >>It was realized by Srinivas K. that there is a need of read-modify-write
-> >>scm exported function so that it can be used by multiple clients.
-> >>
-> >>Let's introduce qcom_scm_io_update_field() which masks out the bits and
-> >>write the passed value to that bit-offset.
-> >>
-> >>Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >>Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> >>Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> >>---
-> >>Changes in V5:
-> >>    - No changes
-> >>
-> >>  drivers/firmware/qcom_scm.c            | 15 +++++++++++++++
-> >>  include/linux/firmware/qcom/qcom_scm.h |  2 ++
-> >>  2 files changed, 17 insertions(+)
-> >>
-> >>diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> >>index fde33acd46b7..104d86e49b97 100644
-> >>--- a/drivers/firmware/qcom_scm.c
-> >>+++ b/drivers/firmware/qcom_scm.c
-> >>@@ -407,6 +407,21 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
-> >>  }
-> >>  EXPORT_SYMBOL(qcom_scm_set_remote_state);
-> >>  +int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask,
-> >>unsigned int val)
-> >>+{
-> >>+    unsigned int old, new;
-> >>+    int ret;
-> >>+
-> >>+    ret = qcom_scm_io_readl(addr, &old);
-> >>+    if (ret)
-> >>+        return ret;
-> >>+
-> >>+    new = (old & ~mask) | (val & mask);
-> >>+
-> >>+    return qcom_scm_io_writel(addr, new);
-> >>+}
-> >>+EXPORT_SYMBOL(qcom_scm_io_update_field);
-> >
-> >EXPORT_SYMBO_GPL please.
-> 
-> 
-> Sure, is it okay if I send the patch to convert the existing EXPORT_SYMBOL
-> to EXPORT_SYMBOL_GPL as well?
 
-This is done already [1].
 
-[1] https://lore.kernel.org/lkml/19d9ac0bf79f957574ef9b3b73246ea0113cc0fd.1690503893.git.quic_gurus@quicinc.com/
+On 7/7/2023 4:12 PM, Dmitry Baryshkov wrote:
+> Change struct dpu_plane allocation to use drmm_universal_plane_alloc().
+> This removes the need to perform any actions on plane destruction.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 46 +++++------------------
+>   1 file changed, 10 insertions(+), 36 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index f114efee1b57..9d9e1cbf0dd7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1170,20 +1170,6 @@ static void dpu_plane_atomic_update(struct drm_plane *plane,
+>   	}
+>   }
+>   
+> -static void dpu_plane_destroy(struct drm_plane *plane)
+> -{
+> -	struct dpu_plane *pdpu = plane ? to_dpu_plane(plane) : NULL;
+> -
+> -	DPU_DEBUG_PLANE(pdpu, "\n");
+> -
+> -	if (pdpu) {
+> -		/* this will destroy the states as well */
+> -		drm_plane_cleanup(plane);
+> -
+> -		kfree(pdpu);
+> -	}
+> -}
+> -
+>   static void dpu_plane_destroy_state(struct drm_plane *plane,
+>   		struct drm_plane_state *state)
+>   {
+> @@ -1353,7 +1339,6 @@ static bool dpu_plane_format_mod_supported(struct drm_plane *plane,
+>   static const struct drm_plane_funcs dpu_plane_funcs = {
+>   		.update_plane = drm_atomic_helper_update_plane,
+>   		.disable_plane = drm_atomic_helper_disable_plane,
+> -		.destroy = dpu_plane_destroy,
+>   		.reset = dpu_plane_reset,
+>   		.atomic_duplicate_state = dpu_plane_duplicate_state,
+>   		.atomic_destroy_state = dpu_plane_destroy_state,
+> @@ -1381,35 +1366,28 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   	struct dpu_hw_sspp *pipe_hw;
+>   	uint32_t num_formats;
+>   	uint32_t supported_rotations;
+> -	int ret = -EINVAL;
+> -
+> -	/* create and zero local structure */
+> -	pdpu = kzalloc(sizeof(*pdpu), GFP_KERNEL);
+> -	if (!pdpu) {
+> -		DPU_ERROR("[%u]failed to allocate local plane struct\n", pipe);
+> -		ret = -ENOMEM;
+> -		return ERR_PTR(ret);
+> -	}
+> -
+> -	/* cache local stuff for later */
+> -	plane = &pdpu->base;
+> -	pdpu->pipe = pipe;
+> +	int ret;
+>   
+>   	/* initialize underlying h/w driver */
+>   	pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
+>   	if (!pipe_hw || !pipe_hw->cap || !pipe_hw->cap->sblk) {
+>   		DPU_ERROR("[%u]SSPP is invalid\n", pipe);
+> -		goto clean_plane;
+> +		return ERR_PTR(-EINVAL);
+>   	}
+>   
+>   	format_list = pipe_hw->cap->sblk->format_list;
+>   	num_formats = pipe_hw->cap->sblk->num_formats;
+>   
+> -	ret = drm_universal_plane_init(dev, plane, 0xff, &dpu_plane_funcs,
+> +	pdpu = drmm_universal_plane_alloc(dev, struct dpu_plane, base,
+> +				0xff, &dpu_plane_funcs,
+>   				format_list, num_formats,
+>   				supported_format_modifiers, type, NULL);
+> -	if (ret)
+> -		goto clean_plane;
+> +	if (IS_ERR(pdpu))
+> +		return ERR_CAST(pdpu);
+> +
+> +	/* cache local stuff for later */
+> +	plane = &pdpu->base;
+> +	pdpu->pipe = pipe;
+>   
+>   	pdpu->catalog = kms->catalog;
+>   
+> @@ -1439,8 +1417,4 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   	DPU_DEBUG("%s created for pipe:%u id:%u\n", plane->name,
+>   					pipe, plane->base.id);
+>   	return plane;
+> -
+> -clean_plane:
+> -	kfree(pdpu);
+> -	return ERR_PTR(ret);
+>   }
+> -- 
+> 2.39.2
+> 
