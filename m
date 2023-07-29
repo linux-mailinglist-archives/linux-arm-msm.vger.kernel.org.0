@@ -2,154 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36C49767A88
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 03:11:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8C68767C56
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 07:29:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237067AbjG2BLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 21:11:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34048 "EHLO
+        id S229710AbjG2F3P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jul 2023 01:29:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235833AbjG2BLW (ORCPT
+        with ESMTP id S229602AbjG2F3O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 21:11:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C79435A5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 18:11:21 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36SNfs52031718;
-        Sat, 29 Jul 2023 01:11:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UWsGmsJb3Fzw/lgOq0BQ3++Iwqp1MJeniobuGbmbC9I=;
- b=iwASIXv16WtByPmXorqpTOQnnLGzPcXVD3TO77w9E4Eci1D59BB4ht73Gz2s12fCPcLt
- wa9poZFK9FxT8BP3PIiwcJsDLyLGLHFAAtwHDBoFJJbZEGKN4ZI50U2zmQ9cgF7NrhKT
- /h6nbwOrw04/AjWUK4gfaxw0iBq2FRLSgNG+Kwh4YW56jgDaaWaDvNaskP894suxV65t
- IHWwVa8Lzq2P/uz4v0hLmBomnuwUWs4QxNEhHTIi8gU8oF9eULsJxK4PPQAG3T8Q4KDe
- 80a/SYKzcrZCBcJlviasUtJuS4fJqW9tVM/wPrvSwmI2ZU4XzUeBa+JAmqT0JQBFRPcI dg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s46ttj8ut-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 01:11:12 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T1BB48029792
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 01:11:11 GMT
-Received: from [10.110.51.188] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
- 2023 18:11:10 -0700
-Message-ID: <4705e582-1fcb-cf5a-a05d-cf2c76c38253@quicinc.com>
-Date:   Fri, 28 Jul 2023 18:11:10 -0700
+        Sat, 29 Jul 2023 01:29:14 -0400
+Received: from mgamail.intel.com (unknown [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EC149CA;
+        Fri, 28 Jul 2023 22:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690608552; x=1722144552;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=p5OlNuOBiNRpIEoTzzV9BfAcI6Rj48c+yaAUgRH2CiY=;
+  b=jSmjbp4SdBu5aW+UFPchpawfqgjO9SqfYQlNdQbXrD1xYrlwNscA+b0K
+   qSxYhI49UX5PNoL00POwRuGuM/KtkxfhYqsE+QfjxQbJGAe48B4r/HeJm
+   IQyQBU8KJU8RNiTlVYHPKqtJ9s7wviKdAqAMeH48mz4r3hh8MAq02cAFk
+   bZK/WmVaHBaSGLWW2FQjULs610or3Tyl/B/SGMjmQkxlQxo9cfuilmRI9
+   5yKo1QaqjjxPBUv+LhcWdxLIGJ7rykcCVekvkC4W5u1RyLv8uox5F8ZWp
+   TYmgaSHRJHWrq+EuAw9GB9jxMvnRkwH6JgEhCHhPGAFAWXy5XCzBKxD2u
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10785"; a="348338525"
+X-IronPort-AV: E=Sophos;i="6.01,239,1684825200"; 
+   d="scan'208";a="348338525"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2023 22:29:11 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10785"; a="793131840"
+X-IronPort-AV: E=Sophos;i="6.01,239,1684825200"; 
+   d="scan'208";a="793131840"
+Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
+  by fmsmga008.fm.intel.com with ESMTP; 28 Jul 2023 22:29:09 -0700
+Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qPcVo-0003r5-1j;
+        Sat, 29 Jul 2023 05:29:08 +0000
+Date:   Sat, 29 Jul 2023 13:28:14 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Nikita Travkin <nikita@trvn.ru>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH 4/4] power: supply: Add driver for pm8916 lbc
+Message-ID: <202307291336.Zxmj8R1g-lkp@intel.com>
+References: <20230728-pm8916-bms-lbc-v1-4-56da32467487@trvn.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/13] drm/msm/dpu: drop dpu_encoder_phys_ops::destroy
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230707231251.3849701-1-dmitry.baryshkov@linaro.org>
- <20230707231251.3849701-13-dmitry.baryshkov@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20230707231251.3849701-13-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jnMUhHDuZRQ4tqd4vA3zoGHE4EWmLIMK
-X-Proofpoint-GUID: jnMUhHDuZRQ4tqd4vA3zoGHE4EWmLIMK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- impostorscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999
- lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307290009
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230728-pm8916-bms-lbc-v1-4-56da32467487@trvn.ru>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Nikita,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on d7b3af5a77e8d8da28f435f313e069aea5bcf172]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Nikita-Travkin/dt-bindings-power-supply-Add-pm8916-VM-BMS/20230729-013044
+base:   d7b3af5a77e8d8da28f435f313e069aea5bcf172
+patch link:    https://lore.kernel.org/r/20230728-pm8916-bms-lbc-v1-4-56da32467487%40trvn.ru
+patch subject: [PATCH 4/4] power: supply: Add driver for pm8916 lbc
+config: i386-allyesconfig (https://download.01.org/0day-ci/archive/20230729/202307291336.Zxmj8R1g-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230729/202307291336.Zxmj8R1g-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202307291336.Zxmj8R1g-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/power/supply/pm8916_lbc.c: In function 'pm8916_lbc_charger_get_property':
+>> drivers/power/supply/pm8916_lbc.c:130:22: warning: unused variable 'tmp' [-Wunused-variable]
+     130 |         unsigned int tmp;
+         |                      ^~~
+>> drivers/power/supply/pm8916_lbc.c:129:13: warning: unused variable 'ret' [-Wunused-variable]
+     129 |         int ret = 0;
+         |             ^~~
 
 
-On 7/7/2023 4:12 PM, Dmitry Baryshkov wrote:
-> Drop the dpu_encoder_phys_ops' destroy() callback. No phys backend
-> implements it anymore, so it is useless.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+vim +/tmp +130 drivers/power/supply/pm8916_lbc.c
 
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+   123	
+   124	static int pm8916_lbc_charger_get_property(struct power_supply *psy,
+   125						   enum power_supply_property psp,
+   126						   union power_supply_propval *val)
+   127	{
+   128		struct pm8916_lbc_charger *chg = power_supply_get_drvdata(psy);
+ > 129		int ret = 0;
+ > 130		unsigned int tmp;
+   131	
+   132		switch (psp) {
+   133		case POWER_SUPPLY_PROP_ONLINE:
+   134			val->intval = chg->online;
+   135			return 0;
+   136	
+   137		case POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE_MAX:
+   138			val->intval = chg->charge_voltage_max;
+   139			return 0;
+   140	
+   141		case POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT:
+   142			val->intval = chg->charge_current_max;
+   143			return 0;
+   144	
+   145		default:
+   146			return -EINVAL;
+   147		};
+   148	}
+   149	
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c    | 18 ------------------
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  2 --
->   2 files changed, 20 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 7c2cd9ce8acd..b42176ce4a3a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -456,24 +456,6 @@ static void dpu_encoder_destroy(struct drm_encoder *drm_enc)
->   	dpu_enc = to_dpu_encoder_virt(drm_enc);
->   	DPU_DEBUG_ENC(dpu_enc, "\n");
->   
-> -	mutex_lock(&dpu_enc->enc_lock);
-> -
-> -	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-> -		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
-> -
-> -		if (phys->ops.destroy) {
-> -			phys->ops.destroy(phys);
-> -			--dpu_enc->num_phys_encs;
-> -			dpu_enc->phys_encs[i] = NULL;
-> -		}
-> -	}
-> -
-> -	if (dpu_enc->num_phys_encs)
-> -		DPU_ERROR_ENC(dpu_enc, "expected 0 num_phys_encs not %d\n",
-> -				dpu_enc->num_phys_encs);
-> -	dpu_enc->num_phys_encs = 0;
-> -	mutex_unlock(&dpu_enc->enc_lock);
-> -
->   	drm_encoder_cleanup(drm_enc);
->   	mutex_destroy(&dpu_enc->enc_lock);
->   }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> index 4fb0d95f3061..757ce58f958b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> @@ -72,7 +72,6 @@ struct dpu_encoder_phys;
->    * @enable:			DRM Call. Enable a DRM mode.
->    * @disable:			DRM Call. Disable mode.
->    * @atomic_check:		DRM Call. Atomic check new DRM state.
-> - * @destroy:			DRM Call. Destroy and release resources.
->    * @control_vblank_irq		Register/Deregister for VBLANK IRQ
->    * @wait_for_commit_done:	Wait for hardware to have flushed the
->    *				current pending frames to hardware
-> @@ -102,7 +101,6 @@ struct dpu_encoder_phys_ops {
->   	int (*atomic_check)(struct dpu_encoder_phys *encoder,
->   			    struct drm_crtc_state *crtc_state,
->   			    struct drm_connector_state *conn_state);
-> -	void (*destroy)(struct dpu_encoder_phys *encoder);
->   	int (*control_vblank_irq)(struct dpu_encoder_phys *enc, bool enable);
->   	int (*wait_for_commit_done)(struct dpu_encoder_phys *phys_enc);
->   	int (*wait_for_tx_complete)(struct dpu_encoder_phys *phys_enc);
-> -- 
-> 2.39.2
-> 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
