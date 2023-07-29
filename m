@@ -2,52 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 206387682A6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 01:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54CA97682A9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 01:06:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229472AbjG2XEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Jul 2023 19:04:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45120 "EHLO
+        id S229544AbjG2XGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jul 2023 19:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjG2XEX (ORCPT
+        with ESMTP id S229514AbjG2XGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Jul 2023 19:04:23 -0400
-Received: from mgamail.intel.com (unknown [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2DF32D71;
-        Sat, 29 Jul 2023 16:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690671860; x=1722207860;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=zlXK6QwP0Nk5exo7XwS/kokL11ivuPGX9LHwXsColEs=;
-  b=ZwMvWZS7cTGTWmykkOu8uNuZAPj0uKjeu6z9eSPDDxYQ4nkQ0VH2lONa
-   6WngRzd5+y6E9bineVFprNnwi2T5DiUnWm2WzuUwRmdQ3bqixcf94+a56
-   3ZqSw9EUUolMrHmEYAHMW3WGFWs9USiWCWNw5JBHeZR/OGtOiRXm+Z8Tg
-   huUKfNKma+JKoybnP/jKxl2FvctD1N0+OqcpbC8h5lpsKtkFSgef/6cbj
-   EqxYO6MLhM4Pbuf8PGYTYSzEjdLPzQOe/hXDUGLaJtOdNg1nyUfjn2do9
-   H2V0y/gVuMU7zoCCGJAc0nEIOSTYZZMsR5g/sDSNBqTaJXcUPTDmY+mi0
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10786"; a="348400700"
-X-IronPort-AV: E=Sophos;i="6.01,240,1684825200"; 
-   d="scan'208";a="348400700"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2023 16:04:20 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10786"; a="731158024"
-X-IronPort-AV: E=Sophos;i="6.01,240,1684825200"; 
-   d="scan'208";a="731158024"
-Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
-  by fmsmga007.fm.intel.com with ESMTP; 29 Jul 2023 16:04:15 -0700
-Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qPsyr-0004KZ-2f;
-        Sat, 29 Jul 2023 23:04:13 +0000
-Date:   Sun, 30 Jul 2023 07:04:03 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Sat, 29 Jul 2023 19:06:42 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69DC02D4C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 16:06:41 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-583d702129cso34643477b3.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 16:06:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690672000; x=1691276800;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/muLVJBTfJy4sEvxdsnx9X7USkoLQCDic9wXkkLaYLo=;
+        b=EUky0LpvnqGuKIAsZ4/Q6MwcK/oPUJQC6q/iXjbf8Mg/pImKd95kWvfIvEoz0hjLEl
+         IDXq6IC002x/oVA1v19llsx/AJZsCMpX4KdhEWR+RHKVInItdfa6g1pwhUlVOblZaG3m
+         3LFeP4FrVFxJCXV6ecsVTeKv8JQHVFA0hYK5T6MKpLPFQZ0YyfrIivxYM6ozsjN4kpen
+         Fvr2BbaHQ3fqzz6bhKaHHVahcs+Zt4iCFRO7V/hVufjjXrC92l1U3UojUzV4Kx2hPefE
+         saNsrBLvXxn5PSDP7SPxBiG+gLpk1rpeMTi8G4wiiU8RN+fH8Tu0gXdMIlIFonhMweIo
+         vzkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690672000; x=1691276800;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/muLVJBTfJy4sEvxdsnx9X7USkoLQCDic9wXkkLaYLo=;
+        b=KiJmFDH29DMd+9dvwj+nesLC75D4WxnBQ4gkKZ1YPY429A2a3rhlWU4mevIatVoeUa
+         +NmjvFZqixLSDIR7gqxkcqn8Ah1F/mql7SEbtfkEgPaLIJXEgFidNfVO0y/Wqvf0t5su
+         LAaYHPzdYiknwUO9ajS+x0rFOhZ95p5gfo2JQGkTStAbeJlSFOn/OHDEMBT104Y1ivv1
+         Job1KyPBwk62PdZzBgrri5H08Psc+GZsj8u44EkGEA5OUtH2D/uJsNrtB2Sf3FtboDuu
+         BxH6GyS52ViRmJ3D2Lurd4VJ9/oTOXt5GLRPHs2PcEjWyUyrZwf7CBZK2WZUAq5GumMW
+         ++Vg==
+X-Gm-Message-State: ABy/qLavexelXGWvoXuUFQn7zTcRM6i32CZ8mMv/eQZxH5Je82NHjvKD
+        oeJ6riAndMftCjq8LrStugIN+OPbDDuEU31PMZFQYw==
+X-Google-Smtp-Source: APBJJlHfoZ6Xr5CfW8PPzNE3Z2CdpsPRR8CNcc4mp0BoZINPljqKuxiyat6ToSqKHdkQb6SoyH8yqJ3XSgeBvRSNF9A=
+X-Received: by 2002:a81:4607:0:b0:576:9ec8:db68 with SMTP id
+ t7-20020a814607000000b005769ec8db68mr6302219ywa.18.1690672000514; Sat, 29 Jul
+ 2023 16:06:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230729204307.268587-1-dmitry.baryshkov@linaro.org> <20230729204307.268587-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230729204307.268587-2-dmitry.baryshkov@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 30 Jul 2023 02:06:29 +0300
+Message-ID: <CAA8EJpryy39EPqf23OjWNWVtO98vx+G-exJStqstwJZErKkMBw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/display: add transparent bridge helper
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -56,19 +62,12 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Heikki Krogerus <heikki.krogerus@linux.intel.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-phy@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 3/3] usb: typec: nb7vpq904m: switch to DRM_SIMPLE_BRIDGE
-Message-ID: <202307300616.LxBZQNEh-lkp@intel.com>
-References: <20230729204307.268587-4-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230729204307.268587-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,134 +75,212 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On Sat, 29 Jul 2023 at 23:43, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Define a helper for creating simple transparent bridges which serve the
+> only purpose of linking devices into the bridge chain up to the last
+> bridge representing the connector. This is especially useful for
+> DP/USB-C bridge chains, which can span across several devices, but do
+> not require any additional functionality from the intermediate bridges.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/display/Kconfig             |   9 ++
+>  drivers/gpu/drm/display/Makefile            |   2 +
+>  drivers/gpu/drm/display/drm_simple_bridge.c | 120 ++++++++++++++++++++
+>  include/drm/display/drm_simple_bridge.h     |  19 ++++
+>  4 files changed, 150 insertions(+)
+>  create mode 100644 drivers/gpu/drm/display/drm_simple_bridge.c
+>  create mode 100644 include/drm/display/drm_simple_bridge.h
+>
+> diff --git a/drivers/gpu/drm/display/Kconfig b/drivers/gpu/drm/display/Kconfig
+> index 09712b88a5b8..a6132984b9e3 100644
+> --- a/drivers/gpu/drm/display/Kconfig
+> +++ b/drivers/gpu/drm/display/Kconfig
+> @@ -49,3 +49,12 @@ config DRM_DP_CEC
+>
+>           Note: not all adapters support this feature, and even for those
+>           that do support this they often do not hook up the CEC pin.
+> +
+> +config DRM_SIMPLE_BRIDGE
+> +       tristate
+> +       depends on DRM
+> +       select AUXILIARY_BUS
+> +       select DRM_PANEL_BRIDGE
+> +       help
+> +         Simple transparent bridge that is used by several drivers to build
+> +         bridges chain.
+> diff --git a/drivers/gpu/drm/display/Makefile b/drivers/gpu/drm/display/Makefile
+> index 17ac4a1006a8..6e2b0d7f24b3 100644
+> --- a/drivers/gpu/drm/display/Makefile
+> +++ b/drivers/gpu/drm/display/Makefile
+> @@ -16,3 +16,5 @@ drm_display_helper-$(CONFIG_DRM_DP_AUX_CHARDEV) += drm_dp_aux_dev.o
+>  drm_display_helper-$(CONFIG_DRM_DP_CEC) += drm_dp_cec.o
+>
+>  obj-$(CONFIG_DRM_DISPLAY_HELPER) += drm_display_helper.o
+> +
+> +obj-$(CONFIG_DRM_SIMPLE_BRIDGE) += drm_simple_bridge.o
+> diff --git a/drivers/gpu/drm/display/drm_simple_bridge.c b/drivers/gpu/drm/display/drm_simple_bridge.c
+> new file mode 100644
+> index 000000000000..c9966691efb1
+> --- /dev/null
+> +++ b/drivers/gpu/drm/display/drm_simple_bridge.c
+> @@ -0,0 +1,120 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright (C) 2023 Linaro Ltd.
+> + *
+> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> + */
+> +#include <linux/auxiliary_bus.h>
+> +#include <linux/module.h>
+> +
+> +#include <drm/drm_bridge.h>
+> +#include <drm/display/drm_simple_bridge.h>
+> +
+> +static DEFINE_IDA(simple_bridge_ida);
+> +
+> +static void drm_simple_bridge_release(struct device *dev)
+> +{
+> +       struct auxiliary_device *adev = to_auxiliary_dev(dev);
+> +
+> +       kfree(adev);
+> +}
+> +
+> +static void drm_simple_bridge_unregister_adev(void *_adev)
+> +{
+> +       struct auxiliary_device *adev = _adev;
+> +
+> +       auxiliary_device_delete(adev);
+> +       auxiliary_device_uninit(adev);
+> +}
+> +
+> +int drm_simple_bridge_register(struct device *parent)
+> +{
+> +       struct auxiliary_device *adev;
+> +       int ret;
+> +
+> +       adev = kzalloc(sizeof(*adev), GFP_KERNEL);
+> +       if (!adev)
+> +               return -ENOMEM;
+> +
+> +       ret = ida_alloc(&simple_bridge_ida, GFP_KERNEL);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       adev->id = ret;
+> +       adev->name = "simple_bridge";
+> +       adev->dev.parent = parent;
+> +       adev->dev.of_node = parent->of_node;
+> +       adev->dev.release = drm_simple_bridge_release;
+> +
+> +       ret = auxiliary_device_init(adev);
+> +       if (ret) {
+> +               kfree(adev);
+> +               return ret;
+> +       }
+> +
+> +       ret = auxiliary_device_add(adev);
+> +       if (ret) {
+> +               auxiliary_device_uninit(adev);
+> +               return ret;
+> +       }
+> +
+> +       return devm_add_action_or_reset(parent, drm_simple_bridge_unregister_adev, adev);
+> +}
 
-kernel test robot noticed the following build errors:
+Forgot EXPORT_SYMBOL_GPL, MODULE_LICENSE, etc. I'll fix that for v2 if
+the overall idea is found to be acceptable.
 
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on usb/usb-testing usb/usb-next usb/usb-linus drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.5-rc3 next-20230728]
-[cannot apply to drm-intel/for-linux-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> +
+> +struct drm_simple_bridge_data {
+> +       struct drm_bridge bridge;
+> +       struct drm_bridge *next_bridge;
+> +       struct device *dev;
+> +};
+> +
+> +static int drm_simple_bridge_attach(struct drm_bridge *bridge,
+> +                                   enum drm_bridge_attach_flags flags)
+> +{
+> +       struct drm_simple_bridge_data *data;
+> +
+> +       if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
+> +               return -EINVAL;
+> +
+> +       data = container_of(bridge, struct drm_simple_bridge_data, bridge);
+> +
+> +       return drm_bridge_attach(bridge->encoder, data->next_bridge, bridge,
+> +                                DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+> +}
+> +
+> +static const struct drm_bridge_funcs drm_simple_bridge_funcs = {
+> +       .attach = drm_simple_bridge_attach,
+> +};
+> +
+> +static int drm_simple_bridge_probe(struct auxiliary_device *auxdev,
+> +                                  const struct auxiliary_device_id *id)
+> +{
+> +       struct drm_simple_bridge_data *data;
+> +
+> +       data = devm_kzalloc(&auxdev->dev, sizeof(*data), GFP_KERNEL);
+> +       if (!data)
+> +               return -ENOMEM;
+> +
+> +       data->dev = &auxdev->dev;
+> +       data->next_bridge = devm_drm_of_get_bridge(&auxdev->dev, auxdev->dev.of_node, 0, 0);
+> +       if (IS_ERR(data->next_bridge))
+> +               return dev_err_probe(&auxdev->dev, PTR_ERR(data->next_bridge),
+> +                                    "failed to acquire drm_bridge\n");
+> +
+> +       data->bridge.funcs = &drm_simple_bridge_funcs;
+> +       data->bridge.of_node = data->dev->of_node;
+> +
+> +       return devm_drm_bridge_add(data->dev, &data->bridge);
+> +}
+> +
+> +static const struct auxiliary_device_id drm_simple_bridge_table[] = {
+> +       { .name = KBUILD_MODNAME ".simple_bridge" },
+> +       {},
+> +};
+> +MODULE_DEVICE_TABLE(auxiliary, drm_simple_bridge_table);
+> +
+> +struct auxiliary_driver drm_simple_bridge_drv = {
+> +       .name = "simple_bridge",
+> +       .id_table = drm_simple_bridge_table,
+> +       .probe = drm_simple_bridge_probe,
+> +};
+> +module_auxiliary_driver(drm_simple_bridge_drv);
+> diff --git a/include/drm/display/drm_simple_bridge.h b/include/drm/display/drm_simple_bridge.h
+> new file mode 100644
+> index 000000000000..3da8e1fb1137
+> --- /dev/null
+> +++ b/include/drm/display/drm_simple_bridge.h
+> @@ -0,0 +1,19 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright (C) 2023 Linaro Ltd.
+> + *
+> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> + */
+> +#ifndef DRM_SIMPLE_BRIDGE_H
+> +#define DRM_SIMPLE_BRIDGE_H
+> +
+> +#if IS_ENABLED(CONFIG_DRM_SIMPLE_BRIDGE)
+> +int drm_simple_bridge_register(struct device *parent);
+> +#else
+> +static inline int drm_simple_bridge_register(struct device *parent)
+> +{
+> +       return 0;
+> +}
+> +#endif
+> +
+> +#endif
+> --
+> 2.39.2
+>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-add-transparent-bridge-helper/20230730-044510
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230729204307.268587-4-dmitry.baryshkov%40linaro.org
-patch subject: [PATCH 3/3] usb: typec: nb7vpq904m: switch to DRM_SIMPLE_BRIDGE
-config: arm-randconfig-r036-20230730 (https://download.01.org/0day-ci/archive/20230730/202307300616.LxBZQNEh-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230730/202307300616.LxBZQNEh-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202307300616.LxBZQNEh-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/nls/mac-greek.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/nls/mac-roman.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/nls/mac-turkish.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/unicode/utf8data.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/unicode/utf8-selftest.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/binfmt_misc.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in fs/binfmt_script.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in security/keys/trusted-keys/trusted.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/kunit/kunit.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/kunit/kunit-test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/kunit/kunit-example-test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/math/prime_numbers.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/crypto/libchacha.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/crypto/libdes.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/zlib_deflate/zlib_deflate.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in lib/asn1_encoder.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/phy/broadcom/phy-bcm-ns-usb2.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpio/gpio-mc33880.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pwm/pwm-pxa.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pwm/pwm-samsung.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pci/controller/pci-host-generic.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pci/controller/pcie-altera.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pci/controller/pcie-altera-msi.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/video/backlight/platform_lcd.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/video/backlight/rt4831-backlight.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/clk_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/clk-gate_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/qcom/clk-qcom.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/qcom/gcc-msm8976.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/virtio/virtio_dma_buf.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/regulator/da9121-regulator.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/regulator/tps6286x-regulator.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/char/hw_random/omap-rng.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/char/hw_random/omap3-rom-rng.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_kunit_helpers.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_buddy_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_cmdline_parser_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_connector_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_damage_helper_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_dp_mst_helper_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_format_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_framebuffer_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_managed_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_mm_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_modes_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_plane_helper_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_probe_helper_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_rect_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tests/drm_exec_test.o
-ERROR: modpost: missing MODULE_LICENSE() in drivers/gpu/drm/display/drm_simple_bridge.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/display/drm_simple_bridge.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/panel/panel-abt-y030xx067a.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/panel/panel-innolux-ej030na.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/panel/panel-newvision-nv3052c.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/panel/panel-orisetech-ota5601a.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/bridge/lontium-lt9611.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tiny/cirrus.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/tiny/gm12u320.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/gud/gud.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/drm_panel_orientation_quirks.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/drm_mipi_dbi.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/base/regmap/regmap-sccb.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/misc/fastrpc.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/qcom-pm8008.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spi/spi-altera-core.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spi/spi-omap2-mcspi.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pcmcia/yenta_socket.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/common/usb-otg-fsm.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/misc/yurex.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/gadget/function/usb_f_hid.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/gadget/function/usb_f_printer.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/gadget/legacy/g_dbgp.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/input/vivaldi-fmap.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/input/tests/input_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/i2c/uda1342.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/tuners/tda9887.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/common/uvc.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/v4l2-core/v4l2-async.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/v4l2-core/v4l2-fwnode.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/radio/si470x/radio-si470x-common.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/watchdog/menz69_wdt.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/firmware/google/cbmem.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/firmware/google/vpd-sysfs.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/devfreq/governor_powersave.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/perf/arm-ccn.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/hwtracing/intel_th/intel_th_msu_sink.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/nvmem/nvmem_brcm_nvram.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/nvmem/nvmem_u-boot-env.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mtd/parsers/tplink_safeloader.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mtd/chips/cfi_util.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mtd/chips/cfi_cmdset_0020.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mtd/maps/map_funcs.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio_cif.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio_aec.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio_netx.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/hwmon/mr75203.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/greybus/greybus.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/greybus/gb-es2.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/iio/buffer/kfifo_buf.o
->> ERROR: modpost: "drm_simple_bridge_register" [drivers/usb/typec/mux/nb7vpq904m.ko] undefined!
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
