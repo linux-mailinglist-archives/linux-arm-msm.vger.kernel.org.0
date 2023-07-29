@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A0BA768289
+	by mail.lfdr.de (Postfix) with ESMTP id E63D176828A
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 00:27:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbjG2W1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229604AbjG2W1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 29 Jul 2023 18:27:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42502 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjG2W1O (ORCPT
+        with ESMTP id S229521AbjG2W1O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 29 Jul 2023 18:27:14 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FCE82D6A
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9FE2D70
         for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 15:27:13 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b974031aeaso49038421fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 15:27:12 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9c0391749so50149471fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 15:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1690669631; x=1691274431;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tuizbfmaDO2vV++M3XhC6onxflL387BwUN+e79YzhTs=;
-        b=p/VjeE/SkSCqFsLQe+c3KXNEFqyhjZ+q5xuZzZ+R4sBZeyhF5HthKlDeYfSv0BfnFF
-         hEMG/qAKxL+EDTgCrXBLlKXpQqxW1rjkk9MbXsCvcipYw8gVWZBGRVjp/EH8QKVb3jDB
-         gl3+vSTIhK7GPs6+qN997fIMXrCGQxp7dTk+NxrCQqzpYvzrQBW9zVhsTVDOz5EYAoeG
-         Sli0idb1GEcjcVNsvjGPXXK5konVqpswMmQxI2bKtSLiq1ag2Mx4Z6iNREwPVH9+JxGc
-         Y/OXRcjGldp5jG6HtzqPbARhjObv5ds4Po3M3yETmSJuTScPx/1xun71Y9NoJesoRt5Q
-         xi/g==
+        bh=bh92DeTzmx0FcOgrWNxOJtI5fqtRUnI1//gTt5OX3PU=;
+        b=gR2aEo/Q8Y/vjfUmJ3592R02OwlpBTTAeyuIJwz4ODNJORVbzl8uFLpJX7Fm/Mhg9y
+         py0hvwssT8JUDWvkH4UpUrFYpZNk8bbnE3aNE9vW7Lsh8jMSK+klCL4UXf76diFSdh4p
+         U6FAQu7Hc5ptpZ3jdzxJmTRA870yPkT/VP95FWIj7ro9UKUW49VaXiAq6ITdXRGLvoZS
+         q19s8gjGQKCszio/5S/BuNYgjktQlWeKr2QRrcdOsaV74lRA4MtQHjNbYVIGKgQHRgem
+         FD2K2od1uO2KfuUfZVS0upppv/b0LZO+gajUqDNOb8l/bcA1HOsxt+VOAV2/eD+0yBRr
+         uy7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1690669631; x=1691274431;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tuizbfmaDO2vV++M3XhC6onxflL387BwUN+e79YzhTs=;
-        b=DYOr75aZLBOiX9KTMrCDfxnCQBW90qpuZQYhqr9HVknisa/xU10cMihY/faaqb5iT8
-         VaON+EIX3P5prIfeNhKHkla/g4TT5i/F461QCAfKbh4fz1YCMg+Rj/mCxTgQ1wQFtIqZ
-         eYMz7xcQlNBPTRm8y7pLS8p+Bd1EHBXskF5oM+IrkpMOBanb1vj3Q0b43sEHAkLo4Xae
-         HvGhzKgUqAMMb5Ggin3vWTTr3gxMuHExirv8eB1T87390bP5Jy6zINRi9DG+FoOXbvnf
-         WhdZuRioKnORfijUJ6jC5GOMxxWpMhNDHRXlOrnpS1HNv/s+WlRXhcNqRaEe5klgVOGZ
-         zG+g==
-X-Gm-Message-State: ABy/qLY8tz3zQ+lJphIxU5duEQIsIUEpFvUaRfj96DvfeHrSfaPMw2OC
-        X2Ovi38hTX0UHG9VliawjKTVmQ==
-X-Google-Smtp-Source: APBJJlHwaOfiuGyZ1+HXEPbCRDbZ+HT2wI9ovsNuRdFtduA0OJwcJT+5rFNmdF47AlKiSe7ISJyu+g==
-X-Received: by 2002:a2e:a0cd:0:b0:2b7:18ff:ba63 with SMTP id f13-20020a2ea0cd000000b002b718ffba63mr3901762ljm.37.1690669630818;
-        Sat, 29 Jul 2023 15:27:10 -0700 (PDT)
+        bh=bh92DeTzmx0FcOgrWNxOJtI5fqtRUnI1//gTt5OX3PU=;
+        b=N5V7fFgkqgsA9kBj+4IcAAk6YyZd40gBv9SvDr5UL+4bNTqZLzmltS5vBp5mYGfU1J
+         9Pf/WvO1IlkDH91f+eNJcxRp6YnC9RlrZZ7CpSA6aI9iNzQtKDXHjhradZSut4R458Js
+         PlCqP9f7ljNXRjFBKVvh0PGHh906HCssdWyQa7y+nLm/jW18LKNxfbk3Hs8hyNGZxbUo
+         8utmocxmU9iEKuEfAwWlW1tnwG9wbPtKIS8zYA6hewTevSSGY6B9aU7spUSEC0CfFjtx
+         l10FtgY0QNF/FOT1ponRUhD26j4AOJxhdqqovC+kQrafoNfZxPYE/dsNDWfmE8euPFCV
+         8EwQ==
+X-Gm-Message-State: ABy/qLYDGZTFnWH4/9wusZ6xnwBu3u1MeK1a0ioK7I/4mxIxwU3TKwT/
+        6Gq2mNhWTPIMud9kbkBgAuMzkg3LJQMTP+CHWVA=
+X-Google-Smtp-Source: APBJJlHUvgD/pfwYFUuYz7KpAxcER/rEN7OY/zSipiUM+Sh6vAyvz+GvlTNaAOO9eNI0A14Sgd1e8A==
+X-Received: by 2002:a2e:2e17:0:b0:2b7:3a8a:4d5f with SMTP id u23-20020a2e2e17000000b002b73a8a4d5fmr4133895lju.0.1690669631765;
+        Sat, 29 Jul 2023 15:27:11 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y9-20020a2e9789000000b002b9ae051ea1sm1734737lji.113.2023.07.29.15.27.09
+        by smtp.gmail.com with ESMTPSA id y9-20020a2e9789000000b002b9ae051ea1sm1734737lji.113.2023.07.29.15.27.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Jul 2023 15:27:10 -0700 (PDT)
+        Sat, 29 Jul 2023 15:27:11 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v4 1/7] drm/msm/dpu: remove irq_idx argument from IRQ callbacks
-Date:   Sun, 30 Jul 2023 01:27:02 +0300
-Message-Id: <20230729222708.329265-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 2/7] drm/msm/dpu: extract dpu_core_irq_is_valid() helper
+Date:   Sun, 30 Jul 2023 01:27:03 +0300
+Message-Id: <20230729222708.329265-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230729222708.329265-1-dmitry.baryshkov@linaro.org>
 References: <20230729222708.329265-1-dmitry.baryshkov@linaro.org>
@@ -78,201 +78,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no point in passing the IRQ index to IRQ callbacks, no function
-uses that. Drop it at last.
+In preparation to reworking IRQ indices, move irq_idx validation to
+a separate helper.
 
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h     |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      |  4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  8 ++++----
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c |  4 ++--
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c  | 16 +++++-----------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c    |  4 ++--
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h    |  2 +-
- 8 files changed, 18 insertions(+), 24 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 22 +++++++++----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-index b5b6e7031fb9..ba06312cbb16 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-@@ -53,7 +53,7 @@ u32 dpu_core_irq_read(
- int dpu_core_irq_register_callback(
- 		struct dpu_kms *dpu_kms,
- 		int irq_idx,
--		void (*irq_cb)(void *arg, int irq_idx),
-+		void (*irq_cb)(void *arg),
- 		void *irq_arg);
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index f0a2a1dca741..051447a3620c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -352,7 +352,7 @@ static int dpu_encoder_helper_wait_event_timeout(int32_t drm_id,
- 
- int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
- 		int irq,
--		void (*func)(void *arg, int irq_idx),
-+		void (*func)(void *arg),
- 		struct dpu_encoder_wait_info *wait_info)
- {
- 	u32 irq_status;
-@@ -399,7 +399,7 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
- 				      phys_enc->hw_pp->idx - PINGPONG_0,
- 				      atomic_read(wait_info->atomic_cnt));
- 			local_irq_save(flags);
--			func(phys_enc, irq);
-+			func(phys_enc);
- 			local_irq_restore(flags);
- 			ret = 0;
- 		} else {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index d48558ede488..f91661a69888 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -365,7 +365,7 @@ void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
-  */
- int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
- 		int irq,
--		void (*func)(void *arg, int irq_idx),
-+		void (*func)(void *arg),
- 		struct dpu_encoder_wait_info *wait_info);
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index df88358e7037..9589fe719452 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -76,7 +76,7 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
- 		phys_enc->hw_intf->ops.program_intf_cmd_cfg(phys_enc->hw_intf, &cmd_mode_cfg);
- }
- 
--static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-+static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 	unsigned long lock_flags;
-@@ -103,7 +103,7 @@ static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
- 	DPU_ATRACE_END("pp_done_irq");
- }
- 
--static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg, int irq_idx)
-+static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 	struct dpu_encoder_phys_cmd *cmd_enc;
-@@ -126,7 +126,7 @@ static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg, int irq_idx)
- 	DPU_ATRACE_END("rd_ptr_irq");
- }
- 
--static void dpu_encoder_phys_cmd_ctl_start_irq(void *arg, int irq_idx)
-+static void dpu_encoder_phys_cmd_ctl_start_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 
-@@ -139,7 +139,7 @@ static void dpu_encoder_phys_cmd_ctl_start_irq(void *arg, int irq_idx)
- 	DPU_ATRACE_END("ctl_start_irq");
- }
- 
--static void dpu_encoder_phys_cmd_underrun_irq(void *arg, int irq_idx)
-+static void dpu_encoder_phys_cmd_underrun_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index c2189e58de6a..a01fda711883 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -297,7 +297,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 	programmable_fetch_config(phys_enc, &timing_params);
- }
- 
--static void dpu_encoder_phys_vid_vblank_irq(void *arg, int irq_idx)
-+static void dpu_encoder_phys_vid_vblank_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 	struct dpu_hw_ctl *hw_ctl;
-@@ -334,7 +334,7 @@ static void dpu_encoder_phys_vid_vblank_irq(void *arg, int irq_idx)
- 	DPU_ATRACE_END("vblank_irq");
- }
- 
--static void dpu_encoder_phys_vid_underrun_irq(void *arg, int irq_idx)
-+static void dpu_encoder_phys_vid_underrun_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 78037a697633..870a1f5060e3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -345,7 +345,11 @@ static void dpu_encoder_phys_wb_setup(
- 
- }
- 
--static void _dpu_encoder_phys_wb_frame_done_helper(void *arg)
-+/**
-+ * dpu_encoder_phys_wb_done_irq - writeback interrupt handler
-+ * @arg:	Pointer to writeback encoder
-+ */
-+static void dpu_encoder_phys_wb_done_irq(void *arg)
- {
- 	struct dpu_encoder_phys *phys_enc = arg;
- 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
-@@ -371,16 +375,6 @@ static void _dpu_encoder_phys_wb_frame_done_helper(void *arg)
- 	wake_up_all(&phys_enc->pending_kickoff_wq);
- }
- 
--/**
-- * dpu_encoder_phys_wb_done_irq - writeback interrupt handler
-- * @arg:	Pointer to writeback encoder
-- * @irq_idx:	interrupt index
-- */
--static void dpu_encoder_phys_wb_done_irq(void *arg, int irq_idx)
--{
--	_dpu_encoder_phys_wb_frame_done_helper(arg);
--}
--
- /**
-  * dpu_encoder_phys_wb_irq_ctrl - irq control of WB
-  * @phys:	Pointer to physical encoder
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index e3c50439f80a..01a9ccfcd54b 100644
+index 01a9ccfcd54b..81d03b6c67d1 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -217,7 +217,7 @@ static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, int irq_idx)
- 	/*
- 	 * Perform registered function callback
- 	 */
--	dpu_kms->hw_intr->irq_tbl[irq_idx].cb(dpu_kms->hw_intr->irq_tbl[irq_idx].arg, irq_idx);
-+	dpu_kms->hw_intr->irq_tbl[irq_idx].cb(dpu_kms->hw_intr->irq_tbl[irq_idx].arg);
- }
+@@ -200,6 +200,12 @@ static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
+ #define DPU_IRQ_REG(irq_idx)	(irq_idx / 32)
+ #define DPU_IRQ_MASK(irq_idx)	(BIT(irq_idx % 32))
  
- irqreturn_t dpu_core_irq(struct msm_kms *kms)
-@@ -507,7 +507,7 @@ void dpu_hw_intr_destroy(struct dpu_hw_intr *intr)
- }
++static inline bool dpu_core_irq_is_valid(struct dpu_hw_intr *intr,
++					 int irq_idx)
++{
++	return irq_idx >= 0 && irq_idx < intr->total_irqs;
++}
++
+ /**
+  * dpu_core_irq_callback_handler - dispatch core interrupts
+  * @dpu_kms:		Pointer to DPU's KMS structure
+@@ -291,7 +297,7 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+ 	if (!intr)
+ 		return -EINVAL;
  
- int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
--		void (*irq_cb)(void *arg, int irq_idx),
-+		void (*irq_cb)(void *arg),
- 		void *irq_arg)
- {
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(intr, irq_idx)) {
+ 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
+@@ -344,7 +350,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+ 	if (!intr)
+ 		return -EINVAL;
+ 
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(intr, irq_idx)) {
+ 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
+@@ -429,13 +435,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
+ 	if (!intr)
+ 		return 0;
+ 
+-	if (irq_idx < 0) {
+-		DPU_ERROR("[%pS] invalid irq_idx=%d\n",
+-				__builtin_return_address(0), irq_idx);
+-		return 0;
+-	}
+-
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(intr, irq_idx)) {
+ 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+ 		return 0;
+ 	}
+@@ -518,7 +518,7 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(dpu_kms->hw_intr, irq_idx)) {
+ 		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
+@@ -555,7 +555,7 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx)
  	unsigned long irq_flags;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-index dab761e54863..e2b00dd32619 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-@@ -58,7 +58,7 @@ struct dpu_hw_intr {
- 	const struct dpu_intr_reg *intr_set;
+ 	int ret;
  
- 	struct {
--		void (*cb)(void *arg, int irq_idx);
-+		void (*cb)(void *arg);
- 		void *arg;
- 		atomic_t count;
- 	} irq_tbl[];
+-	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(dpu_kms->hw_intr, irq_idx)) {
+ 		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.2
 
