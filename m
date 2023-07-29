@@ -2,1020 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58DAC767988
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 02:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35CE576798E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jul 2023 02:30:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbjG2A3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jul 2023 20:29:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54644 "EHLO
+        id S229917AbjG2Aar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jul 2023 20:30:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbjG2A3H (ORCPT
+        with ESMTP id S229481AbjG2Aaq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jul 2023 20:29:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1497D2135
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jul 2023 17:28:45 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36SNobxU020127;
-        Sat, 29 Jul 2023 00:28:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=5QAwtwAvYZqXlCMp1Mdz9Jbh30N3QfcyLC7Semj/HOw=;
- b=JAdKeMGHL7XYuEsCsde6KLDmcm17qjOUPP1Bojus3/7+apsUkqx7wzScW7I1cjQUjMKB
- q1BzO7Rvo2f0LKI1n1DrqnysChmaWLcXzFZgTSZkpJWmq37V8pkROPqp5+b25P+1tiFR
- rFoeRhj+Igwz32O73JBtElf68m/vOfxMl69GVeP/MGzbrwom9ZSf1qhapnATArYpNkWM
- FBsf1m8QQicwJqa9rq3oUJ/BySC9t/cXvPXeUqLpZqQFUNZCAv+OZXaAA8J95lQ048nv
- RzAiMjSnxV1wORxUrwwMlbxaq64Nm/1S9QaXnc4MifvUjpNfLI+XytlMyxUr6iac9Ci1 ZA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4ktureed-1
+        Fri, 28 Jul 2023 20:30:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FB0E48;
+        Fri, 28 Jul 2023 17:30:45 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36T0QaJ3019726;
+        Sat, 29 Jul 2023 00:30:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=4ryQ4VY2iuPwio/zUiaUR4jB8wu6z2TdFVd/vX6F7v4=;
+ b=AszBDm8PXwfmrMnprkeyAR2zxd08l1omk8EwLl12wS22evqwnpOymHOez2Xt2CnONJki
+ eseDB5N/vE2Ylu3LGcOltFKu1KHZRpEwI1vJ4NKEB9wjejbX4m5Q5oyRO4eV2cyUVrxO
+ dU/PL9FozlXdP9G76+p3D7tx4JJJBHzyUrKAVyypw4BI/ad1AYfieQAVj7QTnbbxXBYj
+ SKVPf97Db84trQp5KX4LnQ3gB/IMlHTtQCQrnHik01j8TXfbWI+q1amVXEqXoGuQAzx/
+ PLBiLo9zBkardGeYhWj7FEab8zNwTjXdd+04ehiOZQMi9xCQhqbJJI8B1PjIP3iVUrgo 2Q== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4j0g0p69-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 00:28:30 +0000
+        Sat, 29 Jul 2023 00:30:40 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T0STua025854
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36T0Udxs006544
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Jul 2023 00:28:29 GMT
-Received: from [10.110.51.188] (10.80.80.8) by nasanex01b.na.qualcomm.com
+        Sat, 29 Jul 2023 00:30:39 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 28 Jul
- 2023 17:28:28 -0700
-Message-ID: <b851e992-25a5-6eae-2767-02dbcf27de50@quicinc.com>
-Date:   Fri, 28 Jul 2023 17:28:27 -0700
+ 2023 17:30:38 -0700
+Date:   Fri, 28 Jul 2023 17:30:37 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <quic_eberman@quicinc.com>, <kvalo@kernel.org>,
+        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_varada@quicinc.com>
+Subject: Re: [PATCH v4 07/11] firmware: qcom_scm: ipq5332: add msa
+ lock/unlock support
+Message-ID: <20230729003037.GA25463@quicinc.com>
+References: <20230728063412.1641856-1-quic_mmanikan@quicinc.com>
+ <20230728063412.1641856-8-quic_mmanikan@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/13] drm/msm/dpu: use devres-managed allocation for
- HW blocks
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230707231251.3849701-1-dmitry.baryshkov@linaro.org>
- <20230707231251.3849701-7-dmitry.baryshkov@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20230707231251.3849701-7-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230728063412.1641856-8-quic_mmanikan@quicinc.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vZd1MmO38Ojbn3wMOtUrq_ZStzVDTg1v
-X-Proofpoint-ORIG-GUID: vZd1MmO38Ojbn3wMOtUrq_ZStzVDTg1v
+X-Proofpoint-GUID: rgHczPV4G-qsl8fDBqaZtPgFe6lm6HnU
+X-Proofpoint-ORIG-GUID: rgHczPV4G-qsl8fDBqaZtPgFe6lm6HnU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- spamscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999
- impostorscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307290002
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ lowpriorityscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 phishscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307290002
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/7/2023 4:12 PM, Dmitry Baryshkov wrote:
-> Use devm_kzalloc to create HW block structure. This allows us to remove
-> corresponding kfree and drop all dpu_hw_*_destroy() functions as well as
-> dpu_rm_destroy(), which becomes empty afterwards.
+On Jul 28 2023 12:04, Manikanta Mylavarapu wrote:
+> IPQ5332 user pd remoteproc firmwares need to be locked
+> with MSA(modem secure access) features. This patch add
+> support to lock/unlock MSA features.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    | 19 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    | 16 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 12 ++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    | 10 ++-
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c    |  7 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c   | 16 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h   | 12 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 15 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   | 12 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     | 14 ++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h     | 12 +--
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 14 ++-
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 13 +--
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 14 ++-
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 13 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 15 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  7 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c     | 14 ++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h     | 12 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  8 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 90 +++----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        | 11 +--
->   23 files changed, 119 insertions(+), 238 deletions(-)
+> Changes in v4:
+> 	- Rebased on linux-next
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index c278fb9d2b5b..d22e3f11ae34 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -4,6 +4,9 @@
->    */
->   
->   #include <linux/delay.h>
-> +
-> +#include <drm/drm_managed.h>
-> +
->   #include "dpu_hwio.h"
->   #include "dpu_hw_ctl.h"
->   #include "dpu_kms.h"
-> @@ -674,14 +677,15 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->   		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
->   };
->   
-> -struct dpu_hw_ctl *dpu_hw_ctl_init(const struct dpu_ctl_cfg *cfg,
-> -		void __iomem *addr,
-> -		u32 mixer_count,
-> -		const struct dpu_lm_cfg *mixer)
-> +struct dpu_hw_ctl *dpu_hw_ctl_init(struct drm_device *dev,
-> +				   const struct dpu_ctl_cfg *cfg,
-> +				   void __iomem *addr,
-> +				   u32 mixer_count,
-> +				   const struct dpu_lm_cfg *mixer)
->   {
->   	struct dpu_hw_ctl *c;
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -696,8 +700,3 @@ struct dpu_hw_ctl *dpu_hw_ctl_init(const struct dpu_ctl_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_ctl_destroy(struct dpu_hw_ctl *ctx)
-> -{
-> -	kfree(ctx);
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index 1c242298ff2e..279ebd8dfbff 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -274,20 +274,16 @@ static inline struct dpu_hw_ctl *to_dpu_hw_ctl(struct dpu_hw_blk *hw)
->   /**
->    * dpu_hw_ctl_init() - Initializes the ctl_path hw driver object.
->    * Should be called before accessing any ctl_path register.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  ctl_path catalog entry for which driver object is required
->    * @addr: mapped register io address of MDP
->    * @mixer_count: Number of mixers in @mixer
->    * @mixer: Pointer to an array of Layer Mixers defined in the catalog
->    */
-> -struct dpu_hw_ctl *dpu_hw_ctl_init(const struct dpu_ctl_cfg *cfg,
-> -		void __iomem *addr,
-> -		u32 mixer_count,
-> -		const struct dpu_lm_cfg *mixer);
-> -
-> -/**
-> - * dpu_hw_ctl_destroy(): Destroys ctl driver context
-> - * should be called to free the context
-> - */
-> -void dpu_hw_ctl_destroy(struct dpu_hw_ctl *ctx);
-> +struct dpu_hw_ctl *dpu_hw_ctl_init(struct drm_device *dev,
-> +				   const struct dpu_ctl_cfg *cfg,
-> +				   void __iomem *addr,
-> +				   u32 mixer_count,
-> +				   const struct dpu_lm_cfg *mixer);
->   
->   #endif /*_DPU_HW_CTL_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> index 509dbaa51d87..5e9aad1b2aa2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> @@ -3,6 +3,8 @@
->    * Copyright (c) 2020-2022, Linaro Limited
->    */
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include <drm/display/drm_dsc_helper.h>
->   
->   #include "dpu_kms.h"
-> @@ -188,12 +190,13 @@ static void _setup_dsc_ops(struct dpu_hw_dsc_ops *ops,
->   		ops->dsc_bind_pingpong_blk = dpu_hw_dsc_bind_pingpong_blk;
->   };
->   
-> -struct dpu_hw_dsc *dpu_hw_dsc_init(const struct dpu_dsc_cfg *cfg,
-> +struct dpu_hw_dsc *dpu_hw_dsc_init(struct drm_device *dev,
-> +				   const struct dpu_dsc_cfg *cfg,
->   				   void __iomem *addr)
->   {
->   	struct dpu_hw_dsc *c;
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -206,8 +209,3 @@ struct dpu_hw_dsc *dpu_hw_dsc_init(const struct dpu_dsc_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_dsc_destroy(struct dpu_hw_dsc *dsc)
-> -{
-> -	kfree(dsc);
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
-> index d5b597ab8c5c..989c88d2449b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
-> @@ -64,20 +64,24 @@ struct dpu_hw_dsc {
->   
->   /**
->    * dpu_hw_dsc_init() - Initializes the DSC hw driver object.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  DSC catalog entry for which driver object is required
->    * @addr: Mapped register io address of MDP
->    * Return: Error code or allocated dpu_hw_dsc context
->    */
-> -struct dpu_hw_dsc *dpu_hw_dsc_init(const struct dpu_dsc_cfg *cfg,
-> -		void __iomem *addr);
-> +struct dpu_hw_dsc *dpu_hw_dsc_init(struct drm_device *dev,
-> +				   const struct dpu_dsc_cfg *cfg,
-> +				   void __iomem *addr);
->   
->   /**
->    * dpu_hw_dsc_init_1_2() - initializes the v1.2 DSC hw driver object
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  DSC catalog entry for which driver object is required
->    * @addr: Mapped register io address of MDP
->    * Returns: Error code or allocated dpu_hw_dsc context
->    */
-> -struct dpu_hw_dsc *dpu_hw_dsc_init_1_2(const struct dpu_dsc_cfg *cfg,
-> +struct dpu_hw_dsc *dpu_hw_dsc_init_1_2(struct drm_device *dev,
-> +				       const struct dpu_dsc_cfg *cfg,
->   				       void __iomem *addr);
->   
->   /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
-> index 24fe1d98eb86..ba193b0376fe 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
-> @@ -4,6 +4,8 @@
->    * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
->    */
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include <drm/display/drm_dsc_helper.h>
->   
->   #include "dpu_kms.h"
-> @@ -367,12 +369,13 @@ static void _setup_dcs_ops_1_2(struct dpu_hw_dsc_ops *ops,
->   	ops->dsc_bind_pingpong_blk = dpu_hw_dsc_bind_pingpong_blk_1_2;
->   }
->   
-> -struct dpu_hw_dsc *dpu_hw_dsc_init_1_2(const struct dpu_dsc_cfg *cfg,
-> +struct dpu_hw_dsc *dpu_hw_dsc_init_1_2(struct drm_device *dev,
-> +				       const struct dpu_dsc_cfg *cfg,
->   				       void __iomem *addr)
->   {
->   	struct dpu_hw_dsc *c;
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> index 9419b2209af8..b1da88e2935f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> @@ -2,6 +2,8 @@
->   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->    */
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include "dpu_hwio.h"
->   #include "dpu_hw_catalog.h"
->   #include "dpu_hw_lm.h"
-> @@ -68,15 +70,16 @@ static void _setup_dspp_ops(struct dpu_hw_dspp *c,
->   		c->ops.setup_pcc = dpu_setup_dspp_pcc;
->   }
->   
-> -struct dpu_hw_dspp *dpu_hw_dspp_init(const struct dpu_dspp_cfg *cfg,
-> -			void __iomem *addr)
-> +struct dpu_hw_dspp *dpu_hw_dspp_init(struct drm_device *dev,
-> +				     const struct dpu_dspp_cfg *cfg,
-> +				     void __iomem *addr)
->   {
->   	struct dpu_hw_dspp *c;
->   
->   	if (!addr)
->   		return ERR_PTR(-EINVAL);
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -90,10 +93,3 @@ struct dpu_hw_dspp *dpu_hw_dspp_init(const struct dpu_dspp_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_dspp_destroy(struct dpu_hw_dspp *dspp)
-> -{
-> -	kfree(dspp);
-> -}
-> -
-> -
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
-> index bea965681330..3b435690b6cc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
-> @@ -81,18 +81,14 @@ static inline struct dpu_hw_dspp *to_dpu_hw_dspp(struct dpu_hw_blk *hw)
->   /**
->    * dpu_hw_dspp_init() - Initializes the DSPP hw driver object.
->    * should be called once before accessing every DSPP.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  DSPP catalog entry for which driver object is required
->    * @addr: Mapped register io address of MDP
->    * Return: pointer to structure or ERR_PTR
->    */
-> -struct dpu_hw_dspp *dpu_hw_dspp_init(const struct dpu_dspp_cfg *cfg,
-> -	void __iomem *addr);
-> -
-> -/**
-> - * dpu_hw_dspp_destroy(): Destroys DSPP driver context
-> - * @dspp: Pointer to DSPP driver context
-> - */
-> -void dpu_hw_dspp_destroy(struct dpu_hw_dspp *dspp);
-> +struct dpu_hw_dspp *dpu_hw_dspp_init(struct drm_device *dev,
-> +				     const struct dpu_dspp_cfg *cfg,
-> +				     void __iomem *addr);
->   
->   #endif /*_DPU_HW_DSPP_H */
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 5b0f6627e29b..08304fc3d1d6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -12,6 +12,8 @@
->   
->   #include <linux/iopoll.h>
->   
-> +#include <drm/drm_managed.h>
-> +
->   #define INTF_TIMING_ENGINE_EN           0x000
->   #define INTF_CONFIG                     0x004
->   #define INTF_HSYNC_CTL                  0x008
-> @@ -547,8 +549,9 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
->   		ops->enable_compression = dpu_hw_intf_enable_compression;
->   }
->   
-> -struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
-> -		void __iomem *addr)
-> +struct dpu_hw_intf *dpu_hw_intf_init(struct drm_device *dev,
-> +				     const struct dpu_intf_cfg *cfg,
-> +				     void __iomem *addr)
->   {
->   	struct dpu_hw_intf *c;
->   
-> @@ -557,7 +560,7 @@ struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
->   		return NULL;
->   	}
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -573,9 +576,3 @@ struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_intf_destroy(struct dpu_hw_intf *intf)
-> -{
-> -	kfree(intf);
-> -}
-> -
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 99e21c4137f9..79240fbeeb53 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -125,16 +125,12 @@ struct dpu_hw_intf {
->   /**
->    * dpu_hw_intf_init() - Initializes the INTF driver for the passed
->    * interface catalog entry.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  interface catalog entry for which driver object is required
->    * @addr: mapped register io address of MDP
->    */
-> -struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
-> -		void __iomem *addr);
-> -
-> -/**
-> - * dpu_hw_intf_destroy(): Destroys INTF driver context
-> - * @intf:   Pointer to INTF driver context
-> - */
-> -void dpu_hw_intf_destroy(struct dpu_hw_intf *intf);
-> +struct dpu_hw_intf *dpu_hw_intf_init(struct drm_device *dev,
-> +				     const struct dpu_intf_cfg *cfg,
-> +				     void __iomem *addr);
->   
->   #endif /*_DPU_HW_INTF_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> index d1c3bd8379ea..25af52ab602f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> @@ -4,6 +4,8 @@
->    * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
->    */
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include "dpu_kms.h"
->   #include "dpu_hw_catalog.h"
->   #include "dpu_hwio.h"
-> @@ -156,8 +158,9 @@ static void _setup_mixer_ops(struct dpu_hw_lm_ops *ops,
->   	ops->collect_misr = dpu_hw_lm_collect_misr;
->   }
->   
-> -struct dpu_hw_mixer *dpu_hw_lm_init(const struct dpu_lm_cfg *cfg,
-> -		void __iomem *addr)
-> +struct dpu_hw_mixer *dpu_hw_lm_init(struct drm_device *dev,
-> +				    const struct dpu_lm_cfg *cfg,
-> +				    void __iomem *addr)
->   {
->   	struct dpu_hw_mixer *c;
->   
-> @@ -166,7 +169,7 @@ struct dpu_hw_mixer *dpu_hw_lm_init(const struct dpu_lm_cfg *cfg,
->   		return NULL;
->   	}
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -180,8 +183,3 @@ struct dpu_hw_mixer *dpu_hw_lm_init(const struct dpu_lm_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_lm_destroy(struct dpu_hw_mixer *lm)
-> -{
-> -	kfree(lm);
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-> index 36992d046a53..8835fd106413 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-> @@ -95,16 +95,12 @@ static inline struct dpu_hw_mixer *to_dpu_hw_mixer(struct dpu_hw_blk *hw)
->   /**
->    * dpu_hw_lm_init() - Initializes the mixer hw driver object.
->    * should be called once before accessing every mixer.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  mixer catalog entry for which driver object is required
->    * @addr: mapped register io address of MDP
->    */
-> -struct dpu_hw_mixer *dpu_hw_lm_init(const struct dpu_lm_cfg *cfg,
-> -		void __iomem *addr);
-> -
-> -/**
-> - * dpu_hw_lm_destroy(): Destroys layer mixer driver context
-> - * @lm:   Pointer to LM driver context
-> - */
-> -void dpu_hw_lm_destroy(struct dpu_hw_mixer *lm);
-> +struct dpu_hw_mixer *dpu_hw_lm_init(struct drm_device *dev,
-> +				    const struct dpu_lm_cfg *cfg,
-> +				    void __iomem *addr);
->   
->   #endif /*_DPU_HW_LM_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> index 90e0e05eff8d..ddfa40a959cb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> @@ -4,6 +4,8 @@
->   
->   #include <linux/iopoll.h>
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include "dpu_hw_mdss.h"
->   #include "dpu_hwio.h"
->   #include "dpu_hw_catalog.h"
-> @@ -37,12 +39,13 @@ static void _setup_merge_3d_ops(struct dpu_hw_merge_3d *c,
->   	c->ops.setup_3d_mode = dpu_hw_merge_3d_setup_3d_mode;
->   };
->   
-> -struct dpu_hw_merge_3d *dpu_hw_merge_3d_init(const struct dpu_merge_3d_cfg *cfg,
-> -		void __iomem *addr)
-> +struct dpu_hw_merge_3d *dpu_hw_merge_3d_init(struct drm_device *dev,
-> +					     const struct dpu_merge_3d_cfg *cfg,
-> +					     void __iomem *addr)
->   {
->   	struct dpu_hw_merge_3d *c;
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -55,8 +58,3 @@ struct dpu_hw_merge_3d *dpu_hw_merge_3d_init(const struct dpu_merge_3d_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_merge_3d_destroy(struct dpu_hw_merge_3d *hw)
-> -{
-> -	kfree(hw);
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
-> index 19cec5e88722..c192f02ec1ab 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
-> @@ -48,18 +48,13 @@ static inline struct dpu_hw_merge_3d *to_dpu_hw_merge_3d(struct dpu_hw_blk *hw)
->   /**
->    * dpu_hw_merge_3d_init() - Initializes the merge_3d driver for the passed
->    * merge3d catalog entry.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  Pingpong catalog entry for which driver object is required
->    * @addr: Mapped register io address of MDP
->    * Return: Error code or allocated dpu_hw_merge_3d context
->    */
-> -struct dpu_hw_merge_3d *dpu_hw_merge_3d_init(const struct dpu_merge_3d_cfg *cfg,
-> -		void __iomem *addr);
-> -
-> -/**
-> - * dpu_hw_merge_3d_destroy - destroys merge_3d driver context
-> - *	should be called to free the context
-> - * @pp:   Pointer to PP driver context returned by dpu_hw_merge_3d_init
-> - */
-> -void dpu_hw_merge_3d_destroy(struct dpu_hw_merge_3d *pp);
-> +struct dpu_hw_merge_3d *dpu_hw_merge_3d_init(struct drm_device *dev,
-> +					     const struct dpu_merge_3d_cfg *cfg,
-> +					     void __iomem *addr);
->   
->   #endif /*_DPU_HW_MERGE3D_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> index 437d9e62a841..72292af91a18 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> @@ -4,6 +4,8 @@
->   
->   #include <linux/iopoll.h>
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include "dpu_hw_mdss.h"
->   #include "dpu_hwio.h"
->   #include "dpu_hw_catalog.h"
-> @@ -302,12 +304,13 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
->   		c->ops.setup_dither = dpu_hw_pp_setup_dither;
->   };
->   
-> -struct dpu_hw_pingpong *dpu_hw_pingpong_init(const struct dpu_pingpong_cfg *cfg,
-> -		void __iomem *addr)
-> +struct dpu_hw_pingpong *dpu_hw_pingpong_init(struct drm_device *dev,
-> +					     const struct dpu_pingpong_cfg *cfg,
-> +					     void __iomem *addr)
->   {
->   	struct dpu_hw_pingpong *c;
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -320,8 +323,3 @@ struct dpu_hw_pingpong *dpu_hw_pingpong_init(const struct dpu_pingpong_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_pingpong_destroy(struct dpu_hw_pingpong *pp)
-> -{
-> -	kfree(pp);
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-> index d3246a9a5808..96eb2b87e7ef 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-> @@ -121,18 +121,13 @@ static inline struct dpu_hw_pingpong *to_dpu_hw_pingpong(struct dpu_hw_blk *hw)
->   /**
->    * dpu_hw_pingpong_init() - initializes the pingpong driver for the passed
->    * pingpong catalog entry.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  Pingpong catalog entry for which driver object is required
->    * @addr: Mapped register io address of MDP
->    * Return: Error code or allocated dpu_hw_pingpong context
->    */
-> -struct dpu_hw_pingpong *dpu_hw_pingpong_init(const struct dpu_pingpong_cfg *cfg,
-> -		void __iomem *addr);
-> -
-> -/**
-> - * dpu_hw_pingpong_destroy - destroys pingpong driver context
-> - *	should be called to free the context
-> - * @pp:   Pointer to PP driver context returned by dpu_hw_pingpong_init
-> - */
-> -void dpu_hw_pingpong_destroy(struct dpu_hw_pingpong *pp);
-> +struct dpu_hw_pingpong *dpu_hw_pingpong_init(struct drm_device *dev,
-> +					     const struct dpu_pingpong_cfg *cfg,
-> +					     void __iomem *addr);
->   
->   #endif /*_DPU_HW_PINGPONG_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index b364cf75bb3f..fb8ecfb9b922 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -9,6 +9,7 @@
->   #include "dpu_kms.h"
->   
->   #include <drm/drm_file.h>
-> +#include <drm/drm_managed.h>
->   
->   #define DPU_FETCH_CONFIG_RESET_VALUE   0x00000087
->   
-> @@ -669,15 +670,17 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
->   }
->   #endif
->   
-> -struct dpu_hw_sspp *dpu_hw_sspp_init(const struct dpu_sspp_cfg *cfg,
-> -		void __iomem *addr, const struct dpu_ubwc_cfg *ubwc)
-> +struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
-> +				     const struct dpu_sspp_cfg *cfg,
-> +				     void __iomem *addr,
-> +				     const struct dpu_ubwc_cfg *ubwc)
->   {
->   	struct dpu_hw_sspp *hw_pipe;
->   
->   	if (!addr || !ubwc)
->   		return ERR_PTR(-EINVAL);
->   
-> -	hw_pipe = kzalloc(sizeof(*hw_pipe), GFP_KERNEL);
-> +	hw_pipe = drmm_kzalloc(dev, sizeof(*hw_pipe), GFP_KERNEL);
->   	if (!hw_pipe)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -692,9 +695,3 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(const struct dpu_sspp_cfg *cfg,
->   
->   	return hw_pipe;
->   }
-> -
-> -void dpu_hw_sspp_destroy(struct dpu_hw_sspp *ctx)
-> -{
-> -	kfree(ctx);
-> -}
-> -
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index 085f34bc6b88..5dd4f78d424c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -331,12 +331,15 @@ struct dpu_kms;
->   /**
->    * dpu_hw_sspp_init() - Initializes the sspp hw driver object.
->    * Should be called once before accessing every pipe.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  Pipe catalog entry for which driver object is required
->    * @addr: Mapped register io address of MDP
->    * @ubwc: UBWC configuration data
->    */
-> -struct dpu_hw_sspp *dpu_hw_sspp_init(const struct dpu_sspp_cfg *cfg,
-> -		void __iomem *addr, const struct dpu_ubwc_cfg *ubwc);
-> +struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
-> +				     const struct dpu_sspp_cfg *cfg,
-> +				     void __iomem *addr,
-> +				     const struct dpu_ubwc_cfg *ubwc);
->   
->   /**
->    * dpu_hw_sspp_destroy(): Destroys SSPP driver context
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> index ebc416400382..106540eee5f7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> @@ -3,6 +3,8 @@
->     * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved
->     */
->   
-> +#include <drm/drm_managed.h>
-> +
->   #include "dpu_hw_mdss.h"
->   #include "dpu_hwio.h"
->   #include "dpu_hw_catalog.h"
-> @@ -194,15 +196,16 @@ static void _setup_wb_ops(struct dpu_hw_wb_ops *ops,
->   		ops->bind_pingpong_blk = dpu_hw_wb_bind_pingpong_blk;
->   }
->   
-> -struct dpu_hw_wb *dpu_hw_wb_init(const struct dpu_wb_cfg *cfg,
-> -		void __iomem *addr)
-> +struct dpu_hw_wb *dpu_hw_wb_init(struct drm_device *dev,
-> +				 const struct dpu_wb_cfg *cfg,
-> +				 void __iomem *addr)
->   {
->   	struct dpu_hw_wb *c;
->   
->   	if (!addr)
->   		return ERR_PTR(-EINVAL);
->   
-> -	c = kzalloc(sizeof(*c), GFP_KERNEL);
-> +	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -216,8 +219,3 @@ struct dpu_hw_wb *dpu_hw_wb_init(const struct dpu_wb_cfg *cfg,
->   
->   	return c;
->   }
-> -
-> -void dpu_hw_wb_destroy(struct dpu_hw_wb *hw_wb)
-> -{
-> -	kfree(hw_wb);
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-> index 2d7db2efa3d0..98d1129238cc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-> @@ -72,17 +72,13 @@ struct dpu_hw_wb {
->   
->   /**
->    * dpu_hw_wb_init() - Initializes the writeback hw driver object.
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  wb_path catalog entry for which driver object is required
->    * @addr: mapped register io address of MDP
->    * Return: Error code or allocated dpu_hw_wb context
->    */
-> -struct dpu_hw_wb *dpu_hw_wb_init(const struct dpu_wb_cfg *cfg,
-> -		void __iomem *addr);
-> -
-> -/**
-> - * dpu_hw_wb_destroy(): Destroy writeback hw driver object.
-> - * @hw_wb:  Pointer to writeback hw driver object
-> - */
-> -void dpu_hw_wb_destroy(struct dpu_hw_wb *hw_wb);
-> +struct dpu_hw_wb *dpu_hw_wb_init(struct drm_device *dev,
-> +				 const struct dpu_wb_cfg *cfg,
-> +				 void __iomem *addr);
->   
->   #endif /*_DPU_HW_WB_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 48c3f8b6b88f..1e29de32b7c0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -816,10 +816,6 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
->   		dpu_kms->hw_vbif[i] = NULL;
->   	}
->   
-> -	if (dpu_kms->rm_init)
-> -		dpu_rm_destroy(&dpu_kms->rm);
-> -	dpu_kms->rm_init = false;
-> -
->   	dpu_kms->catalog = NULL;
->   
->   	dpu_kms->hw_mdp = NULL;
-> @@ -1041,14 +1037,12 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   		goto err_pm_put;
->   	}
->   
-> -	rc = dpu_rm_init(&dpu_kms->rm, dpu_kms->catalog, dpu_kms->mmio);
-> +	rc = dpu_rm_init(dev, &dpu_kms->rm, dpu_kms->catalog, dpu_kms->mmio);
->   	if (rc) {
->   		DPU_ERROR("rm init failed: %d\n", rc);
->   		goto err_pm_put;
->   	}
->   
-> -	dpu_kms->rm_init = true;
-> -
->   	dpu_kms->hw_mdp = dpu_hw_mdptop_init(dev,
->   					     dpu_kms->catalog->mdp,
->   					     dpu_kms->mmio,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index f3bdd4f11108..2af1767ada9d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -87,7 +87,6 @@ struct dpu_kms {
->   	struct drm_private_obj global_state;
->   
->   	struct dpu_rm rm;
-> -	bool rm_init;
->   
->   	struct dpu_hw_vbif *hw_vbif[VBIF_MAX];
->   	struct dpu_hw_mdp *hw_mdp;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index e333f4eeafc1..d10025b8f659 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -34,72 +34,8 @@ struct dpu_rm_requirements {
->   	struct msm_display_topology topology;
->   };
->   
-> -int dpu_rm_destroy(struct dpu_rm *rm)
-> -{
-> -	int i;
-> -
-> -	for (i = 0; i < ARRAY_SIZE(rm->dspp_blks); i++) {
-> -		struct dpu_hw_dspp *hw;
-> -
-> -		if (rm->dspp_blks[i]) {
-> -			hw = to_dpu_hw_dspp(rm->dspp_blks[i]);
-> -			dpu_hw_dspp_destroy(hw);
-> -		}
-> -	}
-> -	for (i = 0; i < ARRAY_SIZE(rm->pingpong_blks); i++) {
-> -		struct dpu_hw_pingpong *hw;
-> -
-> -		if (rm->pingpong_blks[i]) {
-> -			hw = to_dpu_hw_pingpong(rm->pingpong_blks[i]);
-> -			dpu_hw_pingpong_destroy(hw);
-> -		}
-> -	}
-> -	for (i = 0; i < ARRAY_SIZE(rm->merge_3d_blks); i++) {
-> -		struct dpu_hw_merge_3d *hw;
-> -
-> -		if (rm->merge_3d_blks[i]) {
-> -			hw = to_dpu_hw_merge_3d(rm->merge_3d_blks[i]);
-> -			dpu_hw_merge_3d_destroy(hw);
-> -		}
-> -	}
-> -	for (i = 0; i < ARRAY_SIZE(rm->mixer_blks); i++) {
-> -		struct dpu_hw_mixer *hw;
-> -
-> -		if (rm->mixer_blks[i]) {
-> -			hw = to_dpu_hw_mixer(rm->mixer_blks[i]);
-> -			dpu_hw_lm_destroy(hw);
-> -		}
-> -	}
-> -	for (i = 0; i < ARRAY_SIZE(rm->ctl_blks); i++) {
-> -		struct dpu_hw_ctl *hw;
-> -
-> -		if (rm->ctl_blks[i]) {
-> -			hw = to_dpu_hw_ctl(rm->ctl_blks[i]);
-> -			dpu_hw_ctl_destroy(hw);
-> -		}
-> -	}
-> -	for (i = 0; i < ARRAY_SIZE(rm->hw_intf); i++)
-> -		dpu_hw_intf_destroy(rm->hw_intf[i]);
-> -
-> -	for (i = 0; i < ARRAY_SIZE(rm->dsc_blks); i++) {
-> -		struct dpu_hw_dsc *hw;
-> -
-> -		if (rm->dsc_blks[i]) {
-> -			hw = to_dpu_hw_dsc(rm->dsc_blks[i]);
-> -			dpu_hw_dsc_destroy(hw);
-> -		}
-> -	}
-> -
-> -	for (i = 0; i < ARRAY_SIZE(rm->hw_wb); i++)
-> -		dpu_hw_wb_destroy(rm->hw_wb[i]);
-> -
-> -	for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++)
-> -		dpu_hw_sspp_destroy(rm->hw_sspp[i]);
-> -
-> -	return 0;
-> -}
-> -
-> -int dpu_rm_init(struct dpu_rm *rm,
-> +int dpu_rm_init(struct drm_device *dev,
-> +		struct dpu_rm *rm,
->   		const struct dpu_mdss_cfg *cat,
->   		void __iomem *mmio)
->   {
-> @@ -118,7 +54,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_mixer *hw;
->   		const struct dpu_lm_cfg *lm = &cat->mixer[i];
->   
-> -		hw = dpu_hw_lm_init(lm, mmio);
-> +		hw = dpu_hw_lm_init(dev, lm, mmio);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed lm object creation: err %d\n", rc);
-> @@ -131,7 +67,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_merge_3d *hw;
->   		const struct dpu_merge_3d_cfg *merge_3d = &cat->merge_3d[i];
->   
-> -		hw = dpu_hw_merge_3d_init(merge_3d, mmio);
-> +		hw = dpu_hw_merge_3d_init(dev, merge_3d, mmio);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed merge_3d object creation: err %d\n",
-> @@ -145,7 +81,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_pingpong *hw;
->   		const struct dpu_pingpong_cfg *pp = &cat->pingpong[i];
->   
-> -		hw = dpu_hw_pingpong_init(pp, mmio);
-> +		hw = dpu_hw_pingpong_init(dev, pp, mmio);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed pingpong object creation: err %d\n",
-> @@ -161,7 +97,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_intf *hw;
->   		const struct dpu_intf_cfg *intf = &cat->intf[i];
->   
-> -		hw = dpu_hw_intf_init(intf, mmio);
-> +		hw = dpu_hw_intf_init(dev, intf, mmio);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed intf object creation: err %d\n", rc);
-> @@ -174,7 +110,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_wb *hw;
->   		const struct dpu_wb_cfg *wb = &cat->wb[i];
->   
-> -		hw = dpu_hw_wb_init(wb, mmio);
-> +		hw = dpu_hw_wb_init(dev, wb, mmio);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed wb object creation: err %d\n", rc);
-> @@ -187,7 +123,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_ctl *hw;
->   		const struct dpu_ctl_cfg *ctl = &cat->ctl[i];
->   
-> -		hw = dpu_hw_ctl_init(ctl, mmio, cat->mixer_count, cat->mixer);
-> +		hw = dpu_hw_ctl_init(dev, ctl, mmio, cat->mixer_count, cat->mixer);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed ctl object creation: err %d\n", rc);
-> @@ -200,7 +136,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_dspp *hw;
->   		const struct dpu_dspp_cfg *dspp = &cat->dspp[i];
->   
-> -		hw = dpu_hw_dspp_init(dspp, mmio);
-> +		hw = dpu_hw_dspp_init(dev, dspp, mmio);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed dspp object creation: err %d\n", rc);
-> @@ -214,9 +150,9 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
->   
->   		if (test_bit(DPU_DSC_HW_REV_1_2, &dsc->features))
-> -			hw = dpu_hw_dsc_init_1_2(dsc, mmio);
-> +			hw = dpu_hw_dsc_init_1_2(dev, dsc, mmio);
->   		else
-> -			hw = dpu_hw_dsc_init(dsc, mmio);
-> +			hw = dpu_hw_dsc_init(dev, dsc, mmio);
->   
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
-> @@ -230,7 +166,7 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		struct dpu_hw_sspp *hw;
->   		const struct dpu_sspp_cfg *sspp = &cat->sspp[i];
->   
-> -		hw = dpu_hw_sspp_init(sspp, mmio, cat->ubwc);
-> +		hw = dpu_hw_sspp_init(dev, sspp, mmio, cat->ubwc);
->   		if (IS_ERR(hw)) {
->   			rc = PTR_ERR(hw);
->   			DPU_ERROR("failed sspp object creation: err %d\n", rc);
-> @@ -242,8 +178,6 @@ int dpu_rm_init(struct dpu_rm *rm,
->   	return 0;
->   
->   fail:
-> -	dpu_rm_destroy(rm);
-> -
->   	return rc ? rc : -EFAULT;
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> index d62c2edb2460..7199a09f3ce3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> @@ -38,22 +38,17 @@ struct dpu_rm {
->   /**
->    * dpu_rm_init - Read hardware catalog and create reservation tracking objects
->    *	for all HW blocks.
-> + * @dev:  Corresponding device for devres management
->    * @rm: DPU Resource Manager handle
->    * @cat: Pointer to hardware catalog
->    * @mmio: mapped register io address of MDP
->    * @Return: 0 on Success otherwise -ERROR
->    */
-> -int dpu_rm_init(struct dpu_rm *rm,
-> +int dpu_rm_init(struct drm_device *dev,
-> +		struct dpu_rm *rm,
->   		const struct dpu_mdss_cfg *cat,
->   		void __iomem *mmio);
->   
-> -/**
-> - * dpu_rm_destroy - Free all memory allocated by dpu_rm_init
-> - * @rm: DPU Resource Manager handle
-> - * @Return: 0 on Success otherwise -ERROR
-> - */
-> -int dpu_rm_destroy(struct dpu_rm *rm);
-> -
->   /**
->    * dpu_rm_reserve - Given a CRTC->Encoder->Connector display chain, analyze
->    *	the use connections and user requirements, specified through related
-> -- 
-> 2.39.2
+>  drivers/firmware/qcom_scm.c            | 78 ++++++++++++++++++++++++++
+>  drivers/firmware/qcom_scm.h            |  2 +
+>  include/linux/firmware/qcom/qcom_scm.h |  2 +
+>  3 files changed, 82 insertions(+)
 > 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 3bc8c63a997f..2275cf7bc887 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -676,6 +676,84 @@ bool qcom_scm_pas_supported(u32 peripheral)
+>  }
+>  EXPORT_SYMBOL(qcom_scm_pas_supported);
+>  
+> +/**
+> + * qcom_scm_msa_lock() - Lock given peripheral firmware region as MSA
+> + *
+> + * @peripheral:	peripheral id
+> + *
+> + * Return 0 on success.
+> + */
+> +int qcom_scm_msa_lock(u32 peripheral)
+> +{
+> +	int ret;
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_PIL,
+> +		.cmd = QCOM_SCM_MSA_LOCK,
+> +		.arginfo = QCOM_SCM_ARGS(1),
+> +		.args[0] = peripheral,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +	struct qcom_scm_res res;
+> +
+> +	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+> +					  QCOM_SCM_MSA_LOCK))
+> +		return 0;
+> +
+> +	ret = qcom_scm_clk_enable();
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = qcom_scm_bw_enable();
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
+> +	qcom_scm_bw_disable();
+> +	qcom_scm_clk_disable();
+> +
+> +	return ret ? : res.result[0];
+> +}
+> +EXPORT_SYMBOL(qcom_scm_msa_lock);
+
+Could you please convert this to EXPORT_SYMBOL_GPL? 
+
+> +
+> +/**
+> + * qcom_scm_msa_unlock() - Unlock given peripheral MSA firmware region
+> + *
+> + * @peripheral:	peripheral id
+> + *
+> + * Return 0 on success.
+> + */
+> +int qcom_scm_msa_unlock(u32 peripheral)
+> +{
+> +	int ret;
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_PIL,
+> +		.cmd = QCOM_SCM_MSA_UNLOCK,
+> +		.arginfo = QCOM_SCM_ARGS(1),
+> +		.args[0] = peripheral,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +	struct qcom_scm_res res;
+> +
+> +	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+> +					  QCOM_SCM_MSA_UNLOCK))
+> +		return 0;
+> +
+> +	ret = qcom_scm_clk_enable();
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = qcom_scm_bw_enable();
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
+> +	qcom_scm_bw_disable();
+> +	qcom_scm_clk_disable();
+> +
+> +	return ret ? : res.result[0];
+> +}
+> +EXPORT_SYMBOL(qcom_scm_msa_unlock);
+
+This one too?
+
+Reference: [1]
+The whole driver has now moved to using EXPORT_SYMBOL_GPL() now.
+
+[1] https://lore.kernel.org/lkml/19d9ac0bf79f957574ef9b3b73246ea0113cc0fd.1690503893.git.quic_gurus@quicinc.com/
+
+Thank you.
+
+Guru Das.
