@@ -2,80 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFECD7682CA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 02:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2B007682D0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 02:35:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229445AbjG3AWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Jul 2023 20:22:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50080 "EHLO
+        id S229456AbjG3AfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jul 2023 20:35:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjG3AWv (ORCPT
+        with ESMTP id S229379AbjG3AfX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Jul 2023 20:22:51 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FEEF100
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 17:22:50 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5221c6a2d3dso4667069a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 17:22:50 -0700 (PDT)
+        Sat, 29 Jul 2023 20:35:23 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B9119B5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 17:35:22 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9cf2b1309so23972401fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 17:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690676568; x=1691281368;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wlP3J0xhxo2b0PW6U+/tsrSrf7Y3FjtKuZpG8pbYeww=;
-        b=uic88FpzzINXJKI7Ia3HTP/JLba205iSm8WzxPBhdOw7D0a8f0WriSvg5cHcOPHkbk
-         a+upm06QPkq9q6ka5LnHg82FyNIcpfOaOUGNLJck25cYp+GQ7OU0k8LExDMw/hy35Wnj
-         hddOZN/WUTIVrNo/h089maMVtG0OW7KEAvWvWQbGEPuLDEyjTZ/y4OWedNfr7Lnqf3MI
-         CLBxwVgpfuEuPCc85RmJypqObaH88HBnr7lkmHNnD5Un3oFUHAG4l9L8yKacaa1dhjFb
-         tem6QnX4DwWGiPZMtJvEMjbvHE09gVqwf7v7nUAqjwroI+JIjuXQUuuALJEOxi5B1oYg
-         H8qg==
+        d=linaro.org; s=google; t=1690677320; x=1691282120;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LAbWbSfrjAJXL01M6Z3Udbs8b9DnT7yJqHEur/XSDic=;
+        b=DSr/Om6fzFiz9i6efc8fkAF+21qOKuIW0ddAujS3XSdmW0VxPUI4mYmT6h/1oIst2u
+         bzrknbPqmaN2XCYFve+iHcXFBY37x7FZN4GQ1pBTlf4BHFbebmeyc5u9lrb/6UAmEg9q
+         4r1aoKB/jYpT6zUXxHtTy6Ft5f4QEXxmFuqQghBqs+8Eq/a95iStQ6d22o8Q1D+IQApp
+         NSYgjCi57nvYsqrVeI+wfPOlPznJkz2TWWf3D/mxzpS/RRtduL9eqe13glfjkDdKtKQy
+         bjxqpan0dmgNeeSNnIJQ31v4u/OdmjMrCsun2kuEjwvc+luIUU4ALEkGyUwBuoVvtCmu
+         KOxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690676568; x=1691281368;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wlP3J0xhxo2b0PW6U+/tsrSrf7Y3FjtKuZpG8pbYeww=;
-        b=ZUJ7z1iR8R55ADmEEqjcKMi9sTBaRG/bLNxpGtnhsCnvEmBFkl8KmWroUNNv6a1Ls7
-         KTd+qZJdxl1tb04QCC3X4KdciJ2i703V8naEwLoiHuXkCnW6sSn1W+AhUCiD9nDsjCuL
-         bB9s+shxNr55a0HYZ1sIu5x9Xg9s6oLLSbFp0XsUzgDGKZQfWR890g0BHIuA4ohQ2Zod
-         38GOGir8HCy4E/ay8pS1uHOLfI4QMv8+DyqKFgvjIpCjkNju9caufcFroQAfz3XZ1EPI
-         onF59htoteQ3gK96K8b/uTXjqJh5Hb5pvkAUWitLdWFtxBR8HF9p4zbUZrEXGI/EeX4G
-         r8nw==
-X-Gm-Message-State: ABy/qLYbfCLbw+B+gErCecixxVPtsOVOelNXOXEFDRMpZ50rfD9l6OP9
-        crkeabUhU/TvewLg+jAO2YjtNg==
-X-Google-Smtp-Source: APBJJlGY6jIiRs0coVTmmdIlq5hbzqGv4/GB9BgC6o2z45sTgVIIbc9TzAZrmpNo+Z6F4PY/+Yg0fA==
-X-Received: by 2002:aa7:dac6:0:b0:522:7d21:9ed3 with SMTP id x6-20020aa7dac6000000b005227d219ed3mr5255993eds.19.1690676568699;
-        Sat, 29 Jul 2023 17:22:48 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x4-20020aa7d6c4000000b0051e2cde9e3esm3475894edr.75.2023.07.29.17.22.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jul 2023 17:22:48 -0700 (PDT)
-Message-ID: <726501f5-7c69-6321-38eb-1b57676cf389@linaro.org>
-Date:   Sun, 30 Jul 2023 03:22:46 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 4/7] drm/msm/dpu: enable INTF TE operations only when
- supported by HW
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        d=1e100.net; s=20221208; t=1690677320; x=1691282120;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LAbWbSfrjAJXL01M6Z3Udbs8b9DnT7yJqHEur/XSDic=;
+        b=fvO456KJfYZGHndmv+far1yQi80uV4rc/IJVRalA2U0jqOd//dHK1XOg+GlG0naRbo
+         NBoWb66LFA+GEaI8BNU3ilDPHu6OC5dfn8dqkT062rQfIG3PucoflrDv/AdyPD3pt0+t
+         HqQ6d9vIUrDJjEEU/KpLZUngNNrikcMQ3VEfHKmXdM+PLXCr7lFkP4fly7vgBn11Vo0f
+         fpq5ZqOgA6NUXRldE7GZB0v/uGKrSNwV/J1z1jmSUDsiXHksXVfOrC5oDHwsZNU+QqYU
+         8phtVYpjkuEO+lEYEhWo8LFhkmIjOYK8HQWXw7wkVyDgOF3V05mt49AKL0RGyalR2xQD
+         hJ6Q==
+X-Gm-Message-State: ABy/qLZXh2SvroVv0Yys2gbhBO3MbfAe5MHvBUaNeugdYC4dWYZwa98I
+        +rchX8qk+mJjGEVVfuaSi7w9AQ==
+X-Google-Smtp-Source: APBJJlH+z2podrmuC7Iatzg4fJ0yg2/rK9ZTkFuqESYst25YRswpz9UFoGjWeEu2xrp3QWFvdW6t/g==
+X-Received: by 2002:a2e:8755:0:b0:2b6:f85a:20af with SMTP id q21-20020a2e8755000000b002b6f85a20afmr2181867ljj.4.1690677319718;
+        Sat, 29 Jul 2023 17:35:19 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id j22-20020a2e8016000000b002b6ffa50896sm1780482ljg.128.2023.07.29.17.35.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Jul 2023 17:35:19 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-References: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
- <20230727162104.1497483-5-dmitry.baryshkov@linaro.org>
- <lck7thivac7ztu6e7b4hakjtpoobydcanjdffn6vvppmc4yzcc@46gcp2pwxedq>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <lck7thivac7ztu6e7b4hakjtpoobydcanjdffn6vvppmc4yzcc@46gcp2pwxedq>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH v2 0/8] drm/msm/dpu: drop DPU_INTF_TE and DPU_PINGPONG_TE
+Date:   Sun, 30 Jul 2023 03:35:10 +0300
+Message-Id: <20230730003518.349197-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,50 +75,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/07/2023 23:12, Marijn Suijten wrote:
-> On 2023-07-27 19:21:01, Dmitry Baryshkov wrote:
->> The DPU_INTF_TE bit is set for all INTF blocks on DPU >= 5.0, however
->> only INTF_1 and INTF_2 actually support tearing control. Rather than
->> trying to fix the DPU_INTF_TE, check for the presense of the
-> 
-> I would more exactly expand "fix" to "Rather than specifying that
-> feature bit on DSI INTF_1 and INTF_2 exclusively..."
-> 
->> corresponding interrupt line.
-> 
-> ... which the catalog will only provide on DPU >= 5.0.
+Drop two feature flags, DPU_INTF_TE and DPU_PINGPONG_TE, in favour of
+performing the MDSS revision checks instead.
 
-I'm going to rephrase this in a slightly different way to follow the irq 
-presence -> major & type change.
+Changes since v1:
+- Added missing patch
+- Reworked commit messages (following suggestions by Marijn)
+- Changed code to check for major & INTF type rather than checking for
+  intr presence in catalog. Added WARN_ON()s instead. (Marijn)
+- Added severall comments & TODO item.
 
-> 
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->> index 7ca772791a73..8abdf9553f3b 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->> @@ -557,7 +557,7 @@ struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
->>   	c->ops.setup_misr = dpu_hw_intf_setup_misr;
->>   	c->ops.collect_misr = dpu_hw_intf_collect_misr;
->>   
->> -	if (cfg->features & BIT(DPU_INTF_TE)) {
->> +	if (cfg->intr_tear_rd_ptr) {
->>   		c->ops.enable_tearcheck = dpu_hw_intf_enable_te;
->>   		c->ops.disable_tearcheck = dpu_hw_intf_disable_te;
->>   		c->ops.connect_external_te = dpu_hw_intf_connect_external_te;
->> -- 
->> 2.39.2
->>
+Dependencies: [1], [2]
+
+[1] https://patchwork.freedesktop.org/series/118088/
+[2] https://patchwork.freedesktop.org/series/118836/
+
+*** BLURB HERE ***
+
+Dmitry Baryshkov (8):
+  drm/msm/dpu: inline _setup_pingpong_ops()
+  drm/msm/dpu: enable PINGPONG TE operations only when supported by HW
+  drm/msm/dpu: drop the DPU_PINGPONG_TE flag
+  drm/msm/dpu: inline _setup_intf_ops()
+  drm/msm/dpu: enable INTF TE operations only when supported by HW
+  drm/msm/dpu: drop DPU_INTF_TE feature flag
+  drm/msm/dpu: drop useless check from
+    dpu_encoder_phys_cmd_te_rd_ptr_irq()
+  drm/msm/dpu: move INTF tearing checks to dpu_encoder_phys_cmd_init
+
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 54 ++++++++++---------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  3 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  6 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 51 +++++++++---------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 41 +++++++-------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  2 +-
+ 7 files changed, 77 insertions(+), 83 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.39.2
 
