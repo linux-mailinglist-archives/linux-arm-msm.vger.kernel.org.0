@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46500768323
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 03:19:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2001768324
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 03:19:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229437AbjG3BT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Jul 2023 21:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54002 "EHLO
+        id S229562AbjG3BT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jul 2023 21:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjG3BT0 (ORCPT
+        with ESMTP id S229559AbjG3BT2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Jul 2023 21:19:26 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5CCB171F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 18:19:25 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-986d8332f50so475108366b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 18:19:25 -0700 (PDT)
+        Sat, 29 Jul 2023 21:19:28 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B63AF171F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 18:19:27 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99bf91956cdso153553966b.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jul 2023 18:19:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690679964; x=1691284764;
+        d=linaro.org; s=google; t=1690679966; x=1691284766;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B8os/TMAEnvf6K9BQCQyps63gRao5zmV5qOLXNQ+yl0=;
-        b=jsmX4rnG/K5ErrJaNDiboodld+ZIFWkNtup8qs2uFG1WK+inpoPmh03NH7XVdgkr/4
-         Hw5gZe8xTkbFJecE87DYFCU6fUO8ZJLIQk6LdGz7oaTRJ66TfrosI/MkLea63t0i8gUw
-         Bv4Lv6LtQfp8SRBwFD5nTOd+ylMx954GGk9K4vJswISk8XfeJhNGHxmg6LHzlcjdmScA
-         Lh9bWZyp0NJ/aSFSCsz7bxMUSSkh2nxlJ8bInwV6nHzwbNQG1Mq7y5CL6CMoxJe5efhh
-         KEnuz3sPgNl2F3nMsdrA7hWWMcn+/+hRyGRDelHgHAhEVPsFW43Ge4pYNV5j6icf45k+
-         HeVg==
+        bh=U0wpK3A204WX+OKsINI1AYwcUxgviu2sOl+wOj2EUdI=;
+        b=aK0f5NWQM6COdeiu7SvyUzC8HCOPFgfS8Ve0Gmj8X2tc2LOYAiu7HmHmPnJHWlQzZD
+         V+ec2CgO+zusKNQqdEzadHbCOn0J9Vr8VxR6wvmNvY1Nnl2QBi4CVD8bAZgp0Nr3Jwd0
+         SuL6K+IOGMwWI4jT+3N1DGPaNwIqiwH7AqUDiTuoMD7rsmOs4Olni/Xqf9JK4B2nt/gP
+         vIHzNif52XgdLSfeJM4z8hk08ULoeEjmB9IjAjvlkI9iMU46H92GoSBH8Qa/ab6IWwHS
+         Holw4d8Rnvg5xEzT0opBb+/UfshmikVPaVuf6ZlA8jyIRfM2VkBL+YqeEB6lCTOAV++U
+         yaww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690679964; x=1691284764;
+        d=1e100.net; s=20221208; t=1690679966; x=1691284766;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=B8os/TMAEnvf6K9BQCQyps63gRao5zmV5qOLXNQ+yl0=;
-        b=hLmyBzNtxLAubFJE77OzcdqeGELSqGwrYMsMzjmGWoH40T10kTKrQ5rNgfLl78wncb
-         75IYOlSsWd+QJGUf0WfTbuDevlVQJnqnchU+PmW+72hsI2o9ywQyIHO7jB4ZaaG8nk+a
-         GZoy4w5d42NQh7PJtUEpySK1aA8YIzxpOOSmgrvxfqsrXKCQ48v/xRuoAE2N0JHJUnSq
-         suUVluWBZk74gc7rbg+pqeTZbPfuhDoHYUwR/AsVHam7zSpm1y8o/7J3tmbmL+s6iwfK
-         0mT3nh1ZdSzikv+E5/vbDbisDQwwKbOiGFA9lGdlsEl9IebPf2HoIxCw7uX2yhGVb32v
-         mlqw==
-X-Gm-Message-State: ABy/qLb3JUjDwYN1fjsbHuMBhVBQzTjSUBni6qsJIIsiRY5cY5vyyg09
-        NzQRyr5w+tcsAH0kT2DiR2FTsQ==
-X-Google-Smtp-Source: APBJJlGc6305yw1LBRkZHXvp14RrtUiVrieVuP977kY1KN8+GcRs9VpVme5jFiCEYuxMHLFDBecIpw==
-X-Received: by 2002:a17:906:3092:b0:991:e7c3:5712 with SMTP id 18-20020a170906309200b00991e7c35712mr2925950ejv.30.1690679964409;
-        Sat, 29 Jul 2023 18:19:24 -0700 (PDT)
+        bh=U0wpK3A204WX+OKsINI1AYwcUxgviu2sOl+wOj2EUdI=;
+        b=dmySuXCoqoqForpg5mORlplUqnB/AilunbUn9paNPis90PecdglV+gqD6kRfUgMIdz
+         /Vwt9Y6KEb+orjnbEY01LSwCqWc5xPio4aqO+ByIBtEFoRbZwwU66Scmgin8djguzge4
+         3Ts9mRk6djUGeIMNE4+KHYQ0QNhWv3G2I7Mxv0oUMFoRXvn+ekZ41ciHfO8gnHjseQ8U
+         npjE2MtiWM1sVUNcCfrGAGs8XK7hJll0chzWW7SR/QRx5zOmklU12lokG3L5TEwbEXtS
+         B+2JSqiMigNFrvmCDQEDwIpD04bZPtdu7D6zDOdNjMtYF7L/mAXNMZhjMvcIOhy3YBZt
+         GQ8g==
+X-Gm-Message-State: ABy/qLZVccvFnwIfa+wjGWurdOPny7q0Z/WhP4P5nYN3+8W/fLMkShew
+        HZWUE8GeAkLozhlZP44TlJ32XQ==
+X-Google-Smtp-Source: APBJJlGRep0ESOlLPd6AHtdKqokWBWL/l7VKefGoEhVF9IspyvdPjQMmbek8jcRmtM3mjTw9InNxNA==
+X-Received: by 2002:a17:907:a077:b0:993:d536:3cb8 with SMTP id ia23-20020a170907a07700b00993d5363cb8mr2919701ejc.2.1690679965769;
+        Sat, 29 Jul 2023 18:19:25 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id rk21-20020a170907215500b00992ea405a79sm3915835ejb.166.2023.07.29.18.19.23
+        by smtp.gmail.com with ESMTPSA id rk21-20020a170907215500b00992ea405a79sm3915835ejb.166.2023.07.29.18.19.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Jul 2023 18:19:24 -0700 (PDT)
+        Sat, 29 Jul 2023 18:19:25 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,10 +60,10 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v3 01/13] drm/msm/dpu: cleanup dpu_kms_hw_init error path
-Date:   Sun, 30 Jul 2023 04:19:08 +0300
-Message-Id: <20230730011920.354575-2-dmitry.baryshkov@linaro.org>
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v3 02/13] drm/msm/dpu: remove IS_ERR_OR_NULL for dpu_hw_intr_init() error handling
+Date:   Sun, 30 Jul 2023 04:19:09 +0300
+Message-Id: <20230730011920.354575-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230730011920.354575-1-dmitry.baryshkov@linaro.org>
 References: <20230730011920.354575-1-dmitry.baryshkov@linaro.org>
@@ -79,102 +79,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It was noticed that dpu_kms_hw_init()'s error path contains several
-labels which point to the same code path. Replace all of them with a
-single label.
+Using IS_ERR_OR_NULL() together with PTR_ERR() is a typical mistake. If
+the value is NULL, then the function will return 0 instead of a proper
+return code. Replace IS_ERR_OR_NULL() with IS_ERR() in the
+dpu_hw_intr_init() error check.
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 31782a6d821f..77a79bc42492 100644
+index 77a79bc42492..3fe43d9be2e5 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1077,7 +1077,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	if (!dpu_kms->catalog) {
- 		DPU_ERROR("device config not known!\n");
- 		rc = -EINVAL;
--		goto power_error;
-+		goto err_pm_put;
- 	}
- 
- 	/*
-@@ -1087,13 +1087,13 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	rc = _dpu_kms_mmu_init(dpu_kms);
- 	if (rc) {
- 		DPU_ERROR("dpu_kms_mmu_init failed: %d\n", rc);
--		goto power_error;
-+		goto err_pm_put;
- 	}
- 
- 	rc = dpu_rm_init(&dpu_kms->rm, dpu_kms->catalog, dpu_kms->mmio);
- 	if (rc) {
- 		DPU_ERROR("rm init failed: %d\n", rc);
--		goto power_error;
-+		goto err_pm_put;
- 	}
- 
- 	dpu_kms->rm_init = true;
-@@ -1105,7 +1105,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 		rc = PTR_ERR(dpu_kms->hw_mdp);
- 		DPU_ERROR("failed to get hw_mdp: %d\n", rc);
- 		dpu_kms->hw_mdp = NULL;
--		goto power_error;
-+		goto err_pm_put;
- 	}
- 
- 	for (i = 0; i < dpu_kms->catalog->vbif_count; i++) {
-@@ -1116,7 +1116,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 		if (IS_ERR(hw)) {
- 			rc = PTR_ERR(hw);
- 			DPU_ERROR("failed to init vbif %d: %d\n", vbif->id, rc);
--			goto power_error;
-+			goto err_pm_put;
- 		}
- 
- 		dpu_kms->hw_vbif[vbif->id] = hw;
-@@ -1132,7 +1132,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	rc = dpu_core_perf_init(&dpu_kms->perf, dpu_kms->catalog->perf, max_core_clk_rate);
- 	if (rc) {
- 		DPU_ERROR("failed to init perf %d\n", rc);
--		goto perf_err;
-+		goto err_pm_put;
+@@ -1136,7 +1136,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
  	}
  
  	dpu_kms->hw_intr = dpu_hw_intr_init(dpu_kms->mmio, dpu_kms->catalog);
-@@ -1140,7 +1140,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+-	if (IS_ERR_OR_NULL(dpu_kms->hw_intr)) {
++	if (IS_ERR(dpu_kms->hw_intr)) {
  		rc = PTR_ERR(dpu_kms->hw_intr);
  		DPU_ERROR("hw_intr init failed: %d\n", rc);
  		dpu_kms->hw_intr = NULL;
--		goto hw_intr_init_err;
-+		goto err_pm_put;
- 	}
- 
- 	dev->mode_config.min_width = 0;
-@@ -1165,7 +1165,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	rc = _dpu_kms_drm_obj_init(dpu_kms);
- 	if (rc) {
- 		DPU_ERROR("modeset init failed: %d\n", rc);
--		goto drm_obj_init_err;
-+		goto err_pm_put;
- 	}
- 
- 	dpu_vbif_init_memtypes(dpu_kms);
-@@ -1174,10 +1174,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 
- 	return 0;
- 
--drm_obj_init_err:
--hw_intr_init_err:
--perf_err:
--power_error:
-+err_pm_put:
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- error:
- 	_dpu_kms_hw_destroy(dpu_kms);
 -- 
 2.39.2
 
