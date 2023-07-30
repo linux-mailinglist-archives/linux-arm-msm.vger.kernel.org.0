@@ -2,80 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BB26768729
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 20:47:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40E34768763
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 21:26:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbjG3SrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jul 2023 14:47:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
+        id S229500AbjG3T0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jul 2023 15:26:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229865AbjG3SrN (ORCPT
+        with ESMTP id S229493AbjG3T0V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jul 2023 14:47:13 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8FE210EB;
-        Sun, 30 Jul 2023 11:47:12 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99bcfe28909so537723466b.3;
-        Sun, 30 Jul 2023 11:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690742831; x=1691347631;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jODm2bxmR0hsMYM8Q0ObNJZ8dSyPCpf1EZ3thXMcrxk=;
-        b=nAvYWRGlNuqoZUEQ5tU+ZkL8bQjFGY2CiAZ2JXmnZnLC9ESCDb+2oMcQ4eZW+HZDjZ
-         /Bo874WtHJjArVpR3YIBaBiCN0INPoB95JZOOfTGyKkKgSffIzF23ppUgWDpqq0BrkC2
-         OGH43elSRcmwMBGwXNh22AeLPKCqCyDzQMYYLTH0kcJlYsmOh1EV91Z6KTXrbf15VBPJ
-         u9HzVUQ7/ZLTL3v7TUHIF/LXOGlLWt8nONbW7fFREuWlp083DdCRt4Vfd60WYk+vCfLK
-         B6zz55gedMuMX31U688A74mLU/Diwjg8UA9jzOeoUWKhKiHGbDXw7VERKjDT0zf3jHzw
-         ROuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690742831; x=1691347631;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jODm2bxmR0hsMYM8Q0ObNJZ8dSyPCpf1EZ3thXMcrxk=;
-        b=A6mw0DmgMe8IFaK2+mvcvZK5bWMHCXeQNGhdoHLSn8LeexH386cEwk/uAq5vU08ECF
-         dYGSO6EhzwHAy9wL+mQunKhZCTNiW9Tf1Cm+HTosiqRXOWPhvgVN/VG0/YFwIdtCmglr
-         3eIFndMSI9c9/KZ06Vd8FEBWdSrMCabiZRhUS65s4CygqV8FPVB3XBlXkaWQ9TRMaBYz
-         q8T8NObG1KG2QT9H9bJgTYvE78VDhafjJ6sUirXQzWKNLdaystsuWFWDGBXnp3oVpzFS
-         YJn0t8JT3ZHaeUToqaI08akkan+dCIrhyY+ZnHe7z+hjFmwpAFayFr5J2hu7Fj04XAzz
-         troQ==
-X-Gm-Message-State: ABy/qLZ9/CrO3WmLKrRnKRkeg31RlnbjptYie1ojCl5VFAxmKGWocFU6
-        VofkRWjZOKXVmrFStA6rdLQx2pLjzM8=
-X-Google-Smtp-Source: APBJJlG0eA33vbglj1HYWANle2bxauiFjQE2Z+q+ylKTJH0k3LQ65oyWzIKRhfAjqLpOPN9lwrJgiQ==
-X-Received: by 2002:a17:907:270d:b0:993:f540:5bb1 with SMTP id w13-20020a170907270d00b00993f5405bb1mr5136244ejk.41.1690742830961;
-        Sun, 30 Jul 2023 11:47:10 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id f25-20020a170906085900b00991d54db2acsm4972556ejd.44.2023.07.30.11.47.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Jul 2023 11:47:10 -0700 (PDT)
-Message-ID: <bb80fc94-7a80-f951-13a9-a0c055c8dbc8@gmail.com>
-Date:   Sun, 30 Jul 2023 20:47:09 +0200
+        Sun, 30 Jul 2023 15:26:21 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF47BF
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 12:26:18 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7B46E1F995;
+        Sun, 30 Jul 2023 21:26:14 +0200 (CEST)
+Date:   Sun, 30 Jul 2023 21:26:12 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/7] drm/msm/dpu: enable PINGPONG TE operations only when
+ supported by HW
+Message-ID: <qn67eiyw7egfgmfqd6uahyyniyptrutf6r37arsfryqiaxj3tl@4wszcae3egsi>
+References: <20230727162104.1497483-1-dmitry.baryshkov@linaro.org>
+ <20230727162104.1497483-2-dmitry.baryshkov@linaro.org>
+ <byxscievxgqwcdu56mebkoy4jpgogzy3euddz73u2qryh3itwb@to3pyltcqqxg>
+ <c9d7994d-5781-41b0-6af0-cc45d4ebf6fb@linaro.org>
+ <sul276fwfmniat5dlkdj4rlw3dxjmqrg254iteblwbdlhwfxmg@4orla7ystkp4>
+ <bd59cd28-b3ba-1805-da2c-8ec6b0b2f1b0@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] firmware: qcom_scm: Add support for Qualcomm
- Secure Execution Environment SCM interface
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Johan Hovold <johan@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230730161906.606163-1-luzmaximilian@gmail.com>
- <20230730161906.606163-3-luzmaximilian@gmail.com>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20230730161906.606163-3-luzmaximilian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bd59cd28-b3ba-1805-da2c-8ec6b0b2f1b0@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,33 +54,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/30/23 18:19, Maximilian Luz wrote:
+On 2023-07-30 02:18:10, Dmitry Baryshkov wrote:
+> On 29/07/2023 21:31, Marijn Suijten wrote:
+> > On 2023-07-29 02:59:32, Dmitry Baryshkov wrote:
+> >> On 27/07/2023 23:03, Marijn Suijten wrote:
+> >>> On 2023-07-27 19:20:58, Dmitry Baryshkov wrote:
+> >>>> The DPU_PINGPONG_TE bit is set for all PINGPONG blocks on DPU < 5.0.
+> >>>> Rather than checking for the flag, check for the presense of the
+> >>>> corresponding interrupt line.
+> >>>>
+> >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>
+> >>> That's a smart use of the interrupt field.  I both like it, and I do
+> >>> not.  While we didn't do any validation for consistency previously, this
+> >>> means we now have multiple ways of controlling available "features":
+> >>>
+> >>> - Feature flags on hardware blocks;
+> >>> - Presence of certain IRQs;
+> >>> - DPU core revision.
+> >>
+> >> I hesitated here too. For INTF it is clear that there is no other good
+> >> way to check for the TE feature. For PP we can just check for the DPU
+> >> revision.
+> > 
+> > For both we could additionally check the DPU revision, and for INTF we
+> > could check for TYPE_DSI.  Both would aid in extra validation, if we
+> > require the IRQ to be present or absent under these conditions.
+> 
+> Yep, maybe that's better.
+> 
+> > 
+> > It might also help to document this, either here and on the respective
+> > struct fields so that catalog implementers know when they should supply
+> > or leave out an IRQ?
+> 
+> Probably a WARN_ON would be enough.
 
-[...]
+SGTM, it is after all only for bring-up as after that (additions have
+been validated, reviewed and merged) we "trust the kernel" including our
+catalog, so errors like this should pretty much be unreachable.
 
-> diff --git a/drivers/firmware/qcom_qseecom.c b/drivers/firmware/qcom_qseecom.c
-> new file mode 100644
-> index 000000000000..e9edd500c3d9
-> --- /dev/null
-> +++ b/drivers/firmware/qcom_qseecom.c
-> @@ -0,0 +1,128 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Driver for Qualcomm Secure Execution Environment (SEE) interface (QSEECOM).
-> + * Responsible for setting up and managing QSEECOM client devices.
-> + *
-> + * Copyright (C) 2023 Maximilian Luz <luzmaximilian@gmail.com>
-> + */
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/types.h>
-
-This is missing a linux/slab.h include for kzalloc() and kfree(). Fixed
-for v6 as well.
-
-Kernel test robot caught this as well... I guess I need to look into
-building with more warnings enabled because I didn't catch that on my
-system.
-
-Regards
-Max
+- Marijn
