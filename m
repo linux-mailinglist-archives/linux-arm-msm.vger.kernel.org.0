@@ -2,107 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3EE87687E2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 22:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 548F87687F5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jul 2023 22:31:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjG3UVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jul 2023 16:21:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57976 "EHLO
+        id S229820AbjG3Ubg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jul 2023 16:31:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjG3UVA (ORCPT
+        with ESMTP id S229679AbjG3Ubg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jul 2023 16:21:00 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790AA18F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 13:20:59 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5227e5d9d96so5083545a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 13:20:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690748458; x=1691353258;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8f/MgDrEv8Tw5VaLnW3VcLxIwrS6Qd/GuTI2klbB/as=;
-        b=pb/mOZGqU4gvRpiwlnn7bHtk5y1t8Zlci00vsSjMi6KXB/5z7EnVF7UnwFF37vxs/q
-         /JHPiF+WDMD6TvloGE+goL0s1lISx0gQbq5tx44PSBhQYQjGgY+r5D+eOmlStfkPvEUD
-         pcCajAVX91Ef6RusRfytRtiqHFm5/0ziEfUzmS/a/p0G2egsQ1I3+wEq57FusDQESfRn
-         k1HrTjBw+9smfgGqFWDlBKHL7JZQ8f9JpPTALclXnCE3/Pi5aCQ+AN1Ohu9d/QfsGFPo
-         CUJbXY4EF+invy4vpmU8CDPYI9T4MYXNf3lKe0rtc6I4r0uuzSYXwrsnLJ58i+MfjoF3
-         /yHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690748458; x=1691353258;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8f/MgDrEv8Tw5VaLnW3VcLxIwrS6Qd/GuTI2klbB/as=;
-        b=dOzn2KEWik66ZKNQ9RR7vljGsVmDrAfWwe8JhRwZNtnB8+mjWOwyx4FFjZ9fFGmONH
-         ybkDPuDI1ZIXeWN6oiJWnMfGW8vXw8E806eeEDdpIjetipvvBIy3YPqxFpCYsUh/fWuQ
-         QwymT1nlGP1ijBoD+dQpiVcS6/IbpjkFlDzcjfl/W+coLplsi6lApbo5q86/12Ub3mcS
-         jZ3j0MggANUu720Oc/uf8lOps1BOh+/H8/ZM0bKbpTW3aEUQ6yMoZRa+DmfgtddTQUtw
-         d56KAs+l9SLeEJnRbD5f6CMXPJ3NFDNbButzXzoh3+dBdsoFljU+/s5hBzvkSOKLV0RQ
-         14yw==
-X-Gm-Message-State: ABy/qLbSMETl6o3yk+0l4ovZvnqjhCC3KwLOCD4vKZGX6khKp04rWgR5
-        aWPhAKv3arth+CCRFTs3PhH4IA==
-X-Google-Smtp-Source: APBJJlGU7AKTZgnUH7tZLhdoNMXBGmqsRp6wlJ6rIt/BwPXPqtzqgMF4PF4altfte1iWVEf70DFpAQ==
-X-Received: by 2002:a17:906:329b:b0:988:9621:d855 with SMTP id 27-20020a170906329b00b009889621d855mr4326827ejw.61.1690748457920;
-        Sun, 30 Jul 2023 13:20:57 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.222.183])
-        by smtp.gmail.com with ESMTPSA id h19-20020a17090634d300b0098e422d6758sm5066254ejb.219.2023.07.30.13.20.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Jul 2023 13:20:57 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Sun, 30 Jul 2023 16:31:36 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2B6113;
+        Sun, 30 Jul 2023 13:31:33 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 842B83F0AC;
+        Sun, 30 Jul 2023 22:31:30 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Subject: [PATCH v5 0/2] dts: qcom: Use labels with generic node names for
+ ADC channels
+Date:   Sun, 30 Jul 2023 22:31:24 +0200
+Message-Id: <20230730-generic-adc-channels-v5-0-e6c69bda8034@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJzIxmQC/0WMQQ6CMBBFr0K6dsi0YBtceQ/josIAQ2BKWjQmh
+ Ltb3bj6ecl/b1eJIlNSl2JXkV6cOEiG86lQ7ehlIOAuszJoKnQVwkCSjRZ818L3ITQnsNgYRKc
+ f2muV1TVSz+9f9nbP3MewwDZG8v9YrTFvo11pametBQ2LjzxJmZ48bSTXFBbPMrNQGeKgjuMD4
+ 3scNq4AAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: msm8953-daisy: use new speaker maxim,interleave-mode
-Date:   Sun, 30 Jul 2023 22:20:51 +0200
-Message-Id: <20230730202051.71099-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Jonathan Cameron <jic23@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Marijn Suijten <marijn.suijten@somainline.org>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MAX98927 speaker amplifier "interleave_mode" property was never
-documented.  Corrected bindings expect "maxim,interleave-mode" instead,
-which is already supported by Linux driver.  Change is not compatible
-with older Linux kernels.
+As discussed in [1] it is more convenient to use a generic `channel`
+node name for ADC channels while storing a friendly - board-specific
+instead of PMIC-specific - name in the label, if/when desired to
+overwrite the channel description already contained (but previously
+unused) in the driver [2].
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The same `channel` node name pattern has also been set in
+iio/adc/adc.yaml, but this generic binding is not inherited as base for
+qcom,spmi-vadc bindings due to not having any other generic elements in
+common, besides the node name rule and reg property.
+
+Replace the .* name pattern with the `channel` literal, but leave the
+label property optional for bindings to choose to fall back a channel
+label hardcoded in the driver [2] instead.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
+[2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
+
+Changes since v4:
+- Dropped iio (dt-bindings) patches that have been merged, leaving only
+  ARM/arm64 DTS patches;
+- Rebased against next-20230728.
+
+v4: https://lore.kernel.org/linux-arm-msm/20230410202917.247666-1-marijn.suijten@somainline.org/
+
+Changes since v3:
+- Switch generic node name to `channel`, matching iio/adc/adc.yaml;
+- Besides switching arbitrary names to `channel`, now also rename all
+  existing `adc-chan` names to `channel`, including ARM tree;
+- Rebase on next-20230406 and apply rename to newer PMIC files.
+
+v3: https://lore.kernel.org/linux-arm-msm/20230201204447.542385-1-marijn.suijten@somainline.org/T/#u
+
+Changes since v2:
+- Reorder DT changes before dt-bindings changes;
+- Update adc-chan generic node name in tm5 example bindings.
+
+v2: https://lore.kernel.org/linux-arm-msm/20230119212632.185881-1-marijn.suijten@somainline.org/T/#u
+
+Changes since v1:
+- Require adc-chan name in dt-bindings;
+- Replace more node names with adc-chan and a descriptive label, that
+  were found by running dtbs_check on adjusted bindings;
+- sm8250-mtp.dts: Fix accidental adc-chan2 node name with pa_therm
+  label, which should have been adc-chan with pa_therm2 label.
+
+v1: https://lore.kernel.org/linux-arm-msm/20221209215308.1781047-1-marijn.suijten@somainline.org/
+
+--
+2.40.0
 
 ---
+Marijn Suijten (2):
+      ARM: dts: qcom: Use labels with generic node names for ADC channels
+      arm64: dts: qcom: Use labels with generic node names for ADC channels
 
-Depends on:
-https://lore.kernel.org/linux-devicetree/20230730201826.70453-2-krzysztof.kozlowski@linaro.org/T/#u
+ arch/arm/boot/dts/qcom/qcom-pm8226.dtsi            | 12 +++----
+ arch/arm/boot/dts/qcom/qcom-pm8941.dtsi            | 14 ++++----
+ arch/arm/boot/dts/qcom/qcom-pma8084.dtsi           | 12 +++----
+ arch/arm/boot/dts/qcom/qcom-pmx55.dtsi             |  8 ++---
+ arch/arm64/boot/dts/qcom/pm6125.dtsi               | 18 ++++++----
+ arch/arm64/boot/dts/qcom/pm6150.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi              |  8 ++---
+ arch/arm64/boot/dts/qcom/pm660.dtsi                | 33 ++++++++++++------
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi              | 24 ++++++-------
+ arch/arm64/boot/dts/qcom/pm8150.dtsi               |  6 ++--
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi              |  8 ++---
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi              |  6 ++--
+ arch/arm64/boot/dts/qcom/pm8916.dtsi               | 14 ++++----
+ arch/arm64/boot/dts/qcom/pm8950.dtsi               | 39 ++++++++++++++--------
+ arch/arm64/boot/dts/qcom/pm8953.dtsi               | 12 +++----
+ arch/arm64/boot/dts/qcom/pm8994.dtsi               | 12 +++----
+ arch/arm64/boot/dts/qcom/pm8998.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/pmi8950.dtsi              | 12 +++----
+ arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi          |  6 ++--
+ arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi          |  6 ++--
+ arch/arm64/boot/dts/qcom/pmp8074.dtsi              | 27 ++++++++++-----
+ arch/arm64/boot/dts/qcom/pms405.dtsi               | 21 ++++++++----
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           | 15 ++++++---
+ .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts     |  4 +--
+ .../arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi |  3 +-
+ .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi     |  3 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-pompom-r1.dts     |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-pompom-r2.dts     |  2 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi |  3 +-
+ .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  3 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  3 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |  2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  2 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi         |  4 +--
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     | 26 +++++++--------
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi         | 10 +++---
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts            | 12 +++----
+ .../dts/qcom/sm6125-sony-xperia-seine-pdx201.dts   | 15 ++++++---
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  |  6 ++--
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts            | 21 ++++++++----
+ 41 files changed, 254 insertions(+), 186 deletions(-)
 ---
- arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+base-commit: d7b3af5a77e8d8da28f435f313e069aea5bcf172
+change-id: 20230730-generic-adc-channels-60920071b1a1
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
-index 790d19c99af1..a5957e79b818 100644
---- a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
-@@ -125,7 +125,7 @@ speaker_codec: audio-codec@3a {
- 
- 		vmon-slot-no = <1>;
- 		imon-slot-no = <1>;
--		interleave_mode = <0>;
-+		maxim,interleave-mode;
- 
- 		#sound-dai-cells = <0>;
- 	};
+Best regards,
 -- 
-2.34.1
+Marijn Suijten <marijn.suijten@somainline.org>
 
