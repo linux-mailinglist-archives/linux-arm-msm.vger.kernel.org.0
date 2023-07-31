@@ -2,188 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55B0176A293
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 23:23:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29C9176A2CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 23:31:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbjGaVX1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 17:23:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
+        id S231384AbjGaVbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 17:31:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231153AbjGaVX0 (ORCPT
+        with ESMTP id S231386AbjGaVaq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 17:23:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFFF81BCD;
-        Mon, 31 Jul 2023 14:23:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C89C612A4;
-        Mon, 31 Jul 2023 21:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D351EC433C7;
-        Mon, 31 Jul 2023 21:23:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690838602;
-        bh=zal/nhqEkOd2DBAsf4yglySl397XzFBXNWifX5Rkvrs=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=FfTKhsh3KSdUtzVHpvcQkBLUfxMmAfCQMC4gvRGdj3OY/0KZuxzXgbR7kW30ydjqY
-         uO5LFQdsLhzc8NxAj4jvS78si/is4drRcBrjhmP+ftRVLJKxKqEa98zqmfnZroqudj
-         MwzTXuGV4zjSJmI/8kMH4RFFctQMMCW6IjnQZEiuSO1wpdLmv0IL8ATqc2Nk0iT6k7
-         A63LW+PbevWozYpKCBDxs6Tdb9uNzbTirbraCmS/Pg9AwuwqdQj+2ndsH4EVPm1tw6
-         DgknfhATdR/T7l2p42I6efAb72XlRw7mLB4b7mPjrDgij+wBc6+WhKhVFT8y0lXG1F
-         EvjUBcjwGb3+A==
-Message-ID: <ac212920-286c-1ef5-fd40-a59717f59a92@kernel.org>
-Date:   Mon, 31 Jul 2023 23:23:14 +0200
+        Mon, 31 Jul 2023 17:30:46 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5820319A4;
+        Mon, 31 Jul 2023 14:30:18 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36VLTKU1015630;
+        Mon, 31 Jul 2023 21:30:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Up7tl0qt0HQUQxtc3m8aLw88GzHGZyI41BmbxGn0+Rg=;
+ b=cmRZWd4Tbdo17n3fEThbWNC6DPhf/oiVdrmw2DVE9HK0jIMYNOuTxzvy649wwkCKQ1j7
+ G9vkKTCuC0gYD3eypgC7nod/BxnxdbeW2odp1qYuI26AtBznXmrS8+PDaXV/ppofdQ+p
+ uO0ryC66a8xKRWhsOU+14zPsGAba6b6WhroWIlp/E2Ib58UFYpTX0MLOkH6SixXlAk4F
+ ct7ihkaMscpqu1wv+DzcjHzTdofR9Jh/rYV9K0YQw2XaXuVcmVLl05pHT0GZg9REm2W+
+ UxkVzTREFwgSNLWrHSM44DJ9NVVBChwJDk967m/Hg7E/w7UIPj7CjyN+23KX0TMEum0V Dw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6fak8qcm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 21:30:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36VLUAED016647
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 21:30:10 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
+ 2023 14:30:10 -0700
+Message-ID: <e4592feb-3878-b0eb-61e4-fb6dfc358e1a@quicinc.com>
+Date:   Mon, 31 Jul 2023 14:29:44 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.1
-Subject: Re: [PATCH 02/33] iris: vidc: add core functions
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] soc: qcom: aoss: Move length requirements from caller
 Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     quic_dikshita@quicinc.com
-References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
- <1690550624-14642-3-git-send-email-quic_vgarodia@quicinc.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <1690550624-14642-3-git-send-email-quic_vgarodia@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
+ <20230731041013.2950307-2-quic_bjorande@quicinc.com>
+From:   Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20230731041013.2950307-2-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: roTXaohgMY-WI2SQze1t3CVll6O2G3BE
+X-Proofpoint-GUID: roTXaohgMY-WI2SQze1t3CVll6O2G3BE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-31_15,2023-07-31_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 priorityscore=1501 mlxscore=0 bulkscore=0
+ phishscore=0 malwarescore=0 spamscore=0 clxscore=1011 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307310195
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/07/2023 15:23, Vikash Garodia wrote:
-> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> 
-> This implements the platform driver methods, file
-> operations and v4l2 registration.
 
 
-> +
-> +	core->debugfs_parent = msm_vidc_devm_debugfs_get(&pdev->dev);
-> +	if (!core->debugfs_parent)
-> +		d_vpr_h("Failed to create debugfs for msm_vidc\n");
-> +
-> +	rc = msm_vidc_devm_init_core(&pdev->dev, core);
-> +	if (rc) {
-> +		d_vpr_e("%s: init core failed with %d\n", __func__, rc);
-> +		goto init_core_failed;
-> +	}
-> +
-> +	rc = msm_vidc_init_platform(core);
-> +	if (rc) {
-> +		d_vpr_e("%s: init platform failed with %d\n", __func__, rc);
-> +		rc = -EINVAL;
-> +		goto init_plat_failed;
-> +	}
-> +
-> +	rc = msm_vidc_init_resources(core);
-> +	if (rc) {
-> +		d_vpr_e("%s: init resource failed with %d\n", __func__, rc);
-> +		goto init_res_failed;
+On 7/30/2023 9:10 PM, Bjorn Andersson wrote:
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+>   	/* The message RAM only implements 32-bit accesses */
+>   	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
+> -			 data, len / sizeof(u32));
+> -	writel(len, qmp->msgram + qmp->offset);
+> +			 buf, sizeof(buf) / sizeof(u32));
+> +	writel(sizeof(buf), qmp->msgram + qmp->offset);
+>   
 
-NAK.
+Looks like we are telling the firmware the packet size will always be 
+QMP_MSG_LEN?
 
-return dev_err_probe.
+This should be ok but might be a problem when debugging. The AOSS 
+firmware only logs size of the message instead of the full string 
+because of memory constraints.
 
-> +	}
-> +
-> +	rc = msm_vidc_init_core_caps(core);
-> +	if (rc) {
-> +		d_vpr_e("%s: init core caps failed with %d\n", __func__, rc);
-> +		goto init_res_failed;
-> +	}
-> +
-> +	rc = msm_vidc_init_instance_caps(core);
-> +	if (rc) {
-> +		d_vpr_e("%s: init inst cap failed with %d\n", __func__, rc);
-> +		goto init_inst_caps_fail;
-> +	}
-> +
-> +	core->debugfs_root = msm_vidc_debugfs_init_core(core);
-> +	if (!core->debugfs_root)
-> +		d_vpr_h("Failed to init debugfs core\n");
-> +
-> +	d_vpr_h("populating sub devices\n");
-> +	/*
-> +	 * Trigger probe for each sub-device i.e. qcom,msm-vidc,context-bank.
-> +	 * When msm_vidc_probe is called for each sub-device, parse the
-> +	 * context-bank details.
-> +	 */
-> +	rc = of_platform_populate(pdev->dev.of_node, msm_vidc_dt_match, NULL,
-> +				  &pdev->dev);
-> +	if (rc) {
-> +		d_vpr_e("Failed to trigger probe for sub-devices\n");
-> +		goto sub_dev_failed;
-> +	}
-> +
-> +	rc = v4l2_device_register(&pdev->dev, &core->v4l2_dev);
-> +	if (rc) {
-> +		d_vpr_e("Failed to register v4l2 device\n");
-> +		goto v4l2_reg_failed;
-> +	}
-> +
-> +	/* setup the decoder device */
-> +	rc = msm_vidc_register_video_device(core, MSM_VIDC_DECODER, nr);
-> +	if (rc) {
-> +		d_vpr_e("Failed to register video decoder\n");
-> +		goto dec_reg_failed;
-> +	}
-> +
-> +	/* setup the encoder device */
-> +	rc = msm_vidc_register_video_device(core, MSM_VIDC_ENCODER, nr + 1);
-> +	if (rc) {
-> +		d_vpr_e("Failed to register video encoder\n");
-> +		goto enc_reg_failed;
-> +	}
-> +
-> +	rc = venus_hfi_queue_init(core);
-> +	if (rc) {
-> +		d_vpr_e("%s: interface queues init failed\n", __func__);
-> +		goto queues_init_failed;
-> +	}
-> +
-> +	rc = msm_vidc_core_init(core);
-> +	if (rc) {
-> +		d_vpr_e("%s: sys init failed\n", __func__);
-> +		goto core_init_failed;
-> +	}
-> +
-> +	d_vpr_h("%s(): succssful\n", __func__);
-
-No need, drop.
-
-> +
-> +	return rc;
-> +
-> +core_init_failed:
-> +	venus_hfi_queue_deinit(core);
-> +queues_init_failed:
-> +	of_platform_depopulate(&pdev->dev);
-> +sub_dev_failed:
-> +	msm_vidc_unregister_video_device(core, MSM_VIDC_ENCODER);
-> +enc_reg_failed:
-> +	msm_vidc_unregister_video_device(core, MSM_VIDC_DECODER);
-> +dec_reg_failed:
-> +	v4l2_device_unregister(&core->v4l2_dev);
-> +v4l2_reg_failed:
-> +init_inst_caps_fail:
-> +init_res_failed:
-> +init_plat_failed:
-> +init_core_failed:
-
-Ykes! No. This code needs more work.
-
-Best regards,
-Krzysztof
-
+We would normally match the firmware and host logs based on size, but 
+won't be able to differentiate this way with a fixed size.
