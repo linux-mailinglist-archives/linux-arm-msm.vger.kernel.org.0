@@ -2,68 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FC0E769469
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 13:14:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2BEB76946E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 13:16:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230220AbjGaLOs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 07:14:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59184 "EHLO
+        id S231566AbjGaLPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 07:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229937AbjGaLOr (ORCPT
+        with ESMTP id S231748AbjGaLPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 07:14:47 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3458E55
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 04:14:45 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe0eb0ca75so6929770e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 04:14:45 -0700 (PDT)
+        Mon, 31 Jul 2023 07:15:54 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B30E6C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 04:15:51 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe10f0f4d1so7182383e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 04:15:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690802084; x=1691406884;
+        d=linaro.org; s=google; t=1690802149; x=1691406949;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hb4fxVsXsEP4Sa2QmJh8ZVYpqcBdy5//SDgjjy3dy7M=;
-        b=ozaCrnHo6bLVwy0FNQ+Z2AHweDMoFj3FJ1WHEAnRkyQpLLfiv4suPKFWnpwpx2aycv
-         9G96J2ub+dbrSC7ART2bLtPFosTulvVKjRHiLwEn8VGiDjrDdmVSO63K/8OL7Lm3TRq+
-         z7Aug4VwusYmfCR+d7pR5Ahwb1z73SDqoodCmbSUZc2a+kK94ROquVvkZv0l3XzbdiCH
-         prG+qQ3rxgdruyX2y30CfRg5FXt8qoWz0bZ6TnnKnBpeN8LAnfKkLkjZ26kt27XtfwVW
-         3IXJ80uEgU1dpv7hz4kYpbdUZ7XOUjXGy6HMRf+amvv33q9AjLc46oQBhGOoI2ap/zni
-         qoyw==
+        bh=vXpM9YuHXuYvit2gWbGjymMEZz2eD2dFqT8jtwhA8R0=;
+        b=kHcLP6vscv6Jabe3CDwOPo6ocDaQUEkCRElegNJQYAdGxuO/2Ob2Zm7nzbWOXajmr9
+         xrD6sjWHADUtwOLovOUaUjVg/P5LpCaAM9eU86YChiWLuS2+ZpF1u4pwINxsKkY6lt82
+         5Vm3vEJQGoYwg3Yfnin1PI4UTDEMkaCX+eeBX71i7u5lQXxmPvOaP0ixz/Ivd1CmXlx0
+         IpDRutlhg6uEiNLqdMzKe3iOMecu7yVov76cj1WW2AbH9J5u7rurVrI6d3Xp0S6KE9Jk
+         ZrazQccZ08r+r0f+lb/4hw5jWUR4lrhJb9O6JTsnJTrGKp1tqdD/n06NX3Xi1MmoJvfS
+         XGQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690802084; x=1691406884;
+        d=1e100.net; s=20221208; t=1690802149; x=1691406949;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hb4fxVsXsEP4Sa2QmJh8ZVYpqcBdy5//SDgjjy3dy7M=;
-        b=QZJO9naq1TvT6fGFkXB1lZZiI+4GyJ773kDYc3+tI4dMmZhUWoMXGPcmNiDSQxVMfK
-         VNzbZVBDkn/yE35BVFEUtZnsCWPJFS2gsBJCOX36kDd+hGmxOfIngO5Sjp+av/GvfK9k
-         n3mLPlBtUN1lSJxdK0maKv0WiviS9FFRvTAGhXuBFbU9oyn3l3p6QKSGCe1fbL6LQILh
-         tDVHdm8W6ikEJHTSBG52NadpTz6DClj9B/UrhuqZHjLJMkaAPjY3LhLfuRUgRGnU1+tX
-         LzsyWEb7edpGkk+BiEVzRJieD22pJk7z1SiZdPdploWfzFQGBnoRbucOK4nLpTzqq8bf
-         8a1A==
-X-Gm-Message-State: ABy/qLYG+muYsEyu7qZ/dxhj/s7lAV1iNegFmlvH24fSJqF7JWHsW0eQ
-        FHfQrWsci73NkbgGqZk4+UKtgg==
-X-Google-Smtp-Source: APBJJlHiHd+ytbn1o+Ewi9URPZK8pLPOXPs/7eYMk01wLn8ctKqk5HHJQv9Kao3h288T3N54DVYBSw==
-X-Received: by 2002:a05:6512:401e:b0:4fe:cca:c6f7 with SMTP id br30-20020a056512401e00b004fe0ccac6f7mr6310275lfb.48.1690802083975;
-        Mon, 31 Jul 2023 04:14:43 -0700 (PDT)
+        bh=vXpM9YuHXuYvit2gWbGjymMEZz2eD2dFqT8jtwhA8R0=;
+        b=jVxvqFkoXXIDHLfL9G4l3oy1WRJsUmE9MLx4dke8zZZVaH8I4YDUHI16v8n59mxGe5
+         OSgkAPHP4lOBfvJIRTxeqhPlGpyj3T6tOLU4AIc6L3NkfIaJ9lIcCpO/w6GqfrZqERWN
+         D4dJVzc7+O/8gPuMgSs6V0gUhR5bpRKPvOJGcY1SKR1lhEKbIjHgJnB7hCQU1H5WKpP0
+         JUiFytz2021Gz3K3wekfBqhiX9227/l+oph4bL51Zr/ijBbw7JVS4uUwn+R1WbQ992z0
+         H1B1dihksKlX25kPzIfCq2FEgONVLQZSb984++TySggCiQyZw/2KVtz3Gw2ChASxyTan
+         wqzg==
+X-Gm-Message-State: ABy/qLYQa3x0UM0lA0jQsNqArgDeBNGGMclzEpz1XG+ucSopSeKwE6Nz
+        tSL1f8C6TjsV6EsdrCnrEAnOnQ==
+X-Google-Smtp-Source: APBJJlEjakuCc32naFnEuTJxngP1I5HPKkLxmrRu4642h7DfLyAfKxxVwhDOgpz7Q1AQp28OOpUA+A==
+X-Received: by 2002:a05:6512:3a85:b0:4f8:6d53:a68f with SMTP id q5-20020a0565123a8500b004f86d53a68fmr6681803lfu.64.1690802149427;
+        Mon, 31 Jul 2023 04:15:49 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id x17-20020ac24891000000b004fe1960dd7csm1928123lfc.132.2023.07.31.04.14.42
+        by smtp.gmail.com with ESMTPSA id x17-20020ac24891000000b004fe1960dd7csm1928123lfc.132.2023.07.31.04.15.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 04:14:43 -0700 (PDT)
-Message-ID: <420c4eed-3a58-6620-0e41-e6919235488b@linaro.org>
-Date:   Mon, 31 Jul 2023 13:14:42 +0200
+        Mon, 31 Jul 2023 04:15:48 -0700 (PDT)
+Message-ID: <6b203ae7-33c3-2de8-dd0c-90481eab5924@linaro.org>
+Date:   Mon, 31 Jul 2023 13:15:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc8180x: switch UFS QMP PHY to new
- style of bindings
+Subject: Re: [PATCH] phy: qcom: qmp-ufs: add missing offsets to sm8150
+ configuration
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230731111158.3998107-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+References: <20230731111009.3998089-1-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,12 +105,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230731111158.3998107-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230731111009.3998089-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -113,16 +118,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.07.2023 13:11, Dmitry Baryshkov wrote:
-> Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
-> resource region, no per-PHY subnodes).
+On 31.07.2023 13:10, Dmitry Baryshkov wrote:
+> The conversion commit 7559e7572c03 ("phy: Explicitly include correct DT
+> includes") misses offsets configuration for sm8150 (most likely it was
+> developed separately from the series adding HS G4 support and was not
+> adapted for the sm8150/sm8250 configuration split).
 > 
+> Add missing offsets to sm8150_ufsphy_cfg.
+> 
+> Fixes: 7559e7572c03 ("phy: Explicitly include correct DT includes")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> 
-> As with the rest of UFS DTS conversion patches, this patch should wait
-> for 6.6, so that the patch flow is bisectable.
-> 
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
