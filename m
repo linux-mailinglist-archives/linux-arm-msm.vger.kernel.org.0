@@ -2,75 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72B18769004
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:22:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D78876900E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:24:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231569AbjGaIWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 04:22:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39286 "EHLO
+        id S230478AbjGaIYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 04:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231418AbjGaIVq (ORCPT
+        with ESMTP id S230129AbjGaIYN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 04:21:46 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3272E41;
-        Mon, 31 Jul 2023 01:21:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=EOe+l+7kjl+7rypw1+iLV+opzi+FSFKtYOJlcbNHKRQ=; b=QAJG2As5EfODtDmGp3YKLSIopz
-        nuJjYbHe9Q2SMWsr3P+MfH4u1IH7UPQWj/Q5A6irrs1KijE3KLbbaWhVSA2C6ygK8X2an3lb86lFG
-        dyInNHpSaJ8C1Kqu/8IUxktL461Jn6CW4uWDxMVqi1+mcChjiSxZI0zjxQeDJ/RMSSqY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1qQO9j-002hJV-PT; Mon, 31 Jul 2023 10:21:31 +0200
-Date:   Mon, 31 Jul 2023 10:21:31 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>,
-        Alex Elder <elder@kernel.org>,
+        Mon, 31 Jul 2023 04:24:13 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9B29183
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:23:59 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe37809e4aso964572e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:23:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690791838; x=1691396638;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=blXee+dDBQ47fnSeiUMVWE7fTOyc9C8HdxZlOvJbcv0=;
+        b=Ex3Bn7EExzLV4MN9C/nljzAJjFQ0zSVGSQ9Md9FbJrIf6utaec9gFlJwhCuHmHlWPA
+         z/wYprbtI9UOQfnUINErG0ap3FASEceipLsOyG4wfIf3urG/BHMSLh231sfK2CPk35Gu
+         B4j1Z23v6SDCEbv7BTR/eISuTukq1WA8VLx67QixBkz/9fsF2pEjQi96EtDxdmF7Flpd
+         EtjhGoHWdY+JNwr+mUIqRxGdp0qqaW0Cr/ITLKy/LxRZyGIDGCg7jISLCbMcgjijrDit
+         GzZvr5WIjtxBS7cFBceYXjZkArcXCIfs4NlQezsRzPlqeWlcABxi8BmPyc98BY1y96gH
+         bGhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690791838; x=1691396638;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=blXee+dDBQ47fnSeiUMVWE7fTOyc9C8HdxZlOvJbcv0=;
+        b=CjQx8lLZ+8rsPy3bvXm0akdflbZXgYwmMQIRoXtin8X2nHJe429YJ7+L3V6wYn3P8j
+         xdwAFmfdu4ype7uLeqSmRlM9KJCb4u3sVYIXfsYZ2n6s++F1OvI4pIzzE8OqDclZXoa5
+         73d2dullBqvrTJTNdPJcY/ky8ptMvjDwEVvWdmq9jQ/0wOnlRkH7WBKYCOG6WSAFpNMI
+         SKCy/dIh6Ozl1lAIhPGOHao0h7SiCp28d7s65XgRNei/cHULniqK5S9v5yD8KoKHyitj
+         n8ewUTjObJTehiqhjMuVr/pmkL9/spetgpAYEZ7X6XJaVJ4ORSNq6qCKy6gnM282qHQ8
+         udpw==
+X-Gm-Message-State: ABy/qLay/PQMHaWPkiufH5JtddFiAxiOAFJLxhxg8i2Y6JVu6U/GykSW
+        Fp4RP4xKjSrsuwfhI/QYPvmkYg==
+X-Google-Smtp-Source: APBJJlGKE2DVLe149kchpBqjbs1hE92ofyR6T5tdMJPbmCVveeORAYPo6+BcOsrUK12AR94Q9JRlZg==
+X-Received: by 2002:a19:9146:0:b0:4fb:7b4c:d38c with SMTP id y6-20020a199146000000b004fb7b4cd38cmr4754003lfj.60.1690791838163;
+        Mon, 31 Jul 2023 01:23:58 -0700 (PDT)
+Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
+        by smtp.gmail.com with ESMTPSA id u23-20020ac24c37000000b004fcdea129basm1977429lfq.94.2023.07.31.01.23.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Jul 2023 01:23:57 -0700 (PDT)
+Message-ID: <2c43966d-33da-107a-ff47-370e3e27a99a@linaro.org>
+Date:   Mon, 31 Jul 2023 10:23:56 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] soc: qcom: aoss: Tidy up qmp_send() callers
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Chris Lew <quic_clew@quicinc.com>
+Cc:     Alex Elder <elder@kernel.org>,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 2/4] soc: qcom: aoss: Add debugfs interface for sending
- messages
-Message-ID: <21dfb855-8f44-4a4c-9dba-52eb5ae46b9b@lunn.ch>
 References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
- <20230731041013.2950307-3-quic_bjorande@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230731041013.2950307-3-quic_bjorande@quicinc.com>
+ <20230731041013.2950307-5-quic_bjorande@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230731041013.2950307-5-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 30, 2023 at 09:10:11PM -0700, Bjorn Andersson wrote:
-> From: Chris Lew <clew@codeaurora.org>
+On 31.07.2023 06:10, Bjorn Andersson wrote:
+> With qmp_send() handling variable length messages and string formatting
+> he callers of qmp_send() can be cleaned up to not care about these
+> things.
 > 
-> In addition to the normal runtime commands, the Always On Processor
-> (AOP) provides a number of debug commands which can be used during
-> system debugging for things such as preventing power collapse or placing
-> floor votes for certain resources. Some of these are documented in the
-> Robotics RB5 "Debug AOP ADB" linked below.
+> Drop the QMP_MSG_LEN sized buffers and use the message formatting, as
+> appropriate.
 > 
-> Provide a debugfs interface for the developer/tester to send these
-> commands to the AOP.
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+If Alex is okay with that going through qcom:
 
-This sort of sending arbitrary binary blob commands is not liked,
-since it allow user space closed source drivers. At minimum, please
-provide a file per command, with the kernel marshalling parameters
-into the binary format, and decoding any returned values.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-       Andrew
+One nit below.
+
+[...]
+
+> -	snprintf(buf, sizeof(buf),
+> -		 "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
+> -			qmp_cdev->name,
+> -			cdev_state ? "on" : "off");
+> -
+> -	ret = qmp_send(qmp_cdev->qmp, buf);
+> -
+> +	ret = qmp_send(qmp_cdev->qmp, "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
+There's a space after the first colon but not after the subsequent
+ones.
+
+Konrad
