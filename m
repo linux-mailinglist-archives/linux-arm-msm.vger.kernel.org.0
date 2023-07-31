@@ -2,97 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B21B76910C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 11:04:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C4A5769139
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 11:14:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232144AbjGaJEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 05:04:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35076 "EHLO
+        id S231744AbjGaJOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 05:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230398AbjGaJDp (ORCPT
+        with ESMTP id S231709AbjGaJO1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 05:03:45 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A01C1999
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 02:02:49 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-31297125334so2877723f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 02:02:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690794161; x=1691398961;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5+r1edqKvURhfyiI4qxFZeIDXLazkhBYvA4uXUjqgCc=;
-        b=eK+Mtf+lWF87Z3McC7LVXrzCWa3aO4dn00FQAoWzKnGoXt0FzcwsP5T6/PMH5OJhxG
-         iieZfY53Ncm0AvMu1q+eLGxhYmGg4VKFjYy/WEyjMwVq+URaegtdF0nB7XCPQGcisNx5
-         cNN0W7Ck1QWmFWRB/y+NEw2LrgUF4EeaXeOZ2MAXruOMRA1nHjg/i7RLgPSgrx9Rj3Oi
-         Nyn9EDpfwxUgWpVDzHYPGWxRUS5eVNyG1qMCxWeDVoEHZmvIX1GDf5diHTTHgaJRBzNL
-         ZDIOCloXQVxPzDqPs8cR1PmEiwG2fVdPm1ul1f+Ua189LNxvMzXjXxHpR4ahvOIUbrRC
-         /uVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690794161; x=1691398961;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5+r1edqKvURhfyiI4qxFZeIDXLazkhBYvA4uXUjqgCc=;
-        b=PxtekrOCo577knDPMLXwFA/TE8kGUOjzi0wZM6hpSnbA08r2+KlDqMmFhn6peleZ8U
-         PCpTLb/zzlhKsaETWGrc877BUR4tzfEsEcXlGTxS6wat0JJHQmYIajoLWWwniX4OhOTK
-         jXp2NvMuKAwRjiXncytreLeThdu5aTpI67A2uFvnPsG78jBeagJ7VugxXDndAHW19oU5
-         QnwOy/9Cr8L71PbBR/ao3/WO8XCgz9MHjfXMn9YVbaHRcXqhn6uQOs2EChjI0GcBjBXX
-         3No3Myb+ZxO0LmA6TlyxxBqTLGLw3PvjJIgcQJX229uvmcrI3WEHrWAfqIvWxIaISGrh
-         BRnA==
-X-Gm-Message-State: ABy/qLb7KhYK3YJxQiYUUGMEEqk+6Ld8Rj0/1rZvx+98+gf/H8HnsqJL
-        29gGbXDIlfDM7RWYfrBth+qy81PYFL9yiSTGPuoXxw==
-X-Google-Smtp-Source: APBJJlG7k6zNm0qkX1tUYP66PohWIF4pMduDAAJNCIb8TGjiznz6duHx0bJf8eizICNgirbhzLLAbg==
-X-Received: by 2002:adf:f182:0:b0:314:3f1:cebf with SMTP id h2-20020adff182000000b0031403f1cebfmr10863530wro.28.1690794161015;
-        Mon, 31 Jul 2023 02:02:41 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m12-20020adff38c000000b00313f031876esm12442715wro.43.2023.07.31.02.02.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 02:02:40 -0700 (PDT)
-Message-ID: <7ca35e2c-d5b7-021f-dbe7-d4e953d0fa10@linaro.org>
-Date:   Mon, 31 Jul 2023 10:02:39 +0100
+        Mon, 31 Jul 2023 05:14:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9DCD123;
+        Mon, 31 Jul 2023 02:14:25 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V6ZgpQ009122;
+        Mon, 31 Jul 2023 09:14:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=+eP0sdLFFRFH1w+5ltT1uqBPynt5gUa0ydFr6fMznAI=;
+ b=mYFA7GgD1OgO1Tv/4uC95TtELeoQAJWaw14pL5pwJdXa75d7dZXcVAGLqHg5IMSlGIPT
+ NcnsvkBOLK+WQn9M8ty3vwqAniXtyg9i1EKEadVaUMHt31qotfIbHoMAWvEby/35+l5D
+ iHfvxO0LJjxZsMU5CpWq6iPQkWnmUxHRzgDrRuSgu84pJ/b3obu5xUPtnBJz3XaL9FJv
+ R7/hQqTkiyJht9yscD0OT3Qx3FgO09NtxelPBQqhXiw5V0lelTc5NA4mrcZZPC+yQbsi
+ 7Ah+Bvj82NPREZyD2zlsnCYK72Y9gRtw1cjIh7UEDWGiNSGAsyzaCpYDyvrby84eIUzM Hw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4uat33rn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 09:14:21 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36V9EKOM028054
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 09:14:20 GMT
+Received: from hu-ipkumar-blr.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 31 Jul 2023 02:14:17 -0700
+From:   Praveenkumar I <quic_ipkumar@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_varada@quicinc.com>, <quic_clew@quicinc.com>
+Subject: [PATCH] soc: qcom: qmi_encdec: Restrict string length in decode
+Date:   Mon, 31 Jul 2023 14:44:08 +0530
+Message-ID: <20230731091408.2458199-1-quic_ipkumar@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 18/33] iris: vidc: hfi: add Host Firmware Interface (HFI)
-Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     quic_dikshita@quicinc.com
-References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
- <1690550624-14642-19-git-send-email-quic_vgarodia@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1690550624-14642-19-git-send-email-quic_vgarodia@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 0dyGBnqj_p7AryjKd9MKOsQGQJLU3BF8
+X-Proofpoint-GUID: 0dyGBnqj_p7AryjKd9MKOsQGQJLU3BF8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-31_02,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307310081
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/07/2023 14:23, Vikash Garodia wrote:
-> This implements the interface for communication between
-> host driver and firmware through interface commands and messages.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+The QMI TLV value for strings in a lot of qmi element info structures
+account for null terminated strings with MAX_LEN + 1. If a string is
+actually MAX_LEN + 1 length, this will cause an out of bounds access
+when the NULL character is appended in decoding.
 
-More dead code here
-
-drivers/media/platform/qcom/iris/vidc/src/venus_hfi.c:542:	//if 
-(core->last_packet_type != HFI_CMD_SYS_PC_PREP)
-drivers/media/platform/qcom/iris/vidc/src/venus_hfi.c:543:	// 
-core->skip_pc_count = 0;
-
+Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 ---
-bod
+ drivers/soc/qcom/qmi_encdec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/qcom/qmi_encdec.c b/drivers/soc/qcom/qmi_encdec.c
+index b7158e3c3a0b..5c7161b18b72 100644
+--- a/drivers/soc/qcom/qmi_encdec.c
++++ b/drivers/soc/qcom/qmi_encdec.c
+@@ -534,8 +534,8 @@ static int qmi_decode_string_elem(const struct qmi_elem_info *ei_array,
+ 		decoded_bytes += rc;
+ 	}
+ 
+-	if (string_len > temp_ei->elem_len) {
+-		pr_err("%s: String len %d > Max Len %d\n",
++	if (string_len >= temp_ei->elem_len) {
++		pr_err("%s: String len %d >= Max Len %d\n",
+ 		       __func__, string_len, temp_ei->elem_len);
+ 		return -ETOOSMALL;
+ 	} else if (string_len > tlv_len) {
+-- 
+2.34.1
 
