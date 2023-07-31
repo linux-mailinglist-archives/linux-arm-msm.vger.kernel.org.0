@@ -2,81 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E666769D00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 18:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C50769D1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 18:47:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232079AbjGaQnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 12:43:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45982 "EHLO
+        id S229726AbjGaQrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 12:47:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233351AbjGaQm4 (ORCPT
+        with ESMTP id S229727AbjGaQrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 12:42:56 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F318C1723
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:42:48 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9a2033978so70369231fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:42:48 -0700 (PDT)
+        Mon, 31 Jul 2023 12:47:06 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1A61728
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:47:05 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d16889b3e93so4977079276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690821767; x=1691426567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n51bPqc2FOBF1O8Pkof/cmIv3X6J8j8NcKC/rdlzbnc=;
-        b=UCCLI6lYVK5fuTzhHD3N56NIKzLuA01wA85/5Q8I4Ub0cr6qqgsAAtXdP7f7Xmp0Jd
-         sQK6/5iKpNoPUmH2oef4zU5tjExKgHDB6YwchfmARkClFn0UBmLD3K5CLjzLWBrb9neu
-         EEsI5iD6t5rVTNISfrLokXvSTd0A8Iy2FXD434yebYtUal5CQrpQWkdWm70L6iRcdLRX
-         mJAfDVrbkpJsG7hGv53EZbMuQv2+hDOhOnp9iHLuE2Xajm0WJOGUQMtBwlEuYp2Be1EZ
-         bAMT9QbaPgLqoKzaYlngIi++D964Yi0YXjACBk+l8mXsLb1n9d94aYZ8Kme5PTstL40o
-         HSbA==
+        d=linaro.org; s=google; t=1690822024; x=1691426824;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=h7ZXjsSf6tAx3asGVuiQEd3Ci5WeA7f/UBUv+GtyjM4=;
+        b=Oi1i6jM8nzX93JTx8OvFmNPBz2M9Gio9in1+4mGVdM6m5tOmiSLU4ou38JSDnA1Hps
+         t90ZACmussYKUOhQyfuuJ+YP7A7T3MnjOO/ddJX6s/h2HQmSns4AitIW1HJgp0YvPHtz
+         3NxI0u3ZDLAl3bTHm8uSIB56qpp02RMuh2INWYYexoINldBbCWnpM/BFCRANlcONABod
+         Hq2l47f9857JKBTDDWLZR9o3N9ON1hV3Dqbo/u9/DBpiwlCiFH4swxqHgpAEBhyfFWmV
+         kngYR7FEeKbDMgSdCJizFXgwGFoCL0sNGkAqVUNEoDUmBULn3jGXWIwEAjp6KD/nE3f7
+         gzQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690821767; x=1691426567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n51bPqc2FOBF1O8Pkof/cmIv3X6J8j8NcKC/rdlzbnc=;
-        b=jWCYy9geTrFTXkbtrPpz5ZgVPoYfdEPg6oI3lIo9cKwSmTRWjS+YdekHaKLln1o24S
-         GCslUPoDtw2nPKRv6/Vn6HJYEEWfzrAXi3CSx7+dF/uO9RscAXr4Le0at1JnKmlgrjm5
-         4RC6I1qOlGzH/GXB24lC1Zeapk2gIgWorZOwdNywD3aoCn2w9/SfzIGcP2HHxcXkOeZw
-         aoRwHq4VUQh5cVt5SaH+7AoXXu4sO86mjnwXT5YFImi22HzrVAd4dkkaBOA+FFp9/HlK
-         UeoNeO3uedLuF2XS5z7CoYXeomKHMwUN6h1ocOqYBQMur2+gsIvsTue8aRi4GdDcf+3x
-         gWWw==
-X-Gm-Message-State: ABy/qLYQBSMYIMxo3aoL6BcjsyalVUbAzril636JXpA5kGX2G0PDzbmU
-        hMAazZXUzC3Z9hYV3ydxqjZEPQ==
-X-Google-Smtp-Source: APBJJlGnlmc0CiNX0uQgMywmw8gDWUm9ZXVzpNexqQqWwE6fS3vBXiSmuhs0v1sT3xheNqqp6aCo5A==
-X-Received: by 2002:a2e:7e04:0:b0:2b6:d576:a25b with SMTP id z4-20020a2e7e04000000b002b6d576a25bmr376516ljc.28.1690821767059;
-        Mon, 31 Jul 2023 09:42:47 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id k15-20020a2e240f000000b002b70a8478ddsm2629932ljk.44.2023.07.31.09.42.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 09:42:46 -0700 (PDT)
-Message-ID: <c68358a7-ee21-2d0a-71ab-cd1f9a3e1afe@linaro.org>
-Date:   Mon, 31 Jul 2023 19:42:46 +0300
+        d=1e100.net; s=20221208; t=1690822024; x=1691426824;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h7ZXjsSf6tAx3asGVuiQEd3Ci5WeA7f/UBUv+GtyjM4=;
+        b=Dc2jC9n7ahZasWXxcM6yqt7DF65MFRLTXjq+oMYVWqmvrQX1NdgdBIShnxPUD+kRXv
+         /sx75L/cBvLMJh6SSvTX782KJYvIUjy5BGfak2XxO5t2JV5vHSHv7ATg5/O/l6pjCl+X
+         ULLkMPLM8Hzatgma1RYEzI88vofCBKhewRVu3lgqEQNBPJVAwtfeYlH4prTAZ/cXYVjm
+         XrEvR83CxBdcd8mgS9egqA9BkleVFus0aVuYcI3zVln/TF4H4o6ktHnZApz6Xqmua5Ig
+         FZiqIpZrREe3Q7OX9ymuhpDtHkf7ozG2SZdtGBwxT6gR5bREjUvltvkw6L8OzL269Ngc
+         Xddg==
+X-Gm-Message-State: ABy/qLZyNQUdcCqo7NZ28oKgVkyokaFBlPjjWU5K6BI66Pxx/u1m9iQO
+        QUjETdBEw2OgyacZue7QmGJqtw==
+X-Google-Smtp-Source: APBJJlHVe2UaaJO5B3mXn0KZ2J3l9/YGEMBEIweiAfnQG0XXkjGfV3tG9f+7QAVSm9AamtiyGtuHzA==
+X-Received: by 2002:a25:734c:0:b0:d00:bc21:a504 with SMTP id o73-20020a25734c000000b00d00bc21a504mr12166149ybc.40.1690822024631;
+        Mon, 31 Jul 2023 09:47:04 -0700 (PDT)
+Received: from fedora (072-189-067-006.res.spectrum.com. [72.189.67.6])
+        by smtp.gmail.com with ESMTPSA id z13-20020a25ad8d000000b00d0c698ed6b6sm2509866ybi.41.2023.07.31.09.47.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jul 2023 09:47:03 -0700 (PDT)
+Date:   Mon, 31 Jul 2023 12:47:01 -0400
+From:   William Breathitt Gray <william.gray@linaro.org>
+To:     Patrick Whewell <patrick.whewell@sightlineapplications.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-sm8250: Fix gcc_sdcc2_apps_clk_src
+Message-ID: <ZMflhQubbITCBKlF@fedora>
+References: <20230728191423.13837-1-patrick.whewell@sightlineapplications.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 00/14] A7xx support
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/rOFXeJeJEPIpyxN"
+Content-Disposition: inline
+In-Reply-To: <20230728191423.13837-1-patrick.whewell@sightlineapplications.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,88 +81,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2023 23:35, Konrad Dybcio wrote:
-> This series attempts to introduce Adreno 700 support (with A730 and A740
-> found on SM8450 and SM8550 respectively), reusing much of the existing
-> A6xx code. This submission largely lays the groundwork for expansion and
-> more or less gives us feature parity (on the kernel side, that is) with
-> existing A6xx parts.
-> 
-> On top of introducing a very messy set of three (!) separate and
-> obfuscated deivce identifiers for each 7xx part, this generation
-> introduces very sophisticated hardware multi-threading and (on some SKUs)
-> hardware ray-tracing (not supported yet).
-> 
-> After this series, a long-overdue cleanup of drm/msm/adreno is planned
-> in preparation for adding more features and removing some hardcoding.
-> 
-> The last patch is a hack that may or may not be necessary depending
-> on your board's humour.. eh.. :/
-> 
-> Developed atop (and hence depends on) [1]
-> 
-> The corresponding devicetree patches are initially available at [2] and
-> will be posted after this series gets merged. To test it, you'll also need
-> firmware that you need to obtain from your board (there's none with a
-> redistributable license, sorry..). Most likely it will be in one of
-> these directories on your stock android installation:
-> 
-> * /vendor/firmware
-> * /vendor/firmware_mnt
-> * /system
-> 
-> ..but some vendors make it hard and you have to do some grepping ;)
-> 
-> Requires [3] to work on the userspace side. You'll almost cerainly want
-> to test it alongside Zink with a lot of debug flags (early impl), like:
-> 
-> TU_DEBUG=sysmem,nolrz,flushall,noubwc MESA_LOADER_DRIVER_OVERRIDE=zink kmscube
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org/
-> [2] https://github.com/SoMainline/linux/commits/topic/a7xx_dt
-> [3] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/23217
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+--/rOFXeJeJEPIpyxN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Jul 28, 2023 at 12:14:23PM -0700, Patrick Whewell wrote:
+> Set .flags =3D CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
+> didn't update its configuration" error.
+>=20
+> Signed-off-by: Patrick Whewell <patrick.whewell@sightlineapplications.com>
+> Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver =
+for SM8250")
+
+The error appears resolved when tested on my Open-Q 865 SOM.
+
+Tested-by: William Breathitt Gray <william.gray@linaro.org>
+
 > ---
-> Konrad Dybcio (14):
->        dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
->        dt-bindings: display/msm/gmu: Allow passing QMP handle
->        dt-bindings: display/msm/gpu: Allow A7xx SKUs
->        drm/msm/a6xx: Add missing regs for A7XX
->        drm/msm/a6xx: Introduce a6xx_llc_read
->        drm/msm/a6xx: Move LLC accessors to the common header
->        drm/msm/a6xx: Bail out early if setting GPU OOB fails
->        drm/msm/a6xx: Add skeleton A7xx support
->        drm/msm/a6xx: Send ACD state to QMP at GMU resume
->        drm/msm/a6xx: Mostly implement A7xx gpu_state
->        drm/msm/a6xx: Add A730 support
->        drm/msm/a6xx: Add A740 support
->        drm/msm/a6xx: Vastly increase HFI timeout
->        [RFC] drm/msm/a6xx: Poll for GBIF unhalt status in hw_init
-> 
->   .../devicetree/bindings/display/msm/gmu.yaml       |  47 +-
->   .../devicetree/bindings/display/msm/gpu.yaml       |   4 +-
->   drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   9 +
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 188 ++++--
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   8 +
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 658 ++++++++++++++++++---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  15 +
->   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 +-
->   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  61 +-
->   drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  90 ++-
->   drivers/gpu/drm/msm/adreno/adreno_device.c         |  26 +
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   7 +-
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  24 +-
->   drivers/gpu/drm/msm/msm_ringbuffer.h               |   2 +
->   15 files changed, 1070 insertions(+), 124 deletions(-)
-> ---
-> base-commit: 6f9b660e9cbb30669fcfec83288d527c0844717d
-> change-id: 20230628-topic-a7xx_drmmsm-123f30d76cf7
+>  drivers/clk/qcom/gcc-sm8250.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
+> index b6cf4bc88d4d..d3c75bb55946 100644
+> --- a/drivers/clk/qcom/gcc-sm8250.c
+> +++ b/drivers/clk/qcom/gcc-sm8250.c
+> @@ -721,6 +721,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src =3D {
+>  		.name =3D "gcc_sdcc2_apps_clk_src",
+>  		.parent_data =3D gcc_parent_data_4,
+>  		.num_parents =3D ARRAY_SIZE(gcc_parent_data_4),
+> +		.flags =3D CLK_OPS_PARENT_ENABLE,
+>  		.ops =3D &clk_rcg2_floor_ops,
+>  	},
+>  };
+> --=20
+> 2.25.1
+>=20
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
+--/rOFXeJeJEPIpyxN
+Content-Type: application/pgp-signature; name="signature.asc"
 
--- 
-With best wishes
-Dmitry
+-----BEGIN PGP SIGNATURE-----
 
+iHUEARYKAB0WIQSNN83d4NIlKPjon7a1SFbKvhIjKwUCZMflhQAKCRC1SFbKvhIj
+K9WPAP0emuG0IfFbFUcbSGg1pjaD2RVmEmR/aMnY01eGm19zWAEAs+swj1y6j371
+lccbKAQk14M5ORRzmO+997ZF5u5uNQQ=
+=LLqT
+-----END PGP SIGNATURE-----
+
+--/rOFXeJeJEPIpyxN--
