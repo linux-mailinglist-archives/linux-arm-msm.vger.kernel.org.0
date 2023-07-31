@@ -2,119 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B4D47689EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 04:16:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C3D2768A6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 05:51:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjGaCQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jul 2023 22:16:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59792 "EHLO
+        id S229714AbjGaDvy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jul 2023 23:51:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjGaCQo (ORCPT
+        with ESMTP id S229469AbjGaDvw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jul 2023 22:16:44 -0400
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CECD218B;
-        Sun, 30 Jul 2023 19:16:42 -0700 (PDT)
-Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.57])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4RDhfh14BqzrRyr;
-        Mon, 31 Jul 2023 10:15:40 +0800 (CST)
-Received: from [10.67.110.108] (10.67.110.108) by
- kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Mon, 31 Jul 2023 10:16:38 +0800
-Message-ID: <4ae70a67-6421-f1f6-f88f-163ee54b39bb@huawei.com>
-Date:   Mon, 31 Jul 2023 10:16:38 +0800
+        Sun, 30 Jul 2023 23:51:52 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 710C1E50
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 20:51:50 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fe0eb0ca75so6363786e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 20:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690775509; x=1691380309;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ddUy3BUYmqLjU7l6ekKc9suZLaStpY0ol+tCNSEW3z4=;
+        b=nRx536MdnTMZBddyBrZfQfZybPTj36s7dpBuoITV2AqiimJJ6/yLNoff6uITUtOlix
+         5ep8CPWaxZ1gMvE8hmC0hqa3X7TNHVSIli2Uxdpn+EEvzybTBH0SI7iRHZq9JESIyrXy
+         TJ1q5JA/ZX6vARBLAIndtCTCX/TCMTzVgHMhhKsfgaKSCiD7b5h9jjrgBeBtpgpaRXGQ
+         NWSSvk0OfFy4zmqhZpZunAtLdCMLwlmdazlycSEaJkc1kHo05wniw8L0ayxj64Ju1Eh8
+         q3Zp47UaMx1LpjaW/4rE6P2FOzwrXw7WyQkCCOLKlo5Z3khwcwvFfuvDRNiYjG1NRyZR
+         CNuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690775509; x=1691380309;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ddUy3BUYmqLjU7l6ekKc9suZLaStpY0ol+tCNSEW3z4=;
+        b=BbeiXBGYqEDbP9oJU66jIxnH2EZPPWjQMjp4PJUxMTOJvvSUu8jqjeFpsC8SeHNCmw
+         YarLk9QECdPXubCM+Kg7VuWF/e6/xuBWCSneRarK2hzUO4fzgE7HpVaI/DJxyNPsD9qo
+         mPBtudmD96sC7G00tta1+M8u4h0T2bKNnnKOBKxEEz5EXcM+dAqCjzqwQzf7C+qwfrkt
+         dFlTtHMcJ1D3MRwDfPqiEUdf9OKn/q3HUlT0K9jX5C/VeIaApwiMAWnhmS0GIQo8A/h1
+         rnfuCq0ZNP/DSKJW+uIZ2z3NHEe+lxjp1So2/L49a2KChmDSeCv1of5JSyV17RAZlkuH
+         PCog==
+X-Gm-Message-State: ABy/qLZvWPB8XJvaPC7Y0JtCb8/uD6xdqeqMyoXYOxWxlBzHloDQWX9e
+        t9YbKqXHl7XL2bF47CwoeQP0kg==
+X-Google-Smtp-Source: APBJJlGW0FgZvkmVdnLqO2ISjEWdAxAGCuIY34ei7SO1aUTkpabJ/WTzELhPmhAG0RVo9crhEAFOEg==
+X-Received: by 2002:a05:6512:44c:b0:4fd:f80d:f6a3 with SMTP id y12-20020a056512044c00b004fdf80df6a3mr4788001lfk.43.1690775508711;
+        Sun, 30 Jul 2023 20:51:48 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id l10-20020ac2430a000000b004fbb1bc1ae0sm1864789lfh.163.2023.07.30.20.51.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Jul 2023 20:51:48 -0700 (PDT)
+Message-ID: <42d3106a-de8f-24f5-e7d2-1ad7ecde9d23@linaro.org>
+Date:   Mon, 31 Jul 2023 06:51:47 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 8/9] i2c: imx-lpi2c: Use dev_err_probe in probe function
-To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>
-CC:     <andi.shyti@kernel.org>, <florian.fainelli@broadcom.com>,
-        <rjui@broadcom.com>, <sbranden@broadcom.com>,
-        <bcm-kernel-feedback-list@broadcom.com>,
-        <yangyicong@hisilicon.com>, <aisheng.dong@nxp.com>,
-        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
-        <kernel@pengutronix.de>, <festevam@gmail.com>, <linux-imx@nxp.com>,
-        <kblaiech@nvidia.com>, <asmaa@nvidia.com>,
-        <loic.poulain@linaro.org>, <rfoss@kernel.org>, <ardb@kernel.org>,
-        <gcherian@marvell.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-rpi-kernel@lists.infradead.org>
-References: <20230728013148.1720978-1-liaochang1@huawei.com>
- <20230728013148.1720978-9-liaochang1@huawei.com>
- <20230728055535.qoqq5syketmtduoy@pengutronix.de>
-From:   "Liao, Chang" <liaochang1@huawei.com>
-In-Reply-To: <20230728055535.qoqq5syketmtduoy@pengutronix.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.110.108]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- kwepemi500012.china.huawei.com (7.221.188.12)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v5 1/2] ARM: dts: qcom: Use labels with generic node names
+ for ADC channels
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230730-generic-adc-channels-v5-0-e6c69bda8034@somainline.org>
+ <20230730-generic-adc-channels-v5-1-e6c69bda8034@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230730-generic-adc-channels-v5-1-e6c69bda8034@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-在 2023/7/28 13:55, Uwe Kleine-König 写道:
-> Hello,
+On 30/07/2023 23:31, Marijn Suijten wrote:
+> A future bindings update will replace the free-form qcom,spmi-vadc and
+> qcom,spmi-adc5 channel node names with the specific name `channel`, to
+> be more consistent with how the driver parses the nodes and to match the
+> generic node name set in `iio/adc/adc.yaml`.
 > 
-> On Fri, Jul 28, 2023 at 09:31:47AM +0800, Liao Chang wrote:
->> Use the dev_err_probe function instead of dev_err in the probe function
->> so that the printed messge includes the return value and also handles
->> -EPROBE_DEFER nicely.
->>
->> Signed-off-by: Liao Chang <liaochang1@huawei.com>
->> ---
->>  drivers/i2c/busses/i2c-imx-lpi2c.c | 6 ++----
->>  1 file changed, 2 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
->> index c3287c887c6f..9021b8064ae4 100644
->> --- a/drivers/i2c/busses/i2c-imx-lpi2c.c
->> +++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
->> @@ -569,10 +569,8 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
->>  		sizeof(lpi2c_imx->adapter.name));
->>  
->>  	ret = devm_clk_bulk_get_all(&pdev->dev, &lpi2c_imx->clks);
->> -	if (ret < 0) {
->> -		dev_err(&pdev->dev, "can't get I2C peripheral clock, ret=%d\n", ret);
->> -		return ret;
->> -	}
->> +	if (ret < 0)
->> +		return dev_err_probe(&pdev->dev, ret, "can't get I2C peripheral clock\n");
-> 
-> The change looks good, however I wonder why you didn't convert the other
-> dev_err() called by lpi2c_imx_probe() in the same way.
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>   arch/arm/boot/dts/qcom/qcom-pm8226.dtsi  | 12 ++++++------
+>   arch/arm/boot/dts/qcom/qcom-pm8941.dtsi  | 14 +++++++-------
+>   arch/arm/boot/dts/qcom/qcom-pma8084.dtsi | 12 ++++++------
+>   arch/arm/boot/dts/qcom/qcom-pmx55.dtsi   |  8 ++++----
+>   4 files changed, 23 insertions(+), 23 deletions(-)
 
-Sorry, I am in hurry and don't clean it up as much as.
-
-Actually, I am not sure if I should convert all dev_err calls to dev_err_probe, or just
-replace the ones that print the 'return value'. I know that dev_err_probe is better
-suited for printing return values, but I am nore sure if it's worth the effort to convert
-all of the calls, for example, the second dev_err in lpi2c_imx_probe():
-
-ret = devm_request_irq(&pdev->dev, irq, lpi2c_imx_isr, 0, pdev->name, lpi2c_imx);
-if (ret)
-    dev_err(&pdev->dev, "can't claim rqi %d\n", irq);
-    return ret;
-}
-
-Thanks.
-
-> 
-> Best regards
-> Uwe
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-BR
-Liao, Chang
+With best wishes
+Dmitry
+
