@@ -2,130 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E75769D9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 19:03:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5930B769EFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 19:11:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233505AbjGaRDf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 13:03:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58162 "EHLO
+        id S233440AbjGaRLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 13:11:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232255AbjGaRDL (ORCPT
+        with ESMTP id S233100AbjGaRLW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 13:03:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE23F1735;
-        Mon, 31 Jul 2023 10:03:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Mon, 31 Jul 2023 13:11:22 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3213F5B9C;
+        Mon, 31 Jul 2023 10:07:48 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8CB4461206;
-        Mon, 31 Jul 2023 17:03:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736B5C433C8;
-        Mon, 31 Jul 2023 17:03:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690822990;
-        bh=prqbrDd1eQM/ciCHGjg5jabFwA3khIZ739HC/mJfYHA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eejfjuhP7BADOW/epFaY0YfjeuaoWC587CNl3oKWWdwOxmI0MU+TyGgtJXmHlqCu/
-         JhG19cnizr15/Rf1nokDUwJ7XmHWQEwam5PLQRCe9oGui4E2/VZTpOaCgWWQpiqnWh
-         UJWmVic5qArl8bC1Ok05bwLblI5knX5lUpgBvZdxefR2zSeCrf+8tcU1arh0/IhLW0
-         Pw20j9T6LSKcVe/WzfNCH46TB3HgonSpus5jUudJcqIXigCb/JvutafnJcvT3n9lQI
-         apNl4dP39mJQaYZ6zrNsF23izQHNgo/wc49RfA2NvwobOFdIowpoas69DSRIPj3jNb
-         WUwe3W5r6g4Xw==
-Date:   Mon, 31 Jul 2023 19:03:07 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Chris Morgan <macroalpha82@gmail.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        cros-qcom-dts-watchers@chromium.org, linux-input@vger.kernel.org,
-        hsinyi@google.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        yangcong5@huaqin.corp-partner.google.com
-Subject: Re: [PATCH v3 02/10] drm/panel: Check for already prepared/enabled
- in drm_panel
-Message-ID: <kuctj2p353nsae24lrhcymqqpfajbc7qoqly63zpwvdp6lgu3b@kk4gpzsapxnn>
-References: <20230725203545.2260506-1-dianders@chromium.org>
- <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
- <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
- <CAD=FV=VcsTik+HD11xeDM2Jq9ispcX0-j5QtK8D1qUkrGabRGg@mail.gmail.com>
- <i3cbgrc365lwscwux2itho6uv74ji3hsjuge4zoxfnlnhacyqc@r73mmifyxffj>
- <CADcbR4JB0h8fByM2Z6diByvWaFprW9GDapBNt+YLWr9-vKoe7A@mail.gmail.com>
+        by box.trvn.ru (Postfix) with ESMTPSA id 9534D408FB;
+        Mon, 31 Jul 2023 22:06:43 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1690823204; bh=/Y8NyMX0ZcTudJzcfGX7rhtY7K7PI/lPFCPNvoSyTp0=;
+        h=From:Subject:Date:To:Cc:From;
+        b=3MOH7Qhdh4I8jxunIhBbxu45twtCJH81VP7G0L4dXuDTdiGcc8AItczzaKBhdvfxD
+         K4bnCHHbyUIlL31s88Gf1vGISVyPM6dWTO46Gzvh4wutPPdaBkgrzPzy1K/QC6CZcb
+         0feYm58z7XU8dirBCQgL++mie38wc8FNo7zBgeAb4CNfm0qYeQXQg2Euxc8wjxsaFX
+         +ns1I0B4uWWZjVGzs0VLcEYiR85jznrc9ln9Fr8DT6s4mk0HcXo6JC0Lg9eBvvyA23
+         1mHcSY/wlHBgeGVORDtKYJ/C8ZdNYJoPuTPLBlI55ephDVYilgdCtxWpv2UYydQXzT
+         JkNAI9jvbxXMA==
+From:   Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v2 0/4] Add pm8916 VM-BMS and LBC
+Date:   Mon, 31 Jul 2023 22:06:23 +0500
+Message-Id: <20230731-pm8916-bms-lbc-v2-0-82a4ebb39c16@trvn.ru>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dtkqu6ml752thbrc"
-Content-Disposition: inline
-In-Reply-To: <CADcbR4JB0h8fByM2Z6diByvWaFprW9GDapBNt+YLWr9-vKoe7A@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA/qx2QC/13MSw7CIBSF4a00d+w1cGkBO3IfpgPaUktiH4FKN
+ A17F5s4cfif5Hw7BOudDVAXO3gbXXDLnINOBXSjme8WXZ8biJFgihSuk75wie0U8NF2KAbNBKs
+ ESUOQT6u3g3sd4K3JPbqwLf59+JF/1x+l/6nIkWEleyOolKrU6rr5OJ/9E5qU0gdS7weXqgAAA
+ A==
+To:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1501; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=/Y8NyMX0ZcTudJzcfGX7rhtY7K7PI/lPFCPNvoSyTp0=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBkx+ocLZz7M2fE56E/uyDsW4E0LR5gEKHclKJKJ
+ DkomhVWRTKJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZMfqHAAKCRBDHOzuKBm/
+ dRTOEACQTZEert5CUPcjG8zrZMg07XRuFzsan5XwR+LpGHguQqAVvb2h8Z4g9zPW1ApBnufeIha
+ +7EyYuUvnD7WPhSO0yfw8srgl/krBKZlX1fOorC1toj6Ok0nfjdyUluiiyWj4rSyCXM2vcGV8SS
+ xW2g1kSWdr4DX+FvvVIR+eXu+5e/Zt5AIwIse8XESfhkFEfFiYaPoHLoSXZpzM8AQyWY0VczhMJ
+ zQj4nKxfc9LuXAWfHJKUndaZcy3rgBpgdhlo9DInvkEBWB50GsXfB9E2BEx1qcqyyZK1t3fFADq
+ nNYSB2WRh4x9UVDNB4/dKQSST9AaxvPD6bQvkUPdqNHf7NylvsQ7WbjgH7urL+bQe/1iP9QBqFS
+ wS662QZd7zyHZa9G3yUEZOH5sbP3tODZfEfDUGWCbmBgWUZegGau9dIqP2Fr+4yLTLYM+1TCMzW
+ R7CcZqHNWHrjg9b32oH+ijHCiVUEtAvZOZnD+/qoXz4QHNaRZXleFAzQ6E0w06mu7bGF1Ct8hpY
+ QVkvPHgjTWmMCiiyLjtg7bpAyhznXSoKeN6jlJKHtokpafV2uQvSN3iMHLDDJrWgpykO3KTvR9J
+ zgYmduRwazHtDjVyzsEMOHw4XM9/1z8nHUAQaUN/8VC/lyaheT2zjwkus3rR+Fn5gGEBqfA5YTs
+ cejVwi3DkJS4oNA==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds charger and "fuel-gauge" found in Qualcomm pm8916 PMIC.
 
---dtkqu6ml752thbrc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The LBC - Linear Battery Charger is a simple CC/CV charger, that works
+autonomously after the current and voltage limits are set.
 
-Hi,
+The VM-BMS - Voltage Mode BMS is a simple hardware block that provides
+average voltage on the battery terminals.
 
-On Mon, Jul 31, 2023 at 11:33:22AM -0500, Chris Morgan wrote:
-> In my case a few different panel drivers disable the regulators in the
-> unprepare/disable routines.
+These two hardware blocks are used as the battery charging and
+management solution in some old Qualcomm devices.
 
-And that's totally fine.
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Changes in v2:
+- Add full interrupt list in the DT bindings. (Conor)
+- Link to v1: https://lore.kernel.org/r/20230728-pm8916-bms-lbc-v1-0-56da32467487@trvn.ru
 
-> For at least the Rockchip DSI implementations for some reason the
-> panel gets unprepared more than once, which triggers an unbalanced
-> regulator disable.
+---
+Nikita Travkin (4):
+      dt-bindings: power: supply: Add pm8916 VM-BMS
+      dt-bindings: power: supply: Add pm8916 LBC
+      power: supply: Add pm8916 VM-BMS support
+      power: supply: Add driver for pm8916 lbc
 
-"For some reason" being that DW-DSI apparently finds it ok to bypass any
-kind of abstraction and randomly calling panel functions by itself:
+ .../bindings/power/supply/qcom,pm8916-bms-vm.yaml  |  83 +++++
+ .../bindings/power/supply/qcom,pm8916-lbc.yaml     | 128 +++++++
+ drivers/power/supply/Kconfig                       |  22 ++
+ drivers/power/supply/Makefile                      |   2 +
+ drivers/power/supply/pm8916_bms_vm.c               | 296 ++++++++++++++++
+ drivers/power/supply/pm8916_lbc.c                  | 383 +++++++++++++++++++++
+ 6 files changed, 914 insertions(+)
+---
+base-commit: ec89391563792edd11d138a853901bce76d11f44
+change-id: 20230727-pm8916-bms-lbc-3f80305326a2
 
-https://elixir.bootlin.com/linux/v6.4.7/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L868
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
 
-It looks like it's fixed it current drm-misc-next though.
-
-> Obviously though the correct course of action is to fix the reason why
-> the panel is disabled more than once, but that's at least the root
-> cause of this behavior on the few panels I've worked with.
-
-Like I said we already have a commit on the way to fix that, so it
-shouldn't be an issue anymore.
-
-I stand by what I was saying earlier though, I think it's mostly
-cargo-cult or drivers being very wrong. If anything, the DW-DSI stuff
-made me even more convinced that we shouldn't even entertain that idea
-:)
-
-Maxime
-
---dtkqu6ml752thbrc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZMfpSwAKCRDj7w1vZxhR
-xSIXAQCizbGTVxHYDBO+tfnKn70WkSNp3OzkFHZtJzhXUbG9NQD9HpsTG6Ik+ohd
-AXiX0xz1UvP/to/HW6CpWv7tiS5uDAw=
-=pXP0
------END PGP SIGNATURE-----
-
---dtkqu6ml752thbrc--
