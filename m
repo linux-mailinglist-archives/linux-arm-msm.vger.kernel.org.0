@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5C0A768C83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 09:01:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62286768E97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 09:23:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjGaHBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 03:01:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42044 "EHLO
+        id S230109AbjGaHXt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 03:23:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230340AbjGaHBE (ORCPT
+        with ESMTP id S229640AbjGaHWj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 03:01:04 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B153AE44
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 00:01:03 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-997c4107d62so609558666b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 00:01:03 -0700 (PDT)
+        Mon, 31 Jul 2023 03:22:39 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8ECB1BD3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 00:19:33 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fe1c285690so5453754e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 00:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690786862; x=1691391662;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IojnIhTxwDoiGRw6GG+eJSBPl+3xl09aBo0KzjuVzS0=;
-        b=y92FC5VXdhua39Bvi2YYw0TJQ3RslJfgj861rXTaO3rRDZiCx9T36d5fdH0+agT8KD
-         FfrjgYTqM+0CUrzaRMDzvRRMMkLcTOBxk9eNr1CXqkArnNEu0yLyubQm3tc2nyWrtdHv
-         1woha1MQysXdIBbVweZQTK+wCLj27t5s/B3fHNnUxK3V+sJtUdG6J0z5VIohFDilwzr+
-         UZpscQDlPgaXxW5TGxpOkPVqe8mZ2xSyNHnerIdSgDVKjdsq0f/gS02KDyx3IfJo94OZ
-         Vq3pzgwa5g3SLVsMvgO+dXkfq3YnKz+6o+LYZPDbj+xwpgVXvWAArLvTIyQdoKrxom//
-         yZGg==
+        d=linaro.org; s=google; t=1690787972; x=1691392772;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HDhfU2FoK8aIJGXr0hUVQrh/P1Qtr8xU+ls50+YP7vQ=;
+        b=pKUFzvIbDXE4qehMCnW185ujZVoxzM64vjsTHYaa8ZifxCwJAiCOV4K51poAf0woPb
+         muInJ8nf1Af/KfLwxvGlbcAUyoJOZ0qV8NBPaysp7o5K37pth4xxejw2Pg0iBvQYW4JE
+         mZzqjyezpf6KybQarU40lVrLbZwaPufKxzExD2aL3F+CsesXxcNMl05REvmtpK25WGrG
+         TpdhGXnGeN2HSZR+t8j5Trb59cIfT8YhhM1LT41WTyvF+1QwUcNWCsxOKLZ2MKbSy4Yg
+         zdsTSFzD5Xp5hRP3u5GdBIPYiUtm+oUlJptM/AqhbnMiqCNFoAZ/G8n4mCJ9Jhgr4qIw
+         CHAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690786862; x=1691391662;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IojnIhTxwDoiGRw6GG+eJSBPl+3xl09aBo0KzjuVzS0=;
-        b=a/7sSvoP3RCIXVncpb/TvFGyW1vvHsXu3sVWfXqEuxsIBFwtQN9IBcd4JS32TWimQH
-         Tw+ItsgSwwFI8pWMKIfYzX8AtYrkJzryU4PjJddgMji5cavsT1achuVGDTffHaq3mRwX
-         isGbaNQtBGUP8+/SpS9gx9ku9uY3WCTttQiFqTl9dgZf3EBoIW/9Z5+bjQqABL1frIB9
-         OP71MpuHLTQdW5fqHzKnlHzEsO2CS1HsgJhcRRlXEcVoxWszgqXV4Q6LgGnhXoQFSXAZ
-         o4bINtJsTLjreubvQ0223x6FsnnbKnW2TjmQoiEa6Spc+l8BE8RyxXI1pjDAcufMXQOk
-         DxXg==
-X-Gm-Message-State: ABy/qLZazQKs9YClDXAb9B4HiUzMDgSlaMk1oMfzL+e/bsbqIIa3w+BU
-        sdrXCdd5AJ9H3Lkis2Sxn3Ff+qbedEQyJhxn1Ss=
-X-Google-Smtp-Source: APBJJlH3FTTDgMYbDFJtYuSq2IGsUBxUZNnUhWxs0tXcd+LbJGecLN+M+i5aP2q+etOOS7MVfh6UtA==
-X-Received: by 2002:a05:6402:1a27:b0:522:45db:48e1 with SMTP id be7-20020a0564021a2700b0052245db48e1mr7521041edb.31.1690786841216;
-        Mon, 31 Jul 2023 00:00:41 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.183])
-        by smtp.gmail.com with ESMTPSA id u18-20020aa7d0d2000000b0051e0f21c43fsm5128339edo.31.2023.07.31.00.00.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 00:00:40 -0700 (PDT)
-Message-ID: <a037a8d3-9ba4-80ee-b34e-9a795ebb6e5b@linaro.org>
-Date:   Mon, 31 Jul 2023 09:00:38 +0200
+        d=1e100.net; s=20221208; t=1690787972; x=1691392772;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HDhfU2FoK8aIJGXr0hUVQrh/P1Qtr8xU+ls50+YP7vQ=;
+        b=T3XQ4bAlFJxhMoZye99M/jN59C1RtvRHniNJANLkfV9Nwqy65KdRHfCbZ7TfMZnL1x
+         u3kLVx1J8CPWZPsEzWO8L8mCmwyW4j2JmE7RcvUOBXny6qZsQN0cjGf4PPECpFYfY8QP
+         mphPlWpYlfSpbmOe1+NRK6L7c3U/Z/+DeEF8aXGKxcFGqhjNXJ7W6S13qhGjsrdXa6ec
+         6LrRottHVVWgucN5SjEGJBKHV3Jt0ZVbEh16nrlPgYJJPJXk2n0wNKokjS4uiJTdo8/8
+         F8Unn4SQDLHQxKBweFewHFkcdcxjyCC3anlk1hjUfEikLWGE0+WHrFSX03U/TJAsEg8V
+         05nQ==
+X-Gm-Message-State: ABy/qLYT30ZsvMZzhlVOToWGFSbAWlBeiQV/Z9xLEDaGYsu6DUvJzqkn
+        SihPTbRjPIkAjoI7tL8dFDUQ7Q==
+X-Google-Smtp-Source: APBJJlEFmmxgVpsb4VKdX/OmDgm7CzXZk2Cy1ts84q1OxjZfrnZW6wz1kgkFsMhlbMY/DhcQwIQTHA==
+X-Received: by 2002:a2e:8ed0:0:b0:2b9:4b2e:5420 with SMTP id e16-20020a2e8ed0000000b002b94b2e5420mr5467379ljl.52.1690787971721;
+        Mon, 31 Jul 2023 00:19:31 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id c4-20020a2ea1c4000000b002b71c128ea0sm2413267ljm.117.2023.07.31.00.19.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jul 2023 00:19:31 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/3] drm/display: simplify support for transparent DRM bridges
+Date:   Mon, 31 Jul 2023 10:19:27 +0300
+Message-Id: <20230731071930.3928150-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.1
-Subject: Re: [PATCH v3 6/8] soc: qcom: socinfo: adjust the position of QDU1010
-Content-Language: en-US
-To:     Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
-        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
-        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
-        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731061325.26431-1-quic_tengfan@quicinc.com>
- <20230731061325.26431-7-quic_tengfan@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230731061325.26431-7-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,35 +78,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/07/2023 08:13, Tengfei Fan wrote:
-> Adjust the position of QDU1010, so that QDU1010 have
-> same sequence with QCOM_ID_QDU1010 in bindings file.
-> 
-> Change-Id: I86d46eca55e877aaa1fd948db99b41ae138a3129
+Supporting DP/USB-C can result in a chain of several transparent
+bridges (PHY, redrivers, mux, etc). This results in drivers having
+similar boilerplate code for such bridges.
 
-Please run scripts/checkpatch.pl and fix reported warnings. Some
-warnings can be ignored, but the code here looks like it needs a fix.
-Feel free to get in touch if the warning is not clear.
+Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
+bridge can either be probed from the bridge->attach callback, when it is
+too late to return -EPROBE_DEFER, or from the probe() callback, when the
+next bridge might not yet be available, because it depends on the
+resources provided by the probing device.
 
-> ---
->  drivers/soc/qcom/socinfo.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 4d49945b3a35..ad7699b401a8 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -405,8 +405,8 @@ static const struct soc_id soc_id[] = {
->  	{ qcom_board_id(SA8775P) },
->  	{ qcom_board_id(QRU1000) },
->  	{ qcom_board_id(QDU1000) },
-> -	{ qcom_board_id(QDU1010) },
->  	{ qcom_board_id(IPQ5019) },
+Last, but not least, this results in the the internal knowledge of DRM
+subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
 
-Same comment as on previous patch.
+To solve all these issues, define a separate DRM helper, which creates
+separate aux device just for the bridge. During probe such aux device
+doesn't result in the EPROBE_DEFER loops. Instead it allows the device
+drivers to probe properly, according to the actual resource
+dependencies. The bridge auxdevs are then probed when the next bridge
+becomes available, sparing drivers from drm_bridge_attach() returning
+-EPROBE_DEFER.
 
-> +	{ qcom_board_id(QDU1010) },
+Proposed merge strategy: immutable branch with the drm commit, which is
+then merged into PHY and USB subsystems together with the corresponding
+patch.
 
-Best regards,
-Krzysztof
+Changes since v1:
+ - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
+
+Dmitry Baryshkov (3):
+  drm/display: add transparent bridge helper
+  phy: qcom: qmp-combo: switch to DRM_SIMPLE_BRIDGE
+  usb: typec: nb7vpq904m: switch to DRM_SIMPLE_BRIDGE
+
+ drivers/gpu/drm/display/Kconfig             |   9 ++
+ drivers/gpu/drm/display/Makefile            |   2 +
+ drivers/gpu/drm/display/drm_simple_bridge.c | 125 ++++++++++++++++++++
+ drivers/phy/qualcomm/Kconfig                |   2 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c   |  44 +------
+ drivers/usb/typec/mux/Kconfig               |   2 +-
+ drivers/usb/typec/mux/nb7vpq904m.c          |  44 +------
+ include/drm/display/drm_simple_bridge.h     |  19 +++
+ 8 files changed, 161 insertions(+), 86 deletions(-)
+ create mode 100644 drivers/gpu/drm/display/drm_simple_bridge.c
+ create mode 100644 include/drm/display/drm_simple_bridge.h
+
+-- 
+2.39.2
 
