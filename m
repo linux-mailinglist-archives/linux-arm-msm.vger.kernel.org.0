@@ -2,177 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2B54769C9A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 18:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD6C0769CA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 18:34:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232531AbjGaQdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 12:33:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37272 "EHLO
+        id S233127AbjGaQep (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 12:34:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233069AbjGaQdi (ORCPT
+        with ESMTP id S233135AbjGaQeo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 12:33:38 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C0F19A3;
-        Mon, 31 Jul 2023 09:33:34 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id 006d021491bc7-5633b7e5f90so3503635eaf.1;
-        Mon, 31 Jul 2023 09:33:34 -0700 (PDT)
+        Mon, 31 Jul 2023 12:34:44 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1907A1738
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:34:42 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1b8ad356f03so28499295ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690821214; x=1691426014;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hmQIuXbR5JP4gOGoh3m94S+xuhXRrZesJ4DjxqjMHlA=;
-        b=JeXgP+w7CMuDnqpJhcpuPl/dg8X263Gotkpx5bJgsnVSDpsqaUEia+zhP602P2UZtE
-         9UY0wRDug3iK4MtHi6S0OnH8zrpiqJG5HR7uADrPOe0PGFE+VPdIwcA6Q6xxZkN0JB7Z
-         v63ItBfKXxB8YN2mgKYDqJtUAFFZKv2efUYVoVWcNvEN0IkqmeJt86CK3x22pJZ6O6RT
-         8Ci33NzRRTUBS8swlUDL13/nYOgBNFh3lQcsDtSS1UcJ8sWB3khon/yuc3p8PTmOwqC9
-         R72kN3Cg2ifyiGg9+sFkO0Bm0oyZ+DY8PWT7ID50lGBMruvL3Bz0iewDP6oLJHkSz4PU
-         Ayug==
+        d=linaro.org; s=google; t=1690821281; x=1691426081;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NF3cdDHtgDTlBXnay3QPfk41bl0qVAIfQAF8Qog11Xc=;
+        b=tQycVGjXj7OfmBsv0gQU0GvZzIeMw3uB8HpYG5JRHHnqS35VmZkW6x9j+vHLcdpoBy
+         ehQnhVe657UqqOsiMqUYI04wNLdK8ArvLslngurhhWL/BZyQh95eG68FWWaxeWjl8Gt8
+         Vbve44+kYnYdyB7wpzbPY5ff33gTZLoBClgaAE9Y8XmwK0Ua/SFqCpsKGe2wupu3R4wF
+         sl1ofmKRxTVKn1SHcSoXKvmNlHwYuHQgUTZIvHa/IWes9oW4SCRjJbuaI1bt3eqG+iau
+         SxaaV5N3Jwzw3G30+udC5blncNh7Q0fObZzb0PpvcIOzf7J2eNO7ZZllAzgfMRsxW7iT
+         9UPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690821214; x=1691426014;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hmQIuXbR5JP4gOGoh3m94S+xuhXRrZesJ4DjxqjMHlA=;
-        b=iw/o+41gdDFjRRyIRo5o50gUaRnUMnUahmj6SsMAb+AcRDrQkuy5Gejewfjl8L2Evz
-         x9mD1q1NaNA8x4DwICfsrjT613wu3hrCZbC42rb3huONHafliMGqCN9+PW/kio8Tp7j7
-         cEsibshwjEisoR01ysKyjjLCiTkMNHkGEYcQgUBf9H5yIrRrZpQpofmy09/OqaudYDVC
-         XJJAeZ6vCbO5LXZoA/uY/wPHyJg6jhlnnxlpm5Tp2xxOGWLX5pUO0grTDYtR21Rcw/o5
-         98UxI5H1rv/YZTzzKPsXhWeNACrnAdoqK4KyaWIAejY2HWDu9b5RXLChWK5AEKsHK1X0
-         660A==
-X-Gm-Message-State: ABy/qLYn5iI5gvOOBDPoRboSPgoh4jSjdKPaJCKiyyQUWEbvOgsiL5T/
-        +fTtVH5aXS6myhi7Nwg2s6n5CnMqAPRffvMo9fc=
-X-Google-Smtp-Source: APBJJlE+NhyxBPQz6UuZPDy2bz3lq06zYg5cvEY5G/En7QKVEhlTaMytpwHnqXO8vKyGUOtYN/2HkwtclOZO0YlYWmw=
-X-Received: by 2002:a4a:7548:0:b0:56c:cd0c:1d67 with SMTP id
- g8-20020a4a7548000000b0056ccd0c1d67mr2626954oof.7.1690821213701; Mon, 31 Jul
- 2023 09:33:33 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690821281; x=1691426081;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NF3cdDHtgDTlBXnay3QPfk41bl0qVAIfQAF8Qog11Xc=;
+        b=U0ytgO4aflqiqINjSU54NmnGsrqnPSZqRyHnAivu6jpc2i82EPID1RzDqyzQAocgsJ
+         1TS3VNtn4264/Gje9vv+BOSjGovORyopUGbMflUFUDiMGxXBx6pwrEwQ8x5vdNW/7LBU
+         DCW4Jz9tJsGPGyyatzGvHPq2TLuyq1CelKCp8aVlTO/pZ0eIP+gvQMJHwbKDe7Upy3WY
+         AldvkjDFEld+6/gPoQTKZW/2ZwcRw/UlBqM7MT4XHL3H3L70/ppwfD2jN1T1Q8hOuFIw
+         cn0/3vdUQnCsiPhTRQjNqDHI3dVetimqzg5WIdVsL2AAegDTOUSfVuS1kNH6XoCrCKjx
+         R/lA==
+X-Gm-Message-State: ABy/qLYyRQByZxUCbVuDPBG5swuuOHLsiQ6XnzwHdun/Saw+5s1CTGKz
+        Uq2Wobknh7XzVjEanheo5Xqr
+X-Google-Smtp-Source: APBJJlGo9I3jYAVeZYXO30xOv/8AyqAUnxLLFlrO69X8v20rYrYqjKlnjOXvYZNJwOWNg4MQ1X3TMg==
+X-Received: by 2002:a17:902:d303:b0:1bb:de7f:a4d4 with SMTP id b3-20020a170902d30300b001bbde7fa4d4mr10001547plc.61.1690821281374;
+        Mon, 31 Jul 2023 09:34:41 -0700 (PDT)
+Received: from localhost.localdomain ([117.193.209.129])
+        by smtp.gmail.com with ESMTPSA id w8-20020a170902e88800b001bb1f09189bsm8779541plg.221.2023.07.31.09.34.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jul 2023 09:34:40 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/6] UFS: Add OPP support
+Date:   Mon, 31 Jul 2023 22:03:51 +0530
+Message-Id: <20230731163357.49045-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20230725203545.2260506-1-dianders@chromium.org>
- <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
- <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
- <CAD=FV=VcsTik+HD11xeDM2Jq9ispcX0-j5QtK8D1qUkrGabRGg@mail.gmail.com> <i3cbgrc365lwscwux2itho6uv74ji3hsjuge4zoxfnlnhacyqc@r73mmifyxffj>
-In-Reply-To: <i3cbgrc365lwscwux2itho6uv74ji3hsjuge4zoxfnlnhacyqc@r73mmifyxffj>
-From:   Chris Morgan <macroalpha82@gmail.com>
-Date:   Mon, 31 Jul 2023 11:33:22 -0500
-Message-ID: <CADcbR4JB0h8fByM2Z6diByvWaFprW9GDapBNt+YLWr9-vKoe7A@mail.gmail.com>
-Subject: Re: [PATCH v3 02/10] drm/panel: Check for already prepared/enabled in drm_panel
-To:     Maxime Ripard <mripard@kernel.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        cros-qcom-dts-watchers@chromium.org, linux-input@vger.kernel.org,
-        hsinyi@google.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        yangcong5@huaqin.corp-partner.google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In my case a few different panel drivers disable the regulators in the
-unprepare/disable routines. For at least the Rockchip DSI
-implementations for some reason the panel gets unprepared more than
-once, which triggers an unbalanced regulator disable. Obviously though
-the correct course of action is to fix the reason why the panel is
-disabled more than once, but that's at least the root cause of this
-behavior on the few panels I've worked with.
+Hi,
 
-Thank you.
+This series adds OPP (Operating Points) support to UFSHCD driver.
 
-On Thu, Jul 27, 2023 at 1:38=E2=80=AFAM Maxime Ripard <mripard@kernel.org> =
-wrote:
->
-> Hi,
->
-> On Wed, Jul 26, 2023 at 08:10:33AM -0700, Doug Anderson wrote:
-> > On Wed, Jul 26, 2023 at 5:41=E2=80=AFAM Maxime Ripard <mripard@kernel.o=
-rg> wrote:
-> > > On Tue, Jul 25, 2023 at 01:34:37PM -0700, Douglas Anderson wrote:
-> > > > NOTE: arguably, the right thing to do here is actually to skip this
-> > > > patch and simply remove all the extra checks from the individual
-> > > > drivers. Perhaps the checks were needed at some point in time in th=
-e
-> > > > past but maybe they no longer are? Certainly as we continue
-> > > > transitioning over to "panel_bridge" then we expect there to be muc=
-h
-> > > > less variety in how these calls are made. When we're called as part=
- of
-> > > > the bridge chain, things should be pretty simple. In fact, there wa=
-s
-> > > > some discussion in the past about these checks [1], including a
-> > > > discussion about whether the checks were needed and whether the cal=
-ls
-> > > > ought to be refcounted. At the time, I decided not to mess with it
-> > > > because it felt too risky.
-> > >
-> > > Yeah, I'd agree here too. I've never found evidence that it was actua=
-lly
-> > > needed and it really looks like cargo cult to me.
-> > >
-> > > And if it was needed, then I'm not sure we need refcounting either. W=
-e
-> > > don't have refcounting for atomic_enable / disable, we have a sound A=
-PI
-> > > design that makes sure we don't fall into that trap :)
-> > >
-> > > > Looking closer at it now, I'm fairly certain that nothing in the
-> > > > existing codebase is expecting these calls to be refcounted. The on=
-ly
-> > > > real question is whether someone is already doing something to ensu=
-re
-> > > > prepare()/unprepare() match and enabled()/disable() match. I would =
-say
-> > > > that, even if there is something else ensuring that things match,
-> > > > there's enough complexity that adding an extra bool and an extra
-> > > > double-check here is a good idea. Let's add a drm_warn() to let peo=
-ple
-> > > > know that it's considered a minor error to take advantage of
-> > > > drm_panel's double-checking but we'll still make things work fine.
-> > >
-> > > I'm ok with this, if we follow-up in a couple of releases and remove =
-it
-> > > and all the calls.
-> > >
-> > > Could you add a TODO item so that we can keep a track of it? A follow=
--up
-> > > is fine if you don't send a new version of that series.
-> >
-> > By this, I think you mean to add a "TODO" comment inline in the code?
->
-> No, sorry, I meant an entry in our TODO list: Documentation/gpu/todo.rst
->
-> > Also: I was thinking that we'd keep the check in "drm_panel.c" with
-> > the warning message indefinitely. You think it should be eventually
-> > removed? If we are truly thinking of removing it eventually, this
-> > feels like it should be a more serious warning message like a WARN(1,
-> > ...) to make it really obvious to people that they're relying on
-> > behavior that will eventually go away.
->
-> Yeah, it really feels like this is cargo-cult to me. Your approach seems
-> like a good short-term thing to do to warn everyone but eventually we'll
-> want it to go away.
->
-> So promoting it to a WARN could be a good thing, or let's say we do a
-> drm_warn for now, WARN next release, and gone in two?
->
-> Maxime
+Motivation behind adding OPP support is to scale both clocks as well as
+regulators/performance state dynamically. Currently, UFSHCD just scales
+clock frequency during runtime with the help of "freq-table-hz" property
+defined in devicetree. With the addition of OPP tables in devicetree (as
+done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+both clocks and performance state of power domain which helps in power
+saving.
+
+For the addition of OPP support to UFSHCD, there are changes required to
+the OPP framework and devfreq drivers. The OPP framework changes are already
+merged and available in linux-next, the devfreq change is added in this series.
+
+Credits
+=======
+
+This series is a continuation of previous work by Krzysztof Kozlowski [1].
+
+Testing
+=======
+
+This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+development boards.
+
+Merging Strategy
+================
+
+An immutable branch might be required between OPP and SCSI trees because of
+the API dependency (devfreq too). And I leave it up to the maintainers to
+decide.
+
+Dependency
+==========
+
+This series depends on the OPP framework changes that got merged into PM tree
+and available in linux-next.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+
+Changes in v3:
+
+* Rebased on top of linux-next/master tag: next-20230731
+* Dropped the already applied patches (dts, opp binding and framework)
+* Moved the interconnect patches to a separate series:
+  https://lore.kernel.org/linux-scsi/20230731145020.41262-1-manivannan.sadhasivam@linaro.org/
+* Moved ufshcd_opp_config_clks() API to ufshcd.c to fix the build failure
+  reported by Kbuild bot: https://lore.kernel.org/all/202307210542.KoLHRbU6-lkp@intel.com/
+* Collected Acks
+* v2: https://lore.kernel.org/all/20230720054100.9940-1-manivannan.sadhasivam@linaro.org/
+
+Changes in v2:
+
+* Added more description to the bindings patch 2/15
+* Fixed dev_pm_opp_put() usage in patch 10/15
+* Added a new patch for adding enums for UFS lanes 14/15
+* Changed the icc variables to mem_bw and cfg_bw and used
+  the enums for gears and lanes in bw_table
+* Collected review tags
+* Added SCSI list and folks
+* Removed duplicate patches
+
+Krzysztof Kozlowski (2):
+  dt-bindings: ufs: common: add OPP table
+  arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+
+Manivannan Sadhasivam (4):
+  PM / devfreq: Switch to dev_pm_opp_find_freq_{ceil/floor}_indexed()
+    APIs
+  scsi: ufs: core: Add OPP support for scaling clocks and regulators
+  scsi: ufs: host: Add support for parsing OPP
+  arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  34 +++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  42 +++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  39 +++-
+ drivers/devfreq/devfreq.c                     |  14 +-
+ drivers/ufs/core/ufshcd.c                     | 179 ++++++++++++++----
+ drivers/ufs/host/ufshcd-pltfrm.c              |  78 ++++++++
+ include/ufs/ufshcd.h                          |   7 +
+ 7 files changed, 331 insertions(+), 62 deletions(-)
+
+
+base-commit: ec89391563792edd11d138a853901bce76d11f44
+prerequisite-patch-id: 9e7233b8c34b4eeef63a90e851bc9429619627bc
+prerequisite-patch-id: a18af123ce0e9537a96676ae0b2d8c1f0fd19c4b
+-- 
+2.25.1
+
