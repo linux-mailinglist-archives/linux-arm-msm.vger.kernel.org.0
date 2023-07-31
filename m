@@ -2,53 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2CD976A4D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 01:30:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECBBF76A4F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 01:46:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbjGaXaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 19:30:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
+        id S230526AbjGaXq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 19:46:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbjGaXaE (ORCPT
+        with ESMTP id S229850AbjGaXq4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 19:30:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 657489D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 16:30:03 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EEF0B61344
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 23:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C50C433C8;
-        Mon, 31 Jul 2023 23:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690846202;
-        bh=GE0KAdwQVSiJh7jA4BKeWG2998o5ia0I7q/87t+hLUo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qEoK507Vrur3gaQzIfjCKAjpsxsdG+8a7rbGly8l6q0HeGL9a5HPPX7YmS7XnHPSn
-         oOJIQ53hIEvieQbFhu3mB9SB3PBkjVQFpcojeeSD8f0sJ3T3K2lfWcT4jfEF2+pCcK
-         exmGLOkuBEaZr6fQkWEixFpcPSsjlB9CyY/cUX9Qim44zsV4rKP+8AeYXCO8Urhaqs
-         sY8LomLr+5WWRsJw7xlH/l8GIo+lvDvhR5VlmNZeHiIbWeo2a9CmNZ4/TZlF5uX48/
-         T6EWIwC2Bf0hJqWBhZB8dqpSGEDlOf3L6vw9rJi83/1sGD1qQOGcOCpXnZuludNMJt
-         EhIMVyi3hMyAg==
-Date:   Mon, 31 Jul 2023 16:33:07 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Yuanjun Gong <ruc_gongyuanjun@163.com>
-Cc:     quic_bjorande@quicinc.com, agross@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] soc: qcom: use devm_clk_get_enabled() in
- gsbi_probe()
-Message-ID: <4l4a2wbmgiuxg4qx47ew2dpnv7j4v2accdku23klf7vjlliazv@6lkm33njiips>
-References: <20230720184354.GB2667611@hu-bjorande-lv.qualcomm.com>
- <20230725022151.36110-1-ruc_gongyuanjun@163.com>
+        Mon, 31 Jul 2023 19:46:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23AF1E7C;
+        Mon, 31 Jul 2023 16:46:55 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36VNQIT8014107;
+        Mon, 31 Jul 2023 23:46:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=HE87F8f+rEZfMqN7IxCafKBAXA6f/kM48CtBdJPVbO0=;
+ b=ORmvvi4eC6yrctwqeQcRkTxcMDLpxRlEdTzbVuhaeDYRcsms6Yi8nfbaERNo7TtFE7/m
+ mzjMaF30bOOzzSyhqwXFkndO/BoOLRC/+/assGreQXbfeHB8UmWtxUnsXJEur8G/fPRy
+ qaVbtrNo7RalQNYNLoVOojdGYd2KN2fW14iSlnYwjkqKgFI1VpbpZ6AHkZLD+nYPwIBp
+ p02OLYtH8h7wwUwWBPxVK/l5HNUKR9FID4465yDpq0bkVGLEhKnlDNaEbqxJ8oFF64dM
+ 8yBZgBNB1h/EX1e4bDFXm5Pi2UoJlq1Ynh6q+xqLwKo5TEecovstw/LVC+qG6Ih6CepB ig== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6a2va8y1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 23:46:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36VNknUg004568
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 23:46:49 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
+ 2023 16:46:48 -0700
+Message-ID: <71460c5f-2aac-67b0-3779-d748f9e512aa@quicinc.com>
+Date:   Mon, 31 Jul 2023 16:46:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230725022151.36110-1-ruc_gongyuanjun@163.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] soc: qcom: aoss: Move length requirements from caller
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
+ <20230731041013.2950307-2-quic_bjorande@quicinc.com>
+ <e4592feb-3878-b0eb-61e4-fb6dfc358e1a@quicinc.com>
+ <20230731231014.GI1428172@hu-bjorande-lv.qualcomm.com>
+From:   Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20230731231014.GI1428172@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gtdIssoZJu70iXyKmnIHOTRi2T8Zb4Oc
+X-Proofpoint-GUID: gtdIssoZJu70iXyKmnIHOTRi2T8Zb4Oc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-31_16,2023-07-31_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0 bulkscore=0
+ spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307310215
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,20 +87,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 10:21:51AM +0800, Yuanjun Gong wrote:
-> in gsbi_probe(), the return value of function clk_prepare_enable()
-> should be checked, since it may fail. using devm_clk_get_enabled()
-> instead of devm_clk_get() and clk_prepare_enable() can avoid this
-> problem.
+
+
+On 7/31/2023 4:10 PM, Bjorn Andersson wrote:
+> On Mon, Jul 31, 2023 at 02:29:44PM -0700, Chris Lew wrote:
+>>
+>>
+>> On 7/30/2023 9:10 PM, Bjorn Andersson wrote:
+>>> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+>>>    	/* The message RAM only implements 32-bit accesses */
+>>>    	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
+>>> -			 data, len / sizeof(u32));
+>>> -	writel(len, qmp->msgram + qmp->offset);
+>>> +			 buf, sizeof(buf) / sizeof(u32));
+>>> +	writel(sizeof(buf), qmp->msgram + qmp->offset);
+>>
+>> Looks like we are telling the firmware the packet size will always be
+>> QMP_MSG_LEN?
+>>
+>> This should be ok but might be a problem when debugging. The AOSS firmware
+>> only logs size of the message instead of the full string because of memory
+>> constraints.
+>>
 > 
-> Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+> Until now ipa_power_retention() has been passing 36 here, everyone else
+> 64, so it is ok.
+> 
+>> We would normally match the firmware and host logs based on size, but won't
+>> be able to differentiate this way with a fixed size.
+> 
+> I don't mind us changing it to ALIGN(len, 4), but as that would change
+> the current behavior I'd like to do so in a subsequent patch.
+> 
+> Speaking of behavior, is 64 the max message size? We inherited the 64
+> from the initial downstream implementation, but qmp->size is quite a bit
+> bigger.
+> 
 
-Thank you for the updated patch, Yuanjun. After sending you my feedback,
-I realized that I could save us both time and just fix it up while
-applying the patch.
+The max message size the firmware can handle is 0x64, so 100 bytes, but 
+I haven't seen any messages go above 64 bytes.
 
-You should have received another reply stating that the first patch has
-been applied.
-
-Regards,
-Bjorn
+> Regards,
+> Bjorn
