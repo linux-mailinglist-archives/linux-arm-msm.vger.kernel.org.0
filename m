@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CB2676A132
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 21:27:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 265BA76A135
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 21:27:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbjGaT1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 15:27:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56872 "EHLO
+        id S230101AbjGaT1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 15:27:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230101AbjGaT1H (ORCPT
+        with ESMTP id S230032AbjGaT1w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 15:27:07 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A389E7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:27:06 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe21e7f3d1so5115578e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:27:06 -0700 (PDT)
+        Mon, 31 Jul 2023 15:27:52 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DCBA9F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:27:51 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe0c566788so7961278e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690831625; x=1691436425;
+        d=linaro.org; s=google; t=1690831669; x=1691436469;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XI3+QIBZeVvSwEM3JKU2rscLoh97VvOMfzOWCOSlkqs=;
-        b=FW/P0nG2PSMxTst060hZMNdM2O4W3zCpzNQaTTrWnfr0iqN/RE/1gR3bggkfLZJviJ
-         eOGcodcqZTMxHNaHHLHNVExxHjsWR2lWpJ+ExE54qz41fJCooZxWqVmFM/FpSQQqZErW
-         lXRmS66oxVPj1EVEsprvlzktFYxEhyV4wL93XEfq4uDOzON7/u02fMObLpRlal+omzfn
-         I4hYMp+u9itWI4QCVVgdjzfTVZ3RBEZkFigbHqogokHlD1SzLb1jA/JnaiPRLimfMXTn
-         fORNlhU4XBoRzyRTu2hq2DaP+tG+Ht9j9AK16WMBSY6kJqT1i07NwHaBwSzGLHxUfjLU
-         hBJQ==
+        bh=u3cpx9y286QZ8BgwC7urTNONFjOP9T8Enk3jLPXhzF4=;
+        b=i8VpYo9WJOLABVoZ6ZfFLsVtmjePTmZQzmwq8T0kQBFWR6Hh+XvafHLQ7xh9PhKiXi
+         RoWHNV+2uqjNxuFnFRq6UlNKKGr5dWf8/VIp21dKXnIVdmoz45iRnmkPHw/UcC98OejH
+         lPW913rHDQV+p4tT5JCU9aV42Xh+uyZjrsXGH9rW9gD34uZg6ov5Rfrpovad8Bw91iDv
+         UspgWfr+SDmSMqxGypMaapTAnAn5Gew9ljqT5257xhciYFdya6p9qr4uFIRjFp6jPI4V
+         dqFJ5XYdrIp1SM9yGVjWEaD7ME+T0R1qoklvbjapu5Of3PuatOWf5UxRQPX7l11lZpf2
+         xyQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690831625; x=1691436425;
+        d=1e100.net; s=20221208; t=1690831669; x=1691436469;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XI3+QIBZeVvSwEM3JKU2rscLoh97VvOMfzOWCOSlkqs=;
-        b=E7ugkPUZk2erPPINYLXLPtkOX3BhpP9I1lq8g0RTVi7kxoAUwEkAxZLTIscEWVNuUv
-         JExf0tHhkMGh/NPAerRMlLDBOEjXmrs3ASfxyzk5YKJWAhMjgj4uKK25kuFh2EAnufD8
-         B5RKRFaWYUQ9ryWpLYSkspvyrlox7moNYs1MaKWbFMHNTng84AiO+SPUDrE0ZK23NMyx
-         lxQ5gIP4gvATqxkegnX7euHMRLkWHqWWZ9/VU/RvrHrKH+W8jDmNqQttp4P2ipQmcN7Q
-         dbT/Hll8KwdhDG0CTMtnNGiPwTM2cHBBEGL2RITkBGDcwu+qmG9Q3W+I58QwWPU+K6Pr
-         vXXQ==
-X-Gm-Message-State: ABy/qLbnRei6i8v2u3nASLexbmQHKRUPaiFGboYu9r+NUJGVv86mH4yx
-        QCKhyer1upuCGMXRtPaN41W8caxuGK6vE2J3N01nig==
-X-Google-Smtp-Source: APBJJlEIXqqdt/Xxw3ETSt0T/T3tbaNB7le3erQvQaNmrJ3cYnWagJsXIscoRVjELmSQrJppW7nEXw==
-X-Received: by 2002:a19:4419:0:b0:4fb:8680:138a with SMTP id r25-20020a194419000000b004fb8680138amr593033lfa.22.1690831624833;
-        Mon, 31 Jul 2023 12:27:04 -0700 (PDT)
+        bh=u3cpx9y286QZ8BgwC7urTNONFjOP9T8Enk3jLPXhzF4=;
+        b=AocbaUmXPw/I4cTPqdwDokKf8VMtZpYxsdcH6VexMLrqc20moFn3bd3oasEc6mPbB7
+         BdleB+9e5MNQAgw+1HKGwyMovytRoygGDoyOHlk94geRvZRshEPR+RmmIYHCPNMPbC0h
+         qAwNThm+L7FdoQ6wQecqhgSbnBEzKkx0FIP5qOynYkDvlUlducqmspUDq3dfnCnofc+q
+         6Jxek9BvYpWzah2yWk2aT4iEbo3ziJY7j32T/CrIq4VeWbb2m9hbkcjxJJJt41lUr+aN
+         FEqi/qgDPnU4Q/rhC95QCuLB4s08AYHYf2z9DRValESwkkuQ1+eIoOr/v6MfXvJ70hzQ
+         vl8g==
+X-Gm-Message-State: ABy/qLZaJJxuYfUKXaBKuWimmx1/wBKQVOK+VMjyDpCn7z9VmoJSKum7
+        LFUZO1ZFkZ9Qc6iK3jc14O6h2Q==
+X-Google-Smtp-Source: APBJJlEM2LNulHCl7CM5VB/GMpyNUJB6hu+W2ex1hSt/zHJJziE04DrkPYCn+0HzT/4A4XNqVA4IeQ==
+X-Received: by 2002:a05:6512:250d:b0:4fd:f7e7:24fd with SMTP id be13-20020a056512250d00b004fdf7e724fdmr521946lfb.64.1690831669416;
+        Mon, 31 Jul 2023 12:27:49 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id u7-20020ac248a7000000b004fba6f38f87sm2190572lfg.24.2023.07.31.12.27.03
+        by smtp.gmail.com with ESMTPSA id u7-20020ac248a7000000b004fba6f38f87sm2190572lfg.24.2023.07.31.12.27.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 12:27:04 -0700 (PDT)
-Message-ID: <9cf776ad-b50c-54bd-801d-2f85dc3ea79c@linaro.org>
-Date:   Mon, 31 Jul 2023 21:27:03 +0200
+        Mon, 31 Jul 2023 12:27:49 -0700 (PDT)
+Message-ID: <a9fd47f2-c82c-4071-f27d-df0682a630ec@linaro.org>
+Date:   Mon, 31 Jul 2023 21:27:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/13] arm64: dts: qcom: sm8150: switch PCIe QMP PHY to
+Subject: Re: [PATCH v2 11/13] arm64: dts: qcom: sm8250: switch PCIe QMP PHY to
  new style of bindings
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -69,7 +69,7 @@ Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org
 References: <20230731105759.3997549-1-dmitry.baryshkov@linaro.org>
- <20230731105759.3997549-11-dmitry.baryshkov@linaro.org>
+ <20230731105759.3997549-12-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -106,11 +106,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230731105759.3997549-11-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230731105759.3997549-12-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -121,11 +121,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 31.07.2023 12:57, Dmitry Baryshkov wrote:
 > Change the PCIe QMP PHY to use newer style of QMP PHY bindings (single
-> resource region, no per-PHY subnodes). As a part of this conversion also
-> add the missing "ref" clock to the PCIe PHY devices.
+> resource region, no per-PHY subnodes).
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
+
