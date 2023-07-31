@@ -2,145 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32088769A7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 17:11:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2851769AAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 17:19:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233273AbjGaPLQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 11:11:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
+        id S229863AbjGaPTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 11:19:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233271AbjGaPKy (ORCPT
+        with ESMTP id S229459AbjGaPTd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 11:10:54 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271331996;
-        Mon, 31 Jul 2023 08:10:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE373611A9;
-        Mon, 31 Jul 2023 15:10:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B807AC433D9;
-        Mon, 31 Jul 2023 15:10:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690816229;
-        bh=qU1aJBXLj8OvL5BxkBm/yTat5cqvXnPkIXeHqHxtlwk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OUi3CJXsrDYDon8PZ1ZFtDc3ZImRViLGAkenIm/dbcms4NKyHjAAuhpbXQHSj1OwD
-         fNvQc/0+GbtK2m1R/JtpN9raiFkubbDnJEbOuUW8/JOhH/vGXa+BD9MCTtvWsJTdNR
-         pmZZt45Xr05z4noO+rU+tjw3vo4pQrQeMx674cyTQClhPifmxs1uICImowl4/yJUR6
-         qhVXMOaOwVKXAQ4kAm/p3DrxZfKfa89TUcFwDy2msm6IvH0NOO8Ems7lfd+sVrpYOY
-         584rNgS5xgX7asKgBGAddiKhp9vzYZAHQerYTuDIOvDFtAjhRPqOk8OKE9bN6u7ZP6
-         62WhvKw+9pBCQ==
-Date:   Mon, 31 Jul 2023 17:10:24 +0200
-From:   Simon Horman <horms@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>,
-        Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 1/4] soc: qcom: aoss: Move length requirements from caller
-Message-ID: <ZMfO4B5ZifxPv/sk@kernel.org>
-References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
- <20230731041013.2950307-2-quic_bjorande@quicinc.com>
+        Mon, 31 Jul 2023 11:19:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4623210E3;
+        Mon, 31 Jul 2023 08:19:29 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36VE1ZVK022849;
+        Mon, 31 Jul 2023 15:19:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=SSJT7kcV4Rhk+b8oB624C63i7adQDSXb+42Vq0rGPV4=;
+ b=lZyo/dBOJSIUuLNjlX2KKBG0COPHpB9jJhXUlJF8EDZypGuwwS5Ky8d3ReWN6tfVFeHN
+ TEJMzZawdDZRkO+Hn/hwqqvP1EbZF4hSC4nGVzIXn6fxGoEPt+5hG2PFRYCv5j/7xr6r
+ kAS49aZs0pF8IFU2MepZ9v8xlsSbQ4wNEUZ5Sy+4StKMHasuAwppbt3mFwnVcDLQKnJA
+ oqtFQuDI3MgKsHtbwWmwZbknzggzY7BqRJjjnReAwZQYWEJGWG3OFPdOeLGPlLIhxPFB
+ KpwiYMihKrY0+MGS3FTDloCsW8iijOLudP6RhsSSdwyGK8QYM2ThhSEOMXZ97oB3FXXd vA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4ueumej5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 15:19:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36VFJHaI006207
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 15:19:17 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 31 Jul 2023 08:19:14 -0700
+Date:   Mon, 31 Jul 2023 20:49:09 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Praveenkumar I <quic_ipkumar@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <quic_clew@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
+Subject: Re: [PATCH] soc: qcom: qmi: Signal the txn completion after
+ releasing the mutex
+Message-ID: <eda306fc-1a92-4a2d-b13f-c3b59a39ef8d@quicinc.com>
+References: <20230731130755.2674029-1-quic_ipkumar@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20230731041013.2950307-2-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230731130755.2674029-1-quic_ipkumar@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ceaKZoqUrcyNOngtoWhI0poymE5SYdV0
+X-Proofpoint-ORIG-GUID: ceaKZoqUrcyNOngtoWhI0poymE5SYdV0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-31_07,2023-07-31_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=837
+ malwarescore=0 mlxscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307310137
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 30, 2023 at 09:10:10PM -0700, Bjorn Andersson wrote:
-> The existing implementation of qmp_send() requires the caller to provide
-> a buffer which is of word-aligned. The underlying reason for this is
-> that message ram only supports word accesses, but pushing this
-> requirement onto the clients results in the same boiler plate code
-> sprinkled in every call site.
+On Mon, Jul 31, 2023 at 06:37:55PM +0530, Praveenkumar I wrote:
+> txn is in #1 stack
 > 
-> By using a temporary buffer in qmp_send() we can hide the underlying
-> hardware limitations from the clients and allow them to pass their
-> NUL-terminates C string directly.
+> Worker #1                                       Worker #2
+> ********					*********
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> qmi_txn_wait(txn)                               qmi_handle_message
+>    |                                                  |
+>    |                                                  |
+>  wait_for_complete(txn->complete)                    ....
+>    |                                             mutex_lock(txn->lock)
+>    |                                                  |
+>  mutex_lock(txn->lock)                                |
+>    .....                                         complete(txn->lock)
+>    |                                             mutex_unlock(txn->lock)
+>    |
+>  mutex_unlock(txn->lock)
+> 
+> In this case above, while #2 is doing the mutex_unlock(txn->lock),
+> in between releasing lock and doing other lock related wakeup, #2 gets
+> scheduled out. As a result #1, acquires the lock, unlocks, also
+> frees the txn also (where the lock resides)
+> 
+> Now #2, gets scheduled again and tries to do the rest of the lock
+> related wakeup, but lock itself is invalid because txn itself is gone.
+> 
+> Fixing this, by doing the mutex_unlock(txn->lock) first and then
+> complete(txn->lock) in #2
+> 
+> Fixes: 3830d0771ef6 ("soc: qcom: Introduce QMI helpers")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > ---
->  drivers/net/ipa/ipa_power.c        |  2 +-
->  drivers/remoteproc/qcom_q6v5.c     |  2 +-
->  drivers/soc/qcom/qcom_aoss.c       | 25 ++++++++++++-------------
->  include/linux/soc/qcom/qcom_aoss.h |  4 ++--
->  4 files changed, 16 insertions(+), 17 deletions(-)
+>  drivers/soc/qcom/qmi_interface.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
-> index 921eecf3eff6..26181eeed975 100644
-> --- a/drivers/net/ipa/ipa_power.c
-> +++ b/drivers/net/ipa/ipa_power.c
-> @@ -332,7 +332,7 @@ void ipa_power_retention(struct ipa *ipa, bool enable)
+> diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
+> index 78d7361fdcf2..92e29db97359 100644
+> --- a/drivers/soc/qcom/qmi_interface.c
+> +++ b/drivers/soc/qcom/qmi_interface.c
+> @@ -505,12 +505,13 @@ static void qmi_handle_message(struct qmi_handle *qmi,
+>  				pr_err("failed to decode incoming message\n");
 >  
->  	(void)snprintf(buf, sizeof(buf), fmt, enable ? '1' : '0');
+>  			txn->result = ret;
+> -			complete(&txn->completion);
+>  		} else  {
+>  			qmi_invoke_handler(qmi, sq, txn, buf, len);
+>  		}
 >  
-> -	ret = qmp_send(power->qmp, buf, sizeof(buf));
-> +	ret = qmp_send(power->qmp, buf);
->  	if (ret)
->  		dev_err(power->dev, "error %d sending QMP %sable request\n",
->  			ret, enable ? "en" : "dis");
-> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-> index 192c7aa0e39e..8b41a73fa4d1 100644
-> --- a/drivers/remoteproc/qcom_q6v5.c
-> +++ b/drivers/remoteproc/qcom_q6v5.c
-> @@ -35,7 +35,7 @@ static int q6v5_load_state_toggle(struct qcom_q6v5 *q6v5, bool enable)
->  
->  	WARN_ON(ret >= Q6V5_LOAD_STATE_MSG_LEN);
->  
-> -	ret = qmp_send(q6v5->qmp, buf, sizeof(buf));
-> +	ret = qmp_send(q6v5->qmp, buf);
->  	if (ret)
->  		dev_err(q6v5->dev, "failed to toggle load state\n");
->  
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index e376c32cc16e..5e74332515cf 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -206,36 +206,35 @@ static bool qmp_message_empty(struct qmp *qmp)
->   * qmp_send() - send a message to the AOSS
->   * @qmp: qmp context
->   * @data: message to be sent
-> - * @len: length of the message
->   *
->   * Transmit @data to AOSS and wait for the AOSS to acknowledge the message.
-> - * @len must be a multiple of 4 and not longer than the mailbox size. Access is
-> - * synchronized by this implementation.
-> + * data must not be longer than the mailbox size. Access is synchronized by
-> + * this implementation.
->   *
->   * Return: 0 on success, negative errno on failure
->   */
-> -int qmp_send(struct qmp *qmp, const void *data, size_t len)
-> +int qmp_send(struct qmp *qmp, const void *data)
->  {
->  	long time_left;
-> +	char buf[QMP_MSG_LEN];
->  	int ret;
+>  		mutex_unlock(&txn->lock);
+> +		if (txn->dest && txn->ei)
+> +			complete(&txn->completion);
+>  	} else {
+>  		/* Create a txn based on the txn_id of the incoming message */
+>  		memset(&tmp_txn, 0, sizeof(tmp_txn));
 
-Hi Bjorn,
+What happens in a remote scenario where the waiter gets timed out at the
+very same time you are releasing the mutex but before calling
+complete()? The caller might end up freeing txn structure and it results
+in the same issue you are currently facing. 
 
-please consider preserving reverse xmas tree - longest line to shortest -
-for local variable declarations in this Networking code.
-
-	char buf[QMP_MSG_LEN];
-	long time_left;
-	int ret;
-
-...
-
+Thanks,
+Pavan
