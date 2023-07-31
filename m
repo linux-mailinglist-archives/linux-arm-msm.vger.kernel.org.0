@@ -2,82 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 892C9768F34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 09:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 326EE768EEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 09:36:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbjGaHwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 03:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53164 "EHLO
+        id S229542AbjGaHgt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 03:36:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbjGaHwG (ORCPT
+        with ESMTP id S230357AbjGaHgP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 03:52:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6859411A;
-        Mon, 31 Jul 2023 00:52:05 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V682CX023871;
-        Mon, 31 Jul 2023 07:22:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LZwBj5VViWDEht+OAYzGm4i+CQ5yEXbnaOkA+0A4fmU=;
- b=aq6M32SlhZva0BcxU5pUY5vR5R5+BpggB/Xst4zy1xpznSoj0JkQ0/Zy2ahJ8bilsgf6
- Laj5HAgxIFKzW1H9QCzrsBI2roAl45HkAWGNlbbA1mZQqEpiCXoQ90kMZ35eTR1MSyz/
- SZ6c/psfla5oY+WxKCy6x0/yPT+w1ypQOdlCDY5D5aqbqW2SnI27kKn4KQGMHNuO8zf5
- nkW2XhANg6lBHMcnTxFbFRL7qV48z3HabG6FcMDDn9DjYwY8HBycZqPgO+abr+Qm/tu6
- OnNFBFyW72gXBtu0oc9P+nfAotPzMTl2Ejpg/M4S76CzLTGRGfrGUiW0ZSVfOuIVZzY8 NQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4usrjuc2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 07:22:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36V7MY8N006243
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 07:22:34 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
- 2023 00:22:30 -0700
-Message-ID: <b20862ba-bfa5-69b8-08e6-08ce76cf36a5@quicinc.com>
-Date:   Mon, 31 Jul 2023 15:22:30 +0800
+        Mon, 31 Jul 2023 03:36:15 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D1711FF5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 00:35:23 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qQNQi-0001B4-MP; Mon, 31 Jul 2023 09:35:00 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qQNQf-0004Ys-Dq; Mon, 31 Jul 2023 09:34:57 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qQNQe-009F7u-OI; Mon, 31 Jul 2023 09:34:56 +0200
+Date:   Mon, 31 Jul 2023 09:34:56 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     "Liao, Chang" <liaochang1@huawei.com>
+Cc:     yangyicong@hisilicon.com, linux-i2c@vger.kernel.org,
+        festevam@gmail.com, ardb@kernel.org, asmaa@nvidia.com,
+        rfoss@kernel.org, florian.fainelli@broadcom.com,
+        kblaiech@nvidia.com, bcm-kernel-feedback-list@broadcom.com,
+        linux-imx@nxp.com, linux-arm-msm@vger.kernel.org,
+        andi.shyti@kernel.org, rjui@broadcom.com, s.hauer@pengutronix.de,
+        gcherian@marvell.com, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, aisheng.dong@nxp.com,
+        loic.poulain@linaro.org, sbranden@broadcom.com,
+        kernel@pengutronix.de, shawnguo@kernel.org
+Subject: Re: [PATCH 8/9] i2c: imx-lpi2c: Use dev_err_probe in probe function
+Message-ID: <20230731073456.zqg6adnyogtojyiv@pengutronix.de>
+References: <20230728013148.1720978-1-liaochang1@huawei.com>
+ <20230728013148.1720978-9-liaochang1@huawei.com>
+ <20230728055535.qoqq5syketmtduoy@pengutronix.de>
+ <4ae70a67-6421-f1f6-f88f-163ee54b39bb@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/8] soc: qcom: socinfo: adjust the position of QDU1010
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
-        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230731061325.26431-1-quic_tengfan@quicinc.com>
- <20230731061325.26431-7-quic_tengfan@quicinc.com>
- <a037a8d3-9ba4-80ee-b34e-9a795ebb6e5b@linaro.org>
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <a037a8d3-9ba4-80ee-b34e-9a795ebb6e5b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: x1gYAeIriykoy4PmBAG_wchne7Oz8FMt
-X-Proofpoint-ORIG-GUID: x1gYAeIriykoy4PmBAG_wchne7Oz8FMt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 bulkscore=0 phishscore=0
- adultscore=0 mlxlogscore=858 malwarescore=0 priorityscore=1501 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307310065
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pyfpad4lehlzfowq"
+Content-Disposition: inline
+In-Reply-To: <4ae70a67-6421-f1f6-f88f-163ee54b39bb@huawei.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,44 +65,80 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--pyfpad4lehlzfowq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-在 7/31/2023 3:00 PM, Krzysztof Kozlowski 写道:
-> On 31/07/2023 08:13, Tengfei Fan wrote:
->> Adjust the position of QDU1010, so that QDU1010 have
->> same sequence with QCOM_ID_QDU1010 in bindings file.
->>
->> Change-Id: I86d46eca55e877aaa1fd948db99b41ae138a3129
-> 
-> Please run scripts/checkpatch.pl and fix reported warnings. Some
-> warnings can be ignored, but the code here looks like it needs a fix.
-> Feel free to get in touch if the warning is not clear.
-> 
-will check if still need this patch.
->> ---
->>   drivers/soc/qcom/socinfo.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
->> index 4d49945b3a35..ad7699b401a8 100644
->> --- a/drivers/soc/qcom/socinfo.c
->> +++ b/drivers/soc/qcom/socinfo.c
->> @@ -405,8 +405,8 @@ static const struct soc_id soc_id[] = {
->>   	{ qcom_board_id(SA8775P) },
->>   	{ qcom_board_id(QRU1000) },
->>   	{ qcom_board_id(QDU1000) },
->> -	{ qcom_board_id(QDU1010) },
->>   	{ qcom_board_id(IPQ5019) },
-> 
-> Same comment as on previous patch.
-> 
-Will remove this patch, another is handling this: 
-https://lore.kernel.org/lkml/20230724083745.1015321-1-quic_kathirav@quicinc.com/T/
->> +	{ qcom_board_id(QDU1010) },
-> 
-> Best regards,
-> Krzysztof
-> 
+Hello,
 
--- 
-Thx and BRs,
-Tengfei Fan
+On Mon, Jul 31, 2023 at 10:16:38AM +0800, Liao, Chang wrote:
+> =E5=9C=A8 2023/7/28 13:55, Uwe Kleine-K=C3=B6nig =E5=86=99=E9=81=93:
+> > On Fri, Jul 28, 2023 at 09:31:47AM +0800, Liao Chang wrote:
+> >> diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i=
+2c-imx-lpi2c.c
+> >> index c3287c887c6f..9021b8064ae4 100644
+> >> --- a/drivers/i2c/busses/i2c-imx-lpi2c.c
+> >> +++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+> >> @@ -569,10 +569,8 @@ static int lpi2c_imx_probe(struct platform_device=
+ *pdev)
+> >>  		sizeof(lpi2c_imx->adapter.name));
+> >> =20
+> >>  	ret =3D devm_clk_bulk_get_all(&pdev->dev, &lpi2c_imx->clks);
+> >> -	if (ret < 0) {
+> >> -		dev_err(&pdev->dev, "can't get I2C peripheral clock, ret=3D%d\n", r=
+et);
+> >> -		return ret;
+> >> -	}
+> >> +	if (ret < 0)
+> >> +		return dev_err_probe(&pdev->dev, ret, "can't get I2C peripheral clo=
+ck\n");
+> >=20
+> > The change looks good, however I wonder why you didn't convert the other
+> > dev_err() called by lpi2c_imx_probe() in the same way.
+>=20
+> Sorry, I am in hurry and don't clean it up as much as.
+>=20
+> Actually, I am not sure if I should convert all dev_err calls to dev_err_=
+probe, or just
+> replace the ones that print the 'return value'. I know that dev_err_probe=
+ is better
+> suited for printing return values, but I am nore sure if it's worth the e=
+ffort to convert
+> all of the calls, for example, the second dev_err in lpi2c_imx_probe():
+>=20
+> ret =3D devm_request_irq(&pdev->dev, irq, lpi2c_imx_isr, 0, pdev->name, l=
+pi2c_imx);
+> if (ret)
+>     dev_err(&pdev->dev, "can't claim rqi %d\n", irq);
+>     return ret;
+> }
+
+I'd say yes. The return value of devm_request_irq() might be interesting
+in the error message. Also emitting error messages in a consistent style
+is nice.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=C3=B6nig         =
+   |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--pyfpad4lehlzfowq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmTHZB8ACgkQj4D7WH0S
+/k4+Fwf9GXOgcrc1BisdDYY4aHPa+/QvyHxzxLz9S2kTUhEbnzmgpFo5SIOjDBdN
+vYqntSAgCP5Si6kBK4tnFj0bLxXLNBYFVS05gxHUUi2nvCAHZmT55b9SWMRCAeM0
+Kv99oq1SadaRMUkygPlQ9M6cMsyA1L/40PQGmw2YuPK85+qj9pY6KNKba1Cb688O
+1QbwWdSiEJP/t5TcSF113QvoxJomz08NMMkoV1ZgW6pEfxua97ogGAzrS5jUNUrb
+G+bP3L5YNRvbV902e/b7reda2HEQZNsiRO+KpHKNitPWlAGQKXP4R5ITq2S1OOEu
+90lqHES8qAF3rjZsV+UObyxWZrtwAg==
+=ODCp
+-----END PGP SIGNATURE-----
+
+--pyfpad4lehlzfowq--
