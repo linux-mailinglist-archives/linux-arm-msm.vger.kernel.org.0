@@ -2,104 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D517D768BB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 08:14:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80337768C66
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 08:54:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjGaGOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 02:14:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42666 "EHLO
+        id S229738AbjGaGyf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 02:54:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230128AbjGaGOv (ORCPT
+        with ESMTP id S229651AbjGaGyc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 02:14:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD7BF1700;
-        Sun, 30 Jul 2023 23:14:30 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V696JZ021897;
-        Mon, 31 Jul 2023 06:14:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=7dVb/qqTToAsp7CwjWP6dEZFOZhPdLehOfnKJdR0bGY=;
- b=o+MtlMSGi+0GhWCPOPKpgZpt58zix+Rb5ftc0wyllBJsllP8aNvqbdmQLIaT3S8I5r1a
- vZqA/Hski9dSy5rj+EfnQc8X67+3G9k9V08L1o4w2+KZXN1mcgpY4feCtJCN1bVsMowZ
- LRRBHEvgMidjEYeGC1Z6qTReKqEcRCBatj68d3hU24dJ0Cudw/lwdNh0Y0vFTJGHW+Ye
- Rbl60EQeIInIW3PwTV6brOaDl63RA3zlOnc15kgVCyaaYzg2IyPd91ttT7Yf8pnYlixM
- bIAi3YgSWF5WS0zkZY2Nw2E1wzR5RrVj/dMAkZ8DNLDkBjpL5uWfRZC2Oj+eOHyQSbiB 9g== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4urxaqb3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 06:14:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36V6EPBI031410
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 06:14:25 GMT
-Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Sun, 30 Jul 2023 23:14:20 -0700
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
-        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: [PATCH v3 8/8] soc: qcom: socinfo: add SM4450 ID
-Date:   Mon, 31 Jul 2023 14:13:25 +0800
-Message-ID: <20230731061325.26431-9-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230731061325.26431-1-quic_tengfan@quicinc.com>
-References: <20230731061325.26431-1-quic_tengfan@quicinc.com>
+        Mon, 31 Jul 2023 02:54:32 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C5F134
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 23:54:29 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52256241c66so8658308a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 23:54:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690786468; x=1691391268;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4qUpAieG+xE08h9GZl+Gc2LW4JHHh2vTdj6E2mVehSY=;
+        b=QZQhRAtBIIZv+wMv6Lxz/k+jf0zqv0L4vBqgBg37tCl2/VZ2sjNccomO1Bbl3DcCBY
+         8aTMsta4hgFyt4+y2HEPbVx1/RwJh9suiK4o8EGnaIImBnM0L3hz5FJTMKluDfGrAsfH
+         5a5/i0Oy8MkSl03+PbLPMXMJqL1dMpKiDj7YtBb+lctxZ+iuWNwp/YbcaV5k70W7QJrL
+         fN9W/W5Ygb/zGvzJ5n0uHRMl/cqeexeZwBHtEOSKuQlE2tFZqQRl4Ogcyhns6/dQHEpl
+         3gKLQ3AHcA6MAIex5cr6tr5IRJlN+kCeLO7EzTdz0Rhd+dW9CmkCcQPCbWS0wWGpRuFJ
+         DyaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690786468; x=1691391268;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4qUpAieG+xE08h9GZl+Gc2LW4JHHh2vTdj6E2mVehSY=;
+        b=jbEeq81fz9GV5HNEajiIqUC7K8zlJhjPSe6PZbZS6SmCUjCgGOQgQdpV36oPcSAuHD
+         Yfm146B2C4coY/Q0sLHnkWkR9H/wkjHVeAo661zb1bBItr5+rCPz/swRJ2lJ8aD57FsE
+         5ghdYIlizyNOOQfTyrVeKzlbuZKlm7x6YVV9c6FPkUqjx+idXlVdZK4FWC7KzX8PKtxS
+         r7+Yb3xwex9aPKVCxSZgve1R3BgxEfWYKDEbRLl4X3yda3fVhms+4XUx3hSn3e8z6EaU
+         zcOaVVKGqpVJHdFNwSTRmew07hMP4Et+P1e1mcSsXC4padEf5iwyAuElVOSWkpOEDR2T
+         /9Pw==
+X-Gm-Message-State: ABy/qLbmPHQryNdz8LvXagw0zDSbhqWEcN+BzzyMU9DcTAl/gHLoj1of
+        cITERNGWkdVcyaNivcKig73LxA==
+X-Google-Smtp-Source: APBJJlGCmJaHU50ObdvcR/6bwTGIuiXDtnox3Cuhxi7HnSlDCaucG+LhabDEzLzNd3EdVAvCwUifNw==
+X-Received: by 2002:aa7:db52:0:b0:522:abaf:1b0b with SMTP id n18-20020aa7db52000000b00522abaf1b0bmr7501888edt.18.1690786467642;
+        Sun, 30 Jul 2023 23:54:27 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.183])
+        by smtp.gmail.com with ESMTPSA id e12-20020a50ec8c000000b0051e0eba608bsm4953487edr.19.2023.07.30.23.54.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Jul 2023 23:54:27 -0700 (PDT)
+Message-ID: <0617841a-5d1f-b703-daa9-fedba148a05d@linaro.org>
+Date:   Mon, 31 Jul 2023 08:54:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BPWLCAxlLbCQ176aic6e_-prMt_N0S4Z
-X-Proofpoint-ORIG-GUID: BPWLCAxlLbCQ176aic6e_-prMt_N0S4Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=831
- clxscore=1015 impostorscore=0 malwarescore=0 mlxscore=0 priorityscore=1501
- adultscore=0 phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307310055
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add PCIe0 node
+Content-Language: en-US
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        quic_parass@quicinc.com,
+        "reviewer:ARM/QUALCOMM CHROMEBOOK SUPPORT" 
+        <cros-qcom-dts-watchers@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <1690540760-20191-1-git-send-email-quic_krichai@quicinc.com>
+ <17c2ba50-3b72-523c-d92b-1ecbf9be7450@linaro.org>
+ <f3d5c72d-90d3-b091-f995-5ad0bf93ae1d@quicinc.com>
+ <a2024453-e749-b659-52a0-83ded8bb5c38@linaro.org>
+ <1cfdf3c4-6e4f-e73d-c711-3890ceabb69d@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1cfdf3c4-6e4f-e73d-c711-3890ceabb69d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the ID for the Qualcomm SM4450 SoC.
+On 31/07/2023 07:29, Krishna Chaitanya Chundru wrote:
+> 
+> On 7/28/2023 9:27 PM, Krzysztof Kozlowski wrote:
+>> On 28/07/2023 17:10, Krishna Chaitanya Chundru wrote:
+>>> On 7/28/2023 5:33 PM, Krzysztof Kozlowski wrote:
+>>>> On 28/07/2023 12:39, Krishna chaitanya chundru wrote:
+>>>>> Add PCIe dtsi node for PCIe0 controller on sc7280 platform.
+>>>>>
+>>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>> Thank you for your patch. There is something to discuss/improve.
+>>>>
+>>>>
+>>>>> +		pcie0_phy: phy@1c06000 {
+>>>>> +			compatible = "qcom,sm8250-qmp-gen3x1-pcie-phy";
+>>>>> +			reg = <0 0x01c06000 0 0x1c0>;
+>>>>> +			#address-cells = <2>;
+>>>>> +			#size-cells = <2>;
+>>>>> +			ranges;
+>>>>> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+>>>>> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+>>>>> +				 <&gcc GCC_PCIE_CLKREF_EN>,
+>>>>> +				 <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
+>>>>> +			clock-names = "aux", "cfg_ahb", "ref", "refgen";
+>>>>> +
+>>>>> +			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
+>>>>> +			reset-names = "phy";
+>>>>> +
+>>>>> +			assigned-clocks = <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
+>>>>> +			assigned-clock-rates = <100000000>;
+>>>>> +
+>>>>> +			status = "disabled";
+>>>>> +
+>>>>> +			pcie0_lane: phy@1c0e6200 {
+>>>> Isn't this old-style of bindings? Wasn't there a change? On what tree
+>>>> did you base it?
+>> The work was here:
+>> https://lore.kernel.org/all/20230324022514.1800382-5-dmitry.baryshkov@linaro.org/
+>>
+>> But I don't remember the status.
+>>
+>>> Let me rebase and send it again.
+>> This anyway looks like wrong compatible. You used sm8250.
+> 
+> The patch was send on latest linux-next only and the above change is not 
+> merged yet.
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+I don't think we will want old DTS syntax... but this actually depends
+on the status of Dmitry's patchset.
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index ad7699b401a8..faa6f9fccfb3 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -405,6 +405,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(SA8775P) },
- 	{ qcom_board_id(QRU1000) },
- 	{ qcom_board_id(QDU1000) },
-+	{ qcom_board_id(SM4450) },
- 	{ qcom_board_id(IPQ5019) },
- 	{ qcom_board_id(QDU1010) },
- 	{ qcom_board_id(QRU1032) },
--- 
-2.17.1
+> 
+> We are using the same compatible string as sm8250 because the phy is 
+> same both from hardware and software perspective for sm8250.
+> 
+> that is why we are using the same compatible string.
+> 
+> Can you let me know if we want create a separate compatible string for 
+> this even though  we are using same phy?
+
+https://elixir.bootlin.com/linux/v6.1-rc1/source/Documentation/devicetree/bindings/writing-bindings.rst#42
+
+
+Best regards,
+Krzysztof
 
