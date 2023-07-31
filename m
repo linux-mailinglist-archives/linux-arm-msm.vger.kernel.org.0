@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5669768FB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:12:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6412A768FBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:13:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbjGaIMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 04:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35574 "EHLO
+        id S229550AbjGaINT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 04:13:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230288AbjGaIMP (ORCPT
+        with ESMTP id S231925AbjGaIM4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 04:12:15 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D99112D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:08:33 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b9b904bb04so63570131fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:08:33 -0700 (PDT)
+        Mon, 31 Jul 2023 04:12:56 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8AB212B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:09:23 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b962535808so63473341fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:09:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690790911; x=1691395711;
+        d=linaro.org; s=google; t=1690790962; x=1691395762;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=J1EFaaDyCNdX0WMnsQXw94E/k0iksAf54Qpf4zrBsFw=;
-        b=XmDzvC1DKiAY1TTEdGqYGZcGLHtHfJ4VQIuJAcq+KJEJIomBVgRAZgvqdwLVzbluHT
-         A49A6GiMGSYwtczBdraaH8uzatBPkURCb926Wnc5dB9440SjL3z+/u6WrcqHvCuB8iim
-         TCmI1QGpN7OJgXjfFQoRIGJ4MA9jdGoTxscUunb4SxYMgpMFg3gtnGa4QHd/E0oP/4ub
-         U/FfwZ+9DVKy8lMrHrafsRix/9pJilWnetqOt+4iij4WI4WyrpV8ZCCIGEK1HiUjA1dt
-         zrgsto6uYvGxhD1E8lor2wTO7rHo/Ke4GtVa4+qrxwQ4gzof4Gea/I/TtckDHESnz3Br
-         T4bA==
+        bh=D3fDGVZFd2PK1zEp0KfLjHfq7Q8t9fsVbaXRkgUvGIs=;
+        b=nQ4rMKgQnmywM8nmNrEghDWGxPhCv30jKSdooNht+jHU1RCf+Xv1Rjzj7L9Te9c4zG
+         kfoPTKjI4LEGkCI0ai9CvmWV2xWilQbmmGBxW9e1GPoQ4RtQ28fj9FwMpQzNh1ArEdNB
+         4WdWkjUWi2Q/BGsMKtaTYVPVQfgzkrhxuGhnFtxzHRYlTQ6Fhk6MVFvxDPdO+IwgHPzk
+         JokhjXFWockyvrRRhg8gBo8U8ea61wibLAhGDtvAdsaJRYMfDIz/GySYTOY+EBZqQuuN
+         No588Y9pFL9kR2owsilMvw2zauVa31IThk+3mbPY6cLQG0YXJJyyY6CTLyGwI9wQLT6d
+         ZSwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690790911; x=1691395711;
+        d=1e100.net; s=20221208; t=1690790962; x=1691395762;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J1EFaaDyCNdX0WMnsQXw94E/k0iksAf54Qpf4zrBsFw=;
-        b=Y3BKAfXJKhiRroEwKDMuSI04N7OcoVqtLS4oeoGTX6nZohY5HKL6PG4ebV13Azcwr9
-         Lg+cTKTJ39S9vvCUx5DP89w1nlxcwsLwy+BWf8UHtn7kXhi6w9yIMYzqhxH2DGo8nFVH
-         dASMmY+Q6YfkpKX5HdFd8DRXhy5mbw0PGCZ8kc7LhDUuzwWEoMR1p0+V+Phkbj2aCHit
-         nWQMvMBiumfUi6e/FpBVJZNMNuOmTmn0HnmI6VW3k4lk8bpgmm8WcYdmrUa1UyqZEcaB
-         frx4a+D2aIh61MUX67OInop9Of+AFOirDxegzoF80gEhNpMqnP1SOw36qLOebTNF93f5
-         oJXQ==
-X-Gm-Message-State: ABy/qLYkRA4UIOyqCtEczrAjX1penD4j4/W2Q5TEpqC+Kh+IPz6GLFcV
-        R6F+IhWbKRSlcl3q57+AuKSoYQ==
-X-Google-Smtp-Source: APBJJlHslHEvObrOJW84A/lMgkXFrmYsbf9fO6GOATIVcuhc5+mqNPcI7Xa0DnW7brf+SYAFyZojAA==
-X-Received: by 2002:a2e:918c:0:b0:2b9:5eae:814f with SMTP id f12-20020a2e918c000000b002b95eae814fmr5508163ljg.50.1690790911622;
-        Mon, 31 Jul 2023 01:08:31 -0700 (PDT)
+        bh=D3fDGVZFd2PK1zEp0KfLjHfq7Q8t9fsVbaXRkgUvGIs=;
+        b=HqZdY0B0c9tmBONg6+nu8mJWFXlGtc751JlYKmnzQRa4r1tlJUoSTTrE8cQ7phAi1M
+         yOgMZ+ubIW/H91RN+yAjk4JecT2Qgq5JAjlZcCLFHN6jyYLS8HhNJA/sVW0E4NIe6dCM
+         vEbHjJYYb4gfdLDSKffgIC+Vwano1bDV+ihN4eNU1ngMAYydT8ZayTD2W9aMTnH039Sa
+         Z3GlyJyRhPj4hFsCQwj3+BfrzOP+mIhTfcvAVBmOmgc82ZaIof6PJjwOC5iVwuz21ddR
+         0z1+f7mZ4CpWkGoHoP8VkBU+J4ja76gLdXjeamRxkVr6/zn1optTRlPc0cIqVH3zcerT
+         OtDA==
+X-Gm-Message-State: ABy/qLY+uw9dDV7HtFhKzblysOlmiBgjfV2jdgn+Y1aYYd9+SGw4iL4o
+        qalZ1GxauR2WFCc9mhqW3ItGVw==
+X-Google-Smtp-Source: APBJJlGfLs2rDS2phwyEFW3W+5xcntYCyYubp/l5J/zxJOX6XOtUs9QRKPy1EKHs9qEwnREOnEknFw==
+X-Received: by 2002:a2e:80c5:0:b0:2b9:ee3e:240b with SMTP id r5-20020a2e80c5000000b002b9ee3e240bmr843964ljg.41.1690790961955;
+        Mon, 31 Jul 2023 01:09:21 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id w18-20020a2e3012000000b002b6a5dfc7f3sm2448776ljw.30.2023.07.31.01.08.30
+        by smtp.gmail.com with ESMTPSA id w18-20020a2e3012000000b002b6a5dfc7f3sm2448776ljw.30.2023.07.31.01.09.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 01:08:31 -0700 (PDT)
-Message-ID: <abf760b0-081b-e8f9-944f-624df518d25a@linaro.org>
-Date:   Mon, 31 Jul 2023 10:08:30 +0200
+        Mon, 31 Jul 2023 01:09:21 -0700 (PDT)
+Message-ID: <ccbcd94c-4a78-934e-f046-b3cb1878fc91@linaro.org>
+Date:   Mon, 31 Jul 2023 10:09:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: use defines for interrupts
+Subject: Re: [PATCH v2] arm64: dts: qcom: use defines for interrupts
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -64,7 +64,7 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230730112024.120903-1-krzysztof.kozlowski@linaro.org>
+References: <20230730180638.23539-1-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,11 +101,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230730112024.120903-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230730180638.23539-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -114,11 +114,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.07.2023 13:20, Krzysztof Kozlowski wrote:
+On 30.07.2023 20:06, Krzysztof Kozlowski wrote:
 > Replace hard-coded interrupt parts (GIC, flags) with standard defines
 > for readability.  No changes in resulting DTBs.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes in v2:
+> 1. Replace defines in few more files (msm8976.dtsi, msm8994.dtsi,
+>    msm8996.dtsi, msm8998.dtsi, one more in sdm630.dtsi,
+>    sdm845-shift-axolotl.dts)
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
