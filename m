@@ -2,74 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8356769262
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 11:54:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FC1A769279
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 11:56:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231701AbjGaJyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 05:54:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40078 "EHLO
+        id S231488AbjGaJ4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 05:56:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231710AbjGaJyB (ORCPT
+        with ESMTP id S231605AbjGaJ4T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 05:54:01 -0400
-Received: from mgamail.intel.com (unknown [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AA44E5B;
-        Mon, 31 Jul 2023 02:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690797176; x=1722333176;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=PAoEQuTB+M6/Mb3C/VaAtLqfjQYPblPsfV7KVnusHG0=;
-  b=R8RetCIdGQB6sPY6dv5VcUWTUGc/TEgck4SZddvjytxyuSJJdJr1EG1L
-   Mnh9M5X08f2vl4WFmt6KuOV/8s9nnllMckIACQiZv3A4JAh92TuUdYhTc
-   /Ge0IkGy7Jecmua0PsTG2W/98+4chQkhLlSyJKn2C3isi51bWasg8vXa7
-   7PAzKlnmtaXx/DNVO75eJ6Zcbk7/wFg4q76mRWbqzrArdFuPqziVQvxis
-   Npz0tNtUI3iNBUfChrN/I0S93r8vVFVMu0yLS3Ymfi6H3YZ623URzCNPy
-   LApH6U1+JnOeaRUwUCbWIbdzM4Z9qlN2giXbwN55zTmJRdlwqEQaZqSDs
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10787"; a="348573362"
-X-IronPort-AV: E=Sophos;i="6.01,244,1684825200"; 
-   d="scan'208";a="348573362"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2023 02:52:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10787"; a="902059850"
-X-IronPort-AV: E=Sophos;i="6.01,244,1684825200"; 
-   d="scan'208";a="902059850"
-Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 31 Jul 2023 02:52:32 -0700
-Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qQPZn-00053G-25;
-        Mon, 31 Jul 2023 09:52:31 +0000
-Date:   Mon, 31 Jul 2023 17:51:35 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-phy@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v2 3/3] usb: typec: nb7vpq904m: switch to
- DRM_SIMPLE_BRIDGE
-Message-ID: <202307311724.2bAqJu6o-lkp@intel.com>
-References: <20230731071930.3928150-4-dmitry.baryshkov@linaro.org>
+        Mon, 31 Jul 2023 05:56:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB74213D;
+        Mon, 31 Jul 2023 02:55:30 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V9R6d3012689;
+        Mon, 31 Jul 2023 09:55:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZAMrhQIC9XVRayN88yy4TVfX4lfN3CyJU16rNgO9jGY=;
+ b=pmdZ9SdcNjg6ihmNiXTnrwbkiJNhjjxXLc1NnmDrq20InrhXd4QDIzRU0NWvwZEXtvBS
+ uLJYy7otSrBDaTl5mLnn+2Sy/hyAp8HGcCQKLR99OPXeqRJxsZVe8RiSgo1YgxMYts92
+ fgKeySqjDyOfYioIYzHgZumi+e8gcHWif72rhROQf8Pki3agwqH958tTsPs+l6dJD503
+ 2nYPHnHaGV2moWbYgQAod5TZDu1YoY86tVtW/WuuEkcDOF0aBmL9tiY9C29nVIZj0luv
+ rREpDfgSfkIa0b4WKT94WxxFOB+N/eBFjEYMxRCMgrvq1PeDGRYzWcBxDw6I4GLSNcwR 3Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4uanu7cc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 09:55:27 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36V9tQ7L017798
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 09:55:26 GMT
+Received: from [10.216.47.206] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
+ 2023 02:55:23 -0700
+Message-ID: <6920de01-2c32-eae8-2ca8-f04ae3a3bed8@quicinc.com>
+Date:   Mon, 31 Jul 2023 15:25:20 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230731071930.3928150-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] soc: qcom: qmi_encdec: Restrict string length in decode
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_varada@quicinc.com>, <quic_clew@quicinc.com>
+References: <20230731091408.2458199-1-quic_ipkumar@quicinc.com>
+ <4377ba5a-deab-1f24-c785-c90965991af1@linaro.org>
+Content-Language: en-US
+From:   Praveenkumar I <quic_ipkumar@quicinc.com>
+In-Reply-To: <4377ba5a-deab-1f24-c785-c90965991af1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: W0jzt3GP2b7JXJQVIcSgwGPokQFsr8x6
+X-Proofpoint-ORIG-GUID: W0jzt3GP2b7JXJQVIcSgwGPokQFsr8x6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-31_03,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0
+ impostorscore=0 mlxscore=0 suspectscore=0 spamscore=0 mlxlogscore=670
+ phishscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307310089
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,63 +81,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
 
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on usb/usb-testing usb/usb-next usb/usb-linus drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.5-rc4 next-20230731]
-[cannot apply to drm-intel/for-linux-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-add-transparent-bridge-helper/20230731-152746
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230731071930.3928150-4-dmitry.baryshkov%40linaro.org
-patch subject: [PATCH v2 3/3] usb: typec: nb7vpq904m: switch to DRM_SIMPLE_BRIDGE
-config: xtensa-randconfig-r004-20230731 (https://download.01.org/0day-ci/archive/20230731/202307311724.2bAqJu6o-lkp@intel.com/config)
-compiler: xtensa-linux-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230731/202307311724.2bAqJu6o-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202307311724.2bAqJu6o-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/gpu/drm/display/drm_simple_bridge.c: In function 'drm_simple_bridge_probe':
->> drivers/gpu/drm/display/drm_simple_bridge.c:105:21: error: 'struct drm_bridge' has no member named 'of_node'
-     105 |         data->bridge.of_node = data->dev->of_node;
-         |                     ^
-
-
-vim +105 drivers/gpu/drm/display/drm_simple_bridge.c
-
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   88  
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   89  static int drm_simple_bridge_probe(struct auxiliary_device *auxdev,
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   90  				   const struct auxiliary_device_id *id)
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   91  {
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   92  	struct drm_simple_bridge_data *data;
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   93  
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   94  	data = devm_kzalloc(&auxdev->dev, sizeof(*data), GFP_KERNEL);
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   95  	if (!data)
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   96  		return -ENOMEM;
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   97  
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   98  	data->dev = &auxdev->dev;
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31   99  	data->next_bridge = devm_drm_of_get_bridge(&auxdev->dev, auxdev->dev.of_node, 0, 0);
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  100  	if (IS_ERR(data->next_bridge))
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  101  		return dev_err_probe(&auxdev->dev, PTR_ERR(data->next_bridge),
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  102  				     "failed to acquire drm_bridge\n");
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  103  
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  104  	data->bridge.funcs = &drm_simple_bridge_funcs;
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31 @105  	data->bridge.of_node = data->dev->of_node;
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  106  
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  107  	return devm_drm_bridge_add(data->dev, &data->bridge);
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  108  }
-1b4ddd588d7e97 Dmitry Baryshkov 2023-07-31  109  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+On 7/31/2023 2:48 PM, Konrad Dybcio wrote:
+> On 31.07.2023 11:14, Praveenkumar I wrote:
+>> The QMI TLV value for strings in a lot of qmi element info structures
+>> account for null terminated strings with MAX_LEN + 1. If a string is
+>> actually MAX_LEN + 1 length, this will cause an out of bounds access
+>> when the NULL character is appended in decoding.
+>>
+>> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>> ---
+> Fixes + Cc: stable?
+Sure, will add.
+>
+> Konrad
+--
+Thanks,
+Praveenkumar
