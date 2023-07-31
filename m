@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA5A76A11E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 21:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F416176A126
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 21:24:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbjGaTWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 15:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54632 "EHLO
+        id S230294AbjGaTYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 15:24:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231671AbjGaTWr (ORCPT
+        with ESMTP id S229537AbjGaTYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 15:22:47 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51BA51BE7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:22:36 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9cdbf682eso52953221fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:22:36 -0700 (PDT)
+        Mon, 31 Jul 2023 15:24:33 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27F9E114
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:24:32 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe1c285690so6734151e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 12:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690831354; x=1691436154;
+        d=linaro.org; s=google; t=1690831470; x=1691436270;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=B9Nlu6El/LKLpwy2r6I0czAb5e+UKcc+mHa0I5Q4DZY=;
-        b=e56EBvuHfSiTbZHyLuLvhn7iunD2205Y4BfqV/k6eChlAS/67nCNMi/cTTLW87pnn0
-         u1DTmYNkqP+eLmT9DOn5bU+mIssqLP2iCDwwk8fX4wVRFXYhQ2+kQd2s0dWooswzSfv1
-         cC4QPWZzZzXpHvMrQKNeI75ZejKR2AqhY+DDYloghApiLoLhnbAFB+uweaIlyfVBfnVP
-         DGG6aQBD0D0Q5N/0C4Hl9ghPO/ece78fSlD+utHSuDeWVmAQ8YP+i/sMtZ3OHIZAwKUy
-         hgjeGn9yDOdsdcVpLcb2cEhsULoSaRDX6vFfh0izhHVIdUmtv6cZBxk61D2UjFWnyGpW
-         wutg==
+        bh=u3cpx9y286QZ8BgwC7urTNONFjOP9T8Enk3jLPXhzF4=;
+        b=g/R9Z9HIIY7ecQ7NKAMcDDlmSCdUH4eOpN9ezY+u6DeBdEb6Ldav31pJavxF0JUxhj
+         Da7Brzuyt+80zHBkHTLMe7SLWPPfnGSstpW5azpKfSUmmV4tlPYK0CVYe/E/XMNv6RS0
+         Ou8wqgb5Z5WKdW3lcm4ofaCwPlOd4ROQ+DlCnPxHBKkHame6dUpS9vZ/QR+3LRJsIVCe
+         ZnnFMwQ0uWFdkzrR0Vm6Rrm5yI6Yj5nb4QGNYU/dlbaPYEnaXnOykzMrNgbMtsmEOsNv
+         /7/AvUfGFBWI9/4CvLV9/GWXXIt/iXr/A8tPzgkE9hz0AYLZqAysxbRzPLD1gwR/ExK2
+         xO9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690831354; x=1691436154;
+        d=1e100.net; s=20221208; t=1690831470; x=1691436270;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B9Nlu6El/LKLpwy2r6I0czAb5e+UKcc+mHa0I5Q4DZY=;
-        b=R3/xw7xBKPYQ6rtG0m0twvv5XLa4l99iIkfr5SJGx2hc5GCn86Lr2stpYrl2sQGy9b
-         eiH4yrrQhuhxlboiedvhFaIEz3tOHptmYwbcsP9sGB4n6scYx7Gxn3NRaJMpXtC3KQ0l
-         0kH+kWmBclS9puEIn6Y0kpgm51V6ptbZHmmAcFvrHgDH+OMw/fT2l3KAg+1tSBGvvEMI
-         t4fVE2tWgW5xmmef8TrjrIsgOSxJL1sVkBpa3xpKN782qT6ZmUyJcXc4soWRw49B86tY
-         UptSwQBfYXNFjuM8NNohsh8Dm9KV8DrhWrb9YjMuzmdpHbtKa4n2AXvPF/eqsOsxpdYY
-         SWRA==
-X-Gm-Message-State: ABy/qLbn18uuXry3HN+V+WM6t5L2DYFujmHTHoyXgEgES+POgA+oNH8O
-        SWZvQtMiVpMEc2Iw/4Vcr/oydg==
-X-Google-Smtp-Source: APBJJlGDxGCXwJr9tYQIG2a4SggBoE8IZG+bJ18FGFU6alRwwvLIS2OQ4AMaNO0VXV5Frzlg/9ys9g==
-X-Received: by 2002:a2e:9d98:0:b0:2b9:ef0a:7d4a with SMTP id c24-20020a2e9d98000000b002b9ef0a7d4amr664038ljj.36.1690831354631;
-        Mon, 31 Jul 2023 12:22:34 -0700 (PDT)
+        bh=u3cpx9y286QZ8BgwC7urTNONFjOP9T8Enk3jLPXhzF4=;
+        b=GEf63NcBIYHyu3DyXyalVkSQwNxHPzjVvOuFvdijPEbPeTWLCiVUKd/8nXNvOsmLVk
+         aol+eBXQ9n+VhdBnfOQWML/FuLh8k5eN/b++4MZiriyndyglWwQTCivKYMtpcuDiLP/g
+         QkX4g8s2kqhxkItyrZJmAwLAQDwKpmZABp4kZqJStOlVn3xEDs3AARA+30f2yonq3q/P
+         xWazIGhjl17OW4QPk+WeAycQZ7jxRdyDvkCPH4N+/Ag7JhMObsj6t5wM+6iu4crnC5Cc
+         Bn2JMNeAC/vcKB/sq6hx63a9eeEozeOxHum1r0hIlxSmhk5Woal4/NcUO80GZBnc3l4p
+         XlBA==
+X-Gm-Message-State: ABy/qLZ5+tgAIHdJdMXjCIqf9MttAJ+tC1VEgmUq9zqV9MCOYU5pJS/o
+        3xgf7Te9flAANUi2lNFgGrKUPw==
+X-Google-Smtp-Source: APBJJlF/vcNLd4EffJel7v9vuu85ywpSuOkkonPfpRoryDRIoJTAI5MGMKOZzzlJUJr53m0ETjl0/Q==
+X-Received: by 2002:ac2:465a:0:b0:4f9:7aee:8dc5 with SMTP id s26-20020ac2465a000000b004f97aee8dc5mr528421lfo.19.1690831470426;
+        Mon, 31 Jul 2023 12:24:30 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id h4-20020a2eb0e4000000b002b6ee99fff2sm2699202ljl.34.2023.07.31.12.22.33
+        by smtp.gmail.com with ESMTPSA id u7-20020ac248a7000000b004fba6f38f87sm2190572lfg.24.2023.07.31.12.24.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 12:22:34 -0700 (PDT)
-Message-ID: <cc195bed-2dd1-61f2-4423-27d36ecdb53d@linaro.org>
-Date:   Mon, 31 Jul 2023 21:22:33 +0200
+        Mon, 31 Jul 2023 12:24:29 -0700 (PDT)
+Message-ID: <9c050802-d03a-9a57-80f0-85ba752a0fed@linaro.org>
+Date:   Mon, 31 Jul 2023 21:24:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/13] arm64: dts: qcom: ipq8074: switch PCIe QMP PHY
+Subject: Re: [PATCH v2 06/13] arm64: dts: qcom: msm8998: switch PCIe QMP PHY
  to new style of bindings
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -69,7 +69,7 @@ Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org
 References: <20230731105759.3997549-1-dmitry.baryshkov@linaro.org>
- <20230731105759.3997549-6-dmitry.baryshkov@linaro.org>
+ <20230731105759.3997549-7-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -106,7 +106,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230731105759.3997549-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230731105759.3997549-7-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -125,28 +125,6 @@ On 31.07.2023 12:57, Dmitry Baryshkov wrote:
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 63 +++++++++++----------------
->  1 file changed, 26 insertions(+), 37 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> index 00ed71936b47..e4447a9d7929 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> @@ -211,59 +211,48 @@ qusb_phy_0: phy@79000 {
->  
->  		pcie_qmp0: phy@84000 {
->  			compatible = "qcom,ipq8074-qmp-gen3-pcie-phy";
-> -			reg = <0x00084000 0x1bc>;
-> -			#address-cells = <1>;
-> -			#size-cells = <1>;
-> -			ranges;
-> +			reg = <0x00084000 0x1000>;
->  
->  			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
-> -				<&gcc GCC_PCIE0_AHB_CLK>;
-> -			clock-names = "aux", "cfg_ahb";
-> +				<&gcc GCC_PCIE0_AHB_CLK>,
-> +				<&gcc GCC_PCIE0_PIPE_CLK>;
-Can you align the clocks entries?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
