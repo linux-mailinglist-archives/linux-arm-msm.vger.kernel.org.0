@@ -2,111 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BA13769CF5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 18:41:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E666769D00
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 18:43:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230147AbjGaQlq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 12:41:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45032 "EHLO
+        id S232079AbjGaQnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 12:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230181AbjGaQlp (ORCPT
+        with ESMTP id S233351AbjGaQm4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 12:41:45 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD97BE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:41:43 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b9b6e943ebso69605641fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:41:43 -0700 (PDT)
+        Mon, 31 Jul 2023 12:42:56 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F318C1723
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:42:48 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9a2033978so70369231fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 09:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690821701; x=1691426501;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1690821767; x=1691426567;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RQv86VcHfpMwMS2LVbhjU4S3QgVY8yDLOOaRvsR6rV0=;
-        b=RfbbU2HgmatPwvrC//dbLuQXOVnc667SB4KhJWbEjwvwNyHphbiyTy5nUB+kYihbga
-         ivaBPdWT3ovWMDEEQogTkth+p3Kmgpxmr+f2mDDUPtjIHC60okRWJa9cg+deA9HUqeNB
-         QSR0l8XlR9ENHlsk/VFyPPj2pq7t5AmSUQK6+Ps7mRrCHsae08V2Xe3IWl1G2rFderu9
-         t3mRudo2V52m7g/VLqmFL4cTquPwGbdhlq6ayZiwNaKEUk5Rtt1M5nyzFareG6Tw5SQB
-         2O5izFF/s11H3vIyVP5fThQwjBuSr1vlBDtiIjcYCaT2eds2Abe6MiumRtuEL8NlHzGO
-         4nsg==
+        bh=n51bPqc2FOBF1O8Pkof/cmIv3X6J8j8NcKC/rdlzbnc=;
+        b=UCCLI6lYVK5fuTzhHD3N56NIKzLuA01wA85/5Q8I4Ub0cr6qqgsAAtXdP7f7Xmp0Jd
+         sQK6/5iKpNoPUmH2oef4zU5tjExKgHDB6YwchfmARkClFn0UBmLD3K5CLjzLWBrb9neu
+         EEsI5iD6t5rVTNISfrLokXvSTd0A8Iy2FXD434yebYtUal5CQrpQWkdWm70L6iRcdLRX
+         mJAfDVrbkpJsG7hGv53EZbMuQv2+hDOhOnp9iHLuE2Xajm0WJOGUQMtBwlEuYp2Be1EZ
+         bAMT9QbaPgLqoKzaYlngIi++D964Yi0YXjACBk+l8mXsLb1n9d94aYZ8Kme5PTstL40o
+         HSbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690821701; x=1691426501;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1690821767; x=1691426567;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RQv86VcHfpMwMS2LVbhjU4S3QgVY8yDLOOaRvsR6rV0=;
-        b=AFn3GrSyUfMuCtJkk7ITMCTMpRXE1HBdCBQqDs9M2qec+sc2H+0DElFCRELW87+BCf
-         BL1pNqDeDx1+x8AXaaOj7CYHRCk9t75m8xJGdv7M2gRydV/VR+HVHO7jtRZHIrMvnDBv
-         GjNrHVAo/w+BvKnJZjk0uWiqdxGCO5O1auOPtZKQJyTjd+m8a1Y3sJcoNzOH4BawFcMd
-         vvIsR6SASymHZlpOSFfL7Ml6kEvKFDJgucO5RADw5uinHfFTgZnvSadsLB18nJAgbeUH
-         PqagGq94/REP8hI6sCVXGGr+IMnfE7cMAoum+iQeU7SUjeAnXAAZWL0FmkYKE2T/AtV9
-         IKWg==
-X-Gm-Message-State: ABy/qLaA7jBYQKU77yS1JUB5iEnxyRZDTyhoiqVzN8vD9DRQDFPBgQ2R
-        bp/JMMBpxBAVU+bo780bnwd6oQ==
-X-Google-Smtp-Source: APBJJlF2EjET63K8oUdWU3gEtypE5eh3Hae3V6G1xKCpe6AfA4xCM7ppXdhkuHv1u6N59BejlR4nwQ==
-X-Received: by 2002:a05:651c:10b6:b0:2b6:b30f:5bf with SMTP id k22-20020a05651c10b600b002b6b30f05bfmr114908ljn.13.1690821701085;
-        Mon, 31 Jul 2023 09:41:41 -0700 (PDT)
-Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id e9-20020a2e9309000000b002b6cdbd9e35sm2617266ljh.55.2023.07.31.09.41.39
+        bh=n51bPqc2FOBF1O8Pkof/cmIv3X6J8j8NcKC/rdlzbnc=;
+        b=jWCYy9geTrFTXkbtrPpz5ZgVPoYfdEPg6oI3lIo9cKwSmTRWjS+YdekHaKLln1o24S
+         GCslUPoDtw2nPKRv6/Vn6HJYEEWfzrAXi3CSx7+dF/uO9RscAXr4Le0at1JnKmlgrjm5
+         4RC6I1qOlGzH/GXB24lC1Zeapk2gIgWorZOwdNywD3aoCn2w9/SfzIGcP2HHxcXkOeZw
+         aoRwHq4VUQh5cVt5SaH+7AoXXu4sO86mjnwXT5YFImi22HzrVAd4dkkaBOA+FFp9/HlK
+         UeoNeO3uedLuF2XS5z7CoYXeomKHMwUN6h1ocOqYBQMur2+gsIvsTue8aRi4GdDcf+3x
+         gWWw==
+X-Gm-Message-State: ABy/qLYQBSMYIMxo3aoL6BcjsyalVUbAzril636JXpA5kGX2G0PDzbmU
+        hMAazZXUzC3Z9hYV3ydxqjZEPQ==
+X-Google-Smtp-Source: APBJJlGnlmc0CiNX0uQgMywmw8gDWUm9ZXVzpNexqQqWwE6fS3vBXiSmuhs0v1sT3xheNqqp6aCo5A==
+X-Received: by 2002:a2e:7e04:0:b0:2b6:d576:a25b with SMTP id z4-20020a2e7e04000000b002b6d576a25bmr376516ljc.28.1690821767059;
+        Mon, 31 Jul 2023 09:42:47 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id k15-20020a2e240f000000b002b70a8478ddsm2629932ljk.44.2023.07.31.09.42.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 09:41:40 -0700 (PDT)
-Message-ID: <afccb93b-2db8-97bb-1746-ac78c850b61f@linaro.org>
-Date:   Mon, 31 Jul 2023 18:41:38 +0200
+        Mon, 31 Jul 2023 09:42:46 -0700 (PDT)
+Message-ID: <c68358a7-ee21-2d0a-71ab-cd1f9a3e1afe@linaro.org>
+Date:   Mon, 31 Jul 2023 19:42:46 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] Adreno QoL changes
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 00/14] A7xx support
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -115,13 +84,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.06.2023 13:10, Konrad Dybcio wrote:
-> This series brings some niceties in preparation for A7xx introduction.
+On 28/06/2023 23:35, Konrad Dybcio wrote:
+> This series attempts to introduce Adreno 700 support (with A730 and A740
+> found on SM8450 and SM8550 respectively), reusing much of the existing
+> A6xx code. This submission largely lays the groundwork for expansion and
+> more or less gives us feature parity (on the kernel side, that is) with
+> existing A6xx parts.
 > 
-> It should be fully independent of the GMU wrapper series.
+> On top of introducing a very messy set of three (!) separate and
+> obfuscated deivce identifiers for each 7xx part, this generation
+> introduces very sophisticated hardware multi-threading and (on some SKUs)
+> hardware ray-tracing (not supported yet).
+> 
+> After this series, a long-overdue cleanup of drm/msm/adreno is planned
+> in preparation for adding more features and removing some hardcoding.
+> 
+> The last patch is a hack that may or may not be necessary depending
+> on your board's humour.. eh.. :/
+> 
+> Developed atop (and hence depends on) [1]
+> 
+> The corresponding devicetree patches are initially available at [2] and
+> will be posted after this series gets merged. To test it, you'll also need
+> firmware that you need to obtain from your board (there's none with a
+> redistributable license, sorry..). Most likely it will be in one of
+> these directories on your stock android installation:
+> 
+> * /vendor/firmware
+> * /vendor/firmware_mnt
+> * /system
+> 
+> ..but some vendors make it hard and you have to do some grepping ;)
+> 
+> Requires [3] to work on the userspace side. You'll almost cerainly want
+> to test it alongside Zink with a lot of debug flags (early impl), like:
+> 
+> TU_DEBUG=sysmem,nolrz,flushall,noubwc MESA_LOADER_DRIVER_OVERRIDE=zink kmscube
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org/
+> [2] https://github.com/SoMainline/linux/commits/topic/a7xx_dt
+> [3] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/23217
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Bump
+> Konrad Dybcio (14):
+>        dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
+>        dt-bindings: display/msm/gmu: Allow passing QMP handle
+>        dt-bindings: display/msm/gpu: Allow A7xx SKUs
+>        drm/msm/a6xx: Add missing regs for A7XX
+>        drm/msm/a6xx: Introduce a6xx_llc_read
+>        drm/msm/a6xx: Move LLC accessors to the common header
+>        drm/msm/a6xx: Bail out early if setting GPU OOB fails
+>        drm/msm/a6xx: Add skeleton A7xx support
+>        drm/msm/a6xx: Send ACD state to QMP at GMU resume
+>        drm/msm/a6xx: Mostly implement A7xx gpu_state
+>        drm/msm/a6xx: Add A730 support
+>        drm/msm/a6xx: Add A740 support
+>        drm/msm/a6xx: Vastly increase HFI timeout
+>        [RFC] drm/msm/a6xx: Poll for GBIF unhalt status in hw_init
+> 
+>   .../devicetree/bindings/display/msm/gmu.yaml       |  47 +-
+>   .../devicetree/bindings/display/msm/gpu.yaml       |   4 +-
+>   drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   9 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 188 ++++--
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   8 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 658 ++++++++++++++++++---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  15 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  61 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  90 ++-
+>   drivers/gpu/drm/msm/adreno/adreno_device.c         |  26 +
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   7 +-
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  24 +-
+>   drivers/gpu/drm/msm/msm_ringbuffer.h               |   2 +
+>   15 files changed, 1070 insertions(+), 124 deletions(-)
+> ---
+> base-commit: 6f9b660e9cbb30669fcfec83288d527c0844717d
+> change-id: 20230628-topic-a7xx_drmmsm-123f30d76cf7
 
-Konrad
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
+
+-- 
+With best wishes
+Dmitry
+
