@@ -2,70 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2470C7692AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 12:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 401297693A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 12:54:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232469AbjGaKEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 06:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44844 "EHLO
+        id S231504AbjGaKyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 06:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230071AbjGaKEB (ORCPT
+        with ESMTP id S231701AbjGaKxY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 06:04:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2602DE66;
-        Mon, 31 Jul 2023 03:03:29 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V6u0gk019759;
-        Mon, 31 Jul 2023 10:03:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=lHj200xUWzB9ScNLTZFvgOL1igTkoipGFcIhVNd/yHY=;
- b=O614T2VKiSfha3diML3A3d5hRoWvp/xTDyDYvaQsiXALfYUZl3B7uXCF4l9c5OwDtapl
- 4S+t5SxllzCgR0ZWB4KkZF6Qts9mD5Q26xqgLVE2kwOPlVBhTHTdFEiav75JjavA52Pt
- M5gxfpMW4m/anrDFznl4J4R/h5AwvUoMG0FU9vpJWbx5bwDqbG9yOCTyKbsFJg3353Hy
- Yz9QGMUZkCwCZrp9pxE5bgAh0gEGRR3XfZRJtCFmmSZKZOyyAi7i+n8pAWXnhggPrNqa
- 0KoNneyarX8yhRjnT2vj5gK3WPZvrXnZ3x4Cd+Ap3shDxNdxGQFGAY9tOMpRX6pukXsA Gw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4ugsb81j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 10:03:25 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36VA3OdI000556
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 10:03:24 GMT
-Received: from hu-ipkumar-blr.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 31 Jul 2023 03:03:21 -0700
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_clew@quicinc.com>
-Subject: [PATCH v2] soc: qcom: qmi_encdec: Restrict string length in decode
-Date:   Mon, 31 Jul 2023 15:33:11 +0530
-Message-ID: <20230731100311.2506271-1-quic_ipkumar@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+        Mon, 31 Jul 2023 06:53:24 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC981725
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 03:52:28 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe28e4671dso2547706e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 03:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690800747; x=1691405547;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6y2HGow0UXdyse/6wVlFKmRzD523dhwnJrMfi/SezFc=;
+        b=dicBxOFztkZvNgc13QHF7Eu2TRn50ntAR8oLYD74do1Oy43e5KGbV8muj5ay70dzWA
+         QAEanZ9rbfrwFW4CWqCzKIJA/zg20tt5aDVbiUrJhktjaRG3XsDWMfKBQ+duSpIWgcNb
+         FhBE7fWNc0huQMCHtt5RK4QkSmFwXsc5IVA8azVfGsLKS5cuTKfmQ21183VkMk8KJ0tc
+         auABOwQCDNMKdryalEhOGrvOUwtVsvuY8b3veYP2/8TZfM/ltT8XJ88GbS3RnmZZ2Aa/
+         akdw4f8jiZmjI/bfqQYDNegR6SQ1yJgf4SrVA4w73KW4SnOVpJJZbeP2vQIli3uTNSJ4
+         +0Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690800747; x=1691405547;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6y2HGow0UXdyse/6wVlFKmRzD523dhwnJrMfi/SezFc=;
+        b=bBngkYMqfTf8qVseqn0d4Gqvqrk8pth621l3v87ap3Cz0ianwaG0iBLO1PbGYJyMuG
+         4/trkDeX1kKkCURyLxMuGGVxZNtSdt20jACGPRF8WeGwhPlYv9QqN6jo4M4Gzsb929Ez
+         KKQlOWcomUYaOHPk1/UoqhGLaEu/6otZ/DNB83j5z+cQUwK0fWLuroOfqlAi16OkZFTh
+         082VtjOKjcXG06NVAfAv/ECwNymAvJk/WRrycv5ugWCq105g6xnpuKwwc2g0sVwm1vS1
+         wsPKLS4zMCTn1Z/PEnP/HQZeLJp/yHw+X1fZAYJJmTXyvuKXOwrXhZ2Rl0Pj8A4LCpCe
+         GG9g==
+X-Gm-Message-State: ABy/qLaCE5Qgsm4xks2RAzaj7/2xzuJcvuqy29oQmGPCpVa+kBI50o8h
+        tsyF6dyx3Rzg12fX2KiHYiGUzg==
+X-Google-Smtp-Source: APBJJlGCBLtBb+6/NoezgE/OIZ6IHW8KjOuAVGRXZ7G6acDHXAXQ8Un9F22hRaXaDCMKsZs3p5R0bA==
+X-Received: by 2002:a19:4f53:0:b0:4fb:e06f:4cf0 with SMTP id a19-20020a194f53000000b004fbe06f4cf0mr5198142lfk.19.1690800747019;
+        Mon, 31 Jul 2023 03:52:27 -0700 (PDT)
+Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
+        by smtp.gmail.com with ESMTPSA id p13-20020a05651238cd00b004fdc7ec5cbesm2016936lft.300.2023.07.31.03.52.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jul 2023 03:52:26 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 00/10] Fix up icc clock rate calculation on some
+ platforms
+Date:   Mon, 31 Jul 2023 12:52:16 +0200
+Message-Id: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yDC6TVQywrsusQDxnR9vIZyf2ulIWTbq
-X-Proofpoint-GUID: yDC6TVQywrsusQDxnR9vIZyf2ulIWTbq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-31_03,2023-07-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
- spamscore=0 priorityscore=1501 mlxscore=0 impostorscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307310090
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGCSx2QC/3WN0QqDIBRAfyXu8xxqy9We9h8jhprWhdC4ttgI/
+ 32u9z2eA4ezQ3KELsGt2oHchgljKCBPFdhJh9ExHAqD5LLmV6nYGhe0DK192ui8Z4Y39dBceGc
+ 6D6UyOjlmSAc7lS685rnIhZzH97F59IUnTGukz3HdxM/+H2yCcVYLJVSneCtae58xaIrnSCP0O
+ ecvX3hDisQAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690800744; l=2187;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=MEmn4TdMUY6cSwKTGP5pVayS+gxapd+/H71puYX2uDk=;
+ b=ppBEsnQzWYp0eimMdNSsp7hopNJK1hTAlo24R0kur3MbFhPwsMLKVdOCStEvXTt7mmha79K3p
+ n50T1nTeLiQAo/g6tMPtQmeYVr/6KWSe+euAXXKTodreeoKmDJ5GJcV
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,37 +88,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The QMI TLV value for strings in a lot of qmi element info structures
-account for null terminated strings with MAX_LEN + 1. If a string is
-actually MAX_LEN + 1 length, this will cause an out of bounds access
-when the NULL character is appended in decoding.
+Certain platforms require that some buses (or individual nodes) make
+some additional changes to the clock rate formula, throwing in some
+magic, Qualcomm-defined coefficients, to account for "inefficiencies".
 
-Fixes: 9b8a11e82615 ("soc: qcom: Introduce QMI encoder/decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+Add the framework for it and utilize it on a couple SoCs.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-[v2]:
-	Added Fixes and Cc: stable
+Changes in v2:
+- Use the (arguably less favourable but necessary for precission) 100/x
+  instead of x/100 for ib coefficient, update values in consequent
+  patches to reflect that
+- Rename "_percent" to "_coeff" because of /\
+- Add the necessary code to support per-node clocks
+- Add the necessary code to support per-node coefficients
+- Hook up the CPUSS<->GNoC clock on QCM2290
+- Update EBI node on QCM2290
+- Link to v1: https://lore.kernel.org/r/20230726-topic-icc_coeff-v1-0-31616960818c@linaro.org
 
- drivers/soc/qcom/qmi_encdec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+---
+Konrad Dybcio (10):
+      interconnect: qcom: icc-rpm: Add AB/IB calculations coefficients
+      interconnect: qcom: icc-rpm: Separate out clock rate calulcations
+      interconnect: qcom: icc-rpm: Let nodes drive their own bus clock
+      interconnect: qcom: icc-rpm: Check for node-specific rate coefficients
+      interconnect: qcom: qcm2290: Hook up MAS_APPS_PROC's bus clock
+      interconnect: qcom: qcm2290: Set AB coefficients
+      interconnect: qcom: qcm2290: Update EBI channel configuration
+      interconnect: qcom: sdm660: Set AB/IB coefficients
+      interconnect: qcom: msm8996: Set AB/IB coefficients
+      clk: qcom: smd-rpm: Move CPUSS_GNoC clock to interconnect
 
-diff --git a/drivers/soc/qcom/qmi_encdec.c b/drivers/soc/qcom/qmi_encdec.c
-index b7158e3c3a0b..5c7161b18b72 100644
---- a/drivers/soc/qcom/qmi_encdec.c
-+++ b/drivers/soc/qcom/qmi_encdec.c
-@@ -534,8 +534,8 @@ static int qmi_decode_string_elem(const struct qmi_elem_info *ei_array,
- 		decoded_bytes += rc;
- 	}
- 
--	if (string_len > temp_ei->elem_len) {
--		pr_err("%s: String len %d > Max Len %d\n",
-+	if (string_len >= temp_ei->elem_len) {
-+		pr_err("%s: String len %d >= Max Len %d\n",
- 		       __func__, string_len, temp_ei->elem_len);
- 		return -ETOOSMALL;
- 	} else if (string_len > tlv_len) {
+ drivers/clk/qcom/clk-smd-rpm.c             | 16 ++++--
+ drivers/interconnect/qcom/icc-rpm-clocks.c |  6 ++
+ drivers/interconnect/qcom/icc-rpm.c        | 92 ++++++++++++++++++++++++------
+ drivers/interconnect/qcom/icc-rpm.h        | 15 +++++
+ drivers/interconnect/qcom/msm8996.c        |  8 ++-
+ drivers/interconnect/qcom/qcm2290.c        |  9 ++-
+ drivers/interconnect/qcom/sdm660.c         |  4 ++
+ 7 files changed, 124 insertions(+), 26 deletions(-)
+---
+base-commit: ec89391563792edd11d138a853901bce76d11f44
+change-id: 20230726-topic-icc_coeff-b053d5409b9f
+
+Best regards,
 -- 
-2.34.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
