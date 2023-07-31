@@ -2,107 +2,336 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29C9176A2CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 23:31:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC51D76A2DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 23:33:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231384AbjGaVbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 17:31:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45584 "EHLO
+        id S229687AbjGaVdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 17:33:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231386AbjGaVaq (ORCPT
+        with ESMTP id S231334AbjGaVca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 17:30:46 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5820319A4;
-        Mon, 31 Jul 2023 14:30:18 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36VLTKU1015630;
-        Mon, 31 Jul 2023 21:30:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Up7tl0qt0HQUQxtc3m8aLw88GzHGZyI41BmbxGn0+Rg=;
- b=cmRZWd4Tbdo17n3fEThbWNC6DPhf/oiVdrmw2DVE9HK0jIMYNOuTxzvy649wwkCKQ1j7
- G9vkKTCuC0gYD3eypgC7nod/BxnxdbeW2odp1qYuI26AtBznXmrS8+PDaXV/ppofdQ+p
- uO0ryC66a8xKRWhsOU+14zPsGAba6b6WhroWIlp/E2Ib58UFYpTX0MLOkH6SixXlAk4F
- ct7ihkaMscpqu1wv+DzcjHzTdofR9Jh/rYV9K0YQw2XaXuVcmVLl05pHT0GZg9REm2W+
- UxkVzTREFwgSNLWrHSM44DJ9NVVBChwJDk967m/Hg7E/w7UIPj7CjyN+23KX0TMEum0V Dw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6fak8qcm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 21:30:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36VLUAED016647
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 21:30:10 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
- 2023 14:30:10 -0700
-Message-ID: <e4592feb-3878-b0eb-61e4-fb6dfc358e1a@quicinc.com>
-Date:   Mon, 31 Jul 2023 14:29:44 -0700
+        Mon, 31 Jul 2023 17:32:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C3F1BF9;
+        Mon, 31 Jul 2023 14:31:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9EE0D612E7;
+        Mon, 31 Jul 2023 21:31:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60922C433C8;
+        Mon, 31 Jul 2023 21:31:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690839082;
+        bh=6lP5+Cei+2goByQ2ABFk3N4PaZH64I6jAOzydkz/QyY=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=LmcG8qXoZM2ed67Z2dFJogRdJ/NwHB+d/XWKqQWCUPkXA/QLPCj7qQN/emwgnK6fv
+         3e+5rcn3qU6Ga7ddJiELPa9u6LLujs2Jmdl80RteHjjT2FikK72++qtRjXB2EOpRw2
+         3/UTQ0/R40Pqekg/Kn4dOdB52rK9kGHfhAmsudslE7Jze7uhf8Zdxz+hJCL/VO5DXm
+         7HNIaLER8ktQ0y7iDvKsxmIxHwb1/GpAI4AzdoS4x5g3ZIwvav6c9ZyMED6iwq6Zwy
+         7y2LJTWdxLg3hQlJMgKysq0aJMKkGfVChen65n60N6ULzjLTxx64jIRgEO81cDDczo
+         octOy7lLcJcOg==
+Message-ID: <defaff1f-af76-8b02-8d23-534310be16bb@kernel.org>
+Date:   Mon, 31 Jul 2023 23:31:14 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] soc: qcom: aoss: Move length requirements from caller
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Subject: Re: [PATCH 24/33] iris: vidc: add debug files
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
- <20230731041013.2950307-2-quic_bjorande@quicinc.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20230731041013.2950307-2-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     quic_dikshita@quicinc.com
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-25-git-send-email-quic_vgarodia@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <1690550624-14642-25-git-send-email-quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: roTXaohgMY-WI2SQze1t3CVll6O2G3BE
-X-Proofpoint-GUID: roTXaohgMY-WI2SQze1t3CVll6O2G3BE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-31_15,2023-07-31_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=999 priorityscore=1501 mlxscore=0 bulkscore=0
- phishscore=0 malwarescore=0 spamscore=0 clxscore=1011 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307310195
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 28/07/2023 15:23, Vikash Garodia wrote:
+> this implements the debugging framework.
+
+Your commit msgs are not helping to understand why do you need it and
+what is this doing. Based on this commit description I would ask you to
+drop most of this code as it looks useless. Extend the commit msg to
+provide proper justification and list of features each unit provides.
+
+Please do not use "This commit/patch", but imperative mood. See longer
+explanation here:
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
+
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>  .../platform/qcom/iris/vidc/inc/msm_vidc_debug.h   | 186 +++++++
+>  .../platform/qcom/iris/vidc/src/msm_vidc_debug.c   | 581 +++++++++++++++++++++
+>  2 files changed, 767 insertions(+)
+>  create mode 100644 drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_debug.h
+>  create mode 100644 drivers/media/platform/qcom/iris/vidc/src/msm_vidc_debug.c
+> 
+> diff --git a/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_debug.h b/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_debug.h
+> new file mode 100644
+> index 0000000..ffced01
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/vidc/inc/msm_vidc_debug.h
+> @@ -0,0 +1,186 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef __MSM_VIDC_DEBUG__
+> +#define __MSM_VIDC_DEBUG__
+> +
+> +#include <linux/debugfs.h>
+> +#include <linux/delay.h>
+> +#include <linux/errno.h>
+> +#include <linux/module.h>
+> +#include <linux/moduleparam.h>
+> +#include <linux/types.h>
+> +
+> +struct msm_vidc_core;
+> +struct msm_vidc_inst;
+> +
+> +#ifndef VIDC_DBG_LABEL
+> +#define VIDC_DBG_LABEL "msm_vidc"
+> +#endif
+
+Drop these three. Don't re-invent Linux kernel API.
+
+> +
+> +/* Allow only 6 prints/sec */
+> +#define VIDC_DBG_SESSION_RATELIMIT_INTERVAL (1 * HZ)
+> +#define VIDC_DBG_SESSION_RATELIMIT_BURST 6
+> +
+> +#define VIDC_DBG_TAG_INST VIDC_DBG_LABEL ": %4s: %s: "
+> +#define VIDC_DBG_TAG_CORE VIDC_DBG_LABEL ": %4s: %08x: %s: "
+> +#define FW_DBG_TAG VIDC_DBG_LABEL ": %6s: "
+> +#define DEFAULT_SID ((u32)-1)
+> +
+> +#ifndef MSM_VIDC_EMPTY_BRACE
+> +#define MSM_VIDC_EMPTY_BRACE {},
+
+That's the funniest code I saw since some time.
+
+> +#endif
+> +
+> +extern unsigned int msm_vidc_debug;
+
+Nope.
+
+> +extern unsigned int msm_fw_debug;
+
+Nope.
+
+> +extern bool msm_vidc_fw_dump;
+
+Nope.
+
+> +
+> +/* do not modify the log message as it is used in test scripts */
+> +#define FMT_STRING_SET_CTRL \
+> +	"%s: state %s, name %s, id 0x%x value %d\n"
+> +#define FMT_STRING_STATE_CHANGE \
+> +	"%s: state changed to %s from %s\n"
+> +#define FMT_STRING_MSG_SFR \
+> +	"SFR Message from FW: %s\n"
+> +#define FMT_STRING_FAULT_HANDLER \
+> +	"%s: faulting address: %lx\n"
+> +#define FMT_STRING_SET_CAP \
+> +	"set cap: name: %24s, cap value: %#10x, hfi: %#10llx\n"
+> +
+> +/* To enable messages OR these values and
+> + * echo the result to debugfs file.
+> + *
+> + * To enable all messages set msm_vidc_debug = 0x101F
+> + */
+> +
+> +enum vidc_msg_prio_drv {
+> +	VIDC_ERR        = 0x00000001,
+> +	VIDC_HIGH       = 0x00000002,
+> +	VIDC_LOW        = 0x00000004,
+> +	VIDC_PERF       = 0x00000008,
+> +	VIDC_PKT        = 0x00000010,
+> +	VIDC_BUS        = 0x00000020,
+> +	VIDC_STAT       = 0x00000040,
+> +	VIDC_ENCODER    = 0x00000100,
+> +	VIDC_DECODER    = 0x00000200,
+> +	VIDC_PRINTK     = 0x10000000,
+> +	VIDC_FTRACE     = 0x20000000,
+> +};
+> +
+> +enum vidc_msg_prio_fw {
+> +	FW_LOW          = 0x00000001,
+> +	FW_MED          = 0x00000002,
+> +	FW_HIGH         = 0x00000004,
+> +	FW_ERROR        = 0x00000008,
+> +	FW_FATAL        = 0x00000010,
+> +	FW_PERF         = 0x00000020,
+> +	FW_CACHE_LOW    = 0x00000100,
+> +	FW_CACHE_MED    = 0x00000200,
+> +	FW_CACHE_HIGH   = 0x00000400,
+> +	FW_CACHE_ERROR  = 0x00000800,
+> +	FW_CACHE_FATAL  = 0x00001000,
+> +	FW_CACHE_PERF   = 0x00002000,
+> +	FW_PRINTK       = 0x10000000,
+> +	FW_FTRACE       = 0x20000000,
+> +};
+> +
+> +#define DRV_LOG        (VIDC_ERR | VIDC_PRINTK)
+> +#define DRV_LOGSHIFT   (0)
+> +#define DRV_LOGMASK    (0x0FFFFFFF)
+> +
+> +#define FW_LOG         (FW_ERROR | FW_FATAL | FW_PRINTK)
+> +#define FW_LOGSHIFT    (0)
+> +#define FW_LOGMASK     (0x0FFFFFFF)
+> +
+> +#define dprintk_inst(__level, __level_str, inst, __fmt, ...) \
+> +	do { \
+> +		if (inst && (msm_vidc_debug & (__level))) { \
+> +			pr_info(VIDC_DBG_TAG_INST __fmt, \
+> +				__level_str, \
+> +				inst->debug_str, \
+> +				##__VA_ARGS__); \
+> +		} \
+> +	} while (0)
+> +
+> +#define i_vpr_e(inst, __fmt, ...) dprintk_inst(VIDC_ERR,  "err ", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_i(inst, __fmt, ...) dprintk_inst(VIDC_HIGH, "high", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_h(inst, __fmt, ...) dprintk_inst(VIDC_HIGH, "high", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_l(inst, __fmt, ...) dprintk_inst(VIDC_LOW,  "low ", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_p(inst, __fmt, ...) dprintk_inst(VIDC_PERF, "perf", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_t(inst, __fmt, ...) dprintk_inst(VIDC_PKT,  "pkt ", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_b(inst, __fmt, ...) dprintk_inst(VIDC_BUS,  "bus ", inst, __fmt, ##__VA_ARGS__)
+
+NAK for entire interface. Please use standard debugging functions, not
+pr_info for everything.
+
+dev_dbg, dev_info, dev_warn, dev_err. Only these.
 
 
-On 7/30/2023 9:10 PM, Bjorn Andersson wrote:
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
->   	/* The message RAM only implements 32-bit accesses */
->   	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
-> -			 data, len / sizeof(u32));
-> -	writel(len, qmp->msgram + qmp->offset);
-> +			 buf, sizeof(buf) / sizeof(u32));
-> +	writel(sizeof(buf), qmp->msgram + qmp->offset);
->   
+> +#define i_vpr_s(inst, __fmt, ...) dprintk_inst(VIDC_STAT, "stat", inst, __fmt, ##__VA_ARGS__)
+> +
+> +#define i_vpr_hp(inst, __fmt, ...) \
+> +	dprintk_inst(VIDC_HIGH | VIDC_PERF, "high", inst, __fmt, ##__VA_ARGS__)
+> +#define i_vpr_hs(inst, __fmt, ...) \
+> +	dprintk_inst(VIDC_HIGH | VIDC_STAT, "stat", inst, __fmt, ##__VA_ARGS__)
+> +> +#define dprintk_core(__level, __level_str, __fmt, ...) \
 
-Looks like we are telling the firmware the packet size will always be 
-QMP_MSG_LEN?
+NAK
 
-This should be ok but might be a problem when debugging. The AOSS 
-firmware only logs size of the message instead of the full string 
-because of memory constraints.
+> +	do { \
+> +		if (msm_vidc_debug & (__level)) { \
+> +			pr_info(VIDC_DBG_TAG_CORE __fmt, \
+> +				__level_str, \
+> +				DEFAULT_SID, \
+> +				"codec", \
+> +				##__VA_ARGS__); \
+> +		} \
+> +	} while (0)
+> +
+> +#define d_vpr_e(__fmt, ...) dprintk_core(VIDC_ERR,  "err ", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_h(__fmt, ...) dprintk_core(VIDC_HIGH, "high", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_l(__fmt, ...) dprintk_core(VIDC_LOW,  "low ", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_p(__fmt, ...) dprintk_core(VIDC_PERF, "perf", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_t(__fmt, ...) dprintk_core(VIDC_PKT,  "pkt ", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_b(__fmt, ...) dprintk_core(VIDC_BUS,  "bus ", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_s(__fmt, ...) dprintk_core(VIDC_STAT, "stat", __fmt, ##__VA_ARGS__)
+> +#define d_vpr_hs(__fmt, ...) \
+> +	dprintk_core(VIDC_HIGH | VIDC_STAT, "high", __fmt, ##__VA_ARGS__)
+> +
+> +#define dprintk_ratelimit(__level, __level_str, __fmt, ...) \
+> +	do { \
+> +		if (msm_vidc_check_ratelimit()) { \
+> +			dprintk_core(__level, __level_str, __fmt, ##__VA_ARGS__); \
+> +		} \
+> +	} while (0)
+> +
+> +#define dprintk_firmware(__level, __fmt, ...)	\
+> +	do { \
+> +		if ((msm_fw_debug & (__level)) & FW_PRINTK) { \
+> +			pr_info(FW_DBG_TAG __fmt, \
+> +				"fw", \
+> +				##__VA_ARGS__); \
+> +		} \
+> +	} while (0)
+> +
+> +enum msm_vidc_debugfs_event {
+> +	MSM_VIDC_DEBUGFS_EVENT_ETB,
+> +	MSM_VIDC_DEBUGFS_EVENT_EBD,
+> +	MSM_VIDC_DEBUGFS_EVENT_FTB,
+> +	MSM_VIDC_DEBUGFS_EVENT_FBD,
+> +};
+> +
+> +enum msm_vidc_bug_on_error {
+> +	MSM_VIDC_BUG_ON_FATAL             = BIT(0),
+> +	MSM_VIDC_BUG_ON_NOC               = BIT(1),
+> +	MSM_VIDC_BUG_ON_WD_TIMEOUT        = BIT(2),
+> +};
+> +
+> +struct dentry *msm_vidc_debugfs_init_drv(void);
+> +struct dentry *msm_vidc_debugfs_init_core(struct msm_vidc_core *core);
+> +struct dentry *msm_vidc_debugfs_init_inst(struct msm_vidc_inst *inst,
+> +					  struct dentry *parent);
+> +void msm_vidc_debugfs_deinit_inst(struct msm_vidc_inst *inst);
+> +void msm_vidc_debugfs_update(struct msm_vidc_inst *inst,
+> +			     enum msm_vidc_debugfs_event e);
+> +int msm_vidc_check_ratelimit(void);
+> +
+> +static inline bool is_stats_enabled(void)
+> +{
+> +	return !!(msm_vidc_debug & VIDC_STAT);
 
-We would normally match the firmware and host logs based on size, but 
-won't be able to differentiate this way with a fixed size.
+...
+
+> +struct dentry *msm_vidc_debugfs_init_core(struct msm_vidc_core *core)
+> +{
+> +	struct dentry *dir = NULL;
+> +	char debugfs_name[MAX_DEBUGFS_NAME];
+> +	struct dentry *parent;
+> +
+> +	if (!core->debugfs_parent) {
+> +		d_vpr_e("%s: invalid params\n", __func__);
+> +		goto failed_create_dir;
+> +	}
+> +	parent = core->debugfs_parent;
+> +
+> +	snprintf(debugfs_name, MAX_DEBUGFS_NAME, "core");
+> +	dir = debugfs_create_dir(debugfs_name, parent);
+> +	if (IS_ERR_OR_NULL(dir)) {
+> +		dir = NULL;
+> +		d_vpr_e("Failed to create debugfs for msm_vidc\n");
+> +		goto failed_create_dir;
+> +	}
+> +	if (!debugfs_create_file("info", 0444, dir, core, &core_info_fops)) {
+> +		d_vpr_e("debugfs_create_file: fail\n");
+> +		goto failed_create_dir;
+> +	}
+> +
+> +	if (!debugfs_create_file("stats_delay_ms", 0644, dir, core, &stats_delay_fops)) {
+> +		d_vpr_e("debugfs_create_file: fail\n");
+
+
+What is this entire debugfs supposed to provide?
+
+
+
+Best regards,
+Krzysztof
+
