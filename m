@@ -2,77 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E04907693F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 12:59:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EC8F769412
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 13:01:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231318AbjGaK7B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 06:59:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44628 "EHLO
+        id S229669AbjGaLBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 07:01:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230494AbjGaK6i (ORCPT
+        with ESMTP id S230059AbjGaLBv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 06:58:38 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138461B8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 03:58:13 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe383c1a26so1069529e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 03:58:12 -0700 (PDT)
+        Mon, 31 Jul 2023 07:01:51 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856C8188
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 04:01:45 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe383c1a26so1076476e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 04:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690801091; x=1691405891;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rfVD0ReDE+afeEDVkr9DHXfR2daYWUMok3vB8NkGUyU=;
-        b=Rf3TvuUi8pvwXHXz8Wm6gSl0rG295QSKN8I5i52/5kgG67fhgcsPRx4DFDLyOs88cS
-         PMLt0TFKTrjVneyoXA6FueAo6mnfp8RSff5mrG+GFK8tdh7wCIxKnikgm7M85knjooC1
-         5XjL2EDbqdXM/8ZylXJP+nHwOXbMno2dUa4eVrPb5B++J+INsDJuINvvM9aw3yeuMdI2
-         FMU8KunFFxUSa70j4x2Jbomf+anQ91M6Euy+M+66MkwRQ83a7cPZIJxQifMn6LoMmHrP
-         M+8AofN9k/SRtYe6IyJpFKlb2rr6upLNPQzR7LrElx4PaXwDvNdUBOhj2/JOWtU16nWi
-         9v3g==
+        d=linaro.org; s=google; t=1690801304; x=1691406104;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LW5VB7qFVO9sNI/Xk6NRtf7lETmgtQbluRtmgiCSPs0=;
+        b=lXdvBOO7c8AfHI2MkFwa1f9eQSD1yDK7rTQVm0DA3+VKvkyGHPgdll4Qipml6e+rTF
+         +eUMF6R4902ZS83ccNONjDMZwW6qNVlHd3hzpTtFvek/+dvgSyN23CkqaH189upmFBBm
+         xi6/+te9H3SATz9AbuqB7g9pOmWNVwnLzVlk+q6mXq2m2fvSgd9bpZxS98awi5TeVNPl
+         FWu4/or+i/WeOrT1y8t9UEXCLu+VFja4PTdLhKSiPCMu8Ytd5J3hDjalh+Lt+l17U/7d
+         veJg5mx3QnAu/fRvaQbkNU0sZM2okVsxtjZpyjqXs766NyAGJ6EAmwF3cfUm1PYJUHbf
+         VCVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690801091; x=1691405891;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rfVD0ReDE+afeEDVkr9DHXfR2daYWUMok3vB8NkGUyU=;
-        b=MDWBbGbtLNZQm7TJBD/bNZMP7KY5uttzemt2d3ThpbX7EO7zWbAPeIn7NqDcgxaDiG
-         nFSHrKPozhFzFG+3/7/YxpaDRgsdtOP/6sFDNHQ43WCUC3nGSZ/hdw4PkV6zpjeDkY6K
-         i1d0wHFLuzQuM6bcn1oa2Cm29Ry2SCcfbTNKRDhU53CN8H5K5ndUi/cixZwhx1ZYryYA
-         pTgWkd9sY7qvmaM+QY4Lt/W+sS+VQ3O9DRpo+M78ggKi0TRzprVmDQFiucdBmZq+5lP0
-         grWIxq94ZWHOCnU6PTnM/rvJpdtVVX/uczuUi/VkjxM5QJ3oWvLlKJdHEdV29OSqaJ8d
-         uWxg==
-X-Gm-Message-State: ABy/qLaI7pqLKJhZidwjgmbyfAT4zYTx0KNxZiYspsa3nTiYMmf5+RmG
-        /16r3xtwAbsaI7pStA1bwo/MuIY2dcrSCavM/ls=
-X-Google-Smtp-Source: APBJJlGgXXnYuz6h6j5X73uGOl6giTP3wtGeaYMpIBgspE96MyJd6VIcEAI24qlCeSyu7kmwU3IsZw==
-X-Received: by 2002:a05:6512:5ca:b0:4fe:3724:fdb1 with SMTP id o10-20020a05651205ca00b004fe3724fdb1mr1224698lfo.41.1690801091216;
-        Mon, 31 Jul 2023 03:58:11 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c19-20020ac24153000000b004fb9fe34c27sm2025497lfi.92.2023.07.31.03.58.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jul 2023 03:58:10 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 13/13] ARM: dts: qcom-sdx55: switch PCIe QMP PHY to new style of bindings
-Date:   Mon, 31 Jul 2023 13:57:59 +0300
-Message-Id: <20230731105759.3997549-14-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230731105759.3997549-1-dmitry.baryshkov@linaro.org>
-References: <20230731105759.3997549-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1690801304; x=1691406104;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LW5VB7qFVO9sNI/Xk6NRtf7lETmgtQbluRtmgiCSPs0=;
+        b=JgHPTkfjvTPo8z3LvgicaSOKGz8ydz1AmQK3iKoVTzSYeNShQsR8BSV7vDx09YyU9s
+         EcO6YgKB+OIqhJeDNNKLec5HnAVz7gV2Tl1vVL34vudSbAHGHNcSwa2kXDN6f3fIZV15
+         PEETs6m878kutFMnhux7x24qB2YRM7/hb2fSyy3kE34RL/ks/+StNj93Zpx5PmzKqc8/
+         lng9KTKkCB7YC/WZQJf4iAqZU02X4Sf0o6aN04ciuhytFNKOhYzdLmeWKlFu56WVbHMP
+         ogpauQveuDIWFzosuAQs+vWditUhUnZwBamQq+qg262iOInQoC77sWP0JiSOUNfo41yd
+         Myiw==
+X-Gm-Message-State: ABy/qLY1LqQfbfVNN4K2f6to2DRybOE1gbwMjXk+iNZ32mpS2YhCrTmy
+        5V5NFJCnWws2c6ZrekU9d5JAxQ==
+X-Google-Smtp-Source: APBJJlEi4EXjtuy8Ky+SAZvAP9BlSHnxtEorHuvm3tDq5FiVPqwVmE53O96mBn07kMMaoyivnBoa5Q==
+X-Received: by 2002:ac2:4da5:0:b0:4fb:85ad:b6e2 with SMTP id h5-20020ac24da5000000b004fb85adb6e2mr4694600lfe.50.1690801303712;
+        Mon, 31 Jul 2023 04:01:43 -0700 (PDT)
+Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
+        by smtp.gmail.com with ESMTPSA id r12-20020ac252ac000000b004fb7ac67bbdsm2045292lfm.41.2023.07.31.04.01.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Jul 2023 04:01:43 -0700 (PDT)
+Message-ID: <0ca1922a-5d21-2c00-7514-6f90a9d2cb03@linaro.org>
+Date:   Mon, 31 Jul 2023 13:01:41 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-msm8996: Use read-only RCG ops for RPM
+ bus clocks
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+References: <20230612-topic-rcg2_ro-v1-0-e7d824aeb628@linaro.org>
+ <20230612-topic-rcg2_ro-v1-2-e7d824aeb628@linaro.org>
+ <20230613175626.aesimqz2alcqjtok@ripper>
+ <e3f69e9d-7c23-d5cd-e203-f1e435ba063a@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <e3f69e9d-7c23-d5cd-e203-f1e435ba063a@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,86 +118,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the PCIe QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+On 13.06.2023 19:54, Konrad Dybcio wrote:
+> 
+> 
+> On 13.06.2023 19:56, Bjorn Andersson wrote:
+>> On Mon, Jun 12, 2023 at 11:22:48AM +0200, Konrad Dybcio wrote:
+>>> The config/periph/system NoC clocks are wholly controlled by the
+>>> RPM firmware and Linux should never ever alter their configuration.
+>>>
+>>
+>> Does Linux need to know about them?
+> Not really, but it allows us to get rates of their children.
+> 
+> We can get rid of them if one can argue debugcc is enough. Unless
+> we need clk_get_rate for some reason.
+> 
+Any opinions?
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-sdx55.dtsi | 31 ++++++++++----------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-index 55ce87b75253..4b0039ccd0da 100644
---- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-@@ -379,7 +379,7 @@ pcie_rc: pcie@1c00000 {
- 
- 			power-domains = <&gcc PCIE_GDSC>;
- 
--			phys = <&pcie_lane>;
-+			phys = <&pcie_phy>;
- 			phy-names = "pciephy";
- 
- 			status = "disabled";
-@@ -428,7 +428,7 @@ pcie_ep: pcie-ep@1c00000 {
- 			resets = <&gcc GCC_PCIE_BCR>;
- 			reset-names = "core";
- 			power-domains = <&gcc PCIE_GDSC>;
--			phys = <&pcie_lane>;
-+			phys = <&pcie_phy>;
- 			phy-names = "pciephy";
- 			max-link-speed = <3>;
- 			num-lanes = <2>;
-@@ -438,18 +438,25 @@ pcie_ep: pcie-ep@1c00000 {
- 
- 		pcie_phy: phy@1c07000 {
- 			compatible = "qcom,sdx55-qmp-pcie-phy";
--			reg = <0x01c07000 0x1c4>;
-+			reg = <0x01c07000 0x2000>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
- 			clocks = <&gcc GCC_PCIE_AUX_PHY_CLK_SRC>,
- 				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
- 				 <&gcc GCC_PCIE_0_CLKREF_CLK>,
--				 <&gcc GCC_PCIE_RCHNG_PHY_CLK>;
-+				 <&gcc GCC_PCIE_RCHNG_PHY_CLK>,
-+				 <&gcc GCC_PCIE_PIPE_CLK>;
- 			clock-names = "aux",
- 				      "cfg_ahb",
- 				      "ref",
--				      "refgen";
-+				      "refgen",
-+				      "pipe";
-+
-+			clock-output-names = "pcie_pipe_clk";
-+			#clock-cells = <0>;
-+
-+			#phy-cells = <0>;
- 
- 			resets = <&gcc GCC_PCIE_PHY_BCR>;
- 			reset-names = "phy";
-@@ -458,20 +465,6 @@ pcie_phy: phy@1c07000 {
- 			assigned-clock-rates = <100000000>;
- 
- 			status = "disabled";
--
--			pcie_lane: lanes@1c06000 {
--				reg = <0x01c06000 0x104>, /* tx0 */
--				      <0x01c06200 0x328>, /* rx0 */
--				      <0x01c07200 0x1e8>, /* pcs */
--				      <0x01c06800 0x104>, /* tx1 */
--				      <0x01c06a00 0x328>, /* rx1 */
--				      <0x01c07600 0x800>; /* pcs_misc */
--				clocks = <&gcc GCC_PCIE_PIPE_CLK>;
--				clock-names = "pipe0";
--
--				#phy-cells = <0>;
--				clock-output-names = "pcie_pipe_clk";
--			};
- 		};
- 
- 		ipa: ipa@1e40000 {
--- 
-2.39.2
-
+Konrad
