@@ -2,114 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5743C768F54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:01:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 516E1768F7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:04:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230314AbjGaIBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 04:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
+        id S231803AbjGaIEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 04:04:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjGaIBT (ORCPT
+        with ESMTP id S231846AbjGaIDt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 04:01:19 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A4A1A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:01:17 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4fe1b00fce2so5603241e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:01:17 -0700 (PDT)
+        Mon, 31 Jul 2023 04:03:49 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4F71FF0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:02:41 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so40365961fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690790476; x=1691395276;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ZJyyR5UkSIkbNzLDxUFgZlK0epBYEkLSwL7lh7NFYg=;
-        b=VJ/SH9e9NWBiMUykekdq4JoiAr+d39zotqVMF87s/c72fd2plgyJn7Z6FkRmHZCfBa
-         xHDkHp8If1EKABPpcoJ9MhUrhaAP8iecrbAszB7v9tvCJQZd0s0LbS7xOIiRPWWOVfFg
-         bFvo+QFNeV3ogUZeACUuFwWgBcV62TSuAaP9iTRgXw0tKjkAwq3/xk/z2c1ipqujHWRx
-         z2QVaJB/6XQ+C2lG7AWk0233RaloSCJSNzK7/MxzxaqKX3AA0FkcxHNEcGVTZTDsBYAJ
-         1sEnQQtRuIvsTr5JxrTpseVygKcEUDK+VrjrKi33LkHQ9zCFYvQUk/IxLhIntNqdH7Yz
-         tngg==
+        d=linaro.org; s=google; t=1690790559; x=1691395359;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MprwVZmNUV7a47mCTURUBSfMwGAKqbdXK1e5nVbgoxA=;
+        b=VwNtgQDgYrVPUchMtfZ690ZpBvW/vnFfxiXWNzOXcd8hVJM9kZOa1NnYACjMR9ct7d
+         KG8NvlOU70LrsblNBE/+X56kZsCUgkukAP97QYe6oAppHDHMFwL1L9TSgzp4CHTtXkJt
+         hDjhWkoodM+dt2FAyHYlJHqAxwUfazFKD6spNoUA5C4v5+pdbWEftNUdD1YzkKzuzOzR
+         6PgIieS07LJks8jfr0YMWpGHigMNoiRA6vmgJAg1YOICh2uSpIg1HShPDxY55rlCoZvR
+         BaxDu8kO7ufs5ZhIcIufRxsMkHN4LiWvUDiEVfelP1RLzjRLsU+u2Jw01keIVRRLPXSg
+         Mlwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690790476; x=1691395276;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4ZJyyR5UkSIkbNzLDxUFgZlK0epBYEkLSwL7lh7NFYg=;
-        b=G5nEwnouKy9WiPZuOeIcx3ecAU6cYHOv4MLhW/WPk9HEJ5HJ07qt2cULBYkS1XV1df
-         fDwYNXvT5LIGMgoOoVZm8iIIIGlwPGIWO7REo1hmiEwYG+lvhjgJ9Jqml7eSIKBcW/P1
-         gos153mFf1u8jV5xYC4WwftNitwa/fIObdfb3iW6JAvL/MEXHSCrTPiDmXiTtqpJqCI0
-         jfH5eLgGLW0Id3GD1T+jmd98wHuVB5txfzTmghcH5bccTIp3uzuZa4jN5nGIikHuuzVp
-         qYXb/iWFVD2KD+3/NxnMXPDyAsBUXNMJFKyIgUl6m0o6b1ma99fWdZ9nNL+tMQmmjkq0
-         pKOQ==
-X-Gm-Message-State: ABy/qLY+2LNoUaYRuBATcoeB62gCIqblXzZY/MKonNbnIbzwo8ptzNEa
-        uSSOeh6kx9o7goLreGc3j0t9tA==
-X-Google-Smtp-Source: APBJJlESbSBGLmVFVtV6llF+oXx5bVANgdysF302QO3LesDU3K/q98qUm/j8zIJQ8B95pKOad1n4Sw==
-X-Received: by 2002:a19:7b1e:0:b0:4fd:8976:5fc9 with SMTP id w30-20020a197b1e000000b004fd89765fc9mr4679184lfc.23.1690790475974;
-        Mon, 31 Jul 2023 01:01:15 -0700 (PDT)
-Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id y7-20020ac24207000000b004fbc6a8ad08sm1971878lfh.306.2023.07.31.01.01.14
+        d=1e100.net; s=20221208; t=1690790559; x=1691395359;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MprwVZmNUV7a47mCTURUBSfMwGAKqbdXK1e5nVbgoxA=;
+        b=NYAl95kQ4d1eBgPSKDY4U3IJDhGpbJjtxjvvCGfiLI+WZccSa4YZBbB/mha7qDH5cQ
+         kOsyGdHgM6mgPqLL/yoP1nQF2BpAiLk2XQAAOxka17UrK67VFJUuXIDEvye5dB6H6/Qg
+         rRG7sUod904KQpZP+qxKRfTOwd2wMhhwFUoA69+0FIzrqXMLdB7qlgFizqMQyIGOxWgJ
+         mZ+pTuDt1deWg9YVmQcek1LKz1LKLjn5K39IWkyz6M72H/XhElULa1E2u0tLoSpOoSsg
+         UhC56Bhww4RaSDGEMUwj3AepBsVEmXa7gnDSLFLcukMygBVRVx8d2ueOCFQ40sgrnope
+         LUMA==
+X-Gm-Message-State: ABy/qLZv978Zd22JVMPK+2/PXm4vCxtXvY9Qhx39fsNFZE+rZc81O/jI
+        3gA/1WP26KkH/Q3cVRbtgGMw2A==
+X-Google-Smtp-Source: APBJJlGllSTwLHwrGgtsMnNsjbPWLnX9k2/UY2kzBkmdnksg2maL9QuCt0nuQECpBFBej1dpvYOMOg==
+X-Received: by 2002:a2e:904e:0:b0:2b9:ec57:c330 with SMTP id n14-20020a2e904e000000b002b9ec57c330mr1167125ljg.7.1690790559168;
+        Mon, 31 Jul 2023 01:02:39 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.183])
+        by smtp.gmail.com with ESMTPSA id h15-20020a1709063c0f00b009929ab17be0sm5799358ejg.162.2023.07.31.01.02.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 01:01:15 -0700 (PDT)
-Message-ID: <13c78778-cb27-d29e-6f7e-74ddcd9f635a@linaro.org>
-Date:   Mon, 31 Jul 2023 10:01:14 +0200
+        Mon, 31 Jul 2023 01:02:38 -0700 (PDT)
+Message-ID: <dc327138-0fc2-0766-0d86-08977b07fb76@linaro.org>
+Date:   Mon, 31 Jul 2023 10:02:36 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-e5: Add touchscreen
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230730025315.8579-1-linmengbo0689@protonmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Subject: Re: [PATCH v3 5/8] dt-bindings: arm: qcom,ids: Adjust the position of
+ QCOM_ID_QDU1010
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230730025315.8579-1-linmengbo0689@protonmail.com>
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230731061325.26431-1-quic_tengfan@quicinc.com>
+ <20230731061325.26431-6-quic_tengfan@quicinc.com>
+ <981a79ee-5258-eb76-020a-765f5f39866f@linaro.org>
+ <53132580-53b6-06bc-8b48-51a3f56ab71d@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <53132580-53b6-06bc-8b48-51a3f56ab71d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -117,33 +84,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.07.2023 04:55, Lin, Meng-Bo wrote:
-> Similar to A5, E5 uses a Melfas MMS345L touchscreen that is connected to
-> blsp_i2c5. Add it to the device tree.
+On 31/07/2023 09:21, Tengfei Fan wrote:
 > 
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-> ---
->  .../boot/dts/qcom/msm8916-samsung-e5.dts      | 21 +++++++++++++++++++
->  1 file changed, 21 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
-> index 777eb934eb4b..bf0d128666d0 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
-> @@ -22,3 +22,24 @@ / {
->  	compatible = "samsung,e5", "qcom,msm8916";
->  	chassis-type = "handset";
->  };
-> +
-> +&blsp_i2c5 {
-> +	status = "okay";
-> +
-> +	touchscreen@48 {
-> +		compatible = "melfas,mms345l";
-> +		reg = <0x48>;
-> +
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <13 IRQ_TYPE_EDGE_FALLING>;
-interrupts-extended?
+> 在 7/31/2023 3:00 PM, Krzysztof Kozlowski 写道:
+>> On 31/07/2023 08:13, Tengfei Fan wrote:
+>>> Adjust the position of QCOM_ID_QDU1010, so that there is a coherent
+>>> sequence of numbers.
+>>>
+>>> Change-Id: Id083e1ecc92c063c1a07a81c66dcb034020964b0
+>>
+>> Please run scripts/checkpatch.pl and fix reported warnings. Some
+>> warnings can be ignored, but the code here looks like it needs a fix.
+>> Feel free to get in touch if the warning is not clear.
+>>
+> sure, will do this check if this patch still need.
 
-Konrad
+I understand that resending this might not be needed, but just to
+clarify: you must run checkpatch on all your patches before sending
+them. This is the most basic step required before sending anything.
+
+Best regards,
+Krzysztof
+
