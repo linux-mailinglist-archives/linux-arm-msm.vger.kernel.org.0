@@ -2,83 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECBBF76A4F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 01:46:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27E2B76A508
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 01:49:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbjGaXq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 19:46:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
+        id S231133AbjGaXtp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 19:49:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbjGaXq4 (ORCPT
+        with ESMTP id S230342AbjGaXto (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 19:46:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23AF1E7C;
-        Mon, 31 Jul 2023 16:46:55 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36VNQIT8014107;
-        Mon, 31 Jul 2023 23:46:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=HE87F8f+rEZfMqN7IxCafKBAXA6f/kM48CtBdJPVbO0=;
- b=ORmvvi4eC6yrctwqeQcRkTxcMDLpxRlEdTzbVuhaeDYRcsms6Yi8nfbaERNo7TtFE7/m
- mzjMaF30bOOzzSyhqwXFkndO/BoOLRC/+/assGreQXbfeHB8UmWtxUnsXJEur8G/fPRy
- qaVbtrNo7RalQNYNLoVOojdGYd2KN2fW14iSlnYwjkqKgFI1VpbpZ6AHkZLD+nYPwIBp
- p02OLYtH8h7wwUwWBPxVK/l5HNUKR9FID4465yDpq0bkVGLEhKnlDNaEbqxJ8oFF64dM
- 8yBZgBNB1h/EX1e4bDFXm5Pi2UoJlq1Ynh6q+xqLwKo5TEecovstw/LVC+qG6Ih6CepB ig== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6a2va8y1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 23:46:50 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36VNknUg004568
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 23:46:49 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
- 2023 16:46:48 -0700
-Message-ID: <71460c5f-2aac-67b0-3779-d748f9e512aa@quicinc.com>
-Date:   Mon, 31 Jul 2023 16:46:48 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] soc: qcom: aoss: Move length requirements from caller
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     Bjorn Andersson <andersson@kernel.org>,
+        Mon, 31 Jul 2023 19:49:44 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE30710C7;
+        Mon, 31 Jul 2023 16:49:43 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B5426135F;
+        Mon, 31 Jul 2023 23:49:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6408C433C7;
+        Mon, 31 Jul 2023 23:49:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690847382;
+        bh=ECkEowFpkaaLto02+wiVoqQdhyB1FQrgZ3V0QXeCg3M=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Wy+0dLBsSRuO1VKv8GHW9+7XPfcJwu3+A2/1bhxn0eNQFqhvRqFg0GEx0IYqr1xvt
+         h5MzVdrNt2EZ7OHvQaKZzqdjYja86HM9xYVFjtlGFctpwHJq2gw+cuvltOgUbkwiJn
+         r5E6egsPw2MTE+ffPl9avZIaLtU9RIl0o23zN5us17bvIX4O2UnYKXFwLgC0Vcby0+
+         +wfAMlOwxroeM0p3ybPdh4FBQxON/Z2WhvTPTZFcE/sav4mSnHsm9apPRUkSX5sZNY
+         m3cEaGLTz+lP1VcCtvVw8bwgUsqEEaiHxg69dN7VZjSrrFyCa4YAkbj1HhhGhx5kfO
+         hZxV89M0cIRfQ==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
- <20230731041013.2950307-2-quic_bjorande@quicinc.com>
- <e4592feb-3878-b0eb-61e4-fb6dfc358e1a@quicinc.com>
- <20230731231014.GI1428172@hu-bjorande-lv.qualcomm.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20230731231014.GI1428172@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gtdIssoZJu70iXyKmnIHOTRi2T8Zb4Oc
-X-Proofpoint-GUID: gtdIssoZJu70iXyKmnIHOTRi2T8Zb4Oc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-31_16,2023-07-31_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0 bulkscore=0
- spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307310215
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 00/10] clk: qcom: convert mdm9615 to parent_hws/_data
+Date:   Mon, 31 Jul 2023 16:52:40 -0700
+Message-ID: <169084756380.3010488.16111757339753616481.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230512211727.3445575-1-dmitry.baryshkov@linaro.org>
+References: <20230512211727.3445575-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,44 +64,23 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Sat, 13 May 2023 00:17:17 +0300, Dmitry Baryshkov wrote:
+> This series concludes the conversion of Qualcomm clock controller
+> drivers to using the parent_hws/parent_data and declaring all the used
+> clocks in DT.
+> 
+> Changes since v2:
+> - Fixed gcc-mdm9615 schema example (Krzysztof)
+> 
+> [...]
 
-On 7/31/2023 4:10 PM, Bjorn Andersson wrote:
-> On Mon, Jul 31, 2023 at 02:29:44PM -0700, Chris Lew wrote:
->>
->>
->> On 7/30/2023 9:10 PM, Bjorn Andersson wrote:
->>> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
->>>    	/* The message RAM only implements 32-bit accesses */
->>>    	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
->>> -			 data, len / sizeof(u32));
->>> -	writel(len, qmp->msgram + qmp->offset);
->>> +			 buf, sizeof(buf) / sizeof(u32));
->>> +	writel(sizeof(buf), qmp->msgram + qmp->offset);
->>
->> Looks like we are telling the firmware the packet size will always be
->> QMP_MSG_LEN?
->>
->> This should be ok but might be a problem when debugging. The AOSS firmware
->> only logs size of the message instead of the full string because of memory
->> constraints.
->>
-> 
-> Until now ipa_power_retention() has been passing 36 here, everyone else
-> 64, so it is ok.
-> 
->> We would normally match the firmware and host logs based on size, but won't
->> be able to differentiate this way with a fixed size.
-> 
-> I don't mind us changing it to ALIGN(len, 4), but as that would change
-> the current behavior I'd like to do so in a subsequent patch.
-> 
-> Speaking of behavior, is 64 the max message size? We inherited the 64
-> from the initial downstream implementation, but qmp->size is quite a bit
-> bigger.
-> 
+Applied, thanks!
 
-The max message size the firmware can handle is 0x64, so 100 bytes, but 
-I haven't seen any messages go above 64 bytes.
+[09/10] ARM: dts: qcom-mdm9615: specify clocks for the lcc device
+        commit: 174b934c3dc4fc7bd1d2075745bba829a743553f
+[10/10] ARM: dts: qcom-mdm9615: specify gcc clocks
+        commit: d988aa8cd09653d9607788e9d1c98f0d7a55e731
 
-> Regards,
-> Bjorn
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
