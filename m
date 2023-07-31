@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8187F769A62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 17:09:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32088769A7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 17:11:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232319AbjGaPJE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 11:09:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33520 "EHLO
+        id S233273AbjGaPLQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 11:11:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232452AbjGaPJA (ORCPT
+        with ESMTP id S233271AbjGaPKy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 11:09:00 -0400
+        Mon, 31 Jul 2023 11:10:54 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDF091726;
-        Mon, 31 Jul 2023 08:08:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271331996;
+        Mon, 31 Jul 2023 08:10:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BD57B6119A;
-        Mon, 31 Jul 2023 15:08:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE470C433C7;
-        Mon, 31 Jul 2023 15:08:54 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BE373611A9;
+        Mon, 31 Jul 2023 15:10:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B807AC433D9;
+        Mon, 31 Jul 2023 15:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690816137;
-        bh=oOqLznACyt0Ze2IndXFJD1mCt9TSZtRNhA9cISgtZXk=;
+        s=k20201202; t=1690816229;
+        bh=qU1aJBXLj8OvL5BxkBm/yTat5cqvXnPkIXeHqHxtlwk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qhqUrVvU/jpadfIcIjeyew8oAopooOc0nuJYMPtyReqOMemjUriEaGM1gXynsSbrL
-         tXD8KcsbgO+lmwA07fI2kLZY02ghDtoieDnPb9I67uv5pm8sr0syJEVU6e70o0t8IA
-         Kk1myA92TRiaD755njdJp4wH0nHR8hLwz988qcDSSJ1eoMre2vWcPz87PemUpQir70
-         c1k0LjXhakjUp5ZyMWvrLX877WeRgkr3CxiDgm4AFqeEXZwmgIJXrB+pJa+A1LLk2k
-         B0yWQBGNZUd+8PCXLdvbmAo1+3kJk4tCoEKM6hhqGRKlgkij14v47TOLDgd/CvKYR6
-         kLN9uCQ58Ijpg==
-Date:   Mon, 31 Jul 2023 17:08:52 +0200
+        b=OUi3CJXsrDYDon8PZ1ZFtDc3ZImRViLGAkenIm/dbcms4NKyHjAAuhpbXQHSj1OwD
+         fNvQc/0+GbtK2m1R/JtpN9raiFkubbDnJEbOuUW8/JOhH/vGXa+BD9MCTtvWsJTdNR
+         pmZZt45Xr05z4noO+rU+tjw3vo4pQrQeMx674cyTQClhPifmxs1uICImowl4/yJUR6
+         qhVXMOaOwVKXAQ4kAm/p3DrxZfKfa89TUcFwDy2msm6IvH0NOO8Ems7lfd+sVrpYOY
+         584rNgS5xgX7asKgBGAddiKhp9vzYZAHQerYTuDIOvDFtAjhRPqOk8OKE9bN6u7ZP6
+         62WhvKw+9pBCQ==
+Date:   Mon, 31 Jul 2023 17:10:24 +0200
 From:   Simon Horman <horms@kernel.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
@@ -45,15 +45,14 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 2/4] soc: qcom: aoss: Add debugfs interface for sending
- messages
-Message-ID: <ZMfOhJI0FNXFwenb@kernel.org>
+Subject: Re: [PATCH 1/4] soc: qcom: aoss: Move length requirements from caller
+Message-ID: <ZMfO4B5ZifxPv/sk@kernel.org>
 References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
- <20230731041013.2950307-3-quic_bjorande@quicinc.com>
+ <20230731041013.2950307-2-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230731041013.2950307-3-quic_bjorande@quicinc.com>
+In-Reply-To: <20230731041013.2950307-2-quic_bjorande@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -64,50 +63,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 30, 2023 at 09:10:11PM -0700, Bjorn Andersson wrote:
-> From: Chris Lew <clew@codeaurora.org>
+On Sun, Jul 30, 2023 at 09:10:10PM -0700, Bjorn Andersson wrote:
+> The existing implementation of qmp_send() requires the caller to provide
+> a buffer which is of word-aligned. The underlying reason for this is
+> that message ram only supports word accesses, but pushing this
+> requirement onto the clients results in the same boiler plate code
+> sprinkled in every call site.
 > 
-> In addition to the normal runtime commands, the Always On Processor
-> (AOP) provides a number of debug commands which can be used during
-> system debugging for things such as preventing power collapse or placing
-> floor votes for certain resources. Some of these are documented in the
-> Robotics RB5 "Debug AOP ADB" linked below.
+> By using a temporary buffer in qmp_send() we can hide the underlying
+> hardware limitations from the clients and allow them to pass their
+> NUL-terminates C string directly.
 > 
-> Provide a debugfs interface for the developer/tester to send these
-> commands to the AOP.
-> 
-> Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-88500-3/85_Debugging_AOP_ADB.html
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> [bjorn: Dropped debugfs guards, improve error codes, rewrote commit message]
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  drivers/soc/qcom/qcom_aoss.c | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
+>  drivers/net/ipa/ipa_power.c        |  2 +-
+>  drivers/remoteproc/qcom_q6v5.c     |  2 +-
+>  drivers/soc/qcom/qcom_aoss.c       | 25 ++++++++++++-------------
+>  include/linux/soc/qcom/qcom_aoss.h |  4 ++--
+>  4 files changed, 16 insertions(+), 17 deletions(-)
 > 
+> diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
+> index 921eecf3eff6..26181eeed975 100644
+> --- a/drivers/net/ipa/ipa_power.c
+> +++ b/drivers/net/ipa/ipa_power.c
+> @@ -332,7 +332,7 @@ void ipa_power_retention(struct ipa *ipa, bool enable)
+>  
+>  	(void)snprintf(buf, sizeof(buf), fmt, enable ? '1' : '0');
+>  
+> -	ret = qmp_send(power->qmp, buf, sizeof(buf));
+> +	ret = qmp_send(power->qmp, buf);
+>  	if (ret)
+>  		dev_err(power->dev, "error %d sending QMP %sable request\n",
+>  			ret, enable ? "en" : "dis");
+> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+> index 192c7aa0e39e..8b41a73fa4d1 100644
+> --- a/drivers/remoteproc/qcom_q6v5.c
+> +++ b/drivers/remoteproc/qcom_q6v5.c
+> @@ -35,7 +35,7 @@ static int q6v5_load_state_toggle(struct qcom_q6v5 *q6v5, bool enable)
+>  
+>  	WARN_ON(ret >= Q6V5_LOAD_STATE_MSG_LEN);
+>  
+> -	ret = qmp_send(q6v5->qmp, buf, sizeof(buf));
+> +	ret = qmp_send(q6v5->qmp, buf);
+>  	if (ret)
+>  		dev_err(q6v5->dev, "failed to toggle load state\n");
+>  
 > diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index 5e74332515cf..4c5bb7034fff 100644
+> index e376c32cc16e..5e74332515cf 100644
 > --- a/drivers/soc/qcom/qcom_aoss.c
 > +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2019, Linaro Ltd
+> @@ -206,36 +206,35 @@ static bool qmp_message_empty(struct qmp *qmp)
+>   * qmp_send() - send a message to the AOSS
+>   * @qmp: qmp context
+>   * @data: message to be sent
+> - * @len: length of the message
+>   *
+>   * Transmit @data to AOSS and wait for the AOSS to acknowledge the message.
+> - * @len must be a multiple of 4 and not longer than the mailbox size. Access is
+> - * synchronized by this implementation.
+> + * data must not be longer than the mailbox size. Access is synchronized by
+> + * this implementation.
+>   *
+>   * Return: 0 on success, negative errno on failure
 >   */
->  #include <linux/clk-provider.h>
-> +#include <linux/debugfs.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/mailbox_client.h>
-> @@ -82,6 +83,7 @@ struct qmp {
->  
->  	struct clk_hw qdss_clk;
->  	struct qmp_cooling_device *cooling_devs;
-> +	struct dentry *debugfs_file;
+> -int qmp_send(struct qmp *qmp, const void *data, size_t len)
+> +int qmp_send(struct qmp *qmp, const void *data)
+>  {
+>  	long time_left;
+> +	char buf[QMP_MSG_LEN];
+>  	int ret;
 
 Hi Bjorn,
 
-Please consider adding debugfs_file to the kernel doc for struct qmp.
+please consider preserving reverse xmas tree - longest line to shortest -
+for local variable declarations in this Networking code.
 
->  };
->  
->  static void qmp_kick(struct qmp *qmp)
+	char buf[QMP_MSG_LEN];
+	long time_left;
+	int ret;
 
 ...
+
