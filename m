@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6412A768FBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:13:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82622768FDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 10:18:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjGaINT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 04:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35772 "EHLO
+        id S231782AbjGaISj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 04:18:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231925AbjGaIM4 (ORCPT
+        with ESMTP id S232125AbjGaISU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 04:12:56 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8AB212B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:09:23 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b962535808so63473341fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:09:23 -0700 (PDT)
+        Mon, 31 Jul 2023 04:18:20 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2567210E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:15:38 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe21e7f3d1so3894839e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 01:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690790962; x=1691395762;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1690791337; x=1691396137;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=D3fDGVZFd2PK1zEp0KfLjHfq7Q8t9fsVbaXRkgUvGIs=;
-        b=nQ4rMKgQnmywM8nmNrEghDWGxPhCv30jKSdooNht+jHU1RCf+Xv1Rjzj7L9Te9c4zG
-         kfoPTKjI4LEGkCI0ai9CvmWV2xWilQbmmGBxW9e1GPoQ4RtQ28fj9FwMpQzNh1ArEdNB
-         4WdWkjUWi2Q/BGsMKtaTYVPVQfgzkrhxuGhnFtxzHRYlTQ6Fhk6MVFvxDPdO+IwgHPzk
-         JokhjXFWockyvrRRhg8gBo8U8ea61wibLAhGDtvAdsaJRYMfDIz/GySYTOY+EBZqQuuN
-         No588Y9pFL9kR2owsilMvw2zauVa31IThk+3mbPY6cLQG0YXJJyyY6CTLyGwI9wQLT6d
-         ZSwQ==
+        bh=mYG0LasLifyyUM7Rwt2a0NjqR/rKg7HRv/UVMGYC+s0=;
+        b=bQvvl/B5tmOti6yZEthNbWipKzs48ju0grUG9tHoZV/l+Ad9JAM4+FLF2dmQQMoz7M
+         A+usfwRp8znkWl4k7fAOM8+pA7fR3iz1nN4Xuo0SVjeIo2h8NZGrP/D3uEjC3ujgN7lQ
+         jpyw4hIsOM9xgl7weU4KmNVcFBztPJwgxhaIRs8T5rlSUVl1ZjzhTG+o6K6BrtHBugj3
+         ghwIVYBXqMTkLKBsgSgb24pfNladB4HFpw/qQ3EAA6jO3OtO/cSJvtETNb5SNZ+qW/DJ
+         aOzfu8kqujjSjniHI6pUTarYdIoH+s4ZCOdbvGbF41lW+HlBAilP+9qDcwU9xs82PfbP
+         aGlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690790962; x=1691395762;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1690791337; x=1691396137;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D3fDGVZFd2PK1zEp0KfLjHfq7Q8t9fsVbaXRkgUvGIs=;
-        b=HqZdY0B0c9tmBONg6+nu8mJWFXlGtc751JlYKmnzQRa4r1tlJUoSTTrE8cQ7phAi1M
-         yOgMZ+ubIW/H91RN+yAjk4JecT2Qgq5JAjlZcCLFHN6jyYLS8HhNJA/sVW0E4NIe6dCM
-         vEbHjJYYb4gfdLDSKffgIC+Vwano1bDV+ihN4eNU1ngMAYydT8ZayTD2W9aMTnH039Sa
-         Z3GlyJyRhPj4hFsCQwj3+BfrzOP+mIhTfcvAVBmOmgc82ZaIof6PJjwOC5iVwuz21ddR
-         0z1+f7mZ4CpWkGoHoP8VkBU+J4ja76gLdXjeamRxkVr6/zn1optTRlPc0cIqVH3zcerT
-         OtDA==
-X-Gm-Message-State: ABy/qLY+uw9dDV7HtFhKzblysOlmiBgjfV2jdgn+Y1aYYd9+SGw4iL4o
-        qalZ1GxauR2WFCc9mhqW3ItGVw==
-X-Google-Smtp-Source: APBJJlGfLs2rDS2phwyEFW3W+5xcntYCyYubp/l5J/zxJOX6XOtUs9QRKPy1EKHs9qEwnREOnEknFw==
-X-Received: by 2002:a2e:80c5:0:b0:2b9:ee3e:240b with SMTP id r5-20020a2e80c5000000b002b9ee3e240bmr843964ljg.41.1690790961955;
-        Mon, 31 Jul 2023 01:09:21 -0700 (PDT)
+        bh=mYG0LasLifyyUM7Rwt2a0NjqR/rKg7HRv/UVMGYC+s0=;
+        b=J/shEoMt5UQ7PTbLscf/C9JoxukCe7j09Xsvbbki5T7BTMMwrdOIFg/7h9N+18bLhA
+         M6DU/6M57luqz+eEHBqxcDFAnUFfqNPMdOqzfZnpqnXHZsBoE3z9dQV/xtQCF1TV+BXi
+         z83zlckX8jUmi5cAX41o1Waw3gitXdTF/TxHNaEzmyl4HCmjWd0ik9nWel/ng3srHWXW
+         KMdA1LRrnSDFkssSUQVEpTxCTP3R2HqgYn+HC0ZOtLro1xS7zWLJt8pGkBJppMIwxtRP
+         B3peCOBTaoTbFa+OfY4dcpYvrCEeHx1SYxAK8Ob+DnlnKUYCbCgJgxLS5XzgfUVN+yRk
+         PV2w==
+X-Gm-Message-State: ABy/qLbTiGgyZJR0njLWt2eLdhGZtCnPSUjDe44QUs30tsxG8DF+i/bn
+        rDEDkGzj93zDz4HIp7fHSBp2uw==
+X-Google-Smtp-Source: APBJJlEuqM3DeDa8wJtUXqjMUMmkQbWCxdq2T9GkSujeAsdIbk7bsJuEfiDxnmkMz/LJuSBzEP7Glw==
+X-Received: by 2002:a05:6512:1105:b0:4fe:8b5:588a with SMTP id l5-20020a056512110500b004fe08b5588amr6068382lfg.57.1690791336811;
+        Mon, 31 Jul 2023 01:15:36 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id w18-20020a2e3012000000b002b6a5dfc7f3sm2448776ljw.30.2023.07.31.01.09.20
+        by smtp.gmail.com with ESMTPSA id f14-20020ac2532e000000b004fb73bea65esm1975317lfh.25.2023.07.31.01.15.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jul 2023 01:09:21 -0700 (PDT)
-Message-ID: <ccbcd94c-4a78-934e-f046-b3cb1878fc91@linaro.org>
-Date:   Mon, 31 Jul 2023 10:09:20 +0200
+        Mon, 31 Jul 2023 01:15:36 -0700 (PDT)
+Message-ID: <93dd0930-8699-9995-c9ac-d361c4c385f1@linaro.org>
+Date:   Mon, 31 Jul 2023 10:15:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: use defines for interrupts
+Subject: Re: [PATCH 2/4] soc: qcom: aoss: Add debugfs interface for sending
+ messages
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230730180638.23539-1-krzysztof.kozlowski@linaro.org>
+        Chris Lew <quic_clew@quicinc.com>
+Cc:     Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
+ <20230731041013.2950307-3-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,11 +104,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230730180638.23539-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230731041013.2950307-3-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -114,19 +117,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.07.2023 20:06, Krzysztof Kozlowski wrote:
-> Replace hard-coded interrupt parts (GIC, flags) with standard defines
-> for readability.  No changes in resulting DTBs.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes in v2:
-> 1. Replace defines in few more files (msm8976.dtsi, msm8994.dtsi,
->    msm8996.dtsi, msm8998.dtsi, one more in sdm630.dtsi,
->    sdm845-shift-axolotl.dts)
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 31.07.2023 06:10, Bjorn Andersson wrote:
+> From: Chris Lew <clew@codeaurora.org>
+No QUIC email?
 
+[...]
+
+
+> +static ssize_t qmp_debugfs_write(struct file *file, const char __user *userstr,
+> +				 size_t len, loff_t *pos)
+> +{
+> +	struct qmp *qmp = file->private_data;
+> +	char buf[QMP_MSG_LEN];
+> +	int ret;
+> +
+> +	if (!len || len > QMP_MSG_LEN)
+>=? Otherwise the last char may be overwritten by the NULL termination
+couple lines below
+
+> +		return -EINVAL;
+> +
+> +	if (copy_from_user(buf, userstr, len))
+> +		return -EFAULT;
+> +	buf[len] = '\0';
+> +
+> +	ret = qmp_send(qmp, buf);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return len;
+> +}
 Konrad
