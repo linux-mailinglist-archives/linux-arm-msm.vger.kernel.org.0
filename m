@@ -2,127 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8BE07694DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 13:30:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B02B8769605
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 14:20:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbjGaLa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 07:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41210 "EHLO
+        id S232383AbjGaMUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 08:20:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229731AbjGaLa0 (ORCPT
+        with ESMTP id S232313AbjGaMUd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 07:30:26 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7E091;
-        Mon, 31 Jul 2023 04:30:24 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V6IdkA024911;
-        Mon, 31 Jul 2023 11:30:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=4WTvwGBmRLj5LnREvr1Wn69OwwyqrhwIirn8M7dadiw=;
- b=aAGV9VEJ43gL5NYWtMZRoAgNT22TRtpkWlG0cydyYI68UPPQr+8BfcUdDc/0GzSCz6DF
- +nRr91WhIdATrAGiEb2+7F67YlSTm6TAGJpOJ53URQ2PUm8SEIgxMHv7dpfJ4Ye+NsTI
- LM88DS6PN1CngYdufodlwVLISNGS9rQKzcITdQi4wAp8LCgHRJs/25y/4Cy8uCLCTMQs
- 7Q4O6ol5q/BjdRVC+SnFbyOFsZifYt6EF3aTA1Bd9ch4dLEwgIkoVo9m8BhIOoHEiCL3
- sjCNRhRHkuv/stUFaAhJNKHRllNkQMGAGwW8hqdCCxCukjsew0E+rDag9snk61Sgq9cJ zg== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4ugsbjgd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Jul 2023 11:30:19 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36VBUGxs027541;
-        Mon, 31 Jul 2023 11:30:16 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3s4uuke9s2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 31 Jul 2023 11:30:16 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36VBUGGr027398;
-        Mon, 31 Jul 2023 11:30:16 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36VBUGlx027309;
-        Mon, 31 Jul 2023 11:30:16 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id 9BB991AE2; Mon, 31 Jul 2023 17:00:15 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mon, 31 Jul 2023 08:20:33 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9B319AC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 05:20:16 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso6847451e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jul 2023 05:20:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690806014; x=1691410814;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gf3LmmIWrMau5faq7nlMlPKiUzu+qP0dMuprgORcSfE=;
+        b=K0GOcdcUPKkJCrwm9ic7QHRzs26pamIeLtNk5RCHei5D6USQDdlP0KDljYOLhYu6lF
+         DJ8hXefNOSNr3LEO8N2cmvF4IZ4sUQS/NzgOw0aYkJSPXQRy3rtpcyr6hhqrzJqwelRF
+         528mDua7HxjToYrkIgrkhTwRPv0TlthGuWp1Mkk2+Uxbk1hgex/HtBwzOD4qNvNrhJal
+         CBpY0jiu53MiCyXWs1v6xBV1mxUvq83QjdA2wAlxJmCXeXXA6O/6mbzz9pEEHkJ27Nxx
+         nwlYvcr662OVpWcxN+AypwXcFKrrwAyRq6aFVLYprmIijv9yq2hyQPS46Q8pbdrdtHhC
+         j/Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690806014; x=1691410814;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gf3LmmIWrMau5faq7nlMlPKiUzu+qP0dMuprgORcSfE=;
+        b=Ym0lwTOyF2zccOzxBaoTuc7Bmt26w8hntVqNRQg97ZX4EGp6kEQmMLGAfTZmx98J11
+         DZPX9oK8Cx4t2ysYYbImqdd1MSQMvQGr2GuXy3BEUIldZAjqTDCrEjv4jaNqAyJVuS8K
+         EYwZBls4yxzdLs/YqSmz7JNqnTRZMhtOhNthSQWnQZh7GOGpKpoU3R0a6/DSL4TWyaF0
+         D3OCKM/NigehyxfSVUAQjB8BbwLX714Gt4gRMFiUX+F4xtP76ZGcEjFG8xDQYlUSHegQ
+         u30WVTlkLITQ1JpQUs/49KiD0Jbc0Ebcq2E8lHlOqPTyTnTLuXQiez26ZSHeU7wkyfSF
+         hQuQ==
+X-Gm-Message-State: ABy/qLYQ5PPT95CiipgnvlP9gai/JpZp5rUUMbiRO2DkiSEwqp3n3WEi
+        T/4uL7KNO+m7GKacWJE3kc4E7w==
+X-Google-Smtp-Source: APBJJlHK1YJ+ycb2Mi0ZGLtYYsXsm/rpLz0hFe+W+eN1LdFXfUN0jmtDbMkk4kss6l5PSzy/TZI81Q==
+X-Received: by 2002:a05:6512:360a:b0:4fe:de3:9fd1 with SMTP id f10-20020a056512360a00b004fe0de39fd1mr4731653lfs.36.1690806014533;
+        Mon, 31 Jul 2023 05:20:14 -0700 (PDT)
+Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
+        by smtp.gmail.com with ESMTPSA id u9-20020a056512040900b004fe11366146sm2079096lfk.51.2023.07.31.05.20.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jul 2023 05:20:13 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] Set PCNoC clk always-on, with or without interconnect
+Date:   Mon, 31 Jul 2023 14:20:11 +0200
+Message-Id: <20230731-topic-pcnoc-v1-0-452dd36d11d7@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPumx2QC/x2N0QqDMAwAf0XyvIBtHbr9yvChxkwDkpZWx0D89
+ 4U93sFxJ1QuwhWezQmFP1IlqYG7NUBr1IVRZmPwrQ9tHxzuKQthJk2E8+Aesetd8PcOrJhiZZx
+ KVFqt0WPbTObCb/n+F6/xun4pYsrrcgAAAA==
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH v4 2/2] soc: qcom: rpmhpd: Add SDX75 power domains
-Date:   Mon, 31 Jul 2023 17:00:07 +0530
-Message-Id: <1690803007-8640-3-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1690803007-8640-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1690803007-8640-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ToIz21XeeXVN5nHUN5EQIqW611m-O5es
-X-Proofpoint-GUID: ToIz21XeeXVN5nHUN5EQIqW611m-O5es
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-31_05,2023-07-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 mlxlogscore=681 malwarescore=0 clxscore=1015
- spamscore=0 priorityscore=1501 mlxscore=0 impostorscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307310103
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690806013; l=885;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=DpM74YJFMGMq7VqXTxFkzlshoHNLJraxbS0yzf7ueLo=;
+ b=P3thT/6NZIx2XNQm85ENg0Oe3UkQyRtif7N93V4ggDQwUhQWUuV7SJViO2+qU4A5UC0HyxOtR
+ vKnaGz2QSSrAdzJQeV08VdXp++xFIjKTshmAF4KMIOWDv5du/o3pB+S
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the power domains exposed by RPMH in the Qualcomm SDX75 platform.
+The PCNoC clock needs to always have some sort of a vote hanging onto
+it, so long as the AP is alive. Some platforms guarantee that through
+the interconnect driver, while others (that register the PCNoC clk
+with the clock framework) don't, which results in a big kaboom and
+force reboot when trying to suspend that clock.
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+Solve the issue for the latter group.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/soc/qcom/rpmhpd.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Konrad Dybcio (2):
+      clk: qcom: smd-rpm: Add a way to define bus clocks with rate and flags
+      clk: qcom: smd-rpm: Set XO rate and CLK_IS_CRITICAL on PCNoC
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index 18d8544..f02a24a 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -308,6 +308,21 @@ static const struct rpmhpd_desc sdx65_desc = {
- 	.num_pds = ARRAY_SIZE(sdx65_rpmhpds),
- };
- 
-+/* SDX75 RPMH powerdomains */
-+static struct rpmhpd *sdx75_rpmhpds[] = {
-+	[RPMHPD_CX] = &cx,
-+	[RPMHPD_CX_AO] = &cx_ao,
-+	[RPMHPD_MSS] = &mss,
-+	[RPMHPD_MX] = &mx,
-+	[RPMHPD_MX_AO] = &mx_ao,
-+	[RPMHPD_MXC] = &mxc,
-+};
-+
-+static const struct rpmhpd_desc sdx75_desc = {
-+	.rpmhpds = sdx75_rpmhpds,
-+	.num_pds = ARRAY_SIZE(sdx75_rpmhpds),
-+};
-+
- /* SM6350 RPMH powerdomains */
- static struct rpmhpd *sm6350_rpmhpds[] = {
- 	[SM6350_CX] = &cx_w_mx_parent,
-@@ -546,6 +561,7 @@ static const struct of_device_id rpmhpd_match_table[] = {
- 	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
- 	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
- 	{ .compatible = "qcom,sdx65-rpmhpd", .data = &sdx65_desc},
-+	{ .compatible = "qcom,sdx75-rpmhpd", .data = &sdx75_desc},
- 	{ .compatible = "qcom,sm6350-rpmhpd", .data = &sm6350_desc },
- 	{ .compatible = "qcom,sm8150-rpmhpd", .data = &sm8150_desc },
- 	{ .compatible = "qcom,sm8250-rpmhpd", .data = &sm8250_desc },
+ drivers/clk/qcom/clk-smd-rpm.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+---
+base-commit: ec89391563792edd11d138a853901bce76d11f44
+change-id: 20230731-topic-pcnoc-d819a4713254
+
+Best regards,
 -- 
-2.7.4
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
