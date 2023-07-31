@@ -2,175 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67880768ABC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 06:15:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 284ED768AE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jul 2023 07:04:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229824AbjGaEPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jul 2023 00:15:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38384 "EHLO
+        id S229590AbjGaFEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jul 2023 01:04:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbjGaEPr (ORCPT
+        with ESMTP id S229379AbjGaFEg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jul 2023 00:15:47 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB033119
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 21:15:44 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe1489ced6so6420426e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jul 2023 21:15:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690776943; x=1691381743;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RMYX8jg3dCCRuMtGRbFlfbd9q+spdF7dLaJz3ilyQ9s=;
-        b=bYvAXKJfEpm7ZHm7V6ZQYvQ/r3zEqbZqR2jUyTa2M3ANHwwnSUYCuFQWHiMJJLxbxh
-         /nhxgAJN7Dn8TffN0Tu6uDmG/R6vsB3vntrYTxd7r/QEkucacPez16QZyNN21IgZdmcn
-         572UoyXFdxJrAvUt1DtZw4KiX82M7w24ajn6WrlG/mIHMHF81d/SDWtbGnupwj+VELyE
-         yVwfCecGWLWoABPkzqRt79FUCBfLBoM6DXeenhtuI03gSPaW0N1ZdefdHnmqXr7dIK/i
-         zV16CNJk6iOaCEOKV5f/lYQp2WdNP38Hbk/X5WHbdshk7LchrIng+WS6yNDSOWpfskSv
-         nnbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690776943; x=1691381743;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RMYX8jg3dCCRuMtGRbFlfbd9q+spdF7dLaJz3ilyQ9s=;
-        b=UyUPkaQ2dMv2YFWDSWgxEhjXCoNacQrnocjAbYuDuRoJEEcZ+O98b+Uq7/PuHMxaIp
-         hFbNVRe0RI3uFmwvNkgay20AjQySVJjJ9ddYOS4kEGxBpv30AVUx6vq5+CSReQNeY0kk
-         xW4j2G8WstanDdWtTQib/8SalDOFkA1hIZLVmq1MSG8UkloKPPU0MaviS9hP3C82U9kb
-         qpm+gPSjR+jmqclOzUr35JupnDlKn/VSq4Zz5ludUZ9oO6STRZ27Kqfk/Nhx4Q6lrRof
-         66MALULPWH1g52065ddsSy4GP9KbpMIeOzbtKlHzCXKZDocQf4g3xJ5fxqDVg2VlvpCb
-         0cBw==
-X-Gm-Message-State: ABy/qLaN/2gas0Uop+o0Z9RtjEJbkS86XKyHxpGT7vPfqt8SSMDYFBGw
-        TLifUoFp98ZcLR87JiMJwwu0Cg==
-X-Google-Smtp-Source: APBJJlGonw/NVp753YF2Y9RKp+a5ekUpZME5M2yzcts8myZGrL29w0aXo/ctx0eEWpMecqVnI/Jw1Q==
-X-Received: by 2002:a19:6501:0:b0:4f8:71cc:2b6e with SMTP id z1-20020a196501000000b004f871cc2b6emr5022274lfb.33.1690776943055;
-        Sun, 30 Jul 2023 21:15:43 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id h11-20020ac25d6b000000b004fa4323ec97sm1899712lft.301.2023.07.30.21.15.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Jul 2023 21:15:42 -0700 (PDT)
-Message-ID: <de406c53-023d-f477-17f2-7d6dabf838bd@linaro.org>
-Date:   Mon, 31 Jul 2023 07:15:42 +0300
+        Mon, 31 Jul 2023 01:04:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5CB51BF;
+        Sun, 30 Jul 2023 22:04:34 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36V4iGxL018972;
+        Mon, 31 Jul 2023 05:04:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TcMnLnc/KdAeHdH42ftkVYIT3tPuoTwENsJK/nuaSqk=;
+ b=GRf1z0MfbJtNriUXrz4cYj2TAoZANx1ilpD9+hlD0aVCbhvCjsnotgvMWAzyBiGMKCjg
+ pM3pS3yQpE7aNf8DarZ9kV/7Hv+JJ7iMtwf4eDJZN7H6iRwVuf2G+cYKy4WwfepL0Otc
+ TmRcoDXfHaz9qzhtGJhJpAkEcflpv62PsJ9pRj+U0ZHGpbAsBd/xD8bCIXtvEYph7Ehr
+ iT/1xw0Ux8SpwLZaREjYJX+MHI69cE9A0ibLYZoWDy6DLAo2j6mWbNfC8tImU2sVfDlQ
+ +itxwczyf0GB3ZvUbJ3T3i3W+KJXqg1wxdt2yFyxe8f5Y+3Rx0mz+A38pnha0xyPFKXQ Ng== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s4uat2n6y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 05:04:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36V54TKS031441
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Jul 2023 05:04:29 GMT
+Received: from [10.201.206.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 30 Jul
+ 2023 22:04:22 -0700
+Message-ID: <58e66ef8-25ff-9d66-da41-52f686480dc0@quicinc.com>
+Date:   Mon, 31 Jul 2023 10:34:19 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH RFC v5 09/10] drm/msm/dpu: Use DRM solid_fill property
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
-        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
-        sebastian.wick@redhat.com, ville.syrjala@linux.intel.com,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        wayland-devel@lists.freedesktop.org
-References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com>
- <20230728-solid-fill-v5-9-053dbefa909c@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230728-solid-fill-v5-9-053dbefa909c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v4 09/11] remoteproc: qcom: Add Hexagon based multipd
+ rproc driver
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <quic_eberman@quicinc.com>, <kvalo@kernel.org>,
+        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_varada@quicinc.com>
+References: <20230728063412.1641856-1-quic_mmanikan@quicinc.com>
+ <20230728063412.1641856-10-quic_mmanikan@quicinc.com>
+ <117f6341-55d7-601b-203f-8a09dd4bb22f@linaro.org>
+Content-Language: en-US
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <117f6341-55d7-601b-203f-8a09dd4bb22f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZzqXozlKprTkbGbxntLcEqOIZPGLW9q8
+X-Proofpoint-GUID: ZzqXozlKprTkbGbxntLcEqOIZPGLW9q8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-27_10,2023-07-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 mlxlogscore=903 suspectscore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307310046
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/07/2023 20:02, Jessica Zhang wrote:
-> Drop DPU_PLANE_COLOR_FILL_FLAG and check the DRM solid_fill property to
-> determine if the plane is solid fill. In addition drop the DPU plane
-> color_fill field as we can now use drm_plane_state.solid_fill instead,
-> and pass in drm_plane_state.alpha to _dpu_plane_color_fill_pipe() to
-> allow userspace to configure the alpha value for the solid fill color.
+
+
+On 7/28/2023 1:57 PM, Krzysztof Kozlowski wrote:
+> On 28/07/2023 08:34, Manikanta Mylavarapu wrote:
+>> +
+>> +static int q6_get_inbound_irq(struct qcom_q6v5 *q6,
+>> +			      struct platform_device *pdev,
+>> +			      const char *int_name,
+>> +			      int index, int *pirq,
+>> +			      irqreturn_t (*handler)(int irq, void *data))
+>> +{
+>> +	int ret, irq;
+>> +	char *interrupt, *tmp = (char *)int_name;
+>> +	struct q6_wcss *wcss = q6->rproc->priv;
+>> +
+>> +	irq = platform_get_irq(pdev, index);
+>> +	if (irq < 0) {
+>> +		if (irq != -EPROBE_DEFER)
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 24 ++++++++++++++++++------
->   1 file changed, 18 insertions(+), 6 deletions(-)
+> Still not good... I think I am saying this the third time: drop this
+> eprobe defer dance. It is not needed. Just open the definition of
+> dev_err_probe().
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 114c803ff99b..95fc0394d13e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -42,7 +42,6 @@
->   #define SHARP_SMOOTH_THR_DEFAULT	8
->   #define SHARP_NOISE_THR_DEFAULT	2
->   
-> -#define DPU_PLANE_COLOR_FILL_FLAG	BIT(31)
->   #define DPU_ZPOS_MAX 255
->   
->   /*
-> @@ -82,7 +81,6 @@ struct dpu_plane {
->   
->   	enum dpu_sspp pipe;
->   
-> -	uint32_t color_fill;
->   	bool is_error;
->   	bool is_rt_pipe;
->   	const struct dpu_mdss_cfg *catalog;
-> @@ -606,6 +604,20 @@ static void _dpu_plane_color_fill_pipe(struct dpu_plane_state *pstate,
->   	_dpu_plane_setup_scaler(pipe, fmt, true, &pipe_cfg, pstate->rotation);
->   }
->   
-> +static uint32_t _dpu_plane_get_bgr_fill_color(struct drm_solid_fill solid_fill)
+Yeah, somehow it's missed. I will drop.
 
-As I commented for v4 (please excuse me for not responding to your email 
-at thattime), we can return abgr here, taking plane->state->alpha into 
-account.
+Thanks & Regards,
+Manikanta.
 
-> +{
-> +	uint32_t ret = 0;
-> +	uint8_t b = solid_fill.b >> 24;
-> +	uint8_t g = solid_fill.g >> 24;
-> +	uint8_t r = solid_fill.r >> 24;
-> +
-> +	ret |= b << 16;
-> +	ret |= g << 8;
-> +	ret |= r;
-> +
-> +	return ret;
-> +}
-> +
->   /**
->    * _dpu_plane_color_fill - enables color fill on plane
->    * @pdpu:   Pointer to DPU plane object
-> @@ -977,9 +989,9 @@ void dpu_plane_flush(struct drm_plane *plane)
->   	if (pdpu->is_error)
->   		/* force white frame with 100% alpha pipe output on error */
->   		_dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
-> -	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
-> -		/* force 100% alpha */
-> -		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
-> +	else if (drm_plane_solid_fill_enabled(plane->state))
-> +		_dpu_plane_color_fill(pdpu, _dpu_plane_get_bgr_fill_color(plane->state->solid_fill),
-> +				plane->state->alpha);
->   	else {
->   		dpu_plane_flush_csc(pdpu, &pstate->pipe);
->   		dpu_plane_flush_csc(pdpu, &pstate->r_pipe);
-> @@ -1024,7 +1036,7 @@ static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
->   	}
->   
->   	/* override for color fill */
-> -	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
-> +	if (drm_plane_solid_fill_enabled(plane->state)) {
->   		_dpu_plane_set_qos_ctrl(plane, pipe, false);
->   
->   		/* skip remaining processing on color fill */
+>> +			return dev_err_probe(&pdev->dev, irq,
+>> +					     "failed to retrieve %s IRQ: %d\n",
+>> +					     int_name, irq);
+>> +	}
+>> +
 > 
-
--- 
-With best wishes
-Dmitry
-
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
