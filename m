@@ -2,116 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38A9576AE7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 11:39:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCB8A76AFB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 11:49:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233294AbjHAJjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 05:39:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40208 "EHLO
+        id S233697AbjHAJty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 05:49:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233180AbjHAJjE (ORCPT
+        with ESMTP id S233555AbjHAJtm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 05:39:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645F844B5;
-        Tue,  1 Aug 2023 02:36:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A1A796151A;
-        Tue,  1 Aug 2023 09:36:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB59C433C8;
-        Tue,  1 Aug 2023 09:36:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690882617;
-        bh=bIbnAIV9LSgAjMhFNe8KGtjVPP3OHk1T9jk268LsK2g=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=hK3eWABuYlGQAcZLf9jiilYQuXlQlCOSOY8k25Qzu5b4FoeDtlJqZMdD4Zdvoj4BH
-         xUMmVlqi8pkwaqNQTlBtauaWF/xlXj+NMvsxjJlNBqpcdCLk/itpbPFJRa9aO9cSmM
-         QjGPBfNAwLc4xEaBxuXmBWJwWQJ+yBCIwRYHHfwWAccBlvLEOaQQfHOaFOKuI12uOR
-         Sh9vIOPpwuhKsdLm3TzFb2qz7UyeXh40sDZSzfSNoIq+GIwGJbP7E5t+9+kzT2ZkGG
-         snSj1RNcKQHBJlM/JsRSO1T4sMiy6GVwhpniE6n2SLbEqMiUKlDIa8GbVa7dqQV+Rh
-         joaPtNImr0miw==
-Received: (nullmailer pid 966827 invoked by uid 1000);
-        Tue, 01 Aug 2023 09:36:55 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Tue, 1 Aug 2023 05:49:42 -0400
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CACD3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 02:48:40 -0700 (PDT)
+Received: from dggpemm500016.china.huawei.com (unknown [172.30.72.57])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4RFVdj1YBhz1GDNx;
+        Tue,  1 Aug 2023 17:47:37 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by dggpemm500016.china.huawei.com
+ (7.185.36.25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Tue, 1 Aug
+ 2023 17:48:37 +0800
+From:   Chen Jiahao <chenjiahao16@huawei.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <quic_deesin@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <chenjiahao16@huawei.com>
+Subject: [PATCH -next] soc: qcom: smem: Fix incompatible types in comparison
+Date:   Tue, 1 Aug 2023 17:48:07 +0800
+Message-ID: <20230801094807.4146779-1-chenjiahao16@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Luo Jie <quic_luoj@quicinc.com>
-Cc:     linux-clk@vger.kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        quic_srichara@quicinc.com, p.zabel@pengutronix.de,
-        konrad.dybcio@linaro.org, conor+dt@kernel.org
-In-Reply-To: <20230801085352.22873-3-quic_luoj@quicinc.com>
-References: <20230801085352.22873-1-quic_luoj@quicinc.com>
- <20230801085352.22873-3-quic_luoj@quicinc.com>
-Message-Id: <169088261501.966799.11880171949914344373.robh@kernel.org>
-Subject: Re: [PATCH 2/3] dt-bindings: clock: add qca8386/qca8084 clock and
- reset definitions
-Date:   Tue, 01 Aug 2023 03:36:55 -0600
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.90.53.73]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ dggpemm500016.china.huawei.com (7.185.36.25)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch fixes the following sparse error:
 
-On Tue, 01 Aug 2023 16:53:51 +0800, Luo Jie wrote:
-> QCA8386/QCA8084 includes the clock & reset controller that is
-> accessed by MDIO bus. Two work modes are supported, qca8386 works
-> as switch mode, qca8084 works as PHY mode.
-> 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> ---
->  .../bindings/clock/qcom,nsscc-qca8k.yaml      |  59 ++++++++++
->  include/dt-bindings/clock/qcom,nsscc-qca8k.h  | 102 ++++++++++++++++++
->  include/dt-bindings/reset/qcom,nsscc-qca8k.h  |  76 +++++++++++++
->  3 files changed, 237 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,nsscc-qca8k.h
->  create mode 100644 include/dt-bindings/reset/qcom,nsscc-qca8k.h
-> 
+drivers/soc/qcom/smem.c:738:30: error: incompatible types in comparison expression (different add        ress spaces):
+drivers/soc/qcom/smem.c:738:30:    void *
+drivers/soc/qcom/smem.c:738:30:    void [noderef] __iomem *
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+In addr_in_range(), "base" is of type void __iomem *, converting
+void *addr to the same type to fix above sparse error.
 
-yamllint warnings/errors:
+Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
+Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
+---
+ drivers/soc/qcom/smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dts:22.11-22: Warning (reg_format): /example-0/clock-controller@24:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
-Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: Warning (pci_device_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: clock-controller@24: '#power-domain-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/clock/qcom,nsscc-qca8k.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.example.dtb: clock-controller@24: Unevaluated properties are not allowed ('#clock-cells', '#reset-cells' were unexpected)
-	from schema $id: http://devicetree.org/schemas/clock/qcom,nsscc-qca8k.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230801085352.22873-3-quic_luoj@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index aa4a199efefb..d4a89d2bb43b 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -735,7 +735,7 @@ EXPORT_SYMBOL_GPL(qcom_smem_get_free_space);
+ 
+ static bool addr_in_range(void __iomem *base, size_t size, void *addr)
+ {
+-	return base && (addr >= base && addr < base + size);
++	return base && ((void __iomem *)addr >= base && (void __iomem *)addr < base + size);
+ }
+ 
+ /**
+-- 
+2.34.1
 
