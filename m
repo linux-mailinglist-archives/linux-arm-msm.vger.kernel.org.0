@@ -2,174 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE6BA76B05C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 12:07:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF6A276B27B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:00:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232120AbjHAKHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 06:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33600 "EHLO
+        id S234216AbjHALAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 07:00:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233803AbjHAKHa (ORCPT
+        with ESMTP id S234233AbjHALAH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 06:07:30 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9567A116
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 03:07:26 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so8628651e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 03:07:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1690884445; x=1691489245;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J1/ktHF3masxab3vl++0ZCMEyPiHHu6fAAPxOuhQTwg=;
-        b=xsjiWuIwfUDV/UvQ4A+bNQ6Kll4xU/AWU7vrqDequWsRjYbxqyr6NpQ9L1k2WXfGXX
-         iQmBDBjsVgWbjYlcUjZUXXQVXnrEMnQK46i9/PiL9V3Fo0IXBw8vbMT3dL+W6Dtxt0qn
-         RK0oylHJogJybBe0f2yQMbQpJcvrdmqfCmfaH7tUN4IYtW/rzH418YGFkFhRaGo3aA9L
-         x6Df8m49fyrYPq8sm23wef7IDELHRngYTWhaSyMCM+zGa9s9mAYlE0p06z2arZdeA1Zj
-         odemvH6lvXjzKfn0dI9wHccAxaKLRVHpusXPpanuqDzOLtRQrr+I4M1DOUx2A8qCb3YJ
-         bxaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690884445; x=1691489245;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=J1/ktHF3masxab3vl++0ZCMEyPiHHu6fAAPxOuhQTwg=;
-        b=gUgPDj9+jxt9TLJvC/Cd+Cjim6/Mcwi07tEM4ecXiRqGX+ilrfcNIe0pH5OzzMisZ4
-         dS7JJWbBf85UpxEZxQtTFsjyJPceXkRk1/lkAKn9Q+3y/jMvqEjZxZ5PLu0gBKSXsoMO
-         vwV7FtNvl7QEVmDMj+Ufs7ICX9GlUlnfrZZUT310MTl4EDO0QwaqGXVACg9zmj3LBNX8
-         /TL4E2VVinj+4h8SCglQ3AUyA2dKQQm2g7fDoTUiPr9cYrjPLx58i25LQeHDj/EokyV0
-         5iRW7MLWeoecHZAjuQOO6YgRep+1R+3+LcfpFIJUZvtZqBju01P94nDCTSsCQZC3PUjk
-         Tb+A==
-X-Gm-Message-State: ABy/qLYEvqE+lTCHAECsctdXLX7y7VkvNkRYr9s5vTWiNRLFNFiLrC/9
-        Q0KBo6v/1S3rQpUm2pTW3dUdhA==
-X-Google-Smtp-Source: APBJJlFLcqzXBAeAzahiYVP4fQYhmRmePiAZ7Yb6nHC/hVOWnsutc6859fMSxTqWPAPLzdg6erg9dA==
-X-Received: by 2002:ac2:5b4e:0:b0:4fe:1f1c:184f with SMTP id i14-20020ac25b4e000000b004fe1f1c184fmr1894304lfp.44.1690884444841;
-        Tue, 01 Aug 2023 03:07:24 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id c7-20020aa7c747000000b0052237839229sm6658440eds.21.2023.08.01.03.07.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Aug 2023 03:07:24 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 01 Aug 2023 12:07:24 +0200
-Message-Id: <CUH4IE1600FN.2SYHOEBM2LS1K@otso>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        "Eric Dumazet" <edumazet@google.com>,
-        "Jakub Kicinski" <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Marcel Holtmann" <marcel@holtmann.org>,
-        "Johan Hedberg" <johan.hedberg@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 0/4] Add WCN3988 Bluetooth support for Fairphone 4
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Luca Weiss" <luca.weiss@fairphone.com>,
-        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>
-X-Mailer: aerc 0.15.2
-References: <20230421-fp4-bluetooth-v2-0-3de840d5483e@fairphone.com>
- <CABBYNZJPw=Oxi+J2oA=6aosEZjCBK=u=8HEJywzRJCCrmGnkGA@mail.gmail.com>
- <CSMMO2ZBOS6Y.3SAQOHDLW68ME@otso>
-In-Reply-To: <CSMMO2ZBOS6Y.3SAQOHDLW68ME@otso>
+        Tue, 1 Aug 2023 07:00:07 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675545B91;
+        Tue,  1 Aug 2023 03:54:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1690887236; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=aAT1gmpYcoMWWL66IjQC0kMJ2YgmRmX/z+QHnQPdM9usmzWv3BMdMKNqfffpdSMpe2
+    X5+uylcHSa/sWOPxMoDiIh7ctMyWvVA2NrMNqmVx4l9DAk63X93VFSN4n+Eke+5WCSPL
+    APILRndDrhKEZZ64eYAIikxB0bsmoSFiG59U+nFyhfsJKqwDZc4yVZRD6985h8WEVvo4
+    60itvMrvdiL1h+fuq9UKhk14eLaanxiOajO4gA4fQrCD6KbRYQY7B8eh9a6uZ7cldwcB
+    sasxH6Jis2llu4NuoospbHo1YBeA/MIhT34f4pU2eAEg9vcU07KSWzZxZHROMmZLCHcn
+    wemg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1690887236;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=qdtofX9rV/JabxOSUq7lzbOdfyHanm5MJ6uMGz3vtho=;
+    b=CAd/JrKD0OV4YhJSBstyLz7bM9tqLgPAG68VmuAtlFL2NmO2OlSQIel/WJLRVJFI0I
+    pSiVCRhxLCP9fd1Rv54lNAP0kwHClrJ/AD+xJhS1zGRgbMhol77dicVX1nomi+dBaLu0
+    dgIo4zcDn6hFSHs4GNcIfxlgARhzbbfWnz4gYhtn/1mW9E8KWIRnBXAEdfuVCtIo5SFN
+    2IXrqHb2KlloYBIfMRULFVvdny8FZjzVhIwqgjHwqe+CRiJPaS1Ie6DaYsY2WS/Q30f5
+    6YsziMfod9Tg+hj6m6P1+HMMP4rDG3jclwNPC9APmCRagMYAuLXPvuYi/FPLsqRczWRJ
+    z50g==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1690887236;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=qdtofX9rV/JabxOSUq7lzbOdfyHanm5MJ6uMGz3vtho=;
+    b=fD9ZyExGq8EC+DerHWU60ByTVFgHkclD+ih/ph9KhGBQSx45CU/Z+vr6IyuFhvU2xg
+    Wrm8LWHIsj8CFk7Y0+YkWVpQ4TkSC7MQjNxSzVG8Y7LfMJCdW6yVUedJAoK6wt4w2DRS
+    2rD7aOR+E75r2VO80LFyidSg3tuFxRw2f886j7cl7xD3fJz4jiLSpQUg414Em7oTUfFE
+    ujF3aUgfscmxd8DJh009323bdixj28rYcHgVG4GHFyFUjQC84hOCuqEpZuhp53lHkjPJ
+    mTKZekUal0Ag/ofCM0s9u5IjQsn8wQA0SYzd3P9tJYKm2mDhTjYsO32S0oOuEtnGZ97D
+    2lMA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1690887235;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=qdtofX9rV/JabxOSUq7lzbOdfyHanm5MJ6uMGz3vtho=;
+    b=oUr5y0ARyOTGFGaAUODubKciTgdGIK9FoaP6DMy3CLqVK2g/c09mVlIHQbEpaFmeV3
+    xaJIFH1Ag8Sxvm4zDfBw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8p+L1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.6.6 DYNA|AUTH)
+    with ESMTPSA id k61817z71ArtNj7
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 1 Aug 2023 12:53:55 +0200 (CEST)
+Date:   Tue, 1 Aug 2023 12:53:48 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 01/10] interconnect: qcom: icc-rpm: Add AB/IB
+ calculations coefficients
+Message-ID: <ZMjkPLqBiWW8CpAU@gerhold.net>
+References: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
+ <20230726-topic-icc_coeff-v2-1-8c91c6c76076@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230726-topic-icc_coeff-v2-1-8c91c6c76076@linaro.org>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luiz,
+On Mon, Jul 31, 2023 at 12:52:17PM +0200, Konrad Dybcio wrote:
+> Presumably due to the hardware being so complex, some nodes (or busses)
+> have different (usually higher) requirements for bandwidth than what
+> the usual calculations would suggest.
+> 
+> Looking at the available downstream files, it seems like AB values are
+> adjusted per-bus and IB values are adjusted per-node.
+> With that in mind, introduce percentage-based coefficient struct members
+> and use them in the calculations.
+> 
+> One thing to note is that the IB coefficient is inverse (100/ib_percent)
+> which feels a bit backwards, but it's necessary for precision..
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/interconnect/qcom/icc-rpm.c | 14 +++++++++++---
+>  drivers/interconnect/qcom/icc-rpm.h |  6 ++++++
+>  2 files changed, 17 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index 2c16917ba1fd..a837d20af79e 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> @@ -298,7 +298,8 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+>   */
+>  static void qcom_icc_bus_aggregate(struct icc_provider *provider, u64 *agg_clk_rate)
+>  {
+> -	u64 agg_avg_rate, agg_rate;
+> +	struct qcom_icc_provider *qp = to_qcom_provider(provider);
+> +	u64 agg_avg_rate, agg_peak_rate, agg_rate;
+>  	struct qcom_icc_node *qn;
+>  	struct icc_node *node;
+>  	int i;
+> @@ -315,8 +316,15 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider, u64 *agg_clk_r
+>  			else
+>  				agg_avg_rate = qn->sum_avg[i];
+>  
+> -			agg_rate = max_t(u64, agg_avg_rate, qn->max_peak[i]);
+> -			do_div(agg_rate, qn->buswidth);
+> +			if (qp->ab_coeff)
+> +				agg_avg_rate = mult_frac(qp->ab_coeff, agg_avg_rate, 100);
 
-On Mon May 15, 2023 at 8:12 AM CEST, Luca Weiss wrote:
-> On Fri May 12, 2023 at 10:53 PM CEST, Luiz Augusto von Dentz wrote:
-> > Hi Luca,
-> >
-> > On Fri, May 12, 2023 at 6:58=E2=80=AFAM Luca Weiss <luca.weiss@fairphon=
-e.com> wrote:
-> > >
-> > > Add support in the btqca/hci_qca driver for the WCN3988 and add it to
-> > > the sm7225 Fairphone 4 devicetree.
-> > >
-> > > Devicetree patches go via Qualcomm tree, the rest via their respectiv=
-e
-> > > trees.
-> >
-> > Just to be sure, patches 1-2 shall be applied to bluetooth-next the
-> > remaining are going to be handled elsewhere?
->
-> Sounds good.
+agg_avg_rate * (qp->ab_coeff / 100) would feel more logical to me (even
+if it should be the same), i.e.
 
-Is anything missing for the patches 1 & 2 to be applied? I don't see
-them yet in linux-next. Should I resend them?
+	agg_avg_rate = mult_frac(agg_avg_rate, qp->ab_coeff, 100);
 
-Regards
-Luca
+Not sure why you swapped them.
 
->
-> >
-> > > --
-> > > Previously with the RFC version I've had problems before with Bluetoo=
-th
-> > > scanning failing like the following:
-> > >
-> > >   [bluetooth]# scan on
-> > >   Failed to start discovery: org.bluez.Error.InProgress
-> > >
-> > >   [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
-> > >
-> > > This appears to only happen with driver built-in (=3Dy) when the supp=
-orted
-> > > local commands list doesn't get updated in the Bluetooth core and
-> > > use_ext_scan() returning false. I'll try to submit this separately si=
-nce
-> > > this now works well enough with =3Dm. But in both cases (=3Dy, =3Dm) =
-it's
-> > > behaving a bit weirdly before (re-)setting the MAC address with "sudo
-> > > btmgmt public-addr fo:oo:ba:ar"
-> > >
-> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > > ---
-> > > Changes in v2:
-> > > - Add pinctrl & 'tlmm 64' irq to uart node
-> > > - Pick up tags
-> > > - Link to v1: https://lore.kernel.org/r/20230421-fp4-bluetooth-v1-0-0=
-430e3a7e0a2@fairphone.com
-> > >
-> > > ---
-> > > Luca Weiss (4):
-> > >       dt-bindings: net: qualcomm: Add WCN3988
-> > >       Bluetooth: btqca: Add WCN3988 support
-> > >       arm64: dts: qcom: sm6350: add uart1 node
-> > >       arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth
-> > >
-> > >  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |   2 +
-> > >  arch/arm64/boot/dts/qcom/sm6350.dtsi               |  63 +++++++++++=
-++
-> > >  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 103 +++++++++++=
-++++++++++
-> > >  drivers/bluetooth/btqca.c                          |  13 ++-
-> > >  drivers/bluetooth/btqca.h                          |  12 ++-
-> > >  drivers/bluetooth/hci_qca.c                        |  12 +++
-> > >  6 files changed, 201 insertions(+), 4 deletions(-)
-> > > ---
-> > > base-commit: f2fe50eb7ca6b7bc6c63745f5c26f7c6022fcd4a
-> > > change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
-> > >
-> > > Best regards,
-> > > --
-> > > Luca Weiss <luca.weiss@fairphone.com>
-> > >
+> +
+> +			if (qp->ib_coeff)
+> +				agg_peak_rate = mult_frac(100, qn->max_peak[i], qp->ib_coeff);
 
+	agg_peak_rate = mult_frac(qn->max_peak[i], 100, qp->ib_coeff);
+
+Anyway, looks like you need to avoid mult_frac anyway for ARM32 compat :/
+
+arm-none-eabi-ld: drivers/interconnect/qcom/icc-rpm.o: in function `qcom_icc_calc_rate':
+drivers/interconnect/qcom/icc-rpm.c:310: undefined reference to `__aeabi_uldivmod'
+arm-none-eabi-ld: drivers/interconnect/qcom/icc-rpm.c:312: undefined reference to `__aeabi_uldivmod'
+
+Thanks,
+Stephan
