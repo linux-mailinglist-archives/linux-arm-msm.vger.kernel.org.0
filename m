@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0643F76B30E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:22:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92F1676B317
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234160AbjHALWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 07:22:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53956 "EHLO
+        id S234332AbjHALXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 07:23:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233765AbjHALWW (ORCPT
+        with ESMTP id S232342AbjHALX3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 07:22:22 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF993C34;
-        Tue,  1 Aug 2023 04:20:45 -0700 (PDT)
-Date:   Tue, 01 Aug 2023 11:20:32 +0000
+        Tue, 1 Aug 2023 07:23:29 -0400
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10BFC273A;
+        Tue,  1 Aug 2023 04:22:39 -0700 (PDT)
+Date:   Tue, 01 Aug 2023 11:22:30 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1690888839; x=1691148039;
-        bh=KXzVhdgvb6ACEBKjOa9F7qDxyiJ47Iva5QgIt6PZuuA=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=qWVmMirlMSCXLq/qBkmnntNTHC+sABJ1TmhAwOyz8Xu1NBj44No4PNysb0acQfwAG
-         PWK2nn3iMnhQZ6KoNiN+VeP1INxG5RnMLlw0xnxScClrUrKADtbpPbpk8EmRno7plT
-         j6U28+oj17hrfBwIUQiEm9zXaNOmf6/EFWi7rUFO8CUKWAm0MPphpo/KKHAw/dkhUK
-         TB8Ry3EKUqE4dkWze72z0SxgwVkPt4QjQLMqP/nl4nkGV9mpG/dWxJ3eXu48oPZJ81
-         f6nNma+PfAAR7XI3/hou6TDuiQa2sSo+KTlWyySuAnnUuCoUT9usO9qOJ5yXpVeCUc
-         fim5jF36Zm5BA==
+        s=protonmail3; t=1690888956; x=1691148156;
+        bh=1f6zJycLuFoL5WQQ7MMLphiDimdCfGXgDIFs81dzGK8=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=Sb8gYHfkY0NpGkrMYc4Rx7l9Pg9zSFBUQbTJeS728HPlx7FAUQQTvqGBQx7ulQCas
+         NKIWkhTb3IMHqUzII3nDIzRWn5vWNwf4wk9c/eujJTI+FzNNF+9v4/z1+M7gdhiDNi
+         NIHVjzF4vQn0/Y3IrgsJuSdg/CVqdEvrceELfAYQGANyoapWjDDijHo7OjApx2wbUF
+         C9RqWa8mcXjGXu3jEp6ZLHPCuuOBVN6+Myuluh3o5SWxhzw0wESyXjR5ECjFT3GMtB
+         R2UsJL/O3pqVw3KrrYkuTa3JRXQnxs0lPbjfq6HEG8LAwlGl/++ILITgySe4Ea9NPB
+         sAUt2xk4JxdYQ==
 To:     linux-kernel@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -38,15 +39,17 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stephan Gerhold <stephan@gerhold.net>,
         Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v2 0/3] arm64: dts: qcom: msm8916-samsung-fortuna: Add initial device trees
-Message-ID: <20230801111745.4629-1-linmengbo0689@protonmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: qcom: Document new msm8916-samsung devices
+Message-ID: <20230801112113.4659-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20230801111745.4629-1-linmengbo0689@protonmail.com>
+References: <20230801111745.4629-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -55,34 +58,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Samsung Galaxy Core Prime, Grand Prime and Ace 4 are phones based on
-MSM8916. They are similar to the other Samsung devices based on MSM8916
-with only a few minor differences.
+Document the new following device tree bindings used in their
+device trees:
 
-This initial commit adds support for:
- - fortuna3g (SM-G530H)
- - fortunaltezt (SM-G530Y)
- - gprimeltecan (SM-G530W)
- - grandprimelte (SM-G530FZ)
- - heatqlte (SM-G357FZ)
- - rossa (SM-G360G)
+- samsung,fortuna3g
+- samsung,fortunaltezt
+- samsung,gprimeltecan
+- samsung,grandprimelte
+- samsung,heatqlte
+- samsung,rossa
 
-The device trees contain initial support with:
- - GPIO keys
- - Regulator haptic
- - SDHCI (internal and external storage)
- - USB Device Mode
- - UART (on USB connector via the SM5502/SM5504 MUIC)
- - WCNSS (WiFi/BT)
- - Regulators
-
-There are different variants of Grand Prime, with some differences
-in accelerometer, NFC and panel.
-Core Prime and Grand Prime are similar, with some differences in MUIC,
-panel and touchscreen.
-Ace 4 and Core Prime are similar, with some differences in panel and
-touchscreen.
-
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 ---
-v2: Use interrupt-extended. Drop fuelgauge, sensors and NFC for now.
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentatio=
+n/devicetree/bindings/arm/qcom.yaml
+index 450f616774e0..7172f657bfa4 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -235,11 +235,17 @@ properties:
+               - samsung,a5u-eur
+               - samsung,e5
+               - samsung,e7
++              - samsung,fortuna3g
++              - samsung,fortunaltezt
++              - samsung,gprimeltecan
+               - samsung,grandmax
++              - samsung,grandprimelte
+               - samsung,gt510
+               - samsung,gt58
++              - samsung,heatqlte
+               - samsung,j5
+               - samsung,j5x
++              - samsung,rossa
+               - samsung,serranove
+               - thwc,uf896
+               - thwc,ufi001c
+--=20
+2.39.2
+
 
