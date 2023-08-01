@@ -2,152 +2,307 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CA4776A9F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 09:27:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D39776AAEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 10:27:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbjHAH1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 03:27:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43136 "EHLO
+        id S229904AbjHAI1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 04:27:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231572AbjHAH1q (ORCPT
+        with ESMTP id S230086AbjHAI07 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 03:27:46 -0400
-Received: from mgamail.intel.com (unknown [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FC919B0;
-        Tue,  1 Aug 2023 00:27:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690874864; x=1722410864;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lpPJ90+riuw2ummWKQe5ELJBHXw8RuUjjS4B9wtPCaA=;
-  b=PnAEkfzWQAtQM4WmVfdyPMiq99EgeuPHLKD5pqgbCmIYJgpHcDDMbWM3
-   jVQldGvErNAZ8IOA8Giq0HgxhpoZbXQfT7Q31Wt0K5B8LCbW0q0jp/984
-   PZPIRcNrFS+gLRa/uOYkyW295jq9uICh2PkP7wNIqt3m1419xnF1KWLYl
-   d2H27RoZJmpdx0dS8uJksu1SWBXqK+y+rGLP4a1UU3NuSbdom+IKVLzqf
-   +/XP4KTXm0Hg3TXXzNRNqHQLngG9ShuPT+jX16dstYRBiE0vvkxRBU7YF
-   PV0EnhRPicm03c2C6x72gRK7MKU44NcDw7etFxZKJkLx8iGu9p9In0LQn
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="348817523"
-X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
-   d="scan'208";a="348817523"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2023 00:27:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="794052071"
-X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
-   d="scan'208";a="794052071"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 01 Aug 2023 00:27:40 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qQjn9-00004N-34;
-        Tue, 01 Aug 2023 07:27:39 +0000
-Date:   Tue, 1 Aug 2023 15:27:36 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        cristian.marussi@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Nikunj Kela <quic_nkela@quicinc.com>
-Subject: Re: [PATCH v2 3/3] firmware: arm_scmi: Add qcom hvc/shmem transport
-Message-ID: <202308011516.voJRAbHr-lkp@intel.com>
-References: <20230724164419.16092-4-quic_nkela@quicinc.com>
+        Tue, 1 Aug 2023 04:26:59 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC8518D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 01:26:58 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3128fcd58f3so5547866f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 01:26:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690878416; x=1691483216;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+nRWq/96dxS9n2YgnBMagUisRdHMaBpUSasoWYOjHMo=;
+        b=IqKMeTr3bFTNFBkho9ygyZ1jRUPbElHs+p9G1g+zG/bOf5K3a0uTrzde/Y0q6LHSoo
+         VCwWFr/lstkVOMxwK6js/apwEzn9OlJUgiSdBEa/6sjFivPh6X6vEPnKb3ksf6ufhVuq
+         wf8ojj3w6n3NXqP6ilVF5x9dHW+U+ev+xuDhvnInai74cehiXFB4eCrPbVSNfTuwLgxb
+         OFJ7UnwemrdwCQbIo9aWNqH4XU6SdyqG9KCXLAP7iQHgRoY4RFbiHC5V/FatsjTNj/nA
+         af67+uWjb/iZ8AoU+2EhKnNuVwSK1l9lEpNWWch3J8NaGFvfT2cbnjS/qkx7XjMq2Moo
+         UFxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690878416; x=1691483216;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+nRWq/96dxS9n2YgnBMagUisRdHMaBpUSasoWYOjHMo=;
+        b=BSCvJTRsS818eQMuTH2csdBkGnH9p0M08oEqzYOb2Uxr0/DnTyUQYZ1Cx/Ck1r8iIT
+         SAc2kviFZ/eMHh+RLMXSLaCBdi9SFSkWkBpJSn9n2p5SscCZL1iFZEhDRV0HAPaXGgts
+         bzRp/67TfN6OayNAJU0Ycxj4MqzE2eyKX9maA1H6VwM+7r9i1bzVOPd/+3cfv3KeQkNM
+         /0xjX4hS3JKs1xxvwO7Bc8W0HK9ahMFespuOrn/x4QRD7OfG6+S/s5Vwq8q7OOrq2nki
+         x7JEUPCb/zf01TWVzTwt6PxmCmDqb/Wi5TX1pUvKsOmDPXYStqWZYUSIe0FmusYFf0b8
+         GdbA==
+X-Gm-Message-State: ABy/qLaIc1qaNFLSZRwmVbihBqiVCt+0XevT8tlohVpS7/Mvxi9/HGWp
+        oeE7VFdj1aciqwEl3yDJ46XU1Q==
+X-Google-Smtp-Source: APBJJlGzOpuW6TY0UwgTTC3QzJ1OrugfkPTBkP7S/s+Gc/Gp3RhNyBtF3IIYqFCoMFJYeSOU9t8d2w==
+X-Received: by 2002:a5d:6391:0:b0:315:7d2f:fc36 with SMTP id p17-20020a5d6391000000b003157d2ffc36mr1790495wru.20.1690878416496;
+        Tue, 01 Aug 2023 01:26:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b92a:81a9:df6e:1e3? ([2a01:e0a:982:cbb0:b92a:81a9:df6e:1e3])
+        by smtp.gmail.com with ESMTPSA id s6-20020a5d6a86000000b003143add4396sm15383146wru.22.2023.08.01.01.26.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Aug 2023 01:26:55 -0700 (PDT)
+Message-ID: <70875c10-9f9d-a084-d0f0-aaf80f56cb1e@linaro.org>
+Date:   Tue, 1 Aug 2023 10:26:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230724164419.16092-4-quic_nkela@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2] drm/panel: Enable DSC and CMD mode for Visionox
+ VTDR6130 panel
+Content-Language: en-US
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Paloma Arellano <quic_parellan@quicinc.com>
+Cc:     sam@ravnborg.org, airlied@gmail.com, daniel@ffwll.ch,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
+References: <20230728012623.22991-1-quic_parellan@quicinc.com>
+ <CAA8EJpqPgzd4ZSP948MQW=f4EVBHxajj4nwYq5s-OConBP7Vvg@mail.gmail.com>
+ <a03e4ec2-0516-7d4c-180f-e0916c83373b@quicinc.com>
+Organization: Linaro Developer Services
+In-Reply-To: <a03e4ec2-0516-7d4c-180f-e0916c83373b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nikunj,
+On 28/07/2023 23:44, Jessica Zhang wrote:
+> 
+> 
+> On 7/28/2023 2:37 AM, Dmitry Baryshkov wrote:
+>> On Fri, 28 Jul 2023 at 04:26, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+>>>
+>>> Enable display compression (DSC v1.2) and CMD mode for 1080x2400 Visionox
+>>> VTDR6130 AMOLED DSI panel. In addition, this patch will set the default
+>>> to command mode with DSC enabled.
+>>>
+>>> Note: This patch has only been validated DSC over command mode as DSC over
+>>> video mode has never been validated for the MSM driver before.
+>>>
+>>> Depends on: "Add prepare_prev_first flag to Visionox VTDR6130" [1]
+>>>
+>>> Changes since v1:
+>>>   - Changed from email address
+>>>
+>>> [1] https://patchwork.freedesktop.org/series/121337/
+>>>
+>>> Suggested-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+>>> ---
+>>>   .../gpu/drm/panel/panel-visionox-vtdr6130.c   | 77 ++++++++++++++++++-
+>>>   1 file changed, 73 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+>>> index e1363e128e7e..5658d39a3a6b 100644
+>>> --- a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+>>> +++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+>>> @@ -9,6 +9,7 @@
+>>>   #include <linux/of.h>
+>>>
+>>>   #include <drm/display/drm_dsc.h>
+>>> +#include <drm/display/drm_dsc_helper.h>
+>>>   #include <drm/drm_mipi_dsi.h>
+>>>   #include <drm/drm_modes.h>
+>>>   #include <drm/drm_panel.h>
+>>> @@ -20,7 +21,8 @@ struct visionox_vtdr6130 {
+>>>          struct mipi_dsi_device *dsi;
+>>>          struct gpio_desc *reset_gpio;
+>>>          struct regulator_bulk_data supplies[3];
+>>> -       bool prepared;
+>>> +       bool prepared, enabled;
+>>> +       bool video_mode;
+>>>   };
+>>>
+>>>   static inline struct visionox_vtdr6130 *to_visionox_vtdr6130(struct drm_panel *panel)
+>>> @@ -50,12 +52,18 @@ static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
+>>>          if (ret)
+>>>                  return ret;
+>>>
+>>> +       mipi_dsi_dcs_write_seq(dsi, 0x03, 0x01);
+>>>          mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY, 0x20);
+>>>          mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_SET_DISPLAY_BRIGHTNESS, 0x00, 0x00);
+>>>          mipi_dsi_dcs_write_seq(dsi, 0x59, 0x09);
+>>>          mipi_dsi_dcs_write_seq(dsi, 0x6c, 0x01);
+>>>          mipi_dsi_dcs_write_seq(dsi, 0x6d, 0x00);
+>>> -       mipi_dsi_dcs_write_seq(dsi, 0x6f, 0x01);
+>>> +
+>>> +       if (ctx->video_mode)
+>>> +               mipi_dsi_dcs_write_seq(dsi, 0x6f, 0x01);
+>>> +       else
+>>> +               mipi_dsi_dcs_write_seq(dsi, 0x6f, 0x02);
+>>> +
+>>>          mipi_dsi_dcs_write_seq(dsi, 0x70,
+>>>                                 0x12, 0x00, 0x00, 0xab, 0x30, 0x80, 0x09, 0x60, 0x04,
+>>>                                 0x38, 0x00, 0x28, 0x02, 0x1c, 0x02, 0x1c, 0x02, 0x00,
+>>> @@ -214,6 +222,42 @@ static const struct drm_display_mode visionox_vtdr6130_mode = {
+>>>          .height_mm = 157,
+>>>   };
+>>>
+>>> +static int visionox_vtdr6130_enable(struct drm_panel *panel)
+>>> +{
+>>> +       struct visionox_vtdr6130 *ctx = to_visionox_vtdr6130(panel);
+>>> +       struct mipi_dsi_device *dsi = ctx->dsi;
+>>> +       struct drm_dsc_picture_parameter_set pps;
+>>> +       int ret;
+>>> +
+>>> +       if (ctx->enabled)
+>>> +               return 0;
+>>> +
+>>> +       if (!dsi->dsc) {
+>>> +               dev_err(&dsi->dev, "DSC not attached to DSI\n");
+>>> +               return -ENODEV;
+>>> +       }
+>>
+>> The error message is misleading. Also, if you don't want to enable DSC
+>> for the video mode, this will break.
+>>
+>>> +
+>>> +       drm_dsc_pps_payload_pack(&pps, dsi->dsc);
+>>> +       ret = mipi_dsi_picture_parameter_set(dsi, &pps);
+>>> +       if (ret) {
+>>> +               dev_err(&dsi->dev, "Failed to set PPS\n");
+>>> +               return ret;
+>>> +       }
+>>> +
+>>> +       ctx->enabled = true;
+>>
+>> Do we need this refcount just for PPS upload? What will happen if PPS
+>> is uploaded several times?
+>>
+>>> +
+>>> +       return 0;
+>>> +}
+>>> +
+>>> +static int visionox_vtdr6130_disable(struct drm_panel *panel)
+>>> +{
+>>> +       struct visionox_vtdr6130 *ctx = to_visionox_vtdr6130(panel);
+>>> +
+>>> +       ctx->enabled = false;
+>>> +
+>>> +       return 0;
+>>> +}
+>>> +
+>>>   static int visionox_vtdr6130_get_modes(struct drm_panel *panel,
+>>>                                         struct drm_connector *connector)
+>>>   {
+>>> @@ -237,6 +281,8 @@ static const struct drm_panel_funcs visionox_vtdr6130_panel_funcs = {
+>>>          .prepare = visionox_vtdr6130_prepare,
+>>>          .unprepare = visionox_vtdr6130_unprepare,
+>>>          .get_modes = visionox_vtdr6130_get_modes,
+>>> +       .enable = visionox_vtdr6130_enable,
+>>> +       .disable = visionox_vtdr6130_disable,
+>>>   };
+>>>
+>>>   static int visionox_vtdr6130_bl_update_status(struct backlight_device *bl)
+>>> @@ -269,11 +315,31 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
+>>>   {
+>>>          struct device *dev = &dsi->dev;
+>>>          struct visionox_vtdr6130 *ctx;
+>>> +       struct drm_dsc_config *dsc;
+>>>          int ret;
+>>>
+>>>          ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+>>>          if (!ctx)
+>>>                  return -ENOMEM;
+>>> +
+>>> +       ctx->video_mode = of_property_read_bool(dev->of_node, "enforce-video-mode");
+>>
+>> Please also add a DT bindings patch.
+>>
+>>> +
+>>> +       dsc = devm_kzalloc(dev, sizeof(*dsc), GFP_KERNEL);
+>>> +       if (!dsc)
+>>> +               return -ENOMEM;
+>>
+>> You can add struct drm_dsc_config to struct visionox_vtdr6130 instead
+>> of allocating it.
+>>
+>>> +
+>>> +       /* Set DSC params */
+>>> +       dsc->dsc_version_major = 0x1;
+>>> +       dsc->dsc_version_minor = 0x2;
+>>> +
+>>> +       dsc->slice_height = 40;
+>>> +       dsc->slice_width = 540;
+>>> +       dsc->slice_count = 2;
+>>> +       dsc->bits_per_component = 8;
+>>> +       dsc->bits_per_pixel = 8 << 4;
+>>> +       dsc->block_pred_enable = true;
+>>> +
+>>> +       dsi->dsc = dsc;
+>>
+>> Only in command mode?
+> 
+> Hi Dmitry,
+> 
+> The intention of the patch wasn't to enable DSC for only command mode.
+> 
+> We didn't want to limit DSC to only command mode because, while the MSM DPU driver isn't able to validate DSC on video mode, other vendors might have already validated DSC on video mode and would benefit from this patch.
+> 
+> FWIW, inital driver commit [1] notes that the panel is meant to work with compressed streams in general and DSC support was tob be added later on.
 
-kernel test robot noticed the following build errors:
+The panel supports Video, Video+DSC, CMD, CMD+DSC, so it would be great to be able to
+select any of the supported modes, including the non-compressed ones.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.5-rc4 next-20230801]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+So enforce-video-mode is great, but an enforce-uncompressed-mode would be necessary
+aswell.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Nikunj-Kela/dt-bindings-arm-convert-nested-if-else-construct-to-allOf/20230725-004613
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230724164419.16092-4-quic_nkela%40quicinc.com
-patch subject: [PATCH v2 3/3] firmware: arm_scmi: Add qcom hvc/shmem transport
-config: arm-randconfig-r004-20230731 (https://download.01.org/0day-ci/archive/20230801/202308011516.voJRAbHr-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce: (https://download.01.org/0day-ci/archive/20230801/202308011516.voJRAbHr-lkp@intel.com/reproduce)
+Neil
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202308011516.voJRAbHr-lkp@intel.com/
+> 
+> Thanks,
+> 
+> Jessica Zhang
+> 
+> [1] https://patchwork.freedesktop.org/patch/517483/?series=112369&rev=2
+> 
+>>
+>>>
+>>>          ctx->supplies[0].supply = "vddio";
+>>>          ctx->supplies[1].supply = "vci";
+>>> @@ -294,8 +360,11 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
+>>>
+>>>          dsi->lanes = 4;
+>>>          dsi->format = MIPI_DSI_FMT_RGB888;
+>>> -       dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_NO_EOT_PACKET |
+>>> -                         MIPI_DSI_CLOCK_NON_CONTINUOUS;
+>>> +
+>>> +       dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET | MIPI_DSI_CLOCK_NON_CONTINUOUS;
+>>
+>> Keep the line split please.
+>>
+>>> +       if (ctx->video_mode)
+>>> +               dsi->mode_flags |= MIPI_DSI_MODE_VIDEO;
+>>> +
+>>>          ctx->panel.prepare_prev_first = true;
+>>>
+>>>          drm_panel_init(&ctx->panel, dev, &visionox_vtdr6130_panel_funcs,
+>>> -- 
+>>> 2.41.0
+>>>
+>>
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
 
-All errors (new ones prefixed by >>):
-
->> drivers/firmware/arm_scmi/qcom_hvc.c:182:2: error: write to reserved register 'R7'
-           arm_smccc_1_1_hvc(scmi_info->func_id, (unsigned long)scmi_info->cap_id,
-           ^
-   include/linux/arm-smccc.h:536:48: note: expanded from macro 'arm_smccc_1_1_hvc'
-   #define arm_smccc_1_1_hvc(...)  __arm_smccc_1_1(SMCCC_HVC_INST, __VA_ARGS__)
-                                                   ^
-   include/linux/arm-smccc.h:398:24: note: expanded from macro 'SMCCC_HVC_INST'
-   #define SMCCC_HVC_INST  __HVC(0)
-                           ^
-   arch/arm/include/asm/opcodes-virt.h:11:22: note: expanded from macro '__HVC'
-   #define __HVC(imm16) __inst_arm_thumb32(                                \
-                        ^
-   arch/arm/include/asm/opcodes.h:215:2: note: expanded from macro '__inst_arm_thumb32'
-           __inst_thumb32(thumb_opcode)
-           ^
-   arch/arm/include/asm/opcodes.h:205:27: note: expanded from macro '__inst_thumb32'
-   #define __inst_thumb32(x) ___inst_thumb32(                              \
-                             ^
-   arch/arm/include/asm/opcodes.h:230:2: note: expanded from macro '___inst_thumb32'
-           ".short " __stringify(first) ", " __stringify(second) "\n\t"
-           ^
-   1 error generated.
-
-
-vim +/R7 +182 drivers/firmware/arm_scmi/qcom_hvc.c
-
-   167	
-   168	static int qcom_hvc_send_message(struct scmi_chan_info *cinfo,
-   169					 struct scmi_xfer *xfer)
-   170	{
-   171		struct scmi_qcom_hvc *scmi_info = cinfo->transport_info;
-   172		struct arm_smccc_res res;
-   173	
-   174		/*
-   175		 * Channel will be released only once response has been
-   176		 * surely fully retrieved, so after .mark_txdone()
-   177		 */
-   178		mutex_lock(&scmi_info->shmem_lock);
-   179	
-   180		shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
-   181	
- > 182		arm_smccc_1_1_hvc(scmi_info->func_id, (unsigned long)scmi_info->cap_id,
-   183				  0, 0, 0, 0, 0, 0, &res);
-   184	
-   185		if (res.a0) {
-   186			mutex_unlock(&scmi_info->shmem_lock);
-   187			return -EOPNOTSUPP;
-   188		}
-   189	
-   190		return 0;
-   191	}
-   192	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
