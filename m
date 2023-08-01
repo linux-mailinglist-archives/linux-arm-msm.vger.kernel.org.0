@@ -2,164 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F3F076B6A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 16:02:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E26F676B6C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 16:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234445AbjHAOCp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 10:02:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56846 "EHLO
+        id S234158AbjHAOGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 10:06:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232064AbjHAOCj (ORCPT
+        with ESMTP id S234492AbjHAOFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 10:02:39 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C44E5F;
-        Tue,  1 Aug 2023 07:02:27 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 8D28F6607187;
-        Tue,  1 Aug 2023 15:02:24 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1690898545;
-        bh=O+sOqle7nRll28/FmxMTrTj8mlyOiIx2mIEKBCwzSGA=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=eoHmMrCkU2nYDXoxwl6GPyQUilti2nJ82i/ts2XxDBgQyKb4hPNwDuIUyLUSiSc8z
-         R0A5XpQtIjU1Qxnm7npVqJ0L60HTMNovgl/DNSe7hLGBeKMbt4gi1Wn78S2rTaMFk2
-         /IycX6R5OfRR2F3ujH3Oi8fKrwtmvWTwbRD9P9BpbauTpIooMAXxcAlSujIK86w57X
-         Ev/wQhrEPZYpwj1ohQlPVqzYHuQzmdef1CXDJGBnI4Q7U2OQA8eR53u3v5eHV7jR+P
-         /fGTEAhrG1+RgBECZ+Zd7hAloPlBzsoPuxwRXoE8ouT1h7DXIAmVjW0ox3q3Yuvi4j
-         oVssdzhph1nKQ==
-Message-ID: <9ae6616c-7799-8b0c-eff5-1a30d467fbda@collabora.com>
-Date:   Tue, 1 Aug 2023 16:02:21 +0200
+        Tue, 1 Aug 2023 10:05:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671E53598;
+        Tue,  1 Aug 2023 07:05:27 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 371Cvufp010226;
+        Tue, 1 Aug 2023 14:05:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8/KuE7ZebrUGAksmIDm85DsZ0E+iBDP8kfm3m+UuBnQ=;
+ b=MFBLuuUeCC7ra6yUso1HzBfXr5yHqupLIbNeGtK5UDPqVgmL+0Yhwn8DEQulIGluxXKL
+ JajWJL66Hd3nTZu6eYl7nb+q89tRcbWAtbbYkneaesCJiO5RIC9LOqn24bwWytI3cn+X
+ 11W9g+o6yvlhTcg1VLR70+nEv+fEQmsQFxDnek50hdlmvBojZ2O/ZwPoY7qvkOP53jXM
+ P/pxeX5ruatrt7KV/khprG55AVnCk6ROcFL1slE3uAchfF9yuCKG22wilbe+cJ3RtHS+
+ TX4fgXs9eKXBgv8Tz5PgS6iwvPXMrotvKIU8qprW9CHFIkEGAzP44ByCp1zX+/TVclTV xw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s72gqr4t5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Aug 2023 14:05:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371E5CJR010200
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 1 Aug 2023 14:05:12 GMT
+Received: from [10.50.55.253] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 1 Aug
+ 2023 07:05:10 -0700
+Message-ID: <dc7fdd8a-b3c4-b931-61be-b9bc467c6a85@quicinc.com>
+Date:   Tue, 1 Aug 2023 19:35:06 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 2/6] iommu/qcom: Use the asid read from device-tree if
- specified
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH][V2][next] accel/qaic: remove redundant pointer pexec
+To:     Colin Ian King <colin.i.king@gmail.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Carl Vanderlip <quic_carlv@quicinc.com>,
+        "Oded Gabbay" <ogabbay@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+CC:     <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230726140626.264952-1-colin.i.king@gmail.com>
 Content-Language: en-US
-To:     Will Deacon <will@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, luca@z3ntu.xyz,
-        konrad.dybcio@linaro.org, dmitry.baryshkov@linaro.org,
-        joro@8bytes.org, robin.murphy@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        kernel@collabora.com,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230622092742.74819-1-angelogioacchino.delregno@collabora.com>
- <20230622092742.74819-3-angelogioacchino.delregno@collabora.com>
- <20230801134953.GA26253@willie-the-truck>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230801134953.GA26253@willie-the-truck>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+In-Reply-To: <20230726140626.264952-1-colin.i.king@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qriaiy6FdSCIUOE9KCRm590KugTW_szM
+X-Proofpoint-ORIG-GUID: qriaiy6FdSCIUOE9KCRm590KugTW_szM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-01_09,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=624 adultscore=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308010128
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,
+        T_SPF_TEMPERROR,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 01/08/23 15:49, Will Deacon ha scritto:
-> On Thu, Jun 22, 2023 at 11:27:38AM +0200, AngeloGioacchino Del Regno wrote:
->> As specified in this driver, the context banks are 0x1000 apart but
->> on some SoCs the context number does not necessarily match this
->> logic, hence we end up using the wrong ASID: keeping in mind that
->> this IOMMU implementation relies heavily on SCM (TZ) calls, it is
->> mandatory that we communicate the right context number.
->>
->> Since this is all about how context banks are mapped in firmware,
->> which may be board dependent (as a different firmware version may
->> eventually change the expected context bank numbers), introduce a
->> new property "qcom,ctx-asid": when found, the ASID will be forced
->> as read from the devicetree.
->>
->> When "qcom,ctx-asid" is not found, this driver retains the previous
->> behavior as to avoid breaking older devicetrees or systems that do
->> not require forcing ASID numbers.
->>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> [Marijn: Rebased over next-20221111]
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
->> ---
->>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 18 +++++++++++++++---
->>   1 file changed, 15 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> index a503ed758ec3..8face57c4180 100644
->> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> @@ -531,7 +531,8 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
->>   	 * index into qcom_iommu->ctxs:
->>   	 */
->>   	if (WARN_ON(asid < 1) ||
->> -	    WARN_ON(asid > qcom_iommu->num_ctxs)) {
->> +	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
->> +	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL)) {
->>   		put_device(&iommu_pdev->dev);
->>   		return -EINVAL;
->>   	}
->> @@ -617,7 +618,8 @@ static int qcom_iommu_sec_ptbl_init(struct device *dev)
->>   
->>   static int get_asid(const struct device_node *np)
->>   {
->> -	u32 reg;
->> +	u32 reg, val;
->> +	int asid;
->>   
->>   	/* read the "reg" property directly to get the relative address
->>   	 * of the context bank, and calculate the asid from that:
->> @@ -625,7 +627,17 @@ static int get_asid(const struct device_node *np)
->>   	if (of_property_read_u32_index(np, "reg", 0, &reg))
->>   		return -ENODEV;
->>   
->> -	return reg / 0x1000;      /* context banks are 0x1000 apart */
->> +	/*
->> +	 * Context banks are 0x1000 apart but, in some cases, the ASID
->> +	 * number doesn't match to this logic and needs to be passed
->> +	 * from the DT configuration explicitly.
->> +	 */
->> +	if (!of_property_read_u32(np, "qcom,ctx-asid", &val))
->> +		asid = val;
->> +	else
->> +		asid = reg / 0x1000;
->> +
->> +	return asid;
+
+
+On 7/26/2023 7:36 PM, Colin Ian King wrote:
+> Pointer pexec is being assigned a value however it is never read. The
+> assignment is redundant and can be removed. Replace sizeof(*pexec)
+> with sizeof the type and remove the declaration of pointer pexec.
 > 
-> Shouldn't we at least have some error checking here? For example, ensuring
-> that the ASIDs are within range, aren't duplicates etc?
-> 
+> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
 
-The only check that we can perform here for ASID-in-range is
-
-if ((asid * 0x1000 > (mmio_start + mmio_size - 0x1000))
-	return -EINVAL;
-
-...as for duplicates, a check can *probably* (surely) be done... but I'm not
-sure I have any more time to feed more code to this series from years ago...
-
-> Also, can you elaborate a little more on what sort of ASID-to-Context
-> mappings you actually see in practice?
-> 
-
-I'm sorry, but not really. The first version of this (including the whole research
-that I had to perform to write those patches) is from year 2019, so 4 years ago...
-
-...I don't really remember the full details anymore - if not that all of this was
-done because context banks are fixed (and setup by TZ), tz takes an asid number
-when trying to perform any operation on the context bank, and there's no way to
-reset mappings because everything is protected by the hypervisor (which will fault
-and reboot the AP instantly if you try).
-
-Cheers,
-Angelo
-
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
