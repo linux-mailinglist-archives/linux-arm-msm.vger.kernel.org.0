@@ -2,56 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89E5E76AB48
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 10:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3C5476AB62
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 10:54:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjHAIpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 04:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50182 "EHLO
+        id S232127AbjHAIyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 04:54:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231812AbjHAIpS (ORCPT
+        with ESMTP id S231986AbjHAIy2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 04:45:18 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3374F1B6;
-        Tue,  1 Aug 2023 01:45:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=+iCOMUZEBRmp0SfXP3l/d75t5cDd7ZTASaBmWC/aA3g=; b=Hr21qsxB3uCtbyYtTq54zdvsSe
-        LSi1orVTZmDgACnr7OMqBi+zYld5OJZ1RM1gHcmzXtsEHsV5SuYD3iFm3BSo5rp9yREoQayT68pFz
-        fWMRqbZcyz5EXaHHfzjS0N3NLiF1Mvnnj0Ta8kGGy5YoOnT1iig3AvDdcVNgJVykHcY4=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1qQl00-002mRI-9L; Tue, 01 Aug 2023 10:45:00 +0200
-Date:   Tue, 1 Aug 2023 10:45:00 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>,
-        Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 2/4] soc: qcom: aoss: Add debugfs interface for sending
- messages
-Message-ID: <98179d9e-0c03-4659-9dcc-73a411bfa00e@lunn.ch>
-References: <20230731041013.2950307-1-quic_bjorande@quicinc.com>
- <20230731041013.2950307-3-quic_bjorande@quicinc.com>
- <21dfb855-8f44-4a4c-9dba-52eb5ae46b9b@lunn.ch>
- <20230731153938.GF1428172@hu-bjorande-lv.qualcomm.com>
+        Tue, 1 Aug 2023 04:54:28 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9211996;
+        Tue,  1 Aug 2023 01:54:23 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37189QSu031114;
+        Tue, 1 Aug 2023 08:54:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=QqdKrxgNGpegtHoX42r1rcywXkR9SeUM/aybOYqB+wk=;
+ b=lpJcXKt2LYwWvNLnG5+Uj/RwQFGyjt7v6Rgr3V9s+iBYmRSajhZgo5Sn2qe4S5WHPYRW
+ 7TFfgGMPaB8gY+xUCxLLAjFOaDjZTQnaKzf2PTzAh66mXSoZAxr86tmVU1kRVDzvghMk
+ MySKXDdoFZP079WCpsDsBbqT/SAI/9pniUHhci45/GmGjQO5+HUrk4ojFJGmc7hnRQTO
+ kugWgJp7BjPcikRVTTf3KGcifUqlhMm1Csk7JlCKMR46CB5vnzWkLnl/HB1zhI13aIaZ
+ jEgDZTy11X9v6US+tJZVZghKe022OM868w1JUM+Z024kocz8407up1thr/2IG/z00ahd Ew== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6d8gthbr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Aug 2023 08:54:13 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3718sC8D016612
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 1 Aug 2023 08:54:12 GMT
+Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 1 Aug 2023 01:54:08 -0700
+From:   Luo Jie <quic_luoj@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, Jie Luo <quic_luoj@quicinc.com>
+Subject: [PATCH 0/3] add clock controller of qca8386/qca8084
+Date:   Tue, 1 Aug 2023 16:53:49 +0800
+Message-ID: <20230801085352.22873-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230731153938.GF1428172@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: lO4lk7Ly_MYHmIRXpFMgJbK47cAhbfeB
+X-Proofpoint-GUID: lO4lk7Ly_MYHmIRXpFMgJbK47cAhbfeB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-01_03,2023-07-31_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0 adultscore=0
+ phishscore=0 priorityscore=1501 clxscore=1011 mlxlogscore=785
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308010080
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,36 +78,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 31, 2023 at 08:39:38AM -0700, Bjorn Andersson wrote:
-> On Mon, Jul 31, 2023 at 10:21:31AM +0200, Andrew Lunn wrote:
-> > On Sun, Jul 30, 2023 at 09:10:11PM -0700, Bjorn Andersson wrote:
-> > > From: Chris Lew <clew@codeaurora.org>
-> > > 
-> > > In addition to the normal runtime commands, the Always On Processor
-> > > (AOP) provides a number of debug commands which can be used during
-> > > system debugging for things such as preventing power collapse or placing
-> > > floor votes for certain resources. Some of these are documented in the
-> > > Robotics RB5 "Debug AOP ADB" linked below.
-> > > 
-> > > Provide a debugfs interface for the developer/tester to send these
-> > > commands to the AOP.
-> > 
-> > This sort of sending arbitrary binary blob commands is not liked,
-> > since it allow user space closed source drivers. At minimum, please
-> > provide a file per command, with the kernel marshalling parameters
-> > into the binary format, and decoding any returned values.
-> > 
-> 
-> Thanks for your input Andrew, that is a valid concern.
-> 
-> The interface is in debugfs and as such wouldn't be suitable for closed
-> source drivers, as in the majority of our shipping software debugfs
-> isn't enabled.
+From: Jie Luo <quic_luoj@quicinc.com>
 
-There only appears to be 3 commands, so it is now too much of a burden
-to do it properly, and not have a binary blob API.
+qca8xxx is 4 * 2.5GBaseT ports chip, working as switch mode
+named by qca8386, working as PHY mode named by qca8084,
+clock hardware reigster is accessed by MDIO bus.
 
-And most distros do have debugfs at least built and available, but
-maybe not mounted.
+This patch series add the clock controller of qca8363/qca8084,
+and add the clock flag CLK_ENABLE_MUTEX_LOCK to avoid spin lock
+used during the clock operation of qca8k clock controller where
+the sleep happens when accessing clock control register by MDIO
+bus.
 
-      Andrew
+Luo Jie (3):
+  clk: Add the flag CLK_ENABLE_MUTEX_LOCK of enabling clock
+  dt-bindings: clock: add qca8386/qca8084 clock and reset definitions
+  clk: qcom: add clock controller driver for qca8386/qca8084
+
+ .../bindings/clock/qcom,nsscc-qca8k.yaml      |   59 +
+ drivers/clk/clk.c                             |   78 +-
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/nsscc-qca8k.c                | 2205 +++++++++++++++++
+ include/dt-bindings/clock/qcom,nsscc-qca8k.h  |  102 +
+ include/dt-bindings/reset/qcom,nsscc-qca8k.h  |   76 +
+ include/linux/clk-provider.h                  |    4 +
+ 8 files changed, 2519 insertions(+), 14 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+ create mode 100644 include/dt-bindings/clock/qcom,nsscc-qca8k.h
+ create mode 100644 include/dt-bindings/reset/qcom,nsscc-qca8k.h
+
+
+base-commit: ec89391563792edd11d138a853901bce76d11f44
+-- 
+2.34.1
+
