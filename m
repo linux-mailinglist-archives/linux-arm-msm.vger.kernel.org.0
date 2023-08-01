@@ -2,388 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BAA576B2BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:09:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8548076B2E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:16:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjHALJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 07:09:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
+        id S234123AbjHALQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 07:16:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231982AbjHALJN (ORCPT
+        with ESMTP id S234156AbjHALPg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 07:09:13 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736F661A4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 04:03:19 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qQn9L-0006fW-T7; Tue, 01 Aug 2023 13:02:47 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qQn9I-000MZ5-F7; Tue, 01 Aug 2023 13:02:44 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qQn9H-009bbU-ND; Tue, 01 Aug 2023 13:02:43 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Su Hui <suhui@nfschina.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Dan Carpenter <dan.carpenter@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Liviu Dudau <liviu.dudau@arm.com>
-Cc:     Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel@pengutronix.de
-Subject: [PATCH v2 08/12] drm/msm: Convert to platform remove callback returning void
-Date:   Tue,  1 Aug 2023 13:02:35 +0200
-Message-Id: <20230801110239.831099-9-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230801110239.831099-1-u.kleine-koenig@pengutronix.de>
-References: <20230801110239.831099-1-u.kleine-koenig@pengutronix.de>
+        Tue, 1 Aug 2023 07:15:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82CC1359E;
+        Tue,  1 Aug 2023 04:13:26 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37189DLt018848;
+        Tue, 1 Aug 2023 11:13:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BKW5mMSwdbsbkp6qfO0zPCTaqLtTrZD81NQcZREgzvE=;
+ b=Pe9n4PAwXG1UkhkCxD40y1mq0DsqJbAs78ulwGSm9EoC5QU7hdyS7ivwzMaVtQDWUo2X
+ EYJ/Vwv9g1vevhDyPQwo7g7NDa0bOhATC8EBg44ix1aj3yBTTCvCeun3A6NYlv1ip3RI
+ 47y9ENYUr0QbFUyNJE/d/+FmxZVkV+cbljUFuy+cdXrraWea/Dy6UhjlXzRtM9hS/s+B
+ l9GHXBo2uJXtPnkf8u14Lc3razHFvtAzQYyyDDvxunAGsuz3JNFgzMYRg8TQTgMu0Nlf
+ mNydJH5WTFAe/WTp0Rg0RSc6OGNPG/MpI+tnMgKCNXepLKolxGEiolHib6pU82Z8jmUB kA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6d0mtxqj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Aug 2023 11:13:19 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371BDImj020777
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 1 Aug 2023 11:13:18 GMT
+Received: from [10.216.16.155] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 1 Aug
+ 2023 04:13:14 -0700
+Message-ID: <1f1b2453-c6c4-8bd7-404e-fb95a356235e@quicinc.com>
+Date:   Tue, 1 Aug 2023 16:43:11 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10594; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=DQXdudoZIFzC5d4kK4v4DYpgqsziHn9Og79FUsg0vy4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkyOW9T1PQAaa823KGFef24R+Qln/jL+jd1cmpH dygd8kSZVuJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZMjlvQAKCRCPgPtYfRL+ Tlx8B/0Wt3NXUOPplh/9zHq9b1+X7KtKpvb/CkzDb4IoCs4dFycMO0wTD4Bti/3yUn5YW5RZjzQ m5al1J9D6cXXQXMT8ZGM5W1xu/DUvQqCk56PQTyqN2p5DP2j0F4CaaYJu80N+8GcxG8LcWvGqN2 AnggvQ2WShM2IL5VN8+zUeO0uDeYaINMw8Rh4XUYJN/H9Dm5WWPhFLJQ2ePHgib/WdDNexenvc5 lBaN7/3cyOwg83kOMJZxHnS8D9IPvqVbLdIK5r8IGYOTDY2PkhzXh7rk0rTRCnOsCREz3hy19bP daqrE7JYGu++9IYF/LZVY24cjvfTqNWYXECK1kWUHOqQJ2Kk
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] soc: qcom: qmi: Signal the txn completion after releasing
+ the mutex
+Content-Language: en-US
+To:     Chris Lew <quic_clew@quicinc.com>,
+        Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_varada@quicinc.com>
+References: <20230731130755.2674029-1-quic_ipkumar@quicinc.com>
+ <eda306fc-1a92-4a2d-b13f-c3b59a39ef8d@quicinc.com>
+ <abcd7ea3-086b-b07c-bb08-63aaf2585040@quicinc.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <abcd7ea3-086b-b07c-bb08-63aaf2585040@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qiC02DgrWwFT3hAI5PBtNMS-Oh_HuvLb
+X-Proofpoint-ORIG-GUID: qiC02DgrWwFT3hAI5PBtNMS-Oh_HuvLb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-01_06,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=999 mlxscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308010101
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+Hi,
 
-Trivially convert the msm drm drivers from always returning zero in the
-remove callback to the void returning variant.
+On 8/1/2023 6:06 AM, Chris Lew wrote:
+> 
+> 
+> On 7/31/2023 8:19 AM, Pavan Kondeti wrote:
+>> On Mon, Jul 31, 2023 at 06:37:55PM +0530, Praveenkumar I wrote:
+>>> txn is in #1 stack
+>>>
+>>> Worker #1                                       Worker #2
+>>> ********                    *********
+>>>
+>>> qmi_txn_wait(txn)                               qmi_handle_message
+>>>     |                                                  |
+>>>     |                                                  |
+>>>   wait_for_complete(txn->complete)                    ....
+>>>     |                                             mutex_lock(txn->lock)
+>>>     |                                                  |
+>>>   mutex_lock(txn->lock)                                |
+>>>     .....                                         complete(txn->lock)
+>>>     |                                             
+>>> mutex_unlock(txn->lock)
+>>>     |
+>>>   mutex_unlock(txn->lock)
+>>>
+>>> In this case above, while #2 is doing the mutex_unlock(txn->lock),
+>>> in between releasing lock and doing other lock related wakeup, #2 gets
+>>> scheduled out. As a result #1, acquires the lock, unlocks, also
+>>> frees the txn also (where the lock resides)
+>>>
+>>> Now #2, gets scheduled again and tries to do the rest of the lock
+>>> related wakeup, but lock itself is invalid because txn itself is gone.
+>>>
+>>> Fixing this, by doing the mutex_unlock(txn->lock) first and then
+>>> complete(txn->lock) in #2
+>>>
+>>> Fixes: 3830d0771ef6 ("soc: qcom: Introduce QMI helpers")
+>>> Cc: stable@vger.kernel.org
+>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>> ---
+>>>   drivers/soc/qcom/qmi_interface.c | 3 ++-
+>>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/soc/qcom/qmi_interface.c 
+>>> b/drivers/soc/qcom/qmi_interface.c
+>>> index 78d7361fdcf2..92e29db97359 100644
+>>> --- a/drivers/soc/qcom/qmi_interface.c
+>>> +++ b/drivers/soc/qcom/qmi_interface.c
+>>> @@ -505,12 +505,13 @@ static void qmi_handle_message(struct 
+>>> qmi_handle *qmi,
+>>>                   pr_err("failed to decode incoming message\n");
+>>>               txn->result = ret;
+>>> -            complete(&txn->completion);
+>>>           } else  {
+>>>               qmi_invoke_handler(qmi, sq, txn, buf, len);
+>>>           }
+>>>           mutex_unlock(&txn->lock);
+>>> +        if (txn->dest && txn->ei)
+>>> +            complete(&txn->completion);
+>>>       } else {
+>>>           /* Create a txn based on the txn_id of the incoming message */
+>>>           memset(&tmp_txn, 0, sizeof(tmp_txn));
+>>
+>> What happens in a remote scenario where the waiter gets timed out at the
+>> very same time you are releasing the mutex but before calling
+>> complete()? The caller might end up freeing txn structure and it results
+>> in the same issue you are currently facing.
+>>
+>> Thanks,
+>> Pavan
+> 
+> I think downstream we had various attempts of moving the signal around 
+> trying to avoid this, but hit scenarios like the one Pavan described.
+> 
+> We eventually settled on removing the txn->lock and treating the 
+> qmi->txn_lock as a big lock. This remedied the issue where the txn->lock 
+> goes out of scope since qmi->txn_lock is tied to the qmi handle.
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jyri Sarha <jyri.sarha@iki.fi>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 5 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 6 ++----
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c   | 6 ++----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   | 5 ++---
- drivers/gpu/drm/msm/dp/dp_display.c        | 6 ++----
- drivers/gpu/drm/msm/dsi/dsi.c              | 6 ++----
- drivers/gpu/drm/msm/hdmi/hdmi.c            | 6 ++----
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c        | 6 ++----
- drivers/gpu/drm/msm/msm_drv.c              | 6 ++----
- drivers/gpu/drm/msm/msm_mdss.c             | 6 ++----
- 10 files changed, 20 insertions(+), 38 deletions(-)
+  ok agree. Using qmi->txn_lock looks a better approach.
+  That said, this race between mutex lock/unlock looks odd though.
+  If i remember we saw the issue only with CONFIG_DEBUG_LOCK_ALLOC.
+  Was that the same case for you guys as well ?
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index cb94cfd137a8..26a27cb039e9 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -647,10 +647,9 @@ static int adreno_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int adreno_remove(struct platform_device *pdev)
-+static void adreno_remove(struct platform_device *pdev)
- {
- 	component_del(&pdev->dev, &a3xx_ops);
--	return 0;
- }
- 
- static void adreno_shutdown(struct platform_device *pdev)
-@@ -765,7 +764,7 @@ static const struct dev_pm_ops adreno_pm_ops = {
- 
- static struct platform_driver adreno_driver = {
- 	.probe = adreno_probe,
--	.remove = adreno_remove,
-+	.remove_new = adreno_remove,
- 	.shutdown = adreno_shutdown,
- 	.driver = {
- 		.name = "adreno",
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index aa8499de1b9f..a16ae7db6245 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1239,11 +1239,9 @@ static int dpu_dev_probe(struct platform_device *pdev)
- 	return msm_drv_probe(&pdev->dev, dpu_kms_init);
- }
- 
--static int dpu_dev_remove(struct platform_device *pdev)
-+static void dpu_dev_remove(struct platform_device *pdev)
- {
- 	component_master_del(&pdev->dev, &msm_drm_ops);
--
--	return 0;
- }
- 
- static int __maybe_unused dpu_runtime_suspend(struct device *dev)
-@@ -1318,7 +1316,7 @@ MODULE_DEVICE_TABLE(of, dpu_dt_match);
- 
- static struct platform_driver dpu_driver = {
- 	.probe = dpu_dev_probe,
--	.remove = dpu_dev_remove,
-+	.remove_new = dpu_dev_remove,
- 	.shutdown = msm_drv_shutdown,
- 	.driver = {
- 		.name = "msm_dpu",
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 6e37072ed302..3c4258d1784b 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -561,11 +561,9 @@ static int mdp4_probe(struct platform_device *pdev)
- 	return msm_drv_probe(&pdev->dev, mdp4_kms_init);
- }
- 
--static int mdp4_remove(struct platform_device *pdev)
-+static void mdp4_remove(struct platform_device *pdev)
- {
- 	component_master_del(&pdev->dev, &msm_drm_ops);
--
--	return 0;
- }
- 
- static const struct of_device_id mdp4_dt_match[] = {
-@@ -576,7 +574,7 @@ MODULE_DEVICE_TABLE(of, mdp4_dt_match);
- 
- static struct platform_driver mdp4_platform_driver = {
- 	.probe      = mdp4_probe,
--	.remove     = mdp4_remove,
-+	.remove_new = mdp4_remove,
- 	.shutdown   = msm_drv_shutdown,
- 	.driver     = {
- 		.name   = "mdp4",
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 323079cfd698..e8aebad5f208 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -942,11 +942,10 @@ static int mdp5_dev_probe(struct platform_device *pdev)
- 	return msm_drv_probe(&pdev->dev, mdp5_kms_init);
- }
- 
--static int mdp5_dev_remove(struct platform_device *pdev)
-+static void mdp5_dev_remove(struct platform_device *pdev)
- {
- 	DBG("");
- 	component_master_del(&pdev->dev, &msm_drm_ops);
--	return 0;
- }
- 
- static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
-@@ -987,7 +986,7 @@ MODULE_DEVICE_TABLE(of, mdp5_dt_match);
- 
- static struct platform_driver mdp5_driver = {
- 	.probe = mdp5_dev_probe,
--	.remove = mdp5_dev_remove,
-+	.remove_new = mdp5_dev_remove,
- 	.shutdown = msm_drv_shutdown,
- 	.driver = {
- 		.name = "msm_mdp",
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 76f13954015b..01784e9e7127 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1296,7 +1296,7 @@ static int dp_display_probe(struct platform_device *pdev)
- 	return rc;
- }
- 
--static int dp_display_remove(struct platform_device *pdev)
-+static void dp_display_remove(struct platform_device *pdev)
- {
- 	struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
- 
-@@ -1304,8 +1304,6 @@ static int dp_display_remove(struct platform_device *pdev)
- 	dp_display_deinit_sub_modules(dp);
- 
- 	platform_set_drvdata(pdev, NULL);
--
--	return 0;
- }
- 
- static int dp_pm_resume(struct device *dev)
-@@ -1415,7 +1413,7 @@ static const struct dev_pm_ops dp_pm_ops = {
- 
- static struct platform_driver dp_display_driver = {
- 	.probe  = dp_display_probe,
--	.remove = dp_display_remove,
-+	.remove_new = dp_display_remove,
- 	.driver = {
- 		.name = "msm-dp-display",
- 		.of_match_table = dp_dt_match,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index baab79ab6e74..7a8208cd6649 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -161,14 +161,12 @@ static int dsi_dev_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int dsi_dev_remove(struct platform_device *pdev)
-+static void dsi_dev_remove(struct platform_device *pdev)
- {
- 	struct msm_dsi *msm_dsi = platform_get_drvdata(pdev);
- 
- 	DBG("");
- 	dsi_destroy(msm_dsi);
--
--	return 0;
- }
- 
- static const struct of_device_id dt_match[] = {
-@@ -187,7 +185,7 @@ static const struct dev_pm_ops dsi_pm_ops = {
- 
- static struct platform_driver dsi_driver = {
- 	.probe = dsi_dev_probe,
--	.remove = dsi_dev_remove,
-+	.remove_new = dsi_dev_remove,
- 	.driver = {
- 		.name = "msm_dsi",
- 		.of_match_table = dt_match,
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 60509fb39710..b6bcb9f675fe 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -551,15 +551,13 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int msm_hdmi_dev_remove(struct platform_device *pdev)
-+static void msm_hdmi_dev_remove(struct platform_device *pdev)
- {
- 	struct hdmi *hdmi = dev_get_drvdata(&pdev->dev);
- 
- 	component_del(&pdev->dev, &msm_hdmi_ops);
- 
- 	msm_hdmi_put_phy(hdmi);
--
--	return 0;
- }
- 
- static const struct of_device_id msm_hdmi_dt_match[] = {
-@@ -574,7 +572,7 @@ static const struct of_device_id msm_hdmi_dt_match[] = {
- 
- static struct platform_driver msm_hdmi_driver = {
- 	.probe = msm_hdmi_dev_probe,
--	.remove = msm_hdmi_dev_remove,
-+	.remove_new = msm_hdmi_dev_remove,
- 	.driver = {
- 		.name = "hdmi_msm",
- 		.of_match_table = msm_hdmi_dt_match,
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-index 3e00fb8190b2..88a3423b7f24 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -177,11 +177,9 @@ static int msm_hdmi_phy_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int msm_hdmi_phy_remove(struct platform_device *pdev)
-+static void msm_hdmi_phy_remove(struct platform_device *pdev)
- {
- 	pm_runtime_disable(&pdev->dev);
--
--	return 0;
- }
- 
- static const struct of_device_id msm_hdmi_phy_dt_match[] = {
-@@ -200,7 +198,7 @@ static const struct of_device_id msm_hdmi_phy_dt_match[] = {
- 
- static struct platform_driver msm_hdmi_phy_platform_driver = {
- 	.probe      = msm_hdmi_phy_probe,
--	.remove     = msm_hdmi_phy_remove,
-+	.remove_new = msm_hdmi_phy_remove,
- 	.driver     = {
- 		.name   = "msm_hdmi_phy",
- 		.of_match_table = msm_hdmi_phy_dt_match,
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 2a0e3529598b..551b0bc28095 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1278,11 +1278,9 @@ static int msm_pdev_probe(struct platform_device *pdev)
- 	return msm_drv_probe(&pdev->dev, NULL);
- }
- 
--static int msm_pdev_remove(struct platform_device *pdev)
-+static void msm_pdev_remove(struct platform_device *pdev)
- {
- 	component_master_del(&pdev->dev, &msm_drm_ops);
--
--	return 0;
- }
- 
- void msm_drv_shutdown(struct platform_device *pdev)
-@@ -1303,7 +1301,7 @@ void msm_drv_shutdown(struct platform_device *pdev)
- 
- static struct platform_driver msm_platform_driver = {
- 	.probe      = msm_pdev_probe,
--	.remove     = msm_pdev_remove,
-+	.remove_new = msm_pdev_remove,
- 	.shutdown   = msm_drv_shutdown,
- 	.driver     = {
- 		.name   = "msm",
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 6bf6c4a0f550..268fb3d490de 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -492,15 +492,13 @@ static int mdss_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int mdss_remove(struct platform_device *pdev)
-+static void mdss_remove(struct platform_device *pdev)
- {
- 	struct msm_mdss *mdss = platform_get_drvdata(pdev);
- 
- 	of_platform_depopulate(&pdev->dev);
- 
- 	msm_mdss_destroy(mdss);
--
--	return 0;
- }
- 
- static const struct msm_mdss_data sc7180_data = {
-@@ -594,7 +592,7 @@ MODULE_DEVICE_TABLE(of, mdss_dt_match);
- 
- static struct platform_driver mdss_platform_driver = {
- 	.probe      = mdss_probe,
--	.remove     = mdss_remove,
-+	.remove_new = mdss_remove,
- 	.driver     = {
- 		.name   = "msm-mdss",
- 		.of_match_table = mdss_dt_match,
--- 
-2.39.2
+  Otherwise, ideally handling all members of the object inside lock
+  should be the right solution (ie moving the wait_for_complete(txn)
+  inside the mutex_lock in qmi_txn_wait. That should take care of the
+  scenario that Pavan described too.
+
+Regards,
+  Sricharan
 
