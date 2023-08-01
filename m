@@ -2,70 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22BCB76C0D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 01:24:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D5F176C12A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 01:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbjHAXYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 19:24:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58412 "EHLO
+        id S230404AbjHAXld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 19:41:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbjHAXYx (ORCPT
+        with ESMTP id S230314AbjHAXl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 19:24:53 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB28F2130
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 16:24:51 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b9e6cc93c6so45541811fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 16:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690932290; x=1691537090;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yejd9U6Gcc2r/2FX/wqBTc3BMFe3dGwJkHdTGuAhl4k=;
-        b=MPownO5/r6vY/Ol/hbrWfumv4zVog3mqa1WLbuFYKD2APFn09LYIVJdLwzbhhsnMTF
-         IzGBki59THy016DAw0MFh2edlfp5i0Pnge1YJoIlHFGGIVYTi3V2fXDfuzSia+tkBvjl
-         Xq4iiMpRqtRMfIoWOyMNOVtorQdBdtIBbkvn21sNDZp0NZXhcdZOw3eJkqUWmxp7Jpl9
-         tI+R5asg8SZ2PLX+vPWbFaS1wpoeHG6nXi4LevySBYNnHPhIEHpw507xCtItosAJT7nK
-         097SIDmcKTcLb9rqZ9cHQQ/lwTznMy1j6Z+jD9e2bMM7oXO3Nr+qDox5JjW8M2cJRg4I
-         f5/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690932290; x=1691537090;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yejd9U6Gcc2r/2FX/wqBTc3BMFe3dGwJkHdTGuAhl4k=;
-        b=K8dMf7Msv7minGoKly+bMPsBToxhHe2HgqE1yzf1/HwKT1VYUlbqaaYxEE3ZN/B0MG
-         bz/vhvKDeQfyDLT5xbaXKK6bsNbawEFZFR5Q5c5cPSAmIB1mZkbiKbPg6G4PrqGOEwYF
-         xhj4IxZnYiiE2/T3t0q2XW5FcfR4RIKnWafcd3pfaCtG+fCObozXh+Bykn9ywLyCJMyT
-         JZUxki8j9EaL03YCxtXlLvr4wtjnBtmzwd+YPvCNvGcZ96hE0N2zRJvVrbGpHdcOEROs
-         3FI2a99Ws9g5RcF16fCX6Ccmry/9Rn+1coZH+ZhDq/NFtxich2IIqJUBF4wp4zEnbJLZ
-         /Xog==
-X-Gm-Message-State: ABy/qLZZwSkTVXt+sEut0qco5cfQXgTuGeAqwaKw/X1GsauLCo2gAE0U
-        1gnbGkLC1AJUu0lLHKdzUaTKyg==
-X-Google-Smtp-Source: APBJJlG9fDmLJM5W7byZy8IBCTKRn5g6ZfOrO+4qcb2bK1+ED0ZGZoCHfJbCsH72SXa/FX7yNTH6jw==
-X-Received: by 2002:a2e:a0c6:0:b0:2b6:e958:5700 with SMTP id f6-20020a2ea0c6000000b002b6e9585700mr3550893ljm.4.1690932290028;
-        Tue, 01 Aug 2023 16:24:50 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a10-20020a2eb16a000000b002b9fddc6d85sm433329ljm.62.2023.08.01.16.24.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Aug 2023 16:24:49 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: qrb4210-rb2: add wifi variant property
-Date:   Wed,  2 Aug 2023 02:24:48 +0300
-Message-Id: <20230801232448.4175662-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230801232448.4175662-1-dmitry.baryshkov@linaro.org>
-References: <20230801232448.4175662-1-dmitry.baryshkov@linaro.org>
+        Tue, 1 Aug 2023 19:41:26 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A98E268E;
+        Tue,  1 Aug 2023 16:41:25 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 371NfJxr017562;
+        Tue, 1 Aug 2023 23:41:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4PQzrhIIqlXe+lJZG3clSiGOZyyUTZdAlXVEkzlaMBQ=;
+ b=PO2QJxIBa2bpnJGHyj2NWBZ1BdQiy33zJLZm1XLYzUMasiXxpTLcJ15NUi2b1gX1HeN0
+ cpm587OTh0Ms3uUKpCR7zDR0wHKTgjfdVAuLI8qqNGXVxUY3Cua689g5ZsWBw9ipPPd9
+ 0MkdfGY6ukYxGNv7EyMhpERGbLFwM0BgN+B7Wueywpj0BjW+hOon5S1ir8cKNdPRxsjs
+ /z2M2b4hPx68ZNioj/aed2OVCMS7uVRoflpxVCT5810RQtIl6VlzNsmemaLAYZOYz6X/
+ dDeQcLD/FZP52EVyyuInxXx8L83ZzXqZlG4GkDau17tmpAwwNDSpaq8iLv9AcSNoK4/u Tw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75b30sdp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Aug 2023 23:41:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371NfHaO030912
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 1 Aug 2023 23:41:17 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 1 Aug
+ 2023 16:41:17 -0700
+Message-ID: <73f25c8f-6193-6001-d3ff-b7fd060cce83@quicinc.com>
+Date:   Tue, 1 Aug 2023 16:41:16 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: qmi: Signal the txn completion after releasing
+ the mutex
+Content-Language: en-US
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_varada@quicinc.com>
+References: <20230731130755.2674029-1-quic_ipkumar@quicinc.com>
+ <eda306fc-1a92-4a2d-b13f-c3b59a39ef8d@quicinc.com>
+ <abcd7ea3-086b-b07c-bb08-63aaf2585040@quicinc.com>
+ <1f1b2453-c6c4-8bd7-404e-fb95a356235e@quicinc.com>
+From:   Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <1f1b2453-c6c4-8bd7-404e-fb95a356235e@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 64_IJAMe_nFD5cTh9kjxaGNPoku4JLSk
+X-Proofpoint-ORIG-GUID: 64_IJAMe_nFD5cTh9kjxaGNPoku4JLSk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-01_20,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308010211
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -76,44 +85,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The RB2 platform doesn't have board-specific board-id programmed, it uses
-generic 0xff. Thus add the property with the 'variant' of the
-calibration data.
 
-Note: the driver will check for the calibration data for the following
-IDs, so existing board-2.bin files will continue to work.
 
-- 'bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2'
-- 'bus=snoc,qmi-board-id=ff,qmi-chip-id=150'
-- 'bus=snoc,qmi-board-id=ff'
+On 8/1/2023 4:13 AM, Sricharan Ramabadhran wrote:
+> Hi,
+> 
+> On 8/1/2023 6:06 AM, Chris Lew wrote:
+>>
+>>
+>> On 7/31/2023 8:19 AM, Pavan Kondeti wrote:
+>>> On Mon, Jul 31, 2023 at 06:37:55PM +0530, Praveenkumar I wrote:
+>>>> txn is in #1 stack
+>>>>
+>>>> Worker #1                                       Worker #2
+>>>> ********                    *********
+>>>>
+>>>> qmi_txn_wait(txn)                               qmi_handle_message
+>>>>     |                                                  |
+>>>>     |                                                  |
+>>>>   wait_for_complete(txn->complete)                    ....
+>>>>     |                                             mutex_lock(txn->lock)
+>>>>     |                                                  |
+>>>>   mutex_lock(txn->lock)                                |
+>>>>     .....                                         complete(txn->lock)
+>>>>     | mutex_unlock(txn->lock)
+>>>>     |
+>>>>   mutex_unlock(txn->lock)
+>>>>
+>>>> In this case above, while #2 is doing the mutex_unlock(txn->lock),
+>>>> in between releasing lock and doing other lock related wakeup, #2 gets
+>>>> scheduled out. As a result #1, acquires the lock, unlocks, also
+>>>> frees the txn also (where the lock resides)
+>>>>
+>>>> Now #2, gets scheduled again and tries to do the rest of the lock
+>>>> related wakeup, but lock itself is invalid because txn itself is gone.
+>>>>
+>>>> Fixing this, by doing the mutex_unlock(txn->lock) first and then
+>>>> complete(txn->lock) in #2
+>>>>
+>>>> Fixes: 3830d0771ef6 ("soc: qcom: Introduce QMI helpers")
+>>>> Cc: stable@vger.kernel.org
+>>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>> ---
+>>>>   drivers/soc/qcom/qmi_interface.c | 3 ++-
+>>>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/soc/qcom/qmi_interface.c 
+>>>> b/drivers/soc/qcom/qmi_interface.c
+>>>> index 78d7361fdcf2..92e29db97359 100644
+>>>> --- a/drivers/soc/qcom/qmi_interface.c
+>>>> +++ b/drivers/soc/qcom/qmi_interface.c
+>>>> @@ -505,12 +505,13 @@ static void qmi_handle_message(struct 
+>>>> qmi_handle *qmi,
+>>>>                   pr_err("failed to decode incoming message\n");
+>>>>               txn->result = ret;
+>>>> -            complete(&txn->completion);
+>>>>           } else  {
+>>>>               qmi_invoke_handler(qmi, sq, txn, buf, len);
+>>>>           }
+>>>>           mutex_unlock(&txn->lock);
+>>>> +        if (txn->dest && txn->ei)
+>>>> +            complete(&txn->completion);
+>>>>       } else {
+>>>>           /* Create a txn based on the txn_id of the incoming 
+>>>> message */
+>>>>           memset(&tmp_txn, 0, sizeof(tmp_txn));
+>>>
+>>> What happens in a remote scenario where the waiter gets timed out at the
+>>> very same time you are releasing the mutex but before calling
+>>> complete()? The caller might end up freeing txn structure and it results
+>>> in the same issue you are currently facing.
+>>>
+>>> Thanks,
+>>> Pavan
+>>
+>> I think downstream we had various attempts of moving the signal around 
+>> trying to avoid this, but hit scenarios like the one Pavan described.
+>>
+>> We eventually settled on removing the txn->lock and treating the 
+>> qmi->txn_lock as a big lock. This remedied the issue where the 
+>> txn->lock goes out of scope since qmi->txn_lock is tied to the qmi 
+>> handle.
+>>
+> 
+>   ok agree. Using qmi->txn_lock looks a better approach.
+>   That said, this race between mutex lock/unlock looks odd though.
+>   If i remember we saw the issue only with CONFIG_DEBUG_LOCK_ALLOC.
+>   Was that the same case for you guys as well ?
+> 
+>   Otherwise, ideally handling all members of the object inside lock
+>   should be the right solution (ie moving the wait_for_complete(txn)
+>   inside the mutex_lock in qmi_txn_wait. That should take care of the
+>   scenario that Pavan described too.
+> 
 
-For the reference, the board is identified by the driver in the
-following way:
+No, we saw the issue even without CONFIG_DEBUG_LOCK_ALLOC. The 
+callstacks always ended up showing that the mutex could be acquired 
+before mutex_unlock() completely finished.
 
-ath10k_snoc c800000.wifi: qmi chip_id 0x150 chip_family 0x4002 board_id 0xff soc_id 0x40670000
-ath10k_snoc c800000.wifi: qmi fw_version 0x337302d3 fw_build_timestamp 2023-01-06 01:50 fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.3.3.7.c2-00723-QCAHLSWMTPLZ-1
-ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id 0x00000000 sub 0000:0000
-ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 tracing 0 dfs 0 testmode 0
-ath10k_snoc c800000.wifi: firmware ver  api 5 features wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
-ath10k_snoc c800000.wifi: htt-ver 3.114 wmi-op 4 htt-op 3 cal file max-sta 32 raw 0 hwcrypto 1
+It didn't seem wise to poke at the mutex implementation so we went with 
+the txn_lock.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 8a6fe297fde8..12298d446104 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -544,6 +544,7 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l16a_1p3>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l23a_3p3>;
-+	qcom,ath10k-calibration-variant = "Thundercomm_RB2";
- 	status = "okay";
- };
- 
--- 
-2.39.2
-
+> Regards,
+>   Sricharan
+> 
