@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA04876B332
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:28:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DC2476B341
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:29:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjHAL2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 07:28:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60206 "EHLO
+        id S232688AbjHAL3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 07:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233763AbjHAL2I (ORCPT
+        with ESMTP id S233265AbjHAL3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 07:28:08 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C098D3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 04:28:06 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9f0b7af65so25090601fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 04:28:06 -0700 (PDT)
+        Tue, 1 Aug 2023 07:29:40 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A8E1FC0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 04:29:19 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9bb097c1bso83264241fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 04:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690889285; x=1691494085;
+        d=linaro.org; s=google; t=1690889357; x=1691494157;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TuKpcOex9H8iQHAfEJfqhOL+SPJzbIxAXlMcBdHlxv0=;
-        b=CFpYr30JbpQ7bBZ9UXQmV3KrOrJgLu+He6XK7sVSBMm8HDoLZSUUD0yDwrX9bfFewr
-         ABkG/VQ821FSiLIKt4YM8fzxzMRBJF2w2B7xFY3mZprqh6Y+lRRFYHIkSs9l1jOrOlmL
-         yQHUAL/U9f4rbZm6ZwxTaJIexg3NJU3WwK0F4gKyG4BrkhPd1PPx0/CmnztABGq6fAqW
-         uOoiwlsnn0oWnx0SwRjwB3d2GJ+clJ9fGIe5jM43mrrzdNADslNlthJfzNaNR7UeOsjJ
-         bT3Le1hqbYBSepSUu8XiwoQdAkO3fDiajtshiJeGvJFQGuT11xoQm7D6PDw4zBJNzJ1c
-         TyLA==
+        bh=xQnhvTrElkRUMYG/j88qokWXWGoFkf2VtDHC0NJz/h8=;
+        b=cA9ukiDO6VpnPgc2H7G6sIXnv2oN3+KtOVxpb+j1pmPII/ej/fJRmgSHIsO4Q4HiLT
+         AAO1CD2A9C93kWJjILfrrRjgvfx/RfGc5CfpJhXIXrgwGXlS4MsyYqRdbuRq9hxkFRZ/
+         DGZAIt0X7RJ3xp4nzwWeRu6bZoqZ9kbSKw9CC7iQBmlfPkebWGmykFDb24+ozRtplf6p
+         +6ZipGtewCDhwBakDelAGTth70ugsGV68mBazqXIh0ZDLzUOKfH1q/hekHfScBMkFSml
+         M4P0/y9mcXw0oAOE+uSjTCewMToWHhSN3ZHw+s5b4IQlLH9Yf2fkYLYmIs4ZRfDAW2Na
+         Ihfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690889285; x=1691494085;
+        d=1e100.net; s=20221208; t=1690889357; x=1691494157;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TuKpcOex9H8iQHAfEJfqhOL+SPJzbIxAXlMcBdHlxv0=;
-        b=dMUVpjAAKJajZkA33n2TRmPerRpQ7zqz5u3PeS+LkI0eWohZejsxmkd4MjUduLwX8f
-         ScReZuyAO0eaNSBuqccq18625Jljvuivikkj1Thut7xl3gtLuoPH47zSSZywcY2rpxl9
-         iBOu5uRT/ZDWtoi3LIJl+1STwt3dgCJf3wvheHNEdzaNEfoWlV1CNlmstyEdolXyYP32
-         tw0BI8okCj6WBQvuSTpXDRhCeFuez1uA9E+xRZ5iOQKPvgZbf/x9LebijKKYnprwSynD
-         5wxVFY/ND80heeBH9TT4Tyly5xXbNbSyhiN9K4PexYVwa0gMoXXTBBhdUbPkisXZhLTR
-         qPWQ==
-X-Gm-Message-State: ABy/qLaUe731x2wSFK/vE3tM1RxoZKRVKHVonAlIBPKGu4K2uYUPv+xr
-        eYI6K1zH1Q5sV1BHYdK3EZo29A==
-X-Google-Smtp-Source: APBJJlHWZgXBOC/QurMjZ71Wjbub5saT7QbC1LhAvnKA1XtlKmYf/eHGJ6hWcDMHhsPzQSBp6qtAEA==
-X-Received: by 2002:a2e:3c19:0:b0:2b9:ce86:b4e7 with SMTP id j25-20020a2e3c19000000b002b9ce86b4e7mr2145445lja.28.1690889284687;
-        Tue, 01 Aug 2023 04:28:04 -0700 (PDT)
+        bh=xQnhvTrElkRUMYG/j88qokWXWGoFkf2VtDHC0NJz/h8=;
+        b=AiRttTJP5EBemJlbPJ2cfE1AMpiXkWhYLBMiV3Xa3yZO1T5MqPp5Au2pcEwINp5fA5
+         yz/c0kacH3ixsQDCLM6p49htvVLHskJfmytdQ4jWMoOQ9F89l54CmVyOxTu1fOVW8KtZ
+         GxSKubZpkzKaI9um3JRCsVJNH/0UCYxSYnInOZiL71nhv62N0Inwil3yDmWT7mpf7y0L
+         UesB16pktSOyAvv64EassNuE2b+xnLgw90Y+MSMTouvYtlUmswiuWu+XI6KgCAlBUArp
+         bPCucGEYb5L7/E23mhnF1JuQ9oTFP/HJbk2t+o8N7jUPYArmmMu6wIXS7p4G4CELU35a
+         e96Q==
+X-Gm-Message-State: ABy/qLYgP6I3mBXMDXdBOJetl6aVwHiewR5WrjtJrbQf+blSbxfU45lv
+        gEXK+RGr2ebm7Qq6kmt1YcR7wg==
+X-Google-Smtp-Source: APBJJlHV5JYqnoDuUsavWaF8qzs6MSrXxGh12jNoZ3jGRoMfI5RtsF4bQLGsAcUFuO+cmJfXIxdicg==
+X-Received: by 2002:a2e:98c3:0:b0:2b9:d28c:9c2d with SMTP id s3-20020a2e98c3000000b002b9d28c9c2dmr2175374ljj.23.1690889357548;
+        Tue, 01 Aug 2023 04:29:17 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id k15-20020a2e240f000000b002b70a8478ddsm3043192ljk.44.2023.08.01.04.28.03
+        by smtp.gmail.com with ESMTPSA id k15-20020a2e240f000000b002b70a8478ddsm3043192ljk.44.2023.08.01.04.29.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Aug 2023 04:28:04 -0700 (PDT)
-Message-ID: <294d87a9-24a9-d802-2dbd-ae762a739a37@linaro.org>
-Date:   Tue, 1 Aug 2023 13:28:02 +0200
+        Tue, 01 Aug 2023 04:29:17 -0700 (PDT)
+Message-ID: <a289c4ed-7a05-76ea-edfc-3148cfd6c020@linaro.org>
+Date:   Tue, 1 Aug 2023 13:29:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: fix some Kconfig corner cases
+Subject: Re: [PATCH v2 03/10] interconnect: qcom: icc-rpm: Let nodes drive
+ their own bus clock
 Content-Language: en-US
-To:     Arnd Bergmann <arnd@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230801105718.3658612-1-arnd@kernel.org>
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
+ <20230726-topic-icc_coeff-v2-3-8c91c6c76076@linaro.org>
+ <ZMjlZyFcB9IFEG60@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -104,7 +105,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230801105718.3658612-1-arnd@kernel.org>
+In-Reply-To: <ZMjlZyFcB9IFEG60@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -117,28 +118,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1.08.2023 12:56, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
+On 1.08.2023 12:58, Stephan Gerhold wrote:
+> On Mon, Jul 31, 2023 at 12:52:19PM +0200, Konrad Dybcio wrote:
+>> If this hardware couldn't get messier, some nodes are supposed to drive
+>> their own bus clock.. Presumably to connect to some intermediate
+>> interface between the node itself and the bus it's (supposed to be)
+>> connected to.
+>>
+>> Expand the node struct with the necessary data and hook up the
+>> allocations & calculations.
+>>
+>> To save on memory (not very many nodes have their own clocks), allocate
+>> a pointer to an array instead of allocating an array within
+>> qcom_icc_node.
+>>
 > 
-> The SM_GCC_8550 symbol and others can only be built for ARM64 or when
-> compile testing, but it gets selected by other drivers that can also be
-> built for 32-bit ARCH_QCOM when not compile testing, which results in
-> a Kconfig warning:
+> Only on ARM32 though. On ARM64 you waste extra memory:
 > 
-> WARNING: unmet direct dependencies detected for SM_GCC_8550
->   Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=m] && (ARM64 || COMPILE_TEST [=n])
->   Selected by [m]:
->   - SM_GPUCC_8550 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
->   - SM_VIDEOCC_8550 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
+> u32 bus_clk_rate[QCOM_SMD_RPM_STATE_NUM];
+> sizeof(bus_clk_rate) = QCOM_SMD_RPM_STATE_NUM * sizeof(bus_clk_rate[0])
+>                      = 2 * 4
+>                      = 8
 > 
-> Add further 'depends on' statements to tighten this in a way that
-> avoids the missing dependencies.
+> u32 *bus_clk_rate;
+> sizeof(bus_clk_rate) = sizeof(ptr)
+>                      = 8 (for ARM64)
+>                        + 2 * 4 + malloc overhead
+>                          for each node with bus_clk_desc
 > 
-> Fixes: fd0b5b106fcab ("clk: qcom: Introduce SM8350 VIDEOCC")
-> Fixes: 441fe711be384 ("clk: qcom: videocc-sm8450: Add video clock controller driver for SM8450")
-> Fixes: f53153a37969c ("clk: qcom: videocc-sm8550: Add video clock controller driver for SM8550")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> which is > 8 from above.
+> 
+> I'm not quite convinced this optimization is worth it.
+Right, u32 is not the same size as *u32, brain fart :D
 
 Konrad
