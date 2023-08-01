@@ -2,73 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74F4976A978
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 08:47:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CA4776A9F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 09:27:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbjHAGrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 02:47:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
+        id S230383AbjHAH1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 03:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbjHAGrb (ORCPT
+        with ESMTP id S231572AbjHAH1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 02:47:31 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FAB598;
-        Mon, 31 Jul 2023 23:47:29 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3716I5mm018874;
-        Tue, 1 Aug 2023 06:47:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=QV4vqHuRpxcN0wlOQI2I9Vr6uvqf0Q7mXfqtt31NXWI=;
- b=cfklhD+IOHaY4NRSrF5U948Vcz9c+5c8fI/TVrSIKJC5kEIriZ2YE0Ng5YCxdo3+tkj9
- enMeDeQX0uxKSM0uQxKBy6dk2VmZGsheuQZc+rJI709cOlAVDX7X++qHqp/2mvBDGXdR
- fK3UMLJSz25V/8jK/O06RFVxkrc62GsxFz/HpnzyPMa0iJG2zdN/vyS0J8Zb8MalkIzH
- YqMZwpAoTythCHxK9c1R0LthcQyAJNNnrMlbjH1TYHuRhTGafSBAUi74CZDZLTT5KYDm
- Pjp5o0rsKiL7KWXUix/SzQoUSUvtLf+PjYGHaVe67itdtzoebEpxxLkT0PGdZolHCV9/ KA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6d61jcwf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Aug 2023 06:47:26 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3716lPpw030188
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 1 Aug 2023 06:47:25 GMT
-Received: from hu-ipkumar-blr.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 31 Jul 2023 23:47:22 -0700
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_clew@quicinc.com>
-Subject: [PATCH v3] soc: qcom: qmi_encdec: Restrict string length in decode
-Date:   Tue, 1 Aug 2023 12:17:12 +0530
-Message-ID: <20230801064712.3590128-1-quic_ipkumar@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+        Tue, 1 Aug 2023 03:27:46 -0400
+Received: from mgamail.intel.com (unknown [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FC919B0;
+        Tue,  1 Aug 2023 00:27:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690874864; x=1722410864;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=lpPJ90+riuw2ummWKQe5ELJBHXw8RuUjjS4B9wtPCaA=;
+  b=PnAEkfzWQAtQM4WmVfdyPMiq99EgeuPHLKD5pqgbCmIYJgpHcDDMbWM3
+   jVQldGvErNAZ8IOA8Giq0HgxhpoZbXQfT7Q31Wt0K5B8LCbW0q0jp/984
+   PZPIRcNrFS+gLRa/uOYkyW295jq9uICh2PkP7wNIqt3m1419xnF1KWLYl
+   d2H27RoZJmpdx0dS8uJksu1SWBXqK+y+rGLP4a1UU3NuSbdom+IKVLzqf
+   +/XP4KTXm0Hg3TXXzNRNqHQLngG9ShuPT+jX16dstYRBiE0vvkxRBU7YF
+   PV0EnhRPicm03c2C6x72gRK7MKU44NcDw7etFxZKJkLx8iGu9p9In0LQn
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="348817523"
+X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
+   d="scan'208";a="348817523"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2023 00:27:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="794052071"
+X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
+   d="scan'208";a="794052071"
+Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 01 Aug 2023 00:27:40 -0700
+Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qQjn9-00004N-34;
+        Tue, 01 Aug 2023 07:27:39 +0000
+Date:   Tue, 1 Aug 2023 15:27:36 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        cristian.marussi@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Nikunj Kela <quic_nkela@quicinc.com>
+Subject: Re: [PATCH v2 3/3] firmware: arm_scmi: Add qcom hvc/shmem transport
+Message-ID: <202308011516.voJRAbHr-lkp@intel.com>
+References: <20230724164419.16092-4-quic_nkela@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ockZpWMMt-3_LtU9gahh4KkhiUaV1FQd
-X-Proofpoint-ORIG-GUID: ockZpWMMt-3_LtU9gahh4KkhiUaV1FQd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-01_03,2023-07-31_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 suspectscore=0 bulkscore=0 mlxscore=0
- phishscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2308010061
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230724164419.16092-4-quic_nkela@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,41 +70,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Chris Lew <quic_clew@quicinc.com>
+Hi Nikunj,
 
-The QMI TLV value for strings in a lot of qmi element info structures
-account for null terminated strings with MAX_LEN + 1. If a string is
-actually MAX_LEN + 1 length, this will cause an out of bounds access
-when the NULL character is appended in decoding.
+kernel test robot noticed the following build errors:
 
-Fixes: 9b8a11e82615 ("soc: qcom: Introduce QMI encoder/decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
----
-[v2]:
-	Changed the Author name
-[v2]:
-	Added Fixes and Cc: stable
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.5-rc4 next-20230801]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
- drivers/soc/qcom/qmi_encdec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+url:    https://github.com/intel-lab-lkp/linux/commits/Nikunj-Kela/dt-bindings-arm-convert-nested-if-else-construct-to-allOf/20230725-004613
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230724164419.16092-4-quic_nkela%40quicinc.com
+patch subject: [PATCH v2 3/3] firmware: arm_scmi: Add qcom hvc/shmem transport
+config: arm-randconfig-r004-20230731 (https://download.01.org/0day-ci/archive/20230801/202308011516.voJRAbHr-lkp@intel.com/config)
+compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
+reproduce: (https://download.01.org/0day-ci/archive/20230801/202308011516.voJRAbHr-lkp@intel.com/reproduce)
 
-diff --git a/drivers/soc/qcom/qmi_encdec.c b/drivers/soc/qcom/qmi_encdec.c
-index b7158e3c3a0b..5c7161b18b72 100644
---- a/drivers/soc/qcom/qmi_encdec.c
-+++ b/drivers/soc/qcom/qmi_encdec.c
-@@ -534,8 +534,8 @@ static int qmi_decode_string_elem(const struct qmi_elem_info *ei_array,
- 		decoded_bytes += rc;
- 	}
- 
--	if (string_len > temp_ei->elem_len) {
--		pr_err("%s: String len %d > Max Len %d\n",
-+	if (string_len >= temp_ei->elem_len) {
-+		pr_err("%s: String len %d >= Max Len %d\n",
- 		       __func__, string_len, temp_ei->elem_len);
- 		return -ETOOSMALL;
- 	} else if (string_len > tlv_len) {
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308011516.voJRAbHr-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/firmware/arm_scmi/qcom_hvc.c:182:2: error: write to reserved register 'R7'
+           arm_smccc_1_1_hvc(scmi_info->func_id, (unsigned long)scmi_info->cap_id,
+           ^
+   include/linux/arm-smccc.h:536:48: note: expanded from macro 'arm_smccc_1_1_hvc'
+   #define arm_smccc_1_1_hvc(...)  __arm_smccc_1_1(SMCCC_HVC_INST, __VA_ARGS__)
+                                                   ^
+   include/linux/arm-smccc.h:398:24: note: expanded from macro 'SMCCC_HVC_INST'
+   #define SMCCC_HVC_INST  __HVC(0)
+                           ^
+   arch/arm/include/asm/opcodes-virt.h:11:22: note: expanded from macro '__HVC'
+   #define __HVC(imm16) __inst_arm_thumb32(                                \
+                        ^
+   arch/arm/include/asm/opcodes.h:215:2: note: expanded from macro '__inst_arm_thumb32'
+           __inst_thumb32(thumb_opcode)
+           ^
+   arch/arm/include/asm/opcodes.h:205:27: note: expanded from macro '__inst_thumb32'
+   #define __inst_thumb32(x) ___inst_thumb32(                              \
+                             ^
+   arch/arm/include/asm/opcodes.h:230:2: note: expanded from macro '___inst_thumb32'
+           ".short " __stringify(first) ", " __stringify(second) "\n\t"
+           ^
+   1 error generated.
+
+
+vim +/R7 +182 drivers/firmware/arm_scmi/qcom_hvc.c
+
+   167	
+   168	static int qcom_hvc_send_message(struct scmi_chan_info *cinfo,
+   169					 struct scmi_xfer *xfer)
+   170	{
+   171		struct scmi_qcom_hvc *scmi_info = cinfo->transport_info;
+   172		struct arm_smccc_res res;
+   173	
+   174		/*
+   175		 * Channel will be released only once response has been
+   176		 * surely fully retrieved, so after .mark_txdone()
+   177		 */
+   178		mutex_lock(&scmi_info->shmem_lock);
+   179	
+   180		shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
+   181	
+ > 182		arm_smccc_1_1_hvc(scmi_info->func_id, (unsigned long)scmi_info->cap_id,
+   183				  0, 0, 0, 0, 0, 0, &res);
+   184	
+   185		if (res.a0) {
+   186			mutex_unlock(&scmi_info->shmem_lock);
+   187			return -EOPNOTSUPP;
+   188		}
+   189	
+   190		return 0;
+   191	}
+   192	
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
