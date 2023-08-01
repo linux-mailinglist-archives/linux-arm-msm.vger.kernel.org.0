@@ -2,102 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF57676B587
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 15:11:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9D7B76B63B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 15:50:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232437AbjHANLY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 09:11:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59938 "EHLO
+        id S230310AbjHANuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 09:50:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231822AbjHANLX (ORCPT
+        with ESMTP id S231220AbjHANuD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 09:11:23 -0400
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB3AE9;
-        Tue,  1 Aug 2023 06:11:22 -0700 (PDT)
-Received: from canpemm500009.china.huawei.com (unknown [172.30.72.57])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4RFb7X1Jb8z1GDNr;
-        Tue,  1 Aug 2023 21:10:16 +0800 (CST)
-Received: from [10.67.102.169] (10.67.102.169) by
- canpemm500009.china.huawei.com (7.192.105.203) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Tue, 1 Aug 2023 21:11:16 +0800
-CC:     <linux-i2c@vger.kernel.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 4/9] i2c: hisi: Use dev_err_probe in probe function
-To:     Liao Chang <liaochang1@huawei.com>, <andi.shyti@kernel.org>,
-        <florian.fainelli@broadcom.com>, <rjui@broadcom.com>,
-        <sbranden@broadcom.com>, <bcm-kernel-feedback-list@broadcom.com>,
-        <yangyicong@hisilicon.com>, <aisheng.dong@nxp.com>,
-        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
-        <kernel@pengutronix.de>, <festevam@gmail.com>, <linux-imx@nxp.com>,
-        <kblaiech@nvidia.com>, <asmaa@nvidia.com>,
-        <loic.poulain@linaro.org>, <rfoss@kernel.org>, <ardb@kernel.org>,
-        <gcherian@marvell.com>
-References: <20230728013148.1720978-1-liaochang1@huawei.com>
- <20230728013148.1720978-5-liaochang1@huawei.com>
-From:   Yicong Yang <yangyicong@huawei.com>
-Message-ID: <7495980c-0a8e-8485-764a-78d960d19ff8@huawei.com>
-Date:   Tue, 1 Aug 2023 21:11:15 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+        Tue, 1 Aug 2023 09:50:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A387ED;
+        Tue,  1 Aug 2023 06:50:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AC302615A1;
+        Tue,  1 Aug 2023 13:50:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA28C433C9;
+        Tue,  1 Aug 2023 13:49:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1690897801;
+        bh=F6qNx1+2DizxHTJiZUKIuy5n3rMNPhTbB7x6ZD0mVPI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=r7ur1W1DVbjmyh5TpwK7GalrpbIf0FUAHrNiu8AEp6T4GFosqyOTFtivu+/VTg3w9
+         LX4IExOlNpV3tkNw2iHoWXXJDtmG+aAAwTrp5pfOkXCUcdm3jR/uAMj1zyKTwIZYZw
+         jdpbDz08IDXaVlsGQQPae1FnpaHpykrgm19mVu0/c858TOsXeJao+Jl7y/Zg8EIMWN
+         9vPXS4yhCtmC7WYU2KmnPn2xH4E7ugbHSTI7k3+4VHG+zfIv44L5HNBNJdE/Mdg/7j
+         DZwAj0pY5YETsSIiwvDXgBrGyTZ04o9o7wsbjnvuaofvZ8JgvFthT78b658xfzaNb+
+         Mlw8GzVOKhcRQ==
+Date:   Tue, 1 Aug 2023 14:49:54 +0100
+From:   Will Deacon <will@kernel.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     agross@kernel.org, andersson@kernel.org, luca@z3ntu.xyz,
+        konrad.dybcio@linaro.org, dmitry.baryshkov@linaro.org,
+        joro@8bytes.org, robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        kernel@collabora.com,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v5 2/6] iommu/qcom: Use the asid read from device-tree if
+ specified
+Message-ID: <20230801134953.GA26253@willie-the-truck>
+References: <20230622092742.74819-1-angelogioacchino.delregno@collabora.com>
+ <20230622092742.74819-3-angelogioacchino.delregno@collabora.com>
 MIME-Version: 1.0
-In-Reply-To: <20230728013148.1720978-5-liaochang1@huawei.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.102.169]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- canpemm500009.china.huawei.com (7.192.105.203)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230622092742.74819-3-angelogioacchino.delregno@collabora.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/7/28 9:31, Liao Chang wrote:
-> Use the dev_err_probe function instead of dev_err in the probe function
-> so that the printed messge includes the return value and also handles
-> -EPROBE_DEFER nicely.
+On Thu, Jun 22, 2023 at 11:27:38AM +0200, AngeloGioacchino Del Regno wrote:
+> As specified in this driver, the context banks are 0x1000 apart but
+> on some SoCs the context number does not necessarily match this
+> logic, hence we end up using the wrong ASID: keeping in mind that
+> this IOMMU implementation relies heavily on SCM (TZ) calls, it is
+> mandatory that we communicate the right context number.
 > 
-> Signed-off-by: Liao Chang <liaochang1@huawei.com>
-
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
-
+> Since this is all about how context banks are mapped in firmware,
+> which may be board dependent (as a different firmware version may
+> eventually change the expected context bank numbers), introduce a
+> new property "qcom,ctx-asid": when found, the ASID will be forced
+> as read from the devicetree.
+> 
+> When "qcom,ctx-asid" is not found, this driver retains the previous
+> behavior as to avoid breaking older devicetrees or systems that do
+> not require forcing ASID numbers.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> [Marijn: Rebased over next-20221111]
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > ---
->  drivers/i2c/busses/i2c-hisi.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/i2c/busses/i2c-hisi.c b/drivers/i2c/busses/i2c-hisi.c
-> index e067671b3ce2..6fc8d6fa43b6 100644
-> --- a/drivers/i2c/busses/i2c-hisi.c
-> +++ b/drivers/i2c/busses/i2c-hisi.c
-> @@ -462,18 +462,14 @@ static int hisi_i2c_probe(struct platform_device *pdev)
->  	hisi_i2c_disable_int(ctlr, HISI_I2C_INT_ALL);
->  
->  	ret = devm_request_irq(dev, ctlr->irq, hisi_i2c_irq, 0, "hisi-i2c", ctlr);
-> -	if (ret) {
-> -		dev_err(dev, "failed to request irq handler, ret = %d\n", ret);
-> -		return ret;
-> -	}
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "failed to request irq handler\n");
->  
->  	ctlr->clk = devm_clk_get_optional_enabled(&pdev->dev, NULL);
->  	if (IS_ERR_OR_NULL(ctlr->clk)) {
->  		ret = device_property_read_u64(dev, "clk_rate", &clk_rate_hz);
-> -		if (ret) {
-> -			dev_err(dev, "failed to get clock frequency, ret = %d\n", ret);
-> -			return ret;
-> -		}
-> +		if (ret)
-> +			return dev_err_probe(dev, ret, "failed to get clock frequency\n");
->  	} else {
->  		clk_rate_hz = clk_get_rate(ctlr->clk);
+> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> index a503ed758ec3..8face57c4180 100644
+> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> @@ -531,7 +531,8 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+>  	 * index into qcom_iommu->ctxs:
+>  	 */
+>  	if (WARN_ON(asid < 1) ||
+> -	    WARN_ON(asid > qcom_iommu->num_ctxs)) {
+> +	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
+> +	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL)) {
+>  		put_device(&iommu_pdev->dev);
+>  		return -EINVAL;
 >  	}
-> 
+> @@ -617,7 +618,8 @@ static int qcom_iommu_sec_ptbl_init(struct device *dev)
+>  
+>  static int get_asid(const struct device_node *np)
+>  {
+> -	u32 reg;
+> +	u32 reg, val;
+> +	int asid;
+>  
+>  	/* read the "reg" property directly to get the relative address
+>  	 * of the context bank, and calculate the asid from that:
+> @@ -625,7 +627,17 @@ static int get_asid(const struct device_node *np)
+>  	if (of_property_read_u32_index(np, "reg", 0, &reg))
+>  		return -ENODEV;
+>  
+> -	return reg / 0x1000;      /* context banks are 0x1000 apart */
+> +	/*
+> +	 * Context banks are 0x1000 apart but, in some cases, the ASID
+> +	 * number doesn't match to this logic and needs to be passed
+> +	 * from the DT configuration explicitly.
+> +	 */
+> +	if (!of_property_read_u32(np, "qcom,ctx-asid", &val))
+> +		asid = val;
+> +	else
+> +		asid = reg / 0x1000;
+> +
+> +	return asid;
+
+Shouldn't we at least have some error checking here? For example, ensuring
+that the ASIDs are within range, aren't duplicates etc?
+
+Also, can you elaborate a little more on what sort of ASID-to-Context
+mappings you actually see in practice?
+
+Will
