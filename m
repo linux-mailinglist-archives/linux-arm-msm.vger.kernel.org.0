@@ -2,167 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1264976BB03
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 19:22:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F88476BB48
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 19:32:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234074AbjHARWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 13:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60254 "EHLO
+        id S233764AbjHARcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 13:32:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbjHARWA (ORCPT
+        with ESMTP id S232136AbjHARcG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 13:22:00 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB7B211E;
-        Tue,  1 Aug 2023 10:21:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C1DCF6154F;
-        Tue,  1 Aug 2023 17:21:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C27C433C7;
-        Tue,  1 Aug 2023 17:21:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690910518;
-        bh=FvTrayG0aB9pBS56Qi18iMvVg3XJECQTzUNoJcvfVxY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XTg8YtjpaBdEyllcrmu65iWMgj74xz2mpu+ThdUY8cWF+84k4nm+EiWPIwktyvaO/
-         OD5Y+be8QlhnRdR+PCnVwUmUtBME8/DE1nSc2FIRxIflgSBdWYFTwqT4aBTvf4snXb
-         O1gVgPwUxCgUS8rEJv7BLxEReymjCD7vzvKhFWiatvEdLrQofd1eE6plTSVs1s74/A
-         6Ma9EuBOspIfKipNOb7U62xfz5hgp1Hg3spssqoMfzA39l4DwDnCoJhHQQ0sYi8HU2
-         wBUXqAkLOo5D9dpFQ5aT4L3TAh6VlWzc9s+tdXWoelzuH5TIhitkStIEEQcQmPxIXh
-         kFLYI0QlKRiZw==
-Date:   Tue, 1 Aug 2023 22:51:42 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        "open list:MHI BUS" <mhi@lists.linux.dev>
-Subject: Re: [PATCH v4 3/9] PCI: epf-mhi: Add support for handling D-state
- notify from EPC
-Message-ID: <20230801172142.GA76659@thinkpad>
-References: <1689232218-28265-1-git-send-email-quic_krichai@quicinc.com>
- <1689232218-28265-4-git-send-email-quic_krichai@quicinc.com>
- <20230728040949.GF4433@thinkpad>
- <1cfa6656-8130-ce1d-e28e-3665f12cc76a@quicinc.com>
- <0a6ca984-9797-88b1-ae12-c64916f6c61c@quicinc.com>
+        Tue, 1 Aug 2023 13:32:06 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A4A9F5;
+        Tue,  1 Aug 2023 10:32:04 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 371GA2kK001406;
+        Tue, 1 Aug 2023 17:32:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=qcppdkim1;
+ bh=Q0zQgRy1fF8lD/XmdYNJfM4tnpsCfZTsWpnSrfRcajY=;
+ b=gjhpkX+1dEGa2VffzW/khy6jFURA4E5PUtk8XMrv/PHRLzL9aSh+8DJ9tji9kcEf9257
+ v8DNWGfo/9E/zzh3EURer/SMsTP2HZiqaVfidTf0Qwbvr8XKzpzRcPrgZSHJdzEM9na2
+ 0r1vVKLJOUddzlxf47rNzgpWvEfAKYnslWSq0xBljUDF0RNUjcw00955BwFHUQAxjrCH
+ EdEXx8gCPi+6YbhVxpQyUVIky/kNLS4yxqPufCxzQorLPDnUexnzFGTy2lB7swOwJIaB
+ dQFWDwq9G+UHVToFYn3QflxjTjN5w967AhikA8bxTD5l/+oYMcejfVtBZhrEGbSiuthd 2g== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75b305wr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Aug 2023 17:32:00 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371HVxeK028158
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 1 Aug 2023 17:31:59 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 1 Aug 2023 10:31:59 -0700
+Received: from nalasex01a.na.qualcomm.com ([fe80::25d0:9235:354f:5fa9]) by
+ nalasex01a.na.qualcomm.com ([fe80::25d0:9235:354f:5fa9%4]) with mapi id
+ 15.02.1118.030; Tue, 1 Aug 2023 10:31:59 -0700
+From:   "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>
+To:     Eric Biggers <ebiggers@kernel.org>
+CC:     "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
+        "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>,
+        "Om Prakash Singh" <omprsing@qti.qualcomm.com>,
+        "Prasad Sodagudi (QUIC)" <quic_psodagud@quicinc.com>,
+        "Arun Menon (SSG)" <avmenon@quicinc.com>,
+        "abel.vesa@linaro.org" <abel.vesa@linaro.org>,
+        "Seshu Madhavi Puppala (QUIC)" <quic_spuppala@quicinc.com>
+Subject: RE: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
+ ufs
+Thread-Topic: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
+ ufs
+Thread-Index: AQHZumN+a5RI3WgcJ0CO2LlDH5s476/Ca+iAgBIbBxA=
+Date:   Tue, 1 Aug 2023 17:31:59 +0000
+Message-ID: <ca11701e403f48b6839b26c47a1b537f@quicinc.com>
+References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
+ <20230720025541.GA2607@sol.localdomain>
+In-Reply-To: <20230720025541.GA2607@sol.localdomain>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.110.47.159]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0a6ca984-9797-88b1-ae12-c64916f6c61c@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rEOTZeAVO7KVUd7mTmyYXt70nJ9OESWH
+X-Proofpoint-ORIG-GUID: rEOTZeAVO7KVUd7mTmyYXt70nJ9OESWH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-01_14,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308010157
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 01, 2023 at 10:31:42AM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> On 7/31/2023 11:05 AM, Krishna Chaitanya Chundru wrote:
-> > 
-> > On 7/28/2023 9:39 AM, Manivannan Sadhasivam wrote:
-> > > On Thu, Jul 13, 2023 at 12:40:12PM +0530, Krishna chaitanya chundru
-> > > wrote:
-> > > > Add support for handling D-state notify for MHI EPF.
-> > > > 
-> > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > ---
-> > > >   drivers/pci/endpoint/functions/pci-epf-mhi.c | 11 +++++++++++
-> > > >   include/linux/mhi_ep.h                       |  3 +++
-> > > >   2 files changed, 14 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > > b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > > index 9c1f5a1..ee91bfc 100644
-> > > > --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > > +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > > > @@ -339,6 +339,16 @@ static int pci_epf_mhi_bme(struct pci_epf *epf)
-> > > >       return 0;
-> > > >   }
-> > > >   +static int pci_epf_mhi_dstate_notify(struct pci_epf *epf,
-> > > > pci_power_t state)
-> > > > +{
-> > > > +    struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-> > > > +    struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-> > > > +
-> > > > +    mhi_cntrl->dstate = state;
-> > > Where is this variable being used? Also, don't we need any locking?
-> > > 
-> > > - Mani
-> > 
-> > we are using this variable in wakeup host op which is introduced on
-> > patch [PATCH v4 8/9] PCI: epf-mhi: Add wakeup host op
-> > 
-> > I will add lock in my next series.
-> > 
-> > - KC
-> 
-> Mani, as this is being called from IRQ context do we need to add any lock
-> here.
-> 
+Hey Eric, thanks for your reply. Pleasure working with you again.
 
-Notifiers are invoked in process context. And here, the context doesn't matter
-as either way you need locking to prevent concurrent access to dstate variable.
+Please find answers inline
 
-But I think it is safe to ignore lock for now provided that wakeup_host callback
-is only called while MHI is in M3 state. Even if dstate changes while processing
-wakeup_host, it won't affect the behavior.
+-----Original Message-----
+From: Eric Biggers <ebiggers@kernel.org>=20
+Sent: Wednesday, July 19, 2023 7:56 PM
+To: Gaurav Kashyap (QUIC) <quic_gaurkash@quicinc.com>
+Cc: linux-scsi@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-mmc@vg=
+er.kernel.org; linux-block@vger.kernel.org; linux-fscrypt@vger.kernel.org; =
+Om Prakash Singh <omprsing@qti.qualcomm.com>; Prasad Sodagudi (QUIC) <quic_=
+psodagud@quicinc.com>; Arun Menon (SSG) <avmenon@quicinc.com>; abel.vesa@li=
+naro.org; Seshu Madhavi Puppala (QUIC) <quic_spuppala@quicinc.com>
+Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and=
+ ufs
 
-- Mani
+Hi Gaurav,
 
-> - KC
-> 
-> > 
-> > > 
-> > > > +
-> > > > +    return 0;
-> > > > +}
-> > > > +
-> > > >   static int pci_epf_mhi_bind(struct pci_epf *epf)
-> > > >   {
-> > > >       struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-> > > > @@ -394,6 +404,7 @@ static struct pci_epc_event_ops
-> > > > pci_epf_mhi_event_ops = {
-> > > >       .link_up = pci_epf_mhi_link_up,
-> > > >       .link_down = pci_epf_mhi_link_down,
-> > > >       .bme = pci_epf_mhi_bme,
-> > > > +    .dstate_notify = pci_epf_mhi_dstate_notify,
-> > > >   };
-> > > >     static int pci_epf_mhi_probe(struct pci_epf *epf,
-> > > > diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-> > > > index f198a8a..c3a0685 100644
-> > > > --- a/include/linux/mhi_ep.h
-> > > > +++ b/include/linux/mhi_ep.h
-> > > > @@ -8,6 +8,7 @@
-> > > >     #include <linux/dma-direction.h>
-> > > >   #include <linux/mhi.h>
-> > > > +#include <linux/pci.h>
-> > > >     #define MHI_EP_DEFAULT_MTU 0x8000
-> > > >   @@ -139,6 +140,8 @@ struct mhi_ep_cntrl {
-> > > >         enum mhi_state mhi_state;
-> > > >   +    pci_power_t dstate;
-> > > > +
-> > > >       u32 max_chan;
-> > > >       u32 mru;
-> > > >       u32 event_rings;
-> > > > -- 
-> > > > 2.7.4
-> > > > 
-> > 
+On Wed, Jul 19, 2023 at 10:04:14AM -0700, Gaurav Kashyap wrote:
+> These patches add support to Qualcomm ICE (Inline Crypto Enginr) for=20
+> hardware wrapped keys using Qualcomm Hardware Key Manager (HWKM) and=20
+> are made on top of a rebased version  Eric Bigger's set of changes to=20
+> support wrapped keys in fscrypt and block below:
+> https://git.kernel.org/pub/scm/fs/fscrypt/linux.git/log/?h=3Dwrapped-key
+> s-v7 (The rebased patches are not uploaded here)
+>=20
+> Ref v1 here:
+> https://lore.kernel.org/linux-scsi/20211206225725.77512-1-quic_gaurkas
+> h@quicinc.com/
+>=20
+> Explanation and use of hardware-wrapped-keys can be found here:
+> Documentation/block/inline-encryption.rst
+>=20
+> This patch is organized as follows:
+>=20
+> Patch 1 - Prepares ICE and storage layers (UFS and EMMC) to pass around w=
+rapped keys.
+> Patch 2 - Adds a new SCM api to support deriving software secret when=20
+> wrapped keys are used Patch 3-4 - Adds support for wrapped keys in the=20
+> ICE driver. This includes adding HWKM support Patch 5-6 - Adds support=20
+> for wrapped keys in UFS Patch 7-10 - Supports generate, prepare and=20
+> import functionality in ICE and UFS
+>=20
+> NOTE: MMC will have similar changes to UFS and will be uploaded in a diff=
+erent patchset
+>       Patch 3, 4, 8, 10 will have MMC equivalents.
+>=20
+> Testing:
+> Test platform: SM8550 MTP
+> Engineering trustzone image is required to test this feature only for=20
+> SM8550. For SM8650 onwards, all trustzone changes to support this will=20
+> be part of the released images.
+> The engineering changes primarily contain hooks to generate, import=20
+> and prepare keys for HW wrapped disk encryption.
+>=20
+> The changes were tested by mounting initramfs and running the=20
+> fscryptctl tool (Ref:=20
+> https://github.com/ebiggers/fscryptctl/tree/wip-wrapped-keys) to=20
+> generate and prepare keys, as well as to set policies on folders, which c=
+onsequently invokes disk encryption flows through UFS.
+>=20
+> Gaurav Kashyap (10):
+>   ice, ufs, mmc: use blk_crypto_key for program_key
+>   qcom_scm: scm call for deriving a software secret
+>   soc: qcom: ice: add hwkm support in ice
+>   soc: qcom: ice: support for hardware wrapped keys
+>   ufs: core: support wrapped keys in ufs core
+>   ufs: host: wrapped keys support in ufs qcom
+>   qcom_scm: scm call for create, prepare and import keys
+>   ufs: core: add support for generate, import and prepare keys
+>   soc: qcom: support for generate, import and prepare key
+>   ufs: host: support for generate, import and prepare key
+>=20
+>  drivers/firmware/qcom_scm.c            | 292 +++++++++++++++++++++++
+>  drivers/firmware/qcom_scm.h            |   4 +
+>  drivers/mmc/host/cqhci-crypto.c        |   7 +-
+>  drivers/mmc/host/cqhci.h               |   2 +
+>  drivers/mmc/host/sdhci-msm.c           |   6 +-
+>  drivers/soc/qcom/ice.c                 | 309 +++++++++++++++++++++++--
+>  drivers/ufs/core/ufshcd-crypto.c       |  92 +++++++-
+>  drivers/ufs/host/ufs-qcom.c            |  63 ++++-
+>  include/linux/firmware/qcom/qcom_scm.h |  13 ++
+>  include/soc/qcom/ice.h                 |  18 +-
+>  include/ufs/ufshcd.h                   |  25 ++
+>  11 files changed, 797 insertions(+), 34 deletions(-)
 
--- 
-மணிவண்ணன் சதாசிவம்
+
+Thank you for continuing to work on this!
+
+According to your cover letter, this feature requires a custom TrustZone im=
+age to work on SM8550.  Will that image be made available outside Qualcomm?
+--> Unfortunately, I don't think there is a way to do that. You can still r=
+equest for one through our customer engineering team like before.
+
+Also according to your cover letter, this feature will work on SM8650 out o=
+f the box.  That's great to hear.  However, SM8650 does not appear to be pu=
+blicly available yet or have any upstream kernel support.  Do you know appr=
+oximately when a SM8650 development board will become available to the gene=
+ral public?
+--> I meant it will be available in the future releases. As of today, I don=
+'t have any information on the timelines
+
+Also, can you please make available a git branch somewhere that contains yo=
+ur patchset?  It sounds like this depends on https://git.kernel.org/pub/scm=
+/fs/fscrypt/linux.git/log/?h=3Dwrapped-keys-v7, but actually a version of i=
+t that you've rebased, which I don't have access to.
+Without being able to apply your patchset, I can't properly review it.
+--> As for the fscrypt patches,
+      I have not changed much functionally from the v7 patch, just merge co=
+nflicts.
+      I will update this thread once I figure out a git location.
+
+Thanks!
+
+- Eric
