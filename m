@@ -2,84 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A60776BCED
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 20:49:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3D0276BD81
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 21:16:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232001AbjHAStK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 14:49:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59864 "EHLO
+        id S230268AbjHATQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 15:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232230AbjHAStC (ORCPT
+        with ESMTP id S229650AbjHATQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 14:49:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E1B2702;
-        Tue,  1 Aug 2023 11:48:53 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 371GA6pf001835;
-        Tue, 1 Aug 2023 18:48:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QxwyS3/sNwp0tL3VMiwf7gLqShqkMYpOrrA7vE/7Z1w=;
- b=Q3qmQ5yzh5AuHILxf28Qi44dIhZTqyw07ujaOQHsQCpmxypr2toPDu53/HbBlYK/T49E
- prR9jTE2CEWAFeDkTxhq1Lk5nCeo1j3xqU6WF8pWp2VWN6P82cxOD6KJ1WEM6BUDUqzl
- i8XsXORh8h2JYyR8lqrCsFQNWu79TAzT8dJfGLEjI+Wv3FE68a85gSZU9MTIQzU8rGAG
- llcgcc5mPVg5qr0lKe+qELIkBH/kMXLHhGjltUK8HJGVDjZNQkr+C+MgJOWXiy1zwt91
- 0ad9+hVwIff5wXozPSf+rcJKwlhhyhUYoGifMSDXHPNSIs0fCFpHF407xJFpabYOv8ax dQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75b30avd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Aug 2023 18:48:39 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371Imcmo012798
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 1 Aug 2023 18:48:38 GMT
-Received: from [10.110.112.42] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 1 Aug
- 2023 11:48:37 -0700
-Message-ID: <6a304661-28df-0868-e222-b0be8dcef00c@quicinc.com>
-Date:   Tue, 1 Aug 2023 11:48:37 -0700
+        Tue, 1 Aug 2023 15:16:46 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EAA1BF0;
+        Tue,  1 Aug 2023 12:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+        bh=/uG5YuIody+hzN8XW34EjJfYB8YBu85awJMxvbTsR0U=; b=nZb3jdNV9pDRrob/YUA4R2AdxT
+        d4OGUQW4mPOpYYhOlP6RZo5aMckUC+eMj/Osevp3aMAix17jcr2Cycvp9Vws7XQsaeWhGIRtZLccP
+        gjDnlTAhh6XRdRQ1aY18sZu/dLXlOgb5E/eaSIvPO5eamrxQ2VUUDzQUVOEEjXNOXPAkmfrQd4zRu
+        0amfY19Yu+U3xVl5jP960puoEx4uXkQWLIr7j7yGgWWKV1P8j6S4aJje2UQAzw+IykwFsmKkH6sVK
+        sGsCqVTuu4SRN+2EeJrqOGkPx9Es21MyLltzX3DHBOEjNu58FnemFiRD2esFkxrtWRn/G4sv2NE+e
+        /hhxWVZw==;
+Received: from [2601:1c2:980:9ec0::2764]
+        by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+        id 1qQurK-0037O0-1t;
+        Tue, 01 Aug 2023 19:16:42 +0000
+Message-ID: <188bcc4c-7388-ca39-5c3c-629edd78cc9f@infradead.org>
+Date:   Tue, 1 Aug 2023 12:16:41 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 3/7] soc: qcom: add QCOM PBS driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 3/3] clk: qcom: add clock controller driver for
+ qca8386/qca8084
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <pavel@ucw.cz>,
-        <lee@kernel.org>, <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC:     <luca.weiss@fairphone.com>, <u.kleine-koenig@pengutronix.de>,
-        <quic_subbaram@quicinc.com>, <linux-leds@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>
-References: <20230725193423.25047-1-quic_amelende@quicinc.com>
- <20230725193423.25047-4-quic_amelende@quicinc.com>
- <de3b4739-5446-c1ab-571f-a36c4aff5e0f@linaro.org>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <de3b4739-5446-c1ab-571f-a36c4aff5e0f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com
+References: <20230801085352.22873-1-quic_luoj@quicinc.com>
+ <20230801085352.22873-4-quic_luoj@quicinc.com>
+From:   Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20230801085352.22873-4-quic_luoj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Izg-M7hnepr_H2pzZLxQQyuAIgDT7-dk
-X-Proofpoint-ORIG-GUID: Izg-M7hnepr_H2pzZLxQQyuAIgDT7-dk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-01_16,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308010168
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,174 +63,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7/26/2023 8:36 AM, Konrad Dybcio wrote:
-> On 25.07.2023 21:34, Anjelique Melendez wrote:
->> Add the Qualcomm PBS (Programmable Boot Sequencer) driver. The QCOM PBS
->> driver supports configuring software PBS trigger events through PBS RAM
->> on Qualcomm Technologies, Inc (QTI) PMICs.
->>
->> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->> ---
-> [...]
-> 
->> +
->> +	u32			base;
->> +};
->> +
->> +static int qcom_pbs_read(struct pbs_dev *pbs, u32 address, u8 *val)
->> +{
->> +	int ret;
->> +
->> +	address += pbs->base;
-> Any reason not to just keep the base address in struct pbs_dev and use
-> normal regmap r/w helpers?
-> 
-> [...]
+On 8/1/23 01:53, Luo Jie wrote:
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 263e55d75e3f..a17e8fa5a7e1 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -195,6 +195,14 @@ config IPQ_GCC_9574
+>  	  i2c, USB, SD/eMMC, etc. Select this for the root clock
+>  	  of ipq9574.
+>  
+> +config IPQ_NSSCC_QCA8K
+> +        tristate "QCA8K(QCA8386 or QCA8084) NSS Clock Controller"
+> +        help
 
-We created the qcom_pbs read/write helpers to limit code duplication when printing
-error messages. 
-I am ok with calling regmap_bulk_read/write() and regmap_update_bits()
-in code instead of these helpers but wondering how everyone would feel with the error messages
-either being duplicated or if error messages should just be removed?
+The 2 lines above should be indented with one tab (only; no spaces).
 
-qcom_pbs_read() is called twice, qcom_pbs_write() is called twice(), and 
-qcom_pbs_masked_write() is called 6 times.
-> 
->> +
->> +static int qcom_pbs_wait_for_ack(struct pbs_dev *pbs, u8 bit_pos)
->> +{
->> +	u16 retries = 2000, delay = 1000;
->> +	int ret;
->> +	u8 val;
->> +
->> +	while (retries--) {
->> +		ret = qcom_pbs_read(pbs, PBS_CLIENT_SCRATCH2, &val);
->> +		if (ret < 0)
->> +			return ret;
->> +
->> +		if (val == 0xFF) {
-> This should be a constant, not a magic value
-ack
-> 
->> +			/* PBS error - clear SCRATCH2 register */
->> +			ret = qcom_pbs_write(pbs, PBS_CLIENT_SCRATCH2, 0);
->> +			if (ret < 0)
->> +				return ret;
->> +
->> +			dev_err(pbs->dev, "NACK from PBS for bit %u\n", bit_pos);
->> +			return -EINVAL;
->> +		}
->> +
->> +		if (val & BIT(bit_pos)) {
->> +			dev_dbg(pbs->dev, "PBS sequence for bit %u executed!\n", bit_pos);
->> +			break;
->> +		}
->> +
->> +		usleep_range(delay, delay + 100);
-> So worst case scenario this will wait for over 2 seconds?
-Yes, worst case scenario will result in waiting for 2.2 seconds
-> 
->> +	}
->> +
->> +	if (!retries) {
->> +		dev_err(pbs->dev, "Timeout for PBS ACK/NACK for bit %u\n", bit_pos);
->> +		return -ETIMEDOUT;
->> +	}
->> +
->> +	return 0;
-> return 0 instead of break above?
-ack
-> 
->> +}
->> +
->> +/**
->> + * qcom_pbs_trigger_event() - Trigger the PBS RAM sequence
->> + * @pbs: Pointer to PBS device
->> + * @bitmap: bitmap
->> + *
->> + * This function is used to trigger the PBS RAM sequence to be
->> + * executed by the client driver.
->> + *
->> + * The PBS trigger sequence involves
->> + * 1. setting the PBS sequence bit in PBS_CLIENT_SCRATCH1
->> + * 2. Initiating the SW PBS trigger
->> + * 3. Checking the equivalent bit in PBS_CLIENT_SCRATCH2 for the
->> + *    completion of the sequence.
->> + * 4. If PBS_CLIENT_SCRATCH2 == 0xFF, the PBS sequence failed to execute
->> + *
->> + * Returns: 0 on success, < 0 on failure
->> + */
->> +int qcom_pbs_trigger_event(struct pbs_dev *pbs, u8 bitmap)
->> +{
->> +	u8 val, mask;
->> +	u16 bit_pos;
->> +	int ret;
->> +
->> +	if (!bitmap) {
->> +		dev_err(pbs->dev, "Invalid bitmap passed by client\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	if (IS_ERR_OR_NULL(pbs))
->> +		return -EINVAL;
->> +
->> +	mutex_lock(&pbs->lock);
->> +	ret = qcom_pbs_read(pbs, PBS_CLIENT_SCRATCH2, &val);
->> +	if (ret < 0)
->> +		goto out;
->> +
->> +	if (val == 0xFF) {
->> +		/* PBS error - clear SCRATCH2 register */
->> +		ret = qcom_pbs_write(pbs, PBS_CLIENT_SCRATCH2, 0);
->> +		if (ret < 0)
->> +			goto out;
->> +	}
->> +
->> +	for (bit_pos = 0; bit_pos < 8; bit_pos++) {
->> +		if (bitmap & BIT(bit_pos)) {
->> +			/*
->> +			 * Clear the PBS sequence bit position in
->> +			 * PBS_CLIENT_SCRATCH2 mask register.
->> +			 */
-> Don't think the "in the X register" parts are useful.
-ack
-> 
->> +			ret = qcom_pbs_masked_write(pbs, PBS_CLIENT_SCRATCH2, BIT(bit_pos), 0);
->> +			if (ret < 0)
->> +				goto error;
->> +
->> +			/*
->> +			 * Set the PBS sequence bit position in
->> +			 * PBS_CLIENT_SCRATCH1 register.
->> +			 */
->> +			val = mask = BIT(bit_pos);
-> You're using mask/val for half the function calls..
-> Stick with one approach.
-ack
-> 
-> [...]
-> 
->> +struct pbs_dev *get_pbs_client_device(struct device *dev)
->> +{
->> +	struct device_node *pbs_dev_node;
->> +	struct platform_device *pdev;
->> +	struct pbs_dev *pbs;
->> +
->> +	pbs_dev_node = of_parse_phandle(dev->of_node, "qcom,pbs", 0);
->> +	if (!pbs_dev_node) {
->> +		dev_err(dev, "Missing qcom,pbs property\n");
->> +		return ERR_PTR(-ENODEV);
->> +	}
->> +
->> +	pdev = of_find_device_by_node(pbs_dev_node);
->> +	if (!pdev) {
->> +		dev_err(dev, "Unable to find PBS dev_node\n");
->> +		pbs = ERR_PTR(-EPROBE_DEFER);
->> +		goto out;
->> +	}
->> +
->> +	pbs = platform_get_drvdata(pdev);
->> +	if (!pbs) {
-> This check seems unnecessary, the PBS driver would have had to fail
-> probing if set_drvdata never got called.
-> > Konrad
+> +          Support for NSS(Network SubSystem) clock controller on
+
+The line above should be indented with one tab + 2 spaces (like the following
+3 lines).
+
+> +	  qca8386/qca8084 chip.
+> +	  Say Y if you want to use network function of switch or PHY
+> +	  function. Select this for the root clock of qca8xxx.
+
+-- 
+~Randy
