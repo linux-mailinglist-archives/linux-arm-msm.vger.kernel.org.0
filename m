@@ -2,126 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A8AD76B299
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:04:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A58776B29D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:05:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234235AbjHALEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 07:04:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
+        id S233201AbjHALFR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 07:05:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234265AbjHALEE (ORCPT
+        with ESMTP id S233242AbjHALEv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 07:04:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C501358C;
-        Tue,  1 Aug 2023 03:57:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D306961528;
-        Tue,  1 Aug 2023 10:57:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30BBC433C7;
-        Tue,  1 Aug 2023 10:57:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690887446;
-        bh=igqPclbn33iQ9Myb2xT63wPBpAiGtwav3k7hWqdmNcA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=FAqmARKIqgIZS8LjC46BceHTw/STKMHz9+ICI4AQw6el4u4oXOrOANfItpJENPVfJ
-         e8wh44NYhEwW43unA4jMS5r+wzLR+AYZw5PoNCVz9f6sbgCDXPOHL0VM48ojp6xebI
-         WHmRHNBrSTvaWj/uulKXYP0w2Wwe7HByUGPKEHqcuU23oz2Linx1cXUQGy0S9EPuq2
-         CNO6q0y9jfQgXIYECur8UG9E2d5EFKJmOlJujfQjmxaDA1AwEPERMQz9c1y5ajVibt
-         9mg2zUXIb5l3mar8xP+qi3I/n9IzqxOfoDlJcYqVSVtbs4fZyw6uTazwA2dS9E+ErE
-         FntfCNQnBt4Og==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Tue, 1 Aug 2023 07:04:51 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9E63C0D;
+        Tue,  1 Aug 2023 03:58:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1690887528; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=riU0iAR+POSddJyJ9VTQav1aJPUMIqjF/LwpFKhsXnkZFMjkTbSixJitrSll6mOVS6
+    4DnF51L/zvuOnJSfdh8bbeCbL0/4uAb+jlC8WrsJtV5n5KvZ55r1x5+KGAxqjemEkiwT
+    LjEX77OBAEYTRAKme6EkPFoeL121yagphgulZIwgK8uL9SlQz3q90rSXFl5kgZwEzAyR
+    PZ//TixDbYIF2yS1BPb8Y71VKzZOu6HsVpArr6t2V15ZHacMHlC7kWWRYdpEQi3IY+3y
+    jjzNB1P0+Wu1bsxHtK+XyrIQ4MB78xNCCoTwibrcxzVDgg2nlhcnQLYg0QhnjX2qH86H
+    uQww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1690887528;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DHbOBvCZgYYvNTOE8eCfcIFSVNt2pXB9oMJnvEr1yMQ=;
+    b=XrkLabBs7byytSRo7gsNP//omSSbGGic7O+WVTyxbJpX4+ykYdiSGB5oQSjxKlf5Bh
+    uaJDEDBpOT4NA4gMLvKWo8JIoz5TQNjYUtFYTZScqRgzBR91khpifLeGC0LZn9eJAa3K
+    0cBC3QAuJp/YVSXDFiuOshYUZiqMKAPfie+yPIMEJU9/ec0KOYBf3PsLV6gJi4uBtf2t
+    CPc7Fi3G3QDI9RVCw4p1KqRtd0r2pBfxLi8UHZxdtGwHKB/0LHjCSyAnj/5UWtxn6nGw
+    qf82zoQejHksBJGU3IvHqvuEbc7IOjqVyRTGfFUv2akqhd4dujhqDWY6OqdMjQmkzp1g
+    1wbA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1690887528;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DHbOBvCZgYYvNTOE8eCfcIFSVNt2pXB9oMJnvEr1yMQ=;
+    b=dn1Ej/kf59bpcPHppSQZRMNxuxNvI19hG54oYMhot/dlzhhcBF2Y4x1PC+QCkb68Hi
+    3FxE6VSdJIpgNnJcHrQ+Y3LzxMV+e7+NS6WM424cs0v7ylX3u9I8CCfyZD49Hsm7yxRK
+    s6D9h0bra0G8+jig20BRns9gb5zxmFaldCoLeovy/SgRAtYc87epbN+XHtKeltZb92Ga
+    JhBtmzy3GzyKIuQZk9j3GhhqGdizDNOIhxht/OzuJ9clrZrDdZJ/g9GXid32QO5ZVzGg
+    z77CTx93s7ZZo1t4+bI7ZzJRb06cwGwiEDLGaWtezRwIjutY0OPvzV1RdJ7mtVK0Ym6q
+    Pflg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1690887528;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DHbOBvCZgYYvNTOE8eCfcIFSVNt2pXB9oMJnvEr1yMQ=;
+    b=m38koJhuqGI76tLhYWjbcwJHCFjyjcjgsErBVIfGl9+Hh7CmCS15i7wiYeW+/kf4gR
+    /Ceun0nyDo9kQ1aX19CA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8p+L1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.6.6 DYNA|AUTH)
+    with ESMTPSA id k61817z71AwmNkR
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 1 Aug 2023 12:58:48 +0200 (CEST)
+Date:   Tue, 1 Aug 2023 12:58:47 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: fix some Kconfig corner cases
-Date:   Tue,  1 Aug 2023 12:56:32 +0200
-Message-Id: <20230801105718.3658612-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.2
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 03/10] interconnect: qcom: icc-rpm: Let nodes drive
+ their own bus clock
+Message-ID: <ZMjlZyFcB9IFEG60@gerhold.net>
+References: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
+ <20230726-topic-icc_coeff-v2-3-8c91c6c76076@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230726-topic-icc_coeff-v2-3-8c91c6c76076@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+On Mon, Jul 31, 2023 at 12:52:19PM +0200, Konrad Dybcio wrote:
+> If this hardware couldn't get messier, some nodes are supposed to drive
+> their own bus clock.. Presumably to connect to some intermediate
+> interface between the node itself and the bus it's (supposed to be)
+> connected to.
+> 
+> Expand the node struct with the necessary data and hook up the
+> allocations & calculations.
+> 
+> To save on memory (not very many nodes have their own clocks), allocate
+> a pointer to an array instead of allocating an array within
+> qcom_icc_node.
+> 
 
-The SM_GCC_8550 symbol and others can only be built for ARM64 or when
-compile testing, but it gets selected by other drivers that can also be
-built for 32-bit ARCH_QCOM when not compile testing, which results in
-a Kconfig warning:
+Only on ARM32 though. On ARM64 you waste extra memory:
 
-WARNING: unmet direct dependencies detected for SM_GCC_8550
-  Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=m] && (ARM64 || COMPILE_TEST [=n])
-  Selected by [m]:
-  - SM_GPUCC_8550 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
-  - SM_VIDEOCC_8550 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
+u32 bus_clk_rate[QCOM_SMD_RPM_STATE_NUM];
+sizeof(bus_clk_rate) = QCOM_SMD_RPM_STATE_NUM * sizeof(bus_clk_rate[0])
+                     = 2 * 4
+                     = 8
 
-Add further 'depends on' statements to tighten this in a way that
-avoids the missing dependencies.
+u32 *bus_clk_rate;
+sizeof(bus_clk_rate) = sizeof(ptr)
+                     = 8 (for ARM64)
+                       + 2 * 4 + malloc overhead
+                         for each node with bus_clk_desc
 
-Fixes: fd0b5b106fcab ("clk: qcom: Introduce SM8350 VIDEOCC")
-Fixes: 441fe711be384 ("clk: qcom: videocc-sm8450: Add video clock controller driver for SM8450")
-Fixes: f53153a37969c ("clk: qcom: videocc-sm8550: Add video clock controller driver for SM8550")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/clk/qcom/Kconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+which is > 8 from above.
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 263e55d75e3f5..ed7dc3349e34e 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -995,6 +995,7 @@ config SM_GPUCC_8450
- 
- config SM_GPUCC_8550
- 	tristate "SM8550 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8550
- 	help
- 	  Support for the graphics clock controller on SM8550 devices.
-@@ -1031,6 +1032,7 @@ config SM_VIDEOCC_8250
- 
- config SM_VIDEOCC_8350
- 	tristate "SM8350 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8350
- 	select QCOM_GDSC
- 	help
-@@ -1040,6 +1042,7 @@ config SM_VIDEOCC_8350
- 
- config SM_VIDEOCC_8550
- 	tristate "SM8550 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8550
- 	select QCOM_GDSC
- 	help
-@@ -1088,6 +1091,7 @@ config CLK_GFM_LPASS_SM8250
- 
- config SM_VIDEOCC_8450
- 	tristate "SM8450 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8450
- 	select QCOM_GDSC
- 	help
--- 
-2.39.2
+I'm not quite convinced this optimization is worth it.
 
+Thanks,
+Stephan
