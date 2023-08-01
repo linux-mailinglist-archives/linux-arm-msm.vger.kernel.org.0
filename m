@@ -2,109 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06B1176B3D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5CDD76B47C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 14:15:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233204AbjHALwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 07:52:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
+        id S232869AbjHAMPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 08:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbjHALwN (ORCPT
+        with ESMTP id S232554AbjHAMPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 07:52:13 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BD2C7;
-        Tue,  1 Aug 2023 04:52:12 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 371Ahb47000769;
-        Tue, 1 Aug 2023 11:52:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=Ucs/AIcc42iyIhwla04Sf5HkBqkmEeFUieVvFoDw0Yw=;
- b=TBu/LUe2+V6T7iDl7GHHroAB3fHbLXHqR8arOEHKce1NFECCEvaopXl9S54FU4dONFn2
- AkuzRMboMXepvyk6lfSnQIrBS4ld8hi79ZSI2UqOCVlaYoDO/WQsq5wcf5ZqcuWGxPrF
- dPr2SbfIu3TmADwxeVerWPSuDjFNraGNLvE3F/V6FuVh3Kv2pVldaj1W6gDdZmW0g+D3
- PcVEeoYigHDxcA9oRjWvTATmsxj9Boj4xpWQngybzGiBfutbwQjBEWAyarI1QR2Cj+pR
- xJIZeqV7VdChc6QpcVvK3JcDsg9wE9ZVITk+d+62KCXSQNYb0vnSsoKsh4CGgBYpVA9t 0w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6d0mu1p8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Aug 2023 11:52:08 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371Bq7rI003024
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 1 Aug 2023 11:52:07 GMT
-Received: from hu-ajainp-blr.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Tue, 1 Aug 2023 04:52:03 -0700
-From:   Anvesh Jain P <quic_ajainp@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, "Rob Herring" <robh+dt@kernel.org>,
+        Tue, 1 Aug 2023 08:15:54 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CF2319A1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 05:15:52 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3178dd771ceso4099448f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 05:15:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690892150; x=1691496950;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cy69UTLPaMkgS867f19KBpP2TanFCy8uIWGJpynTc4M=;
+        b=dQcrKPIR1YSzeSBcWpFUlzV+txmJlH/J0DF9T/2uJe790esSjDcFQtB3E+kMbBLzM9
+         rzA7ChQORoIodjwM75v1oOVgAcQSOpuMZC7YtnnlHBQKKnrsub476uqiFrqJ6XWCl+62
+         5dMSBrIlznogy10YKqOc5iQKchYvJXvz/zTvXbtUy3JMIqB3ewbmApUMTRgaWH9zxgkG
+         AJQV7/gs50s62NA3BJNU+4lmUXaCNg8Ij0xinPbKaOTs1stqq24lGIzvcVqWHvgxLXyr
+         7bVifE4NJSK3SzrVrPEOJih0WP8RlH3oxFIMa7EcZqikGnTQ6zZWHT6jDbeilsHyqJ3s
+         9iRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690892150; x=1691496950;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Cy69UTLPaMkgS867f19KBpP2TanFCy8uIWGJpynTc4M=;
+        b=kzU+SUb/1iVSQ9P45yv787qZk7aoaSCyz+cuhLVJMn6bzE996jlccRWQrKXbtLxNfD
+         ThdavgJuWkWjhRwyQdritHq3V1yrstD1RFb6jnveEDPCMGKUgegk9ajHkCDZMICZROWI
+         fitprFkzXhDeYemI/e6r1hknKpfEs8M8BRZ/0fNWu9lj4jZo1p5gG+VRa6MiKhCT0PC+
+         hwsBCMvQTGFLomTA76LTD7NGUlbKKdAKOiuJ/Uase40im77v5bFtBKEjDe6ry8pOVK0n
+         Ld+BuzzfTtCm+bGsUUibSdRt8jarvgqEJcD/8ByeqdlwIWoiC+gE6RWEPRnDjyxf91ln
+         MJhg==
+X-Gm-Message-State: ABy/qLZWWv7mNB5UbxgYmcQgA/gP2kbZHA3oipMe9O7BSy8hx/FKZJkZ
+        TT7oEpoRiv+UvyZLIrWmEXvCKQ==
+X-Google-Smtp-Source: APBJJlHfsFDHbaVf5nw4nEKhNpQnCwdEhr0FZNS+Kg1ebtodpF2mL9GQO6oQaQou5KmslFA2N0zRkQ==
+X-Received: by 2002:a5d:65d0:0:b0:317:5f04:bc00 with SMTP id e16-20020a5d65d0000000b003175f04bc00mr2153616wrw.27.1690892150441;
+        Tue, 01 Aug 2023 05:15:50 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id z7-20020a5d4407000000b0031766e99429sm15874351wrq.115.2023.08.01.05.15.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Aug 2023 05:15:49 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v5 0/4] input: touchscreen: add initial support for Goodix
+ Berlin touchscreen IC
+Date:   Tue, 01 Aug 2023 14:15:44 +0200
+Message-Id: <20230801-topic-goodix-berlin-upstream-initial-v5-0-079252935593@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHD3yGQC/53PwW7DIAwG4FepOM8TEBpCT3uPaQcgTmIpgwjSq
+ FOVd5/b29TTcvwt6/vtu6hYCKu4nO6i4EaVcuJwfjuJOPk0IlDPWWipG9nKFta8UIQx555uELD
+ MlOC61LWg/wZKtJKfIXhnscPYDSYKpoKvCKH4FCfG0nWeebgUHOj27P784jxRXXP5eZ6yqcf0n
+ 62bAgnGS2tU6DwO/Qev+ZLfcxnFo2HTR1TNqm4DP4MKncQXtTmiNqwO8mxtRN9b6V5Uc0Q1rEp
+ nbDSdC6jsH3Xf9183mgEy8AEAAA==
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Venkata Rao Kakani <quic_vkakani@quicinc.com>,
-        Anvesh Jain P <quic_ajainp@quicinc.com>
-Subject: [PATCH] bindings: mfd: qcom-pm8xxx: add a property for rtc-pm8xxx
-Date:   Tue, 1 Aug 2023 17:21:43 +0530
-Message-ID: <20230801115143.27738-1-quic_ajainp@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WwutmcfvYV2MI7ac2_IvBsbc1n3C4iMU
-X-Proofpoint-ORIG-GUID: WwutmcfvYV2MI7ac2_IvBsbc1n3C4iMU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-01_06,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- priorityscore=1501 mlxlogscore=580 mlxscore=0 malwarescore=0 adultscore=0
- clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308010107
+        Bastien Nocera <hadess@hadess.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Jeff LaBundy <jeff@labundy.com>
+Cc:     linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4187;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=fd+qneyPqfEMIXH5ohAYLPVreAieRi3VQmuuDjoYVWE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkyPdzBMtMLU60jmuVK4dlZe/mNUKoOddka5KNT1Fk
+ ey8MSCeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZMj3cwAKCRB33NvayMhJ0bMNEA
+ CYq3UHf9Vd1i8mW4nvJcBEYz22xRV9AULjK0H2YQEx8q7LPFI2JixBNSO6RGNwHN10xZYh5K07mIyO
+ ulJ3S571loPaYpBnIJbAzI/ezrCGvgVcuFroLRxUmXgNbSNoFpwTDx4H30Bv8nyzh/G95s/KQftePq
+ JNwrh+e4+xAai4nGtE90AldT9/qRB6vmH27mMrKrc0xjT/jOcViXaEgIIDPAObA7Vk05K8wRiVQpTG
+ +vrlMvLj8g9D+RghbbMPoo3KXyruy+yC8X+LWUlV08qANwEWc0ZAttwsQb1YUtSJjS/Z1y8tH/5NQe
+ +oq/NKEC9kMovHqCeytRXGuVlOt/VS8BZyikphsiLHSh1E/99qOoo1Yx2JKk6Dc7W/L2NFvFltzmml
+ nFsLo8Lvji78Ag0KEMn5uNN/jpCfQzanciHxZn3N6bZbaiZs9mOqLHIGRqmh7z66plmd/z6PM+Z0xG
+ IlThS9+CzgvXQ0C7udzInsWNhxY+fwfy50Q9s28AuHJcMeQLOKifON2EzlAMMlfh36yo1kf9zhYYbZ
+ 052mrBR2O4o+C2F4G2zjecxe9z6XhinyrO8i/My0uCo1PlZpSoO3MhH68kiU2dS+1/tXvNrLT/fgSm
+ djRCOGUkWXAqS6KZGuHN73rbjXEu1vs6cF/urSZKOut1vTvLVDsEkmz4I2Lw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update rtc-pm8xxx bindings with disable-alarm-wakeup property.
+These touchscreen ICs support SPI, I2C and I3C interface, up to
+10 finger touch, stylus and gestures events.
 
-Signed-off-by: Venkata Rao Kakani <quic_vkakani@quicinc.com>
-Signed-off-by: Anvesh Jain P <quic_ajainp@quicinc.com>
+This initial driver is derived from the Goodix goodix_ts_berlin
+available at [1] and [2] and only supports the GT9916 IC
+present on the Qualcomm SM8550 MTP & QRD touch panel.
+
+The current implementation only supports BerlinD, aka GT9916.
+
+Support for advanced features like:
+- Firmware & config update
+- Stylus events
+- Gestures events
+- Previous revisions support (BerlinA or BerlinB)
+is not included in current version.
+
+The current support will work with currently flashed firmware
+and config, and bail out if firmware or config aren't flashed yet.
+
+[1] https://github.com/goodix/goodix_ts_berlin
+[2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+Changes in v5:
+- rebased on next-20230801
+- Link to v4: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v4-0-0947c489be17@linaro.org
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-index 9c51c1b19067..e4f1d2ff02b6 100644
---- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-@@ -42,6 +42,9 @@ properties:
- 
-   interrupt-controller: true
- 
-+  disable-alarm-wakeup:
-+    description: optional, disable alarm wake up capability.
-+
- patternProperties:
-   "led@[0-9a-f]+$":
-     type: object
+Changes in v4:
+- Core updates:
+ - drop kconfig depends, deps will be handled by _SPI and _I2C
+ - change power_on() error labels
+ - print errors on all dev_err() prints
+ - remove useless default variable initialization
+ - switch irq touch checksum error to dev_err()
+ - add Jeff's review tag
+- I2C changes
+ - change REGMAP_I2C Kconfig from depends to select
+ - add Jeff's review tag
+- SPI changes
+ - add select REGMAP to Kconfig
+ - added GOODIX_BERLIN_ prefix to defines
+ - switched from ret to error
+ - add Jeff's review tag
+- Link to v3: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org
 
-base-commit: 0a8db05b571ad5b8d5c8774a004c0424260a90bd
+Changes in v3:
+- Another guge cleanups after Jeff's review:
+ - appended goodix_berlin_ before all defines
+ - removed some unused defines
+ - removed retries on most of read functions, can be added back later
+ - added __le to ic_info structures
+ - reworked and simplified irq handling, dropped enum and ts_event structs
+ - added struct for touch data
+ - simplified and cleaned goodix_berlin_check_checksum & goodix_berlin_is_dummy_data
+ - moved touch_data_addr to the end of the main code_data
+ - reworked probe to get_irq last and right before setip input device
+ - cleaned probe by removing the "cd->dev"
+ - added short paragraph to justify new driver for berlin devices
+ - defined all offsets & masks
+- Added bindings review tag
+- Link to v2: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v2-0-26bc8fe1e90e@linaro.org
+
+Changes in v2:
+- Huge cleanups after Jeff's review:
+ - switch to error instead of ret
+ - drop dummy vendor/product ids
+ - drop unused defined/enums
+ - drop unused ic_info and only keep needes values
+ - cleanup namings and use goodix_berlin_ everywhere
+ - fix regulator setup
+ - fix default variables value when assigned afterwars
+ - removed indirections
+ - dropped debugfs
+ - cleaned input_dev setup
+ - dropped _remove()
+ - sync'ed i2c and spi drivers
+- fixed yaml bindings
+- Link to v1: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org
+
+---
+Neil Armstrong (4):
+      dt-bindings: input: document Goodix Berlin Touchscreen IC
+      input: touchscreen: add core support for Goodix Berlin Touchscreen IC
+      input: touchscreen: add I2C support for Goodix Berlin Touchscreen IC
+      input: touchscreen: add SPI support for Goodix Berlin Touchscreen IC
+
+ .../bindings/input/touchscreen/goodix,gt9916.yaml  |  95 ++++
+ drivers/input/touchscreen/Kconfig                  |  31 ++
+ drivers/input/touchscreen/Makefile                 |   3 +
+ drivers/input/touchscreen/goodix_berlin.h          | 159 ++++++
+ drivers/input/touchscreen/goodix_berlin_core.c     | 581 +++++++++++++++++++++
+ drivers/input/touchscreen/goodix_berlin_i2c.c      |  69 +++
+ drivers/input/touchscreen/goodix_berlin_spi.c      | 173 ++++++
+ 7 files changed, 1111 insertions(+)
+---
+base-commit: a734662572708cf062e974f659ae50c24fc1ad17
+change-id: 20230606-topic-goodix-berlin-upstream-initial-ba97e8ec8f4c
+
+Best regards,
 -- 
-2.17.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
