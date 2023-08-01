@@ -2,153 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC2476B341
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:29:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06B1176B3D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 13:52:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232688AbjHAL3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 07:29:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33238 "EHLO
+        id S233204AbjHALwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 07:52:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233265AbjHAL3k (ORCPT
+        with ESMTP id S230087AbjHALwN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 07:29:40 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A8E1FC0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 04:29:19 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9bb097c1bso83264241fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 04:29:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690889357; x=1691494157;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xQnhvTrElkRUMYG/j88qokWXWGoFkf2VtDHC0NJz/h8=;
-        b=cA9ukiDO6VpnPgc2H7G6sIXnv2oN3+KtOVxpb+j1pmPII/ej/fJRmgSHIsO4Q4HiLT
-         AAO1CD2A9C93kWJjILfrrRjgvfx/RfGc5CfpJhXIXrgwGXlS4MsyYqRdbuRq9hxkFRZ/
-         DGZAIt0X7RJ3xp4nzwWeRu6bZoqZ9kbSKw9CC7iQBmlfPkebWGmykFDb24+ozRtplf6p
-         +6ZipGtewCDhwBakDelAGTth70ugsGV68mBazqXIh0ZDLzUOKfH1q/hekHfScBMkFSml
-         M4P0/y9mcXw0oAOE+uSjTCewMToWHhSN3ZHw+s5b4IQlLH9Yf2fkYLYmIs4ZRfDAW2Na
-         Ihfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690889357; x=1691494157;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xQnhvTrElkRUMYG/j88qokWXWGoFkf2VtDHC0NJz/h8=;
-        b=AiRttTJP5EBemJlbPJ2cfE1AMpiXkWhYLBMiV3Xa3yZO1T5MqPp5Au2pcEwINp5fA5
-         yz/c0kacH3ixsQDCLM6p49htvVLHskJfmytdQ4jWMoOQ9F89l54CmVyOxTu1fOVW8KtZ
-         GxSKubZpkzKaI9um3JRCsVJNH/0UCYxSYnInOZiL71nhv62N0Inwil3yDmWT7mpf7y0L
-         UesB16pktSOyAvv64EassNuE2b+xnLgw90Y+MSMTouvYtlUmswiuWu+XI6KgCAlBUArp
-         bPCucGEYb5L7/E23mhnF1JuQ9oTFP/HJbk2t+o8N7jUPYArmmMu6wIXS7p4G4CELU35a
-         e96Q==
-X-Gm-Message-State: ABy/qLYgP6I3mBXMDXdBOJetl6aVwHiewR5WrjtJrbQf+blSbxfU45lv
-        gEXK+RGr2ebm7Qq6kmt1YcR7wg==
-X-Google-Smtp-Source: APBJJlHV5JYqnoDuUsavWaF8qzs6MSrXxGh12jNoZ3jGRoMfI5RtsF4bQLGsAcUFuO+cmJfXIxdicg==
-X-Received: by 2002:a2e:98c3:0:b0:2b9:d28c:9c2d with SMTP id s3-20020a2e98c3000000b002b9d28c9c2dmr2175374ljj.23.1690889357548;
-        Tue, 01 Aug 2023 04:29:17 -0700 (PDT)
-Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id k15-20020a2e240f000000b002b70a8478ddsm3043192ljk.44.2023.08.01.04.29.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Aug 2023 04:29:17 -0700 (PDT)
-Message-ID: <a289c4ed-7a05-76ea-edfc-3148cfd6c020@linaro.org>
-Date:   Tue, 1 Aug 2023 13:29:16 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] interconnect: qcom: icc-rpm: Let nodes drive
- their own bus clock
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 1 Aug 2023 07:52:13 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BD2C7;
+        Tue,  1 Aug 2023 04:52:12 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 371Ahb47000769;
+        Tue, 1 Aug 2023 11:52:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=Ucs/AIcc42iyIhwla04Sf5HkBqkmEeFUieVvFoDw0Yw=;
+ b=TBu/LUe2+V6T7iDl7GHHroAB3fHbLXHqR8arOEHKce1NFECCEvaopXl9S54FU4dONFn2
+ AkuzRMboMXepvyk6lfSnQIrBS4ld8hi79ZSI2UqOCVlaYoDO/WQsq5wcf5ZqcuWGxPrF
+ dPr2SbfIu3TmADwxeVerWPSuDjFNraGNLvE3F/V6FuVh3Kv2pVldaj1W6gDdZmW0g+D3
+ PcVEeoYigHDxcA9oRjWvTATmsxj9Boj4xpWQngybzGiBfutbwQjBEWAyarI1QR2Cj+pR
+ xJIZeqV7VdChc6QpcVvK3JcDsg9wE9ZVITk+d+62KCXSQNYb0vnSsoKsh4CGgBYpVA9t 0w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6d0mu1p8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Aug 2023 11:52:08 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 371Bq7rI003024
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 1 Aug 2023 11:52:07 GMT
+Received: from hu-ajainp-blr.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 1 Aug 2023 04:52:03 -0700
+From:   Anvesh Jain P <quic_ajainp@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
- <20230726-topic-icc_coeff-v2-3-8c91c6c76076@linaro.org>
- <ZMjlZyFcB9IFEG60@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZMjlZyFcB9IFEG60@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Venkata Rao Kakani <quic_vkakani@quicinc.com>,
+        Anvesh Jain P <quic_ajainp@quicinc.com>
+Subject: [PATCH] bindings: mfd: qcom-pm8xxx: add a property for rtc-pm8xxx
+Date:   Tue, 1 Aug 2023 17:21:43 +0530
+Message-ID: <20230801115143.27738-1-quic_ajainp@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WwutmcfvYV2MI7ac2_IvBsbc1n3C4iMU
+X-Proofpoint-ORIG-GUID: WwutmcfvYV2MI7ac2_IvBsbc1n3C4iMU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-01_06,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=580 mlxscore=0 malwarescore=0 adultscore=0
+ clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308010107
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1.08.2023 12:58, Stephan Gerhold wrote:
-> On Mon, Jul 31, 2023 at 12:52:19PM +0200, Konrad Dybcio wrote:
->> If this hardware couldn't get messier, some nodes are supposed to drive
->> their own bus clock.. Presumably to connect to some intermediate
->> interface between the node itself and the bus it's (supposed to be)
->> connected to.
->>
->> Expand the node struct with the necessary data and hook up the
->> allocations & calculations.
->>
->> To save on memory (not very many nodes have their own clocks), allocate
->> a pointer to an array instead of allocating an array within
->> qcom_icc_node.
->>
-> 
-> Only on ARM32 though. On ARM64 you waste extra memory:
-> 
-> u32 bus_clk_rate[QCOM_SMD_RPM_STATE_NUM];
-> sizeof(bus_clk_rate) = QCOM_SMD_RPM_STATE_NUM * sizeof(bus_clk_rate[0])
->                      = 2 * 4
->                      = 8
-> 
-> u32 *bus_clk_rate;
-> sizeof(bus_clk_rate) = sizeof(ptr)
->                      = 8 (for ARM64)
->                        + 2 * 4 + malloc overhead
->                          for each node with bus_clk_desc
-> 
-> which is > 8 from above.
-> 
-> I'm not quite convinced this optimization is worth it.
-Right, u32 is not the same size as *u32, brain fart :D
+Update rtc-pm8xxx bindings with disable-alarm-wakeup property.
 
-Konrad
+Signed-off-by: Venkata Rao Kakani <quic_vkakani@quicinc.com>
+Signed-off-by: Anvesh Jain P <quic_ajainp@quicinc.com>
+---
+ Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+index 9c51c1b19067..e4f1d2ff02b6 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+@@ -42,6 +42,9 @@ properties:
+ 
+   interrupt-controller: true
+ 
++  disable-alarm-wakeup:
++    description: optional, disable alarm wake up capability.
++
+ patternProperties:
+   "led@[0-9a-f]+$":
+     type: object
+
+base-commit: 0a8db05b571ad5b8d5c8774a004c0424260a90bd
+-- 
+2.17.1
+
