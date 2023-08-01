@@ -2,80 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71F9076A875
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 07:48:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4693476A87A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Aug 2023 07:48:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjHAFsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 01:48:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53502 "EHLO
+        id S230296AbjHAFsu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Aug 2023 01:48:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjHAFs3 (ORCPT
+        with ESMTP id S229921AbjHAFst (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 01:48:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8B31B5;
-        Mon, 31 Jul 2023 22:48:25 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3712gRsm026351;
-        Tue, 1 Aug 2023 05:48:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4Zn7E0Dl+W5BuwFXIKMOv+P0FYRaC1MsuIZCNeQvZfE=;
- b=Q8OLNOBhma2YcjkuHn4D1B/UHK/Uvmw+xyUPWJbyiQjhtiLwH6b2nkxKqe8moc6B3u6u
- O/l2UTHnUYb+vSNv1vNWkq6Vt0DSoP5ktZgEJM3+UhzOeQjgbGFyxl0DqY/D2Z57k0Ds
- 95yw+hnjEeTsWYzRMtgcnH1q2cVrtinoF+w1AgiQ8ikZuNHJWohP+bPcOz4clc/RpEBt
- ra/rgdhlVk2JQCl/WB5wvnbP65SoBcyqp8gmeSBx+sDxVsInqZgdrsAvQd62Dxdtbg9i
- RBCWGORArslGr1KhowBM8nL6t3tFxjF8RhM6p1xQ9zvwDG9CjDWUbiYQLpGVZb4V7Nby cA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6rharcux-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Aug 2023 05:48:16 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3715mFfJ027519
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 1 Aug 2023 05:48:15 GMT
-Received: from [10.110.54.109] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 31 Jul
- 2023 22:48:12 -0700
-Message-ID: <ce06c845-f3c8-a733-dc21-ee0ba4b4ca68@quicinc.com>
-Date:   Mon, 31 Jul 2023 22:48:11 -0700
+        Tue, 1 Aug 2023 01:48:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095AB1FCA;
+        Mon, 31 Jul 2023 22:48:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 65A1661473;
+        Tue,  1 Aug 2023 05:48:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A2FC433C7;
+        Tue,  1 Aug 2023 05:48:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1690868923;
+        bh=CSYR83m0hWJjYjIRujwvyFiMN2MH6lGieHS+KpcH5TI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=F+v+oBPjg7WgK2jhl4qBub9O18tXXnx6yR9HpjbyTlMTq9j8VrdTh2kEtcaJVlg7o
+         sy4fvYWyyOeeGWhGez0j+4ln+DJHQxEQOJQALxK2wxNEOlvwQiTgJN1yCJJoVGWFqD
+         ypC6WdR6ijmYOJLItZ5htFUzFNLsgyH0cDPpWG4w=
+Date:   Tue, 1 Aug 2023 07:48:40 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Tony Lindgren <tony@atomide.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Subject: Re: [PATCH 0/3] PM / wakeirq: fix wake irq arming
+Message-ID: <2023080129-district-punk-3da3@gregkh>
+References: <20230713145741.30390-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] EDAC/device: Add sysfs notification for UE,CE count
- change
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-To:     Deepti Jaggi <quic_djaggi@quicinc.com>, <james.morse@arm.com>,
-        <mchehab@kernel.org>, <rric@kernel.org>, <bp@alien8.de>,
-        <tony.luck@intel.com>
-CC:     <linux-edac@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, <quic_psodagud@quicinc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20230731220059.28474-1-quic_djaggi@quicinc.com>
- <3e2bf03e-2bc1-445e-d8ce-4975c044eea0@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <3e2bf03e-2bc1-445e-d8ce-4975c044eea0@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0dEiw39yIqzBDRsd-yshWhcjDBf25sTv
-X-Proofpoint-ORIG-GUID: 0dEiw39yIqzBDRsd-yshWhcjDBf25sTv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-01_03,2023-07-31_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 clxscore=1015 impostorscore=0 spamscore=0
- bulkscore=0 phishscore=0 mlxlogscore=475 lowpriorityscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308010053
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230713145741.30390-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,31 +59,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/31/2023 3:40 PM, Trilok Soni wrote:
-> On 7/31/2023 3:00 PM, Deepti Jaggi wrote:
->> A daemon running in user space collects information on correctable
->> and uncorrectable errors from EDAC driver by reading corresponding
->> sysfs entries and takes appropriate action.
+On Thu, Jul 13, 2023 at 04:57:38PM +0200, Johan Hovold wrote:
+> When reviewing the Qualcomm serial-driver suspend implementation I
+> noticed the odd runtime PM state update which had snuck in. Turns out it
+> was added to work around a bug in PM core which prevented drivers not
+> implementing runtime PM from using dedicated wake irqs.
 > 
-> Which daemon we are referring here? Can you please provide the link to 
-> the project?
+> This series fixes the wake irq arming and drops the unused wake irq
+> enable helpers before dropping the bogus runtime PM state update in the
+> Qualcomm driver.
 > 
-> Are you using this daemon?
-> 
-> https://mcelog.org/ - It is for x86, but is your daemon project different?
-> 
->> This patch adds support for user space daemon to wait on poll() until
->> the sysfs entries for UE count and CE count change and then read updated
->> counts instead of continuously monitoring the sysfs entries for
->> any changes.
-> 
-> The modifications below are architecture agnostic so I really want to 
-> know what exactly we are fixing and if there is a problem.
+> I suggest that Rafael takes all of these through his tree.
 
-+ CC linux-arm-msm
+I agree:
 
-Please keep linux-arm-msm in CC if there is a next revision.
-
--- 
----Trilok Soni
-
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
