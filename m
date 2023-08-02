@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC70376D095
+	by mail.lfdr.de (Postfix) with ESMTP id 6172A76D094
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 16:50:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234152AbjHBOuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 10:50:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47144 "EHLO
+        id S233056AbjHBOuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 10:50:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234420AbjHBOuG (ORCPT
+        with ESMTP id S234347AbjHBOuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 2 Aug 2023 10:50:06 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CF001982
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 07:50:04 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fbc5d5742eso74054385e9.3
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C05BE43
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 07:50:05 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3159d5e409dso697729f8f.0
         for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 07:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1690987803; x=1691592603;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=M4kw9VxVDZYvCkpggtGL2lxTsw9c6lYEtOYEG/sd3AM=;
-        b=kUY9oZycAeqqSCGxzs1Y58rOUxN7O9E9ICnmR1V3/nFvBQwYLQyOvFf7GSnyFDfekl
-         Q8ecp4EF3OUnb2BMVpQWOdaSFO4odgctmfFaj9QaAY56RbUADfDLASEXaRUNAOqyD3yK
-         gIpJwIS1asJgKw9KDepkUvaXuCPOVCWEHjnU/PF/N5phpJ1mFHBJt/rDZ3PZltUShOsa
-         RjY0+yKmbZwuGMQB5NEvE34f+QFS/1pz7nT8aN4tjYAtw4n4VksTDcbfuJOSVRvoC5kf
-         2F+7h0+c7idrmSDEp+f0IzbMflRKtXSyByqGvErpyJmc5yvSOq2wZbbIXgPNNJ7hBmAR
-         Rcxg==
+        bh=l+m04PdzXiQtuh5WJn8M+ftKQwW8UzOG5dvhfD0CJvU=;
+        b=ZLBkTF98A4H9YK/hVFrxVvlLc5lKvCR3tZHuNxuJz3cALyNTCcS7E3bP/F5KSs+YG+
+         1eiHq/Tpgy8vs8PIuHQocH9El3UrNUWYPmme3V9taYDYW/qbKWftb5d4RbJXc9lVyDRI
+         c5wDX+JiZbfMam4SeD3PEjOoNPsDJJh8RLGPv1QihNI2qFj7x7ophNpdPGyhCMlwiTHp
+         YoUJ2MnS7ILrRC942xOZNwhTLimJiNJ3T2u+bbhU+dF5/F10bz2t1wtvQMAt9wbQ5LZc
+         I6z2Zd92g0jnLmFx5RXz9cZ532Fuy8N3JTr4FDlacZ7ibShqmI7TUlldLFWUCnbwUBmm
+         nDzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1690987803; x=1691592603;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M4kw9VxVDZYvCkpggtGL2lxTsw9c6lYEtOYEG/sd3AM=;
-        b=Mta+0Dg7gWyIv24GfzBrzCRY7Mh50rkIaeqbNyQpU6F6FRMiCxccSyPa6vBqyRCzVT
-         /u+uno2puLONeLLgvV80axCxji2shjnREYRDcfBj10xfGzGvbcLv+GdNAu80jkcADD0D
-         DygJFvE02gE8UBekcW5dnPnDeiLE6RLE6+DF9tW4FEhHAxfqrBLsZxAZWEY7mLUOrbIU
-         DCtAHs0vF8Ll5vBJX/RjsqexP0hZKdVBAeZKrQPNwIm+dsZB9QV3KRtDIHc0WR1vVboa
-         Edgn3hEFhFRwYyKY4guUGJm0kAlEbpoKkPkiBqwjrCixvI5husGzJqK5OVSerSm0gdEp
-         kruQ==
-X-Gm-Message-State: ABy/qLbVWgWrcZisQv1pC+pVvJsXBqjv6E4kXc8GIAAnr/CTJITnO7pC
-        pz2UM51Sz0kKOORamUPUKEasaA==
-X-Google-Smtp-Source: APBJJlFVhbFaDTXJTz2M+3Nstm59W7bEHqOSnHL+eVxrmhR1q37s1dmLA8kr/IuGg7aPTzNML4Xmiw==
-X-Received: by 2002:adf:f4d0:0:b0:317:568d:d69f with SMTP id h16-20020adff4d0000000b00317568dd69fmr5128652wrp.12.1690987802781;
-        Wed, 02 Aug 2023 07:50:02 -0700 (PDT)
+        bh=l+m04PdzXiQtuh5WJn8M+ftKQwW8UzOG5dvhfD0CJvU=;
+        b=lMYC+M/i7xQ1YqWvMH3Q6UB9RMdEEdElmec1o0pRcbX+Ra1knUjzO8M6f8aom8velk
+         m/mbsQeTYAHGWoObrk+3AGom+f7wbR/qgmxIEegsPN1bOsqnActmEAco2RwuOy+DrQm5
+         G8vO3nzQ0SUqyVXRKUmalsyteT55Dn2nQG9op9mlr2K9VCy6EabALSd2Bv6lkRrcTZYt
+         yMX0QT6v6L0+uOgJANaTj5szbXxRUlJdFbUztAnLpbRFW4HEUt7GdGNfvngdSdfjETom
+         /Mv9yBwG8mHAnl2SpOHAdc0e2FeIkUnOedhA+uRc9sQ9iW51lH0/RlANlM2YetKUGLE2
+         xO/A==
+X-Gm-Message-State: ABy/qLa0g8cx8dJRwv4LiUcJKfOAUlucG4JlniCOh/BIPdfcfJOmTTvl
+        aG9J2fT+rIpdZVPN/K1Wt8KR7oPCdCFByFlaqCZY9mxk
+X-Google-Smtp-Source: APBJJlE2wPXiYQ+0gkWhrzGHFnE+KfBuDB7r8sjzI/Datz8SVNXcjAKj6WNgazUonfskRyL8IDB+tQ==
+X-Received: by 2002:adf:e752:0:b0:314:423c:95a3 with SMTP id c18-20020adfe752000000b00314423c95a3mr5107091wrn.9.1690987803499;
+        Wed, 02 Aug 2023 07:50:03 -0700 (PDT)
 Received: from lion.connolly.tech (host-92-17-103-66.as13285.net. [92.17.103.66])
         by smtp.gmail.com with ESMTPSA id a1-20020a056000050100b003141f96ed36sm19371033wrf.0.2023.08.02.07.50.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 07:50:02 -0700 (PDT)
+        Wed, 02 Aug 2023 07:50:03 -0700 (PDT)
 From:   Caleb Connolly <caleb.connolly@linaro.org>
-Date:   Wed, 02 Aug 2023 15:49:28 +0100
-Subject: [PATCH 1/2] power: supply: qcom_pmi8998_charger: remove
- CHARGE_CONTROL_LIMIT_* props
+Date:   Wed, 02 Aug 2023 15:49:29 +0100
+Subject: [PATCH 2/2] power: supply: qcom_pmi8998_charger: fix charger
+ status
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230802-pmi8998-charger-fixes-v1-1-a8f1e8b84c1e@linaro.org>
+Message-Id: <20230802-pmi8998-charger-fixes-v1-2-a8f1e8b84c1e@linaro.org>
 References: <20230802-pmi8998-charger-fixes-v1-0-a8f1e8b84c1e@linaro.org>
 In-Reply-To: <20230802-pmi8998-charger-fixes-v1-0-a8f1e8b84c1e@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -69,76 +69,50 @@ Cc:     Sebastian Reichel <sebastian.reichel@collabora.com>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht
 X-Mailer: b4 0.13-dev-46309
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2047;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=996;
  i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=XsNf7NjKqBKQl4vIcQzA3Ah+1YWtGg6RtxuU8xJdlHk=;
- b=owGbwMvMwCFYaeA6f6eBkTjjabUkhpRTuZJ6OWvmHtnqEPJxi9d/sw3GO1TONEY+nHDg9ovJL
- +bOqcsx6ChlYRDkYJAVU2QRP7HMsmntZXuN7QsuwMxhZQIZwsDFKQATmSLB8L/uoIFy5PK6NmFB
- g9w39i23VNN/2qS9ONgU+mz/Iu8uUxmG/+nTOR2Pz24RNT8bFXNi/36fc2pvd02+e/y15pyZbwJ
- u9McAAA==
+ bh=p5XueRdNouZez7x5IuOUY6Xd5perVKgBWAuqhh8dWx0=;
+ b=owGbwMvMwCFYaeA6f6eBkTjjabUkhpRTuZIWU/ct3nj6tqWJwiTWWRcOlnXu7T33na/l8fcv0
+ 6awiy5b0FHKwiDIwSArpsgifmKZZdPay/Ya2xdcgJnDygQyhIGLUwAmsugqw3+P144+Bc5in8Sf
+ tSTkbNe36MlS8bi3ZOYS9UUJl/IEW9kZ/unNNJjqbOz/vG1VT9Wtvz9qV7WencDfeejA3i6Pokv
+ 3Pm4BAA==
 X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
  fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These property were intended to allow the power supply to be treated as a
-cooling device, however the cooling device interface has been dropped
-from the psy core code. They now just duplicate the CURRENT_NOW and
-CURRENT_MAX properties and are generally confusing, drop them.
+The INHIBIT_CHARGE status bit means the battery has reached a
+pre-programmed charge limit which is some voltage offset below the
+target float voltage. This should be reported as a STATUS_FULL rather
+than UNKNOWN, fix it.
 
 Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- drivers/power/supply/qcom_pmi8998_charger.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/power/supply/qcom_pmi8998_charger.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
-index d16c5ee17249..61be835f4106 100644
+index 61be835f4106..a0d76f4f7054 100644
 --- a/drivers/power/supply/qcom_pmi8998_charger.c
 +++ b/drivers/power/supply/qcom_pmi8998_charger.c
-@@ -409,8 +409,6 @@ static enum power_supply_property smb2_properties[] = {
- 	POWER_SUPPLY_PROP_HEALTH,
- 	POWER_SUPPLY_PROP_ONLINE,
- 	POWER_SUPPLY_PROP_USB_TYPE,
--	POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT,
--	POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX,
- };
- 
- static enum power_supply_usb_type smb2_usb_types[] = {
-@@ -673,11 +671,7 @@ static int smb2_get_property(struct power_supply *psy,
- 		val->strval = chip->name;
- 		return 0;
- 	case POWER_SUPPLY_PROP_CURRENT_MAX:
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
- 		return smb2_get_current_limit(chip, &val->intval);
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX:
--		val->intval = DCP_CURRENT_UA;
--		return 0;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 		return smb2_get_iio_chan(chip, chip->usb_in_i_chan,
- 					 &val->intval);
-@@ -706,7 +700,6 @@ static int smb2_set_property(struct power_supply *psy,
- 
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_CURRENT_MAX:
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
- 		return smb2_set_current_limit(chip, val->intval);
+@@ -517,9 +517,9 @@ static int smb2_get_prop_status(struct smb2_chip *chip, int *val)
+ 		*val = POWER_SUPPLY_STATUS_NOT_CHARGING;
+ 		return rc;
+ 	case TERMINATE_CHARGE:
++	case INHIBIT_CHARGE:
+ 		*val = POWER_SUPPLY_STATUS_FULL;
+ 		return rc;
+-	case INHIBIT_CHARGE:
  	default:
- 		dev_err(chip->dev, "No setter for property: %d\n", psp);
-@@ -719,7 +712,6 @@ static int smb2_property_is_writable(struct power_supply *psy,
- {
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_CURRENT_MAX:
--	case POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT:
- 		return 1;
- 	default:
- 		return 0;
+ 		*val = POWER_SUPPLY_STATUS_UNKNOWN;
+ 		return rc;
 
 -- 
 2.41.0
