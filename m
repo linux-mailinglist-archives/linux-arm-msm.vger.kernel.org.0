@@ -2,89 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E442676D5C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:44:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3AFE76D513
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:25:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231407AbjHBRoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 13:44:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
+        id S230201AbjHBRZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 13:25:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233777AbjHBRnz (ORCPT
+        with ESMTP id S229504AbjHBRZX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 13:43:55 -0400
-X-Greylist: delayed 1194 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Aug 2023 10:43:43 PDT
-Received: from srv01.abscue.de (abscue.de [IPv6:2a03:4000:63:bf5:4817:8eff:feeb:8ac7])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B53DE30C0;
-        Wed,  2 Aug 2023 10:43:42 -0700 (PDT)
-Received: from srv01.abscue.de (localhost [127.0.0.1])
-        by spamfilter.srv.local (Postfix) with ESMTP id 72BAE1C0185;
-        Wed,  2 Aug 2023 19:06:13 +0200 (CEST)
+        Wed, 2 Aug 2023 13:25:23 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0B6ED
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 10:25:21 -0700 (PDT)
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: marex@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id 60D5B8685D;
+        Wed,  2 Aug 2023 19:25:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1690997119;
+        bh=RYe5PxJYQ9XrOHJfTi636roYNO47+WQvmmqcvq5UECM=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=eVFe57KoNs4YTqA0uiq3jG392qoq2aYa2ch2IpgVhL+mcKy0vY4865Ep6sV5CbRDx
+         0Syff0W9iVZUJjgvV3lIbIEt9E/eYpTYyDofUzVytSWx/QKmz2FKKz+utQEzPxs5Ps
+         y5Jt2ekFNFsuevweac978G1PHlhjPxpwk+/O4UFiHhqcvrZ4TupN4OFpp6NqeGzcXw
+         G+wWl2WfZ8nSdLAgcXTqaY+HSAonDk4G062DKQgjadTcqb6SOKSqUJI3DHtfZZTcg6
+         RxOsvioaIUUdVvpS5dp7/DspbZRwt4/Wc3MLMutz6IXREiKrsha86nC+1Bn1kedXvK
+         H9gh88Mwc38Dg==
+Message-ID: <c9e42b81-f0b4-05a7-03db-786fa7d38135@denx.de>
+Date:   Wed, 2 Aug 2023 19:25:17 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+To:     neil.armstrong@linaro.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jagan Teki <jagan@amarulasolutions.com>,
+        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
+ <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+ <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
+ <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
+ <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
+ <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
+ <51d782c4-3539-c3d3-6844-d6b9a39c09eb@linaro.org>
+ <88a49ed7-8132-3212-1f7a-9378eb640d68@denx.de>
+ <d4b778f6-35b6-fc1b-014d-eaa9b3b900a4@linaro.org>
+Content-Language: en-US
+From:   Marek Vasut <marex@denx.de>
+In-Reply-To: <d4b778f6-35b6-fc1b-014d-eaa9b3b900a4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
-Received: from fluffy-mammal.fritz.box (dslb-092-072-013-079.092.072.pools.vodafone-ip.de [92.72.13.79])
-        by srv01.abscue.de (Postfix) with ESMTPSA id 0F2E91C0184;
-        Wed,  2 Aug 2023 19:06:13 +0200 (CEST)
-From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-To:     linux-clk@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Subject: [PATCH 2/2] clk: qcom: gcc-msm8917: Enable GPLL0_SLEEP_CLK_SRC
-Date:   Wed,  2 Aug 2023 19:03:18 +0200
-Message-Id: <20230802170317.205112-3-otto.pflueger@abscue.de>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230802170317.205112-1-otto.pflueger@abscue.de>
-References: <20230802170317.205112-1-otto.pflueger@abscue.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is the parent clock of gpll0_early, so it needs to be enabled
-for gpll0_early to return the correct rate. Enable GPLL0_SLEEP_CLK_SRC
-by adding its existing definition to the clock list.
+On 8/2/23 15:08, neil.armstrong@linaro.org wrote:
+> Hi Marek,
+> 
+> On 02/08/2023 14:25, Marek Vasut wrote:
+>> On 8/2/23 10:39, neil.armstrong@linaro.org wrote:
+>>> Hi Marek,
+>>
+>> Hi,
+>>
+>>> On 13/07/2023 20:28, Marek Vasut wrote:
+>>>
+>>> <snip>
+>>>
+>>>>>>
+>>>>>> MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by 
+>>>>>> DSIM.
+>>>>>>
+>>>>>> Maybe there is a need for new set of flags which differentiate 
+>>>>>> between HBP skipped (i.e. NO HBP) and HBP LP11 ?
+>>>>>>
+>>>>>
+>>>>> No, the section of the MIPI DSI spec I posted below clearly states 
+>>>>> there are two options:
+>>>>>
+>>>>> 1) send blanking packets during those periods
+>>>>> 2) transition to LP11 during those periods
+>>>>>
+>>>>> There is no 3rd option in the spec of not doing both like what you 
+>>>>> are suggesting. So DSIM should also be only transitioning to LP11 
+>>>>> during those periods if its not sending the blanking packets with 
+>>>>> those flags set.
+>>>>>
+>>>>> So, there is no need for any new set of flags to differentiate.
+>>>>>
+>>>>> The flags and their interpretation is correct in MSM driver. I 
+>>>>> cannot comment on what exactly DSIM does with those flags.
+>>>>
+>>>> How do you explain the comment in include/drm/drm_mipi_dsi.h:
+>>>>
+>>>> 128 /* disable hback-porch area */
+>>>> 129 #define MIPI_DSI_MODE_VIDEO_NO_HBP      BIT(6)
+>>>
+>>> Can you specify how you determined those flags were needed on DSIM ? 
+>>> a vendor tree ? a datasheet ?
+>>
+>> The following upstream commit:
+>>
+>> 996e1defca344 ("drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags")
+>>
+>>> In the meantime, we should revert this patch because it regresses 
+>>> some Qcom
+>>> based platforms until we figure out what's missing to make DSIM based 
+>>> boards
+>>> happy.
+>>>
+>>> I'll send a revert change afterwards.
+>>
+>> That change would break existing use case on i.MX8M then, I disagree 
+>> with that revert.
+> 
+> As I understand the timeline is :
+> 
+> - 996e1defca344 was merged in v6.2-rc2 and caused regression on NXP 
+> platforms
+> 
+> - 8ddce13ae696 was merged in v6.5-rc1 to fix that but caused regression 
+> on QCOM platforms
+> 
+> Did I miss something ?
 
-This clock also doesn't work with clk_alpha_pll_ops, use
-clk_branch_simple_ops instead to make it enable and disable correctly.
+That looks about right.
 
-Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
----
- drivers/clk/qcom/gcc-msm8917.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> I don't know how to handle this apart reverting 8ddce13ae696 and trying 
+> to find a proper fix that doesn't regress QCOM.
 
-diff --git a/drivers/clk/qcom/gcc-msm8917.c b/drivers/clk/qcom/gcc-msm8917.c
-index 5ec14480e068..f2dd132e2fb1 100644
---- a/drivers/clk/qcom/gcc-msm8917.c
-+++ b/drivers/clk/qcom/gcc-msm8917.c
-@@ -63,7 +63,7 @@ static struct clk_alpha_pll gpll0_sleep_clk_src = {
- 				.index = DT_XO,
- 			},
- 			.num_parents = 1,
--			.ops = &clk_alpha_pll_ops,
-+			.ops = &clk_branch_simple_ops,
- 		},
- 	},
- };
-@@ -3041,6 +3041,7 @@ static struct gdsc cpp_gdsc = {
- static struct clk_regmap *gcc_msm8917_clocks[] = {
- 	[GPLL0] = &gpll0.clkr,
- 	[GPLL0_EARLY] = &gpll0_early.clkr,
-+	[GPLL0_SLEEP_CLK_SRC] = &gpll0_sleep_clk_src.clkr,
- 	[GPLL3] = &gpll3.clkr,
- 	[GPLL3_EARLY] = &gpll3_early.clkr,
- 	[GPLL4] = &gpll4.clkr,
--- 
-2.39.1
+I provided a suggestion above -- I believe QCOM is misinterpreting the 
+NO_H* flags and it needs separate flags for its behavior. The NXP 
+hardware per MX8M{M,N,P} reference manual (which is available at 
+NXP.com) skips the H* areas in the transfer, which matches the flags 
+description:
+
+include/drm/drm_mipi_dsi.h-/* disable hback-porch area */
+include/drm/drm_mipi_dsi.h:#define MIPI_DSI_MODE_VIDEO_NO_HBP   BIT(6)
+
+If the QCOM hardware does something else, it should introduce its own 
+set of flags for that something else and that would be problem solved, 
+for both platforms.
+
+I don't have access to the QCOM hardware or datasheet however, is either 
+available ?
+
+> So, The main issue is around the real meaning of the 
+> IPI_DSI_MODE_VIDEO_NO_* flags,
+> Exynos DRM removed the HSA, HBP and HFP packets, Qcom DSI moves the DSI 
+> lanes
+> state to LP-11 during the period.
+> 
+> The behavior is significantly different and the naming doesn't suggest any
+> correct behavior.
+> 
+> The only solution is to find out why :
+> - On Qcom platforms, having the HSA, HBP and HFP periods is OK, but not 
+> on DSIM
+> - On DSIM, removing the HSA, HBP and HFP periods is fine
+> - What's the exact requirement of the lt9611 bridge concerning those 
+> periods
+
+See above.
