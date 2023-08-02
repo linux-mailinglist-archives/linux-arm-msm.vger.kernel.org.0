@@ -2,372 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C49D76DAC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 00:25:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0994176DBD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 01:50:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233934AbjHBWZL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 18:25:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33720 "EHLO
+        id S231669AbjHBXuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 19:50:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbjHBWYs (ORCPT
+        with ESMTP id S232682AbjHBXue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 18:24:48 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0134E3C28;
-        Wed,  2 Aug 2023 15:23:42 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-686e0213c0bso229027b3a.1;
-        Wed, 02 Aug 2023 15:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691014962; x=1691619762;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XdybEnCEdXCCDRXI8XxrOexQ2ndgYZJ6uVUfLzgHn70=;
-        b=J5+QU+vNyj6hgKCY2k+DFqN9z9EYwLrg/fuB0uKKhtZJ4lpFKNi3wqpJCxS71ankvb
-         YX7DmNVhrEm7TP5OfJROh1U0WUbtb+Y0KOvq+Su+jFRJmfSkURRpe0+sQxxEcGw0n35r
-         tMFWkjPgUEAaF36lsZNAVVM9ISvqvz4epcVg5tcZgsnrErlRyhgEu/xX6wLejDbD1ILn
-         AA1iKWpQe05F6UX6M2J45WPWe3Ue7OJuOZpEEFkeKg+mYeEbqI5N9/jp6/02PJrTIKAf
-         Lu7fZter3j4HkRKXLKwB2RPESf4h3j8z+5Fr/jn+lHHb+Ub6n/SXOQjf2TbilhaVATK7
-         EPLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691014962; x=1691619762;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XdybEnCEdXCCDRXI8XxrOexQ2ndgYZJ6uVUfLzgHn70=;
-        b=dBJwLUq+bToBEo2NTbVrTFGHp6JNHLDajaPfamJe9cSctmqLyJaetPPl0FHdoo39Xr
-         7bTXan3ZQtNQbk3WN1gp3F46n+czw3nlwmcPISyTKvXYkJhzkZ54N2xWuqPcuClDQlpS
-         kRvheIoo3IcwYORCxj4olSSiAzFuEkjWrGGno/MLg/nKOtvIZf/00tqoZu36XD4GWev6
-         waaFdQsZabFPxRmEJuD6H32vyvDJqi4i6dOogHRt507f6K0FBYrv6vjOPo76lrnvrP5l
-         ktamKZSr/mIsNX4a9EkAseJWFb6tR+9b/EPzrBfivekRD1/kwZ56WLHXxFzPzyRMU0+j
-         sJNA==
-X-Gm-Message-State: ABy/qLbbfGcTFItCZeoj7P1D69L4SZkSrDJVjGa7aj73aG0+b84ZeBg8
-        1mCKQIU6P28sQFVRKqJKJOU=
-X-Google-Smtp-Source: APBJJlGjhSExvCFbHtGmr3GexlBgfaXoBhMCvnxdN6IesRHb/YI2aReDAfMw9cETn/i19jpUEL4LAg==
-X-Received: by 2002:a05:6a20:1611:b0:12f:c0c1:d70 with SMTP id l17-20020a056a20161100b0012fc0c10d70mr18602242pzj.40.1691014961811;
-        Wed, 02 Aug 2023 15:22:41 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:33de:aac3:fe1d:788])
-        by smtp.gmail.com with ESMTPSA id ey14-20020a056a0038ce00b00686bdff1d6fsm11304015pfb.77.2023.08.02.15.22.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 15:22:41 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
+        Wed, 2 Aug 2023 19:50:34 -0400
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2043.outbound.protection.outlook.com [40.107.244.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8925A30DF;
+        Wed,  2 Aug 2023 16:50:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=L1lBrJzGkf7JPp08MlTjQO1VEuW/OCoMPb4HDZmnb2F7xZdne0RrrgMiiZwW2hqJnrN1TDXK8WOe9KU5ULDLDPRsYzBVF/1FsCjT7Ckt4Lx0U/KfA06/jKvRbXLBGYDaDGAVd2RU1i4RvtRtY4b2ihMLtrpXT7E02eEjZeuOaqmQGwlxhvP1qPIJIGy/tTUxsffBxl94gqSlCXtS7YDY6dpQHEgEZzWnb6iXhVAgYDEc4C8PHfhFrtxPn0qXSni/gFe6uTDfLs5VQID9mpwfeAbS8nbA9yyJFYJ5mVc/bXcruBRtt2S9B8uJwUR7gXzVfa5hJjpsRwZgXhE9J3jLWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eHN3lxbUhZe5dlztn3JAaGIbSyJWd59/f8Amea8VZ88=;
+ b=bb/uz8F49+S+oNrqSpnmxHKdCssjU2VtKIWwW6SjM6LL3DGp8CEGG5DrJ7MNkr1xGUoAnzTTAQvfilKl4UykS1BCdIKnLL5NmkKPwA3Ncrs3ReygSieghR4l/OQj016lLXZIXQMdRfZKyXIOEE4pLcfp/nECdNfF/na/Rf2t4S3ygWRamZ7icxmw+xu/MOCKvfZps8JEUPjdrdMD2VkE09lFDSbgI4jHM6wcVf2IBxS63X2EdNGcZvjGW3kjfTN7kfbKYOKmL7+btw76OeLTzUY/lNuKI1icmDOrK53A4+wHYWSvBmdhwIYtw1TTwYARxK53J/pKi2gVnX1hL4HKCw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eHN3lxbUhZe5dlztn3JAaGIbSyJWd59/f8Amea8VZ88=;
+ b=F8yuHxtPXSemhi9ySIq0801zRJfYny0s2hEYI7FenC7jq/MX2oJOVlIQB4FCbCn0vy1cpEXIqG+QyjvSVXFuVBqd7aRSR0r2dG2H60PEV77oVSqF836RhEv4TtWzOH75+D8g/P31e5D+XdjxzBY7JHn411h56fgCsDGV2j/6tghCY3FfHykVeqy0HXND9YunjKdY67mfaXtmx+++xQkm7M1d2PguCeohmIapLRqkvfkbjzk/YlvFZe/El/iowiDN/zGr3V5F4lEh+L/A7yxsHPN+bYk/Fin0Wng8L1oTl1SjYDiVYLa8vz/24d5Ruxd++9oRaGFq3DbYwrf6KoCrjQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by DM6PR12MB4941.namprd12.prod.outlook.com (2603:10b6:5:1b8::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6631.45; Wed, 2 Aug
+ 2023 23:50:27 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::5111:16e8:5afe:1da1]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::5111:16e8:5afe:1da1%6]) with mapi id 15.20.6631.045; Wed, 2 Aug 2023
+ 23:50:27 +0000
+Date:   Wed, 2 Aug 2023 20:50:24 -0300
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
         Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 4/4] drm/msm: Remove vma use tracking
-Date:   Wed,  2 Aug 2023 15:21:52 -0700
-Message-ID: <20230802222158.11838-5-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230802222158.11838-1-robdclark@gmail.com>
-References: <20230802222158.11838-1-robdclark@gmail.com>
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v5 15/25] iommufd/selftest: Make the mock iommu driver
+ into a real driver
+Message-ID: <ZMrrwBTt5zHLwWoF@nvidia.com>
+References: <0-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
+ <15-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <15-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
+X-ClientProxiedBy: MN2PR15CA0051.namprd15.prod.outlook.com
+ (2603:10b6:208:237::20) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DM6PR12MB4941:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6e969a22-8258-4b1f-a50b-08db93b33ebe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: xFlIwAP18pcxCg3Z4pQDw7Whi02dFi1bfCs0lJfAkjwKy9OlwiMWuqNOnV6VtVAlxMHVEoGPTrtdiZZShxN7V04kHcCeXgRgPdBXTyxhXHopREDroW9Rnk0RJsUqbC87hDMCvvbSdM7FI1568qeoageJL08vFOqi4V+WqWWnhheznjTQaT4NYRHRLU3fYH62E8K2dK9Jvq1M0f3nwGTMByYLUAmu10fZ5XODAz5yuJ9+TMbwOJ0Tvt0539u1R+z1KBkAvctT5Rijxv+tZ2Mdrr2zWCzCepZkwtxxb4dcQcc426w8T5oJ9aziCDFyizkWh7PCAjNvbtj659MGBOGC/26nw9PX2WHixtqR7Psyt4rHW4/KQQNf/2pVUNEl56tTZnnYmzujU7nR81WLED2kS28fKEO8ZkiXJPxwVfItExrnxJpIoDA7SxsEsZdXPjD+oravq26E0cexLeo3WHff/2ijr9fNRGuDtUZrnPj1LVGt/hc8P9rr1pIMNd8YTqZnN2xVJSvNcp6kY7g0aa3Fgv7wKq5wX01ZKL0pbxFWqKnPfShnEm0BIOXTgoLJdK9TwFc4ycaYqMMNsJ9ZZQ8QWioaI5NjjXYLrCDZoXZn8g0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(346002)(366004)(136003)(376002)(396003)(451199021)(186003)(2616005)(36756003)(6512007)(316002)(478600001)(86362001)(54906003)(110136005)(66946007)(6666004)(66476007)(66556008)(921005)(38100700002)(4326008)(6486002)(6506007)(26005)(41300700001)(107886003)(8936002)(8676002)(7416002)(7406005)(5660300002)(2906002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?oI3N+pzrI64bLLvzAJoCCHKzrgLOnE/Ddg9aX2NYH7lD1aC8E2M5ouIaSMTr?=
+ =?us-ascii?Q?5qWSJZDyrxX+ZivnipkKOMKD0eF+QzKH4kI3FF6XPwJk8CGC+sDKcICeowA9?=
+ =?us-ascii?Q?60FUADf7uDcWpNGAQ8d9Mu8JcFq7Hlr5kVvDyA3Fn8FtICcYfRVD+y7m5K/d?=
+ =?us-ascii?Q?U5ZaUJvJxj9DU60ZnJqQIG2zKhQuuKzuX8d0kC5NYiN9i1cFxYC5bWCMwHef?=
+ =?us-ascii?Q?q7PkuZB/4U8vkZsKAioukgxdlGqpWhuCC+EZ5CqJkKAp5qUixh1zoJrm+N45?=
+ =?us-ascii?Q?5mQYAdCvNr7M9XulGIMNGa4x2O7F42ZeDyue3j6/D/PN5Hs4rpVGm7ewI2ow?=
+ =?us-ascii?Q?CBnfC5S9PE0DIkefTTBDWgYMTJHczhMPwYxNwtuoC8LBjwkQ8OjWPJvLPg+1?=
+ =?us-ascii?Q?IaUaFZYFVGp0JICzGmGQ/cXeAsArnTyHPMyCIractN26jmwJJIevqrE7EIEz?=
+ =?us-ascii?Q?LKn3xwD66wwKILIe/H2/f7hntpvYIOFDxhfeSXMTVDsPBMALBkCNBiaNvr8d?=
+ =?us-ascii?Q?2OpckqteZrHXNJx/2ANNVqtSkbMQSCkOF+4mJYVsds4KBuJWDtu10AawNIDi?=
+ =?us-ascii?Q?G+tlf6GN0YJy3xTZ+279oG9bB3sWu4Af5km3/6ZtVViJlq0o4WqBm+breP8K?=
+ =?us-ascii?Q?G/wYR44S17stTC1a/uV7kY4ZeV1fT6Aqcr386Zr0TWVGAXcY5PDrfWWFaz7n?=
+ =?us-ascii?Q?4JEvI8UsnXDCwvjkxD4DFhU6yiByTFrQAaANxfMMVteCjt6WGMu1bfDIQsKH?=
+ =?us-ascii?Q?j5axXyM8XV7yc7W+JK/M652H+U8WzRDnR4516M4j214fkcMq1aqCO8XCA+uO?=
+ =?us-ascii?Q?SXoyvuGxcDf/2vM+ej8CtNRKy3ALi1VaZkmORbBeNgSpdS+NqmeMTkEFq9zm?=
+ =?us-ascii?Q?6O6boRf7SlW4kr1joa5ZNDF9fHIcWg6sUIEytbfXlI8gz1WHUPYarTzhDTbZ?=
+ =?us-ascii?Q?MtjnGPRtnhbFWSQ/7SwVflJVsBfwuqin1BTu5gPh5CG4NstgtaDgdl4JS/+Y?=
+ =?us-ascii?Q?JoTiRgvNVpbeOYhlOmJGF0FKT79pdcNKI+qLRkdBYhom4C38QOmireLOp6Ip?=
+ =?us-ascii?Q?n9xCqH/LwI50x4EW351xZTtrSuoiB1AVgsaPgekx8MmBa70/HyPYqNYDAo5Q?=
+ =?us-ascii?Q?+Zlc2CpSnSlBuZH4vGRFreaTr/0VXgcW8j0ZVlwTquF4O12/UJGobdcYepZr?=
+ =?us-ascii?Q?HebZ6eFb2kQZWmqadVh9+li8r+sAyl2Upx8N/Tdb2yPkI2IYePfGWzKH7osg?=
+ =?us-ascii?Q?kV11AUdlBsSyfUPQ1WS81544bV8+uY6fAUB4hFqtH/s28MSzpKum1wGrIqTe?=
+ =?us-ascii?Q?grXaR77VtPvzEeMeJ40rUgKINuSR6k+3WWreCwxujKGkTcYs/SdH/4kjxLwT?=
+ =?us-ascii?Q?AyZqEoDpIT6lyGU2ZlL8JhyitxFavpDC8t2sbC9V4vCLl/SOTDlRdmovpD3R?=
+ =?us-ascii?Q?2MwZtAC1B0S9wvFBNR37ieSk/vidSqyfbmMNbQZdD95h2iLdA1bxI4lQ2zV/?=
+ =?us-ascii?Q?ZBindd0JaHI2criBAMQcdccexryXBPmLUJZrOWJq0gLWvvByCGy3JzYaI02E?=
+ =?us-ascii?Q?Tf02KswTq1C2qj5SveCzCwPxt2fUmxLl0R27YkO2?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e969a22-8258-4b1f-a50b-08db93b33ebe
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2023 23:50:27.0221
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: XmXyZjnaALR/E6RlXvsBBSGsw0U6OizKqNDcduEUNdIqu+YBucipah1VaMqb3gyW
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4941
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Mon, Jul 24, 2023 at 02:22:05PM -0300, Jason Gunthorpe wrote:
 
-This was not strictly necessary, as page unpinning (ie. shrinker) only
-cares about the resv.  It did give us some extra sanity checking for
-userspace controlled iova, and was useful to catch issues on kernel and
-userspace side when enabling userspace iova.  But if userspace screws
-this up, it just corrupts it's own gpu buffers and/or gets iova faults.
-So we can just let userspace shoot it's own foot and drop the extra per-
-buffer SUBMIT overhead.
+> -void __init iommufd_test_init(void)
+> +int __init iommufd_test_init(void)
+>  {
+> +	struct platform_device_info pdevinfo = {
+> +		.name = "iommufd_selftest_iommu",
+> +	};
+> +	int rc;
+> +
+>  	dbgfs_root =
+>  		fault_create_debugfs_attr("fail_iommufd", NULL, &fail_iommufd);
+> -	WARN_ON(bus_register(&iommufd_mock_bus_type));
+> +
+> +	selftest_iommu_dev = platform_device_register_full(&pdevinfo);
+> +	if (IS_ERR(selftest_iommu_dev)) {
+> +		rc = PTR_ERR(selftest_iommu_dev);
+> +		goto err_dbgfs;
+> +	}
+> +
+> +	rc = bus_register(&iommufd_mock_bus_type.bus);
+> +	if (rc)
+> +		goto err_platform;
+> +
+> +	mock_iommu_device.dev = &selftest_iommu_dev->dev;
+> +	rc = iommu_device_register_bus(&mock_iommu_device, &mock_ops,
+> +				  &iommufd_mock_bus_type.bus,
+> +				  &iommufd_mock_bus_type.nb);
+> +	if (rc)
+> +		goto err_bus;
+> +	return 0;
+> +
+> +err_bus:
+> +	bus_unregister(&iommufd_mock_bus_type.bus);
+> +err_platform:
+> +	platform_device_del(selftest_iommu_dev);
+> +err_dbgfs:
+> +	debugfs_remove_recursive(dbgfs_root);
+> +	return rc;
+>  }
+>  
+>  void iommufd_test_exit(void)
+>  {
+> +	iommu_device_unregister_bus(&mock_iommu_device,
+> +				    &iommufd_mock_bus_type.bus,
+> +				    &iommufd_mock_bus_type.nb);
+> +	bus_unregister(&iommufd_mock_bus_type.bus);
+> +	platform_device_del(selftest_iommu_dev);
+>  	debugfs_remove_recursive(dbgfs_root);
+> -	bus_unregister(&iommufd_mock_bus_type);
+>  }
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c        |  9 +---
- drivers/gpu/drm/msm/msm_gem.h        | 12 +----
- drivers/gpu/drm/msm/msm_gem_submit.c | 14 ++----
- drivers/gpu/drm/msm/msm_gem_vma.c    | 67 +---------------------------
- drivers/gpu/drm/msm/msm_ringbuffer.c |  3 +-
- 5 files changed, 9 insertions(+), 96 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 1c81ff6115ac..ce1ed0f9ad2d 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -607,9 +607,6 @@ static int clear_iova(struct drm_gem_object *obj,
- 	if (!vma)
- 		return 0;
+There is a mistake here that started to become visible after one of
+the rebases, it needs to call iommu_device_sysfs_add() prior to
+iommu_device_register_bus() otherwise the iommu core stuff does not
+fully initialize and weird stuff starts happening.
+
+So, it needs this:
+
+diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
+index 5433c9c545526d..d2b59a1157441c 100644
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -987,14 +987,21 @@ int __init iommufd_test_init(void)
+ 	if (rc)
+ 		goto err_platform;
  
--	if (msm_gem_vma_inuse(vma))
--		return -EBUSY;
--
- 	msm_gem_vma_purge(vma);
- 	msm_gem_vma_close(vma);
- 	del_vma(vma);
-@@ -660,7 +657,6 @@ void msm_gem_unpin_iova(struct drm_gem_object *obj,
- 	msm_gem_lock(obj);
- 	vma = lookup_vma(obj, aspace);
- 	if (!GEM_WARN_ON(!vma)) {
--		msm_gem_vma_unpin(vma);
- 		msm_gem_unpin_locked(obj);
- 	}
- 	msm_gem_unlock(obj);
-@@ -991,11 +987,10 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
- 			} else {
- 				name = comm = NULL;
- 			}
--			seq_printf(m, " [%s%s%s: aspace=%p, %08llx,%s,inuse=%d]",
-+			seq_printf(m, " [%s%s%s: aspace=%p, %08llx,%s]",
- 				name, comm ? ":" : "", comm ? comm : "",
- 				vma->aspace, vma->iova,
--				vma->mapped ? "mapped" : "unmapped",
--				msm_gem_vma_inuse(vma));
-+				vma->mapped ? "mapped" : "unmapped");
- 			kfree(comm);
- 		}
+-	mock_iommu_device.dev = &selftest_iommu_dev->dev;
++	rc = iommu_device_sysfs_add(&mock_iommu_device,
++				    &selftest_iommu_dev->dev, NULL, "%s",
++				    dev_name(&selftest_iommu_dev->dev));
++	if (rc)
++		goto err_bus;
++
+ 	rc = iommu_device_register_bus(&mock_iommu_device, &mock_ops,
+ 				  &iommufd_mock_bus_type.bus,
+ 				  &iommufd_mock_bus_type.nb);
+ 	if (rc)
+-		goto err_bus;
++		goto err_sysfs;
+ 	return 0;
  
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 2ddd896aac68..8ddef5443140 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -59,24 +59,16 @@ struct msm_fence_context;
++err_sysfs:
++	iommu_device_sysfs_remove(&mock_iommu_device);
+ err_bus:
+ 	bus_unregister(&iommufd_mock_bus_type.bus);
+ err_platform:
+@@ -1006,6 +1013,7 @@ int __init iommufd_test_init(void)
  
- struct msm_gem_vma {
- 	struct drm_mm_node node;
--	spinlock_t lock;
- 	uint64_t iova;
- 	struct msm_gem_address_space *aspace;
- 	struct list_head list;    /* node in msm_gem_object::vmas */
- 	bool mapped;
--	int inuse;
--	uint32_t fence_mask;
--	uint32_t fence[MSM_GPU_MAX_RINGS];
--	struct msm_fence_context *fctx[MSM_GPU_MAX_RINGS];
- };
- 
- struct msm_gem_vma *msm_gem_vma_new(struct msm_gem_address_space *aspace);
- int msm_gem_vma_init(struct msm_gem_vma *vma, int size,
- 		u64 range_start, u64 range_end);
--bool msm_gem_vma_inuse(struct msm_gem_vma *vma);
- void msm_gem_vma_purge(struct msm_gem_vma *vma);
--void msm_gem_vma_unpin(struct msm_gem_vma *vma);
--void msm_gem_vma_unpin_fenced(struct msm_gem_vma *vma, struct msm_fence_context *fctx);
- int msm_gem_vma_map(struct msm_gem_vma *vma, int prot, struct sg_table *sgt, int size);
- void msm_gem_vma_close(struct msm_gem_vma *vma);
- 
-@@ -298,15 +290,13 @@ struct msm_gem_submit {
- /* make sure these don't conflict w/ MSM_SUBMIT_BO_x */
- #define BO_VALID	0x8000	/* is current addr in cmdstream correct/valid? */
- #define BO_LOCKED	0x4000	/* obj lock is held */
--#define BO_OBJ_PINNED	0x2000	/* obj (pages) is pinned and on active list */
--#define BO_VMA_PINNED	0x1000	/* vma (virtual address) is pinned */
-+#define BO_PINNED	0x2000	/* obj (pages) is pinned and on active list */
- 		uint32_t flags;
- 		union {
- 			struct drm_gem_object *obj;
- 			uint32_t handle;
- 		};
- 		uint64_t iova;
--		struct msm_gem_vma *vma;
- 	} bos[];
- };
- 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index b17561ebd518..5f90cc8e7b7f 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -261,10 +261,7 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
- 	 */
- 	submit->bos[i].flags &= ~cleanup_flags;
- 
--	if (flags & BO_VMA_PINNED)
--		msm_gem_vma_unpin(submit->bos[i].vma);
--
--	if (flags & BO_OBJ_PINNED)
-+	if (flags & BO_PINNED)
- 		msm_gem_unpin_locked(obj);
- 
- 	if (flags & BO_LOCKED)
-@@ -273,7 +270,7 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
- 
- static void submit_unlock_unpin_bo(struct msm_gem_submit *submit, int i)
+ void iommufd_test_exit(void)
  {
--	unsigned cleanup_flags = BO_VMA_PINNED | BO_OBJ_PINNED | BO_LOCKED;
-+	unsigned cleanup_flags = BO_PINNED | BO_LOCKED;
- 	submit_cleanup_bo(submit, i, cleanup_flags);
- 
- 	if (!(submit->bos[i].flags & BO_VALID))
-@@ -404,9 +401,6 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 		if (ret)
- 			break;
- 
--		submit->bos[i].flags |= BO_VMA_PINNED;
--		submit->bos[i].vma = vma;
--
- 		if (vma->iova == submit->bos[i].iova) {
- 			submit->bos[i].flags |= BO_VALID;
- 		} else {
-@@ -420,7 +414,7 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 	mutex_lock(&priv->lru.lock);
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		msm_gem_pin_obj_locked(submit->bos[i].obj);
--		submit->bos[i].flags |= BO_OBJ_PINNED;
-+		submit->bos[i].flags |= BO_PINNED;
- 	}
- 	mutex_unlock(&priv->lru.lock);
- 
-@@ -547,7 +541,7 @@ static void submit_cleanup(struct msm_gem_submit *submit, bool error)
- 	unsigned i;
- 
- 	if (error)
--		cleanup_flags |= BO_VMA_PINNED | BO_OBJ_PINNED;
-+		cleanup_flags |= BO_PINNED;
- 
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct drm_gem_object *obj = submit->bos[i].obj;
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 98287ed99960..11e842dda73c 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -38,41 +38,12 @@ msm_gem_address_space_get(struct msm_gem_address_space *aspace)
- 	return aspace;
- }
- 
--bool msm_gem_vma_inuse(struct msm_gem_vma *vma)
--{
--	bool ret = true;
--
--	spin_lock(&vma->lock);
--
--	if (vma->inuse > 0)
--		goto out;
--
--	while (vma->fence_mask) {
--		unsigned idx = ffs(vma->fence_mask) - 1;
--
--		if (!msm_fence_completed(vma->fctx[idx], vma->fence[idx]))
--			goto out;
--
--		vma->fence_mask &= ~BIT(idx);
--	}
--
--	ret = false;
--
--out:
--	spin_unlock(&vma->lock);
--
--	return ret;
--}
--
- /* Actually unmap memory for the vma */
- void msm_gem_vma_purge(struct msm_gem_vma *vma)
- {
- 	struct msm_gem_address_space *aspace = vma->aspace;
- 	unsigned size = vma->node.size;
- 
--	/* Print a message if we try to purge a vma in use */
--	GEM_WARN_ON(msm_gem_vma_inuse(vma));
--
- 	/* Don't do anything if the memory isn't mapped */
- 	if (!vma->mapped)
- 		return;
-@@ -82,33 +53,6 @@ void msm_gem_vma_purge(struct msm_gem_vma *vma)
- 	vma->mapped = false;
- }
- 
--static void vma_unpin_locked(struct msm_gem_vma *vma)
--{
--	if (GEM_WARN_ON(!vma->inuse))
--		return;
--	if (!GEM_WARN_ON(!vma->iova))
--		vma->inuse--;
--}
--
--/* Remove reference counts for the mapping */
--void msm_gem_vma_unpin(struct msm_gem_vma *vma)
--{
--	spin_lock(&vma->lock);
--	vma_unpin_locked(vma);
--	spin_unlock(&vma->lock);
--}
--
--/* Replace pin reference with fence: */
--void msm_gem_vma_unpin_fenced(struct msm_gem_vma *vma, struct msm_fence_context *fctx)
--{
--	spin_lock(&vma->lock);
--	vma->fctx[fctx->index] = fctx;
--	vma->fence[fctx->index] = fctx->last_fence;
--	vma->fence_mask |= BIT(fctx->index);
--	vma_unpin_locked(vma);
--	spin_unlock(&vma->lock);
--}
--
- /* Map and pin vma: */
- int
- msm_gem_vma_map(struct msm_gem_vma *vma, int prot,
-@@ -120,11 +64,6 @@ msm_gem_vma_map(struct msm_gem_vma *vma, int prot,
- 	if (GEM_WARN_ON(!vma->iova))
- 		return -EINVAL;
- 
--	/* Increase the usage counter */
--	spin_lock(&vma->lock);
--	vma->inuse++;
--	spin_unlock(&vma->lock);
--
- 	if (vma->mapped)
- 		return 0;
- 
-@@ -146,9 +85,6 @@ msm_gem_vma_map(struct msm_gem_vma *vma, int prot,
- 
- 	if (ret) {
- 		vma->mapped = false;
--		spin_lock(&vma->lock);
--		vma->inuse--;
--		spin_unlock(&vma->lock);
- 	}
- 
- 	return ret;
-@@ -159,7 +95,7 @@ void msm_gem_vma_close(struct msm_gem_vma *vma)
- {
- 	struct msm_gem_address_space *aspace = vma->aspace;
- 
--	GEM_WARN_ON(msm_gem_vma_inuse(vma) || vma->mapped);
-+	GEM_WARN_ON(vma->mapped);
- 
- 	spin_lock(&aspace->lock);
- 	if (vma->iova)
-@@ -179,7 +115,6 @@ struct msm_gem_vma *msm_gem_vma_new(struct msm_gem_address_space *aspace)
- 	if (!vma)
- 		return NULL;
- 
--	spin_lock_init(&vma->lock);
- 	vma->aspace = aspace;
- 
- 	return vma;
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index 6fa427d2992e..7f5e0a961bba 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -26,9 +26,8 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct drm_gem_object *obj = submit->bos[i].obj;
- 
--		msm_gem_vma_unpin_fenced(submit->bos[i].vma, fctx);
- 		msm_gem_unpin_active(obj);
--		submit->bos[i].flags &= ~(BO_VMA_PINNED | BO_OBJ_PINNED);
-+		submit->bos[i].flags &= ~BO_PINNED;
- 	}
- 
- 	mutex_unlock(&priv->lru.lock);
--- 
-2.41.0
++	iommu_device_sysfs_remove(&mock_iommu_device);
+ 	iommu_device_unregister_bus(&mock_iommu_device,
+ 				    &iommufd_mock_bus_type.bus,
+ 				    &iommufd_mock_bus_type.nb);
 
