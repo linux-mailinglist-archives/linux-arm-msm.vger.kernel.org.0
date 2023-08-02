@@ -2,104 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0BC376D398
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 18:26:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9654676D475
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 18:59:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbjHBQ0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 12:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34152 "EHLO
+        id S231308AbjHBQ7c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 12:59:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbjHBQ0K (ORCPT
+        with ESMTP id S230440AbjHBQ7a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 12:26:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BB91FFA;
-        Wed,  2 Aug 2023 09:26:06 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372E7f1i028328;
-        Wed, 2 Aug 2023 15:16:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=l27L1z+fYh8L3ZhSSl3etbSXBI7anqfGlqjXvz1VcQM=;
- b=cUrJgIK4QWL8orqSU9cB9WcD9MoUcdP7a+IgT2POv4gUjWMRWLRWbXRzlOZF0Bjl9MRM
- MbbshXB43bGPH3uRIKQqoCxPWRp6twV8GkC4+6ShWffxyjjReBDxSfsTWrjc9M0mgaHO
- aallzm6bWIeHUxQs/He2Vq74229RhIvFdmOvoxQGtp95T5l34EP2aj7EjUCGiwq3qOjF
- NTTaIxpZtwkpO8tFM9CUz/yhcDjqP/OKv0nGiw26HoJq4tVz1U1hbmxy+ccVtatczamM
- 0PD1oNNlUrQr7YLrAFLiGoAUJoeiP4UQMwr83DYQWlRqyzvvE453e8KJZ5w3kPpDsRq8 /w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75dgasd1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 15:16:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372FG32r000824
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Aug 2023 15:16:03 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
- 2023 08:16:02 -0700
-Message-ID: <a36af0d6-f6bf-39f8-825d-c743dbd6e84e@quicinc.com>
-Date:   Wed, 2 Aug 2023 09:16:01 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH][V2][next] accel/qaic: remove redundant pointer pexec
-Content-Language: en-US
-To:     Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Colin Ian King <colin.i.king@gmail.com>,
-        Carl Vanderlip <quic_carlv@quicinc.com>,
-        "Oded Gabbay" <ogabbay@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
-CC:     <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230726140626.264952-1-colin.i.king@gmail.com>
- <dc7fdd8a-b3c4-b931-61be-b9bc467c6a85@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <dc7fdd8a-b3c4-b931-61be-b9bc467c6a85@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 71YLkLg0-fdy5LzX6hH5l4uUHqpY7jSM
-X-Proofpoint-ORIG-GUID: 71YLkLg0-fdy5LzX6hH5l4uUHqpY7jSM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_11,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 spamscore=0
- mlxlogscore=752 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308020135
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 2 Aug 2023 12:59:30 -0400
+Received: from mgamail.intel.com (unknown [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BF31981;
+        Wed,  2 Aug 2023 09:59:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690995569; x=1722531569;
+  h=date:from:to:cc:subject:message-id;
+  bh=YAa8C+9fXldrfDuD79ReT82liqUqtGAj2Rws1MSR5qU=;
+  b=LylDWaEpQ0brcW9j/DfMb7UkWieH9RQ6yW2P9HwacIDk/BmJegHo10Lp
+   yNxHscKGbeqKpNobsmV22jYBZ6iocx5hjKPKg/QJZddUW0m+fZTQv4POg
+   eWuF5YIosNLWTyC2hl89L5MfXpAMmAaJf25NyjuaD0rlrj8YLXq194ahc
+   UNKKLFrlWH41b/AnCV4bDAF/b3HjdwmkZuySHong6VryTaMSEwzmZ8Ltb
+   wqf2U2EirPc+7l6KHnUHlBhjj6AH1AO61702I8+8E6dwBbt1NoYW/M8kI
+   sDdPo46RTXId06j+0wAY+iemn7hZi+MHoo2rVWGOk4P3nBArIKYIlqqAD
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10790"; a="368545393"
+X-IronPort-AV: E=Sophos;i="6.01,249,1684825200"; 
+   d="scan'208";a="368545393"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2023 09:59:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10790"; a="729203842"
+X-IronPort-AV: E=Sophos;i="6.01,249,1684825200"; 
+   d="scan'208";a="729203842"
+Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
+  by orsmga002.jf.intel.com with ESMTP; 02 Aug 2023 09:59:26 -0700
+Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qRFC1-0001M3-1c;
+        Wed, 02 Aug 2023 16:59:25 +0000
+Date:   Thu, 03 Aug 2023 00:58:52 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org
+Subject: [linux-next:master] BUILD REGRESSION
+ 626c67169f9972fffcdf3bc3864de421f162ebf5
+Message-ID: <202308030044.0cNCiDHF-lkp@intel.com>
+User-Agent: s-nail v14.9.24
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,SUSPICIOUS_RECIPS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/1/2023 8:05 AM, Pranjal Ramajor Asha Kanojiya wrote:
-> 
-> 
-> On 7/26/2023 7:36 PM, Colin Ian King wrote:
->> Pointer pexec is being assigned a value however it is never read. The
->> assignment is redundant and can be removed. Replace sizeof(*pexec)
->> with sizeof the type and remove the declaration of pointer pexec.
->>
->> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-> 
-> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> 
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 626c67169f9972fffcdf3bc3864de421f162ebf5  Add linux-next specific files for 20230802
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Error/Warning reports:
 
-Applied to drm-misc-next
+https://lore.kernel.org/oe-kbuild-all/202307251531.p8ZLFTMZ-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202307281049.40t8s0uv-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202307301850.i9xFNWT6-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202308022221.APCRi7vk-lkp@intel.com
 
-Thanks!
+Error/Warning: (recently discovered and may have been fixed)
 
--Jeff
+../lib/gcc/loongarch64-linux/12.3.0/plugin/include/config/loongarch/loongarch-opts.h:31:10: fatal error: loongarch-def.h: No such file or directory
+Documentation/gpu/rfc/i915_scheduler.rst:138: WARNING: Unknown directive type "c:namespace-push".
+Documentation/gpu/rfc/i915_scheduler.rst:143: WARNING: Unknown directive type "c:namespace-pop".
+Documentation/gpu/todo.rst:469: WARNING: Unexpected indentation.
+Warning: kernel/Kconfig.kexec references a file that doesn't exist: file:Documentation/s390/zfcpdump.rst
+
+Unverified Error/Warning (likely false positive, please contact us if interested):
+
+drivers/clk/qcom/lcc-msm8960.c:26:24: sparse: sparse: symbol 'pxo_parent_data' was not declared. Should it be static?
+drivers/rtc/rtc-pcf2127.c:1063 pcf2127_enable_ts() warn: missing error code? 'ret'
+drivers/tty/serial/8250/8250_men_mcb.c:226 serial_8250_men_mcb_probe() warn: unsigned 'data->line[i]' is never less than zero.
+sh4-linux-gcc: internal compiler error: Segmentation fault signal terminated program cc1
+{standard input}: Warning: end of file not at end of a line; newline inserted
+{standard input}:573: Error: pcrel too far
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- i386-randconfig-m021-20230730
+|   |-- drivers-rtc-rtc-pcf2127.c-pcf2127_enable_ts()-warn:missing-error-code-ret
+|   `-- drivers-tty-serial-8250_men_mcb.c-serial_8250_men_mcb_probe()-warn:unsigned-data-line-i-is-never-less-than-zero.
+|-- loongarch-allmodconfig
+|   `-- lib-gcc-loongarch64-linux-..-plugin-include-config-loongarch-loongarch-opts.h:fatal-error:loongarch-def.h:No-such-file-or-directory
+|-- microblaze-randconfig-r073-20230802
+|   `-- drivers-clk-qcom-lcc-msm8960.c:sparse:sparse:symbol-pxo_parent_data-was-not-declared.-Should-it-be-static
+|-- sh-allmodconfig
+|   |-- sh4-linux-gcc:internal-compiler-error:Segmentation-fault-signal-terminated-program-cc1
+|   |-- standard-input:Error:pcrel-too-far
+|   `-- standard-input:Warning:end-of-file-not-at-end-of-a-line-newline-inserted
+|-- x86_64-allnoconfig
+|   |-- Documentation-gpu-rfc-i915_scheduler.rst:WARNING:Unknown-directive-type-c:namespace-pop-.
+|   |-- Documentation-gpu-rfc-i915_scheduler.rst:WARNING:Unknown-directive-type-c:namespace-push-.
+|   |-- Documentation-gpu-todo.rst:WARNING:Unexpected-indentation.
+|   `-- Warning:kernel-Kconfig.kexec-references-a-file-that-doesn-t-exist:file:Documentation-s390-zfcpdump.rst
+`-- x86_64-randconfig-m001-20230730
+    `-- drivers-tty-serial-8250_men_mcb.c-serial_8250_men_mcb_probe()-warn:unsigned-data-line-i-is-never-less-than-zero.
+
+elapsed time: 723m
+
+configs tested: 132
+configs skipped: 5
+
+tested configs:
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+alpha                randconfig-r011-20230731   gcc  
+alpha                randconfig-r034-20230731   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                 nsimosci_hs_smp_defconfig   gcc  
+arc                  randconfig-r001-20230801   gcc  
+arc                  randconfig-r036-20230731   gcc  
+arc                  randconfig-r043-20230801   gcc  
+arm                              allmodconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   clang
+arm                                 defconfig   gcc  
+arm                           imxrt_defconfig   gcc  
+arm                  randconfig-r023-20230731   gcc  
+arm                  randconfig-r035-20230731   clang
+arm                  randconfig-r046-20230801   gcc  
+arm                         socfpga_defconfig   clang
+arm                          sp7021_defconfig   clang
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+arm64                randconfig-r013-20230731   clang
+csky                                defconfig   gcc  
+csky                 randconfig-r003-20230801   gcc  
+csky                 randconfig-r032-20230731   gcc  
+hexagon              randconfig-r002-20230801   clang
+hexagon              randconfig-r004-20230801   clang
+hexagon              randconfig-r041-20230801   clang
+hexagon              randconfig-r045-20230801   clang
+i386                             allyesconfig   gcc  
+i386         buildonly-randconfig-r004-20230731   gcc  
+i386         buildonly-randconfig-r005-20230731   gcc  
+i386         buildonly-randconfig-r006-20230731   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                 randconfig-i001-20230801   gcc  
+i386                 randconfig-i002-20230801   gcc  
+i386                 randconfig-i003-20230801   gcc  
+i386                 randconfig-i004-20230801   gcc  
+i386                 randconfig-i005-20230801   gcc  
+i386                 randconfig-i006-20230801   gcc  
+i386                 randconfig-i011-20230731   clang
+i386                 randconfig-i012-20230731   clang
+i386                 randconfig-i013-20230731   clang
+i386                 randconfig-i014-20230731   clang
+i386                 randconfig-i015-20230731   clang
+i386                 randconfig-i016-20230731   clang
+i386                 randconfig-r025-20230731   clang
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch            randconfig-r016-20230731   gcc  
+loongarch            randconfig-r024-20230731   gcc  
+m68k                             allmodconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+m68k                        mvme147_defconfig   gcc  
+m68k                        mvme16x_defconfig   gcc  
+m68k                 randconfig-r005-20230801   gcc  
+mips                             allmodconfig   gcc  
+mips                             allyesconfig   gcc  
+mips                           ci20_defconfig   gcc  
+mips                     loongson1b_defconfig   gcc  
+mips                          malta_defconfig   clang
+nios2                               defconfig   gcc  
+openrisc                         alldefconfig   gcc  
+openrisc             randconfig-r014-20230731   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc               randconfig-r021-20230731   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                      chrp32_defconfig   gcc  
+powerpc                      cm5200_defconfig   gcc  
+powerpc                     ep8248e_defconfig   gcc  
+powerpc                      mgcoge_defconfig   gcc  
+powerpc                 mpc8313_rdb_defconfig   clang
+powerpc                      obs600_defconfig   clang
+powerpc              randconfig-r022-20230731   clang
+powerpc              randconfig-r026-20230731   clang
+powerpc                    sam440ep_defconfig   gcc  
+powerpc                     skiroot_defconfig   clang
+powerpc                     tqm8555_defconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                randconfig-r042-20230801   clang
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                 randconfig-r044-20230801   clang
+sh                               allmodconfig   gcc  
+sh                         apsh4a3a_defconfig   gcc  
+sh                               j2_defconfig   gcc  
+sh                          rsk7201_defconfig   gcc  
+sh                          sdk7780_defconfig   gcc  
+sh                           se7722_defconfig   gcc  
+sh                           se7751_defconfig   gcc  
+sh                              ul2_defconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc64              randconfig-r015-20230731   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64       buildonly-randconfig-r001-20230731   gcc  
+x86_64       buildonly-randconfig-r002-20230731   gcc  
+x86_64       buildonly-randconfig-r003-20230731   gcc  
+x86_64                              defconfig   gcc  
+x86_64                                  kexec   gcc  
+x86_64               randconfig-r031-20230731   gcc  
+x86_64               randconfig-x001-20230731   clang
+x86_64               randconfig-x002-20230731   clang
+x86_64               randconfig-x003-20230731   clang
+x86_64               randconfig-x004-20230731   clang
+x86_64               randconfig-x005-20230731   clang
+x86_64               randconfig-x006-20230731   clang
+x86_64               randconfig-x011-20230731   gcc  
+x86_64               randconfig-x012-20230731   gcc  
+x86_64               randconfig-x013-20230731   gcc  
+x86_64               randconfig-x014-20230731   gcc  
+x86_64               randconfig-x015-20230731   gcc  
+x86_64               randconfig-x016-20230731   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
