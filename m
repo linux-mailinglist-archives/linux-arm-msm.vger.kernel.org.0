@@ -2,147 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9698B76D622
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:52:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF46976D631
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:57:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234216AbjHBRwK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 13:52:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39948 "EHLO
+        id S230130AbjHBR5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 13:57:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234129AbjHBRvx (ORCPT
+        with ESMTP id S229492AbjHBR5W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 13:51:53 -0400
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDEA22101
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 10:50:41 -0700 (PDT)
-Received: by mail-ua1-x929.google.com with SMTP id a1e0cc1a2514c-79aeb0a4665so47807241.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 10:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=raspberrypi.com; s=google; t=1690998628; x=1691603428;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xGq1aIBCGxiEXrqQEhQT2LiB068qDotkWqP0YLxkeNY=;
-        b=VE5dAkKjhFGny8iA1SHzqW1gjkpPyzpJFeCvCiaMmYrYz136cFMNC2wBIbAIpyYvG8
-         PcRFVQlMWLR3IyZu1ZbABkwfBOos+L3H4YyKb0sxceiTZN7kffAtSWidSEwB6sm+WOfg
-         RB8VB9ot6MVX10g89RfjV6H83XBT/9+O3hA0t3Urr7/zSuunnEHEK4VDHBAUkNMnpOvo
-         tDqP0rKHdn9wTIcG/u6Q2vqXUA/jjPED33xazSaZOT2mDzVUPtCzgzTtDQfQmZME6LmS
-         oyYOCB/iNzBwv7KLufHbEpC68ObAZITaI5lh2GNzADEaKEbeq+hoi/5/FRdj1/SUMFgb
-         lRyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690998628; x=1691603428;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xGq1aIBCGxiEXrqQEhQT2LiB068qDotkWqP0YLxkeNY=;
-        b=GCTjZfUWTrnWs5t/QB89Go/3skFMwh4nESfDhbyTtvWhn6iyocjwwTtipHNw6duSH5
-         v0xK4JAla0ZG0N0FV96WAV0srzAakevZZriY+cr3XTKB0LqwEk2lltzrKHW3/v4aA+on
-         /GP3yS5LhLPcnfUCQqhUpwZBkuTl3Hz/5xBWWySW0HnYNzPOS2Zo59zGYBz8q1ktQw4j
-         57xUabH41EZf+cgXj4j+/EJoZwun3cXK9n2zv+1mjZVfUMFURZOyGa9WNbmRdYoGrXhL
-         QBQuB3rXsVWT2qXUCMpJsCEZWRnBY7RMg/kDjv2mfRTBbK6DDO7jZjlgrmNkGwPwB1+D
-         VmrQ==
-X-Gm-Message-State: ABy/qLaM+tOkIAntFie2Pj9nZgCY1IkmBU9gjcAZQCo2BpglMmVRrFlr
-        syYIILb9HPn82LaP2vtLr6BG8SE2ynYtlpMoyM2Rpw==
-X-Google-Smtp-Source: APBJJlEKR2Jf7TabvMSTmOGKPPwR3l8uT7K3XVNms8a2Ktc3rqhSqafmYxy++abfkChGUgUk+R2wfEAjkMi811bR0sM=
-X-Received: by 2002:a05:6102:2c5:b0:447:4fbe:17f8 with SMTP id
- h5-20020a05610202c500b004474fbe17f8mr5295171vsh.23.1690998627720; Wed, 02 Aug
- 2023 10:50:27 -0700 (PDT)
+        Wed, 2 Aug 2023 13:57:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380B19C;
+        Wed,  2 Aug 2023 10:57:21 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372HYZlV001884;
+        Wed, 2 Aug 2023 17:57:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=LrzR88o+DIj7W/tEDw0tIz5VvK34qlOm4eMbpqUNBiw=;
+ b=SVCHGX8h36IG/gv504EsZinMMlDLNbGwQi97qErFC3GKOLKpXW3qzRg62NnzPOqYW46S
+ VDCYqctLArfJCYDC+HsInFWTnIDtpdR9RtavS1kl6NeWrx7+gQld2FyDX6yPJ2fOuU9C
+ h2Oemm1MlDZIhlMeLa6YOiFGRmmR7B6ISfTZ34IQ1C4PQmh28lmRR8jopYlRjmPJzSMa
+ M9XDORmm82uHEaUEKUlxs6Y/faPMt7N+1pGZQUvoHVY83ZFgnXBkHoJQXWWb5DeZJVeh
+ aQsXonlWeSxqugx3vyx8d0BKD2Njr4GQuEdLI7nQV0RmJEAi+Zny0FV8KWVW6jvopzLU zg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s72gquju5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Aug 2023 17:57:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372HvHkt022081
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Aug 2023 17:57:17 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Wed, 2 Aug 2023 10:57:17 -0700
+Date:   Wed, 2 Aug 2023 10:57:15 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 8/8] arm64: dts: qcom: sdx75-idp: Add regulator nodes
+Message-ID: <20230802175715.GJ1428172@hu-bjorande-lv.qualcomm.com>
+References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1690970366-30982-9-git-send-email-quic_rohiagar@quicinc.com>
+ <41b9bbd2-e58f-810d-ad3b-715423ffe74b@linaro.org>
 MIME-Version: 1.0
-References: <20230725203545.2260506-1-dianders@chromium.org>
- <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
- <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
- <CAD=FV=VcsTik+HD11xeDM2Jq9ispcX0-j5QtK8D1qUkrGabRGg@mail.gmail.com>
- <i3cbgrc365lwscwux2itho6uv74ji3hsjuge4zoxfnlnhacyqc@r73mmifyxffj>
- <CADcbR4JB0h8fByM2Z6diByvWaFprW9GDapBNt+YLWr9-vKoe7A@mail.gmail.com>
- <kuctj2p353nsae24lrhcymqqpfajbc7qoqly63zpwvdp6lgu3b@kk4gpzsapxnn> <64ca91a3.0d0a0220.8e58d.89b3@mx.google.com>
-In-Reply-To: <64ca91a3.0d0a0220.8e58d.89b3@mx.google.com>
-From:   Dave Stevenson <dave.stevenson@raspberrypi.com>
-Date:   Wed, 2 Aug 2023 18:50:11 +0100
-Message-ID: <CAPY8ntBGnrJLROCSTDv+qPAN6-Nc3TKBhFg2WqCv-d7c4WPnBA@mail.gmail.com>
-Subject: Re: [PATCH v3 02/10] drm/panel: Check for already prepared/enabled in drm_panel
-To:     Chris Morgan <macroalpha82@gmail.com>
-Cc:     Maxime Ripard <mripard@kernel.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        linux-input@vger.kernel.org, hsinyi@google.com,
-        devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        Jiri Kosina <jikos@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <41b9bbd2-e58f-810d-ad3b-715423ffe74b@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KYVvwMTgX8Az_itE7xG6rELIjHWeH6Tm
+X-Proofpoint-ORIG-GUID: KYVvwMTgX8Az_itE7xG6rELIjHWeH6Tm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-02_14,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=760 adultscore=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308020158
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Aug 2023 at 18:26, Chris Morgan <macroalpha82@gmail.com> wrote:
->
-> * Spam *
-> On Mon, Jul 31, 2023 at 07:03:07PM +0200, Maxime Ripard wrote:
-> > Hi,
-> >
-> > On Mon, Jul 31, 2023 at 11:33:22AM -0500, Chris Morgan wrote:
-> > > In my case a few different panel drivers disable the regulators in the
-> > > unprepare/disable routines.
-> >
-> > And that's totally fine.
-> >
-> > > For at least the Rockchip DSI implementations for some reason the
-> > > panel gets unprepared more than once, which triggers an unbalanced
-> > > regulator disable.
-> >
-> > "For some reason" being that DW-DSI apparently finds it ok to bypass any
-> > kind of abstraction and randomly calling panel functions by itself:
-> >
-> > https://elixir.bootlin.com/linux/v6.4.7/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L868
-> >
-> > It looks like it's fixed it current drm-misc-next though.
->
-> Good, when I get a chance I will test it out with the existing panels
-> I have at my disposal and submit some patches to clean them up.
->
-> >
-> > > Obviously though the correct course of action is to fix the reason why
-> > > the panel is disabled more than once, but that's at least the root
-> > > cause of this behavior on the few panels I've worked with.
-> >
-> > Like I said we already have a commit on the way to fix that, so it
-> > shouldn't be an issue anymore.
-> >
-> > I stand by what I was saying earlier though, I think it's mostly
-> > cargo-cult or drivers being very wrong. If anything, the DW-DSI stuff
-> > made me even more convinced that we shouldn't even entertain that idea
-> > :)
+On Wed, Aug 02, 2023 at 02:49:56PM +0200, Konrad Dybcio wrote:
+> On 2.08.2023 11:59, Rohit Agarwal wrote:
+> > Add the regulators found on SDX75 IDP.
+> > 
+> > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> > ---
+> [...]
+> 
+> 
+> > +		vreg_s2b_1p224: smps2 {
+> Even though most RPMh devices use the schematic-like names, I think naming
+> the labels like pmicname_regname, e.g. pm8550_l2 would be easier to read..
+> (Bjorn, Krzysztof - opinions?)
+> 
 
-DW-DSI is hacking around the fact that DSI panels may want to send DCS
-commands in unprepare, however the DSI host driver shuts down the
-controller in the DSI bridge post_disable which gets called first.
+Using the naming from the schematics is preferred, and avoid various
+levels of ambiguity.
 
-That ordering can now be reversed with pre_enable_prev_first flag in
-struct drm_bridge, or prepare_prev_first in drm_panel, hence no need
-for the DSI controller to jump around the bridge chain.
+> On top of that, please add labels to all of the regulators you're
+> introducing to limit unnecessary diff in the future.
+> 
 
-  Dave
+There are cases where regulators are left on by the bootloader, but
+doesn't have a function, or name, in the particular board. In this case
+it might be unnecessary (or not possible) to label the regulator, but we
+still might want to list the regulator so it will be turned off
+automatically.
 
-> > Maxime
->
-> Thank you, and yes if a driver is doing something it shouldn't we
-> shouldn't be patching around that, we should be fixing things. Thanks
-> for providing me with the additional info.
->
-> Chris
->
+But such decision is explicit and should be mentioned either in a
+comment or in the commit message.
+
+Regards,
+Bjorn
