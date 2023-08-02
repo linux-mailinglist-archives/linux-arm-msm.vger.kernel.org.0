@@ -2,256 +2,283 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9654676D475
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 18:59:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B13176D487
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:02:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231308AbjHBQ7c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 12:59:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
+        id S231690AbjHBRCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 13:02:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230440AbjHBQ7a (ORCPT
+        with ESMTP id S231665AbjHBRB7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 12:59:30 -0400
-Received: from mgamail.intel.com (unknown [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BF31981;
-        Wed,  2 Aug 2023 09:59:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690995569; x=1722531569;
-  h=date:from:to:cc:subject:message-id;
-  bh=YAa8C+9fXldrfDuD79ReT82liqUqtGAj2Rws1MSR5qU=;
-  b=LylDWaEpQ0brcW9j/DfMb7UkWieH9RQ6yW2P9HwacIDk/BmJegHo10Lp
-   yNxHscKGbeqKpNobsmV22jYBZ6iocx5hjKPKg/QJZddUW0m+fZTQv4POg
-   eWuF5YIosNLWTyC2hl89L5MfXpAMmAaJf25NyjuaD0rlrj8YLXq194ahc
-   UNKKLFrlWH41b/AnCV4bDAF/b3HjdwmkZuySHong6VryTaMSEwzmZ8Ltb
-   wqf2U2EirPc+7l6KHnUHlBhjj6AH1AO61702I8+8E6dwBbt1NoYW/M8kI
-   sDdPo46RTXId06j+0wAY+iemn7hZi+MHoo2rVWGOk4P3nBArIKYIlqqAD
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10790"; a="368545393"
-X-IronPort-AV: E=Sophos;i="6.01,249,1684825200"; 
-   d="scan'208";a="368545393"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2023 09:59:28 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10790"; a="729203842"
-X-IronPort-AV: E=Sophos;i="6.01,249,1684825200"; 
-   d="scan'208";a="729203842"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 02 Aug 2023 09:59:26 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qRFC1-0001M3-1c;
-        Wed, 02 Aug 2023 16:59:25 +0000
-Date:   Thu, 03 Aug 2023 00:58:52 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Andrew Morton <akpm@linux-foundation.org>
-Cc:     Linux Memory Management List <linux-mm@kvack.org>,
-        linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: [linux-next:master] BUILD REGRESSION
- 626c67169f9972fffcdf3bc3864de421f162ebf5
-Message-ID: <202308030044.0cNCiDHF-lkp@intel.com>
-User-Agent: s-nail v14.9.24
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,SUSPICIOUS_RECIPS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+        Wed, 2 Aug 2023 13:01:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E3D2D78;
+        Wed,  2 Aug 2023 10:01:53 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372F7F4g025933;
+        Wed, 2 Aug 2023 17:01:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
+ subject : mime-version : content-type : content-transfer-encoding :
+ message-id : to : cc; s=qcppdkim1;
+ bh=1unoftQq1XBOD7bFKjkLUdzJuvVwLfX/7dC74JUVrLo=;
+ b=LqHBSjVKMKvxAcG1ge5I+9gJUzfWhI9jHK+i//P1oeoKF3ssLzQLnLOXRuSbCO3PNshw
+ I2+vizq5KLREKppc9alITjIIhFzNo4lk4KtJzFzW3CC4OUw0hiahid9mW1m+oG68JSBc
+ nx7KTvYsISdR9+cbrxVNioIPgsKVNwmU8ad4Qa1f27aTRZyvtJ2TzQpLxO+ymwZxSZ4N
+ IWLqp8MqJCTtgbGiRIliWAQO/1nMF62zVZWHZqJIHXnZpMAFeiKcjMp+91dUQKQWD+Hq
+ FG/ABFIyYytnFmLofKj/DeEV6yiRnKVlqnH3lgM1V3muYILXKO8qXvrscuIGsTMVjU6w xA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s7sgng8ec-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Aug 2023 17:01:44 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372H1ieY002027
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Aug 2023 17:01:44 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Wed, 2 Aug 2023 10:01:44 -0700
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+Date:   Wed, 2 Aug 2023 10:01:13 -0700
+Subject: [PATCH v2] drm/msm/dpu: Drop encoder vsync_event
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20230802-encoder-cleanup-v2-1-5bfdec0ce765@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIANiLymQC/2WNQQ6CMBBFr0JmbU1bDKWuvIdhgcMgk2iLrTQa0
+ rtbcenyveS/v0KkwBThWK0QKHFk7wroXQU49e5KgofCoKWupdFKkEM/UBB4o94tszjYtjUX3dT
+ YIJTVHGjk11Y8d4Unjk8f3ttBUl/7a7Xyv5WUUGK0VJuRtLHWnB4LIzvco79Dl3P+ABfTG+GwA
+ AAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>
+CC:     <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.13-dev-034f2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690995703; l=6583;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=UpW7L7Fv/5GVMwQ8eidoEDPd67J2FXiqAmKooYsaVEU=;
+ b=7KuVd74NsUxNkF4FZ0Gfhg3LrVqbYsZcFwqCrlQbSAIFKAs1JyWHuwEGwOGak3pSwgl31n3jQ
+ EIcnu1/IWNxAdtchkINg5ZVd0ovgU4ZyGNjnqMgHfWe8RkxXTjkBkRT
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7QhhIU2O6-pLTwEwu6Cu_lhs3B-RG1M1
+X-Proofpoint-GUID: 7QhhIU2O6-pLTwEwu6Cu_lhs3B-RG1M1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-02_13,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ lowpriorityscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308020150
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-branch HEAD: 626c67169f9972fffcdf3bc3864de421f162ebf5  Add linux-next specific files for 20230802
+Drop vsync_event and vsync_event_work handlers as they are unnecessary.
+In addition drop the dpu_enc_ktime_template event class as it will be
+unused after the vsync_event handlers are dropped.
 
-Error/Warning reports:
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+Changes in v2:
+- Dropped dpu_enc_early_kickoff event and dpu_enc_ktime_template event class
+- Link to v1: https://lore.kernel.org/r/20230801-encoder-cleanup-v1-1-f9e37fe27997@quicinc.com
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 65 +----------------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h   | 23 ----------
+ 2 files changed, 1 insertion(+), 87 deletions(-)
 
-https://lore.kernel.org/oe-kbuild-all/202307251531.p8ZLFTMZ-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202307281049.40t8s0uv-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202307301850.i9xFNWT6-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202308022221.APCRi7vk-lkp@intel.com
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index f0a2a1dca741..d34e684a4178 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -152,7 +152,6 @@ enum dpu_enc_rc_states {
+  * @crtc_frame_event_cb_data:	callback handler private data
+  * @frame_done_timeout_ms:	frame done timeout in ms
+  * @frame_done_timer:		watchdog timer for frame done event
+- * @vsync_event_timer:		vsync timer
+  * @disp_info:			local copy of msm_display_info struct
+  * @idle_pc_supported:		indicate if idle power collaps is supported
+  * @rc_lock:			resource control mutex lock to protect
+@@ -160,7 +159,6 @@ enum dpu_enc_rc_states {
+  * @rc_state:			resource controller state
+  * @delayed_off_work:		delayed worker to schedule disabling of
+  *				clks and resources after IDLE_TIMEOUT time.
+- * @vsync_event_work:		worker to handle vsync event for autorefresh
+  * @topology:                   topology of the display
+  * @idle_timeout:		idle timeout duration in milliseconds
+  * @wide_bus_en:		wide bus is enabled on this interface
+@@ -194,7 +192,6 @@ struct dpu_encoder_virt {
+ 
+ 	atomic_t frame_done_timeout_ms;
+ 	struct timer_list frame_done_timer;
+-	struct timer_list vsync_event_timer;
+ 
+ 	struct msm_display_info disp_info;
+ 
+@@ -202,7 +199,6 @@ struct dpu_encoder_virt {
+ 	struct mutex rc_lock;
+ 	enum dpu_enc_rc_states rc_state;
+ 	struct delayed_work delayed_off_work;
+-	struct kthread_work vsync_event_work;
+ 	struct msm_display_topology topology;
+ 
+ 	u32 idle_timeout;
+@@ -1770,49 +1766,6 @@ int dpu_encoder_vsync_time(struct drm_encoder *drm_enc, ktime_t *wakeup_time)
+ 	return 0;
+ }
+ 
+-static void dpu_encoder_vsync_event_handler(struct timer_list *t)
+-{
+-	struct dpu_encoder_virt *dpu_enc = from_timer(dpu_enc, t,
+-			vsync_event_timer);
+-	struct drm_encoder *drm_enc = &dpu_enc->base;
+-	struct msm_drm_private *priv;
+-	struct msm_drm_thread *event_thread;
+-
+-	if (!drm_enc->dev || !drm_enc->crtc) {
+-		DPU_ERROR("invalid parameters\n");
+-		return;
+-	}
+-
+-	priv = drm_enc->dev->dev_private;
+-
+-	if (drm_enc->crtc->index >= ARRAY_SIZE(priv->event_thread)) {
+-		DPU_ERROR("invalid crtc index\n");
+-		return;
+-	}
+-	event_thread = &priv->event_thread[drm_enc->crtc->index];
+-	if (!event_thread) {
+-		DPU_ERROR("event_thread not found for crtc:%d\n",
+-				drm_enc->crtc->index);
+-		return;
+-	}
+-
+-	del_timer(&dpu_enc->vsync_event_timer);
+-}
+-
+-static void dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
+-{
+-	struct dpu_encoder_virt *dpu_enc = container_of(work,
+-			struct dpu_encoder_virt, vsync_event_work);
+-	ktime_t wakeup_time;
+-
+-	if (dpu_encoder_vsync_time(&dpu_enc->base, &wakeup_time))
+-		return;
+-
+-	trace_dpu_enc_vsync_event_work(DRMID(&dpu_enc->base), wakeup_time);
+-	mod_timer(&dpu_enc->vsync_event_timer,
+-			nsecs_to_jiffies(ktime_to_ns(wakeup_time)));
+-}
+-
+ static u32
+ dpu_encoder_dsc_initial_line_calc(struct drm_dsc_config *dsc,
+ 				  u32 enc_ip_width)
+@@ -1972,7 +1925,6 @@ void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
+ {
+ 	struct dpu_encoder_virt *dpu_enc;
+ 	struct dpu_encoder_phys *phys;
+-	ktime_t wakeup_time;
+ 	unsigned long timeout_ms;
+ 	unsigned int i;
+ 
+@@ -1998,14 +1950,6 @@ void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
+ 			phys->ops.handle_post_kickoff(phys);
+ 	}
+ 
+-	if (dpu_enc->disp_info.intf_type == INTF_DSI &&
+-			!dpu_encoder_vsync_time(drm_enc, &wakeup_time)) {
+-		trace_dpu_enc_early_kickoff(DRMID(drm_enc),
+-					    ktime_to_ms(wakeup_time));
+-		mod_timer(&dpu_enc->vsync_event_timer,
+-				nsecs_to_jiffies(ktime_to_ns(wakeup_time)));
+-	}
+-
+ 	DPU_ATRACE_END("encoder_kickoff");
+ }
+ 
+@@ -2439,11 +2383,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+ 	timer_setup(&dpu_enc->frame_done_timer,
+ 			dpu_encoder_frame_done_timeout, 0);
+ 
+-	if (disp_info->intf_type == INTF_DSI)
+-		timer_setup(&dpu_enc->vsync_event_timer,
+-				dpu_encoder_vsync_event_handler,
+-				0);
+-	else if (disp_info->intf_type == INTF_DP)
++	if (disp_info->intf_type == INTF_DP)
+ 		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+ 				priv->dp[disp_info->h_tile_instance[0]]);
+ 
+@@ -2451,9 +2391,6 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+ 			dpu_encoder_off_work);
+ 	dpu_enc->idle_timeout = IDLE_TIMEOUT;
+ 
+-	kthread_init_work(&dpu_enc->vsync_event_work,
+-			dpu_encoder_vsync_event_work_handler);
+-
+ 	memcpy(&dpu_enc->disp_info, disp_info, sizeof(*disp_info));
+ 
+ 	DPU_DEBUG_ENC(dpu_enc, "created\n");
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+index 1a92d21094f4..c74b9be25e68 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+@@ -453,29 +453,6 @@ TRACE_EVENT(dpu_enc_trigger_flush,
+ 		  __entry->extra_flush_bits, __entry->pending_flush_ret)
+ );
+ 
+-DECLARE_EVENT_CLASS(dpu_enc_ktime_template,
+-	TP_PROTO(uint32_t drm_id, ktime_t time),
+-	TP_ARGS(drm_id, time),
+-	TP_STRUCT__entry(
+-		__field(	uint32_t,	drm_id	)
+-		__field(	ktime_t,	time	)
+-	),
+-	TP_fast_assign(
+-		__entry->drm_id = drm_id;
+-		__entry->time = time;
+-	),
+-	TP_printk("id=%u, time=%lld", __entry->drm_id,
+-		  ktime_to_ms(__entry->time))
+-);
+-DEFINE_EVENT(dpu_enc_ktime_template, dpu_enc_vsync_event_work,
+-	TP_PROTO(uint32_t drm_id, ktime_t time),
+-	TP_ARGS(drm_id, time)
+-);
+-DEFINE_EVENT(dpu_enc_ktime_template, dpu_enc_early_kickoff,
+-	TP_PROTO(uint32_t drm_id, ktime_t time),
+-	TP_ARGS(drm_id, time)
+-);
+-
+ DECLARE_EVENT_CLASS(dpu_id_event_template,
+ 	TP_PROTO(uint32_t drm_id, u32 event),
+ 	TP_ARGS(drm_id, event),
 
-Error/Warning: (recently discovered and may have been fixed)
+---
+base-commit: eab616ad7f56cafc8af85e9774816f0901e1efa2
+change-id: 20230721-encoder-cleanup-49887b263c6c
 
-../lib/gcc/loongarch64-linux/12.3.0/plugin/include/config/loongarch/loongarch-opts.h:31:10: fatal error: loongarch-def.h: No such file or directory
-Documentation/gpu/rfc/i915_scheduler.rst:138: WARNING: Unknown directive type "c:namespace-push".
-Documentation/gpu/rfc/i915_scheduler.rst:143: WARNING: Unknown directive type "c:namespace-pop".
-Documentation/gpu/todo.rst:469: WARNING: Unexpected indentation.
-Warning: kernel/Kconfig.kexec references a file that doesn't exist: file:Documentation/s390/zfcpdump.rst
-
-Unverified Error/Warning (likely false positive, please contact us if interested):
-
-drivers/clk/qcom/lcc-msm8960.c:26:24: sparse: sparse: symbol 'pxo_parent_data' was not declared. Should it be static?
-drivers/rtc/rtc-pcf2127.c:1063 pcf2127_enable_ts() warn: missing error code? 'ret'
-drivers/tty/serial/8250/8250_men_mcb.c:226 serial_8250_men_mcb_probe() warn: unsigned 'data->line[i]' is never less than zero.
-sh4-linux-gcc: internal compiler error: Segmentation fault signal terminated program cc1
-{standard input}: Warning: end of file not at end of a line; newline inserted
-{standard input}:573: Error: pcrel too far
-
-Error/Warning ids grouped by kconfigs:
-
-gcc_recent_errors
-|-- i386-randconfig-m021-20230730
-|   |-- drivers-rtc-rtc-pcf2127.c-pcf2127_enable_ts()-warn:missing-error-code-ret
-|   `-- drivers-tty-serial-8250_men_mcb.c-serial_8250_men_mcb_probe()-warn:unsigned-data-line-i-is-never-less-than-zero.
-|-- loongarch-allmodconfig
-|   `-- lib-gcc-loongarch64-linux-..-plugin-include-config-loongarch-loongarch-opts.h:fatal-error:loongarch-def.h:No-such-file-or-directory
-|-- microblaze-randconfig-r073-20230802
-|   `-- drivers-clk-qcom-lcc-msm8960.c:sparse:sparse:symbol-pxo_parent_data-was-not-declared.-Should-it-be-static
-|-- sh-allmodconfig
-|   |-- sh4-linux-gcc:internal-compiler-error:Segmentation-fault-signal-terminated-program-cc1
-|   |-- standard-input:Error:pcrel-too-far
-|   `-- standard-input:Warning:end-of-file-not-at-end-of-a-line-newline-inserted
-|-- x86_64-allnoconfig
-|   |-- Documentation-gpu-rfc-i915_scheduler.rst:WARNING:Unknown-directive-type-c:namespace-pop-.
-|   |-- Documentation-gpu-rfc-i915_scheduler.rst:WARNING:Unknown-directive-type-c:namespace-push-.
-|   |-- Documentation-gpu-todo.rst:WARNING:Unexpected-indentation.
-|   `-- Warning:kernel-Kconfig.kexec-references-a-file-that-doesn-t-exist:file:Documentation-s390-zfcpdump.rst
-`-- x86_64-randconfig-m001-20230730
-    `-- drivers-tty-serial-8250_men_mcb.c-serial_8250_men_mcb_probe()-warn:unsigned-data-line-i-is-never-less-than-zero.
-
-elapsed time: 723m
-
-configs tested: 132
-configs skipped: 5
-
-tested configs:
-alpha                            allyesconfig   gcc  
-alpha                               defconfig   gcc  
-alpha                randconfig-r011-20230731   gcc  
-alpha                randconfig-r034-20230731   gcc  
-arc                              allyesconfig   gcc  
-arc                                 defconfig   gcc  
-arc                 nsimosci_hs_smp_defconfig   gcc  
-arc                  randconfig-r001-20230801   gcc  
-arc                  randconfig-r036-20230731   gcc  
-arc                  randconfig-r043-20230801   gcc  
-arm                              allmodconfig   gcc  
-arm                              allyesconfig   gcc  
-arm                                 defconfig   clang
-arm                                 defconfig   gcc  
-arm                           imxrt_defconfig   gcc  
-arm                  randconfig-r023-20230731   gcc  
-arm                  randconfig-r035-20230731   clang
-arm                  randconfig-r046-20230801   gcc  
-arm                         socfpga_defconfig   clang
-arm                          sp7021_defconfig   clang
-arm64                            allyesconfig   gcc  
-arm64                               defconfig   gcc  
-arm64                randconfig-r013-20230731   clang
-csky                                defconfig   gcc  
-csky                 randconfig-r003-20230801   gcc  
-csky                 randconfig-r032-20230731   gcc  
-hexagon              randconfig-r002-20230801   clang
-hexagon              randconfig-r004-20230801   clang
-hexagon              randconfig-r041-20230801   clang
-hexagon              randconfig-r045-20230801   clang
-i386                             allyesconfig   gcc  
-i386         buildonly-randconfig-r004-20230731   gcc  
-i386         buildonly-randconfig-r005-20230731   gcc  
-i386         buildonly-randconfig-r006-20230731   gcc  
-i386                              debian-10.3   gcc  
-i386                                defconfig   gcc  
-i386                 randconfig-i001-20230801   gcc  
-i386                 randconfig-i002-20230801   gcc  
-i386                 randconfig-i003-20230801   gcc  
-i386                 randconfig-i004-20230801   gcc  
-i386                 randconfig-i005-20230801   gcc  
-i386                 randconfig-i006-20230801   gcc  
-i386                 randconfig-i011-20230731   clang
-i386                 randconfig-i012-20230731   clang
-i386                 randconfig-i013-20230731   clang
-i386                 randconfig-i014-20230731   clang
-i386                 randconfig-i015-20230731   clang
-i386                 randconfig-i016-20230731   clang
-i386                 randconfig-r025-20230731   clang
-loongarch                        allmodconfig   gcc  
-loongarch                         allnoconfig   gcc  
-loongarch                           defconfig   gcc  
-loongarch            randconfig-r016-20230731   gcc  
-loongarch            randconfig-r024-20230731   gcc  
-m68k                             allmodconfig   gcc  
-m68k                             allyesconfig   gcc  
-m68k                                defconfig   gcc  
-m68k                        mvme147_defconfig   gcc  
-m68k                        mvme16x_defconfig   gcc  
-m68k                 randconfig-r005-20230801   gcc  
-mips                             allmodconfig   gcc  
-mips                             allyesconfig   gcc  
-mips                           ci20_defconfig   gcc  
-mips                     loongson1b_defconfig   gcc  
-mips                          malta_defconfig   clang
-nios2                               defconfig   gcc  
-openrisc                         alldefconfig   gcc  
-openrisc             randconfig-r014-20230731   gcc  
-parisc                           allyesconfig   gcc  
-parisc                              defconfig   gcc  
-parisc               randconfig-r021-20230731   gcc  
-parisc64                            defconfig   gcc  
-powerpc                          allmodconfig   gcc  
-powerpc                           allnoconfig   gcc  
-powerpc                      chrp32_defconfig   gcc  
-powerpc                      cm5200_defconfig   gcc  
-powerpc                     ep8248e_defconfig   gcc  
-powerpc                      mgcoge_defconfig   gcc  
-powerpc                 mpc8313_rdb_defconfig   clang
-powerpc                      obs600_defconfig   clang
-powerpc              randconfig-r022-20230731   clang
-powerpc              randconfig-r026-20230731   clang
-powerpc                    sam440ep_defconfig   gcc  
-powerpc                     skiroot_defconfig   clang
-powerpc                     tqm8555_defconfig   gcc  
-riscv                            allmodconfig   gcc  
-riscv                             allnoconfig   gcc  
-riscv                            allyesconfig   gcc  
-riscv                               defconfig   gcc  
-riscv                randconfig-r042-20230801   clang
-riscv                          rv32_defconfig   gcc  
-s390                             allmodconfig   gcc  
-s390                             allyesconfig   gcc  
-s390                                defconfig   gcc  
-s390                 randconfig-r044-20230801   clang
-sh                               allmodconfig   gcc  
-sh                         apsh4a3a_defconfig   gcc  
-sh                               j2_defconfig   gcc  
-sh                          rsk7201_defconfig   gcc  
-sh                          sdk7780_defconfig   gcc  
-sh                           se7722_defconfig   gcc  
-sh                           se7751_defconfig   gcc  
-sh                              ul2_defconfig   gcc  
-sparc                            allyesconfig   gcc  
-sparc                               defconfig   gcc  
-sparc64              randconfig-r015-20230731   gcc  
-um                               allmodconfig   clang
-um                                allnoconfig   clang
-um                               allyesconfig   clang
-um                                  defconfig   gcc  
-um                             i386_defconfig   gcc  
-um                           x86_64_defconfig   gcc  
-x86_64                           allyesconfig   gcc  
-x86_64       buildonly-randconfig-r001-20230731   gcc  
-x86_64       buildonly-randconfig-r002-20230731   gcc  
-x86_64       buildonly-randconfig-r003-20230731   gcc  
-x86_64                              defconfig   gcc  
-x86_64                                  kexec   gcc  
-x86_64               randconfig-r031-20230731   gcc  
-x86_64               randconfig-x001-20230731   clang
-x86_64               randconfig-x002-20230731   clang
-x86_64               randconfig-x003-20230731   clang
-x86_64               randconfig-x004-20230731   clang
-x86_64               randconfig-x005-20230731   clang
-x86_64               randconfig-x006-20230731   clang
-x86_64               randconfig-x011-20230731   gcc  
-x86_64               randconfig-x012-20230731   gcc  
-x86_64               randconfig-x013-20230731   gcc  
-x86_64               randconfig-x014-20230731   gcc  
-x86_64               randconfig-x015-20230731   gcc  
-x86_64               randconfig-x016-20230731   gcc  
-x86_64                          rhel-8.3-rust   clang
-x86_64                               rhel-8.3   gcc  
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
