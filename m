@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CDAC76CD30
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 14:43:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CF5276CD60
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 14:46:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234520AbjHBMnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 08:43:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35120 "EHLO
+        id S234708AbjHBMqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 08:46:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234729AbjHBMnF (ORCPT
+        with ESMTP id S234740AbjHBMqb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 08:43:05 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DC50271C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 05:42:43 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe2503e3easo7971978e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 05:42:43 -0700 (PDT)
+        Wed, 2 Aug 2023 08:46:31 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF8030FF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 05:46:08 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe10f0f4d1so11343060e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 05:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690980153; x=1691584953;
+        d=linaro.org; s=google; t=1690980365; x=1691585165;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=umo4OUeskfd7srKuE+T/sxuVxChKopTJw9LZXfHjNfs=;
-        b=GggRYdeIyHpN5hPV0FQ08RCWZZQ8dRcP2mRAc9kADCoPN5fjW4NW+9d0G+Umj65VPh
-         gzwf55RgHUJADduUWWPtI4/bBZN6/yG9xNxg8PKRKa55XIWR7gXclX0a4dBOznzHfjwQ
-         wxw5TmxqfQm4XBwFpJN56Xr6UvF3sqTGrewNioGJMYY8h2R87YLLBCIh6MYtGeKTve5V
-         LAiWYAUbMnc+HQQHMgY+4CTmIYTvF6dM2oaZMJC6V3lD0Qdo5ut5x/JR9ajLr4iOweca
-         hbqGoMEYJXvRAalb1wmoMJ689N+/QdDQmpI9cxkM2sOsBqGxaUC3+RhS1NAdJD5kk6UG
-         fEuQ==
+        bh=GGkuunS4EDmPT1tZH3dzhdgVpDClL+Bc1J1FBeTNMhc=;
+        b=GmDVhJOHeNgvmek1pbBqqjCH1KuKNhhP55WDa1j5eD1oUjiab38sPQFDqwj82rYPAh
+         5cZJvbCzzq0GGqEflTvTrlUBZc5IKu7gGesqRcd4Pu2nlrYXsOqeAJo3yryBQI39njmL
+         S4jKzckVRMKv+ZENBHkIJCy463fTcaj0eNbeaVbjMFPAfcNxtIHqMKmeLQzzHsYwMSPk
+         K4IZRyh/Eg4+f/t4ra0WcZmEBWGJNY24lZYqysJTJ1oYYpMaI8QZaRbcD62j5EquHZdO
+         kUdn421XnO19QQPQsxdWiXtGW7lFhz6v1of1G6ZnyLUKdge3vQ/m/n/Dk65+ELOBoK+H
+         gkyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690980153; x=1691584953;
+        d=1e100.net; s=20221208; t=1690980365; x=1691585165;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=umo4OUeskfd7srKuE+T/sxuVxChKopTJw9LZXfHjNfs=;
-        b=L61GhmIwdxc5N9X7fodE0x9CzW3H2pxOmu3MM93tnUD8tvc5XjrwZr5aD/0b6FffSr
-         9sjyibEds3vVVgw8bqytfnqQLS1K6pdvNmgv0bshjIEtgYdJXuojglYdTVnXFn2MhlQE
-         qtwF/xDWRvHpi/UOYTAIpCZyShAgS/4/bLOPZ2BhbGottv5a4XugkW6tgh32PNRiKEIP
-         TH5gC+kKoRxgyl+QBn+OAa+9MyaR/ZokC0GUWEBUwRKIM09ANQkjjetQv+xqtQA9On8m
-         FNdgsgvD/VsqTthmxxygeoSfSbXrQoFk0AegOTJb8JyGpLECLOVq5k/u8ywnxydnS604
-         7Nrw==
-X-Gm-Message-State: ABy/qLbQs5BZUyP8n6yfTzJBS1ZcchTeCV/eWZG2Qeq4ofd2+MweE0Kj
-        sZOD9rwiQFv6NvwRi8YgWG1xQQ==
-X-Google-Smtp-Source: APBJJlGTt2a+3bkay+pjlKH+8icKilhflyMutuYvb7Ge7u5pAwIB7mcjC4UkY6qBO1fnAKMjg1x76g==
-X-Received: by 2002:a05:6512:1141:b0:4fd:fe8f:4108 with SMTP id m1-20020a056512114100b004fdfe8f4108mr4572486lfg.62.1690980153215;
-        Wed, 02 Aug 2023 05:42:33 -0700 (PDT)
+        bh=GGkuunS4EDmPT1tZH3dzhdgVpDClL+Bc1J1FBeTNMhc=;
+        b=SuWlV67nRsgSGs6s9P+yUp7Ew6hPo8IzfsUkxhua1I4Qvu44ALG7AzM3peDu6dhzf1
+         Aw/6p+oOELdlTgi6z+v1h4JfkKIpNbpKwB9Oe4ioOxE48YnaoBK3Ck3AC7A2a2A2JUYs
+         GVOQSt/PgnkckoiAHYEjkL+jhMn4tbgDoYfu3cp6jBhN9GOJnTwyrStGFcK0SFCJ+GIx
+         LTt0qpzEAI22UGBV/62Aww0zk3FoXAQrF1JVOv7wj5L3Z540C+u5LvPVDGehzOhmcZdz
+         81PBm2e5tF/+goqjdCRNcJZvMr2EKHL8iv7LqmAsHwRwFhxmQOJOrMn+VBtQXTqKBQwS
+         sDeg==
+X-Gm-Message-State: ABy/qLaNbHAM9kooEmOyvcmRmRXV1jcbsnKESWPde+2NkLGm61nwrMBb
+        WdseFKyBgWc92h8ArTr9Hn/FEEuolr9jKreCMBAxJA==
+X-Google-Smtp-Source: APBJJlGNN+IyRYy9wtIbTnJF9tCCZxS7TKgMiSJIaBh9EOf9lnl3LR8IgGgB/iju35iVR+Xlev+LBw==
+X-Received: by 2002:ac2:5f64:0:b0:4f8:7513:8cb0 with SMTP id c4-20020ac25f64000000b004f875138cb0mr4244966lfc.2.1690980365125;
+        Wed, 02 Aug 2023 05:46:05 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id j15-20020ac2550f000000b004fe432108aesm793107lfk.261.2023.08.02.05.42.32
+        by smtp.gmail.com with ESMTPSA id v11-20020a056512048b00b004f76a88dbcbsm2948635lfq.176.2023.08.02.05.46.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Aug 2023 05:42:32 -0700 (PDT)
-Message-ID: <ce1af969-427a-3e4d-e85c-32d629755d9a@linaro.org>
-Date:   Wed, 2 Aug 2023 14:42:32 +0200
+        Wed, 02 Aug 2023 05:46:04 -0700 (PDT)
+Message-ID: <edc0bf71-ceff-0af5-62e5-ac5c48e62add@linaro.org>
+Date:   Wed, 2 Aug 2023 14:46:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: Add PMIC pm7550ba dtsi
+Subject: Re: [PATCH 4/8] arm64: dts: qcom: Add PMIC pmx75 dtsi
 Content-Language: en-US
 To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -62,7 +62,7 @@ To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
- <1690970366-30982-4-git-send-email-quic_rohiagar@quicinc.com>
+ <1690970366-30982-5-git-send-email-quic_rohiagar@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -99,13 +99,13 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1690970366-30982-4-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <1690970366-30982-5-git-send-email-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -113,19 +113,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2.08.2023 11:59, Rohit Agarwal wrote:
-> Add dtsi for PMIC pm7550ba found in Qualcomm platforms.
+> Add dtsi for PMIC pmx75 found in Qualcomm platforms.
 > 
 > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
-Subject: "PMIC pm7550ba" -> "pm7550ba PMIC"
-
 [...]
 
-> +
-> +		pm7550ba_eusb2_repeater: phy@fd00 {
-> +			compatible = "qcom,pm8550b-eusb2-repeater";
-A new compatible should be introduced, so that it goes like this:
-
-compatible = "qcom,pm7550ba-eusb2-repeater", "qcom,pm8550b-eusb2-repeater";
+> +		pmx75_temp: temp-alarm@a00 {
+Nit: can the label be pmx75_temp_alarm? "temp" is too vague, I think.
 
 Konrad
