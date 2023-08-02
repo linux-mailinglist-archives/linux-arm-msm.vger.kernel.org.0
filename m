@@ -2,115 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0204076CDE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:08:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADB1476CDEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:08:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231196AbjHBNIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 09:08:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49476 "EHLO
+        id S232174AbjHBNIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 09:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231176AbjHBNIQ (ORCPT
+        with ESMTP id S231176AbjHBNIq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 09:08:16 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C80DF;
-        Wed,  2 Aug 2023 06:08:11 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372CpeJc000686;
-        Wed, 2 Aug 2023 13:08:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Aak+kmw72Z4LWeb4q+Xj28N9GFyJZEdd0yYqO3oTKsc=;
- b=Gwh0hNnjr9QpEBRuLJKzyRTSIqJnmNFw+7G38SsYOrH9mUi7VtlXGabEjDT8964Lyytt
- 2o8rtuWAK1SKBiCSUcB5SRSqWZoJqWLV5wmmJpxghoId0xV8cExrWmrvjgx3Ymwd8Th+
- amZ7u7ory9OKvJLuej5E/441pGf5whxJQiOOPaBBRnZ1w65r1R4rBd4LusjK5QlMWQt0
- tRzu1Tmbc+oZa6gUpZxFa/dIb5zi985r+ltHKovTbOHXBpPi5b+0KFmvKuVc/3y4p+9P
- CclzogrZ1rH4St2FjVroJpTjl40855lzu03sCDUkxfiJIQMbMQsaQhRKdaiFoO87Qww2 Og== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75b32eg9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 13:08:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372D83gU005638
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Aug 2023 13:08:03 GMT
-Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
- 2023 06:08:00 -0700
-Message-ID: <b3c2fa94-76ee-c903-d656-0dab6fd91687@quicinc.com>
-Date:   Wed, 2 Aug 2023 18:37:57 +0530
+        Wed, 2 Aug 2023 09:08:46 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B27D42695
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 06:08:44 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fbea14706eso63493605e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 06:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690981723; x=1691586523;
+        h=content-transfer-encoding:in-reply-to:subject:organization
+         :references:cc:to:content-language:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2gKqfx6Ptiw0IBGAk/3SH2zWXJ1w9LfF+qPC02xaE30=;
+        b=P/EWJoARx3LF+9GRRrMNDO5ED5UI+uBEVUm/4dN9aG/einEUFd3LJPgFt6J1yY2A1R
+         21KN7UiekIiFUxocGJ8aX0bfEzvP+bqAXKZMQrugVgu/2m0dOnBnEi9W4G4tTSFDjbej
+         Kqjcm94Qs3QYQRvgvW01wYn9ySkuBCm9qoeycc5TMTPfSQdF8XoR64AhaR5z6r/9GLxb
+         qJ9jFJN7CKIaYSOcUJfopvQsXpgDVrOM3UAb2mYBwt52S6bQQQ4ZgN15T1L3mBCN23Ku
+         JAQA8XjpaVIKQiPRj66vCrsRfOQQf0RoT2vsnLeWMI8dwfynmRG00J3d6tgnuig29I9C
+         SKiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690981723; x=1691586523;
+        h=content-transfer-encoding:in-reply-to:subject:organization
+         :references:cc:to:content-language:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2gKqfx6Ptiw0IBGAk/3SH2zWXJ1w9LfF+qPC02xaE30=;
+        b=BTnof/2TgwKeGLM70PITa+Q9ZKUJkoFJ+UlNe+amUsSU0OYp6e6Kdoe7gmJirrs3ST
+         yNQ3kN3E1Ky1/Xiaq9S5Pp4MJ6MKS9KD5wYXvAwuLbCH89X9WnNQLLofhEdWjxxzFZox
+         wzqncNTMQDfydTztzCkdPUp+Y81UGTkLdaHm4/dfQlpcppHPuw3DpaROyYbs7oOH4TGz
+         SW1QTv4PElDsC4A34xzNb5XT9npSs6P+SMInDAoPXQG3SUksDlu9apVGQpFvxbDlsUWV
+         Hgc330+M+iXMsrH/HBqD+ECPXpbfd2H+1gl0ygOqg+mZfgQyl6Et+qLXhhJYnEy/LakV
+         GTQg==
+X-Gm-Message-State: ABy/qLY3UYVJZVfmUpm9eYXYa+mptNCytpRyNsR1C16o/vXBQCgyLZAp
+        C3QSkjmMOnyKmTHlsezk29Bv5g==
+X-Google-Smtp-Source: APBJJlG8sr5jUWBVjL3BRFAbmn29x9oHMrYNBecenH9BIKBdXscxcFgCB56BCi9tNLKpz3rMG31rBg==
+X-Received: by 2002:adf:face:0:b0:313:f07b:801f with SMTP id a14-20020adfface000000b00313f07b801fmr4563714wrs.44.1690981722963;
+        Wed, 02 Aug 2023 06:08:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:c5bb:5b4:61e3:d196? ([2a01:e0a:982:cbb0:c5bb:5b4:61e3:d196])
+        by smtp.gmail.com with ESMTPSA id m12-20020adff38c000000b00313f031876esm19063623wro.43.2023.08.02.06.08.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Aug 2023 06:08:42 -0700 (PDT)
+Message-ID: <d4b778f6-35b6-fc1b-014d-eaa9b3b900a4@linaro.org>
+Date:   Wed, 2 Aug 2023 15:08:41 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 1/8] arm64: dts: qcom: sdx75: Add spmi node
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
- <1690970366-30982-2-git-send-email-quic_rohiagar@quicinc.com>
- <77d437eb-8edd-344d-61be-71aae7866a69@linaro.org>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <77d437eb-8edd-344d-61be-71aae7866a69@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _4I0ToN6QRU9ZaRn6goCnJZFrp-mOlgA
-X-Proofpoint-ORIG-GUID: _4I0ToN6QRU9ZaRn6goCnJZFrp-mOlgA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_08,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 mlxlogscore=580 bulkscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308020115
+To:     Marek Vasut <marex@denx.de>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jagan Teki <jagan@amarulasolutions.com>,
+        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
+ <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+ <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
+ <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
+ <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
+ <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
+ <51d782c4-3539-c3d3-6844-d6b9a39c09eb@linaro.org>
+ <88a49ed7-8132-3212-1f7a-9378eb640d68@denx.de>
+Organization: Linaro Developer Services
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+In-Reply-To: <88a49ed7-8132-3212-1f7a-9378eb640d68@denx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Marek,
 
-On 8/2/2023 6:10 PM, Konrad Dybcio wrote:
-> On 2.08.2023 11:59, Rohit Agarwal wrote:
->> Add SPMI node to SDX75 dtsi.
+On 02/08/2023 14:25, Marek Vasut wrote:
+> On 8/2/23 10:39, neil.armstrong@linaro.org wrote:
+>> Hi Marek,
+> 
+> Hi,
+> 
+>> On 13/07/2023 20:28, Marek Vasut wrote:
 >>
->> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sdx75.dtsi | 23 +++++++++++++++++++++++
->>   1 file changed, 23 insertions(+)
+>> <snip>
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
->> index 21d5d55..5e9602cd 100644
->> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
->> @@ -469,6 +469,29 @@
->>   			interrupt-controller;
->>   		};
->>   
->> +		spmi_bus: spmi@c400000 {
->> +			compatible = "qcom,spmi-pmic-arb";
->> +			reg = <0x0 0xc400000 0x0 0x3000>,
->> +			      <0x0 0xc500000 0x0 0x400000>,
->> +			      <0x0 0xc440000 0x0 0x80000>,
->> +			      <0x0 0xc4c0000 0x0 0x10000>,
->> +			      <0x0 0xc42d000 0x0 0x4000>;
-> Please pad the address part to 8 hex digits (add leading zeroes)
-Sure will update this.
-Thanks,
-Rohit.
->
-> Konrad
+>>>>>
+>>>>> MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by DSIM.
+>>>>>
+>>>>> Maybe there is a need for new set of flags which differentiate between HBP skipped (i.e. NO HBP) and HBP LP11 ?
+>>>>>
+>>>>
+>>>> No, the section of the MIPI DSI spec I posted below clearly states there are two options:
+>>>>
+>>>> 1) send blanking packets during those periods
+>>>> 2) transition to LP11 during those periods
+>>>>
+>>>> There is no 3rd option in the spec of not doing both like what you are suggesting. So DSIM should also be only transitioning to LP11 during those periods if its not sending the blanking packets with those flags set.
+>>>>
+>>>> So, there is no need for any new set of flags to differentiate.
+>>>>
+>>>> The flags and their interpretation is correct in MSM driver. I cannot comment on what exactly DSIM does with those flags.
+>>>
+>>> How do you explain the comment in include/drm/drm_mipi_dsi.h:
+>>>
+>>> 128 /* disable hback-porch area */
+>>> 129 #define MIPI_DSI_MODE_VIDEO_NO_HBP      BIT(6)
+>>
+>> Can you specify how you determined those flags were needed on DSIM ? a vendor tree ? a datasheet ?
+> 
+> The following upstream commit:
+> 
+> 996e1defca344 ("drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags")
+> 
+>> In the meantime, we should revert this patch because it regresses some Qcom
+>> based platforms until we figure out what's missing to make DSIM based boards
+>> happy.
+>>
+>> I'll send a revert change afterwards.
+> 
+> That change would break existing use case on i.MX8M then, I disagree with that revert.
+
+As I understand the timeline is :
+
+- 996e1defca344 was merged in v6.2-rc2 and caused regression on NXP platforms
+
+- 8ddce13ae696 was merged in v6.5-rc1 to fix that but caused regression on QCOM platforms
+
+Did I miss something ?
+
+I don't know how to handle this apart reverting 8ddce13ae696 and trying to find a proper fix that doesn't regress QCOM.
+
+So, The main issue is around the real meaning of the IPI_DSI_MODE_VIDEO_NO_* flags,
+Exynos DRM removed the HSA, HBP and HFP packets, Qcom DSI moves the DSI lanes
+state to LP-11 during the period.
+
+The behavior is significantly different and the naming doesn't suggest any
+correct behavior.
+
+The only solution is to find out why :
+- On Qcom platforms, having the HSA, HBP and HFP periods is OK, but not on DSIM
+- On DSIM, removing the HSA, HBP and HFP periods is fine
+- What's the exact requirement of the lt9611 bridge concerning those periods
+
+Neil
