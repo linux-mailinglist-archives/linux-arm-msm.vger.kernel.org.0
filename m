@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69F0376D6CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:22:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 716FB76D6D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:25:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232292AbjHBSW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 14:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36204 "EHLO
+        id S232592AbjHBSZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 14:25:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234314AbjHBSWt (ORCPT
+        with ESMTP id S231688AbjHBSZS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 14:22:49 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDAD31BD5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 11:22:44 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5860c7fc2fcso323447b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 11:22:44 -0700 (PDT)
+        Wed, 2 Aug 2023 14:25:18 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1327CBA
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 11:25:17 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d167393b95aso1833808276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 11:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691000564; x=1691605364;
+        d=linaro.org; s=google; t=1691000716; x=1691605516;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ae5epmyMSgwEaKPoiZdDHz+XlPWQsao3AH8Jqs9WmdU=;
-        b=UuqXKQfOGoWGMgGrhbzQ7Wa0/vXE/PUmfIVrIYA9KkQvmIFU/S5Eo9JvSfi0pm11uu
-         VyHZup/WLbdqVsF0nfd5Ho2XcMC+1tlM9ssgHC0FQstbia3K70xkAzuV0SNyAs/DzKQt
-         kmlPg8Sb+MSfYIwSBqS3H8dPFn3WYFmE0eDMVeA/EnYkoHXGoRFnz+uEx1Gy3qGQbnoV
-         9l3MOYYUM9CXOZ9KjIy57KCeno+2RambOPlV02yrJSN29vjf62d/1peDAzGVb+FaLOh9
-         ZKdDM8oRS70Ri/LQHtPVXCmXMm/a4NihlVaTAPODCRZYzceXEGpapsv7QZnsHaK1PhM8
-         IudA==
+        bh=5rqnhpukvnuroNpgIhuZ9KfllzGzBjkAWHO7GNn33Zk=;
+        b=tdRmHORtrVoProVKvDSNsGAlMh6mwrIM4BGH/OGo+JVYBufe7LKoaKZCOFd71mVztY
+         6xkHD5yCeVF6KBSYOy+BWCcf72ACYn40XNHI/oZocmLWnrgaKX9IDmQNicEhOdZO4vTJ
+         QXM6flWto7fGK8mbbKG1CuYY9hDOcIBiGyVkqMopus0PR+4p7NzhIKat8qPeepBJIkfA
+         oBSOD1LnxQ4uoN/TkOL+IgLy/I8OyZClvbmizvM+c1wrUm2/IIz2THu9ca4L94pByOcO
+         NtXJcb2FxwGlBF4c4Z+QSlS/saM30gG2XtmZhBdp0kCH8l+SviR2gVLCkSg6s+RuMIxX
+         fSBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691000564; x=1691605364;
+        d=1e100.net; s=20221208; t=1691000716; x=1691605516;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ae5epmyMSgwEaKPoiZdDHz+XlPWQsao3AH8Jqs9WmdU=;
-        b=QkMR0MNUCdDLlGjpgTSgcuM2uwdAV7Grkb3LUP61cZK8TyO/txU6PkQRG2gpKsuY4u
-         HOW0zoMFp6I7hCvXkl6n8pBkrpuDLXwd/yEvU9QR2ZBe8mDx4V3figP9cOxfbfJJxDYc
-         OTVyCL/tPTD5ro/BQToSmdbAKhF+Z9/rID7C7U070x6jqpsdKfu8YvAtYEpf8dAnuCXq
-         mVdc543B2zLN2nWFQmBZQr8OGJS1lPmkhxqKoBGjCvQVvFtmLts060+p0TYhsRExsqFp
-         Sn0qhuWkmuZRfF7u4Zjmln0UuxmvjCcsSlDkG/Ma7wEiHTkL/sxX/btJhngUpqcImQ3G
-         DSsA==
-X-Gm-Message-State: ABy/qLZIsgar0/uaICfmYrMlkd5ow7jEursf1jF0nkE7VKDNr6Znx7sD
-        Ltx0gQLOqqIKzzUFHdtfUVGdYgFmIRR8qDU8sPgBTw==
-X-Google-Smtp-Source: APBJJlGZ6j6qKs+9G6d2w79KwHIPTThBY36/+BubF52WqifMDyo3N6LxG7I0oOMtg4goYv9jDrIm2vRKw2e81Yj1nck=
-X-Received: by 2002:a25:5542:0:b0:c12:29ac:1d3b with SMTP id
- j63-20020a255542000000b00c1229ac1d3bmr13193825ybb.11.1691000563690; Wed, 02
- Aug 2023 11:22:43 -0700 (PDT)
+        bh=5rqnhpukvnuroNpgIhuZ9KfllzGzBjkAWHO7GNn33Zk=;
+        b=FyGm2PdLzrB1Hjrczo6i22o/rRh3fH+dOaySmpLIbSZ7fS7wpqSHRuWWuA9A4AIcZU
+         dnnpbe0MDvG1CFIMh0/xhFfZBY4tCzna8yGY7GjXiS+SSxyG17kqoTKLjfJzxBBn5/6f
+         J0qbaXix32RizvJhHncc0FbLbOUB0JgY/vPtUCZ8kQghOQNoALatuorXarmyaS8Z1e17
+         kOyW48q1WxfrPhd4KVe0CnPcvXe/6P/Bg9AdyLwVOS9t9HF+2DuYHHdgvXQT+/4y0zml
+         VeAcY0HtihP3yDTTL6jW+EYvPXBIwatx/iuCRQs5hoG33Sp5ej/VRJhbkAmYXeb0ntAb
+         8NMg==
+X-Gm-Message-State: ABy/qLbo4e5wJygFxBKkN2ClGl1LorsZJYnaoAgVknzVY0QFMMdxIeTM
+        8Ww4DDjggWxQCEstCnvDQilkwpcAgTOaE/w03aQuVQ==
+X-Google-Smtp-Source: APBJJlGURMqux6vjsKCyEZh5uiiRc2JPbZFyh118s++aogxKu7iUDz2oUe6gsb+DYPZiJrvV3yPjpFvKrpB5WxbFELI=
+X-Received: by 2002:a25:d3d0:0:b0:d0e:3831:fa26 with SMTP id
+ e199-20020a25d3d0000000b00d0e3831fa26mr21044770ybf.9.1691000716085; Wed, 02
+ Aug 2023 11:25:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com> <20230802-add-widebus-support-v3-1-2661706be001@quicinc.com>
-In-Reply-To: <20230802-add-widebus-support-v3-1-2661706be001@quicinc.com>
+References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com> <20230802-add-widebus-support-v3-4-2661706be001@quicinc.com>
+In-Reply-To: <20230802-add-widebus-support-v3-4-2661706be001@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 2 Aug 2023 21:22:32 +0300
-Message-ID: <CAA8EJpogs_AsU5CG22m+azdGvDdyDuJE+89n67EoBxmoFtTsWQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] drm/msm/dpu: Move DPU encoder wide_bus_en setting
+Date:   Wed, 2 Aug 2023 21:25:05 +0300
+Message-ID: <CAA8EJpoodqcWXsvjjpfMhMxmmvjNfYu5KUM6iOxqxYRH6wxsRA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] drm/msm/dsi: Enable widebus for DSI
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
@@ -64,7 +64,7 @@ Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -73,57 +73,124 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, 2 Aug 2023 at 21:09, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 >
-> Move the setting of dpu_enc.wide_bus_en to
-> dpu_encoder_virt_atomic_enable() so that it mirrors the setting of
-> dpu_enc.dsc.
-
-because ... ?
-
+> DSI 6G v2.5.x+ supports a data-bus widen mode that allows DSI to send
+> 48 bits of compressed data instead of 24.
+>
+> Enable this mode whenever DSC is enabled for supported chipsets.
 >
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/dsi/dsi.c      |  5 +++++
+>  drivers/gpu/drm/msm/dsi/dsi.h      |  1 +
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 30 ++++++++++++++++++++++++++----
+>  3 files changed, 32 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+> index baab79ab6e74..4fa738dea680 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+> @@ -17,6 +17,11 @@ struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
+>         return msm_dsi_host_get_dsc_config(msm_dsi->host);
+>  }
+>
+> +bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi)
+> +{
+> +       return msm_dsi_host_is_widebus_enabled(msm_dsi->host);
+> +}
 
-Other than the commit message:
+If this function is not provided at the time of the previous patch,
+compilation will break. I'd suggest to provide a stub first and then
+change it in this patch.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index d34e684a4178..3dcd37c48aac 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1194,11 +1194,18 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
->         struct dpu_encoder_virt *dpu_enc = NULL;
->         int ret = 0;
->         struct drm_display_mode *cur_mode = NULL;
-> +       struct msm_drm_private *priv = drm_enc->dev->dev_private;
-> +       struct msm_display_info *disp_info;
->
->         dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +       disp_info = &dpu_enc->disp_info;
->
->         dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
->
-> +       if (disp_info->intf_type == INTF_DP)
-> +               dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
-> +                               priv->dp[disp_info->h_tile_instance[0]]);
 > +
->         mutex_lock(&dpu_enc->enc_lock);
->         cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
+>  static int dsi_get_phy(struct msm_dsi *msm_dsi)
+>  {
+>         struct platform_device *pdev = msm_dsi->pdev;
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index bd3763a5d723..a557d2c1aaff 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -134,6 +134,7 @@ int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+>  void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
+>  void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
+>  struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
+> +bool msm_dsi_host_is_widebus_enabled(struct mipi_dsi_host *host);
 >
-> @@ -2383,10 +2390,6 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
->         timer_setup(&dpu_enc->frame_done_timer,
->                         dpu_encoder_frame_done_timeout, 0);
+>  /* dsi phy */
+>  struct msm_dsi_phy;
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 645927214871..231b02e5ab6e 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -710,6 +710,14 @@ static void dsi_ctrl_disable(struct msm_dsi_host *msm_host)
+>         dsi_write(msm_host, REG_DSI_CTRL, 0);
+>  }
 >
-> -       if (disp_info->intf_type == INTF_DP)
-> -               dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
-> -                               priv->dp[disp_info->h_tile_instance[0]]);
-> -
->         INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
->                         dpu_encoder_off_work);
->         dpu_enc->idle_timeout = IDLE_TIMEOUT;
+> +bool msm_dsi_host_is_widebus_enabled(struct mipi_dsi_host *host)
+> +{
+> +       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+> +
+> +       return msm_host->dsc && (msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
+
+Please add a line break after the first &&. Compare two following statements:
+
+> +                       msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0);
+> +}
+> +
+>  static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+>                         struct msm_dsi_phy_shared_timings *phy_shared_timings, struct msm_dsi_phy *phy)
+>  {
+> @@ -753,10 +761,16 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+>                 data |= DSI_CMD_CFG1_INSERT_DCS_COMMAND;
+>                 dsi_write(msm_host, REG_DSI_CMD_CFG1, data);
+>
+> -               if (msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
+> -                   msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3) {
+> +               if (cfg_hnd->major == MSM_DSI_VER_MAJOR_6G) {
+>                         data = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
+> -                       data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
+> +
+> +                       if (cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3)
+> +                               data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
+> +
+> +                       /* TODO: Allow for video-mode support once tested/fixed */
+> +                       if (msm_dsi_host_is_widebus_enabled(&msm_host->base))
+> +                               data |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
+> +
+>                         dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, data);
+>                 }
+>         }
+> @@ -894,6 +908,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>         u32 hdisplay = mode->hdisplay;
+>         u32 wc;
+>         int ret;
+> +       bool widebus_enabled = msm_dsi_host_is_widebus_enabled(&msm_host->base);
+>
+>         DBG("");
+>
+> @@ -914,6 +929,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>
+>         if (msm_host->dsc) {
+>                 struct drm_dsc_config *dsc = msm_host->dsc;
+> +               u32 bytes_per_pclk;
+>
+>                 /* update dsc params with timing params */
+>                 if (!dsc || !mode->hdisplay || !mode->vdisplay) {
+> @@ -937,7 +953,13 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>                  * pulse width same
+>                  */
+>                 h_total -= hdisplay;
+> -               hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> +               if (widebus_enabled && !(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
+> +                       bytes_per_pclk = 6;
+> +               else
+> +                       bytes_per_pclk = 3;
+> +
+> +               hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), bytes_per_pclk);
+> +
+>                 h_total += hdisplay;
+>                 ha_end = ha_start + hdisplay;
+>         }
 >
 > --
 > 2.41.0
