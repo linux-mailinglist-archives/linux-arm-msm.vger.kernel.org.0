@@ -2,69 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E060176C501
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 07:50:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19A5776C5E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 08:56:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231936AbjHBFuF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 01:50:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
+        id S231620AbjHBG4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 02:56:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230362AbjHBFuE (ORCPT
+        with ESMTP id S230202AbjHBG4f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 01:50:04 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 244BF1704
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 22:50:03 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-686f38692b3so6209427b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 22:50:03 -0700 (PDT)
+        Wed, 2 Aug 2023 02:56:35 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D823411A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 23:56:32 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-99bf9252eddso656859266b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 23:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690955402; x=1691560202;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dJviXEolxDsHscNjJ89nMsWSR/pVTtDnuSmhYDnoX4A=;
-        b=BKe9GEyzvb8YtpahAAWJSeYsdv3ZUUlAIlJ9J8BrNBy102qGUmj/NnozyHRuJ00zeg
-         qN7Rv2GRTW6QtCydqCufj5+2YffuNZ39A+TEcFp4qkfTj5c20D6uNGJbc0nqpORCScAA
-         Lrfa6wOBb0Z0iukec0fdtiyuyBYTAvePudz1460SM28xkZmUiiYyw2ltLRo9pS22kmGa
-         NSOPKta7jjqdKdHuIBjG6r7rCYhXbMaed3UdCVe3py2q3lTR9lASYpcziJMqcqo0sVFe
-         D6IbEJl2U2XCivjbCLyiv/VdTBnl2zR2Jlphs0mrRhzhfnoy+EJrzJHz1IGHpdQL0iUa
-         5IbA==
+        d=fairphone.com; s=fair; t=1690959391; x=1691564191;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jUzJB+BG9RWYTDdVbtJXTjUaZZLqj4Uowx0i8AONLTw=;
+        b=l4+MfpYfZRWgAvFL59TuqxRwKN3tBGtKvfwKpSyrfRyu+7nwyMrx9ILWQWLNKf32OG
+         FUtfn0xMrlGBtubo2AdyaBgxbz2yLFhQXM/dIbwDT/RowOhLwejXUk3a/OlXPawY5N+p
+         q/29IRT5KSR7Jq9s0cXptycUP7XEvN+vQfND0VLUFtzxxdAADqQX27UQya7N42KpLk/Z
+         rmrSsGjxpCjOlqn8F5+O9sEZMWHFFjAD46FGdFdfOtVQQWaKvWdzuE1MKSbfi98fD4cw
+         +sziTQw3Q1keXmQGtd+7cgMIQ8MQg+GQZ3ttgek9Jl563UPAC+VsLBy6lZCbDaYcJ/yA
+         b3JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690955402; x=1691560202;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dJviXEolxDsHscNjJ89nMsWSR/pVTtDnuSmhYDnoX4A=;
-        b=ZXzjVnWGW/QusR3dQP+gnzB5/GmZnK1iSmN+QtGLXD9fwgENgrbL0DkN9w53yKIoKS
-         7GTGBskZfKdfAMsn7JiDo2A7C0KvQHD9po0L8ZWGmWaPK4RfzDHuUHGjSvFctiIZLBA5
-         Cti/pDSVK8XxXXtGrSoaXaJYyLqknBmrTR7i7+wXkWhzGiR8L12gLG5NSZenSg66eGk/
-         xVUo6LlWOuNZbprnkvZFFiD7TRDt6hfL3UALqUd6+hcIL/be5KkV0nGHbRX4slIVuEh+
-         kkYDu97BAOFed+IsBo9TKO/gHxTKVeplZI9i1i//1ohb4PyatODfNirMfRkJ1RtSV0o6
-         ttmQ==
-X-Gm-Message-State: ABy/qLZWCjZj/E6nAOt2GxhKR2/trDDZJy6md/It3A6BbzIWOgq+ebD+
-        yAPjsRe5y189X8awAmqsrqiX
-X-Google-Smtp-Source: APBJJlHhp0Rpsf5K8jb6rviEQwM7/+spND8NP0jQBv3B2Py1ClnOITOPfT6jeZYgEpevIu/wsJHTeA==
-X-Received: by 2002:a05:6a00:a84:b0:668:97bf:5ed7 with SMTP id b4-20020a056a000a8400b0066897bf5ed7mr19895524pfl.22.1690955402602;
-        Tue, 01 Aug 2023 22:50:02 -0700 (PDT)
-Received: from thinkpad ([117.193.209.129])
-        by smtp.gmail.com with ESMTPSA id p24-20020aa78618000000b0068702b66ab1sm9662535pfn.174.2023.08.01.22.49.59
+        d=1e100.net; s=20221208; t=1690959391; x=1691564191;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jUzJB+BG9RWYTDdVbtJXTjUaZZLqj4Uowx0i8AONLTw=;
+        b=WPd1gxwMXDHSYZRKP0oKbB5XHI9z4cYwSILjiH3UM5JZcIysobkgV3j3cxsfxhA9jl
+         Wh/VCW7k0b3m3rLW/6AnY2+PSVUxXw0dWdfZGLjX1OR3gTmxa9Hp5Vj5uUyG/a2OsDkO
+         bXVIilOejbiqDJMK0bLErzdLkO+2dbUOZBxsq7SSna/C54CmKmQbp4t2Dk0XBOSzLjIr
+         7FsKSmxazHZ9TkLqotpI9JFVIObjpP4z/KqkxDU+TIs27jObhLvjsNAuE+bfClOJxkWC
+         2q9evhUlJtU0rm2lMQE0oZnJAoAeglKNX/aL7twudIvkdqh+y7BpZ/uXoPXsCRbIgirx
+         3O8Q==
+X-Gm-Message-State: ABy/qLb3zoe3jLaFHpLtqskpuwthfqFsqk0lBuVwEcA1sSm2L9lMbqgm
+        pkm1/wB0HVFEc0XjcwQnCvF/AQ==
+X-Google-Smtp-Source: APBJJlGi5fmP0zp7K4DR2MMoxvj+mltvijlg3OwvuFffod4okhkoMLCJtNXJIomfMjOXylY05fNUEg==
+X-Received: by 2002:a17:907:1dca:b0:997:beca:f9db with SMTP id og10-20020a1709071dca00b00997becaf9dbmr4051637ejc.54.1690959391375;
+        Tue, 01 Aug 2023 23:56:31 -0700 (PDT)
+Received: from [172.16.240.113] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id e1-20020a1709062c0100b0099bd5b72d93sm8567400ejh.43.2023.08.01.23.56.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Aug 2023 22:50:02 -0700 (PDT)
-Date:   Wed, 2 Aug 2023 11:19:55 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Treat unknown irq events as an error
-Message-ID: <20230802054955.GG2370@thinkpad>
-References: <20230726152931.18134-1-manivannan.sadhasivam@linaro.org>
- <20230731165738.GA14380@bhelgaas>
+        Tue, 01 Aug 2023 23:56:31 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/2] Add WCN3988 Bluetooth support for Fairphone 4
+Date:   Wed, 02 Aug 2023 08:56:27 +0200
+Message-Id: <20230802-fp4-bluetooth-v3-0-7c9e7a6e624b@fairphone.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230731165738.GA14380@bhelgaas>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABv+yWQC/32NQQ7CIBQFr9KwFvMLaLEr72FcAP0VkgoNtETT9
+ O7SLk10OZO8eQtJGB0m0lYLiZhdcsEX4IeKGKv8A6nrChMGjINgNe1HQfUw4xTCZKnmZwUoG30
+ xkpSNVgmpjsobW1Z+HoYix4i9e+0nt3th69IU4nv/zPVmf+VzTYGC4IBcNQiKXXvl4miDx6MJT
+ 7LVMvtbYKXAO5QCupOQHL8L67p+AI7Xl8cFAQAA
+To:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -75,58 +92,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 31, 2023 at 11:57:38AM -0500, Bjorn Helgaas wrote:
-> On Wed, Jul 26, 2023 at 08:59:31PM +0530, Manivannan Sadhasivam wrote:
-> > Sometimes, the Qcom PCIe EP controller can receive some interrupts that are
-> > not known to the driver like safety interrupts in newer SoCs. In those
-> > cases, if the driver doesn't clear the interrupts, then it will end up in
-> > interrupt storm. But the users won't have any idea about it due to the log
-> > being treated as a debug message.
-> > 
-> > So let's treat the unknown event log as an error, so that it at least makes
-> > the user aware, thereby getting fixed eventually.
-> 
-> Would it be practical to log the error message, then clear the
-> interrupt to avoid the interrupt storm?
+Add support in the btqca/hci_qca driver for the WCN3988 and add it to
+the sm7225 Fairphone 4 devicetree.
 
-Just to make it clear that we are already clearing the IRQs in
-PARF_INT_ALL_CLEAR. But the issue is, on newer platforms there are a couple more
-of these registers that the driver should mask and clear.
+Devicetree patches go via Qualcomm tree, the rest via their respective
+trees.
 
-Qcom faced an interrupt storm issue while bringing up PCIe EP on a new
-platform. On that platform, several interrupts were added for some specific
-usecases. Since we do not mask/clear those interrupts, it resulted in an
-interrupt storm. Moreover, the absence of error message made it difficult to
-debug the issue as there were no logs from the driver (they didn't enable DEBUG
-unfortunately during bringup as I thought one would do).
+--
+Previously with the RFC version I've had problems before with Bluetooth
+scanning failing like the following:
 
-So to catch these kind of issues in the future, I just want to promote the log
-to dev_err().
+  [bluetooth]# scan on
+  Failed to start discovery: org.bluez.Error.InProgress
 
-- Mani
+  [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
 
-> 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index 267e1247d548..802dedcc929c 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > @@ -593,7 +593,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
-> >  		dw_pcie_ep_linkup(&pci->ep);
-> >  		pcie_ep->link_status = QCOM_PCIE_EP_LINK_UP;
-> >  	} else {
-> > -		dev_dbg(dev, "Received unknown event: %d\n", status);
-> > +		dev_err(dev, "Received unknown event: %d\n", status);
-> >  	}
-> >  
-> >  	return IRQ_HANDLED;
-> > -- 
-> > 2.25.1
-> > 
+This appears to only happen with driver built-in (=y) when the supported
+local commands list doesn't get updated in the Bluetooth core and
+use_ext_scan() returning false. I'll try to submit this separately since
+this now works well enough with =m. But in both cases (=y, =m) it's
+behaving a bit weirdly before (re-)setting the MAC address with "sudo
+btmgmt public-addr fo:oo:ba:ar"
 
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v3:
+- Drop applied patches and resend
+- Link to v2: https://lore.kernel.org/r/20230421-fp4-bluetooth-v2-0-3de840d5483e@fairphone.com
+
+Changes in v2:
+- Add pinctrl & 'tlmm 64' irq to uart node
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com
+
+---
+Luca Weiss (2):
+      dt-bindings: net: qualcomm: Add WCN3988
+      Bluetooth: btqca: Add WCN3988 support
+
+ .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          |  2 ++
+ drivers/bluetooth/btqca.c                                   | 13 +++++++++++--
+ drivers/bluetooth/btqca.h                                   | 12 ++++++++++--
+ drivers/bluetooth/hci_qca.c                                 | 12 ++++++++++++
+ 4 files changed, 35 insertions(+), 4 deletions(-)
+---
+base-commit: 7093f04e534f48181e5d5fccbcf99c37ab96929a
+change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Luca Weiss <luca.weiss@fairphone.com>
+
