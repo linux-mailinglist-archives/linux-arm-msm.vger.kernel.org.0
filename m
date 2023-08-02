@@ -2,88 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8835276CFC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 16:11:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5EB276CFE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 16:19:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjHBOLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 10:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
+        id S232501AbjHBOTw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 10:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231449AbjHBOLd (ORCPT
+        with ESMTP id S231555AbjHBOTv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 10:11:33 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C22CD2706
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 07:11:31 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-316feb137a7so6963499f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 07:11:31 -0700 (PDT)
+        Wed, 2 Aug 2023 10:19:51 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A3E2711
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 07:19:49 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso11170321e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 07:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690985490; x=1691590290;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SVUD/O22MK9ex6QgiZ3+WUntWWQ3J8kc4lQNBHLBbPU=;
-        b=O0pl3CfNG+2nlyUt5+zfo6hxkUIwCmA0VTxeAoAucHTP2J3GXCg1P/ihndRx2gZ1I4
-         0t1+kPq9wQCvjz8ovRbBlbKlQwVL6EZg7iHAAyFUZ3WHclipajFdd87iZ8Vjjz/ygVRQ
-         rWHMIgDWEKEZc+nK0spkAOFVW8mN7o3dPyajSNEcGbZcve+qEJNuTbJ2TddbaiHi2J/C
-         EpxmIZKdd6hrUpaH5JR5F3pfc6P+vE3OA7K39Ynn52i6RoSMpdc0BHai/1MAkXTt/Lco
-         hcj1WzLZnaiL5wxytbt69pPeY3LyclHGlIdXaKnPhDJ4q8JLhVQIqEJGRpWj1iuf64c5
-         QmBA==
+        d=linaro.org; s=google; t=1690985987; x=1691590787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a4wZsqR8LbrTTZv7kmk4RZ3s9EZmYRoAu6PO3sMdZUs=;
+        b=VBAjZfSLPDTNwu0CV0rv4G5xg10wHSM/383f45p5UkzIDihYnJOVr7SFrEPpej4o++
+         qhzsZLmUhm+Y1CguDPHbBSgmSYg4iV1qJA0JQ9pLeE4cUt386BnzSwesNCsvYS5selB8
+         Wst0rOLT902/p2+bofyLyC1+iF4yvjOlIqGikNxnuuuwHodxfIKGfMcXDGwGejpBnSts
+         Zs4hPiQ0F42FIkA4Yucbx6U/ajplONI6YvxD1jAxDvvO5/rmLntQ0Cq+ScNsyl3zCumv
+         cygBhCtVrvN2zcJk9uEKlDvuk7Z6tJZTG0hGg4ItUPkBqmDOtY9tnQxfmsfolnvuvMEz
+         72GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690985490; x=1691590290;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SVUD/O22MK9ex6QgiZ3+WUntWWQ3J8kc4lQNBHLBbPU=;
-        b=Z+XfvsBDbneULsy8hiG3Mpb3KASAdzKJZBoIv4+WWYOt6AP7aLYHqyD4oy0NX2dTA5
-         mz40MYE2w1FJYtagcQuki/R/CINUEFaehpMCYWWU+4H9p0E2vq4IPozoCEpwYpxW864r
-         gIMwjiRyldJUuIXjpOON1e5+TJlJS/zsoblTEh9+kl59xmzQo+I4N2MVW5ZIj8L2OvLb
-         02WZkW9wUX/Ft1jT0cHEsneHRqA4mAhkLsIN7G7UY9RuuOvDAeK4tLYggJzbkAtejlXB
-         hLCdXQc//558zIRbljK/T1gbZr6VHqgbP9dZ7juFFO52TuSJUdh/xV7nbfpawJtQylbU
-         AQrw==
-X-Gm-Message-State: ABy/qLYHUCyyw+VghqZ4DnwPHr/sXQP4uKywSb1L8CkD4CEBFxuxAje9
-        Sai/9le9pMIPNsSZKpMxSJxVvw==
-X-Google-Smtp-Source: APBJJlG571gwXZIj6TT36oNDTSONPYSRs5LsCoWFMRx/QXy3Xwaf3xs7Q41gEg0SoGxykIUAzWqDbw==
-X-Received: by 2002:a5d:6a8e:0:b0:314:468d:ccab with SMTP id s14-20020a5d6a8e000000b00314468dccabmr4601407wru.45.1690985490210;
-        Wed, 02 Aug 2023 07:11:30 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c5bb:5b4:61e3:d196? ([2a01:e0a:982:cbb0:c5bb:5b4:61e3:d196])
-        by smtp.gmail.com with ESMTPSA id c7-20020a7bc847000000b003fe22da3bc5sm1772761wml.42.2023.08.02.07.11.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Aug 2023 07:11:29 -0700 (PDT)
-Message-ID: <079ece4b-3f36-2ff9-36ff-23fcc4c2c8e1@linaro.org>
-Date:   Wed, 2 Aug 2023 16:11:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] drm/msm/dpu: increase memtype count to 16 for sm8550
-Content-Language: en-US
-To:     Jonathan Marek <jonathan@marek.ca>, freedreno@lists.freedesktop.org
+        d=1e100.net; s=20221208; t=1690985987; x=1691590787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a4wZsqR8LbrTTZv7kmk4RZ3s9EZmYRoAu6PO3sMdZUs=;
+        b=bPu3ftIF1gOg20RwBQIf2KHEEXUXGGA66qk9OADRp+Z0f5EbGTNLQwAhICS7Jn3l9Y
+         nojspDt4DXVIsPk9IbkUlGoXkoqMgpRLj4ifznz2VBtHDSkVKcdKForcU9/OT1wGMq3O
+         yVSuJiqBbcKW0r1bGaioFpFM6wZDRMCgqpoL9+gV2HJsDxUUaFMum+g9tBq58+8qp4sD
+         6ZxNgPxZQcf3tZ5aF7Xk15/kfPCbpFxtraj9GWCo2bnyJJHCA9Hr5e5DE9pfYn2QwvPq
+         MWQz2WIhvoF60g0cdZCd9PpLfKMVo/cqKCNdUmKLVRwaLG3k3nbpRS1pN6jCqCJRQXZ9
+         PGRQ==
+X-Gm-Message-State: ABy/qLbJ4A8Dgv8Dppgx/5Y8/watE0Y0ZP4d+SC5uaqTg0MEorydOIxn
+        bRurVUmw76TvEWhPeFuISBEYk6gxGdMD2ZGK+5o=
+X-Google-Smtp-Source: APBJJlHXFkd0l2Dl0uCDbmr5c23DuUa47sXDSuioFO/K6TtLmZZkga2NjOJcXcM347Gwl2VJkTXPJA==
+X-Received: by 2002:a05:6512:3694:b0:4fe:193a:e15c with SMTP id d20-20020a056512369400b004fe193ae15cmr4097594lfs.40.1690985987197;
+        Wed, 02 Aug 2023 07:19:47 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id p15-20020a19f00f000000b004fdfd4c1fcesm2952851lfc.36.2023.08.02.07.19.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Aug 2023 07:19:46 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     freedreno@lists.freedesktop.org, Jonathan Marek <jonathan@marek.ca>
 Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         Robert Foss <rfoss@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230802134900.30435-1-jonathan@marek.ca>
-Organization: Linaro Developer Services
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: increase memtype count to 16 for sm8550
+Date:   Wed,  2 Aug 2023 17:19:46 +0300
+Message-Id: <169098596277.4187657.1718002880741720691.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230802134900.30435-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230802134900.30435-1-jonathan@marek.ca>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,66 +84,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/08/2023 15:48, Jonathan Marek wrote:
+
+On Wed, 02 Aug 2023 09:48:53 -0400, Jonathan Marek wrote:
 > sm8550 has 16 vbif clients.
 > 
 > This fixes the extra 2 clients (DMA4/DMA5) not having their memtype
 > initialized. This fixes DMA4/DMA5 planes not displaying correctly.
 > 
-> Fixes: efcd0107 ("drm/msm/dpu: add support for SM8550")
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  4 ++--
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 20 +++++++++++++++++++
->   2 files changed, 22 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index f17b9a7fee85..89a2ac1e840d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -245,8 +245,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
->   	.merge_3d = sm8550_merge_3d,
->   	.intf_count = ARRAY_SIZE(sm8550_intf),
->   	.intf = sm8550_intf,
-> -	.vbif_count = ARRAY_SIZE(sdm845_vbif),
-> -	.vbif = sdm845_vbif,
-> +	.vbif_count = ARRAY_SIZE(sm8550_vbif),
-> +	.vbif = sm8550_vbif,
->   	.perf = &sm8550_perf_data,
->   	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
->   		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 0de507d4d7b7..8b17a4a9b438 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -663,6 +663,26 @@ static const struct dpu_vbif_cfg sdm845_vbif[] = {
->   	},
->   };
->   
-> +static const struct dpu_vbif_cfg sm8550_vbif[] = {
-> +	{
-> +	.name = "vbif_rt", .id = VBIF_RT,
-> +	.base = 0, .len = 0x1040,
-> +	.features = BIT(DPU_VBIF_QOS_REMAP),
-> +	.xin_halt_timeout = 0x4000,
-> +	.qos_rp_remap_size = 0x40,
-> +	.qos_rt_tbl = {
-> +		.npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
-> +		.priority_lvl = sdm845_rt_pri_lvl,
-> +		},
-> +	.qos_nrt_tbl = {
-> +		.npriority_lvl = ARRAY_SIZE(sdm845_nrt_pri_lvl),
-> +		.priority_lvl = sdm845_nrt_pri_lvl,
-> +		},
-> +	.memtype_count = 16,
-> +	.memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-> +	},
-> +};
-> +
->   /*************************************************************
->    * PERF data config
->    *************************************************************/
 
-Thanks !
+Applied, thanks!
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+[1/1] drm/msm/dpu: increase memtype count to 16 for sm8550
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/08bfcdc2c358
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
