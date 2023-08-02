@@ -2,74 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF46976D631
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:57:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 022E276D67F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbjHBR5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 13:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46204 "EHLO
+        id S232089AbjHBSJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 14:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjHBR5W (ORCPT
+        with ESMTP id S229480AbjHBSJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 13:57:22 -0400
+        Wed, 2 Aug 2023 14:09:20 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380B19C;
-        Wed,  2 Aug 2023 10:57:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B973A1735;
+        Wed,  2 Aug 2023 11:09:15 -0700 (PDT)
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372HYZlV001884;
-        Wed, 2 Aug 2023 17:57:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=LrzR88o+DIj7W/tEDw0tIz5VvK34qlOm4eMbpqUNBiw=;
- b=SVCHGX8h36IG/gv504EsZinMMlDLNbGwQi97qErFC3GKOLKpXW3qzRg62NnzPOqYW46S
- VDCYqctLArfJCYDC+HsInFWTnIDtpdR9RtavS1kl6NeWrx7+gQld2FyDX6yPJ2fOuU9C
- h2Oemm1MlDZIhlMeLa6YOiFGRmmR7B6ISfTZ34IQ1C4PQmh28lmRR8jopYlRjmPJzSMa
- M9XDORmm82uHEaUEKUlxs6Y/faPMt7N+1pGZQUvoHVY83ZFgnXBkHoJQXWWb5DeZJVeh
- aQsXonlWeSxqugx3vyx8d0BKD2Njr4GQuEdLI7nQV0RmJEAi+Zny0FV8KWVW6jvopzLU zg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s72gquju5-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372HYZln001884;
+        Wed, 2 Aug 2023 18:09:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=Z7+m9MRkLgFH+BPGaAMKQBZw7dNNSAUMw86L9LjuQT4=;
+ b=pBYWg6bqqO+P7gm0idvDtquXErMi287qKDhleNpSRDQZQBx/qBwFZynSwHXrSpha8ctk
+ mBYLxQ8rB8g2gZo7p+I/8U0M5XgvoakfLrJF3MF2c0bi+wXpPUyxn6+z0Zy+T3q4yYRQ
+ gAAfc+98qXL79qyCbbu9c9+AvHk0uYrL1QtR7/eV9yHT8Gh51BP8JQwUGc/QeUMvIZWU
+ j2au4T7dM/lmidqDBdafg3dQHVMJwYEiHLvsLwSNQtp+/n/fTcoUK+WH2CE367KvtQ3l
+ O/4fKZxQ4AMvpuoygdJBgMFEFDDYlZuGv/dPVJDk6pF66dsMdDqyBBF9wq4pz680nzD3 Jg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s72gquknk-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 17:57:18 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372HvHkt022081
+        Wed, 02 Aug 2023 18:09:08 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372I97aP031812
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Aug 2023 17:57:17 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+        Wed, 2 Aug 2023 18:09:07 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 2 Aug 2023 10:57:17 -0700
-Date:   Wed, 2 Aug 2023 10:57:15 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: sdx75-idp: Add regulator nodes
-Message-ID: <20230802175715.GJ1428172@hu-bjorande-lv.qualcomm.com>
-References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
- <1690970366-30982-9-git-send-email-quic_rohiagar@quicinc.com>
- <41b9bbd2-e58f-810d-ad3b-715423ffe74b@linaro.org>
+ 15.2.1118.30; Wed, 2 Aug 2023 11:09:07 -0700
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v3 0/4] drm/msm: Enable widebus for DSI
+Date:   Wed, 2 Aug 2023 11:08:47 -0700
+Message-ID: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <41b9bbd2-e58f-810d-ad3b-715423ffe74b@linaro.org>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAK+bymQC/32OwQ6CMBBEf8X07Jq2WKqePPsJGg+lXWQTKdgCY
+ gz/bvFiTIzH2dl5M08WMRBGtls8WcCBIjU+iWy5YLYy/oJALmkmucy4kgqMc3Anh0UfIfZt24Q
+ OSr1Rap0jaiVYShYmIhTBeFvN2cMR6liDx7GDa1+by/zTBixpfDefzklXFLsmPN5DBjFf/3cOA
+ jhYzfNtKbG0RuxvPVnydmWbms3EQX4oWmS/KRJEMnjy0Ald5N+UaZpe/xzU9yIBAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>
+CC:     <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.13-dev-034f2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690999747; l=2617;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=KSfiJP412T3sckmGlUyt/6jwYPL+0fA6TPTN0rnG9v8=;
+ b=S4OFU+fQO4meMNBdHdwTBiylgxl45k+bnNV2xiuZnMKzOtbFSBbMTtXy3Nl48xWRB+Nw3GsqM
+ NLFkcdPK7ycDa2WZMCaF6N46g6h3+PWRePFQji9WyMz7EssgBenpehQ
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KYVvwMTgX8Az_itE7xG6rELIjHWeH6Tm
-X-Proofpoint-ORIG-GUID: KYVvwMTgX8Az_itE7xG6rELIjHWeH6Tm
+X-Proofpoint-GUID: HQVgJKg8RMigtvrwcskcpUvataQOK3pP
+X-Proofpoint-ORIG-GUID: HQVgJKg8RMigtvrwcskcpUvataQOK3pP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_14,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=760 adultscore=0
+ definitions=2023-08-02_15,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
  phishscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
  priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308020158
+ definitions=main-2308020160
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -80,36 +93,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 02, 2023 at 02:49:56PM +0200, Konrad Dybcio wrote:
-> On 2.08.2023 11:59, Rohit Agarwal wrote:
-> > Add the regulators found on SDX75 IDP.
-> > 
-> > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> > ---
-> [...]
-> 
-> 
-> > +		vreg_s2b_1p224: smps2 {
-> Even though most RPMh devices use the schematic-like names, I think naming
-> the labels like pmicname_regname, e.g. pm8550_l2 would be easier to read..
-> (Bjorn, Krzysztof - opinions?)
-> 
+DSI 6G v2.5.x+ and DPU support a data-bus widen mode that allows DSI
+to send 48 bits of compressed data per pclk instead of 24.
 
-Using the naming from the schematics is preferred, and avoid various
-levels of ambiguity.
+For all chipsets that support this mode, enable it whenever DSC is
+enabled as recommended by the hardware programming guide.
 
-> On top of that, please add labels to all of the regulators you're
-> introducing to limit unnecessary diff in the future.
-> 
+Only enable this for command mode as we are currently unable to validate
+widebus for video mode.
 
-There are cases where regulators are left on by the bootloader, but
-doesn't have a function, or name, in the particular board. In this case
-it might be unnecessary (or not possible) to label the regulator, but we
-still might want to list the regulator so it will be turned off
-automatically.
+Depends on: "drm/msm/dpu: Drop encoder vsync_event" [1]
 
-But such decision is explicit and should be mentioned either in a
-comment or in the commit message.
+Note: The dsi.xml.h changes were generated using the headergen2 script in
+envytools [2], but the changes to the copyright and rules-ng-ng source file
+paths were dropped.
 
-Regards,
-Bjorn
+[1] https://patchwork.freedesktop.org/series/121742/
+[2] https://github.com/freedreno/envytools/
+
+--
+Changes in v3:
+- Split commit into DPU, dsi.xml.h, and DSI changes (Dmitry)
+- Add DSC enabled check to DSI *_is_widebus_enabled() helper (Dmitry)
+- Dropped mention of DPU in cover letter title
+- Moved setting of dpu_enc->wide_bus_en to dpu_encoder_virt_atomic_enable()
+- Link to v2: https://lore.kernel.org/r/20230713-add-widebus-support-v2-1-ad0added17b6@quicinc.com
+
+Changes in v2:
+- Rebased on top of "drm/msm/dpu: Re-introduce dpu core revision"
+- Squashed all commits to avoid breaking feature if the series is only partially applied
+- Moved DATABUS_WIDEN bit setting to dsi_ctr_enable() (Marijn)
+- Have DPU check if wide bus is requested by output driver (Dmitry)
+- Introduced bytes_per_pclk variable for dsi_timing_setup() hdisplay adjustment (Marijn)
+- Link to v1: https://lore.kernel.org/r/20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com
+
+---
+Jessica Zhang (4):
+      drm/msm/dpu: Move DPU encoder wide_bus_en setting
+      drm/msm/dpu: Enable widebus for DSI INTF
+      drm/msm/dsi: Add DATABUS_WIDEN MDP_CTRL2 bit
+      drm/msm/dsi: Enable widebus for DSI
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 16 +++++++++---
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  4 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  3 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  1 +
+ drivers/gpu/drm/msm/dsi/dsi.c                      |  5 ++++
+ drivers/gpu/drm/msm/dsi/dsi.h                      |  1 +
+ drivers/gpu/drm/msm/dsi/dsi.xml.h                  |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 | 30 +++++++++++++++++++---
+ drivers/gpu/drm/msm/msm_drv.h                      |  6 ++++-
+ 9 files changed, 57 insertions(+), 10 deletions(-)
+---
+base-commit: e5046e719774f833d32e3e6064416bb792564c95
+change-id: 20230525-add-widebus-support-f785546ee751
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
