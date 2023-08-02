@@ -2,95 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D402776C87A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 10:39:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 895FC76C8C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 10:53:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232508AbjHBIj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 04:39:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48542 "EHLO
+        id S230240AbjHBIxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 04:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232200AbjHBIj4 (ORCPT
+        with ESMTP id S234024AbjHBIxP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 04:39:56 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30317B2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 01:39:55 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3fbc12181b6so70180705e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 01:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690965593; x=1691570393;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WRAP0HWhn6g/kOzKMWD911kOSk1jcneyHwYZl0WYjRQ=;
-        b=zjxvc+i/DMwy1ldffwestytA9zQ9YS0gCIeUp8PCaYqnMRm0KdoXXjQaiLjlmVNd4R
-         V9MlqPOtLLrS5A8JldTm24Y4SUL3Q/fbST66sPcPKUa7FlLcnbHIstHpy1qKRAfzEIcH
-         lWzUqvT4+c3diBNyjapbUqGjGLy+6J+B4XAysz/sviUq2oKPjjVzspVzhN5fkrsPO7S/
-         gsrNFKoV3BUklHuINdw0XifiiigWRFl+oINrXKVd1P9v3qESnDUt8MmAsmnBiOBMPhA8
-         tTG1VSsi4f5KTXhU1Jd22P/IB1ra3DG+yYW/39m6Ue2zFdFV8+PUgo8hjAnBqUjLIOCV
-         LNIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690965593; x=1691570393;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WRAP0HWhn6g/kOzKMWD911kOSk1jcneyHwYZl0WYjRQ=;
-        b=l1pqUExILB5d01b5GLQwpqtAXnW2wH3Q66HPmZb+73vyyUaJQSWk6bKeon321PC0Xy
-         OeVSASVlnLANn8LlrETpD4EdYg3PaILL4MVviKLqvKVxyk317okWvPgPZ7FWoqPY2Ao8
-         O5ntIC1oqzw29C7mMlFr5KRSYgY7v7DYVlssncNO1dzsEc4BxHW9OGyVSI0yp86fPDpX
-         03kVvuNkYF9se4wF3JIErkOEGsu6CK8wAhKbQTD0aeIdP0OsRMFkQ5KGv3cu/LYfFG+V
-         PmVX5bF8iM8JhAoh6BoQkL0Q7p/vEJ1qNGoWvuUCZFbwv0Dzu1HY1d0ta1QyKBrugcw6
-         9bQw==
-X-Gm-Message-State: ABy/qLbp7mgYb8/tFqI+e3uwhKGniaglsY2BkQX1hcK/JZVTD6bURJkg
-        SJWktS0V5dDxhVkWDLIo8AiOB2fzI40gkPzjj5MAAg==
-X-Google-Smtp-Source: APBJJlGt/JMMR519d7Jukm0qKi7EMlBz8mwUobaLaXQQYxBaB55wp9ApOuo9C23hQVRgAF3YcFVuYA==
-X-Received: by 2002:a5d:4e0a:0:b0:317:5747:b955 with SMTP id p10-20020a5d4e0a000000b003175747b955mr4465403wrt.17.1690965593557;
-        Wed, 02 Aug 2023 01:39:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c5bb:5b4:61e3:d196? ([2a01:e0a:982:cbb0:c5bb:5b4:61e3:d196])
-        by smtp.gmail.com with ESMTPSA id r18-20020adfce92000000b0031272fced4dsm18264016wrn.52.2023.08.02.01.39.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Aug 2023 01:39:52 -0700 (PDT)
-Message-ID: <51d782c4-3539-c3d3-6844-d6b9a39c09eb@linaro.org>
-Date:   Wed, 2 Aug 2023 10:39:52 +0200
+        Wed, 2 Aug 2023 04:53:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5775D194;
+        Wed,  2 Aug 2023 01:53:13 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3726fb4T028852;
+        Wed, 2 Aug 2023 08:53:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dAu67Eh36U0//WitpoeFJwx8QZxquScCaIT6fgdv09M=;
+ b=mKYpCBkSe2E5Bfm/hZziXzio/boOjYU0Cj8328HBK2CbrRVswr+VukvH30wQF3qe5wxR
+ HpNHihg10017okQFakJ5re/+010vUtgCvvrBWThYwMrUJFHDEEl7wLgDP7h/NopUm+ZO
+ iuoSEWs1p4iECrKLiDbTTMEygYkto7jg+sznnmS94vKhiliQ7Oi2jMO9Nokf0DxzBpGI
+ +/IXGjA9cfaOqI4FZZOqY/nbrFWlZAzT/2DtZAg6jH5mHu1xmEMF6uVZYiUgCpwnm0Dl
+ 8qSi0z7e78nXMElU1lMIxRMwLYlhmzW5g2NGt7GpsQyaXJceWryRjKbfIDUQ90JrUHwS 3Q== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6yq4aqjb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Aug 2023 08:53:09 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3728r8Xk000783
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Aug 2023 08:53:08 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
+ 2023 01:53:04 -0700
+Message-ID: <6821691d-675f-e3ce-d5b5-e198fd79fcf2@quicinc.com>
+Date:   Wed, 2 Aug 2023 14:23:01 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-From:   neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
- EOT packet
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v5 2/6] soc: qcom: llcc: Refactor llcc driver to support
+ multiple configuration
 Content-Language: en-US
-To:     Marek Vasut <marex@denx.de>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jagan Teki <jagan@amarulasolutions.com>,
-        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Michael Walle <michael@walle.cc>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20230403221233.500485-1-marex@denx.de>
- <20230403221233.500485-2-marex@denx.de>
- <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
- <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
- <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
- <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
- <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
- <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
- <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
- <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
- <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
- <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
-Organization: Linaro Developer Services
-In-Reply-To: <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <srinivas.kandagatla@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230724084155.8682-1-quic_kbajaj@quicinc.com>
+ <20230724084155.8682-3-quic_kbajaj@quicinc.com>
+ <39b4bafd-410f-cae8-13ae-e18d751b51a2@quicinc.com>
+ <431fa748-5b4c-061c-a5b1-331b504e5475@quicinc.com>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <431fa748-5b4c-061c-a5b1-331b504e5475@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: e2pEn0XfSqGZcWrmEIE8jLMMR6X9AEuo
+X-Proofpoint-GUID: e2pEn0XfSqGZcWrmEIE8jLMMR6X9AEuo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-02_03,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308020078
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
@@ -101,80 +86,370 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marek,
 
-On 13/07/2023 20:28, Marek Vasut wrote:
 
-<snip>
-
+On 7/24/2023 9:41 PM, Mukesh Ojha wrote:
+>
+>
+> On 7/24/2023 5:58 PM, Mukesh Ojha wrote:
+>>
+>>
+>> On 7/24/2023 2:11 PM, Komal Bajaj wrote:
+>>> Refactor driver to support multiple configuration for llcc on a target.
 >>>
->>> MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by DSIM.
+>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>> ---
+>>>   drivers/soc/qcom/llcc-qcom.c | 264 
+>>> +++++++++++++++++++++++------------
+>>>   1 file changed, 178 insertions(+), 86 deletions(-)
 >>>
->>> Maybe there is a need for new set of flags which differentiate between HBP skipped (i.e. NO HBP) and HBP LP11 ?
->>>
+>>> diff --git a/drivers/soc/qcom/llcc-qcom.c 
+>>> b/drivers/soc/qcom/llcc-qcom.c
+>>> index 67c19ed2219a..321f8d2079f7 100644
+>>> --- a/drivers/soc/qcom/llcc-qcom.c
+>>> +++ b/drivers/soc/qcom/llcc-qcom.c
+>>> @@ -127,6 +127,12 @@ struct qcom_llcc_config {
+>>>       bool no_edac;
+>>>   };
+>>> +struct qcom_sct_config
 >>
->> No, the section of the MIPI DSI spec I posted below clearly states there are two options:
+>> const ?
+>
+> Please ignore this comment, it looks like, I wrote something and forgot
+> to remove..
+>
+>
+> -Mukesh
+>
+>>   > +    const struct qcom_llcc_config *llcc_config;
+>>> +    int num_cfgs;
+>>> +};
+>>> +
+>>> +
+>>>   enum llcc_reg_offset {
+>>>       LLCC_COMMON_HW_INFO,
+>>>       LLCC_COMMON_STATUS0,
+>>> @@ -423,101 +429,185 @@ static const u32 llcc_v2_1_reg_offset[] = {
+>>>       [LLCC_COMMON_STATUS0]    = 0x0003400c,
+>>>   };
+>>> -static const struct qcom_llcc_config sc7180_cfg = {
+>>> -    .sct_data    = sc7180_data,
+>>> -    .size        = ARRAY_SIZE(sc7180_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_llcc_config sc7180_cfg[] = {
+>>> +    {
+>>> +        .sct_data    = sc7180_data,
+>>> +        .size        = ARRAY_SIZE(sc7180_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sc7280_cfg[] = {
+>>> +    {
+>>> +        .sct_data    = sc7280_data,
+>>> +        .size        = ARRAY_SIZE(sc7280_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sc8180x_cfg[] = {
+>>> +    {
+>>> +        .sct_data    = sc8180x_data,
+>>> +        .size        = ARRAY_SIZE(sc8180x_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sc8280xp_cfg[] = {
+>>> +    {
+>>> +        .sct_data    = sc8280xp_data,
+>>> +        .size        = ARRAY_SIZE(sc8280xp_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sdm845_cfg[] = {
+>>> +    {
+>>> +        .sct_data    = sdm845_data,
+>>> +        .size        = ARRAY_SIZE(sdm845_data),
+>>> +        .need_llcc_cfg    = false,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +        .no_edac    = true,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm6350_cfg[] = {
+>>> +    {
+>>> +        .sct_data    = sm6350_data,
+>>> +        .size        = ARRAY_SIZE(sm6350_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm7150_cfg[] = {
+>>> +    {
+>>> +        .sct_data       = sm7150_data,
+>>> +        .size           = ARRAY_SIZE(sm7150_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm8150_cfg[] = {
+>>> +    {
+>>> +        .sct_data       = sm8150_data,
+>>> +        .size           = ARRAY_SIZE(sm8150_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm8250_cfg[] = {
+>>> +    {
+>>> +        .sct_data       = sm8250_data,
+>>> +        .size           = ARRAY_SIZE(sm8250_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm8350_cfg[] = {
+>>> +    {
+>>> +        .sct_data       = sm8350_data,
+>>> +        .size           = ARRAY_SIZE(sm8350_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm8450_cfg[] = {
+>>> +    {
+>>> +        .sct_data       = sm8450_data,
+>>> +        .size           = ARRAY_SIZE(sm8450_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v2_1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_llcc_config sm8550_cfg[] = {
+>>> +    {
+>>> +        .sct_data       = sm8550_data,
+>>> +        .size           = ARRAY_SIZE(sm8550_data),
+>>> +        .need_llcc_cfg    = true,
+>>> +        .reg_offset    = llcc_v2_1_reg_offset,
+>>> +        .edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+>>> +    },
+>>> +};
+>>> +
+>>> +static const struct qcom_sct_config sc7180_cfgs = {
+>>> +    .llcc_config    = sc7180_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sc7280_cfg = {
+>>> -    .sct_data    = sc7280_data,
+>>> -    .size        = ARRAY_SIZE(sc7280_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sc7280_cfgs = {
+>>> +    .llcc_config    = sc7280_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sc8180x_cfg = {
+>>> -    .sct_data    = sc8180x_data,
+>>> -    .size        = ARRAY_SIZE(sc8180x_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sc8180x_cfgs = {
+>>> +    .llcc_config    = sc8180x_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sc8280xp_cfg = {
+>>> -    .sct_data    = sc8280xp_data,
+>>> -    .size        = ARRAY_SIZE(sc8280xp_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sc8280xp_cfgs = {
+>>> +    .llcc_config    = sc8280xp_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sdm845_cfg = {
+>>> -    .sct_data    = sdm845_data,
+>>> -    .size        = ARRAY_SIZE(sdm845_data),
+>>> -    .need_llcc_cfg    = false,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> -    .no_edac    = true,
+>>> +static const struct qcom_sct_config sdm845_cfgs = {
+>>> +    .llcc_config    = sdm845_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm6350_cfg = {
+>>> -    .sct_data    = sm6350_data,
+>>> -    .size        = ARRAY_SIZE(sm6350_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm6350_cfgs = {
+>>> +    .llcc_config    = sm6350_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm7150_cfg = {
+>>> -    .sct_data       = sm7150_data,
+>>> -    .size           = ARRAY_SIZE(sm7150_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm7150_cfgs = {
+>>> +    .llcc_config    = sm7150_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm8150_cfg = {
+>>> -    .sct_data       = sm8150_data,
+>>> -    .size           = ARRAY_SIZE(sm8150_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm8150_cfgs = {
+>>> +    .llcc_config    = sm8150_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm8250_cfg = {
+>>> -    .sct_data       = sm8250_data,
+>>> -    .size           = ARRAY_SIZE(sm8250_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm8250_cfgs = {
+>>> +    .llcc_config    = sm8250_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm8350_cfg = {
+>>> -    .sct_data       = sm8350_data,
+>>> -    .size           = ARRAY_SIZE(sm8350_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm8350_cfgs = {
+>>> +    .llcc_config    = sm8350_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm8450_cfg = {
+>>> -    .sct_data       = sm8450_data,
+>>> -    .size           = ARRAY_SIZE(sm8450_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v2_1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm8450_cfgs = {
+>>> +    .llcc_config    = sm8450_cfg,
+>>> +    .num_cfgs    = 1,
+>>>   };
+>>> -static const struct qcom_llcc_config sm8550_cfg = {
+>>> -    .sct_data       = sm8550_data,
+>>> -    .size           = ARRAY_SIZE(sm8550_data),
+>>> -    .need_llcc_cfg    = true,
+>>> -    .reg_offset    = llcc_v2_1_reg_offset,
+>>> -    .edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+>>> +static const struct qcom_sct_config sm8550_cfgs = {
+>>> +    .llcc_config    = sm8550_cfg,
+>>> +    .num_cfgs    = 1,
 >>
->> 1) send blanking packets during those periods
->> 2) transition to LP11 during those periods
+>> num prefix itself take care of singular/plural, num_config would do
+>> good.
 >>
->> There is no 3rd option in the spec of not doing both like what you are suggesting. So DSIM should also be only transitioning to LP11 during those periods if its not sending the blanking packets with those flags set.
 >>
->> So, there is no need for any new set of flags to differentiate.
+>>>   };
+>>>   static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+>>> @@ -939,6 +1029,7 @@ static int qcom_llcc_probe(struct 
+>>> platform_device *pdev)
+>>>       struct device *dev = &pdev->dev;
+>>>       int ret, i;
+>>>       struct platform_device *llcc_edac;
+>>> +    const struct qcom_sct_config *cfgs;
+>>>       const struct qcom_llcc_config *cfg;
+>>>       const struct llcc_slice_config *llcc_cfg;
+>>>       u32 sz;
+>>> @@ -958,7 +1049,8 @@ static int qcom_llcc_probe(struct 
+>>> platform_device *pdev)
+>>>           goto err;
+>>>       }
+>>> -    cfg = of_device_get_match_data(&pdev->dev);
+>>> +    cfgs = of_device_get_match_data(&pdev->dev);
+>>> +    cfg = &cfgs->llcc_config[0];
 >>
->> The flags and their interpretation is correct in MSM driver. I cannot comment on what exactly DSIM does with those flags.
-> 
-> How do you explain the comment in include/drm/drm_mipi_dsi.h:
-> 
-> 128 /* disable hback-porch area */
-> 129 #define MIPI_DSI_MODE_VIDEO_NO_HBP      BIT(6)
+>> Hardcoding without check ?
+>>
+>> #define DEFAULT_NUM_CFG    1
+>>
+>> if (cfgs->num_cfgs != DEFAULT_NUM_CFG)
+>>       ret = -EINVAL;
+>>       goto err;
+>>
+>> cfg = &cfgs->llcc_config[DEFAULT_NUM_CFG - 1];
+>>
+>> I would let others comment as well..
 
-Can you specify how you determined those flags were needed on DSIM ? a vendor tree ? a datasheet ?
+Okay, will add a check for default llcc configuration.
 
-In the meantime, we should revert this patch because it regresses some Qcom
-based platforms until we figure out what's missing to make DSIM based boards
-happy.
+Thanks
+Komal
 
-I'll send a revert change afterwards.
-
-Neil
-
-> 
-> Esp. the "disable" part. That to me reads as "don't send HBP packet".
-> 
-> Where do you see that quote above in the DSI spec (which chapter and which version do you read) ?
-> 
->>>> It should be replacing those periods with LP11 too.
->>>>
->>>> The traffic mode being used on this bridge is MIPI_DSI_MODE_VIDEO_SYNC_PULSE which is "Non-Burst Mode with Sync Pulses".
->>>>
->>>> As per this traffic mode in the DSI spec,
->>>>
->>>> "Normally, periods shown as HSA (Horizontal Sync Active), HBP (Horizontal Back Porch) and HFP (Horizontal Front Porch) are filled by Blanking Packets, with lengths (including packet overhead) calculated to match the period specified by the peripheral’s data sheet. Alternatively, if there is sufficient time to transition from HS to LP mode and back again, a timed interval in LP mode may substitute for a Blanking Packet, thus saving power. During HSA, HBP and HFP periods, the bus should stay in the LP-11 state."
->>>>
->>>> So we can either send the blanking packets or transition to LP state and those 3 flags are controlling exactly that during those periods for MSM driver.
->>>>
->>>> If you stop sending the blanking packets, you need to replace that gap with LP.
->>>
->>> I don't think that's what MIPI_DSI_MODE_VIDEO_NO_HBP means, the way I understand MIPI_DSI_MODE_VIDEO_NO_HBP is that it skips the HBP completely. So if you want HBP, then do not set MIPI_DSI_MODE_VIDEO_NO_HBP . And if you want LP11 during HBP, that is I think up to the controller (or maybe another new flag?).
->>>
 >>
->> No, there is no need of another new flag. There are only two options as per the spec.
 >>
->> In fact, as per my checking with more folks, requiring LP11 during those periods is something very rare.
+>> -Mukesh
 >>
->> Because usually horizontal period is usually a very short period, most of the time we do not use the LP11 option and send the blanking packets instead.
->>
->> So its something very unusual for DSIM.
->>
->> That being said, I still think my previous question is important.
->>
->> 1) What is the difference between the resolution you are trying Vs what Amit is trying?
->>
->> 2) Are you both using just standard HDMI monitors?
-> 
-> What is a "standard HDMI monitor" ?
-> I use DELL U2713HM .
-> 
-> [...]
+>>>       ret = regmap_read(regmap, 
+>>> cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
+>>>       if (ret)
+>>> @@ -1051,18 +1143,18 @@ static int qcom_llcc_probe(struct 
+>>> platform_device *pdev)
+>>>   }
+>>>   static const struct of_device_id qcom_llcc_of_match[] = {
+>>> -    { .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
+>>> -    { .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfg },
+>>> -    { .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfg },
+>>> -    { .compatible = "qcom,sc8280xp-llcc", .data = &sc8280xp_cfg },
+>>> -    { .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
+>>> -    { .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfg },
+>>> -    { .compatible = "qcom,sm7150-llcc", .data = &sm7150_cfg },
+>>> -    { .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
+>>> -    { .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfg },
+>>> -    { .compatible = "qcom,sm8350-llcc", .data = &sm8350_cfg },
+>>> -    { .compatible = "qcom,sm8450-llcc", .data = &sm8450_cfg },
+>>> -    { .compatible = "qcom,sm8550-llcc", .data = &sm8550_cfg },
+>>> +    { .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfgs },
+>>> +    { .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfgs },
+>>> +    { .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfgs },
+>>> +    { .compatible = "qcom,sc8280xp-llcc", .data = &sc8280xp_cfgs },
+>>> +    { .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfgs },
+>>> +    { .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfgs },
+>>> +    { .compatible = "qcom,sm7150-llcc", .data = &sm7150_cfgs },
+>>> +    { .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfgs },
+>>> +    { .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfgs },
+>>> +    { .compatible = "qcom,sm8350-llcc", .data = &sm8350_cfgs },
+>>> +    { .compatible = "qcom,sm8450-llcc", .data = &sm8450_cfgs },
+>>> +    { .compatible = "qcom,sm8550-llcc", .data = &sm8550_cfgs },
+>>>       { }
+>>>   };
+>>>   MODULE_DEVICE_TABLE(of, qcom_llcc_of_match);
 
