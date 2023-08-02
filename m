@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52A3B76CEE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:37:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22F2876CF05
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:43:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232278AbjHBNhp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 09:37:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35194 "EHLO
+        id S230321AbjHBNnb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 09:43:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232456AbjHBNhn (ORCPT
+        with ESMTP id S231196AbjHBNna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 09:37:43 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC9D210D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 06:37:41 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fe1d462762so32663455e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 06:37:41 -0700 (PDT)
+        Wed, 2 Aug 2023 09:43:30 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EF3026BD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 06:43:29 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-314172bac25so6074261f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 06:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690983460; x=1691588260;
+        d=linaro.org; s=google; t=1690983808; x=1691588608;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2vGRb18JT1B3IoPWFshCBAs1d3mrRij7dJ3Ogr4/w9Y=;
-        b=ON2+EQ3hpjmmU3SIBE1+TMjLwgH3Im7aSKfMZ8W1/nyVJp7bEgvTb66ycR7e2pDovV
-         Nr4e+ZY/fb5zqWv4W26AFk2aOyHJ+/TJaAqqgnW2RhbBGLp7MVCsodAXd/uY9vgKCx4H
-         fGclw+npz0jJKdWrpJwTly+mo9MMaceV+qlFqFVdxfOGzuJSM6OlE93osB7R8G6EBHnN
-         rfBNcvLZlQn/Or9/iDz3N8sv4QDDtjQf2TEnKj5K7jKE87dKM5PH6Um/8Spv+H6mzSPM
-         Zwf+sQzBOmiGziDW2U0RRKqAFfP3CyvIIIFebHC8wAyQmDtCLJ0FORD707YxIZRFCosV
-         9Kpw==
+        bh=wGJEBm4dQys0beO4Bm0mPgfPYBGDaDpTKYi50saQ/uA=;
+        b=knokmoXugOTtLQBWN3e8aeYqcJvx2GR3L1faFmpjTGqC0zLQdu3wOrHa02gXLdrPsC
+         1KYvA3SEgerxt6mpcET200sWT1doWORaDSTB7Smdq/vYezTDA/S9DkDve+ENpTmpN3GX
+         yToMN6QFUDQPbIgKwM/o1a49km6e4GOr62S5NGFqU04gp7PUEhMb7ioQnLD/OKkboRuO
+         byfTHeX6prnUUv68dv/dFcc+iCqK2RGF4DaQ/5oQe2OmOyc9Hr6oNQXWfkZZGByWrK12
+         xvugDEDIf8jNw9U8cImcuE1iDsGYUhOeOVpfwmfT0Jt+AZe4XM5v9NyD0aHaRmvVBck7
+         FGLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690983460; x=1691588260;
+        d=1e100.net; s=20221208; t=1690983808; x=1691588608;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2vGRb18JT1B3IoPWFshCBAs1d3mrRij7dJ3Ogr4/w9Y=;
-        b=ZMOkQeeXL2a1DY+jQjzSAuCxINImTYhlzZ0B1QG3wciy9rr+kF8iY16xUHclbngJ8P
-         Ykw8Yp+TV1Zm81Sgw31HwRNu0ibxUOrzF6VQoamROywlwq/VncEsN0RrC14IOW08va40
-         tqrKZuC0ScU0X0oU/a2tUm/y0t6jAUE7PBAH0NFx00ORQuwjLkykjrSjL4aGgEosvm4r
-         nLNTEr/kOJjwhVRc8MCW3vTpqIXzcF2ApoMAljAcafGvC6r9iH1y+wusM5D7m7SIZC5R
-         dzs4ZR2YVE51OL5NjDlItDV8Z2O4RceQp+gK2ekV3f4U9Y3A5ahhedGzGM5l2X/cRzm+
-         U5Jw==
-X-Gm-Message-State: ABy/qLaGhB6uWNvN//3rJ5mOpcLHPHqPp9FBPrnQOvrYXwPiCFzp7Knl
-        x7fmHj8ZTZ9Ciukg31CKySlMig==
-X-Google-Smtp-Source: APBJJlE/NjGY+wFY7wdiY/lQ8FrZiSBeH3t9hUzmY/vT1xIxZGOmm8taQwuVA3w1OmG/ZD57pjHnuQ==
-X-Received: by 2002:a7b:c4d9:0:b0:3fe:1a58:6203 with SMTP id g25-20020a7bc4d9000000b003fe1a586203mr4817498wmk.34.1690983460172;
-        Wed, 02 Aug 2023 06:37:40 -0700 (PDT)
+        bh=wGJEBm4dQys0beO4Bm0mPgfPYBGDaDpTKYi50saQ/uA=;
+        b=VOIjwVQO+pHVMPiIqln5SfC6ZDJw2Z53fpUtWoV268ouXfYexa6DeI3rHXdbIXAQyL
+         kCI/ZJ+RnC2kN13Bs5/9EGQ9T8B+Q3Lw3rj0owszi1nqIzBlPt4nIs/QTBxyIYDAAqkB
+         TTIW3qG8506NVemj/VBnIeync+Dl2lErxw3LA5xynd+pbtacdgDgGEAwC0Z++LS0ZXwX
+         jGBdd3WQtO9qwIladvEBcxCG32SvacXhWz41nLkkKaB8prs2vZA8fGgv9CzNTj3KuVYI
+         +QhCOvxYB/0szeHnbOdfYlpvJsdRhTNgOAQuW9bQiOpJcGILdorS+GdaFLLyb9DtVOlR
+         /XnA==
+X-Gm-Message-State: ABy/qLYrHLi8SSreuJ/DpEDpyOuKbM7isw5w2SEEu1DyanM02x+z7NNA
+        3WMUiemJI5G9idrMvmwy5w8t3Q==
+X-Google-Smtp-Source: APBJJlHta3U/jq9uKyLui5LoG13PK/puAdJvu3OZxY8w7krdd53vHbw1TBTo18tiZELuw6M9TbPMyA==
+X-Received: by 2002:a5d:54d2:0:b0:317:718a:e83f with SMTP id x18-20020a5d54d2000000b00317718ae83fmr4508067wrv.68.1690983807722;
+        Wed, 02 Aug 2023 06:43:27 -0700 (PDT)
 Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id k10-20020adff28a000000b00311299df211sm19117714wro.77.2023.08.02.06.37.39
+        by smtp.googlemail.com with ESMTPSA id x2-20020adfdd82000000b0030e56a9ff25sm19013745wrl.31.2023.08.02.06.43.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Aug 2023 06:37:39 -0700 (PDT)
-Message-ID: <1dfd407d-2c75-0154-947a-3f1783017444@linaro.org>
-Date:   Wed, 2 Aug 2023 14:37:39 +0100
+        Wed, 02 Aug 2023 06:43:27 -0700 (PDT)
+Message-ID: <4059684f-2e44-ccd6-4c65-5137cc76492c@linaro.org>
+Date:   Wed, 2 Aug 2023 14:43:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3] misc: fastrpc: Pass proper scm arguments for static
- process init
+Subject: Re: [PATCH v3] misc: fastrpc: Fix incorrect DMA mapping unmap request
 Content-Language: en-US
 To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
         linux-arm-msm@vger.kernel.org
 Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
         linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
         stable <stable@kernel.org>
-References: <1690952549-31819-1-git-send-email-quic_ekangupt@quicinc.com>
+References: <1690953032-17070-1-git-send-email-quic_ekangupt@quicinc.com>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1690952549-31819-1-git-send-email-quic_ekangupt@quicinc.com>
+In-Reply-To: <1690953032-17070-1-git-send-email-quic_ekangupt@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,70 +79,58 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 02/08/2023 06:02, Ekansh Gupta wrote:
-> Memory is allocated for dynamic loading when audio daemon is trying
-> to attach to audioPD on DSP side. This memory is allocated from
-> reserved CMA memory region and needs ownership assignment to
-> new VMID in order to use it from audioPD.
+On 02/08/2023 06:10, Ekansh Gupta wrote:
+> Scatterlist table is obtained during map create request and the same
+> table is used for DMA mapping unmap. In case there is any failure
+> while getting the sg_table, ERR_PTR is returned instead of sg_table.
 > 
-> In the current implementation, arguments are not correctly passed
-> to the scm call which might result in failure of dynamic loading
-> on audioPD. Added changes to pass correct arguments during daemon
-> attach request.
+> When the map is getting freed, there is only a non-NULL check of
+> sg_table which will also be true in case failure was returned instead
+> of sg_table. This would result in improper unmap request. Add proper
+> check before setting map table to avoid bad unmap request.
 > 
-> Fixes: 	0871561055e6 ("misc: fastrpc: Add support for audiopd")
+> Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
 > Cc: stable <stable@kernel.org>
-> Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
 > Changes in v2:
->    - Removed redundant code
+>    - Added fixes information to commit text
 > Changes in v3:
->    - Reuse channel context perms for source perms
+>    - Set map->table only if attachment for successful
 > 
->   drivers/misc/fastrpc.c | 16 ++++++++++------
->   1 file changed, 10 insertions(+), 6 deletions(-)
+>   drivers/misc/fastrpc.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 > 
 > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..5a1268f 100644
+> index 9666d28..de7c812 100644
 > --- a/drivers/misc/fastrpc.c
 > +++ b/drivers/misc/fastrpc.c
-> @@ -1280,8 +1280,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   		if (fl->cctx->vmcount) {
->   			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->   							(u64)fl->cctx->remote_heap->size,
-> -							&fl->cctx->perms,
-> -							fl->cctx->vmperms, fl->cctx->vmcount);
-> +							&fl->cctx->perms, fl->cctx->vmperms, fl->cctx->vmcount);
+> @@ -756,6 +756,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+>   {
+>   	struct fastrpc_session_ctx *sess = fl->sctx;
+>   	struct fastrpc_map *map = NULL;
+> +	struct sg_table *table;
+>   	int err = 0;
+>   
+>   	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
+> @@ -783,11 +784,12 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+>   		goto attach_err;
+>   	}
+>   
+> -	map->table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
+> -	if (IS_ERR(map->table)) {
+> -		err = PTR_ERR(map->table);
+> +	table = dma_buf_map_attachment(map->attach, DMA_BIDIRECTIONAL);
 
-this change does not look correct,  Looks totally like converting 
-multiple lines to a single line.
+Any reason why dma_buf_map_attachment_unlocked changed to 
+dma_buf_map_attachment?
 
 --srini
-
->   			if (err) {
->   				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
->   					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
-> @@ -1322,13 +1321,18 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   	return 0;
->   err_invoke:
->   	if (fl->cctx->vmcount) {
-> -		struct qcom_scm_vmperm perm;
-> +		u64 src_perms = 0;
-> +		struct qcom_scm_vmperm dst_perms;
-> +		u32 i;
+> +	if (IS_ERR(table)) {
+> +		err = PTR_ERR(table);
+>   		goto map_err;
+>   	}
+> +	map->table = table;
 >   
-> -		perm.vmid = QCOM_SCM_VMID_HLOS;
-> -		perm.perm = QCOM_SCM_PERM_RWX;
-> +		for (i = 0; i < fl->cctx->vmcount; i++)
-> +			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
-> +
-> +		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
-> +		dst_perms.perm = QCOM_SCM_PERM_RWX;
->   		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->   						(u64)fl->cctx->remote_heap->size,
-> -						&fl->cctx->perms, &perm, 1);
-> +						&src_perms, &dst_perms, 1);
->   		if (err)
->   			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
->   				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+>   	if (attr & FASTRPC_ATTR_SECUREMAP) {
+>   		map->phys = sg_phys(map->table->sgl);
