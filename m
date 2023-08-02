@@ -2,147 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69CA876CF30
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 173A276CF41
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:54:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbjHBNtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 09:49:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42326 "EHLO
+        id S234363AbjHBNyv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 09:54:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230392AbjHBNtq (ORCPT
+        with ESMTP id S234360AbjHBNyu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 09:49:46 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB8FDC;
-        Wed,  2 Aug 2023 06:49:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372AAWu4005236;
-        Wed, 2 Aug 2023 13:49:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=g43xVjYg1vuP+BwMaOXl5nwdrLL57nsRQFXxYLnIuP4=;
- b=b/tvbUQ9R3DTMxZyUMiSQz8LVT/iFfVRrnoFdturA5+cByYvmyW23dTZeU9j+KTOQq/X
- +upclq4Gl/gn/ipDrRX9W4eLwMTHTC1bm8PFq+1mnx8VwGtTTvw07FYFTI+PBFH6A4HN
- hMqgs/eRlTeqsAGHygo525J5u7FQp1WxIrKhRUkOXSH3+f9vc/ebyA6zr3q0EgD11BDc
- hVUE6JWYSFwRE36H516MGjYI/a25x7Zy+7ThO6XSMqey2/AfR7LmGLH9WPTw4rPilyEr
- ATcm4sFVn5gZjIXq1yNtKjA4OEtQpcW+OZFmRv3tX9pahp/J5IOsgP50/zgafCXhZZnp oA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s7fre1erq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 13:49:40 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372DndaE019914
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Aug 2023 13:49:39 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
- 2023 06:49:36 -0700
-Message-ID: <7f7aab67-69a3-b2ca-0bed-30cb6a5bca16@quicinc.com>
-Date:   Wed, 2 Aug 2023 19:19:33 +0530
+        Wed, 2 Aug 2023 09:54:50 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46703270F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 06:54:48 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id 6a1803df08f44-635f293884cso37909326d6.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 06:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20221208.gappssmtp.com; s=20221208; t=1690984487; x=1691589287;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=seaD21t4N5iLjVhay/ewPj/1qlbu80teMRMYHWk0A2M=;
+        b=iKbRHinaPDB0apNvAl70ixEfMtKDToQw8TPAyW97i52CzP3tCs0GH/wpPed5jrnzP+
+         +S8HfCST4xy+zVwtNtrSvQs0UbKoBrnHp9tunzqBB/IlpkVGZnUrmBXqXcKmSn28Fsbo
+         MMoHptpE7DXVs9C4eX/23eu2nFnv+8riHQWYX7nZwaSEcmofWLVFm7fK9mnreQ6oidHV
+         2SYG+EK3tXAPOQDK/lYZsAzAw99dEiEBft0MWzPhWLVin12hNCUxMJTmyLaNS3HHOtnG
+         Ns4QdK/beR3hrY5EEjQZcRMQa4YM/SUj221L0qVBXghAdxx2u/5NoAPN7pCxIe0D9lEq
+         TkRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690984487; x=1691589287;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=seaD21t4N5iLjVhay/ewPj/1qlbu80teMRMYHWk0A2M=;
+        b=Ar0ve+Ze1LF4DCjglzeCkz2TYeK+lXFCT977kkcaxobNHySeaxwnzbHs2mWSOXJT1y
+         tGgRp4qstQUz9RZPttouxBU8AGpcGNRPmOXGUVOUx5vh5SOlheMD8dDTKFJhReP0b/co
+         x6QpiovdH+2Z7LZfVxr22CkQH80yjzurqzORz1fW2ygJOekPAb602wjvGUxpJ50B1K/Z
+         Xur8HG0jhOtgD1Wd8nPcI6N2iMKr/P39bluawY7RQI6m46OtJx+EAxo1HJ/Ryo19CqdZ
+         EA1ljrDDeAAeoym9iPh0qrsgZamj7vddmBmM1OzZzW9deEcV5rbUQBH6dfMQ5kQfKbZV
+         hIQQ==
+X-Gm-Message-State: ABy/qLa5L80pP2ipQn3QU9wZv1kWReK5AmAnPGoSzr93qoNXWUrTxxh0
+        UtiiRDSose888I/if8Qw5VDblpAoWiwSw2Axrak=
+X-Google-Smtp-Source: APBJJlE3RA69LZI+j9QbZ+3RrJWtf+Jc3Y22/Prt/omYJDb+iTH4VFda19/iXaU12Moig6y+VlGZjw==
+X-Received: by 2002:a05:6214:154e:b0:634:8a80:230a with SMTP id t14-20020a056214154e00b006348a80230amr14820651qvw.59.1690984487267;
+        Wed, 02 Aug 2023 06:54:47 -0700 (PDT)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id o17-20020a0cf4d1000000b0063d0f1db105sm5609493qvm.32.2023.08.02.06.54.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Aug 2023 06:54:46 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Huang Yiwei <quic_hyiwei@quicinc.com>,
+        linux-kernel@vger.kernel.org (open list:MAILBOX API)
+Subject: [PATCH] mailbox: qcom-ipcc: fix incorrect num_chans counting
+Date:   Wed,  2 Aug 2023 09:52:22 -0400
+Message-Id: <20230802135222.30754-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3] misc: fastrpc: Fix incorrect DMA mapping unmap request
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
-References: <1690953032-17070-1-git-send-email-quic_ekangupt@quicinc.com>
- <4059684f-2e44-ccd6-4c65-5137cc76492c@linaro.org>
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <4059684f-2e44-ccd6-4c65-5137cc76492c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IB4G8ESR6Vrl4m6q2s6a5d9H2mti2mSB
-X-Proofpoint-ORIG-GUID: IB4G8ESR6Vrl4m6q2s6a5d9H2mti2mSB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_09,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 clxscore=1015
- mlxlogscore=972 bulkscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
- suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2308020122
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Breaking out early when a match is found leads to an incorrect num_chans
+value when more than one ipcc mailbox channel is used by the same device.
 
+Fixes: e9d50e4b4d04 ("mailbox: qcom-ipcc: Dynamic alloc for channel arrangement")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/mailbox/qcom-ipcc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-On 8/2/2023 7:13 PM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 02/08/2023 06:10, Ekansh Gupta wrote:
->> Scatterlist table is obtained during map create request and the same
->> table is used for DMA mapping unmap. In case there is any failure
->> while getting the sg_table, ERR_PTR is returned instead of sg_table.
->>
->> When the map is getting freed, there is only a non-NULL check of
->> sg_table which will also be true in case failure was returned instead
->> of sg_table. This would result in improper unmap request. Add proper
->> check before setting map table to avoid bad unmap request.
->>
->> Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke 
->> method")
->> Cc: stable <stable@kernel.org>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->> ---
->> Changes in v2:
->>    - Added fixes information to commit text
->> Changes in v3:
->>    - Set map->table only if attachment for successful
->>
->>   drivers/misc/fastrpc.c | 8 +++++---
->>   1 file changed, 5 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 9666d28..de7c812 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -756,6 +756,7 @@ static int fastrpc_map_create(struct fastrpc_user 
->> *fl, int fd,
->>   {
->>       struct fastrpc_session_ctx *sess = fl->sctx;
->>       struct fastrpc_map *map = NULL;
->> +    struct sg_table *table;
->>       int err = 0;
->>       if (!fastrpc_map_lookup(fl, fd, ppmap, true))
->> @@ -783,11 +784,12 @@ static int fastrpc_map_create(struct 
->> fastrpc_user *fl, int fd,
->>           goto attach_err;
->>       }
->> -    map->table = dma_buf_map_attachment_unlocked(map->attach, 
->> DMA_BIDIRECTIONAL);
->> -    if (IS_ERR(map->table)) {
->> -        err = PTR_ERR(map->table);
->> +    table = dma_buf_map_attachment(map->attach, DMA_BIDIRECTIONAL);
-> 
-> Any reason why dma_buf_map_attachment_unlocked changed to 
-> dma_buf_map_attachment?
-This is a mistake from my end. My local workspace had older version due 
-to which the function also got reverted. I will fix this in new patch. 
-Apologies for the confusion.
-> 
-> --srini
->> +    if (IS_ERR(table)) {
->> +        err = PTR_ERR(table);
->>           goto map_err;
->>       }
->> +    map->table = table;
->>       if (attr & FASTRPC_ATTR_SECUREMAP) {
->>           map->phys = sg_phys(map->table->sgl);
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index 7e27acf6c0cc..f597a1bd5684 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -227,10 +227,8 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
+ 			ret = of_parse_phandle_with_args(client_dn, "mboxes",
+ 						"#mbox-cells", j, &curr_ph);
+ 			of_node_put(curr_ph.np);
+-			if (!ret && curr_ph.np == controller_dn) {
++			if (!ret && curr_ph.np == controller_dn)
+ 				ipcc->num_chans++;
+-				break;
+-			}
+ 		}
+ 	}
+ 
+-- 
+2.26.1
+
