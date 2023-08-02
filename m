@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A41276CCE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 14:38:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE48676CCED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 14:38:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234538AbjHBMib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 08:38:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58418 "EHLO
+        id S234516AbjHBMie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 08:38:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234512AbjHBMiW (ORCPT
+        with ESMTP id S234527AbjHBMia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 08:38:22 -0400
+        Wed, 2 Aug 2023 08:38:30 -0400
 Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1D1E4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 05:38:20 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b9fa64db41so30005801fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 05:38:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9559F271C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 05:38:22 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b962535808so106049781fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 05:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690979899; x=1691584699;
+        d=linaro.org; s=google; t=1690979900; x=1691584700;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=z/arHXwGDpg0PaLjq3SVx/1vOD3CQunADkBlXywyjWc=;
-        b=pzjM00rclJ3O6oMZD6Vt6W+n1moVRi5fOb2JrgpCj8wKpTq4/z6+RtGZEJvxRXBtZV
-         WndP5sU5ASyp3G7zpmVg160TH7sMgywghbM7AA0LejUZIJxH0ddd2J6md27Jjr+Z2whu
-         rK2ZKj46vxytOk853vjyuAEJRubLDfTTimGagp6St25tx9awbuMupq6n//43oG4a7Vaf
-         z75+e1M/CHOF3jNdO4bQ6PnrGeIE2OZBu9MGnLUHr58UGXwtPTLNQUYlRP99ps8KSEfg
-         C4Ao2mTaasEFK5MMVn//gdktkxTHXEXNzocbeJe4jJRNO9ep1WdFKjaduBY1Mwy3NqQM
-         GMtQ==
+        bh=p8ibCsCefa6ZAWVplZiGBVLhq2a/cqsLVlyXMZQI290=;
+        b=L/WAhGYg89vCGvKJ01xmKEj/kAYomwjtqchmRnAljmrzypWGf1ExVNCPvP2t84Fa+H
+         5nhcRtEoiypv+ORz4oZa7O//4OxFXX1xNzhCgTtBF3ndTp5N4VfY59H6yXfwNvmBF4L0
+         oMSEts9C/Ju6pwtv9v/tZXD9XCCBhS0Gv2KVlcdai7CllO6imkWoZA/Y4ooniHZkF4VX
+         HmkILrPsPmVPSoBpgDFNqEXzZwYKyGURbINqnijylTODT57GlOv8VinWfMeQuC8ixDnh
+         uRFr7ESBxePYuwdQN+k+RTwxiKDVZnXdlSKkvbft5LX1teVY5mkkdE2EuXo/i5I+vT6O
+         YkfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690979899; x=1691584699;
+        d=1e100.net; s=20221208; t=1690979900; x=1691584700;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z/arHXwGDpg0PaLjq3SVx/1vOD3CQunADkBlXywyjWc=;
-        b=ARtcg0+vEJU+yaoQUw9JY65Gz2Op4Eb0jCMCmKPPkDZxwRHkt35iTvFOFhAyMup8ne
-         2gCwd5HqWPLGCfYmRg0tdISEDjb8d47w8ATnN29eogy/Ot2+8G7/yiSLPHeQUavcNbuT
-         d4uwANiIreBap0hm63sYh+jynADbPn1HMQJnaNRq0wRR1QKw1Rpl2q4jPuc9zh5WPlv4
-         zyDM9GuE8e/DEKqXaVqv4b2fVKykSYjuoX2/OXmoqFzY/l/FNi1M0XOPOChLiBCwiKbi
-         /6Zyy1Owt8vo1enI/sKB+10NtYxGBmsdtlQXZwUVNbCCZuElERcGYFc8ZjW/59MsS72X
-         Z0BQ==
-X-Gm-Message-State: ABy/qLa0l8o32P08qITqqTe65m76njQRON0TZS9GwlhopGhNGFNIWgvv
-        sTDVCViqCpqRlXk54ApkXJ7/GQ==
-X-Google-Smtp-Source: APBJJlEIw9eIfqcPtLZzNmEUFCp9vj9/HnXINY+FrqvSgVQvrQnVQDh/HFfTYafJpEBnYcmADWIIvg==
-X-Received: by 2002:a2e:980c:0:b0:2b9:b41a:aa66 with SMTP id a12-20020a2e980c000000b002b9b41aaa66mr5429905ljj.20.1690979898810;
-        Wed, 02 Aug 2023 05:38:18 -0700 (PDT)
+        bh=p8ibCsCefa6ZAWVplZiGBVLhq2a/cqsLVlyXMZQI290=;
+        b=BteCJwlZtEvk8FuO0LDFCmv8IKo53LIjPN3N+q8KmVeJ/0ufjT9Lvk0uNH7ALKZ5cY
+         MlyD9P5ERKDV3AcHDgOjkGSZDk+Us7dbGh/gOxFUxMwmd8Kkej8QIiZoeSPPUYi/I31R
+         dHeXqOecdKIHBJ0q/7c5sSh9LSnrxjdzyA92eQLsjf184x4JQ4t7czI0V2Sp0dQeY2Gg
+         rNir0EUqKpuZISlQSVk5h63HhMN7M1+o/B6PfPMgGR+XPjvo2EBysUv4NW8ELWMIxonA
+         BEl/QA+XouFvUj55+bFmiBgEvdALq+1RCdmgquzObwhp3yJygGx+uwMMceV9NRAsdrPO
+         8KfA==
+X-Gm-Message-State: ABy/qLYzur56IdM8Qfa/jds4GuInl7B0z293g+L9dfr4AOpem/kmzhAq
+        EPFG8ZgIKMsAFWN9AlQRlueWzA==
+X-Google-Smtp-Source: APBJJlE6ARDEmy21WU3r29vh2B5ymlpRBSIrn0DFyx0h3brX5raOWVzzM4WVWqe1ZERvyRqSv+SJuQ==
+X-Received: by 2002:a2e:3307:0:b0:2b6:ba54:cc8 with SMTP id d7-20020a2e3307000000b002b6ba540cc8mr4884185ljc.30.1690979900741;
+        Wed, 02 Aug 2023 05:38:20 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id h8-20020a2e9ec8000000b002b9e5fe86dasm1897050ljk.81.2023.08.02.05.38.16
+        by smtp.gmail.com with ESMTPSA id h8-20020a2e9ec8000000b002b9e5fe86dasm1897050ljk.81.2023.08.02.05.38.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 05:38:18 -0700 (PDT)
+        Wed, 02 Aug 2023 05:38:20 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 02 Aug 2023 14:37:42 +0200
-Subject: [PATCH v13 02/10] MAINTAINERS: Add entry for Qualcomm
- CPRv3/v4/Hardened driver
+Date:   Wed, 02 Aug 2023 14:37:43 +0200
+Subject: [PATCH v13 03/10] dt-bindings: opp: v2-qcom-level: Document CPR3
+ open/closed loop volt adjustment
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230217-topic-cpr3h-v13-2-d01cff1c54cf@linaro.org>
+Message-Id: <20230217-topic-cpr3h-v13-3-d01cff1c54cf@linaro.org>
 References: <20230217-topic-cpr3h-v13-0-d01cff1c54cf@linaro.org>
 In-Reply-To: <20230217-topic-cpr3h-v13-0-d01cff1c54cf@linaro.org>
 To:     AngeloGioacchino Del Regno 
@@ -79,56 +79,61 @@ Cc:     Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-pm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690979891; l=984;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1690979891; l=1556;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=2YiA3nGNcsVPCq1IwlTdMAqStD1lE3rx04PXJ5i83As=;
- b=/aE9/NxMNY3o+ds1NwBS03mBqZjAuS1DKfNpv8RGPTcD4ywBrlNoAWFXhqTRhVaZtzCiJY7vE
- My7YAfaWacCDkCONSmD6pJ4K1kNF+ar5KWeXMz0/H/aKp3zvAJxU7E8
+ bh=1PU66HaoulFU/Wo7HNKJEIXnou7x9T43KX25qUVEdMs=;
+ b=l6lqMVeLONCbszDhY3T5E0D1mbsBcY/OrtcjDOXJH7657zxZ58AWWw/XkxmTXe9bkCyinjJlt
+ BS3oS28U+1OAnL6wInr9zNUYwqUYsKemAIvGlsroPFO+qkgLuMT7VlN
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+CPR3 and newer can be fed per-OPP voltage adjustment values for both
+open- and closed-loop paths to make better decisions about settling
+on the final voltage offset target. Document these properties.
 
-Add maintainers entry for the Qualcomm CPR3/CPR4/CPRh driver.
-
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-[Konrad: rebase, update AGdR's email]
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- MAINTAINERS | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../devicetree/bindings/opp/opp-v2-qcom-level.yaml         | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1089ef3319f2..a7514261b157 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17621,6 +17621,12 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
- F:	drivers/genpd/qcom/cpr.c
+diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+index a30ef93213c0..b203ea01b17a 100644
+--- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
++++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+@@ -34,6 +34,20 @@ patternProperties:
+         minItems: 1
+         maxItems: 2
  
-+QUALCOMM CORE POWER REDUCTION v3/v4/Hardened AVS DRIVER
-+M:	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-+F:	drivers/soc/qcom/cpr3.c
++      qcom,opp-cloop-vadj:
++        description: |
++          An array of per-thread values representing the closed-loop
++          voltage adjustment value associated with this OPP node.
++        $ref: /schemas/types.yaml#/definitions/int32-array
++        maxItems: 2
 +
- QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
- M:	Ilia Lin <ilia.lin@kernel.org>
- L:	linux-pm@vger.kernel.org
++      qcom,opp-oloop-vadj:
++        description: |
++          An array of per-thread values representing the open-loop
++          voltage adjustment value associated with this OPP node.
++        $ref: /schemas/types.yaml#/definitions/int32-array
++        maxItems: 2
++
+     required:
+       - opp-level
+       - qcom,opp-fuse-level
 
 -- 
 2.41.0
