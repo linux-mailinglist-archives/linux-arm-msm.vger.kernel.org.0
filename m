@@ -2,152 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2ABB76C3C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 05:52:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4418476C3D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 06:02:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232190AbjHBDwT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Aug 2023 23:52:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38276 "EHLO
+        id S229629AbjHBECK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 00:02:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbjHBDwC (ORCPT
+        with ESMTP id S229482AbjHBECI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Aug 2023 23:52:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EBA30C8;
-        Tue,  1 Aug 2023 20:51:45 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3722NIGu028791;
-        Wed, 2 Aug 2023 03:51:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=iv9VMeggZweWL3QOIkADDj2WzrjlhjhC5j1kulPSJ7c=;
- b=KO3b3yWU9Yeiv/hmJGVWpLLB8uLD+mEBgj+fPeDktexvcG3HKxJzjfLvJeZsc3+Zbjqn
- N8KG0dNYg7w/fqGUje064kAqIj3jeylY7AafHWUFaGIzQj1bbKvnDMsfGC3ReipPbvN9
- Oa0ti8LjtuJKStoEIkpQCSvytinlVladvPR5vlZE17p85OcIZ7Ud/tla+Rfcg+zWoIIf
- 0sQaK8sIBBf7DjgvUca6NjFCuicieY2ApaIe1H0YDkDfge+ypiiEqBtP+Ir0mBjr82kL
- RQykojQAZJ7qF0pAqZYgKlFWpi2ao+rRANjZ06BLZB/D4ersTNk/z+PbDVLBsu6lgwir dw== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6rhatudq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 03:51:32 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3723pS43022512;
-        Wed, 2 Aug 2023 03:51:28 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3s4uukryxw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 02 Aug 2023 03:51:28 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3723pSSJ022504;
-        Wed, 2 Aug 2023 03:51:28 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3723pR5Q022503;
-        Wed, 02 Aug 2023 03:51:28 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 5B7344B59; Wed,  2 Aug 2023 09:21:27 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        mhi@lists.linux.dev (open list:MHI BUS)
-Subject: [PATCH v5 4/4] PCI: epf-mhi: Add support for handling D-state notify from EPC
-Date:   Wed,  2 Aug 2023 09:21:21 +0530
-Message-Id: <1690948281-2143-5-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1690948281-2143-1-git-send-email-quic_krichai@quicinc.com>
-References: <1690948281-2143-1-git-send-email-quic_krichai@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BstDsv_bIAOsUCh53GyUGQ2obw2nsynp
-X-Proofpoint-ORIG-GUID: BstDsv_bIAOsUCh53GyUGQ2obw2nsynp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_01,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 clxscore=1015 impostorscore=0 spamscore=0
- bulkscore=0 phishscore=0 mlxlogscore=776 lowpriorityscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308020033
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        Wed, 2 Aug 2023 00:02:08 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B93103
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 21:02:06 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1bc0d39b52cso18776355ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 21:02:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690948926; x=1691553726;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vG5UMw6bFZ2XuN8CCsSVN9Y60w1sWvQGrsbmsXSfDCg=;
+        b=l0OlMBx+GytmlHiryoJm4BsFsflyHSrNEeowcnna3sb2VRaFNPQCkpXkOpIbypjAXi
+         P1qKRrhuGKhoouanf6XjGT8QqcWaAklLPjPvz19Kt2vdqd3OfaeH5CWRXMVwkP/VIDaI
+         Q3ejhBU1HEbl40qJvIQI/P8DnE1TQmXaQB3Uv8XKF4jtXj+Pe40hkHTfBPuKKORRfwmF
+         BZ25EDRGgRABT1sRKMrBqDNiqT1VzNPpdNkkSZGk3Fekj+Ud8ayt5KJmp2/loDq0+hEt
+         UcOqeSdiYu+eUPiLzYwNkJ8bpFcuoKXcmpj+UU+pUCs2uedvZa6tz2CG/p3gCUflrPaF
+         z5LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690948926; x=1691553726;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vG5UMw6bFZ2XuN8CCsSVN9Y60w1sWvQGrsbmsXSfDCg=;
+        b=MkpHAueGWR4Q6QcAuuEI3YxiWBdRfIwn6tTcOOP22JEeZSlY6WI4/JELFODENF1ThG
+         XAYcqialo2K1vZaBXzLPgGond6BpDowneL4hdw3h4pLipdGgb92+jHT8Uln+JYzYbMDR
+         Mlz3ezEAn89w+ZrOhqNkLFy84fPJVOQ6Uj9bouaPfI53nsSNb9N87/FTlUPdPldQIBY0
+         ge30pr35BZJ7io5PvoaFQucvN2Vpx9o0DI8uxVNDFpJztSa42kntbzLdaAcoUCjOoLK8
+         N/uyecXz9L7xfQQ8JvMIDFF9Keh4ALe9pljUkabvrlE96eY1HkGSCpVd6xhCvcKtx310
+         2WRg==
+X-Gm-Message-State: ABy/qLbzWrhhisUY7uD7nHkrc1KVcvU4RcT0DBVKVkTwalNnZ5ObrLyZ
+        ING7QHQmwQhYaOSBeEDZffsp
+X-Google-Smtp-Source: APBJJlFdwviOBoJsVp3olVv/BcGe+WEfRsc/zCYIAaAGRExJh38BwE9IFhqgUoI63zUxsukJQ701Aw==
+X-Received: by 2002:a17:902:e551:b0:1bb:a125:f831 with SMTP id n17-20020a170902e55100b001bba125f831mr17474097plf.58.1690948926150;
+        Tue, 01 Aug 2023 21:02:06 -0700 (PDT)
+Received: from localhost.localdomain ([117.193.209.129])
+        by smtp.gmail.com with ESMTPSA id b12-20020a170902d50c00b001bb8be10a84sm11202710plg.304.2023.08.01.21.02.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Aug 2023 21:02:05 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
+        martin.petersen@oracle.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH] scsi: ufs: qcom: Make struct ufs_qcom_bw_table static const
+Date:   Wed,  2 Aug 2023 09:31:54 +0530
+Message-Id: <20230802040154.10652-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for handling D-state notify for MHI EPF.
+ufs_qcom_bw_table is not modified anywhere. So make it static const so that
+it can be placed in read-only memory.
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Reported-by: Bart Van Assche <bvanassche@acm.org>
+Closes: https://lore.kernel.org/linux-scsi/43cd0057-c6d8-bc92-08f4-d767336d2cfe@acm.org/
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 11 +++++++++++
- include/linux/mhi_ep.h                       |  3 +++
- 2 files changed, 14 insertions(+)
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 9c1f5a1..ee91bfc 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -339,6 +339,16 @@ static int pci_epf_mhi_bme(struct pci_epf *epf)
- 	return 0;
- }
- 
-+static int pci_epf_mhi_dstate_notify(struct pci_epf *epf, pci_power_t state)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+
-+	mhi_cntrl->dstate = state;
-+
-+	return 0;
-+}
-+
- static int pci_epf_mhi_bind(struct pci_epf *epf)
- {
- 	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-@@ -394,6 +404,7 @@ static struct pci_epc_event_ops pci_epf_mhi_event_ops = {
- 	.link_up = pci_epf_mhi_link_up,
- 	.link_down = pci_epf_mhi_link_down,
- 	.bme = pci_epf_mhi_bme,
-+	.dstate_notify = pci_epf_mhi_dstate_notify,
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 75a1fd295f34..0341c025e818 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -58,7 +58,7 @@ enum {
+ 	MODE_MAX,
  };
  
- static int pci_epf_mhi_probe(struct pci_epf *epf,
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index f198a8a..c3a0685 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -8,6 +8,7 @@
- 
- #include <linux/dma-direction.h>
- #include <linux/mhi.h>
-+#include <linux/pci.h>
- 
- #define MHI_EP_DEFAULT_MTU 0x8000
- 
-@@ -139,6 +140,8 @@ struct mhi_ep_cntrl {
- 
- 	enum mhi_state mhi_state;
- 
-+	pci_power_t dstate;
-+
- 	u32 max_chan;
- 	u32 mru;
- 	u32 event_rings;
+-struct __ufs_qcom_bw_table {
++static const struct __ufs_qcom_bw_table {
+ 	u32 mem_bw;
+ 	u32 cfg_bw;
+ } ufs_qcom_bw_table[MODE_MAX + 1][QCOM_UFS_MAX_GEAR + 1][QCOM_UFS_MAX_LANE + 1] = {
 -- 
-2.7.4
+2.25.1
 
