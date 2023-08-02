@@ -2,93 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8E5376CD10
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 14:39:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D997176CD29
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 14:42:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234712AbjHBMj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 08:39:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59362 "EHLO
+        id S234540AbjHBMmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 08:42:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234662AbjHBMjG (ORCPT
+        with ESMTP id S234521AbjHBMmQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 08:39:06 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7850D3592
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 05:38:38 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b9e6cc93c6so55160361fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 05:38:38 -0700 (PDT)
+        Wed, 2 Aug 2023 08:42:16 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16B762D6A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 05:41:46 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4fe216edaf7so1140372e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 05:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690979916; x=1691584716;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yWpzhnQyuCXmHr6iRBAVFa2JqHGslJH+d5J1UDbZiG0=;
-        b=eC1jcE1Dv0P2qrgUmuxi5JIeIIlp4rWdrZUUSj97jPrLbLs7Le2LB6efqzewaZFhQf
-         nvtpjdoKamisetWlheTb/2VBaNIr/Z2e2xeITuXshtHNoNEge5QcLUr5PhkED+/g6rL1
-         KICwqcr7a56MT4O7DLgNl5Kw3OTPNOb6Qa+6nn/zlF566ZBxlCJTu/qefSHD2pouE3Q0
-         vtOVDd4Zu+yGlDRUwPBieYR5tvOXxuDywYOwUbUFCpHU6TKzbt16bnn5vEnkd7IsjFLf
-         4YCy0aBYaJIsahYo4jT4wR/ZL0rRlEYUyW+6UfIWoZKEynpaBOO/Kfa0SGCWVTNcqEXj
-         waIw==
+        d=linaro.org; s=google; t=1690980032; x=1691584832;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RU7egs2LiLlo94w/Ve+4pxpzbrlg5N9jxVZz8FuH8uk=;
+        b=Rbgd7W2JAFnf7G5kp/X/mgMBWM6VkzdZ3F6c2JrJ420yqYrmlmVO4QwIN0MmXM0t9G
+         UJfq74w8QEO5p1D7WnYFrv2CVwxqIbkx4EHYKkX4nhA6txhoIrBxRLM9l2b7EW26Dfab
+         DZoJmMEvfVwTUTGHBLmu0x0yi4HO076Vtk5u5WybylPs5fjGml8EgyynBdrWA0lhR/ca
+         yr8bRhx8LVIidA9hgmgLl+DhXUBlEoO55oE2u43nM7j3ttTURqPLXfTzNjC6j8FhNrvw
+         X94NLcxEE7yVFhJiALfj15rgHAhtG5jLI564dxr8dPsNE4crLYeqH0JMoQJKeYlj+rp1
+         9WKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690979916; x=1691584716;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yWpzhnQyuCXmHr6iRBAVFa2JqHGslJH+d5J1UDbZiG0=;
-        b=kxHiARPFQuoMOQloYRAJu7vVSABBGE+C1Z1/SGCJzcue/FSvgHaJnkDGooI3Il0Kk7
-         /CK+UfzDwzQi1Iu/aXJVAavb4EVPmCrOlZ4Ubvcj2FsRyPtsLBb5PYhC+n7tuiJDXutD
-         PNTzq4VEF/mdx3rvK5cLI+Y/6hhgGZIsxt9GqEbR12ndLsmCPEqMDcgKjzu25Ixa7OPJ
-         vw7mUX84W2xhwKXi71LdRGFooIXz8yGFiKbskvOamisrVbB2WxxdewUu3UoIn3PeWUto
-         n78NrUASIP/31QFvbv2lo95GsI9qDJOjahY/E2vwlXUCUC2uum4S8SajbEcGADo+BYER
-         udDg==
-X-Gm-Message-State: ABy/qLaEwtavJBnSai5IHnq5ahi0eE9U1EBhOkzFxnNImCK7GJIN9iV3
-        4/ssf5mT333JkUBYBV1OIv7Y1g==
-X-Google-Smtp-Source: APBJJlHx//E3L3W0Oi81cuQUVzlXq5J2JREgz4Avss5lsYPcxx9YCNrK6plMYpPFKw0lXPUzqVuIrw==
-X-Received: by 2002:a2e:8812:0:b0:2b8:3a1e:eec9 with SMTP id x18-20020a2e8812000000b002b83a1eeec9mr4854604ljh.36.1690979915719;
-        Wed, 02 Aug 2023 05:38:35 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690980032; x=1691584832;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RU7egs2LiLlo94w/Ve+4pxpzbrlg5N9jxVZz8FuH8uk=;
+        b=R5Kn+/DkQQlVGrMI8ki9ucXvDgMuA7jgWr8kIBm3rdSmEAfomKUq3fhrLTgubInsmF
+         1jAX5ySs3/ohWiUPRjzo4sMzsK7RDhhOBC8GfW3a8iN+1fOXxjOABQ2aRVMJvME8JroS
+         qW9TaldsFIUkaNFN6s8snW/D5jGOEBCZ+CU52QSozEzYFxANIX+ROEqhbDZ+ojaKAQMJ
+         wdlJkT87c1q6oHDDquEf5zlJoqOkFz8uuvfMP8Rp+G673OG8Ung16PQ6bUwzL0a3aLQo
+         IyN/lP7lUnxj9GXfSOgHzypqLNbz5ZRgasLpCYqzQJGyuxAcey8ZupiDaZKXFsju1yej
+         jcIg==
+X-Gm-Message-State: ABy/qLY/FufMWj0sZDTVkow6Gewni939mo7zh/C+B7dBNiOZrtyT/yYT
+        No6QMX3HxAnGvSaicwRBVmZY8A==
+X-Google-Smtp-Source: APBJJlHrGFppFXU8yTl+lMATmGnTZzlyE3gAXM9FXDbbwfGdSJLUeR9imLN5Va8zq/USOk9AbGxx5A==
+X-Received: by 2002:a05:6512:3b8e:b0:4f9:6adf:3981 with SMTP id g14-20020a0565123b8e00b004f96adf3981mr2119812lfv.33.1690980032026;
+        Wed, 02 Aug 2023 05:40:32 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id h8-20020a2e9ec8000000b002b9e5fe86dasm1897050ljk.81.2023.08.02.05.38.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 05:38:35 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 02 Aug 2023 14:37:50 +0200
-Subject: [PATCH v13 10/10] arm64: dts: qcom: msm8998: Configure CPRh
+        by smtp.gmail.com with ESMTPSA id j15-20020ac2550f000000b004fe432108aesm793107lfk.261.2023.08.02.05.40.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Aug 2023 05:40:31 -0700 (PDT)
+Message-ID: <77d437eb-8edd-344d-61be-71aae7866a69@linaro.org>
+Date:   Wed, 2 Aug 2023 14:40:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] arm64: dts: qcom: sdx75: Add spmi node
+Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1690970366-30982-2-git-send-email-quic_rohiagar@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <1690970366-30982-2-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230217-topic-cpr3h-v13-10-d01cff1c54cf@linaro.org>
-References: <20230217-topic-cpr3h-v13-0-d01cff1c54cf@linaro.org>
-In-Reply-To: <20230217-topic-cpr3h-v13-0-d01cff1c54cf@linaro.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1690979891; l=20963;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=We+qvKn3JTrFqYADA1GiGktR+dtEoTtIhBLgqH+EQR0=;
- b=EtA8n4b4oStmFXwQfH8wFVshXI1cpNiXCuNrW/WXDTsXb0MaTn0rJsRAkOAdv5hVUD+PlnCZm
- qga4gg0qAYUDEexTMS+9cII24BCB1+H9GF3toP5zqg2aOa9ZoEOPN9z
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -99,859 +112,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On 2.08.2023 11:59, Rohit Agarwal wrote:
+> Add SPMI node to SDX75 dtsi.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sdx75.dtsi | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> index 21d5d55..5e9602cd 100644
+> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> @@ -469,6 +469,29 @@
+>  			interrupt-controller;
+>  		};
+>  
+> +		spmi_bus: spmi@c400000 {
+> +			compatible = "qcom,spmi-pmic-arb";
+> +			reg = <0x0 0xc400000 0x0 0x3000>,
+> +			      <0x0 0xc500000 0x0 0x400000>,
+> +			      <0x0 0xc440000 0x0 0x80000>,
+> +			      <0x0 0xc4c0000 0x0 0x10000>,
+> +			      <0x0 0xc42d000 0x0 0x4000>;
+Please pad the address part to 8 hex digits (add leading zeroes)
 
-Now that the CPR v3/v4/Hardened is ready, enable it on MSM8998.
-
-[Konrad: separate from adding cpufreq, sort nodes, use lowercase hex,
- update for driver changes]
-
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 757 ++++++++++++++++++++++++++++++++++
- 1 file changed, 757 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 360fe3edcc08..88b1efe0d34d 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -143,6 +143,9 @@ CPU0: cpu@0 {
- 			capacity-dmips-mhz = <1024>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			power-domains = <&apc_cprh 0>;
-+			power-domain-names = "cprh";
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -158,6 +161,9 @@ CPU1: cpu@1 {
- 			capacity-dmips-mhz = <1024>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			power-domains = <&apc_cprh 0>;
-+			power-domain-names = "cprh";
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -168,6 +174,9 @@ CPU2: cpu@2 {
- 			capacity-dmips-mhz = <1024>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			power-domains = <&apc_cprh 0>;
-+			power-domain-names = "cprh";
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -178,6 +187,9 @@ CPU3: cpu@3 {
- 			capacity-dmips-mhz = <1024>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			power-domains = <&apc_cprh 0>;
-+			power-domain-names = "cprh";
- 		};
- 
- 		CPU4: cpu@100 {
-@@ -188,6 +200,9 @@ CPU4: cpu@100 {
- 			capacity-dmips-mhz = <1536>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_1>;
-+			operating-points-v2 = <&cpu4_opp_table>;
-+			power-domains = <&apc_cprh 1>;
-+			power-domain-names = "cprh";
- 			L2_1: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -203,6 +218,9 @@ CPU5: cpu@101 {
- 			capacity-dmips-mhz = <1536>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_1>;
-+			operating-points-v2 = <&cpu4_opp_table>;
-+			power-domains = <&apc_cprh 1>;
-+			power-domain-names = "cprh";
- 		};
- 
- 		CPU6: cpu@102 {
-@@ -213,6 +231,9 @@ CPU6: cpu@102 {
- 			capacity-dmips-mhz = <1536>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_1>;
-+			operating-points-v2 = <&cpu4_opp_table>;
-+			power-domains = <&apc_cprh 1>;
-+			power-domain-names = "cprh";
- 		};
- 
- 		CPU7: cpu@103 {
-@@ -223,6 +244,9 @@ CPU7: cpu@103 {
- 			capacity-dmips-mhz = <1536>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 			next-level-cache = <&L2_1>;
-+			operating-points-v2 = <&cpu4_opp_table>;
-+			power-domains = <&apc_cprh 1>;
-+			power-domain-names = "cprh";
- 		};
- 
- 		cpu-map {
-@@ -316,6 +340,490 @@ scm {
- 		};
- 	};
- 
-+	cprh_opp_table: opp-table-cprh {
-+		compatible = "operating-points-v2-qcom-level";
-+
-+		cprh_opp1: opp-1 {
-+			opp-level = <1>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp2: opp-2 {
-+			opp-level = <2>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp3: opp-3 {
-+			opp-level = <3>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp4: opp-4 {
-+			opp-level = <4>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp5: opp-5 {
-+			opp-level = <5>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp6: opp-6 {
-+			opp-level = <6>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp7: opp-7 {
-+			opp-level = <7>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp8: opp-8 {
-+			opp-level = <8>;
-+			qcom,opp-fuse-level = <1 1>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp9: opp-9 {
-+			opp-level = <9>;
-+			qcom,opp-fuse-level = <2 2>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp10: opp-10 {
-+			opp-level = <10>;
-+			qcom,opp-fuse-level = <2 2>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp11: opp-11 {
-+			opp-level = <11>;
-+			qcom,opp-fuse-level = <2 2>;
-+			qcom,opp-cloop-vadj = <0 0>;
-+			qcom,opp-oloop-vadj = <0 0>;
-+		};
-+
-+		cprh_opp12: opp-12 {
-+			opp-level = <12>;
-+			qcom,opp-fuse-level = <3 2>;
-+			qcom,opp-cloop-vadj = <(-10000) (-10000)>;
-+			qcom,opp-oloop-vadj = <(-12000) (-8000)>;
-+		};
-+
-+		cprh_opp13: opp-13 {
-+			opp-level = <13>;
-+			qcom,opp-fuse-level = <3 3>;
-+			qcom,opp-cloop-vadj = <(-11000) (-10000)>;
-+			qcom,opp-oloop-vadj = <(-16000) (-16000)>;
-+		};
-+
-+		cprh_opp14: opp-14 {
-+			opp-level = <14>;
-+			qcom,opp-fuse-level = <3 3>;
-+			qcom,opp-cloop-vadj = <(-12000) (-11000)>;
-+			qcom,opp-oloop-vadj = <(-16000) (-12000)>;
-+		};
-+
-+		cprh_opp15: opp-15 {
-+			opp-level = <15>;
-+			qcom,opp-fuse-level = <3 3>;
-+			qcom,opp-cloop-vadj = <(-13000) (-12000)>;
-+			qcom,opp-oloop-vadj = <(-12000) (-16000)>;
-+		};
-+
-+		cprh_opp16: opp-16 {
-+			opp-level = <16>;
-+			qcom,opp-fuse-level = <3 3>;
-+			qcom,opp-cloop-vadj = <(-14000) (-12000)>;
-+			qcom,opp-oloop-vadj = <(-12000) (-16000)>;
-+		};
-+
-+		cprh_opp17: opp-17 {
-+			opp-level = <17>;
-+			qcom,opp-fuse-level = <3 3>;
-+			qcom,opp-cloop-vadj = <(-14000) (-13000)>;
-+			qcom,opp-oloop-vadj = <(-16000) (-12000)>;
-+		};
-+
-+		cprh_opp18: opp-18 {
-+			opp-level = <18>;
-+			qcom,opp-fuse-level = <3 3>;
-+			qcom,opp-cloop-vadj = <(-15000) (-14000)>;
-+			qcom,opp-oloop-vadj = <(-16000) (-16000)>;
-+		};
-+
-+		cprh_opp19: opp-19 {
-+			opp-level = <19>;
-+			qcom,opp-fuse-level = <4 3>;
-+			qcom,opp-cloop-vadj = <(-21000) (-14000)>;
-+			qcom,opp-oloop-vadj = <(-20000) (-16000)>;
-+		};
-+
-+		cprh_opp20: opp-20 {
-+			opp-level = <20>;
-+			qcom,opp-fuse-level = <4 3>;
-+			qcom,opp-cloop-vadj = <(-24000) (-15000)>;
-+			qcom,opp-oloop-vadj = <(-24000) (-16000)>;
-+		};
-+
-+		cprh_opp21: opp-21 {
-+			opp-level = <21>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <(-26000) (-16000)>;
-+			qcom,opp-oloop-vadj = <(-28000) (-24000)>;
-+		};
-+
-+		cprh_opp22: opp-22 {
-+			opp-level = <22>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <(-28000) (-16000)>;
-+			qcom,opp-oloop-vadj = <(-28000) (-16000)>;
-+		};
-+
-+		cprh_opp23: opp-23 {
-+			opp-level = <23>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-17000)>;
-+			qcom,opp-oloop-vadj = <0 (-20000)>;
-+		};
-+
-+		cprh_opp24: opp-24 {
-+			opp-level = <24>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-15000)>;
-+			qcom,opp-oloop-vadj = <0 (-16000)>;
-+		};
-+
-+		cprh_opp25: opp-25 {
-+			opp-level = <25>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-14000)>;
-+			qcom,opp-oloop-vadj = <0 (-12000)>;
-+		};
-+
-+		cprh_opp26: opp-26 {
-+			opp-level = <26>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-27000)>;
-+			qcom,opp-oloop-vadj = <0 (-28000)>;
-+		};
-+
-+		cprh_opp27: opp-27 {
-+			opp-level = <27>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-27000)>;
-+			qcom,opp-oloop-vadj = <0 (-28000)>;
-+		};
-+
-+		cprh_opp28: opp-28 {
-+			opp-level = <28>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-28000)>;
-+			qcom,opp-oloop-vadj = <0 (-28000)>;
-+		};
-+
-+		cprh_opp29: opp-29 {
-+			opp-level = <29>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-28000)>;
-+			qcom,opp-oloop-vadj = <0 (-28000)>;
-+		};
-+
-+		cprh_opp30: opp-30 {
-+			opp-level = <30>;
-+			qcom,opp-fuse-level = <4 4>;
-+			qcom,opp-cloop-vadj = <0 (-28000)>;
-+			qcom,opp-oloop-vadj = <0 (-28000)>;
-+		};
-+	};
-+
-+	cpu0_opp_table: opp-table-cpu0 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-1900800000 {
-+			opp-hz = /bits/ 64 <1900800000>;
-+			required-opps = <&cprh_opp22>;
-+		};
-+
-+		opp-1824000000 {
-+			opp-hz = /bits/ 64 <1824000000>;
-+			required-opps = <&cprh_opp21>;
-+		};
-+
-+		opp-1747200000 {
-+			opp-hz = /bits/ 64 <1747200000>;
-+			required-opps = <&cprh_opp20>;
-+		};
-+
-+		opp-1670400000 {
-+			opp-hz = /bits/ 64 <1670400000>;
-+			required-opps = <&cprh_opp19>;
-+		};
-+
-+		opp-1555200000 {
-+			opp-hz = /bits/ 64 <1555200000>;
-+			required-opps = <&cprh_opp18>;
-+		};
-+
-+		opp-1478400000 {
-+			opp-hz = /bits/ 64 <1478400000>;
-+			required-opps = <&cprh_opp17>;
-+		};
-+
-+		opp-1401600000 {
-+			opp-hz = /bits/ 64 <1401600000>;
-+			required-opps = <&cprh_opp16>;
-+		};
-+
-+		opp-1324800000 {
-+			opp-hz = /bits/ 64 <1324800000>;
-+			required-opps = <&cprh_opp15>;
-+		};
-+
-+		opp-1248000000 {
-+			opp-hz = /bits/ 64 <1248000000>;
-+			required-opps = <&cprh_opp14>;
-+		};
-+
-+		opp-1171200000 {
-+			opp-hz = /bits/ 64 <1171200000>;
-+			required-opps = <&cprh_opp13>;
-+		};
-+
-+		opp-1094400000 {
-+			opp-hz = /bits/ 64 <1094400000>;
-+			required-opps = <&cprh_opp12>;
-+		};
-+
-+		opp-1036800000 {
-+			opp-hz = /bits/ 64 <1036800000>;
-+			required-opps = <&cprh_opp11>;
-+		};
-+
-+		opp-960000000 {
-+			opp-hz = /bits/ 64 <960000000>;
-+			required-opps = <&cprh_opp10>;
-+		};
-+
-+		opp-883200000 {
-+			opp-hz = /bits/ 64 <883200000>;
-+			required-opps = <&cprh_opp9>;
-+		};
-+
-+		opp-825600000 {
-+			opp-hz = /bits/ 64 <825600000>;
-+			required-opps = <&cprh_opp8>;
-+		};
-+
-+		opp-748800000 {
-+			opp-hz = /bits/ 64 <748800000>;
-+			required-opps = <&cprh_opp7>;
-+		};
-+
-+		opp-672000000 {
-+			opp-hz = /bits/ 64 <672000000>;
-+			required-opps = <&cprh_opp6>;
-+		};
-+
-+		opp-595200000 {
-+			opp-hz = /bits/ 64 <595200000>;
-+			required-opps = <&cprh_opp5>;
-+		};
-+
-+		opp-518400000 {
-+			opp-hz = /bits/ 64 <518400000>;
-+			required-opps = <&cprh_opp4>;
-+		};
-+
-+		opp-441600000 {
-+			opp-hz = /bits/ 64 <441600000>;
-+			required-opps = <&cprh_opp3>;
-+		};
-+
-+		opp-364800000 {
-+			opp-hz = /bits/ 64 <364800000>;
-+			required-opps = <&cprh_opp2>;
-+		};
-+
-+		opp-300000000 {
-+			opp-hz = /bits/ 64 <300000000>;
-+			required-opps = <&cprh_opp1>;
-+		};
-+	};
-+
-+	cpu4_opp_table: opp-table-cpu4 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-2361600000 {
-+			opp-hz = /bits/ 64 <2361600000>;
-+			required-opps = <&cprh_opp30>;
-+		};
-+
-+		opp-2342400000 {
-+			opp-hz = /bits/ 64 <2342400000>;
-+			required-opps = <&cprh_opp29>;
-+		};
-+
-+		opp-2323200000 {
-+			opp-hz = /bits/ 64 <2323200000>;
-+			required-opps = <&cprh_opp28>;
-+		};
-+
-+		opp-2265600000 {
-+			opp-hz = /bits/ 64 <2265600000>;
-+			required-opps = <&cprh_opp27>;
-+		};
-+
-+		opp-2208000000 {
-+			opp-hz = /bits/ 64 <2208000000>;
-+			required-opps = <&cprh_opp26>;
-+		};
-+
-+		opp-2112000000 {
-+			opp-hz = /bits/ 64 <2112000000>;
-+			required-opps = <&cprh_opp25>;
-+		};
-+
-+		opp-2035200000 {
-+			opp-hz = /bits/ 64 <2035200000>;
-+			required-opps = <&cprh_opp24>;
-+		};
-+
-+		opp-1958400000 {
-+			opp-hz = /bits/ 64 <1958400000>;
-+			required-opps = <&cprh_opp23>;
-+		};
-+
-+		opp-1881600000 {
-+			opp-hz = /bits/ 64 <1881600000>;
-+			required-opps = <&cprh_opp22>;
-+		};
-+
-+		opp-1804800000 {
-+			opp-hz = /bits/ 64 <1804800000>;
-+			required-opps = <&cprh_opp21>;
-+		};
-+
-+		opp-1728000000 {
-+			opp-hz = /bits/ 64 <1728000000>;
-+			required-opps = <&cprh_opp20>;
-+		};
-+
-+		opp-1651200000 {
-+			opp-hz = /bits/ 64 <1651200000>;
-+			required-opps = <&cprh_opp19>;
-+		};
-+
-+		opp-1574400000 {
-+			opp-hz = /bits/ 64 <1574400000>;
-+			required-opps = <&cprh_opp18>;
-+		};
-+
-+		opp-1497600000 {
-+			opp-hz = /bits/ 64 <1497600000>;
-+			required-opps = <&cprh_opp17>;
-+		};
-+
-+		opp-1420800000 {
-+			opp-hz = /bits/ 64 <1420800000>;
-+			required-opps = <&cprh_opp16>;
-+		};
-+
-+		opp-1344000000 {
-+			opp-hz = /bits/ 64 <1344000000>;
-+			required-opps = <&cprh_opp15>;
-+		};
-+
-+		opp-1267200000 {
-+			opp-hz = /bits/ 64 <1267200000>;
-+			required-opps = <&cprh_opp14>;
-+		};
-+
-+		opp-1190400000 {
-+			opp-hz = /bits/ 64 <1190400000>;
-+			required-opps = <&cprh_opp13>;
-+		};
-+
-+		opp-1132800000 {
-+			opp-hz = /bits/ 64 <1132800000>;
-+			required-opps = <&cprh_opp12>;
-+		};
-+
-+		opp-1056000000 {
-+			opp-hz = /bits/ 64 <1056000000>;
-+			required-opps = <&cprh_opp11>;
-+		};
-+
-+		opp-979200000 {
-+			opp-hz = /bits/ 64 <979200000>;
-+			required-opps = <&cprh_opp10>;
-+		};
-+
-+		opp-902400000 {
-+			opp-hz = /bits/ 64 <902400000>;
-+			required-opps = <&cprh_opp9>;
-+		};
-+
-+		opp-806400000 {
-+			opp-hz = /bits/ 64 <806400000>;
-+			required-opps = <&cprh_opp8>;
-+		};
-+
-+		opp-729600000 {
-+			opp-hz = /bits/ 64 <729600000>;
-+			required-opps = <&cprh_opp7>;
-+		};
-+
-+		opp-652800000 {
-+			opp-hz = /bits/ 64 <652800000>;
-+			required-opps = <&cprh_opp6>;
-+		};
-+
-+		opp-576000000 {
-+			opp-hz = /bits/ 64 <576000000>;
-+			required-opps = <&cprh_opp5>;
-+		};
-+
-+		opp-499200000 {
-+			opp-hz = /bits/ 64 <499200000>;
-+			required-opps = <&cprh_opp4>;
-+		};
-+
-+		opp-422400000 {
-+			opp-hz = /bits/ 64 <422400000>;
-+			required-opps = <&cprh_opp3>;
-+		};
-+
-+		opp-345600000 {
-+			opp-hz = /bits/ 64 <345600000>;
-+			required-opps = <&cprh_opp2>;
-+		};
-+
-+		opp-300000000 {
-+			opp-hz = /bits/ 64 <300000000>;
-+			required-opps = <&cprh_opp1>;
-+		};
-+	};
-+
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-@@ -851,6 +1359,174 @@ qfprom: qfprom@784000 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 
-+			cpr_efuse_speedbin: speedbin@133 {
-+				reg = <0x133 0x8>;
-+				bits = <5 3>;
-+			};
-+
-+			cpr_fuse_revision: cpr-fusing-rev@13e {
-+				reg = <0x13e 0x1>;
-+				bits = <3 3>;
-+			};
-+
-+			/* CPR Ring Oscillator: Power Cluster */
-+			cpr_ro_sel3_pwrcl: rosel3-pwrcl@218 {
-+				reg = <0x218 0x1>;
-+				bits = <0 4>;
-+			};
-+
-+			cpr_ro_sel2_pwrcl: rosel2-pwrcl@218 {
-+				reg = <0x218 0x1>;
-+				bits = <4 4>;
-+			};
-+
-+			cpr_ro_sel1_pwrcl: rosel1-pwrcl@219 {
-+				reg = <0x219 0x1>;
-+				bits = <0 4>;
-+			};
-+
-+			cpr_ro_sel0_pwrcl: rosel0-pwrcl@219 {
-+				reg = <0x219 0x1>;
-+				bits = <4 4>;
-+			};
-+
-+			/* CPR Init Voltage: Power Cluster */
-+			cpr_init_voltage3_pwrcl: ivolt3-pwrcl@21a {
-+				reg = <0x21a 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			cpr_init_voltage2_pwrcl: ivolt2-pwrcl@21a {
-+				reg = <0x21a 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			cpr_init_voltage1_pwrcl: ivolt1-pwrcl@21b {
-+				reg = <0x21b 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			cpr_init_voltage0_pwrcl: ivolt0-pwrcl@21c {
-+				reg = <0x21c 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			/* CPR Target Quotients: Power Cluster */
-+			cpr_quot3_pwrcl: quot3-pwrcl@21d {
-+				reg = <0x21d 0x3>;
-+				bits = <6 12>;
-+			};
-+
-+			cpr_quot2_pwrcl: quot2-pwrcl@21f {
-+				reg = <0x21f 0x2>;
-+				bits = <2 11>;
-+			};
-+
-+			cpr_quot1_pwrcl: quot1-pwrcl@220 {
-+				reg = <0x220 0x3>;
-+				bits = <6 12>;
-+			};
-+
-+			cpr_quot0_pwrcl: quot0-pwrcl@222 {
-+				reg = <0x222 0x2>;
-+				bits = <2 12>;
-+			};
-+
-+			/* CPR Quotient Offsets: Power Cluster */
-+			cpr_quot_offset3_pwrcl: qoff3-pwrcl@226 {
-+				reg = <0x226 0x1>;
-+				bits = <1 7>;
-+			};
-+
-+			cpr_quot_offset2_pwrcl: qoff2-pwrcl@227 {
-+				reg = <0x227 0x1>;
-+				bits = <0 7>;
-+			};
-+
-+			cpr_quot_offset1_pwrcl: qoff1-pwrcl@227 {
-+				reg = <0x227 0x2>;
-+				bits = <7 6>;
-+			};
-+
-+			/* CPR Ring Oscillator: Performance Cluster */
-+			cpr_ro_sel3_perfcl: rosel3-perfcl@229 {
-+				reg = <0x229 0x2>;
-+				bits = <6 4>;
-+			};
-+
-+			cpr_ro_sel2_perfcl: rosel2-perfcl@22a {
-+				reg = <0x22a 0x1>;
-+				bits = <2 4>;
-+			};
-+
-+			cpr_ro_sel1_perfcl: rosel1-perfcl@22a {
-+				reg = <0x22a 0x2>;
-+				bits = <6 4>;
-+			};
-+
-+			cpr_ro_sel0_perfcl: rosel0-perfcl@22b {
-+				reg = <0x22b 0x1>;
-+				bits = <2 4>;
-+			};
-+
-+			/* CPR Init Voltage: Performance Cluster */
-+			cpr_init_voltage3_perfcl: ivolt3-perfcl@22b {
-+				reg = <0x22b 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			cpr_init_voltage2_perfcl: ivolt2-perfcl@22c {
-+				reg = <0x22c 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			cpr_init_voltage1_perfcl: ivolt1-perfcl@22d {
-+				reg = <0x22d 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			cpr_init_voltage0_perfcl: ivolt0-perfcl@22e {
-+				reg = <0x22e 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			/* CPR Target Quotients: Performance Cluster */
-+			cpr_quot3_perfcl: quot3-perfcl@22f {
-+				reg = <0x22f 0x2>;
-+				bits = <4 11>;
-+			};
-+
-+			cpr_quot2_perfcl: quot2-perfcl@231 {
-+				reg = <0x231 0x2>;
-+				bits = <0 12>;
-+			};
-+
-+			cpr_quot1_perfcl: quot1-perfcl@232 {
-+				reg = <0x232 0x2>;
-+				bits = <4 12>;
-+			};
-+
-+			cpr_quot0_perfcl: quot0-perfcl@234 {
-+				reg = <0x234 0x2>;
-+				bits = <0 12>;
-+			};
-+
-+			/* CPR Quotient Offsets: Performance Cluster */
-+			cpr_quot_offset3_perfcl: qoff3-perfcl@237 {
-+				reg = <0x237 0x2>;
-+				bits = <7 6>;
-+			};
-+
-+			cpr_quot_offset2_perfcl: qoff2-perfcl@238 {
-+				reg = <0x238 0x2>;
-+				bits = <6 7>;
-+			};
-+
-+			cpr_quot_offset1_perfcl: qoff1-perfcl@239 {
-+				reg = <0x239 0x1>;
-+				bits = <5 3>;
-+			};
-+
- 			qusb2_hstx_trim: hstx-trim@23a {
- 				reg = <0x23a 0x1>;
- 				bits = <0 4>;
-@@ -2871,6 +3547,87 @@ frame@17928000 {
- 			};
- 		};
- 
-+		apc_cprh: power-controller@179c8000 {
-+			compatible = "qcom,msm8998-cprh", "qcom,cprh";
-+			reg = <0x179c8000 0x4000>,
-+			      <0x179c4000 0x4000>;
-+
-+			clocks = <&gcc GCC_HMSS_RBCPR_CLK>;
-+
-+			/* Set the CPR clock here, it needs to match XO */
-+			assigned-clocks = <&gcc GCC_HMSS_RBCPR_CLK>;
-+			assigned-clock-rates = <19200000>;
-+
-+			operating-points-v2 = <&cprh_opp_table>;
-+			power-domains = <&rpmpd MSM8998_VDDCX_AO>;
-+			#power-domain-cells = <1>;
-+
-+			nvmem-cells = <&cpr_efuse_speedbin>,
-+				      <&cpr_fuse_revision>,
-+				      <&cpr_quot0_pwrcl>,
-+				      <&cpr_quot1_pwrcl>,
-+				      <&cpr_quot2_pwrcl>,
-+				      <&cpr_quot3_pwrcl>,
-+				      <&cpr_quot_offset1_pwrcl>,
-+				      <&cpr_quot_offset2_pwrcl>,
-+				      <&cpr_quot_offset3_pwrcl>,
-+				      <&cpr_init_voltage0_pwrcl>,
-+				      <&cpr_init_voltage1_pwrcl>,
-+				      <&cpr_init_voltage2_pwrcl>,
-+				      <&cpr_init_voltage3_pwrcl>,
-+				      <&cpr_ro_sel0_pwrcl>,
-+				      <&cpr_ro_sel1_pwrcl>,
-+				      <&cpr_ro_sel2_pwrcl>,
-+				      <&cpr_ro_sel3_pwrcl>,
-+				      <&cpr_quot0_perfcl>,
-+				      <&cpr_quot1_perfcl>,
-+				      <&cpr_quot2_perfcl>,
-+				      <&cpr_quot3_perfcl>,
-+				      <&cpr_quot_offset1_perfcl>,
-+				      <&cpr_quot_offset2_perfcl>,
-+				      <&cpr_quot_offset3_perfcl>,
-+				      <&cpr_init_voltage0_perfcl>,
-+				      <&cpr_init_voltage1_perfcl>,
-+				      <&cpr_init_voltage2_perfcl>,
-+				      <&cpr_init_voltage3_perfcl>,
-+				      <&cpr_ro_sel0_perfcl>,
-+				      <&cpr_ro_sel1_perfcl>,
-+				      <&cpr_ro_sel2_perfcl>,
-+				      <&cpr_ro_sel3_perfcl>;
-+			nvmem-cell-names = "cpr_speed_bin",
-+					   "cpr_fuse_revision",
-+					   "cpr0_quotient1",
-+					   "cpr0_quotient2",
-+					   "cpr0_quotient3",
-+					   "cpr0_quotient4",
-+					   "cpr0_quotient_offset2",
-+					   "cpr0_quotient_offset3",
-+					   "cpr0_quotient_offset4",
-+					   "cpr0_init_voltage1",
-+					   "cpr0_init_voltage2",
-+					   "cpr0_init_voltage3",
-+					   "cpr0_init_voltage4",
-+					   "cpr0_ring_osc1",
-+					   "cpr0_ring_osc2",
-+					   "cpr0_ring_osc3",
-+					   "cpr0_ring_osc4",
-+					   "cpr1_quotient1",
-+					   "cpr1_quotient2",
-+					   "cpr1_quotient3",
-+					   "cpr1_quotient4",
-+					   "cpr1_quotient_offset2",
-+					   "cpr1_quotient_offset3",
-+					   "cpr1_quotient_offset4",
-+					   "cpr1_init_voltage1",
-+					   "cpr1_init_voltage2",
-+					   "cpr1_init_voltage3",
-+					   "cpr1_init_voltage4",
-+					   "cpr1_ring_osc1",
-+					   "cpr1_ring_osc2",
-+					   "cpr1_ring_osc3",
-+					   "cpr1_ring_osc4";
-+		};
-+
- 		intc: interrupt-controller@17a00000 {
- 			compatible = "arm,gic-v3";
- 			reg = <0x17a00000 0x10000>,       /* GICD */
-
--- 
-2.41.0
-
+Konrad
