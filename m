@@ -2,228 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 145DE76D821
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 21:47:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E1EE76D884
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 22:20:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230023AbjHBTr0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 15:47:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47802 "EHLO
+        id S232039AbjHBUUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 16:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229795AbjHBTrZ (ORCPT
+        with ESMTP id S229924AbjHBUUM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 15:47:25 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99C4E5C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 12:47:23 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id BCE6C3F20C;
-        Wed,  2 Aug 2023 21:47:21 +0200 (CEST)
-Date:   Wed, 2 Aug 2023 21:47:20 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 2 Aug 2023 16:20:12 -0400
+X-Greylist: delayed 505 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Aug 2023 13:20:09 PDT
+Received: from 19.mo581.mail-out.ovh.net (19.mo581.mail-out.ovh.net [178.33.251.118])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7906FF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 13:20:09 -0700 (PDT)
+Received: from director8.ghost.mail-out.ovh.net (unknown [10.108.4.215])
+        by mo581.mail-out.ovh.net (Postfix) with ESMTP id 0451B255E3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 20:11:42 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-bx767 (unknown [10.110.208.218])
+        by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 516431FD16;
+        Wed,  2 Aug 2023 20:11:37 +0000 (UTC)
+Received: from etezian.org ([37.59.142.99])
+        by ghost-submission-6684bf9d7b-bx767 with ESMTPSA
+        id lfT3D3m4ymRdtgAAkSz/Gg
+        (envelope-from <andi@etezian.org>); Wed, 02 Aug 2023 20:11:37 +0000
+Authentication-Results: garm.ovh; auth=pass (GARM-99G003c63778ac-0bbd-4dff-bfae-0bec4c240887,
+                    0C641BB37B7CC30D107EA61C426C60CA54BC1A77) smtp.auth=andi@etezian.org
+X-OVh-ClientIp: 178.238.172.51
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     Wolfram Sang <wsa@kernel.org>, Paul Cercueil <paul@crapouillou.net>
+Cc:     Andi Shyti <andi.shyti@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Elie Morisse <syniurge@gmail.com>,
+        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Jan Dabros <jsd@semihalf.com>,
+        Jean Delvare <jdelvare@suse.com>,
+        Qii Wang <qii.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Peter Korsgaard <peter@korsgaard.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Ryan McCann <quic_rmccann@quicinc.com>
-Subject: Re: [PATCH v2 1/2] drm/msm/dpu: fix DSC 1.2 block lengths
-Message-ID: <z7jhbgeng6ded4nzrn5khu6pzbrsfcibulzzt5huujm6m3nk3y@kmhk6wfoe3h2>
-References: <20230802183655.4188640-1-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Conghui Chen <conghui.chen@intel.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Peter Rosin <peda@axentia.se>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: Re: [PATCH v2 00/22] i2c: Use new PM macros
+Date:   Wed,  2 Aug 2023 22:10:34 +0200
+Message-Id: <169100562778.1919254.5355387350651563678.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230722115046.27323-1-paul@crapouillou.net>
+References: <20230722115046.27323-1-paul@crapouillou.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230802183655.4188640-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 13293781676598954517
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedviedrkedtgdehtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomheptehnughiucfuhhihthhiuceorghnughirdhshhihthhisehkvghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnhepveevieffieefgfefuddvteelffeuhfelffejteejuddvveekveehvdejgeefteevnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepuddvjedrtddrtddruddpudejkedrvdefkedrudejvddrhedupdefjedrheelrddugedvrdelleenucevlhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoegrnhguihesvghtvgiiihgrnhdrohhrgheqpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekuddpmhhouggvpehsmhhtphhouhht
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H5,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-08-02 21:36:54, Dmitry Baryshkov wrote:
-> All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
-> This includes the common block itself, enc subblocks and some empty
-> space around. Change that to pass 0x4 instead, the length of common
-> register block itself.
-> 
-> Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets")
-> Reported-by: Ryan McCann <quic_rmccann@quicinc.com>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+On Sat, 22 Jul 2023 13:50:24 +0200, Paul Cercueil wrote:
+> Here is a revised version of my patchset that converts the I2C drivers
+> to use the new PM macros.
+> 
+> Changes since V1 include:
+> - Previous patch [01/23] that updated the amd-mp2 driver has been
+>   dropped per Jonathan's request.
+> - [09/22]: Unfold _DEV_PM_OPS() macro
+> - [10/22]: Convert to use regular device PM instead of using
+>   platform_driver.{suspend,resume}. I figured it was OK to also change
+>   it to use the new PM macros and keep it in one single patch.
+> - [13/22]: Rewrap runtime PM line
+> 
+> [...]
 
-> ---
-> 
-> Changes since v1:
->  - Rebased on top of the catalog changes
-> 
-> ---
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  8 ++++----
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   |  2 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  8 ++++----
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   |  8 ++++----
->  5 files changed, 19 insertions(+), 19 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index c906b6864b5e..f8d16f9bf528 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -283,22 +283,22 @@ static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
->  static const struct dpu_dsc_cfg sm8350_dsc[] = {
->  	{
->  		.name = "dce_0_0", .id = DSC_0,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_0_1", .id = DSC_1,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_1,
->  	}, {
->  		.name = "dce_1_0", .id = DSC_2,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_1_1", .id = DSC_3,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_1,
->  	},
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 2bf9f34e54c6..3b5061c4402a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -163,7 +163,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
->  static const struct dpu_dsc_cfg sc7280_dsc[] = {
->  	{
->  		.name = "dce_0_0", .id = DSC_0,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_0,
->  	},
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index ccd0477f4877..58f5e25679b1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -286,32 +286,32 @@ static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
->  static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
->  	{
->  		.name = "dce_0_0", .id = DSC_0,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_0_1", .id = DSC_1,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_1,
->  	}, {
->  		.name = "dce_1_0", .id = DSC_2,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_1_1", .id = DSC_3,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_1,
->  	}, {
->  		.name = "dce_2_0", .id = DSC_4,
-> -		.base = 0x82000, .len = 0x29c,
-> +		.base = 0x82000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_2_1", .id = DSC_5,
-> -		.base = 0x82000, .len = 0x29c,
-> +		.base = 0x82000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_1,
->  	},
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 2b2e9d4800f8..1b12178dfbca 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -305,22 +305,22 @@ static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
->  static const struct dpu_dsc_cfg sm8450_dsc[] = {
->  	{
->  		.name = "dce_0_0", .id = DSC_0,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_0_1", .id = DSC_1,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_1,
->  	}, {
->  		.name = "dce_1_0", .id = DSC_2,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_1_1", .id = DSC_3,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_1,
->  	},
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 833be1167499..f2ab02d04440 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -320,22 +320,22 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
->  static const struct dpu_dsc_cfg sm8550_dsc[] = {
->  	{
->  		.name = "dce_0_0", .id = DSC_0,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_0_1", .id = DSC_1,
-> -		.base = 0x80000, .len = 0x29c,
-> +		.base = 0x80000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2),
->  		.sblk = &dsc_sblk_1,
->  	}, {
->  		.name = "dce_1_0", .id = DSC_2,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_0,
->  	}, {
->  		.name = "dce_1_1", .id = DSC_3,
-> -		.base = 0x81000, .len = 0x29c,
-> +		.base = 0x81000, .len = 0x4,
->  		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->  		.sblk = &dsc_sblk_1,
->  	},
-> -- 
-> 2.39.2
-> 
+Applied to i2c/andi-for-next on
+
+https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git
+
+Please note that this patch may still undergo further evaluation
+and the final decision will be made in collaboration with
+Wolfram.
+
+Thank you,
+Andi
+
+Patches applied
+===============
+[01/22] i2c: au1550: Remove #ifdef guards for PM related functions
+        commit: 45a21c833d23848487963cb5d7eab27d748d2491
+[02/22] i2c: iproc: Remove #ifdef guards for PM related functions
+        commit: 679e955c54d83743184c06ffdfae62fcd406825b
+[03/22] i2c: brcmstb: Remove #ifdef guards for PM related functions
+        commit: 6079d3054ba1ffdd3b85fd0b006a7130762ef2b0
+[04/22] i2c: davinci: Remove #ifdef guards for PM related functions
+        commit: d81a91c4bbeac742284cf34edd6ccf121cd15ddb
+[05/22] i2c: designware: Remove #ifdef guards for PM related functions
+        commit: a6ca696a40af0f652dc79b480dbd54096672d2b5
+[06/22] i2c: exynos5: Remove #ifdef guards for PM related functions
+        commit: af65727a77cc3c90e6d01bad387c7c8f337af2ad
+[07/22] i2c: hix5hd2: Remove #ifdef guards for PM related functions
+        commit: 38373903059c7e82d141007fe311cba237a00e86
+[08/22] i2c: i801: Remove #ifdef guards for PM related functions
+        commit: 02d1b6a99b4c5b4f05343aea46da96a8f795836c
+[09/22] i2c: img-scb: Remove #ifdef guards for PM related functions
+        commit: d2150e96646ddbd9a0f7f193107e7c310cbbe455
+[10/22] i2c: kempld: Convert to use regular device PM
+        commit: abef155faf2bb13b7aca9c2df74d63bb81ebcd55
+[11/22] i2c: lpc2k: Remove #ifdef guards for PM related functions
+        commit: a31425a6d93571433aa254b1eb4262ed378a08c2
+[12/22] i2c: mt65xx: Remove #ifdef guards for PM related functions
+        commit: 910047e7741fbfe15a4fdb14de7a2c3d72284d9f
+[13/22] i2c: nomadik: Remove #ifdef guards for PM related functions
+        commit: d55ee2c2f6fe629e6f8eb5b9c824b2545bc9b5d2
+[14/22] i2c: ocores: Remove #ifdef guards for PM related functions
+        commit: f5e33fcc30fa1e4085d6381f50b4f35ca412d708
+[15/22] i2c: pnx: Remove #ifdef guards for PM related functions
+        commit: 1670c7091b2aead73c21f3f27bbac44943d739ae
+[16/22] i2c: pxa: Remove #ifdef guards for PM related functions
+        commit: 605b9efba5d6a290f7ea41bd23ee5a11c3bacfcf
+[17/22] i2c: qup: Remove #ifdef guards for PM related functions
+        commit: aeb96820afefc02b8ac287685c9f6c75e2e56b31
+[18/22] i2c: rcar: Remove #ifdef guards for PM related functions
+        commit: dd4e0c0b6f01cf1c42d8bbb4a29d657a44a64bc0
+[19/22] i2c: s3c2410: Remove #ifdef guards for PM related functions
+        commit: 386d59093b247b258c6257525ff7c74b8ee9e6ca
+[20/22] i2c: sh-mobile: Remove #ifdef guards for PM related functions
+        commit: 8a76e5af8731db81ab325e734c5acfc386d3139c
+[21/22] i2c: virtio: Remove #ifdef guards for PM related functions
+        commit: 61999179835e23f4b245258087bfc20cf3c082ee
+[22/22] i2c: mux: pca954x: Remove #ifdef guards for PM related functions
+        commit: 458405d7c5b85e60a1b68972d1432d20fa9dc557
