@@ -2,106 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AF2B76CAE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 12:34:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F34D76CA62
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 12:04:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233626AbjHBKem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 06:34:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52244 "EHLO
+        id S233345AbjHBKEr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 06:04:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232365AbjHBKeV (ORCPT
+        with ESMTP id S234198AbjHBKEb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 06:34:21 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CA26192;
-        Wed,  2 Aug 2023 03:29:38 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3723mMmO029434;
-        Wed, 2 Aug 2023 09:59:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=3c0uec/qvNsAX7sYfKp/rd963h+yE+MbJo6JqiueQhM=;
- b=SlpFGqJLDJi9nr/PP/Gc9yG+B1JZnA9mYcEgtO4LfllB1uUgQa1lhbKNA/1HzDP9YNhw
- YtrAtBGUyWlt+yl8g3E6uIcUXcmDgvCeLQAKdytkgT9LO2u84XF/M5xJahXp3iAJAtMg
- 4LO5ml3P5zVPVBAdSeioJxrjcTTfSkAlXho6o1qnriae+EgpD/C3+RkMOCWx4sRsNuhR
- Ux16xNgf0JJDWIp+CRBS3xIi9BWmRvIRP3nvKXllsQJLY9pymhFdtdDhSbYhchdNY2F8
- TZrEETXN6cKWS9Nu2EA8dDMKgZ0Th6wCHUprtwy/ADBpgy4rq5RNYLhfpSgGq3JCbfNq vg== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s6yq4aw4e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 09:59:49 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3729xUda006681;
-        Wed, 2 Aug 2023 09:59:30 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3s4uuke10j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 02 Aug 2023 09:59:30 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3729xTYF006628;
-        Wed, 2 Aug 2023 09:59:29 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3729xTUq006622;
-        Wed, 02 Aug 2023 09:59:29 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id B536B1AE6; Wed,  2 Aug 2023 15:29:28 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH 5/8] ARM: dts: qcom: sdx65-mtp: Update the pmic used in sdx65
-Date:   Wed,  2 Aug 2023 15:29:23 +0530
-Message-Id: <1690970366-30982-6-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RQGN4eV6-fduDjR7OUVjaGas6paRhJJf
-X-Proofpoint-GUID: RQGN4eV6-fduDjR7OUVjaGas6paRhJJf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_05,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=557
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308020089
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        Wed, 2 Aug 2023 06:04:31 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D6B7268F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 03:04:29 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe0e201f87so968551e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 03:04:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690970667; x=1691575467;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=izmDC9RsdCQbJBlU11/lW4sdu4loxNg0jjfHkErdNjU=;
+        b=nnXoe2hPcIEKxrCfIDgp36+gTLaXhE+3V34AfVaeJ7+slZE9m3Jt3UEDg+9fpVrEQs
+         AxCXj10Oho+pJzRhWRABQKfEkI8RRDL/q6bTJPvHbRThmmCeaoGMXpQZsKutsKR8blfQ
+         KrqJhrEF9n5skgk9Npl49mEs4WWn6959iXbJzie57MY5tAiJk07B4x5/TZKOoxjYrwzQ
+         RYzDLoGFaguBVKKemaetzrbBVBxaR2gzaK9oWid3gsi8njWUYiL6unAILcfL9A0GAvhP
+         PFFVJMDVFVyVM44Ow1daerxrhZB/RcQLLHKn2LCpyPjOuE7rMgUivrkhY8tQp8Hoogz0
+         KE3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690970667; x=1691575467;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=izmDC9RsdCQbJBlU11/lW4sdu4loxNg0jjfHkErdNjU=;
+        b=lbNoFy+fGDXteOEy0soljyvzxDTFeYbzfsX4VnWDClDud7k7+SaVKCIIZGOcVJKiIv
+         YwsMdHSNXzfZcRJv7blGPrUCuaS94YzhqQ94YgddZvTejSKjbbtrMFS/5TEI+dnNN959
+         pjHn6wYen9YhfGCiziZ95EIVenjkDHygA4MG0bXwcTHu0dCufKyOBrY1/Tf6P31gZ6eU
+         pUTMBR7r58ObSEmFWPjz21YGPYL2n2jBUOKIP12hWq0xyH65GBrBBkGOc1lf6Qb/Da1b
+         /7JXe9o8imNFwNpeTghJfHn5n4iRnqngkpkUJfokqQ4YiTRB7SAhJ4oVVp/1R9iaHkkR
+         F6iw==
+X-Gm-Message-State: ABy/qLa6fja0NpoaOKA+vRGJRXrcTzr35QTFs2QgatomyCoYv2UX+6/R
+        ow+OV9SHvc3HfYsZP8E3OVqO/A==
+X-Google-Smtp-Source: APBJJlHtKlpldz5wlYRKarTCXQhtHX8P4JyvRE88Iz1/6nXjMw2GVdxgC67DCrCFuhOwZ0NGT4Es6Q==
+X-Received: by 2002:ac2:465e:0:b0:4f9:5693:3d2c with SMTP id s30-20020ac2465e000000b004f956933d2cmr1735049lfo.34.1690970667406;
+        Wed, 02 Aug 2023 03:04:27 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id p21-20020a19f015000000b004fbf5242e8bsm2402353lfc.231.2023.08.02.03.04.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Aug 2023 03:04:26 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/8] drm/msm/dpu: change interrupts code to make 0 be the no IRQ
+Date:   Wed,  2 Aug 2023 13:04:18 +0300
+Message-Id: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the pmic used in sdx65 platform to pm7250b.
+Having an explicit init of interrupt fields to -1 for not existing IRQs
+makes it easier to forget and/or miss such initialisation, resulting in
+a wrong interrupt definition.
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Instead shift all IRQ indices to turn '0' to be the non-existing IRQ.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
-index 02d8d6e..fcf1c51 100644
---- a/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
-@@ -7,7 +7,7 @@
- #include "qcom-sdx65.dtsi"
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <arm64/qcom/pmk8350.dtsi>
--#include <arm64/qcom/pm8150b.dtsi>
-+#include <arm64/qcom/pm7250b.dtsi>
- #include "qcom-pmx65.dtsi"
- 
- / {
+Dependencies: [1]
+
+[1] https://patchwork.freedesktop.org/series/118088/
+
+Changes since v4:
+ - Really add a fix for writeback code (got missing in the previous
+   series)
+ - Reworked several printk formats strings to always use IRQ=[%d, %d]
+   (Marijn)
+
+Changes since v3:
+ - Added a fix for writeback code
+ - Fixed articles in commit message (Marijn)
+ - Dropped dpu_hw_intr argument of dpu_core_irq_is_valid() (Marijn)
+ - Reworked REG_IRQ_BIT / REG_IRQ_MASK / REG_IRQ_IDX (Marijn)
+ - Fixed irq format strings (Marijn)
+ - Also updated all trace points to use reg/bit pairs instead of raw
+   index
+
+Changes since v2:
+ - Added the dpu_core_irq_is_valid() helper
+ - Replaced irq_idx with reg/big pairs in kernel output
+ - Readded -1 when accessing the IRQ structure.
+
+Changes since v1:
+ - Rebased on top of msm-next-lumag and updated IRQ rework series.
+
+Dmitry Baryshkov (8):
+  drm/msm/dpu: fix the irq index in
+    dpu_encoder_phys_wb_wait_for_commit_done
+  drm/msm/dpu: remove irq_idx argument from IRQ callbacks
+  drm/msm/dpu: extract dpu_core_irq_is_valid() helper
+  drm/msm/dpu: add helper to get IRQ-related data
+  drm/msm/dpu: make the irq table size static
+  drm/msm/dpu: stop using raw IRQ indices in the kernel output
+  drm/msm/dpu: stop using raw IRQ indices in the kernel traces
+  drm/msm/dpu: shift IRQ indices by 1
+
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |   4 -
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |   4 -
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |   8 -
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  10 --
+ .../msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |   3 -
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |   8 -
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |   3 -
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   1 -
+ .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |   3 -
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   1 -
+ .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |   1 -
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |   8 -
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |   6 -
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  13 --
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  12 --
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  12 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h  |   8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  41 +++--
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |   6 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |   8 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |   4 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  19 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  14 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 160 +++++++++++-------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  20 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h     |  72 ++++----
+ 26 files changed, 195 insertions(+), 254 deletions(-)
+
 -- 
-2.7.4
+2.39.2
 
