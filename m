@@ -2,141 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75B4F76C4AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 07:15:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EB1776C4ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 07:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232321AbjHBFPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 01:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40796 "EHLO
+        id S231818AbjHBFg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 01:36:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232306AbjHBFPP (ORCPT
+        with ESMTP id S231377AbjHBFg1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 01:15:15 -0400
-Received: from mgamail.intel.com (unknown [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C81841736;
-        Tue,  1 Aug 2023 22:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690953314; x=1722489314;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fc2nysuFO9M8VGq9+Fl/1ckOPG9IPmlUO6abXeCqJyk=;
-  b=mYV8sy74yDlu0uAzR1G3yPxHuvkAlEUOefrazmWNKda+88I7KoRYDGcz
-   3H4n7v0Ezof+2h9ccnInqryCO+Cn6BrUZhoLV4iz0PqjmZG8AKaANS+Vx
-   gAtMg5M5vYiyZg5AjBYdc/jty0L+DyEEQE2BJbNNZmT0MZBmYPowssbOS
-   u2mFBi+3eSNc7QsyUNLqWBoIRxdMubfkfBD6YzsiImNhZ/7rtoaxOWe4d
-   IR5fPqacEk99gmQVRoQ8x4EvOSSRoflXwNr5aRjWjPazfNVAv9xxoCTOZ
-   pZUTLf+k37sDGNarvCJPhd+H6lxl8I0R1D+Rp07VIwsjCw7Ny/+qCLlp3
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10789"; a="369480283"
-X-IronPort-AV: E=Sophos;i="6.01,248,1684825200"; 
-   d="scan'208";a="369480283"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2023 22:15:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10789"; a="764064754"
-X-IronPort-AV: E=Sophos;i="6.01,248,1684825200"; 
-   d="scan'208";a="764064754"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by orsmga001.jf.intel.com with ESMTP; 01 Aug 2023 22:15:09 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qR4CS-0000tB-2d;
-        Wed, 02 Aug 2023 05:15:08 +0000
-Date:   Wed, 2 Aug 2023 13:14:44 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
-Message-ID: <202308021312.obgu7FWM-lkp@intel.com>
-References: <1690948281-2143-2-git-send-email-quic_krichai@quicinc.com>
+        Wed, 2 Aug 2023 01:36:27 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3710FE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Aug 2023 22:36:25 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-686f8614ce5so6049173b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Aug 2023 22:36:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690954585; x=1691559385;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=v4Fc7P6F/s9IcK1ZkkE4eKQ9aXOxzO0/vcsB9Z0O/Gk=;
+        b=BBVnGf/vOrDe8m9btKDPytfzv/3xhPsvVTOq6PPU5677am04z3rpQfbGwl5UonDa4R
+         7oHUnEstdprokoKtwBIsc3ttdEXtNM2ePOFFnLtrBs0m8iIHcpvqPONw5X/PFAqWGnvu
+         TX5E8BaZhskQrJ/d3WjL6LFKnto8/IyQ3CMP4lLWIET68PrmxFh9u8o6A9wCG7At/lch
+         5ArMhTg+8YvDFC89vUeYJmouV1H6S0yazsrRKloi4HpCVtvYMQKjWhZFFPvXTn8Hh5p0
+         pN6DCPUYkQgn22EWG4vq1CYg3gLhWsCkdsuhrDeHGW1/a7P0o4mUfnurYjqEpLXNReRg
+         ejSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690954585; x=1691559385;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v4Fc7P6F/s9IcK1ZkkE4eKQ9aXOxzO0/vcsB9Z0O/Gk=;
+        b=QdiB2fc16ZjQpkB3E4jCOpWFcE9nTyb+spNPH0RVDkhg9t7XcHFL6b8ZwkN/JhsyXO
+         +fdt4BaDynYzUYyxjiATm6rPhYH/FFv7g8YHUPW8HPrxe6jr/kZvq8nJhmLy0SOJ6Ev8
+         CPB6uf2ZtMduHGUjKGDtuRJdX4S6tBE6eu4ujli8RY2H1a/MOe59s0IWL6WX9P5CcIJD
+         pUpbjzpOFc00HcIqEjc/Vgj3HgK9fFbJo52YoYY9lRAagKwvSjZ2Z+Vrgo4EAFd0ZBY2
+         1zFqduQPcicdcOxx0D5EhQ7FjHvIUBfzfNzXNtl4nSxPBAWfed8f0hVZpRxafeUPgn6n
+         yH4w==
+X-Gm-Message-State: ABy/qLZ9bl2UuHWSi/Ccc4zQ8Q7ngzyVWHoVQEB7xUETk+9t8Jzn2QlD
+        CTI1IFtOTGUXX8V461TGcP/D
+X-Google-Smtp-Source: APBJJlHOPFFjWAsy/EsguxUGZlcRDKZJJ6x7vD35Quk1YIaSvrN0TR8JHhwQG+8BdPDm5/VTrfRfuQ==
+X-Received: by 2002:a05:6a00:1249:b0:674:6dd4:8337 with SMTP id u9-20020a056a00124900b006746dd48337mr17486395pfi.12.1690954585157;
+        Tue, 01 Aug 2023 22:36:25 -0700 (PDT)
+Received: from thinkpad ([117.193.209.129])
+        by smtp.gmail.com with ESMTPSA id y15-20020a637d0f000000b00563b36264besm10780727pgc.85.2023.08.01.22.36.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Aug 2023 22:36:24 -0700 (PDT)
+Date:   Wed, 2 Aug 2023 11:06:13 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/6] scsi: ufs: host: Add support for parsing OPP
+Message-ID: <20230802053613.GF2370@thinkpad>
+References: <20230731163357.49045-1-manivannan.sadhasivam@linaro.org>
+ <20230731163357.49045-5-manivannan.sadhasivam@linaro.org>
+ <20230801090333.pqqugj4tcarwdl2o@vireshk-i7>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1690948281-2143-2-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230801090333.pqqugj4tcarwdl2o@vireshk-i7>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+On Tue, Aug 01, 2023 at 02:33:33PM +0530, Viresh Kumar wrote:
+> On 31-07-23, 22:03, Manivannan Sadhasivam wrote:
+> > +int ufshcd_opp_config_clks(struct device *dev, struct opp_table *opp_table,
+> > +			   struct dev_pm_opp *opp, void *data,
+> > +			   bool scaling_down)
+> > +{
+> > +	struct ufs_hba *hba = dev_get_drvdata(dev);
+> > +	struct list_head *head = &hba->clk_list_head;
+> > +	struct ufs_clk_info *clki;
+> > +	unsigned long freq;
+> > +	u8 idx = 0;
+> > +	int ret;
+> > +
+> > +	list_for_each_entry(clki, head, list) {
+> > +		if (!IS_ERR_OR_NULL(clki->clk)) {
+> 
+> NULL is considered as a valid clock AFAIR, so you must only be doing
+> IS_ERR() here I guess.
 
-kernel test robot noticed the following build warnings:
+Agree that clk_ APIs accept NULL clk, but we already have IS_ERR_OR_NULL() check
+everywhere in the driver for clk handling. So I used the same for consistency.
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus linus/master v6.5-rc4 next-20230801]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+- Mani
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-endpoint-Add-D-state-change-notifier-support/20230802-115309
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/1690948281-2143-2-git-send-email-quic_krichai%40quicinc.com
-patch subject: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
-config: loongarch-allyesconfig (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202308021312.obgu7FWM-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/pci/endpoint/pci-epc-core.c:795:6: warning: no previous prototype for 'pci_epc_dstate_notity' [-Wmissing-prototypes]
-     795 | void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
-         |      ^~~~~~~~~~~~~~~~~~~~~
-
-
-vim +/pci_epc_dstate_notity +795 drivers/pci/endpoint/pci-epc-core.c
-
-   785	
-   786	/**
-   787	 * pci_epc_dstate_notity() - Notify the EPF driver that EPC device D-state
-   788	 *			has changed
-   789	 * @epc: the EPC device which has change in D-state
-   790	 * @state: the changed D-state
-   791	 *
-   792	 * Invoke to Notify the EPF device that the EPC device has D-state has
-   793	 * changed.
-   794	 */
- > 795	void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
-   796	{
-   797		struct pci_epf *epf;
-   798	
-   799		if (!epc || IS_ERR(epc))
-   800			return;
-   801	
-   802		mutex_lock(&epc->list_lock);
-   803		list_for_each_entry(epf, &epc->pci_epf, list) {
-   804			mutex_lock(&epf->lock);
-   805			if (epf->event_ops && epf->event_ops->dstate_notify)
-   806				epf->event_ops->dstate_notify(epf, state);
-   807			mutex_unlock(&epf->lock);
-   808		}
-   809		mutex_unlock(&epc->list_lock);
-   810	}
-   811	EXPORT_SYMBOL_GPL(pci_epc_dstate_notity);
-   812	
+> 
+> -- 
+> viresh
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
