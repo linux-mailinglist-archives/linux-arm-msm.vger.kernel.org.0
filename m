@@ -2,70 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE6D76D6F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:39:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D08376D713
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230236AbjHBSjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 14:39:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42528 "EHLO
+        id S230076AbjHBSqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 14:46:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbjHBSjw (ORCPT
+        with ESMTP id S231639AbjHBSqv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 14:39:52 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3E51BF0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 11:39:50 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id 006d021491bc7-56c96982829so47133eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 11:39:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691001590; x=1691606390;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=haU7i7v25ac1CcQqTdM2/jDIKeY/5oFZ+LnWdM9648E=;
-        b=lnFvofE/wYHei35mFlKi8Xf//VbtJKBGdqzrnyN9KaPWhwHqn1VK6tEyPQR1JqzGjo
-         QHge13v5S/t1xw+ddkZGNOE34iaJ1EnHH2Sh5S/J7IxMyZlhLb3pj6xeo//daa5wkoSX
-         Dv+NZPh2px1Q/fklxY+OagWSeCviVmnvp6BRnR3vbJz5KsCMSTv7SdOYR6A2U6HhS0ca
-         N3YBLPnQA9el3v7MUY5FbR2Eqfp1r6QSfQgu7Sl/lkMYH6Hla/0EKpERAJQy5cCNhKdG
-         DL3J6clr1Jdkx2zZO6xF8ry07fNhKX71OeB1lyIk+PxWeWqrbJ44Rd9s0r0encDhFP2T
-         n/XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691001590; x=1691606390;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=haU7i7v25ac1CcQqTdM2/jDIKeY/5oFZ+LnWdM9648E=;
-        b=K1EDPADu+1VZOv5QFRfCIvE+WR+kV56YQpY3tPwvgIZoninR3MJdGySOL3EDYddOPM
-         SoDcOI5KEfUPAO/30BL0+MtyiGyglVoTV290W11A/rjCgA24j/6nqrnZ3AL82yWYdoC5
-         QOHVpU7AXjDIZgn9AY1/clSUXW+SI6b8FCPCbUmd/aIaBDu7uoZh1lLKkdLkxQY3qB0X
-         /40glQAT4ytt1NInwjPl6PMW6bCze8gMFBjgvBWckWwe6vnQSXjC6jDorKBGbj1z5Gga
-         1jOQU4orSnhY3sS7hCXuxroGSqHQcIRA6sJbxVXzVdM5AcqtbUdRG5szD3kg6lQyEF+R
-         EinA==
-X-Gm-Message-State: ABy/qLa//focEU+sr2YgAbgoPABcDlbF/b1mHxqMVq0c7ig+U/AdvnEX
-        bB8Y9CowUkt7ShFfo1Ip06tbfLcStbudOEj1cj1KxQ==
-X-Google-Smtp-Source: APBJJlFZV7qFYrarT7AAvLTE6+iQLBZszrYCKxyA/UNyRG6vAJP43Ba+1dHGGSlaT6+6Nu+eFuhIDK498fYoxPbhpyc=
-X-Received: by 2002:a05:6358:6f8a:b0:134:ce27:223c with SMTP id
- s10-20020a0563586f8a00b00134ce27223cmr7027612rwn.27.1691001590159; Wed, 02
- Aug 2023 11:39:50 -0700 (PDT)
+        Wed, 2 Aug 2023 14:46:51 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F40F1BC1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 11:46:50 -0700 (PDT)
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: marex@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id 988DF86851;
+        Wed,  2 Aug 2023 20:46:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1691002008;
+        bh=EKe3hL3JC/TbKuOLimeKzrWst0PmwwaLD2ywLvHXsB0=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=Q77eJFOVAfhbEd5TcqcQxoEr4Yp7P9JLoeBd0GHiUbh/2ocH+JX+MaaL+GjWz7BR5
+         bPNCf10dJR109kBe9z52xokVTToVQlOEqrw2+/dBzBX7SjaehZLznU8IaoL5srWF0T
+         AJ0zz+5tosfxK2ovCYHfenqnefM4QAXosujOA5GCerrJ5GGu/QjE/Ub90foupFuHQx
+         dh/ApJQ26eIYhpXO+VPSYlAnbgneiEKilS5FVxZP+VxXxnzdZGXtKpUg3U9VtAJcpM
+         KvVeec4pIPeWS1BKeUYUSxG7THGYMpjUT+5fPaBpGD7/s8a+inFvTpgsCyB9dHoPSx
+         PPjz0OMRiE10w==
+Message-ID: <8d4a4595-1aeb-1069-3558-275f56cb4516@denx.de>
+Date:   Wed, 2 Aug 2023 20:46:47 +0200
 MIME-Version: 1.0
-References: <20230802183655.4188640-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230802183655.4188640-1-dmitry.baryshkov@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 2 Aug 2023 21:39:39 +0300
-Message-ID: <CAA8EJprY-MzO4S130VRqSavxOuB8d5tG-0yghEeY60niQysdMQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] drm/msm/dpu: fix DSC 1.2 block lengths
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Ryan McCann <quic_rmccann@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+Content-Language: en-US
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        neil.armstrong@linaro.org, Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jagan Teki <jagan@amarulasolutions.com>,
+        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
+ <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+ <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
+ <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
+ <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
+ <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
+ <51d782c4-3539-c3d3-6844-d6b9a39c09eb@linaro.org>
+ <88a49ed7-8132-3212-1f7a-9378eb640d68@denx.de>
+ <d4b778f6-35b6-fc1b-014d-eaa9b3b900a4@linaro.org>
+ <c9e42b81-f0b4-05a7-03db-786fa7d38135@denx.de>
+ <9fae9cc5-7de0-7a65-8400-bb55263c0377@quicinc.com>
+From:   Marek Vasut <marex@denx.de>
+In-Reply-To: <9fae9cc5-7de0-7a65-8400-bb55263c0377@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,190 +85,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Aug 2023 at 21:36, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
-> This includes the common block itself, enc subblocks and some empty
-> space around. Change that to pass 0x4 instead, the length of common
-> register block itself.
->
-> Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets")
-> Reported-by: Ryan McCann <quic_rmccann@quicinc.com>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+On 8/2/23 19:49, Abhinav Kumar wrote:
+> Hi Marek
+> 
+> On 8/2/2023 10:25 AM, Marek Vasut wrote:
+>> On 8/2/23 15:08, neil.armstrong@linaro.org wrote:
+>>> Hi Marek,
+>>>
+>>> On 02/08/2023 14:25, Marek Vasut wrote:
+>>>> On 8/2/23 10:39, neil.armstrong@linaro.org wrote:
+>>>>> Hi Marek,
+>>>>
+>>>> Hi,
+>>>>
+>>>>> On 13/07/2023 20:28, Marek Vasut wrote:
+>>>>>
+>>>>> <snip>
+>>>>>
+>>>>>>>>
+>>>>>>>> MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped 
+>>>>>>>> by DSIM.
+>>>>>>>>
+>>>>>>>> Maybe there is a need for new set of flags which differentiate 
+>>>>>>>> between HBP skipped (i.e. NO HBP) and HBP LP11 ?
+>>>>>>>>
+>>>>>>>
+>>>>>>> No, the section of the MIPI DSI spec I posted below clearly 
+>>>>>>> states there are two options:
+>>>>>>>
+>>>>>>> 1) send blanking packets during those periods
+>>>>>>> 2) transition to LP11 during those periods
+>>>>>>>
+>>>>>>> There is no 3rd option in the spec of not doing both like what 
+>>>>>>> you are suggesting. So DSIM should also be only transitioning to 
+>>>>>>> LP11 during those periods if its not sending the blanking packets 
+>>>>>>> with those flags set.
+>>>>>>>
+>>>>>>> So, there is no need for any new set of flags to differentiate.
+>>>>>>>
+>>>>>>> The flags and their interpretation is correct in MSM driver. I 
+>>>>>>> cannot comment on what exactly DSIM does with those flags.
+>>>>>>
+>>>>>> How do you explain the comment in include/drm/drm_mipi_dsi.h:
+>>>>>>
+>>>>>> 128 /* disable hback-porch area */
+>>>>>> 129 #define MIPI_DSI_MODE_VIDEO_NO_HBP      BIT(6)
+>>>>>
+>>>>> Can you specify how you determined those flags were needed on DSIM 
+>>>>> ? a vendor tree ? a datasheet ?
+>>>>
+>>>> The following upstream commit:
+>>>>
+>>>> 996e1defca344 ("drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags")
+>>>>
+>>>>> In the meantime, we should revert this patch because it regresses 
+>>>>> some Qcom
+>>>>> based platforms until we figure out what's missing to make DSIM 
+>>>>> based boards
+>>>>> happy.
+>>>>>
+>>>>> I'll send a revert change afterwards.
+>>>>
+>>>> That change would break existing use case on i.MX8M then, I disagree 
+>>>> with that revert.
+>>>
+>>> As I understand the timeline is :
+>>>
+>>> - 996e1defca344 was merged in v6.2-rc2 and caused regression on NXP 
+>>> platforms
+>>>
+>>> - 8ddce13ae696 was merged in v6.5-rc1 to fix that but caused 
+>>> regression on QCOM platforms
+>>>
+>>> Did I miss something ?
+>>
+>> That looks about right.
+>>
+>>> I don't know how to handle this apart reverting 8ddce13ae696 and 
+>>> trying to find a proper fix that doesn't regress QCOM.
+>>
+>> I provided a suggestion above -- I believe QCOM is misinterpreting the 
+>> NO_H* flags and it needs separate flags for its behavior. The NXP 
+>> hardware per MX8M{M,N,P} reference manual (which is available at 
+>> NXP.com) skips the H* areas in the transfer, which matches the flags 
+>> description:
+>>
+>> include/drm/drm_mipi_dsi.h-/* disable hback-porch area */
+>> include/drm/drm_mipi_dsi.h:#define MIPI_DSI_MODE_VIDEO_NO_HBP   BIT(6)
+>>
+>> If the QCOM hardware does something else, it should introduce its own 
+>> set of flags for that something else and that would be problem solved, 
+>> for both platforms.
+>>
+>> I don't have access to the QCOM hardware or datasheet however, is 
+>> either available ?
+>>
+> 
+> Like I have written above, the DSI spec gives two options which we can 
+> do in the HBP/HSA/HFP periods:
+> 
+> 1) Transition to LP11 which means blanking packets will not be sent
+> 2) Send blanking packets during those periods
+> 
+> That flag controls exactly that and thats what MSM does.
+> 
+> There is no third option in the spec to not do either.
+> 
+> Now, are you saying that those flags are providing some other third 
+> option which is not even there in the DSI spec?
 
-Of course, it should have been v3, with the v2 having been sent on
-July 8th. Confusion is the price of sending a series with no cover
-letter. Please excuse me.
-
->
-> Changes since v1:
->  - Rebased on top of the catalog changes
->
-> ---
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  8 ++++----
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   |  2 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  8 ++++----
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   |  8 ++++----
->  5 files changed, 19 insertions(+), 19 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index c906b6864b5e..f8d16f9bf528 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -283,22 +283,22 @@ static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
->  static const struct dpu_dsc_cfg sm8350_dsc[] = {
->         {
->                 .name = "dce_0_0", .id = DSC_0,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_0_1", .id = DSC_1,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_1,
->         }, {
->                 .name = "dce_1_0", .id = DSC_2,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_1_1", .id = DSC_3,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_1,
->         },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 2bf9f34e54c6..3b5061c4402a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -163,7 +163,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
->  static const struct dpu_dsc_cfg sc7280_dsc[] = {
->         {
->                 .name = "dce_0_0", .id = DSC_0,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_0,
->         },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index ccd0477f4877..58f5e25679b1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -286,32 +286,32 @@ static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
->  static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
->         {
->                 .name = "dce_0_0", .id = DSC_0,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_0_1", .id = DSC_1,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_1,
->         }, {
->                 .name = "dce_1_0", .id = DSC_2,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_1_1", .id = DSC_3,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_1,
->         }, {
->                 .name = "dce_2_0", .id = DSC_4,
-> -               .base = 0x82000, .len = 0x29c,
-> +               .base = 0x82000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_2_1", .id = DSC_5,
-> -               .base = 0x82000, .len = 0x29c,
-> +               .base = 0x82000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_1,
->         },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 2b2e9d4800f8..1b12178dfbca 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -305,22 +305,22 @@ static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
->  static const struct dpu_dsc_cfg sm8450_dsc[] = {
->         {
->                 .name = "dce_0_0", .id = DSC_0,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_0_1", .id = DSC_1,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_1,
->         }, {
->                 .name = "dce_1_0", .id = DSC_2,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_1_1", .id = DSC_3,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_1,
->         },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 833be1167499..f2ab02d04440 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -320,22 +320,22 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
->  static const struct dpu_dsc_cfg sm8550_dsc[] = {
->         {
->                 .name = "dce_0_0", .id = DSC_0,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_0_1", .id = DSC_1,
-> -               .base = 0x80000, .len = 0x29c,
-> +               .base = 0x80000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2),
->                 .sblk = &dsc_sblk_1,
->         }, {
->                 .name = "dce_1_0", .id = DSC_2,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_0,
->         }, {
->                 .name = "dce_1_1", .id = DSC_3,
-> -               .base = 0x81000, .len = 0x29c,
-> +               .base = 0x81000, .len = 0x4,
->                 .features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN),
->                 .sblk = &dsc_sblk_1,
->         },
-> --
-> 2.39.2
->
-
-
--- 
-With best wishes
-Dmitry
+Can you please have a look at the i.MX8M reference manual and read 
+exactly what that controller does , then compare it to the QCOM 
+controller behavior ?
