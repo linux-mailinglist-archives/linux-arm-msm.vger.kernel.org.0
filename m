@@ -2,128 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D088A76C4A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 07:10:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75B4F76C4AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 07:15:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232246AbjHBFKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 01:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
+        id S232321AbjHBFPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 01:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231903AbjHBFKq (ORCPT
+        with ESMTP id S232306AbjHBFPP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 01:10:46 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7965D1FCB;
-        Tue,  1 Aug 2023 22:10:44 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3724WEPx028031;
-        Wed, 2 Aug 2023 05:10:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=JGQQ2RRYZ1qf9bibWVUm1IHA4vj9lwvMXXEvTgPZB9s=;
- b=BwGucw4cad6IJRVo6KTZ34lqAdCgdb/NXM6gSF1Z/NsI0zhryTDNxveTJogT3mR+rCRg
- Xogjwil1SrVOmzcc3ly/KQ3aEdoJjPFE9SiRCzVikk8Q5xnOwDH4mwE2YtGwufGmsWIR
- cWIPJhgdwBW+Pp9a8Zv5TUEf0DmzcW2REhsVsHicNvJa7BCnK/DkDYwecEWN0Cw1v2CR
- MrfVCtKvN/7GMi8mz3S1ersYW7t//CLFwk3KEgJWZkARmU1CXTMPrx0OUhnM9lgJv4eo
- CJGvnOFbPvqDvLWBcm4UYZaCpYI68yoXxMQdqsXK/VC76L/9XTcT2JCS26EkO8HTgomi 2Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s7adk8m0g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 05:10:40 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3725AdmW023636
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Aug 2023 05:10:39 GMT
-Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Tue, 1 Aug 2023 22:10:36 -0700
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
-Subject: [PATCH v3] misc: fastrpc: Fix incorrect DMA mapping unmap request
-Date:   Wed, 2 Aug 2023 10:40:32 +0530
-Message-ID: <1690953032-17070-1-git-send-email-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 2 Aug 2023 01:15:15 -0400
+Received: from mgamail.intel.com (unknown [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C81841736;
+        Tue,  1 Aug 2023 22:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690953314; x=1722489314;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fc2nysuFO9M8VGq9+Fl/1ckOPG9IPmlUO6abXeCqJyk=;
+  b=mYV8sy74yDlu0uAzR1G3yPxHuvkAlEUOefrazmWNKda+88I7KoRYDGcz
+   3H4n7v0Ezof+2h9ccnInqryCO+Cn6BrUZhoLV4iz0PqjmZG8AKaANS+Vx
+   gAtMg5M5vYiyZg5AjBYdc/jty0L+DyEEQE2BJbNNZmT0MZBmYPowssbOS
+   u2mFBi+3eSNc7QsyUNLqWBoIRxdMubfkfBD6YzsiImNhZ/7rtoaxOWe4d
+   IR5fPqacEk99gmQVRoQ8x4EvOSSRoflXwNr5aRjWjPazfNVAv9xxoCTOZ
+   pZUTLf+k37sDGNarvCJPhd+H6lxl8I0R1D+Rp07VIwsjCw7Ny/+qCLlp3
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10789"; a="369480283"
+X-IronPort-AV: E=Sophos;i="6.01,248,1684825200"; 
+   d="scan'208";a="369480283"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2023 22:15:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10789"; a="764064754"
+X-IronPort-AV: E=Sophos;i="6.01,248,1684825200"; 
+   d="scan'208";a="764064754"
+Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 01 Aug 2023 22:15:09 -0700
+Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qR4CS-0000tB-2d;
+        Wed, 02 Aug 2023 05:15:08 +0000
+Date:   Wed, 2 Aug 2023 13:14:44 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
+Message-ID: <202308021312.obgu7FWM-lkp@intel.com>
+References: <1690948281-2143-2-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gTMHd-1VJt47SGVj2KF1yS310-ZxNrcN
-X-Proofpoint-GUID: gTMHd-1VJt47SGVj2KF1yS310-ZxNrcN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_03,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- priorityscore=1501 phishscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 clxscore=1015 mlxlogscore=967 adultscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308020046
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1690948281-2143-2-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Scatterlist table is obtained during map create request and the same
-table is used for DMA mapping unmap. In case there is any failure
-while getting the sg_table, ERR_PTR is returned instead of sg_table.
+Hi Krishna,
 
-When the map is getting freed, there is only a non-NULL check of
-sg_table which will also be true in case failure was returned instead
-of sg_table. This would result in improper unmap request. Add proper
-check before setting map table to avoid bad unmap request.
+kernel test robot noticed the following build warnings:
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
-Changes in v2:
-  - Added fixes information to commit text
-Changes in v3:
-  - Set map->table only if attachment for successful
+[auto build test WARNING on pci/next]
+[also build test WARNING on pci/for-linus linus/master v6.5-rc4 next-20230801]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
- drivers/misc/fastrpc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-endpoint-Add-D-state-change-notifier-support/20230802-115309
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/1690948281-2143-2-git-send-email-quic_krichai%40quicinc.com
+patch subject: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
+config: loongarch-allyesconfig (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/config)
+compiler: loongarch64-linux-gcc (GCC) 12.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/reproduce)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 9666d28..de7c812 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -756,6 +756,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-+	struct sg_table *table;
- 	int err = 0;
- 
- 	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
-@@ -783,11 +784,12 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 		goto attach_err;
- 	}
- 
--	map->table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
--	if (IS_ERR(map->table)) {
--		err = PTR_ERR(map->table);
-+	table = dma_buf_map_attachment(map->attach, DMA_BIDIRECTIONAL);
-+	if (IS_ERR(table)) {
-+		err = PTR_ERR(table);
- 		goto map_err;
- 	}
-+	map->table = table;
- 
- 	if (attr & FASTRPC_ATTR_SECUREMAP) {
- 		map->phys = sg_phys(map->table->sgl);
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308021312.obgu7FWM-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/pci/endpoint/pci-epc-core.c:795:6: warning: no previous prototype for 'pci_epc_dstate_notity' [-Wmissing-prototypes]
+     795 | void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
+         |      ^~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/pci_epc_dstate_notity +795 drivers/pci/endpoint/pci-epc-core.c
+
+   785	
+   786	/**
+   787	 * pci_epc_dstate_notity() - Notify the EPF driver that EPC device D-state
+   788	 *			has changed
+   789	 * @epc: the EPC device which has change in D-state
+   790	 * @state: the changed D-state
+   791	 *
+   792	 * Invoke to Notify the EPF device that the EPC device has D-state has
+   793	 * changed.
+   794	 */
+ > 795	void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
+   796	{
+   797		struct pci_epf *epf;
+   798	
+   799		if (!epc || IS_ERR(epc))
+   800			return;
+   801	
+   802		mutex_lock(&epc->list_lock);
+   803		list_for_each_entry(epf, &epc->pci_epf, list) {
+   804			mutex_lock(&epf->lock);
+   805			if (epf->event_ops && epf->event_ops->dstate_notify)
+   806				epf->event_ops->dstate_notify(epf, state);
+   807			mutex_unlock(&epf->lock);
+   808		}
+   809		mutex_unlock(&epc->list_lock);
+   810	}
+   811	EXPORT_SYMBOL_GPL(pci_epc_dstate_notity);
+   812	
+
 -- 
-2.7.4
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
