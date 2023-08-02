@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5D6976D6B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:21:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F0376D6CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 20:22:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231732AbjHBSVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 14:21:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34990 "EHLO
+        id S232292AbjHBSW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 14:22:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230440AbjHBSU7 (ORCPT
+        with ESMTP id S234314AbjHBSWt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 14:20:59 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0281A1724
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 11:20:58 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d124309864dso87467276.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 11:20:57 -0700 (PDT)
+        Wed, 2 Aug 2023 14:22:49 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDAD31BD5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 11:22:44 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5860c7fc2fcso323447b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 11:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691000457; x=1691605257;
+        d=linaro.org; s=google; t=1691000564; x=1691605364;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Homk9fjzMS9bRt7+JLpaV1MTVogVxSAQQC2/ioeMDYs=;
-        b=cglIoM6sjH+zBmascjr/gM8vL+7gGGCZUdjV7mtnF4yV93Ty1l53erEyXgHv12bEbu
-         pGBzH8Vc+EfShQRn+4dhoS9n8u3BWsfRj1iPSR1StLh7wfqj9zBS2BxrpS159whlJxnS
-         7igu1uBdIQZmyX5FUSm95WTDBuA+DQdQzA88TLo0kFBaqvp/39CX+1885MQbkKmumIyj
-         N+bjctQEtPoHBBKONrWT37KN+X0+n3X47G50DXRFIbP+oEZLc2mQeBeDdEjcL1DcqUE7
-         /HUW1SKIx1jsTQnc2UrbYAq2Q55WP63D25gB0VeIzPVYByqE1SPvhEodu0WjfvK94SiF
-         SbVw==
+        bh=Ae5epmyMSgwEaKPoiZdDHz+XlPWQsao3AH8Jqs9WmdU=;
+        b=UuqXKQfOGoWGMgGrhbzQ7Wa0/vXE/PUmfIVrIYA9KkQvmIFU/S5Eo9JvSfi0pm11uu
+         VyHZup/WLbdqVsF0nfd5Ho2XcMC+1tlM9ssgHC0FQstbia3K70xkAzuV0SNyAs/DzKQt
+         kmlPg8Sb+MSfYIwSBqS3H8dPFn3WYFmE0eDMVeA/EnYkoHXGoRFnz+uEx1Gy3qGQbnoV
+         9l3MOYYUM9CXOZ9KjIy57KCeno+2RambOPlV02yrJSN29vjf62d/1peDAzGVb+FaLOh9
+         ZKdDM8oRS70Ri/LQHtPVXCmXMm/a4NihlVaTAPODCRZYzceXEGpapsv7QZnsHaK1PhM8
+         IudA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691000457; x=1691605257;
+        d=1e100.net; s=20221208; t=1691000564; x=1691605364;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Homk9fjzMS9bRt7+JLpaV1MTVogVxSAQQC2/ioeMDYs=;
-        b=itU2ZGDzk5xj2bkNKulzDOqhMCTxtd0W5P9eJhgmToHoHXoH9t3MVDBPh5CULoae7D
-         C9cHhKnuigGslkJ1hPbf7kI64Dw3BnhMLGZsuhKvZsHJBpEs6mkLsxQrXNk1Udcd8zku
-         +n0GMI5/PjsPFTW/UL71F2bgKLZu/Emkb13I11J9e8kz2xlEXRFotA9ozGzE82bWs4QC
-         eelulWALX0q/Ju4gjzPSv3+Esud9S4YQNylqRb5jbogueL+xtPcyNeU0zvOlkeumQUOk
-         xhejUNkd66DYkbgACuXpWqX0SgJEcNGoB90xTj6zf+fMknEh0eMgllnbF+gGO3/gbAUn
-         tcdg==
-X-Gm-Message-State: ABy/qLbQSpu9K2Y/uwBWn/rr2ayO4Bnr8MBcrhczEQqD4h9aXORYz1NV
-        BJtQEP/nMaCCHFk56/5BXRYiUTGtYc+8XcbK3jZjtA==
-X-Google-Smtp-Source: APBJJlGdRkk9ZTw77IAlIa2EQ5+EbP7+f/MNQsqxMuzb2A7BYiWokn6e+q+V79qBOo+lQb7f/hDZkW2TA/vLhi6yLSY=
-X-Received: by 2002:a25:4d87:0:b0:d35:7c2a:e912 with SMTP id
- a129-20020a254d87000000b00d357c2ae912mr6332121ybb.3.1691000457217; Wed, 02
- Aug 2023 11:20:57 -0700 (PDT)
+        bh=Ae5epmyMSgwEaKPoiZdDHz+XlPWQsao3AH8Jqs9WmdU=;
+        b=QkMR0MNUCdDLlGjpgTSgcuM2uwdAV7Grkb3LUP61cZK8TyO/txU6PkQRG2gpKsuY4u
+         HOW0zoMFp6I7hCvXkl6n8pBkrpuDLXwd/yEvU9QR2ZBe8mDx4V3figP9cOxfbfJJxDYc
+         OTVyCL/tPTD5ro/BQToSmdbAKhF+Z9/rID7C7U070x6jqpsdKfu8YvAtYEpf8dAnuCXq
+         mVdc543B2zLN2nWFQmBZQr8OGJS1lPmkhxqKoBGjCvQVvFtmLts060+p0TYhsRExsqFp
+         Sn0qhuWkmuZRfF7u4Zjmln0UuxmvjCcsSlDkG/Ma7wEiHTkL/sxX/btJhngUpqcImQ3G
+         DSsA==
+X-Gm-Message-State: ABy/qLZIsgar0/uaICfmYrMlkd5ow7jEursf1jF0nkE7VKDNr6Znx7sD
+        Ltx0gQLOqqIKzzUFHdtfUVGdYgFmIRR8qDU8sPgBTw==
+X-Google-Smtp-Source: APBJJlGZ6j6qKs+9G6d2w79KwHIPTThBY36/+BubF52WqifMDyo3N6LxG7I0oOMtg4goYv9jDrIm2vRKw2e81Yj1nck=
+X-Received: by 2002:a25:5542:0:b0:c12:29ac:1d3b with SMTP id
+ j63-20020a255542000000b00c1229ac1d3bmr13193825ybb.11.1691000563690; Wed, 02
+ Aug 2023 11:22:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com> <20230802-add-widebus-support-v3-2-2661706be001@quicinc.com>
-In-Reply-To: <20230802-add-widebus-support-v3-2-2661706be001@quicinc.com>
+References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com> <20230802-add-widebus-support-v3-1-2661706be001@quicinc.com>
+In-Reply-To: <20230802-add-widebus-support-v3-1-2661706be001@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 2 Aug 2023 21:20:46 +0300
-Message-ID: <CAA8EJpoPd_T+vLVrJ6RpCrYY6H1xLF4eFYVGV4N-wS3g+5cR-w@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] drm/msm/dpu: Enable widebus for DSI INTF
+Date:   Wed, 2 Aug 2023 21:22:32 +0300
+Message-ID: <CAA8EJpogs_AsU5CG22m+azdGvDdyDuJE+89n67EoBxmoFtTsWQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] drm/msm/dpu: Move DPU encoder wide_bus_en setting
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
@@ -62,9 +62,9 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -73,128 +73,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, 2 Aug 2023 at 21:09, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 >
-> DPU supports a data-bus widen mode for DSI INTF.
->
-> Enable this mode for all supported chipsets if widebus is enabled for DSI.
+> Move the setting of dpu_enc.wide_bus_en to
+> dpu_encoder_virt_atomic_enable() so that it mirrors the setting of
+> dpu_enc.dsc.
+
+because ... ?
+
 >
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 11 ++++++++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  4 +++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          |  3 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  1 +
->  drivers/gpu/drm/msm/msm_drv.h                        |  6 +++++-
->  5 files changed, 20 insertions(+), 5 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+
+Other than the commit message:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 >
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 3dcd37c48aac..de08aad39e15 100644
+> index d34e684a4178..3dcd37c48aac 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1196,15 +1196,20 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+> @@ -1194,11 +1194,18 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+>         struct dpu_encoder_virt *dpu_enc = NULL;
+>         int ret = 0;
 >         struct drm_display_mode *cur_mode = NULL;
->         struct msm_drm_private *priv = drm_enc->dev->dev_private;
->         struct msm_display_info *disp_info;
-> +       int index;
+> +       struct msm_drm_private *priv = drm_enc->dev->dev_private;
+> +       struct msm_display_info *disp_info;
 >
 >         dpu_enc = to_dpu_encoder_virt(drm_enc);
->         disp_info = &dpu_enc->disp_info;
->
 > +       disp_info = &dpu_enc->disp_info;
-> +       index = disp_info->h_tile_instance[0];
-> +
+>
 >         dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
+>
+> +       if (disp_info->intf_type == INTF_DP)
+> +               dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+> +                               priv->dp[disp_info->h_tile_instance[0]]);
+> +
+>         mutex_lock(&dpu_enc->enc_lock);
+>         cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
+>
+> @@ -2383,10 +2390,6 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+>         timer_setup(&dpu_enc->frame_done_timer,
+>                         dpu_encoder_frame_done_timeout, 0);
 >
 > -       if (disp_info->intf_type == INTF_DP)
 > -               dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
 > -                               priv->dp[disp_info->h_tile_instance[0]]);
-> +       if (disp_info->intf_type == INTF_DSI)
-> +               dpu_enc->wide_bus_en = msm_dsi_is_widebus_enabled(priv->dsi[index]);
-> +       else if (disp_info->intf_type == INTF_DP)
-> +               dpu_enc->wide_bus_en = msm_dp_wide_bus_available(priv->dp[index]);
-
-If you change the order, you won't have to touch DP lines.
-
->
->         mutex_lock(&dpu_enc->enc_lock);
->         cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index df88358e7037..dace6168be2d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -69,8 +69,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->                                 phys_enc->hw_intf,
->                                 phys_enc->hw_pp->idx);
->
-> -       if (intf_cfg.dsc != 0)
-> +       if (intf_cfg.dsc != 0) {
->                 cmd_mode_cfg.data_compress = true;
-> +               cmd_mode_cfg.wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
-> +       }
-
-This embeds the knowledge that a wide bus can only be enabled when DSC
-is in use. Please move the wide_bus_en assignment out of conditional
-code.
-
->
->         if (phys_enc->hw_intf->ops.program_intf_cmd_cfg)
->                 phys_enc->hw_intf->ops.program_intf_cmd_cfg(phys_enc->hw_intf, &cmd_mode_cfg);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 8ec6505d9e78..dc6f3febb574 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -521,6 +521,9 @@ static void dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *ctx,
-
-This function is only enabled for DPU >= 7.0, while IIRC wide bus can
-be enabled even for some of the earlier chipsets.
-
->         if (cmd_mode_cfg->data_compress)
->                 intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
->
-> +       if (cmd_mode_cfg->wide_bus_en)
-> +               intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
-> +
->         DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
->  }
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 77f80531782b..c539025c418b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -50,6 +50,7 @@ struct dpu_hw_intf_status {
->
->  struct dpu_hw_intf_cmd_mode_cfg {
->         u8 data_compress;       /* enable data compress between dpu and dsi */
-> +       u8 wide_bus_en;         /* enable databus widen mode */
->  };
->
->  /**
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 9d9d5e009163..e4f706b16aad 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -344,6 +344,7 @@ void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi
->  bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
->  bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
->  bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
-> +bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi);
->  struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
->  #else
->  static inline void __init msm_dsi_register(void)
-> @@ -373,7 +374,10 @@ static inline bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
->  {
->         return false;
->  }
 > -
-> +static inline bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi)
-> +{
-> +       return false;
-> +}
-
-Empty line, please.
-
->  static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
->  {
->         return NULL;
+>         INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>                         dpu_encoder_off_work);
+>         dpu_enc->idle_timeout = IDLE_TIMEOUT;
 >
 > --
 > 2.41.0
