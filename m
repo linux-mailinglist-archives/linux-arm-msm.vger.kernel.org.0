@@ -2,112 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E60E376D0C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 17:00:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C752B76D0C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 17:00:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234647AbjHBPAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 11:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53000 "EHLO
+        id S231209AbjHBPAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 11:00:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233762AbjHBPAI (ORCPT
+        with ESMTP id S234652AbjHBPAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 11:00:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891C92103;
-        Wed,  2 Aug 2023 08:00:05 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372DnRW6025456;
-        Wed, 2 Aug 2023 14:59:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=nqKKN7meQbdRNJo9KlOngNjsLMfb0nu5TkjgpFuhl4o=;
- b=MzbueZdP+ltGTq63fOi0dvI5wWkJvJEqIYHICaoVv88EoqfSINXKW2COYNou7Sh/3Oiw
- c3luWqCI2P3Kt/oIRnlMxZjsveu4NY6D0AfPO9DZ4yF8SnrEaKbm2Puv+dOWncPy/9sv
- IVQtPqLjbvGeV3GOV869qdV9IiBCIRrnqvRdeN/Z6I3qIn5TQq9T98Gg17VaVLK6p6Fc
- Bse2pz9y7AcPnporLAzpmxjH1pQurljRGsjA4V5FkVdMkd+U5KIItr+p+PC5Vd52gQ1v
- Z/b0aSVcD9xmbdDcc+s3MyVv7Kf0pGfFjTj/KAkEUilS9MOTVsFBazUPfuo4+MQmRul+ QA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s760c2n8g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Aug 2023 14:59:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372ExuPZ018039
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Aug 2023 14:59:56 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 2 Aug 2023 07:59:55 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>
-CC:     <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
-        <stanislaw.gruszka@linux.intel.com>, <quic_carlv@quicinc.com>,
-        <quic_ajitpals@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <Markus.Elfring@web.de>,
-        "Pranjal Ramajor Asha Kanojiya" <quic_pkanojiy@quicinc.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH v2] accel/qaic: Fix slicing memory leak
-Date:   Wed, 2 Aug 2023 08:59:37 -0600
-Message-ID: <20230802145937.14827-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Wed, 2 Aug 2023 11:00:10 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E359E1BFD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 08:00:08 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fb4146e8fcso7193565e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 08:00:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690988407; x=1691593207;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EH/qoegRHnu+b8cDz/dAxuYea2UnuHQevVxVsME5zDE=;
+        b=cg/AqtTBjcSV1POS/R+K3T9D6D959LYVz9EDSHG0z8h31rpvPfkTxOlOfXME6wfPU0
+         fFEbcFmYLGE4y3tPWmE1O01eKQZdzy2afIc+j2F55AJGxvYTQibjq9tHDd4O1KnLkkPJ
+         /huz0fhvd007cO8R/jnxmV1w8VDkzGyiE3nxVeJx7M8zsq36aTFqqUqF5Xkl/BJdQ+G9
+         a8ivIi/AAS+fuBqW3MGRWxBapI3zpXp+qy5uc1rpkt6rz3wqHqlN0kof+Bvj8qbUvJed
+         u99T/YmlEp1XGtVczNAszJih7vjUNiEzFixV2YT1J68NVB8slxQl4eWrjE95SQDJBof1
+         ds6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690988407; x=1691593207;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EH/qoegRHnu+b8cDz/dAxuYea2UnuHQevVxVsME5zDE=;
+        b=O009nW2ABAfPDPpwXHCdIGHIHH4oDmx6kv/ezE7kWZPHIqQVSOT3wDXP+5bmXYcCWY
+         8ao+8lepCy16R9QueMHEC6k+3NBiVxOyL4CvCMfFe3JJEWI5ClRMP5Imr/CWdK1fWXn8
+         CFyFqsnhjLT/VqlIfUQmUcjOLeVqlWKCywbGqCL9X5mRDrYvtOqzvyMaJ4BrNZqY4pqc
+         sk7vglDGEKn9jfXl42KD6YZFxFPN8q09QuM8Y6sRImQsM3ENHPXRgVC4geCLYjGAv6+u
+         2E9ALRVGvAkr2k9S+475xJRfq9i7t2fbKrGVpF9m7HVVUYUquyQKMKIvycDIV9lMnjLP
+         plPA==
+X-Gm-Message-State: ABy/qLZL2Ipe2fxtIvXuV+M2JiIjLHhhSHqzTlFXFlGecH2vQxKDVV9b
+        f6HMHTRrSEhncq21iw5KlON+kA==
+X-Google-Smtp-Source: APBJJlGnlpiErGS8FzQdyQBwLIDnGemOvU40eJ7NKOtGO9NFZ2M6zJQqZKx6d4fN3t/cngq1FDDBsQ==
+X-Received: by 2002:a05:600c:1d06:b0:3fe:3389:122f with SMTP id l6-20020a05600c1d0600b003fe3389122fmr1667528wms.1.1690988407271;
+        Wed, 02 Aug 2023 08:00:07 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id p16-20020a1c7410000000b003fe263dab33sm1904438wmc.9.2023.08.02.08.00.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Aug 2023 08:00:06 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     linux-arm-msm@vger.kernel.org,
+        Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
+        stable <stable@kernel.org>
+In-Reply-To: <1690984656-11761-1-git-send-email-quic_ekangupt@quicinc.com>
+References: <1690984656-11761-1-git-send-email-quic_ekangupt@quicinc.com>
+Subject: Re: [PATCH v4] misc: fastrpc: Fix incorrect DMA mapping unmap
+ request
+Message-Id: <169098840645.77008.10424849723734584416.b4-ty@linaro.org>
+Date:   Wed, 02 Aug 2023 16:00:06 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vGiXcTrgX75lrD_nxlkN8ZH58tXCyAzw
-X-Proofpoint-ORIG-GUID: vGiXcTrgX75lrD_nxlkN8ZH58tXCyAzw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-02_10,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
- phishscore=0 clxscore=1011 bulkscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308020132
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-The temporary buffer storing slicing configuration data from user is only
-freed on error.  This is a memory leak.  Free the buffer unconditionally.
+On Wed, 02 Aug 2023 19:27:36 +0530, Ekansh Gupta wrote:
+> Scatterlist table is obtained during map create request and the same
+> table is used for DMA mapping unmap. In case there is any failure
+> while getting the sg_table, ERR_PTR is returned instead of sg_table.
+> 
+> When the map is getting freed, there is only a non-NULL check of
+> sg_table which will also be true in case failure was returned instead
+> of sg_table. This would result in improper unmap request. Add proper
+> check before setting map table to avoid bad unmap request.
+> 
+> [...]
 
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
+Applied, thanks!
 
-v2: reword commit text
+[1/1] misc: fastrpc: Fix incorrect DMA mapping unmap request
+      commit: 3042d44f7e49c74f2928b4780c66564632449bab
 
- drivers/accel/qaic/qaic_data.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index e9a1cb779b30..6b6d981a71be 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1021,6 +1021,7 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
- 	bo->dbc = dbc;
- 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
- 	drm_gem_object_put(obj);
-+	kfree(slice_ent);
- 	srcu_read_unlock(&qdev->dev_lock, qdev_rcu_id);
- 	srcu_read_unlock(&usr->qddev_lock, usr_rcu_id);
- 
+Best regards,
 -- 
-2.40.1
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
