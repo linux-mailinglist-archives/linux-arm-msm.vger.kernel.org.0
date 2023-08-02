@@ -2,141 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E468976D517
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:26:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E5D276D612
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 19:51:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbjHBRZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 13:25:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47806 "EHLO
+        id S234123AbjHBRvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 13:51:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjHBRZ5 (ORCPT
+        with ESMTP id S234181AbjHBRun (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 13:25:57 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4393ED;
-        Wed,  2 Aug 2023 10:25:56 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-583fe10bb3cso82826357b3.2;
-        Wed, 02 Aug 2023 10:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690997156; x=1691601956;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=YpPXroXrivp2oqSXrd5mVrkzp3XdQTSk9hrAgVtYUMI=;
-        b=di135iIWW+eTqzw4vL43zpQ02LIFyGoRZR7ZhFsNukaq27imiHGAlcaz3pSlptp5Dp
-         EwYJEpfS5XBfF5e6JZQZijnreYABU5nMNqk6RCYQN8xlX/zNNnt+sjIiPokyWwZJbpqD
-         TP8vfYN9zToVR9ljOLLtq1Frm9VQkuFkXVdHJ1BJ/u0xKQRp3x9v41IACG9ZhfVf3ZOS
-         4UrbUOj1Hgihw7yx+7VZynYoM9+zSsWWOVZkbCu+FxF84jha0q3eO6wRgv+Qe9ihw2P7
-         gWiqKytdPdybEIo2UORvZChskMiIVcvjQM+4JoXMYTRKUlSqb6gcjQsKlYBzV8GYvYDx
-         V94A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690997156; x=1691601956;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YpPXroXrivp2oqSXrd5mVrkzp3XdQTSk9hrAgVtYUMI=;
-        b=E8o/GHSRxn7iRONkUsZQ8ZRDZw0f5IRhlnzUbuDeOfSLe3NE8UT+QDA7Tsag00CE4m
-         HP9KN/OKx8Zy6ncHkjD98QvSI6OIkQa/yA2l4Dz165CqBHEZD9w4M5p1B5D6C0SK+FVI
-         kcqJVQiRRMS28vqOZFjw6vno4XBeT8mdHIHGGlgiBGh1rjvCX/ooCIWBPNj1ufMKwxhA
-         z+rNAsGyfLBDv9CxSEWN2Q4FM6VPxn0nTVLTSx1NzC3jROgMGHLsVn4LnmUfoSgZoqei
-         cNQPCnMxdT4Tb4yjMh0pb98EwdUbwH3qccoSFArgBDY9Jr0pv7MB0S+/V00bnXMPnety
-         ecjg==
-X-Gm-Message-State: ABy/qLYmfiFjjDjE5kNY1FLXQO+DkISIxfhb9Z20v/CNHcrL4q6bWZVA
-        2DzwY3DpASoXLZW6Z+XasG0=
-X-Google-Smtp-Source: APBJJlEt7z7QZtDchjFQrTTiyOdhjoBA522GpyLibMtT4mAHwoGMoo1oTrWqNFzmBJaiw8V99Oc7mQ==
-X-Received: by 2002:a81:c313:0:b0:576:f0d6:3d68 with SMTP id r19-20020a81c313000000b00576f0d63d68mr18840238ywk.32.1690997155892;
-        Wed, 02 Aug 2023 10:25:55 -0700 (PDT)
-Received: from neuromancer. ([75.28.21.198])
-        by smtp.gmail.com with ESMTPSA id a135-20020a0dd88d000000b0057a67df3308sm4677099ywe.101.2023.08.02.10.25.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 10:25:55 -0700 (PDT)
-Message-ID: <64ca91a3.0d0a0220.8e58d.89b3@mx.google.com>
-X-Google-Original-Message-ID: <ZMqRoAEesL5GAflV@neuromancer.>
-Date:   Wed, 2 Aug 2023 12:25:52 -0500
-From:   Chris Morgan <macroalpha82@gmail.com>
-To:     Maxime Ripard <mripard@kernel.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        cros-qcom-dts-watchers@chromium.org, linux-input@vger.kernel.org,
-        hsinyi@google.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        yangcong5@huaqin.corp-partner.google.com
-Subject: Re: [PATCH v3 02/10] drm/panel: Check for already prepared/enabled
- in drm_panel
-References: <20230725203545.2260506-1-dianders@chromium.org>
- <20230725133443.v3.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
- <snx3fzvf3icauri2xuigydvpqxtzhp34mptdxvifi7jswm2evy@sx7jr7zwvjw5>
- <CAD=FV=VcsTik+HD11xeDM2Jq9ispcX0-j5QtK8D1qUkrGabRGg@mail.gmail.com>
- <i3cbgrc365lwscwux2itho6uv74ji3hsjuge4zoxfnlnhacyqc@r73mmifyxffj>
- <CADcbR4JB0h8fByM2Z6diByvWaFprW9GDapBNt+YLWr9-vKoe7A@mail.gmail.com>
- <kuctj2p353nsae24lrhcymqqpfajbc7qoqly63zpwvdp6lgu3b@kk4gpzsapxnn>
+        Wed, 2 Aug 2023 13:50:43 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B005F3C12
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 10:49:52 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372DO9o1026791;
+        Wed, 2 Aug 2023 17:49:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/h5iN9dUI/LoZOiwTjf8345ud477edgZpv5BBlPCv7A=;
+ b=CoAECWefA/Szyp4QPHeJvvYuSZWgoRgSGWZbUokzvHktUriMjtNZdlx5F8TRViJxr8dU
+ nlV+yfgnJVKuV4hDnl/stfK2utfe1MqpiehNVQR2Ukug1NLvSSSG3DnRQfLGbDSkvAr/
+ 9qAaE/8V6nIx2H/XbUJ0doOt7bEJnhEnrNuW76LCBr2Zrn6P/OXTUVoHGCFupxP4a1Y7
+ O4lj4Dsbl8D2Qk1ob5ZvrvJfO467iO8xIUYTmigC4fdhw48Dpr1PJklAmrxVsiUafEXa
+ 2P+dJLmBKr/eeqsiz2eV6Wm/gaTy60AJ6bXP8KEAj/Lon1gnF1SyYinB+DND9sbNi324 KQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75dgb3wf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Aug 2023 17:49:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372Hn4M4011685
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Aug 2023 17:49:04 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
+ 2023 10:49:03 -0700
+Message-ID: <9fae9cc5-7de0-7a65-8400-bb55263c0377@quicinc.com>
+Date:   Wed, 2 Aug 2023 10:49:02 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <kuctj2p353nsae24lrhcymqqpfajbc7qoqly63zpwvdp6lgu3b@kk4gpzsapxnn>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+Content-Language: en-US
+To:     Marek Vasut <marex@denx.de>, <neil.armstrong@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Jagan Teki <jagan@amarulasolutions.com>,
+        <dri-devel@lists.freedesktop.org>, Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
+ <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+ <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
+ <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
+ <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
+ <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
+ <51d782c4-3539-c3d3-6844-d6b9a39c09eb@linaro.org>
+ <88a49ed7-8132-3212-1f7a-9378eb640d68@denx.de>
+ <d4b778f6-35b6-fc1b-014d-eaa9b3b900a4@linaro.org>
+ <c9e42b81-f0b4-05a7-03db-786fa7d38135@denx.de>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <c9e42b81-f0b4-05a7-03db-786fa7d38135@denx.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ECGW1qWEatLmkMpazbtMdmmABW7dPkqk
+X-Proofpoint-ORIG-GUID: ECGW1qWEatLmkMpazbtMdmmABW7dPkqk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-02_14,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 clxscore=1011 malwarescore=0
+ suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=882 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308020157
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 31, 2023 at 07:03:07PM +0200, Maxime Ripard wrote:
-> Hi,
-> 
-> On Mon, Jul 31, 2023 at 11:33:22AM -0500, Chris Morgan wrote:
-> > In my case a few different panel drivers disable the regulators in the
-> > unprepare/disable routines.
-> 
-> And that's totally fine.
-> 
-> > For at least the Rockchip DSI implementations for some reason the
-> > panel gets unprepared more than once, which triggers an unbalanced
-> > regulator disable.
-> 
-> "For some reason" being that DW-DSI apparently finds it ok to bypass any
-> kind of abstraction and randomly calling panel functions by itself:
-> 
-> https://elixir.bootlin.com/linux/v6.4.7/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L868
-> 
-> It looks like it's fixed it current drm-misc-next though.
+Hi Marek
 
-Good, when I get a chance I will test it out with the existing panels
-I have at my disposal and submit some patches to clean them up.
+On 8/2/2023 10:25 AM, Marek Vasut wrote:
+> On 8/2/23 15:08, neil.armstrong@linaro.org wrote:
+>> Hi Marek,
+>>
+>> On 02/08/2023 14:25, Marek Vasut wrote:
+>>> On 8/2/23 10:39, neil.armstrong@linaro.org wrote:
+>>>> Hi Marek,
+>>>
+>>> Hi,
+>>>
+>>>> On 13/07/2023 20:28, Marek Vasut wrote:
+>>>>
+>>>> <snip>
+>>>>
+>>>>>>>
+>>>>>>> MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped 
+>>>>>>> by DSIM.
+>>>>>>>
+>>>>>>> Maybe there is a need for new set of flags which differentiate 
+>>>>>>> between HBP skipped (i.e. NO HBP) and HBP LP11 ?
+>>>>>>>
+>>>>>>
+>>>>>> No, the section of the MIPI DSI spec I posted below clearly states 
+>>>>>> there are two options:
+>>>>>>
+>>>>>> 1) send blanking packets during those periods
+>>>>>> 2) transition to LP11 during those periods
+>>>>>>
+>>>>>> There is no 3rd option in the spec of not doing both like what you 
+>>>>>> are suggesting. So DSIM should also be only transitioning to LP11 
+>>>>>> during those periods if its not sending the blanking packets with 
+>>>>>> those flags set.
+>>>>>>
+>>>>>> So, there is no need for any new set of flags to differentiate.
+>>>>>>
+>>>>>> The flags and their interpretation is correct in MSM driver. I 
+>>>>>> cannot comment on what exactly DSIM does with those flags.
+>>>>>
+>>>>> How do you explain the comment in include/drm/drm_mipi_dsi.h:
+>>>>>
+>>>>> 128 /* disable hback-porch area */
+>>>>> 129 #define MIPI_DSI_MODE_VIDEO_NO_HBP      BIT(6)
+>>>>
+>>>> Can you specify how you determined those flags were needed on DSIM ? 
+>>>> a vendor tree ? a datasheet ?
+>>>
+>>> The following upstream commit:
+>>>
+>>> 996e1defca344 ("drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags")
+>>>
+>>>> In the meantime, we should revert this patch because it regresses 
+>>>> some Qcom
+>>>> based platforms until we figure out what's missing to make DSIM 
+>>>> based boards
+>>>> happy.
+>>>>
+>>>> I'll send a revert change afterwards.
+>>>
+>>> That change would break existing use case on i.MX8M then, I disagree 
+>>> with that revert.
+>>
+>> As I understand the timeline is :
+>>
+>> - 996e1defca344 was merged in v6.2-rc2 and caused regression on NXP 
+>> platforms
+>>
+>> - 8ddce13ae696 was merged in v6.5-rc1 to fix that but caused 
+>> regression on QCOM platforms
+>>
+>> Did I miss something ?
+> 
+> That looks about right.
+> 
+>> I don't know how to handle this apart reverting 8ddce13ae696 and 
+>> trying to find a proper fix that doesn't regress QCOM.
+> 
+> I provided a suggestion above -- I believe QCOM is misinterpreting the 
+> NO_H* flags and it needs separate flags for its behavior. The NXP 
+> hardware per MX8M{M,N,P} reference manual (which is available at 
+> NXP.com) skips the H* areas in the transfer, which matches the flags 
+> description:
+> 
+> include/drm/drm_mipi_dsi.h-/* disable hback-porch area */
+> include/drm/drm_mipi_dsi.h:#define MIPI_DSI_MODE_VIDEO_NO_HBP   BIT(6)
+> 
+> If the QCOM hardware does something else, it should introduce its own 
+> set of flags for that something else and that would be problem solved, 
+> for both platforms.
+> 
+> I don't have access to the QCOM hardware or datasheet however, is either 
+> available ?
+> 
 
-> 
-> > Obviously though the correct course of action is to fix the reason why
-> > the panel is disabled more than once, but that's at least the root
-> > cause of this behavior on the few panels I've worked with.
-> 
-> Like I said we already have a commit on the way to fix that, so it
-> shouldn't be an issue anymore.
-> 
-> I stand by what I was saying earlier though, I think it's mostly
-> cargo-cult or drivers being very wrong. If anything, the DW-DSI stuff
-> made me even more convinced that we shouldn't even entertain that idea
-> :)
-> 
-> Maxime
+Like I have written above, the DSI spec gives two options which we can 
+do in the HBP/HSA/HFP periods:
 
-Thank you, and yes if a driver is doing something it shouldn't we
-shouldn't be patching around that, we should be fixing things. Thanks
-for providing me with the additional info.
+1) Transition to LP11 which means blanking packets will not be sent
+2) Send blanking packets during those periods
 
-Chris
+That flag controls exactly that and thats what MSM does.
+
+There is no third option in the spec to not do either.
+
+Now, are you saying that those flags are providing some other third 
+option which is not even there in the DSI spec?
+
+
+>> So, The main issue is around the real meaning of the 
+>> IPI_DSI_MODE_VIDEO_NO_* flags,
+>> Exynos DRM removed the HSA, HBP and HFP packets, Qcom DSI moves the 
+>> DSI lanes
+>> state to LP-11 during the period.
+>>
+>> The behavior is significantly different and the naming doesn't suggest 
+>> any
+>> correct behavior.
+>>
+>> The only solution is to find out why :
+>> - On Qcom platforms, having the HSA, HBP and HFP periods is OK, but 
+>> not on DSIM
+>> - On DSIM, removing the HSA, HBP and HFP periods is fine
+>> - What's the exact requirement of the lt9611 bridge concerning those 
+>> periods
+> 
+> See above.
