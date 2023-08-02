@@ -2,143 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C855376CF34
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69CA876CF30
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 15:49:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232824AbjHBNvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 09:51:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43082 "EHLO
+        id S229492AbjHBNtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 09:49:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232556AbjHBNvt (ORCPT
+        with ESMTP id S230392AbjHBNtq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 09:51:49 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B214132
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Aug 2023 06:51:48 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id 6a1803df08f44-63cfe6e0c32so47168416d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Aug 2023 06:51:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20221208.gappssmtp.com; s=20221208; t=1690984307; x=1691589107;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=l1zIwGQ1HZMb0pN+mUSGNHuePnalac4Pl8tVWYqsfVw=;
-        b=nn/5AxkS768/jvAiPhVwNmrYfMymkvIhBxizk84LoThX/jtNxpq5b3gruU6lrYUmjS
-         yLmNxZXOnJ3yALNI2clOe97krKwCf2yvznzlmKTEau/BsR4mntw25XMynGRXjWaqFMip
-         9wsASCi70GrftHbVGekSQyLRUqFTiLc8d0SP9o/SUo2LaJxwl8WP4H0xoEDgCTcnSD41
-         Eo2U3DmxIJtXBOsUv3C6VCAIGn3iThTkb+50kSPenb3KkBl/wW73UfggTC6N31jeoVzr
-         Ya5YIK3zv0vx0gF9aPvVnsErWu3NXu4jqH/N1DE1pJCkZBwkAL2HUOv1g/M88qwPd9LB
-         K5vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690984307; x=1691589107;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l1zIwGQ1HZMb0pN+mUSGNHuePnalac4Pl8tVWYqsfVw=;
-        b=ZxgEQMiq3lwVgXKEWgyzpsbsixxC5u7YMtktmJoOlcuZnH+fQ3PQdnIuDn5Tus77pU
-         Clx4rx1Hf6fWjuwfa8ImZCiCvpUx7JWoUhZYTgArZ++CAdHv5jRFEoYoV54MfD2T/a0e
-         ZlJuudjOYEs4Kd0C7ormwq/CZC5PcH3MGg6gRedjbLiS+ZTYIIeCnN5Rdn4lRa+U3hTX
-         zcdJUaIOPmxX8SiRfNGDONkg9u0wV1kXbEDSz/f8uLouK2ipL+jLcEa4bJ9vp0gJFG8K
-         Czw3vKzM9oYX2uEWU+ryZcBoEzkRtzs0tbHotws2pB7G46Ymb9ZyBZeAsyoXDMiWy6yM
-         PLMQ==
-X-Gm-Message-State: ABy/qLYdqXeJj5uvdqStCClbIwn4/Su+Vc7YO52/OQNcsy9IzELf0OeZ
-        G76A4eJllhmR8y1ZGkj6NPIcVg==
-X-Google-Smtp-Source: APBJJlFmLcYtLxH6sMGVtzSX8BEJweW9TY6EYu1M71HYfJNUqmKuzhIUPnezEohxfEVeACGveZXtog==
-X-Received: by 2002:a0c:e448:0:b0:63d:4a9b:b29f with SMTP id d8-20020a0ce448000000b0063d4a9bb29fmr14482083qvm.65.1690984307163;
-        Wed, 02 Aug 2023 06:51:47 -0700 (PDT)
-Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id k24-20020a05620a143800b0076c9e981b6bsm3492191qkj.57.2023.08.02.06.51.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Aug 2023 06:51:46 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/dpu: increase memtype count to 16 for sm8550
-Date:   Wed,  2 Aug 2023 09:48:53 -0400
-Message-Id: <20230802134900.30435-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
+        Wed, 2 Aug 2023 09:49:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB8FDC;
+        Wed,  2 Aug 2023 06:49:45 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372AAWu4005236;
+        Wed, 2 Aug 2023 13:49:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=g43xVjYg1vuP+BwMaOXl5nwdrLL57nsRQFXxYLnIuP4=;
+ b=b/tvbUQ9R3DTMxZyUMiSQz8LVT/iFfVRrnoFdturA5+cByYvmyW23dTZeU9j+KTOQq/X
+ +upclq4Gl/gn/ipDrRX9W4eLwMTHTC1bm8PFq+1mnx8VwGtTTvw07FYFTI+PBFH6A4HN
+ hMqgs/eRlTeqsAGHygo525J5u7FQp1WxIrKhRUkOXSH3+f9vc/ebyA6zr3q0EgD11BDc
+ hVUE6JWYSFwRE36H516MGjYI/a25x7Zy+7ThO6XSMqey2/AfR7LmGLH9WPTw4rPilyEr
+ ATcm4sFVn5gZjIXq1yNtKjA4OEtQpcW+OZFmRv3tX9pahp/J5IOsgP50/zgafCXhZZnp oA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s7fre1erq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Aug 2023 13:49:40 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372DndaE019914
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Aug 2023 13:49:39 GMT
+Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
+ 2023 06:49:36 -0700
+Message-ID: <7f7aab67-69a3-b2ca-0bed-30cb6a5bca16@quicinc.com>
+Date:   Wed, 2 Aug 2023 19:19:33 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3] misc: fastrpc: Fix incorrect DMA mapping unmap request
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>,
+        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
+References: <1690953032-17070-1-git-send-email-quic_ekangupt@quicinc.com>
+ <4059684f-2e44-ccd6-4c65-5137cc76492c@linaro.org>
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <4059684f-2e44-ccd6-4c65-5137cc76492c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IB4G8ESR6Vrl4m6q2s6a5d9H2mti2mSB
+X-Proofpoint-ORIG-GUID: IB4G8ESR6Vrl4m6q2s6a5d9H2mti2mSB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-02_09,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=972 bulkscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
+ suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2308020122
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-sm8550 has 16 vbif clients.
 
-This fixes the extra 2 clients (DMA4/DMA5) not having their memtype
-initialized. This fixes DMA4/DMA5 planes not displaying correctly.
 
-Fixes: efcd0107 ("drm/msm/dpu: add support for SM8550")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  4 ++--
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 20 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index f17b9a7fee85..89a2ac1e840d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -245,8 +245,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
- 	.merge_3d = sm8550_merge_3d,
- 	.intf_count = ARRAY_SIZE(sm8550_intf),
- 	.intf = sm8550_intf,
--	.vbif_count = ARRAY_SIZE(sdm845_vbif),
--	.vbif = sdm845_vbif,
-+	.vbif_count = ARRAY_SIZE(sm8550_vbif),
-+	.vbif = sm8550_vbif,
- 	.perf = &sm8550_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 0de507d4d7b7..8b17a4a9b438 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -663,6 +663,26 @@ static const struct dpu_vbif_cfg sdm845_vbif[] = {
- 	},
- };
- 
-+static const struct dpu_vbif_cfg sm8550_vbif[] = {
-+	{
-+	.name = "vbif_rt", .id = VBIF_RT,
-+	.base = 0, .len = 0x1040,
-+	.features = BIT(DPU_VBIF_QOS_REMAP),
-+	.xin_halt_timeout = 0x4000,
-+	.qos_rp_remap_size = 0x40,
-+	.qos_rt_tbl = {
-+		.npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
-+		.priority_lvl = sdm845_rt_pri_lvl,
-+		},
-+	.qos_nrt_tbl = {
-+		.npriority_lvl = ARRAY_SIZE(sdm845_nrt_pri_lvl),
-+		.priority_lvl = sdm845_nrt_pri_lvl,
-+		},
-+	.memtype_count = 16,
-+	.memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-+	},
-+};
-+
- /*************************************************************
-  * PERF data config
-  *************************************************************/
--- 
-2.26.1
-
+On 8/2/2023 7:13 PM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 02/08/2023 06:10, Ekansh Gupta wrote:
+>> Scatterlist table is obtained during map create request and the same
+>> table is used for DMA mapping unmap. In case there is any failure
+>> while getting the sg_table, ERR_PTR is returned instead of sg_table.
+>>
+>> When the map is getting freed, there is only a non-NULL check of
+>> sg_table which will also be true in case failure was returned instead
+>> of sg_table. This would result in improper unmap request. Add proper
+>> check before setting map table to avoid bad unmap request.
+>>
+>> Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke 
+>> method")
+>> Cc: stable <stable@kernel.org>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>> Changes in v2:
+>>    - Added fixes information to commit text
+>> Changes in v3:
+>>    - Set map->table only if attachment for successful
+>>
+>>   drivers/misc/fastrpc.c | 8 +++++---
+>>   1 file changed, 5 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 9666d28..de7c812 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -756,6 +756,7 @@ static int fastrpc_map_create(struct fastrpc_user 
+>> *fl, int fd,
+>>   {
+>>       struct fastrpc_session_ctx *sess = fl->sctx;
+>>       struct fastrpc_map *map = NULL;
+>> +    struct sg_table *table;
+>>       int err = 0;
+>>       if (!fastrpc_map_lookup(fl, fd, ppmap, true))
+>> @@ -783,11 +784,12 @@ static int fastrpc_map_create(struct 
+>> fastrpc_user *fl, int fd,
+>>           goto attach_err;
+>>       }
+>> -    map->table = dma_buf_map_attachment_unlocked(map->attach, 
+>> DMA_BIDIRECTIONAL);
+>> -    if (IS_ERR(map->table)) {
+>> -        err = PTR_ERR(map->table);
+>> +    table = dma_buf_map_attachment(map->attach, DMA_BIDIRECTIONAL);
+> 
+> Any reason why dma_buf_map_attachment_unlocked changed to 
+> dma_buf_map_attachment?
+This is a mistake from my end. My local workspace had older version due 
+to which the function also got reverted. I will fix this in new patch. 
+Apologies for the confusion.
+> 
+> --srini
+>> +    if (IS_ERR(table)) {
+>> +        err = PTR_ERR(table);
+>>           goto map_err;
+>>       }
+>> +    map->table = table;
+>>       if (attr & FASTRPC_ATTR_SECUREMAP) {
+>>           map->phys = sg_phys(map->table->sgl);
