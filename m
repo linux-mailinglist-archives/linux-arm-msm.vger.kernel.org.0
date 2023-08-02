@@ -2,96 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68D4D76D313
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 17:57:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0BC376D398
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Aug 2023 18:26:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233788AbjHBP5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 11:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
+        id S229932AbjHBQ0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 12:26:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235315AbjHBP45 (ORCPT
+        with ESMTP id S229701AbjHBQ0K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 11:56:57 -0400
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7344A199F;
-        Wed,  2 Aug 2023 08:56:51 -0700 (PDT)
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1bb84194bf3so875ad.3;
-        Wed, 02 Aug 2023 08:56:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690991810; x=1691596610;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1DUYdxnB2FNg3/y055eS3dja8IzXKkYToY1e5G8lvIE=;
-        b=iZFJPGzOKD4kuZELBjxisC36JMXIalGDi+lqY3ebDMR+uuXO+eIf1v0QtHUfTBHFD7
-         BWgFbeVYTqRvtWryw4cGpcS2N7VlW0BEdopdDRwEjNrE86IUzsYinq5W8KbUaNMPNmdd
-         z3xSYLG4Lcp82if/vNRTpwAPLbiQkfVEPeKqdTF3MSk6GkPgC/2L5Cbaf4Icv8UbPCfA
-         Xc53JConNNEAFDZR9vxxuK4uKt4Aa6jRhjjI0pSVzNpBU+MCEOBrdr/54fVB6CNxIKpY
-         Xvb0qsNIe05Zdcnhe1XxFw4+kXyTGyTkGnzU8LLcj3C1bNdu2gLeZ+0TivfVZq0u3TGX
-         VT0g==
-X-Gm-Message-State: ABy/qLai8Ez2rMYIB0E5jHB1OoSxa1Hl9Y7gdydYBNNBtMpM5xuj38CJ
-        yWjwhJq5RXNesQT17z2LEQQ=
-X-Google-Smtp-Source: APBJJlGf1pSqV9JSKYgTp/bl7ILF6WcP5BFRWmnG+g9QT6rddzR3jFN5rGzwa7EawiOqJVC/rU96+Q==
-X-Received: by 2002:a17:902:dacf:b0:1bb:b74c:88f6 with SMTP id q15-20020a170902dacf00b001bbb74c88f6mr17926330plx.16.1690991810237;
-        Wed, 02 Aug 2023 08:56:50 -0700 (PDT)
-Received: from ?IPV6:2620:15c:211:201:3b5d:5926:23cf:5139? ([2620:15c:211:201:3b5d:5926:23cf:5139])
-        by smtp.gmail.com with ESMTPSA id e16-20020a17090301d000b001b8b2fb52d4sm12599048plh.203.2023.08.02.08.56.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Aug 2023 08:56:49 -0700 (PDT)
-Message-ID: <3c6bd78b-c716-1c47-6d82-f6551e85251e@acm.org>
-Date:   Wed, 2 Aug 2023 08:56:47 -0700
+        Wed, 2 Aug 2023 12:26:10 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BB91FFA;
+        Wed,  2 Aug 2023 09:26:06 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 372E7f1i028328;
+        Wed, 2 Aug 2023 15:16:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=l27L1z+fYh8L3ZhSSl3etbSXBI7anqfGlqjXvz1VcQM=;
+ b=cUrJgIK4QWL8orqSU9cB9WcD9MoUcdP7a+IgT2POv4gUjWMRWLRWbXRzlOZF0Bjl9MRM
+ MbbshXB43bGPH3uRIKQqoCxPWRp6twV8GkC4+6ShWffxyjjReBDxSfsTWrjc9M0mgaHO
+ aallzm6bWIeHUxQs/He2Vq74229RhIvFdmOvoxQGtp95T5l34EP2aj7EjUCGiwq3qOjF
+ NTTaIxpZtwkpO8tFM9CUz/yhcDjqP/OKv0nGiw26HoJq4tVz1U1hbmxy+ccVtatczamM
+ 0PD1oNNlUrQr7YLrAFLiGoAUJoeiP4UQMwr83DYQWlRqyzvvE453e8KJZ5w3kPpDsRq8 /w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75dgasd1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Aug 2023 15:16:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 372FG32r000824
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Aug 2023 15:16:03 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
+ 2023 08:16:02 -0700
+Message-ID: <a36af0d6-f6bf-39f8-825d-c743dbd6e84e@quicinc.com>
+Date:   Wed, 2 Aug 2023 09:16:01 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] scsi: ufs: qcom: Make struct ufs_qcom_bw_table static
- const
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH][V2][next] accel/qaic: remove redundant pointer pexec
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
-        martin.petersen@oracle.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230802040154.10652-1-manivannan.sadhasivam@linaro.org>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20230802040154.10652-1-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+        Colin Ian King <colin.i.king@gmail.com>,
+        Carl Vanderlip <quic_carlv@quicinc.com>,
+        "Oded Gabbay" <ogabbay@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+CC:     <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230726140626.264952-1-colin.i.king@gmail.com>
+ <dc7fdd8a-b3c4-b931-61be-b9bc467c6a85@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <dc7fdd8a-b3c4-b931-61be-b9bc467c6a85@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 71YLkLg0-fdy5LzX6hH5l4uUHqpY7jSM
+X-Proofpoint-ORIG-GUID: 71YLkLg0-fdy5LzX6hH5l4uUHqpY7jSM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-02_11,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=752 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308020135
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/1/23 21:01, Manivannan Sadhasivam wrote:
-> ufs_qcom_bw_table is not modified anywhere. So make it static const so that
-> it can be placed in read-only memory.
+On 8/1/2023 8:05 AM, Pranjal Ramajor Asha Kanojiya wrote:
 > 
-> Reported-by: Bart Van Assche <bvanassche@acm.org>
-> Closes: https://lore.kernel.org/linux-scsi/43cd0057-c6d8-bc92-08f4-d767336d2cfe@acm.org/
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/ufs/host/ufs-qcom.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 75a1fd295f34..0341c025e818 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -58,7 +58,7 @@ enum {
->   	MODE_MAX,
->   };
->   
-> -struct __ufs_qcom_bw_table {
-> +static const struct __ufs_qcom_bw_table {
->   	u32 mem_bw;
->   	u32 cfg_bw;
->   } ufs_qcom_bw_table[MODE_MAX + 1][QCOM_UFS_MAX_GEAR + 1][QCOM_UFS_MAX_LANE + 1] = {
+> On 7/26/2023 7:36 PM, Colin Ian King wrote:
+>> Pointer pexec is being assigned a value however it is never read. The
+>> assignment is redundant and can be removed. Replace sizeof(*pexec)
+>> with sizeof the type and remove the declaration of pointer pexec.
+>>
+>> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+> 
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> 
+
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+
+Applied to drm-misc-next
 
 Thanks!
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+-Jeff
