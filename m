@@ -2,205 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A161C76DC94
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 02:25:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FBE076DC99
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 02:25:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231766AbjHCAZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Aug 2023 20:25:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33862 "EHLO
+        id S231952AbjHCAZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Aug 2023 20:25:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjHCAZH (ORCPT
+        with ESMTP id S232080AbjHCAZt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Aug 2023 20:25:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059BE11D;
-        Wed,  2 Aug 2023 17:25:06 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        Wed, 2 Aug 2023 20:25:49 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B924330E5;
+        Wed,  2 Aug 2023 17:25:46 -0700 (PDT)
+Received: from mercury (unknown [185.254.75.45])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9597F61B95;
-        Thu,  3 Aug 2023 00:25:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6861C433C8;
-        Thu,  3 Aug 2023 00:25:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691022304;
-        bh=Ak6kWgpita0ccStQUBSLTHQZ7Qxm2852u+BDrFi7RTQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oxoeAZAGjuZLO3hoE98/N44RKxRUPG41IhNvI224eG9LzGYuPJ8KxOHPpB05W3om9
-         5b5TuYFEiAHtFZ2fL7L9JR+ldk+TrfSE0YhaBJJHVmh5mn7nDHfVruAH97TJK9hood
-         gLYnjUG1/u8MMHPdk4BzKhpk3JqQ2dPHz5nvlEqmccwuBMgtJE7TMz5k0WHn5BF7uH
-         +DupCeCicS+5gCblQeAizSgrN0sPOwSEuLBc4GEt/q6nYNtTI3A2/GQ0iBkuL7Glxl
-         RLD0GwnXsX4J71uei464iGVOTgdXaegNN4hvxit/2wWQgS9Y4HiONI/Nkp6+y+fRMA
-         9wDKyN8IyhgtQ==
-Received: (nullmailer pid 1580378 invoked by uid 1000);
-        Thu, 03 Aug 2023 00:25:02 -0000
-Date:   Wed, 2 Aug 2023 18:25:02 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Anjelique Melendez <quic_amelende@quicinc.com>
-Cc:     pavel@ucw.cz, lee@kernel.org, thierry.reding@gmail.com,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, luca.weiss@fairphone.com,
-        konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
-        quic_subbaram@quicinc.com, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] dt-bindings: leds: leds-qcom-lpg: Add support for
- LPG PPG
-Message-ID: <20230803002502.GA1569972-robh@kernel.org>
-References: <20230725193423.25047-1-quic_amelende@quicinc.com>
- <20230725193423.25047-3-quic_amelende@quicinc.com>
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 86E076607088;
+        Thu,  3 Aug 2023 01:25:44 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1691022344;
+        bh=a4ZVvuCVIjytPB9Xa+qzo7sw1T+PCxguID4EgDUegNc=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=TBzsdyAyY3G7T6+EIiTdwsFEZTdDyNw4SVfJtM2s3k8U++fOslAEWn85/D+bpwYGO
+         gWFrrtb5ZlUrKHvvbfdh4sOLysGJvs46nvfvWtEEmkkSpGmmr/nZO9lKTlzoHh1gU+
+         HXIHnIugq7CnENJt6+iyV+rLPU8QsMFMadtoX6WRNlujlUknepn7NE8ef0um5xTd2F
+         eclPf6A/j03ajNsHwGfYJhGD2C9Ij8cHsN0aGMgdRe8Rj+BVmvec2e9YQ5TSG5z1d2
+         rUvNO6nfqj5qkH0p7Sf6IjkGAB7KYTuj/ZU+W4Gh5sw05IEuNKLkTXokjSXwEQfegN
+         zglmcfFxRJ/9A==
+Received: by mercury (Postfix, from userid 1000)
+        id 712791060927; Thu,  3 Aug 2023 02:25:42 +0200 (CEST)
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+In-Reply-To: <20230802-pmi8998-charger-fixes-v1-0-a8f1e8b84c1e@linaro.org>
+References: <20230802-pmi8998-charger-fixes-v1-0-a8f1e8b84c1e@linaro.org>
+Subject: Re: [PATCH 0/2] power: supply: qcom_pmi8998_charger fixes
+Message-Id: <169102234245.232087.1076719973314019851.b4-ty@collabora.com>
+Date:   Thu, 03 Aug 2023 02:25:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230725193423.25047-3-quic_amelende@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 25, 2023 at 12:34:18PM -0700, Anjelique Melendez wrote:
-> Update leds-qcom-lpg bindings to support LPG PPG.
+
+On Wed, 02 Aug 2023 15:49:27 +0100, Caleb Connolly wrote:
+> Drop the useless CHARGE_CONTROL_LIMIT_* properties and
+> fix incorrect status reporting on some devices when the
+> battery is full.
 > 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  .../bindings/leds/leds-qcom-lpg.yaml          | 92 ++++++++++++++++++-
->  1 file changed, 91 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> index e6f1999cb22f..6feca859fb74 100644
-> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> @@ -11,7 +11,7 @@ maintainers:
->  
->  description: >
->    The Qualcomm Light Pulse Generator consists of three different hardware blocks;
-> -  a ramp generator with lookup table, the light pulse generator and a three
-> +  a ramp generator with lookup table (LUT), the light pulse generator and a three
->    channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
->  
->  properties:
-> @@ -63,6 +63,27 @@ properties:
->          - description: dtest line to attach
->          - description: flags for the attachment
->  
-> +  nvmem:
-> +    description: >
-> +      This property is required for PMICs that supports PPG, which is when a
-> +      PMIC stores LPG per-channel data and pattern LUT in SDAM modules instead
-> +      of in a LUT peripheral. For PMICs, such as PM8350C, per-channel data
-> +      and pattern LUT is separated into 2 SDAM modules. In that case, phandles
-> +      to both SDAM modules need to be specified.
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  nvmem-names:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  qcom,pbs:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: >
-> +      Phandle of the Qualcomm Programmable Boot Sequencer node (PBS).
-> +      PBS node is used to trigger LPG pattern sequences for PMICs that support
-> +      single SDAM PPG.
-> +
->    multi-led:
->      type: object
->      $ref: leds-class-multicolor.yaml#
-> @@ -106,6 +127,44 @@ required:
->  
->  additionalProperties: false
->  
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,pmi632-lpg
-> +    then:
-> +      properties:
-> +        nvmem:
-> +          maxItems: 1
-> +        nvmem-names:
-> +          items:
-> +            - const: lpg_chan_sdam
-> +        qcom,pbs:
-> +          maxItems: 1
-> +      required:
-> +        - nvmem
-> +        - nvmem-names
-> +        - qcom,pbs
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pm8350c-pwm
-> +              - qcom,pm8550-pwm
-> +    then:
-> +      properties:
-> +        nvmem:
-> +          minItems: 2
-> +        nvmem-names:
-> +          items:
-> +            - const: lpg_chan_sdam
-> +            - const: lut_sdam
 
-This can go into the main section and then here you just say 
-'minItems: 2'. And similar for the 1st if/then.
+Applied, thanks!
 
-> +      required:
-> +        - nvmem
-> +        - nvmem-names
+[1/2] power: supply: qcom_pmi8998_charger: remove CHARGE_CONTROL_LIMIT_* props
+      commit: f57f5838c044d1554b71186d3d277619eab58d31
+[2/2] power: supply: qcom_pmi8998_charger: fix charger status
+      commit: 7e6311f04b41174ccc738d37dcb4b93cd4de98b0
 
-Looks like these are always required.
+Best regards,
+-- 
+Sebastian Reichel <sebastian.reichel@collabora.com>
 
-> +
->  examples:
->    - |
->      #include <dt-bindings/leds/common.h>
-> @@ -191,4 +250,35 @@ examples:
->        compatible = "qcom,pm8916-pwm";
->        #pwm-cells = <2>;
->      };
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    led-controller {
-> +      compatible = "qcom,pmi632-lpg";
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      #pwm-cells = <2>;
-> +      nvmem-names = "lpg_chan_sdam";
-> +      nvmem = <&pmi632_sdam_7>;
-> +      qcom,pbs = <&pmi632_pbs_client3>;
-> +
-> +      led@1 {
-> +        reg = <1>;
-> +        color = <LED_COLOR_ID_RED>;
-> +        label = "red";
-> +      };
-> +
-> +      led@2 {
-> +        reg = <2>;
-> +        color = <LED_COLOR_ID_GREEN>;
-> +        label = "green";
-> +      };
-> +
-> +      led@3 {
-> +        reg = <3>;
-> +        color = <LED_COLOR_ID_BLUE>;
-> +        label = "blue";
-> +      };
-> +    };
-> +
->  ...
-> -- 
-> 2.41.0
-> 
