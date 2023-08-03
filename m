@@ -2,136 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3179676ECBE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 16:37:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92FAE76ED5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 16:58:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235872AbjHCOha (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 10:37:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
+        id S236282AbjHCO6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 10:58:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234846AbjHCOhN (ORCPT
+        with ESMTP id S232505AbjHCO6g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 10:37:13 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A61524A;
-        Thu,  3 Aug 2023 07:36:12 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 373EJRix025489;
-        Thu, 3 Aug 2023 14:35:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=fNAvu0glUC7orvVuI8D5tnkb1EFqrPjO1TlyEH3Kf1A=;
- b=gHguUEmCb31GdB1NXtR7ulhaSn8EzJls3eylMjPoLpxM1lKQtGviovF31hf1oyu7udae
- LcL4IBsyqa9RLpxLAp/TuySu1cA/yLhIg/X/MiVQQG4HLzmoLNXkx56iPbjhh8VgqQrH
- /HEsgh5XAPiXFrxdmMO8TAlrdagfNqcWxDB3e74RrnwP3+1TsR2bWi9t4H16HiOo5XcQ
- tqWjdsBj93YDiwagWY1ewk4789+rGNU/mCDu/p3oG0O+SOyev69UNoQTL90ZM1X9aTa+
- scps1lhSosjFVTKYyZVwr+DOTc63lpuZ4M1694Z1OjeMB9aiXGhlBtNuXrt26ns36RS4 1w== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s8dv5013m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Aug 2023 14:35:20 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 373EZKbW000923
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Aug 2023 14:35:20 GMT
-Received: from [10.110.54.109] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 3 Aug
- 2023 07:35:19 -0700
-Message-ID: <774b688f-0324-9097-6504-58d15a3e6afb@quicinc.com>
-Date:   Thu, 3 Aug 2023 07:35:18 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V25 0/3] misc: Add driver support for Data Capture and
- Compare unit(DCC)
-Content-Language: en-US
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Thu, 3 Aug 2023 10:58:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA278173F;
+        Thu,  3 Aug 2023 07:58:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5E4F861DEB;
+        Thu,  3 Aug 2023 14:58:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD23C433C8;
+        Thu,  3 Aug 2023 14:58:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691074714;
+        bh=yMg1YEwuJlIFczOQZY8fQXTUaLaqCwPe1K5AJfailb0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dnZo4TfWlyzyTmeTVwJWce2tqZsbJPYrVVSOM8snyxCcEa18Q473++Mm5TzoZbXF4
+         XG/fbkrFrX8fv2hmeJHqpy34ohk+n3uYw4VyKDaeQBvKAblqmLjRXZOr+s5scO1P3S
+         ISgoZraioxE44UFUuwofEcSSikNuLQl4qrcUE5ALRpzMgRVvoYVKXBBKu0QWubvLXt
+         +nivNO666XHDvB7isEqr2AOhNL3doay5dUfd9BsKgbeuSd3Yr2LPd49UxnVCd5HG4b
+         ingQ56KYEVvDxjWb8/cBWUsziSCYyn3eCzRX5ThpJinsY6AVmqyIzTpdAkt/Z5JQKA
+         dqb99rMqyWC/A==
+Date:   Thu, 3 Aug 2023 16:58:28 +0200
+From:   Simon Horman <horms@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1687945879.git.quic_schowdhu@quicinc.com>
- <f25f8c43-2996-23ff-e6af-9e39b7fced86@quicinc.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <f25f8c43-2996-23ff-e6af-9e39b7fced86@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3bDD16gGqm4EkJMhwU3EEZ52FkhJMWai
-X-Proofpoint-ORIG-GUID: 3bDD16gGqm4EkJMhwU3EEZ52FkhJMWai
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-03_14,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- clxscore=1011 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308030131
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] bluetooth: qca: use switch case for soc type
+ behavior
+Message-ID: <ZMvAlO2Y9CfJtOlE@kernel.org>
+References: <20230803-topic-sm8550-upstream-bt-v3-0-6874a1507288@linaro.org>
+ <20230803-topic-sm8550-upstream-bt-v3-2-6874a1507288@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230803-topic-sm8550-upstream-bt-v3-2-6874a1507288@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/3/2023 12:06 AM, Souradeep Chowdhury wrote:
+On Thu, Aug 03, 2023 at 10:45:27AM +0200, Neil Armstrong wrote:
+> Use switch/case to handle soc type specific behaviour,
+> the permit dropping the qca_is_xxx() inline functions
+> and maked the code clearer and easier to update for new
+
+nit: maked -> make
+
+> SoCs.
 > 
-> 
-> On 6/28/2023 3:53 PM, Souradeep Chowdhury wrote:
+> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
 ...
-
->>
->> https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
->>
->> Changes in v25
->>
->> * Updated the documentation of the structure dcc_config_entry as per 
->> the comments in V23
->> * Updated the documentation of the dcc Kconfig definition as per 
->> comment in V24
->> * Used u64 where applicable
->> * Removed the mutex locks where it is not needed
->> * Removed the use of unlikely keyword
->> * Renamed "nr_link_list" to "max_link_list"
->>
->> Souradeep Chowdhury (3):
->>    dt-bindings: misc: qcom,dcc: Add the dtschema
->>    misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
->>    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->>      support
->>
->>   Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
->>   .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
->>   MAINTAINERS                                   |    8 +
->>   drivers/misc/Kconfig                          |    8 +
->>   drivers/misc/Makefile                         |    1 +
->>   drivers/misc/qcom-dcc.c                       | 1312 +++++++++++++++++
->>   6 files changed, 1378 insertions(+), 5 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
->>   create mode 100644 drivers/misc/qcom-dcc.c
-> 
-> Gentle Ping
-
-Thank you for the reminder Souradeep. Greg and others, please see if we 
-need any changes here or it can be picked up?
-
--- 
----Trilok Soni
-
