@@ -2,101 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B603376E37A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 10:45:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0F0376E38C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 10:48:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234701AbjHCIpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 04:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35042 "EHLO
+        id S234405AbjHCIsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 04:48:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234709AbjHCIpp (ORCPT
+        with ESMTP id S233753AbjHCIsJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 04:45:45 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 577AA1A5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 01:45:42 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-317715ec496so623863f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 01:45:42 -0700 (PDT)
+        Thu, 3 Aug 2023 04:48:09 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA84EEA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 01:48:06 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe3b86cec1so1188433e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 01:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691052341; x=1691657141;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bi5+9HvNvXpvNBPYij9PWseIuCe8O1Z0ZYdcEqI4Cio=;
-        b=kvPR+dUyBjCzHnNrW658g+LIsWomjrlds7qVesYkX8q9NFNY+ikq4DGlUJxa93QfAR
-         5F6rxsgUpZNhTjgoRPii2FImDT5VN6L3qsPFiR3P9nO+Ry7BW2J1Gp8HbpsRwtTJMyo2
-         6Hj59pn79gIy2NFTIHO1GoWaQi6EYXBzySh8GOuQEQ2zPvrdNvOp/ZyZakY1wYx37q25
-         NojKsgFQSTUc3jx7kn8LUwYUKnIImeVeZfRAO8Ya301EbbW5epAsqSE9NOGDfxZ/6PTj
-         vdO+XHzTzxvGDAG9A1FXK59GgMQnfhGGOXrieOkGf4xGPVjOeUIoNc0MkRv9PUMq58iO
-         f4ng==
+        d=linaro.org; s=google; t=1691052485; x=1691657285;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2/hdxh3xj6iR4Yykv7Dt+Q7h/174Nys/IxjYgXNUnVA=;
+        b=raY2Go5vuMFc5/QctA0YSLUQfciPAf69VmtKHUgoDQgoDMgllytied97OkQyodbuFH
+         WnuF5FtIu+mEvtDjgQOII/EPcaYPFO+DIpEIoOQf+tPB4ELKZK3KRffieZB7STmoID9J
+         oaAobXQhjz3bhLHfh940OTRpowIEG1A9uUutgFIG60UoB3AYaijRERQ5si6ATqcz6yWY
+         RLfxHfMladH/225xS2vBh/cuwkn00q5AJ5d7Cp64ZG6eZm2Dpdin76rBw22afBUFLqSQ
+         myp8Dhf7pQbaRNjh24Se+Z/Kogxgeh0FFHSeEzuWatwJ1ngDyFlFx7JrD9fNO2dV4q29
+         yfCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691052341; x=1691657141;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bi5+9HvNvXpvNBPYij9PWseIuCe8O1Z0ZYdcEqI4Cio=;
-        b=UHjLL5NYsAVe4Oq4xJkFzPdARJTSoB9CCt8OUFnM9gfDKpbCkHLBRJ0xuc1CKGdGoW
-         m2Q8We0laAcCBeVxlDRi5iOOhYbilEkzYnZYP+wB/c3cCnj9rm0MRdUccYG79SGy1XdF
-         s5vG9K8e/BFBFCGWhSFkudR9j2hV7FRrjJ0PsaMamOfq+b/k+G5XLzCi+4zYTxUE+Npm
-         9jT4y6Uh1Nvn5m+/e0ikUH1oP4G3LSVCAtcdVqWXlXakYYoMY+BnsUnnmTWZdbdPNsp8
-         Ht0n4kF1NeQVdKPYQgwD5Od0UhKHly24Px1W/BHrdew9sBwEm1WwGJeR6cXnjcPOYHKd
-         3RAA==
-X-Gm-Message-State: ABy/qLYcOL7v0TGsIjMv2PSQXbRJEB6gvvW4GMCLwspSgj9ge6+bV12D
-        HJBE5IsfCW8TB6enOUj0+4+ELg==
-X-Google-Smtp-Source: APBJJlHJyeKJY6M4klnyCIqpEABGyQ64n8i1qwA4BoMFX2hBC0hl08XHFjGeMEWd0z/b5TMz2P0UQQ==
-X-Received: by 2002:adf:e442:0:b0:317:393f:8633 with SMTP id t2-20020adfe442000000b00317393f8633mr6409442wrm.58.1691052340871;
-        Thu, 03 Aug 2023 01:45:40 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id v9-20020adfe4c9000000b00314374145e0sm11895052wrm.67.2023.08.03.01.45.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Aug 2023 01:45:40 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 03 Aug 2023 10:45:28 +0200
-Subject: [PATCH v3 3/3] bluetooth: qca: add support for WCN7850
+        d=1e100.net; s=20221208; t=1691052485; x=1691657285;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2/hdxh3xj6iR4Yykv7Dt+Q7h/174Nys/IxjYgXNUnVA=;
+        b=hkUFHfsrgnHG34p0P3n7vfW2EOFAdWRTlCPe9Ct1ZbZj4vVE+BZalCNx3D1zHmmcnd
+         r4th85KnHSn+G48/fSWs0HFYpCuIZFs3P6luemF068spCLgfmujG7U71tcruexGetA1s
+         VavfxOZ3ys4Dkg47QSpeufeYqYJu1Z4CUZmTxa8ZcIaTdWeRGv89heSAfbyuaV9GQ9Vm
+         iXrGMUB8Y7fEZ2+mlqoWWyzEg83+dD8R7hz7Y9PUl1GhcgeWbpRQhs+0BJi5+95xARKT
+         5uKrCIn1Xz9I94vg3iWU7Dwbs49lMxZwvl5lqEEDrttlLSbWo9hx05m795wmaLR9jvAj
+         wTMg==
+X-Gm-Message-State: ABy/qLadGvd03djaz+huvkVp1oIxY63l7jC72At/l1fEhxI/g21dglgy
+        +KQdw42CmDZ0ihfoGTCO1nGTOQ==
+X-Google-Smtp-Source: APBJJlG1TSXmbhUXV6vd3PGIBBYcghGyWllyDz062a86gUJzBx9qMnh2oD2yAfzL++WwiCd4hkhqKw==
+X-Received: by 2002:ac2:518a:0:b0:4fb:9497:b2a5 with SMTP id u10-20020ac2518a000000b004fb9497b2a5mr5653512lfi.21.1691052485036;
+        Thu, 03 Aug 2023 01:48:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:8656:583:d034:d966? ([2a01:e0a:982:cbb0:8656:583:d034:d966])
+        by smtp.gmail.com with ESMTPSA id i17-20020a5d55d1000000b003143be36d99sm21265332wrw.58.2023.08.03.01.48.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Aug 2023 01:48:04 -0700 (PDT)
+Message-ID: <5aab1846-5d3c-7010-56ca-556db1f74e92@linaro.org>
+Date:   Thu, 3 Aug 2023 10:48:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230803-topic-sm8550-upstream-bt-v3-3-6874a1507288@linaro.org>
-References: <20230803-topic-sm8550-upstream-bt-v3-0-6874a1507288@linaro.org>
-In-Reply-To: <20230803-topic-sm8550-upstream-bt-v3-0-6874a1507288@linaro.org>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 00/14] A7xx support
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-        Rocky Liao <quic_rjliao@quicinc.com>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6215;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=eL/qL4uyJI4grmSytkM8eZWJRrxrVCwakNuTJSdjak4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBky2kv6/uXDXKgNK+swA7bjoggxnBIyrv27IakVFfh
- yOBqlfaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZMtpLwAKCRB33NvayMhJ0RQMEA
- CILffMaABh00q7nqZhtaVO7cLx9EvkEr3VMXgpBdaGWIWRPqxS6xYC66gAk3JgVySmI2eqHDGkYjZB
- nfOrYDnPsTGgCdEDAK43xEhehhyodLQR5OSY7U2jlhWGYEQuJXMppoiNEjv+UFP8IsBP148pTn2RYv
- ZbdWOhVqRamdsOhIYhFhXssiQ+UpisgEAzwiqwtk5Faz6j7k6scaEqFboiGnZfqMv+vkoVfoSxZxmG
- kCKPB0tCRNqxiVmlFldhOCyvxV5u++E+IsV6NmmSTdCkZ+vDP6C7TTG9IrYn4NgbboFxC53hL1wrtc
- sIYejedmtRC5cFCJegii9kaFlHtonqv46Q/eo9uateah8ATMkwuCdb4a+IfyEjj2Bsvl5U9tWSxVo4
- FWUoXgI8qeH+dc6Y7B40E+YHHi/EmLBvGRWJyEIUbuvYhLydOdqvc8yhNF8a2Gc/sfXOG7qULFksom
- jdBU6fqpbQKi7UNqN5hpoycvHD1obR7BI5uMiKWSZdYxgSmEPCFM4RNwQlvGaCE18VyL0A4ceV6Mu2
- OjY0xIPVQhEHOoh2zB7tjUfftPdSBsN0+jpPm+PLhTobt0+zuOJccWDybY4p3ZOqtx/e70JubbA3cM
- seBxiivY4hb+LEx16vk3YwAEGbKfdP59kn/DzcqpksQRryNTJBO8aIF/POKA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -105,198 +88,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the WCN7850 Bluetooth chipset.
+On 28/06/2023 22:35, Konrad Dybcio wrote:
+> This series attempts to introduce Adreno 700 support (with A730 and A740
+> found on SM8450 and SM8550 respectively), reusing much of the existing
+> A6xx code. This submission largely lays the groundwork for expansion and
+> more or less gives us feature parity (on the kernel side, that is) with
+> existing A6xx parts.
+> 
+> On top of introducing a very messy set of three (!) separate and
+> obfuscated deivce identifiers for each 7xx part, this generation
+> introduces very sophisticated hardware multi-threading and (on some SKUs)
+> hardware ray-tracing (not supported yet).
+> 
+> After this series, a long-overdue cleanup of drm/msm/adreno is planned
+> in preparation for adding more features and removing some hardcoding.
+> 
+> The last patch is a hack that may or may not be necessary depending
+> on your board's humour.. eh.. :/
+> 
+> Developed atop (and hence depends on) [1]
+> 
+> The corresponding devicetree patches are initially available at [2] and
+> will be posted after this series gets merged. To test it, you'll also need
+> firmware that you need to obtain from your board (there's none with a
+> redistributable license, sorry..). Most likely it will be in one of
+> these directories on your stock android installation:
+> 
+> * /vendor/firmware
+> * /vendor/firmware_mnt
+> * /system
+> 
+> ..but some vendors make it hard and you have to do some grepping ;)
+> 
+> Requires [3] to work on the userspace side. You'll almost cerainly want
+> to test it alongside Zink with a lot of debug flags (early impl), like:
+> 
+> TU_DEBUG=sysmem,nolrz,flushall,noubwc MESA_LOADER_DRIVER_OVERRIDE=zink kmscube
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org/
+> [2] https://github.com/SoMainline/linux/commits/topic/a7xx_dt
+> [3] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/23217
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (14):
+>        dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
+>        dt-bindings: display/msm/gmu: Allow passing QMP handle
+>        dt-bindings: display/msm/gpu: Allow A7xx SKUs
+>        drm/msm/a6xx: Add missing regs for A7XX
+>        drm/msm/a6xx: Introduce a6xx_llc_read
+>        drm/msm/a6xx: Move LLC accessors to the common header
+>        drm/msm/a6xx: Bail out early if setting GPU OOB fails
+>        drm/msm/a6xx: Add skeleton A7xx support
+>        drm/msm/a6xx: Send ACD state to QMP at GMU resume
+>        drm/msm/a6xx: Mostly implement A7xx gpu_state
+>        drm/msm/a6xx: Add A730 support
+>        drm/msm/a6xx: Add A740 support
+>        drm/msm/a6xx: Vastly increase HFI timeout
+>        [RFC] drm/msm/a6xx: Poll for GBIF unhalt status in hw_init
+> 
+>   .../devicetree/bindings/display/msm/gmu.yaml       |  47 +-
+>   .../devicetree/bindings/display/msm/gpu.yaml       |   4 +-
+>   drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   9 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 188 ++++--
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   8 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 658 ++++++++++++++++++---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  15 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  61 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  90 ++-
+>   drivers/gpu/drm/msm/adreno/adreno_device.c         |  26 +
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   7 +-
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  24 +-
+>   drivers/gpu/drm/msm/msm_ringbuffer.h               |   2 +
+>   15 files changed, 1070 insertions(+), 124 deletions(-)
+> ---
+> base-commit: 6f9b660e9cbb30669fcfec83288d527c0844717d
+> change-id: 20230628-topic-a7xx_drmmsm-123f30d76cf7
+> 
+> Best regards,
 
-Tested on the SM8550 QRD platform.
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/bluetooth/btqca.c   | 10 ++++++++++
- drivers/bluetooth/btqca.h   |  1 +
- drivers/bluetooth/hci_qca.c | 31 ++++++++++++++++++++++++++++++-
- 3 files changed, 41 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index e301f571e971..5a35ac4138c6 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -631,6 +631,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/hpbtfw%02x.tlv", rom_ver);
- 		break;
-+	case QCA_WCN7850:
-+		snprintf(config.fwname, sizeof(config.fwname),
-+			 "qca/hmtbtfw%02x.tlv", rom_ver);
-+		break;
- 	default:
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/rampatch_%08x.bin", soc_ver);
-@@ -679,6 +683,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/hpnv%02x.bin", rom_ver);
- 			break;
-+		case QCA_WCN7850:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/hmtnv%02x.bin", rom_ver);
-+			break;
- 
- 		default:
- 			snprintf(config.fwname, sizeof(config.fwname),
-@@ -697,6 +705,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	case QCA_QCA6390:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		err = qca_disable_soc_logging(hdev);
- 		if (err < 0)
- 			return err;
-@@ -731,6 +740,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	case QCA_WCN3991:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		/* get fw build info */
- 		err = qca_read_fw_build_info(hdev);
- 		if (err < 0)
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index fe51c632d772..03bff5c0059d 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -149,6 +149,7 @@ enum qca_btsoc_type {
- 	QCA_QCA6390,
- 	QCA_WCN6750,
- 	QCA_WCN6855,
-+	QCA_WCN7850,
- };
- 
- #if IS_ENABLED(CONFIG_BT_QCA)
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 548157119b75..4b57e15f9c7a 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1357,6 +1357,7 @@ static int qca_set_baudrate(struct hci_dev *hdev, uint8_t baudrate)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		usleep_range(1000, 10000);
- 		break;
- 
-@@ -1442,6 +1443,7 @@ static int qca_check_speeds(struct hci_uart *hu)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		if (!qca_get_speed(hu, QCA_INIT_SPEED) &&
- 		    !qca_get_speed(hu, QCA_OPER_SPEED))
- 			return -EINVAL;
-@@ -1483,6 +1485,7 @@ static int qca_set_speed(struct hci_uart *hu, enum qca_speed_type speed_type)
- 		case QCA_WCN3998:
- 		case QCA_WCN6750:
- 		case QCA_WCN6855:
-+		case QCA_WCN7850:
- 			hci_uart_set_flow_control(hu, true);
- 			break;
- 
-@@ -1516,6 +1519,7 @@ static int qca_set_speed(struct hci_uart *hu, enum qca_speed_type speed_type)
- 		case QCA_WCN3998:
- 		case QCA_WCN6750:
- 		case QCA_WCN6855:
-+		case QCA_WCN7850:
- 			hci_uart_set_flow_control(hu, false);
- 			break;
- 
-@@ -1783,6 +1787,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		ret = qca_regulator_init(hu);
- 		break;
- 
-@@ -1851,6 +1856,10 @@ static int qca_setup(struct hci_uart *hu)
- 		soc_name = "wcn6855";
- 		break;
- 
-+	case QCA_WCN7850:
-+		soc_name = "wcn7850";
-+		break;
-+
- 	default:
- 		soc_name = "ROME/QCA6390";
- 	}
-@@ -1872,6 +1881,7 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
- 		hci_set_aosp_capable(hdev);
- 
-@@ -1901,6 +1911,7 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		break;
- 
- 	default:
-@@ -2057,6 +2068,20 @@ static const struct qca_device_data qca_soc_data_wcn6855 __maybe_unused = {
- 	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
- };
- 
-+static const struct qca_device_data qca_soc_data_wcn7850 __maybe_unused = {
-+	.soc_type = QCA_WCN7850,
-+	.vregs = (struct qca_vreg []) {
-+		{ "vddio", 5000 },
-+		{ "vddaon", 26000 },
-+		{ "vdddig", 126000 },
-+		{ "vddrfa0p8", 102000 },
-+		{ "vddrfa1p2", 257000 },
-+		{ "vddrfa1p9", 302000 },
-+	},
-+	.num_vregs = 6,
-+	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
-+};
-+
- static void qca_power_shutdown(struct hci_uart *hu)
- {
- 	struct qca_serdev *qcadev;
-@@ -2240,6 +2265,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		qcadev->bt_power = devm_kzalloc(&serdev->dev,
- 						sizeof(struct qca_power),
- 						GFP_KERNEL);
-@@ -2269,7 +2295,8 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 					       GPIOD_IN);
- 		if (IS_ERR_OR_NULL(qcadev->sw_ctrl) &&
- 		    (data->soc_type == QCA_WCN6750 ||
--		     data->soc_type == QCA_WCN6855))
-+		     data->soc_type == QCA_WCN6855 ||
-+		     data->soc_type == QCA_WCN7850))
- 			dev_warn(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
- 
- 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
-@@ -2348,6 +2375,7 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- 	case QCA_WCN3998:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		if (power->vregs_on) {
- 			qca_power_shutdown(&qcadev->serdev_hu);
- 			break;
-@@ -2540,6 +2568,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
- 	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
- 	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
- 	{ .compatible = "qcom,wcn6855-bt", .data = &qca_soc_data_wcn6855},
-+	{ .compatible = "qcom,wcn7850-bt", .data = &qca_soc_data_wcn7850},
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
-
--- 
-2.34.1
-
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
