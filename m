@@ -2,144 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43BF876F057
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 19:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA92F76F0BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 19:34:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232875AbjHCRKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 13:10:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33886 "EHLO
+        id S230056AbjHCRez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 13:34:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbjHCRKN (ORCPT
+        with ESMTP id S235099AbjHCRev (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 13:10:13 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B4B3C16;
-        Thu,  3 Aug 2023 10:09:39 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe1344b707so1996222e87.1;
-        Thu, 03 Aug 2023 10:09:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691082577; x=1691687377;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xdX+NfKio0pdth/b1d1o4UZ72iZouUkmJiyFwK8qVRA=;
-        b=nksi91tjevvMMgNWYlvmcgOmPIdGTqnFBRLPCT4P4lOdETDuOkwWnO1rHuCIfdw4CU
-         GcZ4/CN57hMzWYbmPQywctjcJiI6QLL2u2cW0ZoTXswXkLWmHQXGEJRorLkVQx4DdS/9
-         fTR1zwTefMbODzpnwr0ea1j+KnCP1lVgeFeRmR1ahJdNHssrp/+w7Zv8EYy6JzzOQZFL
-         WDsPSgZDXxS5qPjVOOm3DAa72J8KEcK/wPQN8f6cMTCnr4EE2RjQjmxiskVQTsZqGzTP
-         fDYQxueX3vSXC17ZthaXEJpuMVsUTKS5YFORjBJyJvGph5vXDuKB+HgTdCS7+OfcE4A7
-         C9zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691082577; x=1691687377;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xdX+NfKio0pdth/b1d1o4UZ72iZouUkmJiyFwK8qVRA=;
-        b=LYHmlLkDRQvZ5v68BiEB/Eukoft1KTg51LAPknVv6qFZz+FFi2a6ytTsMnVNMUSmhV
-         sxoHam72V7u9Qu++x1TIw4RWyANVjUS/ZzXw5mr+EPjxNqwdvvK1xtdAX8Lm3QqYtIMO
-         5EzeU15YEPvSoWyAOcqpdphxNF/6aPIbcmDS5sFtciUSp4FthVQEVDPy3NazbRix8pBt
-         Dwyt4uSpSWVNQ/rBsvZL5ox9ckRkNw7cASyDs/YCKW1EMTv0toDj7FhA3Wwin3339efr
-         S781akRZJFsm4cx7nSzle/2B+Xyq8yluWTUj4aTn99izQga71oo2TGwgcJU+mngDFn9F
-         v/ZQ==
-X-Gm-Message-State: ABy/qLatb61zhHqweIwx6MYn1myftQgA6t36/swc3KlBF1L72dVN+4GY
-        TfSfHYYHnlXpSH7CtyI9APM=
-X-Google-Smtp-Source: APBJJlGhRWoXCW3zb8xv6o2L/pb2FkVE77i5R/jy7yvFiOJbKfQhEbkYqdBs0TwL3XUgT12uDeagtA==
-X-Received: by 2002:a19:5005:0:b0:4fe:19ef:8795 with SMTP id e5-20020a195005000000b004fe19ef8795mr7081713lfb.64.1691082576831;
-        Thu, 03 Aug 2023 10:09:36 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id d13-20020a50fe8d000000b0051e1660a34esm49538edt.51.2023.08.03.10.09.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Aug 2023 10:09:36 -0700 (PDT)
-Message-ID: <b8b82aee-45a5-5e56-1737-4ec78f6279c2@gmail.com>
-Date:   Thu, 3 Aug 2023 19:09:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] firmware: Add support for Qualcomm UEFI Secure
- Application
-To:     Ard Biesheuvel <ardb@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Johan Hovold <johan@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230730161906.606163-1-luzmaximilian@gmail.com>
- <20230730161906.606163-4-luzmaximilian@gmail.com>
- <CAMj1kXHOaEuP2Wds9ZU4RLx9oKhthvE=yR-Ju_Ka2boqTmTYNw@mail.gmail.com>
-Content-Language: en-US
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <CAMj1kXHOaEuP2Wds9ZU4RLx9oKhthvE=yR-Ju_Ka2boqTmTYNw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 3 Aug 2023 13:34:51 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F97FE72;
+        Thu,  3 Aug 2023 10:34:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1691084089; x=1722620089;
+  h=date:from:to:cc:subject:message-id;
+  bh=cpkBoV5sM0Dn+NSFA5wkVQ3j88Jr/EEl0ZyJKbI8VJ4=;
+  b=iJFC5jsIz9Lm7vnBmWy/VbqS4oE/OD/4SEl2xYnq78m+cCPi8jBLLXyk
+   9Y8/XpJANeiL8DCE/+D1TKyY4mE+crYAkxR+pWoX5cn9Ali1/XNSHei0N
+   AJZd+Pk7EXFjjsSI/EtImX0mXBqV0ZCDsA3VDAPRUEJa6JQnWDfAF8M4W
+   cxMQMc9kQEdBZSBZg/BnrvfhrvWZD3DCTxsl1Q9VLq+NqvlnIgOwucj60
+   4Ui36a0tswLOwYJGQfBH5be+Qm5kN+aww474TYF02eikebzZDevs+grox
+   ww03ughZgcGiVokZM3NwpwyIqXwwdHZDQ0zUDXzDrSWSnI0CUJZ0vF7TK
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10791"; a="433799184"
+X-IronPort-AV: E=Sophos;i="6.01,252,1684825200"; 
+   d="scan'208";a="433799184"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2023 10:34:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10791"; a="759218574"
+X-IronPort-AV: E=Sophos;i="6.01,252,1684825200"; 
+   d="scan'208";a="759218574"
+Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
+  by orsmga008.jf.intel.com with ESMTP; 03 Aug 2023 10:34:44 -0700
+Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qRcDj-0002G3-2K;
+        Thu, 03 Aug 2023 17:34:43 +0000
+Date:   Fri, 04 Aug 2023 01:34:01 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org
+Subject: [linux-next:master] BUILD REGRESSION
+ fb4327106e5250ee360d0d8b056c1eef7eeb9a98
+Message-ID: <202308040141.gUjtZ32J-lkp@intel.com>
+User-Agent: s-nail v14.9.24
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,SUSPICIOUS_RECIPS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/3/23 17:44, Ard Biesheuvel wrote:
-> On Sun, 30 Jul 2023 at 18:19, Maximilian Luz <luzmaximilian@gmail.com> wrote:
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: fb4327106e5250ee360d0d8b056c1eef7eeb9a98  Add linux-next specific files for 20230803
 
-[...]
+Error/Warning reports:
 
->> +/* -- Driver setup. --------------------------------------------------------- */
->> +
->> +static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
->> +                                const struct auxiliary_device_id *aux_dev_id)
->> +{
->> +       struct qcuefi_client *qcuefi;
->> +       int status;
->> +
->> +       qcuefi = devm_kzalloc(&aux_dev->dev, sizeof(*qcuefi), GFP_KERNEL);
->> +       if (!qcuefi)
->> +               return -ENOMEM;
->> +
->> +       qcuefi->client = container_of(aux_dev, struct qseecom_client, aux_dev);
->> +
->> +       auxiliary_set_drvdata(aux_dev, qcuefi);
->> +       status = qcuefi_set_reference(qcuefi);
->> +       if (status)
->> +               return status;
->> +
->> +       status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
-> 
-> Will this also work if the EFI runtime services were already
-> registered by the time we reach this point?
+https://lore.kernel.org/oe-kbuild-all/202307251531.p8ZLFTMZ-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202307281049.40t8s0uv-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202307301850.i9xFNWT6-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202308022221.APCRi7vk-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202308031810.pQzGmR1v-lkp@intel.com
 
-That's actually a good question. In short: No. However, let me explain
-that a bit:
+Error/Warning: (recently discovered and may have been fixed)
 
-First, we assume that we're the only other non-generic provider
-(arguably, multiple non-generic providers don't make much sense on a
-single platform anyway, so I'd say in that case it's okay to fail here).
+../lib/gcc/loongarch64-linux/12.3.0/plugin/include/config/loongarch/loongarch-opts.h:31:10: fatal error: loongarch-def.h: No such file or directory
+Documentation/gpu/rfc/i915_scheduler.rst:138: WARNING: Unknown directive type "c:namespace-push".
+Documentation/gpu/rfc/i915_scheduler.rst:143: WARNING: Unknown directive type "c:namespace-pop".
+Documentation/gpu/todo.rst:469: WARNING: Unexpected indentation.
+Warning: kernel/Kconfig.kexec references a file that doesn't exist: file:Documentation/s390/zfcpdump.rst
+arm-linux-gnueabi-ld: storage.c:(.text+0x27c): undefined reference to `__brelse'
+arm-linux-gnueabi-ld: storage.c:(.text+0x9c): undefined reference to `__bread_gfp'
+storage.c:(.text+0x22c): undefined reference to `__bread_gfp'
+storage.c:(.text+0x64): undefined reference to `__brelse'
 
-Second, we assume that the generic ops are not going to be registered at
-all on the platforms that this implementation is used. In particular, on
-the platforms I've tested and heard reports from so far, "standard"
-efivars either aren't actively advertised as "supported" or they return
-EFI_UNSUPPORTED for all calls. So we assume that either the check in
-efisubsys_init() or in generic_ops_supported() prevents registration
-of the generic ops.
+Unverified Error/Warning (likely false positive, please contact us if interested):
 
-Further, I'd hope that the uefisecapp would not be loaded if generic ops
-would be supported on such a platform, thus preventing instantiation of
-the respective client device.
+drivers/mtd/nand/raw/qcom_nandc.c:2941 qcom_op_cmd_mapping() error: uninitialized symbol 'ret'.
+drivers/mtd/nand/raw/qcom_nandc.c:3369 qcom_check_op() warn: was && intended here instead of ||?
+drivers/rtc/rtc-pcf2127.c:1063 pcf2127_enable_ts() warn: missing error code? 'ret'
+drivers/tty/serial/8250/8250_men_mcb.c:226 serial_8250_men_mcb_probe() warn: unsigned 'data->line[i]' is never less than zero.
+sh4-linux-gcc: internal compiler error: Segmentation fault signal terminated program cc1
+{standard input}: Warning: end of file not at end of a line; newline inserted
+{standard input}:573: Error: pcrel too far
 
-So the only issue that I can see is that if uefisecapp is loaded and
-generic ops are supported, we would need a way to choose one over the
-other. But I think that is fairly unlikely to happen and I think it
-would probably be best to sort that out then (e.g. by refusing to load
-this new driver with some additional check).
+Error/Warning ids grouped by kconfigs:
 
-Apart from that case, there should not be any timing issues that could
-cause registration to fail spuriously.
+gcc_recent_errors
+|-- arm-gemini_defconfig
+|   |-- arm-linux-gnueabi-ld:storage.c:(.text):undefined-reference-to-__bread_gfp
+|   |-- arm-linux-gnueabi-ld:storage.c:(.text):undefined-reference-to-__brelse
+|   |-- storage.c:(.text):undefined-reference-to-__bread_gfp
+|   `-- storage.c:(.text):undefined-reference-to-__brelse
+|-- i386-randconfig-m021-20230730
+|   |-- drivers-rtc-rtc-pcf2127.c-pcf2127_enable_ts()-warn:missing-error-code-ret
+|   `-- drivers-tty-serial-8250_men_mcb.c-serial_8250_men_mcb_probe()-warn:unsigned-data-line-i-is-never-less-than-zero.
+|-- loongarch-allmodconfig
+|   `-- lib-gcc-loongarch64-linux-..-plugin-include-config-loongarch-loongarch-opts.h:fatal-error:loongarch-def.h:No-such-file-or-directory
+|-- riscv-randconfig-m031-20230730
+|   |-- drivers-mtd-nand-raw-qcom_nandc.c-qcom_check_op()-warn:was-intended-here-instead-of
+|   `-- drivers-mtd-nand-raw-qcom_nandc.c-qcom_op_cmd_mapping()-error:uninitialized-symbol-ret-.
+|-- sh-allmodconfig
+|   |-- sh4-linux-gcc:internal-compiler-error:Segmentation-fault-signal-terminated-program-cc1
+|   |-- standard-input:Error:pcrel-too-far
+|   `-- standard-input:Warning:end-of-file-not-at-end-of-a-line-newline-inserted
+|-- x86_64-allnoconfig
+|   |-- Documentation-gpu-rfc-i915_scheduler.rst:WARNING:Unknown-directive-type-c:namespace-pop-.
+|   |-- Documentation-gpu-rfc-i915_scheduler.rst:WARNING:Unknown-directive-type-c:namespace-push-.
+|   |-- Documentation-gpu-todo.rst:WARNING:Unexpected-indentation.
+|   `-- Warning:kernel-Kconfig.kexec-references-a-file-that-doesn-t-exist:file:Documentation-s390-zfcpdump.rst
+`-- x86_64-randconfig-m001-20230730
+    `-- drivers-tty-serial-8250_men_mcb.c-serial_8250_men_mcb_probe()-warn:unsigned-data-line-i-is-never-less-than-zero.
 
-Regards
-Max
+elapsed time: 729m
+
+configs tested: 132
+configs skipped: 4
+
+tested configs:
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+alpha                randconfig-r032-20230803   gcc  
+alpha                randconfig-r036-20230803   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                  randconfig-r043-20230802   gcc  
+arm                              allmodconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                         assabet_defconfig   gcc  
+arm                                 defconfig   gcc  
+arm                          gemini_defconfig   gcc  
+arm                        mvebu_v5_defconfig   clang
+arm                          pxa3xx_defconfig   gcc  
+arm                  randconfig-r004-20230801   clang
+arm                  randconfig-r023-20230731   gcc  
+arm                  randconfig-r046-20230802   clang
+arm                        realview_defconfig   gcc  
+arm                        spear3xx_defconfig   clang
+arm                           sunxi_defconfig   gcc  
+arm                       versatile_defconfig   clang
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+csky                                defconfig   gcc  
+csky                 randconfig-r012-20230801   gcc  
+hexagon              randconfig-r016-20230801   clang
+hexagon              randconfig-r035-20230803   clang
+hexagon              randconfig-r041-20230802   clang
+hexagon              randconfig-r045-20230802   clang
+i386                             allyesconfig   gcc  
+i386         buildonly-randconfig-r004-20230731   gcc  
+i386         buildonly-randconfig-r005-20230731   gcc  
+i386         buildonly-randconfig-r006-20230731   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                 randconfig-i001-20230731   gcc  
+i386                 randconfig-i002-20230731   gcc  
+i386                 randconfig-i003-20230731   gcc  
+i386                 randconfig-i004-20230731   gcc  
+i386                 randconfig-i005-20230731   gcc  
+i386                 randconfig-i006-20230731   gcc  
+i386                 randconfig-i011-20230802   gcc  
+i386                 randconfig-i012-20230802   gcc  
+i386                 randconfig-i013-20230802   gcc  
+i386                 randconfig-i014-20230802   gcc  
+i386                 randconfig-i015-20230802   gcc  
+i386                 randconfig-i016-20230802   gcc  
+i386                 randconfig-r025-20230731   clang
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch            randconfig-r024-20230731   gcc  
+loongarch            randconfig-r031-20230803   gcc  
+loongarch            randconfig-r034-20230803   gcc  
+m68k                             allmodconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+m68k                        m5272c3_defconfig   gcc  
+m68k                        mvme147_defconfig   gcc  
+microblaze                          defconfig   gcc  
+microblaze           randconfig-r005-20230801   gcc  
+microblaze           randconfig-r013-20230801   gcc  
+mips                             allmodconfig   gcc  
+mips                             allyesconfig   gcc  
+mips                         bigsur_defconfig   gcc  
+mips                      maltaaprp_defconfig   clang
+mips                 randconfig-r011-20230801   gcc  
+mips                          rb532_defconfig   gcc  
+nios2                               defconfig   gcc  
+nios2                randconfig-r001-20230801   gcc  
+openrisc                 simple_smp_defconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc               randconfig-r021-20230731   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                    ge_imp3a_defconfig   clang
+powerpc                 linkstation_defconfig   gcc  
+powerpc                   microwatt_defconfig   clang
+powerpc                     mpc5200_defconfig   clang
+powerpc                     mpc83xx_defconfig   gcc  
+powerpc                      ppc44x_defconfig   clang
+powerpc              randconfig-r014-20230801   clang
+powerpc              randconfig-r022-20230731   clang
+powerpc              randconfig-r026-20230731   clang
+powerpc                     sequoia_defconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   clang
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                randconfig-r042-20230802   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                 randconfig-r015-20230801   clang
+s390                 randconfig-r044-20230802   gcc  
+sh                               allmodconfig   gcc  
+sh                        apsh4ad0a_defconfig   gcc  
+sh                          lboxre2_defconfig   gcc  
+sh                   randconfig-r006-20230801   gcc  
+sh                           se7724_defconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc                randconfig-r003-20230801   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64       buildonly-randconfig-r001-20230731   gcc  
+x86_64       buildonly-randconfig-r002-20230731   gcc  
+x86_64       buildonly-randconfig-r003-20230731   gcc  
+x86_64                              defconfig   gcc  
+x86_64                                  kexec   gcc  
+x86_64               randconfig-x001-20230731   clang
+x86_64               randconfig-x002-20230731   clang
+x86_64               randconfig-x003-20230731   clang
+x86_64               randconfig-x004-20230731   clang
+x86_64               randconfig-x005-20230731   clang
+x86_64               randconfig-x006-20230731   clang
+x86_64               randconfig-x011-20230731   gcc  
+x86_64               randconfig-x012-20230731   gcc  
+x86_64               randconfig-x013-20230731   gcc  
+x86_64               randconfig-x014-20230731   gcc  
+x86_64               randconfig-x015-20230731   gcc  
+x86_64               randconfig-x016-20230731   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
