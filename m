@@ -2,222 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5608976EFEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 18:48:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43BF876F057
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 19:10:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233858AbjHCQsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 12:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48598 "EHLO
+        id S232875AbjHCRKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 13:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233854AbjHCQsR (ORCPT
+        with ESMTP id S229733AbjHCRKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 12:48:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46A333ABF;
-        Thu,  3 Aug 2023 09:48:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CB4B461E4D;
-        Thu,  3 Aug 2023 16:48:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A5CC433C7;
-        Thu,  3 Aug 2023 16:48:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691081295;
-        bh=7ih77e1O1WRRHs0N4JvX9JDljcQRbssPj1LkTZtl7Jc=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=NRHLNhARAMl8lYehiE0faYX2zFBDY8X1+qIEZkiV1gXU/GtAiEDYaEy4yorCNtNPi
-         m8wFMTIDzXp9lisRixB4A8mKSZTo30XlfeADvm6ktksCquOAmNSVloYGP9dNhLZGXN
-         iT2JudKZyAAAp0PVHMzXMnrtdpJF19k7upG8IPZxPmSKiWuSyjNJtvAYn7ht6V3Z1b
-         cqvgeIhqjUdz0UnLjAqi5V3SWXfp7NAZMZ5a3vN/iHIquHQeXdjwwqPhANAVW2pF0M
-         faHgHYfADJbUXZirxovfuycyBsFPD55rAgO181D9B0qxNWf4iGT95SMp0Ya0x1e9ID
-         jaxXBVcYqTPHw==
-Message-ID: <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
-Date:   Thu, 3 Aug 2023 19:48:08 +0300
+        Thu, 3 Aug 2023 13:10:13 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B4B3C16;
+        Thu,  3 Aug 2023 10:09:39 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe1344b707so1996222e87.1;
+        Thu, 03 Aug 2023 10:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691082577; x=1691687377;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xdX+NfKio0pdth/b1d1o4UZ72iZouUkmJiyFwK8qVRA=;
+        b=nksi91tjevvMMgNWYlvmcgOmPIdGTqnFBRLPCT4P4lOdETDuOkwWnO1rHuCIfdw4CU
+         GcZ4/CN57hMzWYbmPQywctjcJiI6QLL2u2cW0ZoTXswXkLWmHQXGEJRorLkVQx4DdS/9
+         fTR1zwTefMbODzpnwr0ea1j+KnCP1lVgeFeRmR1ahJdNHssrp/+w7Zv8EYy6JzzOQZFL
+         WDsPSgZDXxS5qPjVOOm3DAa72J8KEcK/wPQN8f6cMTCnr4EE2RjQjmxiskVQTsZqGzTP
+         fDYQxueX3vSXC17ZthaXEJpuMVsUTKS5YFORjBJyJvGph5vXDuKB+HgTdCS7+OfcE4A7
+         C9zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691082577; x=1691687377;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xdX+NfKio0pdth/b1d1o4UZ72iZouUkmJiyFwK8qVRA=;
+        b=LYHmlLkDRQvZ5v68BiEB/Eukoft1KTg51LAPknVv6qFZz+FFi2a6ytTsMnVNMUSmhV
+         sxoHam72V7u9Qu++x1TIw4RWyANVjUS/ZzXw5mr+EPjxNqwdvvK1xtdAX8Lm3QqYtIMO
+         5EzeU15YEPvSoWyAOcqpdphxNF/6aPIbcmDS5sFtciUSp4FthVQEVDPy3NazbRix8pBt
+         Dwyt4uSpSWVNQ/rBsvZL5ox9ckRkNw7cASyDs/YCKW1EMTv0toDj7FhA3Wwin3339efr
+         S781akRZJFsm4cx7nSzle/2B+Xyq8yluWTUj4aTn99izQga71oo2TGwgcJU+mngDFn9F
+         v/ZQ==
+X-Gm-Message-State: ABy/qLatb61zhHqweIwx6MYn1myftQgA6t36/swc3KlBF1L72dVN+4GY
+        TfSfHYYHnlXpSH7CtyI9APM=
+X-Google-Smtp-Source: APBJJlGhRWoXCW3zb8xv6o2L/pb2FkVE77i5R/jy7yvFiOJbKfQhEbkYqdBs0TwL3XUgT12uDeagtA==
+X-Received: by 2002:a19:5005:0:b0:4fe:19ef:8795 with SMTP id e5-20020a195005000000b004fe19ef8795mr7081713lfb.64.1691082576831;
+        Thu, 03 Aug 2023 10:09:36 -0700 (PDT)
+Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
+        by smtp.gmail.com with ESMTPSA id d13-20020a50fe8d000000b0051e1660a34esm49538edt.51.2023.08.03.10.09.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Aug 2023 10:09:36 -0700 (PDT)
+Message-ID: <b8b82aee-45a5-5e56-1737-4ec78f6279c2@gmail.com>
+Date:   Thu, 3 Aug 2023 19:09:34 +0200
 MIME-Version: 1.0
-Subject: Re: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/3] firmware: Add support for Qualcomm UEFI Secure
+ Application
+To:     Ard Biesheuvel <ardb@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Johan Hovold <johan@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230730161906.606163-1-luzmaximilian@gmail.com>
+ <20230730161906.606163-4-luzmaximilian@gmail.com>
+ <CAMj1kXHOaEuP2Wds9ZU4RLx9oKhthvE=yR-Ju_Ka2boqTmTYNw@mail.gmail.com>
+Content-Language: en-US
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <CAMj1kXHOaEuP2Wds9ZU4RLx9oKhthvE=yR-Ju_Ka2boqTmTYNw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On 8/3/23 17:44, Ard Biesheuvel wrote:
+> On Sun, 30 Jul 2023 at 18:19, Maximilian Luz <luzmaximilian@gmail.com> wrote:
 
-On 11.07.23 15:17, Konrad Dybcio wrote:
-> Many parts of Qualcomm SoCs are entirely independent of each other and can
-> run when the other parts are off. The RPMh system architecture embraces
-> this by giving each (loosely defined) subsystem its own connection (as in,
-> physical wires) to the AOSS, terminated by per-subsystem RSCs (Resource
-> State Coordinators) that barter for power, bandwidth etc.
-> 
-> This series introduces the groundwork necessary for voting for resources
-> through non-APPS RSCs. It should allow for lower-latency vote adjustments
-> (e.g. for very high bandwidth / multiple displays) and could potentially
-> allow for full APSS collapse while keeping e.g. MDSS operating (say
-> refreshing an image from a RAM buffer).
+[...]
 
-This is good stuff. Thanks for working on it! Actually the path tagging,
-that have been introduced some time ago could be used for supporting the
-multiple RSCs. Today we can get the tags from DT, and tag the path with
-some DISP_RSC flag (for example) and avoid the qcom,bcm-voter-idx property.
+>> +/* -- Driver setup. --------------------------------------------------------- */
+>> +
+>> +static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
+>> +                                const struct auxiliary_device_id *aux_dev_id)
+>> +{
+>> +       struct qcuefi_client *qcuefi;
+>> +       int status;
+>> +
+>> +       qcuefi = devm_kzalloc(&aux_dev->dev, sizeof(*qcuefi), GFP_KERNEL);
+>> +       if (!qcuefi)
+>> +               return -ENOMEM;
+>> +
+>> +       qcuefi->client = container_of(aux_dev, struct qseecom_client, aux_dev);
+>> +
+>> +       auxiliary_set_drvdata(aux_dev, qcuefi);
+>> +       status = qcuefi_set_reference(qcuefi);
+>> +       if (status)
+>> +               return status;
+>> +
+>> +       status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
+> 
+> Will this also work if the EFI runtime services were already
+> registered by the time we reach this point?
 
-Mike has been also looking into this, so maybe he can share his thoughts.
+That's actually a good question. In short: No. However, let me explain
+that a bit:
 
-> 
-> On top of that, a rather necessary and overdue cleanup is performed to
-> stop adding more and more arguments to the insane preprocessor macros.
-> 
+First, we assume that we're the only other non-generic provider
+(arguably, multiple non-generic providers don't make much sense on a
+single platform anyway, so I'd say in that case it's okay to fail here).
 
-Retiring the DEFINE_QNODE is good clean-up, but some patches failed to
-apply so a re-base would be needed.
+Second, we assume that the generic ops are not going to be registered at
+all on the platforms that this implementation is used. In particular, on
+the platforms I've tested and heard reports from so far, "standard"
+efivars either aren't actively advertised as "supported" or they return
+EFI_UNSUPPORTED for all calls. So we assume that either the check in
+efisubsys_init() or in generic_ops_supported() prevents registration
+of the generic ops.
 
-Thanks,
-Georgi
+Further, I'd hope that the uefisecapp would not be loaded if generic ops
+would be supported on such a platform, thus preventing instantiation of
+the respective client device.
 
-> Partially reverting (or reimplementing the revert) [1] will be necessary
-> to coordinate the rather complex relationship between the DPU and RSC
-> drivers.
-> 
-> The "Point x paths to the x RSC" patches won't do anything (check the
-> compatibility workaround qcom_icc_pre_aggregate()) until disp_rsc is
-> properly described in the device tree, along with its BCM voter),
-> but they prepare ground for when that happens.
-> 
-> I was able to test sending requests through the DISP_RSC on SM8450, but
-> I had to hack its clocks (_rscc_ in dispcc) to be always-on, as we don't
-> have any clk handling for qcom,rpmh-rsc today.
-> 
-> Boot-tested on SM8350 and SM8450, nothing exploded.
-> 
-> [1] https://patchwork.kernel.org/project/dri-devel/patch/1521827074-28424-1-git-send-email-ryadav@codeaurora.org/
-> 
-> Dependencies:
-> [2] https://lore.kernel.org/linux-arm-msm/113b50f8-35f6-73fc-4fc9-302262927c5e@quicinc.com/
-> [3] https://lore.kernel.org/linux-arm-msm/20230703-topic-8250_qup_icc-v2-0-9ba0a9460be2@linaro.org/
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Konrad Dybcio (53):
->        dt-bindings: interconnect: qcom,icc: Introduce fixed BCM voter indices
->        dt-bindings: interconnect: qcom,bcm-voter: Add qcom,bcm-voter-idx
->        interconnect: qcom: icc-rpmh: Store direct BCM voter references
->        interconnect: qcom: icc-rpmh: Retire dead code
->        interconnect: qcom: icc-rpmh: Implement voting on non-APPS RSCs
->        interconnect: qcom: sc7180: Retire DEFINE_QNODE
->        interconnect: qcom: sdm670: Retire DEFINE_QNODE
->        interconnect: qcom: sdm845: Retire DEFINE_QNODE
->        interconnect: qcom: sdx55: Retire DEFINE_QNODE
->        interconnect: qcom: sdx65: Retire DEFINE_QNODE
->        interconnect: qcom: sm6350: Retire DEFINE_QNODE
->        interconnect: qcom: sm8150: Retire DEFINE_QNODE
->        interconnect: qcom: sm8250: Retire DEFINE_QNODE
->        interconnect: qcom: sm8350: Retire DEFINE_QNODE
->        interconnect: qcom: icc-rpmh: Retire DEFINE_QNODE
->        interconnect: qcom: sc7180: Retire DEFINE_QBCM
->        interconnect: qcom: sdm670: Retire DEFINE_QBCM
->        interconnect: qcom: sdm845: Retire DEFINE_QBCM
->        interconnect: qcom: sdx55: Retire DEFINE_QBCM
->        interconnect: qcom: sdx65: Retire DEFINE_QBCM
->        interconnect: qcom: sm6350: Retire DEFINE_QBCM
->        interconnect: qcom: sm8150: Retire DEFINE_QBCM
->        interconnect: qcom: sm8250: Retire DEFINE_QBCM
->        interconnect: qcom: sm8350: Retire DEFINE_QBCM
->        interconnect: qcom: icc-rpmh: Retire DEFINE_QBCM
->        interconnect: qcom: qdu1000: Explicitly assign voter_idx
->        interconnect: qcom: sa8775p: Explicitly assign voter_idx
->        interconnect: qcom: sc7280: Explicitly assign voter_idx
->        interconnect: qcom: sc8180x: Explicitly assign voter_idx
->        interconnect: qcom: sc8280xp: Explicitly assign voter_idx
->        interconnect: qcom: sm8450: Explicitly assign voter_idx
->        interconnect: qcom: sm8550: Explicitly assign voter_idx
->        arm64: dts: qcom: qdu1000: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sa8775p: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sc7180: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sc7280: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sc8180x: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sc8280xp: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sdm670: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sdm845: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sdx75: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sm6350: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sm8150: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sm8250: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sm8350: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sm8450: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sm8550: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sdx55: add qcom,bcm-voter-idx
->        arm64: dts: qcom: sdx65: add qcom,bcm-voter-idx
->        interconnect: qcom: sm8350: Point display paths to the display RSC
->        interconnect: qcom: sm8450: Point display paths to the display RSC
->        interconnect: qcom: sm8550: Point display paths to the display RSC
->        interconnect: qcom: sm8550: Point camera paths to the camera RSC
-> 
->   .../bindings/interconnect/qcom,bcm-voter.yaml      |   10 +
->   arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             |    1 +
->   arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |    1 +
->   arch/arm64/boot/dts/qcom/qdu1000.dtsi              |    2 +
->   arch/arm64/boot/dts/qcom/sa8775p.dtsi              |    1 +
->   arch/arm64/boot/dts/qcom/sc7180.dtsi               |    1 +
->   arch/arm64/boot/dts/qcom/sc7280.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sc8180x.dtsi              |    2 +
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |    2 +
->   arch/arm64/boot/dts/qcom/sdm670.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sdm845.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sdx75.dtsi                |    2 +
->   arch/arm64/boot/dts/qcom/sm6350.dtsi               |    1 +
->   arch/arm64/boot/dts/qcom/sm8150.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sm8250.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sm8350.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sm8450.dtsi               |    2 +
->   arch/arm64/boot/dts/qcom/sm8550.dtsi               |    2 +
->   drivers/interconnect/qcom/bcm-voter.c              |   75 +-
->   drivers/interconnect/qcom/bcm-voter.h              |    9 -
->   drivers/interconnect/qcom/icc-rpmh.c               |   53 +-
->   drivers/interconnect/qcom/icc-rpmh.h               |   14 +-
->   drivers/interconnect/qcom/qdu1000.c                |   11 +
->   drivers/interconnect/qcom/sa8775p.c                |   28 +
->   drivers/interconnect/qcom/sc7180.c                 | 1637 +++++++++++++++--
->   drivers/interconnect/qcom/sc7280.c                 |   27 +
->   drivers/interconnect/qcom/sc8180x.c                |   23 +
->   drivers/interconnect/qcom/sc8280xp.c               |   27 +
->   drivers/interconnect/qcom/sdm670.c                 | 1410 +++++++++++++--
->   drivers/interconnect/qcom/sdm845.c                 | 1683 ++++++++++++++++--
->   drivers/interconnect/qcom/sdx55.c                  |  863 ++++++++-
->   drivers/interconnect/qcom/sdx65.c                  |  850 ++++++++-
->   drivers/interconnect/qcom/sm6350.c                 | 1551 +++++++++++++++--
->   drivers/interconnect/qcom/sm8150.c                 | 1714 ++++++++++++++++--
->   drivers/interconnect/qcom/sm8250.c                 | 1772 +++++++++++++++++--
->   drivers/interconnect/qcom/sm8350.c                 | 1830 ++++++++++++++++++--
->   drivers/interconnect/qcom/sm8450.c                 |   24 +
->   drivers/interconnect/qcom/sm8550.c                 |   42 +
->   include/dt-bindings/interconnect/qcom,icc.h        |    8 +
->   39 files changed, 12320 insertions(+), 1370 deletions(-)
-> ---
-> base-commit: 82cee168d497ffcb79e4889fe3c7384788e89f4d
-> change-id: 20230708-topic-rpmh_icc_rsc-f897080fb207
-> 
-> Best regards,
+So the only issue that I can see is that if uefisecapp is loaded and
+generic ops are supported, we would need a way to choose one over the
+other. But I think that is fairly unlikely to happen and I think it
+would probably be best to sort that out then (e.g. by refusing to load
+this new driver with some additional check).
 
+Apart from that case, there should not be any timing issues that could
+cause registration to fail spuriously.
+
+Regards
+Max
