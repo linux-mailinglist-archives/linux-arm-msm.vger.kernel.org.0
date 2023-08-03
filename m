@@ -2,84 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4941876E34D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 10:39:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83FA576E371
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 10:45:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234732AbjHCIjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 04:39:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56956 "EHLO
+        id S234628AbjHCIpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 04:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234628AbjHCIj0 (ORCPT
+        with ESMTP id S234011AbjHCIpl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 04:39:26 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FF70422B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 01:38:03 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-523029050d0so184542a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 01:38:02 -0700 (PDT)
+        Thu, 3 Aug 2023 04:45:41 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2ED7F2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 01:45:38 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fe426b8583so175055e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 01:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1691051881; x=1691656681;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YLeBA2gvCKSwrQ2IvmVGA7dsAuidJbK+oOtl2KRNGpE=;
-        b=dkoz6pqa4E8bxR4RkItrXILd3Y/VJzIvTG++n03jk/d8c59UylipU/Ba3IwteUXleg
-         DnpklusI8Og2PfgPLyG6IY//WsWP/Fl3CKJ8K91058WfHk5snuYIzZLwBjcT1MPiQ5gs
-         GQi6UsHsMfrjgwhiHG7GBTtxJRlCmOAfdTMGE=
+        d=linaro.org; s=google; t=1691052337; x=1691657137;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gPa9htGpiuI88ff5WUiZx6PDVgHTuHk6lBPw5ohsQrE=;
+        b=iQtKPYyIyijAQEZXG8sS3v+UioIsnM10x5V8AfNOi143sbdJ5YaY/fkAuGgnpYujMR
+         TEFMmjE/V1jlg100vQscP3xPDrSpi3Ei/QbnxGUnpsaYXTALydWbg7T9mT7oZIzL+Fgy
+         sZ4m8K1aOJVN6NpqkZGlUkKnqejc2v5Y0gzKCnnsNXi5qtbsy3q8l1aI+LHGQCKGG9uC
+         crpm/Pl+UwuEA6tsAUZrKMGzfSNynfOnSouZtvWjNp1CCt0h+Z79Bihq5kkwZxA5XP++
+         1EoXsa1xQg1U4GS/gNO2rpsDcSHd82r5eQGyw+b4KKbJKrTY/+7jz3a8fY/zvGDLcwWs
+         ISsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691051881; x=1691656681;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YLeBA2gvCKSwrQ2IvmVGA7dsAuidJbK+oOtl2KRNGpE=;
-        b=BKUtuSVyso2fsbAGELM7LfceSCp1ZBipK9PXPOCFFSnh/2hoS+EAL2zyTucimSOTqf
-         lVB60P9f6XSM/n5HHDXM6ThIDhWYnVBU9y/CMPkgJxZj3qIk0njtVHzFVu1nREZrEE7e
-         VRs7EZRXfyaVOJ3rg6lRdSX58DZHGwOGT6kUvvI1m8BGjqhPpmmqaR9ZOvws1h/lCQo8
-         SRy8chFk21cr5zAoRZaaEci78SxRNmvYyHZlh/C2ty+wZeIJoDKR3lkT47wKUhwmPvrB
-         jgnSe48cIMPm+H7RBcm9+ZvXvzleOs+urX3qbxHTubfXQSb0EJS5woQohr9B1OwMzorj
-         hLJQ==
-X-Gm-Message-State: ABy/qLaF01FydDb40uqCxL31SqtAWd23NwFHQaA2aAYSQKRT8DdZfFra
-        xnDWkThYSON/WKVsyhnYbRoOTMOX/ErH2U9Uk4s=
-X-Google-Smtp-Source: APBJJlEPTLJ8mnYKZG5mALpz1XgrinUrw5SQRSvDFIWcwmGgjU0tebOBnTwaHBT9+oxIBjM2QZQkWA==
-X-Received: by 2002:a17:906:112:b0:99b:c845:7917 with SMTP id 18-20020a170906011200b0099bc8457917mr13076136eje.4.1691051881488;
-        Thu, 03 Aug 2023 01:38:01 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id y9-20020a170906470900b0099bc8db97bcsm10143956ejq.131.2023.08.03.01.38.00
+        d=1e100.net; s=20221208; t=1691052337; x=1691657137;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gPa9htGpiuI88ff5WUiZx6PDVgHTuHk6lBPw5ohsQrE=;
+        b=OU6LC8AFk1K51fWUdsOEtuFLAu2zYeSeZC8RqB7TQsdIjr+QQVW8LNBW7jfbbdHqVk
+         hGs0Lh42fgIywpSfYD2Nm5hJ1TcK2fUa4nWmORyy4KZNMAPSsSNuFnEKIWnwVHwIysKv
+         qMZHNz2nFDvKkiqgF/GFe77t7zGvlVsjgWlnr46xmDB9ZBxBXR6Ii2Dneay1nQOiRjvv
+         gRN7uW6ue+5Z1NHz6x7mWkfnsT7ym5+pe8yNjIn/+KAV/GKJ07vplQSwLlZbZr6O6+Vt
+         lc6JuAs9INffkDPvdZ5Sp9jITGk3AFC5EV3rHahQDHDL0hvQUzNjmDATZqbsWPFYrfwr
+         qEOA==
+X-Gm-Message-State: ABy/qLZ0aV02fTEDPHtErQy7falqUoShCI7LoqKUwxBxUQEhRgC6HUxC
+        ka2Q9dfO2CLWT507IavXYErveA==
+X-Google-Smtp-Source: APBJJlES0Xlr2MrJWA51aN+2lsiZe+u4CUHNXP1A/0+zTvskMAO250OGxQ+v/nB4BX/XxbeFxrmgmw==
+X-Received: by 2002:a05:6000:104f:b0:314:38e4:2596 with SMTP id c15-20020a056000104f00b0031438e42596mr7084284wrx.49.1691052337341;
+        Thu, 03 Aug 2023 01:45:37 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id v9-20020adfe4c9000000b00314374145e0sm11895052wrm.67.2023.08.03.01.45.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Aug 2023 01:38:00 -0700 (PDT)
-Date:   Thu, 3 Aug 2023 10:37:58 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 4/4] drm/msm: Remove vma use tracking
-Message-ID: <ZMtnZgpv4TQtYybA@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230802222158.11838-1-robdclark@gmail.com>
- <20230802222158.11838-5-robdclark@gmail.com>
+        Thu, 03 Aug 2023 01:45:36 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v3 0/3] bluetooth: qca: enable WCN7850 support
+Date:   Thu, 03 Aug 2023 10:45:25 +0200
+Message-Id: <20230803-topic-sm8550-upstream-bt-v3-0-6874a1507288@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230802222158.11838-5-robdclark@gmail.com>
-X-Operating-System: Linux phenom 6.3.0-2-amd64 
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACVpy2QC/42NTQ6DIBgFr2JY92v4Veyq92i6QAQlUTCgpo3x7
+ kV33bmcl7yZDSUTnUnoUWwomtUlF3wGdiuQ7pXvDLg2M6KYMlxSDHOYnIY0SiEwLFOao1EjNDO
+ 0VnOGha014SjfG5UMNFF53WeBX4Yhj1M01n3O3uuduXdpDvF75ldyrBdKKwEMvKJSlNxKWdHn4
+ LyK4R5ihw7rSq+aaDbVssGYs5YRxf9M+77/AGQ1//kgAQAA
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1406;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=QvoRFcZDs6o9TpNJhRcOO+q/4iGgVp6r0X2pKqGwQss=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBky2kuaalQYq+GyOGhBC5dzBopgjJeWqj6s3nph5/j
+ SJdvoJGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZMtpLgAKCRB33NvayMhJ0YVtD/
+ 0S3YIoi65pepoxmM4BNp7wpxX2Vem04ne3cGBDCEdXwlhXM3I+Y7XC/JrFDZoszlc41WS7829pdw9n
+ qCdfAzPHzQCXkRcjOTVxdMurgb6lL+utjUNFE2XZCkePbe0fXQmLkWCxN8FKbN4RhAXNl7x3rssDsl
+ U+N6Y9WQ0tGHhSAIA7UjoDEPhNir7DKT2wIckC9S8iMDtz305/nBMUF9mQuJRRg3rd1dRhDU16JDT2
+ RYCbeSsXxtnf3jGfQo3NurddIKG0A0Ph0QwvI3q743nKgtW62RxoTEj6JmgEghHMoZRvACHOOy+pwc
+ IeBSqe7LIztwIHHCsb3qEJK/mph9vJ3FNmXgS8IyqS2dRRR4r2X3XVzjTE9fHeN4zYMk1HqQ8fLNgr
+ F/sdKPjzfo41cLWpPilvSfjJkV0BMUb7VQ0uYQ2268m33RXvcASfMmn7VGwHNyOk4CE0J6eZqZrVvK
+ rsVo2vy+7e7xmAgbS5FOafvRqgcErnWOBnvp8ETVxhIbwi3iG82KijkA+dcQbd4GAM2bwgjhq+0E5U
+ TBoID9lY7D3Hxinl+/K5EOH+55qwlzaiHC47ZFtsZ7rQ4pinuagYcXQ0/xRpM+mJoPsL8MK05QTVJf
+ 8+TfAjwhbR80bFwg03jrKSiEp8BL5nGz+DpU2Ulc/u89IBObTFJi0mM8w4gQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,308 +107,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 02, 2023 at 03:21:52PM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> This was not strictly necessary, as page unpinning (ie. shrinker) only
-> cares about the resv.  It did give us some extra sanity checking for
-> userspace controlled iova, and was useful to catch issues on kernel and
-> userspace side when enabling userspace iova.  But if userspace screws
-> this up, it just corrupts it's own gpu buffers and/or gets iova faults.
-> So we can just let userspace shoot it's own foot and drop the extra per-
-> buffer SUBMIT overhead.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+This serie enables WCN7850 on the Qualcomm SM8550 QRD
+reference platform.
 
-I did check a few things (like that the gem lru helpers have all the
-needed lockdep_assert_held) and I think aside from the optimization this
-is a nice semantic cleanup. Since iirc we've had a locking inversion
-discussion and the vma tracking here came up as a culprit. On the series:
+The WCN7850 is close to the WCN6855 but uses different
+firmware names.
 
-Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v3:
+- Rebased on next-20230803 (including WCN3988 changes)
+- Dropped DT patches to be sent in a separate serie
+- Link to v2: https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v2-0-98b0043d31a4@linaro.org
 
-> ---
->  drivers/gpu/drm/msm/msm_gem.c        |  9 +---
->  drivers/gpu/drm/msm/msm_gem.h        | 12 +----
->  drivers/gpu/drm/msm/msm_gem_submit.c | 14 ++----
->  drivers/gpu/drm/msm/msm_gem_vma.c    | 67 +---------------------------
->  drivers/gpu/drm/msm/msm_ringbuffer.c |  3 +-
->  5 files changed, 9 insertions(+), 96 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index 1c81ff6115ac..ce1ed0f9ad2d 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -607,9 +607,6 @@ static int clear_iova(struct drm_gem_object *obj,
->  	if (!vma)
->  		return 0;
->  
-> -	if (msm_gem_vma_inuse(vma))
-> -		return -EBUSY;
-> -
->  	msm_gem_vma_purge(vma);
->  	msm_gem_vma_close(vma);
->  	del_vma(vma);
-> @@ -660,7 +657,6 @@ void msm_gem_unpin_iova(struct drm_gem_object *obj,
->  	msm_gem_lock(obj);
->  	vma = lookup_vma(obj, aspace);
->  	if (!GEM_WARN_ON(!vma)) {
-> -		msm_gem_vma_unpin(vma);
->  		msm_gem_unpin_locked(obj);
->  	}
->  	msm_gem_unlock(obj);
-> @@ -991,11 +987,10 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
->  			} else {
->  				name = comm = NULL;
->  			}
-> -			seq_printf(m, " [%s%s%s: aspace=%p, %08llx,%s,inuse=%d]",
-> +			seq_printf(m, " [%s%s%s: aspace=%p, %08llx,%s]",
->  				name, comm ? ":" : "", comm ? comm : "",
->  				vma->aspace, vma->iova,
-> -				vma->mapped ? "mapped" : "unmapped",
-> -				msm_gem_vma_inuse(vma));
-> +				vma->mapped ? "mapped" : "unmapped");
->  			kfree(comm);
->  		}
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> index 2ddd896aac68..8ddef5443140 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -59,24 +59,16 @@ struct msm_fence_context;
->  
->  struct msm_gem_vma {
->  	struct drm_mm_node node;
-> -	spinlock_t lock;
->  	uint64_t iova;
->  	struct msm_gem_address_space *aspace;
->  	struct list_head list;    /* node in msm_gem_object::vmas */
->  	bool mapped;
-> -	int inuse;
-> -	uint32_t fence_mask;
-> -	uint32_t fence[MSM_GPU_MAX_RINGS];
-> -	struct msm_fence_context *fctx[MSM_GPU_MAX_RINGS];
->  };
->  
->  struct msm_gem_vma *msm_gem_vma_new(struct msm_gem_address_space *aspace);
->  int msm_gem_vma_init(struct msm_gem_vma *vma, int size,
->  		u64 range_start, u64 range_end);
-> -bool msm_gem_vma_inuse(struct msm_gem_vma *vma);
->  void msm_gem_vma_purge(struct msm_gem_vma *vma);
-> -void msm_gem_vma_unpin(struct msm_gem_vma *vma);
-> -void msm_gem_vma_unpin_fenced(struct msm_gem_vma *vma, struct msm_fence_context *fctx);
->  int msm_gem_vma_map(struct msm_gem_vma *vma, int prot, struct sg_table *sgt, int size);
->  void msm_gem_vma_close(struct msm_gem_vma *vma);
->  
-> @@ -298,15 +290,13 @@ struct msm_gem_submit {
->  /* make sure these don't conflict w/ MSM_SUBMIT_BO_x */
->  #define BO_VALID	0x8000	/* is current addr in cmdstream correct/valid? */
->  #define BO_LOCKED	0x4000	/* obj lock is held */
-> -#define BO_OBJ_PINNED	0x2000	/* obj (pages) is pinned and on active list */
-> -#define BO_VMA_PINNED	0x1000	/* vma (virtual address) is pinned */
-> +#define BO_PINNED	0x2000	/* obj (pages) is pinned and on active list */
->  		uint32_t flags;
->  		union {
->  			struct drm_gem_object *obj;
->  			uint32_t handle;
->  		};
->  		uint64_t iova;
-> -		struct msm_gem_vma *vma;
->  	} bos[];
->  };
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index b17561ebd518..5f90cc8e7b7f 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -261,10 +261,7 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
->  	 */
->  	submit->bos[i].flags &= ~cleanup_flags;
->  
-> -	if (flags & BO_VMA_PINNED)
-> -		msm_gem_vma_unpin(submit->bos[i].vma);
-> -
-> -	if (flags & BO_OBJ_PINNED)
-> +	if (flags & BO_PINNED)
->  		msm_gem_unpin_locked(obj);
->  
->  	if (flags & BO_LOCKED)
-> @@ -273,7 +270,7 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
->  
->  static void submit_unlock_unpin_bo(struct msm_gem_submit *submit, int i)
->  {
-> -	unsigned cleanup_flags = BO_VMA_PINNED | BO_OBJ_PINNED | BO_LOCKED;
-> +	unsigned cleanup_flags = BO_PINNED | BO_LOCKED;
->  	submit_cleanup_bo(submit, i, cleanup_flags);
->  
->  	if (!(submit->bos[i].flags & BO_VALID))
-> @@ -404,9 +401,6 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
->  		if (ret)
->  			break;
->  
-> -		submit->bos[i].flags |= BO_VMA_PINNED;
-> -		submit->bos[i].vma = vma;
-> -
->  		if (vma->iova == submit->bos[i].iova) {
->  			submit->bos[i].flags |= BO_VALID;
->  		} else {
-> @@ -420,7 +414,7 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
->  	mutex_lock(&priv->lru.lock);
->  	for (i = 0; i < submit->nr_bos; i++) {
->  		msm_gem_pin_obj_locked(submit->bos[i].obj);
-> -		submit->bos[i].flags |= BO_OBJ_PINNED;
-> +		submit->bos[i].flags |= BO_PINNED;
->  	}
->  	mutex_unlock(&priv->lru.lock);
->  
-> @@ -547,7 +541,7 @@ static void submit_cleanup(struct msm_gem_submit *submit, bool error)
->  	unsigned i;
->  
->  	if (error)
-> -		cleanup_flags |= BO_VMA_PINNED | BO_OBJ_PINNED;
-> +		cleanup_flags |= BO_PINNED;
->  
->  	for (i = 0; i < submit->nr_bos; i++) {
->  		struct drm_gem_object *obj = submit->bos[i].obj;
-> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-> index 98287ed99960..11e842dda73c 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> @@ -38,41 +38,12 @@ msm_gem_address_space_get(struct msm_gem_address_space *aspace)
->  	return aspace;
->  }
->  
-> -bool msm_gem_vma_inuse(struct msm_gem_vma *vma)
-> -{
-> -	bool ret = true;
-> -
-> -	spin_lock(&vma->lock);
-> -
-> -	if (vma->inuse > 0)
-> -		goto out;
-> -
-> -	while (vma->fence_mask) {
-> -		unsigned idx = ffs(vma->fence_mask) - 1;
-> -
-> -		if (!msm_fence_completed(vma->fctx[idx], vma->fence[idx]))
-> -			goto out;
-> -
-> -		vma->fence_mask &= ~BIT(idx);
-> -	}
-> -
-> -	ret = false;
-> -
-> -out:
-> -	spin_unlock(&vma->lock);
-> -
-> -	return ret;
-> -}
-> -
->  /* Actually unmap memory for the vma */
->  void msm_gem_vma_purge(struct msm_gem_vma *vma)
->  {
->  	struct msm_gem_address_space *aspace = vma->aspace;
->  	unsigned size = vma->node.size;
->  
-> -	/* Print a message if we try to purge a vma in use */
-> -	GEM_WARN_ON(msm_gem_vma_inuse(vma));
-> -
->  	/* Don't do anything if the memory isn't mapped */
->  	if (!vma->mapped)
->  		return;
-> @@ -82,33 +53,6 @@ void msm_gem_vma_purge(struct msm_gem_vma *vma)
->  	vma->mapped = false;
->  }
->  
-> -static void vma_unpin_locked(struct msm_gem_vma *vma)
-> -{
-> -	if (GEM_WARN_ON(!vma->inuse))
-> -		return;
-> -	if (!GEM_WARN_ON(!vma->iova))
-> -		vma->inuse--;
-> -}
-> -
-> -/* Remove reference counts for the mapping */
-> -void msm_gem_vma_unpin(struct msm_gem_vma *vma)
-> -{
-> -	spin_lock(&vma->lock);
-> -	vma_unpin_locked(vma);
-> -	spin_unlock(&vma->lock);
-> -}
-> -
-> -/* Replace pin reference with fence: */
-> -void msm_gem_vma_unpin_fenced(struct msm_gem_vma *vma, struct msm_fence_context *fctx)
-> -{
-> -	spin_lock(&vma->lock);
-> -	vma->fctx[fctx->index] = fctx;
-> -	vma->fence[fctx->index] = fctx->last_fence;
-> -	vma->fence_mask |= BIT(fctx->index);
-> -	vma_unpin_locked(vma);
-> -	spin_unlock(&vma->lock);
-> -}
-> -
->  /* Map and pin vma: */
->  int
->  msm_gem_vma_map(struct msm_gem_vma *vma, int prot,
-> @@ -120,11 +64,6 @@ msm_gem_vma_map(struct msm_gem_vma *vma, int prot,
->  	if (GEM_WARN_ON(!vma->iova))
->  		return -EINVAL;
->  
-> -	/* Increase the usage counter */
-> -	spin_lock(&vma->lock);
-> -	vma->inuse++;
-> -	spin_unlock(&vma->lock);
-> -
->  	if (vma->mapped)
->  		return 0;
->  
-> @@ -146,9 +85,6 @@ msm_gem_vma_map(struct msm_gem_vma *vma, int prot,
->  
->  	if (ret) {
->  		vma->mapped = false;
-> -		spin_lock(&vma->lock);
-> -		vma->inuse--;
-> -		spin_unlock(&vma->lock);
->  	}
->  
->  	return ret;
-> @@ -159,7 +95,7 @@ void msm_gem_vma_close(struct msm_gem_vma *vma)
->  {
->  	struct msm_gem_address_space *aspace = vma->aspace;
->  
-> -	GEM_WARN_ON(msm_gem_vma_inuse(vma) || vma->mapped);
-> +	GEM_WARN_ON(vma->mapped);
->  
->  	spin_lock(&aspace->lock);
->  	if (vma->iova)
-> @@ -179,7 +115,6 @@ struct msm_gem_vma *msm_gem_vma_new(struct msm_gem_address_space *aspace)
->  	if (!vma)
->  		return NULL;
->  
-> -	spin_lock_init(&vma->lock);
->  	vma->aspace = aspace;
->  
->  	return vma;
-> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> index 6fa427d2992e..7f5e0a961bba 100644
-> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> @@ -26,9 +26,8 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
->  	for (i = 0; i < submit->nr_bos; i++) {
->  		struct drm_gem_object *obj = submit->bos[i].obj;
->  
-> -		msm_gem_vma_unpin_fenced(submit->bos[i].vma, fctx);
->  		msm_gem_unpin_active(obj);
-> -		submit->bos[i].flags &= ~(BO_VMA_PINNED | BO_OBJ_PINNED);
-> +		submit->bos[i].flags &= ~BO_PINNED;
->  	}
->  
->  	mutex_unlock(&priv->lru.lock);
-> -- 
-> 2.41.0
-> 
+Changes in v2:
+- Convert if/else and qca_is_*() macros by switch/case to simplify adding now BT SoCs
+- Add bindings reviewed-by
+- Link to v1: https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v1-0-4728564f8872@linaro.org
 
+---
+Neil Armstrong (3):
+      dt-bindings: net: bluetooth: qualcomm: document WCN7850 chipset
+      bluetooth: qca: use switch case for soc type behavior
+      bluetooth: qca: add support for WCN7850
+
+ .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |  23 ++
+ drivers/bluetooth/btqca.c                          |  97 +++++---
+ drivers/bluetooth/btqca.h                          |  37 +--
+ drivers/bluetooth/hci_qca.c                        | 264 ++++++++++++++++-----
+ 4 files changed, 300 insertions(+), 121 deletions(-)
+---
+base-commit: fb4327106e5250ee360d0d8b056c1eef7eeb9a98
+change-id: 20230620-topic-sm8550-upstream-bt-dfc4305f9c14
+
+Best regards,
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Neil Armstrong <neil.armstrong@linaro.org>
+
