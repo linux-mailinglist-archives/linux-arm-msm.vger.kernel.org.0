@@ -2,80 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E727976DF8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 07:07:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C06576DFA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 07:18:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230005AbjHCFHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 01:07:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46728 "EHLO
+        id S232117AbjHCFSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 01:18:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjHCFHG (ORCPT
+        with ESMTP id S232181AbjHCFSV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 01:07:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A4510C1;
-        Wed,  2 Aug 2023 22:07:03 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3733rn4B008712;
-        Thu, 3 Aug 2023 05:06:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=xpFDekMwUSJDrYjwp01Mb07R7FJlMGi3Al6Moa/52lQ=;
- b=cVoQubhdUyn4Fu0dT+m332rwLdUODBVAW6PIG7Chc3BAy+Lz5pim5rQeWNEBAwzCtRwS
- QDKke5oCVt4rloQ4//cD3F7pU1BWtih5wFIlrtLr2QAWC9PEnkQGsRysihIBypuOgk8/
- yAjDBbl2c3sunXnW9oED2UiDai+dxrByF94ddSJjM95FTxd2qMQkFJTUgjEJGZPQUR9g
- blMubf6dAneRPAykUt+bM8hStt/H+Ew5YNpjn50BOiKWD20q7ZgSMNxq7ugz/pTF+wsG
- lC6molMEIDjbFzvC+OVMf1axQbf6qk+uyRVL/0l2XWomf/A7QWUfeAcbI7EPzcqG3mpa 7Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s75dgc5ub-1
+        Thu, 3 Aug 2023 01:18:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7627E30FF;
+        Wed,  2 Aug 2023 22:18:20 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37347sOP001482;
+        Thu, 3 Aug 2023 05:18:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=91DonNJJR8nbkv0nnP+YVancydUGw7/+AHHnSVDrQ3E=;
+ b=CBPURklfp6SmexmddjeDmG1/bTJdwjeW/SNsQ9Of+VIpD1X54z2YXS36bXUu7Slk44Qw
+ 19He+mY3U/vC31Bv5EIY2bJ7187vkmF3mHHeoKWdYGUhCstHRtH3iLtPqO7SXcxJTdh1
+ 8Ay3RLKalfp/YPJGyk/u024f8RW+VoIG+IEUDewCoI8ldvSHfoJtwiNhh8x0pMwSXEr1
+ BozqiVJ58WRNxEYyOD4bigtTGvr/EKzsRCNj3Zsxfw3zV9lo3+d2frvDko6YAFmeG7VX
+ dQR8cQp/v4ZpAxEQJikYHGRekMRbI7O+Ce1EGEUSwKIDsZT7kXXc8cRe+GsEfPzHDmFR 9A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s7n93j17m-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Aug 2023 05:06:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37356qCC011877
+        Thu, 03 Aug 2023 05:18:00 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3735Hv9G024678
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Aug 2023 05:06:52 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 2 Aug 2023 22:06:48 -0700
-Date:   Thu, 3 Aug 2023 10:36:45 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_jackp@quicinc.com>
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: Add PMIC pm7550ba dtsi
-Message-ID: <7941f5de-547c-4a92-9af1-a1c0add1ace4@quicinc.com>
-References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
- <1690970366-30982-4-git-send-email-quic_rohiagar@quicinc.com>
- <ce1af969-427a-3e4d-e85c-32d629755d9a@linaro.org>
- <bb374ec4-3dfa-42f1-dffb-fc8505625b73@quicinc.com>
- <2e97b032-4ca5-e59c-c891-2ed9ca39d237@linaro.org>
+        Thu, 3 Aug 2023 05:17:57 GMT
+Received: from [10.216.43.191] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 2 Aug
+ 2023 22:17:51 -0700
+Message-ID: <c1e6d380-256b-4750-9703-e893c79611da@quicinc.com>
+Date:   Thu, 3 Aug 2023 10:47:48 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2e97b032-4ca5-e59c-c891-2ed9ca39d237@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V12 0/6] Add minimal boot support for IPQ5018
+Content-Language: en-US
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
+        <krzysztof.kozlowski@linaro.org>, <andy.shevchenko@gmail.com>
+References: <1690533192-22220-1-git-send-email-quic_srichara@quicinc.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <1690533192-22220-1-git-send-email-quic_srichara@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: C-OcsofTPxVkeCo3JK--U4bpNshGPn-s
-X-Proofpoint-ORIG-GUID: C-OcsofTPxVkeCo3JK--U4bpNshGPn-s
+X-Proofpoint-GUID: cz9b77BDoQtM8IGxcGvqquddyDRE_9WW
+X-Proofpoint-ORIG-GUID: cz9b77BDoQtM8IGxcGvqquddyDRE_9WW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-03_02,2023-08-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 spamscore=0
- mlxlogscore=279 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308030046
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+ definitions=2023-08-03_03,2023-08-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
+ bulkscore=0 mlxlogscore=724 spamscore=0 malwarescore=0 suspectscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308030048
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,41 +88,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, Aug 02, 2023 at 03:14:19PM +0200, Konrad Dybcio wrote:
-> On 2.08.2023 15:13, Rohit Agarwal wrote:
-> > 
-> > On 8/2/2023 6:12 PM, Konrad Dybcio wrote:
-> >> On 2.08.2023 11:59, Rohit Agarwal wrote:
-> >>> Add dtsi for PMIC pm7550ba found in Qualcomm platforms.
-> >>>
-> >>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> >>> ---
-> >> Subject: "PMIC pm7550ba" -> "pm7550ba PMIC"
-> >>
-> >> [...]
-> >>
-> >>> +
-> >>> +        pm7550ba_eusb2_repeater: phy@fd00 {
-> >>> +            compatible = "qcom,pm8550b-eusb2-repeater";
-> >> A new compatible should be introduced, so that it goes like this:
-> >>
-> >> compatible = "qcom,pm7550ba-eusb2-repeater", "qcom,pm8550b-eusb2-repeater";
-> > Just a doubt, Since the compatible can be same why we need to introduce a new compatible.
-> > Should every soc have a compatible string?
-> If it turns out that we need to add a quirk for PM7550BA 3 years down
-> the line, this approach lets us fix it for users that never updated
-> their device trees.
+
+On 7/28/2023 2:03 PM, Sricharan Ramabadhran wrote:
+> The IPQ5018 is Qualcomm's 802.11ax SoC for Routers,
+> Gateways and Access Points.
 > 
+> This series adds minimal board boot support for ipq5018-rdp432-c2 board.
+> 
+> [v12]   Fixed the subject for patch #1 and fixed a conflict in Makefile for patch #5
 
-Trying to make my understanding clear.
+Bjorn,
+   Any chance this can be pulled in now for 6.6 ?
 
-eUSB repeater is a peripheral in the PMIC. Do we need a separate
-compatible even if the peripheral is same in two different PMIC chips?
-I believe eUSB peripheral has some identification registers to apply any
-quirks in future.
-
-Adding Jack who would know more about any deltas between the PMICs in
-sdx75 and sm8550.
-
-Thanks,
-Pavan
+Regards,
+  Sricharan
