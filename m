@@ -2,86 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A90AF76E673
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 13:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28FA576E6A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 13:18:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229446AbjHCLMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 07:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48584 "EHLO
+        id S234594AbjHCLSi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 07:18:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232519AbjHCLMF (ORCPT
+        with ESMTP id S234579AbjHCLSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 07:12:05 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA68735A6;
-        Thu,  3 Aug 2023 04:11:55 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 373AWJFf027628;
-        Thu, 3 Aug 2023 11:11:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nIhYZQ2o7rdTlb24IfHDbwWufWVPzpCWsdj/IAyGH28=;
- b=R9Byoya6EIDQFWw0TKmqyMpLIKTMY5egmjyoGa1wcy4//+G7o20KLbp9ma7O7qq/1DD2
- bkrBrEtENaWqFCB1D4J8G2Nr0BB9mF5BM6iTfjk9jyrCFzkozOXGR0i2T1S+myQnBQHc
- CqlautRyHZS4ohHoWY8uGwxs9ofMr+vGrtkbbyRpxY/fouoW5SBMVyzD2alDeGKj1NMF
- xYkd6h53gcYo1vcaX8Ui4g6LhOsyC4+po0g8QXLHVGaDLOgYaN3VpAWP2JO8fYldMTEU
- 5u5NRH6cXOMWdCXjAQjDtOv737XAS58DQoMHk54D6nPxm2MfEl0owSsf4J/KyZWB2Dvz nw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s87jhgepw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Aug 2023 11:11:51 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 373BBoH7029762
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Aug 2023 11:11:50 GMT
-Received: from [10.201.206.212] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 3 Aug
- 2023 04:11:47 -0700
-Message-ID: <1ac4ec1d-f01e-6ddd-708d-6dec7ca4ea3d@quicinc.com>
-Date:   Thu, 3 Aug 2023 16:41:44 +0530
+        Thu, 3 Aug 2023 07:18:37 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A481A5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 04:18:36 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fe2de785e7so1499705e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 04:18:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691061514; x=1691666314;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yVMtPnE0Jb/J9QxlUytkL4duX4FZWHFBp/OP8kiAwAA=;
+        b=kal3dk9nda2u/3tB1viAQMR0L+3pUMGDhUd2QCFVid4mUMGAdEKYuavISSPyIKokFD
+         TgC/qi7ryRCd9vbKYXe34j0lFy5wG2FzNyEGiT//5VEW3KsPlLqEinqDhh0pu8tALa4k
+         itRxbwI6lzjTXRBckCh4wCZU8FZJubZKt4TN3ga8ZIY1dWZYv54f3hKxAQhozdag9pKw
+         NjPXZuM2ErBdtqp2Ac5BfFjAqIa6GRSgOZlNXihJpqxdPuOfMl7muoxEpHau7j6mmewH
+         glCZas8+O4ga/Lxx4jIWsYZr3aD4Q1alTWeeUUrGbvWIQdINQ2CaAkxCU9TeqBktG/9P
+         V3gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691061514; x=1691666314;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yVMtPnE0Jb/J9QxlUytkL4duX4FZWHFBp/OP8kiAwAA=;
+        b=DYOQfpsr9ayVNYaoVDJFLYe3x/XtH9zMyo9JbOkLbBdnGXpqAmHurbJjhV7Vu1B/HO
+         J0ts76PX3hfllQ9xWYFyjhwu8LCx9ZtWF1xT/OQz+NwqpCswuK4ZCim7ql4Lg4C+YR9+
+         k7M6zqqRRrNZyGIewYUcNDmAWW2A78smja5cX7nbSQaI+rsN8uz6kXBJkbQNPzExCGFa
+         84MOtplVuqUnR7QAba/iCDNYHgqsxyIhjPh9L+xvqsdlmiKryk+spDcbjZTHGqCWkekJ
+         IrCauH4pBaSz0qyD++mcSBfkixjkx/penQjzZVAfNhFgEvHSmSWBBN5mRYdwNhPHdvXo
+         KCPA==
+X-Gm-Message-State: ABy/qLZMGw0MO5rWpe7Iaw+1VwBylTIabYHOrGjLYeZPGRGqSJ6Pv2lW
+        SLBHHTGoedYMNM9c76zysWSTYA==
+X-Google-Smtp-Source: APBJJlH0pAA+7qtJlp2hvnz725PBTJoYabs1TKO9v3OgLTpxg8UmqkP9rCFsq0g7E9dMQnMgVshsdQ==
+X-Received: by 2002:a19:e008:0:b0:4f8:8be4:8a82 with SMTP id x8-20020a19e008000000b004f88be48a82mr6449087lfg.22.1691061514124;
+        Thu, 03 Aug 2023 04:18:34 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id f14-20020a056512092e00b004edc72be17csm3296417lft.2.2023.08.03.04.18.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Aug 2023 04:18:33 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Ryan McCann <quic_rmccann@quicinc.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu: fix DSC 1.2 block lengths
+Date:   Thu,  3 Aug 2023 14:18:32 +0300
+Message-Id: <169106148046.4192382.8826688814736988415.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230802183655.4188640-1-dmitry.baryshkov@linaro.org>
+References: <20230802183655.4188640-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document AL02-Cx and AL03-C2
- boards based on IPQ9574 family
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230720084534.6461-1-quic_sridsn@quicinc.com>
- <20230720084534.6461-2-quic_sridsn@quicinc.com>
- <87c3a3db-d172-bc98-cf83-89b874c9fee7@linaro.org>
- <9e401641-1334-c0bc-c49a-481a8a9af2de@linaro.org>
- <c1903d09-f307-8e80-0482-2040c7af7a2c@quicinc.com>
- <b57e0199-141f-2a37-4d5a-b98da5276b89@linaro.org>
-Content-Language: en-US
-From:   Sridharan S N <quic_sridsn@quicinc.com>
-In-Reply-To: <b57e0199-141f-2a37-4d5a-b98da5276b89@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5vwHY_BDHPxdfBRppFQg_PzSoLMo5PRx
-X-Proofpoint-ORIG-GUID: 5vwHY_BDHPxdfBRppFQg_PzSoLMo5PRx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-03_09,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 phishscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308030100
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,82 +82,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 7/26/2023 12:51 PM, Krzysztof Kozlowski wrote:
-> On 26/07/2023 07:03, Sridharan S N wrote:
->> On 7/20/2023 3:18 PM, Konrad Dybcio wrote:
->>> On 20.07.2023 10:49, Krzysztof Kozlowski wrote:
->>>> On 20/07/2023 10:45, Sridharan S N wrote:
->>>>> Document the below listed (Reference Design Platform) RDP boards based on IPQ9574
->>>>> family of SoCs.
->>>>>
->>>>> AL02-C3  - rdp437
->>>>> AL02-C7  - rdp433-mht-phy
->>>>> AL02-C10 - rdp433-mht-switch
->>>>> AL02-C11 - rdp467
->>>>> AL02-C12 - rdp455
->>>>> AL02-C13 - rdp459
->>>>> AL02-C15 - rdp457
->>>>> AL02-C16 - rdp456
->>>>> AL02-C17 - rdp469
->>>>> AL02-C19 - rdp461
->>>>> AL03-C2  - rdp458
->>>>>
->>>>> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
->>>>> ---
->>>>>    .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
->>>>>    1 file changed, 20 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>>> index dd66fd872c31..d992261da691 100644
->>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>>> @@ -89,10 +89,20 @@ description: |
->>>>>            adp
->>>>>            ap-al01-c1
->>>>>            ap-al02-c2
->>>>> +        ap-al02-c3
->>>>>            ap-al02-c6
->>>>>            ap-al02-c7
->>>>>            ap-al02-c8
->>>>>            ap-al02-c9
->>>>> +        ap-al02-c10
->>>>> +        ap-al02-c11
->>>>> +        ap-al02-c12
->>>>> +        ap-al02-c13
->>>>> +        ap-al02-c15
->>>>> +        ap-al02-c16
->>>>> +        ap-al02-c17
->>>>> +        ap-al02-c19
->>>> Why? I asked once, but there was no feedback from Qualcomm.
->>>>
->>>> Why do we need to do this? What's the point?
->>> Another question would be, whether these boards are just one-off test
->>> prototypes of which there exist like 5-10 units, or are they actually
->>> going to be supported and useful.
->>>
->>> If it's the former, I don't think it makes sense to keep the device
->>> trees upstream.
->>>
->>> Konrad
->> These are all not test rdps and each rdps has its own configurations.
->> IPQ9574 has four pcie instances and one QDSP processor. Not all rdps use
->> all of the interfaces and it will vary for each rdp. In next version ,
->> will post with each rdp's configuration explicitly
->
-> So still no answer why do we need to list it as possible boards.
-> Especially that it messes with compatible style, because c[1-9] looks
-> like board version.
->
-> I suggest don't add these board types and drop existing ones.
->
->
-> Best regards,
-> Krzysztof
+On Wed, 02 Aug 2023 21:36:54 +0300, Dmitry Baryshkov wrote:
+> All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
+> This includes the common block itself, enc subblocks and some empty
+> space around. Change that to pass 0x4 instead, the length of common
+> register block itself.
+> 
+> 
 
-Apologize for the late reply. IPQ bootloader doesn't need these info. we 
-will send the patch to drop the existing ones
+Applied, thanks!
 
-Thanks,
+[1/2] drm/msm/dpu: fix DSC 1.2 block lengths
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/e550ad0e5c3d
+[2/2] drm/msm/dpu: fix DSC 1.2 enc subblock length
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/57a1ca6cf73b
 
-Sridharan
-
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
