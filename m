@@ -2,49 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65AC476EA7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 15:33:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D219B76E993
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 15:08:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233595AbjHCNda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 09:33:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48288 "EHLO
+        id S236141AbjHCNIi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 09:08:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232613AbjHCNcO (ORCPT
+        with ESMTP id S236300AbjHCNIH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 09:32:14 -0400
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441693C1F;
-        Thu,  3 Aug 2023 06:31:11 -0700 (PDT)
-Received: from dggpemm100020.china.huawei.com (unknown [172.30.72.55])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4RGpz03117zrS8N;
-        Thu,  3 Aug 2023 21:07:08 +0800 (CST)
-Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
- dggpemm100020.china.huawei.com (7.185.36.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Thu, 3 Aug 2023 21:08:12 +0800
-Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
- (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Thu, 3 Aug
- 2023 21:08:12 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
-        <yangyingliang@huawei.com>
-Subject: [PATCH -next] interconnect: fix error handling in qnoc_probe()
-Date:   Thu, 3 Aug 2023 21:05:21 +0800
-Message-ID: <20230803130521.959487-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 3 Aug 2023 09:08:07 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB635596
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 06:06:35 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe55d70973so600137e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 06:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691067934; x=1691672734;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eWYA704UWyrCuVl2IVzrHz3n0S97k5VTTL5u48g6ZTA=;
+        b=e3geX4m1ZZORMkJo5JTDAM+hn3WhVYbMmVHOQ05ESi/RbDn63S6kae8cPpi585t1dh
+         3CAXQhSIZQfLK4Qz4FQJsnjCDTrZqJe+DDBzMB68sMgwEHWXlOHV1di3njBqtX9FHav/
+         fR+Ozvez38uIPy6yw3BQeJ78h6eNbPDnijtHPa6cazgw1D3We0icbBrV1aejrMj7E6if
+         1PSfMUmoLr/y3Y8ptBBlvJDRIj85TjXcjOnUkfTS3KxvMbsaPufy0AFKTv9TtIgnsIHC
+         BWcqB4mvXFYO46zOZk1XGqlRAHhZcCnv7JGlzTwldbnqsevuEUx8Wx/LQugPN7t4D9mN
+         q89A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691067934; x=1691672734;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eWYA704UWyrCuVl2IVzrHz3n0S97k5VTTL5u48g6ZTA=;
+        b=WsEd1Ou9R1CA9X7GBpP3Y+Ys/XZnceje1u9EAqF/JbM31Ks+Q6+B9W5M2GUEfCv+Fw
+         vOvecp5Wdh5MQXAraQWTXk4joEzNdS8jzlsj2z8Zq9Yh3rpcum4ZfIHPvM3z9Im8OVKF
+         3khYYBbpwSPCQkk4wStgq2UTdvEL9mo0G+fHMwkq66mV7N7ky88ZnWlYd/6wm9E2VoG2
+         MblZ6TVxEOuWzM71V58C6Etpr1G3lXq+hcLTo1oniCmgDGqdfOt3ZR9peY3sHSlF6y+0
+         nRF35GxahGTjO72HU1uC88FpSNh21uk2C/RsZzf3OjxDERGm7QWMChDpzD20EIshJttx
+         l6dQ==
+X-Gm-Message-State: ABy/qLZhO8x6CVbG/7UH+5wnWutQS4ugx6whKOW3rHM8JtTwkfd7IQPc
+        /m5R71IPHQ54p3LsGNJrgg9F9A==
+X-Google-Smtp-Source: APBJJlGC3rABxiwyoiDF0oUWEpERVKiEj80Fs1x/UV5kinaiB16EEFg1DxZaPQsrEAhjC/Ej7JCD+g==
+X-Received: by 2002:a05:6512:3ca3:b0:4fe:17a8:bee5 with SMTP id h35-20020a0565123ca300b004fe17a8bee5mr4122947lfv.31.1691067933716;
+        Thu, 03 Aug 2023 06:05:33 -0700 (PDT)
+Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
+        by smtp.gmail.com with ESMTPSA id h11-20020ac25d6b000000b004fa4323ec97sm3346594lft.301.2023.08.03.06.05.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Aug 2023 06:05:33 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Thu, 03 Aug 2023 15:05:26 +0200
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Unreserve NC pins
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- dggpemm500007.china.huawei.com (7.185.36.183)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230803-topic-x13s_pin-v1-1-fae792274e89@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABWmy2QC/x2NywqDQAwAf0VybmAfB2t/pZSyu8YakLhsahHEf
+ 2/wOAPDHKDUmBQe3QGNfqy8ioG/dVDmJB9CHo0huBDd3UX8rpUL7j7qu7LgQBS973M/hQEsykk
+ Jc0tSZstkWxaTtdHE+3V5vs7zD1liBMZ1AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691067932; l=1138;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Isdz9v//a75u85vSi/PjyYD1dgrHZUgYNZovgx3+yvA=;
+ b=JyjBZpB+Bv5UsUJshxNfdQulQwSprrfTT60zfjNwelAxLfJnexNNxp4PttcYsRTPVNwX9ue2W
+ pznf2z61XRoDb5KTM2QRjQTNgT5yJlLcx9dv8yPc8DV/iS3Ag0TFQVD
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,69 +89,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing clk_disable_unprepare() and clk_bulk_disable_unprepare()
-in the error path in qnoc_probe(). And when qcom_icc_qos_set() fails,
-it needs remove nodes and disable clks.
+Pins 83-86 and 158-160 are NC, so there's no point in keeping them
+reserved. Take care of that.
 
-Fixes: 2e2113c8a64f ("interconnect: qcom: rpm: Handle interface clocks")
-Fixes: 32882f657e78 ("interconnect: qcom: rpm: Set QoS registers only once")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Fixes: 32c231385ed4 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 2c16917ba1fd..51f12b70cb4f 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -497,7 +497,7 @@ int qnoc_probe(struct platform_device *pdev)
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 6b5a7de6a27d..9a2bbd339e76 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1244,7 +1244,7 @@ hastings_reg_en: hastings-reg-en-state {
+ };
  
- 	ret = devm_clk_bulk_get(dev, qp->num_intf_clks, qp->intf_clks);
- 	if (ret)
--		return ret;
-+		goto err_disable_unprepare_clk;;
+ &tlmm {
+-	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
++	gpio-reserved-ranges = <70 2>, <74 6>, <125 2>, <128 2>, <154 4>;
  
- 	provider = &qp->provider;
- 	provider->dev = dev;
-@@ -512,13 +512,15 @@ int qnoc_probe(struct platform_device *pdev)
- 	/* If this fails, bus accesses will crash the platform! */
- 	ret = clk_bulk_prepare_enable(qp->num_intf_clks, qp->intf_clks);
- 	if (ret)
--		return ret;
-+		goto err_disable_unprepare_clk;
- 
- 	for (i = 0; i < num_nodes; i++) {
- 		size_t j;
- 
- 		node = icc_node_create(qnodes[i]->id);
- 		if (IS_ERR(node)) {
-+			clk_bulk_disable_unprepare(qp->num_intf_clks,
-+						   qp->intf_clks);
- 			ret = PTR_ERR(node);
- 			goto err_remove_nodes;
- 		}
-@@ -534,8 +536,11 @@ int qnoc_probe(struct platform_device *pdev)
- 		if (qnodes[i]->qos.ap_owned &&
- 		    qnodes[i]->qos.qos_mode != NOC_QOS_MODE_INVALID) {
- 			ret = qcom_icc_qos_set(node);
--			if (ret)
--				return ret;
-+			if (ret) {
-+				clk_bulk_disable_unprepare(qp->num_intf_clks,
-+							   qp->intf_clks);
-+				goto err_remove_nodes;
-+			}
- 		}
- 
- 		data->nodes[i] = node;
-@@ -563,6 +568,7 @@ int qnoc_probe(struct platform_device *pdev)
- 	icc_provider_deregister(provider);
- err_remove_nodes:
- 	icc_nodes_remove(provider);
-+err_disable_unprepare_clk:
- 	clk_disable_unprepare(qp->bus_clk);
- 
- 	return ret;
+ 	bt_default: bt-default-state {
+ 		hstp-bt-en-pins {
+
+---
+base-commit: fb4327106e5250ee360d0d8b056c1eef7eeb9a98
+change-id: 20230803-topic-x13s_pin-9ee3117b7f29
+
+Best regards,
 -- 
-2.25.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
