@@ -2,376 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B38076E617
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 13:00:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A90AF76E673
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 13:12:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235524AbjHCK77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 06:59:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41080 "EHLO
+        id S229446AbjHCLMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 07:12:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235484AbjHCK7Z (ORCPT
+        with ESMTP id S232519AbjHCLMF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 06:59:25 -0400
+        Thu, 3 Aug 2023 07:12:05 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC38E423A;
-        Thu,  3 Aug 2023 03:59:03 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3731rSPY007772;
-        Thu, 3 Aug 2023 10:58:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=LgQ4C3GUdSQw7QoTxJ2cWTWy1NEDZ8kFpk5lJD7dTok=;
- b=OjrbiKeEJxF/Mlipb/2BskhJYvu5i7kmae3IvsrxNXyJcQFbiA/kYXdwzc4ElhEZouiX
- 2bLnKdEwAI10joPJB67F+8WxIeRjQl/7OHw0PnqkYPKLcppKHSkpUKaETV2fBOEXTDh2
- vB3KmxMwv+m3G7MNZwS9NFHOIQEIcrfDuw5hg/6YvHTabkH5LRhbiwGADidS95FEzKaN
- +SUUaWnf0kT9jWtgF/PNX/57Xzd0tDFtnQ3qk874+urBZbYdlCP+a7L5BFCjSJNwYBBs
- wcoCFIOwRPNAFxGK4XqZ4mO0BCNKOvRW1mG/eOAmXw+kQ6zGXJPtiZtIBF3/yDmd5WEB Pg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s82wx8vm5-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA68735A6;
+        Thu,  3 Aug 2023 04:11:55 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 373AWJFf027628;
+        Thu, 3 Aug 2023 11:11:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nIhYZQ2o7rdTlb24IfHDbwWufWVPzpCWsdj/IAyGH28=;
+ b=R9Byoya6EIDQFWw0TKmqyMpLIKTMY5egmjyoGa1wcy4//+G7o20KLbp9ma7O7qq/1DD2
+ bkrBrEtENaWqFCB1D4J8G2Nr0BB9mF5BM6iTfjk9jyrCFzkozOXGR0i2T1S+myQnBQHc
+ CqlautRyHZS4ohHoWY8uGwxs9ofMr+vGrtkbbyRpxY/fouoW5SBMVyzD2alDeGKj1NMF
+ xYkd6h53gcYo1vcaX8Ui4g6LhOsyC4+po0g8QXLHVGaDLOgYaN3VpAWP2JO8fYldMTEU
+ 5u5NRH6cXOMWdCXjAQjDtOv737XAS58DQoMHk54D6nPxm2MfEl0owSsf4J/KyZWB2Dvz nw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s87jhgepw-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Aug 2023 10:58:59 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 373AwwJq018105
+        Thu, 03 Aug 2023 11:11:51 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 373BBoH7029762
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Aug 2023 10:58:58 GMT
-Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 3 Aug 2023 03:58:52 -0700
-From:   Imran Shaik <quic_imrashai@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Ajit Pandey" <quic_ajipan@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Subject: [PATCH V5 8/8] clk: qcom: gcc-qdu1000: Update the RCGs ops
-Date:   Thu, 3 Aug 2023 16:27:41 +0530
-Message-ID: <20230803105741.2292309-9-quic_imrashai@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230803105741.2292309-1-quic_imrashai@quicinc.com>
-References: <20230803105741.2292309-1-quic_imrashai@quicinc.com>
+        Thu, 3 Aug 2023 11:11:50 GMT
+Received: from [10.201.206.212] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 3 Aug
+ 2023 04:11:47 -0700
+Message-ID: <1ac4ec1d-f01e-6ddd-708d-6dec7ca4ea3d@quicinc.com>
+Date:   Thu, 3 Aug 2023 16:41:44 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document AL02-Cx and AL03-C2
+ boards based on IPQ9574 family
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230720084534.6461-1-quic_sridsn@quicinc.com>
+ <20230720084534.6461-2-quic_sridsn@quicinc.com>
+ <87c3a3db-d172-bc98-cf83-89b874c9fee7@linaro.org>
+ <9e401641-1334-c0bc-c49a-481a8a9af2de@linaro.org>
+ <c1903d09-f307-8e80-0482-2040c7af7a2c@quicinc.com>
+ <b57e0199-141f-2a37-4d5a-b98da5276b89@linaro.org>
+Content-Language: en-US
+From:   Sridharan S N <quic_sridsn@quicinc.com>
+In-Reply-To: <b57e0199-141f-2a37-4d5a-b98da5276b89@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4-UhPPWSMfGdf0zf_zINMrBkU_iEwjO8
-X-Proofpoint-GUID: 4-UhPPWSMfGdf0zf_zINMrBkU_iEwjO8
+X-Proofpoint-GUID: 5vwHY_BDHPxdfBRppFQg_PzSoLMo5PRx
+X-Proofpoint-ORIG-GUID: 5vwHY_BDHPxdfBRppFQg_PzSoLMo5PRx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-08-03_09,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 mlxscore=0 bulkscore=0
- priorityscore=1501 mlxlogscore=999 phishscore=0 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308030098
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 bulkscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 phishscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308030100
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The clock RCGs are required to be parked at safe clock source(XO)
-during disable as per the hardware expectation and clk_rcg2_shared_ops
-are the closest implementation for the same. Hence update the clock
-RCG ops to clk_rcg2_shared_ops.
 
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-Changes since v4:
- - Updated the commit text
-Changes since v3:
- - Split the patch as per the review comments
- - Newly added
+On 7/26/2023 12:51 PM, Krzysztof Kozlowski wrote:
+> On 26/07/2023 07:03, Sridharan S N wrote:
+>> On 7/20/2023 3:18 PM, Konrad Dybcio wrote:
+>>> On 20.07.2023 10:49, Krzysztof Kozlowski wrote:
+>>>> On 20/07/2023 10:45, Sridharan S N wrote:
+>>>>> Document the below listed (Reference Design Platform) RDP boards based on IPQ9574
+>>>>> family of SoCs.
+>>>>>
+>>>>> AL02-C3  - rdp437
+>>>>> AL02-C7  - rdp433-mht-phy
+>>>>> AL02-C10 - rdp433-mht-switch
+>>>>> AL02-C11 - rdp467
+>>>>> AL02-C12 - rdp455
+>>>>> AL02-C13 - rdp459
+>>>>> AL02-C15 - rdp457
+>>>>> AL02-C16 - rdp456
+>>>>> AL02-C17 - rdp469
+>>>>> AL02-C19 - rdp461
+>>>>> AL03-C2  - rdp458
+>>>>>
+>>>>> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
+>>>>> ---
+>>>>>    .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
+>>>>>    1 file changed, 20 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>> index dd66fd872c31..d992261da691 100644
+>>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>> @@ -89,10 +89,20 @@ description: |
+>>>>>            adp
+>>>>>            ap-al01-c1
+>>>>>            ap-al02-c2
+>>>>> +        ap-al02-c3
+>>>>>            ap-al02-c6
+>>>>>            ap-al02-c7
+>>>>>            ap-al02-c8
+>>>>>            ap-al02-c9
+>>>>> +        ap-al02-c10
+>>>>> +        ap-al02-c11
+>>>>> +        ap-al02-c12
+>>>>> +        ap-al02-c13
+>>>>> +        ap-al02-c15
+>>>>> +        ap-al02-c16
+>>>>> +        ap-al02-c17
+>>>>> +        ap-al02-c19
+>>>> Why? I asked once, but there was no feedback from Qualcomm.
+>>>>
+>>>> Why do we need to do this? What's the point?
+>>> Another question would be, whether these boards are just one-off test
+>>> prototypes of which there exist like 5-10 units, or are they actually
+>>> going to be supported and useful.
+>>>
+>>> If it's the former, I don't think it makes sense to keep the device
+>>> trees upstream.
+>>>
+>>> Konrad
+>> These are all not test rdps and each rdps has its own configurations.
+>> IPQ9574 has four pcie instances and one QDSP processor. Not all rdps use
+>> all of the interfaces and it will vary for each rdp. In next version ,
+>> will post with each rdp's configuration explicitly
+>
+> So still no answer why do we need to list it as possible boards.
+> Especially that it messes with compatible style, because c[1-9] looks
+> like board version.
+>
+> I suggest don't add these board types and drop existing ones.
+>
+>
+> Best regards,
+> Krzysztof
 
- drivers/clk/qcom/gcc-qdu1000.c | 58 +++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+Apologize for the late reply. IPQ bootloader doesn't need these info. we 
+will send the patch to drop the existing ones
 
-diff --git a/drivers/clk/qcom/gcc-qdu1000.c b/drivers/clk/qcom/gcc-qdu1000.c
-index 82391918c93e..9f42d2601464 100644
---- a/drivers/clk/qcom/gcc-qdu1000.c
-+++ b/drivers/clk/qcom/gcc-qdu1000.c
-@@ -476,7 +476,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_dma_clk_src = {
- 		.name = "gcc_aggre_noc_ecpri_dma_clk_src",
- 		.parent_data = gcc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -496,7 +496,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_gsi_clk_src = {
- 		.name = "gcc_aggre_noc_ecpri_gsi_clk_src",
- 		.parent_data = gcc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -515,7 +515,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
- 		.name = "gcc_gp1_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -529,7 +529,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
- 		.name = "gcc_gp2_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -543,7 +543,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
- 		.name = "gcc_gp3_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -562,7 +562,7 @@ static struct clk_rcg2 gcc_pcie_0_aux_clk_src = {
- 		.name = "gcc_pcie_0_aux_clk_src",
- 		.parent_data = gcc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -582,7 +582,7 @@ static struct clk_rcg2 gcc_pcie_0_phy_rchng_clk_src = {
- 		.name = "gcc_pcie_0_phy_rchng_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -601,7 +601,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
- 		.name = "gcc_pdm2_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -623,7 +623,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s0_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
-@@ -639,7 +639,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s1_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
-@@ -655,7 +655,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s2_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
-@@ -671,7 +671,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s3_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
-@@ -687,7 +687,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s4_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
-@@ -708,7 +708,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s5_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
-@@ -724,7 +724,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s6_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
-@@ -740,7 +740,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s7_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
-@@ -756,7 +756,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s0_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-@@ -772,7 +772,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s1_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-@@ -788,7 +788,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s2_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-@@ -804,7 +804,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s3_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-@@ -820,7 +820,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s4_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-@@ -836,7 +836,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s5_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-@@ -852,7 +852,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s6_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-@@ -868,7 +868,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s7_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
-@@ -937,7 +937,7 @@ static struct clk_rcg2 gcc_sm_bus_xo_clk_src = {
- 		.name = "gcc_sm_bus_xo_clk_src",
- 		.parent_data = gcc_parent_data_2,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -956,7 +956,7 @@ static struct clk_rcg2 gcc_tsc_clk_src = {
- 		.name = "gcc_tsc_clk_src",
- 		.parent_data = gcc_parent_data_9,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -976,7 +976,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
- 		.name = "gcc_usb30_prim_master_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -990,7 +990,7 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
- 		.name = "gcc_usb30_prim_mock_utmi_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1004,7 +1004,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
- 		.name = "gcc_usb3_prim_phy_aux_clk_src",
- 		.parent_data = gcc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
--- 
-2.25.1
+Thanks,
+
+Sridharan
 
