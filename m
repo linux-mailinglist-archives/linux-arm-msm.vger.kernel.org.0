@@ -2,124 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08B4C76E9C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 15:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33A3676E9A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 15:12:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236146AbjHCNPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 09:15:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
+        id S236166AbjHCNMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 09:12:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236144AbjHCNP1 (ORCPT
+        with ESMTP id S236079AbjHCNLw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 09:15:27 -0400
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A535349C7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 06:13:57 -0700 (PDT)
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2b9bf52cd08so13530191fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 06:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691068067; x=1691672867;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ULZh00shqSbFq5grqktN6+UDr7p6MpFnwW0/QE5bbfg=;
-        b=sLdx/pJYVtKsg1914OnlGaU0lQSpV9t8Qx9rathAPQshDkGnZmDQwacremsrENT7jL
-         TvV3cWkI7aq2/GTiZmYrMfRv/cOBlmDqXwfXxs3jrjHuE3pGZOp2+zndbf/WE+MUA/zj
-         TtCg2ON4AE7/VRnQ1nd5arOZQW/BGLvXyeRqvwRak4D2W+Atzq9p5/2k9NyA0X4NEwXF
-         IqO5roXHJQtUvxi2AX+wzVKsWiJPfKNthSZdRMXdy1qapagX/9q2fw5EnKD+E+vV9H7o
-         4dOPjvSDMz4q4EGBAGjwVbfgtoxAnhZe328VNEmw25x8AhO+teAc4YvSF4qIDMJIseVK
-         ClKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691068067; x=1691672867;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ULZh00shqSbFq5grqktN6+UDr7p6MpFnwW0/QE5bbfg=;
-        b=AxOwQhP3YFg2woKAe4DF+vZiN1eAeBTrnWI6ANJBKESE5kKn/2Zs3LjZMcqktTLy6w
-         ivxJYjGrk0Sua9i6xUeifkBQ6fEDgQ7aS/JEuc0UwgNm4zkgLgy0B8BqTKqrkk03De70
-         dTBD7WZajIonHAk0ebgOdZ9+Gl3n7JHILVqQ5uwz1v+OrggGhUsR+BMN1Q2VPrLNZGKY
-         g4BF4XKbgGa2aNeoLtYVz6i6D9lxfo7TMMXRUkuVjjrVZuGP0vVNMKdYxxglDrHLfDWh
-         HEi6mO7+qzXBG1MTbFDZluN7T3Rcn6rQxm0VdL9WV7u6uBRS08dDTxMu3puuOTt7Gp7v
-         q/Xw==
-X-Gm-Message-State: ABy/qLZo949mwLFtkAU2kJVxWPZIusgpTsxRHdPsQdkvlRkg7CMWIBeg
-        ErAKXd0PUTSeA9EsmuFkIo5+4w==
-X-Google-Smtp-Source: APBJJlHBhIkn4hiSwGB7dHFwA4x10f32wnddawjsgW3guqIEX0NirLgVtLxRbYeE+3PkWHqpc83xrQ==
-X-Received: by 2002:a2e:a312:0:b0:2b9:da28:c508 with SMTP id l18-20020a2ea312000000b002b9da28c508mr7519833lje.31.1691068067412;
-        Thu, 03 Aug 2023 06:07:47 -0700 (PDT)
-Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id z16-20020a2e9650000000b002b1b92910c8sm3175586ljh.86.2023.08.03.06.07.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Aug 2023 06:07:46 -0700 (PDT)
-Message-ID: <e598e278-8be8-13db-a11d-ae650cb91774@linaro.org>
-Date:   Thu, 3 Aug 2023 15:07:45 +0200
+        Thu, 3 Aug 2023 09:11:52 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D387E49D6;
+        Thu,  3 Aug 2023 06:10:14 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 373BsqhK007959;
+        Thu, 3 Aug 2023 13:09:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ucUxDSwxnrBpRrHDljPUeC6KW5nBI61F9ncRRJ1iEf0=;
+ b=ir8EakGDy6zLsP0WmnXiZajbv4DVc8cEyrLSFy77a0OCllC+ueGoFGRnxwwJRj08DfTa
+ BzyM7oq/JHUJcB2qvIremrsZrEJVwEJAGBrlFlBycq2l8+4EluTD1ABTXgePhgLgyGZy
+ w3di7ICEqB5Eem3qUFiecwSMUMgmd/mhm1qkNMW3C1fRnsYrHZ0XiN4YYYKxvaHE+82s
+ n0QXtGfycvH0jyydBFWFtZG0w3/vAlxVVZWsAZLgY2/j5w2jKZcLdaD/7neYh/fAbn9r
+ l7sc3i3uewzA4SaznYWf+KVLwGBH+BAh93gsWT+c7iUTMPM04C9K/sJ47ZgzO1k+9oUe WA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s7vxsspsp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 03 Aug 2023 13:09:23 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 373D9Mvk010971
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 3 Aug 2023 13:09:22 GMT
+Received: from [10.216.37.36] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 3 Aug
+ 2023 06:09:17 -0700
+Message-ID: <c25456de-4d5a-033f-3328-6183c754b08f@quicinc.com>
+Date:   Thu, 3 Aug 2023 18:39:13 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next] clk: qcom: lcc-msm8960: change pxo_parent_data to
- static
-To:     Yang Yingliang <yangyingliang@huawei.com>,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     andersson@kernel.org, dmitry.baryshkov@linaro.org,
-        neil.armstrong@linaro.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org
-References: <20230803082125.521849-1-yangyingliang@huawei.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v6 6/6] soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC
+ support
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230803082125.521849-1-yangyingliang@huawei.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <srinivas.kandagatla@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230802091429.20892-1-quic_kbajaj@quicinc.com>
+ <20230802091429.20892-7-quic_kbajaj@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230802091429.20892-7-quic_kbajaj@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZXQLIAt4PJ-iDGhJQHjoxLCMsysaH--s
+X-Proofpoint-GUID: ZXQLIAt4PJ-iDGhJQHjoxLCMsysaH--s
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-03_12,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 bulkscore=0 mlxlogscore=999 phishscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2308030119
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3.08.2023 10:21, Yang Yingliang wrote:
-> The pxo_parent_data inroduced in commit bac4675a4d1b ("clk: qcom:
-> drop lcc-mdm9615 in favour of lcc-msm8960") is only used in lcc-msm8960.c
-> now, change it to static.
-> 
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
+
+On 8/2/2023 2:44 PM, Komal Bajaj wrote:
+> Add LLCC configuration data for QDU1000 and QRU1000 SoCs.
+> 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>   drivers/soc/qcom/llcc-qcom.c | 67 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 67 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 315f7a1b90aa..8e1b2399700d 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -366,6 +366,36 @@ static const struct llcc_slice_config sm8550_data[] =  {
+>   	{LLCC_VIDVSP,   28,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+>   };
+> 
+> +static const struct llcc_slice_config qdu1000_data_2ch[] = {
+> +	{ LLCC_MDMHPGRW, 7, 512, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MODHW,    9, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MDMPNG,  21, 256, 0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_ECC,     26, 512, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_MODPE,   29, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_APTCM,   30, 256, 3, 1, 0x0,   0xc, 1, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_WRCACHE, 31, 128, 1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +};
+> +
+> +static const struct llcc_slice_config qdu1000_data_4ch[] = {
+> +	{ LLCC_MDMHPGRW, 7, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MODHW,    9, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MDMPNG,  21, 512,  0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_ECC,     26, 1024, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_MODPE,   29, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_APTCM,   30, 512,  3, 1, 0x0,   0xc, 1, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_WRCACHE, 31, 256,  1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +};
+> +
+> +static const struct llcc_slice_config qdu1000_data_8ch[] = {
+> +	{ LLCC_MDMHPGRW, 7, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MODHW,    9, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_MDMPNG,  21, 1024, 0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_ECC,     26, 2048, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_MODPE,   29, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_APTCM,   30, 1024, 3, 1, 0x0,   0xc, 1, 0, 0, 1, 0, 0, 0 },
+> +	{ LLCC_WRCACHE, 31, 512,  1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
+> +};
+> +
+>   static const struct llcc_edac_reg_offset llcc_v1_edac_reg_offset = {
+>   	.trp_ecc_error_status0 = 0x20344,
+>   	.trp_ecc_error_status1 = 0x20348,
+> @@ -432,6 +462,37 @@ static const u32 llcc_v2_1_reg_offset[] = {
+>   	[LLCC_COMMON_STATUS0]	= 0x0003400c,
+>   };
+> 
+> +static const struct qcom_llcc_config qdu1000_cfg[] = {
+> +	{
+> +		.sct_data       = qdu1000_data_8ch,
+> +		.size		= ARRAY_SIZE(qdu1000_data_8ch),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +	},
+> +	{
+> +		.sct_data       = qdu1000_data_4ch,
+> +		.size           = ARRAY_SIZE(qdu1000_data_4ch),
+> +		.need_llcc_cfg  = true,
+> +		.reg_offset     = llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +	},
+> +	{
+> +		.sct_data       = qdu1000_data_4ch,
+> +		.size           = ARRAY_SIZE(qdu1000_data_4ch),
+> +		.need_llcc_cfg  = true,
+> +		.reg_offset     = llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +	},
+> +	{
+> +		.sct_data       = qdu1000_data_2ch,
+> +		.size           = ARRAY_SIZE(qdu1000_data_2ch),
+> +		.need_llcc_cfg  = true,
+> +		.reg_offset     = llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +	},
+> +};
+> +
+>   static const struct qcom_llcc_config sc7180_cfg[] = {
+>   	{
+>   		.sct_data	= sc7180_data,
+> @@ -553,6 +614,11 @@ static const struct qcom_llcc_config sm8550_cfg[] = {
+>   	},
+>   };
+> 
+> +static const struct qcom_sct_config qdu1000_cfgs = {
+> +	.llcc_config	= qdu1000_cfg,
+> +	.num_config	= 4,
+
+looks like you missed to take konrad suggestion here
+
+https://lore.kernel.org/lkml/2a68b891-b855-1998-3eaf-a21473da0851@linaro.org/
+
+-Mukesh
+
+> +};
+> +
+>   static const struct qcom_sct_config sc7180_cfgs = {
+>   	.llcc_config	= sc7180_cfg,
+>   	.num_config	= ARRAY_SIZE(sc7180_cfg),
+> @@ -1171,6 +1237,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>   }
+> 
+>   static const struct of_device_id qcom_llcc_of_match[] = {
+> +	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
+>   	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfgs },
+>   	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfgs },
+>   	{ .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfgs },
+> --
+> 2.41.0
+> 
