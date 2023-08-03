@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 031E576E417
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 11:16:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2A7176E5C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 12:33:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232258AbjHCJQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 05:16:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52928 "EHLO
+        id S235323AbjHCKc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 06:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234133AbjHCJQk (ORCPT
+        with ESMTP id S233843AbjHCKct (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 05:16:40 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DB9E53
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 02:16:38 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-307d58b3efbso606748f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 02:16:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691054196; x=1691658996;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3qjTxnd4KtTTOKG14S4/4BnF9x1FwZI+P+SQK+cy1Q0=;
-        b=CNJ2m5qzGE5gwyNdXs1sH6KOgQxlKSIHDjGkj6guZkjEyYkkO/XOqo/bP+FrP1ErPd
-         ezB2MKpzBPnZLymibjrG6yL/pPAXWBRaf1kHrkKZIELELGLRvs0aWl4OEL2NALEGZm6l
-         aAXtdq42NEv4YLPCJ4SKdR1cvpwrQBFAfeNdo93rpxPt3zg64ugXOaGAolNanT8v50w/
-         Wd+kV0GlBFcvgDfQ22Bqnho/zumP59kxYuxJxJaFQpCn8tXOmVUgfjQOJOCcFOwddr9u
-         iq0vcJtAAJ/oLYWvAbZU2qgu8h7/HoL5DBd4NZg7qfXFmT8gYIz1wI4gqiUn2E8yNjCX
-         3m/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691054196; x=1691658996;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3qjTxnd4KtTTOKG14S4/4BnF9x1FwZI+P+SQK+cy1Q0=;
-        b=eXM+PzqOa+Z1nU7atzkQ5fxjL/kxcdSwIuXGFumvKitjyt8lAilSb9EffyS6gYZooH
-         OJ2/P9yw26ele04n/2odM5XSHzsEKtlvjYFsbhNg0u3ijv9Rb7+8rEksytDYL2P4mm4V
-         YSBQ3Q8Gbdz+gQeI3dEG2gjeh6EbdRPs7WG/zmVA9gcZ1a3BZ5NztVo7Wd5gYkXCLrel
-         Bo8Em4qn0Pnpkiq0re5bp4u3jHUkWwEmnUWG5Rp6xAb4hr1ynhaTYtUBCYwTg/O2ZVFa
-         5ffNhJrzh+UmHdGNTiaEkYLyQC8kpt6RW9bRhJHvHyrWPwyXMhWCOogdU4fBsPtytAUF
-         ZY/Q==
-X-Gm-Message-State: ABy/qLYcU8vnK8/5RQatrYyJWv9+xszIBXan1mkje/xNHTMj+uxVqZ05
-        a1SOuWy4wLGltHT9NN4e3yna7w==
-X-Google-Smtp-Source: APBJJlEbMgvuYyt6jh+e+n6VqroGKijmgJQ7xQY+spS0oF/gn/I2gqCbv1hokho+dYSXUMUWKBIkAw==
-X-Received: by 2002:a5d:69d1:0:b0:316:ff0e:8213 with SMTP id s17-20020a5d69d1000000b00316ff0e8213mr6661940wrw.15.1691054196274;
-        Thu, 03 Aug 2023 02:16:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:8656:583:d034:d966? ([2a01:e0a:982:cbb0:8656:583:d034:d966])
-        by smtp.gmail.com with ESMTPSA id y18-20020a5d6212000000b003143c6e09ccsm21481602wru.16.2023.08.03.02.16.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Aug 2023 02:16:35 -0700 (PDT)
-Message-ID: <27b8f21c-f705-ba65-5b2e-912fb97a85a9@linaro.org>
-Date:   Thu, 3 Aug 2023 11:16:34 +0200
+        Thu, 3 Aug 2023 06:32:49 -0400
+Received: from mgamail.intel.com (unknown [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1366B11B;
+        Thu,  3 Aug 2023 03:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1691058768; x=1722594768;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=6hc1/qNVWMhq9Hi9YrzSfxvx3XvZSP+GUU/ssEMrrlA=;
+  b=mVG0ieGn/imq9YXnxaNYqEM5l0vxrXRZSTBKDl5doZ1FTmdymfExZVMg
+   BvNeUqaNVO8omGZeQtMiRZePPpyzLWV2qafLDtfnsGEjAQWfFOxl4WcIZ
+   2OrYTfyb4JZzNsr/RMIh/cccEw/p+o6zoncJHHrXj6TxmeVqk2uW28u29
+   OsBIA3UtDTIuVlsjYQoAXzZF2QlbV8VcFNRnXV6wdtO4w37a/P6OjxrXt
+   bRoDH8JGd/Bg2YdQ+SoOmmAUeN2vC/2J3ELk1I+6f6VbM5CPcPSF6SxdB
+   joHgPOLB7m6J6pAe+74jIDYZAtLfH1HVm7v4gdRM33jbKxPVmbsIeybgc
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10790"; a="400775316"
+X-IronPort-AV: E=Sophos;i="6.01,252,1684825200"; 
+   d="scan'208";a="400775316"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2023 03:32:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10790"; a="843544345"
+X-IronPort-AV: E=Sophos;i="6.01,252,1684825200"; 
+   d="scan'208";a="843544345"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by fmsmga002.fm.intel.com with ESMTP; 03 Aug 2023 03:32:41 -0700
+Message-ID: <7b31b220-6fd5-0f5d-7e1a-df3f38bd792f@linux.intel.com>
+Date:   Thu, 3 Aug 2023 13:33:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
+ Firefox/102.0 Thunderbird/102.13.0
 Content-Language: en-US
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1691049436.git.quic_gurus@quicinc.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <cover.1691049436.git.quic_gurus@quicinc.com>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
+        quic_jackp@quicinc.com, pierre-louis.bossart@linux.intel.com,
+        oneukum@suse.com, albertccwang@google.com, o-takashi@sakamocchi.jp
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-5-quic_wcheng@quicinc.com>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v4 04/32] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
+In-Reply-To: <20230725023416.11205-5-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,51 +77,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 03/08/2023 10:23, Guru Das Srinagesh wrote:
-> When pushing patches to upstream, the `get_maintainer.pl` script is used to
-> determine whom to send the patches to. Instead of having to manually process
-> the output of the script, add a wrapper script to do that for you.
+On 25.7.2023 5.33, Wesley Cheng wrote:
+> As part of xHCI bus suspend, the XHCI is halted.  However, if there are
+> pending events in the secondary event ring, it is observed that the xHCI
+> controller stops responding to further commands upon host or device
+> initiated bus resume.  Iterate through all pending events and updating the
+> dequeue pointer to the last pending event trb.
 > 
-> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
-> editing it in-place.
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>   drivers/usb/host/xhci-mem.c | 74 ++++++++++++++++++++++++++++++++++---
+>   1 file changed, 69 insertions(+), 5 deletions(-)
 
-FYI the b4 prep command does this:
-https://github.com/mricon/b4/blob/e8045d1353165cc065b2f1b180bf1b0846af510e/b4/ez.py#L2055
-
-Perhaps it could be useful to make sure the output is similar ?
-
-So far I've been very satisfied by the output of b4 auto_to_cc.
-
-Thanks,
-Neil
+This sounds more like ring handling code.
+Maybe xhci-ring.c would be a better place
 
 > 
-> Thanks to Bjorn for being a sounding board to this idea and for his valuable
-> suggestions.
-> 
-> Please try out this script with `--verbosity debug` for verifying that it's
-> doing "the right thing". I've tested this with a patch series from various
-> subsystems to ensure variety of maintainers and lists output and found it to be
-> doing what it is supposed to do.
-> 
-> I referred to the following links during development of this script:
-> - https://stackoverflow.com/questions/4427542/how-to-do-sed-like-text-replace-with-python
-> - https://stackoverflow.com/questions/4146009/python-get-list-indexes-using-regular-expression
-> - https://stackoverflow.com/questions/10507230/insert-line-at-middle-of-file-with-python
-> 
-> v1 -> v2:
-> - Added set-union logic based on Pavan's comments [1] and Bjorn's early suggestion
-> - Expanded audience and added more mailing lists to get more review comments and feedback
-> 
-> [1] https://lore.kernel.org/lkml/63764b84-3ebd-4081-836f-4863af196228@quicinc.com/
-> 
-> Guru Das Srinagesh (1):
->    scripts: Add add-maintainer.py
-> 
->   scripts/add-maintainer.py | 113 ++++++++++++++++++++++++++++++++++++++
->   1 file changed, 113 insertions(+)
->   create mode 100755 scripts/add-maintainer.py
-> 
+> diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+> index c51150af22f2..6b01d56c176f 100644
+> --- a/drivers/usb/host/xhci-mem.c
+> +++ b/drivers/usb/host/xhci-mem.c
+> @@ -1799,17 +1799,85 @@ int xhci_alloc_erst(struct xhci_hcd *xhci,
+>   	return 0;
+>   }
+>   
+> +static void xhci_handle_sec_intr_events(struct xhci_hcd *xhci,
+> +	struct xhci_ring *ring,	struct xhci_intr_reg __iomem *ir_set,
+> +	struct xhci_erst *erst)
+> +{
+
+The function name is a bit misleading as it doesn't handle
+any of the pending events, it just marks them all handled.
+
+> +	union xhci_trb *erdp_trb, *current_trb;
+> +	struct xhci_segment	*seg;
+> +	u64 erdp_reg;
+> +	u32 iman_reg;
+> +	dma_addr_t deq;
+> +	unsigned long segment_offset;
+> +
+> +	/* disable irq, ack pending interrupt and ack all pending events */
+> +	iman_reg = readl_relaxed(&ir_set->irq_pending);
+> +	iman_reg &= ~IMAN_IE;
+> +	writel_relaxed(iman_reg, &ir_set->irq_pending);
+> +	iman_reg = readl_relaxed(&ir_set->irq_pending);
+> +	if (iman_reg & IMAN_IP)
+> +		writel_relaxed(iman_reg, &ir_set->irq_pending);
+
+maybe use xhci_disable_interrupter() helper, it does most of this already.
+
+> +
+> +	/* last acked event trb is in erdp reg  */
+> +	erdp_reg = xhci_read_64(xhci, &ir_set->erst_dequeue);
+> +	deq = (dma_addr_t)(erdp_reg & ~ERST_PTR_MASK);
+> +	if (!deq) {
+> +		xhci_dbg(xhci, "event ring handling not required\n");
+> +		return;
+> +	}
+> +
+> +	seg = ring->first_seg;
+> +	segment_offset = deq - seg->dma;
+> +
+> +	/* find out virtual address of the last acked event trb */
+> +	erdp_trb = current_trb = &seg->trbs[0] +
+> +				(segment_offset/sizeof(*current_trb));
+> +
+> +	/* read cycle state of the last acked trb to find out CCS */
+> +	ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE;
+> +
+> +	while (1) {
+> +		/* last trb of the event ring: toggle cycle state */
+> +		if (current_trb == &seg->trbs[TRBS_PER_SEGMENT - 1]) {
+> +			ring->cycle_state ^= 1;
+> +			current_trb = &seg->trbs[0];
+> +		} else {
+> +			current_trb++;
+> +		}
+> +
+> +		/* cycle state transition */
+> +		if ((le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE) !=
+> +		    ring->cycle_state)
+> +			break;
+> +	}
+> +
+> +	if (erdp_trb != current_trb) {
+> +		deq = xhci_trb_virt_to_dma(ring->deq_seg, current_trb);
+> +		if (deq == 0)
+> +			xhci_warn(xhci,
+> +				"WARN invalid SW event ring dequeue ptr.\n");
+> +		/* Update HC event ring dequeue pointer */
+> +		erdp_reg &= ERST_PTR_MASK;
+> +		erdp_reg |= ((u64) deq & (u64) ~ERST_PTR_MASK);
+> +	}
+> +
+> +	/* Clear the event handler busy flag (RW1C); event ring is empty. */
+> +	erdp_reg |= ERST_EHB;
+> +	xhci_write_64(xhci, erdp_reg, &ir_set->erst_dequeue);
+
+There are some helpers like inc_deq() and  xhci_update_erst_dequeue()
+that could be used here.
+
+> +}
+> +
+>   static void
+>   xhci_free_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
+>   {
+>   	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+>   	size_t erst_size;
+> -	u64 tmp64;
+>   	u32 tmp;
+>   
+>   	if (!ir)
+>   		return;
+>   
+> +	xhci_handle_sec_intr_events(xhci, ir->event_ring, ir->ir_set, &ir->erst);
+
+Cleaning up the interrupter event ring should be called earlier.
+  
+Probably from xhci_remove_secondary_interrupter(), before it calls xhci_free_interrupter()
+
+Thanks
+-Mathias
+
 
