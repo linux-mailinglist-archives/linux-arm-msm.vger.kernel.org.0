@@ -2,112 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44DE876F471
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 23:06:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 506A476F4D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 23:50:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231952AbjHCVGm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 17:06:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34164 "EHLO
+        id S229911AbjHCVub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 17:50:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231356AbjHCVGl (ORCPT
+        with ESMTP id S230129AbjHCVub (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 17:06:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A134226
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 14:06:33 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 373KkVbY008015;
-        Thu, 3 Aug 2023 21:06:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7XYGNJwUP2VKmFtxs1N0kzZeF4GKJrwRRHMePG6EE0g=;
- b=ENWgF92CUgi//ntsT7FWSoB2+AfAhHOb5aLlu/LYQyDwxw2fBjTmUI3Xs+4CVWRc2USh
- qoQ118t09dZ8ZSbhcFoGSoqbrdEecDow16hQoRTQNuZqMJO0SAFIU/bfxEck7XmznUUQ
- RMh6g4T55VFT3ZHHg76hwa4wclwNNx+0TiG0PAdp7uUf3bhQDxx00HM9vy9xs7q5XNY4
- 6YTMjo2Qpdr4l9MykWOJ25HGajHsPRySGjxlOPo9TxdB3airrKOADDrSxfCJkv4TQ4rz
- /ntm9y6E9kOSTYXfkqCLO3Bu3Ktk1QrN96gmyubJafcFluhYpsfiVayHJOdMXHlr2ztj KA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s8kfx0152-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Aug 2023 21:06:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 373L6OQx003927
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Aug 2023 21:06:24 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 3 Aug
- 2023 14:06:23 -0700
-Message-ID: <f3bb8699-2e4d-f9b2-0dff-267b058bc24b@quicinc.com>
-Date:   Thu, 3 Aug 2023 14:06:22 -0700
+        Thu, 3 Aug 2023 17:50:31 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77F5F30FD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 14:50:28 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 39A9C3F5A2;
+        Thu,  3 Aug 2023 23:50:24 +0200 (CEST)
+Date:   Thu, 3 Aug 2023 23:50:21 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Danila Tikhonov <danila@jiaxyga.com>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, neil.armstrong@linaro.org,
+        rfoss@kernel.org, andersson@kernel.org, quic_khsieh@quicinc.com,
+        quic_vpolimer@quicinc.com, quic_rmccann@quicinc.com,
+        quic_jesszhan@quicinc.com, liushixin2@huawei.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, davidwronek@gmail.com
+Subject: Re: [PATCH 1/2] dt-bindings: display/msm: document DPU on SM7150
+Message-ID: <77nlqneq5z5wb223va4ez5mol5eol5uja2hpev73fv5iina4qh@ixbvxligq5ss>
+References: <20230803194724.154591-1-danila@jiaxyga.com>
+ <20230803194724.154591-2-danila@jiaxyga.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/mdp5: Don't leak some plane state
-Content-Language: en-US
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>,
-        DRI Development <dri-devel@lists.freedesktop.org>
-CC:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <dorum@noisolation.com>, Daniel Vetter <daniel.vetter@intel.com>
-References: <20230803204521.928582-1-daniel.vetter@ffwll.ch>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230803204521.928582-1-daniel.vetter@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -NaBc_DQYG0YuEtkkwDHacXM-jtGJ6qm
-X-Proofpoint-GUID: -NaBc_DQYG0YuEtkkwDHacXM-jtGJ6qm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-03_22,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 spamscore=0
- clxscore=1011 malwarescore=0 mlxscore=0 impostorscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308030189
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230803194724.154591-2-danila@jiaxyga.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/3/2023 1:45 PM, Daniel Vetter wrote:
-> Apparently no one noticed that mdp5 plane states leak like a sieve
-> ever since we introduced plane_state->commit refcount a few years ago
-> in 21a01abbe32a ("drm/atomic: Fix freeing connector/plane state too
-> early by tracking commits, v3.")
+On 2023-08-03 22:47:23, Danila Tikhonov wrote:
+> Document the DPU hardware found on the Qualcomm SM7150 platform.
 > 
-> Fix it by using the right helpers.
-> 
-> Fixes: 21a01abbe32a ("drm/atomic: Fix freeing connector/plane state too early by tracking commits, v3.")
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: freedreno@lists.freedesktop.org
-> Reported-and-tested-by: dorum@noisolation.com
-> Cc: dorum@noisolation.com
-> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>  .../bindings/display/msm/qcom,sm7150-dpu.yaml | 116 ++++++++++++++++++
+>  1 file changed, 116 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> new file mode 100644
+> index 000000000000..0d86997ae09f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> @@ -0,0 +1,116 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,sm7150-dpu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM7150 Display DPU
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +  - Danila Tikhonov <danila@jiaxyga.com>
+> +
+> +$ref: /schemas/display/msm/dpu-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm7150-dpu
+> +
+> +  reg:
+> +    items:
+> +      - description: Address offset and size for mdp register set
+> +      - description: Address offset and size for vbif register set
+> +
+> +  reg-names:
+> +    items:
+> +      - const: mdp
+> +      - const: vbif
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display hf axi clock
+> +      - description: Display ahb clock
+> +      - description: Display rotator clock
+> +      - description: Display lut clock
+> +      - description: Display core clock
+> +      - description: Display vsync clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bus
+> +      - const: iface
+> +      - const: rot
+> +      - const: lut
+> +      - const: core
+> +      - const: vsync
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,sm7150-dispcc.h>
+> +    #include <dt-bindings/clock/qcom,sm7150-gcc.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +    display-controller@ae01000 {
+> +        compatible = "qcom,sm7150-dpu";
+> +        reg = <0x0ae01000 0x8f000>,
+> +              <0x0aeb0000 0x2008>;
+> +        reg-names = "mdp", "vbif";
+> +
+> +        clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +                 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                 <&dispcc DISP_CC_MDSS_ROT_CLK>,
+> +                 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +                 <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +        clock-names = "bus", "iface", "rot", "lut", "core",
+> +                      "vsync";
+> +
+> +        assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
+> +                          <&dispcc DISP_CC_MDSS_ROT_CLK>,
+> +                          <&dispcc DISP_CC_MDSS_AHB_CLK>;
+> +        assigned-clock-rates = <19200000>,
+> +                               <19200000>,
+> +                               <19200000>;
+> +
+> +        operating-points-v2 = <&mdp_opp_table>;
+> +        power-domains = <&rpmhpd SM7150_CX>;
+> +
+> +        interrupt-parent = <&mdss>;
+> +        interrupts = <0>;
+> +
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@0 {
+> +                reg = <0>;
+> +                endpoint {
+> +                    remote-endpoint = <&dsi0_in>;
+> +                };
+> +            };
+> +
+> +            port@1 {
+> +                reg = <1>;
+> +                endpoint {
+> +                    remote-endpoint = <&dsi1_in>;
+> +                };
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+I don't think this compiles with a missing closing bracket.  Did you
+test the bindings?
 
+- Marijn
+
+> +
+> +            port@2 {
+> +                reg = <2>;
+> +                endpoint {
+> +                    remote-endpoint = <&dp_in>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+> -- 
+> 2.41.0
+> 
