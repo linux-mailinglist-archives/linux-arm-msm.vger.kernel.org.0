@@ -2,121 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D219B76E993
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 15:08:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08B4C76E9C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Aug 2023 15:15:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236141AbjHCNIi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 09:08:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53904 "EHLO
+        id S236146AbjHCNPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 09:15:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236300AbjHCNIH (ORCPT
+        with ESMTP id S236144AbjHCNP1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 09:08:07 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB635596
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 06:06:35 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe55d70973so600137e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 06:06:35 -0700 (PDT)
+        Thu, 3 Aug 2023 09:15:27 -0400
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A535349C7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 06:13:57 -0700 (PDT)
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2b9bf52cd08so13530191fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 06:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691067934; x=1691672734;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eWYA704UWyrCuVl2IVzrHz3n0S97k5VTTL5u48g6ZTA=;
-        b=e3geX4m1ZZORMkJo5JTDAM+hn3WhVYbMmVHOQ05ESi/RbDn63S6kae8cPpi585t1dh
-         3CAXQhSIZQfLK4Qz4FQJsnjCDTrZqJe+DDBzMB68sMgwEHWXlOHV1di3njBqtX9FHav/
-         fR+Ozvez38uIPy6yw3BQeJ78h6eNbPDnijtHPa6cazgw1D3We0icbBrV1aejrMj7E6if
-         1PSfMUmoLr/y3Y8ptBBlvJDRIj85TjXcjOnUkfTS3KxvMbsaPufy0AFKTv9TtIgnsIHC
-         BWcqB4mvXFYO46zOZk1XGqlRAHhZcCnv7JGlzTwldbnqsevuEUx8Wx/LQugPN7t4D9mN
-         q89A==
+        d=linaro.org; s=google; t=1691068067; x=1691672867;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ULZh00shqSbFq5grqktN6+UDr7p6MpFnwW0/QE5bbfg=;
+        b=sLdx/pJYVtKsg1914OnlGaU0lQSpV9t8Qx9rathAPQshDkGnZmDQwacremsrENT7jL
+         TvV3cWkI7aq2/GTiZmYrMfRv/cOBlmDqXwfXxs3jrjHuE3pGZOp2+zndbf/WE+MUA/zj
+         TtCg2ON4AE7/VRnQ1nd5arOZQW/BGLvXyeRqvwRak4D2W+Atzq9p5/2k9NyA0X4NEwXF
+         IqO5roXHJQtUvxi2AX+wzVKsWiJPfKNthSZdRMXdy1qapagX/9q2fw5EnKD+E+vV9H7o
+         4dOPjvSDMz4q4EGBAGjwVbfgtoxAnhZe328VNEmw25x8AhO+teAc4YvSF4qIDMJIseVK
+         ClKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691067934; x=1691672734;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eWYA704UWyrCuVl2IVzrHz3n0S97k5VTTL5u48g6ZTA=;
-        b=WsEd1Ou9R1CA9X7GBpP3Y+Ys/XZnceje1u9EAqF/JbM31Ks+Q6+B9W5M2GUEfCv+Fw
-         vOvecp5Wdh5MQXAraQWTXk4joEzNdS8jzlsj2z8Zq9Yh3rpcum4ZfIHPvM3z9Im8OVKF
-         3khYYBbpwSPCQkk4wStgq2UTdvEL9mo0G+fHMwkq66mV7N7ky88ZnWlYd/6wm9E2VoG2
-         MblZ6TVxEOuWzM71V58C6Etpr1G3lXq+hcLTo1oniCmgDGqdfOt3ZR9peY3sHSlF6y+0
-         nRF35GxahGTjO72HU1uC88FpSNh21uk2C/RsZzf3OjxDERGm7QWMChDpzD20EIshJttx
-         l6dQ==
-X-Gm-Message-State: ABy/qLZhO8x6CVbG/7UH+5wnWutQS4ugx6whKOW3rHM8JtTwkfd7IQPc
-        /m5R71IPHQ54p3LsGNJrgg9F9A==
-X-Google-Smtp-Source: APBJJlGC3rABxiwyoiDF0oUWEpERVKiEj80Fs1x/UV5kinaiB16EEFg1DxZaPQsrEAhjC/Ej7JCD+g==
-X-Received: by 2002:a05:6512:3ca3:b0:4fe:17a8:bee5 with SMTP id h35-20020a0565123ca300b004fe17a8bee5mr4122947lfv.31.1691067933716;
-        Thu, 03 Aug 2023 06:05:33 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691068067; x=1691672867;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ULZh00shqSbFq5grqktN6+UDr7p6MpFnwW0/QE5bbfg=;
+        b=AxOwQhP3YFg2woKAe4DF+vZiN1eAeBTrnWI6ANJBKESE5kKn/2Zs3LjZMcqktTLy6w
+         ivxJYjGrk0Sua9i6xUeifkBQ6fEDgQ7aS/JEuc0UwgNm4zkgLgy0B8BqTKqrkk03De70
+         dTBD7WZajIonHAk0ebgOdZ9+Gl3n7JHILVqQ5uwz1v+OrggGhUsR+BMN1Q2VPrLNZGKY
+         g4BF4XKbgGa2aNeoLtYVz6i6D9lxfo7TMMXRUkuVjjrVZuGP0vVNMKdYxxglDrHLfDWh
+         HEi6mO7+qzXBG1MTbFDZluN7T3Rcn6rQxm0VdL9WV7u6uBRS08dDTxMu3puuOTt7Gp7v
+         q/Xw==
+X-Gm-Message-State: ABy/qLZo949mwLFtkAU2kJVxWPZIusgpTsxRHdPsQdkvlRkg7CMWIBeg
+        ErAKXd0PUTSeA9EsmuFkIo5+4w==
+X-Google-Smtp-Source: APBJJlHBhIkn4hiSwGB7dHFwA4x10f32wnddawjsgW3guqIEX0NirLgVtLxRbYeE+3PkWHqpc83xrQ==
+X-Received: by 2002:a2e:a312:0:b0:2b9:da28:c508 with SMTP id l18-20020a2ea312000000b002b9da28c508mr7519833lje.31.1691068067412;
+        Thu, 03 Aug 2023 06:07:47 -0700 (PDT)
 Received: from [192.168.1.101] (abyk53.neoplus.adsl.tpnet.pl. [83.9.30.53])
-        by smtp.gmail.com with ESMTPSA id h11-20020ac25d6b000000b004fa4323ec97sm3346594lft.301.2023.08.03.06.05.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Aug 2023 06:05:33 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 03 Aug 2023 15:05:26 +0200
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Unreserve NC pins
+        by smtp.gmail.com with ESMTPSA id z16-20020a2e9650000000b002b1b92910c8sm3175586ljh.86.2023.08.03.06.07.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Aug 2023 06:07:46 -0700 (PDT)
+Message-ID: <e598e278-8be8-13db-a11d-ae650cb91774@linaro.org>
+Date:   Thu, 3 Aug 2023 15:07:45 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH -next] clk: qcom: lcc-msm8960: change pxo_parent_data to
+ static
+To:     Yang Yingliang <yangyingliang@huawei.com>,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     andersson@kernel.org, dmitry.baryshkov@linaro.org,
+        neil.armstrong@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org
+References: <20230803082125.521849-1-yangyingliang@huawei.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230803082125.521849-1-yangyingliang@huawei.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230803-topic-x13s_pin-v1-1-fae792274e89@linaro.org>
-X-B4-Tracking: v=1; b=H4sIABWmy2QC/x2NywqDQAwAf0VybmAfB2t/pZSyu8YakLhsahHEf
- 2/wOAPDHKDUmBQe3QGNfqy8ioG/dVDmJB9CHo0huBDd3UX8rpUL7j7qu7LgQBS973M/hQEsykk
- Jc0tSZstkWxaTtdHE+3V5vs7zD1liBMZ1AAAA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691067932; l=1138;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Isdz9v//a75u85vSi/PjyYD1dgrHZUgYNZovgx3+yvA=;
- b=JyjBZpB+Bv5UsUJshxNfdQulQwSprrfTT60zfjNwelAxLfJnexNNxp4PttcYsRTPVNwX9ue2W
- pznf2z61XRoDb5KTM2QRjQTNgT5yJlLcx9dv8yPc8DV/iS3Ag0TFQVD
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pins 83-86 and 158-160 are NC, so there's no point in keeping them
-reserved. Take care of that.
+On 3.08.2023 10:21, Yang Yingliang wrote:
+> The pxo_parent_data inroduced in commit bac4675a4d1b ("clk: qcom:
+> drop lcc-mdm9615 in favour of lcc-msm8960") is only used in lcc-msm8960.c
+> now, change it to static.
+> 
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Fixes: 32c231385ed4 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 6b5a7de6a27d..9a2bbd339e76 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -1244,7 +1244,7 @@ hastings_reg_en: hastings-reg-en-state {
- };
- 
- &tlmm {
--	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
-+	gpio-reserved-ranges = <70 2>, <74 6>, <125 2>, <128 2>, <154 4>;
- 
- 	bt_default: bt-default-state {
- 		hstp-bt-en-pins {
-
----
-base-commit: fb4327106e5250ee360d0d8b056c1eef7eeb9a98
-change-id: 20230803-topic-x13s_pin-9ee3117b7f29
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Konrad
