@@ -2,71 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42F647704CF
+	by mail.lfdr.de (Postfix) with ESMTP id B79D37704D0
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 17:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbjHDPd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229968AbjHDPd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 4 Aug 2023 11:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37810 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230003AbjHDPd0 (ORCPT
+        with ESMTP id S229669AbjHDPd1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 11:33:26 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB2B49C1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 08:33:24 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe48a2801bso3882855e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 08:33:24 -0700 (PDT)
+        Fri, 4 Aug 2023 11:33:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9956C49E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 08:33:25 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so3872425e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 08:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691163203; x=1691768003;
+        d=linaro.org; s=google; t=1691163204; x=1691768004;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f6jlXHLj1MUCfLZToewZeR7OtzKxIt9mLVk/gVOh5yw=;
-        b=mdnuEsB4ff942lzJOdWVE5DqJm3m702v928B2Mi3mmyo6TIqs665k2iz+eFXpRSDsO
-         wxNH7lZZnvlhOUiY1/Ingp+O0ZRLgna3JH04B4vy7QvFlJ9xWJnXnXp5n10x50OXGYMx
-         +bzzTM6bUFkZETdlNeqJ3eBuD9p3S4KiCptEMJAo2PrnroTF40rl66GGmzv8h49zg+YQ
-         FdEmOdD9PuxiqQ9JcKC6DM2q9d330hRd3Q4Y3qPLOBeI1zJ0OHIIvCrvrLCmXSBcpufJ
-         ROJ2c0wA/i0WFKBqWxvJLA3i7LJ2at4dZO0TjY4+Wwx3w+PnHlCEDLr4B8THefjCDIGW
-         3hug==
+        bh=Ct+HhFSf3JuuA0pS4qW/YHF3pCVOsmudw0iO0Dt49tI=;
+        b=O+O0DdJB7gDBLNjPG25N+i5iYBocWpOSXo1e9KKSn+uIzN4wAkWVfWxNpAQshTubR9
+         hIsogftgGgdnA573RdL2yI/56LIDgGsrEFwi/idXWw91cGDCG9kdxQ1qOVF88OmOfRBz
+         ebA+TEDovyrAC24Acvnr78RW5R3lvnA73XPnz7TaA+MHOBaQF6KsdxZrqF1aYIZH2RM5
+         DzPjNzVL+YCdXTSwKiAecoe6klmEvqqyJYM6+wUuOJ9I+TwV+ST5yg0s4DJhWyi0g1Ez
+         vDrRPQ4GcQr2jAsH5tXyi003crAiyZfRiJv7wFvJTWzS+i/xLVQUa2A9jvEDarwGe6Tp
+         PDKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691163203; x=1691768003;
+        d=1e100.net; s=20221208; t=1691163204; x=1691768004;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f6jlXHLj1MUCfLZToewZeR7OtzKxIt9mLVk/gVOh5yw=;
-        b=GHyq+tKbCPHv9WojDx4P4xM8PkJDvbItYG7drItPXyvzNK4MhFMxuFXXRu95uRq3cx
-         IdJ46rOfQNCcu1Cuke9Q1TgmPXaH5l4E+6DOuUmDQCbcAhYBvJ12Hv0vpCZqqIMM3ZyQ
-         I25IDATS4o/Dd6U+mUaHe5Vvda+B5iGH8iLtkllwPNcbLfAEY5ECtzjUpap18whanIUX
-         XwngKRdVO23YnHTtZryjrod+64e58HPugxHnsDZwdILJtj9hPFAFiMD68W4aGOAjM9yu
-         QZHu4IwU4AnYaYlvtLkzqbge7O04au0zecyBMnXwgnKOPA0i3hwuF4epcA8ZM3BcUgFE
-         f6Tw==
-X-Gm-Message-State: AOJu0YySNdkDDDdaoIUVve6zrDhDL+RSaXygbA3p+qBCKlu7VPI57tmf
-        8Fy9P+0oo1R3/1zR+3bD0s/y/w==
-X-Google-Smtp-Source: AGHT+IGW7itXMzBpTRGOomYFU6pVFSKbCE5PJfR8t9U8RbjMcV1bPdCvMMMUsQWTLeJSl+72NkQFwg==
-X-Received: by 2002:a05:6512:3d0d:b0:4fd:f876:d86 with SMTP id d13-20020a0565123d0d00b004fdf8760d86mr2138504lfv.50.1691163202824;
-        Fri, 04 Aug 2023 08:33:22 -0700 (PDT)
+        bh=Ct+HhFSf3JuuA0pS4qW/YHF3pCVOsmudw0iO0Dt49tI=;
+        b=g0BrXWPsVyAHFFibBOz/qtx5cS8zf4rAZ4iLBG27yLqqM+eCR3TAwC1gFLZsvye8S8
+         PIHsrqHGULvbBcfOxOxyXpX1/EOA66V4yvntz8M7OEXz+7oe1X6j0HMsKlDxqLT896SB
+         NKvil8kNmwl97kORZirZD5q29NBEkM2m15BbM/JnfILcN/cwNcs25jc8xf6uyrqDA4pv
+         NeEOsYI/KFPfTfsaiSL/+9UD40j2chZDxktS9E1LTFOWPI4zHyZiKPpbSthfhjVHbyJv
+         aj+UxuEndlIFbXVFA/feXKxPasfOCyLUKHBSCUP3Y1tuBzvXcAPp3GooFZnjYg1IiGPQ
+         iSVQ==
+X-Gm-Message-State: AOJu0Yyh9yQhECkcjeTeeWScHEYbBuPYigFqyBAb3waBRfU3u90LvmcP
+        LPRFr50cU93iPZ6inh5WZnOY+Q==
+X-Google-Smtp-Source: AGHT+IHEKmz6wgZTpApnn2eeHnpWC8wifjJXIPan0+O+hTJlVADjPVgOzrAW4CFWVh8fXkk9hmfB9w==
+X-Received: by 2002:a19:4f5e:0:b0:4fe:89f:cbad with SMTP id a30-20020a194f5e000000b004fe089fcbadmr1431945lfk.51.1691163203868;
+        Fri, 04 Aug 2023 08:33:23 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id w12-20020a05651204cc00b004f873ca4139sm411874lfq.71.2023.08.04.08.33.21
+        by smtp.gmail.com with ESMTPSA id w12-20020a05651204cc00b004f873ca4139sm411874lfq.71.2023.08.04.08.33.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 08:33:22 -0700 (PDT)
+        Fri, 04 Aug 2023 08:33:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     robdclark@gmail.com,
+        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Cc:     quic_abhinavk@quicinc.com, sean@poorly.run,
+        marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 0/8] drm/msm/dpu: change interrupts code to make 0 be the no IRQ
-Date:   Fri,  4 Aug 2023 18:33:17 +0300
-Message-Id: <169116308154.148471.9274793163444236457.b4-ty@linaro.org>
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abaci Robot <abaci@linux.alibaba.com>
+Subject: Re: [PATCH] drm/msm/dpu: clean up some inconsistent indenting
+Date:   Fri,  4 Aug 2023 18:33:18 +0300
+Message-Id: <169116308155.148471.3951374224625324432.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
-References: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230804075746.77435-1-jiapeng.chong@linux.alibaba.com>
+References: <20230804075746.77435-1-jiapeng.chong@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -81,21 +78,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 02 Aug 2023 13:04:18 +0300, Dmitry Baryshkov wrote:
-> Having an explicit init of interrupt fields to -1 for not existing IRQs
-> makes it easier to forget and/or miss such initialisation, resulting in
-> a wrong interrupt definition.
+On Fri, 04 Aug 2023 15:57:46 +0800, Jiapeng Chong wrote:
+> No functional modification involved.
 > 
-> Instead shift all IRQ indices to turn '0' to be the non-existing IRQ.
+> drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c:183 dpu_core_perf_crtc_check() warn: inconsistent indenting.
 > 
-> Dependencies: [1]
 > 
-> [...]
 
 Applied, thanks!
 
-[1/8] drm/msm/dpu: fix the irq index in dpu_encoder_phys_wb_wait_for_commit_done
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d93cf453f51d
+[1/1] drm/msm/dpu: clean up some inconsistent indenting
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/b0fe70105056
 
 Best regards,
 -- 
