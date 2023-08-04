@@ -2,121 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07A7D76F57F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 00:13:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48AE476F76C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 04:02:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231613AbjHCWN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Aug 2023 18:13:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58408 "EHLO
+        id S231501AbjHDCCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Aug 2023 22:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjHCWN3 (ORCPT
+        with ESMTP id S229846AbjHDCCY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Aug 2023 18:13:29 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B874212D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 15:13:27 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d07c535377fso1639741276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 15:13:27 -0700 (PDT)
+        Thu, 3 Aug 2023 22:02:24 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8F67448E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Aug 2023 19:02:22 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-686f74a8992so269693b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Aug 2023 19:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691100806; x=1691705606;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pKrgIpuXRGic6b6C+k3mhH+LzXEqNBKYd3T00BcALmA=;
-        b=jPKgu+iiT2nEak06cLi5GKVS0paWCjfjSa8tgHxQjtr3eIHOBCiQN2V7RkbMu4Wff2
-         QovtecUd9NiigJRkm2kqlPn36VyKhaOFaMeLwKT8VlJdT4fpQWUKN/QSZF5kFv5TvO5x
-         GevgBbGfzvoCyN2QkM+87T5++4frW5rkkUYZK4FQiNYqGimVjVZeWLVhUI75+98lLgKy
-         Ky/GJc+J731K10FMbY0KIS5VwWht98Z2sB5uskZx4WTdaDeC89ZAIueiLLTjkX1FSOlv
-         TQeh4MEmI/AzppxZxXUIoW14tqQU4YLNd/MdHfvZznwp8zKU5sdyjgZir9OGC9i+nHRk
-         Dqaw==
+        d=kernel-dk.20221208.gappssmtp.com; s=20221208; t=1691114542; x=1691719342;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lLAyHP6q7d4xyqH5BrZ0J2y9ZHEmKn11Ag5iLKGIobk=;
+        b=wP2ZuHLlNuDfTT71uzyzf0CV4FW0+5rHmVIqE6GOMVjwL3ZpUnT2g2DTt/WDPPdjrF
+         2U2HC6n0rUbzNslkkp6Hn7rJWDpqfSmq9b66hXnpWCUj8YqrgFcHUJhG77/tAs47G266
+         ElZhOuyclpDWX2rOoNKzHHzbVTAE54S07RIJ8OKTFKzcSexf0Gz621jhyP7rRN33bbXa
+         tkJbJPIcYWZ4ZpCxxkdHqHPkTvp2YIFjPQGCcymM3t8fqWtXNJ1CJG5w9R5HSfJH6nCk
+         KdkWaHmwZ/oMmmFXNOSYXCV4ARohZ/th4bdIj0Kq+d27AG7CIKhmk7x2SgAnQa4lZa+v
+         ZR3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691100806; x=1691705606;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pKrgIpuXRGic6b6C+k3mhH+LzXEqNBKYd3T00BcALmA=;
-        b=V/t3F0qpNIFBMZicV9D+XbFjp4tl5JI1lV/9C3oCOqR1bS4vpqsur4wMkJu3hmKC+P
-         dozmGBl2tZ7C8XBFA90fERiwrvz25PoFVdwbPZCVMaFc2D50eczruqXHc2wrrRID8bkI
-         VL06FrxIn/Rb4YqX0j14GPqluo3pqcnqs1Q6ppBELgXcBossXroHT2iAjKXkmXzFmRrH
-         k28jdFKvk2w0Yz4MkP6fcf90Gh1LhKeCcx0VGsBDImsWSqGYjtkhJ0Q8wqhUV5Jr6Uxv
-         5H9z87EHA0JPzPzvgE9M9xyy1xVVfBMC7bBP0O2uYk6t3HGiv3voVze58ayD/haXVk68
-         GzDg==
-X-Gm-Message-State: ABy/qLY2wditEQ9wrLzcrmVvlN/td9hNJOD1OXeiHKt8IqMwNoNtbyZ2
-        HdgFjm707YzL6r58kXlK9hhlfhH1JfpDW1llHAfYaQ==
-X-Google-Smtp-Source: APBJJlHZ7yvBgzplN6wNzGDnzG/pCcR0AGkTrE8Gsc0Q677Ie2EiJpTWqq5VDD/PB1rxSTWDCvZtg/T3zp3k8g0au60=
-X-Received: by 2002:a05:6902:1895:b0:d05:f537:da99 with SMTP id
- cj21-20020a056902189500b00d05f537da99mr20258859ybb.46.1691100806499; Thu, 03
- Aug 2023 15:13:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691114542; x=1691719342;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lLAyHP6q7d4xyqH5BrZ0J2y9ZHEmKn11Ag5iLKGIobk=;
+        b=WEPYWHQPNzQYTuKH5Vt0u36r9K0wKVLNzw+mAVOKiv7OreYLjiAWNo/pQZUgSRzx3p
+         54nI0Hcv1kfgIuKJc5rgDDa4LB2z/GnWYnNXbD4XKqoihIbzNGdNGOE85p19dAF3OmEs
+         kh32C73/wguCxZymgTQBcr4aWxVttD6mO44xUVRcJm5aK/ybqwfrGp35De4Rg+dpQh0I
+         X/O3YbCMjPxNynbH25+RI776Fefs8aRDbOBARcbBiiU2zVo73H7fGNoSiAR9pz2CkiH2
+         D4l1Zic8Y+Ar5oELBY1QEa+xB8WBnL2CbPgfuX2wINU8Y13iVYc5jZgKDj4UK5zW6j2n
+         hGWA==
+X-Gm-Message-State: ABy/qLavxVFDx1Gerf/Un/xm3GFIReCfZpqrTbm6DmotgiU1eJrAvsd/
+        PINKlEmH18nbz+bu9a7gCuGq7w==
+X-Google-Smtp-Source: APBJJlHGxvq+YAD+sdIdRb+NwnMfx8vt2DdNH34XqanHP+MVvvdnK8URPIL1n0IT/Nu8x7TU0I+uaA==
+X-Received: by 2002:a05:6a00:8016:b0:675:8627:a291 with SMTP id eg22-20020a056a00801600b006758627a291mr20382970pfb.3.1691114542072;
+        Thu, 03 Aug 2023 19:02:22 -0700 (PDT)
+Received: from [172.20.1.218] (071-095-160-189.biz.spectrum.com. [71.95.160.189])
+        by smtp.gmail.com with ESMTPSA id p18-20020aa78612000000b006871dad3e74sm471163pfn.65.2023.08.03.19.02.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Aug 2023 19:02:21 -0700 (PDT)
+Message-ID: <5dbc41bb-f843-dcd9-37d6-cf1f37cb80d4@kernel.dk>
+Date:   Thu, 3 Aug 2023 20:02:20 -0600
 MIME-Version: 1.0
-References: <20230803194724.154591-1-danila@jiaxyga.com> <20230803194724.154591-3-danila@jiaxyga.com>
- <CAA8EJpoBZBLYQ5RUW7nGo+wsma2XiON9+rK8N-gjnfWTkb-7rA@mail.gmail.com> <1691097186.296866515@f749.i.mail.ru>
-In-Reply-To: <1691097186.296866515@f749.i.mail.ru>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 4 Aug 2023 01:13:15 +0300
-Message-ID: <CAA8EJpqdQ84wq03swhOd6Qz11QzdhBbW=r0cLNuoXsEY=vT9uA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm/dpu: Add SM7150 support
-To:     Danila Tikhonov <danila@jiaxyga.com>
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org,
-        neil.armstrong@linaro.org, rfoss@kernel.org, andersson@kernel.org,
-        quic_khsieh@quicinc.com, quic_vpolimer@quicinc.com,
-        quic_rmccann@quicinc.com, quic_jesszhan@quicinc.com,
-        liushixin2@huawei.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        davidwronek@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Subject: Re: [linux-next:master] BUILD REGRESSION
+ fb4327106e5250ee360d0d8b056c1eef7eeb9a98
+Content-Language: en-US
+To:     Matthew Wilcox <willy@infradead.org>,
+        kernel test robot <lkp@intel.com>
+Cc:     Andrew Morton <akpm@linux-foundation.org>,
+        Linux Memory Management List <linux-mm@kvack.org>,
+        linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
+        Christoph Hellwig <hch@lst.de>
+References: <202308040141.gUjtZ32J-lkp@intel.com>
+ <ZMwH1WuEb1JEtZ4o@casper.infradead.org>
+From:   Jens Axboe <axboe@kernel.dk>
+In-Reply-To: <ZMwH1WuEb1JEtZ4o@casper.infradead.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 4 Aug 2023 at 00:13, Danila Tikhonov <danila@jiaxyga.com> wrote:
->
-> So here too I add new sm7150_vig_sblk_0 and sm7150_vig_sblk_1 with v3lite?
->
-> static const struct dpu_sspp_sub_blks sm7150_vig_sblk_0 =
->     _VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3LITE);
-> static const struct dpu_sspp_sub_blks sm7150_vig_sblk_1 =
->     _VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3LITE);
+On 8/3/23 2:02?PM, Matthew Wilcox wrote:
+> On Fri, Aug 04, 2023 at 01:34:01AM +0800, kernel test robot wrote:
+>> arm-linux-gnueabi-ld: storage.c:(.text+0x27c): undefined reference to `__brelse'
+>> arm-linux-gnueabi-ld: storage.c:(.text+0x9c): undefined reference to `__bread_gfp'
+>> storage.c:(.text+0x22c): undefined reference to `__bread_gfp'
+>> storage.c:(.text+0x64): undefined reference to `__brelse'
+> 
+> I think something like this would fix it.  Jens?  Christoph?
 
-Yes, please, close to other sblk variables.
-
-But the priorities should be 4 and 5 (and 1, 2, 3 for DMA).
-
->
-> > +static const struct dpu_sspp_cfg sm7150_sspp[] = {
-> > + {
-> > + .name = "sspp_0", .id = SSPP_VIG0,
-> > + .base = 0x4000, .len = 0x1f0,
-> > + .features = VIG_SDM845_MASK,
-> > - .sblk = &sm8250_vig_sblk_0, // &sm7150_vig_sblk_0
-> > + .xin_id = 0,
-> > + .type = SSPP_TYPE_VIG,
-> > + .clk_ctrl = DPU_CLK_CTRL_VIG0,
-> > + }, {
-> > + .name = "sspp_1", .id = SSPP_VIG1,
-> > + .base = 0x6000, .len = 0x1f0,
-> > + .features = VIG_SDM845_MASK,
-> > + .sblk = &sm8250_vig_sblk_1,  // &sm7150_vig_sblk_1
-> > + .xin_id = 4,
-> > + .type = SSPP_TYPE_VIG,
-> > + .clk_ctrl = DPU_CLK_CTRL_VIG1,
-> > + }, {
->
-> --
-> Best regards,
-> Danila
->
-
-
+Yep, someone else sent one earlier today, but looks like they didn't CC
+the list. In any case, I replied with it CC'ed and got it applied.
 
 -- 
-With best wishes
-Dmitry
+Jens Axboe
+
