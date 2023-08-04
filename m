@@ -2,105 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7529377092C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 21:44:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8364770964
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 22:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229981AbjHDToP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 15:44:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57894 "EHLO
+        id S229992AbjHDUJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 16:09:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjHDToO (ORCPT
+        with ESMTP id S229607AbjHDUJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 15:44:14 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27AC3E7;
-        Fri,  4 Aug 2023 12:44:13 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99bc9e3cbf1so528864266b.0;
-        Fri, 04 Aug 2023 12:44:13 -0700 (PDT)
+        Fri, 4 Aug 2023 16:09:16 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C55AE6E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 13:09:14 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso39882471fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 13:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691178251; x=1691783051;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7d+J7JLjtlPoezgQvcsKrQ7M26pTKCKXnoUr1qqP+rY=;
-        b=DiKwQ9bxDEXhhW6WL1b64KlpieL6VSEHdJq1P/G4DTYj0jKDtjx4fEEEWW/zCyFIml
-         UBRU2Mv6DCC5y5pT3b70ajDTof7Dg6rM40H5+UJbCrYahIoe1vDp+M12D3lD5QOFjR+X
-         b/syJ9v3q8RNaLyFedAMnTdi8M+MDcRVWLwa0/jwWHgcdrlyKcceH0X1yx8QYG5JfCd4
-         M1cXNP4jOz4HrmDL/aM3esJ2TkDLTP0gog9W1WJGvysaTB4ftWNnbuRBwZImPsIDImpW
-         SK9uag+qh5EjSxJpxGgsO0AX+RgKERIzpkGzKLnVazKduwksQpBBQEQLjjf9jcb7RWAn
-         WBAg==
+        d=linaro.org; s=google; t=1691179752; x=1691784552;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i+ZdmQe2vjcw9gjPv4iQjRIm3FBr/PMEmSD7gYRuQwc=;
+        b=hcinsQkuFtpLJ9xV4fFj9cY0ql+oBRySikeZGQ8E31nfuPFd+r4JtO1kn/PIYjwNz0
+         rm0WKUO5Fz9/1SiGWi7qzv5SCfZIKM8RK3IFtbW5PIzyjYSsBewr34R9hPk/j127Z7mO
+         ViEEEcKnDO2euFPHvPDu16wTfbixnm4Mg3V9uBFnCGfWBF/FsOuUKgxhDBaHu0wSFOyE
+         74kn03HtLmZPf9oobD28WJa2/Xn0qp7LiXgrtKALlNMv3eeg484dO+PN4/Ui6ecPuRXa
+         YPrJUzUMrblsRgvwhfhvfsFkgQY9ZDBWhEs63fdFcIcJpeQoHn1GQzK6l5yxkksN20lp
+         Nvyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691178251; x=1691783051;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7d+J7JLjtlPoezgQvcsKrQ7M26pTKCKXnoUr1qqP+rY=;
-        b=N3ZJOWEo9DvT57P1gw80EhfD2EH9yBrKb3xzGvuFCDcdXi+hHUGBonVxaAQE+wyVmS
-         nKpccT4AsXmyMRfewytu+xkm0zIZeC1mhej0NO8q3nQKaZXtWDX/UgKu5icpAdKCulpf
-         LBUrmreQBy6/QjmzMu+wgHELcBtSKV9dDETdKdfG4DqQZHz6JMeHsn4KD0TVZJ1JMWcJ
-         3VJ1IDA9hzrYGpraqQjyI67gYIm0Jjudo4S0/z1lv6/ZXQE6cSQBGNls9OD23hzHB22u
-         qmqF4akw5Yv0E6Sictt0NXSCDpd2Z64yCJvheuCOcNhRoIywf6Qch/IYq+zW1Le/PUqt
-         AlYw==
-X-Gm-Message-State: AOJu0Yw5b/uTQW5lVxtY/ncVPnCzlc5P4+KPGpi21WdQ20qsjyrYX8tD
-        MSGmii0R6Z/++i4QycDPreT7ecx//Ag=
-X-Google-Smtp-Source: AGHT+IGmVeIt9TUSVexi1m88V64aOZm+P0u2XcqQjoJ7UYCl+41w2rOfcpsRlQvhuS8oXs9cJq4S4A==
-X-Received: by 2002:a17:907:3e8f:b0:99c:728:c655 with SMTP id hs15-20020a1709073e8f00b0099c0728c655mr764896ejc.2.1691178251423;
-        Fri, 04 Aug 2023 12:44:11 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id bj10-20020a170906b04a00b0099bd6026f45sm1710205ejb.198.2023.08.04.12.44.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Aug 2023 12:44:10 -0700 (PDT)
-Message-ID: <63f0f3b0-0fb2-afad-710f-fccadfb52a42@gmail.com>
-Date:   Fri, 4 Aug 2023 21:44:09 +0200
+        d=1e100.net; s=20221208; t=1691179752; x=1691784552;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i+ZdmQe2vjcw9gjPv4iQjRIm3FBr/PMEmSD7gYRuQwc=;
+        b=guiJ+GwNFpmewnw8lnzyne+2Ne1zirBhFftoYSwRTvZjOe3hn/NZSMrP78nJtBjkOQ
+         qdJRl137Q//lz2FVEHFftQnsTN9kC6ToqBmd4/KtIdbqFhe7/iwmjRhVjFtvPMXUa9lf
+         oy4hla6v39+L/DtahKXA7P9POV5jTlvrzZsod1wNzwJJAcrWZhpNgNf7UsxfrRcYQqPX
+         v0zzVgSVXDRgbSFjVwM8tewGiHjOqkKSWi9oU8bRJHBanq+Ski6Bvx7kkL6yOjtEL39n
+         vXq5a3Jjh1OJNHLU564xYm+aGHmS0w1c8rZWyaX1npvcaLl0Rb6VHwfAd4MNPIrUnD4E
+         yWPw==
+X-Gm-Message-State: AOJu0Yz5wkU1y12T+czRq7YtOyhV0izmWR/EZy2D3ld5MnmGjO07Ix/l
+        Y7sH196PTmtQxbnwSlSGSNyX+w==
+X-Google-Smtp-Source: AGHT+IGbZyh6qA34iNgBp8oFYb6AJZhXUvEDwUt3b8rkf3hwhTNMR/FSJMsQs1eZ2IG5rP7u2tPKNw==
+X-Received: by 2002:a2e:3219:0:b0:2b7:4078:13e0 with SMTP id y25-20020a2e3219000000b002b7407813e0mr2238879ljy.43.1691179751569;
+        Fri, 04 Aug 2023 13:09:11 -0700 (PDT)
+Received: from [192.168.1.101] (abym15.neoplus.adsl.tpnet.pl. [83.9.32.15])
+        by smtp.gmail.com with ESMTPSA id m8-20020a2e97c8000000b002b6fed37b18sm580048ljj.101.2023.08.04.13.09.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Aug 2023 13:09:11 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/6] SM8350 and SC8280XP venus support
+Date:   Fri, 04 Aug 2023 22:09:07 +0200
+Message-Id: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] firmware: Add support for Qualcomm UEFI Secure
- Application
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230730161906.606163-1-luzmaximilian@gmail.com>
- <20230730161906.606163-4-luzmaximilian@gmail.com>
- <ZM0tO1K4yuBdK6pa@hovoldconsulting.com>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <ZM0tO1K4yuBdK6pa@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAONazWQC/x2N0QqDMAwAf0XyvEBtmZb9yhgjdnEGJEozZSD++
+ 8Ie7+C4A4yrsMGtOaDyLiaLOrSXBspE+maUlzPEEFPoU4ufZZWCOebw3Fk3wzxeQ0fcx0QdeDa
+ QMQ6VtEwe6jbPLtfKo3z/n/vjPH/wy7qIdwAAAA==
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691179750; l=1206;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=AzvGjZWLIrTWpfIVnfz5gbNYaA+bZzT3svjy3XgECbI=;
+ b=0E0tvMR801ggIH4I124z4f5XNPnjOBBR8BGs/LZAiTZvgfA4g2KKXac2YPpEBiF4AJQXNycOg
+ pQb+63s7PKNCAd++C8WMpzuOV2PEzOBfO9w7eONj+U2+/3YLWThY5K2
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/4/23 18:54, Johan Hovold wrote:
-> On Sun, Jul 30, 2023 at 06:19:04PM +0200, Maximilian Luz wrote:
->   
->> +config QCOM_QSEECOM_UEFISECAPP
->> +	bool "Qualcomm SEE UEFI Secure App client driver"
->> +	depends on QCOM_SCM
-> 
-> No need for this one.
+SM8350 and SC8280XP both implement IRIS2, with the bigger SoC having
+a bit of a beefier unit, capable of reaching a higher core clock.
 
-Oh right, forgot to remove that.
+Rebased atop Stan's venus-for-6.6.
 
->> +	depends on QCOM_QSEECOM
->> +	depends on EFI
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (6):
+      media: dt-bindings: Document SC8280XP/SM8350 Venus
+      media: venus: core: Remove trailing commas from of match entries
+      media: venus: hfi_venus: Support only updating certain bits with presets
+      media: platform: venus: Add optional LLCC path
+      media: venus: core: Add SM8350 resource struct
+      media: venus: core: Add SC8280XP resource struct
 
-Thanks!
+ .../bindings/media/qcom,sm8350-venus.yaml          | 149 +++++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.c           | 119 ++++++++++++++--
+ drivers/media/platform/qcom/venus/core.h           |   4 +
+ drivers/media/platform/qcom/venus/hfi_venus.c      |  15 ++-
+ drivers/media/platform/qcom/venus/pm_helpers.c     |   3 +
+ 5 files changed, 279 insertions(+), 11 deletions(-)
+---
+base-commit: 210fefeb11b4bf5d4c5597f126425c2d3fea1aa9
+change-id: 20230731-topic-8280_venus-8f506ae723a6
 
-Regards
-Max
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
