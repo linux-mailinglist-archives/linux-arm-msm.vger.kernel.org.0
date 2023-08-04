@@ -2,181 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C21F77021B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 15:44:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 464DB770225
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 15:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231338AbjHDNom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 09:44:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55724 "EHLO
+        id S231357AbjHDNrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 09:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231304AbjHDNol (ORCPT
+        with ESMTP id S230047AbjHDNrc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 09:44:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74159CC
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 06:44:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1691156639;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=tpOIG5n3MxbFIH92Jg66Rf7F45WxAwd2M2vqn7RHptk=;
-        b=DS55RchhPxNSdQwefm6uk27Ny3JBuP3r+iwhzXeH1U5bydgqG7Nf4yIS6mxLHSuh/CM8TL
-        mqJl3vkH2z+kJwRrn4MJotgJCxJlrZone5yg2ZVHlCDwPLcFyd2YLb30E5Ra8Dtrch6cqk
-        1ezorQn+69rayH6n4Fa0anoxVO6O77c=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-uoRCuK8OM0O1za9Di1TgXw-1; Fri, 04 Aug 2023 09:43:58 -0400
-X-MC-Unique: uoRCuK8OM0O1za9Di1TgXw-1
-Received: by mail-lf1-f72.google.com with SMTP id 2adb3069b0e04-4fe32cab9b7so2510004e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 06:43:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691156637; x=1691761437;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tpOIG5n3MxbFIH92Jg66Rf7F45WxAwd2M2vqn7RHptk=;
-        b=k6VCERIme/8/QaqV22SSdj5yDYujrWlc4d8Y6kmoA7ci0rDtWS+1E3SKKROjjW9LOW
-         Att37nfBsPFUjOlG9eMyk1LtGk6AwnvkROo3VaTcjg87zyE6pzBkB9cZiZmrNNsNr9p6
-         wnrg2B1NBjdMh9NAiji6xasGmM+yFH4GlruTC5bkF+wN4t7l92iC96WxghY5FSrogb8N
-         UAV7ElNOsmuNCxmImQh7hVMFmG4Uk2gyJ2yJ73bkfqVj+isQs3bhIUgvARF37w7Goni7
-         +DMt347+O50VS57/EE6c8BnlNB0htHTZFhZqZnrIwDASyHLacuftG7/G+NuL05WFoTeV
-         yl6Q==
-X-Gm-Message-State: AOJu0YxhTBjUUWbfojUPCz92uf94WHpjTX6Krs6lvTVwOGrQARuz6W3W
-        cSbcVH2Gdsroicqylwrv+IBtuJ9UAFiTHkZAM3Swrtp23hQiRK7TKUDgX8ZYjpkwxVCY6FgazDU
-        CmwLrImjA64G3a9eM3NNJVaSYhLw60W5dPHPHvU9IRg==
-X-Received: by 2002:a05:6512:2821:b0:4fb:bef0:948e with SMTP id cf33-20020a056512282100b004fbbef0948emr1624365lfb.5.1691156636883;
-        Fri, 04 Aug 2023 06:43:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4TC7gMZF2ei8j5FBv3RQrBOVNN/MDvRv3kcEy9bNjf6yT6T+EyfwKjB1EnVg7s3ShGDE6vL7iyVUjtK3tb6k=
-X-Received: by 2002:a05:6512:2821:b0:4fb:bef0:948e with SMTP id
- cf33-20020a056512282100b004fbbef0948emr1624343lfb.5.1691156636477; Fri, 04
- Aug 2023 06:43:56 -0700 (PDT)
+        Fri, 4 Aug 2023 09:47:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD429D1;
+        Fri,  4 Aug 2023 06:47:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3EFB462007;
+        Fri,  4 Aug 2023 13:47:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EE9C433C7;
+        Fri,  4 Aug 2023 13:47:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1691156849;
+        bh=Vus8oDWqbe6hI+z8JRRz2IwYSOmpWI93p8MNavKhkKc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nlwKQVwKhVMc36MQa31XedPh72V5Kk3PA95jvM+710KkbpjU67UNPm9iLn1HkZtQM
+         Uix8VnrHM7OZOtlKDUDtezNGWq6/QmacVNptoX1t2AG1W0aGWlUGyjC0UIsHlTuJ9i
+         fkqdy9w1Ew/0BZrMQoSitYvblyORVT0kwHrz5opM=
+Date:   Fri, 4 Aug 2023 15:47:26 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Trilok Soni <quic_tsoni@quicinc.com>
+Cc:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V25 0/3] misc: Add driver support for Data Capture and
+ Compare unit(DCC)
+Message-ID: <2023080438-reacquire-obsessed-3e81@gregkh>
+References: <cover.1687945879.git.quic_schowdhu@quicinc.com>
+ <f25f8c43-2996-23ff-e6af-9e39b7fced86@quicinc.com>
+ <774b688f-0324-9097-6504-58d15a3e6afb@quicinc.com>
 MIME-Version: 1.0
-References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com>
- <20230728-solid-fill-v5-2-053dbefa909c@quicinc.com> <CAA8EJpq=pbDoYc9wqKKrX+RahXp8zWTPFqVqA=S-0TkWXXJUjQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpq=pbDoYc9wqKKrX+RahXp8zWTPFqVqA=S-0TkWXXJUjQ@mail.gmail.com>
-From:   Sebastian Wick <sebastian.wick@redhat.com>
-Date:   Fri, 4 Aug 2023 15:43:45 +0200
-Message-ID: <CA+hFU4y38MTTUsbri1jy=n4Vyp7xx2CosD9Nmk97z_au6NHCdQ@mail.gmail.com>
-Subject: Re: [PATCH RFC v5 02/10] drm: Introduce solid fill DRM plane property
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
-        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
-        ville.syrjala@linux.intel.com, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        wayland-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <774b688f-0324-9097-6504-58d15a3e6afb@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 4, 2023 at 3:27=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Fri, 28 Jul 2023 at 20:03, Jessica Zhang <quic_jesszhan@quicinc.com> w=
-rote:
-> >
-> > Document and add support for solid_fill property to drm_plane. In
-> > addition, add support for setting and getting the values for solid_fill=
-.
-> >
-> > To enable solid fill planes, userspace must assign a property blob to
-> > the "solid_fill" plane property containing the following information:
-> >
-> > struct drm_mode_solid_fill {
-> >         u32 version;
-> >         u32 r, g, b;
-> > };
-> >
-> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/drm_atomic_state_helper.c |  9 +++++
-> >  drivers/gpu/drm/drm_atomic_uapi.c         | 55 +++++++++++++++++++++++=
-++++++++
-> >  drivers/gpu/drm/drm_blend.c               | 30 +++++++++++++++++
-> >  include/drm/drm_blend.h                   |  1 +
-> >  include/drm/drm_plane.h                   | 35 ++++++++++++++++++++
-> >  include/uapi/drm/drm_mode.h               | 24 ++++++++++++++
-> >  6 files changed, 154 insertions(+)
-> >
->
-> [skipped most of the patch]
->
-> > diff --git a/include/uapi/drm/drm_mode.h b/include/uapi/drm/drm_mode.h
-> > index 43691058d28f..53c8efa5ad7f 100644
-> > --- a/include/uapi/drm/drm_mode.h
-> > +++ b/include/uapi/drm/drm_mode.h
-> > @@ -259,6 +259,30 @@ struct drm_mode_modeinfo {
-> >         char name[DRM_DISPLAY_MODE_LEN];
-> >  };
-> >
-> > +/**
-> > + * struct drm_mode_solid_fill - User info for solid fill planes
-> > + *
-> > + * This is the userspace API solid fill information structure.
-> > + *
-> > + * Userspace can enable solid fill planes by assigning the plane "soli=
-d_fill"
-> > + * property to a blob containing a single drm_mode_solid_fill struct p=
-opulated with an RGB323232
-> > + * color and setting the pixel source to "SOLID_FILL".
-> > + *
-> > + * For information on the plane property, see drm_plane_create_solid_f=
-ill_property()
-> > + *
-> > + * @version: Version of the blob. Currently, there is only support for=
- version =3D=3D 1
-> > + * @r: Red color value of single pixel
-> > + * @g: Green color value of single pixel
-> > + * @b: Blue color value of single pixel
-> > + */
-> > +struct drm_mode_solid_fill {
-> > +       __u32 version;
-> > +       __u32 r;
-> > +       __u32 g;
-> > +       __u32 b;
->
-> Another thought about the drm_mode_solid_fill uABI. I still think we
-> should add alpha here. The reason is the following:
->
-> It is true that we have  drm_plane_state::alpha and the plane's
-> "alpha" property. However it is documented as "the plane-wide opacity
-> [...] It can be combined with pixel alpha. The pixel values in the
-> framebuffers are expected to not be pre-multiplied by the global alpha
-> associated to the plane.".
->
-> I can imagine a use case, when a user might want to enable plane-wide
-> opacity, set "pixel blend mode" to "Coverage" and then switch between
-> partially opaque framebuffer and partially opaque solid-fill without
-> touching the plane's alpha value.
+On Thu, Aug 03, 2023 at 07:35:18AM -0700, Trilok Soni wrote:
+> On 8/3/2023 12:06 AM, Souradeep Chowdhury wrote:
+> > 
+> > 
+> > On 6/28/2023 3:53 PM, Souradeep Chowdhury wrote:
+> 
+> ...
+> 
+> > > 
+> > > https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
+> > > 
+> > > Changes in v25
+> > > 
+> > > * Updated the documentation of the structure dcc_config_entry as per
+> > > the comments in V23
+> > > * Updated the documentation of the dcc Kconfig definition as per
+> > > comment in V24
+> > > * Used u64 where applicable
+> > > * Removed the mutex locks where it is not needed
+> > > * Removed the use of unlikely keyword
+> > > * Renamed "nr_link_list" to "max_link_list"
+> > > 
+> > > Souradeep Chowdhury (3):
+> > >    dt-bindings: misc: qcom,dcc: Add the dtschema
+> > >    misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+> > >    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+> > >      support
+> > > 
+> > >   Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
+> > >   .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
+> > >   MAINTAINERS                                   |    8 +
+> > >   drivers/misc/Kconfig                          |    8 +
+> > >   drivers/misc/Makefile                         |    1 +
+> > >   drivers/misc/qcom-dcc.c                       | 1312 +++++++++++++++++
+> > >   6 files changed, 1378 insertions(+), 5 deletions(-)
+> > >   create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+> > >   create mode 100644 drivers/misc/qcom-dcc.c
+> > 
+> > Gentle Ping
+> 
+> Thank you for the reminder Souradeep. Greg and others, please see if we need
+> any changes here or it can be picked up?
 
-The only reason I see against this is that there might be some
-hardware which supports only RGB but not alpha on planes and they
-could then not use this property. Maybe another COLOR_FILL enum value
-with alpha might be better? Maybe just doing the alpha via the alpha
-property is good enough.
+It would help if the code would actually build:
 
->
-> --
-> With best wishes
-> Dmitry
->
+drivers/misc/qcom-dcc.c: In function ‘ready_read’:
+drivers/misc/qcom-dcc.c:853:13: error: unused variable ‘ret’ [-Werror=unused-variable]
+  853 |         int ret = 0;
+      |             ^~~
 
+{sigh}
+
+How in the world was this ever tested?
+
+greg k-h
