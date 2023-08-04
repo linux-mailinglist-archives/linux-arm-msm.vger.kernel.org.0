@@ -2,166 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9247476FD44
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:29:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEC3876FDD1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:52:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230367AbjHDJ3Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 05:29:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40468 "EHLO
+        id S229483AbjHDJwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 05:52:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230362AbjHDJ3X (ORCPT
+        with ESMTP id S230505AbjHDJwM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 05:29:23 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056F649D8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:29:20 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b9a2033978so29763911fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:29:20 -0700 (PDT)
+        Fri, 4 Aug 2023 05:52:12 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E01A9
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:52:11 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1bb775625e2so13508575ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691141359; x=1691746159;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dnn3YjqK0gYS2d3cBmIF54I2GW/nHeks1WnBWbPsCqA=;
-        b=LSoxPSq6PqUSUyUwQor3UO7ej1NFQ1w4NXKg0U9UgkTQuNs7Wc5AVke2/McAMrWT+4
-         /DtkaJ4zVQshHs/utXvU0hppM4B988NMvyyIH3sk1n0Vq4mrLnt8dQ4oa8goPba7vExa
-         vx2slalXu7r2P1NFZ2LlJ1BDujQihTqO19ZhgRyF1Vb6ZVovAFIEI6Ujb6w+vQBiKb2Z
-         urt5JNTo3bq83k1jYouWXynVOT80QpAKIYfO4qigVB7bRH8siqUZLzd3wXljoqbGC3R7
-         aL43JH45KlCDdUmPkbCb2oNJ4Ea3wLh1ubtIOAj/QGX/sNXtlNGZd5JADjXRL/Thgpe9
-         23CQ==
+        d=gmail.com; s=20221208; t=1691142730; x=1691747530;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ztEtGsHv8LUsy3rYuXtTs4zJ+h/bmJ//A4c7nlgI5hw=;
+        b=DF4vOh9oYjsGO5mn6q0HtK0qqUgf67d94y1xNpqbMUE5/ZlvETU4qywX2jSiq2IJdb
+         x0xvfCu3TwzjRUiH25JAogM+QJZ2hrT/p4NUXShuFTwm1OqqCAMaGeo3OC2+kbMrdDyN
+         tzjgB/w51/f13PYfMIIKiHNDfp7DWSsFnKhN1CcFWUsjkjjS5SSSTUwixiIu83+jqcao
+         vfP4bAGcC1xaw0ENAnJGRDfD8Wa8DFq4Ga22c2T0M6Dmy64N1NlrK+BhXPAemHj2j7rP
+         6uS9t+eEqAO4qqLpYoVNkAtr1O7whwMHAUXwNFKXcC3/YIvRJN5o5tiEJ62Om8aphw8/
+         udVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691141359; x=1691746159;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1691142730; x=1691747530;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Dnn3YjqK0gYS2d3cBmIF54I2GW/nHeks1WnBWbPsCqA=;
-        b=FGz+Xz3stSfMkn6vPXpSF/A2dTSMdSy/R0Xr5dl7WG+cBO/8ycp15Flzr2cQKn2yJp
-         PyxzNLxo7KOWJfaRePvZUxKKAXm/ahMfsvjuQ5+nU2HK4g8TQNDqXx+/gTBs9DiVDg7u
-         VYoNcuvET2R2S2eW4vJwvfKVB5hI8XUmbpc3tlXOYooWZinv474DbxV90gbAzmUWU5KX
-         LluUitnqqtVMVccvaDkKVpE/OWXoEsUMftTsfcVlbZB0SPhl5UNbbdBuQmctD88g1Tij
-         4W1m/pD1MxId7tTujL+NdXim1ZKPLXzhyO6OQ/o9KU1XfVuvYUgYnkG5/4b2ecUzEilr
-         2zoQ==
-X-Gm-Message-State: AOJu0YyuixcGcxr36X+XKyYdZcvlCwqYmlTHwOsIDzxhqc4UWR65oLzd
-        7UCLVYw2XVonWEPpU7aKDM9Ejw==
-X-Google-Smtp-Source: AGHT+IEHiVe4K3MqLOjm+DVCGQ3jTlV9XKFXZSedQKFKvv1j9d815up6QRwY2QCphNtBD8WAdX0iUw==
-X-Received: by 2002:a05:651c:102a:b0:2b6:fc60:776f with SMTP id w10-20020a05651c102a00b002b6fc60776fmr972258ljm.30.1691141359043;
-        Fri, 04 Aug 2023 02:29:19 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id b13-20020a05600c11cd00b003fba6709c68sm1877070wmi.47.2023.08.04.02.29.17
+        bh=ztEtGsHv8LUsy3rYuXtTs4zJ+h/bmJ//A4c7nlgI5hw=;
+        b=b2qycp6jiBkO6xUn2aPQedXGe/mhtFtNoiSY6NaGY26QKKvf6RRocDKGsw8ZjXqlMY
+         3ABTu43z3ij2m75XUPH80pIcy2G3WEe4436/3JoU1YetbuzOxuO+cXfMt7kUux4eO9Oc
+         yfMp4RlFuqor0BiqXd/WDzH3wlw7mRZBAw0lqwN3l+m5iowE2Sq4OP81atoHl0Im2XJY
+         OlIQYB/HCOYVjxhjOxxxZ0horUd42Knj+skcphCFJOsBDesJuWSAkWJwOflUFjkHU7nH
+         gOpq7tr/zZctTCFNQYyXvk9T+vUCXQIaF98WVHSCAZFOjsMDCGboxNVXRMrVHukM5GSS
+         hPuw==
+X-Gm-Message-State: AOJu0YzOGXsH41KTo6+8lRlM3/jAmmggUldH5zJUPYNQHLnKoNqMwZwh
+        S9PwcfTTqbWYE+XFINOEO+I=
+X-Google-Smtp-Source: AGHT+IE/WipBRcaU+FY6R8C3CdC0fD2YKmltWH+7ElgTn4fIfxyJjtfY+77F/BZaTL1oP+sWFDhhCw==
+X-Received: by 2002:a17:902:f54b:b0:1bc:4df5:8bfe with SMTP id h11-20020a170902f54b00b001bc4df58bfemr1768138plf.20.1691142730365;
+        Fri, 04 Aug 2023 02:52:10 -0700 (PDT)
+Received: from ThinkStation-P340.tmt.telital.com ([2a01:7d0:4800:7:ed2b:eb02:183:4c01])
+        by smtp.gmail.com with ESMTPSA id ja4-20020a170902efc400b001b8013ed362sm1344866plb.96.2023.08.04.02.52.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 02:29:18 -0700 (PDT)
-Date:   Fri, 4 Aug 2023 12:29:15 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     oe-kbuild@lists.linux.dev, Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        Rob Clark <robdclark@chromium.org>,
-        Len Brown <len.brown@intel.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 4/9] PM / QoS: Decouple request alloc from
- dev_pm_qos_mtx
-Message-ID: <1085ed08-ac8f-4847-b232-0dcea6a61d77@kadam.mountain>
+        Fri, 04 Aug 2023 02:52:08 -0700 (PDT)
+From:   Daniele Palmas <dnlplm@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Daniele Palmas <dnlplm@gmail.com>
+Subject: [PATCH 1/1] bus: mhi: host: pci_generic: add support for Telit FE990
+Date:   Fri,  4 Aug 2023 11:40:39 +0200
+Message-Id: <20230804094039.365102-1-dnlplm@gmail.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230803220202.78036-5-robdclark@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
+        HK_RANDOM_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Add support for Telit FE990 that has the same configuration than FN990:
 
-kernel test robot noticed the following build warnings:
+$ lspci -vv
+04:00.0 Unassigned class [ff00]: Qualcomm Device 0308
+    Subsystem: Device 1c5d:2015
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Rob-Clark/PM-devfreq-Drop-unneed-locking-to-appease-lockdep/20230804-060505
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230803220202.78036-5-robdclark%40gmail.com
-patch subject: [PATCH v3 4/9] PM / QoS: Decouple request alloc from dev_pm_qos_mtx
-config: i386-randconfig-m021-20230730 (https://download.01.org/0day-ci/archive/20230804/202308041725.Npwswh0L-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20230804/202308041725.Npwswh0L-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202308041725.Npwswh0L-lkp@intel.com/
-
-smatch warnings:
-drivers/base/power/qos.c:973 dev_pm_qos_update_user_latency_tolerance() warn: possible memory leak of 'req'
-
-vim +/req +973 drivers/base/power/qos.c
-
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  923  int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  924  {
-b5ac35ff4296f7 Rob Clark         2023-08-03  925  	struct dev_pm_qos_request *req = NULL;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  926  	int ret;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  927  
-211fb32e3a0547 Rob Clark         2023-08-03  928  	ret = dev_pm_qos_constraints_ensure_allocated(dev);
-211fb32e3a0547 Rob Clark         2023-08-03  929  	if (ret)
-211fb32e3a0547 Rob Clark         2023-08-03  930  		return ret;
-211fb32e3a0547 Rob Clark         2023-08-03  931  
-b5ac35ff4296f7 Rob Clark         2023-08-03  932  	if (!dev->power.qos->latency_tolerance_req)
-b5ac35ff4296f7 Rob Clark         2023-08-03  933  		req = kzalloc(sizeof(*req), GFP_KERNEL);
-b5ac35ff4296f7 Rob Clark         2023-08-03  934  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  935  	mutex_lock(&dev_pm_qos_mtx);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  936  
-211fb32e3a0547 Rob Clark         2023-08-03  937  	if (!dev->power.qos->latency_tolerance_req) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  938  		if (val < 0) {
-80a6f7c79b7822 Andrew Lutomirski 2016-11-29  939  			if (val == PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT)
-80a6f7c79b7822 Andrew Lutomirski 2016-11-29  940  				ret = 0;
-80a6f7c79b7822 Andrew Lutomirski 2016-11-29  941  			else
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  942  				ret = -EINVAL;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  943  			goto out;
-
-kfree(req);?
-
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  944  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  945  		if (!req) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  946  			ret = -ENOMEM;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  947  			goto out;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  948  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  949  		ret = __dev_pm_qos_add_request(dev, req, DEV_PM_QOS_LATENCY_TOLERANCE, val);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  950  		if (ret < 0) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  951  			kfree(req);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  952  			goto out;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  953  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  954  		dev->power.qos->latency_tolerance_req = req;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  955  	} else {
-b5ac35ff4296f7 Rob Clark         2023-08-03  956  		/*
-b5ac35ff4296f7 Rob Clark         2023-08-03  957  		 * If we raced with another thread to allocate the request,
-b5ac35ff4296f7 Rob Clark         2023-08-03  958  		 * simply free the redundant allocation and move on.
-b5ac35ff4296f7 Rob Clark         2023-08-03  959  		 */
-b5ac35ff4296f7 Rob Clark         2023-08-03  960  		if (req)
-b5ac35ff4296f7 Rob Clark         2023-08-03  961  			kfree(req);
-b5ac35ff4296f7 Rob Clark         2023-08-03  962  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  963  		if (val < 0) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  964  			__dev_pm_qos_drop_user_request(dev, DEV_PM_QOS_LATENCY_TOLERANCE);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  965  			ret = 0;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  966  		} else {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  967  			ret = __dev_pm_qos_update_request(dev->power.qos->latency_tolerance_req, val);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  968  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  969  	}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  970  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  971   out:
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  972  	mutex_unlock(&dev_pm_qos_mtx);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11 @973  	return ret;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  974  }
-
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index fcd80bc92978..676f3ae33ae9 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -595,6 +595,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FN990 */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
++	/* Telit FE990, same configuration than FN990 */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.37.1
 
