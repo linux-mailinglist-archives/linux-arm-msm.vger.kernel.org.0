@@ -2,164 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCBF976FDA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:43:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6825276FDCA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:48:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbjHDJna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 05:43:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48604 "EHLO
+        id S231201AbjHDJsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 05:48:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230527AbjHDJn3 (ORCPT
+        with ESMTP id S229483AbjHDJsI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 05:43:29 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2406530F8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:43:27 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9923833737eso261932766b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:43:27 -0700 (PDT)
+        Fri, 4 Aug 2023 05:48:08 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A88127
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:48:07 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9f48b6796so28534571fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691142205; x=1691747005;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1eXbT/KalONwMKPKZfZFiDNuA7l+qr3D7lfU+28kCBQ=;
-        b=tMxDCZWY4gGhkYmTyR60h5DpxZNyiNEUht4LfLAAdA11c0Kqdw3ikJKKMIyM896WAt
-         gDMhvRVATOEUC5X/iVQRbktG4S9VmMu3Bi9mN08wC9qnclDiiwdJWl+Wi+qPPlCH8xgl
-         HEm4PDd9L4OfgCxWsotTw2FhEcWsz/i4dO4C3Rh/z6mZuNW0G4pCALsb19iNHwvuZCnk
-         KfDIUzh5b7jXddXqr7bTXpzCg3MMTe27rZvrEBqZrIEyK5c9VHWxa8yguOIbQg4bFtIG
-         lFY2dZXiwIoP45xY5V2dnJb7/0MofSxb838NMEldTDg9Aa0fNmak4J/mbo+VRtocfJoW
-         PBdA==
+        d=linaro.org; s=google; t=1691142486; x=1691747286;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ia7ixFWhmmaN0o7SC42Vjj/tmV60762EI0Hz3GNAHW8=;
+        b=hNE792IZkYahHM15H25k7VCHg9L338Ls2XiVE1JZvlbICnqcAMQzIIoIu/pxeqqvGH
+         NC1LLLpw8HIdYhoyIIoP9M3cDsaNfm60mFQ2ELWcdiUxP4H3HrFSVj/jX6t81AxyS88X
+         uOrn3rQPaK5fnDoGuvl+iub52NEj6drd59MR+Fxljs17Yk0SKnG8iued9fJs+08YZy+j
+         j2th4ttvgSU8umJ4L3QUFiaPkFhpusn6jyry5QNpnGZdXIj8m7wp5XcFarFgcxouJbcl
+         22XHe9uaZxwJfO8z3Lfee/DCP6zkGj7h0JKN9Qfp0StFSLiAasObwhQvUdtDdoo/IA46
+         FX8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691142205; x=1691747005;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1eXbT/KalONwMKPKZfZFiDNuA7l+qr3D7lfU+28kCBQ=;
-        b=MGchis2ZUePN5V07EdkizrkqPnMlaqW8/IewYRLxbsT9LQTdW7SJhUTI/Wc2oAinKV
-         atsT/1tpt8ATDc5rtQVsL/6hAaeNWcoPtP6bJ+TiVtl7Kv3lbOmHyDtXFyjOh5SuM4MZ
-         6HT0x6u57oDLjCqlu3De9J1zJPL0aMv+BahRjx4QnHtilD5N+gxFWY37icgsC1SC5c+L
-         316FhQWbbglRixE69rA9Qaxn5EnkpyokIV4z+uBm4VZqezZc5uBV1Xz8QWYAlIM8i3Gp
-         RCVqev0hROteKFOj4AMOlnO8K/OO55bWQUfMsdPHzIXEFGCP5UL64aDTBzZEyJRX+MUK
-         YnwQ==
-X-Gm-Message-State: AOJu0YxcfOznHmsqcSaj0pU9an6v+hWdSbP1WsYjanqnB9xVT2Ka0ASG
-        ap/1D7l4/A5SLRLMM+KgWwuISw==
-X-Google-Smtp-Source: AGHT+IGC9mA7LPO2N64IIl+Xk6+A/e9ohIrzJGE8pgrJFcZhD7dVNL2lN7+hweJBbOWw01HxcF6Slg==
-X-Received: by 2002:a17:906:28a:b0:99b:d178:f051 with SMTP id 10-20020a170906028a00b0099bd178f051mr893587ejf.64.1691142205545;
-        Fri, 04 Aug 2023 02:43:25 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.245])
-        by smtp.gmail.com with ESMTPSA id gs10-20020a170906f18a00b0097404f4a124sm1059389ejb.2.2023.08.04.02.43.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Aug 2023 02:43:25 -0700 (PDT)
-Message-ID: <b16b0fa5-d2ce-dca0-9074-f2e04fe533dc@linaro.org>
-Date:   Fri, 4 Aug 2023 11:43:23 +0200
+        d=1e100.net; s=20221208; t=1691142486; x=1691747286;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ia7ixFWhmmaN0o7SC42Vjj/tmV60762EI0Hz3GNAHW8=;
+        b=Skz5H0fs5/yLU0J/lLn8JdWffpXFa/NxB29EC7EK7uMyAjxhV1tppbKavDZtKdyBMa
+         f0wcP3MD0ej09sCbz5jfhDq+PvVJFNriA5vG51hSuZWm3Jsrh7Ikl23kKrAb45P1fhIX
+         2HkeAv3D2lPEyfmj/YI2fZ+xeN8r4tNxNa46wZ5QmYMqrDOjwstQNFeQfOiw6QMoZCHC
+         MigMmM/vU7821rcMgFeVkTuQbzBCsb3fzZnCF6qYbC3zHc6u+vomEU21HMBjNhy9NGvP
+         w8pqO+dFIl5usHzYFCvysE3R7mon2nRChO0XOVEJ5QMRfYPRlwi7tHhUKZDlGvBkMHYp
+         4Q5Q==
+X-Gm-Message-State: AOJu0Yw/pXj9sfdb6dny7R9mTeK4NECTLjsRZOT3MODnj052niWfX4Rg
+        nNnHqV9+OjGXdT88VTwIJn94eg==
+X-Google-Smtp-Source: AGHT+IFFYyMhY/dwT3vckRQ4+nd0tP7F/nqRCzwAkUASSgIB7U7IV8MP40hPgycRnIa+74Q4HnzxzQ==
+X-Received: by 2002:a2e:b0c6:0:b0:2b9:ea6b:64b with SMTP id g6-20020a2eb0c6000000b002b9ea6b064bmr1092055ljl.37.1691142485789;
+        Fri, 04 Aug 2023 02:48:05 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id y3-20020a2e3203000000b002b9de06f119sm364670ljy.67.2023.08.04.02.48.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Aug 2023 02:48:05 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH] drm/msm/dpu: initialise clk_rate to 0 in _dpu_core_perf_get_core_clk_rate
+Date:   Fri,  4 Aug 2023 12:48:04 +0300
+Message-Id: <20230804094804.36053-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH V1] arm64: dts: qcom: sa8775p-ride: Remove min and max
- voltages for L8A
-Content-Language: en-US
-To:     "Naveen Kumar Goud Arepalli (QUIC)" <quic_narepall@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>
-Cc:     "Nitin Rawat (QUIC)" <quic_nitirawa@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "krzysztof.kozlowski+dt@linaro.org" 
-        <krzysztof.kozlowski+dt@linaro.org>,
-        "conor+dt@kernel.org" <conor+dt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20230725100007.14775-1-quic_narepall@quicinc.com>
- <a3l7356miuuapf5dakgfchdjmxjp62ynvle4ta3hejd3tjvzd4@e2t2zm6jh7hb>
- <516a54da44724001895f7e50634ad884@quicinc.com>
- <33232e22-1014-2670-47f6-712b0acc929d@linaro.org>
- <78e6233799f54428b6601896b8bd7b5c@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <78e6233799f54428b6601896b8bd7b5c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/08/2023 10:04, Naveen Kumar Goud Arepalli (QUIC) wrote:
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->>> b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->>> index ed76680410b4..6f3891a09e59 100644
->>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
->>> @@ -98,8 +98,6 @@
->>>  
->>>  		vreg_l8a: ldo8 {
->>>  			regulator-name = "vreg_l8a";
->>> -			regulator-min-microvolt = <2504000>;
->>> -			regulator-max-microvolt = <3300000>;
->>>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->>>  			regulator-allow-set-load;
->>>  			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
->>> --
->>> 2.17.1
->>>
->>
->> Reviewing with very little expertise in the area....
->> A few questions below that would help me understand this a bit better.
->>
->> Does it make sense to *not* set the range of the regulator at all?:
->>>>> Yes, we are removing the range of the regulator.
->>
->>     1. A board dts knows its UFS device
->>     2. Is UFS backwards compatible with respect to UFS2/UFS3?
->>        I don't know how the version is determined, but if it's a
->>        "start at UFS2, go to UFS3" should it be scaled as that goes?
->>        >>>> For a UFS device 3.x, we cannot start as UFS 2.0. vcc has to be as per UFS 3.x recommendations.
->>
->> Relying on the bootloader to set up the device before the kernel 
->> starts seems like a direction that should be actively avoided instead 
->> of depended on in my opinion.
-> 
-> I have trouble finding which part is your reply and which is quote of Andrew. Please reconfigure your mail client.
+When removing the core perf tune overrides, I also occasionaly removed the
+initialisation of the clk_rate variable. Initialise it to 0 to let max()
+correctly calculate the maximum of requested clock rates.
 
-Who said this? Me or you? I am pretty sure I *said this*.
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 6a4bc73915af ("drm/msm/dpu: drop separate dpu_core_perf_tune overrides")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Not only you pasted it as your reply, but you also re-wrapped lines.
-
-That's not how email communication works outside of corporate structure.
-Please, don't bring Outlook style to our lives...
-
-> 
->>>>>> As per upstream UFS driver,  voltage voting is not there and we vote only for enable/disable . 
->> Since UFS is the only client in Linux for this rail (L8A ), we don't 
->> need min and max range to support UFS 2.x and 3.x cards.
-> 
-> I would assume some reasonable range is always desired. Why it cannot be the wider range from both? 2.4 - 3.6?
-
-Again - who said that? I am 100% sure that me, not you.
-
-> 
-> Wider range cannot be mentioned in DT, For UFS 2.x range is 2.7 V to 3.6 V and for UFS 3.x range is 2.4V to 2.7V.
-> Giving the wider range will not set the correct voltage.
-
-So is this your reply?
-
-I don't see a problem in wider range...
-
-> 
-> For example: 
-> If the range is mentioned as 2.4V to 3.6V in DT and we have connected UFS 2.x device,  Since UFS driver is voting only for
-> regulator_enable(voltage is not being set) the voltage will be 2.4V(min voltage) from pmic driver which is wrong voltage for
-> UFS 2.x devices, which is violation of spec.
-
-So what is your solution? Remove constraints? Then who configures them?
-You rely on bootloader which is not what we want.
-
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 0b54a659a940..e843e5f3b3dd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -289,6 +289,7 @@ static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+ 	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM)
+ 		return kms->perf.max_core_clk_rate;
+ 
++	clk_rate = 0;
+ 	drm_for_each_crtc(crtc, kms->dev) {
+ 		if (crtc->enabled) {
+ 			dpu_cstate = to_dpu_crtc_state(crtc->state);
+-- 
+2.39.2
 
