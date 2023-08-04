@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A367E770A57
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 23:04:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4553770A65
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 23:05:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230051AbjHDVEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 17:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
+        id S230127AbjHDVFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 17:05:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjHDVEx (ORCPT
+        with ESMTP id S230339AbjHDVFi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 17:04:53 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62772524D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 14:04:19 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fb4146e8fcso15564545e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 14:04:19 -0700 (PDT)
+        Fri, 4 Aug 2023 17:05:38 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BBE25596
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 14:05:12 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fe4cdb72b9so5096755e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 14:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691183057; x=1691787857;
+        d=linaro.org; s=google; t=1691183111; x=1691787911;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qj00refZhLuErTSKNSGUW/qZ75TMCYbmVyutlgVJHgQ=;
-        b=MO4H8yS+K+Xm2FffRCOiWPEJvYNH7Yf7+h3x+U9xYZzfFgMmpZUQjWTjHfVrozc7h/
-         r1kIzVT+FkUPql+u9EMpPdrjjCTYY50SCKB075W4lYtmEMBBON6Mwe1fweQqDzZFhQKs
-         TZLIqkK3tgJASIB/1nKvF4hVv68QZ2OHtPtMKeseCJa2IOV7/dsH0rXH/FGlxYGVpAwB
-         B7TzAF8GYgSCieLZwqMmc5pGKF0wh96lIx4r/RpmDlZQgNaggzYGFNi/jB+ngNy2WXGp
-         Zub3xDQbXD1LD2ZyCJ6NJ60UoLo8DKr/C7lBZLwJphAv6FfM3pm37PCChO9Fo+kRigSu
-         wf1Q==
+        bh=3tY2x5jOA5MdZIZQOU+BSDgMhCiPCQJMMt53eXPrT6A=;
+        b=ToYJOdJ5fj7DrMiQyzjHrRm8CPjZtUeDWLgCVQMEWcK2D7SHvzCTpvT+G3YXVFJzL0
+         PQqRKhfW+CTxP2e9x7tnro/ca9kFlHutp3C0KJ81cvc9Io2DQva9Nmtv0bjQwPvVWUeG
+         mRpa8udRCVui1Ng0juDV7Wp5ePMmaK5r0KYHEEteDixsLvf/IAclFd1C98D+SDgY+NtU
+         +b1bW3iwo1osF8yTZrK8t0CkVyJj5QcMCT85lTGhoB0f6unJ0MeqzTH65Q1uh2RU2NWt
+         4NIWyrx+cctBsmuiw2vutTcdq0faJu5MKLHYTHqgv6kIbjzUo9uLZDDvfPfUSipnJt2R
+         3Sxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691183057; x=1691787857;
+        d=1e100.net; s=20221208; t=1691183111; x=1691787911;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qj00refZhLuErTSKNSGUW/qZ75TMCYbmVyutlgVJHgQ=;
-        b=faCCNEb0mXa1DLV4C4bdob6dMCJ2YsvCK/YZvmxPCW0u/592muaB5Q4kk5qHMB/tgj
-         5ABJj7M7H+KjCZiRW8Ns7ysdna8rDcGDaqDlldBQGvwAIKge3aSvqwCTLhIr+g528c0Q
-         3+zsBsweAAZsW/cYid1qDNY9NrSD1pIKaBy5ADIestCYpHo8nJcru1+7iXP31aLQhyXP
-         y3v4is3zJmDIRdjum/w+bcuArAYM7rmAcRBcwaP4MIA4dGEhIn/XC4z8psdOmHV07fWV
-         c/ebnJn6V/zq31yOIV/pD9y+TIwOFq//yEbWdnV6bwPfjCN4JosSCnw9cSs8JuOzgNkd
-         ZflA==
-X-Gm-Message-State: AOJu0YySUxmgnXhTKu11tZe4IA7K0Rlq+DfqX6+P4hitx7+dezv8Jjf+
-        8H4tHNi7IGdL2vKFrrRo5/R0fA==
-X-Google-Smtp-Source: AGHT+IGyA0Q3+2Nb2ODfW2rz93zZN2wGnB+YRvJRjvFlRWp31BI5vk2MXcuURK8UbD0Ovp4v/kCKnw==
-X-Received: by 2002:a05:600c:2609:b0:3fb:416d:7324 with SMTP id h9-20020a05600c260900b003fb416d7324mr617463wma.6.1691183056759;
-        Fri, 04 Aug 2023 14:04:16 -0700 (PDT)
+        bh=3tY2x5jOA5MdZIZQOU+BSDgMhCiPCQJMMt53eXPrT6A=;
+        b=KvLZSf8ZSG20g7keI4eMCtHvzmwT4Vx/FdLYBloXc2166GiP5a3mkyvp8GonXoNjve
+         1M52CBfdWtcQzIWZgh2Hp9CtnOTEh63QTrOekAPtB7VeH0wQc4992dLcsSv5tTvpV2rK
+         7v7Fr17Fl9bokCK4smzONOvAhMuPOJk/JVEjeOnxA27u12H9t3EzUji3tNDwAMXXsVRU
+         5L91OdgdSy55Aghuo9L89ub05zdK89Ttqa4FMKDUenUhYodJv3g0xUbnF+IfWoEZ4BCh
+         ohmdU5XASqQcct+c0JTAQ9csZzjgYeiC/KelLv7UPBy2gCRJdtAjUdojQR8vfFGoHYUr
+         2ENw==
+X-Gm-Message-State: AOJu0YwGnvb909K290DFSqu7n69k1ZKyfozCyImHkTpTDzUo/dEiQwlZ
+        ks4z9hlS6MrxfcWObLQ9DfMtXw==
+X-Google-Smtp-Source: AGHT+IGhQzTlOvnyUH7z13hhyfjdj82sVmoev7p0mQju8BbwDFXwFx+c7okVHM5ncHB2MgwoXMueow==
+X-Received: by 2002:a5d:4e03:0:b0:314:3ad6:2327 with SMTP id p3-20020a5d4e03000000b003143ad62327mr2025995wrt.12.1691183110969;
+        Fri, 04 Aug 2023 14:05:10 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l22-20020a7bc456000000b003fc06169ab3sm7556830wmi.20.2023.08.04.14.04.15
+        by smtp.gmail.com with ESMTPSA id l12-20020adff48c000000b0030ada01ca78sm3372266wro.10.2023.08.04.14.05.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Aug 2023 14:04:16 -0700 (PDT)
-Message-ID: <78d2fd56-804d-827b-d074-b139cf62a498@linaro.org>
-Date:   Fri, 4 Aug 2023 22:04:15 +0100
+        Fri, 04 Aug 2023 14:05:10 -0700 (PDT)
+Message-ID: <9dc7d386-2922-0fb5-171f-1dd19505c092@linaro.org>
+Date:   Fri, 4 Aug 2023 22:05:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 4/6] media: platform: venus: Add optional LLCC path
+Subject: Re: [PATCH 2/6] media: venus: core: Remove trailing commas from of
+ match entries
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -72,15 +73,15 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-4-8c8bbe1983a5@linaro.org>
+ <20230731-topic-8280_venus-v1-2-8c8bbe1983a5@linaro.org>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230731-topic-8280_venus-v1-4-8c8bbe1983a5@linaro.org>
+In-Reply-To: <20230731-topic-8280_venus-v1-2-8c8bbe1983a5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,100 +89,41 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/08/2023 21:09, Konrad Dybcio wrote:
-> Some newer SoCs (such as SM8350) have a third interconnect path. Add
-> it and make it optional.
+> Even though it has zero effect on functionality, remove them for coherency
+> with other drivers.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/media/platform/qcom/venus/core.c       | 19 +++++++++++++++++++
->   drivers/media/platform/qcom/venus/core.h       |  3 +++
->   drivers/media/platform/qcom/venus/pm_helpers.c |  3 +++
->   3 files changed, 25 insertions(+)
+>   drivers/media/platform/qcom/venus/core.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
 > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 0af45faec247..db363061748f 100644
+> index 3cc38881d4f6..0af45faec247 100644
 > --- a/drivers/media/platform/qcom/venus/core.c
 > +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -302,6 +302,15 @@ static int venus_probe(struct platform_device *pdev)
->   	if (IS_ERR(core->cpucfg_path))
->   		return PTR_ERR(core->cpucfg_path);
+> @@ -884,14 +884,14 @@ static const struct venus_resources sc7280_res = {
+>   };
 >   
-> +	core->llcc_path = devm_of_icc_get(dev, "video-llcc");
-> +	if (IS_ERR(core->llcc_path)) {
-> +		/* LLCC path is optional */
-> +		if (PTR_ERR(core->llcc_path) == -ENODATA)
-> +			core->llcc_path = NULL;
-> +		else
-> +			return PTR_ERR(core->llcc_path);
-> +	}
-> +
->   	core->irq = platform_get_irq(pdev, 0);
->   	if (core->irq < 0)
->   		return core->irq;
-> @@ -479,12 +488,18 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
->   	if (ret)
->   		goto err_cpucfg_path;
->   
-> +	ret = icc_set_bw(core->llcc_path, 0, 0);
-> +	if (ret)
-> +		goto err_llcc_path;
-> +
->   	ret = icc_set_bw(core->video_path, 0, 0);
->   	if (ret)
->   		goto err_video_path;
->   
->   	return ret;
->   
-> +err_llcc_path:
-> +	icc_set_bw(core->video_path, kbps_to_icc(20000), 0);
->   err_video_path:
->   	icc_set_bw(core->cpucfg_path, kbps_to_icc(1000), 0);
->   err_cpucfg_path:
-> @@ -504,6 +519,10 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
->   	if (ret)
->   		return ret;
->   
-> +	ret = icc_set_bw(core->llcc_path, kbps_to_icc(20000), 0);
-> +	if (ret)
-> +		return ret;
-> +
+>   static const struct of_device_id venus_dt_match[] = {
+> -	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+> -	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+> -	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+> -	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+> -	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+> -	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res, },
+> -	{ .compatible = "qcom,sc7280-venus", .data = &sc7280_res, },
+> -	{ .compatible = "qcom,sm8250-venus", .data = &sm8250_res, },
+> +	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res },
+> +	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res },
+> +	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res },
+> +	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res },
+> +	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2 },
+> +	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res },
+> +	{ .compatible = "qcom,sc7280-venus", .data = &sc7280_res },
+> +	{ .compatible = "qcom,sm8250-venus", .data = &sm8250_res },
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, venus_dt_match);
 
-I would scream if someone left me this comment but...
 
-In probe we have
-
-video_path =
-cpu_cfgpath =
-
-llc_path =
-
-suspend
-
-icc_set_bw(cpu_cfgpath,);
-icc_set_bw(llc_path,);
-icc_set_bw(video_path,);
-
-resume
-icc_set_bw(video_path,);
-icc_set_bw(llc_path,);
-icc_set_bw(cpu_cfgpath,);
-
-it would be nice to have probe match the ordering ...
-
->   	ret = icc_set_bw(core->cpucfg_path, kbps_to_icc(1000), 0);
->   	if (ret)
->   		return ret;
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 2999c24392f5..45ed1551c2db 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -65,6 +65,7 @@ struct venus_resources {
->   	unsigned int bw_tbl_enc_size;
->   	const struct bw_tbl *bw_tbl_dec;
->   	unsigned int bw_tbl_dec_size;
-> +	bool has_llcc_path;
-
-Why do you need this bool, you can get for llc_path == NULL
-
----
-bod
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
