@@ -2,56 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF55077060E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 18:31:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17C97770645
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 18:49:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230295AbjHDQbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 12:31:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45726 "EHLO
+        id S230483AbjHDQtD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 12:49:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230297AbjHDQbX (ORCPT
+        with ESMTP id S229848AbjHDQtC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 12:31:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 288FF4C10;
-        Fri,  4 Aug 2023 09:31:19 -0700 (PDT)
+        Fri, 4 Aug 2023 12:49:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84C1E198B;
+        Fri,  4 Aug 2023 09:49:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 74C21620A7;
-        Fri,  4 Aug 2023 16:31:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE97C433CA;
-        Fri,  4 Aug 2023 16:31:15 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 237CF62086;
+        Fri,  4 Aug 2023 16:49:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B64BC433C7;
+        Fri,  4 Aug 2023 16:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691166677;
-        bh=jhplGazxUjW6Kin0V8iloOqTZLDJpCl1zEaHCyPA1fM=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=dLhqNsnSg4yY/9nwol2eZbD6+D9MExdUAVnK6eywfZwGbATOSzECNkUbkU6m102dD
-         L8sqC6Pl7aFvSrpx2iNtiZR79se8NCyOJLXJDSj0X6BneaMNDOUqYrH9go3QqpZgW4
-         FNddhvIIcdTxXW9o+FWts9XFbrg7+VHPsBJXSTcrzN6zZke+dSHg9j8B6suLZ1MMLF
-         Jf/M2/wBfWbLqZvKIoe4J9ML0pjYaDXQRaD8bO0G6tb4bVL7x/5UJ65VR4I2QMn7+/
-         2BtOE8OIHP6GfhevdMj1FP/5LwM/zw/EMLnUNug6u06iS9iTSrkbcZjAZ6zg40zZzr
-         EpvmfUxkeYKsg==
-Message-ID: <aba1b417-67ad-aec0-03ef-43da925c74da@kernel.org>
-Date:   Fri, 4 Aug 2023 19:31:11 +0300
-MIME-Version: 1.0
-Subject: Re: [PATCH v2 00/10] Fix up icc clock rate calculation on some
- platforms
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        s=k20201202; t=1691167740;
+        bh=lQCx9Dz9yMtIj1Oyu19SVTHVNDkjX0ALa4mVG6hzUYI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=W0NfLVmp5hsUaUKM6GPz934nSxdGx97smGiC+ITLAyEyXGIb+6nz65V1gDN8bai0g
+         kx9ZPaj+vqXSj7lNRk/Uly0NmRV4XU1mwCsoSiVCn0rh9enVoJ1DxwwIr8lXfo2hbZ
+         t/mjcHZTbBdkTcLpgk3eFrRi3EPyIAC9uOGZWXPxSXzFLtUf2iOF2ignNe4gbRGuEF
+         XGD/mfAjQ6ykpb9PA0TDYp3Yvx6Tsj14z22ecBbTYKXv1+07qbAXCDOmM4uhJRvIFG
+         TCKdgtTRtP+NshOspyzucj/zd4OfD402u/ZLajV5lRN5g5wRekCqGrJBQY1NdrTMaL
+         rx5GvJNKDAyOg==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qRxyz-0005Xp-0t;
+        Fri, 04 Aug 2023 18:48:58 +0200
+Date:   Fri, 4 Aug 2023 18:48:57 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, quic_okukatla@quicinc.com
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20230726-topic-icc_coeff-v2-0-8c91c6c76076@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/3] firmware: qcom_scm: Add support for Qualcomm
+ Secure Execution Environment SCM interface
+Message-ID: <ZM0r-ZrkWXBtNZJZ@hovoldconsulting.com>
+References: <20230730161906.606163-1-luzmaximilian@gmail.com>
+ <20230730161906.606163-3-luzmaximilian@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230730161906.606163-3-luzmaximilian@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -62,59 +68,200 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Sun, Jul 30, 2023 at 06:19:03PM +0200, Maximilian Luz wrote:
 
-On 31.07.23 13:52, Konrad Dybcio wrote:
-> Certain platforms require that some buses (or individual nodes) make
-> some additional changes to the clock rate formula, throwing in some
-> magic, Qualcomm-defined coefficients, to account for "inefficiencies".
+> @@ -0,0 +1,128 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * Driver for Qualcomm Secure Execution Environment (SEE) interface (QSEECOM).
+> + * Responsible for setting up and managing QSEECOM client devices.
+> + *
+> + * Copyright (C) 2023 Maximilian Luz <luzmaximilian@gmail.com>
+> + */
+> +#include <linux/auxiliary_bus.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/types.h>
 
-Maybe some links to the downstream code would help to better check and
-understand this. Adding also Odelu in case he has any comments on the
-patches.
+Looks like you're missing some includes like module.h and slab.h.
 
-Thanks,
-Georgi
+> +
+> +#include <linux/firmware/qcom/qcom_qseecom.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
 
-> Add the framework for it and utilize it on a couple SoCs.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes in v2:
-> - Use the (arguably less favourable but necessary for precission) 100/x
->    instead of x/100 for ib coefficient, update values in consequent
->    patches to reflect that
-> - Rename "_percent" to "_coeff" because of /\
-> - Add the necessary code to support per-node clocks
-> - Add the necessary code to support per-node coefficients
-> - Hook up the CPUSS<->GNoC clock on QCM2290
-> - Update EBI node on QCM2290
-> - Link to v1: https://lore.kernel.org/r/20230726-topic-icc_coeff-v1-0-31616960818c@linaro.org
-> 
-> ---
-> Konrad Dybcio (10):
->        interconnect: qcom: icc-rpm: Add AB/IB calculations coefficients
->        interconnect: qcom: icc-rpm: Separate out clock rate calulcations
->        interconnect: qcom: icc-rpm: Let nodes drive their own bus clock
->        interconnect: qcom: icc-rpm: Check for node-specific rate coefficients
->        interconnect: qcom: qcm2290: Hook up MAS_APPS_PROC's bus clock
->        interconnect: qcom: qcm2290: Set AB coefficients
->        interconnect: qcom: qcm2290: Update EBI channel configuration
->        interconnect: qcom: sdm660: Set AB/IB coefficients
->        interconnect: qcom: msm8996: Set AB/IB coefficients
->        clk: qcom: smd-rpm: Move CPUSS_GNoC clock to interconnect
-> 
->   drivers/clk/qcom/clk-smd-rpm.c             | 16 ++++--
->   drivers/interconnect/qcom/icc-rpm-clocks.c |  6 ++
->   drivers/interconnect/qcom/icc-rpm.c        | 92 ++++++++++++++++++++++++------
->   drivers/interconnect/qcom/icc-rpm.h        | 15 +++++
->   drivers/interconnect/qcom/msm8996.c        |  8 ++-
->   drivers/interconnect/qcom/qcm2290.c        |  9 ++-
->   drivers/interconnect/qcom/sdm660.c         |  4 ++
->   7 files changed, 124 insertions(+), 26 deletions(-)
-> ---
-> base-commit: ec89391563792edd11d138a853901bce76d11f44
-> change-id: 20230726-topic-icc_coeff-b053d5409b9f
-> 
-> Best regards,
+> +static void qseecom_client_release(struct device *dev)
+> +{
+> +	struct qseecom_client *client = container_of(dev, struct qseecom_client, aux_dev.dev);
 
+Nit: Perhaps you can separate declaration and initialisation here to
+stay within 80 columns.
+
+> +
+> +	kfree(client);
+> +}
+
+> +static int qcom_qseecom_remove(struct platform_device *qseecom_dev)
+> +{
+> +	return 0;	/* Nothing to do here, all is managed via devm. */
+> +}
+
+You should just drop this one (even if it serves as documentation).
+
+> +static struct platform_driver qcom_qseecom_driver = {
+> +	.driver = {
+> +		.name	= "qcom_qseecom",
+> +	},
+> +	.probe = qcom_qseecom_probe,
+> +	.remove = qcom_qseecom_remove,
+> +};
+> +
+> +static int __init qcom_qseecom_init(void)
+> +{
+> +	return platform_driver_register(&qcom_qseecom_driver);
+> +}
+> +subsys_initcall(qcom_qseecom_init);
+> +
+> +static void __exit qcom_qseecom_exit(void)
+> +{
+> +	platform_driver_unregister(&qcom_qseecom_driver);
+> +}
+> +module_exit(qcom_qseecom_exit);
+
+No need for this one either since this driver can only be built-in now.
+
+> +MODULE_AUTHOR("Maximilian Luz <luzmaximilian@gmail.com>");
+> +MODULE_DESCRIPTION("Driver for the Qualcomm SEE (QSEECOM) interface");
+> +MODULE_LICENSE("GPL");
+> +MODULE_ALIAS("platform:qcom_qseecom");
+
+No need for MODULE_ALIAS() either.
+
+> +static void qcom_scm_qseecom_free(void *data)
+> +{
+> +	struct platform_device *qseecom_dev = data;
+> +
+> +	platform_device_unregister(qseecom_dev);
+
+Perhaps use platform_device_del() and platform_device_put() for symmetry
+as you're not using platform_device_register() below.
+
+> +}
+> +
+> +static int qcom_scm_qseecom_init(struct qcom_scm *scm)
+> +{
+> +	struct platform_device *qseecom_dev;
+> +	u32 version;
+> +	int ret;
+> +
+> +	/*
+> +	 * Note: We do two steps of validation here: First, we try to query the
+> +	 * QSEECOM version as a check to see if the interface exists on this
+> +	 * device. Second, we check against known good devices due to current
+> +	 * driver limitations (see comment in qcom_scm_qseecom_allowlist).
+> +	 *
+> +	 * Note that we deliberately do the machine check after the version
+> +	 * check so that we can log potentially supported devices. This should
+> +	 * be safe as downstream sources indicate that the version query is
+> +	 * neither blocking nor reentrant.
+> +	 */
+> +	ret = qcom_scm_qseecom_get_version(&version);
+> +	if (ret)
+> +		return 0;
+> +
+> +	dev_info(scm->dev, "qseecom: found qseecom with version 0x%x\n", version);
+> +
+> +	if (!qcom_scm_qseecom_machine_is_allowed()) {
+> +		dev_info(scm->dev, "qseecom: untested device, skipping\n");
+
+untested "machine"?
+
+> +		return 0;
+> +	}
+> +
+> +	/*
+> +	 * Set up QSEECOM interface device. All application clients will be
+> +	 * set up and managed by the corresponding driver for it.
+> +	 */
+> +	qseecom_dev = platform_device_alloc("qcom_qseecom", -1);
+> +	if (!qseecom_dev)
+> +		return -ENOMEM;
+> +
+> +	qseecom_dev->dev.parent = scm->dev;
+> +
+> +	ret = platform_device_add(qseecom_dev);
+> +	if (ret) {
+> +		platform_device_put(qseecom_dev);
+> +		return ret;
+> +	}
+> +
+> +	return devm_add_action_or_reset(scm->dev, qcom_scm_qseecom_free, qseecom_dev);
+> +}
+> +
+> +#else /* CONFIG_QCOM_QSEECOM */
+> +
+> +static int qcom_scm_qseecom_init(struct qcom_scm *scm)
+> +{
+> +	return 0;
+> +}
+> +
+> +#endif /* CONFIG_QCOM_QSEECOM */
+> +
+>  /**
+>   * qcom_scm_is_available() - Checks if SCM is available
+>   */
+> @@ -1468,6 +1848,18 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  	if (download_mode)
+>  		qcom_scm_set_download_mode(true);
+>  
+> +	/*
+> +	 * Initialize the QSEECOM interface. Note: QSEECOM is fairly
+
+Nit: I'd add a line break and an empty line before the "Note:".
+
+> +	 * self-contained and this only adds the interface device (the driver
+> +	 * of which does most of the heavy lifting). So any errors returned
+> +	 * here should be either -ENOMEM or -EINVAL (with the latter only in
+> +	 * case there's a bug in our code). This means that there is no need to
+> +	 * bring down the whole SCM driver. Just log the error instead and let
+> +	 * SCM live.
+> +	 */
+> +	ret = qcom_scm_qseecom_init(scm);
+> +	WARN(ret < 0, "failed to initialize qseecom: %d", ret);
+
+Missing '\n'.
+
+> +
+>  	return 0;
+>  }
+>  
+  
+> +#ifdef CONFIG_QCOM_QSEECOM
+> +
+> +int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id);
+> +int qcom_scm_qseecom_app_send(u32 app_id, void *req, size_t req_size, void *rsp,
+> +			      size_t rsp_size);
+> +
+> +#else /* CONFIG_QCOM_QSEECOM */
+> +
+> +int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id)
+> +{
+> +	return -EINVAL;
+> +}
+> +
+> +int qcom_scm_qseecom_app_send(u32 app_id, void *req, size_t req_size, void *rsp,
+> +			      size_t rsp_size)
+> +{
+> +	return -EINVAL;
+> +}
+
+These should be static inline as you already noticed.
+
+> +
+> +#endif /* CONFIG_QCOM_QSEECOM */
+> +
+>  #endif
+
+With the above fixed you can add my
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
