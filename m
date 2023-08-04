@@ -2,106 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C369C770048
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 14:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30DD8770110
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 15:16:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbjHDMeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 08:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37204 "EHLO
+        id S230417AbjHDNQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 09:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbjHDMeI (ORCPT
+        with ESMTP id S230374AbjHDNQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 08:34:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E390046A8;
-        Fri,  4 Aug 2023 05:34:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7F80461FCA;
-        Fri,  4 Aug 2023 12:34:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F999C433C7;
-        Fri,  4 Aug 2023 12:34:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1691152446;
-        bh=yj/B0W9BcspXC2UxB03MQT0G1dUXs8vgKQRG94PPXP4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tHmB/A1JazuAuqvuw8nd8+A4pg3ietVaLE2vBI0KsIUqZkzCobJXIQeirVwdUlTTD
-         qaxvV8YnbuJG2FKIzZOE9kN3ueru18kto95MSLPvuh0edkmhmT9p008B28mv8d6cEL
-         N/9P5PF2iGKT3l2Gxux1i5NpOA8A85U8hqB+RmZs=
-Date:   Fri, 4 Aug 2023 14:34:03 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Guenter Roeck <linux@roeck-us.net>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] usb: typec: qcom-pmic-typec: enable DP support
-Message-ID: <2023080455-impeding-deplored-7058@gregkh>
-References: <20230728100857.471984-1-dmitry.baryshkov@linaro.org>
- <e4de7d39-978a-0996-1b03-8e7a6712b477@roeck-us.net>
- <CAA8EJproo0yv7Zo6T6fVNfvDVy7JrtMCmixHH73iaWbssehZbg@mail.gmail.com>
+        Fri, 4 Aug 2023 09:16:02 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BB605245
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 06:14:35 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d0548cf861aso2260836276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 06:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691154874; x=1691759674;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=D4FGrRKKqr6fNENlJ4HUuscXPUM5XRYzhDK7WNtt/9c=;
+        b=Mrg4Xr5v0lFTFocRyHHEc/zy5oeKvOxVeaf08lVJ7qOu9G25xP8Yl2opzmsjEGYjsW
+         0Om3zPnCCY0EABOYWclpfzyb+ZiGjyUErocqO/LbH1SMmdC1cHvm0nefne0a4NwzTe3o
+         ue082SJuCjExtQm7w3FilO5271WrroN8Tr/rEi0ohb4LtN6m69c3a2n96V8XNIyxBUx4
+         tlauYnDu6Qi2QCQrDTUpc4Zi2ML5ZWE3rse4yDzvKi8Bn7tARoEZpjPHp9q1TR1d3WoE
+         nkAXfDqMUV7FVUs6eeffv5TVKg9VO3vYmspm+FS25ZPGsZV5vLgpC6mPw4o9Th0llI1s
+         HipQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691154874; x=1691759674;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D4FGrRKKqr6fNENlJ4HUuscXPUM5XRYzhDK7WNtt/9c=;
+        b=auLugcKJRJ9zQyM2wWAE+4afoVg0jCOVIW0mY+xn6gFdS/J4qb44GPzNvj0iIyOekU
+         lCjnrGxdvVqty8YZrrh0532cc384usmZClD1J64kTfM+J9tAOeNR2V/ur5a4fbk6Utoj
+         EUpdTi+gJ2tNFZ7FEg62oHkieCWkmtrPt6ZMD43sh2+f+h0gM8ruNEuJax2w0m95KZdr
+         LJj2l9FgNlby7Wy/d2i+pCdMFrOJde/DLhB/NKNTxMBNQKhxeG+gEEZppPyPq6udYLUb
+         8orMrKZ2iIeYJDdQJzp0Ke9N0FBBa/zxB1/YHTA9aY4DDJrSLgz8A1/e4dXHA/HcPypP
+         /DDg==
+X-Gm-Message-State: AOJu0Yzv4Rbd2U53qFF5v1UxByiJZZOkjDAXpbpl+BrYmhRuwEQcQyEE
+        qt2+31GtpN32esT5A7wP4TjgBewJw80t5HJ4iLbapw==
+X-Google-Smtp-Source: AGHT+IG/YtX9++/di3aekXINcH9r4zmIZn1VPvqr+jVi9AWhqoV2uRrOWWP2zNSUOl6v7/OqmARiYdzthQYNo4Bm61c=
+X-Received: by 2002:a25:29c2:0:b0:c62:2320:2598 with SMTP id
+ p185-20020a2529c2000000b00c6223202598mr1173682ybp.62.1691154874341; Fri, 04
+ Aug 2023 06:14:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJproo0yv7Zo6T6fVNfvDVy7JrtMCmixHH73iaWbssehZbg@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230802-encoder-cleanup-v2-1-5bfdec0ce765@quicinc.com>
+In-Reply-To: <20230802-encoder-cleanup-v2-1-5bfdec0ce765@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 4 Aug 2023 16:14:23 +0300
+Message-ID: <CAA8EJpp6mijmo2A5xn2aG2PwsAh9mr0v3+ruDgoqLKTawme-xA@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dpu: Drop encoder vsync_event
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 28, 2023 at 01:19:36PM +0300, Dmitry Baryshkov wrote:
-> On Fri, 28 Jul 2023 at 13:14, Guenter Roeck <linux@roeck-us.net> wrote:
-> >
-> > On 7/28/23 03:08, Dmitry Baryshkov wrote:
-> > > To enable DisplayPort on the platforms supported by qcom-pmic-typec
-> > > driver, we need to register a corresponding drm_bridge for this device
-> > > to be able to receive the OOB hotplug event sent to the corresponding
-> > > DRM connector.
-> > >
-> > > Reception of the hotplug event is implemented by [1], but there is no
-> > > direct dependency on that patchset. This series implements the remaining
-> > > parts: registration of the drm_bridge and setting of the proper
-> > > destination for the OOB hotplug event.
-> > >
-> > > [1] https://patchwork.freedesktop.org/series/120393/
-> > >
-> > > Changes since v2:
-> > > - Reworded commit message for the first patch to explicitly mention that
-> > >    the "displayport" OF property was rejected (Bjorn)
-> > > - Removed several #ifdefs from the qcom-pmic-typec patch (Bryan, Konrad,
-> > >    Greg K-H)
-> > >
-> > > Changes since v1:
-> > > - Properly handle CONFIG_DRM dependency. Disallow building DRM as a
-> > >    module if qcom-pmic-typec driver is built-in (Bryan).
-> >
-> >   config TYPEC_QCOM_PMIC
-> >         tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
-> >         depends on ARCH_QCOM || COMPILE_TEST
-> > +       depends on DRM || DRM=n
-> >
-> > This disallows building TYPEC_QCOM_PMIC into the kernel if DRM is built
-> > as module, which is pretty much the opposite of what is claimed above.
-> > It does not affect DRM at all.
-> >
-> > Not that it matters much, but I find it confusing if the change log
-> > claims to do the opposite of what the code is doing.
-> 
-> Ack. If there is a v4 I'll fix the changelog to invert the condition.
+On Wed, 2 Aug 2023 at 20:01, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>
+> Drop vsync_event and vsync_event_work handlers as they are unnecessary.
+> In addition drop the dpu_enc_ktime_template event class as it will be
+> unused after the vsync_event handlers are dropped.
+>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+> Changes in v2:
+> - Dropped dpu_enc_early_kickoff event and dpu_enc_ktime_template event class
+> - Link to v1: https://lore.kernel.org/r/20230801-encoder-cleanup-v1-1-f9e37fe27997@quicinc.com
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 65 +----------------------------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h   | 23 ----------
+>  2 files changed, 1 insertion(+), 87 deletions(-)
 
-Please fix.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-thanks,
 
-greg k-h
+
+-- 
+With best wishes
+Dmitry
