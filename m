@@ -2,98 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC3876FDD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:52:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCBF976FDA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:43:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbjHDJwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 05:52:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51580 "EHLO
+        id S230267AbjHDJna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 05:43:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbjHDJwM (ORCPT
+        with ESMTP id S230527AbjHDJn3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 05:52:12 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E01A9
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:52:11 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1bb775625e2so13508575ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:52:11 -0700 (PDT)
+        Fri, 4 Aug 2023 05:43:29 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2406530F8
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:43:27 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9923833737eso261932766b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691142730; x=1691747530;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ztEtGsHv8LUsy3rYuXtTs4zJ+h/bmJ//A4c7nlgI5hw=;
-        b=DF4vOh9oYjsGO5mn6q0HtK0qqUgf67d94y1xNpqbMUE5/ZlvETU4qywX2jSiq2IJdb
-         x0xvfCu3TwzjRUiH25JAogM+QJZ2hrT/p4NUXShuFTwm1OqqCAMaGeo3OC2+kbMrdDyN
-         tzjgB/w51/f13PYfMIIKiHNDfp7DWSsFnKhN1CcFWUsjkjjS5SSSTUwixiIu83+jqcao
-         vfP4bAGcC1xaw0ENAnJGRDfD8Wa8DFq4Ga22c2T0M6Dmy64N1NlrK+BhXPAemHj2j7rP
-         6uS9t+eEqAO4qqLpYoVNkAtr1O7whwMHAUXwNFKXcC3/YIvRJN5o5tiEJ62Om8aphw8/
-         udVQ==
+        d=linaro.org; s=google; t=1691142205; x=1691747005;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1eXbT/KalONwMKPKZfZFiDNuA7l+qr3D7lfU+28kCBQ=;
+        b=tMxDCZWY4gGhkYmTyR60h5DpxZNyiNEUht4LfLAAdA11c0Kqdw3ikJKKMIyM896WAt
+         gDMhvRVATOEUC5X/iVQRbktG4S9VmMu3Bi9mN08wC9qnclDiiwdJWl+Wi+qPPlCH8xgl
+         HEm4PDd9L4OfgCxWsotTw2FhEcWsz/i4dO4C3Rh/z6mZuNW0G4pCALsb19iNHwvuZCnk
+         KfDIUzh5b7jXddXqr7bTXpzCg3MMTe27rZvrEBqZrIEyK5c9VHWxa8yguOIbQg4bFtIG
+         lFY2dZXiwIoP45xY5V2dnJb7/0MofSxb838NMEldTDg9Aa0fNmak4J/mbo+VRtocfJoW
+         PBdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691142730; x=1691747530;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ztEtGsHv8LUsy3rYuXtTs4zJ+h/bmJ//A4c7nlgI5hw=;
-        b=b2qycp6jiBkO6xUn2aPQedXGe/mhtFtNoiSY6NaGY26QKKvf6RRocDKGsw8ZjXqlMY
-         3ABTu43z3ij2m75XUPH80pIcy2G3WEe4436/3JoU1YetbuzOxuO+cXfMt7kUux4eO9Oc
-         yfMp4RlFuqor0BiqXd/WDzH3wlw7mRZBAw0lqwN3l+m5iowE2Sq4OP81atoHl0Im2XJY
-         OlIQYB/HCOYVjxhjOxxxZ0horUd42Knj+skcphCFJOsBDesJuWSAkWJwOflUFjkHU7nH
-         gOpq7tr/zZctTCFNQYyXvk9T+vUCXQIaF98WVHSCAZFOjsMDCGboxNVXRMrVHukM5GSS
-         hPuw==
-X-Gm-Message-State: AOJu0YzOGXsH41KTo6+8lRlM3/jAmmggUldH5zJUPYNQHLnKoNqMwZwh
-        S9PwcfTTqbWYE+XFINOEO+I=
-X-Google-Smtp-Source: AGHT+IE/WipBRcaU+FY6R8C3CdC0fD2YKmltWH+7ElgTn4fIfxyJjtfY+77F/BZaTL1oP+sWFDhhCw==
-X-Received: by 2002:a17:902:f54b:b0:1bc:4df5:8bfe with SMTP id h11-20020a170902f54b00b001bc4df58bfemr1768138plf.20.1691142730365;
-        Fri, 04 Aug 2023 02:52:10 -0700 (PDT)
-Received: from ThinkStation-P340.tmt.telital.com ([2a01:7d0:4800:7:ed2b:eb02:183:4c01])
-        by smtp.gmail.com with ESMTPSA id ja4-20020a170902efc400b001b8013ed362sm1344866plb.96.2023.08.04.02.52.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 02:52:08 -0700 (PDT)
-From:   Daniele Palmas <dnlplm@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        Daniele Palmas <dnlplm@gmail.com>
-Subject: [PATCH 1/1] bus: mhi: host: pci_generic: add support for Telit FE990
-Date:   Fri,  4 Aug 2023 11:40:39 +0200
-Message-Id: <20230804094039.365102-1-dnlplm@gmail.com>
-X-Mailer: git-send-email 2.37.1
+        d=1e100.net; s=20221208; t=1691142205; x=1691747005;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1eXbT/KalONwMKPKZfZFiDNuA7l+qr3D7lfU+28kCBQ=;
+        b=MGchis2ZUePN5V07EdkizrkqPnMlaqW8/IewYRLxbsT9LQTdW7SJhUTI/Wc2oAinKV
+         atsT/1tpt8ATDc5rtQVsL/6hAaeNWcoPtP6bJ+TiVtl7Kv3lbOmHyDtXFyjOh5SuM4MZ
+         6HT0x6u57oDLjCqlu3De9J1zJPL0aMv+BahRjx4QnHtilD5N+gxFWY37icgsC1SC5c+L
+         316FhQWbbglRixE69rA9Qaxn5EnkpyokIV4z+uBm4VZqezZc5uBV1Xz8QWYAlIM8i3Gp
+         RCVqev0hROteKFOj4AMOlnO8K/OO55bWQUfMsdPHzIXEFGCP5UL64aDTBzZEyJRX+MUK
+         YnwQ==
+X-Gm-Message-State: AOJu0YxcfOznHmsqcSaj0pU9an6v+hWdSbP1WsYjanqnB9xVT2Ka0ASG
+        ap/1D7l4/A5SLRLMM+KgWwuISw==
+X-Google-Smtp-Source: AGHT+IGC9mA7LPO2N64IIl+Xk6+A/e9ohIrzJGE8pgrJFcZhD7dVNL2lN7+hweJBbOWw01HxcF6Slg==
+X-Received: by 2002:a17:906:28a:b0:99b:d178:f051 with SMTP id 10-20020a170906028a00b0099bd178f051mr893587ejf.64.1691142205545;
+        Fri, 04 Aug 2023 02:43:25 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.245])
+        by smtp.gmail.com with ESMTPSA id gs10-20020a170906f18a00b0097404f4a124sm1059389ejb.2.2023.08.04.02.43.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Aug 2023 02:43:25 -0700 (PDT)
+Message-ID: <b16b0fa5-d2ce-dca0-9074-f2e04fe533dc@linaro.org>
+Date:   Fri, 4 Aug 2023 11:43:23 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
-        HK_RANDOM_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH V1] arm64: dts: qcom: sa8775p-ride: Remove min and max
+ voltages for L8A
+Content-Language: en-US
+To:     "Naveen Kumar Goud Arepalli (QUIC)" <quic_narepall@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>
+Cc:     "Nitin Rawat (QUIC)" <quic_nitirawa@quicinc.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "krzysztof.kozlowski+dt@linaro.org" 
+        <krzysztof.kozlowski+dt@linaro.org>,
+        "conor+dt@kernel.org" <conor+dt@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20230725100007.14775-1-quic_narepall@quicinc.com>
+ <a3l7356miuuapf5dakgfchdjmxjp62ynvle4ta3hejd3tjvzd4@e2t2zm6jh7hb>
+ <516a54da44724001895f7e50634ad884@quicinc.com>
+ <33232e22-1014-2670-47f6-712b0acc929d@linaro.org>
+ <78e6233799f54428b6601896b8bd7b5c@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <78e6233799f54428b6601896b8bd7b5c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for Telit FE990 that has the same configuration than FN990:
+On 04/08/2023 10:04, Naveen Kumar Goud Arepalli (QUIC) wrote:
+>>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>>> b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>>> index ed76680410b4..6f3891a09e59 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>>> @@ -98,8 +98,6 @@
+>>>  
+>>>  		vreg_l8a: ldo8 {
+>>>  			regulator-name = "vreg_l8a";
+>>> -			regulator-min-microvolt = <2504000>;
+>>> -			regulator-max-microvolt = <3300000>;
+>>>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>>  			regulator-allow-set-load;
+>>>  			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+>>> --
+>>> 2.17.1
+>>>
+>>
+>> Reviewing with very little expertise in the area....
+>> A few questions below that would help me understand this a bit better.
+>>
+>> Does it make sense to *not* set the range of the regulator at all?:
+>>>>> Yes, we are removing the range of the regulator.
+>>
+>>     1. A board dts knows its UFS device
+>>     2. Is UFS backwards compatible with respect to UFS2/UFS3?
+>>        I don't know how the version is determined, but if it's a
+>>        "start at UFS2, go to UFS3" should it be scaled as that goes?
+>>        >>>> For a UFS device 3.x, we cannot start as UFS 2.0. vcc has to be as per UFS 3.x recommendations.
+>>
+>> Relying on the bootloader to set up the device before the kernel 
+>> starts seems like a direction that should be actively avoided instead 
+>> of depended on in my opinion.
+> 
+> I have trouble finding which part is your reply and which is quote of Andrew. Please reconfigure your mail client.
 
-$ lspci -vv
-04:00.0 Unassigned class [ff00]: Qualcomm Device 0308
-    Subsystem: Device 1c5d:2015
+Who said this? Me or you? I am pretty sure I *said this*.
 
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
----
- drivers/bus/mhi/host/pci_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
+Not only you pasted it as your reply, but you also re-wrapped lines.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index fcd80bc92978..676f3ae33ae9 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -595,6 +595,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* Telit FN990 */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
-+	/* Telit FE990, same configuration than FN990 */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
-+		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
--- 
-2.37.1
+That's not how email communication works outside of corporate structure.
+Please, don't bring Outlook style to our lives...
+
+> 
+>>>>>> As per upstream UFS driver,  voltage voting is not there and we vote only for enable/disable . 
+>> Since UFS is the only client in Linux for this rail (L8A ), we don't 
+>> need min and max range to support UFS 2.x and 3.x cards.
+> 
+> I would assume some reasonable range is always desired. Why it cannot be the wider range from both? 2.4 - 3.6?
+
+Again - who said that? I am 100% sure that me, not you.
+
+> 
+> Wider range cannot be mentioned in DT, For UFS 2.x range is 2.7 V to 3.6 V and for UFS 3.x range is 2.4V to 2.7V.
+> Giving the wider range will not set the correct voltage.
+
+So is this your reply?
+
+I don't see a problem in wider range...
+
+> 
+> For example: 
+> If the range is mentioned as 2.4V to 3.6V in DT and we have connected UFS 2.x device,  Since UFS driver is voting only for
+> regulator_enable(voltage is not being set) the voltage will be 2.4V(min voltage) from pmic driver which is wrong voltage for
+> UFS 2.x devices, which is violation of spec.
+
+So what is your solution? Remove constraints? Then who configures them?
+You rely on bootloader which is not what we want.
+
+Best regards,
+Krzysztof
 
