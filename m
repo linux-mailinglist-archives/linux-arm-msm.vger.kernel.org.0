@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24A6A770A11
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 22:51:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28EE7770A17
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 22:51:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbjHDUvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 16:51:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54462 "EHLO
+        id S230042AbjHDUvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 16:51:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjHDUvB (ORCPT
+        with ESMTP id S230116AbjHDUva (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 16:51:01 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9D74C37
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 13:50:58 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fe1e1142caso24276085e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 13:50:58 -0700 (PDT)
+        Fri, 4 Aug 2023 16:51:30 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26554C3B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 13:51:25 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3fe12baec61so23211995e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 13:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1691182257; x=1691787057;
+        d=linaro.org; s=google; t=1691182284; x=1691787084;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=oRdtvajcr0+92CY77W3iHbJU9XUO/PBM1l9BDnbFdFc=;
-        b=xs8zzZqm1qGHId3LlKUmwK5FOhtA0omVwvGrdA1ntw5jFrQfqgQoGr3y/s+EEF0uHO
-         Bdt4pWHgGB11RE9UkjVl8kf8u/EFSl/7pa+X9c2x6ZF3tSOpFJ7tAe03nuR+7ddrRCuy
-         Po61hPXefC4YtgUWH3mLtGMwLObmQ7NDS4+EUm8LEEC754QIJWmu/Xkrj5t8Qjfkuzbk
-         xJDAcRAZpRQaS0mFivlN5Ti3XEAcocC/3uotIq6NjLfFFfsK6GcUuh9JoLTcu9nnAJ1R
-         SoiXG/a2ShqUuoNpYzJpb/ze/AKDS3H/LIKLK3RgTLc7P+69T6hBe0S8/bLb546Lfm/B
-         l+iw==
+        bh=ytf0fYl7y3s90xE10GWsqr8qlrP5SU3wZD0qdEGlqoc=;
+        b=WMUbMmCHym2MWewUEGEymY2vgE0ilbwjsaA1pKhhgapZV6TqtVkRpDzrtMUbIN2dyz
+         kJeFNOM9GvuMSEZU800iXAru7Y07uX1MbrUic1GH/U9E92lP+GZp7dF5YLPJZP/k1crr
+         bgI9xA3hgJu360BLHjUCy38lwhj2r4i3KW+5zNVsfnzyct1j69gMMVrzjDyae/0IZPjK
+         V1iD0ckcPsQfLy90X0mxyrTwCI1CPlAGNNsqkzxFvG/dnRGF8Efq1cMS3e2/0EHL64no
+         qaXYXrXKq5VN8/c91Mzh3dECKNowQCN8tvqn+gZ7tlSw3DoCH8rFbG7WU6jiL0K3r2zN
+         DrVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691182257; x=1691787057;
+        d=1e100.net; s=20221208; t=1691182284; x=1691787084;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oRdtvajcr0+92CY77W3iHbJU9XUO/PBM1l9BDnbFdFc=;
-        b=J3XoruvJ9LILnbG2718BwkIQcCsAHbauMECSvdcahcJP+m8gZ3ZXPye5Z5Dzwjjbrn
-         8IHYEBeWKHDtpEwinV/uYfrVNZqEkuEVXXKWkrmhweKArmu36KYlpdnO5J2VZeicNMU0
-         HmRPZ/KQxPub4x33+fR6JD4et59+KvJRa11t2h8MsSB9swejkAawvwFYuM/mHbld3r/p
-         Jr/Y+Z2tXH50384Ccunq96idKkGz2P17/Ds6I5hN+eCZFfoV44txi4G1vjGk8NXztRcN
-         F0f5sNAA89VtohNHpHYvZGDwBQuXkyDCoWi2NkEuOu1wsAJTKAejtaoDKitL03+0TqZg
-         Sdtw==
-X-Gm-Message-State: AOJu0Yz9hvC88s3z7FYn1Fc0uIRzhveVLUtauVwEYVc8iMgAGSlI54/h
-        5lIMlqLc8g0IKyf9VY8limuJyg==
-X-Google-Smtp-Source: AGHT+IG9nktERXD1XuryHQ2ywTah8rg+BCMhCDCxvrQusPr01OSsEg0ZZxE1+OpK3eP+FA9bGulG8Q==
-X-Received: by 2002:a7b:ce0e:0:b0:3fb:b56b:470f with SMTP id m14-20020a7bce0e000000b003fbb56b470fmr2187419wmc.14.1691182256933;
-        Fri, 04 Aug 2023 13:50:56 -0700 (PDT)
+        bh=ytf0fYl7y3s90xE10GWsqr8qlrP5SU3wZD0qdEGlqoc=;
+        b=HE/0TfJBHlR4ggSTtf2BXwxEfoREjqdkzty208/ihMmsSWXA3o+faL5F9Tdwp/iHLs
+         RgwdZp8kPpj1XRRYHbmDVcCO8w0mdMy2m6beFEsTSUNn2to2rl98vLC+ABK7ZWhfTRIB
+         LwBlFGwVgzC2Vc9cQVAPkJ8OVvFW0FKKMJ5n7YsbXOpeHXMWuXwRMT+lPpael2Gda6I9
+         L6pv1/4xjkxOlSHjyoRIHdLW9EpugN+WSt/QZraHDt1ZBZcmEytu4++26tY3vJ8Y01YL
+         V7nwqmRkSjXtlIlbwaA0rM9uTRzaPkQoQwcqe1XhZjCpRs6E1AM1ADtzZI3LTC3GxI1R
+         GmWw==
+X-Gm-Message-State: AOJu0YydgX/semDsdPXgDHkwyTxqUq9dwhiA+Lk5fXdODUON7q6YNN4+
+        DXEgx7lw9LD2NoON/J3UBu2r+A==
+X-Google-Smtp-Source: AGHT+IGzxeyhmK9nqilKsYEKNHXLOAEigw+w5l8VPYbY1weIKK21xhMMkz5L+XIn0AsFjtgXRkwi8g==
+X-Received: by 2002:a5d:4a81:0:b0:317:5b76:826 with SMTP id o1-20020a5d4a81000000b003175b760826mr1826052wrq.0.1691182284080;
+        Fri, 04 Aug 2023 13:51:24 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id u7-20020a5d5147000000b0031437ec7ec1sm3355379wrt.2.2023.08.04.13.50.55
+        by smtp.gmail.com with ESMTPSA id n9-20020a5d4009000000b00317a04131c5sm3355263wrp.57.2023.08.04.13.51.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Aug 2023 13:50:56 -0700 (PDT)
-Message-ID: <ef61906d-98f2-2806-9ad7-2a99f7928bb1@nexus-software.ie>
-Date:   Fri, 4 Aug 2023 21:50:55 +0100
+        Fri, 04 Aug 2023 13:51:23 -0700 (PDT)
+Message-ID: <fdbdbf61-e372-b81d-3a14-7ed27b1249a3@linaro.org>
+Date:   Fri, 4 Aug 2023 21:51:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
@@ -74,12 +74,14 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
  <20230731-topic-8280_venus-v1-3-8c8bbe1983a5@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20230731-topic-8280_venus-v1-3-8c8bbe1983a5@linaro.org>
+ <ef61906d-98f2-2806-9ad7-2a99f7928bb1@nexus-software.ie>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <ef61906d-98f2-2806-9ad7-2a99f7928bb1@nexus-software.ie>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,72 +89,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/08/2023 21:09, Konrad Dybcio wrote:
-> On some platforms (like SM8350) we're expected to only touch certain bits
-> (such as 0 and 4 corresponding to mask 0x11). Add support for doing so.
+On 04/08/2023 21:50, Bryan O'Donoghue wrote:
+> On 04/08/2023 21:09, Konrad Dybcio wrote:
+>> On some platforms (like SM8350) we're expected to only touch certain bits
+>> (such as 0 and 4 corresponding to mask 0x11). Add support for doing so.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/media/platform/qcom/venus/core.h      |  1 +
+>>   drivers/media/platform/qcom/venus/hfi_venus.c | 15 ++++++++++++---
+>>   2 files changed, 13 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.h 
+>> b/drivers/media/platform/qcom/venus/core.h
+>> index d996abd339e1..2999c24392f5 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -38,6 +38,7 @@ struct freq_tbl {
+>>   struct reg_val {
+>>       u32 reg;
+>>       u32 value;
+>> +    u32 mask;
+>>   };
+>>   struct bw_tbl {
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c 
+>> b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index 19fc6575a489..d4bad66f7293 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -349,10 +349,19 @@ static void venus_set_registers(struct 
+>> venus_hfi_device *hdev)
+>>       const struct venus_resources *res = hdev->core->res;
+>>       const struct reg_val *tbl = res->reg_tbl;
+>>       unsigned int count = res->reg_tbl_size;
+>> -    unsigned int i;
+>> +    unsigned int i, val;
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/media/platform/qcom/venus/core.h      |  1 +
->   drivers/media/platform/qcom/venus/hfi_venus.c | 15 ++++++++++++---
->   2 files changed, 13 insertions(+), 3 deletions(-)
+> u32 val;
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index d996abd339e1..2999c24392f5 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -38,6 +38,7 @@ struct freq_tbl {
->   struct reg_val {
->   	u32 reg;
->   	u32 value;
-> +	u32 mask;
->   };
->   
->   struct bw_tbl {
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-> index 19fc6575a489..d4bad66f7293 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -349,10 +349,19 @@ static void venus_set_registers(struct venus_hfi_device *hdev)
->   	const struct venus_resources *res = hdev->core->res;
->   	const struct reg_val *tbl = res->reg_tbl;
->   	unsigned int count = res->reg_tbl_size;
-> -	unsigned int i;
-> +	unsigned int i, val;
-
-u32 val;
-
-> +
-> +	for (i = 0; i < count; i++) {
-> +		val = tbl[i].value;
-
-struct reg_val looks like this
-
-struct reg_val {
-         u32 reg;
-         u32 value;
-};
-
-val should be declared a u32
-
-> -	for (i = 0; i < count; i++)
-> -		writel(tbl[i].value, hdev->core->base + tbl[i].reg);
-> +		/* In some cases, we only want to update certain bits */
-
-I'll trust this is a legitimate and true statement.
-
-> +		if (tbl[i].mask) {
-> +			val = readl(hdev->core->base + tbl[i].reg);
-> +			val = (val & ~tbl[i].mask) | (tbl[i].value & tbl[i].mask);
-
-feels like something regmap_update_bits() already does though, I prefer 
-this because there's less code in it.
-
-> +		}
-> +
-> +		writel(val, hdev->core->base + tbl[i].reg);
-> +	}
-
-With the val declaration fix
+>> +
+>> +    for (i = 0; i < count; i++) {
+>> +        val = tbl[i].value;
+> 
+> struct reg_val looks like this
+> 
+> struct reg_val {
+>          u32 reg;
+>          u32 value;
+> };
+> 
+> val should be declared a u32
+> 
+>> -    for (i = 0; i < count; i++)
+>> -        writel(tbl[i].value, hdev->core->base + tbl[i].reg);
+>> +        /* In some cases, we only want to update certain bits */
+> 
+> I'll trust this is a legitimate and true statement.
+> 
+>> +        if (tbl[i].mask) {
+>> +            val = readl(hdev->core->base + tbl[i].reg);
+>> +            val = (val & ~tbl[i].mask) | (tbl[i].value & tbl[i].mask);
+> 
+> feels like something regmap_update_bits() already does though, I prefer 
+> this because there's less code in it.
+> 
+>> +        }
+>> +
+>> +        writel(val, hdev->core->base + tbl[i].reg);
+>> +    }
+> 
+> With the val declaration fix
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
