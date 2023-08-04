@@ -2,171 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AC0376FBCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 10:18:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9247476FD44
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Aug 2023 11:29:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234465AbjHDIST (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Aug 2023 04:18:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55154 "EHLO
+        id S230367AbjHDJ3Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Aug 2023 05:29:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234489AbjHDISR (ORCPT
+        with ESMTP id S230362AbjHDJ3X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Aug 2023 04:18:17 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29994696
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 01:18:06 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-686d8c8fc65so1382104b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 01:18:06 -0700 (PDT)
+        Fri, 4 Aug 2023 05:29:23 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056F649D8
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Aug 2023 02:29:20 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b9a2033978so29763911fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Aug 2023 02:29:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1691137086; x=1691741886;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gg5cVCUNV3XHGOdEED3Q5WLBVqpxV2U0ovPUur9voag=;
-        b=F4u5Br/6x69AAvjAgMCxCTVIJ5ywKIpqh2D36RfYxFp2q7yHZ27dzUJAmOqKW9pJqH
-         h77oI985AoKugoObOdc3Mc/zCJp8iWso0lLemKvy9Xmn/8pVTaoSBFtTAJ59BV5ZBr+5
-         c8P+FQ2fMtbyDkgiyzeqgrZDCOyvhFNWzy4zo=
+        d=linaro.org; s=google; t=1691141359; x=1691746159;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dnn3YjqK0gYS2d3cBmIF54I2GW/nHeks1WnBWbPsCqA=;
+        b=LSoxPSq6PqUSUyUwQor3UO7ej1NFQ1w4NXKg0U9UgkTQuNs7Wc5AVke2/McAMrWT+4
+         /DtkaJ4zVQshHs/utXvU0hppM4B988NMvyyIH3sk1n0Vq4mrLnt8dQ4oa8goPba7vExa
+         vx2slalXu7r2P1NFZ2LlJ1BDujQihTqO19ZhgRyF1Vb6ZVovAFIEI6Ujb6w+vQBiKb2Z
+         urt5JNTo3bq83k1jYouWXynVOT80QpAKIYfO4qigVB7bRH8siqUZLzd3wXljoqbGC3R7
+         aL43JH45KlCDdUmPkbCb2oNJ4Ea3wLh1ubtIOAj/QGX/sNXtlNGZd5JADjXRL/Thgpe9
+         23CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691137086; x=1691741886;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gg5cVCUNV3XHGOdEED3Q5WLBVqpxV2U0ovPUur9voag=;
-        b=dDFyO4/DG11N0ywSsZW9YQeoWcGAmsPkWnx21rgzOO+cIGnbLhvGlvAigf/fBGbUDa
-         AbWFXea1qUG77X0NOs4wrLSvQwub87dux9XPtU2D5g5tHDUIsikBJJ6ZnDJ+Wqm6zvlx
-         7ElW3kDt7NxWBH1njz5BSKcGMat6O0uzdNukqKpU6PgidAIESbKm4UGopRTmz2ZH1a3E
-         YDXYq97vg0K1iQAl4/Sp/XGTSTh9xpR2qp7Dm71mbjMIDKXsBFBxUtGUQntwVvarWN/6
-         fqJZxYbvnU96Ubl7u/10i8iJDnmIwfLxf31bXmQZQ8KALmQqKkChzbqqwTJp6/VCSXVk
-         s/aQ==
-X-Gm-Message-State: AOJu0YwfuN8tnT9gv71FQu0/lGYx8KIKAyGGnQoRUAOBIUdis1KlUHiE
-        PeL2KRwI28ThN6OSwxqGF8wEUbs/ClsfzvVMpQY=
-X-Google-Smtp-Source: AGHT+IF0p+Ad31RQ2e8xZC4taMCW7aZqthbtutqmacSexOFcs3y+7j334dkNht2sO4v7wQdkEBZOuQ==
-X-Received: by 2002:a05:6a20:2452:b0:13e:82ad:ff0a with SMTP id t18-20020a056a20245200b0013e82adff0amr1046163pzc.23.1691137086366;
-        Fri, 04 Aug 2023 01:18:06 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id ff12-20020a056a002f4c00b0067f2f7eccdcsm1043514pfb.193.2023.08.04.01.18.05
+        d=1e100.net; s=20221208; t=1691141359; x=1691746159;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Dnn3YjqK0gYS2d3cBmIF54I2GW/nHeks1WnBWbPsCqA=;
+        b=FGz+Xz3stSfMkn6vPXpSF/A2dTSMdSy/R0Xr5dl7WG+cBO/8ycp15Flzr2cQKn2yJp
+         PyxzNLxo7KOWJfaRePvZUxKKAXm/ahMfsvjuQ5+nU2HK4g8TQNDqXx+/gTBs9DiVDg7u
+         VYoNcuvET2R2S2eW4vJwvfKVB5hI8XUmbpc3tlXOYooWZinv474DbxV90gbAzmUWU5KX
+         LluUitnqqtVMVccvaDkKVpE/OWXoEsUMftTsfcVlbZB0SPhl5UNbbdBuQmctD88g1Tij
+         4W1m/pD1MxId7tTujL+NdXim1ZKPLXzhyO6OQ/o9KU1XfVuvYUgYnkG5/4b2ecUzEilr
+         2zoQ==
+X-Gm-Message-State: AOJu0YyuixcGcxr36X+XKyYdZcvlCwqYmlTHwOsIDzxhqc4UWR65oLzd
+        7UCLVYw2XVonWEPpU7aKDM9Ejw==
+X-Google-Smtp-Source: AGHT+IEHiVe4K3MqLOjm+DVCGQ3jTlV9XKFXZSedQKFKvv1j9d815up6QRwY2QCphNtBD8WAdX0iUw==
+X-Received: by 2002:a05:651c:102a:b0:2b6:fc60:776f with SMTP id w10-20020a05651c102a00b002b6fc60776fmr972258ljm.30.1691141359043;
+        Fri, 04 Aug 2023 02:29:19 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id b13-20020a05600c11cd00b003fba6709c68sm1877070wmi.47.2023.08.04.02.29.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 01:18:05 -0700 (PDT)
-Date:   Fri, 4 Aug 2023 01:18:05 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Johan Hovold <johan@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] lib/ucs2_string: Add UCS-2 strscpy function
-Message-ID: <202308040115.A4643B8@keescook>
-References: <20230730161906.606163-1-luzmaximilian@gmail.com>
- <20230730161906.606163-2-luzmaximilian@gmail.com>
+        Fri, 04 Aug 2023 02:29:18 -0700 (PDT)
+Date:   Fri, 4 Aug 2023 12:29:15 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     oe-kbuild@lists.linux.dev, Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org
+Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
+        Rob Clark <robdclark@chromium.org>,
+        Len Brown <len.brown@intel.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        "open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 4/9] PM / QoS: Decouple request alloc from
+ dev_pm_qos_mtx
+Message-ID: <1085ed08-ac8f-4847-b232-0dcea6a61d77@kadam.mountain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230730161906.606163-2-luzmaximilian@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230803220202.78036-5-robdclark@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 30, 2023 at 06:19:02PM +0200, Maximilian Luz wrote:
-> Add a ucs2_strscpy() function for UCS-2 strings. The behavior is
-> equivalent to the standard strscpy() function, just for 16-bit character
-> UCS-2 strings.
-> 
-> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-> ---
-> 
-> Changes in v5:
->  - Add ucs2_strscpy() instead of ucs2_strlcpy()
-> 
-> Patch introduced in v4.
-> 
-> ---
->  include/linux/ucs2_string.h |  1 +
->  lib/ucs2_string.c           | 35 +++++++++++++++++++++++++++++++++++
->  2 files changed, 36 insertions(+)
-> 
-> diff --git a/include/linux/ucs2_string.h b/include/linux/ucs2_string.h
-> index cf3ada3e820e..c499ae809c7d 100644
-> --- a/include/linux/ucs2_string.h
-> +++ b/include/linux/ucs2_string.h
-> @@ -10,6 +10,7 @@ typedef u16 ucs2_char_t;
->  unsigned long ucs2_strnlen(const ucs2_char_t *s, size_t maxlength);
->  unsigned long ucs2_strlen(const ucs2_char_t *s);
->  unsigned long ucs2_strsize(const ucs2_char_t *data, unsigned long maxlength);
-> +ssize_t ucs2_strscpy(ucs2_char_t *dst, const ucs2_char_t *src, size_t count);
->  int ucs2_strncmp(const ucs2_char_t *a, const ucs2_char_t *b, size_t len);
->  
->  unsigned long ucs2_utf8size(const ucs2_char_t *src);
-> diff --git a/lib/ucs2_string.c b/lib/ucs2_string.c
-> index 0a559a42359b..b608129fcbdc 100644
-> --- a/lib/ucs2_string.c
-> +++ b/lib/ucs2_string.c
-> @@ -32,6 +32,41 @@ ucs2_strsize(const ucs2_char_t *data, unsigned long maxlength)
->  }
->  EXPORT_SYMBOL(ucs2_strsize);
->  
-> +ssize_t ucs2_strscpy(ucs2_char_t *dst, const ucs2_char_t *src, size_t count)
-> +{
-> +	long res;
-> +
-> +	/*
-> +	 * Ensure that we have a valid amount of space. We need to store at
-> +	 * least one NUL-character.
-> +	 */
-> +	if (count == 0 || WARN_ON_ONCE(count > INT_MAX))
+Hi Rob,
 
-Is "count" a measure of bytes or characters? It seems to be characters.
-can you please add some kern-doc for this function to clarify this.
-Also, I wonder if the above check should be "count > INT_MAX / 2" since
-the INT_MAX is, generally, done in byte counts.
+kernel test robot noticed the following build warnings:
 
-> +		return -E2BIG;
-> +
-> +	/*
-> +	 * Copy at most 'count' bytes, return early if we find a
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-If "count" is characters, this comment should not say "bytes". :)
+url:    https://github.com/intel-lab-lkp/linux/commits/Rob-Clark/PM-devfreq-Drop-unneed-locking-to-appease-lockdep/20230804-060505
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230803220202.78036-5-robdclark%40gmail.com
+patch subject: [PATCH v3 4/9] PM / QoS: Decouple request alloc from dev_pm_qos_mtx
+config: i386-randconfig-m021-20230730 (https://download.01.org/0day-ci/archive/20230804/202308041725.Npwswh0L-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230804/202308041725.Npwswh0L-lkp@intel.com/reproduce)
 
-> +	 * NUL-terminator.
-> +	 */
-> +	for (res = 0; res < count; res++) {
-> +		ucs2_char_t c;
-> +
-> +		c = src[res];
-> +		dst[res] = c;
-> +
-> +		if (!c)
-> +			return res;
-> +	}
-> +
-> +	/*
-> +	 * The loop above terminated without finding a NUL-terminator,
-> +	 * exceeding the 'count': Enforce proper NUL-termination and return
-> +	 * error.
-> +	 */
-> +	dst[count - 1] = 0;
-> +	return -E2BIG;
-> +}
-> +EXPORT_SYMBOL(ucs2_strscpy);
-> +
->  int
->  ucs2_strncmp(const ucs2_char_t *a, const ucs2_char_t *b, size_t len)
->  {
-> -- 
-> 2.41.0
-> 
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202308041725.Npwswh0L-lkp@intel.com/
 
-Otherwise looks good to me!
+smatch warnings:
+drivers/base/power/qos.c:973 dev_pm_qos_update_user_latency_tolerance() warn: possible memory leak of 'req'
+
+vim +/req +973 drivers/base/power/qos.c
+
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  923  int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  924  {
+b5ac35ff4296f7 Rob Clark         2023-08-03  925  	struct dev_pm_qos_request *req = NULL;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  926  	int ret;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  927  
+211fb32e3a0547 Rob Clark         2023-08-03  928  	ret = dev_pm_qos_constraints_ensure_allocated(dev);
+211fb32e3a0547 Rob Clark         2023-08-03  929  	if (ret)
+211fb32e3a0547 Rob Clark         2023-08-03  930  		return ret;
+211fb32e3a0547 Rob Clark         2023-08-03  931  
+b5ac35ff4296f7 Rob Clark         2023-08-03  932  	if (!dev->power.qos->latency_tolerance_req)
+b5ac35ff4296f7 Rob Clark         2023-08-03  933  		req = kzalloc(sizeof(*req), GFP_KERNEL);
+b5ac35ff4296f7 Rob Clark         2023-08-03  934  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  935  	mutex_lock(&dev_pm_qos_mtx);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  936  
+211fb32e3a0547 Rob Clark         2023-08-03  937  	if (!dev->power.qos->latency_tolerance_req) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  938  		if (val < 0) {
+80a6f7c79b7822 Andrew Lutomirski 2016-11-29  939  			if (val == PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT)
+80a6f7c79b7822 Andrew Lutomirski 2016-11-29  940  				ret = 0;
+80a6f7c79b7822 Andrew Lutomirski 2016-11-29  941  			else
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  942  				ret = -EINVAL;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  943  			goto out;
+
+kfree(req);?
+
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  944  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  945  		if (!req) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  946  			ret = -ENOMEM;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  947  			goto out;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  948  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  949  		ret = __dev_pm_qos_add_request(dev, req, DEV_PM_QOS_LATENCY_TOLERANCE, val);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  950  		if (ret < 0) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  951  			kfree(req);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  952  			goto out;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  953  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  954  		dev->power.qos->latency_tolerance_req = req;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  955  	} else {
+b5ac35ff4296f7 Rob Clark         2023-08-03  956  		/*
+b5ac35ff4296f7 Rob Clark         2023-08-03  957  		 * If we raced with another thread to allocate the request,
+b5ac35ff4296f7 Rob Clark         2023-08-03  958  		 * simply free the redundant allocation and move on.
+b5ac35ff4296f7 Rob Clark         2023-08-03  959  		 */
+b5ac35ff4296f7 Rob Clark         2023-08-03  960  		if (req)
+b5ac35ff4296f7 Rob Clark         2023-08-03  961  			kfree(req);
+b5ac35ff4296f7 Rob Clark         2023-08-03  962  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  963  		if (val < 0) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  964  			__dev_pm_qos_drop_user_request(dev, DEV_PM_QOS_LATENCY_TOLERANCE);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  965  			ret = 0;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  966  		} else {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  967  			ret = __dev_pm_qos_update_request(dev->power.qos->latency_tolerance_req, val);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  968  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  969  	}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  970  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  971   out:
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  972  	mutex_unlock(&dev_pm_qos_mtx);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11 @973  	return ret;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  974  }
 
 -- 
-Kees Cook
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
