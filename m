@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E65C771133
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 20:00:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A67ED77113C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 20:05:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbjHESAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Aug 2023 14:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35356 "EHLO
+        id S229844AbjHESFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Aug 2023 14:05:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjHESAi (ORCPT
+        with ESMTP id S229839AbjHESFA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Aug 2023 14:00:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E439183;
-        Sat,  5 Aug 2023 11:00:37 -0700 (PDT)
+        Sat, 5 Aug 2023 14:05:00 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 128AF1A4;
+        Sat,  5 Aug 2023 11:04:59 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1B9EF60B99;
-        Sat,  5 Aug 2023 18:00:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80C0C433C8;
-        Sat,  5 Aug 2023 18:00:34 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9B4AD60D41;
+        Sat,  5 Aug 2023 18:04:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DB8C433C7;
+        Sat,  5 Aug 2023 18:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691258436;
-        bh=4OB0LIsIuMwZCxSV0QuHTkdvl8z1YvtMFoPcoJgVuiE=;
+        s=k20201202; t=1691258698;
+        bh=xBCbNByM2zM6Uu+EhMN5x/0VWLzyzREN31JtUtuJoYk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZxNoetshNaW9M7ViwOc/cCpVU9y5ak8RsVNGta57besr7s4NoxxH/dndsemD5RjLe
-         o/k0TYBfQ6fnyzMM5RDhVIv7MV98iPK+MdcfHYjh/OdBi1cEi5oCDG/fA1vOh4t6Cd
-         n0Y6Fz6cF3apXUP9pcTeLc78XlWP1cO9kkH+pJo62dX1PDvzlngzJ2OPaN5840g2f4
-         V4gSJY0qz4oo+/eMKmrm0e79OAj5W4MR/YHRinV/8a3OOCBQqOz4mfjKGn+xQ0Zzm2
-         ItJQnGtDCkCK3EoMD/CfB8y8iAibHjZ1jsNhxxVVLYZNZq7kcTKQaQHGHYlkC6SeXM
-         S+4WvKmyvN3yA==
-Date:   Sat, 5 Aug 2023 11:03:33 -0700
+        b=WfE3BssWdMxhRPwD4a2GY6i4c4R4RzLN0bOviBcW/DR0pFWyjgO82HWpklyuhX8u2
+         17Iw/ltaDtQ8rB4nuU4eAgpFCKEjRi9DNKQpk1O8ciiml7TV0S6Rj1G9tfm6756M+k
+         c0rmaZo+bikBS0RSYbChAk5GVWv9bTkDNzwYeSPYqRQu4z6Iy+zka9zspEAZN85eV5
+         E0uLezxjFl3Gn/a/q7C5epU+/hYP+p2Lp26/Q/wZWC+FlA6ArWEzeeaF8qFd9a59B+
+         67VTv2Ikpm3o+Kg2HCHNIsJ0vXjYklC3HomZi4IIB7kbkMdZS7A8kfv0+ZLZ+oDH9d
+         uHakEmXPqg+TQ==
+Date:   Sat, 5 Aug 2023 11:07:55 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Elliot Berman <quic_eberman@quicinc.com>
 Cc:     Alex Elder <elder@linaro.org>,
@@ -58,149 +58,84 @@ Cc:     Alex Elder <elder@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v14 13/25] samples: Add sample userspace Gunyah VM Manager
-Message-ID: <3krirzh2fojye44a7trzit54opfssnzzsujbo4kzv2mqzhpsmo@qrm53c5naaqw>
+Subject: Re: [PATCH v14 14/25] gunyah: rsc_mgr: Add platform ops on
+ mem_lend/mem_reclaim
+Message-ID: <tresq6hho3iqo4z6lmsknalx7452hb4zpmefoaugypgwqkyk4p@rrmsuly65vpg>
 References: <20230613172054.3959700-1-quic_eberman@quicinc.com>
- <20230613172054.3959700-14-quic_eberman@quicinc.com>
+ <20230613172054.3959700-15-quic_eberman@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230613172054.3959700-14-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230613172054.3959700-15-quic_eberman@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 10:20:41AM -0700, Elliot Berman wrote:
-> diff --git a/samples/gunyah/gunyah_vmm.c b/samples/gunyah/gunyah_vmm.c
-> new file mode 100644
-> index 0000000000000..6f636ac227c69
-> --- /dev/null
-> +++ b/samples/gunyah/gunyah_vmm.c
-> @@ -0,0 +1,266 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <stdlib.h>
-> +#include <stdio.h>
-> +#include <unistd.h>
-> +#include <sys/types.h>
-> +#include <sys/stat.h>
-> +#include <fcntl.h>
-> +#include <sys/ioctl.h>
-> +#include <getopt.h>
-> +#include <limits.h>
-> +#include <stdint.h>
-> +#include <fcntl.h>
-> +#include <string.h>
-> +#include <sys/sysmacros.h>
-> +#define __USE_GNU
-> +#include <sys/mman.h>
-> +
-> +#include <linux/gunyah.h>
-> +
-> +#define DEFAULT_GUEST_BASE	0x80000000
-> +#define DEFAULT_GUEST_SIZE	0x6400000 /* 100 MiB */
-> +#define DEFAULT_DTB_OFFSET	0x45f0000 /* 70MiB - 64 KiB */
-> +#define DEFAULT_RAMDISK_OFFSET	0x4600000 /* 70MiB */
+On Tue, Jun 13, 2023 at 10:20:42AM -0700, Elliot Berman wrote:
+> On Qualcomm platforms, there is a firmware entity which controls access
+> to physical pages. In order to share memory with another VM, this entity
+> needs to be informed that the guest VM should have access to the memory.
+> 
 
-Would be nice if the default ramdisk offset was close to accounting for
-the kernel modules produced in an upstream defconfig build... Perhaps
-just bumping the default guest size to facilitate this?
+Why isn't this handled by the system above us?
 
-[..]
-> diff --git a/samples/gunyah/sample_vm.dts b/samples/gunyah/sample_vm.dts
-> new file mode 100644
-> index 0000000000000..293bbc0469c8f
-> --- /dev/null
-> +++ b/samples/gunyah/sample_vm.dts
-> @@ -0,0 +1,68 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+> Reviewed-by: Alex Elder <elder@linaro.org>
+> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>  drivers/virt/gunyah/Kconfig                 |  4 ++
+>  drivers/virt/gunyah/Makefile                |  2 +
+>  drivers/virt/gunyah/gunyah_platform_hooks.c | 80 +++++++++++++++++++++
+>  drivers/virt/gunyah/rsc_mgr.h               |  3 +
+>  drivers/virt/gunyah/rsc_mgr_rpc.c           | 18 ++++-
+>  include/linux/gunyah_rsc_mgr.h              | 17 +++++
+>  6 files changed, 122 insertions(+), 2 deletions(-)
+>  create mode 100644 drivers/virt/gunyah/gunyah_platform_hooks.c
+> 
+> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
+> index 1a737694c333d..de815189dab6c 100644
+> --- a/drivers/virt/gunyah/Kconfig
+> +++ b/drivers/virt/gunyah/Kconfig
+> @@ -4,6 +4,7 @@ config GUNYAH
+>  	tristate "Gunyah Virtualization drivers"
+>  	depends on ARM64
+>  	depends on MAILBOX
+> +	select GUNYAH_PLATFORM_HOOKS
+>  	help
+>  	  The Gunyah drivers are the helper interfaces that run in a guest VM
+>  	  such as basic inter-VM IPC and signaling mechanisms, and higher level
+> @@ -11,3 +12,6 @@ config GUNYAH
+>  
+>  	  Say Y/M here to enable the drivers needed to interact in a Gunyah
+>  	  virtual environment.
 > +
-> +/dts-v1/;
-> +
-> +/ {
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +	interrupt-parent = <&intc>;
-> +
-> +	chosen {
-> +		bootargs = "nokaslr";
+> +config GUNYAH_PLATFORM_HOOKS
 
-Is this required?
+Automatically selected by GUNYAH and the only platform so far, no need
+to keep this as a separate Kconfig.
 
-> +	};
+> +	tristate
+> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+> index bacf78b8fa337..4fbeee521d60a 100644
+> --- a/drivers/virt/gunyah/Makefile
+> +++ b/drivers/virt/gunyah/Makefile
+> @@ -1,4 +1,6 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  
+> +obj-$(CONFIG_GUNYAH_PLATFORM_HOOKS) += gunyah_platform_hooks.o
 > +
-> +	cpus {
-> +		#address-cells = <0x2>;
-> +		#size-cells = <0>;
-> +
-> +		cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "arm,armv8";
-> +			reg = <0 0>;
-> +		};
-> +	};
-> +
-> +	intc: interrupt-controller@3FFF0000 {
-> +		compatible = "arm,gic-v3";
-> +		#interrupt-cells = <3>;
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		interrupt-controller;
-> +		reg = <0 0x3FFF0000 0 0x10000>,
-> +		      <0 0x3FFD0000 0 0x20000>;
 
-Lowercase hex digits please.
+Why is this added before the core gunyah components?
 
-> +	};
-> +
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +		always-on;
-> +		interrupts = <1 13 0x108>,
-> +			     <1 14 0x108>,
-> +			     <1 11 0x108>,
-> +			     <1 10 0x108>;
-> +		clock-frequency = <19200000>;
-> +	};
-> +
-> +	gunyah-vm-config {
-
-Is this node documented somewhere?
+>  gunyah-y += rsc_mgr.o rsc_mgr_rpc.o vm_mgr.o vm_mgr_mm.o
+>  obj-$(CONFIG_GUNYAH) += gunyah.o
 
 Regards,
 Bjorn
-
-> +		image-name = "linux_vm_0";
-> +
-> +		memory {
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +
-> +			base-address = <0 0x80000000>;
-> +		};
-> +
-> +		interrupts {
-> +			config = <&intc>;
-> +		};
-> +
-> +		vcpus {
-> +			affinity-map = < 0 >;
-> +			sched-priority = < (-1) >;
-> +			sched-timeslice = < 2000 >;
-> +		};
-> +	};
-> +};
-> -- 
-> 2.40.0
-> 
