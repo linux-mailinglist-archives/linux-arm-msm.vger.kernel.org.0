@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A67ED77113C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 20:05:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19C33771150
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 20:08:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbjHESFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Aug 2023 14:05:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36316 "EHLO
+        id S229602AbjHESIk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Aug 2023 14:08:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbjHESFA (ORCPT
+        with ESMTP id S229481AbjHESIj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Aug 2023 14:05:00 -0400
+        Sat, 5 Aug 2023 14:08:39 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 128AF1A4;
-        Sat,  5 Aug 2023 11:04:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C574619B;
+        Sat,  5 Aug 2023 11:08:38 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9B4AD60D41;
-        Sat,  5 Aug 2023 18:04:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DB8C433C7;
-        Sat,  5 Aug 2023 18:04:56 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 59B9360DB5;
+        Sat,  5 Aug 2023 18:08:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA552C433C7;
+        Sat,  5 Aug 2023 18:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691258698;
-        bh=xBCbNByM2zM6Uu+EhMN5x/0VWLzyzREN31JtUtuJoYk=;
+        s=k20201202; t=1691258917;
+        bh=o1T6WnCOl5nls/Z32FQUuI4vIWqJLvZNcazUro6lNio=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WfE3BssWdMxhRPwD4a2GY6i4c4R4RzLN0bOviBcW/DR0pFWyjgO82HWpklyuhX8u2
-         17Iw/ltaDtQ8rB4nuU4eAgpFCKEjRi9DNKQpk1O8ciiml7TV0S6Rj1G9tfm6756M+k
-         c0rmaZo+bikBS0RSYbChAk5GVWv9bTkDNzwYeSPYqRQu4z6Iy+zka9zspEAZN85eV5
-         E0uLezxjFl3Gn/a/q7C5epU+/hYP+p2Lp26/Q/wZWC+FlA6ArWEzeeaF8qFd9a59B+
-         67VTv2Ikpm3o+Kg2HCHNIsJ0vXjYklC3HomZi4IIB7kbkMdZS7A8kfv0+ZLZ+oDH9d
-         uHakEmXPqg+TQ==
-Date:   Sat, 5 Aug 2023 11:07:55 -0700
+        b=oBXocZdCA2osDvHvD8WVyNio/gV6OKzFo9MtHyK/iBf0DY56PO9xJPizOMgKFDOPc
+         dOx6hqB60YygH69+Jtn7OBjJG7RAF0yWkzsx0SYt+cZr9nZRtiHT9yCBb2jWsXddsg
+         pFhgSg4krC+k/HQOV/w7tMEeEnStdR0V+NuQHhr5Eg3EAp10JmgAsNpfj1dN+HCZ9F
+         a6/S/ATA530tyoOV7sxtuD0e+tLBKDRPQIVfBlJO6bsENv4qSr60KE8zDamwCTm1Xr
+         aYSvNj6fQ20QcLuMEiYsnPkwqtjgwCUNgLfzuxMtb6SWcxzrTT6jK+j3GeSvmjOEp8
+         quIqeBavQjmLg==
+Date:   Sat, 5 Aug 2023 11:11:34 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Elliot Berman <quic_eberman@quicinc.com>
 Cc:     Alex Elder <elder@linaro.org>,
@@ -58,15 +58,14 @@ Cc:     Alex Elder <elder@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v14 14/25] gunyah: rsc_mgr: Add platform ops on
- mem_lend/mem_reclaim
-Message-ID: <tresq6hho3iqo4z6lmsknalx7452hb4zpmefoaugypgwqkyk4p@rrmsuly65vpg>
+Subject: Re: [PATCH v14 15/25] virt: gunyah: Add Qualcomm Gunyah platform ops
+Message-ID: <7bpdzvlrdxwqpxor36i4nha5qs4opvnf7tr4sfb7ta3ebl7fdl@c5nylbvtnv5y>
 References: <20230613172054.3959700-1-quic_eberman@quicinc.com>
- <20230613172054.3959700-15-quic_eberman@quicinc.com>
+ <20230613172054.3959700-16-quic_eberman@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230613172054.3959700-15-quic_eberman@quicinc.com>
+In-Reply-To: <20230613172054.3959700-16-quic_eberman@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -77,65 +76,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 10:20:42AM -0700, Elliot Berman wrote:
-> On Qualcomm platforms, there is a firmware entity which controls access
-> to physical pages. In order to share memory with another VM, this entity
-> needs to be informed that the guest VM should have access to the memory.
+On Tue, Jun 13, 2023 at 10:20:43AM -0700, Elliot Berman wrote:
+> Qualcomm platforms have a firmware entity which performs access control
+> to physical pages. Dynamically started Gunyah virtual machines use the
+> QCOM_SCM_RM_MANAGED_VMID for access. Linux thus needs to assign access
+> to the memory used by guest VMs. Gunyah doesn't do this operation for us
+> since it is the current VM (typically VMID_HLOS) delegating the access
+> and not Gunyah itself. Use the Gunyah platform ops to achieve this so
+> that only Qualcomm platforms attempt to make the needed SCM calls.
 > 
-
-Why isn't this handled by the system above us?
-
 > Reviewed-by: Alex Elder <elder@linaro.org>
 > Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
 > Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/virt/gunyah/Kconfig                 |  4 ++
->  drivers/virt/gunyah/Makefile                |  2 +
->  drivers/virt/gunyah/gunyah_platform_hooks.c | 80 +++++++++++++++++++++
->  drivers/virt/gunyah/rsc_mgr.h               |  3 +
->  drivers/virt/gunyah/rsc_mgr_rpc.c           | 18 ++++-
->  include/linux/gunyah_rsc_mgr.h              | 17 +++++
->  6 files changed, 122 insertions(+), 2 deletions(-)
->  create mode 100644 drivers/virt/gunyah/gunyah_platform_hooks.c
+>  drivers/virt/gunyah/Kconfig       |  13 +++
+>  drivers/virt/gunyah/Makefile      |   1 +
+>  drivers/virt/gunyah/gunyah_qcom.c | 153 ++++++++++++++++++++++++++++++
+>  3 files changed, 167 insertions(+)
+>  create mode 100644 drivers/virt/gunyah/gunyah_qcom.c
 > 
 > diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
-> index 1a737694c333d..de815189dab6c 100644
+> index de815189dab6c..0421b751aad4f 100644
 > --- a/drivers/virt/gunyah/Kconfig
 > +++ b/drivers/virt/gunyah/Kconfig
-> @@ -4,6 +4,7 @@ config GUNYAH
->  	tristate "Gunyah Virtualization drivers"
+> @@ -5,6 +5,7 @@ config GUNYAH
 >  	depends on ARM64
 >  	depends on MAILBOX
-> +	select GUNYAH_PLATFORM_HOOKS
+>  	select GUNYAH_PLATFORM_HOOKS
+> +	imply GUNYAH_QCOM_PLATFORM if ARCH_QCOM
 >  	help
 >  	  The Gunyah drivers are the helper interfaces that run in a guest VM
 >  	  such as basic inter-VM IPC and signaling mechanisms, and higher level
-> @@ -11,3 +12,6 @@ config GUNYAH
+> @@ -15,3 +16,15 @@ config GUNYAH
 >  
->  	  Say Y/M here to enable the drivers needed to interact in a Gunyah
->  	  virtual environment.
+>  config GUNYAH_PLATFORM_HOOKS
+>  	tristate
 > +
-> +config GUNYAH_PLATFORM_HOOKS
-
-Automatically selected by GUNYAH and the only platform so far, no need
-to keep this as a separate Kconfig.
-
-> +	tristate
+> +config GUNYAH_QCOM_PLATFORM
+> +	tristate "Support for Gunyah on Qualcomm platforms"
+> +	depends on GUNYAH
+> +	select GUNYAH_PLATFORM_HOOKS
+> +	select QCOM_SCM
+> +	help
+> +	  Enable support for interacting with Gunyah on Qualcomm
+> +	  platforms. Interaction with Qualcomm firmware requires
+> +	  extra platform-specific support.
+> +
+> +	  Say Y/M here to use Gunyah on Qualcomm platforms.
 > diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> index bacf78b8fa337..4fbeee521d60a 100644
+> index 4fbeee521d60a..2aa9ff038ed02 100644
 > --- a/drivers/virt/gunyah/Makefile
 > +++ b/drivers/virt/gunyah/Makefile
-> @@ -1,4 +1,6 @@
+> @@ -1,6 +1,7 @@
 >  # SPDX-License-Identifier: GPL-2.0
 >  
-> +obj-$(CONFIG_GUNYAH_PLATFORM_HOOKS) += gunyah_platform_hooks.o
-> +
-
-Why is this added before the core gunyah components?
-
+>  obj-$(CONFIG_GUNYAH_PLATFORM_HOOKS) += gunyah_platform_hooks.o
+> +obj-$(CONFIG_GUNYAH_QCOM_PLATFORM) += gunyah_qcom.o
+>  
 >  gunyah-y += rsc_mgr.o rsc_mgr_rpc.o vm_mgr.o vm_mgr_mm.o
 >  obj-$(CONFIG_GUNYAH) += gunyah.o
+> diff --git a/drivers/virt/gunyah/gunyah_qcom.c b/drivers/virt/gunyah/gunyah_qcom.c
+> new file mode 100644
+> index 0000000000000..f06a598f2e1b3
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/gunyah_qcom.c
+> @@ -0,0 +1,153 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/arm-smccc.h>
+> +#include <linux/gunyah_rsc_mgr.h>
+> +#include <linux/module.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/types.h>
+> +#include <linux/uuid.h>
+> +
+> +#define QCOM_SCM_RM_MANAGED_VMID	0x3A
+> +#define QCOM_SCM_MAX_MANAGED_VMID	0x3F
+> +
+> +static int qcom_scm_gh_rm_pre_mem_share(struct gh_rm *rm, struct gh_rm_mem_parcel *mem_parcel)
+> +{
+> +	struct qcom_scm_vmperm *new_perms;
+> +	u64 src, src_cpy;
+> +	int ret = 0, i, n;
+> +	u16 vmid;
+> +
+> +	new_perms = kcalloc(mem_parcel->n_acl_entries, sizeof(*new_perms), GFP_KERNEL);
+> +	if (!new_perms)
+> +		return -ENOMEM;
+> +
+> +	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
+> +		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
+> +		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
+> +			new_perms[n].vmid = vmid;
+> +		else
+> +			new_perms[n].vmid = QCOM_SCM_RM_MANAGED_VMID;
+> +		if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_X)
+> +			new_perms[n].perm |= QCOM_SCM_PERM_EXEC;
+> +		if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_W)
+> +			new_perms[n].perm |= QCOM_SCM_PERM_WRITE;
+> +		if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_R)
+> +			new_perms[n].perm |= QCOM_SCM_PERM_READ;
+> +	}
+> +
+> +	src = BIT_ULL(QCOM_SCM_VMID_HLOS);
+> +
+> +	for (i = 0; i < mem_parcel->n_mem_entries; i++) {
+> +		src_cpy = src;
+> +		ret = qcom_scm_assign_mem(le64_to_cpu(mem_parcel->mem_entries[i].phys_addr),
+> +						le64_to_cpu(mem_parcel->mem_entries[i].size),
+> +						&src_cpy, new_perms, mem_parcel->n_acl_entries);
+> +		if (ret)
+> +			break;
+> +	}
+> +
+> +	if (!ret)
+> +		goto out;
+
+I was going to complain that you don't unroll the assignments on
+failure, but now realized that this "error handling" is backwards and
+actually represents the success case.
+
+Please don't do that, goto error_handling || kfree(new_perms); return 0;
+here instead.
+
+
+That also means that you don't need to zero-initialize ret, because you
+would goto err_reclaim inside the loop.
+
+> +
+> +	src = 0;
+> +	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
+> +		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
+> +		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
+> +			src |= BIT_ULL(vmid);
+> +		else
+> +			src |= BIT_ULL(QCOM_SCM_RM_MANAGED_VMID);
+> +	}
+> +
+> +	new_perms[0].vmid = QCOM_SCM_VMID_HLOS;
+> +
+> +	for (i--; i >= 0; i--) {
+> +		src_cpy = src;
+> +		WARN_ON_ONCE(qcom_scm_assign_mem(
+> +				le64_to_cpu(mem_parcel->mem_entries[i].phys_addr),
+> +				le64_to_cpu(mem_parcel->mem_entries[i].size),
+> +				&src_cpy, new_perms, 1));
+> +	}
+> +
+> +out:
+> +	kfree(new_perms);
+> +	return ret;
+> +}
 
 Regards,
 Bjorn
