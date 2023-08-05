@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82C2A771108
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 19:42:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C10577110A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 19:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230158AbjHERme (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Aug 2023 13:42:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56908 "EHLO
+        id S230148AbjHERmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Aug 2023 13:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230146AbjHERmb (ORCPT
+        with ESMTP id S230157AbjHERmj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Aug 2023 13:42:31 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2364A3AB1
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Aug 2023 10:42:21 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-6874d1c8610so2228244b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Aug 2023 10:42:21 -0700 (PDT)
+        Sat, 5 Aug 2023 13:42:39 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2EE3C2D
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Aug 2023 10:42:24 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-686ba29ccb1so2111135b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Aug 2023 10:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691257340; x=1691862140;
+        d=linaro.org; s=google; t=1691257343; x=1691862143;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6DdQ17i05e7SXOOOl5eag5513m9DyQQ031lLX7RYOeM=;
-        b=z4YGgwR2elh/iFIEMIUuNAj75llc2sReLBB/7yRb9iY10hRhPLGSIKMAOsbKqiruEJ
-         e85zr/jUwZeceCfIFHWnSjwCUynVarvL9gIntTCBoIFNHDNG3jBkfvS5kuXKOkkRLlYc
-         lQX4Zignzpz7MQw2vQs/TjRvy4buMPaSBMCEDzA/iNe60kq3H4nwf36F00sUo4Ia0Moy
-         hNl0DKN8mImdD6VcaBgs8v6ftvL2fz6IkM7C2zySYqRW/cjpzZRqndVbN+QNqgBMKIWu
-         CwKRaJCs6xZEaauXEJoVLEKvQN9IFredPVAFJgHzLGaaZAhLfvyyxaizTUbNx6B0qbCw
-         6Gng==
+        bh=1Sk0pPWqBxPd0LZRhqUZVkkGQlVge4WAhNj/aqE/s4Y=;
+        b=r3e0kB4hxBfTtxIB0onMjnTolvvCfOWZ6jFqGifW4WvCZljrocy7UTblzz5SgbZSMV
+         Tsg6Grb5tNsecdh7a3xvki0xfGCzsjstt2awTgo5qChvIy5eZZHhzs3p9ax0WcWC3Tei
+         tgcyE9SjI8JNLSsZz7XZn+YlxNV9B7RczmluWvy6OA5QTxU+XnstbRxTykip1aunBR+w
+         wvO3V5k/mzf7dNLhvllWENRiaYAON41uRSDRlsd3pI4/QUAx8NVDMFoRJUe9M331xiDK
+         WRxJ80B9Pix7WXIMMX/Eh7wTIMNZMUz6ESVIzmjKRIGxflRDWv8dy9e9WDLjaLBsQmj/
+         CLow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691257340; x=1691862140;
+        d=1e100.net; s=20221208; t=1691257343; x=1691862143;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6DdQ17i05e7SXOOOl5eag5513m9DyQQ031lLX7RYOeM=;
-        b=Nd7EampSr+QjCQcK+wRvyDWFPLVbjoCxcai2rcJ06f6giOfE5RcLCEGKjdXWnIc3RB
-         WV4bM3Sf7x8ONNYQdMPCSSbGJl39lSHXiKBKQPUlQCp8uFQ3Sop/Wiqdizsw4+LAVVEJ
-         XLjiqZZssiGOCZWhhLMSxYZ8SNc8m5pjdK1JrLAZkE2pgi5or4ZAVyetxjeXjf3Xa/I1
-         ETn78Sqhbaoion7cuTK4IltkDqoUIYMJSJpe3b67W9mu3peKqqTO7gdnuWhgKy9fbZ4j
-         SlIYkkDkgeFKXDPpoY2Y3gDNx+06563siSNiM8ZaANdh56hD8QhASo58+x+GzPEgMjz9
-         J7Yg==
-X-Gm-Message-State: AOJu0Yz3jpTEmBhc3pBqFUPcSwok4oyRizl1BGolEmFbytlD5X6YlLTV
-        iHYtOrQ/19+ny9jiUxMYEphl
-X-Google-Smtp-Source: AGHT+IFKwnABP3vDMVazc2QTk+cvtQZ8yH68NQhgjQamItU7KcCa/d/HqrT5m1bOe/BPp6jzK4AlmQ==
-X-Received: by 2002:a05:6a00:2d91:b0:687:29ce:2fa6 with SMTP id fb17-20020a056a002d9100b0068729ce2fa6mr4911550pfb.7.1691257340058;
-        Sat, 05 Aug 2023 10:42:20 -0700 (PDT)
+        bh=1Sk0pPWqBxPd0LZRhqUZVkkGQlVge4WAhNj/aqE/s4Y=;
+        b=JuxeedJr+iOrf46yS159QU24eDMRgeM13X9bCMAzBCE6tCSFaDDGT9qZiRhc25dvvY
+         SJfWY0Qyvb9QTy6C8q4JECrsS2wdnuarMQcDxmTiZty/f/zlnCJAPa6salTij8UiL6Uu
+         Didrplr510ay7mAp/1d4F/hkmwmqSu2IkLJq/6NACNlBUKr1Ez3O5D/h/fYkB5aKIUii
+         vERcjS7qCPHQTgvJKru9w367tNIag1LldDuIfxDf6NkFtZZL6oY8G56SYxV3Ro6hw9w2
+         WANPCpXzX6lOnm8vkH9IPlHPmHUWp9Y/S2woe1gh97HT3ZmHDDY+U4TikndJ0q2CdBVZ
+         kKww==
+X-Gm-Message-State: AOJu0Yyh25cjP+co3RTASDkx4ZH1NraSR/N6JlA1Ls5LD2QP+OQ2ipSX
+        Kmmf8ZxYsT8z2dLnvSYtJYyf
+X-Google-Smtp-Source: AGHT+IGfVwqNV2yZu3HBwsINeFiBqSoo6eDBh4XGHw3BY2S/rCtcxHL+55POlo+nJk6aFa9hHqDL5A==
+X-Received: by 2002:a05:6a20:12c2:b0:12e:caac:f263 with SMTP id v2-20020a056a2012c200b0012ecaacf263mr3443189pzg.20.1691257343130;
+        Sat, 05 Aug 2023 10:42:23 -0700 (PDT)
 Received: from localhost.localdomain ([103.28.246.21])
-        by smtp.gmail.com with ESMTPSA id i14-20020aa78b4e000000b006874a6850e9sm3363160pfd.215.2023.08.05.10.42.17
+        by smtp.gmail.com with ESMTPSA id i14-20020aa78b4e000000b006874a6850e9sm3363160pfd.215.2023.08.05.10.42.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Aug 2023 10:42:19 -0700 (PDT)
+        Sat, 05 Aug 2023 10:42:22 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     miquel.raynal@bootlin.com, vigneshr@ti.com
 Cc:     richard@nod.at, linux-mtd@lists.infradead.org,
@@ -57,9 +57,9 @@ Cc:     richard@nod.at, linux-mtd@lists.infradead.org,
         quic_mdalam@quicinc.com, quic_srichara@quicinc.com,
         dan.carpenter@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 05/10] mtd: rawnand: qcom: Use EOPNOTSUPP instead of ENOTSUPP
-Date:   Sat,  5 Aug 2023 23:11:41 +0530
-Message-Id: <20230805174146.57006-6-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 06/10] mtd: rawnand: qcom: Wrap qcom_nand_exec_op() to 80 columns
+Date:   Sat,  5 Aug 2023 23:11:42 +0530
+Message-Id: <20230805174146.57006-7-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
 References: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
@@ -75,30 +75,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Checkpatch complains over the usage of ENOTSUPP for new patches as below:
-
-WARNING: ENOTSUPP is not a SUSV4 error code, prefer EOPNOTSUPP
-
-So let's fix the error code which is already present in qcom_check_op().
+Both the function arguments and the definition could be wrapped to 80
+columns to save line space.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/qcom_nandc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 29fcdac932f1..a7a9421ef003 100644
+index a7a9421ef003..4f38579ae03e 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -3040,7 +3040,7 @@ static int qcom_check_op(struct nand_chip *chip,
- 			    instr->ctx.cmd.opcode != NAND_CMD_ERASE2 &&
- 			    instr->ctx.cmd.opcode != NAND_CMD_STATUS &&
- 			    instr->ctx.cmd.opcode != NAND_CMD_PAGEPROG)
--				return -ENOTSUPP;
-+				return -EOPNOTSUPP;
- 			break;
- 		default:
- 			break;
+@@ -3051,14 +3051,12 @@ static int qcom_check_op(struct nand_chip *chip,
+ }
+ 
+ static int qcom_nand_exec_op(struct nand_chip *chip,
+-			     const struct nand_operation *op,
+-			bool check_only)
++			     const struct nand_operation *op, bool check_only)
+ {
+ 	if (check_only)
+ 		return qcom_check_op(chip, op);
+ 
+-	return nand_op_parser_exec_op(chip, &qcom_op_parser,
+-			op, check_only);
++	return nand_op_parser_exec_op(chip, &qcom_op_parser, op, check_only);
+ }
+ 
+ static const struct nand_controller_ops qcom_nandc_ops = {
 -- 
 2.25.1
 
