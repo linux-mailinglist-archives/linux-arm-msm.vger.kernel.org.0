@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 718E3771101
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 19:42:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0ADA771104
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 19:42:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230111AbjHERmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Aug 2023 13:42:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56510 "EHLO
+        id S230135AbjHERmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Aug 2023 13:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230112AbjHERmL (ORCPT
+        with ESMTP id S230139AbjHERmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Aug 2023 13:42:11 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3AE6183
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Aug 2023 10:42:10 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-68706b39c4cso2161381b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Aug 2023 10:42:10 -0700 (PDT)
+        Sat, 5 Aug 2023 13:42:19 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E30CE78
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Aug 2023 10:42:14 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-686ed1d2594so3011387b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Aug 2023 10:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691257330; x=1691862130;
+        d=linaro.org; s=google; t=1691257333; x=1691862133;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CXEH8Wa3ojD+esCQhV22he8Pc5JwMdbmIGFKAtqq3lU=;
-        b=i9tbqf5TzsxdR8yFifphKZWnrPl1Ckv74LxFEHOMpMMvv5kdJzVDtoDtExAZ7t0N9t
-         KzG638x7INF+Mac7aTRK4k7wN2umrVA+od63KF/I/lzeYFvljlGw64ocISCIS3r2OxqU
-         nZAjyQ2VCY15S2Va+1eFSMG3rK0RbgmLaFC6VJLxa9rODoISrce5p32Kr4G1cn85p6Qi
-         8twOkwW0nP5ucMoTQ59lLnVlpkxHcIHdLd3FseL8GOWelgkX3m7jrUKqdPWMMkrakER+
-         vlUgPoF/zCoAbcvoiUdWHiNlMnFtN33kkQarBJtlyWG/av+eu8MN5H6qne6JGZb0ElWK
-         F0Vw==
+        bh=uWgVvz/rSzQAaNBR+0GRt5Tgri/Am0g/0Utn1T92Y2Y=;
+        b=spmuW2205c4AMxvmTZqta+KfpbmGiMADfX552zTgjqqhuoU5jB50Rvj6YA5huHCmxS
+         Clj8Tc/0sYIjn8v3eOqz9XQ/ICo1AOxtgTjNwJn285MAh7sCg0B6/9qmkvNTKmqY31KM
+         kF1ntOt634CLv/Qdwqiiwb2WbWP5MocBnkT7Hj96LUqUuSGE8g9FdfBT64hp5UemWICs
+         uwVemBDY2CR9JB7S/JBkewlSzcg2alQG4DzmdXAuZQpoTdUqiYiHwIo2cw9fbXvyOaip
+         vDDwiawt5foQ3dgQ2Och6bf1DoT/UDLHoj87uHzsYv/h3mQQcFlvkFrYqiB/E/U1Bb+m
+         +0Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691257330; x=1691862130;
+        d=1e100.net; s=20221208; t=1691257333; x=1691862133;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CXEH8Wa3ojD+esCQhV22he8Pc5JwMdbmIGFKAtqq3lU=;
-        b=dp4qL2p2prIOuON8s0uqSiCjxEgFY5sr6DaROw9rWG6WBL+Ry2rLW4cdiwgh31XT1L
-         +awkstUjeuYPgciQi1+/geBYXE1RHfaoG8DOqJzvicj2KYj+hGRIHSW+1rY5g0ZBU+vt
-         eAmm1MEt+9Gxgu2Dp8Q3/QDFNAwpt56xp5M1iiCiIqPnyHU9Og11emfJgxRdonSzvkiN
-         +LfYc0ojjcnZdGc3owMCQj0M4OtKZdjfDW0OU1Jgj9Q4JHXu2ok9V3qbeMw9RtCfQmAk
-         c64j0uxr62AJteeFEXKpqqpVQzUaB6Mc/r8hAJrPdbkhRpnS2jobiF3AK3utZI48f60E
-         Erdw==
-X-Gm-Message-State: AOJu0YxMhSKxcX+sZREwSRqaoWTPrq4Y1cYTsIH2Kd5i3t+j4cGYS3nL
-        YLVzB7mYEO/GSd+HgiYJu1bV
-X-Google-Smtp-Source: AGHT+IEQZKy6eZ9zB73Nlmrdh8OA6cfrfr262pAHVYOI+3rkx6/lhGQc0+CoG0aVyM/nTPlKCjypgA==
-X-Received: by 2002:a05:6a00:1501:b0:675:ef91:7922 with SMTP id q1-20020a056a00150100b00675ef917922mr4571732pfu.4.1691257330155;
-        Sat, 05 Aug 2023 10:42:10 -0700 (PDT)
+        bh=uWgVvz/rSzQAaNBR+0GRt5Tgri/Am0g/0Utn1T92Y2Y=;
+        b=C34fcB3jW0zGBXZiCnkGypVa6n5Vb8rwVbF9oslTyOz9R/qllIqJJlfF2gBJc/WZg8
+         yTT2dFcGRN7ynMvPtmogrAN9S864h8sDCdRFxuwJoQ2OWccCtiooXowNmgtQECGsfXiU
+         3U3uUD9IOj8G/gBHsow62OKFnmgMDq2lXHYOA2EDLAvaiuyAZpxkooh4bLoB+wdIPSGc
+         Cq2YwnY8PwPK2Fr/m0B3zcZ8gRdF3q1AvI3Fv0uOvWHzMtALtZbjjVJZa9NKpZupJ1yH
+         NWDF8UavtpJKi3HQNDto30vcLUR9k1XwXDS2zvyFTLKHTtSmvfM6pmJJOM4O6RW87Dfv
+         LolQ==
+X-Gm-Message-State: AOJu0Yzx+Yk7WjRshz5/W8/qoEz+gS2W682VxQeaLu4WIEZU82MqVo/v
+        xhs8GYpC5liyBdshTnRlQ8Ix
+X-Google-Smtp-Source: AGHT+IElfmMvpoXzEv7T8xFD3V6MeRB4DjmbKf0fKAgK1eie9hb1tQx+4CUQdeE1PPVXG/iSNIBwXQ==
+X-Received: by 2002:a05:6a20:1456:b0:13f:5234:24ce with SMTP id a22-20020a056a20145600b0013f523424cemr6875817pzi.28.1691257333498;
+        Sat, 05 Aug 2023 10:42:13 -0700 (PDT)
 Received: from localhost.localdomain ([103.28.246.21])
-        by smtp.gmail.com with ESMTPSA id i14-20020aa78b4e000000b006874a6850e9sm3363160pfd.215.2023.08.05.10.42.07
+        by smtp.gmail.com with ESMTPSA id i14-20020aa78b4e000000b006874a6850e9sm3363160pfd.215.2023.08.05.10.42.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Aug 2023 10:42:09 -0700 (PDT)
+        Sat, 05 Aug 2023 10:42:13 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     miquel.raynal@bootlin.com, vigneshr@ti.com
 Cc:     richard@nod.at, linux-mtd@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_mdalam@quicinc.com, quic_srichara@quicinc.com,
         dan.carpenter@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 02/10] mtd: rawnand: qcom: Rename variables in qcom_op_cmd_mapping()
-Date:   Sat,  5 Aug 2023 23:11:38 +0530
-Message-Id: <20230805174146.57006-3-manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH 03/10] mtd: rawnand: qcom: Handle unsupported opcode in qcom_op_cmd_mapping()
+Date:   Sat,  5 Aug 2023 23:11:39 +0530
+Message-Id: <20230805174146.57006-4-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
 References: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
@@ -75,72 +76,129 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qcom_op_cmd_mapping() function accepts opcode and returns the corresponding
-command register. So let's rename the local variables and parameters to
-reflect the same.
+Handle the scenario where the caller has passed an unsupported opcode to
+qcom_op_cmd_mapping(). In that case, log the error and return the
+-EOPNOTSUPP errono. Also, let's propagate this error code all the way up.
 
-Reported-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Closes: https://lore.kernel.org/all/20230804190750.3367a044@xps-13/
+This also fixes the following smatch warning:
+
+drivers/mtd/nand/raw/qcom_nandc.c:2941 qcom_op_cmd_mapping() error: uninitialized symbol 'ret'.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202308032022.SnXkKyFs-lkp@intel.com/
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/mtd/nand/raw/qcom_nandc.c | 35 ++++++++++++++++++++++++-------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index b6751fb17587..be428b80a39b 100644
+index be428b80a39b..4957e9253878 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2555,39 +2555,39 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
- 	return 0;
- }
- 
--static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 cmd,
-+static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 opcode,
- 			       struct qcom_op *q_op)
- {
--	int ret;
-+	int cmd;
- 
--	switch (cmd) {
-+	switch (opcode) {
- 	case NAND_CMD_RESET:
--		ret = OP_RESET_DEVICE;
-+		cmd = OP_RESET_DEVICE;
- 		break;
- 	case NAND_CMD_READID:
--		ret = OP_FETCH_ID;
-+		cmd = OP_FETCH_ID;
- 		break;
- 	case NAND_CMD_PARAM:
- 		if (nandc->props->qpic_v2)
--			ret = OP_PAGE_READ_ONFI_READ;
-+			cmd = OP_PAGE_READ_ONFI_READ;
- 		else
--			ret = OP_PAGE_READ;
-+			cmd = OP_PAGE_READ;
- 		break;
- 	case NAND_CMD_ERASE1:
- 	case NAND_CMD_ERASE2:
--		ret = OP_BLOCK_ERASE;
-+		cmd = OP_BLOCK_ERASE;
- 		break;
- 	case NAND_CMD_STATUS:
--		ret = OP_CHECK_STATUS;
-+		cmd = OP_CHECK_STATUS;
- 		break;
- 	case NAND_CMD_PAGEPROG:
--		ret = OP_PROGRAM_PAGE;
-+		cmd = OP_PROGRAM_PAGE;
+@@ -2585,20 +2585,23 @@ static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 opcode,
  		q_op->flag = OP_PROGRAM_PAGE;
  		nandc->exec_opwrite = true;
  		break;
++	default:
++		dev_err(nandc->dev, "Opcode not supported: %u\n", opcode);
++		return -EOPNOTSUPP;
  	}
  
--	return ret;
-+	return cmd;
+ 	return cmd;
  }
  
  /* NAND framework ->exec_op() hooks and related helpers */
+-static void qcom_parse_instructions(struct nand_chip *chip,
++static int qcom_parse_instructions(struct nand_chip *chip,
+ 				    const struct nand_subop *subop,
+ 				    struct qcom_op *q_op)
+ {
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+ 	const struct nand_op_instr *instr = NULL;
+ 	unsigned int op_id;
+-	int i;
++	int i, ret;
+ 
+ 	for (op_id = 0; op_id < subop->ninstrs; op_id++) {
+ 		unsigned int offset, naddrs;
+@@ -2608,7 +2611,11 @@ static void qcom_parse_instructions(struct nand_chip *chip,
+ 
+ 		switch (instr->type) {
+ 		case NAND_OP_CMD_INSTR:
+-			q_op->cmd_reg = qcom_op_cmd_mapping(nandc, instr->ctx.cmd.opcode, q_op);
++			ret = qcom_op_cmd_mapping(nandc, instr->ctx.cmd.opcode, q_op);
++			if (ret < 0)
++				return ret;
++
++			q_op->cmd_reg = ret;
+ 			q_op->rdy_delay_ns = instr->delay_ns;
+ 			break;
+ 
+@@ -2641,6 +2648,8 @@ static void qcom_parse_instructions(struct nand_chip *chip,
+ 			break;
+ 		}
+ 	}
++
++	return 0;
+ }
+ 
+ static void qcom_delay_ns(unsigned int ns)
+@@ -2689,7 +2698,9 @@ static int qcom_read_status_exec(struct nand_chip *chip,
+ 
+ 	host->status = NAND_STATUS_READY | NAND_STATUS_WP;
+ 
+-	qcom_parse_instructions(chip, subop, &q_op);
++	ret = qcom_parse_instructions(chip, subop, &q_op);
++	if (ret)
++		return ret;
+ 
+ 	num_cw = nandc->exec_opwrite ? ecc->steps : 1;
+ 	nandc->exec_opwrite = false;
+@@ -2749,7 +2760,9 @@ static int qcom_read_id_type_exec(struct nand_chip *chip, const struct nand_subo
+ 	unsigned int len = 0;
+ 	int ret;
+ 
+-	qcom_parse_instructions(chip, subop, &q_op);
++	ret = qcom_parse_instructions(chip, subop, &q_op);
++	if (ret)
++		return ret;
+ 
+ 	nandc->buf_count = 0;
+ 	nandc->buf_start = 0;
+@@ -2797,7 +2810,9 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
+ 	struct qcom_op q_op = {};
+ 	int ret;
+ 
+-	qcom_parse_instructions(chip, subop, &q_op);
++	ret = qcom_parse_instructions(chip, subop, &q_op);
++	if (ret)
++		return ret;
+ 
+ 	if (q_op.flag == OP_PROGRAM_PAGE)
+ 		goto wait_rdy;
+@@ -2843,7 +2858,9 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+ 	unsigned int len = 0;
+ 	int ret;
+ 
+-	qcom_parse_instructions(chip, subop, &q_op);
++	ret = qcom_parse_instructions(chip, subop, &q_op);
++	if (ret)
++		return ret;
+ 
+ 	q_op.cmd_reg |= PAGE_ACC | LAST_PAGE;
+ 
+@@ -2937,7 +2954,9 @@ static int qcom_erase_cmd_type_exec(struct nand_chip *chip, const struct nand_su
+ 	struct qcom_op q_op = {};
+ 	int ret;
+ 
+-	qcom_parse_instructions(chip, subop, &q_op);
++	ret = qcom_parse_instructions(chip, subop, &q_op);
++	if (ret)
++		return ret;
+ 
+ 	q_op.cmd_reg |= PAGE_ACC | LAST_PAGE;
+ 
 -- 
 2.25.1
 
