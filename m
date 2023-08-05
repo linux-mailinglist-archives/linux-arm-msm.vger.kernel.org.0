@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E538A7710FE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 19:42:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1F0771100
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Aug 2023 19:42:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229814AbjHERmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Aug 2023 13:42:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56474 "EHLO
+        id S230097AbjHERmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Aug 2023 13:42:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjHERmF (ORCPT
+        with ESMTP id S229676AbjHERmI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Aug 2023 13:42:05 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A455103
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Aug 2023 10:42:04 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-686b643df5dso2171206b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Aug 2023 10:42:04 -0700 (PDT)
+        Sat, 5 Aug 2023 13:42:08 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EBA1103
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Aug 2023 10:42:07 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-68730bafa6bso2826505b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Aug 2023 10:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691257324; x=1691862124;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2LjEphxbAcNmk9OuIlZ94EZVoNAFsXVDLzgtQBZgFFQ=;
-        b=iM/QsUsabggE7YohYddy8BZqv8PLiVjz/B2omd5Oi/syBuKENzIZccFSX8Mjnidn70
-         1enPhOhCh/CojRhMib5LOMGvwq5NLU/p9hDixVbtNizzVTt2Of69z9JMzgw/f2mXbHzA
-         nE5m8eCYtYMvNvoBzjaNapuAXqRl47upLJuLpJR5g/Yfro+yoYd54xnitlMMyLuyY2ww
-         0gDGKgkBck2LwllXc4rdBCsp8i7uEpHKTVIu557vPIWnnBCS/bH5HL0HsnkeFpiT/R+L
-         sel1yLhqlX53djhwSIoLADLg7HQbRjYN9kjq8wNgY1Z6nfwv8KWklyuhECC/x049WJuO
-         jo5Q==
+        d=linaro.org; s=google; t=1691257327; x=1691862127;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LzHoBg1aTtFdNgIFHIxm61nutJbPmolyU88qKYX8avE=;
+        b=e1bZg3WPmbUxYy4tVUd2YabTZ8JXTzEPZRnA0bqC3L7uQXcn6U887EK3lAeNlDZyNC
+         vQjEbD9X1fJLxuU5Zv/7ik4UhOHvvdSysx4b4cCOLfdSo9+IbFEQx/QDw9Zair9WhJyJ
+         0pDNjZAmedfhhDhiC+hcnm6hLq+kf2Ma3ecnjHM/R6tfqcRftOpsw1bXYOrQVsOLJjas
+         J4p85ACOLMtCOVfV3nW/3jAGe11uzBmQzbdlzmGs/O+TIpgy8SLk3TpWPKtYyvnk5v4d
+         hkHTWzB5dWlbQWhRalHEGZghsjx5CPq/FKL3q4R5PtlvenwD61jnGfrZk9y6vn4kTYIG
+         YIFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691257324; x=1691862124;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2LjEphxbAcNmk9OuIlZ94EZVoNAFsXVDLzgtQBZgFFQ=;
-        b=QbDeXUOQq9SvV+lQ5g68cDhhLuNlExCNBhdyqQUpZnCZb6xuTuXUn2n7nbmygFxnfq
-         dBCSzmpFrpmgN25WdTuLCXR88hgzHC4eHKaRDsmbig9nkVVvGxOHzqzDWojMjMQgkje9
-         bLilnmMUb7PCwKDupzHiNTL7JV44yMUbfqpi/fcdPxsSIBSC0zgpO4j4FXCApSbtd+Fq
-         dCKWPyZYoYo8WQDrjM2lVGKcRzzMgRnL5QYbiPZExrT4QIrBxx15oWgaWe+aM6j1B0Yb
-         +UnUSUfm0OaRq+XkbC9FZRfIgP+kqY1p7NHmvTWe98CkRafB/OXzrZ4Qr/FMtjSKWQvI
-         CxFA==
-X-Gm-Message-State: AOJu0YwsPoZaeRuYl7E9Qux2qunEQiJB/yO/QvWCYBIeOsW/UmCHw5K5
-        EIHc4V7OJQZIONR8E1eAFq2y
-X-Google-Smtp-Source: AGHT+IFJfhm/Y/G4uZNTHP5zy/WL24vliQ/xJ5ECsmWh2A3VOvzdhfvM/1qcfzd0Ndh8NGCNvJHvAw==
-X-Received: by 2002:a05:6a00:1743:b0:66a:365c:a0e6 with SMTP id j3-20020a056a00174300b0066a365ca0e6mr4617174pfc.13.1691257323649;
-        Sat, 05 Aug 2023 10:42:03 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691257327; x=1691862127;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LzHoBg1aTtFdNgIFHIxm61nutJbPmolyU88qKYX8avE=;
+        b=MBDYOY2jzna70QeYtwZlm8JDUi9B9tKQALT0nw3kRFp7NvGktEV7jqoVo+iZXePyN7
+         TBwrw7wzly82v9tTLhgJJaCthXctJ1yHUGZBokwLkMeTNHuIenvmzt6SsuXEAW2q3AvV
+         hKjnF4U/fhnaFxD5ttZljezWeE0E0W5CM4c1tsOV0GrtmkDQm5puplKkUnnnwSDvUhtt
+         hGqId8lx8SoEE3/aSUlQCQDvzLw/J49gslasQTcJvXrbPruKYzxQh1aYsYf26s4l2Dkd
+         eTIx/Dn+7cp61mDtd0mcWMM/aw3/N9upZ8GFnQ6SOaSg4sViyybMCDyKNUQWBu4brJvt
+         5gmg==
+X-Gm-Message-State: AOJu0YyvrdX60UhAxAmks0cyiXC1h526dgBTLq06IXKZDEcoX71VJdxf
+        txCqKAaNU7Rx9Ro4ovXbAFGb
+X-Google-Smtp-Source: AGHT+IEOiKPKt0ItAknA4l5B8LXP+gGY8RF1sPeFYB7R7juUVo86q4NWggmSxvfpHBmQc9/dyHihKQ==
+X-Received: by 2002:a05:6a20:7fa3:b0:12f:d350:8a12 with SMTP id d35-20020a056a207fa300b0012fd3508a12mr4024851pzj.21.1691257326933;
+        Sat, 05 Aug 2023 10:42:06 -0700 (PDT)
 Received: from localhost.localdomain ([103.28.246.21])
-        by smtp.gmail.com with ESMTPSA id i14-20020aa78b4e000000b006874a6850e9sm3363160pfd.215.2023.08.05.10.42.00
+        by smtp.gmail.com with ESMTPSA id i14-20020aa78b4e000000b006874a6850e9sm3363160pfd.215.2023.08.05.10.42.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Aug 2023 10:42:03 -0700 (PDT)
+        Sat, 05 Aug 2023 10:42:06 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     miquel.raynal@bootlin.com, vigneshr@ti.com
 Cc:     richard@nod.at, linux-mtd@lists.infradead.org,
@@ -56,10 +57,12 @@ Cc:     richard@nod.at, linux-mtd@lists.infradead.org,
         quic_mdalam@quicinc.com, quic_srichara@quicinc.com,
         dan.carpenter@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 00/10] mtd: rawnand: qcom: Bunch of fixes and cleanups
-Date:   Sat,  5 Aug 2023 23:11:36 +0530
-Message-Id: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 01/10] mtd: rawnand: qcom: Remove superfluous initialization of "ret"
+Date:   Sat,  5 Aug 2023 23:11:37 +0530
+Message-Id: <20230805174146.57006-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
+References: <20230805174146.57006-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,33 +75,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Miquel,
+In all the cases, "ret" variable is assigned a value before returning it.
+So there is no need to explicitly initialize it with 0.
 
-This series has fixes for the smatch warnings reported by Kbuild bot [1]
-and also several cleanup patches based on my code observation.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/mtd/nand/raw/qcom_nandc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-I've only compile tested this series. So let's wait for Sadre/Sricharan to
-give a tested-by tag to make sure I didn't mess up anything.
-
-- Mani
-
-[1] https://lore.kernel.org/all/202308040141.gUjtZ32J-lkp@intel.com/
-
-Manivannan Sadhasivam (10):
-  mtd: rawnand: qcom: Remove superfluous initialization of "ret"
-  mtd: rawnand: qcom: Rename variables in qcom_op_cmd_mapping()
-  mtd: rawnand: qcom: Handle unsupported opcode in qcom_op_cmd_mapping()
-  mtd: rawnand: qcom: Fix the opcode check in qcom_check_op()
-  mtd: rawnand: qcom: Use EOPNOTSUPP instead of ENOTSUPP
-  mtd: rawnand: qcom: Wrap qcom_nand_exec_op() to 80 columns
-  mtd: rawnand: qcom: Unmap sg_list and free desc within submic_descs()
-  mtd: rawnand: qcom: Simplify the call to nand_prog_page_end_op()
-  mtd: rawnand: qcom: Do not override the error no of submit_descs()
-  mtd: rawnand: qcom: Sort includes alphabetically
-
- drivers/mtd/nand/raw/qcom_nandc.c | 192 ++++++++++++++----------------
- 1 file changed, 91 insertions(+), 101 deletions(-)
-
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index b485d8517fce..b6751fb17587 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -1554,7 +1554,7 @@ check_for_erased_page(struct qcom_nand_host *host, u8 *data_buf,
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+ 	struct nand_ecc_ctrl *ecc = &chip->ecc;
+ 	u8 *cw_data_buf, *cw_oob_buf;
+-	int cw, data_size, oob_size, ret = 0;
++	int cw, data_size, oob_size, ret;
+ 
+ 	if (!data_buf)
+ 		data_buf = nand_get_data_buf(chip);
+@@ -2684,7 +2684,7 @@ static int qcom_read_status_exec(struct nand_chip *chip,
+ 	const struct nand_op_instr *instr = NULL;
+ 	unsigned int op_id = 0;
+ 	unsigned int len = 0;
+-	int ret = 0, num_cw, i;
++	int ret, num_cw, i;
+ 	u32 flash_status;
+ 
+ 	host->status = NAND_STATUS_READY | NAND_STATUS_WP;
+@@ -2747,7 +2747,7 @@ static int qcom_read_id_type_exec(struct nand_chip *chip, const struct nand_subo
+ 	const struct nand_op_instr *instr = NULL;
+ 	unsigned int op_id = 0;
+ 	unsigned int len = 0;
+-	int ret = 0;
++	int ret;
+ 
+ 	qcom_parse_instructions(chip, subop, &q_op);
+ 
+@@ -2795,7 +2795,7 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+ 	struct qcom_nand_host *host = to_qcom_nand_host(chip);
+ 	struct qcom_op q_op = {};
+-	int ret = 0;
++	int ret;
+ 
+ 	qcom_parse_instructions(chip, subop, &q_op);
+ 
+@@ -2841,7 +2841,7 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+ 	const struct nand_op_instr *instr = NULL;
+ 	unsigned int op_id = 0;
+ 	unsigned int len = 0;
+-	int ret = 0;
++	int ret;
+ 
+ 	qcom_parse_instructions(chip, subop, &q_op);
+ 
+@@ -2935,7 +2935,7 @@ static int qcom_erase_cmd_type_exec(struct nand_chip *chip, const struct nand_su
+ 	struct qcom_nand_host *host = to_qcom_nand_host(chip);
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+ 	struct qcom_op q_op = {};
+-	int ret = 0;
++	int ret;
+ 
+ 	qcom_parse_instructions(chip, subop, &q_op);
+ 
 -- 
 2.25.1
 
