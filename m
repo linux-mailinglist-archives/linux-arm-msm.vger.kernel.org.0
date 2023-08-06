@@ -2,391 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF1857713AB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Aug 2023 07:09:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1F477147B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Aug 2023 12:48:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbjHFFI6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Aug 2023 01:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
+        id S230333AbjHFKsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Aug 2023 06:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjHFFI6 (ORCPT
+        with ESMTP id S229509AbjHFKr7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Aug 2023 01:08:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9E41FCB;
-        Sat,  5 Aug 2023 22:08:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E18CC60D30;
-        Sun,  6 Aug 2023 05:08:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C486AC433C8;
-        Sun,  6 Aug 2023 05:08:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691298535;
-        bh=3ky+wpe10b6Qv3cw6OkN3Avc7rZzkz3wNoVTLLLBIfM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TYERX3YfNz7P95IqZ88V737zWkUIzmscfYd1DozOVmoaStdqUu7qHhbFpYHD00yYu
-         Jh2DGjnmwqneQvy4aU0iP9JQjDXgHiwskQSwtSN+PfNWR3RxJSQtFRnjdcFOvpE8Qr
-         dcW+Oq+cdKGh6Qiv+LoC+1V0H/LVoS07+X+BCApEeMBQyh5TV6rBzfz3mcI2TOOyDY
-         0Uhh8tCckU7nHZQJutnAREEmcJd4okuQc72soqe/gUCvsaB8q3Py5jnDiaMbUKBicK
-         pj7kDJZPtFg5njJEJjxQ2GCiH7r/Fgb8TXEXNkBHUTI08lrKtcRa3FA6l1iaUvZbLv
-         rnZ1D5m4bLqTw==
-Date:   Sat, 5 Aug 2023 22:11:52 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sun, 6 Aug 2023 06:47:59 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAEBDB8;
+        Sun,  6 Aug 2023 03:47:54 -0700 (PDT)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id C0D4FCF63C;
+        Sun,  6 Aug 2023 10:47:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1691318873; bh=cADcKcnDy8gLxnojyW532VLW7T8QirnxnQhcPDcckqo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=W8JMkEKrEKilRpRJOOyop+A9Z1lwHYBuY/Y6h0EpEB4ujaHvE+oviJ34f1Nvj8wP7
+         JK52mmBnBsCL3smqQPA0w45gU/AWDa8+0ZFMA87K6BlDCaCAKaXYg0D1AfGJtXsQoG
+         ZE+91uFeMiSHfk/2ddeS8L5iq+/0Y9HRh4ArPOPs=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Rob Herring <robh@kernel.org>,
+        Andy Gross <andy.gross@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v10 06/11] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-Message-ID: <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
-References: <20230727223307.8096-1-quic_kriskura@quicinc.com>
- <20230727223307.8096-7-quic_kriskura@quicinc.com>
+        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
+Subject: Re: [PATCH v2] ARM: dts: qcom: msm8974: correct qfprom node size
+Date:   Sun, 06 Aug 2023 12:47:51 +0200
+Message-ID: <12394955.O9o76ZdvQC@z3ntu.xyz>
+In-Reply-To: <ff6fwomoik6kz4jtbm5jac7jahrtcia5fb6dj5ykxg7xt574sn@ti42sevqj6pk>
+References: <20230130-msm8974-qfprom-v2-1-3839cf41d9ee@z3ntu.xyz>
+ <866f1f66-8845-2453-ab9c-d125e23ae758@linaro.org>
+ <ff6fwomoik6kz4jtbm5jac7jahrtcia5fb6dj5ykxg7xt574sn@ti42sevqj6pk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230727223307.8096-7-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 28, 2023 at 04:03:02AM +0530, Krishna Kurapati wrote:
-> Refactor setup_irq call to facilitate reading multiport IRQ's along
-> with non mulitport ones. For SA8295, there are 4-DP/4-DM and 2-SS
-> IRQ's. Check whether device is multiport capable or not and read all
-> interrupts for DP/DM/SS on each port accordingly.
+Hi Bjorn,
+
+On Montag, 31. Juli 2023 23:45:21 CEST Bjorn Andersson wrote:
+> On Thu, Jun 15, 2023 at 08:20:41PM +0200, Konrad Dybcio wrote:
+> > On 15.06.2023 20:17, Luca Weiss wrote:
+> > > From: Craig Tatlor <ctatlor97@gmail.com>
+> > > 
+> > > The qfprom actually has size 0x3000, so adjust the reg.
+> > > 
+> > > Note that the non-ECC-corrected qfprom can be found at 0xfc4b8000
+> > > (-0x4000). The current reg points to the ECC-corrected qfprom block
+> > > which should have equivalent values at all offsets compared to the
+> > > non-corrected version.
+> > > 
+> > > [luca@z3ntu.xyz: extract to standalone patch and adjust for review
+> > > comments]
+> > > 
+> > > Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
+> > > qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
+> > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > > ---
+> > 
+> > Not sure of the actual size of the region, maybe Bjorn can help..
+> > 
+> > Downstream 3.10 suggests 0x60F0, 0x20F0 after adjusting for the ECC offset
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 277 ++++++++++++++++++++++++-----------
->  1 file changed, 190 insertions(+), 87 deletions(-)
+> There is indeed 0x3000 bytes until the next region, but afaict the
+> corrected ECC values only cover the first 0x800 bytes thereof.
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 3de43df6bbe8..ad89ded116d3 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -64,33 +64,61 @@ struct dwc3_acpi_pdata {
->  	bool			is_urs;
->  };
->  
-> +struct dwc3_qcom_of_match_data {
-> +	u8	num_ports;
-> +};
-> +
->  struct dwc3_qcom {
-> -	struct device		*dev;
-> -	void __iomem		*qscratch_base;
-> -	struct platform_device	*dwc3;
-> -	struct platform_device	*urs_usb;
-> -	struct clk		**clks;
-> -	int			num_clocks;
-> -	struct reset_control	*resets;
-> -
-> -	int			hs_phy_irq;
-> -	int			dp_hs_phy_irq;
-> -	int			dm_hs_phy_irq;
-> -	int			ss_phy_irq;
-> -	enum usb_device_speed	usb2_speed;
-> -
-> -	struct extcon_dev	*edev;
-> -	struct extcon_dev	*host_edev;
-> -	struct notifier_block	vbus_nb;
-> -	struct notifier_block	host_nb;
-> +	struct device				*dev;
-> +	void __iomem				*qscratch_base;
-> +	struct platform_device			*dwc3;
-> +	struct platform_device			*urs_usb;
-> +	struct clk				**clks;
-> +	int					num_clocks;
-> +	struct reset_control			*resets;
-> +
-> +	int					hs_phy_irq;
-> +	int					dp_hs_phy_irq[DWC3_MAX_PORTS];
-> +	int					dm_hs_phy_irq[DWC3_MAX_PORTS];
-> +	int					ss_phy_irq[DWC3_MAX_PORTS];
-> +	enum usb_device_speed			usb2_speed;
-> +
-> +	struct extcon_dev			*edev;
-> +	struct extcon_dev			*host_edev;
-> +	struct notifier_block			vbus_nb;
-> +	struct notifier_block			host_nb;
-> +
-> +	const struct dwc3_acpi_pdata		*acpi_pdata;
-> +
-> +	enum usb_dr_mode			mode;
-> +	bool					is_suspended;
-> +	bool					pm_suspended;
-> +	struct icc_path				*icc_path_ddr;
-> +	struct icc_path				*icc_path_apps;
-> +	const struct dwc3_qcom_of_match_data	*data;
+> Can you please let me know if this patch fixes a problem, or just
+> makes the numbers look better?
 
-Please don't adjust indentation of unrelated code, it makes it hard to
-see what actually changed.
+Initially this patch came from a different direction, to make space to use the 
+PVS bits for cpufreq. Since Konrad said in earlier revisions that I should 
+always use the +0x4000 space for the ECC-corrected variant I've switched to 
+that.
 
-> +};
-> +
-> +static const struct dwc3_qcom_of_match_data qcom_dwc3  = {
-> +	.num_ports = 1,
-> +};
->  
-> -	const struct dwc3_acpi_pdata *acpi_pdata;
-> +static const struct dwc3_qcom_of_match_data sx8280xp_qcom_dwc3 = {
-> +	.num_ports = 4,
-> +};
->  
-> -	enum usb_dr_mode	mode;
-> -	bool			is_suspended;
-> -	bool			pm_suspended;
-> -	struct icc_path		*icc_path_ddr;
-> -	struct icc_path		*icc_path_apps;
-> +/*
-> + * Driver needs to read HS/DP_HS/DM_HS/SS IRQ's. Currently, for
-> + * SA8295 which supports mutliport, thre are 4 DP/ 4 DM/ 2 SS IRQ's
-> + * and 1 HS IRQ present. So avoid trying to read HS_PHY_IRQ for 4
-> + * ports of SA8295.
-> + */
+If you think it's not useful to have the qfprom size reflect the actual size, 
+we can also drop this patch since I don't think it's actually necessary for 
+anything that I have lying around in some branches.
 
-The last part here is relevant information, but it doesn't seem to
-relate to this define.
+I think I've just sent the current patch to make sure the hardware description 
+(dts) is as accurate as possible, but of course since any info on Qualcomm is 
+very restricted it could also be a bit wrong.
 
-Also, does all platforms have this configuration of interrupts?
+Regards
+Luca
 
-> +#define MAX_PHY_IRQ	4
-> +
-> +enum dwc3_qcom_phy_irq_identifier {
-> +	HS_PHY_IRQ = 0,
-> +	DP_HS_PHY_IRQ,
-> +	DM_HS_PHY_IRQ,
-> +	SS_PHY_IRQ,
->  };
-
-This enum is unused.
-
->  
-[..]
-> +static int dwc3_get_acpi_index(const struct dwc3_acpi_pdata *pdata, int irq_index)
-> +{
-> +	int acpi_index = -1;
-> +
-> +	if (!pdata)
-> +		return -1;
-> +
-> +	if (irq_index == DP_HS_PHY_IRQ)
-> +		acpi_index = pdata->dp_hs_phy_irq_index;
-> +	else if (irq_index == DM_HS_PHY_IRQ)
-> +		acpi_index = pdata->dm_hs_phy_irq_index;
-> +	else if (irq_index == SS_PHY_IRQ)
-> +		acpi_index = pdata->ss_phy_irq_index;
-
-It looks favourable to put these in an array, instead of having to pull
-them out of 4 different variables conditionally.
-
-> +
-> +	return acpi_index;
-> +}
-> +
-> +static int dwc3_get_port_irq(struct platform_device *pdev, u8 port_index)
-> +{
-> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> +	bool is_mp_supported = (qcom->data->num_ports > 1) ? true : false;
-> +	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
-> +	char *disp_name;
-> +	int acpi_index;
-> +	char *dt_name;
-> +	int ret;
-> +	int irq;
-> +	int i;
-> +
-> +	/*
-> +	 * We need to read only DP/DM/SS IRQ's here.
-> +	 * So loop over from 1->3 and accordingly modify respective phy_irq[].
-> +	 */
-> +	for (i = 1; i < MAX_PHY_IRQ; i++) {
-> +
-> +		if (!is_mp_supported && (port_index == 0)) {
-> +			if (i == DP_HS_PHY_IRQ) {
-> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"dp_hs_phy_irq");
-> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"qcom_dwc3 DP_HS");
-> +			} else if (i == DM_HS_PHY_IRQ) {
-> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"dm_hs_phy_irq");
-> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"qcom_dwc3 DM_HS");
-> +			} else if (i == SS_PHY_IRQ) {
-> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"ss_phy_irq");
-> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"qcom_dwc3 SS");
-> +			}
-> +		} else {
-> +			if (i == DP_HS_PHY_IRQ) {
-> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"dp_hs_phy_%d", port_index + 1);
-> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"qcom_dwc3 DP_HS%d", port_index + 1);
-> +			} else if (i == DM_HS_PHY_IRQ) {
-> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"dm_hs_phy_%d", port_index + 1);
-> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"qcom_dwc3 DM_HS%d", port_index + 1);
-> +			} else if (i == SS_PHY_IRQ) {
-> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"ss_phy_%d", port_index + 1);
-> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-> +					"qcom_dwc3 SS%d", port_index + 1);
-> +			}
-
-There is too much repetition in this for my liking.
-
->  		}
-> -		qcom->hs_phy_irq = irq;
-> -	}
->  
-> -	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
-> -				pdata ? pdata->dp_hs_phy_irq_index : -1);
-> -	if (irq > 0) {
-> -		irq_set_status_flags(irq, IRQ_NOAUTOEN);
-> -		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
-> -					qcom_dwc3_resume_irq,
-> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> -					"qcom_dwc3 DP_HS", qcom);
-> -		if (ret) {
-> -			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
-> -			return ret;
-> +		if (!dt_name || !disp_name)
-> +			return -ENOMEM;
-> +
-> +		acpi_index = !is_mp_supported ? dwc3_get_acpi_index(pdata, i) : -1;
-> +
-> +		irq = dwc3_qcom_get_irq(pdev, dt_name, acpi_index);
-> +		if (irq > 0) {
-> +			ret = dwc3_qcom_prep_irq(qcom, dt_name, disp_name, irq);
-> +			if (ret)
-> +				return ret;
-> +
-> +			if (i == DP_HS_PHY_IRQ)
-> +				qcom->dp_hs_phy_irq[port_index] = irq;
-> +			else if (i == DM_HS_PHY_IRQ)
-> +				qcom->dm_hs_phy_irq[port_index] = irq;
-> +			else if (i == SS_PHY_IRQ)
-> +				qcom->ss_phy_irq[port_index] = irq;
->  		}
-> -		qcom->dp_hs_phy_irq = irq;
->  	}
->  
-> -	irq = dwc3_qcom_get_irq(pdev, "dm_hs_phy_irq",
-> -				pdata ? pdata->dm_hs_phy_irq_index : -1);
-> +	return 0;
-> +}
-> +
-> +static int dwc3_qcom_setup_irq(struct platform_device *pdev)
-> +{
-> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-> +	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
-> +	int irq;
-> +	int ret;
-> +	int i;
-> +
-> +	irq = dwc3_qcom_get_irq(pdev, "hs_phy_irq",
-> +				pdata ? pdata->hs_phy_irq_index : -1);
->  	if (irq > 0) {
-> -		irq_set_status_flags(irq, IRQ_NOAUTOEN);
-> -		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
-> -					qcom_dwc3_resume_irq,
-> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> -					"qcom_dwc3 DM_HS", qcom);
-> -		if (ret) {
-> -			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
-> +		ret = dwc3_qcom_prep_irq(qcom, "hs_phy_irq", "qcom_dwc3 HS",irq);
-> +		if (ret)
-
-It would be nice to have this refactored out in a separate commit.
-
->  			return ret;
-> -		}
-> -		qcom->dm_hs_phy_irq = irq;
-> +		qcom->hs_phy_irq = irq;
->  	}
->  
-> -	irq = dwc3_qcom_get_irq(pdev, "ss_phy_irq",
-> -				pdata ? pdata->ss_phy_irq_index : -1);
-> -	if (irq > 0) {
-> -		irq_set_status_flags(irq, IRQ_NOAUTOEN);
-> -		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
-> -					qcom_dwc3_resume_irq,
-> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> -					"qcom_dwc3 SS", qcom);
-> -		if (ret) {
-> -			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
-> +	for (i = 0; i < qcom->data->num_ports; i++) {
-> +		ret = dwc3_get_port_irq(pdev, i);
-> +		if (ret)
->  			return ret;
-> -		}
-> -		qcom->ss_phy_irq = irq;
->  	}
->  
->  	return 0;
-> @@ -811,6 +905,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	platform_set_drvdata(pdev, qcom);
->  	qcom->dev = &pdev->dev;
->  
-> +	qcom->data = of_device_get_match_data(qcom->dev);
-> +
->  	if (has_acpi_companion(dev)) {
->  		qcom->acpi_pdata = acpi_device_get_match_data(dev);
->  		if (!qcom->acpi_pdata) {
-> @@ -1023,8 +1119,15 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
->  };
->  
->  static const struct of_device_id dwc3_qcom_of_match[] = {
-> -	{ .compatible = "qcom,dwc3" },
-> -	{ }
-> +	{
-> +		.compatible = "qcom,dwc3",
-> +		.data = &qcom_dwc3,
-> +	},
-> +	{
-> +		.compatible = "qcom,sc8280xp-dwc3-mp",
-> +		.data = &sx8280xp_qcom_dwc3,
-> +	},
-
-I would prefer that we don't add a separate compatible, but rather just
-try to parse the interrupts for multiport and fall back to single port.
-
-If/when we figure out how to peak into the dwc3 core, we could
-potentially introduce a check to aid the developer.
-
-Regards,
-Bjorn
-
-> +	{ },
->  };
->  MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
->  
-> -- 
-> 2.40.0
 > 
+> Regards,
+> Bjorn
+> 
+> > Konrad
+> > 
+> > > Changes in v2:
+> > > - Keep base offset but expand reg from 0x1000 to 0x3000 (Konrad)
+> > > - Link to v1:
+> > > https://lore.kernel.org/r/20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3n
+> > > tu.xyz ---
+> > > 
+> > >  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > b/arch/arm/boot/dts/qcom-msm8974.dtsi index 7ed0d925a4e9..3156fe25967f
+> > > 100644
+> > > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > > @@ -1194,7 +1194,7 @@ restart@fc4ab000 {
+> > > 
+> > >  		qfprom: qfprom@fc4bc000 {
+> > >  		
+> > >  			compatible = "qcom,msm8974-qfprom", 
+"qcom,qfprom";
+> > > 
+> > > -			reg = <0xfc4bc000 0x1000>;
+> > > +			reg = <0xfc4bc000 0x3000>;
+> > > 
+> > >  			#address-cells = <1>;
+> > >  			#size-cells = <1>;
+> > > 
+> > > ---
+> > > base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
+> > > change-id: 20230130-msm8974-qfprom-619c0e8f26eb
+> > > 
+> > > Best regards,
+
+
+
+
