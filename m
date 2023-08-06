@@ -2,148 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1F477147B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Aug 2023 12:48:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 076BA771507
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Aug 2023 14:31:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbjHFKsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Aug 2023 06:48:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49072 "EHLO
+        id S230144AbjHFMbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Aug 2023 08:31:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjHFKr7 (ORCPT
+        with ESMTP id S229573AbjHFMbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Aug 2023 06:47:59 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAEBDB8;
-        Sun,  6 Aug 2023 03:47:54 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id C0D4FCF63C;
-        Sun,  6 Aug 2023 10:47:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1691318873; bh=cADcKcnDy8gLxnojyW532VLW7T8QirnxnQhcPDcckqo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=W8JMkEKrEKilRpRJOOyop+A9Z1lwHYBuY/Y6h0EpEB4ujaHvE+oviJ34f1Nvj8wP7
-         JK52mmBnBsCL3smqQPA0w45gU/AWDa8+0ZFMA87K6BlDCaCAKaXYg0D1AfGJtXsQoG
-         ZE+91uFeMiSHfk/2ddeS8L5iq+/0Y9HRh4ArPOPs=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Sun, 6 Aug 2023 08:31:17 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96B6FA;
+        Sun,  6 Aug 2023 05:31:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1691325075; x=1722861075;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=WG+jMRSs1giuugV7/S2AhBZlclIgxIwrnVuxY1rUKxk=;
+  b=gGetMhj4azODuSd6nUbIl0hY+NPTfD2h7CHc73qQL8iE3be/Mykjlc9w
+   c1Jk3TqMkpVDWJ+eFls1gYa2FxdQX61xbpb9IM49VKlMBhGAA1AAx+rFZ
+   Y9in3v5XQ7BCb99d/0Epi5mRmebXLtU4qIs1WdUUCWhe9Q60CsQzUXiDP
+   ecQ+I/+CYCMGXPO3vfj3S8mHPP/l/bPvioW+xaWSiP59wydoYIzB4dB1G
+   1Mf2XD/Zbhinm0DqV4TQ/9zP/YvcAGGLpvCrJvgkAQjVo2zVSKPN/ffff
+   GPtSHmYSJ2/3V1QXzyChliX1eITpZpLoYkOJwDB9MIuu546o184De4iOC
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10794"; a="434222192"
+X-IronPort-AV: E=Sophos;i="6.01,259,1684825200"; 
+   d="scan'208";a="434222192"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2023 05:31:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10794"; a="760144574"
+X-IronPort-AV: E=Sophos;i="6.01,259,1684825200"; 
+   d="scan'208";a="760144574"
+Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
+  by orsmga008.jf.intel.com with ESMTP; 06 Aug 2023 05:31:11 -0700
+Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qScub-0004Df-34;
+        Sun, 06 Aug 2023 12:31:09 +0000
+Date:   Sun, 6 Aug 2023 20:30:35 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Rob Herring <robh@kernel.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: qcom: msm8974: correct qfprom node size
-Date:   Sun, 06 Aug 2023 12:47:51 +0200
-Message-ID: <12394955.O9o76ZdvQC@z3ntu.xyz>
-In-Reply-To: <ff6fwomoik6kz4jtbm5jac7jahrtcia5fb6dj5ykxg7xt574sn@ti42sevqj6pk>
-References: <20230130-msm8974-qfprom-v2-1-3839cf41d9ee@z3ntu.xyz>
- <866f1f66-8845-2453-ab9c-d125e23ae758@linaro.org>
- <ff6fwomoik6kz4jtbm5jac7jahrtcia5fb6dj5ykxg7xt574sn@ti42sevqj6pk>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-phy@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v3 1/3] drm/display: add transparent bridge helper
+Message-ID: <202308062017.iKU92hML-lkp@intel.com>
+References: <20230802011845.4176631-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230802011845.4176631-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi Dmitry,
 
-On Montag, 31. Juli 2023 23:45:21 CEST Bjorn Andersson wrote:
-> On Thu, Jun 15, 2023 at 08:20:41PM +0200, Konrad Dybcio wrote:
-> > On 15.06.2023 20:17, Luca Weiss wrote:
-> > > From: Craig Tatlor <ctatlor97@gmail.com>
-> > > 
-> > > The qfprom actually has size 0x3000, so adjust the reg.
-> > > 
-> > > Note that the non-ECC-corrected qfprom can be found at 0xfc4b8000
-> > > (-0x4000). The current reg points to the ECC-corrected qfprom block
-> > > which should have equivalent values at all offsets compared to the
-> > > non-corrected version.
-> > > 
-> > > [luca@z3ntu.xyz: extract to standalone patch and adjust for review
-> > > comments]
-> > > 
-> > > Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
-> > > qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
-> > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > ---
-> > 
-> > Not sure of the actual size of the region, maybe Bjorn can help..
-> > 
-> > Downstream 3.10 suggests 0x60F0, 0x20F0 after adjusting for the ECC offset
-> 
-> There is indeed 0x3000 bytes until the next region, but afaict the
-> corrected ECC values only cover the first 0x800 bytes thereof.
-> 
-> Can you please let me know if this patch fixes a problem, or just
-> makes the numbers look better?
+kernel test robot noticed the following build warnings:
 
-Initially this patch came from a different direction, to make space to use the 
-PVS bits for cpufreq. Since Konrad said in earlier revisions that I should 
-always use the +0x4000 space for the ECC-corrected variant I've switched to 
-that.
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on usb/usb-testing usb/usb-next usb/usb-linus drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.5-rc4 next-20230804]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-If you think it's not useful to have the qfprom size reflect the actual size, 
-we can also drop this patch since I don't think it's actually necessary for 
-anything that I have lying around in some branches.
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-add-transparent-bridge-helper/20230802-091932
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230802011845.4176631-2-dmitry.baryshkov%40linaro.org
+patch subject: [PATCH v3 1/3] drm/display: add transparent bridge helper
+config: i386-randconfig-r072-20230806 (https://download.01.org/0day-ci/archive/20230806/202308062017.iKU92hML-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230806/202308062017.iKU92hML-lkp@intel.com/reproduce)
 
-I think I've just sent the current patch to make sure the hardware description 
-(dts) is as accurate as possible, but of course since any info on Qualcomm is 
-very restricted it could also be a bit wrong.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308062017.iKU92hML-lkp@intel.com/
 
-Regards
-Luca
+sparse warnings: (new ones prefixed by >>)
+>> drivers/gpu/drm/display/drm_simple_bridge.c:118:25: sparse: sparse: symbol 'drm_simple_bridge_drv' was not declared. Should it be static?
 
-> 
-> Regards,
-> Bjorn
-> 
-> > Konrad
-> > 
-> > > Changes in v2:
-> > > - Keep base offset but expand reg from 0x1000 to 0x3000 (Konrad)
-> > > - Link to v1:
-> > > https://lore.kernel.org/r/20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3n
-> > > tu.xyz ---
-> > > 
-> > >  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > b/arch/arm/boot/dts/qcom-msm8974.dtsi index 7ed0d925a4e9..3156fe25967f
-> > > 100644
-> > > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > @@ -1194,7 +1194,7 @@ restart@fc4ab000 {
-> > > 
-> > >  		qfprom: qfprom@fc4bc000 {
-> > >  		
-> > >  			compatible = "qcom,msm8974-qfprom", 
-"qcom,qfprom";
-> > > 
-> > > -			reg = <0xfc4bc000 0x1000>;
-> > > +			reg = <0xfc4bc000 0x3000>;
-> > > 
-> > >  			#address-cells = <1>;
-> > >  			#size-cells = <1>;
-> > > 
-> > > ---
-> > > base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
-> > > change-id: 20230130-msm8974-qfprom-619c0e8f26eb
-> > > 
-> > > Best regards,
-
-
-
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
