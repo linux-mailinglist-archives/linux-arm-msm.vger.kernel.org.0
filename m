@@ -2,148 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60DB77728D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 17:13:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 717307728FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 17:21:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230118AbjHGPNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 11:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
+        id S229731AbjHGPVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 11:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbjHGPNq (ORCPT
+        with ESMTP id S229729AbjHGPVf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 11:13:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE38F10DE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 08:13:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1691421181;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=MSkCa7A9TXUS3VXQ5McnNNZT+8+UROTnmjHayz9OLCM=;
-        b=JBjMEN+KOLXzkZ3v/X0MoX2f8zmm5mrbT9NuLbCJWJ/Mj8BMETFNTvq9aErd6LK+ub7xSk
-        cSoPedaAji1ooq+Tdju3cp+6k7f/cgzxG6nxcn9PFCU+sW21w7+oG3skki67lk6dqAodMz
-        Dpau2LBNCqrXQq8cjqZa13tbUjTZNZ8=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-am5hkzIwPzKxfFRFuq_W2g-1; Mon, 07 Aug 2023 11:08:53 -0400
-X-MC-Unique: am5hkzIwPzKxfFRFuq_W2g-1
-Received: by mail-yb1-f198.google.com with SMTP id 3f1490d57ef6-d27ac992539so4863411276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 08:08:53 -0700 (PDT)
+        Mon, 7 Aug 2023 11:21:35 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BED910FC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 08:21:34 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fe1d9a8ec6so33185995e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 08:21:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691421693; x=1692026493;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+nsJrZUa4VkqTGqcaTSNi/vYZDLgC/AzsBWnapgNPsA=;
+        b=Nsw7w4sr6+BEI6GiS03rJCR+qP7FKXFucjKae0xybflt8CRyBmkvE/AK7Ih9GAwJ1d
+         YwVj6sDRHm2S6kbyYSzEeYmxO7MOe2L+afG9Amhf0Bcx08O/S5m4N03QkI7Ku2guggME
+         ZcuSP6qJxDsN3NPTD1qlO+coXiLPrJeFwqtKIbQUhLkTfPHjJqKQk7JlRqT9NMXJWO4y
+         VwiESOBTJXc/rGae2+69lFgZHNIv3TTXb6j2G2LzRyUtV3Ae9URl/FS6GDmVyl6Ev+/F
+         4C/bCPUA1NyaAU2WtHIeKkuLW/1tTrQyoA0wdOvCv6ZZHrIZe/lzjCJYmI6++mQ8UaXE
+         pCOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691420933; x=1692025733;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MSkCa7A9TXUS3VXQ5McnNNZT+8+UROTnmjHayz9OLCM=;
-        b=NVAnWzOFGHWRpBDHGHdTFaCgyBHbEEqaWQp2/h67EOEY04VSPaue8hblro4/+Eychp
-         oMK11gIaOElMxZ2Po9LKnZLa+GQC8QszIqgfLDE49N57naM5Sm3dq3An2jYOUu5swGSt
-         GK4mq04srVb6hCSgHQe4tZph6kfZ8o9DfqbUBF0hdQyWO2sAsihs7VFxf1SlsZ0kA7RJ
-         lvyuREBIwYHK4ciC9lya7opRrdJpMkPoLVBbr3etmozOww9redcuebwDn94qvpl1j+3X
-         Fym00XIJE53suNvaDe5+5TY13wdZPuEkNwGKJ44wKS9AKJkyt/xOyIKIZaarnO1VaFkr
-         dAxw==
-X-Gm-Message-State: AOJu0YzPBbpqO64oSMuah9rJvNAu/U8uBSelKhjyYtjoYQCCX/T0H2I6
-        cz8mCQx3dp9g3IV8uOxbx2UGRUkWe6P9MVOvjFvM0h6KWIn7h0ggfmKCzsQsaMV6w7BqiWZQazp
-        CMqgptgB1OwSu7ppsvgxmfeoOTw==
-X-Received: by 2002:a25:29c2:0:b0:c62:2320:2598 with SMTP id p185-20020a2529c2000000b00c6223202598mr8059905ybp.62.1691420933320;
-        Mon, 07 Aug 2023 08:08:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFwHp4dDJnIOl2S3nXfBjqj/u/Iz50+0PkY1Lm8o+KMODDnct/IB/u4h0wbSKzpgdvXF7AeQ==
-X-Received: by 2002:a25:29c2:0:b0:c62:2320:2598 with SMTP id p185-20020a2529c2000000b00c6223202598mr8059891ybp.62.1691420933058;
-        Mon, 07 Aug 2023 08:08:53 -0700 (PDT)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id a10-20020a5b0aca000000b00d1dffdd7a97sm2250323ybr.57.2023.08.07.08.08.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 08:08:52 -0700 (PDT)
-Date:   Mon, 7 Aug 2023 11:08:50 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        lkml <linux-kernel@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Nishanth Menon <nm@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>
-Subject: Re: Feedback on Qualcomm's minidump (debug) solution for end user
- device crash
-Message-ID: <ZNEJAh0in/fjq6s9@brian-x1>
-References: <0199db00-1b1d-0c63-58ff-03efae02cb21@quicinc.com>
- <ZL6t/sZTZBfvSYOm@brian-x1>
- <15caeb52-b670-9000-fa2b-b8d1b8485016@kernel.org>
- <81b15738-615d-a039-7bc3-22aa5b3a54bd@quicinc.com>
+        d=1e100.net; s=20221208; t=1691421693; x=1692026493;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+nsJrZUa4VkqTGqcaTSNi/vYZDLgC/AzsBWnapgNPsA=;
+        b=SVo2d9ukAoLlyAIyDTtjzNKl0t5f8gsXxCFXw1YNmQ09G7x+zFqJB3cqoZJiKZCYx3
+         dxNSvfcoOeTDDG2Do/YLZSmq5rC4ix0p/hKv8lJJXAg9PsvZ65uhbCbmT2ymqEPmqzIB
+         HkK0qc0ubSCqLZAwVhSK/VbXymMk9THAW/jsV+TDPSGzwiXLrCPrzIZBd2/4OS1YQ9pB
+         7XBI/Z+ZsPxHQ3i9S38eENxpiaNX5Z4gZPdy2PXkDqlC9WUbAF7bWO7iMMxAjJGUQxTd
+         /e3tWzkx+hS5WYJcL1yT6Q2hc+YKmEinldmQykjrlTGautsfpTQFkymJayUYn+TLy4Sg
+         V8Nw==
+X-Gm-Message-State: AOJu0Yys3T9786sHxkaWNMg4BdeiSjmDa1l6t1/SGIq/+U0VAl6B8VlQ
+        Uh26pPu6X2kD9ZULETTdbVWOtA==
+X-Google-Smtp-Source: AGHT+IGQCfrlQO64alS7N0QfuUt8zy4HfzB7owueYTq7zYyg0AdGu2V3y/eAffkk7npb6rrpoIcScA==
+X-Received: by 2002:a5d:6ac5:0:b0:317:6570:afec with SMTP id u5-20020a5d6ac5000000b003176570afecmr5904245wrw.3.1691421692754;
+        Mon, 07 Aug 2023 08:21:32 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.113])
+        by smtp.gmail.com with ESMTPSA id t6-20020a5d6a46000000b003142e438e8csm10789411wrw.26.2023.08.07.08.21.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Aug 2023 08:21:32 -0700 (PDT)
+Message-ID: <7cf31e92-ea7d-80f6-9fab-a9c2886c96d1@linaro.org>
+Date:   Mon, 7 Aug 2023 17:21:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <81b15738-615d-a039-7bc3-22aa5b3a54bd@quicinc.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
+ <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
+ <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
+ <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
+ <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
+ <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 07, 2023 at 06:01:27PM +0530, Mukesh Ojha wrote:
-> On 7/30/2023 5:14 PM, Krzysztof Kozlowski wrote:
-> > On 24/07/2023 18:59, Brian Masney wrote:
-> > > + linux-arm-kernel list
-> > > 
-> > > On Thu, Jul 20, 2023 at 08:32:24PM +0530, Mukesh Ojha wrote:
-> > > > Hi Samsung/MTK/Any other SOC vendors,
-> > > > 
-> > > > This is to bring to your notice that, we (Qualcomm) are working on
-> > > > upstreaming our minidump solution which is to address the problem of
-> > > > debugging on field device crashes where collecting entire ddr dump
-> > > > would not be feasible and collecting minimal data from the ddr would
-> > > > help in debug direction or even help in root causing issue.
-> > > > 
-> > > > We have recently posted v4 version here [1]
-> > > > 
-> > > > Based on comments[2], community is more worried about, if each SOC
-> > > > vendor come up with their own dumping method today or in future and
-> > > > whether it can have a common solution to a similar problem faced by
-> > > > other SOC vendor.
-> > > > 
-> > > > We wanted to take your feedback if you also encounter a similar problem
-> > > > or maintain something similar solution in downstream which can be
-> > > > upstreamed. This will help us in a way to have a common solution in
-> > > > upstream.
-> > > > 
-> > > > [1]
-> > > > https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com/
-> > > > 
-> > > > [2]
-> > > > https://lore.kernel.org/lkml/CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com/
-> > > 
-> > > Adding the main ARM list to solicit feedback from other silicon
-> > > manufacturers.
-> > > 
-> > > The cover sheet on the v4 patch set is available at:
-> > > https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
-> > 
-> > I doubt anyone follows the lists, so at least Cc some maintainers.
-> > 
-> > +Cc Alim, Kukjin, Vignesh, Nishanth, Matthias.
+On 07/08/2023 17:02, Konrad Dybcio wrote:
+> On 7.08.2023 16:04, Krzysztof Kozlowski wrote:
+>> On 07/08/2023 14:41, Konrad Dybcio wrote:
+>>> On 5.08.2023 21:29, Krzysztof Kozlowski wrote:
+>>>> On 04/08/2023 22:09, Konrad Dybcio wrote:
+>>>>> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
+>>>>> to clock it a bit higher.
+>>>>>
+>>>>
+>>>> ...
+>>>>
+>>>>> +
+>>>>> +  iommus:
+>>>>> +    maxItems: 1
+>>>>> +
+>>>>> +  video-decoder:
+>>>>> +    type: object
+>>>>> +
+>>>>> +    properties:
+>>>>> +      compatible:
+>>>>> +        const: venus-decoder
+>>>>
+>>>> That's not how compatibles are constructed... missing vendor prefix, SoC
+>>>> or IP block name.
+>>>>
+>>>>> +
+>>>>> +    required:
+>>>>> +      - compatible
+>>>>> +
+>>>>> +    additionalProperties: false
+>>>>
+>>>> Why do you need this child node? Child nodes without properties are
+>>>> usually useless.
+>>> For both comments: I aligned with what was there..
+>>>
+>>> The driver abuses these compats to probe enc/dec submodules, even though
+>>> every Venus implementation (to my knowledge) is implicitly enc/dec capable..
+>>
+>> Holy crap, I see...
+>>
+>>>
+>>> Perhaps a bigger clean-up is due. I guess I could just create the venc/vdec
+>>> devices from the venus core probe and get rid of this fake stuff?
+>>
+>> Few devices (qcom,msm8996-venus.yaml, sdm660, sdm845) have clocks there,
+>> so we actually could stay with these subnodes, just correct the
+>> compatibles to a list with correct prefixes:
+>>
+>> qcom,sc8280xp-venus-decoder + qcom,venus-decoder
+> Hm.. looks like pre-845-v2 (with the v2 being "v2 binding" and not
+> "v2 chip" or "v2 hardware") these were used to look up clocks but
+> then they were moved to the root node.
 > 
-> Thanks @Krzysztof/@Brian for extending the list.
+> I am not quite sure if it makes sense to distinguish e.g.
+> sc8280xp-venus-decoder within sc8280xp-venus..>
+> Perhaps deprecating the "8916 way" (clocks under subnodes), adding
+> some boilerplate to look up clocks/pds in both places and converting
+> everybody to the "7180 way" way of doing things (clocks under venus),
+> and then getting rid of venus encoder/decoder completely (by calling
+> device creation from venus probe) would be better. WDYT?
 
-Hi Mukesh,
+Yes, this makes more sense. I think this is controlled by
+"legacy_binding" variable (see
+drivers/media/platform/qcom/venus/pm_helpers.c).
 
-Since no one has responded yet: I suspect your best bet to land the
-minidump functionality upstream is to refactor it to use the pstore
-functionality that Rob suggested:
+Once all bindings are converted to new one (clocks in main/parent node),
+then we can drop the children and instantiate devices as MFD.
 
-https://lore.kernel.org/lkml/CAL_JsqK7MHR09U5h01=Gf1ZLeDVCgZdN-W1hQRH3AX+E94_uUg@mail.gmail.com/
-
-Brian
+Best regards,
+Krzysztof
 
