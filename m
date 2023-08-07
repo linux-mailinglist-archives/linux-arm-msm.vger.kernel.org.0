@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F10F5772E43
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 20:55:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FFC7772E71
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 21:05:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230247AbjHGSz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 14:55:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42054 "EHLO
+        id S230097AbjHGTFX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 15:05:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbjHGSz4 (ORCPT
+        with ESMTP id S229519AbjHGTFW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 14:55:56 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C4F171C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 11:55:54 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe4762173bso7982788e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 11:55:54 -0700 (PDT)
+        Mon, 7 Aug 2023 15:05:22 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8144D172A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 12:05:20 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-317716a4622so3843592f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 12:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691434553; x=1692039353;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1691435119; x=1692039919;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OjCy5SjMZ+AiVFiRM4IBoLf8KbrEBzHsvJm+XlA4tvI=;
-        b=rWAl9Tbg7v5R2xlhN7Tgi4/syOkC1SD2HLEki0BYHzvU/oBOLDeV1fwFGLgYeezx8X
-         4yelivTU+v+xjC6GEsrweWsDSg92sU31DHPD8eiV7PhrDuqfvs0X9Y8ZbVXra+y+IJ3J
-         fmrmnlAxANZNLrWhODwD2c/yTuB64BdZksVl5QQNcrUefrvYZZH7qpT9gOMjfQqqZBAg
-         IfGcv3GvybZIKmzn+rdI5hJ+Steqzcl9wCwNf+co4UpY2bPoI1DqiiMmQFML5Pq1QKBe
-         hFKnaL/FHOrgHZz1j/MZiLqakIPcIwwYoT98Bldpp5dD9zuR+Rg+ipnZ8vXZblJMeHCs
-         yFCQ==
+        bh=rvuFHndPak4ec42pS0cW4H6Y5ajhn2h6mKNTE3KKxxo=;
+        b=Yem7gJdGf7Owrby1kKBGd9+PAvzP5GbKKVok+aWqs3yyLzIOop3idScyHOlMF+jgWm
+         +LVRZenvKFPZJ4KmROoqVWBmj7pmmaqrC3KuivpqxrdHR/lf7lBn0/pjGhoFdLjFX7zz
+         g7p4NChjrw4lnESiAtysoSSE01RIR7zeU/G6WZom2Pau1eYtg1UCz3kZgJrbma67e0GC
+         Cp/w1NPBnFVG/ioGWQpSSkvWEZkde1SXDFe4OKMNjD2DbecUAHeWesRBbb5kgkRhoOcs
+         QuAjeabAXCyEiAn8vBR9vX5EyX8nyT9mK/K+2FirUctKKsYr2HfPW/wMjSRBvWjzOmhW
+         G3cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691434553; x=1692039353;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1691435119; x=1692039919;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OjCy5SjMZ+AiVFiRM4IBoLf8KbrEBzHsvJm+XlA4tvI=;
-        b=a2NkHh1aQ3hGDGBSKGFxYuXBqZ4odJnoqTUH7K1G+E1r6J4dZDo1gztpDHhDnq45rz
-         Hw/Zbpt5ePW/bRPmEdTSC/lcVDUGkWQp9jwANakZmeIGz6ygq2/9gpuPQX05H4JXx0K6
-         uX0EBuQ6zrS9V/eS19j8Hp9vI+iwAOFEx4ptw5ODani1tNgwoSGaxz/PtsRsDruQbhFJ
-         AUKodIV8HHNHitWSnjng3foG7Y7Bbpz1peBUTxcZonI1P5lesTFuLAe/Cicj7nzSz9vR
-         S229jpnqo5telfPT4gt4WpZQJdvIxH/2LLSyQnzU2+tQl8+iOFeWOnzKxFmNQOlG84MZ
-         oHHA==
-X-Gm-Message-State: AOJu0YxsPEvl0opQO8rhvb2sRrwN6B5HJjHecNKkXiQVXdTbLNd6bunj
-        eg9s2QHaECFclt82Mczt9IHc0A==
-X-Google-Smtp-Source: AGHT+IF5ZkmqwNltyK035McabIc6LMOgsrJVJZwGMjMtUyKN9Mj9HodsGiAjaGs0ubpW8e5G7ya6hg==
-X-Received: by 2002:a05:6512:3704:b0:4f9:6842:afc with SMTP id z4-20020a056512370400b004f968420afcmr5270287lfr.64.1691434552990;
-        Mon, 07 Aug 2023 11:55:52 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id q11-20020ac24a6b000000b004fb86662871sm1585880lfp.233.2023.08.07.11.55.51
+        bh=rvuFHndPak4ec42pS0cW4H6Y5ajhn2h6mKNTE3KKxxo=;
+        b=NLxnZaZsnrrvV67g6eptrDRZwnB3BwcCeTYSY5SgqDPadxPSDg9Nj96t7FGPRI3z7z
+         4urTw2TaEArF7jvS9OGIHXU4oBhqdwWUQLku0gMrPBwbedx2zrxV9x2/kpjyAxG71kg3
+         qlowstKvR4O9d6bCR6BDvhsur6lSI4qrD9fiRKOUfQAmR2IvxwTjorC5MscaE/ytXROf
+         z6dVobruE66JWIDqYggsw2Rb0jQ+cJlqdw5JRNFT5a0t+3aJs3CTUYHjkkdGwXjI5DSh
+         E3tys/1rvbcteko8bqxM8lQ0n3DPlibScXzP3jER7erZOnTlwQF/+W2Sn3KUa+btq8k+
+         8o5g==
+X-Gm-Message-State: AOJu0YyY8qeJYcGYErhzCLPHd1JG1Dv5FXdhYYDQLlMUevaOaYRvTjk2
+        YPQcK5nzW20rQhvlv/8jPPi0rw==
+X-Google-Smtp-Source: AGHT+IG0ZZxtP9emcBVJC5c2XbtqWNh1hbYL+45ShRzUzFbWLI69g4Y4soB3Co9c1GR/FTyRTROQ3w==
+X-Received: by 2002:adf:fd47:0:b0:317:6681:e426 with SMTP id h7-20020adffd47000000b003176681e426mr5984372wrs.25.1691435118926;
+        Mon, 07 Aug 2023 12:05:18 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id s1-20020adff801000000b00314417f5272sm11263527wrp.64.2023.08.07.12.05.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 11:55:52 -0700 (PDT)
-Message-ID: <4bd04709-155f-4750-8638-e73b653b1482@linaro.org>
-Date:   Mon, 7 Aug 2023 20:55:51 +0200
+        Mon, 07 Aug 2023 12:05:18 -0700 (PDT)
+Message-ID: <0cba0158-8a9f-68b6-6bb3-dab0272a5ce0@linaro.org>
+Date:   Mon, 7 Aug 2023 20:05:17 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
 Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
         Vikash Garodia <quic_vgarodia@quicinc.com>,
@@ -79,67 +80,57 @@ References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
  <816359f7-ad4d-659f-db39-c971e1b1cd9a@linaro.org>
  <0feda32e-5430-4f35-b18a-7afce63a970c@linaro.org>
  <d09df249-cc6d-9708-bfa6-ae5cc7929697@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <d09df249-cc6d-9708-bfa6-ae5cc7929697@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <4bd04709-155f-4750-8638-e73b653b1482@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <4bd04709-155f-4750-8638-e73b653b1482@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.08.2023 20:49, Bryan O'Donoghue wrote:
-> On 07/08/2023 19:45, Konrad Dybcio wrote:
->> That can be taken care of with match data.
+On 07/08/2023 19:55, Konrad Dybcio wrote:
+> On 7.08.2023 20:49, Bryan O'Donoghue wrote:
+>> On 07/08/2023 19:45, Konrad Dybcio wrote:
+>>> That can be taken care of with match data.
+>>>
+>>> Konrad
 >>
->> Konrad
+>> Well perhaps.
+>>
+>> I'm just sticking my oar in, to elucidate.
+>>
+>> The compat sub-nodes aren't just a random choice with no logic. They exist to select between what you assign the blocks to be, encoder, decoder or any admixture thereof.
+>>
+>> A functionality we want to maintain.
+> Surely something like a modparam would be more suitable here?
 > 
-> Well perhaps.
-> 
-> I'm just sticking my oar in, to elucidate.
-> 
-> The compat sub-nodes aren't just a random choice with no logic. They exist to select between what you assign the blocks to be, encoder, decoder or any admixture thereof.
-> 
-> A functionality we want to maintain.
-Surely something like a modparam would be more suitable here?
+> Konrad
 
-Konrad
+Hmm.
+
+Well from earlier in the thread the question "why do we have these 
+compat strings" is because we can have any combination of 
+encoder/decoder assigned.
+
+If there's a cogent argument _still_ to be made to transition to some 
+new way of assignment then fine so long as we don't break that basic 
+flexibility.
+
+Though my own €0.02 is that a module parameter is more of a PITA than a 
+compat string.
+
+OTOH I could make the argument, that the high probability is most people 
+- probably all, just instantiate a single encoder and decoder and aren't 
+aware of or using the inbuilt flexibility.
+
+@stan probably has the right idea what to do.
+
+---
+bod
