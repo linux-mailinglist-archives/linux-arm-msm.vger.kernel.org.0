@@ -2,149 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5F82771BF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 10:00:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48AA1771C22
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 10:17:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjHGIAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 04:00:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50556 "EHLO
+        id S230231AbjHGIRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 04:17:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbjHGIAT (ORCPT
+        with ESMTP id S229491AbjHGIRb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 04:00:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E05DD;
-        Mon,  7 Aug 2023 01:00:15 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3777H2o8008651;
-        Mon, 7 Aug 2023 07:59:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=gidHkrGNBS/Q/FTRhnksGL7NvZvTt0ub/F33zzXjTMw=;
- b=KudwzehPQFZL1fsyXkWh2fvqOWKZ4qikiaSjqiDvwiTX9yGWxCrOJkiaDDBFl+Wom2m+
- Sgccad3A+rRu1NYiCCkqqIRPSSM67lEcSNBn85RgVryF7UxanVBEv4T2izRVgiBq1LD6
- xSv1zjYHyk++GIkHprDzIO5xrLMMK9qMAR2FkrGxFw8X/KdYfOCtrg93GPkXYN+/KZJr
- w/1T+dAaoUK0ZQPnRYOB7eENbmP4rnjLkPmgZT04kkr3N7W8cD64iPK6lpYFBr2/pWPc
- zrFU2jLp45jBQIluCgGQrZ8K0qXJnI/bvwOxygpyDe4n37NzOqV6Cs8npIpJ5i4Mv/iW kA== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9f6pjtcs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Aug 2023 07:59:57 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3777xtdc018677;
-        Mon, 7 Aug 2023 07:59:55 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 3s9fgkhehf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 07 Aug 2023 07:59:55 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3777xt72018672;
-        Mon, 7 Aug 2023 07:59:55 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3777xtIt018670;
-        Mon, 07 Aug 2023 07:59:55 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id 009994C57; Mon,  7 Aug 2023 15:59:53 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, quic_jhugo@quicinc.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v2] mhi: host: Add standard ELF header image download functionality
-Date:   Mon,  7 Aug 2023 15:59:52 +0800
-Message-Id: <1691395192-16090-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YqjZznV0w4SQVLWQ__9FIGDB4WIk57Hg
-X-Proofpoint-GUID: YqjZznV0w4SQVLWQ__9FIGDB4WIk57Hg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_06,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308070074
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Mon, 7 Aug 2023 04:17:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B25170A;
+        Mon,  7 Aug 2023 01:17:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D725261630;
+        Mon,  7 Aug 2023 08:17:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B62C433C8;
+        Mon,  7 Aug 2023 08:17:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691396249;
+        bh=32RJaUXj2/HJRQtblPM6k2oeKfZF39yPw0P0aMzAYXE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iT5OKUMwlCJ4CCjZqGu84tZcrCdI/0E808Lxxgrw5JmYEp3N5dZRI1nqqwBnyFyWQ
+         TOgjeM8hHWrwokdGgVUZcPRtK9Y9jocBsPDBhTv3QFM26EX2lJ78J/U3U3sTHl4wA+
+         GHX+LWaD9Lwo4XenoR7Eolj8FQ2uZO/uhhgTxaovlFaiVIgVEEQHIUaMeYXiA3phQL
+         DokdH43PaZCNchHzZmn0pygxh4VlxgM6C4UxUz+CtFBqiJnAf7YZmZjnr4HbCA1Wbl
+         dW3U4tsy/paYQ7zMHngtqLgxo8YpJxxqgDml5guJTOqmjaaSVIEZLgu1NwCtSiaUeo
+         jWCw8ccjAitJg==
+Date:   Mon, 7 Aug 2023 10:17:25 +0200
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     "Liao, Chang" <liaochang1@huawei.com>
+Cc:     florian.fainelli@broadcom.com,
+        bcm-kernel-feedback-list@broadcom.com, rjui@broadcom.com,
+        sbranden@broadcom.com, yangyicong@hisilicon.com,
+        aisheng.dong@nxp.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        kblaiech@nvidia.com, asmaa@nvidia.com, loic.poulain@linaro.org,
+        rfoss@kernel.org, ardb@kernel.org, gcherian@marvell.com,
+        linux-i2c@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 8/9] i2c: imx-lpi2c: Use dev_err_probe in probe function
+Message-ID: <20230807081725.fmjvdp3gxjs2ijee@intel.intel>
+References: <20230802095737.3957587-1-liaochang1@huawei.com>
+ <20230802095737.3957587-9-liaochang1@huawei.com>
+ <20230804221644.cqmoin6u22mxvouk@intel.intel>
+ <758b882e-31a5-1f73-7fd2-945a8a2e9558@huawei.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <758b882e-31a5-1f73-7fd2-945a8a2e9558@huawei.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Mayank Rana <quic_mrana@quicinc.com>
+On Mon, Aug 07, 2023 at 10:13:30AM +0800, Liao, Chang wrote:
+> Hi, Andi
+> 
+> 在 2023/8/5 6:16, Andi Shyti 写道:
+> > On Wed, Aug 02, 2023 at 05:57:36PM +0800, Liao Chang wrote:
+> >> Use the dev_err_probe function instead of dev_err in the probe function
+> >> so that the printed messge includes the return value and also handles
+> >> -EPROBE_DEFER nicely.
+> >>
+> >> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+> >> ---
+> >>  drivers/i2c/busses/i2c-imx-lpi2c.c | 12 ++++--------
+> >>  1 file changed, 4 insertions(+), 8 deletions(-)
+> >>
+> >> diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+> >> index c3287c887c6f..bfa788b3775b 100644
+> >> --- a/drivers/i2c/busses/i2c-imx-lpi2c.c
+> >> +++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+> >> @@ -569,10 +569,8 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
+> >>  		sizeof(lpi2c_imx->adapter.name));
+> >>  
+> >>  	ret = devm_clk_bulk_get_all(&pdev->dev, &lpi2c_imx->clks);
+> >> -	if (ret < 0) {
+> >> -		dev_err(&pdev->dev, "can't get I2C peripheral clock, ret=%d\n", ret);
+> >> -		return ret;
+> >> -	}
+> >> +	if (ret < 0)
+> >> +		return dev_err_probe(&pdev->dev, ret, "can't get I2C peripheral clock\n");
+> > 
+> > you cut on this because the line was going over 100 characters? :)
+> > 
+> > In theory you shouldn't change the print message when doing such
+> > changes and you can still split it as:
+> > 
+> > 		return dev_err_probe(&pdev->dev, ret,
+> > 				     "can't get I2C peripheral clock, ret=%d\n",
+> > 				     ret);
+> > 
+> > and you're even within the 80 characters.
+> 
+> Since dev_err_probe always print the second parameter that happens to be the return value,
+> I remove the "ret=%d" from the original message to avoid a redundant error message.
+> 
+> So is it better to keep the original message unchanged, even though dev_err_probe also prints
+> the return error value? Or is it better to make this change so that all error messages printed
+> in the probe function include the return value in a consistent style?
 
-Some devices (e.g. WLAN chips) are unable to handle the non-standard ELF
-format of the FBC image and thus need special handling of the FBC image.
+yes, you are right! Then please ignore this comment, but...
 
-Add standard_elf_image flag which makes decision in terms of how FBC image
-based AMSS image is being downloaded with connected endpoint.
-FBC image is having two image combine: SBL image + AMSS image.
-1. FBC image download using legacy single ELF header image format:
-- SBL image: 512KB of FBC image is downloaded using BHI.
-- AMSS image: full FBC image is downloaded using BHIe.
-2. FBC image download using separate ELF header image format:
-- SBL image: 512 KB of FBC image is downloaded using BHI.
-- AMSS image: 512 KB onward FBC image is downloaded using BHIe.
-There is no change for SBL image download. Although AMSS image start
-address is end address of SBL image while using separate ELF header format.
+> >   	ret = devm_request_irq(&pdev->dev, irq, lpi2c_imx_isr, 0,
+> >   		pdev->name, lpi2c_imx);
+> > - 	if (ret) {
+> > - 		dev_err(&pdev->dev, "can't claim irq %d\n", irq);
+> > - 		return ret;
+> > - 	}
+> > + 	if (ret)
+> > + 		return dev_err_probe(&pdev->dev, ret, "can't claim irq %d\n", irq);
 
-Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
-[quic_qianyu@quicinc.com: Update commit message, minor updates]
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v1->v2: modify commit message
-	correct author
-	rebase on latest mhi-next branch, resolve conflicts
+please make it coherent to this second part, as well, where the
+error number is printed.
 
- drivers/bus/mhi/host/boot.c | 7 +++++++
- include/linux/mhi.h         | 2 ++
- 2 files changed, 9 insertions(+)
-
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index edc0ec5..586d551 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -495,6 +495,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	 * device transitioning into MHI READY state
- 	 */
- 	if (mhi_cntrl->fbc_download) {
-+		dev_dbg(dev, "standard_elf_image: %s\n",
-+				(mhi_cntrl->standard_elf_image ? "True" : "False"));
-+		if (mhi_cntrl->standard_elf_image) {
-+			fw_data = firmware->data + mhi_cntrl->sbl_size;
-+			fw_sz = fw_sz - mhi_cntrl->sbl_size;
-+		}
-+
- 		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
- 		if (ret) {
- 			release_firmware(firmware);
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 039943e..e065101 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -310,6 +310,7 @@ struct mhi_controller_config {
-  * @reg_len: Length of the MHI MMIO region (required)
-  * @fbc_image: Points to firmware image buffer
-  * @rddm_image: Points to RAM dump buffer
-+ * @standard_elf_image: Flag to make decision about firmware download start address (optional)
-  * @mhi_chan: Points to the channel configuration table
-  * @lpm_chans: List of channels that require LPM notifications
-  * @irq: base irq # to request (required)
-@@ -456,6 +457,7 @@ struct mhi_controller {
- 	bool bounce_buf;
- 	bool fbc_download;
- 	bool wake_set;
-+	bool standard_elf_image;
- 	unsigned long irq_flags;
- 	u32 mru;
- };
--- 
-2.7.4
-
+Thank you,
+Andi
