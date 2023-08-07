@@ -2,493 +2,560 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D577729C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 17:50:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44C627729D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 17:51:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229884AbjHGPuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 11:50:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41574 "EHLO
+        id S230162AbjHGPv5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 11:51:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229820AbjHGPup (ORCPT
+        with ESMTP id S231347AbjHGPv4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 11:50:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98458C2;
-        Mon,  7 Aug 2023 08:50:43 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377EHQlT002394;
-        Mon, 7 Aug 2023 15:50:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=ThwuSBJyTU9Sg5ZVh5tF9Npd8l50ObSjiqc9aImHxtI=;
- b=C8BLyMWw0CjKzo43ck6YLgszkuvQOYy0+zxOP1/zt7V4Rr3CxLmusHCypJJO9X8gLh+F
- hiQ8VWuJWTlIL2W7w/qDF45icjS15Fc+BFo9WR5hhi8jzJoeGHcjh6Pvr80OqS4hYyda
- dcKsg1rB15hNocoGEi7k7+Yx2s6PtZ4j9KmJpGORpC+63ECvMBDkU5Ffj48238b3ItIg
- s2p9u9p8DUSybRokdm0MgsSc94jhLaZgQHSoPtkCPUBZ0nCCQVLP6LS2Bjk4Rl9duGoQ
- 9Zo3xWDpU1AnbydM5BKFguw1Wr/zpSAwkqMjNVDL2ucKe9AuwpZB2TcfMbxtTKesVN8X Qg== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sawbg8xau-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Aug 2023 15:50:34 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 377FoUsD025733;
-        Mon, 7 Aug 2023 15:50:30 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3s9fgk844g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 07 Aug 2023 15:50:30 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 377FoUW8025717;
-        Mon, 7 Aug 2023 15:50:30 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 377FoUdM025712;
-        Mon, 07 Aug 2023 15:50:30 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-        id 800395000A9; Mon,  7 Aug 2023 21:20:29 +0530 (+0530)
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-To:     mani@kernel.org, quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
-        avri.altman@wdc.com, martin.petersen@oracle.com, beanhuo@micron.com
-Cc:     bvanassche@acm.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
-        linux-arm-msm@vger.kernel.org, quic_ziqichen@quicinc.com,
-        Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Subject: [PATCH V1] scsi: ufs: qcom: Align programming sequence as per HW spec
-Date:   Mon,  7 Aug 2023 21:20:26 +0530
-Message-Id: <20230807155026.28671-1-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: j5okrou2D-y-szRwwdZBy4w1Gh5GSWRy
-X-Proofpoint-GUID: j5okrou2D-y-szRwwdZBy4w1Gh5GSWRy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_16,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- impostorscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
- mlxscore=0 priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308070146
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+        Mon, 7 Aug 2023 11:51:56 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DEF10CF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 08:51:50 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d45caf42d73so3022421276.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 08:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691423510; x=1692028310;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QV5Oxrwi2YBiB2PnbpfvilSiboZ88DL4vcOqWWFx7v8=;
+        b=RcEfoieb4TAZHin0Dt6b54nmdTuwmkWKiV4aShwDZWdujrFhzLaoWYabFG+z2usFzv
+         uIdIhFDp289WeddfAZAGgf62HctV0ytCu9PscpFBNdngkmYBRtv70TLT2rIOac1zqO8F
+         hneWm1S54pVmGfXqHZj7gtqrZjKIf5w5/wtC/iziBeGlanZY18JBJP/MoL+otTGR7XiC
+         sg/yCGppch2g6HLOaVBz0fooyYmSYvjaD2Pi3jc7/ayITUHzp4rjW91A4SRe7gPprlm/
+         EaqzaLjaGVcp78g7jB9LZEuBNUE4ZyYK79eVart+l2yhBttPveE+hTQ+HQIjEgXvawec
+         A24A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691423510; x=1692028310;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QV5Oxrwi2YBiB2PnbpfvilSiboZ88DL4vcOqWWFx7v8=;
+        b=lh1C1pJLqe9ncRsuZaS7W7Zt41QnyawS+a7daWJYOcCn3dbCl9xOhUjr3/J9Nk/qkz
+         sjyv7lYUEjC9y8H944VOFPys5/+wROU1QCcNwpiLOG3vyUa3cuywelhiGKFrXRWWYDpP
+         oDaG2UxD6YSR7g7pmBmNOjIanxx+KtXV7cbieAF6JMaDx0zKqgWE9SCKGYQLZhUrGUGj
+         6HY8wh04SQxGNU7yXU832/TK3aenKheZmn1We//pCs9hSLuEQwqofbCu0ZD7/0mKLvmm
+         os9I9tnIq6qaS68g0Yl9dR69fVtTV30b543URXi6ggj9kA1lhOy6HRZZ4iJMz1aMcecS
+         C9Mw==
+X-Gm-Message-State: AOJu0Ywn/y7p1vd/beH75B/udUp9MgxWiFac8Y3H6Fg1LyL0ArXM1WqY
+        kGZQCaw6FeN7XfVKkykIAhv249NvPj3/wopYNHJw9Q==
+X-Google-Smtp-Source: AGHT+IFM8NMG1aM90qqfA7curuuhzGi4LQ+J3959I9PDp3MPl1NYbQCixPRGgKUxA+yOwJZVhkZ+Dq1zqCQEGLMFFs8=
+X-Received: by 2002:a25:83c1:0:b0:d3b:b36f:37b1 with SMTP id
+ v1-20020a2583c1000000b00d3bb36f37b1mr9541743ybm.33.1691423509913; Mon, 07 Aug
+ 2023 08:51:49 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230718143054.1065288-1-robh@kernel.org>
+In-Reply-To: <20230718143054.1065288-1-robh@kernel.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 7 Aug 2023 17:51:13 +0200
+Message-ID: <CAPDyKFpbRzow4d4F5X5VbXxUjMdbWbaO5qqgCFL_Dxsg9szOBg@mail.gmail.com>
+Subject: Re: [PATCH v2] mmc: Explicitly include correct DT includes
+To:     Rob Herring <robh@kernel.org>
+Cc:     Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Robert Richter <rric@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainel li <florian.fainelli@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michal Simek <michal.simek@amd.com>,
+        Eugen Hristev <eugen.hristev@collabora.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Ben Dooks <ben-linux@fluff.org>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        linux-actions@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Align clock configuration as per Qualcomm UFS controller
-hardware specification.
+On Tue, 18 Jul 2023 at 16:31, Rob Herring <robh@kernel.org> wrote:
+>
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-This change updates UFS_SYS1CLK_1US, CORE_CLK_1US_CYCLES,
-PA_VS_CORE_CLK_40NS_CYCLES timer configuration for Qunipro
-and UTP to align with Qualcomm UFS HW specification.
+Applied for next, thanks!
 
-Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 262 +++++++++++++++++++++++++++---------
- drivers/ufs/host/ufs-qcom.h |  20 ++-
- 2 files changed, 215 insertions(+), 67 deletions(-)
+Kind regards
+Uffe
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index e7164ce7336b..836894c112c1 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -91,10 +91,7 @@ struct __ufs_qcom_bw_table {
- };
 
- static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
--
- static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
--static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
--						       u32 clk_cycles);
-
- static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
- {
-@@ -531,8 +528,9 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
- /*
-  * Return: zero for success and non-zero in case of a failure.
-  */
--static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
--			       u32 hs, u32 rate, bool update_link_startup_timer)
-+static int __ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-+				 u32 hs, u32 rate, bool link_startup,
-+				 bool is_pre_scale_up)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 	struct ufs_clk_info *clki;
-@@ -563,11 +561,16 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 	/*
- 	 * The Qunipro controller does not use following registers:
- 	 * SYS1CLK_1US_REG, TX_SYMBOL_CLK_1US_REG, CLK_NS_REG &
--	 * UFS_REG_PA_LINK_STARTUP_TIMER
--	 * But UTP controller uses SYS1CLK_1US_REG register for Interrupt
--	 * Aggregation logic.
--	*/
--	if (ufs_qcom_cap_qunipro(host) && !ufshcd_is_intr_aggr_allowed(hba))
-+	 * UFS_REG_PA_LINK_STARTUP_TIMER.
-+	 * However UTP controller uses SYS1CLK_1US_REG register for Interrupt
-+	 * Aggregation logic and Auto hibern8 logic.
-+	 * It is mandatory to write SYS1CLK_1US_REG register on UFS host
-+	 * controller V4.0.0 onwards.
-+	 */
-+	if (ufs_qcom_cap_qunipro(host) &&
-+	    !(ufshcd_is_intr_aggr_allowed(hba) ||
-+	    ufshcd_is_auto_hibern8_supported(hba) ||
-+	    host->hw_ver.major >= 4))
- 		return 0;
-
- 	if (gear == 0) {
-@@ -576,8 +579,14 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 	}
-
- 	list_for_each_entry(clki, &hba->clk_list_head, list) {
--		if (!strcmp(clki->name, "core_clk"))
--			core_clk_rate = clk_get_rate(clki->clk);
-+		if (!strcmp(clki->name, "core_clk")) {
-+			if (is_pre_scale_up)
-+				core_clk_rate = clki->max_freq;
-+			else
-+				core_clk_rate = clk_get_rate(clki->clk);
-+			break;
-+		}
-+
- 	}
-
- 	/* If frequency is smaller than 1MHz, set to 1MHz */
-@@ -657,7 +666,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 		mb();
- 	}
-
--	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
-+	if (link_startup && host->hw_ver.major != 0x5) {
- 		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
- 			      REG_UFS_CFG0);
- 		/*
-@@ -670,6 +679,114 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 	return 0;
- }
-
-+static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-+			       u32 hs, u32 rate, bool link_startup)
-+{
-+	return  __ufs_qcom_cfg_timers(hba, gear, hs, rate,
-+				      link_startup, false);
-+}
-+
-+static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
-+				      u32 clk_1us_cycles,
-+				      u32 clk_40ns_cycles,
-+				      bool scale_up)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	u32 mask = MAX_CORE_CLK_1US_CYCLES_MASK;
-+	u32 reg, clk_cycles;
-+	u32 offset = 0;
-+	int err;
-+
-+	/* Bit mask and offset changed on UFS host controller V4.0.0 onwards */
-+	if (host->hw_ver.major >= 4) {
-+		mask = MAX_CORE_CLK_1US_CYCLES_MASK_V4;
-+		offset = MAX_CORE_CLK_1US_CYCLES_OFFSET_V4;
-+	}
-+
-+	if (clk_1us_cycles > mask)
-+		return -EINVAL;
-+
-+	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
-+	if (err)
-+		return err;
-+
-+	reg &= ~(mask << offset);
-+	reg |= clk_1us_cycles << offset;
-+
-+	if (scale_up)
-+		reg |= CORE_CLK_DIV_EN_BIT;
-+	else
-+		reg &= ~CORE_CLK_DIV_EN_BIT;
-+
-+	err = ufshcd_dme_set(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), reg);
-+	if (err)
-+		return err;
-+
-+	/*
-+	 * UFS host controller V4.0.0 onwards needs to program
-+	 * PA_VS_CORE_CLK_40NS_CYCLES attribute per programmed
-+	 * frequency of unipro core clk of UFS host controller.
-+	 */
-+	if (host->hw_ver.major >= 4) {
-+		if (clk_40ns_cycles > PA_VS_CORE_CLK_40NS_CYCLES_MASK)
-+			return -EINVAL;
-+
-+		err = ufshcd_dme_get(hba,
-+				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
-+				     &clk_cycles);
-+		if (err)
-+			return err;
-+
-+		clk_cycles &= ~PA_VS_CORE_CLK_40NS_CYCLES_MASK;
-+		clk_cycles |= clk_40ns_cycles;
-+
-+		err = ufshcd_dme_set(hba,
-+				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
-+				     clk_cycles);
-+	}
-+
-+	return err;
-+}
-+
-+static int ufs_qcom_cfg_core_clk_ctrl(struct ufs_hba *hba)
-+{
-+	struct list_head *head = &hba->clk_list_head;
-+	struct ufs_clk_info *clki;
-+	u32 max_freq = 0;
-+	int err;
-+
-+	list_for_each_entry(clki, head, list) {
-+		if (!IS_ERR_OR_NULL(clki->clk) &&
-+		    (!strcmp(clki->name, "core_clk_unipro"))) {
-+			max_freq = clki->max_freq;
-+			break;
-+		}
-+	}
-+
-+	switch (max_freq) {
-+	case MHZ_403:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16, true);
-+		break;
-+	case MHZ_300:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12, true);
-+		break;
-+	case MHZ_201_5:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8, true);
-+		break;
-+	case MHZ_150:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6, true);
-+		break;
-+	case MHZ_100:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, true);
-+		break;
-+	default:
-+		dev_err(hba->dev, "unipro max_freq=%u entry missing\n", max_freq);
-+		err = -EINVAL;
-+		break;
-+	}
-+
-+	return err;
-+}
- static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
- 					enum ufs_notify_change_status status)
- {
-@@ -685,13 +802,15 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
- 			return -EINVAL;
- 		}
-
--		if (ufs_qcom_cap_qunipro(host))
--			/*
--			 * set unipro core clock cycles to 150 & clear clock
--			 * divider
--			 */
--			err = ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba,
--									  150);
-+		if (ufs_qcom_cap_qunipro(host)) {
-+			err = ufs_qcom_cfg_core_clk_ctrl(hba);
-+			if (err) {
-+				dev_err(hba->dev,
-+					"%s cfg core clk ctrl failed\n",
-+					__func__);
-+				return err;
-+			}
-+		}
-
- 		/*
- 		 * Some UFS devices (and may be host) have issues if LCC is
-@@ -1296,69 +1415,52 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
- 	phy_exit(host->generic_phy);
- }
-
--static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
--						       u32 clk_cycles)
-+static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
- {
--	int err;
--	u32 core_clk_ctrl_reg;
--
--	if (clk_cycles > DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK)
--		return -EINVAL;
--
--	err = ufshcd_dme_get(hba,
--			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
--			    &core_clk_ctrl_reg);
--	if (err)
--		return err;
--
--	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
--	core_clk_ctrl_reg |= clk_cycles;
--
--	/* Clear CORE_CLK_DIV_EN */
--	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
-+	int err = 0;
-
--	return ufshcd_dme_set(hba,
--			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
--			    core_clk_ctrl_reg);
--}
-+	if (!ufs_qcom_cap_qunipro(host))
-+		goto out;
-
--static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
--{
--	/* nothing to do as of now */
--	return 0;
-+	if (attr) {
-+		err = __ufs_qcom_cfg_timers(hba, attr->gear_rx,
-+					    attr->pwr_rx, attr->hs_rate,
-+					    false, true);
-+		if (err)
-+			dev_err(hba->dev, "%s ufs cfg timer failed\n",
-+					  __func__);
-+	}
-+	err = ufs_qcom_cfg_core_clk_ctrl(hba);
-+out:
-+	return err;
- }
-
- static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
- {
--	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--
--	if (!ufs_qcom_cap_qunipro(host))
--		return 0;
--
--	/* set unipro core clock cycles to 150 and clear clock divider */
--	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 150);
-+	return 0;
- }
-
- static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 	int err;
--	u32 core_clk_ctrl_reg;
-+	u32 reg;
-
- 	if (!ufs_qcom_cap_qunipro(host))
- 		return 0;
-
--	err = ufshcd_dme_get(hba,
--			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
--			    &core_clk_ctrl_reg);
-+	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
-+	if (err)
-+		return err;
-
- 	/* make sure CORE_CLK_DIV_EN is cleared */
--	if (!err &&
--	    (core_clk_ctrl_reg & DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT)) {
--		core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-+	if (reg & CORE_CLK_DIV_EN_BIT) {
-+		reg &= ~CORE_CLK_DIV_EN_BIT;
- 		err = ufshcd_dme_set(hba,
- 				    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
--				    core_clk_ctrl_reg);
-+				    reg);
- 	}
-
- 	return err;
-@@ -1367,12 +1469,44 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
- static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
-+	struct list_head *head = &hba->clk_list_head;
-+	struct ufs_clk_info *clki;
-+	u32 curr_freq = 0;
-+	int err;
-
- 	if (!ufs_qcom_cap_qunipro(host))
- 		return 0;
-
--	/* set unipro core clock cycles to 75 and clear clock divider */
--	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 75);
-+	if (attr)
-+		ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
-+				    attr->hs_rate, false);
-+
-+	list_for_each_entry(clki, head, list) {
-+		if (!IS_ERR_OR_NULL(clki->clk) &&
-+		    (!strcmp(clki->name, "core_clk_unipro"))) {
-+			curr_freq = clk_get_rate(clki->clk);
-+			break;
-+		}
-+	}
-+
-+	switch (curr_freq) {
-+	case MHZ_37_5:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2, false);
-+		break;
-+	case MHZ_75:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3, false);
-+		break;
-+	case MHZ_100:
-+		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, false);
-+		break;
-+	default:
-+		err = -EINVAL;
-+		dev_err(hba->dev, "unipro curr_freq=%u entry missing\n", curr_freq);
-+		break;
-+	}
-+
-+	return err;
- }
-
- static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index d6f8e74bd538..da7b5ee7c1cf 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -79,6 +79,17 @@ enum {
- 	UFS_MEM_CQIS_VS		= 0x8,
- };
-
-+
-+/* QCOM UFS host controller core clk frequencies */
-+#define MHZ_37_5	37500000
-+#define MHZ_50		50000000
-+#define MHZ_75		75000000
-+#define MHZ_100		100000000
-+#define MHZ_150		150000000
-+#define MHZ_300		300000000
-+#define MHZ_201_5	201500000
-+#define MHZ_403		403000000
-+
- #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
- #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
-
-@@ -129,9 +140,12 @@ enum {
- #define PA_VS_CONFIG_REG1	0x9000
- #define DME_VS_CORE_CLK_CTRL	0xD002
- /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
--#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
--#define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
--
-+#define MAX_CORE_CLK_1US_CYCLES_MASK_V4			0xFFF
-+#define MAX_CORE_CLK_1US_CYCLES_OFFSET_V4		0x10
-+#define MAX_CORE_CLK_1US_CYCLES_MASK			0xFF
-+#define CORE_CLK_DIV_EN_BIT				BIT(8)
-+#define PA_VS_CORE_CLK_40NS_CYCLES			0x9007
-+#define PA_VS_CORE_CLK_40NS_CYCLES_MASK			0x3F
- static inline void
- ufs_qcom_get_controller_revision(struct ufs_hba *hba,
- 				 u8 *major, u16 *minor, u16 *step)
---
-2.17.1
-
+> ---
+> v2:
+> - Fix double include of of.h
+> ---
+>  drivers/mmc/host/atmel-mci.c                  | 1 -
+>  drivers/mmc/host/cavium-octeon.c              | 2 ++
+>  drivers/mmc/host/cavium-thunderx.c            | 1 +
+>  drivers/mmc/host/davinci_mmc.c                | 1 -
+>  drivers/mmc/host/meson-gx-mmc.c               | 2 +-
+>  drivers/mmc/host/mtk-sd.c                     | 4 +---
+>  drivers/mmc/host/mxcmmc.c                     | 1 -
+>  drivers/mmc/host/mxs-mmc.c                    | 1 -
+>  drivers/mmc/host/owl-mmc.c                    | 3 ++-
+>  drivers/mmc/host/pxamci.c                     | 1 -
+>  drivers/mmc/host/renesas_sdhi_internal_dmac.c | 3 ++-
+>  drivers/mmc/host/renesas_sdhi_sys_dmac.c      | 3 ++-
+>  drivers/mmc/host/sdhci-bcm-kona.c             | 1 -
+>  drivers/mmc/host/sdhci-cadence.c              | 2 +-
+>  drivers/mmc/host/sdhci-esdhc-imx.c            | 2 +-
+>  drivers/mmc/host/sdhci-iproc.c                | 2 +-
+>  drivers/mmc/host/sdhci-msm.c                  | 2 +-
+>  drivers/mmc/host/sdhci-of-arasan.c            | 4 ++--
+>  drivers/mmc/host/sdhci-of-at91.c              | 2 +-
+>  drivers/mmc/host/sdhci-of-dwcmshc.c           | 2 +-
+>  drivers/mmc/host/sdhci-of-sparx5.c            | 2 +-
+>  drivers/mmc/host/sdhci-omap.c                 | 1 -
+>  drivers/mmc/host/sdhci-pxav2.c                | 1 -
+>  drivers/mmc/host/sdhci-s3c.c                  | 1 -
+>  drivers/mmc/host/sdhci-sprd.c                 | 1 -
+>  drivers/mmc/host/sdhci-tegra.c                | 1 -
+>  drivers/mmc/host/sh_mmcif.c                   | 1 -
+>  drivers/mmc/host/uniphier-sd.c                | 1 -
+>  drivers/mmc/host/wmt-sdmmc.c                  | 1 -
+>  29 files changed, 20 insertions(+), 30 deletions(-)
+>
+> diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+> index dd18440a90c5..2fdf352b3d86 100644
+> --- a/drivers/mmc/host/atmel-mci.c
+> +++ b/drivers/mmc/host/atmel-mci.c
+> @@ -18,7 +18,6 @@
+>  #include <linux/ioport.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_gpio.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/scatterlist.h>
+> diff --git a/drivers/mmc/host/cavium-octeon.c b/drivers/mmc/host/cavium-octeon.c
+> index 12dca91a8ef6..02429f7afb42 100644
+> --- a/drivers/mmc/host/cavium-octeon.c
+> +++ b/drivers/mmc/host/cavium-octeon.c
+> @@ -13,7 +13,9 @@
+>  #include <linux/mmc/mmc.h>
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/module.h>
+> +#include <linux/of.h>
+>  #include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+>  #include <asm/octeon/octeon.h>
+>  #include "cavium.h"
+>
+> diff --git a/drivers/mmc/host/cavium-thunderx.c b/drivers/mmc/host/cavium-thunderx.c
+> index 202b1d6da678..2e2ff984f0b3 100644
+> --- a/drivers/mmc/host/cavium-thunderx.c
+> +++ b/drivers/mmc/host/cavium-thunderx.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/pci.h>
+>  #include "cavium.h"
+>
+> diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
+> index 7138dfa065bf..17a137f85cbe 100644
+> --- a/drivers/mmc/host/davinci_mmc.c
+> +++ b/drivers/mmc/host/davinci_mmc.c
+> @@ -21,7 +21,6 @@
+>  #include <linux/dma-mapping.h>
+>  #include <linux/mmc/mmc.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/interrupt.h>
+>
+> diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
+> index ee9a25b900ae..0669993108ec 100644
+> --- a/drivers/mmc/host/meson-gx-mmc.c
+> +++ b/drivers/mmc/host/meson-gx-mmc.c
+> @@ -11,7 +11,7 @@
+>  #include <linux/delay.h>
+>  #include <linux/device.h>
+>  #include <linux/iopoll.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/ioport.h>
+>  #include <linux/dma-mapping.h>
+> diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+> index 02403ff99e0d..6c68c642ef61 100644
+> --- a/drivers/mmc/host/mtk-sd.c
+> +++ b/drivers/mmc/host/mtk-sd.c
+> @@ -12,9 +12,7 @@
+>  #include <linux/iopoll.h>
+>  #include <linux/ioport.h>
+>  #include <linux/irq.h>
+> -#include <linux/of_address.h>
+> -#include <linux/of_device.h>
+> -#include <linux/of_irq.h>
+> +#include <linux/of.h>
+>  #include <linux/of_gpio.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/platform_device.h>
+> diff --git a/drivers/mmc/host/mxcmmc.c b/drivers/mmc/host/mxcmmc.c
+> index 668f865f3efb..226a10202d25 100644
+> --- a/drivers/mmc/host/mxcmmc.c
+> +++ b/drivers/mmc/host/mxcmmc.c
+> @@ -31,7 +31,6 @@
+>  #include <linux/dmaengine.h>
+>  #include <linux/types.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_dma.h>
+>  #include <linux/mmc/slot-gpio.h>
+>
+> diff --git a/drivers/mmc/host/mxs-mmc.c b/drivers/mmc/host/mxs-mmc.c
+> index 8c3655d3be96..951c6c48b4f7 100644
+> --- a/drivers/mmc/host/mxs-mmc.c
+> +++ b/drivers/mmc/host/mxs-mmc.c
+> @@ -11,7 +11,6 @@
+>  #include <linux/init.h>
+>  #include <linux/ioport.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/delay.h>
+>  #include <linux/interrupt.h>
+> diff --git a/drivers/mmc/host/owl-mmc.c b/drivers/mmc/host/owl-mmc.c
+> index 1bf22b08b373..62d2993573d0 100644
+> --- a/drivers/mmc/host/owl-mmc.c
+> +++ b/drivers/mmc/host/owl-mmc.c
+> @@ -16,8 +16,9 @@
+>  #include <linux/interrupt.h>
+>  #include <linux/mmc/host.h>
+>  #include <linux/mmc/slot-gpio.h>
+> +#include <linux/mod_devicetable.h>
+>  #include <linux/module.h>
+> -#include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/reset.h>
+>  #include <linux/spinlock.h>
+>
+> diff --git a/drivers/mmc/host/pxamci.c b/drivers/mmc/host/pxamci.c
+> index 2a988f942b6c..d274e4433fc1 100644
+> --- a/drivers/mmc/host/pxamci.c
+> +++ b/drivers/mmc/host/pxamci.c
+> @@ -30,7 +30,6 @@
+>  #include <linux/gpio/consumer.h>
+>  #include <linux/gfp.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/soc/pxa/cpu.h>
+>
+>  #include <linux/sizes.h>
+> diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+> index 9ab813903b2c..4cc5bcb3213a 100644
+> --- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+> +++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+> @@ -15,7 +15,8 @@
+>  #include <linux/mmc/host.h>
+>  #include <linux/mod_devicetable.h>
+>  #include <linux/module.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/pagemap.h>
+>  #include <linux/scatterlist.h>
+>  #include <linux/sys_soc.h>
+> diff --git a/drivers/mmc/host/renesas_sdhi_sys_dmac.c b/drivers/mmc/host/renesas_sdhi_sys_dmac.c
+> index b559ad38b667..452982e670d2 100644
+> --- a/drivers/mmc/host/renesas_sdhi_sys_dmac.c
+> +++ b/drivers/mmc/host/renesas_sdhi_sys_dmac.c
+> @@ -15,7 +15,8 @@
+>  #include <linux/mmc/host.h>
+>  #include <linux/mod_devicetable.h>
+>  #include <linux/module.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/pagemap.h>
+>  #include <linux/scatterlist.h>
+>  #include <linux/sys_soc.h>
+> diff --git a/drivers/mmc/host/sdhci-bcm-kona.c b/drivers/mmc/host/sdhci-bcm-kona.c
+> index 6a93a54fe067..ef1fb383e1e7 100644
+> --- a/drivers/mmc/host/sdhci-bcm-kona.c
+> +++ b/drivers/mmc/host/sdhci-bcm-kona.c
+> @@ -11,7 +11,6 @@
+>  #include <linux/clk.h>
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/mmc/slot-gpio.h>
+>
+>  #include "sdhci-pltfm.h"
+> diff --git a/drivers/mmc/host/sdhci-cadence.c b/drivers/mmc/host/sdhci-cadence.c
+> index d2f625054689..25d9849ef0d1 100644
+> --- a/drivers/mmc/host/sdhci-cadence.c
+> +++ b/drivers/mmc/host/sdhci-cadence.c
+> @@ -11,7 +11,7 @@
+>  #include <linux/mmc/host.h>
+>  #include <linux/mmc/mmc.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/reset.h>
+>
+>  #include "sdhci-pltfm.h"
+> diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+> index eebf94604a7f..e767fe058023 100644
+> --- a/drivers/mmc/host/sdhci-esdhc-imx.c
+> +++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+> @@ -22,7 +22,7 @@
+>  #include <linux/mmc/sdio.h>
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/pm_runtime.h>
+>  #include "sdhci-cqhci.h"
+> diff --git a/drivers/mmc/host/sdhci-iproc.c b/drivers/mmc/host/sdhci-iproc.c
+> index 86eb0045515e..6a93b1ee0b30 100644
+> --- a/drivers/mmc/host/sdhci-iproc.c
+> +++ b/drivers/mmc/host/sdhci-iproc.c
+> @@ -10,7 +10,7 @@
+>  #include <linux/module.h>
+>  #include <linux/mmc/host.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+>  #include "sdhci-pltfm.h"
+>
+>  struct sdhci_iproc_data {
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 1c935b5bafe1..c0ce187e740a 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -6,7 +6,6 @@
+>   */
+>
+>  #include <linux/module.h>
+> -#include <linux/of_device.h>
+>  #include <linux/delay.h>
+>  #include <linux/mmc/mmc.h>
+>  #include <linux/pm_runtime.h>
+> @@ -15,6 +14,7 @@
+>  #include <linux/iopoll.h>
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/interconnect.h>
+> +#include <linux/of.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/reset.h>
+>
+> diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
+> index 294dd605fd2b..2f9de2518942 100644
+> --- a/drivers/mmc/host/sdhci-of-arasan.c
+> +++ b/drivers/mmc/host/sdhci-of-arasan.c
+> @@ -18,11 +18,11 @@
+>  #include <linux/clk-provider.h>
+>  #include <linux/mfd/syscon.h>
+>  #include <linux/module.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/phy/phy.h>
+>  #include <linux/regmap.h>
+>  #include <linux/reset.h>
+> -#include <linux/of.h>
+>  #include <linux/firmware/xlnx-zynqmp.h>
+>
+>  #include "cqhci.h"
+> diff --git a/drivers/mmc/host/sdhci-of-at91.c b/drivers/mmc/host/sdhci-of-at91.c
+> index cd0134580a90..808307a211f2 100644
+> --- a/drivers/mmc/host/sdhci-of-at91.c
+> +++ b/drivers/mmc/host/sdhci-of-at91.c
+> @@ -17,7 +17,7 @@
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/pm.h>
+>  #include <linux/pm_runtime.h>
+>
+> diff --git a/drivers/mmc/host/sdhci-of-dwcmshc.c b/drivers/mmc/host/sdhci-of-dwcmshc.c
+> index e68cd87998c8..55e1e2d0494d 100644
+> --- a/drivers/mmc/host/sdhci-of-dwcmshc.c
+> +++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+> @@ -14,7 +14,7 @@
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/reset.h>
+>  #include <linux/sizes.h>
+>
+> diff --git a/drivers/mmc/host/sdhci-of-sparx5.c b/drivers/mmc/host/sdhci-of-sparx5.c
+> index 28e4ee69e100..2e983cf49bc6 100644
+> --- a/drivers/mmc/host/sdhci-of-sparx5.c
+> +++ b/drivers/mmc/host/sdhci-of-sparx5.c
+> @@ -13,9 +13,9 @@
+>  #include <linux/delay.h>
+>  #include <linux/module.h>
+>  #include <linux/regmap.h>
+> -#include <linux/of_device.h>
+>  #include <linux/mfd/syscon.h>
+>  #include <linux/dma-mapping.h>
+> +#include <linux/of.h>
+>
+>  #include "sdhci-pltfm.h"
+>
+> diff --git a/drivers/mmc/host/sdhci-omap.c b/drivers/mmc/host/sdhci-omap.c
+> index 8ed9256b83da..2593e3fbd0d9 100644
+> --- a/drivers/mmc/host/sdhci-omap.c
+> +++ b/drivers/mmc/host/sdhci-omap.c
+> @@ -11,7 +11,6 @@
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_irq.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_runtime.h>
+> diff --git a/drivers/mmc/host/sdhci-pxav2.c b/drivers/mmc/host/sdhci-pxav2.c
+> index 91aca8f8d6ef..86b60b0447b3 100644
+> --- a/drivers/mmc/host/sdhci-pxav2.c
+> +++ b/drivers/mmc/host/sdhci-pxav2.c
+> @@ -19,7 +19,6 @@
+>  #include <linux/platform_data/pxa_sdhci.h>
+>  #include <linux/slab.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/mmc/sdio.h>
+>  #include <linux/mmc/mmc.h>
+>  #include <linux/pinctrl/consumer.h>
+> diff --git a/drivers/mmc/host/sdhci-s3c.c b/drivers/mmc/host/sdhci-s3c.c
+> index 504015e84308..6245fb4584fe 100644
+> --- a/drivers/mmc/host/sdhci-s3c.c
+> +++ b/drivers/mmc/host/sdhci-s3c.c
+> @@ -20,7 +20,6 @@
+>  #include <linux/gpio.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_gpio.h>
+>  #include <linux/pm.h>
+>  #include <linux/pm_runtime.h>
+> diff --git a/drivers/mmc/host/sdhci-sprd.c b/drivers/mmc/host/sdhci-sprd.c
+> index 7f4ee2e12735..a21d6524d7ca 100644
+> --- a/drivers/mmc/host/sdhci-sprd.c
+> +++ b/drivers/mmc/host/sdhci-sprd.c
+> @@ -11,7 +11,6 @@
+>  #include <linux/iopoll.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_gpio.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/platform_device.h>
+> diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+> index bff084f178c9..1e1eac953691 100644
+> --- a/drivers/mmc/host/sdhci-tegra.c
+> +++ b/drivers/mmc/host/sdhci-tegra.c
+> @@ -19,7 +19,6 @@
+>  #include <linux/mmc/mmc.h>
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/module.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/platform_device.h>
+> diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
+> index 5cf53348372a..838dab179724 100644
+> --- a/drivers/mmc/host/sh_mmcif.c
+> +++ b/drivers/mmc/host/sh_mmcif.c
+> @@ -46,7 +46,6 @@
+>  #include <linux/mmc/slot-gpio.h>
+>  #include <linux/mod_devicetable.h>
+>  #include <linux/mutex.h>
+> -#include <linux/of_device.h>
+>  #include <linux/pagemap.h>
+>  #include <linux/platform_data/sh_mmcif.h>
+>  #include <linux/platform_device.h>
+> diff --git a/drivers/mmc/host/uniphier-sd.c b/drivers/mmc/host/uniphier-sd.c
+> index 61acd69fac0e..c1400d616fff 100644
+> --- a/drivers/mmc/host/uniphier-sd.c
+> +++ b/drivers/mmc/host/uniphier-sd.c
+> @@ -13,7 +13,6 @@
+>  #include <linux/mmc/host.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+> diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
+> index 68525d900046..f860f363be56 100644
+> --- a/drivers/mmc/host/wmt-sdmmc.c
+> +++ b/drivers/mmc/host/wmt-sdmmc.c
+> @@ -21,7 +21,6 @@
+>  #include <linux/of.h>
+>  #include <linux/of_address.h>
+>  #include <linux/of_irq.h>
+> -#include <linux/of_device.h>
+>
+>  #include <linux/mmc/host.h>
+>  #include <linux/mmc/mmc.h>
+> --
+> 2.40.1
+>
