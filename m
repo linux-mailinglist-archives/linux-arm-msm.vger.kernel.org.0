@@ -2,79 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC5FF7731BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 23:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FF3C7732E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 00:21:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230102AbjHGV6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 17:58:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40288 "EHLO
+        id S229829AbjHGWV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 18:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjHGV6H (ORCPT
+        with ESMTP id S229909AbjHGWV4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 17:58:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB53FDB;
-        Mon,  7 Aug 2023 14:57:53 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377LgpjA008701;
-        Mon, 7 Aug 2023 21:57:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=QPCAV9pyNoC0h6RfGBJgwpUbQEL+UJj8rm3tn0R9vW4=;
- b=irmgA6P67oB7glk8LWMvE96ZiST3DuE2xRYvn4JdPRSHkI0p4IQmIN6517uaX4/K6uJr
- JXAuI1UWiQ2Gw3WrtrCkD9eYLY7+ZiBrVVVmdSnbc4OnaW2UiHXf6hFUAP9QDvQinv00
- k4dL/9mG5WeifKJIG73pHEjnKoR+FSW7XZcCGkgTAKEFJmOp02GKes+/8V54GIo4cYp+
- UCM8OiPui/uJYPJ9GYPn6M+6XUlioIamm6mAEGjAD2EVm5xtaHBLCI/26NLnRKie4XkM
- pzWlEd+dfGe0ylZ3hLP60LgnKqMNjIyTRQ9X8s+RL5KTdEbitOWGirchlOdC9clmhawk dw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3saxbbsbmy-1
+        Mon, 7 Aug 2023 18:21:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E0F9B3;
+        Mon,  7 Aug 2023 15:21:51 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377MHn8W031068;
+        Mon, 7 Aug 2023 22:21:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=HuQGzR9nGcEDqsgxRQgpnqUloZrjPftuf8TrhulhEFs=;
+ b=T4ygLLgy+z5E7d4rtH/IiMSl7pfGthOR1GEXJ26bUzQKozGtHDliiPETesb7vAHK5naj
+ cs6chjARAFIfP2x5rJAzaq05QoRgSfVP/WRcTlUV8ROJqnxeFaaFrrPHWpoIgQRD5907
+ CkkK3/N7fEA1O6TiH/0MMYHqwdbvUddQNeeqKeE2Mb5h28Kb19OVf5qmdb36oUz6Oebe
+ Ln+XUi9YvLdOaQptucHEJUABRhrpzneczVnWGamDg6tfaeY2bIdKaxHhai0aI/fE1v/8
+ XTMG0TakJrauRBImmF0KOVVNMq92ccK0GCbHTwl6GDgqUlTk8d4vUIwrVQVyrunQgO9f ww== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3saw0r9ny6-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Aug 2023 21:57:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377Lvf6G012050
+        Mon, 07 Aug 2023 22:21:43 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377MLgak018490
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 7 Aug 2023 21:57:41 GMT
-Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 7 Aug 2023 14:57:40 -0700
-Date:   Mon, 7 Aug 2023 14:57:39 -0700
-From:   Mike Tipton <quic_mdtipton@quicinc.com>
-To:     Georgi Djakov <djakov@kernel.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
-Message-ID: <20230807215739.GA9621@hu-mdtipton-lv.qualcomm.com>
-References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
- <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
+        Mon, 7 Aug 2023 22:21:42 GMT
+Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 15:21:42 -0700
+Message-ID: <b04755d6-cc52-3766-9f39-34529d9eb769@quicinc.com>
+Date:   Mon, 7 Aug 2023 15:21:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] drm/msm/dpu: Enable widebus for DSI INTF
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, <quic_abhinavk@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com>
+ <20230802-add-widebus-support-v3-2-2661706be001@quicinc.com>
+ <ujgfclphym2ezd6g4uw43tp3ciswhuon2qfp77uwqcbwrtqwqe@inybwaln3q5u>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <ujgfclphym2ezd6g4uw43tp3ciswhuon2qfp77uwqcbwrtqwqe@inybwaln3q5u>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KEfak8hgRYBt2UyjLGg6DaQalcjhtdha
-X-Proofpoint-GUID: KEfak8hgRYBt2UyjLGg6DaQalcjhtdha
+X-Proofpoint-GUID: 5FZFHI-sGeY9VyQRQvVYfKSxH7wLD03i
+X-Proofpoint-ORIG-GUID: 5FZFHI-sGeY9VyQRQvVYfKSxH7wLD03i
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_24,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
- spamscore=0 clxscore=1011 impostorscore=0 malwarescore=0 phishscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308070199
+ definitions=2023-08-07_25,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ phishscore=0 adultscore=0 impostorscore=0 mlxlogscore=999 clxscore=1015
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070203
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -84,59 +83,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 03, 2023 at 07:48:08PM +0300, Georgi Djakov wrote:
-> Hi Konrad,
+
+
+On 8/2/2023 12:39 PM, Marijn Suijten wrote:
+> On 2023-08-02 11:08:49, Jessica Zhang wrote:
+>> DPU supports a data-bus widen mode for DSI INTF.
+>>
+>> Enable this mode for all supported chipsets if widebus is enabled for DSI.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 11 ++++++++---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  4 +++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          |  3 +++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  1 +
+>>   drivers/gpu/drm/msm/msm_drv.h                        |  6 +++++-
+>>   5 files changed, 20 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 3dcd37c48aac..de08aad39e15 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -1196,15 +1196,20 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+>>   	struct drm_display_mode *cur_mode = NULL;
+>>   	struct msm_drm_private *priv = drm_enc->dev->dev_private;
+>>   	struct msm_display_info *disp_info;
+>> +	int index;
+>>   
+>>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>>   	disp_info = &dpu_enc->disp_info;
+>>   
+>> +	disp_info = &dpu_enc->disp_info;
+>> +	index = disp_info->h_tile_instance[0];
+>> +
+>>   	dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
+>>   
+>> -	if (disp_info->intf_type == INTF_DP)
+>> -		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+>> -				priv->dp[disp_info->h_tile_instance[0]]);
+>> +	if (disp_info->intf_type == INTF_DSI)
+>> +		dpu_enc->wide_bus_en = msm_dsi_is_widebus_enabled(priv->dsi[index]);
+>> +	else if (disp_info->intf_type == INTF_DP)
+>> +		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(priv->dp[index]);
 > 
-> On 11.07.23 15:17, Konrad Dybcio wrote:
-> > Many parts of Qualcomm SoCs are entirely independent of each other and can
-> > run when the other parts are off. The RPMh system architecture embraces
-> > this by giving each (loosely defined) subsystem its own connection (as in,
-> > physical wires) to the AOSS, terminated by per-subsystem RSCs (Resource
-> > State Coordinators) that barter for power, bandwidth etc.
-> > 
-> > This series introduces the groundwork necessary for voting for resources
-> > through non-APPS RSCs. It should allow for lower-latency vote adjustments
-> > (e.g. for very high bandwidth / multiple displays) and could potentially
-> > allow for full APSS collapse while keeping e.g. MDSS operating (say
-> > refreshing an image from a RAM buffer).
+> This inconsistency really is killing.  wide_bus vs widebus, and one
+> function has an is_ while the other does not.
+
+Hi Marijn,
+
+Acked. Will change the DSI function name to match DP.
+
 > 
-> This is good stuff. Thanks for working on it! Actually the path tagging,
-> that have been introduced some time ago could be used for supporting the
-> multiple RSCs. Today we can get the tags from DT, and tag the path with
-> some DISP_RSC flag (for example) and avoid the qcom,bcm-voter-idx property.
+>>   
+>>   	mutex_lock(&dpu_enc->enc_lock);
+>>   	cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> index df88358e7037..dace6168be2d 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> @@ -69,8 +69,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+>>   				phys_enc->hw_intf,
+>>   				phys_enc->hw_pp->idx);
+>>   
+>> -	if (intf_cfg.dsc != 0)
+>> +	if (intf_cfg.dsc != 0) {
+>>   		cmd_mode_cfg.data_compress = true;
+>> +		cmd_mode_cfg.wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
+>> +	}
+>>   
+>>   	if (phys_enc->hw_intf->ops.program_intf_cmd_cfg)
+>>   		phys_enc->hw_intf->ops.program_intf_cmd_cfg(phys_enc->hw_intf, &cmd_mode_cfg);
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> index 8ec6505d9e78..dc6f3febb574 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> @@ -521,6 +521,9 @@ static void dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *ctx,
+>>   	if (cmd_mode_cfg->data_compress)
+>>   		intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
+>>   
+>> +	if (cmd_mode_cfg->wide_bus_en)
+>> +		intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
+>> +
+>>   	DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
+>>   }
+>>   
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+>> index 77f80531782b..c539025c418b 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+>> @@ -50,6 +50,7 @@ struct dpu_hw_intf_status {
+>>   
+>>   struct dpu_hw_intf_cmd_mode_cfg {
+>>   	u8 data_compress;	/* enable data compress between dpu and dsi */
+>> +	u8 wide_bus_en;		/* enable databus widen mode */
 > 
-> Mike has been also looking into this, so maybe he can share his thoughts.
+> Any clue why these weren't just bool types?  These suffix-comments also
+> aren't adhering to the kerneldoc format, or is there a different
+> variant?
+
+It seems that the `u8` declaration and comment docs were meant to mirror 
+the other dpu_hw_intf_* structs [1]
+
+[1] 
+https://elixir.bootlin.com/linux/v6.5-rc5/source/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h#L44
+
 > 
+>>   };
+>>   
+>>   /**
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+>> index 9d9d5e009163..e4f706b16aad 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>> @@ -344,6 +344,7 @@ void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi
+>>   bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
+>>   bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
+>>   bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
+>> +bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi);
+>>   struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
+>>   #else
+>>   static inline void __init msm_dsi_register(void)
+>> @@ -373,7 +374,10 @@ static inline bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
+>>   {
+>>   	return false;
+>>   }
+>> -
+>> +static inline bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi)
+>> +{
+>> +	return false;
+>> +}
+> 
+> Only this default inline implementation is defined, but the function is
+> declared in this commit.  Since there's no real functional
+> implementation yet your commit should clarify that it comes later (in a
+> followup commit in the same series?  I can't know because I am reviewing
+> this series linearly from start to finish...) or reorder the patches so
+> that this lack of clarity is circumvented entirely.
 
-Yeah, the current way we've been supporting multiple voters (e.g. RSCs)
-doesn't scale. We currently duplicate the topology for any path that
-requires a secondary, non-APSS voter. Which means we have duplicates
-nodes and bindings for each hop in those paths, even though there's only
-a single logical path.
+This was so that there wouldn't be a compiler error in cases where 
+CONFIG_MSM_DSI=n (since DPU support is added before DSI support).
 
-For example, in qcom/sm8550.c, each node and BCM ending with _disp,
-_ife_0, _ife_1, or _ife_2 is a duplicate. The only reason they exist is
-to allow clients to target their votes to the non-APPS voters. And to
-provide separate, voter-specific buckets of aggregation. But everything
-else about them is 100% identical to their default APPS counterparts.
-For sm8550, this amounts to roughly 643 extra lines of code.
+Thanks,
 
-Initially there was only the one secondary display voter, so the scaling
-problem wasn't a huge issue. But sm8550 has four voters. And future SOCs
-will have even more.
+Jessica Zhang
 
-We should only define the logical topology once. The ratio of NOC ports
-to interconnect nodes should be 1:1, rather than 1:N where N is the
-number of voters that care about them.
-
-The general idea is that we could use tags for this. So, instead of...
-
-  path = icc_get(dev, MASTER_MDP_DISP, SLAVE_EBI1_DISP);
-
-it would be...
-
-  path = icc_get(dev, MASTER_MDP, SLAVE_EBI1);
-  icc_set_tag(path, QCOM_ICC_TAG_VOTER_DISP);
-
-I have an early prototype with basic testing already. I can hopefully
-clean it up and post for review in the next couple of weeks.
+> 
+> - Marijn
+> 
+>>   static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
+>>   {
+>>   	return NULL;
+>>
+>> -- 
+>> 2.41.0
+>>
