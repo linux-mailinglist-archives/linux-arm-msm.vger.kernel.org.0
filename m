@@ -2,141 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A60907726FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 16:05:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FB77772716
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 16:09:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233290AbjHGOFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 10:05:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53084 "EHLO
+        id S231842AbjHGOJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 10:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233452AbjHGOFX (ORCPT
+        with ESMTP id S231376AbjHGOJn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 10:05:23 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E87E8272A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 07:04:44 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so70771131fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 07:04:44 -0700 (PDT)
+        Mon, 7 Aug 2023 10:09:43 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7467A10DB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 07:09:41 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fe61ae020bso3277470e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 07:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691417079; x=1692021879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1691417379; x=1692022179;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UKSrhcE5Bln8vQQGTHtL4QDZJ+tT1+92+NGnlfVJ2k0=;
-        b=O0bP2X7Yu58QOiyOA57b5a+g7b72bAfdkW0yXkeQQdZZQiVjurj73+CUZMsll5txeS
-         Uac1l9skbh9f7pHv9667e5ZIwgY9Tg4r9edtmpPfv9Z7rXTsj3IrAgS0keiC/Jjg63vd
-         1BRYd79hMAYZBgQa5JUWPmS6/0A2jIMbv0zfcD/dzq5NkjgEU4RtH6GnHS4IZtwE86zH
-         lECRrM3vB/iZgJ1+MwbnsVx1mVPeEyaDs2JPgxMG7D9UT7RAngjviNL7nfEljZbvWVrI
-         REdj6p99L0cxiiE19jDuQ4BwXZwi7XILkIs6LOtl9BfbJ7mkCoNJ/XyT4hq0RyaBiNbj
-         hF7g==
+        bh=qsspjBTz0WwJAyfi3IrApSy8tFr5Y4cShd2ZcDlW/hE=;
+        b=sJ5QZe/dQJU0F49lMYomQFRCKVKAIm6XBxvx+oz2A1tOeMRBr9LWlfTiRQIMM1tBt8
+         FOBMLosgPXNIZPGlarWpREN9BTV7ffWSzePe07TwXE2h9nbYjbU+0xZXvo+Ko0wmNyJ4
+         8ODzVflQtfoP5ZRC6u9qoL0GOPxvfBJ8eKcjcMlLga/msVf5rPwmoQZIFujW1hP/3Q5b
+         dPcoN3c0m0/sQ/1vyLGDpg913WW3Abnujo8d8EynTmfdhaXhGAXOUwr+IiDigxy68KMF
+         B/bTjvh2XJ2051/wSASwyav+pRjReepVdOhJtNIj5rJ2iOf47KzO8L+WiqjhYrWTieO8
+         ATJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691417079; x=1692021879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1691417379; x=1692022179;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UKSrhcE5Bln8vQQGTHtL4QDZJ+tT1+92+NGnlfVJ2k0=;
-        b=fqRa1G+SAr+3a2MYTvKBygIDwfgBhPaxGM0Q6iIdfG+jisTWEPMHy8Gn/7XIp63aTb
-         IKWkizEdHHXuy7hW5sKDCwsqGIVQGe6WN7Fv0Q8FQZBvk4KC5GmnfcIA1tZNmAxJYtty
-         6nd+YN9IqeD5qT6KZIulH4IqMvQ4IAcox7IQT/srjyThGeY0k+UslGMtJ6icNKwed5SR
-         4z/R4wvNLvHTmRi9eaDTbMdsZ48yCU3bzgCwALmVhXc0mVLhaecCVW6MHdxAngy5iIsv
-         Za/KY6iFm7j6ydRSuJNUd7GiPiMIoZPf+cWd4I4Vq1V8nOgTh3Z5O86Sh/eCghISsV7q
-         O90g==
-X-Gm-Message-State: AOJu0Yyi+6G65mHO9csbbUV1KgrA+M9rpERL71nSNslN9JC9PCPsOawh
-        nh+ZFmrDZHsGR4hgUa3/hr4tWw==
-X-Google-Smtp-Source: AGHT+IHCrcRfDWUcueQ6OuYJVjkC4Z602JSHTqP1DbVPjQLQkoBsDryvz98IyZzcKGS29BVtwEritA==
-X-Received: by 2002:a2e:a0cb:0:b0:2b9:cce3:a126 with SMTP id f11-20020a2ea0cb000000b002b9cce3a126mr6405556ljm.21.1691417079270;
-        Mon, 07 Aug 2023 07:04:39 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id y8-20020a1709063a8800b0099316c56db9sm5158207ejd.127.2023.08.07.07.04.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 07:04:38 -0700 (PDT)
-Message-ID: <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
-Date:   Mon, 7 Aug 2023 16:04:37 +0200
+        bh=qsspjBTz0WwJAyfi3IrApSy8tFr5Y4cShd2ZcDlW/hE=;
+        b=Ar05LJdEMw4lEv3fLl41S+UsQ8o94uFr/7H4KTrsECudHcZONRT23czEshOlKaZFVp
+         ciBXgGNWNGDs2qNagWpqyN1o4KUuSXAKXnA9no1kAOA2r6vfPJwPwISjYk5GuZuai7U1
+         J+CmwwTeyP9frVa0Fxj5DLyY8PCAUKGnGNJWFFWtxei2fweI+kGVZdl1jsGIAcGZqZvL
+         uXRqF3FFNuU/4DQZ377o4QccG75p92dfMhI2kFBPxF5FqtBzvqdIx8WGPQL43fp/4bGf
+         03VNYYUD6xBtkatPLK8MXn3nWBN0DINkMCIKEufdznUWeVpC/Bv2i6A9+zUh/tbY8Xe9
+         4s0g==
+X-Gm-Message-State: AOJu0YzrfsAm8ZR+qMz6VoWkLWyXrSy++J9YHayoZVeY5Lm5SSTNaypQ
+        ECGUevwmi0e8cJ0KQp1BjfYLl5z0/z33BQi8hdI=
+X-Google-Smtp-Source: AGHT+IHMJ0PCpSkNtWXzMTB9tXGBROu0Ysj4j1KeULOhjSuIWf8Yo6PoiNgJ2dCppoLG4q11CHvdpw==
+X-Received: by 2002:a05:6512:3e29:b0:4fe:4e2c:8e52 with SMTP id i41-20020a0565123e2900b004fe4e2c8e52mr2204489lfv.42.1691417379532;
+        Mon, 07 Aug 2023 07:09:39 -0700 (PDT)
+Received: from localhost (h3221.n1.ips.mtn.co.ug. [41.210.178.33])
+        by smtp.gmail.com with ESMTPSA id h12-20020aa7c60c000000b00521953ce6e0sm5213951edq.93.2023.08.07.07.09.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Aug 2023 07:09:39 -0700 (PDT)
+Date:   Mon, 7 Aug 2023 17:09:34 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH v5] accel/qaic: tighten integer overflow checking in
+ map_user_pages()
+Message-ID: <e6cbc8a3-c2ae-46be-a731-494470c0a21c@moroto.mountain>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
- <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
- <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/08/2023 14:41, Konrad Dybcio wrote:
-> On 5.08.2023 21:29, Krzysztof Kozlowski wrote:
->> On 04/08/2023 22:09, Konrad Dybcio wrote:
->>> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
->>> to clock it a bit higher.
->>>
->>
->> ...
->>
->>> +
->>> +  iommus:
->>> +    maxItems: 1
->>> +
->>> +  video-decoder:
->>> +    type: object
->>> +
->>> +    properties:
->>> +      compatible:
->>> +        const: venus-decoder
->>
->> That's not how compatibles are constructed... missing vendor prefix, SoC
->> or IP block name.
->>
->>> +
->>> +    required:
->>> +      - compatible
->>> +
->>> +    additionalProperties: false
->>
->> Why do you need this child node? Child nodes without properties are
->> usually useless.
-> For both comments: I aligned with what was there..
-> 
-> The driver abuses these compats to probe enc/dec submodules, even though
-> every Venus implementation (to my knowledge) is implicitly enc/dec capable..
+The encode_dma() function has some validation on in_trans->size but it's
+not complete and it would be more clear to move those checks to
+find_and_map_user_pages().
 
-Holy crap, I see...
+The encode_dma() had two checks:
 
-> 
-> Perhaps a bigger clean-up is due. I guess I could just create the venc/vdec
-> devices from the venus core probe and get rid of this fake stuff?
+	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
+		return -EINVAL;
 
-Few devices (qcom,msm8996-venus.yaml, sdm660, sdm845) have clocks there,
-so we actually could stay with these subnodes, just correct the
-compatibles to a list with correct prefixes:
+It's not sufficeint to just check if in_trans->size is zero.  The
+resources->xferred_dma_size variable represent the number of bytes
+already transferred.  If we have already transferred more bytes than
+in_trans->size then there are negative bytes remaining which doesn't
+make sense.  Check for that as well.
 
-qcom,sc8280xp-venus-decoder + qcom,venus-decoder
+I introduced a new variable "remaining" which represents the amount
+we want to transfer (in_trans->size) minus the ammount we have already
+transferred (resources->xferred_dma_size).
 
-Best regards,
-Krzysztof
+The check in encode_dma() checked that "addr + size" could not overflow
+however we may already have transferred some bytes so the real starting
+address is "xfer_start_addr" so check that "xfer_start_addr + size"
+cannot overflow instead.  Also check that "addr +
+resources->xferred_dma_size cannot overflow.
+
+My other concern was that we are dealing with u64 values but on 32bit
+systems the kmalloc() function will truncate the sizes to 32 bits.  So
+I calculated "total = in_trans->size + offset_in_page(xfer_start_addr);"
+and returned -EINVAL if it were >= SIZE_MAX.  This will not affect 64bit
+systems.
+
+Fixes: 129776ac2e38 ("accel/qaic: Add control path")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+---
+This is re-write re-write of the previous version.
+
+I am not necessarily sure it is correct.  Please review carefully.  In
+particular, please check how "total" is calculated.  Maybe it would make
+more sense to write that as:
+
+	total = remaining + offset_in_page(xfer_start_addr);
+
+The other question I had is should we add a check:
+
+	if (remaining == 0)
+		return 0;
+
+ drivers/accel/qaic/qaic_control.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+index cfbc92da426f..d64505bcf4ae 100644
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -392,18 +392,28 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
+ 				   struct qaic_manage_trans_dma_xfer *in_trans,
+ 				   struct ioctl_resources *resources, struct dma_xfer *xfer)
+ {
++	u64 xfer_start_addr, remaining, end, total;
+ 	unsigned long need_pages;
+ 	struct page **page_list;
+ 	unsigned long nr_pages;
+ 	struct sg_table *sgt;
+-	u64 xfer_start_addr;
+ 	int ret;
+ 	int i;
+ 
+-	xfer_start_addr = in_trans->addr + resources->xferred_dma_size;
++	if (check_add_overflow(in_trans->addr, resources->xferred_dma_size, &xfer_start_addr))
++		return -EINVAL;
++
++	if (in_trans->size == 0 ||
++	    in_trans->size < resources->xferred_dma_size ||
++	    check_add_overflow(xfer_start_addr, in_trans->size, &end))
++		return -EINVAL;
+ 
+-	need_pages = DIV_ROUND_UP(in_trans->size + offset_in_page(xfer_start_addr) -
+-				  resources->xferred_dma_size, PAGE_SIZE);
++	remaining = in_trans->size - resources->xferred_dma_size;
++	total = in_trans->size + offset_in_page(xfer_start_addr);
++	if (total >= SIZE_MAX)
++		return -EINVAL;
++
++	need_pages = DIV_ROUND_UP(total - resources->xferred_dma_size, PAGE_SIZE);
+ 
+ 	nr_pages = need_pages;
+ 
+@@ -435,7 +445,7 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
+ 
+ 	ret = sg_alloc_table_from_pages(sgt, page_list, nr_pages,
+ 					offset_in_page(xfer_start_addr),
+-					in_trans->size - resources->xferred_dma_size, GFP_KERNEL);
++					remaining, GFP_KERNEL);
+ 	if (ret) {
+ 		ret = -ENOMEM;
+ 		goto free_sgt;
+@@ -566,9 +576,6 @@ static int encode_dma(struct qaic_device *qdev, void *trans, struct wrapper_list
+ 	    QAIC_MANAGE_EXT_MSG_LENGTH)
+ 		return -ENOMEM;
+ 
+-	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
+-		return -EINVAL;
+-
+ 	xfer = kmalloc(sizeof(*xfer), GFP_KERNEL);
+ 	if (!xfer)
+ 		return -ENOMEM;
+-- 
+2.39.2
 
