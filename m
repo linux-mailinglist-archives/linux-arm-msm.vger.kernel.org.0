@@ -2,415 +2,473 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66F2D771F02
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 12:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D830771F67
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 13:10:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbjHGK6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 06:58:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38718 "EHLO
+        id S231879AbjHGLK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 07:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbjHGK62 (ORCPT
+        with ESMTP id S231432AbjHGLK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 06:58:28 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7204810FE;
-        Mon,  7 Aug 2023 03:58:26 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1AB731FB;
-        Mon,  7 Aug 2023 03:59:09 -0700 (PDT)
-Received: from [10.57.90.63] (unknown [10.57.90.63])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 34FBA3F59C;
-        Mon,  7 Aug 2023 03:58:23 -0700 (PDT)
-Message-ID: <4cfd50c3-834c-8f8d-187b-8cfe38d7ece0@arm.com>
-Date:   Mon, 7 Aug 2023 11:58:21 +0100
+        Mon, 7 Aug 2023 07:10:26 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761031701
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 04:09:57 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-268663fb09cso630361a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 04:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1691406597; x=1692011397;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IUFroX+K29vocKlwNJzs/neGWgohuFaGhfTkMV8vShc=;
+        b=VgaeXhz1xsi1DvY0mdHG5w6GDNOVQV4G915G2okvAB9QZ0UmJ9gvIJ6asoYIB210RG
+         Ey93kt9KOPOZ3l4nhlHXgtdSy6FjYflv77vSCILUklupME+r3C8zNVLYXpLlDcRqUM0e
+         lfUAl5POG7wx94wNJAfUoDsPXulpyHktrCbv8gD1x/O2p9qeRsFSiX6gwTwjM13k8Ul9
+         /rnH/O+MrYpDiSizTF8aNQeTO7XJ0dle1SDOCfUCACCM/+nHgHo/Meo1/jTJjDUt3SZw
+         15CpfTIt4xPVx9oBnNw2YwnlJP6BsajGK0nqKNQy5sLb5tHNDmV00nrqq2mUlfhGa7do
+         /28Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691406597; x=1692011397;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IUFroX+K29vocKlwNJzs/neGWgohuFaGhfTkMV8vShc=;
+        b=frFG3CMAelBj8eQ2QrUHEx0LsQbc59wlqIoURtw1xN1pJbYJa/5LrQKUN9upHdb9h6
+         SNIdBxXyuZf3f75qNHazqgTMz3HabVkcmXzivwRgRIVF4bD+mSxiUKDiysxURffN38dv
+         mQXH7LdFTRCvokiTrz0da/w3+Kh9uPt4yzLGhESqlr4IoUTbGnxadksRFjgEyt44neeL
+         9kGzklFCbS5O1c4enlXmTFCiEcs7jCLR31sjp9WJiLRboeIA/Hb2c0V2O9p0eqRRjLJj
+         g+pPJoGiBeGkSLDQBT3AHEjShbz2ffwEKb4if+LzMJlYLJe7ex4bLazJ1e8zQvWSiykd
+         Hs9g==
+X-Gm-Message-State: AOJu0YxdquXHv6V4Q51a5Atcs3fEnu84/BH3QMO1puG/gPd/I6tTvgAP
+        INQg+TFJHJh2++O7oec+amRDSA==
+X-Google-Smtp-Source: AGHT+IE6Hkf3zCZO4yTHBCI4U2PxahDBEY93d/z4hx9RjtxF2e4b3lAVTQiaQWVBs1sivCsjN/GRXg==
+X-Received: by 2002:a17:90a:6701:b0:269:32c7:24dc with SMTP id n1-20020a17090a670100b0026932c724dcmr6023585pjj.0.1691406596583;
+        Mon, 07 Aug 2023 04:09:56 -0700 (PDT)
+Received: from C02DW0BEMD6R.bytedance.net ([203.208.167.146])
+        by smtp.gmail.com with ESMTPSA id y13-20020a17090aca8d00b0025be7b69d73sm5861191pjt.12.2023.08.07.04.09.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Aug 2023 04:09:56 -0700 (PDT)
+From:   Qi Zheng <zhengqi.arch@bytedance.com>
+To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
+        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
+        yujie.liu@intel.com, gregkh@linuxfoundation.org,
+        muchun.song@linux.dev, simon.horman@corigine.com,
+        dlemoal@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        Qi Zheng <zhengqi.arch@bytedance.com>
+Subject: [PATCH v4 00/48] use refcount+RCU method to implement lockless slab shrink
+Date:   Mon,  7 Aug 2023 19:08:48 +0800
+Message-Id: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
+X-Mailer: git-send-email 2.24.3 (Apple Git-128)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.13.0
-Subject: Re: [PATCH v7 09/13] coresight-tpdm: Add nodes for dsb edge control
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
- <1690269353-10829-10-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1690269353-10829-10-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/07/2023 08:15, Tao Zhang wrote:
-> Add the nodes to set value for DSB edge control and DSB edge
-> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
-> resgisters to configure edge control. DSB edge detection control
-> 00: Rising edge detection
-> 01: Falling edge detection
-> 10: Rising and falling edge detection (toggle detection)
-> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
-> configure mask. Eight 32 bit registers providing DSB interface
-> edge detection mask control.
-> 
-> Add the nodes to configure DSB edge control and DSB edge control
-> mask. Each DSB subunit TPDM maximum of 256 edge detections can be
-> configured. The index and value sysfs files need to be paired and
-> written to order. The index sysfs file is to set the index number
-> of the edge detection which needs to be configured. And the value
-> sysfs file is to set the control or mask for the edge detection.
-> DSB edge detection control should be set as the following values.
-> 00: Rising edge detection
-> 01: Falling edge detection
-> 10: Rising and falling edge detection (toggle detection)
-> And DSB edge mask should be set as 0 or 1.
-> Each DSB subunit TPDM has maximum of n(n<16) EDCR resgisters to
-> configure edge control. And each DSB subunit TPDM has maximum of
-> m(m<8) ECDMR registers to configure mask.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  39 +++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 158 ++++++++++++++++++++-
->   drivers/hwtracing/coresight/coresight-tpdm.h       |  30 +++-
->   3 files changed, 223 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 2a82cd0..a4550c5 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -60,3 +60,42 @@ Description:
->   		Bit[3] : Set to 0 for low performance mode.
->   				 Set to 1 for high performance mode.
->   		Bit[4:8] : Select byte lane for high performance mode.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl_idx
-> +Date:		March 2023
-> +KernelVersion	6.5
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		Read/Write the index number of the edge detection for the DSB
-> +		subunit TPDM. Since there are at most 256 edge detections, this
-> +		value ranges from 0 to 255.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl_val
-> +Date:		March 2023
-> +KernelVersion	6.5
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		Read a set of the edge control registers of the DSB in TPDM.
-> +		Write a data to control the edge detection corresponding to
-> +		the index number. Before writing data to this sysfs file,
-> +		"dsb_edge_ctrl_idx" should be written first to configure the
-> +		index number of the edge detection which needs to be controlled.
-> +
-> +		Accepts only one of the following values.
-> +		0 - Rising edge detection
-> +		1 - Falling edge detection
-> +		2 - Rising and falling edge detection (toggle detection)
-> +
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl_mask
-> +Date:		March 2023
-> +KernelVersion	6.5
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		Read a set of the edge control mask registers of the DSB in TPDM.
-> +		Write a data to mask the edge detection corresponding to the index
-> +		number. Before writing data to this sysfs file, "dsb_edge_ctrl_idx"
-> +		should be written first to configure the index number of the edge
-> +		detection which needs to be masked.
-> +
-> +		Accepts only one of the 2 values -  0 or 1.
-> \ No newline at end of file
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index c38760b..98fd6ab 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -71,7 +71,14 @@ static void set_dsb_perf_mode(struct tpdm_drvdata *drvdata, u32 *val)
->   
->   static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   {
-> -	u32 val;
-> +	u32 val, i;
-> +
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCR; i++)
-> +		writel_relaxed(drvdata->dsb->edge_ctrl[i],
-> +			   drvdata->base + TPDM_DSB_EDCR(i));
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++)
-> +		writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
-> +			   drvdata->base + TPDM_DSB_EDCMR(i));
->   
->   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
->   	/* Set trigger timestamp */
-> @@ -302,6 +309,152 @@ static ssize_t dsb_mode_store(struct device *dev,
->   }
->   static DEVICE_ATTR_RW(dsb_mode);
->   
-> +static ssize_t dsb_edge_ctrl_idx_show(struct device *dev,
-> +				       struct device_attribute *attr,
-> +				       char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	return sysfs_emit(buf, "%u\n",
-> +			 (unsigned int)drvdata->dsb->edge_ctrl_idx);
-> +}
-> +
-> +/*
-> + * The EDCR registers can include up to 16 32-bit registers, and each
-> + * one can be configured to control up to 16 edge detections(2 bits
-> + * control one edge detection). So a total 256 edge detections can be
-> + * configured. This function provides a way to set the index number of
-> + * the edge detection which needs to be configured.
-> + */
-> +static ssize_t dsb_edge_ctrl_idx_store(struct device *dev,
-> +					struct device_attribute *attr,
-> +					const char *buf,
-> +					size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val;
-> +
-> +	if ((kstrtoul(buf, 0, &val)) || (val >= TPDM_DSB_MAX_LINES))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	drvdata->dsb->edge_ctrl_idx = val;
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_edge_ctrl_idx);
-> +
-> +static ssize_t dsb_edge_ctrl_val_show(struct device *dev,
-> +				       struct device_attribute *attr,
-> +				       char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
-> +	unsigned long bytes;
-> +	int i;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
-> +		bytes = sysfs_emit_at(buf, size,
-> +				  "Val:0x%x\n", drvdata->dsb->edge_ctrl[i]);
+Hi all,
 
-This feels a bit odd. edget_ctrl_val allows storing one "edge ctrl"
-value, while "show"ing all EDCR values. We could split them to :
+1. Background
+=============
 
-Read only sysfs files:
+We used to implement the lockless slab shrink with SRCU [1], but then kernel
+test robot reported -88.8% regression in stress-ng.ramfs.ops_per_sec test
+case [2], so we reverted it [3].
 
-dsb_edcr0 ... dsb_edcr15
+This patch series aims to re-implement the lockless slab shrink using the
+refcount+RCU method proposed by Dave Chinner [4].
 
-for each EDCR register (similarly for the mask)
+[1]. https://lore.kernel.org/lkml/20230313112819.38938-1-zhengqi.arch@bytedance.com/
+[2]. https://lore.kernel.org/lkml/202305230837.db2c233f-yujie.liu@intel.com/
+[3]. https://lore.kernel.org/all/20230609081518.3039120-1-qi.zheng@linux.dev/
+[4]. https://lore.kernel.org/lkml/ZIJhou1d55d4H1s0@dread.disaster.area/
 
-and may be show the specific edge_ctrl_line for with the above function 
-for selected index.
+2. Implementation
+=================
 
-> +		if (bytes <= 0)
-> +			break;
-> +		size += bytes;
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +
-> +/*
-> + * This function is used to control the edge detection according
-> + * to the index number that has been set.
-> + * "edge_ctrl" should be one of the following values.
-> + * 0 - Rising edge detection
-> + * 1 - Falling edge detection
-> + * 2 - Rising and falling edge detection (toggle detection)
-> + */
-> +static ssize_t dsb_edge_ctrl_val_store(struct device *dev,
-> +					struct device_attribute *attr,
-> +					const char *buf,
-> +					size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val, mask, edge_ctrl;
-> +	int reg;
-> +
-> +	if ((kstrtoul(buf, 0, &edge_ctrl)) || (edge_ctrl > 0x2))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	/*
-> +	 * There are 2 bit per DSB Edge Control line.
-> +	 * Thus we have 16 lines in a 32bit word.
-> +	 */
-> +	reg = EDCR_TO_WORD_IDX(drvdata->dsb->edge_ctrl_idx);
-> +	mask = EDCR_TO_WORD_MASK(drvdata->dsb->edge_ctrl_idx);
-> +	val = drvdata->dsb->edge_ctrl[reg];
-> +	val &= ~EDCR_TO_WORD_MASK(drvdata->dsb->edge_ctrl_idx);
-> +	val |= EDCR_TO_WORD_VAL(edge_ctrl, drvdata->dsb->edge_ctrl_idx);
-> +	drvdata->dsb->edge_ctrl[reg] = val;
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_edge_ctrl_val);
+Currently, the shrinker instances can be divided into the following three types:
 
-This can be WO attribute to write to a given line.
+a) global shrinker instance statically defined in the kernel, such as
+   workingset_shadow_shrinker.
 
-> +
-> +static ssize_t dsb_edge_ctrl_mask_show(struct device *dev,
-> +					    struct device_attribute *attr,
-> +					    char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
-> +	unsigned long bytes;
-> +	int i;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++) {
-> +		bytes = sysfs_emit_at(buf, size,
-> +				  "Val:0x%x\n", drvdata->dsb->edge_ctrl_mask[i]);
+b) global shrinker instance statically defined in the kernel modules, such as
+   mmu_shrinker in x86.
 
-As mentioned above, please don't do this. One value per file. Add
+c) shrinker instance embedded in other structures.
 
-dsb_edcmr0..dsb_edcmr7
+For case a, the memory of shrinker instance is never freed. For case b, the
+memory of shrinker instance will be freed after synchronize_rcu() when the
+module is unloaded. For case c, the memory of shrinker instance will be freed
+along with the structure it is embedded in.
 
-and print only the selected index mask for this function.
+In preparation for implementing lockless slab shrink, we need to dynamically
+allocate those shrinker instances in case c, then the memory can be dynamically
+freed alone by calling kfree_rcu().
 
-> +		if (bytes <= 0)
-> +			break;
-> +		size += bytes;
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +
-> +static ssize_t dsb_edge_ctrl_mask_store(struct device *dev,
-> +					     struct device_attribute *attr,
-> +					     const char *buf,
-> +					     size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val;
-> +	u32 set;
-> +	int reg;
-> +
-> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	/*
-> +	 * There is 1 bit per DSB Edge Control Mark line.
-> +	 * Thus we have 32 lines in a 32bit word.
-> +	 */
-> +	reg = EDCMR_TO_WORD_IDX(drvdata->dsb->edge_ctrl_idx);
-> +	set = drvdata->dsb->edge_ctrl_mask[reg];
-> +	if (val)
-> +		set |= BIT(EDCMR_TO_WORD_SHIFT(drvdata->dsb->edge_ctrl_idx));
-> +	else
-> +		set &= ~BIT(EDCMR_TO_WORD_SHIFT(drvdata->dsb->edge_ctrl_idx));
-> +		drvdata->dsb->edge_ctrl_mask[reg] = set;
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
-> +
->   static ssize_t dsb_trig_type_show(struct device *dev,
->   				     struct device_attribute *attr, char *buf)
->   {
-> @@ -374,6 +527,9 @@ static DEVICE_ATTR_RW(dsb_trig_ts);
->   
->   static struct attribute *tpdm_dsb_attrs[] = {
->   	&dev_attr_dsb_mode.attr,
-> +	&dev_attr_dsb_edge_ctrl_idx.attr,
-> +	&dev_attr_dsb_edge_ctrl_val.attr,
-> +	&dev_attr_dsb_edge_ctrl_mask.attr,
->   	&dev_attr_dsb_trig_ts.attr,
->   	&dev_attr_dsb_trig_type.attr,
->   	NULL,
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index 49fffb1..4afdb29 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -12,6 +12,8 @@
->   /* DSB Subunit Registers */
->   #define TPDM_DSB_CR		(0x780)
->   #define TPDM_DSB_TIER		(0x784)
-> +#define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
-> +#define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
->   
->   /* Enable bit for DSB subunit */
->   #define TPDM_DSB_CR_ENA		BIT(0)
-> @@ -34,6 +36,16 @@
->   #define TPDM_DSB_TEST_MODE		GENMASK(10, 9)
->   #define TPDM_DSB_HPSEL		GENMASK(6, 2)
->   
-> +#define EDCRS_PER_WORD				16
-> +#define EDCR_TO_WORD_IDX(r)			((r) / EDCRS_PER_WORD)
-> +#define EDCR_TO_WORD_SHIFT(r)		((r % EDCRS_PER_WORD) * 2)
-> +#define EDCR_TO_WORD_VAL(val, r)	(val << EDCR_TO_WORD_SHIFT(r))
-> +#define EDCR_TO_WORD_MASK(r)		EDCR_TO_WORD_VAL(0x3, r)
-> +
-> +#define EDCMRS_PER_WORD				32
-> +#define EDCMR_TO_WORD_IDX(r)		((r) / EDCMRS_PER_WORD)
-> +#define EDCMR_TO_WORD_SHIFT(r)		((r) % EDCMRS_PER_WORD)
-> +
->   /* TPDM integration test registers */
->   #define TPDM_ITATBCNTRL		(0xEF0)
->   #define TPDM_ITCNTRL		(0xF00)
-> @@ -60,14 +72,26 @@
->   #define TPDM_PIDR0_DS_IMPDEF	BIT(0)
->   #define TPDM_PIDR0_DS_DSB	BIT(1)
->   
-> +#define TPDM_DSB_MAX_LINES	256
-> +/* MAX number of EDCR registers */
-> +#define TPDM_DSB_MAX_EDCR	16
-> +/* MAX number of EDCMR registers */
-> +#define TPDM_DSB_MAX_EDCMR	8
-> +
->   /**
->    * struct dsb_dataset - specifics associated to dsb dataset
-> - * @mode:             DSB programming mode
-> - * @trig_ts:          Enable/Disable trigger timestamp.
-> - * @trig_type:        Enable/Disable trigger type.
-> + * @mode:               DSB programming mode
-> + * @edge_ctrl_idx       Index number of the edge control
-> + * @edge_ctrl:          Save value for edge control
-> + * @edge_ctrl_mask:     Save value for edge control mask
-> + * @trig_ts:            Enable/Disable trigger timestamp.
-> + * @trig_type:          Enable/Disable trigger type.
->    */
->   struct dsb_dataset {
->   	u32				mode;
-> +	u32				edge_ctrl_idx;
-> +	u32				edge_ctrl[TPDM_DSB_MAX_EDCR];
-> +	u32				edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
+This patchset adds the following new APIs for dynamically allocating shrinker,
+and add a private_data field to struct shrinker to record and get the original
+embedded structure.
 
-Please keep them aligned with the rest of the fields.
+1. shrinker_alloc()
+2. shrinker_register()
+3. shrinker_free()
 
->   	bool			trig_ts;
->   	bool			trig_type;
+In order to simplify shrinker-related APIs and make shrinker more independent of
+other kernel mechanisms, this patchset uses the above APIs to convert all
+shrinkers (including case a and b) to dynamically allocated, and then remove all
+existing APIs. This will also have another advantage mentioned by Dave Chinner:
 
-Suzuki
+```
+The other advantage of this is that it will break all the existing out of tree
+code and third party modules using the old API and will no longer work with a
+kernel using lockless slab shrinkers. They need to break (both at the source and
+binary levels) to stop bad things from happening due to using uncoverted
+shrinkers in the new setup.
+```
 
+Then we free the shrinker by calling call_rcu(), and use rcu_read_{lock,unlock}()
+to ensure that the shrinker instance is valid. And the shrinker::refcount
+mechanism ensures that the shrinker instance will not be run again after
+unregistration. So the structure that records the pointer of shrinker instance
+can be safely freed without waiting for the RCU read-side critical section.
 
->   };
+In this way, while we implement the lockless slab shrink, we don't need to be
+blocked in unregister_shrinker() to wait RCU read-side critical section.
+
+PATCH 1: fix memory leak in binder_init()
+PATCH 2: move some shrinker-related function declarations to mm/internal.h
+PATCH 3: move shrinker-related code into a separate file
+PATCH 4: remove redundant shrinker_rwsem in debugfs operations
+PATCH 5: add infrastructure for dynamically allocating shrinker
+PATCH 6 ~ 23: dynamically allocate the shrinker instances in case a and b
+PATCH 24 ~ 42: dynamically allocate the shrinker instances in case c
+PATCH 43: remove old APIs
+PATCH 44: introduce pool_shrink_rwsem to implement private synchronize_shrinkers()
+PATCH 45: add a secondary array for shrinker_info::{map, nr_deferred}
+PATCH 46 ~ 47: implement the lockless slab shrink
+PATCH 48 ~ 49: convert shrinker_rwsem to mutex
+
+3. Testing
+==========
+
+3.1 slab shrink stress test
+---------------------------
+
+We can reproduce the down_read_trylock() hotspot through the following script:
+
+```
+
+DIR="/root/shrinker/memcg/mnt"
+
+do_create()
+{
+    mkdir -p /sys/fs/cgroup/memory/test
+    echo 4G > /sys/fs/cgroup/memory/test/memory.limit_in_bytes
+    for i in `seq 0 $1`;
+    do
+        mkdir -p /sys/fs/cgroup/memory/test/$i;
+        echo $$ > /sys/fs/cgroup/memory/test/$i/cgroup.procs;
+        mkdir -p $DIR/$i;
+    done
+}
+
+do_mount()
+{
+    for i in `seq $1 $2`;
+    do
+        mount -t tmpfs $i $DIR/$i;
+    done
+}
+
+do_touch()
+{
+    for i in `seq $1 $2`;
+    do
+        echo $$ > /sys/fs/cgroup/memory/test/$i/cgroup.procs;
+        dd if=/dev/zero of=$DIR/$i/file$i bs=1M count=1 &
+    done
+}
+
+case "$1" in
+  touch)
+    do_touch $2 $3
+    ;;
+  test)
+    do_create 4000
+    do_mount 0 4000
+    do_touch 0 3000
+    ;;
+  *)
+    exit 1
+    ;;
+esac
+```
+
+Save the above script, then run test and touch commands. Then we can use the
+following perf command to view hotspots:
+
+perf top -U -F 999
+
+1) Before applying this patchset:
+
+  40.44%  [kernel]            [k] down_read_trylock
+  17.59%  [kernel]            [k] up_read
+  13.64%  [kernel]            [k] pv_native_safe_halt
+  11.90%  [kernel]            [k] shrink_slab
+   8.21%  [kernel]            [k] idr_find
+   2.71%  [kernel]            [k] _find_next_bit
+   1.36%  [kernel]            [k] shrink_node
+   0.81%  [kernel]            [k] shrink_lruvec
+   0.80%  [kernel]            [k] __radix_tree_lookup
+   0.50%  [kernel]            [k] do_shrink_slab
+   0.21%  [kernel]            [k] list_lru_count_one
+   0.16%  [kernel]            [k] mem_cgroup_iter
+
+2) After applying this patchset:
+
+  60.17%  [kernel]           [k] shrink_slab
+  20.42%  [kernel]           [k] pv_native_safe_halt
+   3.03%  [kernel]           [k] do_shrink_slab
+   2.73%  [kernel]           [k] shrink_node
+   2.27%  [kernel]           [k] shrink_lruvec
+   2.00%  [kernel]           [k] __rcu_read_unlock
+   1.92%  [kernel]           [k] mem_cgroup_iter
+   0.98%  [kernel]           [k] __rcu_read_lock
+   0.91%  [kernel]           [k] osq_lock
+   0.63%  [kernel]           [k] mem_cgroup_calculate_protection
+   0.55%  [kernel]           [k] shrinker_put
+   0.46%  [kernel]           [k] list_lru_count_one
+
+We can see that the first perf hotspot becomes shrink_slab, which is what we
+expect.
+
+3.2 registeration and unregisteration stress test
+-------------------------------------------------
+
+Run the command below to test:
+
+stress-ng --timeout 60 --times --verify --metrics-brief --ramfs 9 &
+
+1) Before applying this patchset:
+
+setting to a 60 second run per stressor
+dispatching hogs: 9 ramfs
+stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+                          (secs)    (secs)    (secs)   (real time) (usr+sys time)
+ramfs            735238     60.00     12.37    363.70     12253.05        1955.08
+for a 60.01s run time:
+   1440.27s available CPU time
+     12.36s user time   (  0.86%)
+    363.70s system time ( 25.25%)
+    376.06s total time  ( 26.11%)
+load average: 10.79 4.47 1.69
+passed: 9: ramfs (9)
+failed: 0
+skipped: 0
+successful run completed in 60.01s (1 min, 0.01 secs)
+
+2) After applying this patchset:
+
+setting to a 60 second run per stressor
+dispatching hogs: 9 ramfs
+stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+                          (secs)    (secs)    (secs)   (real time) (usr+sys time)
+ramfs            746698     60.00     12.45    376.16     12444.02        1921.47
+for a 60.01s run time:
+   1440.28s available CPU time
+     12.44s user time   (  0.86%)
+    376.16s system time ( 26.12%)
+    388.60s total time  ( 26.98%)
+load average: 9.01 3.85 1.49
+passed: 9: ramfs (9)
+failed: 0
+skipped: 0
+successful run completed in 60.01s (1 min, 0.01 secs)
+
+We can see that the ops/s has hardly changed.
+
+This series is based on next-20230807.
+
+Comments and suggestions are welcome.
+
+Thanks,
+Qi
+
+Changelog in v3 -> v4:
+ - [PATCH v3 01/49] has been merged, so discard it.
+ - fix wrong return value in patch v3 15\16\22\27\28\29\34\40.
+   (pointed by Damien Le Moal)
+ - fix uninitialized variable in [PATCH v3 04/49]
+   (pointed by Simon Horman)
+ - fix typo in [PATCH v3 05/49] (pointed by Simon Horman)
+ - rebase onto the next-20230807.
+
+Changelog in v2 -> v3:
+ - add the patch that [PATCH v3 07/49] depends on
+ - move some shrinker-related function declarations to mm/internal.h
+   (suggested by Muchun Song)
+ - combine shrinker_free_non_registered() and shrinker_unregister() into
+   shrinker_free() (suggested by Dave Chinner)
+ - add missing __init and fix return value in bch_btree_cache_alloc()
+   (pointed by Muchun Song)
+ - remove unnecessary WARN_ON() (pointed by Steven Price)
+ - go back to use completion to implement lockless slab shrink
+   (pointed by Dave Chinner)
+ - collect Acked-bys and Reviewed-bys
+ - rebase onto the next-20230726.
+
+Changelog in v1 -> v2:
+ - implement the new APIs and convert all shrinkers to use it.
+   (suggested by Dave Chinner)
+ - fix UAF in PATCH [05/29] (pointed by Steven Price)
+ - add a secondary array for shrinker_info::{map, nr_deferred}
+ - re-implement the lockless slab shrink
+   (Since unifying the processing of global and memcg slab shrink needs to
+    modify the startup sequence (As I mentioned in https://lore.kernel.org/lkml/38b14080-4ce5-d300-8a0a-c630bca6806b@bytedance.com/),
+    I finally choose to process them separately.)
+ - collect Acked-bys
+
+Qi Zheng (48):
+  mm: move some shrinker-related function declarations to mm/internal.h
+  mm: vmscan: move shrinker-related code into a separate file
+  mm: shrinker: remove redundant shrinker_rwsem in debugfs operations
+  mm: shrinker: add infrastructure for dynamically allocating shrinker
+  kvm: mmu: dynamically allocate the x86-mmu shrinker
+  binder: dynamically allocate the android-binder shrinker
+  drm/ttm: dynamically allocate the drm-ttm_pool shrinker
+  xenbus/backend: dynamically allocate the xen-backend shrinker
+  erofs: dynamically allocate the erofs-shrinker
+  f2fs: dynamically allocate the f2fs-shrinker
+  gfs2: dynamically allocate the gfs2-glock shrinker
+  gfs2: dynamically allocate the gfs2-qd shrinker
+  NFSv4.2: dynamically allocate the nfs-xattr shrinkers
+  nfs: dynamically allocate the nfs-acl shrinker
+  nfsd: dynamically allocate the nfsd-filecache shrinker
+  quota: dynamically allocate the dquota-cache shrinker
+  ubifs: dynamically allocate the ubifs-slab shrinker
+  rcu: dynamically allocate the rcu-lazy shrinker
+  rcu: dynamically allocate the rcu-kfree shrinker
+  mm: thp: dynamically allocate the thp-related shrinkers
+  sunrpc: dynamically allocate the sunrpc_cred shrinker
+  mm: workingset: dynamically allocate the mm-shadow shrinker
+  drm/i915: dynamically allocate the i915_gem_mm shrinker
+  drm/msm: dynamically allocate the drm-msm_gem shrinker
+  drm/panfrost: dynamically allocate the drm-panfrost shrinker
+  dm: dynamically allocate the dm-bufio shrinker
+  dm zoned: dynamically allocate the dm-zoned-meta shrinker
+  md/raid5: dynamically allocate the md-raid5 shrinker
+  bcache: dynamically allocate the md-bcache shrinker
+  vmw_balloon: dynamically allocate the vmw-balloon shrinker
+  virtio_balloon: dynamically allocate the virtio-balloon shrinker
+  mbcache: dynamically allocate the mbcache shrinker
+  ext4: dynamically allocate the ext4-es shrinker
+  jbd2,ext4: dynamically allocate the jbd2-journal shrinker
+  nfsd: dynamically allocate the nfsd-client shrinker
+  nfsd: dynamically allocate the nfsd-reply shrinker
+  xfs: dynamically allocate the xfs-buf shrinker
+  xfs: dynamically allocate the xfs-inodegc shrinker
+  xfs: dynamically allocate the xfs-qm shrinker
+  zsmalloc: dynamically allocate the mm-zspool shrinker
+  fs: super: dynamically allocate the s_shrink
+  mm: shrinker: remove old APIs
+  drm/ttm: introduce pool_shrink_rwsem
+  mm: shrinker: add a secondary array for shrinker_info::{map,
+    nr_deferred}
+  mm: shrinker: make global slab shrink lockless
+  mm: shrinker: make memcg slab shrink lockless
+  mm: shrinker: hold write lock to reparent shrinker nr_deferred
+  mm: shrinker: convert shrinker_rwsem to mutex
+
+ arch/x86/kvm/mmu/mmu.c                        |  18 +-
+ drivers/android/binder_alloc.c                |  31 +-
+ drivers/gpu/drm/i915/gem/i915_gem_shrinker.c  |  30 +-
+ drivers/gpu/drm/i915/i915_drv.h               |   2 +-
+ drivers/gpu/drm/msm/msm_drv.c                 |   4 +-
+ drivers/gpu/drm/msm/msm_drv.h                 |   4 +-
+ drivers/gpu/drm/msm/msm_gem_shrinker.c        |  34 +-
+ drivers/gpu/drm/panfrost/panfrost_device.h    |   2 +-
+ drivers/gpu/drm/panfrost/panfrost_drv.c       |   6 +-
+ drivers/gpu/drm/panfrost/panfrost_gem.h       |   2 +-
+ .../gpu/drm/panfrost/panfrost_gem_shrinker.c  |  30 +-
+ drivers/gpu/drm/ttm/ttm_pool.c                |  38 +-
+ drivers/md/bcache/bcache.h                    |   2 +-
+ drivers/md/bcache/btree.c                     |  27 +-
+ drivers/md/bcache/sysfs.c                     |   3 +-
+ drivers/md/dm-bufio.c                         |  28 +-
+ drivers/md/dm-cache-metadata.c                |   2 +-
+ drivers/md/dm-zoned-metadata.c                |  29 +-
+ drivers/md/raid5.c                            |  26 +-
+ drivers/md/raid5.h                            |   2 +-
+ drivers/misc/vmw_balloon.c                    |  38 +-
+ drivers/virtio/virtio_balloon.c               |  25 +-
+ drivers/xen/xenbus/xenbus_probe_backend.c     |  18 +-
+ fs/btrfs/super.c                              |   2 +-
+ fs/erofs/utils.c                              |  20 +-
+ fs/ext4/ext4.h                                |   2 +-
+ fs/ext4/extents_status.c                      |  24 +-
+ fs/f2fs/super.c                               |  32 +-
+ fs/gfs2/glock.c                               |  20 +-
+ fs/gfs2/main.c                                |   6 +-
+ fs/gfs2/quota.c                               |  26 +-
+ fs/gfs2/quota.h                               |   3 +-
+ fs/jbd2/journal.c                             |  27 +-
+ fs/kernfs/mount.c                             |   2 +-
+ fs/mbcache.c                                  |  23 +-
+ fs/nfs/nfs42xattr.c                           |  87 +-
+ fs/nfs/super.c                                |  22 +-
+ fs/nfsd/filecache.c                           |  23 +-
+ fs/nfsd/netns.h                               |   4 +-
+ fs/nfsd/nfs4state.c                           |  20 +-
+ fs/nfsd/nfscache.c                            |  31 +-
+ fs/proc/root.c                                |   2 +-
+ fs/quota/dquot.c                              |  18 +-
+ fs/super.c                                    |  36 +-
+ fs/ubifs/super.c                              |  22 +-
+ fs/xfs/xfs_buf.c                              |  25 +-
+ fs/xfs/xfs_buf.h                              |   2 +-
+ fs/xfs/xfs_icache.c                           |  26 +-
+ fs/xfs/xfs_mount.c                            |   4 +-
+ fs/xfs/xfs_mount.h                            |   2 +-
+ fs/xfs/xfs_qm.c                               |  28 +-
+ fs/xfs/xfs_qm.h                               |   2 +-
+ include/linux/fs.h                            |   2 +-
+ include/linux/jbd2.h                          |   2 +-
+ include/linux/memcontrol.h                    |  12 +-
+ include/linux/shrinker.h                      |  67 +-
+ kernel/rcu/tree.c                             |  22 +-
+ kernel/rcu/tree_nocb.h                        |  20 +-
+ mm/Makefile                                   |   4 +-
+ mm/huge_memory.c                              |  69 +-
+ mm/internal.h                                 |  41 +
+ mm/shrinker.c                                 | 770 ++++++++++++++++++
+ mm/shrinker_debug.c                           |  47 +-
+ mm/vmscan.c                                   | 701 ----------------
+ mm/workingset.c                               |  27 +-
+ mm/zsmalloc.c                                 |  28 +-
+ net/sunrpc/auth.c                             |  21 +-
+ 67 files changed, 1540 insertions(+), 1235 deletions(-)
+ create mode 100644 mm/shrinker.c
+
+-- 
+2.30.2
 
