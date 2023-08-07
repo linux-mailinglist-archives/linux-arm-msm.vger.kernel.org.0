@@ -2,133 +2,318 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE79771911
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 06:41:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D74D5771991
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 07:47:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbjHGElj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 00:41:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
+        id S229623AbjHGFrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 01:47:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjHGElh (ORCPT
+        with ESMTP id S230357AbjHGFrc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 00:41:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7D210F3;
-        Sun,  6 Aug 2023 21:41:36 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3774QDmd016997;
-        Mon, 7 Aug 2023 04:41:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=L/AODu6CiGzGr9FCJsPeSE9hoze7s8us5qkCMSXX18o=;
- b=VQFrzCxgAF5qJ/tQAmatax3uWgAJjH00KxlPVVHis+gHIuaSMoPAdCIa9YNvzTdb/98b
- OkO6B7HVLPYrBqLR5CoAsGpzBD11npNbjm5F99u+NZOsn+iq2bwen1vNPzvEcmvI/4tP
- ZTkWCTcn6KsdQaZmtXMQMgryN2vY3u7goI4C/lUCxU0Y80jyXmjmkMhI/cqlyCUcTgMS
- vBQg8fcPpcSrK/hfBDT1i/O6o+j7GafX9h6fMBmmx0xPL1Ipsz3pd9IPG2Mpo3PNqNUa
- 9sS0t3zvTHIZI9gE8kup8ACke53mXDOa4DeGMgm+SP6XzubXcGnb2ro5gArdGJOiwsiP Eg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9bsutqck-1
+        Mon, 7 Aug 2023 01:47:32 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB481711;
+        Sun,  6 Aug 2023 22:47:25 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3775l6qG013253;
+        Mon, 7 Aug 2023 05:47:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=INOyYg0anY37YW6x8icaKf/SuLlBRNs40P3mnkpCiFQ=;
+ b=KhHYjY+Lb1MZ/9cSTt1zhJvu+sPtEzLZ97+gK0VwdL2VrsEvV8jTmex/Pt3O7KMVqgQW
+ /IuTUu1o5aX6+Ebh/TM/w0trEgcF6gqAWzUUrD9D4pV2OiSxAgGggm7LeFKLRh8y2ash
+ 8su8EuP1t+lXdjgYZx6h4ThOREZPS6IVUgp5L3bn9sbY5luy2iIKvpJk3WstMjqmYDKS
+ pwpztg5ZrTq4K3LzNIGnkx4QJtYzokeAXOiAwbyrJrpJ7KZ6sFksS1eEOMWmVB24qbcK
+ XASJ6tJX6y2yESGkSQDzTklhNqrCA9+DYxn5OkZTjhcEUKr4I/emEBxqnRyrOMrbynt/ Xw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9f6pjkmu-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Aug 2023 04:41:32 +0000
+        Mon, 07 Aug 2023 05:47:06 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3774fVDY024504
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3775l5U4017808
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 7 Aug 2023 04:41:31 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Sun, 6 Aug 2023 21:41:27 -0700
-Date:   Mon, 7 Aug 2023 10:11:24 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_jackp@quicinc.com>
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: Add PMIC pm7550ba dtsi
-Message-ID: <161713d4-1c95-4822-ac66-dbc7c2d8b421@quicinc.com>
-References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
- <1690970366-30982-4-git-send-email-quic_rohiagar@quicinc.com>
- <ce1af969-427a-3e4d-e85c-32d629755d9a@linaro.org>
- <bb374ec4-3dfa-42f1-dffb-fc8505625b73@quicinc.com>
- <2e97b032-4ca5-e59c-c891-2ed9ca39d237@linaro.org>
- <7941f5de-547c-4a92-9af1-a1c0add1ace4@quicinc.com>
- <dfe57d75-f0ff-41fb-bc81-0dc84dcfef7e@linaro.org>
+        Mon, 7 Aug 2023 05:47:05 GMT
+Received: from [10.216.62.114] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 6 Aug
+ 2023 22:46:59 -0700
+Message-ID: <70b2495f-1305-05b1-2039-9573d171fe24@quicinc.com>
+Date:   Mon, 7 Aug 2023 11:16:56 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dfe57d75-f0ff-41fb-bc81-0dc84dcfef7e@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v10 06/11] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230727223307.8096-1-quic_kriskura@quicinc.com>
+ <20230727223307.8096-7-quic_kriskura@quicinc.com>
+ <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: T9m0EKq7IGi08IUHQM-3QZAy1U5Sedua
-X-Proofpoint-ORIG-GUID: T9m0EKq7IGi08IUHQM-3QZAy1U5Sedua
+X-Proofpoint-ORIG-GUID: f6hm02WNP_RRupHmMY4J6xmm2npvVba_
+X-Proofpoint-GUID: f6hm02WNP_RRupHmMY4J6xmm2npvVba_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_02,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- mlxlogscore=322 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308070042
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-08-07_03,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070052
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 04, 2023 at 06:58:34PM +0200, Konrad Dybcio wrote:
-> On 3.08.2023 07:06, Pavan Kondeti wrote:
-> > 
-> > On Wed, Aug 02, 2023 at 03:14:19PM +0200, Konrad Dybcio wrote:
-> >> On 2.08.2023 15:13, Rohit Agarwal wrote:
-> >>>
-> >>> On 8/2/2023 6:12 PM, Konrad Dybcio wrote:
-> >>>> On 2.08.2023 11:59, Rohit Agarwal wrote:
-> >>>>> Add dtsi for PMIC pm7550ba found in Qualcomm platforms.
-> >>>>>
-> >>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> >>>>> ---
-> >>>> Subject: "PMIC pm7550ba" -> "pm7550ba PMIC"
-> >>>>
-> >>>> [...]
-> >>>>
-> >>>>> +
-> >>>>> +        pm7550ba_eusb2_repeater: phy@fd00 {
-> >>>>> +            compatible = "qcom,pm8550b-eusb2-repeater";
-> >>>> A new compatible should be introduced, so that it goes like this:
-> >>>>
-> >>>> compatible = "qcom,pm7550ba-eusb2-repeater", "qcom,pm8550b-eusb2-repeater";
-> >>> Just a doubt, Since the compatible can be same why we need to introduce a new compatible.
-> >>> Should every soc have a compatible string?
-> >> If it turns out that we need to add a quirk for PM7550BA 3 years down
-> >> the line, this approach lets us fix it for users that never updated
-> >> their device trees.
-> >>
-> > 
-> > Trying to make my understanding clear.
-> > 
-> > eUSB repeater is a peripheral in the PMIC. Do we need a separate
-> > compatible even if the peripheral is same in two different PMIC chips?
-> > I believe eUSB peripheral has some identification registers to apply any
-> > quirks in future.
-> Perhaps, but keeping the compatible tied to the specific hardware is
-> the way to go with the device tree. Most components don't have such
-> information avaiable, and since at introduction time there wasn't
-> any better name for it, "pm8550b-eusb2-repeater" was chosen.
+On 8/6/2023 10:41 AM, Bjorn Andersson wrote:
+> On Fri, Jul 28, 2023 at 04:03:02AM +0530, Krishna Kurapati wrote:
+>> Refactor setup_irq call to facilitate reading multiport IRQ's along
+>> with non mulitport ones. For SA8295, there are 4-DP/4-DM and 2-SS
+>> IRQ's. Check whether device is multiport capable or not and read all
+>> interrupts for DP/DM/SS on each port accordingly.
+>> +/*
+>> + * Driver needs to read HS/DP_HS/DM_HS/SS IRQ's. Currently, for
+>> + * SA8295 which supports mutliport, thre are 4 DP/ 4 DM/ 2 SS IRQ's
+>> + * and 1 HS IRQ present. So avoid trying to read HS_PHY_IRQ for 4
+>> + * ports of SA8295.
+>> + */
+> 
+> The last part here is relevant information, but it doesn't seem to
+> relate to this define.
+> 
+> Also, does all platforms have this configuration of interrupts?
+> 
+Hi Bjorn,
+
+Yes, all targets have the same IRQ's. Just that MP one's have multiple 
+IRQ's of each type. But hs-phy_irq is only one in SC8280 as well.
+
+>> +#define MAX_PHY_IRQ	4
+>> +
+>> +enum dwc3_qcom_phy_irq_identifier {
+>> +	HS_PHY_IRQ = 0,
+>> +	DP_HS_PHY_IRQ,
+>> +	DM_HS_PHY_IRQ,
+>> +	SS_PHY_IRQ,
+>>   };
+> 
+> This enum is unused.
+> 
+>>   
+> [..]
+>> +static int dwc3_get_acpi_index(const struct dwc3_acpi_pdata *pdata, int irq_index)
+>> +{
+>> +	int acpi_index = -1;
+>> +
+>> +	if (!pdata)
+>> +		return -1;
+>> +
+>> +	if (irq_index == DP_HS_PHY_IRQ)
+>> +		acpi_index = pdata->dp_hs_phy_irq_index;
+>> +	else if (irq_index == DM_HS_PHY_IRQ)
+>> +		acpi_index = pdata->dm_hs_phy_irq_index;
+>> +	else if (irq_index == SS_PHY_IRQ)
+>> +		acpi_index = pdata->ss_phy_irq_index;
+> 
+> It looks favourable to put these in an array, instead of having to pull
+> them out of 4 different variables conditionally.
+> 
+Sure, will move them to an array to remove this if-else stuff.
+>> +
+>> +	return acpi_index;
+>> +		} else {
+>> +			if (i == DP_HS_PHY_IRQ) {
+>> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"dp_hs_phy_%d", port_index + 1);
+>> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"qcom_dwc3 DP_HS%d", port_index + 1);
+>> +			} else if (i == DM_HS_PHY_IRQ) {
+>> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"dm_hs_phy_%d", port_index + 1);
+>> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"qcom_dwc3 DM_HS%d", port_index + 1);
+>> +			} else if (i == SS_PHY_IRQ) {
+>> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"ss_phy_%d", port_index + 1);
+>> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"qcom_dwc3 SS%d", port_index + 1);
+>> +			}
+> 
+> There is too much repetition in this for my liking.
+Will try to put dp/dm/ss too in an array in dwc3_qcom structure and 
+merge these 3 loops into '1'. But that would mean I need to add a global 
+structure to avoid adding if else statements to do proper kasprintf 
+stuff. If its fine to add a global array with all names and use them 
+here, then it would be easy to merge the loops into one for loop. But if 
+we are not supposed to add global array of names, then I would keep 
+these 3 repetitive code blocks as is.
+> 
+>>   		}
+>> -		qcom->hs_phy_irq = irq;
+>> -	}
+>>   
+>> -	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
+>> -				pdata ? pdata->dp_hs_phy_irq_index : -1);
+>> -	if (irq > 0) {
+>> -		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+>> -		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+>> -					qcom_dwc3_resume_irq,
+>> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>> -					"qcom_dwc3 DP_HS", qcom);
+>> -		if (ret) {
+>> -			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
+>> -			return ret;
+>> +		if (!dt_name || !disp_name)
+>> +			return -ENOMEM;
+>> +
+>> +		acpi_index = !is_mp_supported ? dwc3_get_acpi_index(pdata, i) : -1;
+>> +
+>> +		irq = dwc3_qcom_get_irq(pdev, dt_name, acpi_index);
+>> +		if (irq > 0) {
+>> +			ret = dwc3_qcom_prep_irq(qcom, dt_name, disp_name, irq);
+>> +			if (ret)
+>> +				return ret;
+>> +
+>> +			if (i == DP_HS_PHY_IRQ)
+>> +				qcom->dp_hs_phy_irq[port_index] = irq;
+>> +			else if (i == DM_HS_PHY_IRQ)
+>> +				qcom->dm_hs_phy_irq[port_index] = irq;
+>> +			else if (i == SS_PHY_IRQ)
+>> +				qcom->ss_phy_irq[port_index] = irq;
+>>   		}
+>> -		qcom->dp_hs_phy_irq = irq;
+>>   	}
+>>   
+>> -	irq = dwc3_qcom_get_irq(pdev, "dm_hs_phy_irq",
+>> -				pdata ? pdata->dm_hs_phy_irq_index : -1);
+>> +	return 0;
+>> +}
+>> +
+>> +static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>> +{
+>> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>> +	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
+>> +	int irq;
+>> +	int ret;
+>> +	int i;
+>> +
+>> +	irq = dwc3_qcom_get_irq(pdev, "hs_phy_irq",
+>> +				pdata ? pdata->hs_phy_irq_index : -1);
+>>   	if (irq > 0) {
+>> -		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+>> -		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+>> -					qcom_dwc3_resume_irq,
+>> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>> -					"qcom_dwc3 DM_HS", qcom);
+>> -		if (ret) {
+>> -			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
+>> +		ret = dwc3_qcom_prep_irq(qcom, "hs_phy_irq", "qcom_dwc3 HS",irq);
+>> +		if (ret)
+> 
+> It would be nice to have this refactored out in a separate commit.
+> 
+Sure, will add the prep irq in a seperate commit before we read the MP 
+IRQ's.
+>>   			return ret;
+>> -		}
+>> -		qcom->dm_hs_phy_irq = irq;
+>> +		qcom->hs_phy_irq = irq;
+>>   	}
+>>   
+>> -	irq = dwc3_qcom_get_irq(pdev, "ss_phy_irq",
+>> -				pdata ? pdata->ss_phy_irq_index : -1);
+>> -	if (irq > 0) {
+>> -		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+>> -		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+>> -					qcom_dwc3_resume_irq,
+>> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>> -					"qcom_dwc3 SS", qcom);
+>> -		if (ret) {
+>> -			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
+>> +	for (i = 0; i < qcom->data->num_ports; i++) {
+>> +		ret = dwc3_get_port_irq(pdev, i);
+>> +		if (ret)
+>>   			return ret;
+>> -		}
+>> -		qcom->ss_phy_irq = irq;
+>>   	}
+>>   
+>>   	return 0;
+>> @@ -811,6 +905,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   	platform_set_drvdata(pdev, qcom);
+>>   	qcom->dev = &pdev->dev;
+>>   
+>> +	qcom->data = of_device_get_match_data(qcom->dev);
+>> +
+>>   	if (has_acpi_companion(dev)) {
+>>   		qcom->acpi_pdata = acpi_device_get_match_data(dev);
+>>   		if (!qcom->acpi_pdata) {
+>> @@ -1023,8 +1119,15 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
+>>   };
+>>   
+>>   static const struct of_device_id dwc3_qcom_of_match[] = {
+>> -	{ .compatible = "qcom,dwc3" },
+>> -	{ }
+>> +	{
+>> +		.compatible = "qcom,dwc3",
+>> +		.data = &qcom_dwc3,
+>> +	},
+>> +	{
+>> +		.compatible = "qcom,sc8280xp-dwc3-mp",
+>> +		.data = &sx8280xp_qcom_dwc3,
+>> +	},
+> 
+> I would prefer that we don't add a separate compatible, but rather just
+> try to parse the interrupts for multiport and fall back to single port.
+> 
+> If/when we figure out how to peak into the dwc3 core, we could
+> potentially introduce a check to aid the developer.
 > 
 
-Thanks for the clarification and guidance. We can introduce a new
-compatible and use qcom,pm8550b-eusb2-repeater as generic binding.
+Only reason I chose this path is it is unabiguous. With this path, we 
+don't need to worry about whether the user skipped any irq's in the DT 
+or not. If we rely on the IRQ parsing from DT, then we might need to 
+calculate effective port count while parsing the irq loop making it 
+ambigous and prone to error I believe. I would like to keep this 
+compatible as it and use this in the file wherever needed. And since 
+peeking into dwc3-core before we call of_platform_populate is not 
+possible and we need port_count, I kept a compatible here. I could move 
+the setup_irq call to after completion of of_platform_populate, but 
+still there is risk of dwc3 probe getting deferred or failing and we end 
+up not being able to peek into dwc3.
 
-Thanks,
-Pavan
+Request you to reconsider and accept adding a compatible here.
+
+Regards,
+Krishna,
+
