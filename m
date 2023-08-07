@@ -2,180 +2,414 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74D1C772A15
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 18:05:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45D2C772B07
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 18:35:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbjHGQFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 12:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47364 "EHLO
+        id S229580AbjHGQfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 12:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230327AbjHGQFu (ORCPT
+        with ESMTP id S231411AbjHGQfA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 12:05:50 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A807DE7F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 09:05:44 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so75814911fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 09:05:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691424343; x=1692029143;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f3NRCQqXbUSCCrnt/9oEbb5aA3KgrkhtMfzTxdax6mo=;
-        b=DcuLzHXQ3nc+8APwug6vkpTZHBbXaTio3nT5EOkFocbPjbgKovZOdK9cnlRPvNRL6/
-         pUD/jwsoM155THkC0Z5H5klF1i8aPH3HZZ1hboqV4MAR7Z7lQ2esFRPgXwX9CU9CZyCJ
-         0mgicKVZzzwhuDZrI2tIzAOwI7h/Pagd0DuZuolmmW3lAXL7LjdVuLBNKcI8fbV6x++T
-         VInGiEaLBCv1Pmu523XUgSsqWkKowfP8Mr6KYzP565U0SRxwPoQ3aTE72ZWz2DbY0oI1
-         yhE5cUoUiElPJYvF7Svb7VvCZg2nD+rYXgxeD38jrChX0wlGVUQV/cU0YqSW5uirNglA
-         nSPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691424343; x=1692029143;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f3NRCQqXbUSCCrnt/9oEbb5aA3KgrkhtMfzTxdax6mo=;
-        b=QLZipNvEDA9bkSYUf4ZYTiDn1pjKBrwxgZKkIowQmgKmD2+zsmW8YAN5uAhfEA5QqC
-         pLKDC5yq078GMNA6gPVJqd1X89rqfRJVloNdTWMe9lBgCY+XzCojJ1gCAYIn2xcYPxX6
-         OSolHsOfWRXIod2tBlcT4LL7JEBGsMNamK8dxeS9sHgBKq1/myOKRkRENr4mwSIy6GL5
-         igF9QCWRVg/b1zazfOAoL8czUz7gYQWjMPf2PPoEvwTBUbfMQT6R3UAmY6QeRxzF9UUp
-         +yw80FKRxBNn7gfiwMCjzsf6dqVwtRMPOMF5Gq/DFAv5FAiiLBg1p81ndJkesURg8hFj
-         ZUbg==
-X-Gm-Message-State: AOJu0Yx02xaDH3RgS91HHgX6rsYWUGGmFpiv9f7f+u5DTdCkRzfHwtcD
-        XARc4aOjC8K2QwzP1gln12qRYg==
-X-Google-Smtp-Source: AGHT+IFrZnmkbOq1VoMJWoNd8Q5ead/2nUoLqt46vZNA2VGEa4H5MCmc0wtEyHk6dF0qHjlSjUymWA==
-X-Received: by 2002:a2e:a0cc:0:b0:2b9:ee3e:240c with SMTP id f12-20020a2ea0cc000000b002b9ee3e240cmr6846867ljm.24.1691424342886;
-        Mon, 07 Aug 2023 09:05:42 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id e8-20020a2e8188000000b002b724063010sm1884883ljg.47.2023.08.07.09.05.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 09:05:42 -0700 (PDT)
-Message-ID: <27bd3a9e-192f-43e9-b417-784c6d9c3ecd@linaro.org>
-Date:   Mon, 7 Aug 2023 18:05:40 +0200
+        Mon, 7 Aug 2023 12:35:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03F1B19AB;
+        Mon,  7 Aug 2023 09:34:29 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377FLI70026617;
+        Mon, 7 Aug 2023 16:33:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dl6S2e8Ejt023XPbv1iI7cVSS2l+GoaShhvHi/XlJjQ=;
+ b=N5FF/nh3NPoJUehVw1mekHTIN/sMhCNhqiTNaIkg361Qwv7W/OBA97vgPSo0D51feDUw
+ rsDhiiLDO3zxTY/31Vc6WYIlQceukJXZm2FY9l3FCzKNiGGp9xk34GC5jcP2GLP9+EmJ
+ 8Twvp6t5i7VQr6G6DQ+1KRAIL0IhV99kOkBnkLE2CGYkX3FFkbFYarudDbQx8731+zsR
+ AIU8tPpemxel/Fle5U8Rvufq7XdvpIiVJyima5YMNys89uhQvKc7yzQ+QubQL6FdRndk
+ Ak/wEDqHA1LjGObe5MS2pvRXZhO6GK7f1MyU8j4gxYiNCC6IiQX+hRVdUMdVZLaAqoqK hw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9bsuv5jx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 16:33:58 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377GXuuB020164
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 16:33:56 GMT
+Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 09:33:56 -0700
+Message-ID: <6885a107-79da-9001-680a-bbd15286fb7d@quicinc.com>
+Date:   Mon, 7 Aug 2023 09:33:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add device tree for Xiaomi Mi 11
- Ultra
+Subject: Re: [PATCH RFC v5 02/10] drm: Introduce solid fill DRM plane property
 Content-Language: en-US
-To:     wuxilin123@gmail.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20230806-xiaomi-star-v1-0-0c384e8b5737@gmail.com>
- <20230806-xiaomi-star-v1-3-0c384e8b5737@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230806-xiaomi-star-v1-3-0c384e8b5737@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Sebastian Wick <sebastian.wick@redhat.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <quic_abhinavk@quicinc.com>, <ppaalanen@gmail.com>,
+        <contact@emersion.fr>, <laurent.pinchart@ideasonboard.com>,
+        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        <wayland-devel@lists.freedesktop.org>
+References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com>
+ <20230728-solid-fill-v5-2-053dbefa909c@quicinc.com>
+ <de8388d2-5625-2737-3997-4fa23baa3693@linaro.org>
+ <CA+hFU4xgtJ2HrBMYWsbvL9LA546+v+-s=XQnsSr1vehJ36L-Kw@mail.gmail.com>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <CA+hFU4xgtJ2HrBMYWsbvL9LA546+v+-s=XQnsSr1vehJ36L-Kw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FoGM4ecD8G4olnbTKbQOC9KVlxtAcmFU
+X-Proofpoint-ORIG-GUID: FoGM4ecD8G4olnbTKbQOC9KVlxtAcmFU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_17,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070153
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5.08.2023 19:03, Xilin Wu via B4 Relay wrote:
-> From: Xilin Wu <wuxilin123@gmail.com>
-> 
-> Add support for Xiaomi Mi 11 Ultra. This commit brings support for:
-> * Front and rear display panels (initialized by bootloader)
-> * USB
-> * UFS
-> * PCIe0
-> * Thermistor sensors
-> * ADSP/CDSP/Modem/SLPI
-> * IR Transmitter
-> * RTC provided by PMK8350
-> * Buttons
-> 
-> To create a working boot image, you need to run:
-> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/sm8350-xiaomi-\
-> star.dtb > .Image.gz-dtb
-> 
-> mkbootimg \
-> --kernel .Image.gz-dtb \
-> --ramdisk some_initrd.img \
-> --pagesize 4096 \
-> --base 0x0 \
-> --kernel_offset 0x8000 \
-> --ramdisk_offset 0x1000000 \
-> --tags_offset 0x100 \
-> --cmdline "SOME_CMDLINE" \
-> --dtb_offset 0x1f00000 \
-> --header_version 1 \
-> --os_version 14.0.0 \
-> --os_patch_level 2099-12 \
-> -o boot.img-xiaomi-star
-> 
-> Then, you can flash it to slot b on the device:
-> 
-> // You have to either pull vbmeta{"","_system"} from
-> // /dev/block/bootdevice/by-name/ or build one as a part of AOSP build process
-> fastboot --disable-verity --disable-verification flash vbmeta_b vbmeta.img
-> fastboot --disable-verity --disable-verification flash vbmeta_system_b \
-> vbmeta_system.img
-> 
-> fastboot flash boot_b boot.img-xiaomi-star
-> fastboot erase dtbo_b
-> fastboot set_active b
-> fastboot reboot
-> 
-> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-> ---
-[...]
 
 
-> +&adsp {
-> +	status = "okay";
-> +	firmware-name = "qcom/sm8350/xiaomi/star/adsp.mbn";
-> +};
-Please keep status as the last property, everywhere.
+On 8/4/2023 6:40 AM, Sebastian Wick wrote:
+> On Mon, Jul 31, 2023 at 6:01 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On 28/07/2023 20:02, Jessica Zhang wrote:
+>>> Document and add support for solid_fill property to drm_plane. In
+>>> addition, add support for setting and getting the values for solid_fill.
+>>>
+>>> To enable solid fill planes, userspace must assign a property blob to
+>>> the "solid_fill" plane property containing the following information:
+>>>
+>>> struct drm_mode_solid_fill {
+>>>        u32 version;
+>>>        u32 r, g, b;
+>>> };
+>>>
+>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>> ---
+>>>    drivers/gpu/drm/drm_atomic_state_helper.c |  9 +++++
+>>>    drivers/gpu/drm/drm_atomic_uapi.c         | 55 +++++++++++++++++++++++++++++++
+>>>    drivers/gpu/drm/drm_blend.c               | 30 +++++++++++++++++
+>>>    include/drm/drm_blend.h                   |  1 +
+>>>    include/drm/drm_plane.h                   | 35 ++++++++++++++++++++
+>>>    include/uapi/drm/drm_mode.h               | 24 ++++++++++++++
+>>>    6 files changed, 154 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/drm/drm_atomic_state_helper.c
+>>> index 01638c51ce0a..86fb876efbe6 100644
+>>> --- a/drivers/gpu/drm/drm_atomic_state_helper.c
+>>> +++ b/drivers/gpu/drm/drm_atomic_state_helper.c
+>>> @@ -254,6 +254,11 @@ void __drm_atomic_helper_plane_state_reset(struct drm_plane_state *plane_state,
+>>>        plane_state->pixel_blend_mode = DRM_MODE_BLEND_PREMULTI;
+>>>        plane_state->pixel_source = DRM_PLANE_PIXEL_SOURCE_FB;
+>>>
+>>> +     if (plane_state->solid_fill_blob) {
+>>> +             drm_property_blob_put(plane_state->solid_fill_blob);
+>>> +             plane_state->solid_fill_blob = NULL;
+>>> +     }
+>>> +
+>>>        if (plane->color_encoding_property) {
+>>>                if (!drm_object_property_get_default_value(&plane->base,
+>>>                                                           plane->color_encoding_property,
+>>> @@ -336,6 +341,9 @@ void __drm_atomic_helper_plane_duplicate_state(struct drm_plane *plane,
+>>>        if (state->fb)
+>>>                drm_framebuffer_get(state->fb);
+>>>
+>>> +     if (state->solid_fill_blob)
+>>> +             drm_property_blob_get(state->solid_fill_blob);
+>>> +
+>>>        state->fence = NULL;
+>>>        state->commit = NULL;
+>>>        state->fb_damage_clips = NULL;
+>>> @@ -385,6 +393,7 @@ void __drm_atomic_helper_plane_destroy_state(struct drm_plane_state *state)
+>>>                drm_crtc_commit_put(state->commit);
+>>>
+>>>        drm_property_blob_put(state->fb_damage_clips);
+>>> +     drm_property_blob_put(state->solid_fill_blob);
+>>>    }
+>>>    EXPORT_SYMBOL(__drm_atomic_helper_plane_destroy_state);
+>>>
+>>> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+>>> index 454f980e16c9..039686c78c2a 100644
+>>> --- a/drivers/gpu/drm/drm_atomic_uapi.c
+>>> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+>>> @@ -316,6 +316,51 @@ drm_atomic_set_crtc_for_connector(struct drm_connector_state *conn_state,
+>>>    }
+>>>    EXPORT_SYMBOL(drm_atomic_set_crtc_for_connector);
+>>>
+>>> +static int drm_atomic_set_solid_fill_prop(struct drm_plane_state *state,
+>>> +             struct drm_property_blob *blob)
+>>> +{
+>>> +     int blob_version;
+>>> +
+>>> +     if (blob == state->solid_fill_blob)
+>>> +             return 0;
+>>> +
+>>> +     if (blob) {
+>>> +             struct drm_mode_solid_fill *user_info = (struct drm_mode_solid_fill *)blob->data;
+>>> +
+>>> +             if (blob->length != sizeof(struct drm_mode_solid_fill)) {
+>>> +                     drm_dbg_atomic(state->plane->dev,
+>>> +                                    "[PLANE:%d:%s] bad solid fill blob length: %zu\n",
+>>> +                                    state->plane->base.id, state->plane->name,
+>>> +                                    blob->length);
+>>> +                     return -EINVAL;
+>>> +             }
+>>> +
+>>> +             blob_version = user_info->version;
+>>
+>> I remember that we had versioning for quite some time. However it stroke
+>> me while reviewing that we do not a way to negotiate supported
+>> SOLID_FILL versions. However as we now have support for different
+>> pixel_source properties, maybe we can drop version completely. If at
+>> some point a driver needs to support different kind of SOLID_FILL
+>> property (consider v2), we can add new pixel source to the enum.
+> 
+> Agreed. Let's drop the versioning.
 
-BTW, is the rear screen connected via DSI, or is it some stupid
-SPI display?
+Acked.
 
-Konrad
+Thanks,
+
+Jessica Zhang
+
+> 
+>>
+>>> +
+>>> +             /* Add more versions if necessary */
+>>> +             if (blob_version == 1) {
+>>> +                     state->solid_fill.r = user_info->r;
+>>> +                     state->solid_fill.g = user_info->g;
+>>> +                     state->solid_fill.b = user_info->b;
+>>> +             } else {
+>>> +                     drm_dbg_atomic(state->plane->dev,
+>>> +                                    "[PLANE:%d:%s] unsupported solid fill version (version=%d)\n",
+>>> +                                    state->plane->base.id, state->plane->name,
+>>> +                                    blob_version);
+>>> +                     return -EINVAL;
+>>> +             }
+>>> +     }
+>>> +
+>>> +     drm_property_blob_put(state->solid_fill_blob);
+>>> +
+>>> +     if (blob)
+>>> +             state->solid_fill_blob = drm_property_blob_get(blob);
+>>> +     else
+>>> +             state->solid_fill_blob = NULL;
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +
+>>>    static void set_out_fence_for_crtc(struct drm_atomic_state *state,
+>>>                                   struct drm_crtc *crtc, s32 __user *fence_ptr)
+>>>    {
+>>> @@ -546,6 +591,13 @@ static int drm_atomic_plane_set_property(struct drm_plane *plane,
+>>>                state->src_h = val;
+>>>        } else if (property == plane->pixel_source_property) {
+>>>                state->pixel_source = val;
+>>> +     } else if (property == plane->solid_fill_property) {
+>>> +             struct drm_property_blob *solid_fill = drm_property_lookup_blob(dev, val);
+>>> +
+>>> +             ret = drm_atomic_set_solid_fill_prop(state, solid_fill);
+>>> +             drm_property_blob_put(solid_fill);
+>>> +
+>>> +             return ret;
+>>
+>> Bonus point: dropping version from SOLID_FILL would allow us to use
+>> drm_atomic_replace_property_blob_from_id() here.
+>>
+>>>        } else if (property == plane->alpha_property) {
+>>>                state->alpha = val;
+>>>        } else if (property == plane->blend_mode_property) {
+>>> @@ -620,6 +672,9 @@ drm_atomic_plane_get_property(struct drm_plane *plane,
+>>>                *val = state->src_h;
+>>>        } else if (property == plane->pixel_source_property) {
+>>>                *val = state->pixel_source;
+>>> +     } else if (property == plane->solid_fill_property) {
+>>> +             *val = state->solid_fill_blob ?
+>>> +                     state->solid_fill_blob->base.id : 0;
+>>>        } else if (property == plane->alpha_property) {
+>>>                *val = state->alpha;
+>>>        } else if (property == plane->blend_mode_property) {
+>>> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
+>>> index c500310a3d09..c632dfcd8a9b 100644
+>>> --- a/drivers/gpu/drm/drm_blend.c
+>>> +++ b/drivers/gpu/drm/drm_blend.c
+>>> @@ -200,6 +200,10 @@
+>>>     *  "FB":
+>>>     *          Framebuffer source set by the "FB_ID" property.
+>>>     *
+>>> + * solid_fill:
+>>> + *   solid_fill is set up with drm_plane_create_solid_fill_property(). It
+>>> + *   contains pixel data that drivers can use to fill a plane.
+>>> + *
+>>>     * Note that all the property extensions described here apply either to the
+>>>     * plane or the CRTC (e.g. for the background color, which currently is not
+>>>     * exposed and assumed to be black).
+>>> @@ -700,3 +704,29 @@ int drm_plane_create_pixel_source_property(struct drm_plane *plane,
+>>>        return 0;
+>>>    }
+>>>    EXPORT_SYMBOL(drm_plane_create_pixel_source_property);
+>>> +
+>>> +/**
+>>> + * drm_plane_create_solid_fill_property - create a new solid_fill property
+>>> + * @plane: drm plane
+>>> + *
+>>> + * This creates a new property blob that holds pixel data for solid fill planes.
+>>> + * The property is exposed to userspace as a property blob called "solid_fill".
+>>> + *
+>>> + * For information on what the blob contains, see `drm_mode_solid_fill`.
+>>> + */
+>>> +int drm_plane_create_solid_fill_property(struct drm_plane *plane)
+>>> +{
+>>> +     struct drm_property *prop;
+>>> +
+>>> +     prop = drm_property_create(plane->dev,
+>>> +                     DRM_MODE_PROP_ATOMIC | DRM_MODE_PROP_BLOB,
+>>> +                     "solid_fill", 0);
+>>> +     if (!prop)
+>>> +             return -ENOMEM;
+>>> +
+>>> +     drm_object_attach_property(&plane->base, prop, 0);
+>>> +     plane->solid_fill_property = prop;
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +EXPORT_SYMBOL(drm_plane_create_solid_fill_property);
+>>> diff --git a/include/drm/drm_blend.h b/include/drm/drm_blend.h
+>>> index 122bbfbaae33..e7158fbee389 100644
+>>> --- a/include/drm/drm_blend.h
+>>> +++ b/include/drm/drm_blend.h
+>>> @@ -60,4 +60,5 @@ int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+>>>                                         unsigned int supported_modes);
+>>>    int drm_plane_create_pixel_source_property(struct drm_plane *plane,
+>>>                                           unsigned long extra_sources);
+>>> +int drm_plane_create_solid_fill_property(struct drm_plane *plane);
+>>>    #endif
+>>> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+>>> index 89508b4dea4a..abf1458fa099 100644
+>>> --- a/include/drm/drm_plane.h
+>>> +++ b/include/drm/drm_plane.h
+>>> @@ -46,6 +46,17 @@ enum drm_plane_pixel_source {
+>>>        DRM_PLANE_PIXEL_SOURCE_MAX
+>>>    };
+>>>
+>>> +/**
+>>> + * struct solid_fill_property - RGB values for solid fill plane
+>>> + *
+>>> + * Note: This is the V1 for this feature
+>>> + */
+>>> +struct drm_solid_fill {
+>>> +     uint32_t r;
+>>> +     uint32_t g;
+>>> +     uint32_t b;
+>>> +};
+>>> +
+>>>    /**
+>>>     * struct drm_plane_state - mutable plane state
+>>>     *
+>>> @@ -130,6 +141,23 @@ struct drm_plane_state {
+>>>         */
+>>>        enum drm_plane_pixel_source pixel_source;
+>>>
+>>> +     /**
+>>> +      * @solid_fill_blob:
+>>> +      *
+>>> +      * Blob containing relevant information for a solid fill plane
+>>> +      * including pixel format and data. See
+>>> +      * drm_plane_create_solid_fill_property() for more details.
+>>> +      */
+>>> +     struct drm_property_blob *solid_fill_blob;
+>>> +
+>>> +     /**
+>>> +      * @solid_fill:
+>>> +      *
+>>> +      * Pixel data for solid fill planes. See
+>>> +      * drm_plane_create_solid_fill_property() for more details.
+>>> +      */
+>>> +     struct drm_solid_fill solid_fill;
+>>> +
+>>>        /**
+>>>         * @alpha:
+>>>         * Opacity of the plane with 0 as completely transparent and 0xffff as
+>>> @@ -720,6 +748,13 @@ struct drm_plane {
+>>>         */
+>>>        struct drm_property *pixel_source_property;
+>>>
+>>> +     /**
+>>> +      * @solid_fill_property:
+>>> +      * Optional solid_fill property for this plane. See
+>>> +      * drm_plane_create_solid_fill_property().
+>>> +      */
+>>> +     struct drm_property *solid_fill_property;
+>>> +
+>>>        /**
+>>>         * @alpha_property:
+>>>         * Optional alpha property for this plane. See
+>>> diff --git a/include/uapi/drm/drm_mode.h b/include/uapi/drm/drm_mode.h
+>>> index 43691058d28f..53c8efa5ad7f 100644
+>>> --- a/include/uapi/drm/drm_mode.h
+>>> +++ b/include/uapi/drm/drm_mode.h
+>>> @@ -259,6 +259,30 @@ struct drm_mode_modeinfo {
+>>>        char name[DRM_DISPLAY_MODE_LEN];
+>>>    };
+>>>
+>>> +/**
+>>> + * struct drm_mode_solid_fill - User info for solid fill planes
+>>> + *
+>>> + * This is the userspace API solid fill information structure.
+>>> + *
+>>> + * Userspace can enable solid fill planes by assigning the plane "solid_fill"
+>>> + * property to a blob containing a single drm_mode_solid_fill struct populated with an RGB323232
+>>> + * color and setting the pixel source to "SOLID_FILL".
+>>> + *
+>>> + * For information on the plane property, see drm_plane_create_solid_fill_property()
+>>> + *
+>>> + * @version: Version of the blob. Currently, there is only support for version == 1
+>>> + * @r: Red color value of single pixel
+>>> + * @g: Green color value of single pixel
+>>> + * @b: Blue color value of single pixel
+>>> + */
+>>> +struct drm_mode_solid_fill {
+>>> +     __u32 version;
+>>> +     __u32 r;
+>>> +     __u32 g;
+>>> +     __u32 b;
+>>> +};
+>>> +
+>>> +
+>>>    struct drm_mode_card_res {
+>>>        __u64 fb_id_ptr;
+>>>        __u64 crtc_id_ptr;
+>>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
+>>
+> 
