@@ -2,46 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA50771665
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Aug 2023 20:14:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25C8077182E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 04:13:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjHFSOU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Aug 2023 14:14:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51896 "EHLO
+        id S229696AbjHGCNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Aug 2023 22:13:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjHFSOU (ORCPT
+        with ESMTP id S229498AbjHGCNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Aug 2023 14:14:20 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 793C51716
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Aug 2023 11:14:17 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3F4641F547;
-        Sun,  6 Aug 2023 20:14:15 +0200 (CEST)
-Date:   Sun, 6 Aug 2023 20:14:14 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 6/8] drm/msm/dpu: stop using raw IRQ indices in the
- kernel output
-Message-ID: <56i25g2mxc52zxc6sfjeonjizhhfnzna4sjttw2sibjx3flykr@mfqy7nwyszed>
-References: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
- <20230802100426.4184892-7-dmitry.baryshkov@linaro.org>
+        Sun, 6 Aug 2023 22:13:35 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BD081703;
+        Sun,  6 Aug 2023 19:13:34 -0700 (PDT)
+Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.56])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4RK0C06q6XztRtR;
+        Mon,  7 Aug 2023 10:10:04 +0800 (CST)
+Received: from [10.67.110.108] (10.67.110.108) by
+ kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Mon, 7 Aug 2023 10:13:30 +0800
+Message-ID: <758b882e-31a5-1f73-7fd2-945a8a2e9558@huawei.com>
+Date:   Mon, 7 Aug 2023 10:13:30 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230802100426.4184892-7-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 8/9] i2c: imx-lpi2c: Use dev_err_probe in probe function
+To:     Andi Shyti <andi.shyti@kernel.org>
+CC:     <florian.fainelli@broadcom.com>,
+        <bcm-kernel-feedback-list@broadcom.com>, <rjui@broadcom.com>,
+        <sbranden@broadcom.com>, <yangyicong@hisilicon.com>,
+        <aisheng.dong@nxp.com>, <shawnguo@kernel.org>,
+        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
+        <festevam@gmail.com>, <linux-imx@nxp.com>, <kblaiech@nvidia.com>,
+        <asmaa@nvidia.com>, <loic.poulain@linaro.org>, <rfoss@kernel.org>,
+        <ardb@kernel.org>, <gcherian@marvell.com>,
+        <linux-i2c@vger.kernel.org>,
+        <linux-rpi-kernel@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20230802095737.3957587-1-liaochang1@huawei.com>
+ <20230802095737.3957587-9-liaochang1@huawei.com>
+ <20230804221644.cqmoin6u22mxvouk@intel.intel>
+From:   "Liao, Chang" <liaochang1@huawei.com>
+In-Reply-To: <20230804221644.cqmoin6u22mxvouk@intel.intel>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.110.108]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemi500012.china.huawei.com (7.221.188.12)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-9.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,270 +61,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-08-02 13:04:24, Dmitry Baryshkov wrote:
-> In preparation to reworking IRQ indcies, stop using raw IRQ indices in
-> kernel output (both printk and debugfs). Instead use a pair of register
-> index and bit. This corresponds closer to the values in HW catalog.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi, Andi
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+在 2023/8/5 6:16, Andi Shyti 写道:
+> On Wed, Aug 02, 2023 at 05:57:36PM +0800, Liao Chang wrote:
+>> Use the dev_err_probe function instead of dev_err in the probe function
+>> so that the printed messge includes the return value and also handles
+>> -EPROBE_DEFER nicely.
+>>
+>> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+>> ---
+>>  drivers/i2c/busses/i2c-imx-lpi2c.c | 12 ++++--------
+>>  1 file changed, 4 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+>> index c3287c887c6f..bfa788b3775b 100644
+>> --- a/drivers/i2c/busses/i2c-imx-lpi2c.c
+>> +++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+>> @@ -569,10 +569,8 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
+>>  		sizeof(lpi2c_imx->adapter.name));
+>>  
+>>  	ret = devm_clk_bulk_get_all(&pdev->dev, &lpi2c_imx->clks);
+>> -	if (ret < 0) {
+>> -		dev_err(&pdev->dev, "can't get I2C peripheral clock, ret=%d\n", ret);
+>> -		return ret;
+>> -	}
+>> +	if (ret < 0)
+>> +		return dev_err_probe(&pdev->dev, ret, "can't get I2C peripheral clock\n");
+> 
+> you cut on this because the line was going over 100 characters? :)
+> 
+> In theory you shouldn't change the print message when doing such
+> changes and you can still split it as:
+> 
+> 		return dev_err_probe(&pdev->dev, ret,
+> 				     "can't get I2C peripheral clock, ret=%d\n",
+> 				     ret);
+> 
+> and you're even within the 80 characters.
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 26 +++++-----
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 51 +++++++++++--------
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +
->  3 files changed, 46 insertions(+), 33 deletions(-)
+Since dev_err_probe always print the second parameter that happens to be the return value,
+I remove the "ret=%d" from the original message to avoid a redundant error message.
+
+So is it better to keep the original message unchanged, even though dev_err_probe also prints
+the return error value? Or is it better to make this change so that all error messages printed
+in the probe function include the return value in a consistent style?
+
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 051447a3620c..b464df7a2dcf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -351,7 +351,7 @@ static int dpu_encoder_helper_wait_event_timeout(int32_t drm_id,
->  		u32 irq_idx, struct dpu_encoder_wait_info *info);
->  
->  int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
-> -		int irq,
-> +		int irq_idx,
->  		void (*func)(void *arg),
->  		struct dpu_encoder_wait_info *wait_info)
->  {
-> @@ -366,36 +366,36 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
->  
->  	/* return EWOULDBLOCK since we know the wait isn't necessary */
->  	if (phys_enc->enable_state == DPU_ENC_DISABLED) {
-> -		DRM_ERROR("encoder is disabled id=%u, callback=%ps, irq=%d\n",
-> +		DRM_ERROR("encoder is disabled id=%u, callback=%ps, IRQ=[%d, %d]\n",
->  			  DRMID(phys_enc->parent), func,
-> -			  irq);
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  		return -EWOULDBLOCK;
->  	}
->  
-> -	if (irq < 0) {
-> +	if (irq_idx < 0) {
->  		DRM_DEBUG_KMS("skip irq wait id=%u, callback=%ps\n",
->  			      DRMID(phys_enc->parent), func);
->  		return 0;
->  	}
->  
-> -	DRM_DEBUG_KMS("id=%u, callback=%ps, irq=%d, pp=%d, pending_cnt=%d\n",
-> +	DRM_DEBUG_KMS("id=%u, callback=%ps, IRQ=[%d, %d], pp=%d, pending_cnt=%d\n",
->  		      DRMID(phys_enc->parent), func,
-> -		      irq, phys_enc->hw_pp->idx - PINGPONG_0,
-> +		      DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx), phys_enc->hw_pp->idx - PINGPONG_0,
->  		      atomic_read(wait_info->atomic_cnt));
->  
->  	ret = dpu_encoder_helper_wait_event_timeout(
->  			DRMID(phys_enc->parent),
-> -			irq,
-> +			irq_idx,
->  			wait_info);
->  
->  	if (ret <= 0) {
-> -		irq_status = dpu_core_irq_read(phys_enc->dpu_kms, irq);
-> +		irq_status = dpu_core_irq_read(phys_enc->dpu_kms, irq_idx);
->  		if (irq_status) {
->  			unsigned long flags;
->  
-> -			DRM_DEBUG_KMS("irq not triggered id=%u, callback=%ps, irq=%d, pp=%d, atomic_cnt=%d\n",
-> +			DRM_DEBUG_KMS("IRQ=[%d, %d] not triggered id=%u, callback=%ps, pp=%d, atomic_cnt=%d\n",
-> +				      DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx),
->  				      DRMID(phys_enc->parent), func,
-> -				      irq,
->  				      phys_enc->hw_pp->idx - PINGPONG_0,
->  				      atomic_read(wait_info->atomic_cnt));
->  			local_irq_save(flags);
-> @@ -404,16 +404,16 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
->  			ret = 0;
->  		} else {
->  			ret = -ETIMEDOUT;
-> -			DRM_DEBUG_KMS("irq timeout id=%u, callback=%ps, irq=%d, pp=%d, atomic_cnt=%d\n",
-> +			DRM_DEBUG_KMS("IRQ=[%d, %d] timeout id=%u, callback=%ps, pp=%d, atomic_cnt=%d\n",
-> +				      DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx),
->  				      DRMID(phys_enc->parent), func,
-> -				      irq,
->  				      phys_enc->hw_pp->idx - PINGPONG_0,
->  				      atomic_read(wait_info->atomic_cnt));
->  		}
->  	} else {
->  		ret = 0;
->  		trace_dpu_enc_irq_wait_success(DRMID(phys_enc->parent),
-> -			func, irq,
-> +			func, irq_idx,
->  			phys_enc->hw_pp->idx - PINGPONG_0,
->  			atomic_read(wait_info->atomic_cnt));
->  	}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index 3d6d13407dde..c413e9917d7e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -197,8 +197,7 @@ static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
->  	},
->  };
->  
-> -#define DPU_IRQ_REG(irq_idx)	(irq_idx / 32)
-> -#define DPU_IRQ_MASK(irq_idx)	(BIT(irq_idx % 32))
-> +#define DPU_IRQ_MASK(irq_idx)	(BIT(DPU_IRQ_BIT(irq_idx)))
->  
->  static inline bool dpu_core_irq_is_valid(int irq_idx)
->  {
-> @@ -220,10 +219,11 @@ static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, int irq_idx)
->  {
->  	struct dpu_hw_intr_entry *irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, irq_idx);
->  
-> -	VERB("irq_idx=%d\n", irq_idx);
-> +	VERB("IRQ=[%d, %d]\n", DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  
->  	if (!irq_entry->cb)
-> -		DRM_ERROR("no registered cb, idx:%d\n", irq_idx);
-> +		DRM_ERROR("no registered cb, IRQ=[%d, %d]\n",
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  
->  	atomic_inc(&irq_entry->count);
->  
-> @@ -305,7 +305,8 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->  		return -EINVAL;
->  
->  	if (!dpu_core_irq_is_valid(irq_idx)) {
-> -		pr_err("invalid IRQ index: [%d]\n", irq_idx);
-> +		pr_err("invalid IRQ=[%d, %d]\n",
-> +		       DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  		return -EINVAL;
->  	}
->  
-> @@ -341,7 +342,8 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->  		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
->  	}
->  
-> -	pr_debug("DPU IRQ %d %senabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", irq_idx, dbgstr,
-> +	pr_debug("DPU IRQ=[%d, %d] %senabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n",
-> +		 DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx), dbgstr,
->  			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
->  
->  	return 0;
-> @@ -358,7 +360,8 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->  		return -EINVAL;
->  
->  	if (!dpu_core_irq_is_valid(irq_idx)) {
-> -		pr_err("invalid IRQ index: [%d]\n", irq_idx);
-> +		pr_err("invalid IRQ=[%d, %d]\n",
-> +		       DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  		return -EINVAL;
->  	}
->  
-> @@ -390,7 +393,8 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->  		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
->  	}
->  
-> -	pr_debug("DPU IRQ %d %sdisabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", irq_idx, dbgstr,
-> +	pr_debug("DPU IRQ=[%d, %d] %sdisabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n",
-> +		 DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx), dbgstr,
->  			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
->  
->  	return 0;
-> @@ -443,7 +447,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
->  		return 0;
->  
->  	if (!dpu_core_irq_is_valid(irq_idx)) {
-> -		pr_err("invalid IRQ index: [%d]\n", irq_idx);
-> +		pr_err("invalid IRQ=[%d, %d]\n", DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  		return 0;
->  	}
->  
-> @@ -519,16 +523,19 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
->  	int ret;
->  
->  	if (!irq_cb) {
-> -		DPU_ERROR("invalid ird_idx:%d irq_cb:%ps\n", irq_idx, irq_cb);
-> +		DPU_ERROR("invalid IRQ=[%d, %d] irq_cb:%ps\n",
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx), irq_cb);
->  		return -EINVAL;
->  	}
->  
->  	if (!dpu_core_irq_is_valid(irq_idx)) {
-> -		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
-> +		DPU_ERROR("invalid IRQ=[%d, %d]\n",
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  		return -EINVAL;
->  	}
->  
-> -	VERB("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
-> +	VERB("[%pS] IRQ=[%d, %d]\n", __builtin_return_address(0),
-> +	     DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  
->  	spin_lock_irqsave(&dpu_kms->hw_intr->irq_lock, irq_flags);
->  
-> @@ -547,8 +554,8 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
->  				dpu_kms->hw_intr,
->  				irq_idx);
->  	if (ret)
-> -		DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
-> -					irq_idx);
-> +		DPU_ERROR("Failed/ to enable IRQ=[%d, %d]\n",
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  	spin_unlock_irqrestore(&dpu_kms->hw_intr->irq_lock, irq_flags);
->  
->  	trace_dpu_irq_register_success(irq_idx);
-> @@ -563,19 +570,21 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx)
->  	int ret;
->  
->  	if (!dpu_core_irq_is_valid(irq_idx)) {
-> -		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
-> +		DPU_ERROR("invalid IRQ=[%d, %d]\n",
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  		return -EINVAL;
->  	}
->  
-> -	VERB("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
-> +	VERB("[%pS] IRQ=[%d, %d]\n", __builtin_return_address(0),
-> +	     DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx));
->  
->  	spin_lock_irqsave(&dpu_kms->hw_intr->irq_lock, irq_flags);
->  	trace_dpu_core_irq_unregister_callback(irq_idx);
->  
->  	ret = dpu_hw_intr_disable_irq_locked(dpu_kms->hw_intr, irq_idx);
->  	if (ret)
-> -		DPU_ERROR("Fail to disable IRQ for irq_idx:%d: %d\n",
-> -					irq_idx, ret);
-> +		DPU_ERROR("Failed to disable IRQ=[%d, %d]: %d\n",
-> +			  DPU_IRQ_REG(irq_idx), DPU_IRQ_BIT(irq_idx), ret);
->  
->  	irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, irq_idx);
->  	irq_entry->cb = NULL;
-> @@ -605,7 +614,8 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
->  		spin_unlock_irqrestore(&dpu_kms->hw_intr->irq_lock, irq_flags);
->  
->  		if (irq_count || cb)
-> -			seq_printf(s, "idx:%d irq:%d cb:%ps\n", i, irq_count, cb);
-> +			seq_printf(s, "IRQ=[%d, %d] count:%d cb:%ps\n",
-> +				   DPU_IRQ_REG(i), DPU_IRQ_BIT(i), irq_count, cb);
->  	}
->  
->  	return 0;
-> @@ -651,7 +661,8 @@ void dpu_core_irq_uninstall(struct msm_kms *kms)
->  	for (i = 0; i < DPU_NUM_IRQS; i++) {
->  		irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, i);
->  		if (irq_entry->cb)
-> -			DPU_ERROR("irq_idx=%d still enabled/registered\n", i);
-> +			DPU_ERROR("IRQ=[%d, %d] still enabled/registered\n",
-> +				  DPU_IRQ_REG(i), DPU_IRQ_BIT(i));
->  	}
->  
->  	dpu_clear_irqs(dpu_kms);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index bb775b6a2432..9df5d6e737a1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -37,6 +37,8 @@ enum dpu_hw_intr_reg {
->  #define MDP_INTFn_INTR(intf)	(MDP_INTF0_INTR + (intf - INTF_0))
->  
->  #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
-> +#define DPU_IRQ_REG(irq_idx)	(irq_idx / 32)
-> +#define DPU_IRQ_BIT(irq_idx)	(irq_idx % 32)
->  
->  #define DPU_NUM_IRQS		(MDP_INTR_MAX * 32)
->  
-> -- 
-> 2.39.2
+> Sorry, I missed it in the previous version, mind resending it?
+
+Sure, I will resend it in v3.
+
+Thanks.
+
 > 
+> Andi
+
+-- 
+BR
+Liao, Chang
