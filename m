@@ -2,145 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D2137724A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 14:46:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 950E87724B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 14:49:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231528AbjHGMqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 08:46:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45070 "EHLO
+        id S232234AbjHGMtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 08:49:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjHGMqX (ORCPT
+        with ESMTP id S230206AbjHGMto (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 08:46:23 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C2A61FEB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 05:46:00 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe389d6f19so7011531e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 05:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691412355; x=1692017155;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=BM1kbz2sor4nBFnh9WswI/g45TnNXDre/AlWkm0RfbQ=;
-        b=uq30S6T9nAcl4QiN7iOhvdbLiZw77kkr1JRRhfr0W6ShfnXXM5ig2wbNADpcXqk+Rg
-         nXxriE8EAa8JIe4QV0j2eEeEAsdNWzWcpn6wQYuAUMFGtJTjoo6Oj/pjkKgkfpeNYe6m
-         TMS1LBhiauERgvHsD2+aL7eUCkBXxBqXX+Aikay+eamSCHGHwuC6USN0JNigr56wkM4Z
-         f06EgIBfT5XnFEOOpMOjefFzgTXlQWFR9PrN+snpkKL3qTEclHnp7MQogVn9eFbpiFgr
-         Co+igq6se4B6h/BM+d0dowORfaa/NxsPl+OLlY4ggKqTVN8r1v1Ln4NvFIrvnqKgux0H
-         LaEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691412355; x=1692017155;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BM1kbz2sor4nBFnh9WswI/g45TnNXDre/AlWkm0RfbQ=;
-        b=Pzva4v7Gey6Zaymz2awYqZH3RfakQhWwbfST3E1ToYGoRt2vrU1fmrtX45YRQrUj5T
-         FxIbbzzLN9KeKA7pjFyYAkuAv9IMyIUB8eaOIvcGgE+JdAfggwdyK6DOfk9sOUKRbzId
-         lidu8Ir8+NqIV7L1wxbpRwTeHPUjLKJXHSJUSqd3LqzhfGpZKA6NVPdhJdnL868U0Y0/
-         PweTAIvodR/u6FbdpC51YX9feHzNPe4u7CgyNa8dOOkeZn8Z3HJHIk5k4XZBHf5X8bCP
-         w0bW0IMng84OS8vFe3oFRQTg4bGP+sSbgM+rWkbaT1qrHZNUQrsxggxBWAyDEfrqcNts
-         FUaQ==
-X-Gm-Message-State: AOJu0YwKPrpbYPUcxQABwI8g/4igWObNeGBG2327+M/npd2tzpQJSQ/1
-        MJc2RCCfxMbM+0H2YWda/HeVIw==
-X-Google-Smtp-Source: AGHT+IErCLFJX26zK+vEYznMVLBrXzWNAXrAwI3vp1xDFz3J3Oft8RD/9dMuMHa1JBJ9o58sWbEM8g==
-X-Received: by 2002:a19:5007:0:b0:4fe:85c:aeba with SMTP id e7-20020a195007000000b004fe085caebamr5800744lfb.21.1691412355163;
-        Mon, 07 Aug 2023 05:45:55 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id l17-20020ac24a91000000b004f85d80ca64sm1490547lfp.221.2023.08.07.05.45.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 05:45:54 -0700 (PDT)
-Message-ID: <c4006b16-2c06-4c96-86a1-d4ba235503f4@linaro.org>
-Date:   Mon, 7 Aug 2023 14:45:54 +0200
+        Mon, 7 Aug 2023 08:49:44 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2408710FE;
+        Mon,  7 Aug 2023 05:49:43 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 76FA41FB;
+        Mon,  7 Aug 2023 05:50:25 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3B8523F64C;
+        Mon,  7 Aug 2023 05:49:40 -0700 (PDT)
+Message-ID: <3c387223-eb0e-a8af-b9de-20235d7337fa@arm.com>
+Date:   Mon, 7 Aug 2023 13:49:35 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/9] Add pmics supported in Qualcomm's SDX75 platform
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, abel.vesa@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        quic_pkondeti@quicinc.com
-References: <1691411333-1556-1-git-send-email-quic_rohiagar@quicinc.com>
- <83dff121-0a0f-4bd5-bf84-0c7c83f98615@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <83dff121-0a0f-4bd5-bf84-0c7c83f98615@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] iommu: Explicitly include correct DT includes
+Content-Language: en-GB
+To:     Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+References: <20230714174640.4058404-1-robh@kernel.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20230714174640.4058404-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.08.2023 14:45, Konrad Dybcio wrote:
-> On 7.08.2023 14:28, Rohit Agarwal wrote:
->> Hi,
->>
->> Changes in v2:
->>  - Added compatible for pm7550ba for eusb2 repeater and used it in DT.
->>  - Addressed some minor comments from Konrad to add fixes tag, labels
->>    and update the labels
->>
->> This series add support of pmics that are found in SDX75 platform and
->> add the corresponding regulators in the IDP platform as well.
->> It also parallely updates the pmic found in SDX65 to PM7250b and add pinctrl
->> support for the same pmic chip.
->> This series is based on the new header inclusion[1] and movement of the
->> regulators level from rpmpd to rpmhpd[2].
->> This series can be picked after successfully picking [2] and [3] as [1] has
->> already been applied.
->>
->> [1] https://lore.kernel.org/all/1689744162-9421-1-git-send-email-quic_rohiagar@quicinc.com/
->> [2] https://lore.kernel.org/all/1690781104-2290-1-git-send-email-quic_rohiagar@quicinc.com/
->> [3] https://lore.kernel.org/all/1690461813-22564-1-git-send-email-quic_rohiagar@quicinc.com/
->>
->> Thanks,
->> Rohit.
-> Since you resent this (as mentioned in the first thread with "v2" [1]),
-> the subject should be [PATCH RESEND ...]
-> 
-[1] https://lore.kernel.org/linux-arm-msm/f29eae07-b6c4-e7ea-3790-ee800d83859e@quicinc.com/T/#m863acf47848ba75987fcf144c588da21306dc2fe
+On 14/07/2023 6:46 pm, Rob Herring wrote:
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
 
-Konrad
+Thanks Rob; FWIW,
+
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+
+I guess you're hoping for Joerg to pick this up? However I wouldn't 
+foresee any major conflicts if you do need to take it through the OF tree.
+
+Cheers,
+Robin.
+
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c | 2 +-
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c            | 1 -
+>   drivers/iommu/arm/arm-smmu/qcom_iommu.c          | 3 +--
+>   drivers/iommu/ipmmu-vmsa.c                       | 1 -
+>   drivers/iommu/sprd-iommu.c                       | 1 +
+>   drivers/iommu/tegra-smmu.c                       | 2 +-
+>   drivers/iommu/virtio-iommu.c                     | 2 +-
+>   7 files changed, 5 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> index b5b14108e086..bb89d49adf8d 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> @@ -3,7 +3,7 @@
+>    * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+> -#include <linux/of_device.h>
+> +#include <linux/device.h>
+>   #include <linux/firmware/qcom/qcom_scm.h>
+>   #include <linux/ratelimit.h>
+>   
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index a86acd76c1df..d6d1a2a55cc0 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -29,7 +29,6 @@
+>   #include <linux/module.h>
+>   #include <linux/of.h>
+>   #include <linux/of_address.h>
+> -#include <linux/of_device.h>
+>   #include <linux/pci.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/pm_runtime.h>
+> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> index a503ed758ec3..cc3f68a3516c 100644
+> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> @@ -22,8 +22,7 @@
+>   #include <linux/init.h>
+>   #include <linux/mutex.h>
+>   #include <linux/of.h>
+> -#include <linux/of_address.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of_platform.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/pm.h>
+>   #include <linux/pm_runtime.h>
+> diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
+> index 9f64c5c9f5b9..0aeedd3e1494 100644
+> --- a/drivers/iommu/ipmmu-vmsa.c
+> +++ b/drivers/iommu/ipmmu-vmsa.c
+> @@ -17,7 +17,6 @@
+>   #include <linux/io-pgtable.h>
+>   #include <linux/iommu.h>
+>   #include <linux/of.h>
+> -#include <linux/of_device.h>
+>   #include <linux/of_platform.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/sizes.h>
+> diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
+> index 39e34fdeccda..51144c232474 100644
+> --- a/drivers/iommu/sprd-iommu.c
+> +++ b/drivers/iommu/sprd-iommu.c
+> @@ -14,6 +14,7 @@
+>   #include <linux/mfd/syscon.h>
+>   #include <linux/module.h>
+>   #include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+>   #include <linux/regmap.h>
+>   #include <linux/slab.h>
+>   
+> diff --git a/drivers/iommu/tegra-smmu.c b/drivers/iommu/tegra-smmu.c
+> index 1cbf063ccf14..e445f80d0226 100644
+> --- a/drivers/iommu/tegra-smmu.c
+> +++ b/drivers/iommu/tegra-smmu.c
+> @@ -9,7 +9,7 @@
+>   #include <linux/iommu.h>
+>   #include <linux/kernel.h>
+>   #include <linux/of.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of_platform.h>
+>   #include <linux/pci.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/slab.h>
+> diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
+> index 3551ed057774..17dcd826f5c2 100644
+> --- a/drivers/iommu/virtio-iommu.c
+> +++ b/drivers/iommu/virtio-iommu.c
+> @@ -13,7 +13,7 @@
+>   #include <linux/interval_tree.h>
+>   #include <linux/iommu.h>
+>   #include <linux/module.h>
+> -#include <linux/of_platform.h>
+> +#include <linux/of.h>
+>   #include <linux/pci.h>
+>   #include <linux/virtio.h>
+>   #include <linux/virtio_config.h>
