@@ -2,186 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD15977287E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 17:02:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60DB77728D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 17:13:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229749AbjHGPCa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 11:02:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34946 "EHLO
+        id S230118AbjHGPNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 11:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjHGPC3 (ORCPT
+        with ESMTP id S229823AbjHGPNq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 11:02:29 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820A310CA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 08:02:27 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe1b00fce2so7223451e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 08:02:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691420546; x=1692025346;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k7Lgg7kjrbEt45qFR8K/nxw0x7tFUualnc3Ld3Cm0jg=;
-        b=BT4SIJJV6GJIPCL23DUMJMBHHtMnQznH+vfM05AG7WxxWsN/Ht/OQr7Fvi933rw+rK
-         SA/zJ8kzhiCxmTMkw+VOx0E5+/kTIsUvCACkPgVGcL8YQT1DAtlgcBKv7mb/hRFDHlOy
-         sKJwqAUb9PUHDYw6AI0J2mO84tD+glmY5OdvcKm2YtNf8+07iqdg4e6Tuhl0xrCh/QKN
-         vIjCjeU39tM+EsxSHakayFoNbfGdAphhdE5zWovrXUMv/oLh5Hdki1f4BYRuZ/8XV6sy
-         7jWTlqV6sQ3m3Ikwlq3jH7C+l0AbL0mf2rfUgh6d695CKy+tjTXE5c0PMTPJOB8bwU+/
-         Qdmg==
+        Mon, 7 Aug 2023 11:13:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE38F10DE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 08:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1691421181;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=MSkCa7A9TXUS3VXQ5McnNNZT+8+UROTnmjHayz9OLCM=;
+        b=JBjMEN+KOLXzkZ3v/X0MoX2f8zmm5mrbT9NuLbCJWJ/Mj8BMETFNTvq9aErd6LK+ub7xSk
+        cSoPedaAji1ooq+Tdju3cp+6k7f/cgzxG6nxcn9PFCU+sW21w7+oG3skki67lk6dqAodMz
+        Dpau2LBNCqrXQq8cjqZa13tbUjTZNZ8=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-620-am5hkzIwPzKxfFRFuq_W2g-1; Mon, 07 Aug 2023 11:08:53 -0400
+X-MC-Unique: am5hkzIwPzKxfFRFuq_W2g-1
+Received: by mail-yb1-f198.google.com with SMTP id 3f1490d57ef6-d27ac992539so4863411276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 08:08:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691420546; x=1692025346;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k7Lgg7kjrbEt45qFR8K/nxw0x7tFUualnc3Ld3Cm0jg=;
-        b=Jzvx7al6F9bZwfxiPPBDcFRk7TnfGk7Y/TCEAqeyI9tgry8ntRASYY3k9GmL84D6aX
-         uCmgJZIsueutmR7DgHgxqNU38ZC20M5qkzwDgBJ/k4zX/XsOR67K+sWyKyiNZw/TzWWd
-         PbvV7eVDO8I0XKzwAHtiL+MEVymCz0smMv3clm9EU0/etLfK6CC30nB+jFJ7E8jnRnx5
-         kXs9Hff3sgOB0FPlKHDGIbe1z2o/SCMIBUYPGOIanLARSoX/dYZ/LmIeoZfOL1Ah639l
-         hK3Q8aE8zFTE8lo2E1s1oeiTAc0CmziNP9eTtjgzIrktmogqUuV68k3iFY13eO6UYISg
-         GkaQ==
-X-Gm-Message-State: AOJu0YyvY93hkyAEnq3cBd3agnnIPLkXbNImP/PVYv7sunMTsy1H2CNR
-        Bof7u5mEHo4S+VFqW5RzY4u17w==
-X-Google-Smtp-Source: AGHT+IHrsH4P+p4KSysynUg8ELybOz5I9LSJST5r4WGlQ2Y72bIN8g0aTOqpn5P1jaSGRD1FAQEPlQ==
-X-Received: by 2002:a05:6512:2348:b0:4fb:73ce:8e7d with SMTP id p8-20020a056512234800b004fb73ce8e7dmr7154064lfu.15.1691420545659;
-        Mon, 07 Aug 2023 08:02:25 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id f23-20020ac25337000000b004fbb1f7352csm1514948lfh.72.2023.08.07.08.02.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 08:02:25 -0700 (PDT)
-Message-ID: <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
-Date:   Mon, 7 Aug 2023 17:02:23 +0200
+        d=1e100.net; s=20221208; t=1691420933; x=1692025733;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MSkCa7A9TXUS3VXQ5McnNNZT+8+UROTnmjHayz9OLCM=;
+        b=NVAnWzOFGHWRpBDHGHdTFaCgyBHbEEqaWQp2/h67EOEY04VSPaue8hblro4/+Eychp
+         oMK11gIaOElMxZ2Po9LKnZLa+GQC8QszIqgfLDE49N57naM5Sm3dq3An2jYOUu5swGSt
+         GK4mq04srVb6hCSgHQe4tZph6kfZ8o9DfqbUBF0hdQyWO2sAsihs7VFxf1SlsZ0kA7RJ
+         lvyuREBIwYHK4ciC9lya7opRrdJpMkPoLVBbr3etmozOww9redcuebwDn94qvpl1j+3X
+         Fym00XIJE53suNvaDe5+5TY13wdZPuEkNwGKJ44wKS9AKJkyt/xOyIKIZaarnO1VaFkr
+         dAxw==
+X-Gm-Message-State: AOJu0YzPBbpqO64oSMuah9rJvNAu/U8uBSelKhjyYtjoYQCCX/T0H2I6
+        cz8mCQx3dp9g3IV8uOxbx2UGRUkWe6P9MVOvjFvM0h6KWIn7h0ggfmKCzsQsaMV6w7BqiWZQazp
+        CMqgptgB1OwSu7ppsvgxmfeoOTw==
+X-Received: by 2002:a25:29c2:0:b0:c62:2320:2598 with SMTP id p185-20020a2529c2000000b00c6223202598mr8059905ybp.62.1691420933320;
+        Mon, 07 Aug 2023 08:08:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFwHp4dDJnIOl2S3nXfBjqj/u/Iz50+0PkY1Lm8o+KMODDnct/IB/u4h0wbSKzpgdvXF7AeQ==
+X-Received: by 2002:a25:29c2:0:b0:c62:2320:2598 with SMTP id p185-20020a2529c2000000b00c6223202598mr8059891ybp.62.1691420933058;
+        Mon, 07 Aug 2023 08:08:53 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id a10-20020a5b0aca000000b00d1dffdd7a97sm2250323ybr.57.2023.08.07.08.08.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Aug 2023 08:08:52 -0700 (PDT)
+Date:   Mon, 7 Aug 2023 11:08:50 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        lkml <linux-kernel@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Nishanth Menon <nm@ti.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>
+Subject: Re: Feedback on Qualcomm's minidump (debug) solution for end user
+ device crash
+Message-ID: <ZNEJAh0in/fjq6s9@brian-x1>
+References: <0199db00-1b1d-0c63-58ff-03efae02cb21@quicinc.com>
+ <ZL6t/sZTZBfvSYOm@brian-x1>
+ <15caeb52-b670-9000-fa2b-b8d1b8485016@kernel.org>
+ <81b15738-615d-a039-7bc3-22aa5b3a54bd@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
- <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
- <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
- <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <81b15738-615d-a039-7bc3-22aa5b3a54bd@quicinc.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.08.2023 16:04, Krzysztof Kozlowski wrote:
-> On 07/08/2023 14:41, Konrad Dybcio wrote:
->> On 5.08.2023 21:29, Krzysztof Kozlowski wrote:
->>> On 04/08/2023 22:09, Konrad Dybcio wrote:
->>>> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
->>>> to clock it a bit higher.
->>>>
->>>
->>> ...
->>>
->>>> +
->>>> +  iommus:
->>>> +    maxItems: 1
->>>> +
->>>> +  video-decoder:
->>>> +    type: object
->>>> +
->>>> +    properties:
->>>> +      compatible:
->>>> +        const: venus-decoder
->>>
->>> That's not how compatibles are constructed... missing vendor prefix, SoC
->>> or IP block name.
->>>
->>>> +
->>>> +    required:
->>>> +      - compatible
->>>> +
->>>> +    additionalProperties: false
->>>
->>> Why do you need this child node? Child nodes without properties are
->>> usually useless.
->> For both comments: I aligned with what was there..
->>
->> The driver abuses these compats to probe enc/dec submodules, even though
->> every Venus implementation (to my knowledge) is implicitly enc/dec capable..
+On Mon, Aug 07, 2023 at 06:01:27PM +0530, Mukesh Ojha wrote:
+> On 7/30/2023 5:14 PM, Krzysztof Kozlowski wrote:
+> > On 24/07/2023 18:59, Brian Masney wrote:
+> > > + linux-arm-kernel list
+> > > 
+> > > On Thu, Jul 20, 2023 at 08:32:24PM +0530, Mukesh Ojha wrote:
+> > > > Hi Samsung/MTK/Any other SOC vendors,
+> > > > 
+> > > > This is to bring to your notice that, we (Qualcomm) are working on
+> > > > upstreaming our minidump solution which is to address the problem of
+> > > > debugging on field device crashes where collecting entire ddr dump
+> > > > would not be feasible and collecting minimal data from the ddr would
+> > > > help in debug direction or even help in root causing issue.
+> > > > 
+> > > > We have recently posted v4 version here [1]
+> > > > 
+> > > > Based on comments[2], community is more worried about, if each SOC
+> > > > vendor come up with their own dumping method today or in future and
+> > > > whether it can have a common solution to a similar problem faced by
+> > > > other SOC vendor.
+> > > > 
+> > > > We wanted to take your feedback if you also encounter a similar problem
+> > > > or maintain something similar solution in downstream which can be
+> > > > upstreamed. This will help us in a way to have a common solution in
+> > > > upstream.
+> > > > 
+> > > > [1]
+> > > > https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com/
+> > > > 
+> > > > [2]
+> > > > https://lore.kernel.org/lkml/CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com/
+> > > 
+> > > Adding the main ARM list to solicit feedback from other silicon
+> > > manufacturers.
+> > > 
+> > > The cover sheet on the v4 patch set is available at:
+> > > https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
+> > 
+> > I doubt anyone follows the lists, so at least Cc some maintainers.
+> > 
+> > +Cc Alim, Kukjin, Vignesh, Nishanth, Matthias.
 > 
-> Holy crap, I see...
-> 
->>
->> Perhaps a bigger clean-up is due. I guess I could just create the venc/vdec
->> devices from the venus core probe and get rid of this fake stuff?
-> 
-> Few devices (qcom,msm8996-venus.yaml, sdm660, sdm845) have clocks there,
-> so we actually could stay with these subnodes, just correct the
-> compatibles to a list with correct prefixes:
-> 
-> qcom,sc8280xp-venus-decoder + qcom,venus-decoder
-Hm.. looks like pre-845-v2 (with the v2 being "v2 binding" and not
-"v2 chip" or "v2 hardware") these were used to look up clocks but
-then they were moved to the root node.
+> Thanks @Krzysztof/@Brian for extending the list.
 
-I am not quite sure if it makes sense to distinguish e.g.
-sc8280xp-venus-decoder within sc8280xp-venus..
+Hi Mukesh,
 
-Perhaps deprecating the "8916 way" (clocks under subnodes), adding
-some boilerplate to look up clocks/pds in both places and converting
-everybody to the "7180 way" way of doing things (clocks under venus),
-and then getting rid of venus encoder/decoder completely (by calling
-device creation from venus probe) would be better. WDYT?
+Since no one has responded yet: I suspect your best bet to land the
+minidump functionality upstream is to refactor it to use the pstore
+functionality that Rob suggested:
 
-Konrad
+https://lore.kernel.org/lkml/CAL_JsqK7MHR09U5h01=Gf1ZLeDVCgZdN-W1hQRH3AX+E94_uUg@mail.gmail.com/
+
+Brian
+
