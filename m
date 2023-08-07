@@ -2,153 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85CD7772757
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 16:16:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77C0A7727C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 16:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233181AbjHGOQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 10:16:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33826 "EHLO
+        id S233691AbjHGOaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 10:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233270AbjHGOQP (ORCPT
+        with ESMTP id S233168AbjHGOaJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 10:16:15 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F73610D9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 07:16:10 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b9ba3d6157so73207471fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 07:16:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google; t=1691417769; x=1692022569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mVE/GJTe1IuiufpABjiYZn1olHI1ifx/I1TivYEBHQg=;
-        b=KDeUHSfDD3L4EI9ZDbXXnOCIgf36k4kTiyHRIIffaGRG3HCFl39GcfvKDi2APyBxt9
-         uIkOV41JjBWzvcfkl4hWbMoMF6B7yW2N6o4toZetNa+16q9cwIbk8dhp8WLMlbMnqtzs
-         lrCcsJN2ho/fqPCpmMmUqd/p18Lc2P1XhR9Zc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691417769; x=1692022569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mVE/GJTe1IuiufpABjiYZn1olHI1ifx/I1TivYEBHQg=;
-        b=bKpRlvFyAxQcSkPO+nc4LINr6xhoX265Cz6zNOxfFfESawQ8rIxedhiYlDhaho2nOl
-         OPaL7azOdKZrcB7iDqwrHhDqTCzJQLZmsYjESB9LUwbN432jRgYJ9y7qJHGRXopGfeMg
-         JotPmMMRwl7zrCn8Cl01ZJFsSmxIWClooL4k2/BVdp2PPpN/Pp1c7tEd78LrfuDlTpRU
-         qEAtq0yR71GTuwcJrupAqgh0KZjpq7t7H5OUyDdZMhkPNDFhYQDkdpLbHQYDOr/xRELa
-         pPsLDfO0y6T+WOnEB38TkK3nh8w6DNVnGSBS2KP1aaQSs2ZPfs3LWMtVpJWH53+VdpuU
-         Zg9A==
-X-Gm-Message-State: AOJu0YyzW9ps6z/YAG6YmbhDtdKZQ9eWWilX2GV/5wNHFWzdO0d01tx6
-        rfYFIRAq9EwGtfnbjIziYo+75Qfo+mHMEHtlAmVeWA==
-X-Google-Smtp-Source: AGHT+IGOrJUhdG+ahMA8bObfIwJouhmkY47ZzUfvTwinDgzhZuBpH+4Q7OaueJuZRAHK8xn8XVlTzjWWvAUYbt+ovvQ=
-X-Received: by 2002:a2e:b166:0:b0:2b9:dd3b:cf43 with SMTP id
- a6-20020a2eb166000000b002b9dd3bcf43mr6572529ljm.13.1691417768626; Mon, 07 Aug
- 2023 07:16:08 -0700 (PDT)
+        Mon, 7 Aug 2023 10:30:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C7410DD;
+        Mon,  7 Aug 2023 07:30:07 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377DoQtY000876;
+        Mon, 7 Aug 2023 14:29:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=WoSxx6ZruXxGBfMVehlHMK4su0XVr2Ci5fp6ctuEGh4=;
+ b=aSxwSCFhzXeMczhqF1S5pjhRMFyrwwDNgwPxy3Mch/22y3MDWJ3pSDfSQ5/JmXyoa84n
+ IuETwrfPgebgrt5V4sAL7ggYql6yxS2Zs/LB26adcA/aDSqT/jsVLBs0d2n9TqAdhc7p
+ 5IcrM9blILi+V5RWmluh4sE0Bh3ZW85QFmGffwCOo85NamTwdwlx3tSXnNoGdV1xpmml
+ Q73gACPjGxKbCltPmy9+GDjp+fugAH9ZWLdWwOf2W42iApBVCCuAtoruWuu9AHAFVRLL
+ PtWPfXhBCckBcqkKwN61j+EjpVAgjBsfMbCicCxfZKj/dtJ8zzy9J1KTum79xJroeZ9G mw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9endkm0n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 14:29:56 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377ETtX1008128
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 14:29:55 GMT
+Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 7 Aug 2023 07:29:55 -0700
+From:   Mike Tipton <quic_mdtipton@quicinc.com>
+To:     <djakov@kernel.org>, <gregkh@linuxfoundation.org>,
+        <rafael@kernel.org>, <corbet@lwn.net>
+CC:     <linux-pm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_okukatla@quicinc.com>, <quic_viveka@quicinc.com>,
+        <peterz@infradead.org>, <quic_pkondeti@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: [PATCH v3 0/3] Add interconnect debugfs client
+Date:   Mon, 7 Aug 2023 07:29:11 -0700
+Message-ID: <20230807142914.12480-1-quic_mdtipton@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20230807110936.21819-1-zhengqi.arch@bytedance.com> <20230807110936.21819-19-zhengqi.arch@bytedance.com>
-In-Reply-To: <20230807110936.21819-19-zhengqi.arch@bytedance.com>
-From:   Joel Fernandes <joel@joelfernandes.org>
-Date:   Mon, 7 Aug 2023 10:16:03 -0400
-Message-ID: <CAEXW_YTKHUeZHWtzeSG5Tt7MscNKjVTScBWkVDkC4Orisa7w=Q@mail.gmail.com>
-Subject: Re: [PATCH v4 18/48] rcu: dynamically allocate the rcu-lazy shrinker
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-Cc:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev, simon.horman@corigine.com,
-        dlemoal@kernel.org, linux-kernel@vger.kernel.org,
-        linux-mm@kvack.org, x86@kernel.org, kvm@vger.kernel.org,
-        xen-devel@lists.xenproject.org, linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JzplI7XndwFknZJOOyveOWmb3Frp8xWt
+X-Proofpoint-ORIG-GUID: JzplI7XndwFknZJOOyveOWmb3Frp8xWt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_15,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 mlxlogscore=792 adultscore=0 clxscore=1011 mlxscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 impostorscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070134
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 7, 2023 at 7:36=E2=80=AFAM Qi Zheng <zhengqi.arch@bytedance.com=
-> wrote:
->
-> Use new APIs to dynamically allocate the rcu-lazy shrinker.
->
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+This series introduces interconnect debugfs files that support voting
+for any path the framework supports.
 
-For RCU:
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+We've historically relied on an out-of-tree module for this, which used
+the old icc_get() that was recently removed in [0]. The old icc_get()
+took integer endpoint IDs, which made identifying paths in our old
+implementation non-intuitive. The logical node names typically don't
+change much chip-to-chip, but the raw integer IDs do. Take this
+opportunity to introduce an icc_get() that uses string names instead,
+which allows for a more intuitive and generic debugfs interface.
 
-thanks,
+We rely on this support for debug, test, and verification. Hopefully
+it'll be useful for other vendors as well.
 
-- Joel
+[0] commit 7dcdad6f32c9 ("interconnect: drop unused icc_get() interface")
 
+Changes in v3:
+- Use GFP_ATOMIC when allocating with the rcu lock held.
 
-> ---
->  kernel/rcu/tree_nocb.h | 20 +++++++++++---------
->  1 file changed, 11 insertions(+), 9 deletions(-)
->
-> diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-> index 5598212d1f27..e1c59c33738a 100644
-> --- a/kernel/rcu/tree_nocb.h
-> +++ b/kernel/rcu/tree_nocb.h
-> @@ -1396,13 +1396,6 @@ lazy_rcu_shrink_scan(struct shrinker *shrink, stru=
-ct shrink_control *sc)
->
->         return count ? count : SHRINK_STOP;
->  }
-> -
-> -static struct shrinker lazy_rcu_shrinker =3D {
-> -       .count_objects =3D lazy_rcu_shrink_count,
-> -       .scan_objects =3D lazy_rcu_shrink_scan,
-> -       .batch =3D 0,
-> -       .seeks =3D DEFAULT_SEEKS,
-> -};
->  #endif // #ifdef CONFIG_RCU_LAZY
->
->  void __init rcu_init_nohz(void)
-> @@ -1410,6 +1403,7 @@ void __init rcu_init_nohz(void)
->         int cpu;
->         struct rcu_data *rdp;
->         const struct cpumask *cpumask =3D NULL;
-> +       struct shrinker * __maybe_unused lazy_rcu_shrinker;
->
->  #if defined(CONFIG_NO_HZ_FULL)
->         if (tick_nohz_full_running && !cpumask_empty(tick_nohz_full_mask)=
-)
-> @@ -1436,8 +1430,16 @@ void __init rcu_init_nohz(void)
->                 return;
->
->  #ifdef CONFIG_RCU_LAZY
-> -       if (register_shrinker(&lazy_rcu_shrinker, "rcu-lazy"))
-> -               pr_err("Failed to register lazy_rcu shrinker!\n");
-> +       lazy_rcu_shrinker =3D shrinker_alloc(0, "rcu-lazy");
-> +       if (!lazy_rcu_shrinker) {
-> +               pr_err("Failed to allocate lazy_rcu shrinker!\n");
-> +       } else {
-> +               lazy_rcu_shrinker->count_objects =3D lazy_rcu_shrink_coun=
-t;
-> +               lazy_rcu_shrinker->scan_objects =3D lazy_rcu_shrink_scan;
-> +               lazy_rcu_shrinker->seeks =3D DEFAULT_SEEKS;
-> +
-> +               shrinker_register(lazy_rcu_shrinker);
-> +       }
->  #endif // #ifdef CONFIG_RCU_LAZY
->
->         if (!cpumask_subset(rcu_nocb_mask, cpu_possible_mask)) {
-> --
-> 2.30.2
->
+Changes in v2:
+- Make icc_get() an internal interface.
+- RCU-protect src_node and dst_node.
+- Replace PLATFORM_DEVID_AUTO with PLATFORM_DEVID_NONE.
+- Remove unnecessary #include.
+- Add debugfs client documentation.
+
+Mike Tipton (3):
+  debugfs: Add write support to debugfs_create_str()
+  interconnect: Reintroduce icc_get()
+  interconnect: Add debugfs test client
+
+ Documentation/driver-api/interconnect.rst |  25 ++++
+ drivers/interconnect/Makefile             |   2 +-
+ drivers/interconnect/core.c               |  66 +++++++++
+ drivers/interconnect/debugfs-client.c     | 168 ++++++++++++++++++++++
+ drivers/interconnect/internal.h           |   3 +
+ fs/debugfs/file.c                         |  48 ++++++-
+ 6 files changed, 309 insertions(+), 3 deletions(-)
+ create mode 100644 drivers/interconnect/debugfs-client.c
+
+-- 
+2.17.1
+
