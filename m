@@ -2,76 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C52F3772C6A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 19:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22C5E772CF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 19:29:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232148AbjHGRNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 13:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43824 "EHLO
+        id S232322AbjHGR3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 13:29:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232156AbjHGRMy (ORCPT
+        with ESMTP id S232298AbjHGR26 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 13:12:54 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5AC199C;
-        Mon,  7 Aug 2023 10:12:17 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-6877eb31261so3425072b3a.1;
-        Mon, 07 Aug 2023 10:12:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691428336; x=1692033136;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nXZWjfN9jRVe+H33im5sYKdcYpl83+nexah9W681kvs=;
-        b=JxtZ0TOHGdOvBVososgY9Zy15pOWAkF7x8gemX+XNHlZcmEwUGJH6gS7S5u0636e08
-         DiOV4aG8XKBk3aaL1ZVD2tiUaTPI4gMubJmq7Mf+JpRTj/mhbtWlFt1qLc2v7ofqYi9t
-         RgK5Ym7wckZkEwX/gvnpwuxMT77wMtDJbPIIqtaOpUGM0EWb8lnlk67dEBK4XSbfidgo
-         p/Lj6BMenBt7K/mvIRlCIIaM5NFCKtT8GCuCba+blaWeK8LMDukx8oHEyivtwKyHFaOC
-         8YnI1Rh7Y+KYIKJdx/rIQylrQUic0EKQNctdRw4RtQh+uRsx/lrMKyfUtbbVPy6r/06n
-         +3dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691428336; x=1692033136;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nXZWjfN9jRVe+H33im5sYKdcYpl83+nexah9W681kvs=;
-        b=cy1bcnJXfmtL9HVpiqQfhrLd9zgtHX4+75yH7N0rWVrgSy9Bf6l/9lQ5UhhNsacdto
-         Xcqf3bHPiKCCpVUNco9UZ3/YB0YuQqCzjzB+jCH4QYrbIpDataTRIa4FQaBIwd6E7X9C
-         +LObSCbQ0vnKwU2MfWXHlMjLLUHAfZtbtwc1OFIyL5rAwBeqO/gJAtKRfXfqiEVB8xH7
-         g7K04nTJgza9zBcJyI4N4e8buRiKYgHe3YXCih1BV7l9BC/J7HGHfAQHiUZEG53GRNSm
-         Ynvjj16uGz3g+Z1xBtn8gIxuC6p6zdBI4ACo0fow6Xqjfmyn8sykXRHmGOC5hx2dsPzM
-         EGQA==
-X-Gm-Message-State: AOJu0YwAlzvkbC72ps//GUgnI4+ZIRQkqxkBXO0fSfPbhtnyjO5nFZ9N
-        sqtCf7z6SkC8Kh8vDVzMM3k=
-X-Google-Smtp-Source: AGHT+IFHBNbwLQimjGOtzcaKvIByqk/TQzJWCN/W+g5iL3kJg/6pWmYPHRMzc0ZNijBedo2YSdDiqw==
-X-Received: by 2002:a05:6a20:1604:b0:13f:4e70:ad48 with SMTP id l4-20020a056a20160400b0013f4e70ad48mr12770238pzj.52.1691428336288;
-        Mon, 07 Aug 2023 10:12:16 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
-        by smtp.gmail.com with ESMTPSA id j8-20020aa783c8000000b00682c864f35bsm6624048pfn.140.2023.08.07.10.12.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 10:12:15 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        Mon, 7 Aug 2023 13:28:58 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A859010D2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 10:28:56 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377Cw8sv016125;
+        Mon, 7 Aug 2023 17:28:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=EFlRnDM16Qlnu93ff6dNuQB500aAs11bDQ7gX9qeOCU=;
+ b=E6CA+MEKlvAxsZCnjdTfb6DCpjhexPpXxjXzv8JTrBvA+wvHuSCQlXwMe6RJjYTKRW4Q
+ Lauo3PfV0D0ezYq36qgiXJX2VyiFY6IVfXxuXJ28EE7BofL3px7KeJ/5KFYfYFThxxDJ
+ IbsG70TH6ycH375mzy8oo8olgL1X3roQ9FaFs3i4+OFmimlk/jMnyxIj0xgv7YYLbFFE
+ gpI6ce6yBtKRK2TO/23fxRyEL4+xHhaA0w+JOqwjvqO15cx/rIhdxWFsqX6SdZtFtCRy
+ DtgEELUrVQkpK1WSm2FT9BP1Vk5xSTlta1DuISx17T8C6sqzrDqZufdNqBLK9NXYXRQb og== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3saxbbrwfv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 17:28:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377HSYab003076
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 17:28:34 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 10:28:33 -0700
+Message-ID: <a0596593-0215-99b3-4295-a8bcb6c05129@quicinc.com>
+Date:   Mon, 7 Aug 2023 10:28:32 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v5 1/8] drm/msm/dpu: fix the irq index in
+ dpu_encoder_phys_wb_wait_for_commit_done
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 9/9] drm/msm: Enable fence signalling annotations
-Date:   Mon,  7 Aug 2023 10:11:43 -0700
-Message-ID: <20230807171148.210181-10-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230807171148.210181-1-robdclark@gmail.com>
-References: <20230807171148.210181-1-robdclark@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
+ <20230802100426.4184892-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230802100426.4184892-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xoP2wpLzAXdZ52YVJybKwG4U01p9G2ub
+X-Proofpoint-GUID: xoP2wpLzAXdZ52YVJybKwG4U01p9G2ub
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_19,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070160
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,29 +87,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-Now that the runpm/qos/interconnect lockdep vs reclaim issues are
-solved, we can enable the fence signalling annotations without lockdep
-making it's immediate displeasure known.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_ringbuffer.c | 1 +
- 1 file changed, 1 insertion(+)
+On 8/2/2023 3:04 AM, Dmitry Baryshkov wrote:
+> Since commit 1e7ac595fa46 ("drm/msm/dpu: pass irq to
+> dpu_encoder_helper_wait_for_irq()") the
+> dpu_encoder_phys_wb_wait_for_commit_done expects the IRQ index rather
+> than the IRQ index in phys_enc->intr table, however writeback got the
+> older invocation in place. This was unnoticed for several releases, but
+> now it's time to fix it.
+> 
 
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index 7f5e0a961bba..cb9cf41bcb9b 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -97,6 +97,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 	 /* currently managing hangcheck ourselves: */
- 	sched_timeout = MAX_SCHEDULE_TIMEOUT;
- 
-+	ring->sched.fence_signalling = true;
- 	ret = drm_sched_init(&ring->sched, &msm_sched_ops,
- 			num_hw_submissions, 0, sched_timeout,
- 			NULL, NULL, to_msm_bo(ring->bo)->name, gpu->dev->dev);
--- 
-2.41.0
+The reason it went unnoticed is because the IRQ index is used within 
+dpu_encoder_helper_wait_for_irq() only for cases when the interrupt did 
+not fire (in other words not the *working* or common cases). Its used 
+only for the trace in dpu_encoder_helper_wait_event_timeout(). So this 
+was not really breaking writeback as such because the encoder kickoff / 
+wait mechanism largely relies on the kickoff_cnt increment/decrement.
 
+Nonetheless, the patch LGTM and works fine, hence
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index a466ff70a4d6..78037a697633 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -446,7 +446,8 @@ static int dpu_encoder_phys_wb_wait_for_commit_done(
+>   	wait_info.atomic_cnt = &phys_enc->pending_kickoff_cnt;
+>   	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
+>   
+> -	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_WB_DONE,
+> +	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
+> +			phys_enc->irq[INTR_IDX_WB_DONE],
+>   			dpu_encoder_phys_wb_done_irq, &wait_info);
+>   	if (ret == -ETIMEDOUT)
+>   		_dpu_encoder_phys_wb_handle_wbdone_timeout(phys_enc);
