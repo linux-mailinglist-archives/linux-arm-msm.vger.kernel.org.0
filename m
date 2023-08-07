@@ -2,129 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E0967732F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 00:28:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C3FA7734C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 01:17:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230000AbjHGW2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 18:28:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58668 "EHLO
+        id S229660AbjHGXRt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 19:17:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjHGW2g (ORCPT
+        with ESMTP id S229845AbjHGXRs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 18:28:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C543C1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 15:27:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1691447269;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=OoCQj+gG1dm9NiP0aYa0b0pvxLVU+VxmVMWhUGehjZE=;
-        b=YyVPSRfxiV/4Nwa8k8teGYN1WlA6uLZv6jhbw+lmZTRGXArUwoibl1uLfVhYlqLO2AN2po
-        UYSqwJ/2pC0nqEOt3i8b6hYUfCNzWtXnpALGkbflryplfDFYdynF/SQmjHtYb7fCLDucfp
-        dCFaaNCot/x+KEZov170u9rCKrwT044=
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-mN5OSz-ePJGVLQP9LL3kSw-1; Mon, 07 Aug 2023 18:27:48 -0400
-X-MC-Unique: mN5OSz-ePJGVLQP9LL3kSw-1
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-79a2f35a521so786069241.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 15:27:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691447267; x=1692052067;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OoCQj+gG1dm9NiP0aYa0b0pvxLVU+VxmVMWhUGehjZE=;
-        b=YoONk8DL+nPYRTp0Hutcqq4wP4h0IWWDLhXkBz7Z+iPsjaf/HUmQD9/gyXZ4rVBoo+
-         2cm1p2NVaCTDae+1vwDXoJY2bn0fMGKXTEQ771bEeIXZGKWav4dYtpgiVXibzh9FElkn
-         dYfV5NjUKzkuzJVTESmwmCqyaRW0N6zC8tT7vnIEfZu8k27Pfp1eeTgr9iL+Wog3jFP7
-         yVuuiAvGZL212/8c7v11Z7AyFWmzBvuVvFD8ppCjHXpBfl/8jU2qtcr0Bxv/dukwN+eL
-         AbCQ8ZL4JpheYdWk4MConoBYgJMOlE4nidr5hr/wJBjokMoICGwkl09Ub/e0UlaGUjQy
-         DB+A==
-X-Gm-Message-State: AOJu0YyZzzeiyH+YPupHZW1+8iNCnFWhmSt6MEyou2h4uQUWT6bZbCfc
-        qIF41IWMAPOkkxw/Gsk4YAacF5zv0EKpDNXcuZ/IwKBRMFLTf39x+qRwmUK66HCadvtAKqk9rDX
-        Kyt01AkXWHWnFxCWeDtf/ItpWVw==
-X-Received: by 2002:a67:b602:0:b0:447:a303:bbf2 with SMTP id d2-20020a67b602000000b00447a303bbf2mr4519783vsm.24.1691447267716;
-        Mon, 07 Aug 2023 15:27:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoKaR+izuGwqD5ORej9M/bSlTm97V1zhmD9i50ejqm8XmB/Yp0iCZwCW0ekYfB7D367IWYEQ==
-X-Received: by 2002:a67:b602:0:b0:447:a303:bbf2 with SMTP id d2-20020a67b602000000b00447a303bbf2mr4519771vsm.24.1691447267397;
-        Mon, 07 Aug 2023 15:27:47 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id x19-20020a0cda13000000b0063d585225e0sm3136365qvj.61.2023.08.07.15.27.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 15:27:46 -0700 (PDT)
-Date:   Mon, 7 Aug 2023 17:27:44 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 5/9] arm64: dts: qcom: sa8775p-ride: move the reset-gpios
- property of the PHY
-Message-ID: <ld2j4llgfba6j43gesqxs6wz2baucka5scbj4nef5ehbex2cmt@d4dxsqp2vuoj>
-References: <20230807193507.6488-1-brgl@bgdev.pl>
- <20230807193507.6488-6-brgl@bgdev.pl>
- <siqiyihftz3musfjulpcqunhgi7npftumrfwfyh2pqnlx6zeb7@rrpwmkvjshfb>
- <da679b5e-6712-4849-b29c-6aa42022abc4@lunn.ch>
+        Mon, 7 Aug 2023 19:17:48 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2D711A;
+        Mon,  7 Aug 2023 16:17:47 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377NHUCx014259;
+        Mon, 7 Aug 2023 23:17:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=haSdIhLP1n0o22iUyQvSxYEe4IEa2zpM2Fu5jd9vnpM=;
+ b=n/+/FQR4rPVmR6FUPEEHHODK67P7nFqGUE8Xa1KbuMb9gq1tQ/ygv8mrRiG7YYogV6oH
+ yhFDTPLxfT+wagk6AmnDZOTjv0x2fsnaXxx4ao5IXq/qxt89/2M3HoQWmEziJK/RHIzr
+ qhYHrj4bkH5Vo3QSIWTMlOMUaAzJetak0WWQAWwyYqyp5eI38oZBvQXUQvgQkaP8sWX+
+ bOeFAkI/KdVxsyclZCHIbjhGjkE+drM1R1kRQco84rhbAl6xl1KoUEOPFEHSYcQmYgbL
+ 9B5s33KoZ3PW/fIsMoIP3aU/X7tv7k0YCDn+RKVV+hW8cG8xaHKfcRMJDOQM6E/Fh5nR iQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sb9pqr1er-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 23:17:30 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377NHTTQ027199
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 23:17:29 GMT
+Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 16:17:29 -0700
+Message-ID: <9918624f-184d-3ddc-189b-35b162ef5b18@quicinc.com>
+Date:   Mon, 7 Aug 2023 16:17:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <da679b5e-6712-4849-b29c-6aa42022abc4@lunn.ch>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] drm/msm/dpu: Move DPU encoder wide_bus_en setting
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, <quic_abhinavk@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com>
+ <20230802-add-widebus-support-v3-1-2661706be001@quicinc.com>
+ <mdmxxxs5atqtunsast542fucmoewpvjjqj7bdhbs2yuzgv52ws@qbrdltjo3734>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <mdmxxxs5atqtunsast542fucmoewpvjjqj7bdhbs2yuzgv52ws@qbrdltjo3734>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PDO5iLTJru58BUDOHxWly-9v9KkB7aSC
+X-Proofpoint-ORIG-GUID: PDO5iLTJru58BUDOHxWly-9v9KkB7aSC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_25,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ malwarescore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ mlxlogscore=999 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070209
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 07, 2023 at 11:51:40PM +0200, Andrew Lunn wrote:
-> > > I have proposed a solution for this problem in 2020 but it never got
-> > > upstream. Now we have a workaround in place which allows us to hard-code
-> > > the PHY id in the compatible property, thus skipping the ID scanning).
-> > 
-> > nitpicky, but I think that already existed at that time :D
+
+
+On 8/2/2023 12:32 PM, Marijn Suijten wrote:
+> I find this title very undescriptive, it doesn't really explain from/to
+> where this move is happening nor why.
 > 
-> Yes, it has been there are long long time. It is however only in the
-> last 5 years of so has it been seen as a solution to the chicken egg
-> problem.
+> On 2023-08-02 11:08:48, Jessica Zhang wrote:
+>> Move the setting of dpu_enc.wide_bus_en to
+>> dpu_encoder_virt_atomic_enable() so that it mirrors the setting of
+>> dpu_enc.dsc.
 > 
-> > >  		sgmii_phy: phy@8 {
-> > > +			compatible = "ethernet-phy-id0141.0dd4";
-> > >  			reg = <0x8>;
-> > >  			device_type = "ethernet-phy";
-> > > +			reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-> > > +			reset-deassert-us = <70000>;
-> > 
-> > Doesn't this need reset-assert-us?
+> mirroring "the setting of dpu_enc.dsc" very much sounds like you are
+> mirroring _its value_, but that is not the case.  You are moving the
+> initialization (or just setting, because it could also be overwriting?)
+> to _the same place_ where .dsc is assigned.
+
+Hi Marijn,
+
+Hmm.. got it. Will reword it to "mirror how dpu_enc.dsc is being set" if 
+that makes it clearer.
+
 > 
-> If i remember correctly, there is a default value if DT does not
-> provide one.
+> I am pretty sure that this has a runtime impact which we discussed
+> before (hotplug...?) but the commit message omits that.  This is
+> mandatory.
+
+I'm assuming the prior discussion you're referring to is with Kuogee on 
+his DSC fix [1]. Unlike DSC, both DSI and DP know if wide bus is enabled 
+upon initialization.
+
+The main reasons the setting of the wide_bus_en flag was moved here were
+
+1) to mirror how dpu_enc.dsc was being set (as stated in the commit 
+message) as wide bus is related to DSC,
+
+and 2) account for the possibility of DSC for DSI being set during 
+runtime in the future.
+
+Thanks,
+
+Jessica Zhang
+
+[1] https://patchwork.freedesktop.org/patch/543867/
+
 > 
-
-I've been trying to make sure I view devicetree properties as an OS
-agnostic ABI lately, with that in mind...
-
-The dt-binding says this for ethernet-phy:
-
-  reset-assert-us:
-    description:
-      Delay after the reset was asserted in microseconds. If this
-      property is missing the delay will be skipped.
-
-If the hardware needs a delay I think we should encode it based on that
-description, else we risk it starting to look like a unit impulse!
-
+> - Marijn
+> 
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 +++++++----
+>>   1 file changed, 7 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index d34e684a4178..3dcd37c48aac 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -1194,11 +1194,18 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+>>   	struct dpu_encoder_virt *dpu_enc = NULL;
+>>   	int ret = 0;
+>>   	struct drm_display_mode *cur_mode = NULL;
+>> +	struct msm_drm_private *priv = drm_enc->dev->dev_private;
+>> +	struct msm_display_info *disp_info;
+>>   
+>>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>> +	disp_info = &dpu_enc->disp_info;
+>>   
+>>   	dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
+>>   
+>> +	if (disp_info->intf_type == INTF_DP)
+>> +		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+>> +				priv->dp[disp_info->h_tile_instance[0]]);
+>> +
+>>   	mutex_lock(&dpu_enc->enc_lock);
+>>   	cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
+>>   
+>> @@ -2383,10 +2390,6 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+>>   	timer_setup(&dpu_enc->frame_done_timer,
+>>   			dpu_encoder_frame_done_timeout, 0);
+>>   
+>> -	if (disp_info->intf_type == INTF_DP)
+>> -		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+>> -				priv->dp[disp_info->h_tile_instance[0]]);
+>> -
+>>   	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>>   			dpu_encoder_off_work);
+>>   	dpu_enc->idle_timeout = IDLE_TIMEOUT;
+>>
+>> -- 
+>> 2.41.0
+>>
