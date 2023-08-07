@@ -2,91 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE94C771831
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 04:13:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03FE27718AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 05:05:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbjHGCNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Aug 2023 22:13:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36934 "EHLO
+        id S229499AbjHGDFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Aug 2023 23:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjHGCNj (ORCPT
+        with ESMTP id S229436AbjHGDFp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Aug 2023 22:13:39 -0400
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C68489F;
-        Sun,  6 Aug 2023 19:13:38 -0700 (PDT)
-Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.55])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RK0Cs242Vz1Z1Td;
-        Mon,  7 Aug 2023 10:10:49 +0800 (CST)
-Received: from [10.67.110.108] (10.67.110.108) by
- kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Mon, 7 Aug 2023 10:13:36 +0800
-Message-ID: <d9441f46-eccd-c407-7fdf-6e3b505a588c@huawei.com>
-Date:   Mon, 7 Aug 2023 10:13:35 +0800
+        Sun, 6 Aug 2023 23:05:45 -0400
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 476C1BA
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Aug 2023 20:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
+        Content-Type; bh=g3ecp61wnfg/vQjhC4VC12IwfZdDXqEOZSJ2iCuEPXU=;
+        b=L/wn+QtAdghGEffnkBGCA2K/hV1vPM58HbFxcJkV3e9AD174ywZTUcEVbqJpV/
+        R6KEKcQ2RXHug1d/Gcvwy5DXhyLJvi4t37K0v02YL09/eoIAhO5tmo1rm12vZ6OW
+        JN0sRl7jfMUXAEgQX4SvLbBUZv8I9HJvO9q0/XkrPaXAg=
+Received: from ubuntu.localdomain (unknown [220.180.239.201])
+        by zwqz-smtp-mta-g2-0 (Coremail) with SMTP id _____wA3pSlXX9BkizWcCQ--.22796S2;
+        Mon, 07 Aug 2023 11:04:58 +0800 (CST)
+From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
+        <duke_xinanwen@163.com>
+To:     mani@kernel.org, loic.poulain@linaro.org, slark_xiao@163.com
+Cc:     fabio.porcedda@gmail.com, johan+linaro@kernel.org,
+        bhelgaas@google.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
+        duke.xin@quectel.com,
+        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
+        <duke_xinanwen@163.com>
+Subject: [PATCH v2] bus: mhi: host: pci_generic: Add support for Lenovo RM520N-GL
+Date:   Sun,  6 Aug 2023 20:04:54 -0700
+Message-Id: <20230807030454.37255-1-duke_xinanwen@163.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 0/9] Use dev_err_probe in i2c probe function
-To:     Andi Shyti <andi.shyti@kernel.org>
-CC:     <florian.fainelli@broadcom.com>,
-        <bcm-kernel-feedback-list@broadcom.com>, <rjui@broadcom.com>,
-        <sbranden@broadcom.com>, <yangyicong@hisilicon.com>,
-        <aisheng.dong@nxp.com>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
-        <festevam@gmail.com>, <linux-imx@nxp.com>, <kblaiech@nvidia.com>,
-        <asmaa@nvidia.com>, <loic.poulain@linaro.org>, <rfoss@kernel.org>,
-        <ardb@kernel.org>, <gcherian@marvell.com>,
-        <linux-i2c@vger.kernel.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20230802095737.3957587-1-liaochang1@huawei.com>
- <20230804221953.abmpboxdzy2upswe@intel.intel>
-From:   "Liao, Chang" <liaochang1@huawei.com>
-In-Reply-To: <20230804221953.abmpboxdzy2upswe@intel.intel>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.110.108]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500012.china.huawei.com (7.221.188.12)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-CM-TRANSID: _____wA3pSlXX9BkizWcCQ--.22796S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7uryDWr1fCFWDWF48tFW7CFg_yoW8Gr43pF
+        4F9340vF4qvrWjka4kGrWkWF98Xa17Cry7Kr17Cw1Fgr4qyFsYqr929FyF9F9FvFZ5WFya
+        qF1rJrWDW3Wqy3JanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRJCzJUUUUU=
+X-Originating-IP: [220.180.239.201]
+X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/1tbiPRbBe2I0X+eFwwABs4
+X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L4,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The Quectel new RM520N-GL product works with the Quectel's existing
+RM520N-GL modem settings.But this one is designed for lenovo laptop
+usecase, hence Quectel got a new PID.
 
+Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+---
+Changelog
 
-在 2023/8/5 6:19, Andi Shyti 写道:
-> Hi Liao,
-> 
-> On Wed, Aug 02, 2023 at 05:57:28PM +0800, Liao Chang wrote:
->> Use the dev_err_probe function instead of dev_err in the probe function
->> so that the printed messge includes the return value and also handles
->> -EPROBE_DEFER nicely.
-> 
-> first of all thanks for this cleanup which is very much
-> appreciated!
-> 
-> I need to ask you to add the version to all the patches, not just
-> patch 0/9. It's trivial if you do "git format-patch -v 2...".
+v1 -> v2
 
-Hi Andi,
+* Adjusted description of quectel modem and limit character length to 75 characters.
+---
+ drivers/bus/mhi/host/pci_generic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Trully sorry for the misleading, I will add the version to all the patches
-and send them out in next revision.
-
-Thanks for taking the time to review these patches.
-
-> 
-> Thanks,
-> Andi
-
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index fcd80bc92978..e4f2fb67dfaf 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -604,6 +604,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* RM520N-GL (sdx6x), eSIM */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
++	/* RM520N-GL (sdx6x), Lenovo variant */
++	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1007),
++		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x100d), /* EM160R-GL (sdx24) */
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
 -- 
-BR
-Liao, Chang
+2.25.1
+
