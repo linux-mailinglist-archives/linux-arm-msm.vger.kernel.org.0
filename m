@@ -2,91 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03FE27718AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 05:05:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EE79771911
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 06:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbjHGDFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Aug 2023 23:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53504 "EHLO
+        id S229812AbjHGElj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 00:41:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjHGDFp (ORCPT
+        with ESMTP id S229513AbjHGElh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Aug 2023 23:05:45 -0400
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 476C1BA
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Aug 2023 20:05:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
-        Content-Type; bh=g3ecp61wnfg/vQjhC4VC12IwfZdDXqEOZSJ2iCuEPXU=;
-        b=L/wn+QtAdghGEffnkBGCA2K/hV1vPM58HbFxcJkV3e9AD174ywZTUcEVbqJpV/
-        R6KEKcQ2RXHug1d/Gcvwy5DXhyLJvi4t37K0v02YL09/eoIAhO5tmo1rm12vZ6OW
-        JN0sRl7jfMUXAEgQX4SvLbBUZv8I9HJvO9q0/XkrPaXAg=
-Received: from ubuntu.localdomain (unknown [220.180.239.201])
-        by zwqz-smtp-mta-g2-0 (Coremail) with SMTP id _____wA3pSlXX9BkizWcCQ--.22796S2;
-        Mon, 07 Aug 2023 11:04:58 +0800 (CST)
-From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-To:     mani@kernel.org, loic.poulain@linaro.org, slark_xiao@163.com
-Cc:     fabio.porcedda@gmail.com, johan+linaro@kernel.org,
-        bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
-        duke.xin@quectel.com,
-        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-Subject: [PATCH v2] bus: mhi: host: pci_generic: Add support for Lenovo RM520N-GL
-Date:   Sun,  6 Aug 2023 20:04:54 -0700
-Message-Id: <20230807030454.37255-1-duke_xinanwen@163.com>
-X-Mailer: git-send-email 2.25.1
+        Mon, 7 Aug 2023 00:41:37 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7D210F3;
+        Sun,  6 Aug 2023 21:41:36 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3774QDmd016997;
+        Mon, 7 Aug 2023 04:41:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ content-transfer-encoding : in-reply-to; s=qcppdkim1;
+ bh=L/AODu6CiGzGr9FCJsPeSE9hoze7s8us5qkCMSXX18o=;
+ b=VQFrzCxgAF5qJ/tQAmatax3uWgAJjH00KxlPVVHis+gHIuaSMoPAdCIa9YNvzTdb/98b
+ OkO6B7HVLPYrBqLR5CoAsGpzBD11npNbjm5F99u+NZOsn+iq2bwen1vNPzvEcmvI/4tP
+ ZTkWCTcn6KsdQaZmtXMQMgryN2vY3u7goI4C/lUCxU0Y80jyXmjmkMhI/cqlyCUcTgMS
+ vBQg8fcPpcSrK/hfBDT1i/O6o+j7GafX9h6fMBmmx0xPL1Ipsz3pd9IPG2Mpo3PNqNUa
+ 9sS0t3zvTHIZI9gE8kup8ACke53mXDOa4DeGMgm+SP6XzubXcGnb2ro5gArdGJOiwsiP Eg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9bsutqck-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 04:41:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3774fVDY024504
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 04:41:31 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Sun, 6 Aug 2023 21:41:27 -0700
+Date:   Mon, 7 Aug 2023 10:11:24 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_jackp@quicinc.com>
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: Add PMIC pm7550ba dtsi
+Message-ID: <161713d4-1c95-4822-ac66-dbc7c2d8b421@quicinc.com>
+References: <1690970366-30982-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1690970366-30982-4-git-send-email-quic_rohiagar@quicinc.com>
+ <ce1af969-427a-3e4d-e85c-32d629755d9a@linaro.org>
+ <bb374ec4-3dfa-42f1-dffb-fc8505625b73@quicinc.com>
+ <2e97b032-4ca5-e59c-c891-2ed9ca39d237@linaro.org>
+ <7941f5de-547c-4a92-9af1-a1c0add1ace4@quicinc.com>
+ <dfe57d75-f0ff-41fb-bc81-0dc84dcfef7e@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wA3pSlXX9BkizWcCQ--.22796S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7uryDWr1fCFWDWF48tFW7CFg_yoW8Gr43pF
-        4F9340vF4qvrWjka4kGrWkWF98Xa17Cry7Kr17Cw1Fgr4qyFsYqr929FyF9F9FvFZ5WFya
-        qF1rJrWDW3Wqy3JanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRJCzJUUUUU=
-X-Originating-IP: [220.180.239.201]
-X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/1tbiPRbBe2I0X+eFwwABs4
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L4,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <dfe57d75-f0ff-41fb-bc81-0dc84dcfef7e@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: T9m0EKq7IGi08IUHQM-3QZAy1U5Sedua
+X-Proofpoint-ORIG-GUID: T9m0EKq7IGi08IUHQM-3QZAy1U5Sedua
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_02,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ mlxlogscore=322 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070042
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Quectel new RM520N-GL product works with the Quectel's existing
-RM520N-GL modem settings.But this one is designed for lenovo laptop
-usecase, hence Quectel got a new PID.
+On Fri, Aug 04, 2023 at 06:58:34PM +0200, Konrad Dybcio wrote:
+> On 3.08.2023 07:06, Pavan Kondeti wrote:
+> > 
+> > On Wed, Aug 02, 2023 at 03:14:19PM +0200, Konrad Dybcio wrote:
+> >> On 2.08.2023 15:13, Rohit Agarwal wrote:
+> >>>
+> >>> On 8/2/2023 6:12 PM, Konrad Dybcio wrote:
+> >>>> On 2.08.2023 11:59, Rohit Agarwal wrote:
+> >>>>> Add dtsi for PMIC pm7550ba found in Qualcomm platforms.
+> >>>>>
+> >>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> >>>>> ---
+> >>>> Subject: "PMIC pm7550ba" -> "pm7550ba PMIC"
+> >>>>
+> >>>> [...]
+> >>>>
+> >>>>> +
+> >>>>> +        pm7550ba_eusb2_repeater: phy@fd00 {
+> >>>>> +            compatible = "qcom,pm8550b-eusb2-repeater";
+> >>>> A new compatible should be introduced, so that it goes like this:
+> >>>>
+> >>>> compatible = "qcom,pm7550ba-eusb2-repeater", "qcom,pm8550b-eusb2-repeater";
+> >>> Just a doubt, Since the compatible can be same why we need to introduce a new compatible.
+> >>> Should every soc have a compatible string?
+> >> If it turns out that we need to add a quirk for PM7550BA 3 years down
+> >> the line, this approach lets us fix it for users that never updated
+> >> their device trees.
+> >>
+> > 
+> > Trying to make my understanding clear.
+> > 
+> > eUSB repeater is a peripheral in the PMIC. Do we need a separate
+> > compatible even if the peripheral is same in two different PMIC chips?
+> > I believe eUSB peripheral has some identification registers to apply any
+> > quirks in future.
+> Perhaps, but keeping the compatible tied to the specific hardware is
+> the way to go with the device tree. Most components don't have such
+> information avaiable, and since at introduction time there wasn't
+> any better name for it, "pm8550b-eusb2-repeater" was chosen.
+> 
 
-Signed-off-by: Duke Xin(è¾›å®‰æ–‡) <duke_xinanwen@163.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
----
-Changelog
+Thanks for the clarification and guidance. We can introduce a new
+compatible and use qcom,pm8550b-eusb2-repeater as generic binding.
 
-v1 -> v2
-
-* Adjusted description of quectel modem and limit character length to 75 characters.
----
- drivers/bus/mhi/host/pci_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index fcd80bc92978..e4f2fb67dfaf 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -604,6 +604,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* RM520N-GL (sdx6x), eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
-+	/* RM520N-GL (sdx6x), Lenovo variant */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1007),
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x100d), /* EM160R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
--- 
-2.25.1
-
+Thanks,
+Pavan
