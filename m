@@ -2,210 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB750772667
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 15:47:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A60907726FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 16:05:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233924AbjHGNrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 09:47:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34850 "EHLO
+        id S233290AbjHGOFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 10:05:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233434AbjHGNrW (ORCPT
+        with ESMTP id S233452AbjHGOFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 09:47:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633F110DB;
-        Mon,  7 Aug 2023 06:47:18 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3778a7wG025126;
-        Mon, 7 Aug 2023 13:46:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=p+rpL5NjFVV5WSitXR2jia2C5Z06+rZ1kuNE5pQqw7w=;
- b=FmQeFFve0SO2ejC+Uz+TxribeYBOtp9llapgDeg5elVLua60KvNzqohuktnKXOn7GMSk
- rosPmXqoH16nJnPH1Pkg/Qn6I2JGpGzeoY/mO3hfVxsFsnhT86jGiVno5WnNUPpA6PAm
- mQCb0Q22LsDMGrNCRpo2gpBUCE+QiMGCMAPa0gyPjvQKd0LWERQ8oIyLPemwt5LmXcgl
- x9tS0YzvGmGtkmlZChZQ72JbGbbBg0kMl6S2GQgBxGKaYRATopqr2N9eyOOGJRNayQKe
- WBRhSoeS4bEoqqp9Kv5HoMq5XR2DLid/5rTTnYW1zZmnlrWNixT1yL6IdojLwa9YBFow ow== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9deekmn8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Aug 2023 13:46:56 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377Dktnj018001
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 7 Aug 2023 13:46:55 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
- 2023 06:46:48 -0700
-Message-ID: <632c5b97-4a91-c3e8-1e6c-33d6c4f6454f@quicinc.com>
-Date:   Mon, 7 Aug 2023 19:16:45 +0530
+        Mon, 7 Aug 2023 10:05:23 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E87E8272A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 07:04:44 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so70771131fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 07:04:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691417079; x=1692021879;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UKSrhcE5Bln8vQQGTHtL4QDZJ+tT1+92+NGnlfVJ2k0=;
+        b=O0bP2X7Yu58QOiyOA57b5a+g7b72bAfdkW0yXkeQQdZZQiVjurj73+CUZMsll5txeS
+         Uac1l9skbh9f7pHv9667e5ZIwgY9Tg4r9edtmpPfv9Z7rXTsj3IrAgS0keiC/Jjg63vd
+         1BRYd79hMAYZBgQa5JUWPmS6/0A2jIMbv0zfcD/dzq5NkjgEU4RtH6GnHS4IZtwE86zH
+         lECRrM3vB/iZgJ1+MwbnsVx1mVPeEyaDs2JPgxMG7D9UT7RAngjviNL7nfEljZbvWVrI
+         REdj6p99L0cxiiE19jDuQ4BwXZwi7XILkIs6LOtl9BfbJ7mkCoNJ/XyT4hq0RyaBiNbj
+         hF7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691417079; x=1692021879;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UKSrhcE5Bln8vQQGTHtL4QDZJ+tT1+92+NGnlfVJ2k0=;
+        b=fqRa1G+SAr+3a2MYTvKBygIDwfgBhPaxGM0Q6iIdfG+jisTWEPMHy8Gn/7XIp63aTb
+         IKWkizEdHHXuy7hW5sKDCwsqGIVQGe6WN7Fv0Q8FQZBvk4KC5GmnfcIA1tZNmAxJYtty
+         6nd+YN9IqeD5qT6KZIulH4IqMvQ4IAcox7IQT/srjyThGeY0k+UslGMtJ6icNKwed5SR
+         4z/R4wvNLvHTmRi9eaDTbMdsZ48yCU3bzgCwALmVhXc0mVLhaecCVW6MHdxAngy5iIsv
+         Za/KY6iFm7j6ydRSuJNUd7GiPiMIoZPf+cWd4I4Vq1V8nOgTh3Z5O86Sh/eCghISsV7q
+         O90g==
+X-Gm-Message-State: AOJu0Yyi+6G65mHO9csbbUV1KgrA+M9rpERL71nSNslN9JC9PCPsOawh
+        nh+ZFmrDZHsGR4hgUa3/hr4tWw==
+X-Google-Smtp-Source: AGHT+IHCrcRfDWUcueQ6OuYJVjkC4Z602JSHTqP1DbVPjQLQkoBsDryvz98IyZzcKGS29BVtwEritA==
+X-Received: by 2002:a2e:a0cb:0:b0:2b9:cce3:a126 with SMTP id f11-20020a2ea0cb000000b002b9cce3a126mr6405556ljm.21.1691417079270;
+        Mon, 07 Aug 2023 07:04:39 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.113])
+        by smtp.gmail.com with ESMTPSA id y8-20020a1709063a8800b0099316c56db9sm5158207ejd.127.2023.08.07.07.04.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Aug 2023 07:04:38 -0700 (PDT)
+Message-ID: <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
+Date:   Mon, 7 Aug 2023 16:04:37 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
- support
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
 Content-Language: en-US
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <keescook@chromium.org>,
-        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, Alex Elder <elder@linaro.org>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <2023062814-chance-flounder-f002@gregkh>
- <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
- <cc30660f-dd72-aade-6346-a93c6ad4b695@quicinc.com>
- <29af84dc-7db8-0c43-07b6-eb743cf25e57@linaro.org>
- <957a3cdb-6091-8679-ddb0-296db2347291@quicinc.com> <ZKb3wz2eXS6h1yIW@p14s>
- <c0284d98-4cb2-cb78-9123-54d83fc31101@quicinc.com>
-In-Reply-To: <c0284d98-4cb2-cb78-9123-54d83fc31101@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Luzsc6SdMQLdX7JpjvPFQ5f6xCkwCQ8m
-X-Proofpoint-ORIG-GUID: Luzsc6SdMQLdX7JpjvPFQ5f6xCkwCQ8m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_13,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- malwarescore=0 impostorscore=0 spamscore=0 clxscore=1011 mlxlogscore=999
- mlxscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308070128
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
+ <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
+ <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
+ <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 7/18/2023 8:33 PM, Mukesh Ojha wrote:
-> 
-> 
-> On 7/6/2023 10:50 PM, Mathieu Poirier wrote:
->> On Mon, Jul 03, 2023 at 02:05:58PM -0700, Trilok Soni wrote:
->>> On 7/2/2023 1:29 AM, Krzysztof Kozlowski wrote:
->>>> On 30/06/2023 18:04, Mukesh Ojha wrote:
->>>>>>
->>>>>>> We don't add layers when they are not needed, and never when 
->>>>>>> there is no
->>>>>>> actual user.  If you need the extra "complexity" later, then add it
->>>>>>> later when it is needed as who knows when that will ever be.
->>>>>>>
->>>>>>> Please redo this series based on that, thanks.
->>>>>>
->>>>>> My bigger issue with this whole series is what would this all look
->>>>>> like if every SoC vendor upstreamed their own custom dumping
->>>>>> mechanism. That would be a mess. (I have similar opinions on the
->>>>>> $soc-vendor hypervisors.)
->>>>
->>>> Mukesh,
->>>>
->>>> LPC CFP is still open. There will be also Android and Kernel Debugging
->>>> LPC microconference tracks. Coming with a unified solution could be a
->>>> great topic for LPC. Solutions targeting only one user are quite often
->>>> frowned upon.
+On 07/08/2023 14:41, Konrad Dybcio wrote:
+> On 5.08.2023 21:29, Krzysztof Kozlowski wrote:
+>> On 04/08/2023 22:09, Konrad Dybcio wrote:
+>>> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
+>>> to clock it a bit higher.
 >>>
->>> LPC is far out and in November. Can we not have others speak up if 
->>> they have
->>> the similar solution now? We can expand this to linux-kernel and ask 
->>> for the
->>> other SOC vendors to chime in. I am sure that we may have existing 
->>> solutions
->>> which came in for the one user first like Intel RDT if I remember. I 
->>> am sure
->>> ARM MPAM usecase was present at that time but Intel RDT based 
->>> solution which
->>> was x86 specific but accepted.
 >>
->> I am not familiar with Intel RDT and Arm MPAM but the community is always
->> improving on the way it does things.
+>> ...
 >>
->> LPC is indeed far out in November but it is an opportunity to cover the
->> groundwork needed to have this discussion.  It is always best to 
->> improve on
->> something then introduce something new.  Even better if something 
->> specific such
->> as Intel RDT and Arm MPAM can be made more generic.  A perfect example is
->> hwtracing Linus referred to.  The perf framework wasn't a perfect fit 
->> but it was
->> enhanced to accommodate our requirements.  I suggest to look at what 
->> is currently
->> available and come up with a strategy to be presented at LPC - event 
->> better if
->> you have a prototype.  If you can't find anything or the drawbacks 
->> inherent to
->> each avenue outweigh the benefits then we can have that conversation 
->> at LPC.
-> 
-> I was checking hwtracing[1] and pmu interface introduction of
-> address filtering[3] from analogy point of view, which i think you
-> meant that perf framework was extended to accommodate this.
-> 
-> Minidump is quite different and simple in its way to address the problem
-> of debugging on end user devices with minimum data captured to debug 
-> crashes and this patch series is inline with similar (core + backend)
-> implementation done for stm patches[1] where stm core was developed
-> and intel trace hub get hooked into it and later it got reused in [2] by 
-> coresight-stm driver.
-> 
-> I am still exploring if something available we can reuse but it seems 
-> unlikely at the moment to already available something in the kernel with
-> similar use case.
-
-
-I explored about kdump and fadump(PPC) but they take another route to 
-boot capture kernel, FAdump is even optimized and do not even boot
-capture kernel instead reboot the same kernel with minimal
-memory and once the reading of crash kernel region is complete
-from user space it release the memories.
-
-Latency in booting another kernel may not acceptable to boot time
-sensitive devices like mobile, tablet etc., also to boot another
-kernel will have security implication with user data..
-
-So, Minidump is limited in its capability and uses firmware infra
-to dump registered entries and boot afresh. So, it need to be
-presented what need to be dumped via Minidump registration API.
-
-If there is no comments, would like to go ahead with the next
-revision of the patchset.
-
--Mukesh
-> 
-> -Mukesh
-> 
-> [1]
-> https://lwn.net/Articles/650245/
-> 
-> [2]
-> https://lwn.net/Articles/674201/
-> 
-> [3]
-> https://lore.kernel.org/lkml/1461771888-10409-1-git-send-email-alexander.shishkin@linux.intel.com/
-> 
-> 
+>>> +
+>>> +  iommus:
+>>> +    maxItems: 1
+>>> +
+>>> +  video-decoder:
+>>> +    type: object
+>>> +
+>>> +    properties:
+>>> +      compatible:
+>>> +        const: venus-decoder
 >>
->>>
->>> ---Trilok Soni
+>> That's not how compatibles are constructed... missing vendor prefix, SoC
+>> or IP block name.
+>>
+>>> +
+>>> +    required:
+>>> +      - compatible
+>>> +
+>>> +    additionalProperties: false
+>>
+>> Why do you need this child node? Child nodes without properties are
+>> usually useless.
+> For both comments: I aligned with what was there..
+> 
+> The driver abuses these compats to probe enc/dec submodules, even though
+> every Venus implementation (to my knowledge) is implicitly enc/dec capable..
+
+Holy crap, I see...
+
+> 
+> Perhaps a bigger clean-up is due. I guess I could just create the venc/vdec
+> devices from the venus core probe and get rid of this fake stuff?
+
+Few devices (qcom,msm8996-venus.yaml, sdm660, sdm845) have clocks there,
+so we actually could stay with these subnodes, just correct the
+compatibles to a list with correct prefixes:
+
+qcom,sc8280xp-venus-decoder + qcom,venus-decoder
+
+Best regards,
+Krzysztof
+
