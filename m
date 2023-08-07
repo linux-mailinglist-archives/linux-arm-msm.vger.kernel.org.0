@@ -2,58 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A009A772DC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 20:23:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2622C772E14
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 20:44:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229754AbjHGSXm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 14:23:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
+        id S230148AbjHGSof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 14:44:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbjHGSXh (ORCPT
+        with ESMTP id S229785AbjHGSod (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 14:23:37 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 262271FCE;
-        Mon,  7 Aug 2023 11:23:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691432586; x=1722968586;
-  h=date:from:to:cc:subject:message-id;
-  bh=2DgVD2YvnzYf2SL/zG7f5FwCph5doUeAjz6JPSbtOOg=;
-  b=LT9MAyVcfDtIFbddTySdCQUDC8pdgrlwkT+GZf2eypYMqHJDyIqVhPMa
-   NY2aWEDRRwMSg+e3xnJd+0n2ZDNz+hX2F7RustqgSi8ojF6JRXZfrhLQX
-   er54WzAC+v5zL6xm4/BPW924NZ1mKZ22lLFcmrFaSGqc937NXQQpDayXE
-   JmkgSNB64QEDBbXywP9r5biPbhETOnjxvuAAEWJheeKzBWiL4Xz/si3bC
-   HiZvDb5VtVEq6B6Dq7L98ui3AUQqlyQwWX5UFRKEdEIVJNac1B+DrvrW0
-   yxr651tgrpgbuSuXAQ8KfeustNEwtk3EnnMleC8gspdrRp4RQdlq9VfMj
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="369516682"
-X-IronPort-AV: E=Sophos;i="6.01,262,1684825200"; 
-   d="scan'208";a="369516682"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2023 11:22:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="796407467"
-X-IronPort-AV: E=Sophos;i="6.01,262,1684825200"; 
-   d="scan'208";a="796407467"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 07 Aug 2023 11:22:08 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qT4rn-0004oF-11;
-        Mon, 07 Aug 2023 18:22:07 +0000
-Date:   Tue, 08 Aug 2023 02:21:15 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Andrew Morton <akpm@linux-foundation.org>
-Cc:     Linux Memory Management List <linux-mm@kvack.org>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org
-Subject: [linux-next:master] BUILD REGRESSION
- f7dc24b3413851109c4047b22997bd0d95ed52a2
-Message-ID: <202308080207.HeQl4uz9-lkp@intel.com>
-User-Agent: s-nail v14.9.24
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        Mon, 7 Aug 2023 14:44:33 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151BD1721
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 11:44:31 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fe4cdb727cso29984015e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 11:44:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691433869; x=1692038669;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Zol9Y1aLsvmdyfqvAX1V5FxzXvCH4Sriw98PTemVe/Y=;
+        b=vjyhPkEwkKxlqSi04SjKJd3eMNMokdMkJK1iLWhFCbhIqmWw11MawDEdbbsai/YNKD
+         6Qpx8J59b/tBL4kqDdfm4yBWCRakUxcysqa38qCjOa/k3By/sLdHIlI/9lg1SVgReyg3
+         NvCIpoHCeGFfQsvtSL5u9pM972PO+FJXo1+a6j/yLhbU+7lqTyetKKLqafZmM+zf1HgW
+         gIGjderr/ZVvF8JRbLbzig6HT5wgBramYWjQd5zGDyVIgvIal15uEIVfsq8QaDILBsag
+         TNAo6gdW5QDmZMCkaJiPhE4mmmMCf31Bcc3PNrqRwI+XZocg4tYilx91WSuobeFP1khG
+         g6hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691433869; x=1692038669;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zol9Y1aLsvmdyfqvAX1V5FxzXvCH4Sriw98PTemVe/Y=;
+        b=AfkbElIbaMejLiUfbYBhUQz+EfoUdeOYLhGu4vab0LH8fmmGruROlkoTvJ4L1MfaVH
+         dIwkVW7Q/C/hYJ9YdAzX0GJgvjm/mzrlmMvgkSOjv9pN8U66crbVBMrOTsF3NNel+pdM
+         NvqTeC7hwxTVC4AAN4EaQ79HdBivOjcmydy2HOty4tdOFC0HIy4ppLgiyNZUgnn2LY60
+         +7mi5I+Dk3CuRgxIYWXv0xa8Ahtjale7u5436WKUzOwYSCnKyaob/3jojl22+d17QB4X
+         aKchQhUaaz9VG6YQSKluzYmv2OJZKbST+wNQdsN/zHmiAt5s83oTyVbtr+qyThJm04PB
+         Pvbg==
+X-Gm-Message-State: AOJu0YwmDLSYYhqsC/Wwq+E7j7sE/58q4VDHYBxLGEt3MqCq9MJ14d58
+        kQ3q2GxDXlfExoiCuAq4gPkgeA==
+X-Google-Smtp-Source: AGHT+IGkU+sRFzXebcv1bEtGyvJz3C5vtCBxWmEJ2Tp8v0Xoa905AJwzisVYBKC4XbijduimSwLgbA==
+X-Received: by 2002:a1c:6a05:0:b0:3fb:415a:d07 with SMTP id f5-20020a1c6a05000000b003fb415a0d07mr7951188wmc.36.1691433869440;
+        Mon, 07 Aug 2023 11:44:29 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id d5-20020a5d6dc5000000b003142ea7a661sm11317894wrz.21.2023.08.07.11.44.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Aug 2023 11:44:28 -0700 (PDT)
+Message-ID: <816359f7-ad4d-659f-db39-c971e1b1cd9a@linaro.org>
+Date:   Mon, 7 Aug 2023 19:44:27 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
+ <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
+ <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
+ <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
+ <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
+ <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,202 +91,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-branch HEAD: f7dc24b3413851109c4047b22997bd0d95ed52a2  Add linux-next specific files for 20230807
+On 07/08/2023 16:02, Konrad Dybcio wrote:
+> On 7.08.2023 16:04, Krzysztof Kozlowski wrote:
+>> On 07/08/2023 14:41, Konrad Dybcio wrote:
+>>> On 5.08.2023 21:29, Krzysztof Kozlowski wrote:
+>>>> On 04/08/2023 22:09, Konrad Dybcio wrote:
+>>>>> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
+>>>>> to clock it a bit higher.
+>>>>>
+>>>>
+>>>> ...
+>>>>
+>>>>> +
+>>>>> +  iommus:
+>>>>> +    maxItems: 1
+>>>>> +
+>>>>> +  video-decoder:
+>>>>> +    type: object
+>>>>> +
+>>>>> +    properties:
+>>>>> +      compatible:
+>>>>> +        const: venus-decoder
+>>>>
+>>>> That's not how compatibles are constructed... missing vendor prefix, SoC
+>>>> or IP block name.
+>>>>
+>>>>> +
+>>>>> +    required:
+>>>>> +      - compatible
+>>>>> +
+>>>>> +    additionalProperties: false
+>>>>
+>>>> Why do you need this child node? Child nodes without properties are
+>>>> usually useless.
+>>> For both comments: I aligned with what was there..
+>>>
+>>> The driver abuses these compats to probe enc/dec submodules, even though
+>>> every Venus implementation (to my knowledge) is implicitly enc/dec capable..
+>>
+>> Holy crap, I see...
+>>
+>>>
+>>> Perhaps a bigger clean-up is due. I guess I could just create the venc/vdec
+>>> devices from the venus core probe and get rid of this fake stuff?
+>>
+>> Few devices (qcom,msm8996-venus.yaml, sdm660, sdm845) have clocks there,
+>> so we actually could stay with these subnodes, just correct the
+>> compatibles to a list with correct prefixes:
+>>
+>> qcom,sc8280xp-venus-decoder + qcom,venus-decoder
+> Hm.. looks like pre-845-v2 (with the v2 being "v2 binding" and not
+> "v2 chip" or "v2 hardware") these were used to look up clocks but
+> then they were moved to the root node.
+> 
+> I am not quite sure if it makes sense to distinguish e.g.
+> sc8280xp-venus-decoder within sc8280xp-venus..
+> 
+> Perhaps deprecating the "8916 way" (clocks under subnodes), adding
+> some boilerplate to look up clocks/pds in both places and converting
+> everybody to the "7180 way" way of doing things (clocks under venus),
+> and then getting rid of venus encoder/decoder completely (by calling
+> device creation from venus probe) would be better. WDYT?
+> 
+> Konrad
 
-Error/Warning reports:
+As I understand it though, for some classes of venus hardware - earlier, 
+it was possible to have two encoders or two decoders and it really 
+didn't - perhaps still doesn't matter which order they are declared in.
 
-https://lore.kernel.org/oe-kbuild-all/202307251531.p8ZLFTMZ-lkp@intel.com
+That's the logic behind having a compat string that assigns either 
+encoder or decoder to one of the logical blocks.
 
-Error/Warning: (recently discovered and may have been fixed)
+You can have any mixture of
+- encoder
+- decoder
 
-../lib/gcc/loongarch64-linux/12.3.0/plugin/include/config/loongarch/loongarch-opts.h:31:10: fatal error: loongarch-def.h: No such file or directory
-ld.lld: error: undefined symbol: rz_mtu3_16bit_ch_read
-ld.lld: error: undefined symbol: rz_mtu3_16bit_ch_write
-ld.lld: error: undefined symbol: rz_mtu3_32bit_ch_read
-ld.lld: error: undefined symbol: rz_mtu3_32bit_ch_write
-ld.lld: error: undefined symbol: rz_mtu3_8bit_ch_read
-ld.lld: error: undefined symbol: rz_mtu3_8bit_ch_write
-ld.lld: error: undefined symbol: rz_mtu3_disable
-ld.lld: error: undefined symbol: rz_mtu3_enable
-ld.lld: error: undefined symbol: rz_mtu3_is_enabled
-ld.lld: error: undefined symbol: rz_mtu3_shared_reg_read
-ld.lld: error: undefined symbol: rz_mtu3_shared_reg_update_bit
+- encoder
+- encoder
 
-Unverified Error/Warning (likely false positive, please contact us if interested):
+- decoder
+- decoder
 
-drivers/mtd/nand/raw/qcom_nandc.c:2590 qcom_op_cmd_mapping() error: uninitialized symbol 'ret'.
-drivers/mtd/nand/raw/qcom_nandc.c:3017 qcom_check_op() warn: was && intended here instead of ||?
-drivers/rtc/rtc-pcf2127.c:1063 pcf2127_enable_ts() warn: missing error code? 'ret'
-mm/khugepaged.c:2138 collapse_file() warn: variable dereferenced before check 'cc' (see line 1787)
-sh4-linux-gcc: internal compiler error: Segmentation fault signal terminated program cc1
-{standard input}: Warning: end of file not at end of a line; newline inserted
-{standard input}:927: Error: pcrel too far
+- decoder
+- encoder
 
-Error/Warning ids grouped by kconfigs:
+- encoder
 
-gcc_recent_errors
-|-- arm64-randconfig-m031-20230807
-|   |-- drivers-mtd-nand-raw-qcom_nandc.c-qcom_check_op()-warn:was-intended-here-instead-of
-|   |-- drivers-mtd-nand-raw-qcom_nandc.c-qcom_op_cmd_mapping()-error:uninitialized-symbol-ret-.
-|   |-- drivers-rtc-rtc-pcf2127.c-pcf2127_enable_ts()-warn:missing-error-code-ret
-|   `-- mm-khugepaged.c-collapse_file()-warn:variable-dereferenced-before-check-cc-(see-line-)
-|-- i386-randconfig-m021-20230807
-|   `-- drivers-rtc-rtc-pcf2127.c-pcf2127_enable_ts()-warn:missing-error-code-ret
-|-- loongarch-allmodconfig
-|   `-- lib-gcc-loongarch64-linux-..-plugin-include-config-loongarch-loongarch-opts.h:fatal-error:loongarch-def.h:No-such-file-or-directory
-`-- sh-allmodconfig
-    |-- sh4-linux-gcc:internal-compiler-error:Segmentation-fault-signal-terminated-program-cc1
-    |-- standard-input:Error:pcrel-too-far
-    `-- standard-input:Warning:end-of-file-not-at-end-of-a-line-newline-inserted
-clang_recent_errors
-`-- riscv-randconfig-r015-20230807
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_16bit_ch_read
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_16bit_ch_write
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_32bit_ch_read
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_32bit_ch_write
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_8bit_ch_read
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_8bit_ch_write
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_disable
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_enable
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_is_enabled
-    |-- ld.lld:error:undefined-symbol:rz_mtu3_shared_reg_read
-    `-- ld.lld:error:undefined-symbol:rz_mtu3_shared_reg_update_bit
+- decoder
 
-elapsed time: 733m
+I think it should *still* be the case - whether it is a practical 
+reality or not, that any of those mapping can be selected and supported.
 
-configs tested: 127
-configs skipped: 8
-
-tested configs:
-alpha                            allyesconfig   gcc  
-alpha                               defconfig   gcc  
-alpha                randconfig-r002-20230807   gcc  
-alpha                randconfig-r015-20230807   gcc  
-arc                              allyesconfig   gcc  
-arc                                 defconfig   gcc  
-arc                  randconfig-r001-20230807   gcc  
-arc                  randconfig-r012-20230807   gcc  
-arc                  randconfig-r043-20230807   gcc  
-arm                              allmodconfig   gcc  
-arm                              allyesconfig   gcc  
-arm                                 defconfig   gcc  
-arm                  randconfig-r046-20230807   gcc  
-arm64                            allyesconfig   gcc  
-arm64                               defconfig   gcc  
-arm64                randconfig-r013-20230807   clang
-arm64                randconfig-r016-20230807   clang
-arm64                randconfig-r035-20230807   gcc  
-csky                                defconfig   gcc  
-csky                 randconfig-r003-20230807   gcc  
-csky                 randconfig-r023-20230807   gcc  
-csky                 randconfig-r033-20230807   gcc  
-csky                 randconfig-r034-20230807   gcc  
-csky                 randconfig-r036-20230807   gcc  
-hexagon              randconfig-r002-20230807   clang
-hexagon              randconfig-r006-20230807   clang
-hexagon              randconfig-r041-20230807   clang
-hexagon              randconfig-r045-20230807   clang
-i386                             allyesconfig   gcc  
-i386         buildonly-randconfig-r004-20230807   gcc  
-i386         buildonly-randconfig-r005-20230807   gcc  
-i386         buildonly-randconfig-r006-20230807   gcc  
-i386                              debian-10.3   gcc  
-i386                                defconfig   gcc  
-i386                 randconfig-i001-20230807   gcc  
-i386                 randconfig-i002-20230807   gcc  
-i386                 randconfig-i003-20230807   gcc  
-i386                 randconfig-i004-20230807   gcc  
-i386                 randconfig-i005-20230807   gcc  
-i386                 randconfig-i006-20230807   gcc  
-i386                 randconfig-i011-20230807   clang
-i386                 randconfig-i012-20230807   clang
-i386                 randconfig-i013-20230807   clang
-i386                 randconfig-i014-20230807   clang
-i386                 randconfig-i015-20230807   clang
-i386                 randconfig-i016-20230807   clang
-i386                 randconfig-r005-20230807   gcc  
-i386                 randconfig-r025-20230807   clang
-i386                 randconfig-r035-20230807   gcc  
-i386                 randconfig-r036-20230807   gcc  
-loongarch                        allmodconfig   gcc  
-loongarch                         allnoconfig   gcc  
-loongarch                           defconfig   gcc  
-loongarch            randconfig-r015-20230807   gcc  
-m68k                             allmodconfig   gcc  
-m68k                             allyesconfig   gcc  
-m68k                                defconfig   gcc  
-mips                             allmodconfig   gcc  
-mips                             allyesconfig   gcc  
-nios2                               defconfig   gcc  
-nios2                randconfig-r001-20230807   gcc  
-nios2                randconfig-r012-20230807   gcc  
-nios2                randconfig-r026-20230807   gcc  
-openrisc             randconfig-r024-20230807   gcc  
-parisc                           allyesconfig   gcc  
-parisc                              defconfig   gcc  
-parisc               randconfig-r003-20230807   gcc  
-parisc               randconfig-r034-20230807   gcc  
-parisc64                            defconfig   gcc  
-powerpc                          allmodconfig   gcc  
-powerpc                           allnoconfig   gcc  
-powerpc              randconfig-r004-20230807   gcc  
-powerpc              randconfig-r005-20230807   gcc  
-powerpc              randconfig-r023-20230807   clang
-powerpc              randconfig-r026-20230807   clang
-powerpc              randconfig-r033-20230807   gcc  
-riscv                            allmodconfig   gcc  
-riscv                             allnoconfig   gcc  
-riscv                            allyesconfig   gcc  
-riscv                               defconfig   gcc  
-riscv                randconfig-r014-20230807   clang
-riscv                randconfig-r032-20230807   gcc  
-riscv                randconfig-r042-20230807   clang
-riscv                          rv32_defconfig   gcc  
-s390                             allmodconfig   gcc  
-s390                             allyesconfig   gcc  
-s390                                defconfig   gcc  
-s390                 randconfig-r031-20230807   gcc  
-s390                 randconfig-r044-20230807   clang
-sh                               allmodconfig   gcc  
-sh                   randconfig-r021-20230807   gcc  
-sh                   randconfig-r022-20230807   gcc  
-sparc                            allyesconfig   gcc  
-sparc                               defconfig   gcc  
-sparc                randconfig-r032-20230807   gcc  
-sparc64              randconfig-r011-20230807   gcc  
-sparc64              randconfig-r016-20230807   gcc  
-um                               allmodconfig   clang
-um                                allnoconfig   clang
-um                               allyesconfig   clang
-um                                  defconfig   gcc  
-um                             i386_defconfig   gcc  
-um                   randconfig-r031-20230807   clang
-um                           x86_64_defconfig   gcc  
-x86_64                           allyesconfig   gcc  
-x86_64       buildonly-randconfig-r001-20230807   gcc  
-x86_64       buildonly-randconfig-r002-20230807   gcc  
-x86_64       buildonly-randconfig-r003-20230807   gcc  
-x86_64                              defconfig   gcc  
-x86_64                                  kexec   gcc  
-x86_64               randconfig-r004-20230807   gcc  
-x86_64               randconfig-r022-20230807   clang
-x86_64               randconfig-x001-20230807   clang
-x86_64               randconfig-x002-20230807   clang
-x86_64               randconfig-x003-20230807   clang
-x86_64               randconfig-x004-20230807   clang
-x86_64               randconfig-x005-20230807   clang
-x86_64               randconfig-x006-20230807   clang
-x86_64               randconfig-x011-20230807   gcc  
-x86_64               randconfig-x012-20230807   gcc  
-x86_64               randconfig-x013-20230807   gcc  
-x86_64               randconfig-x014-20230807   gcc  
-x86_64               randconfig-x015-20230807   gcc  
-x86_64               randconfig-x016-20230807   gcc  
-x86_64                          rhel-8.3-rust   clang
-x86_64                               rhel-8.3   gcc  
-xtensa               randconfig-r013-20230807   gcc  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+---
+bod
