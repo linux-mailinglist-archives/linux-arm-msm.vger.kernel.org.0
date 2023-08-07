@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BF60772642
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 15:43:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DEC77264D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 15:44:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232169AbjHGNnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 09:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57396 "EHLO
+        id S233318AbjHGNod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 09:44:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234379AbjHGNms (ORCPT
+        with ESMTP id S233961AbjHGNoG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 09:42:48 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1674D199B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 06:42:28 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe28e4671dso7318689e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 06:42:27 -0700 (PDT)
+        Mon, 7 Aug 2023 09:44:06 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E4C171E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 06:43:32 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe48d0ab0fso7007829e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 06:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691415744; x=1692020544;
+        d=linaro.org; s=google; t=1691415809; x=1692020609;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kDhfQZM/N3ej3lKKvgWWaDak6lFW5rPggYsaN6xOdOk=;
-        b=efH8e0ctEYq2NnqIAd7dEJpQecsCh6CJveIGEWODDmt+i1HL7ofR5uiHFrmvMnT8MQ
-         jm0XhPOnPiyzdsfO+qGh9AabTgJm9rU835E756/irwveK6R/8QxPxYxtgY8cv2x6IoVO
-         vrjufqbiVeAHzt8hkfUZqH8IoZbzVCDGss2KoKZ58aNMsMVL4jCeOCX+7DwYSTV07PeF
-         luZ4fQmNLj4T2CbFcvHYEkdz+JlrYHp7SonmbZPfs4FMUJHPJ+Tu5T9K3KDQS4CXORLu
-         2H8hT0SQp9PI9dLnJ1McQZJSPDy7dAV/jjEIyWy4r7g+26fEjk/4HdXctMs1TWNAwv8x
-         tr4g==
+        bh=2Q98lyuvE1I3w5lq0DAIUXX2CZJx1fl6gZyp/DMqbeQ=;
+        b=CyoDk109aZXA8aBA8hfWMowusRvXZzY/ImX3+qHHTOMbzAzE49mZgZDSfG50l03skb
+         dLXYpOxAKHb9pQ1iZAfyTwPtiB7uTRotiJs23gw+q64tQQy9xLsyvhSy7CfmVlsKHSNr
+         OUUeu4zBqYvu2wwTgKkmAR490Ev1aL5j0JOhp7zlLMRxU0idr9+LrPXMFWTqqSHhe2Zw
+         HdIe5KeRqY9QoAnHQextvX7J7YvDtudYGaxMxGTc4+gs5hD5FDfmkUOJQRjqDzACGRV/
+         AGr97vmbBVhPZojatsaWNOJPcrLKN9nTix5mddOAUUmURVQ2NAeM4b9RalmKO5nDv5nd
+         9zSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691415744; x=1692020544;
+        d=1e100.net; s=20221208; t=1691415809; x=1692020609;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kDhfQZM/N3ej3lKKvgWWaDak6lFW5rPggYsaN6xOdOk=;
-        b=P5Y1DYk63uzOsOq1l8SoJDD63Iy7VMDVrMncoGT6NwWw5srYYI1w5UiO8EVr4ZlArp
-         LXOzNvS5i6i2wXgsFBF14/FywCnxiimmsM9NNisJRvwD8XBBV6ZhZwAq1y/oVLdm8fJv
-         OaPZsLbDc3vsn8fvItl3vNX3Rml2wqYIyDXB2Oeq3A4ZzaLOb3mKwvtnyAUdJLR2Y0hu
-         /4+ICKHku5+L6XdrVVV3Rhp0lxVc2iPSHhuWVzsFc/w7gdx94uW3uAWOEv82r7bSDIGo
-         T3V1sU6cXK2olYCoI5rJx2mebEB4PW4OV5StvjLNPt7uRLdCOwQYfo189O9NBCT/q0Qy
-         c7QA==
-X-Gm-Message-State: AOJu0YzvfhxYncstV3WwZNiacKLD702CtZePf3ikOYF//PgnGQbmrMpi
-        0ocLFYgjiqoUMtqAaJU4KUNRYQ==
-X-Google-Smtp-Source: AGHT+IFQ85SrKDI10FMMsQXw+GuNbIH2nIiqqZTmuxbhBVBeRorppVDRIaYXp5QIhKX5B82nHqMweg==
-X-Received: by 2002:a05:6512:3133:b0:4fb:9631:4bb with SMTP id p19-20020a056512313300b004fb963104bbmr6065183lfd.11.1691415744387;
-        Mon, 07 Aug 2023 06:42:24 -0700 (PDT)
+        bh=2Q98lyuvE1I3w5lq0DAIUXX2CZJx1fl6gZyp/DMqbeQ=;
+        b=ABhPv8aUfejpjMKWjDqRASnuoE1eWRi2OE/B6D9lxZppE6WqUAi139E/LyEqHs+s3H
+         fBFIFwjDxwPFFl8sFeLR3ugLk8VOeg/hCca6usOSpXt1VRqvXVlv1j59RC5htXkzLfMI
+         jBX1S/3r0eRkyl9Vjp+u1Xgb1wB7sscaZQEYf4B4CKeFVCKdPRqYI++NYiVO/5gxPLQv
+         exQcODLq8FhUUInWnSRI+6haeay4BzNj9G3ZTNy21/jM+RhNgx0DjHE+c+Ht4Ab/ZlGT
+         P0DlhBYyKz6q7rquiPyu0pjG6LjAJLzZBosGDHy9scobBON0o01XqSJcCDJ6bfQ16/Qu
+         TrdQ==
+X-Gm-Message-State: AOJu0YzBGyagfwFrtShIH9ibff+vBppNmJ8RFewFfX/Q5QL3VM5OVAGk
+        zC1G31/z4XHxkKQHE8nVw/aZ3g==
+X-Google-Smtp-Source: AGHT+IE/7f5hb2IxLkMQD7JsUfoacy5RSJu8uKCkUYCCSZNBbP/zTp5xQiIdCsY1/2XzwTF2aovqSw==
+X-Received: by 2002:a05:6512:313b:b0:4fe:28f6:d542 with SMTP id p27-20020a056512313b00b004fe28f6d542mr5453873lfd.13.1691415809419;
+        Mon, 07 Aug 2023 06:43:29 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id r6-20020a19ac46000000b004fe3a2e3952sm1511134lfc.100.2023.08.07.06.42.22
+        by smtp.gmail.com with ESMTPSA id r6-20020a19ac46000000b004fe3a2e3952sm1511134lfc.100.2023.08.07.06.43.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 06:42:24 -0700 (PDT)
-Message-ID: <bc57790a-5f41-4790-8058-c0fec6c641e7@linaro.org>
-Date:   Mon, 7 Aug 2023 15:42:22 +0200
+        Mon, 07 Aug 2023 06:43:28 -0700 (PDT)
+Message-ID: <d3f5651b-ecbc-4836-9f53-6d71e6b16072@linaro.org>
+Date:   Mon, 7 Aug 2023 15:43:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v2 7/9] arm64: dts: qcom: sdx75-idp: Add pmics
- supported in SDX75
+Subject: Re: [PATCH RESEND v2 8/9] arm64: dts: qcom: sdx75: Add rpmhpd node
 Content-Language: en-US
 To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
@@ -64,7 +63,7 @@ To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
 References: <1691415534-31820-1-git-send-email-quic_rohiagar@quicinc.com>
- <1691415534-31820-8-git-send-email-quic_rohiagar@quicinc.com>
+ <1691415534-31820-9-git-send-email-quic_rohiagar@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,13 +100,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1691415534-31820-8-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <1691415534-31820-9-git-send-email-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -115,7 +113,7 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 7.08.2023 15:38, Rohit Agarwal wrote:
-> SDX75-idp features pmk8550, pmx75 and pm7550ba pmic, so include them.
+> Add rpmhpd node and opps for this node to the SDX75 dts.
 > 
 > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
