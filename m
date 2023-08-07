@@ -2,135 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FFC7772E71
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 21:05:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD8EA772E7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 21:08:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbjHGTFX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 15:05:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47082 "EHLO
+        id S229503AbjHGTIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 15:08:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjHGTFW (ORCPT
+        with ESMTP id S229441AbjHGTIt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 15:05:22 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8144D172A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 12:05:20 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-317716a4622so3843592f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 12:05:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691435119; x=1692039919;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rvuFHndPak4ec42pS0cW4H6Y5ajhn2h6mKNTE3KKxxo=;
-        b=Yem7gJdGf7Owrby1kKBGd9+PAvzP5GbKKVok+aWqs3yyLzIOop3idScyHOlMF+jgWm
-         +LVRZenvKFPZJ4KmROoqVWBmj7pmmaqrC3KuivpqxrdHR/lf7lBn0/pjGhoFdLjFX7zz
-         g7p4NChjrw4lnESiAtysoSSE01RIR7zeU/G6WZom2Pau1eYtg1UCz3kZgJrbma67e0GC
-         Cp/w1NPBnFVG/ioGWQpSSkvWEZkde1SXDFe4OKMNjD2DbecUAHeWesRBbb5kgkRhoOcs
-         QuAjeabAXCyEiAn8vBR9vX5EyX8nyT9mK/K+2FirUctKKsYr2HfPW/wMjSRBvWjzOmhW
-         G3cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691435119; x=1692039919;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rvuFHndPak4ec42pS0cW4H6Y5ajhn2h6mKNTE3KKxxo=;
-        b=NLxnZaZsnrrvV67g6eptrDRZwnB3BwcCeTYSY5SgqDPadxPSDg9Nj96t7FGPRI3z7z
-         4urTw2TaEArF7jvS9OGIHXU4oBhqdwWUQLku0gMrPBwbedx2zrxV9x2/kpjyAxG71kg3
-         qlowstKvR4O9d6bCR6BDvhsur6lSI4qrD9fiRKOUfQAmR2IvxwTjorC5MscaE/ytXROf
-         z6dVobruE66JWIDqYggsw2Rb0jQ+cJlqdw5JRNFT5a0t+3aJs3CTUYHjkkdGwXjI5DSh
-         E3tys/1rvbcteko8bqxM8lQ0n3DPlibScXzP3jER7erZOnTlwQF/+W2Sn3KUa+btq8k+
-         8o5g==
-X-Gm-Message-State: AOJu0YyY8qeJYcGYErhzCLPHd1JG1Dv5FXdhYYDQLlMUevaOaYRvTjk2
-        YPQcK5nzW20rQhvlv/8jPPi0rw==
-X-Google-Smtp-Source: AGHT+IG0ZZxtP9emcBVJC5c2XbtqWNh1hbYL+45ShRzUzFbWLI69g4Y4soB3Co9c1GR/FTyRTROQ3w==
-X-Received: by 2002:adf:fd47:0:b0:317:6681:e426 with SMTP id h7-20020adffd47000000b003176681e426mr5984372wrs.25.1691435118926;
-        Mon, 07 Aug 2023 12:05:18 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s1-20020adff801000000b00314417f5272sm11263527wrp.64.2023.08.07.12.05.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 12:05:18 -0700 (PDT)
-Message-ID: <0cba0158-8a9f-68b6-6bb3-dab0272a5ce0@linaro.org>
-Date:   Mon, 7 Aug 2023 20:05:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 7 Aug 2023 15:08:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5A61701;
+        Mon,  7 Aug 2023 12:08:49 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A800762166;
+        Mon,  7 Aug 2023 19:08:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72776C433C8;
+        Mon,  7 Aug 2023 19:08:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691435328;
+        bh=9hJaF99KfuyO0MAbT/sVT9KSXAiWpGzLkHZqHLnTTH8=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=L9iynZphM10jPqIO2cUXBMFJW+En1wuWXz5+RESQbepD588n08srg7U6xoKOeA407
+         h/9Kveuyo2HHsU4GP8SmhH33D/zxQ3UWnjPdFUztEizsMX6+LtPaCVxrDUKIHa4soc
+         p+WWhiBXHU3ITlQtUJon5c767iwZjSks2427je+uKJoYraCFIu2z6AXpLErtpzLgaV
+         +4PGy6kKvIsPZo+Oiv7LG/JTub3Z9LG4SY3qO1oiuuY8kPzDUlJD6rX3UThR0CjEOk
+         S4BlsdF/GGEtcvQsK9r8Thf/1tN+U2UhLL/wTmf1cc+NP48sNyyNuC9u3ggXIkRWCB
+         qlLenWrh97b1w==
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
- <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
- <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
- <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
- <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
- <816359f7-ad4d-659f-db39-c971e1b1cd9a@linaro.org>
- <0feda32e-5430-4f35-b18a-7afce63a970c@linaro.org>
- <d09df249-cc6d-9708-bfa6-ae5cc7929697@linaro.org>
- <4bd04709-155f-4750-8638-e73b653b1482@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <4bd04709-155f-4750-8638-e73b653b1482@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+In-Reply-To: <20230801095702.2891127-1-abel.vesa@linaro.org>
+References: <20230801095702.2891127-1-abel.vesa@linaro.org>
+Subject: Re: [PATCH] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
+Message-Id: <169143532617.213897.12646437489915335366.b4-ty@kernel.org>
+Date:   Mon, 07 Aug 2023 20:08:46 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-034f2
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/08/2023 19:55, Konrad Dybcio wrote:
-> On 7.08.2023 20:49, Bryan O'Donoghue wrote:
->> On 07/08/2023 19:45, Konrad Dybcio wrote:
->>> That can be taken care of with match data.
->>>
->>> Konrad
->>
->> Well perhaps.
->>
->> I'm just sticking my oar in, to elucidate.
->>
->> The compat sub-nodes aren't just a random choice with no logic. They exist to select between what you assign the blocks to be, encoder, decoder or any admixture thereof.
->>
->> A functionality we want to maintain.
-> Surely something like a modparam would be more suitable here?
+On Tue, 01 Aug 2023 12:57:02 +0300, Abel Vesa wrote:
+> The LDO 12 is NLDO 515 low voltage type, so fix accordingly.
 > 
-> Konrad
+> 
 
-Hmm.
+Applied to
 
-Well from earlier in the thread the question "why do we have these 
-compat strings" is because we can have any combination of 
-encoder/decoder assigned.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-If there's a cogent argument _still_ to be made to transition to some 
-new way of assignment then fine so long as we don't break that basic 
-flexibility.
+Thanks!
 
-Though my own €0.02 is that a module parameter is more of a PITA than a 
-compat string.
+[1/1] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
+      commit: 7cdf55462c5533a1c78ae13ab8563558e30e4130
 
-OTOH I could make the argument, that the high probability is most people 
-- probably all, just instantiate a single encoder and decoder and aren't 
-aware of or using the inbuilt flexibility.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-@stan probably has the right idea what to do.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
----
-bod
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
