@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04023771A6F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 08:32:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1E74771A76
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 08:34:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229509AbjHGGcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 02:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40332 "EHLO
+        id S229538AbjHGGeq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 02:34:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbjHGGcP (ORCPT
+        with ESMTP id S229676AbjHGGep (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 02:32:15 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC42F170B
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Aug 2023 23:32:12 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fbd33a57b6so41398375e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Aug 2023 23:32:12 -0700 (PDT)
+        Mon, 7 Aug 2023 02:34:45 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863CE1721
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Aug 2023 23:34:42 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-52307552b03so5778156a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Aug 2023 23:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691389931; x=1691994731;
+        d=linaro.org; s=google; t=1691390081; x=1691994881;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=oomhBhepoHb+LZTOC+J99yf3KAYX+GX+1Abo9ZCPz1o=;
-        b=W7qj3uHZTLBXRX3It5fbtH7ths8eUwVoZoSWE4Vsr8wlY7IxiHplDPfetKko8azlk4
-         eMqw5knbYxgVxzkAuFK8lRfmwNC30zl+S4llTCTrAMa846RfzkikE3GCUMHK9mbF3Kbs
-         W4V9pql5g+rCwf15ggmx9UUHAH9XxiWI+WtmiJpkV4BjyW7edG7miW10High2Xs5dTBj
-         d9BRsqdLxNu5LFWzYt/4YyZjeHRUM90XWiccSjrXP8La7TLS91znMIXfFn6uV8uQ7YFY
-         0UsYn9HcHfKB222WSnqcig5vGfuo+UicUbdte4oxHhhcgS4lDX3vTocyK4ONzfRU5Mhi
-         Xb1g==
+        bh=VckXP9ih2gwufm6/QhL4dWWMWgXntEp4Dns74V0TzJ4=;
+        b=tJR+hd+xF0yj4KJR39+0WqH/oepHfK84vQ6Y68KrgJNCmFSPj2ZdNSvjTgtexwzukF
+         bnOLEzszGnbqpyjoCaBBZroJq6hHgkHhTGsXvj1vr1D5Zst+Z6uLQVqg0xUeqZ9rTnxQ
+         V2Dg7Zjo9MPawNMNA4winf+tQoEZ3yZoPmV0jwRa9NNM/4uplqt/ckOUvCTS/p/TOPuq
+         CkRF4hkbsWhF4bVLkqlQdwDE1jXFpx40Vi5A3S4Iw6ByF0eNBIChs8Qkk9fAGvaeGyMJ
+         br79r6MI2fRxd5XQURoGxhtWmS/WJM6RF6v7VLndZUEm8w+3UpCBWJdbQaLwRtBnWcT+
+         5Ftg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691389931; x=1691994731;
+        d=1e100.net; s=20221208; t=1691390081; x=1691994881;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oomhBhepoHb+LZTOC+J99yf3KAYX+GX+1Abo9ZCPz1o=;
-        b=LQwVs4rSpnSlMb3NVbR+R/O0EwbHeCpZjYkrV0oGZAPgrWC6vw8EcyDzJE1ur5ANlV
-         5iM8KqE+0sDTNAuqhhIqM4k3O6NHOZJGowD4BRIzqTenYhbeUUPZRepnJTRKibCukF/h
-         rRFNTNhyzbWF6EOHbgDZsiuhSDcM3gwSym9qDnw0DpIRcL9Kd96Gg0CBPy6bSN0q051H
-         2M5OH1KZWrY9xalwN9xFQr9tl6k9WI6qzW4vR5+6KT3LzmyfKHfdEgF6le2Hzv8fbLcP
-         aY7RX78pHAk7zh0xhyqllZU/ni9cNl/yEWfbq9Ce2YTrbTn7aHph1paeqnL6lPVw2Bpv
-         vYjg==
-X-Gm-Message-State: AOJu0YzXkJeHJ2H+Ey831nIJU4BSETGO++YMxzH86etrUKjdGDvt0S79
-        CEDYUcK4kwRs7PV096GuF4hovw==
-X-Google-Smtp-Source: AGHT+IH7DcldVCQggD34wEJoSwWjyBJnM+SXOdljJCRzRvbllJfi7VmNDhCQDm2i8faedqBT4iLBLA==
-X-Received: by 2002:a05:600c:22da:b0:3fb:e254:b81e with SMTP id 26-20020a05600c22da00b003fbe254b81emr6593888wmg.12.1691389931142;
-        Sun, 06 Aug 2023 23:32:11 -0700 (PDT)
+        bh=VckXP9ih2gwufm6/QhL4dWWMWgXntEp4Dns74V0TzJ4=;
+        b=Y7aP6U57++4C8+w5WWEO5LIcU03CBPNLNilN2X/4ZKaEkkmiGxnCS9vN9IaFscMuep
+         QO9lM50wSGqjxfM+gaak6nOCIuit4fHRwjPP5C2HDGWT+Tm5VMMvkkeidXrwFKHbgF9C
+         gFmywTaDRt3S12XFHaW2umQ9ByTirsKbxc4jKr78TQt5tTuOJsKXFkTA70id2SC2Fdk+
+         fmJIyT1ULzHK7FfGY4C+/cgr79w3fIqeglLFc0E6b0MGBHroG8AkxIQFIKaXm8V319cS
+         7quikrBDSCtSvBzDJlV43pE4By68JIP28XbYPi6E1XMBDaR1ttLOjq62/lEM65OrFJxb
+         8fyQ==
+X-Gm-Message-State: AOJu0YwkARFYpgw3giNEy123vdEkhNsk8cDe4g+nS98qn2mV4e2PPmcd
+        obJ2OcWIQZOWot06Cu23U/HyUw==
+X-Google-Smtp-Source: AGHT+IHTINgxyjOOoNrLZot8r8/xIvRPrel16VzQDL9tJdMYNeKTjKgR2WsR49TfL56D48RgPuyLIQ==
+X-Received: by 2002:aa7:c243:0:b0:522:3ebc:84b8 with SMTP id y3-20020aa7c243000000b005223ebc84b8mr7376875edo.12.1691390080734;
+        Sun, 06 Aug 2023 23:34:40 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id 13-20020a05600c024d00b003fc015ae1e1sm9634360wmj.3.2023.08.06.23.32.09
+        by smtp.gmail.com with ESMTPSA id s25-20020a056402015900b0052237dfa82fsm4723694edu.64.2023.08.06.23.34.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Aug 2023 23:32:10 -0700 (PDT)
-Message-ID: <3ed8a34b-5f7d-6547-7e34-35e4d0994bba@linaro.org>
-Date:   Mon, 7 Aug 2023 08:32:09 +0200
+        Sun, 06 Aug 2023 23:34:40 -0700 (PDT)
+Message-ID: <0cc71595-ba11-11d4-1fcd-865721ede3f9@linaro.org>
+Date:   Mon, 7 Aug 2023 08:34:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: add sc7180-lazor board
- bindings
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7180: Add board id for
+ lazor/limozeen
 Content-Language: en-US
 To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
         LKML <linux-kernel@vger.kernel.org>
@@ -65,17 +65,18 @@ Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 References: <20230804095836.39551-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230804175734.v2.1.I7a950de49ec24b957e90d7fe7abd5f2f5f2e24c3@changeid>
+ <20230804175734.v2.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230804175734.v2.1.I7a950de49ec24b957e90d7fe7abd5f2f5f2e24c3@changeid>
+In-Reply-To: <20230804175734.v2.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,124 +85,97 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/08/2023 11:58, Sheng-Liang Pan wrote:
-> Introduce more sc7180-lazor sku and board version configuration,
-> add no-eSIM SKU 10 for Lazor, no-eSIM SKU 15 and 18 for Limozeen,
-> add new board version 10 for audio codec ALC5682i-VS.
+> add BRD_ID(0, Z, 0) = 10 for new board with ALC5682i-VS
 > 
 > Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 > ---
 > 
 > Changes in v2:
-> - add new entry rev9 with Parade bridge chip
+> - correct newly create dts files
 > 
->  .../devicetree/bindings/arm/qcom.yaml         | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 450f616774e0..dce7b771a280 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -470,6 +470,11 @@ properties:
->            - const: google,lazor-rev8
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook Spin 513 Parade bridge chip (rev9)
-> +        items:
-> +          - const: google,lazor-rev9
-> +          - const: qcom,sc7180
-> +
->        - description: Acer Chromebook Spin 513 (newest rev)
->          items:
->            - const: google,lazor
-> @@ -491,6 +496,11 @@ properties:
->            - const: google,lazor-rev8-sku2
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook Spin 513 Parade bridge chip with KB Backlight (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku2
-> +          - const: qcom,sc7180
-> +
->        - description: Acer Chromebook Spin 513 with KB Backlight (newest rev)
->          items:
->            - const: google,lazor-sku2
-> @@ -512,11 +522,26 @@ properties:
->            - const: google,lazor-rev8-sku0
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook Spin 513 Parade bridge chip with LTE (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku0
-> +          - const: qcom,sc7180
-> +
->        - description: Acer Chromebook Spin 513 with LTE (newest rev)
->          items:
->            - const: google,lazor-sku0
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook Spin 513 Parade bridge chip with LTE no-esim (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku10
-> +          - const: qcom,sc7180
-> +
-> +      - description: Acer Chromebook Spin 513 with LTE no-esim (newest rev)
-> +        items:
-> +          - const: google,lazor-sku10
-> +          - const: qcom,sc7180
-> +
->        - description: Acer Chromebook 511 (rev4 - rev8)
->          items:
->            - const: google,lazor-rev4-sku4
-> @@ -526,6 +551,11 @@ properties:
->            - const: google,lazor-rev8-sku4
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook 511 Parade bridge chip (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku4
-> +          - const: qcom,sc7180
-> +
->        - description: Acer Chromebook 511 (newest rev)
->          items:
->            - const: google,lazor-sku4
-> @@ -545,11 +575,36 @@ properties:
->            - const: google,lazor-rev8-sku6
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook 511 Parade bridge chip without Touchscreen (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku6
-> +          - const: qcom,sc7180
-> +
->        - description: Acer Chromebook 511 without Touchscreen (newest rev)
->          items:
->            - const: google,lazor-sku6
->            - const: qcom,sc7180
->  
-> +      - description: Acer Chromebook 511 Parade bridge chip no-esim (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku15
-> +          - const: qcom,sc7180
-> +
-> +      - description: Acer Chromebook 511 no-esim (newest rev)
-> +        items:
-> +          - const: google,lazor-sku15
-> +          - const: qcom,sc7180
-> +
-> +      - description: Acer Chromebook 511 Parade bridge chip without Touchscreen no-esim (rev9)
-> +        items:
-> +          - const: google,lazor-rev9-sku18
-> +          - const: qcom,sc7180
-> +
-> +      - description: Acer Chromebook 511 without Touchscreen no-esim (newest rev)
-> +        items:
-> +          - const: google,lazor-sku18
 
-All of these entries (existing and new) should be just one entry with:
- - enum:
-     - ....
-     - ....
- - const: qcom,sc7180
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
+> new file mode 100644
+> index 000000000000..5a58e94c228e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
+> @@ -0,0 +1,30 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Lazor board device tree source
+> + *
+> + * Copyright 2023 Google LLC.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sc7180-trogdor.dtsi"
+> +#include "sc7180-trogdor-parade-ps8640.dtsi"
+> +#include "sc7180-trogdor-lazor.dtsi"
+> +#include "sc7180-lite.dtsi"
+> +
+> +/ {
+> +	model = "Google Lazor (rev10+)";
+> +	compatible = "google,lazor", "qcom,sc7180";
+> +};
+> +
+> +&alc5682 {
+> +	compatible = "realtek,rt5682s";
+> +	/delete-property/ VBAT-supply;
+
+No, don't delete properties. First of all, why you do not have this
+supply here? I doubt it... Especially that this DTS has vbat-supply
+regulator!
+
+Second, define the properties where applicable instead.
+
+> +	realtek,dmic1-clk-pin = <2>;
+> +	realtek,dmic-clk-rate-hz = <2048000>;
+> +};
+> +
+> +&sound {
+> +	compatible = "google,sc7180-trogdor";
+> +	model = "sc7180-rt5682s-max98357a-1mic";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+> index 960f7b7ce094..f74a1985cac6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+> @@ -13,8 +13,8 @@
+>  #include "sc7180-lite.dtsi"
+>  
+>  / {
+> -	model = "Google Lazor (rev9+) with KB Backlight";
+> -	compatible = "google,lazor-sku2", "qcom,sc7180";
+> +	model = "Google Lazor (rev9) with KB Backlight";
+> +	compatible = "google,lazor-rev9-sku2", "qcom,sc7180";
+>  };
+>  
+>  &keyboard_backlight {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+> index 438ab9cd3389..15dcf95da311 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+> @@ -13,8 +13,8 @@
+>  #include "sc7180-trogdor-lte-sku.dtsi"
+>  
+>  / {
+> -	model = "Google Lazor (rev9+) with LTE";
+> -	compatible = "google,lazor-sku0", "google,lazor-sku10", "qcom,sc7180";
+> +	model = "Google Lazor (rev9) with LTE";
+> +	compatible = "google,lazor-rev9-sku0", "google,lazor-rev9-sku10", "qcom,sc7180";
+
+
+This is not what your binding is saying. You just introduced new
+dtbs_check warnings :(
+
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
+
 
 Best regards,
 Krzysztof
