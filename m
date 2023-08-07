@@ -2,239 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66C77771D4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 11:42:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BCEA771D98
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 11:56:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231641AbjHGJmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 05:42:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33318 "EHLO
+        id S231405AbjHGJ4A convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Mon, 7 Aug 2023 05:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231643AbjHGJmV (ORCPT
+        with ESMTP id S229876AbjHGJ4A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 05:42:21 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6C4F810C1;
-        Mon,  7 Aug 2023 02:42:20 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0D7DA1FB;
-        Mon,  7 Aug 2023 02:43:03 -0700 (PDT)
-Received: from [10.57.90.63] (unknown [10.57.90.63])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3E5353F59C;
-        Mon,  7 Aug 2023 02:42:17 -0700 (PDT)
-Message-ID: <73a5313d-9ab2-f5f9-42af-c3d9939198c6@arm.com>
-Date:   Mon, 7 Aug 2023 10:42:15 +0100
+        Mon, 7 Aug 2023 05:56:00 -0400
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43BE2F4;
+        Mon,  7 Aug 2023 02:55:59 -0700 (PDT)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-1bc05bece1dso489537fac.1;
+        Mon, 07 Aug 2023 02:55:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691402158; x=1692006958;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HM29zdZVBVOCSCNWC+N4/pn42HvEOpSp0FjiUfhyV+c=;
+        b=WG0LPz2O6tJSd7aohQHE15fGr1TEfsj9aE+Sucy4Ibz4YC4K3Eoonla84sn9S9R8I5
+         zEC5DO9u3I0KsA8YpDKr4c0IwQgZ42W8NBtkN+yIqxRZqcoSsdtYS+K3NBHkrj/OVCXd
+         r8uHgwKdUOIdPU65xHyHoz4BnSDCspLnfaClzZ6tnw+38jTr1LK9TU9sjgCpkojQGP8B
+         iYgNCFbRv1+zr/MgqY27vo/8HrfT7kdStroxzTc5pXxMGoG5qWE3g6zp3ruhxCpgootc
+         C8XYpN7q6tclBLAb/ITBjWT+PngBsIY2R+MqkhCFFOXJMykYfhU8E3lrtUYs0ZDji4tb
+         tuDg==
+X-Gm-Message-State: AOJu0YzRPckUNUTtgTa+hVafUv/FAYSqjVl4hZCaUIFqoCs+DQyxtM5j
+        VcKEbEyWNtfPPt9cWtoJuxZJDuHBRZIsjUYHbwQ=
+X-Google-Smtp-Source: AGHT+IFHIvYl74pw4UZh36FUG3o40lXvym9lMWxwRL/SxHlVB7wTSMG9tn/tEdRQ5gFzwoxUxtwe3BVZMSdpSLITRrE=
+X-Received: by 2002:a05:6870:c091:b0:1bf:9170:89ef with SMTP id
+ c17-20020a056870c09100b001bf917089efmr9642566oad.4.1691402158480; Mon, 07 Aug
+ 2023 02:55:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.13.0
-Subject: Re: [PATCH v7 07/13] coresight-tpdm: Add nodes to set trigger
- timestamp and type
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
+References: <20230804214051.136268-1-robdclark@gmail.com>
+In-Reply-To: <20230804214051.136268-1-robdclark@gmail.com>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Mon, 7 Aug 2023 11:55:43 +0200
+Message-ID: <CAJZ5v0iy+qD7J+UvFkG+ErLmYGk7ZvG2HY2vvWFiwA95jQ-yPA@mail.gmail.com>
+Subject: Re: [RFC] PM / QoS: Decouple request alloc from dev_pm_qos_mtx
+ (alternative solution)
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
- <1690269353-10829-8-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1690269353-10829-8-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        "open list:SUSPEND TO RAM" <linux-pm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/07/2023 08:15, Tao Zhang wrote:
-> The nodes are needed to set or show the trigger timestamp and
-> trigger type. This change is to add these nodes to achieve these
-> function.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+On Fri, Aug 4, 2023 at 11:41 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Similar to the previous patch, move the allocation out from under
+> dev_pm_qos_mtx, by speculatively doing the allocation and handle
+> any race after acquiring dev_pm_qos_mtx by freeing the redundant
+> allocation.
+>
+> Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 ++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 94 ++++++++++++++++++++++
->   2 files changed, 118 insertions(+)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index dbc2fbd0..0b7b4ad 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -21,3 +21,27 @@ Description:
->   
->   		Accepts only one value -  1.
->   		1 : Reset the dataset of the tpdm
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_type
-> +Date:		March 2023
-> +KernelVersion	6.5
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Set the trigger type of DSB tpdm. Read the trigger
-> +		type of DSB tpdm.
+> This is an alternative to https://patchwork.freedesktop.org/patch/551417/?series=115028&rev=4
+>
+> So, this does _slightly_ change error paths, for ex
+> dev_pm_qos_update_user_latency_tolerance() will now allocate
+> dev->power.qos in some error cases.  But this seems harmless?
 
-Please use: (RW) instead of (Write).
+It is harmless AFAICS.
 
-		(RW) Set/Get the trigger type of the DSB for TPDM.
-Similarly for the items below.
+> A slightly more complicated version of this could conserve the
+> previous error path behavior, but I figured I'd try the simpler
+> thing first.
 
-> +
-> +		Accepts only one of the 2 values -  0 or 1.
-> +		0 : Set the DSB trigger type to false
-> +		1 : Set the DSB trigger type to true
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_ts
-> +Date:		March 2023
-> +KernelVersion	6.5
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Set the trigger timestamp of DSB tpdm. Read the
-> +		trigger timestamp of DSB tpdm.
-> +
-> +		Accepts only one of the 2 values -  0 or 1.
-> +		0 : Set the DSB trigger type to false
-> +		1 : Set the DSB trigger type to true
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index acc3eea..62efc18 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -20,6 +20,18 @@
->   
->   DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
->   
-> +static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
-> +					   struct attribute *attr, int n)
+Good choice!
 
-Please keep the alignment.
+>  drivers/base/power/qos.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/base/power/qos.c b/drivers/base/power/qos.c
+> index 1b73a704aac1..c7ba85e89c42 100644
+> --- a/drivers/base/power/qos.c
+> +++ b/drivers/base/power/qos.c
+> @@ -920,8 +920,12 @@ s32 dev_pm_qos_get_user_latency_tolerance(struct device *dev)
+>  int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+>  {
+>         struct dev_pm_qos *qos = dev_pm_qos_constraints_allocate();
+> +       struct dev_pm_qos_request *req = NULL;
+>         int ret = 0;
+>
+> +       if (!dev->power.qos->latency_tolerance_req)
+> +               req = kzalloc(sizeof(*req), GFP_KERNEL);
+> +
+>         mutex_lock(&dev_pm_qos_mtx);
+>
+>         dev_pm_qos_constraints_set(dev, qos);
+> @@ -935,8 +939,6 @@ int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+>                 goto out;
+>
+>         if (!dev->power.qos->latency_tolerance_req) {
+> -               struct dev_pm_qos_request *req;
+> -
+>                 if (val < 0) {
+>                         if (val == PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT)
+>                                 ret = 0;
+> @@ -944,17 +946,15 @@ int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+>                                 ret = -EINVAL;
+>                         goto out;
+>                 }
+> -               req = kzalloc(sizeof(*req), GFP_KERNEL);
+>                 if (!req) {
+>                         ret = -ENOMEM;
+>                         goto out;
+>                 }
+>                 ret = __dev_pm_qos_add_request(dev, req, DEV_PM_QOS_LATENCY_TOLERANCE, val);
+> -               if (ret < 0) {
+> -                       kfree(req);
+> +               if (ret < 0)
+>                         goto out;
+> -               }
+>                 dev->power.qos->latency_tolerance_req = req;
+> +               req = NULL;
+>         } else {
+>                 if (val < 0) {
+>                         __dev_pm_qos_drop_user_request(dev, DEV_PM_QOS_LATENCY_TOLERANCE);
+> @@ -966,6 +966,7 @@ int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+>
+>   out:
+>         mutex_unlock(&dev_pm_qos_mtx);
+> +       kfree(req);
+>         return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(dev_pm_qos_update_user_latency_tolerance);
+> --
 
-> +{
-> +	struct device *dev = kobj_to_dev(kobj);
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	if (drvdata && (drvdata->datasets & TPDM_PIDR0_DS_DSB))
-
-As suggested earlier, add a wrapper for the above check.
-
-> +		return attr->mode;
-> +
-> +	return 0;
-> +}
-> +
->   static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
->   {
->   	if (drvdata->datasets & TPDM_PIDR0_DS_DSB) {
-> @@ -229,8 +241,90 @@ static struct attribute_group tpdm_attr_grp = {
->   	.attrs = tpdm_attrs,
->   };
->   
-> +static ssize_t dsb_trig_type_show(struct device *dev,
-> +				     struct device_attribute *attr, char *buf)
-
-Please follow the above alignment for all functions throughout the 
-series. There are unaligned parameter lists scattered around the series.
-
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	return sysfs_emit(buf, "%u\n",
-> +			 (unsigned int)drvdata->dsb->trig_type);
-> +}
-> +
-> +/*
-> + * Trigger type (boolean):
-> + * false - Disable trigger type.
-> + * true  - Enable trigger type.
-> + */
-> +static ssize_t dsb_trig_type_store(struct device *dev,
-> +				      struct device_attribute *attr,
-> +				      const char *buf,
-> +				      size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val;
-> +
-> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	if (val)
-> +		drvdata->dsb->trig_type = true;
-> +	else
-> +		drvdata->dsb->trig_type = false;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_trig_type);
-> +
-> +static ssize_t dsb_trig_ts_show(struct device *dev,
-> +				     struct device_attribute *attr, char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	return sysfs_emit(buf, "%u\n",
-> +			 (unsigned int)drvdata->dsb->trig_ts);
-> +}
-> +
-> +/*
-> + * Trigger timestamp (boolean):
-> + * false - Disable trigger timestamp.
-> + * true  - Enable trigger timestamp.
-> + */
-> +static ssize_t dsb_trig_ts_store(struct device *dev,
-> +				      struct device_attribute *attr,
-> +				      const char *buf,
-> +				      size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val;
-> +
-> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	if (val)
-> +		drvdata->dsb->trig_ts = true;
-> +	else
-> +		drvdata->dsb->trig_ts = false;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_trig_ts);
-> +
-> +static struct attribute *tpdm_dsb_attrs[] = {
-> +	&dev_attr_dsb_trig_ts.attr,
-> +	&dev_attr_dsb_trig_type.attr,
-> +	NULL,
-> +};
-> +
-> +static struct attribute_group tpdm_dsb_attr_grp = {
-> +	.attrs = tpdm_dsb_attrs,
-> +	.is_visible = tpdm_dsb_is_visible,
-> +};
-> +
->   static const struct attribute_group *tpdm_attr_grps[] = {
->   	&tpdm_attr_grp,
-> +	&tpdm_dsb_attr_grp,
->   	NULL,
->   };
->   
-
-Rest looks fine.
-
-Suzuk
-
+Yes, something like this, please!
