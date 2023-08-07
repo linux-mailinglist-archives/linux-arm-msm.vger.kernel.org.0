@@ -2,99 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07EF9771AA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 08:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38C08771ACE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 08:53:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231243AbjHGGrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 02:47:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46412 "EHLO
+        id S231446AbjHGGxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 02:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230235AbjHGGrK (ORCPT
+        with ESMTP id S231513AbjHGGxC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 02:47:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FA281B5;
-        Sun,  6 Aug 2023 23:47:09 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3774n87B022868;
-        Mon, 7 Aug 2023 06:47:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=VuqF2i1KSXv2OuTyKvF7D6u9nEHqYt6V7gK2npJup9I=;
- b=bMfL8VYMqwqf8A4rMSA3yNA+6gAZo0uD3UqjgZTbkjzHmOkkZ6qPQpmfT9yuRFa5S66T
- MmM7O1bQ99splaZDpecb3MgvPvRyURhzf2lN9EcRXuDsgP/1t442v9gcJ/jzjmSJfzgk
- 1SOReddDtWikarl7RXqwlzUiGlZgg7C6razU7I2T20OWkS2PIDnxLnZr42yKlnUnSEed
- 7MVmrPrxh2hbugcbKw3FKu1joTEAncgteU0fG1kcVbnopHoxL2GlQ7toGhHW+642N+Z/
- fIE/igj6OyA19QJBMKTmOVBXo193VW3rdaUSJk/WSHQWLJXv1+YsvJ78TJx1Il0fe6x1 ig== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3s9drrjsd7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Aug 2023 06:47:06 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3776klkI008408
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 7 Aug 2023 06:46:47 GMT
-Received: from rjliao1.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Sun, 6 Aug 2023 23:46:45 -0700
-From:   Rocky Liao <quic_rjliao@quicinc.com>
-To:     <marcel@holtmann.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Rocky Liao <quic_rjliao@quicinc.com>
-Subject: [PATCH v1] Bluetooth: btusb: add shutdown function for QCA6174
-Date:   Mon, 7 Aug 2023 14:46:26 +0800
-Message-ID: <20230807064626.980-1-quic_rjliao@quicinc.com>
-X-Mailer: git-send-email 2.38.1.windows.1
+        Mon, 7 Aug 2023 02:53:02 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97F21BE3
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Aug 2023 23:52:38 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b9a2033978so64047211fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Aug 2023 23:52:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691391131; x=1691995931;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8IF0yzc6AQ9CBWm+WqCwLb44jaEvchA3XftCWbCQ9L4=;
+        b=IfRIAHWGdjLxmsV0rmnZyf1fOg8WbNu+ehKL82gk425VAwtIEAIINC4zB4q7Jb+dzr
+         p9b/gbxhTtIX9WvRBLx5J0gqFffnZUNnEiYLaT0P07NiI87qqxlIfjIeKCs7mFMI3J30
+         tfbKVHhRs+ltj78Y/kvblNAusfd+1GzAvHUIiHGkYHLnUoFrUdygK/H+zGdVxuuQ9LUd
+         zN+OkffDfzKtlDkgwRwuDWBru+bive5yqnfsciRIB7QOAeYLDZTebey+EB3Qonju3iVu
+         WeGPP7ImXtyJ7iSbqe4aMi4xr/fDFQV2hqN0q6N0IajkntePqwvJO+JdRqQxrLu21zj9
+         rguQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691391131; x=1691995931;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8IF0yzc6AQ9CBWm+WqCwLb44jaEvchA3XftCWbCQ9L4=;
+        b=ZvvH61fOT/tLyAHofDaHNvnrvv7FQsTW1s/O+YjQNqsMFbH/SIy/6lA73kJSa9PVIR
+         5u4JUp07mKLCkgwjgShFVXeOO+aQuLHhj2Pe4fX9eNsdNFiDmHQEZAYCvYYKTrTmyw3X
+         Jki62XyrA3nh61S104eLnh/s4zF3/ayMCACTSUh55sVAFv8Rftj5R91AjD3Y45USFxTq
+         V4FqieIYAqMbWFkCj8SmziGRhMA9tBKbuQ5pSnpeMt+TCnu+/29UnqZqkh8+gioEoy60
+         i5IJOWl5aO5Y0lcOVF3jb9JcMDyLPM1OMVjEgLa+mPRIvvup9ZpqXWqlFSGpYS+HQ1Qc
+         Nx9g==
+X-Gm-Message-State: AOJu0YzOQ84keHHP1ALHTv6yt+QpIq0UKffWvwddXIxCzWXShy1jzJ1Q
+        M20kc+rwKkktZVl2cA4XW/bjm6OEW8JpRAwAJ48=
+X-Google-Smtp-Source: AGHT+IGqjo6zmRgY8j0C8XXJLbmy3JnrMpqbfOBeiwcg7iAa1v/qGTulOKuyVucOW2ba5x7xXnmTAQ==
+X-Received: by 2002:a2e:6a0e:0:b0:2b9:e831:f165 with SMTP id f14-20020a2e6a0e000000b002b9e831f165mr5522024ljc.42.1691391131429;
+        Sun, 06 Aug 2023 23:52:11 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.113])
+        by smtp.gmail.com with ESMTPSA id s9-20020a170906354900b0099b7276235esm4787000eja.93.2023.08.06.23.52.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 06 Aug 2023 23:52:11 -0700 (PDT)
+Message-ID: <ef996a7e-6eba-4366-c3ea-0d08f2768e98@linaro.org>
+Date:   Mon, 7 Aug 2023 08:52:08 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: INAKSMYEn5psaL1htd92bBye8XfdcArX
-X-Proofpoint-GUID: INAKSMYEn5psaL1htd92bBye8XfdcArX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_03,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 mlxlogscore=999 adultscore=0 spamscore=0 clxscore=1011
- bulkscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308070062
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 2/3] dt-bindings: clock: add qca8386/qca8084 clock and
+ reset definitions
+Content-Language: en-US
+To:     Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com
+References: <20230801085352.22873-1-quic_luoj@quicinc.com>
+ <20230801085352.22873-3-quic_luoj@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230801085352.22873-3-quic_luoj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We should send hci reset command before bt turn off, which can reset bt
-firmware status.
+On 01/08/2023 10:53, Luo Jie wrote:
+> QCA8386/QCA8084 includes the clock & reset controller that is
+> accessed by MDIO bus. Two work modes are supported, qca8386 works
+> as switch mode, qca8084 works as PHY mode.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,nsscc-qca8k.yaml      |  59 ++++++++++
+>  include/dt-bindings/clock/qcom,nsscc-qca8k.h  | 102 ++++++++++++++++++
+>  include/dt-bindings/reset/qcom,nsscc-qca8k.h  |  76 +++++++++++++
+>  3 files changed, 237 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,nsscc-qca8k.h
+>  create mode 100644 include/dt-bindings/reset/qcom,nsscc-qca8k.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml b/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+> new file mode 100644
+> index 000000000000..8fb77156070c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+> @@ -0,0 +1,59 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,nsscc-qca8k.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm NSS Clock & Reset Controller on QCA8386/QCA8084
+> +
+> +maintainers:
+> +  - Luo Jie <quic_luoj@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm NSS clock control module provides the clocks and resets
+> +  on QCA8386(switch mode)/QCA8084(PHY mode)
+> +
+> +  See also::
+> +    include/dt-bindings/clock/qcom,nsscc-qca8k.h
+> +    include/dt-bindings/reset/qcom,nsscc-qca8k.h
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,nsscc-qca8k
 
-Signed-off-by: Rocky Liao <quic_rjliao@quicinc.com>
----
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+SoC name is before IP block names. See:
+Documentation/devicetree/bindings/arm/qcom-soc.yaml
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 1bb3b09013b0..ac4d8cf831df 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4419,6 +4419,7 @@ static int btusb_probe(struct usb_interface *intf,
- 
- 	if (id->driver_info & BTUSB_QCA_ROME) {
- 		data->setup_on_usb = btusb_setup_qca;
-+		hdev->shutdown = btusb_shutdown_qca;
- 		hdev->set_bdaddr = btusb_set_bdaddr_ath3012;
- 		hdev->cmd_timeout = btusb_qca_cmd_timeout;
- 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
--- 
-2.38.1.windows.1
+qca8k is not SoC specific. I don't know what you are documenting here,
+but if this is a SoC, then follow SoC rules.
+
+If this is not SoC, it confuses me a bit to use GCC binding.
+
+Anyway, this was not tested, as pointed out by bot... Please test the
+code before sending.
+
+Best regards,
+Krzysztof
 
