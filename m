@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC5B2772464
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 14:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CE6977249E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 14:45:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231934AbjHGMmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 08:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41424 "EHLO
+        id S233727AbjHGMpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 08:45:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232459AbjHGMl6 (ORCPT
+        with ESMTP id S233801AbjHGMpj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 08:41:58 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEBCC10F7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 05:41:50 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fe216edaf7so6708948e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 05:41:50 -0700 (PDT)
+        Mon, 7 Aug 2023 08:45:39 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F32B1FDC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 05:45:15 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe0e34f498so7366590e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 05:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691412109; x=1692016909;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oJnaxQIHCtUwxvq/1ZncB26HRZEwTNC8HkQm0K1lF9Y=;
-        b=Y22yNqLd7TWrKia65/DB1YefQkhEqfMEjOXtD/U9QhCvfumHOChPYe79Mx7KS/B2o5
-         A9irjl8YwQmUh7/OozBtD7xYHDwTdexpxxjj/wZ8eWtKEAW8MuXbIGSiY5Z9zPzfircT
-         Go8jgSyPnhJVsGdCfhQJKZUaA60B1e82sX5P4Zbgz5DrADoMbBsqksayXWPsUb9QnMZx
-         ta9/9Kjf9YnzNn8xDI+bYYo5xWrYfpWbLoiyiknMoO6A26znfl3HH1VVuIdoDwxbqmPu
-         KOYtkkKVujgP8zkUGrvLYIicgl+RBv/UuJ6nOGhe7HpEvRKIlmYs899+WlFi5w9XdoJH
-         Yg1g==
+        d=linaro.org; s=google; t=1691412305; x=1692017105;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YjDxC4rtPa0izTbvMeyjDGK6HK2/KV+hf9iWhLFqP9w=;
+        b=pSfjlTr+AW86gnpB3QekvpSlBfqOaWifkCW4OVsU1WUs4eufunLuEqg+6u2kRmuD11
+         vS6DT4yYYnEXEIeliX+QI4u//9VFftHPgiVAGcbnNm0xjGc1LVTj41/4Ar912dWbFcah
+         NuWvuwDmCoHncEYvfA7fNVCBS8i0qXfXngHcLxHCQXF9hTyFO2JadMz40EV9RxaCgfzX
+         6EO1jX/aEc5Kf/9vNPEM47hXoAEZoOGXch/8jpHxxLs+U2/Is7l8SwlH0qdEpZm8+CKv
+         ZN8eCo6LOg2VerYWw1iJcusucPITSLFljF9peDG+1t6m13WmcR4yD4q+UxDp4sFtQxr3
+         8jsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691412109; x=1692016909;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oJnaxQIHCtUwxvq/1ZncB26HRZEwTNC8HkQm0K1lF9Y=;
-        b=ffipDDXneV3v3pXLD1AKpPUNeEff09NkTbtLG4HuqpBQd7SbqX9t71LUUCrpta5pPn
-         n4szGn10kLDA4fvm9L3M6R8o3tBxVta/oo3R/mWqLFmqSrRCcyDkNnvo0xvN7if+Von+
-         LSRKVLVdm6891P/Rt06G16ILAmEk3dGOzVWTxmGHn2EqKpKb3NXno/wG9p4rXlA1u4cL
-         8yZPgyczqxKPoTs5idAVCB/MZFHc4GQa6UfwA4FNvLGbRrkxbDldZ2+IIvYfkLI1+8K7
-         ovIoqT/ZFTqZiVNB/SYoKZrbo8SDSV4K787bWcjExIyJX3TpVrKrFTPrxGolauww4XWj
-         cNYw==
-X-Gm-Message-State: AOJu0Yx2Md6YABV6vSODosDfRa/92hiz7MxEYVoRmwVKJmMpwSy1fa1V
-        aXEdLKe+dAof1vjGdB9n1Jul7Q==
-X-Google-Smtp-Source: AGHT+IGd/bA+WdoXr2RtB9cVfw2LRTOMcdEI9g4vHgHZKXbuqyq+n/lPuSuf1r5s8S6n1UQWJNJWoA==
-X-Received: by 2002:a05:6512:3b85:b0:4fe:56d8:631e with SMTP id g5-20020a0565123b8500b004fe56d8631emr2387130lfv.28.1691412108950;
-        Mon, 07 Aug 2023 05:41:48 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691412305; x=1692017105;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YjDxC4rtPa0izTbvMeyjDGK6HK2/KV+hf9iWhLFqP9w=;
+        b=TYq6Aj1eyQ4JWgT20FjoFd/hHfKy2I5VPx1Doa6azSkVCC8EZ4QagvNd9SgjmY4pT5
+         eVfsxVow9l2XlDxUhiE0NcIfhQ/3LbB2M5djFjs2wUgFXm+ajh/+srRmOVdFAbqWEk25
+         7CnR31ZAZzHnQMnd0sCWlF0cygjVpzMWNtl5XW0tR/2gyI+X3QLr251zWSnz2hgJzSVP
+         kqIU2m175f7CUG9jnmX09TREkWt5ZtXjedVnrx3uOqJyPVSB4h2WPAjhl5/mwESeG817
+         2LOSV1pGE/3IWrBxJa/XXaPiaxIhoZxR4Ziyb7batjlOaeX4W146/jYa/SNPwFHVQofx
+         qD+A==
+X-Gm-Message-State: AOJu0YztJ0nsPaccxwLdGK1EPukyeELEG4jjCInuiKlM2M74usoW/1B0
+        mYkD7Cz8GfXBETP0DzSylro+/g==
+X-Google-Smtp-Source: AGHT+IHCN5mJVb8OsMRJcQcr63UMPpzxGng8hmBDj3FAI8slxL2zzPmOjqUSK5ezDMVbRIq6WOK1mQ==
+X-Received: by 2002:ac2:5e66:0:b0:4fe:18be:ef37 with SMTP id a6-20020ac25e66000000b004fe18beef37mr5207112lfr.61.1691412305187;
+        Mon, 07 Aug 2023 05:45:05 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id o15-20020a056512050f00b004fe36bae2d6sm1491498lfb.81.2023.08.07.05.41.47
+        by smtp.gmail.com with ESMTPSA id l17-20020ac24a91000000b004f85d80ca64sm1490547lfp.221.2023.08.07.05.45.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 05:41:48 -0700 (PDT)
-Message-ID: <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
-Date:   Mon, 7 Aug 2023 14:41:46 +0200
+        Mon, 07 Aug 2023 05:45:04 -0700 (PDT)
+Message-ID: <83dff121-0a0f-4bd5-bf84-0c7c83f98615@linaro.org>
+Date:   Mon, 7 Aug 2023 14:45:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
- <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
+Subject: Re: [PATCH v2 0/9] Add pmics supported in Qualcomm's SDX75 platform
 Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, abel.vesa@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        quic_pkondeti@quicinc.com
+References: <1691411333-1556-1-git-send-email-quic_rohiagar@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,7 +100,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
+In-Reply-To: <1691411333-1556-1-git-send-email-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -123,42 +113,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5.08.2023 21:29, Krzysztof Kozlowski wrote:
-> On 04/08/2023 22:09, Konrad Dybcio wrote:
->> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
->> to clock it a bit higher.
->>
+On 7.08.2023 14:28, Rohit Agarwal wrote:
+> Hi,
 > 
-> ...
+> Changes in v2:
+>  - Added compatible for pm7550ba for eusb2 repeater and used it in DT.
+>  - Addressed some minor comments from Konrad to add fixes tag, labels
+>    and update the labels
 > 
->> +
->> +  iommus:
->> +    maxItems: 1
->> +
->> +  video-decoder:
->> +    type: object
->> +
->> +    properties:
->> +      compatible:
->> +        const: venus-decoder
+> This series add support of pmics that are found in SDX75 platform and
+> add the corresponding regulators in the IDP platform as well.
+> It also parallely updates the pmic found in SDX65 to PM7250b and add pinctrl
+> support for the same pmic chip.
+> This series is based on the new header inclusion[1] and movement of the
+> regulators level from rpmpd to rpmhpd[2].
+> This series can be picked after successfully picking [2] and [3] as [1] has
+> already been applied.
 > 
-> That's not how compatibles are constructed... missing vendor prefix, SoC
-> or IP block name.
+> [1] https://lore.kernel.org/all/1689744162-9421-1-git-send-email-quic_rohiagar@quicinc.com/
+> [2] https://lore.kernel.org/all/1690781104-2290-1-git-send-email-quic_rohiagar@quicinc.com/
+> [3] https://lore.kernel.org/all/1690461813-22564-1-git-send-email-quic_rohiagar@quicinc.com/
 > 
->> +
->> +    required:
->> +      - compatible
->> +
->> +    additionalProperties: false
-> 
-> Why do you need this child node? Child nodes without properties are
-> usually useless.
-For both comments: I aligned with what was there..
-
-The driver abuses these compats to probe enc/dec submodules, even though
-every Venus implementation (to my knowledge) is implicitly enc/dec capable..
-
-Perhaps a bigger clean-up is due. I guess I could just create the venc/vdec
-devices from the venus core probe and get rid of this fake stuff?
+> Thanks,
+> Rohit.
+Since you resent this (as mentioned in the first thread with "v2" [1]),
+the subject should be [PATCH RESEND ...]
 
 Konrad
