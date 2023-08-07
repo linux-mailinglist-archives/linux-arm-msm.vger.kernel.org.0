@@ -2,226 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0078B7734F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 01:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C29FB77351C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 01:40:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230310AbjHGX2w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 19:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59332 "EHLO
+        id S230168AbjHGXkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 19:40:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbjHGX2v (ORCPT
+        with ESMTP id S229848AbjHGXkQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 19:28:51 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301CA1736
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 16:28:49 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-68783004143so3588993b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 16:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20221208.gappssmtp.com; s=20221208; t=1691450928; x=1692055728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0xqamAux0UTVG6klbJHwJNM84FqVsjBhqmY+h06Y7S4=;
-        b=adlg0mZ+HbNffKaKec2p7cVEI4EUlpFfVSVpmG5fvHzHnQEOdBYZjEy4QnkJtTu7lu
-         YmN6EGaH1vJkJ2ZOmqiBcV/yaN6Y4JVna47CjKD7nPXpOiMzYNw9UySGma80pWoaj7Dk
-         jUxXtUXqouB4bUXn3WeUBdMeMQNzv8NtKVfvER+m7KEKe99ZrQWUTG4Y9TUCDw4Kbcew
-         TFF8/aAopaaIk2YO3rVVNpTSZmvFLss5lfJ8bn13k+LTkCPg51SMuEfV97r2Zvr+7s3C
-         AcdJXj3qJcnQFWBnyvELMIWQLaBKzEk7yCwrvdFLv4Z0y5aFUIdjan9j2uUGZT7xZ3GX
-         Ib8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691450928; x=1692055728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0xqamAux0UTVG6klbJHwJNM84FqVsjBhqmY+h06Y7S4=;
-        b=eNuqCx8b3Cg5tSjpKD2I7y5F/BKfaSWljaSkv2rFdKSf0ypS9Kr2ofqjAA0ydzMko7
-         HNHBeaXPwKcgH6kaRfjMJ//00a7VZtVjGKrNg7Gle7tEVGAYcUUGz5q2bZy3lBkX5R+w
-         Auc9lyQrmz3vR0S1cF0hX0ysS+8EcFsQpLlYzA47GboZzuL7T3RK768lo0dhBu6F+ncV
-         C8VF5m+fEmqxDzOVFCO/ARu06kFOJB3YBT3v3nDgvRa+qkNFlCBU9TKMI8L4EtqGjORr
-         0yOmCwed3Ju+1d4gTi8Py0OeVMfZF6xi8rJEcmkO988LYFmBeVYMgFC5COQrnM+e8zZL
-         f75g==
-X-Gm-Message-State: AOJu0YxngBRh/k91gBL9JM2yjzdJzW+OVUY0RAD81YWPdeqdi+td6zp+
-        DEZlrXB1WYoSikmexdhjwNXA8A==
-X-Google-Smtp-Source: AGHT+IHWcHOenJQfOaWa9c7YDyMdy3l3j1H0rEzsEcwqog5HJ9HhPve3KCBNDXb4QQT+YEAg/cljWw==
-X-Received: by 2002:a05:6a20:8e04:b0:13c:8e50:34b8 with SMTP id y4-20020a056a208e0400b0013c8e5034b8mr12892217pzj.35.1691450928413;
-        Mon, 07 Aug 2023 16:28:48 -0700 (PDT)
-Received: from dread.disaster.area (pa49-180-166-213.pa.nsw.optusnet.com.au. [49.180.166.213])
-        by smtp.gmail.com with ESMTPSA id e18-20020aa78c52000000b0068620bee456sm6663729pfd.209.2023.08.07.16.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 16:28:47 -0700 (PDT)
-Received: from dave by dread.disaster.area with local (Exim 4.96)
-        (envelope-from <david@fromorbit.com>)
-        id 1qT9eW-002TeM-1d;
-        Tue, 08 Aug 2023 09:28:44 +1000
-Date:   Tue, 8 Aug 2023 09:28:44 +1000
-From:   Dave Chinner <david@fromorbit.com>
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-Cc:     akpm@linux-foundation.org, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
-        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
-        gregkh@linuxfoundation.org, muchun.song@linux.dev,
-        simon.horman@corigine.com, dlemoal@kernel.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-Subject: Re: [PATCH v4 45/48] mm: shrinker: make global slab shrink lockless
-Message-ID: <ZNF+LLUpKWHDEG1u@dread.disaster.area>
-References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
- <20230807110936.21819-46-zhengqi.arch@bytedance.com>
+        Mon, 7 Aug 2023 19:40:16 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0945019B0;
+        Mon,  7 Aug 2023 16:40:12 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377Mqs1P009757;
+        Mon, 7 Aug 2023 23:39:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0RfEQDLxhKFTA8DuiPQcRgmthhpURSf1M+h5DOhmCvk=;
+ b=Zso+mmjPZkTMYGLEjTsJUZJwvalERlNMYyIvZDS0c87Rk+niX1fAVObAL2CKx8xqD+lm
+ bH3V/w6/NdnoJ+EP+uo75jw7meW5ro4VuJhUg+7j1cOb2liDUPXafdGBMOA+iotD0Rj3
+ FiTWt4c1XLP8otUxr5eqQ7fKiO1ecPVfFrxibP9svjYo0BFXqp8XoXFXhXyoRvnB9rww
+ m61HVdLyFTJ4myq3ZtK6S3AoT2Te6x/uf1IhXMSUGiqoscNTLNzI+AvGquiRxGXP+qCY
+ +r8XKoBiCIZuH05USigMU4XdVt4DUU1c6Ol7Ar3Mbc02clXZ9uLF1qjPWmntmiFRWaTS DQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sb6jbrca7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 23:39:36 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377NdYYe031201
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 23:39:34 GMT
+Received: from [10.110.124.178] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 16:39:32 -0700
+Message-ID: <6372908e-7dbd-c36f-bfa4-ad3c342e5ce8@quicinc.com>
+Date:   Mon, 7 Aug 2023 16:39:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230807110936.21819-46-zhengqi.arch@bytedance.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v4 08/32] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
+Content-Language: en-US
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <quic_jackp@quicinc.com>, <oneukum@suse.com>,
+        <albertccwang@google.com>, <o-takashi@sakamocchi.jp>
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-9-quic_wcheng@quicinc.com>
+ <eb1c679b-f50b-1f20-c7c8-da3f4857bec1@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <eb1c679b-f50b-1f20-c7c8-da3f4857bec1@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OsnD4NoW4TBRS7pMQG0naicr_t7--X2B
+X-Proofpoint-GUID: OsnD4NoW4TBRS7pMQG0naicr_t7--X2B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_25,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ bulkscore=0 mlxlogscore=999 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 clxscore=1015 mlxscore=0 phishscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308070211
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 07, 2023 at 07:09:33PM +0800, Qi Zheng wrote:
-> The shrinker_rwsem is a global read-write lock in shrinkers subsystem,
-> which protects most operations such as slab shrink, registration and
-> unregistration of shrinkers, etc. This can easily cause problems in the
-> following cases.
-....
-> This commit uses the refcount+RCU method [5] proposed by Dave Chinner
-> to re-implement the lockless global slab shrink. The memcg slab shrink is
-> handled in the subsequent patch.
-....
-> ---
->  include/linux/shrinker.h | 17 ++++++++++
->  mm/shrinker.c            | 70 +++++++++++++++++++++++++++++-----------
->  2 files changed, 68 insertions(+), 19 deletions(-)
+Hi Pierre,
 
-There's no documentation in the code explaining how the lockless
-shrinker algorithm works. It's left to the reader to work out how
-this all goes together....
+On 7/25/2023 1:27 AM, Pierre-Louis Bossart wrote:
+> 
+>> +static const struct snd_soc_dai_ops q6usb_ops = {
+>> +	.prepare	= q6afe_dai_prepare,
+>> +	.hw_params	= q6usb_hw_params,
+>> +	.shutdown	= q6afe_dai_shutdown,
+> 
+> it's a bit odd to see a .shutdown without a .startup?
+> 
+> Is this intentional and should a comment be added?
+> 
+> 
 
-> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
-> index eb342994675a..f06225f18531 100644
-> --- a/include/linux/shrinker.h
-> +++ b/include/linux/shrinker.h
-> @@ -4,6 +4,8 @@
->  
->  #include <linux/atomic.h>
->  #include <linux/types.h>
-> +#include <linux/refcount.h>
-> +#include <linux/completion.h>
->  
->  #define SHRINKER_UNIT_BITS	BITS_PER_LONG
->  
-> @@ -87,6 +89,10 @@ struct shrinker {
->  	int seeks;	/* seeks to recreate an obj */
->  	unsigned flags;
->  
-> +	refcount_t refcount;
-> +	struct completion done;
-> +	struct rcu_head rcu;
+That is correct, because the Q6AFE port start command needs to also pass 
+in the PCM params, so we wait for the hw_params() callback before 
+actually starting the port.  I will add a comment.
 
-What does the refcount protect, why do we need the completion, etc?
+>> +/* device token of actual end USB aduio device */
+> 
+> audio
+> 
+>> +	u32                  dev_token;
+>> +/* endianness of this interface */
+>> +	u32                   endian;
+>> +/* service interval */
+>> +	u32                  service_interval;
+>> +} __packed;
+>> +
+>> +/**
+>> + * struct afe_param_id_usb_audio_dev_params
+>> + * @cfg_minor_version: Minor version used for tracking USB audio device
+>> + * configuration.
+>> + * Supported values:
+>> + *     AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
+>> + * @dev_token: device token of actual end USB aduio device
+> 
+> audio. please run a spell-checker.
+> 
+> 
 
-> +
->  	void *private_data;
->  
->  	/* These are for internal use */
-> @@ -120,6 +126,17 @@ struct shrinker *shrinker_alloc(unsigned int flags, const char *fmt, ...);
->  void shrinker_register(struct shrinker *shrinker);
->  void shrinker_free(struct shrinker *shrinker);
->  
-> +static inline bool shrinker_try_get(struct shrinker *shrinker)
-> +{
-> +	return refcount_inc_not_zero(&shrinker->refcount);
-> +}
-> +
-> +static inline void shrinker_put(struct shrinker *shrinker)
-> +{
-> +	if (refcount_dec_and_test(&shrinker->refcount))
-> +		complete(&shrinker->done);
-> +}
-> +
->  #ifdef CONFIG_SHRINKER_DEBUG
->  extern int __printf(2, 3) shrinker_debugfs_rename(struct shrinker *shrinker,
->  						  const char *fmt, ...);
-> diff --git a/mm/shrinker.c b/mm/shrinker.c
-> index 1911c06b8af5..d318f5621862 100644
-> --- a/mm/shrinker.c
-> +++ b/mm/shrinker.c
-> @@ -2,6 +2,7 @@
->  #include <linux/memcontrol.h>
->  #include <linux/rwsem.h>
->  #include <linux/shrinker.h>
-> +#include <linux/rculist.h>
->  #include <trace/events/vmscan.h>
->  
->  #include "internal.h"
-> @@ -577,33 +578,42 @@ unsigned long shrink_slab(gfp_t gfp_mask, int nid, struct mem_cgroup *memcg,
->  	if (!mem_cgroup_disabled() && !mem_cgroup_is_root(memcg))
->  		return shrink_slab_memcg(gfp_mask, nid, memcg, priority);
->  
-> -	if (!down_read_trylock(&shrinker_rwsem))
-> -		goto out;
-> -
-> -	list_for_each_entry(shrinker, &shrinker_list, list) {
-> +	rcu_read_lock();
-> +	list_for_each_entry_rcu(shrinker, &shrinker_list, list) {
->  		struct shrink_control sc = {
->  			.gfp_mask = gfp_mask,
->  			.nid = nid,
->  			.memcg = memcg,
->  		};
->  
-> +		if (!shrinker_try_get(shrinker))
-> +			continue;
-> +
-> +		/*
-> +		 * We can safely unlock the RCU lock here since we already
-> +		 * hold the refcount of the shrinker.
-> +		 */
-> +		rcu_read_unlock();
-> +
->  		ret = do_shrink_slab(&sc, shrinker, priority);
->  		if (ret == SHRINK_EMPTY)
->  			ret = 0;
->  		freed += ret;
-> +
->  		/*
-> -		 * Bail out if someone want to register a new shrinker to
-> -		 * prevent the registration from being stalled for long periods
-> -		 * by parallel ongoing shrinking.
-> +		 * This shrinker may be deleted from shrinker_list and freed
-> +		 * after the shrinker_put() below, but this shrinker is still
-> +		 * used for the next traversal. So it is necessary to hold the
-> +		 * RCU lock first to prevent this shrinker from being freed,
-> +		 * which also ensures that the next shrinker that is traversed
-> +		 * will not be freed (even if it is deleted from shrinker_list
-> +		 * at the same time).
->  		 */
+Will fix the typos.
 
-This comment really should be at the head of the function,
-describing the algorithm used within the function itself. i.e. how
-reference counts are used w.r.t. the rcu_read_lock() usage to
-guarantee existence of the shrinker and the validity of the list
-walk.
+>> +	svc_int.cfg_minor_version = AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG;
+>> +	svc_int.svc_interval = pcfg->usb_cfg.service_interval;
+>> +	ret = q6afe_port_set_param_v2(port, &svc_int,
+>> +				      AFE_PARAM_ID_USB_AUDIO_SVC_INTERVAL,
+>> +				      AFE_MODULE_AUDIO_DEV_INTERFACE, sizeof(svc_int));
+>> +	if (ret) {
+>> +		dev_err(port->afe->dev, "%s: AFE device param cmd svc_interval failed %d\n",
+>> +			__func__, ret);
+>> +		ret = -EINVAL;
+> 
+> why do you override the return value?
+> 
+>> +		goto exit;
+> 
+> not necessary, this is a jump to the next line. Looks like copy-paste ...
+> 
 
-I'm not going to remember all these little details when I look at
-this code in another 6 months time, and having to work it out from
-first principles every time I look at the code will waste of a lot
-of time...
+Thanks, will fix.
 
--Dave.
--- 
-Dave Chinner
-david@fromorbit.com
+>> +	}
+>> +exit:
+>> +	return ret;
+>> +}
+>> +
+>> +/**
+>> + * q6afe_usb_port_prepare() - Prepare usb afe port.
+>> + *
+>> + * @port: Instance of afe port
+>> + * @cfg: USB configuration for the afe port
+>> + *
+>> + */
+>> +void q6afe_usb_port_prepare(struct q6afe_port *port,
+>> +			     struct q6afe_usb_cfg *cfg)
+>> +{
+>> +	union afe_port_config *pcfg = &port->port_cfg;
+>> +
+>> +	pcfg->usb_cfg.cfg_minor_version = AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG;
+>> +	pcfg->usb_cfg.sample_rate = cfg->sample_rate;
+>> +	pcfg->usb_cfg.num_channels = cfg->num_channels;
+>> +	pcfg->usb_cfg.bit_width = cfg->bit_width;
+>> +
+>> +	afe_port_send_usb_dev_param(port, cfg);
+>> +}
+>> +EXPORT_SYMBOL_GPL(q6afe_usb_port_prepare);
+>> +
+>>   /**
+>>    * q6afe_hdmi_port_prepare() - Prepare hdmi afe port.
+>>    *
+>> @@ -1611,7 +1791,10 @@ struct q6afe_port *q6afe_port_get_from_id(struct device *dev, int id)
+>>   		break;
+>>   	case AFE_PORT_ID_WSA_CODEC_DMA_RX_0 ... AFE_PORT_ID_RX_CODEC_DMA_RX_7:
+>>   		cfg_type = AFE_PARAM_ID_CODEC_DMA_CONFIG;
+>> -	break;
+>> +		break;
+>> +	case AFE_PORT_ID_USB_RX:
+>> +		cfg_type = AFE_PARAM_ID_USB_AUDIO_CONFIG;
+>> +		break;
+>>   	default:
+>>   		dev_err(dev, "Invalid port id 0x%x\n", port_id);
+>>   		return ERR_PTR(-EINVAL);
+>> diff --git a/sound/soc/qcom/qdsp6/q6afe.h b/sound/soc/qcom/qdsp6/q6afe.h
+>> index 30fd77e2f458..e098a3e15135 100644
+>> --- a/sound/soc/qcom/qdsp6/q6afe.h
+>> +++ b/sound/soc/qcom/qdsp6/q6afe.h
+>> @@ -5,7 +5,7 @@
+>>   
+>>   #include <dt-bindings/sound/qcom,q6afe.h>
+>>   
+>> -#define AFE_PORT_MAX		129
+>> +#define AFE_PORT_MAX		130
+>>   
+>>   #define MSM_AFE_PORT_TYPE_RX 0
+>>   #define MSM_AFE_PORT_TYPE_TX 1
+>> @@ -205,6 +205,47 @@ struct q6afe_cdc_dma_cfg {
+>>   	u16	active_channels_mask;
+>>   };
+>>   
+>> +/**
+>> + * struct q6afe_usb_cfg
+>> + * @cfg_minor_version: Minor version used for tracking USB audio device
+>> + * configuration.
+>> + * Supported values:
+>> + *     AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
+>> + * @sample_rate: Sampling rate of the port
+>> + *    Supported values:
+>> + *      AFE_PORT_SAMPLE_RATE_8K
+>> + *      AFE_PORT_SAMPLE_RATE_11025
+>> + *      AFE_PORT_SAMPLE_RATE_12K
+>> + *      AFE_PORT_SAMPLE_RATE_16K
+>> + *      AFE_PORT_SAMPLE_RATE_22050
+>> + *      AFE_PORT_SAMPLE_RATE_24K
+>> + *      AFE_PORT_SAMPLE_RATE_32K
+>> + *      AFE_PORT_SAMPLE_RATE_44P1K
+>> + *      AFE_PORT_SAMPLE_RATE_48K
+>> + *      AFE_PORT_SAMPLE_RATE_96K
+>> + *      AFE_PORT_SAMPLE_RATE_192K
+>> + * @bit_width: Bit width of the sample.
+>> + *    Supported values: 16, 24
+>> + * @num_channels: Number of channels
+>> + *    Supported values: 1, 2
+>> + * @data_format: Data format supported by the USB
+>> + *    Supported values: 0
+>> + * @reserved: this field must be 0
+>> + * @dev_token: device token of actual end USB audio device
+>> + * @endian: endianness of this interface
+>> + * @service_interval: service interval
+>> + **/
+>> +struct q6afe_usb_cfg {
+>> +	u32	cfg_minor_version;
+>> +	u32     sample_rate;
+>> +	u16	bit_width;
+>> +	u16	num_channels;
+>> +	u16	data_format;
+>> +	u16	reserved;
+>> +	u32	dev_token;
+>> +	u32	endian;
+>> +	u32	service_interval;
+>> +};
+> 
+> this definition looks exactly the same as
+> struct afe_param_id_usb_cfg
+> ??
+> 
+> 
+
+I'll remove some of the params that we aren't utilizing.
+
+Thanks
+Wesley Cheng
