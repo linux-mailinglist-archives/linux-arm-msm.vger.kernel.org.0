@@ -2,154 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A33937724E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 15:04:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46FE3772502
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 15:07:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233772AbjHGNEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 09:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S233830AbjHGNHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 09:07:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232521AbjHGNEL (ORCPT
+        with ESMTP id S233837AbjHGNHa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 09:04:11 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EED9F99
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 06:04:09 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe2de785e7so7418130e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 06:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691413448; x=1692018248;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8fw0ysUuRGQmdYsHgBJKqqkV1K0A5L6FDJbFcuo1480=;
-        b=MJy29QYA/VD6U+CY7J3IJ5cz3bNN7TmAPbf77MJGd3kkYzf9gZadG6tHXfcbfrz3DU
-         XNfpy7dt0w1j5asGH8FWu9wn4psO5TC0kAFU9OTmkLrPldK3oXwQVYcCH8QHJbz3v7VW
-         kd/N8TSA3sccU7kOxYCq753ePdQCoQGY9Io7duwoBYFwyRwTPWnThIg0Z6PCMZP11DFN
-         UcSz3Qw/z6rDlpS7gTGl+TyXFSxMuOBZXouH0lmGm7e3KxLD97KaWgQhb/5+8ro0SnF3
-         fpH2vTaqv5KyAquLeJ59UxOFVXoj4MAyecyTJ6o3Vos3bJRmtrbGCyUfLL8NGxAFdOFm
-         L7MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691413448; x=1692018248;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8fw0ysUuRGQmdYsHgBJKqqkV1K0A5L6FDJbFcuo1480=;
-        b=X7FsS+UsFItlY3RBhAshF4SJpnBa0Lfqz+409aym52teXqmurt2bVFJydGd9brmTSz
-         2nuCxEaGY2NrhSZMlOP9ZOGTccEgR1+8eSiNEiM4JuU9E4OatOf+mSfdNnjWZTkEL3R5
-         +ZH1aN/wITNVEim8RIPlPyjBjyzBFDiWpWYoyCRCWpR2DNrDUL1Z4jogvNzP6WI9dvqa
-         8zuKtCZt2JnBvL9TQG2w38zkBiLsEYi/ZKj02e+B+QwfU9H0k6tR8ltDAIKBcH9CSovP
-         9HaYAJoFqX0Vh3Ou2MRSH8NPm6v5/k6wUd1m3NaKe519iheZh8dAsOC13aBF8YkpvglU
-         sU/w==
-X-Gm-Message-State: AOJu0YwoOieUAXvZBSebiRMXD9fae3ou7ZW0s7+or1FbIm1fuUrfb1OD
-        u6Th7+G52CL1MvDx8lFyaSmRpg==
-X-Google-Smtp-Source: AGHT+IFANa3hBy+WjggbiPeaU4RZbBasyq8DPreopiF5u4h3sdQbfn6LOIasEwL96ek3TlV6MRoBRg==
-X-Received: by 2002:a19:f817:0:b0:4fe:590:53ca with SMTP id a23-20020a19f817000000b004fe059053camr5806148lff.4.1691413448165;
-        Mon, 07 Aug 2023 06:04:08 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id b17-20020ac25631000000b004fdc6f03c6dsm1477693lff.37.2023.08.07.06.04.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Aug 2023 06:04:07 -0700 (PDT)
-Message-ID: <f710487d-7f35-448d-b2e9-7f008e040607@linaro.org>
-Date:   Mon, 7 Aug 2023 15:04:06 +0200
+        Mon, 7 Aug 2023 09:07:30 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CA8171A;
+        Mon,  7 Aug 2023 06:07:10 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 377ASHX8001047;
+        Mon, 7 Aug 2023 13:06:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=CqfOPwU9hDvT12Or13YFoKQiulhQ0+H+8G8AkmCCiDo=;
+ b=g5oXedAmKh0+UOpgOp0EUlYUUXW/IXXKBNBsWjc5wlfD9u4YK5EqX0cAR2XJT21o2n67
+ yvmNRLc3M5/PmUettkho2KmZq5MqISE/tUa+FSCrwagI370oAoYwZd/uIKpMMrlk5jGQ
+ 7bfwyq+UR3diQFIz77ny6vlsl891Y0r8FzjsrqVrQnqzcW+E+TAVXUZRtDTKinBiW8rW
+ jEKrgrazWotpe01IDKSQbYHXnhz4uvYkAaI/IRPE0z2/9DnwLxDRCQE2HFYM9qrbEzAL
+ QCGd6KJ224MOGjqQ4/UoB6EBYJwwaIPtPaMZIprcy9Stwtfgok/eyDACOKKS7AoMq7S2 TA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sawbg8kdw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Aug 2023 13:06:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 377D6wKr016911
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Aug 2023 13:06:58 GMT
+Received: from [10.216.6.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 06:06:53 -0700
+Message-ID: <9864c6b8-aea0-f8e2-5949-2a05cf899e5a@quicinc.com>
+Date:   Mon, 7 Aug 2023 18:36:50 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] media: platform: venus: Add optional LLCC path
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 0/9] Add pmics supported in Qualcomm's SDX75 platform
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-4-8c8bbe1983a5@linaro.org>
- <ZNDKtwO3tWNIFIhz@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZNDKtwO3tWNIFIhz@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <vkoul@kernel.org>, <kishon@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <abel.vesa@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <quic_pkondeti@quicinc.com>
+References: <1691411333-1556-1-git-send-email-quic_rohiagar@quicinc.com>
+ <83dff121-0a0f-4bd5-bf84-0c7c83f98615@linaro.org>
+ <c4006b16-2c06-4c96-86a1-d4ba235503f4@linaro.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <c4006b16-2c06-4c96-86a1-d4ba235503f4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7AjZ_FNy7XoCdkW6U_Ip0PbbJxTAqPj3
+X-Proofpoint-GUID: 7AjZ_FNy7XoCdkW6U_Ip0PbbJxTAqPj3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_13,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=796
+ impostorscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
+ mlxscore=0 priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308070122
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.08.2023 12:43, Johan Hovold wrote:
-> On Fri, Aug 04, 2023 at 10:09:11PM +0200, Konrad Dybcio wrote:
-> 
->> @@ -479,12 +488,18 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
->>  	if (ret)
->>  		goto err_cpucfg_path;
->>  
->> +	ret = icc_set_bw(core->llcc_path, 0, 0);
->> +	if (ret)
->> +		goto err_llcc_path;
->> +
->>  	ret = icc_set_bw(core->video_path, 0, 0);
->>  	if (ret)
->>  		goto err_video_path;
->>  
->>  	return ret;
->>  
->> +err_llcc_path:
->> +	icc_set_bw(core->video_path, kbps_to_icc(20000), 0);
-> 
-> This looks wrong; you should not try to restore the video path bw which
-> you have not yet updated here.
-Oh whoops :D
 
-> 
-> Also error labels should be named after what they do, not after where
-> you jump from (e.g. to avoid mistakes like the above). Perhaps you can
-> clean up the existing labels before adding the new one.
-Ack, I wouldn't mind giving this some cleanup.
+On 8/7/2023 6:15 PM, Konrad Dybcio wrote:
+> On 7.08.2023 14:45, Konrad Dybcio wrote:
+>> On 7.08.2023 14:28, Rohit Agarwal wrote:
+>>> Hi,
+>>>
+>>> Changes in v2:
+>>>   - Added compatible for pm7550ba for eusb2 repeater and used it in DT.
+>>>   - Addressed some minor comments from Konrad to add fixes tag, labels
+>>>     and update the labels
+>>>
+>>> This series add support of pmics that are found in SDX75 platform and
+>>> add the corresponding regulators in the IDP platform as well.
+>>> It also parallely updates the pmic found in SDX65 to PM7250b and add pinctrl
+>>> support for the same pmic chip.
+>>> This series is based on the new header inclusion[1] and movement of the
+>>> regulators level from rpmpd to rpmhpd[2].
+>>> This series can be picked after successfully picking [2] and [3] as [1] has
+>>> already been applied.
+>>>
+>>> [1] https://lore.kernel.org/all/1689744162-9421-1-git-send-email-quic_rohiagar@quicinc.com/
+>>> [2] https://lore.kernel.org/all/1690781104-2290-1-git-send-email-quic_rohiagar@quicinc.com/
+>>> [3] https://lore.kernel.org/all/1690461813-22564-1-git-send-email-quic_rohiagar@quicinc.com/
+>>>
+>>> Thanks,
+>>> Rohit.
+>> Since you resent this (as mentioned in the first thread with "v2" [1]),
+>> the subject should be [PATCH RESEND ...]
+>>
+> [1] https://lore.kernel.org/linux-arm-msm/f29eae07-b6c4-e7ea-3790-ee800d83859e@quicinc.com/T/#m863acf47848ba75987fcf144c588da21306dc2fe
+Ok, Let me resend it with RESEND tag. But since there is no change will 
+keep it v2.
 
-Konrad
+Thanks,
+Rohit.
+>
+> Konrad
