@@ -2,321 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE63D7721A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 13:24:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E7D67721B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Aug 2023 13:24:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232561AbjHGLYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 07:24:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59478 "EHLO
+        id S232618AbjHGLYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 07:24:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232911AbjHGLXf (ORCPT
+        with ESMTP id S232975AbjHGLXl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 07:23:35 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BBD93C0E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 04:21:22 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-2690803a368so591685a91.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 04:21:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1691407213; x=1692012013;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+T9zoPssix7N9qfaGNa68znQHEAFyeYciCKXdVaHQFo=;
-        b=AEtfoTIxkqzl025wvf9yyl8OvVpV1orZ+7ADsAn8FRdyaHqyneHFGuyJ9jSB6bZbnq
-         2fmUw9pixcoPu0uENFLV6yEHDyHzbx9PEa4/1QReRkJ9Vdrtq4t36sOjNjHyywd/DJSd
-         tcNSBkDsm06qXT7HTJrbLcS8z4Stb96uz/ah29ckB60DgcXFm35Nrt3Aq6Gzw7rdETno
-         9DoEQihV9/klwV9kg7jDjWFfkJeTbrOGsUsJTU6XthyBDJ62ZHYmlNs7Ps0ai9BdMXBM
-         XSVKEoVI2ousbfFpSnJdwsS47J/fbQRy8WPmYTGdWXjklXq1QHXWKCVy/72epw0hglU+
-         Vytw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691407213; x=1692012013;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+T9zoPssix7N9qfaGNa68znQHEAFyeYciCKXdVaHQFo=;
-        b=bCMjjrW+kJKiXMVG6+AWC+uUrRVbSjyIvUDkt6w7kInn2LCf+1OjAxiXIH61OPZUqe
-         caLA31UKpctM3l+DAAAgHiPNexJn6lxIhwdCXdgLbRA2McACcqjexv4LtgsWMWLSAaTL
-         DGLhNeXmb5Echn+oRHFVMbC0mppPqV+/OnF04G9FhD4bRHjqZHFys6W6pabxMOBAIx7N
-         ivY3vON8qnsiQO1Oljp3mcM3dY4zR7oSMeVw+/jPWyv/z0B3by+Ag2+9eWOnn0vfpRNF
-         pHsd+YY3FIntLwqo24Wan2A2SWQB+7NpeuOgeefCISd0VjzGgrCkjP9toAPD0vvCHIfW
-         Oydg==
-X-Gm-Message-State: AOJu0YxNr7FWVbguw3kXg/ggkznwLbVNDGbYMy6BHxP9fjR1fkFhligX
-        iVe7gisbEOMtuOh7piYwZGHWvg==
-X-Google-Smtp-Source: AGHT+IF0evmdLrDlsDTr5Y4TU4NmdZynXgLSKug5uHjkOo8cedCVYEqxJp+s7Xi+ZKGxMcrB3jNS6g==
-X-Received: by 2002:a17:90a:648:b0:269:60ed:d493 with SMTP id q8-20020a17090a064800b0026960edd493mr1830877pje.4.1691407213020;
-        Mon, 07 Aug 2023 04:20:13 -0700 (PDT)
-Received: from C02DW0BEMD6R.bytedance.net ([203.208.167.146])
-        by smtp.gmail.com with ESMTPSA id y13-20020a17090aca8d00b0025be7b69d73sm5861191pjt.12.2023.08.07.04.20.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 04:20:12 -0700 (PDT)
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev, simon.horman@corigine.com,
-        dlemoal@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        Qi Zheng <zhengqi.arch@bytedance.com>
-Subject: [PATCH v4 48/48] mm: shrinker: convert shrinker_rwsem to mutex
-Date:   Mon,  7 Aug 2023 19:09:36 +0800
-Message-Id: <20230807110936.21819-49-zhengqi.arch@bytedance.com>
-X-Mailer: git-send-email 2.24.3 (Apple Git-128)
-In-Reply-To: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
-References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
+        Mon, 7 Aug 2023 07:23:41 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5D7F03C30;
+        Mon,  7 Aug 2023 04:21:31 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C9861D75;
+        Mon,  7 Aug 2023 04:15:47 -0700 (PDT)
+Received: from [10.57.90.63] (unknown [10.57.90.63])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0882A3F59C;
+        Mon,  7 Aug 2023 04:15:01 -0700 (PDT)
+Message-ID: <6535a243-b69c-8571-2d2c-c686f25a9dc5@arm.com>
+Date:   Mon, 7 Aug 2023 12:15:00 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+Subject: Re: [PATCH v7 10/13] coresight-tpdm: Add nodes to configure pattern
+ match output
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
+ <1690269353-10829-11-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1690269353-10829-11-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now there are no readers of shrinker_rwsem, so we can simply replace it
-with mutex lock.
+On 25/07/2023 08:15, Tao Zhang wrote:
+> Add nodes to configure trigger pattern and trigger pattern mask.
+> Each DSB subunit TPDM has maximum of n(n<7) XPR registers to
+> configure trigger pattern match output. Eight 32 bit registers
+> providing DSB interface trigger output pattern match comparison.
+> And each DSB subunit TPDM has maximum of m(m<7) XPMR registers to
+> configure trigger pattern mask match output. Eight 32 bit
+> registers providing DSB interface trigger output pattern match
+> mask.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  34 +++++-
+>   drivers/hwtracing/coresight/coresight-tpdm.c       | 118 +++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.h       |  10 ++
+>   3 files changed, 161 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index a4550c5..66f9582 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -98,4 +98,36 @@ Description:
+>   		should be written first to configure the index number of the edge
+>   		detection which needs to be masked.
+>   
+> -		Accepts only one of the 2 values -  0 or 1.
+> \ No newline at end of file
+> +		Accepts only one of the 2 values -  0 or 1.
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_idx
+> +Date:		March 2023
+> +KernelVersion	6.5
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		Read/Write the index number of the trigger pattern value of DSB
+> +		tpdm. Since there are at most 8 XPR and XPMR registers for the
+> +		trigger parttern, this value ranges from 0 to 7.
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_val
+> +Date:		March 2023
+> +KernelVersion	6.5
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		Read a set of the trigger pattern values of the DSB TPDM.
+> +		Write a data to configure the trigger pattern corresponding to
+> +		the index number. Before writing data to this sysfs file,
+> +		"dsb_trig_patt_idx" should be written first to configure the
+> +		index number of the trigger pattern which needs to be configured.
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_mask
+> +Date:		March 2023
+> +KernelVersion	6.5
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		Read a set of the trigger pattern mask of the DSB TPDM.
+> +		Write a data to configure the trigger pattern mask corresponding
+> +		to the index number. Before writing data to this sysfs file,
+> +		"dsb_trig_patt_idx" should be written first to configure the
+> +		index number of the trigger pattern mask which needs to be
+> +		configured.
+> \ No newline at end of file
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 98fd6ab..1c32d27 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -80,6 +80,13 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   		writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
+>   			   drvdata->base + TPDM_DSB_EDCMR(i));
+>   
+> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> +		writel_relaxed(drvdata->dsb->trig_patt[i],
+> +			    drvdata->base + TPDM_DSB_XPR(i));
+> +		writel_relaxed(drvdata->dsb->trig_patt_mask[i],
+> +			    drvdata->base + TPDM_DSB_XPMR(i));
+> +	}
+> +
+>   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
+>   	/* Set trigger timestamp */
+>   	if (drvdata->dsb->trig_ts)
+> @@ -455,6 +462,114 @@ static ssize_t dsb_edge_ctrl_mask_store(struct device *dev,
+>   }
+>   static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
+>   
+> +static ssize_t dsb_trig_patt_idx_show(struct device *dev,
+> +					   struct device_attribute *attr,
+> +					   char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_patt_idx);
+> +}
+> +
+> +static ssize_t dsb_trig_patt_idx_store(struct device *dev,
+> +					    struct device_attribute *attr,
+> +					    const char *buf,
+> +					    size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long index;
+> +
+> +	if (kstrtoul(buf, 0, &index))
+> +		return -EINVAL;
+> +	if (index >= TPDM_DSB_MAX_PATT)
+> +		return -EPERM;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	drvdata->dsb->trig_patt_idx = index;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_patt_idx);
+> +
+> +static ssize_t dsb_trig_patt_val_show(struct device *dev,
+> +					   struct device_attribute *attr,
+> +					   char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	ssize_t size = 0;
+> +	unsigned long bytes;
+> +	int i = 0;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> +		bytes = sysfs_emit_at(buf, size,
+> +				  "Value: 0x%x\n", drvdata->dsb->trig_patt[i]);
+> +		if (bytes <= 0)
+> +			break;
+> +		size += bytes;
+> +	}
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +
+> +static ssize_t dsb_trig_patt_val_store(struct device *dev,
+> +					    struct device_attribute *attr,
+> +					    const char *buf,
+> +					    size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if (kstrtoul(buf, 0, &val))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	drvdata->dsb->trig_patt[drvdata->dsb->trig_patt_idx] = val;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_patt_val);
+> +
+> +static ssize_t dsb_trig_patt_mask_show(struct device *dev,
+> +					    struct device_attribute *attr,
+> +					    char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	ssize_t size = 0;
+> +	unsigned long bytes;
+> +	int i = 0;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> +		bytes = sysfs_emit_at(buf, size,
+> +			  "Value: 0x%x\n", drvdata->dsb->trig_patt_mask[i]);
 
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
----
- drivers/md/dm-cache-metadata.c |  2 +-
- fs/super.c                     |  2 +-
- mm/shrinker.c                  | 28 ++++++++++++++--------------
- mm/shrinker_debug.c            | 14 +++++++-------
- 4 files changed, 23 insertions(+), 23 deletions(-)
+As mentioned above, please stick to single value. In this case, we could 
+simply expose :
 
-diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index acffed750e3e..9e0c69958587 100644
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1828,7 +1828,7 @@ int dm_cache_metadata_abort(struct dm_cache_metadata *cmd)
- 	 * Replacement block manager (new_bm) is created and old_bm destroyed outside of
- 	 * cmd root_lock to avoid ABBA deadlock that would result (due to life-cycle of
- 	 * shrinker associated with the block manager's bufio client vs cmd root_lock).
--	 * - must take shrinker_rwsem without holding cmd->root_lock
-+	 * - must take shrinker_mutex without holding cmd->root_lock
- 	 */
- 	new_bm = dm_block_manager_create(cmd->bdev, DM_CACHE_METADATA_BLOCK_SIZE << SECTOR_SHIFT,
- 					 CACHE_MAX_CONCURRENT_LOCKS);
-diff --git a/fs/super.c b/fs/super.c
-index a28193045345..60c2d290c754 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -54,7 +54,7 @@ static char *sb_writers_name[SB_FREEZE_LEVELS] = {
-  * One thing we have to be careful of with a per-sb shrinker is that we don't
-  * drop the last active reference to the superblock from within the shrinker.
-  * If that happens we could trigger unregistering the shrinker from within the
-- * shrinker path and that leads to deadlock on the shrinker_rwsem. Hence we
-+ * shrinker path and that leads to deadlock on the shrinker_mutex. Hence we
-  * take a passive reference to the superblock to avoid this from occurring.
-  */
- static unsigned long super_cache_scan(struct shrinker *shrink,
-diff --git a/mm/shrinker.c b/mm/shrinker.c
-index a12dede5d21f..3d44a335ef3c 100644
---- a/mm/shrinker.c
-+++ b/mm/shrinker.c
-@@ -8,7 +8,7 @@
- #include "internal.h"
- 
- LIST_HEAD(shrinker_list);
--DECLARE_RWSEM(shrinker_rwsem);
-+DEFINE_MUTEX(shrinker_mutex);
- 
- #ifdef CONFIG_MEMCG
- static int shrinker_nr_max;
-@@ -80,7 +80,7 @@ int alloc_shrinker_info(struct mem_cgroup *memcg)
- 	int nid, ret = 0;
- 	int array_size = 0;
- 
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 	array_size = shrinker_unit_size(shrinker_nr_max);
- 	for_each_node(nid) {
- 		info = kvzalloc_node(sizeof(*info) + array_size, GFP_KERNEL, nid);
-@@ -91,7 +91,7 @@ int alloc_shrinker_info(struct mem_cgroup *memcg)
- 			goto err;
- 		rcu_assign_pointer(memcg->nodeinfo[nid]->shrinker_info, info);
- 	}
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- 
- 	return ret;
- 
-@@ -104,7 +104,7 @@ static struct shrinker_info *shrinker_info_protected(struct mem_cgroup *memcg,
- 						     int nid)
- {
- 	return rcu_dereference_protected(memcg->nodeinfo[nid]->shrinker_info,
--					 lockdep_is_held(&shrinker_rwsem));
-+					 lockdep_is_held(&shrinker_mutex));
- }
- 
- static struct shrinker_info *shrinker_info_rcu(struct mem_cgroup *memcg,
-@@ -161,7 +161,7 @@ static int expand_shrinker_info(int new_id)
- 	if (!root_mem_cgroup)
- 		goto out;
- 
--	lockdep_assert_held(&shrinker_rwsem);
-+	lockdep_assert_held(&shrinker_mutex);
- 
- 	new_size = shrinker_unit_size(new_nr_max);
- 	old_size = shrinker_unit_size(shrinker_nr_max);
-@@ -224,7 +224,7 @@ static int shrinker_memcg_alloc(struct shrinker *shrinker)
- 	if (mem_cgroup_disabled())
- 		return -ENOSYS;
- 
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 	id = idr_alloc(&shrinker_idr, shrinker, 0, 0, GFP_KERNEL);
- 	if (id < 0)
- 		goto unlock;
-@@ -238,7 +238,7 @@ static int shrinker_memcg_alloc(struct shrinker *shrinker)
- 	shrinker->id = id;
- 	ret = 0;
- unlock:
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- 	return ret;
- }
- 
-@@ -248,7 +248,7 @@ static void shrinker_memcg_remove(struct shrinker *shrinker)
- 
- 	BUG_ON(id < 0);
- 
--	lockdep_assert_held(&shrinker_rwsem);
-+	lockdep_assert_held(&shrinker_mutex);
- 
- 	idr_remove(&shrinker_idr, id);
- }
-@@ -299,7 +299,7 @@ void reparent_shrinker_deferred(struct mem_cgroup *memcg)
- 		parent = root_mem_cgroup;
- 
- 	/* Prevent from concurrent shrinker_info expand */
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 	for_each_node(nid) {
- 		child_info = shrinker_info_protected(memcg, nid);
- 		parent_info = shrinker_info_protected(parent, nid);
-@@ -312,7 +312,7 @@ void reparent_shrinker_deferred(struct mem_cgroup *memcg)
- 			}
- 		}
- 	}
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- }
- #else
- static int shrinker_memcg_alloc(struct shrinker *shrinker)
-@@ -708,11 +708,11 @@ void shrinker_register(struct shrinker *shrinker)
- 		return;
- 	}
- 
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 	list_add_tail_rcu(&shrinker->list, &shrinker_list);
- 	shrinker->flags |= SHRINKER_REGISTERED;
- 	shrinker_debugfs_add(shrinker);
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- 
- 	init_completion(&shrinker->done);
- 	/*
-@@ -745,7 +745,7 @@ void shrinker_free(struct shrinker *shrinker)
- 		wait_for_completion(&shrinker->done);
- 	}
- 
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 	if (shrinker->flags & SHRINKER_REGISTERED) {
- 		/*
- 		 * Lookups on the shrinker are over and will fail in the future,
-@@ -760,7 +760,7 @@ void shrinker_free(struct shrinker *shrinker)
- 
- 	if (shrinker->flags & SHRINKER_MEMCG_AWARE)
- 		shrinker_memcg_remove(shrinker);
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- 
- 	if (debugfs_entry)
- 		shrinker_debugfs_remove(debugfs_entry, debugfs_id);
-diff --git a/mm/shrinker_debug.c b/mm/shrinker_debug.c
-index aa2027075ed9..b698ca9e309e 100644
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -7,7 +7,7 @@
- #include <linux/memcontrol.h>
- 
- /* defined in vmscan.c */
--extern struct rw_semaphore shrinker_rwsem;
-+extern struct mutex shrinker_mutex;
- extern struct list_head shrinker_list;
- 
- static DEFINE_IDA(shrinker_debugfs_ida);
-@@ -163,7 +163,7 @@ int shrinker_debugfs_add(struct shrinker *shrinker)
- 	char buf[128];
- 	int id;
- 
--	lockdep_assert_held(&shrinker_rwsem);
-+	lockdep_assert_held(&shrinker_mutex);
- 
- 	/* debugfs isn't initialized yet, add debugfs entries later. */
- 	if (!shrinker_debugfs_root)
-@@ -220,7 +220,7 @@ int shrinker_debugfs_rename(struct shrinker *shrinker, const char *fmt, ...)
- 	if (!new)
- 		return -ENOMEM;
- 
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 
- 	old = shrinker->name;
- 	shrinker->name = new;
-@@ -238,7 +238,7 @@ int shrinker_debugfs_rename(struct shrinker *shrinker, const char *fmt, ...)
- 			shrinker->debugfs_entry = entry;
- 	}
- 
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- 
- 	kfree_const(old);
- 
-@@ -251,7 +251,7 @@ struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
- {
- 	struct dentry *entry = shrinker->debugfs_entry;
- 
--	lockdep_assert_held(&shrinker_rwsem);
-+	lockdep_assert_held(&shrinker_mutex);
- 
- 	shrinker_debugfs_name_free(shrinker);
- 
-@@ -279,14 +279,14 @@ static int __init shrinker_debugfs_init(void)
- 	shrinker_debugfs_root = dentry;
- 
- 	/* Create debugfs entries for shrinkers registered at boot */
--	down_write(&shrinker_rwsem);
-+	mutex_lock(&shrinker_mutex);
- 	list_for_each_entry(shrinker, &shrinker_list, list)
- 		if (!shrinker->debugfs_entry) {
- 			ret = shrinker_debugfs_add(shrinker);
- 			if (ret)
- 				break;
- 		}
--	up_write(&shrinker_rwsem);
-+	mutex_unlock(&shrinker_mutex);
- 
- 	return ret;
- }
--- 
-2.30.2
+dsb_trig_patt_mask0..7 as RW and directly let the user set/get the 
+values and get rid of the idx.
+
+You may be able to use an device_ext_attribute to store the index and 
+use a single function to support all registers.
+
+Suzuki
 
