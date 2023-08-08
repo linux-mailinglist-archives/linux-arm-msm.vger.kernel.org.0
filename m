@@ -2,87 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80CE7774EC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 00:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B69AE774F88
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 01:47:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbjHHW6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 18:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58982 "EHLO
+        id S229570AbjHHXrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 19:47:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjHHW6X (ORCPT
+        with ESMTP id S229517AbjHHXrN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 18:58:23 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C138101;
-        Tue,  8 Aug 2023 15:58:22 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 378LZTS5029920;
-        Tue, 8 Aug 2023 22:57:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8pLYU4YB2qxqvhctsJIggYz0Lp5Rs0uMxaMSBiHek2Y=;
- b=jOX3cgcHmovZL33zzRT4xxLZJZ47PpDbEF3S2Yl8FqmTsyVK0iJqF1AXDPMeGzrmrWPQ
- cJtlqggs4g1E+aJJ2la2jog55Wkbk0WPBwyoNxpUuPZJYBABidGBYgSg7iJZyUCpmL7N
- KNLzqOsEkwle3JJE7e3QavbFvj0yz440fz5NGjBEG5qn7Up8QkXONHiQ/bIidN9KA3nL
- nZmnOGXdlcrhElX/nD/DStYVHjHNIkbYCr+d2tPBgDDRPG9ZUaBuZaev3bp+003mFU0A
- dUFr4d3nRa0q/aDUIIplkiGOfcu90kNZVO/yS9dre+KNU72WKsHr/eTdStZMNebNtxWC ug== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbe15t57g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Aug 2023 22:57:54 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 378Mvrf7026849
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Aug 2023 22:57:53 GMT
-Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
- 2023 15:57:52 -0700
-Message-ID: <1dfcd37e-11a6-fa77-6440-f0e6bd06998d@quicinc.com>
-Date:   Tue, 8 Aug 2023 15:57:51 -0700
+        Tue, 8 Aug 2023 19:47:13 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE979F0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 16:47:11 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9a828c920so95767391fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 16:47:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691538430; x=1692143230;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VZG7TCZvLFAbHq/1wBLzx2E5YyVPigTkVZVHiMhQFnM=;
+        b=U+wtHP2lc50CwCQVIKv4CrFV0GfCfxF26eroErW+Sn5QXWbPBU9YME9XmuPVRSUGBj
+         QMDjoDzZeqwOk2jIvaSM4ly0C6xF48aJVJF9DidB4vkcLpNy3VHizUfHp4efk/38JbLz
+         lR7ieaBiGeM05a1baPyWeMxCns5nTAouAWyT72K6Wa4uay7XIWdBdn014Tv7oRL6J5vF
+         8vKoPce4p5ciHVVSqBxcimHI5qDGq0g3wyR4gW4io2qQX7lkXqLS7o8pZ2HzUSWnokYD
+         p5x0eSHthR3L8nnh72hdC+Z7oB+hBBWTAoSGFv7ozyyPnDID3mpDfq4xyjeEkW+pCi3i
+         Toqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691538430; x=1692143230;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VZG7TCZvLFAbHq/1wBLzx2E5YyVPigTkVZVHiMhQFnM=;
+        b=b2IYZhBZhlCcOYdOpz4OkYpItueqjypGyIF2+Ud9bikgCSIL+DCCNisuvwbHwOqNnP
+         6JgDCHu6JFdRcZLSj92l+xOu+qx7cjc/Ez2PtiW/zMDp4cuw/eeVSNgX42qmzmXqFnfD
+         c6n0zlABKBvWIGLc3XLJDgz6osFWOlw0XGkHhLrWycKsELcKgGYOjO+0ODAkaP6urAdO
+         lXAtf2Lg3AbIWY2HtqLjWUcBg1daJ/syMAh2N13FResvLYXyIPHDrw561xpA3jrSAEat
+         vqiioodhfhfMwKwFADFgTF4y8Q3br15idE+fVhFl89KoMSdqTKb1U8n9A88Coz0X/d0o
+         gYLw==
+X-Gm-Message-State: AOJu0YzmDXYNSoBklzd2DCTnMvo595vBY0lXICvVzK8DPXchtykmZv+2
+        FL7OSd+BuxxNYBOTn8Rymo7mgA==
+X-Google-Smtp-Source: AGHT+IFBWK7BtOK07P1lkRjIV4kNADCddzfkRWw6PRzybwN5eLRLi+bkzQh96jH5UwNvaKPrKEX05w==
+X-Received: by 2002:a2e:97c3:0:b0:2b9:bf49:901b with SMTP id m3-20020a2e97c3000000b002b9bf49901bmr670235ljj.6.1691538430152;
+        Tue, 08 Aug 2023 16:47:10 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id t3-20020a2e9d03000000b002b6d7682050sm2473194lji.89.2023.08.08.16.47.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Aug 2023 16:47:09 -0700 (PDT)
+Message-ID: <60cbc599-e95b-4723-9cc0-525bfe5cfcbb@linaro.org>
+Date:   Wed, 9 Aug 2023 01:47:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v5 02/10] drm: Introduce solid fill DRM plane property
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: msm8996: Improve GPU OPP table
 Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <sboyd@codeaurora.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        <quic_abhinavk@quicinc.com>, <ppaalanen@gmail.com>,
-        <contact@emersion.fr>, <laurent.pinchart@ideasonboard.com>,
-        <sebastian.wick@redhat.com>, <ville.syrjala@linux.intel.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <wayland-devel@lists.freedesktop.org>
-References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com>
- <20230728-solid-fill-v5-2-053dbefa909c@quicinc.com>
- <CAA8EJpq=pbDoYc9wqKKrX+RahXp8zWTPFqVqA=S-0TkWXXJUjQ@mail.gmail.com>
- <26b4bb91-8786-c7cf-a821-eb2b881a42ab@quicinc.com>
- <656526F6-C123-4A5A-9E62-6ED092474113@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <656526F6-C123-4A5A-9E62-6ED092474113@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>
+References: <20230329-topic-adreno_opp-v1-0-24d34ac6f007@linaro.org>
+ <20230329-topic-adreno_opp-v1-3-24d34ac6f007@linaro.org>
+ <CAA8EJpprgiXWZC2W3JSgG3jtTZDtbwoeQ6LBK=pqfpk0oMvNRw@mail.gmail.com>
+ <bc5dd7d1-e001-8bd2-55c6-b6827c418371@linaro.org>
+ <0e703d3c-7ad9-6265-fa71-b62650b96e79@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <0e703d3c-7ad9-6265-fa71-b62650b96e79@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c8FIUlp1qh3WMLbmJE0pWfDwaXNp4yYP
-X-Proofpoint-ORIG-GUID: c8FIUlp1qh3WMLbmJE0pWfDwaXNp4yYP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-08_21,2023-08-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- lowpriorityscore=0 mlxscore=0 adultscore=0 suspectscore=0 phishscore=0
- impostorscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308080205
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -93,113 +126,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/7/2023 6:07 PM, Dmitry Baryshkov wrote:
+On 26.05.2023 15:30, Konrad Dybcio wrote:
 > 
 > 
-> On 8 August 2023 00:41:07 GMT+03:00, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+> On 30.03.2023 12:57, Konrad Dybcio wrote:
 >>
 >>
->> On 8/4/2023 6:27 AM, Dmitry Baryshkov wrote:
->>> On Fri, 28 Jul 2023 at 20:03, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>> On 29.03.2023 23:32, Dmitry Baryshkov wrote:
+>>> On Wed, 29 Mar 2023 at 22:17, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >>>>
->>>> Document and add support for solid_fill property to drm_plane. In
->>>> addition, add support for setting and getting the values for solid_fill.
->>>>
->>>> To enable solid fill planes, userspace must assign a property blob to
->>>> the "solid_fill" plane property containing the following information:
->>>>
->>>> struct drm_mode_solid_fill {
->>>>           u32 version;
->>>>           u32 r, g, b;
->>>> };
->>>>
->>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>> ---
->>>>    drivers/gpu/drm/drm_atomic_state_helper.c |  9 +++++
->>>>    drivers/gpu/drm/drm_atomic_uapi.c         | 55 +++++++++++++++++++++++++++++++
->>>>    drivers/gpu/drm/drm_blend.c               | 30 +++++++++++++++++
->>>>    include/drm/drm_blend.h                   |  1 +
->>>>    include/drm/drm_plane.h                   | 35 ++++++++++++++++++++
->>>>    include/uapi/drm/drm_mode.h               | 24 ++++++++++++++
->>>>    6 files changed, 154 insertions(+)
->>>>
+>>>> Remove the self-explanatory comment about opp-supported-hw contents,
+>>>> add required-opps to ensure reasonable power domain levels are voted
+>>>> for (currently we've been piggybacking off of miracles and MDP votes)
+>>>> and add newlines between each subnode.
 >>>
->>> [skipped most of the patch]
->>>
->>>> diff --git a/include/uapi/drm/drm_mode.h b/include/uapi/drm/drm_mode.h
->>>> index 43691058d28f..53c8efa5ad7f 100644
->>>> --- a/include/uapi/drm/drm_mode.h
->>>> +++ b/include/uapi/drm/drm_mode.h
->>>> @@ -259,6 +259,30 @@ struct drm_mode_modeinfo {
->>>>           char name[DRM_DISPLAY_MODE_LEN];
->>>>    };
->>>>
->>>> +/**
->>>> + * struct drm_mode_solid_fill - User info for solid fill planes
->>>> + *
->>>> + * This is the userspace API solid fill information structure.
->>>> + *
->>>> + * Userspace can enable solid fill planes by assigning the plane "solid_fill"
->>>> + * property to a blob containing a single drm_mode_solid_fill struct populated with an RGB323232
->>>> + * color and setting the pixel source to "SOLID_FILL".
->>>> + *
->>>> + * For information on the plane property, see drm_plane_create_solid_fill_property()
->>>> + *
->>>> + * @version: Version of the blob. Currently, there is only support for version == 1
->>>> + * @r: Red color value of single pixel
->>>> + * @g: Green color value of single pixel
->>>> + * @b: Blue color value of single pixel
->>>> + */
->>>> +struct drm_mode_solid_fill {
->>>> +       __u32 version;
->>>> +       __u32 r;
->>>> +       __u32 g;
->>>> +       __u32 b;
->>>
->>> Another thought about the drm_mode_solid_fill uABI. I still think we
->>> should add alpha here. The reason is the following:
->>>
->>> It is true that we have  drm_plane_state::alpha and the plane's
->>> "alpha" property. However it is documented as "the plane-wide opacity
->>> [...] It can be combined with pixel alpha. The pixel values in the
->>> framebuffers are expected to not be pre-multiplied by the global alpha
->>> associated to the plane.".
->>>
->>> I can imagine a use case, when a user might want to enable plane-wide
->>> opacity, set "pixel blend mode" to "Coverage" and then switch between
->>> partially opaque framebuffer and partially opaque solid-fill without
->>> touching the plane's alpha value.
+>>> I'm not sure this is 100% correct. The values that you add are correct
+>>> for the voltage scaling case. However, based on the vendor kernel
+>>> sources I think that MX should only be scaled if the voltage is scaled
+>>> too. I might be wrong here.
+>> MX must be >= CX (and GX), so this should bring no harm.
 >>
->> Hi Dmitry,
->>
->> I don't really agree that adding a solid fill alpha would be a good idea. Since the intent behind solid fill is to have a single color for the entire plane, I think it makes more sense to have solid fill rely on the global plane alpha.
->>
->> As stated in earlier discussions, I think having both a solid_fill.alpha and a plane_state.alpha would be redundant and serve to confuse the user as to which one to set.
-> 
-> That depends on the blending mode: in Coverage mode one has independent plane and contents alpha values. And I consider alpha value to be a part of the colour in the rgba/bgra modes.
+>> (citation needed, but that seems to hold true..)
+> With that in mind, would you ack these patches Dmitry?
+Bump?
 
-Acked -- taking Sebastian's concern into consideration, I think I'll 
-have "PIXEL_SOURCE_SOLID_FILL_RGB" and add a separate 
-"PIXEL_SOURCE_SOLID_FILL_RGBA".
-
-Thanks,
-
-Jessica Zhang
-
-> 
-> 
->>
->> Thanks,
->>
->> Jessica Zhang
->>
->>>
->>> -- 
->>> With best wishes
->>> Dmitry
-> 
-> -- 
-> With best wishes
-> Dmitry
+Konrad
