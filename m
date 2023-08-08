@@ -2,89 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 162B5773742
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 05:02:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0004E773BF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 17:58:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbjHHDCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 23:02:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40750 "EHLO
+        id S231374AbjHHP6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 11:58:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjHHDCc (ORCPT
+        with ESMTP id S230517AbjHHP50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 23:02:32 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FD310D3;
-        Mon,  7 Aug 2023 20:02:30 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3782MfV7025489;
-        Tue, 8 Aug 2023 03:02:07 GMT
+        Tue, 8 Aug 2023 11:57:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D6159F6;
+        Tue,  8 Aug 2023 08:44:01 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3785waNI027031;
+        Tue, 8 Aug 2023 06:14:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=aFtzoNl4y4lvbvaP2g/HGPsHP90SAc8cYVHqU/YrCxc=;
- b=e8mI9z6pgWfKtKqVQyCuBmh5htUFjGqccV3z/2oAeEYJasuGLN3mj8iEU4nJQCJNKVeK
- JYxrywcQgg6YFy/LAUKpLG6DsZVchG06/orELf08NBtawT331aAsTXsx03YTKgMw2lPV
- G0zfIj0/q/VOThRh9ByY2mC2/Yt9D6YTowQ6wxH7O1MwFqHeM766DLBc0SENKdMOHdrY
- 2gc1W7aOyLWYtwiecYo7kuIWXPheU/yd2qNxh94mK0LV1BQEzH+eq0uTghuwU1SJS6YF
- 6/y5TNPQr6+YL1RkskFsRVqa80q3ET/CqoVBikAgvByPSVNTioh60vfnOKv5ec3s90r1 Vw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sb7bb8k97-1
+ bh=Z+YoQRvp5w4t9wXjYhRR/QHF47BeYoKYT/xPD6UE0rA=;
+ b=SNf4ltofDcPbaKUSx/fQhrrVZr0LFbRa4cpaEqmQ9pCu+4pYtnlZwApTQbzwfiE9s3IR
+ vHqY/5OXixu3cfiOtMbBpJxX2nOH9rKQrJuVvsKZhxalTtaCqhQbSyy/zEstMSjpU4hU
+ vBPj68X/ZcClOrJxgbE6Mh68GTo9++SUKpPMybzQwDqr+Yh8kD4VAUZ2G5OPAEZ424KL
+ Hw2DWWCzgjM365984s0MaO4sbQ1WoU4aKSDwhqArrYzfkJ1kM/E43utwqc4n6ROsTCHY
+ VoAXah+FvyBLRX82SwHQSOaxCMeRIGkfAbFt4tt6vksd7BKSEc6hWMSrcWngMg4nihcX Kg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sba0qrkfw-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Aug 2023 03:02:06 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 378325HC027201
+        Tue, 08 Aug 2023 06:14:10 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3786E9x6011302
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Aug 2023 03:02:05 GMT
-Received: from [10.50.30.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 8 Aug 2023 06:14:09 GMT
+Received: from [192.168.143.77] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
- 2023 20:02:01 -0700
-Message-ID: <58ff2350-9e07-36a3-e7a6-f882b292bc35@quicinc.com>
-Date:   Tue, 8 Aug 2023 08:31:46 +0530
+ 2023 23:14:09 -0700
+Message-ID: <240099bf-0a28-9ddd-7d85-12ef227fda6a@quicinc.com>
+Date:   Mon, 7 Aug 2023 23:14:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V25 0/3] misc: Add driver support for Data Capture and
- Compare unit(DCC)
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        "Rajendra Nayak" <quic_rjendra@quicinc.com>
-References: <cover.1687945879.git.quic_schowdhu@quicinc.com>
- <f25f8c43-2996-23ff-e6af-9e39b7fced86@quicinc.com>
- <774b688f-0324-9097-6504-58d15a3e6afb@quicinc.com>
- <2023080438-reacquire-obsessed-3e81@gregkh>
- <2023080408-zoom-defraud-1ae8@gregkh>
- <75c25eac-e92c-5ca2-4ef6-06ee89584ce6@quicinc.com>
- <2023080753-decode-outgoing-b6c6@gregkh>
+ Thunderbird/102.6.1
+Subject: Re: [PATCH V1] scsi: ufs: qcom: Align programming sequence as per HW
+ spec
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, <mani@kernel.org>,
+        <quic_cang@quicinc.com>, <quic_asutoshd@quicinc.com>,
+        <avri.altman@wdc.com>, <martin.petersen@oracle.com>,
+        <beanhuo@micron.com>
+CC:     <bvanassche@acm.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <jejb@linux.ibm.com>, <linux-arm-msm@vger.kernel.org>,
+        <quic_ziqichen@quicinc.com>,
+        "Naveen Kumar Goud Arepalli" <quic_narepall@quicinc.com>
+References: <20230807155026.28671-1-quic_nitirawa@quicinc.com>
 Content-Language: en-US
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <2023080753-decode-outgoing-b6c6@gregkh>
+From:   "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+In-Reply-To: <20230807155026.28671-1-quic_nitirawa@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eq2g4EHpoqaQuw7jecakTqTERzJ-Cqdf
-X-Proofpoint-ORIG-GUID: eq2g4EHpoqaQuw7jecakTqTERzJ-Cqdf
+X-Proofpoint-GUID: iOV8u8dKw-LTCm9VXayL2mS8btWu4Pqa
+X-Proofpoint-ORIG-GUID: iOV8u8dKw-LTCm9VXayL2mS8btWu4Pqa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-07_28,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxscore=0 adultscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308080025
+ definitions=2023-08-08_04,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1011
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308080055
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
@@ -95,92 +87,440 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 8/7/2023 8:50 AM, Nitin Rawat wrote:
+> Align clock configuration as per Qualcomm UFS controller
+> hardware specification.
+> 
+> This change updates UFS_SYS1CLK_1US, CORE_CLK_1US_CYCLES,
+> PA_VS_CORE_CLK_40NS_CYCLES timer configuration for Qunipro
+> and UTP to align with Qualcomm UFS HW specification.
+> 
+> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>   drivers/ufs/host/ufs-qcom.c | 262 +++++++++++++++++++++++++++---------
+>   drivers/ufs/host/ufs-qcom.h |  20 ++-
+>   2 files changed, 215 insertions(+), 67 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index e7164ce7336b..836894c112c1 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -91,10 +91,7 @@ struct __ufs_qcom_bw_table {
+>   };
+> 
+>   static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+> -
+>   static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+> -static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+> -						       u32 clk_cycles);
+> 
+>   static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
+>   {
+> @@ -531,8 +528,9 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+>   /*
+>    * Return: zero for success and non-zero in case of a failure.
+>    */
+> -static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+> -			       u32 hs, u32 rate, bool update_link_startup_timer)
+> +static int __ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+> +				 u32 hs, u32 rate, bool link_startup,
+> +				 bool is_pre_scale_up)
+>   {
+>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>   	struct ufs_clk_info *clki;
+> @@ -563,11 +561,16 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>   	/*
+>   	 * The Qunipro controller does not use following registers:
+>   	 * SYS1CLK_1US_REG, TX_SYMBOL_CLK_1US_REG, CLK_NS_REG &
+> -	 * UFS_REG_PA_LINK_STARTUP_TIMER
+> -	 * But UTP controller uses SYS1CLK_1US_REG register for Interrupt
+> -	 * Aggregation logic.
+> -	*/
+> -	if (ufs_qcom_cap_qunipro(host) && !ufshcd_is_intr_aggr_allowed(hba))
+> +	 * UFS_REG_PA_LINK_STARTUP_TIMER.
+> +	 * However UTP controller uses SYS1CLK_1US_REG register for Interrupt
+> +	 * Aggregation logic and Auto hibern8 logic.
+> +	 * It is mandatory to write SYS1CLK_1US_REG register on UFS host
+> +	 * controller V4.0.0 onwards.
+> +	 */
+> +	if (ufs_qcom_cap_qunipro(host) &&
+> +	    !(ufshcd_is_intr_aggr_allowed(hba) ||
+> +	    ufshcd_is_auto_hibern8_supported(hba) ||
+> +	    host->hw_ver.major >= 4))
+>   		return 0;
+> 
+>   	if (gear == 0) {
+> @@ -576,8 +579,14 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>   	}
+> 
+>   	list_for_each_entry(clki, &hba->clk_list_head, list) {
+> -		if (!strcmp(clki->name, "core_clk"))
+> -			core_clk_rate = clk_get_rate(clki->clk);
+> +		if (!strcmp(clki->name, "core_clk")) {
+> +			if (is_pre_scale_up)
+> +				core_clk_rate = clki->max_freq;
+> +			else
+> +				core_clk_rate = clk_get_rate(clki->clk);
+> +			break;
+> +		}
+> +
+>   	}
+> 
+>   	/* If frequency is smaller than 1MHz, set to 1MHz */
+> @@ -657,7 +666,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>   		mb();
+>   	}
+> 
+> -	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
+> +	if (link_startup && host->hw_ver.major != 0x5) {
+>   		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
+>   			      REG_UFS_CFG0);
+>   		/*
+> @@ -670,6 +679,114 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>   	return 0;
+>   }
+> 
+> +static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+> +			       u32 hs, u32 rate, bool link_startup)
+Hi Nitin,
 
+How about adding scale_up param to this function ufs_qcom_cfg_timers() 
+as below:
 
-On 8/7/2023 11:14 PM, Greg Kroah-Hartman wrote:
-> On Mon, Aug 07, 2023 at 11:03:45PM +0530, Souradeep Chowdhury wrote:
->>
->>
->> On 8/4/2023 7:19 PM, Greg Kroah-Hartman wrote:
->>> On Fri, Aug 04, 2023 at 03:47:26PM +0200, Greg Kroah-Hartman wrote:
->>>> On Thu, Aug 03, 2023 at 07:35:18AM -0700, Trilok Soni wrote:
->>>>> On 8/3/2023 12:06 AM, Souradeep Chowdhury wrote:
->>>>>>
->>>>>>
->>>>>> On 6/28/2023 3:53 PM, Souradeep Chowdhury wrote:
->>>>>
->>>>> ...
->>>>>
->>>>>>>
->>>>>>> https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
->>>>>>>
->>>>>>> Changes in v25
->>>>>>>
->>>>>>> * Updated the documentation of the structure dcc_config_entry as per
->>>>>>> the comments in V23
->>>>>>> * Updated the documentation of the dcc Kconfig definition as per
->>>>>>> comment in V24
->>>>>>> * Used u64 where applicable
->>>>>>> * Removed the mutex locks where it is not needed
->>>>>>> * Removed the use of unlikely keyword
->>>>>>> * Renamed "nr_link_list" to "max_link_list"
->>>>>>>
->>>>>>> Souradeep Chowdhury (3):
->>>>>>>      dt-bindings: misc: qcom,dcc: Add the dtschema
->>>>>>>      misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
->>>>>>>      MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->>>>>>>        support
->>>>>>>
->>>>>>>     Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
->>>>>>>     .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
->>>>>>>     MAINTAINERS                                   |    8 +
->>>>>>>     drivers/misc/Kconfig                          |    8 +
->>>>>>>     drivers/misc/Makefile                         |    1 +
->>>>>>>     drivers/misc/qcom-dcc.c                       | 1312 +++++++++++++++++
->>>>>>>     6 files changed, 1378 insertions(+), 5 deletions(-)
->>>>>>>     create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
->>>>>>>     create mode 100644 drivers/misc/qcom-dcc.c
->>>>>>
->>>>>> Gentle Ping
->>>>>
->>>>> Thank you for the reminder Souradeep. Greg and others, please see if we need
->>>>> any changes here or it can be picked up?
->>>>
->>>> It would help if the code would actually build:
->>>>
->>>> drivers/misc/qcom-dcc.c: In function ‘ready_read’:
->>>> drivers/misc/qcom-dcc.c:853:13: error: unused variable ‘ret’ [-Werror=unused-variable]
->>>>     853 |         int ret = 0;
->>>>         |             ^~~
->>>>
->>>> {sigh}
->>>>
->>>> How in the world was this ever tested?
->>>
->>> Ok, next time I want to see some QCOM engineers to sign off on this that
->>> it was actually tested and they can back it up that this is ready to be
->>> merged.  When the code doesn't even build, that is a huge red flag that
->>> this whole thing is being rushed as it obviously was never tested in the
->>> form that was submitted for inclusion.
->>>
->>> You all know better than this.
->>
->> My apologies on missing out on this, it is a W=1 level compilation warning
->> that got suppressed on a normal kernel build.
-> 
-> No, not at all, it showed up on my "normal kernel build", I do not have
-> "W=1" set at all.
-> 
-> If you did a simple "make allmodconfig" I am pretty sure it would have
-> tripped this.
-> 
-> How exactly was this tested?
+static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+			       u32 hs, u32 rate, bool link_startup,
+			       bool scale_up)
 
-My toolchain interprets this as a W=1 level warning rather than an 
-error. So I am able to build the kernel with it. Probably because I
-am using an older version. Will correct this in the next version.
+Then replace all references to __ufs_qcom_cfg_timers() with 
+ufs_qcom_cfg_timers()?
 
+It is hard to follow these two almost identical functions with 2 flags 
+invoked from different places, so try to get rid of one.
+
+> +{
+> +	return  __ufs_qcom_cfg_timers(hba, gear, hs, rate,
+> +				      link_startup, false);
+> +}
+> +
+> +static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
+> +				      u32 clk_1us_cycles,
+> +				      u32 clk_40ns_cycles,
+> +				      bool scale_up)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	u32 mask = MAX_CORE_CLK_1US_CYCLES_MASK;
+> +	u32 reg, clk_cycles;
+Remove the clk_cycles variable and re-use the variable reg?
+
+> +	u32 offset = 0;
+> +	int err;
+> +
+> +	/* Bit mask and offset changed on UFS host controller V4.0.0 onwards */
+> +	if (host->hw_ver.major >= 4) {
+> +		mask = MAX_CORE_CLK_1US_CYCLES_MASK_V4;
+> +		offset = MAX_CORE_CLK_1US_CYCLES_OFFSET_V4;
+> +	}
+> +
+> +	if (clk_1us_cycles > mask)
+> +		return -EINVAL;
+> +
+> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
+> +	if (err)
+> +		return err;
+> +
+> +	reg &= ~(mask << offset);
+> +	reg |= clk_1us_cycles << offset;
+> +
+> +	if (scale_up)
+> +		reg |= CORE_CLK_DIV_EN_BIT;
+> +	else
+> +		reg &= ~CORE_CLK_DIV_EN_BIT;
+> +
+> +	err = ufshcd_dme_set(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), reg);
+> +	if (err)
+> +		return err;
+> +
+> +	/*
+> +	 * UFS host controller V4.0.0 onwards needs to program
+> +	 * PA_VS_CORE_CLK_40NS_CYCLES attribute per programmed
+> +	 * frequency of unipro core clk of UFS host controller.
+> +	 */
+> +	if (host->hw_ver.major >= 4) {
+> +		if (clk_40ns_cycles > PA_VS_CORE_CLK_40NS_CYCLES_MASK)
+> +			return -EINVAL;
+> +
+> +		err = ufshcd_dme_get(hba,
+Nitpicking..You can probably fit all 3 params on 1 line once you replace 
+clk_cycles with reg.
+
+> +				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
+> +				     &clk_cycles);
+> +		if (err)
+> +			return err;
+> +
+> +		clk_cycles &= ~PA_VS_CORE_CLK_40NS_CYCLES_MASK;
+> +		clk_cycles |= clk_40ns_cycles;
+> +
+> +		err = ufshcd_dme_set(hba,
+Same comment as above.
+
+> +				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
+> +				     clk_cycles);
+> +	}
+> +
+> +	return err;
+> +}
+> +
+> +static int ufs_qcom_cfg_core_clk_ctrl(struct ufs_hba *hba)
+> +{
+> +	struct list_head *head = &hba->clk_list_head;
+> +	struct ufs_clk_info *clki;
+> +	u32 max_freq = 0;
+> +	int err;
+> +
+> +	list_for_each_entry(clki, head, list) {
+> +		if (!IS_ERR_OR_NULL(clki->clk) &&
+> +		    (!strcmp(clki->name, "core_clk_unipro"))) {
+> +			max_freq = clki->max_freq;
+> +			break;
+> +		}
+> +	}
+> +
+> +	switch (max_freq) {
+> +	case MHZ_403:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16, true);
+> +		break;
+> +	case MHZ_300:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12, true);
+> +		break;
+> +	case MHZ_201_5:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8, true);
+> +		break;
+> +	case MHZ_150:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6, true);
+> +		break;
+> +	case MHZ_100:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, true);
+> +		break;
+> +	default:
+> +		dev_err(hba->dev, "unipro max_freq=%u entry missing\n", max_freq);
+> +		err = -EINVAL;
+> +		break;
+> +	}
+> +
+> +	return err;
+> +}
+>   static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>   					enum ufs_notify_change_status status)
+>   {
+> @@ -685,13 +802,15 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>   			return -EINVAL;
+>   		}
 > 
-> thanks,
+> -		if (ufs_qcom_cap_qunipro(host))
+> -			/*
+> -			 * set unipro core clock cycles to 150 & clear clock
+> -			 * divider
+> -			 */
+> -			err = ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba,
+> -									  150);
+> +		if (ufs_qcom_cap_qunipro(host)) {
+> +			err = ufs_qcom_cfg_core_clk_ctrl(hba);
+> +			if (err) {
+> +				dev_err(hba->dev,
+> +					"%s cfg core clk ctrl failed\n",
+> +					__func__);
+> +				return err;
+> +			}
+> +		}
 > 
-> greg k-h
+>   		/*
+>   		 * Some UFS devices (and may be host) have issues if LCC is
+> @@ -1296,69 +1415,52 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
+>   	phy_exit(host->generic_phy);
+>   }
+> 
+> -static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+> -						       u32 clk_cycles)
+> +static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+>   {
+> -	int err;
+> -	u32 core_clk_ctrl_reg;
+> -
+> -	if (clk_cycles > DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK)
+> -		return -EINVAL;
+> -
+> -	err = ufshcd_dme_get(hba,
+> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+> -			    &core_clk_ctrl_reg);
+> -	if (err)
+> -		return err;
+> -
+> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
+> -	core_clk_ctrl_reg |= clk_cycles;
+> -
+> -	/* Clear CORE_CLK_DIV_EN */
+> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
+> +	int err = 0;
+> 
+> -	return ufshcd_dme_set(hba,
+> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+> -			    core_clk_ctrl_reg);
+> -}
+> +	if (!ufs_qcom_cap_qunipro(host))
+> +		goto out;
+> 
+> -static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+> -{
+> -	/* nothing to do as of now */
+> -	return 0;
+> +	if (attr) {
+> +		err = __ufs_qcom_cfg_timers(hba, attr->gear_rx,
+> +					    attr->pwr_rx, attr->hs_rate,
+> +					    false, true);
+> +		if (err)
+> +			dev_err(hba->dev, "%s ufs cfg timer failed\n",
+> +					  __func__);
+> +	}
+> +	err = ufs_qcom_cfg_core_clk_ctrl(hba);
+> +out:
+> +	return err;
+>   }
+> 
+>   static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
+>   {
+> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> -
+> -	if (!ufs_qcom_cap_qunipro(host))
+> -		return 0;
+> -
+> -	/* set unipro core clock cycles to 150 and clear clock divider */
+> -	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 150);
+> +	return 0;
+>   }
+> 
+>   static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+>   {
+>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>   	int err;
+> -	u32 core_clk_ctrl_reg;
+> +	u32 reg;
+> 
+>   	if (!ufs_qcom_cap_qunipro(host))
+>   		return 0;
+> 
+> -	err = ufshcd_dme_get(hba,
+> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+> -			    &core_clk_ctrl_reg);
+> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
+> +	if (err)
+> +		return err;
+> 
+>   	/* make sure CORE_CLK_DIV_EN is cleared */
+> -	if (!err &&
+> -	    (core_clk_ctrl_reg & DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT)) {
+> -		core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
+> +	if (reg & CORE_CLK_DIV_EN_BIT) {
+> +		reg &= ~CORE_CLK_DIV_EN_BIT;
+>   		err = ufshcd_dme_set(hba,
+>   				    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+> -				    core_clk_ctrl_reg);
+> +				    reg);
+>   	}
+> 
+>   	return err;
+> @@ -1367,12 +1469,44 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+>   static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
+>   {
+>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
+> +	struct list_head *head = &hba->clk_list_head;
+> +	struct ufs_clk_info *clki;
+> +	u32 curr_freq = 0;
+> +	int err;
+> 
+>   	if (!ufs_qcom_cap_qunipro(host))
+>   		return 0;
+> 
+> -	/* set unipro core clock cycles to 75 and clear clock divider */
+> -	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 75);
+> +	if (attr)
+> +		ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
+> +				    attr->hs_rate, false);
+> +
+> +	list_for_each_entry(clki, head, list) {
+> +		if (!IS_ERR_OR_NULL(clki->clk) &&
+> +		    (!strcmp(clki->name, "core_clk_unipro"))) {
+> +			curr_freq = clk_get_rate(clki->clk);
+> +			break;
+> +		}
+> +	}
+> +
+> +	switch (curr_freq) {
+> +	case MHZ_37_5:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2, false);
+> +		break;
+> +	case MHZ_75:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3, false);
+> +		break;
+> +	case MHZ_100:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, false);
+> +		break;
+> +	default:
+> +		err = -EINVAL;
+> +		dev_err(hba->dev, "unipro curr_freq=%u entry missing\n", curr_freq);
+> +		break;
+> +	}
+> +
+> +	return err;
+>   }
+> 
+>   static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index d6f8e74bd538..da7b5ee7c1cf 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -79,6 +79,17 @@ enum {
+>   	UFS_MEM_CQIS_VS		= 0x8,
+>   };
+> 
+> +
+> +/* QCOM UFS host controller core clk frequencies */
+> +#define MHZ_37_5	37500000
+> +#define MHZ_50		50000000
+> +#define MHZ_75		75000000
+> +#define MHZ_100		100000000
+> +#define MHZ_150		150000000
+> +#define MHZ_300		300000000
+> +#define MHZ_201_5	201500000
+> +#define MHZ_403		403000000
+> +
+>   #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
+>   #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
+> 
+> @@ -129,9 +140,12 @@ enum {
+>   #define PA_VS_CONFIG_REG1	0x9000
+>   #define DME_VS_CORE_CLK_CTRL	0xD002
+>   /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
+> -#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
+> -#define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
+> -
+> +#define MAX_CORE_CLK_1US_CYCLES_MASK_V4			0xFFF
+> +#define MAX_CORE_CLK_1US_CYCLES_OFFSET_V4		0x10
+> +#define MAX_CORE_CLK_1US_CYCLES_MASK			0xFF
+> +#define CORE_CLK_DIV_EN_BIT				BIT(8)
+> +#define PA_VS_CORE_CLK_40NS_CYCLES			0x9007
+> +#define PA_VS_CORE_CLK_40NS_CYCLES_MASK			0x3F
+Remove the 1 extra tab in between the macro names and their values?
+
+>   static inline void
+>   ufs_qcom_get_controller_revision(struct ufs_hba *hba,
+>   				 u8 *major, u16 *minor, u16 *step)
+> --
+> 2.17.1
+> 
+
