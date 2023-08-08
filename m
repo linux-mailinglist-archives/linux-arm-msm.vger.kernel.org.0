@@ -2,210 +2,400 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 985E877413F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA0C6774194
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:24:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234115AbjHHRRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 13:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51538 "EHLO
+        id S234463AbjHHRYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 13:24:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234215AbjHHRQp (ORCPT
+        with ESMTP id S234454AbjHHRXf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:16:45 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EDC11D46F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:06:50 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3fbea14700bso49966405e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:06:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691510808; x=1692115608;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/zypaBxPLVAPc31qUuCjXrOIoE2MnVMIBlcoWFCbsKI=;
-        b=gjHoUOvA+qG0jZY1oIT30evfDxoH73X5TuZyI9FT7HTvIF+mNcWdpFTiGeC4GByVF4
-         Bv2jok27jOI3uLQTEc+uIUtcP/KqA9sCbp+H9mYxnM8xtdxHI2o6pAOohmKqbUfSyGSa
-         ppKu+O9JyPE/qxRiVtDf4fPUgH5DqmU6Sm0JP4yJuFgoXTRhplva0molbRxL3e624gU5
-         AQ6DCDFWg/gz0HULOdTcAniyoeaSykupd+YhN09AcYD1u/CBQIBkxufoZvrrf8cQybZl
-         2/JnBK0ErhQLj7dfziCCV0mfSSRa4mKxSoi6JOIspyp6bxgwrApiK+5Pq2x/oVkcYkFI
-         LjyA==
+        Tue, 8 Aug 2023 13:23:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54E41E581
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1691510922;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=aVuCFjdJcVT8JMbGrbvzk+njXdiWTuw1wj4t/nxixDc=;
+        b=FvkAPhiRI1hBZmIynKhGZUcIvaTfJ6ag7cWytZ5WXPwoHyXFpnB2e8IStNt5t9kjreeeYi
+        JmG6zzChJo18qvhTUJkO8oxffr3N51zbCiVSwuaEN/0R3yPcseDdMA5cvt6Tkl++I4LVIX
+        bQC1tjYsWr5SDz4JUClQEVphjhytQA0=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-SEYV7nUzNfWH-UXkE81tFw-1; Tue, 08 Aug 2023 08:06:01 -0400
+X-MC-Unique: SEYV7nUzNfWH-UXkE81tFw-1
+Received: by mail-lf1-f70.google.com with SMTP id 2adb3069b0e04-4fe0e1dfdbaso5469371e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 05:06:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691510808; x=1692115608;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/zypaBxPLVAPc31qUuCjXrOIoE2MnVMIBlcoWFCbsKI=;
-        b=US4rHMXSd8RVcYZFCrIGpR183arvuZRqy5QQSwhIWZNm5ayJruOI/7dMAxio8kRAFi
-         4WsVnhNcn/d3vOrKR+YbPhi7UpWtlTDhfF5w7TECXZ0B+cJ3oLCovyDnNTL0xPlwBZiD
-         PHZDDjfVahNHTkofC+uV8iteAWS4NQ92vWdaIhjO740/teG+txCw5vu8M4DcToFJ+FgM
-         0OkOTZvDsfi35IvtgAwsIsCSA7ObMKFt+8xE57LA5SQ7ISsDDa4JqRTN8HAD7ENEvKHp
-         LZdphX8SoSZO/6Op7SM8bcbjU7970CIpugaPEkiZ5UBvKV/KT4hC6t7mDyWcr6YCLg6X
-         GINQ==
-X-Gm-Message-State: AOJu0YwKzRIQbPdvsx2qoldbzBSzY/9b/ksRRtOD3KMfq8/EJGzVXrJC
-        O/BXRkuJGlAMYqUTL+Rl03fAEPlj3q5oFJSF1k0=
-X-Google-Smtp-Source: AGHT+IEoGl3vyoVtiywtPvr5AXF6ZdPgkAryg6BVWtqdOXiDMhBXW7AIpBBiui1nIRpUAsdrT42WOQ==
-X-Received: by 2002:ac2:4e8b:0:b0:4fe:181f:272c with SMTP id o11-20020ac24e8b000000b004fe181f272cmr6904189lfr.41.1691495409134;
-        Tue, 08 Aug 2023 04:50:09 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id v2-20020ac25922000000b004fe4a1f046asm1856888lfi.266.2023.08.08.04.50.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 04:50:08 -0700 (PDT)
-Message-ID: <30b1fe67-bab5-4add-8d89-cc8e06cd8c7f@linaro.org>
-Date:   Tue, 8 Aug 2023 13:50:06 +0200
+        d=1e100.net; s=20221208; t=1691496360; x=1692101160;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aVuCFjdJcVT8JMbGrbvzk+njXdiWTuw1wj4t/nxixDc=;
+        b=ML3hBbqRZOeahLvaLGBkfXdpOBmLnjIL/ReyDu0mljmtv4A9NuO1qwVXbhS4fOPzMM
+         rPctBYQGIC+ev3nExRCjxrjXJv6N6MempH7bRTuT2ziYidYfAaWkSwSeSptqjK6dOVER
+         kOk1f3NAwKre2ZKSZz8ecRJexeXZ5pACx6jykAtns4poqSYq6X9fQtwfjG0mvRHknh8z
+         MzSqnNsZXUcPNBtSRG+r0h+CyICbLbKGiBuKwNcySWN1EewdXD3Y+KSlnSHMhqrlUc5c
+         JTF/VS6gQPgD4fH4Za8icmniY8AZfhLvfTNB9iQ16zZDAweypsQ61yvxtAEgKJmdLMfZ
+         Ni6w==
+X-Gm-Message-State: AOJu0Yw3t8YXeCjiIepLf8mfJe0x/4fTGb6wc/dLxekXWtdnIbNbM4KM
+        nhyBAigeSp0N24JgWaESIkzhb+whLXeA0DO1A0C9jL3I6tl+JfgwU+bHSuVWvsutIXesJugKltH
+        NX4kxzajMUHCBAUXjYYuoBH4LNsCGtmADiOmfZC+2oQ==
+X-Received: by 2002:a05:6512:31c7:b0:4fd:fc36:68a2 with SMTP id j7-20020a05651231c700b004fdfc3668a2mr7965614lfe.1.1691496360154;
+        Tue, 08 Aug 2023 05:06:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhnLeTE8WqeViIx7SXQVaYVyeppCRK13xcg7l4wcYFiSlrkv0ka6P5Z6WrJPz7QaVdDhqAj2JKI7NLgZNtbmc=
+X-Received: by 2002:a05:6512:31c7:b0:4fd:fc36:68a2 with SMTP id
+ j7-20020a05651231c700b004fdfc3668a2mr7965593lfe.1.1691496359781; Tue, 08 Aug
+ 2023 05:05:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 06/11] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-References: <20230727223307.8096-1-quic_kriskura@quicinc.com>
- <20230727223307.8096-7-quic_kriskura@quicinc.com>
- <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
- <dc800b15-e35d-207b-73a8-9a3d2261f4f5@quicinc.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <dc800b15-e35d-207b-73a8-9a3d2261f4f5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com>
+ <20230728-solid-fill-v5-1-053dbefa909c@quicinc.com> <CA+hFU4ywNbK77Nj+AVkRbgnomyP-YHhP6pKvNhFG-6HXwAY=Yw@mail.gmail.com>
+ <71e9cc67-3aed-f1b7-33b7-1bf9faa0d6ae@quicinc.com>
+In-Reply-To: <71e9cc67-3aed-f1b7-33b7-1bf9faa0d6ae@quicinc.com>
+From:   Sebastian Wick <sebastian.wick@redhat.com>
+Date:   Tue, 8 Aug 2023 14:05:48 +0200
+Message-ID: <CA+hFU4wJ5xtVT_Yunc7r7c9eKaGus0Ew1_XnoDg1vMQRF0OQ0w@mail.gmail.com>
+Subject: Re: [PATCH RFC v5 01/10] drm: Introduce pixel_source DRM plane property
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
+        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
+        ville.syrjala@linux.intel.com, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        wayland-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8.08.2023 10:32, Krishna Kurapati PSSNV wrote:
->  +
->>> +enum dwc3_qcom_phy_irq_identifier {
->>> +    HS_PHY_IRQ = 0,
->>> +    DP_HS_PHY_IRQ,
->>> +    DM_HS_PHY_IRQ,
->>> +    SS_PHY_IRQ,
->>>   };
->>
->> This enum is unused.
->>
-> 
-> Hi Bjorn,
-> 
->  I didn't use the enum directly, but used its members in the get_port_irq call below.
-> 
->> [..]
->>> +static int dwc3_get_acpi_index(const struct dwc3_acpi_pdata *pdata, int irq_index)
->>> +{
->>> +    int acpi_index = -1;
->>> +
->>> +    if (!pdata)
->>> +        return -1;
->>> +
->>> +    if (irq_index == DP_HS_PHY_IRQ)
->>> +        acpi_index = pdata->dp_hs_phy_irq_index;
->>> +    else if (irq_index == DM_HS_PHY_IRQ)
->>> +        acpi_index = pdata->dm_hs_phy_irq_index;
->>> +    else if (irq_index == SS_PHY_IRQ)
->>> +        acpi_index = pdata->ss_phy_irq_index;
->>
->> It looks favourable to put these in an array, instead of having to pull
->> them out of 4 different variables conditionally.
->>
->>> +
->>> +    return acpi_index;
->>> +}
->>> +
->>> +static int dwc3_get_port_irq(struct platform_device *pdev, u8 port_index)
->>> +{
->>> +    struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
->>> +    bool is_mp_supported = (qcom->data->num_ports > 1) ? true : false;
->>> +    const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
->>> +    char *disp_name;
->>> +    int acpi_index;
->>> +    char *dt_name;
->>> +    int ret;
->>> +    int irq;
->>> +    int i;
->>> +
->>> +    /*
->>> +     * We need to read only DP/DM/SS IRQ's here.
->>> +     * So loop over from 1->3 and accordingly modify respective phy_irq[].
->>> +     */
->>> +    for (i = 1; i < MAX_PHY_IRQ; i++) {
->>> +
->>> +        if (!is_mp_supported && (port_index == 0)) {
->>> +            if (i == DP_HS_PHY_IRQ) {
->>> +                dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
->>> +                    "dp_hs_phy_irq");
->>> +                disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
->>> +                    "qcom_dwc3 DP_HS");
->>> +            } else if (i == DM_HS_PHY_IRQ) {
->>> +                dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
->>> +                    "dm_hs_phy_irq");
->>> +                disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
->>> +                    "qcom_dwc3 DM_HS");
->>> +            } else if (i == SS_PHY_IRQ) {
->>> +                dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
->>> +                    "ss_phy_irq");
->>> +                disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
->>> +                    "qcom_dwc3 SS");
-> Bjorn, Konrad,
-> 
-> If we are to remove this repetitive loops, we might need to make a 2D array for all of Dp/Dm/Ss interrutps and make a global array of names to be used for irq lookup and use them to reduce the if-else-if stuff here. If that is fine, I can make those changes, else I would like to stick to this approach for now because if we don't add the global array of names, prepping them seperately for dp/dm/ss would again lead us to making if-else loops like above.
-> 
-> Please let me know your thoughts on this.
-Can we not just reuse the associated interrupt-names from the devicetree
-if present?
+On Mon, Aug 7, 2023 at 7:52=E2=80=AFPM Jessica Zhang <quic_jesszhan@quicinc=
+.com> wrote:
+>
+>
+>
+> On 8/4/2023 6:15 AM, Sebastian Wick wrote:
+> > On Fri, Jul 28, 2023 at 7:03=E2=80=AFPM Jessica Zhang <quic_jesszhan@qu=
+icinc.com> wrote:
+> >>
+> >> Add support for pixel_source property to drm_plane and related
+> >> documentation. In addition, force pixel_source to
+> >> DRM_PLANE_PIXEL_SOURCE_FB in DRM_IOCTL_MODE_SETPLANE as to not break
+> >> legacy userspace.
+> >>
+> >> This enum property will allow user to specify a pixel source for the
+> >> plane. Possible pixel sources will be defined in the
+> >> drm_plane_pixel_source enum.
+> >>
+> >> The current possible pixel sources are DRM_PLANE_PIXEL_SOURCE_NONE and
+> >> DRM_PLANE_PIXEL_SOURCE_FB with *_PIXEL_SOURCE_FB being the default val=
+ue.
+> >>
+> >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/drm_atomic_state_helper.c |  1 +
+> >>   drivers/gpu/drm/drm_atomic_uapi.c         |  4 ++
+> >>   drivers/gpu/drm/drm_blend.c               | 85 +++++++++++++++++++++=
+++++++++++
+> >>   drivers/gpu/drm/drm_plane.c               |  3 ++
+> >>   include/drm/drm_blend.h                   |  2 +
+> >>   include/drm/drm_plane.h                   | 21 ++++++++
+> >>   6 files changed, 116 insertions(+)
+> >>
+> >> diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/d=
+rm/drm_atomic_state_helper.c
+> >> index 784e63d70a42..01638c51ce0a 100644
+> >> --- a/drivers/gpu/drm/drm_atomic_state_helper.c
+> >> +++ b/drivers/gpu/drm/drm_atomic_state_helper.c
+> >> @@ -252,6 +252,7 @@ void __drm_atomic_helper_plane_state_reset(struct =
+drm_plane_state *plane_state,
+> >>
+> >>          plane_state->alpha =3D DRM_BLEND_ALPHA_OPAQUE;
+> >>          plane_state->pixel_blend_mode =3D DRM_MODE_BLEND_PREMULTI;
+> >> +       plane_state->pixel_source =3D DRM_PLANE_PIXEL_SOURCE_FB;
+> >>
+> >>          if (plane->color_encoding_property) {
+> >>                  if (!drm_object_property_get_default_value(&plane->ba=
+se,
+> >> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_a=
+tomic_uapi.c
+> >> index d867e7f9f2cd..454f980e16c9 100644
+> >> --- a/drivers/gpu/drm/drm_atomic_uapi.c
+> >> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+> >> @@ -544,6 +544,8 @@ static int drm_atomic_plane_set_property(struct dr=
+m_plane *plane,
+> >>                  state->src_w =3D val;
+> >>          } else if (property =3D=3D config->prop_src_h) {
+> >>                  state->src_h =3D val;
+> >> +       } else if (property =3D=3D plane->pixel_source_property) {
+> >> +               state->pixel_source =3D val;
+> >>          } else if (property =3D=3D plane->alpha_property) {
+> >>                  state->alpha =3D val;
+> >>          } else if (property =3D=3D plane->blend_mode_property) {
+> >> @@ -616,6 +618,8 @@ drm_atomic_plane_get_property(struct drm_plane *pl=
+ane,
+> >>                  *val =3D state->src_w;
+> >>          } else if (property =3D=3D config->prop_src_h) {
+> >>                  *val =3D state->src_h;
+> >> +       } else if (property =3D=3D plane->pixel_source_property) {
+> >> +               *val =3D state->pixel_source;
+> >>          } else if (property =3D=3D plane->alpha_property) {
+> >>                  *val =3D state->alpha;
+> >>          } else if (property =3D=3D plane->blend_mode_property) {
+> >> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
+> >> index 6e74de833466..c500310a3d09 100644
+> >> --- a/drivers/gpu/drm/drm_blend.c
+> >> +++ b/drivers/gpu/drm/drm_blend.c
+> >> @@ -185,6 +185,21 @@
+> >>    *              plane does not expose the "alpha" property, then thi=
+s is
+> >>    *              assumed to be 1.0
+> >>    *
+> >> + * pixel_source:
+> >> + *     pixel_source is set up with drm_plane_create_pixel_source_prop=
+erty().
+> >> + *     It is used to toggle the active source of pixel data for the p=
+lane.
+> >> + *     The plane will only display data from the set pixel_source -- =
+any
+> >> + *     data from other sources will be ignored.
+> >> + *
+> >> + *     Possible values:
+> >> + *
+> >> + *     "NONE":
+> >> + *             No active pixel source.
+> >> + *             Committing with a NONE pixel source will disable the p=
+lane.
+> >> + *
+> >> + *     "FB":
+> >> + *             Framebuffer source set by the "FB_ID" property.
+> >> + *
+> >>    * Note that all the property extensions described here apply either=
+ to the
+> >>    * plane or the CRTC (e.g. for the background color, which currently=
+ is not
+> >>    * exposed and assumed to be black).
+> >> @@ -615,3 +630,73 @@ int drm_plane_create_blend_mode_property(struct d=
+rm_plane *plane,
+> >>          return 0;
+> >>   }
+> >>   EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
+> >> +
+> >> +/**
+> >> + * drm_plane_create_pixel_source_property - create a new pixel source=
+ property
+> >> + * @plane: DRM plane
+> >> + * @extra_sources: Bitmask of additional supported pixel_sources for =
+the driver.
+> >> + *                DRM_PLANE_PIXEL_SOURCE_FB always be enabled as a su=
+pported
+> >> + *                source.
+> >> + *
+> >> + * This creates a new property describing the current source of pixel=
+ data for the
+> >> + * plane. The pixel_source will be initialized as DRM_PLANE_PIXEL_SOU=
+RCE_FB by default.
+> >> + *
+> >> + * Drivers can set a custom default source by overriding the pixel_so=
+urce value in
+> >> + * drm_plane_funcs.reset()
+> >> + *
+> >> + * The property is exposed to userspace as an enumeration property ca=
+lled
+> >> + * "pixel_source" and has the following enumeration values:
+> >> + *
+> >> + * "NONE":
+> >> + *      No active pixel source
+> >> + *
+> >> + * "FB":
+> >> + *     Framebuffer pixel source
+> >> + *
+> >> + * Returns:
+> >> + * Zero on success, negative errno on failure.
+> >> + */
+> >> +int drm_plane_create_pixel_source_property(struct drm_plane *plane,
+> >> +                                          unsigned long extra_sources=
+)
+> >> +{
+> >> +       struct drm_device *dev =3D plane->dev;
+> >> +       struct drm_property *prop;
+> >> +       static const struct drm_prop_enum_list enum_list[] =3D {
+> >> +               { DRM_PLANE_PIXEL_SOURCE_NONE, "NONE" },
+> >> +               { DRM_PLANE_PIXEL_SOURCE_FB, "FB" },
+> >> +       };
+> >> +       static const unsigned int valid_source_mask =3D BIT(DRM_PLANE_=
+PIXEL_SOURCE_FB);
+> >> +       int i;
+> >> +
+> >> +       /* FB is supported by default */
+> >> +       unsigned long supported_sources =3D extra_sources | BIT(DRM_PL=
+ANE_PIXEL_SOURCE_FB);
+> >
+> > The DRM_PLANE_PIXEL_SOURCE_NONE property should also be enabled by
+> > default and in the valid_source_mask.
+>
+> Hi Sebastian,
+>
+> Acked.
+>
+>
+> > In a later patch you implement
+> > the DRM_PLANE_PIXEL_SOURCE_NONE logic in drm core so everyone gets the
+> > enum value for free. Might want to pull that logic into its own patch
+> > and move it before this one.
+>
+> Can you elaborate on this? Are you referring to the "Loosen FB atomic
+> checks" patch?
+>
+> Not sure why it would make sense to loosen the checks before non-FB
+> pixel sources are introduced.
 
-Konrad
+Mh, yeah, but just adding the enum value which is not hooked up is not
+good either. Both should probably happen in the same patch.
+
+> Thanks,
+>
+> Jessica Zhang
+>
+> >
+> >> +
+> >> +       if (WARN_ON(supported_sources & ~valid_source_mask))
+> >> +               return -EINVAL;
+> >> +
+> >> +       prop =3D drm_property_create(dev, DRM_MODE_PROP_ENUM | DRM_MOD=
+E_PROP_ATOMIC, "pixel_source",
+> >> +                       hweight32(supported_sources));
+> >> +
+> >> +       if (!prop)
+> >> +               return -ENOMEM;
+> >> +
+> >> +       for (i =3D 0; i < ARRAY_SIZE(enum_list); i++) {
+> >> +               int ret;
+> >> +
+> >> +               if (!test_bit(enum_list[i].type, &supported_sources))
+> >> +                       continue;
+> >> +
+> >> +               ret =3D drm_property_add_enum(prop, enum_list[i].type,=
+ enum_list[i].name);
+> >> +               if (ret) {
+> >> +                       drm_property_destroy(dev, prop);
+> >> +
+> >> +                       return ret;
+> >> +               }
+> >> +       }
+> >> +
+> >> +       drm_object_attach_property(&plane->base, prop, DRM_PLANE_PIXEL=
+_SOURCE_FB);
+> >> +       plane->pixel_source_property =3D prop;
+> >> +
+> >> +       return 0;
+> >> +}
+> >> +EXPORT_SYMBOL(drm_plane_create_pixel_source_property);
+> >> diff --git a/drivers/gpu/drm/drm_plane.c b/drivers/gpu/drm/drm_plane.c
+> >> index 24e7998d1731..f342cf15412b 100644
+> >> --- a/drivers/gpu/drm/drm_plane.c
+> >> +++ b/drivers/gpu/drm/drm_plane.c
+> >> @@ -987,6 +987,9 @@ int drm_mode_setplane(struct drm_device *dev, void=
+ *data,
+> >>                  return -ENOENT;
+> >>          }
+> >>
+> >> +       if (plane->state && plane->state->pixel_source !=3D DRM_PLANE_=
+PIXEL_SOURCE_FB)
+> >> +               plane->state->pixel_source =3D DRM_PLANE_PIXEL_SOURCE_=
+FB;
+> >> +
+> >>          if (plane_req->fb_id) {
+> >>                  fb =3D drm_framebuffer_lookup(dev, file_priv, plane_r=
+eq->fb_id);
+> >>                  if (!fb) {
+> >> diff --git a/include/drm/drm_blend.h b/include/drm/drm_blend.h
+> >> index 88bdfec3bd88..122bbfbaae33 100644
+> >> --- a/include/drm/drm_blend.h
+> >> +++ b/include/drm/drm_blend.h
+> >> @@ -58,4 +58,6 @@ int drm_atomic_normalize_zpos(struct drm_device *dev=
+,
+> >>                                struct drm_atomic_state *state);
+> >>   int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+> >>                                           unsigned int supported_modes=
+);
+> >> +int drm_plane_create_pixel_source_property(struct drm_plane *plane,
+> >> +                                          unsigned long extra_sources=
+);
+> >>   #endif
+> >> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+> >> index 51291983ea44..89508b4dea4a 100644
+> >> --- a/include/drm/drm_plane.h
+> >> +++ b/include/drm/drm_plane.h
+> >> @@ -40,6 +40,12 @@ enum drm_scaling_filter {
+> >>          DRM_SCALING_FILTER_NEAREST_NEIGHBOR,
+> >>   };
+> >>
+> >> +enum drm_plane_pixel_source {
+> >> +       DRM_PLANE_PIXEL_SOURCE_NONE,
+> >> +       DRM_PLANE_PIXEL_SOURCE_FB,
+> >> +       DRM_PLANE_PIXEL_SOURCE_MAX
+> >> +};
+> >> +
+> >>   /**
+> >>    * struct drm_plane_state - mutable plane state
+> >>    *
+> >> @@ -116,6 +122,14 @@ struct drm_plane_state {
+> >>          /** @src_h: height of visible portion of plane (in 16.16) */
+> >>          uint32_t src_h, src_w;
+> >>
+> >> +       /**
+> >> +        * @pixel_source:
+> >> +        *
+> >> +        * Source of pixel information for the plane. See
+> >> +        * drm_plane_create_pixel_source_property() for more details.
+> >> +        */
+> >> +       enum drm_plane_pixel_source pixel_source;
+> >> +
+> >>          /**
+> >>           * @alpha:
+> >>           * Opacity of the plane with 0 as completely transparent and =
+0xffff as
+> >> @@ -699,6 +713,13 @@ struct drm_plane {
+> >>           */
+> >>          struct drm_plane_state *state;
+> >>
+> >> +       /*
+> >> +        * @pixel_source_property:
+> >> +        * Optional pixel_source property for this plane. See
+> >> +        * drm_plane_create_pixel_source_property().
+> >> +        */
+> >> +       struct drm_property *pixel_source_property;
+> >> +
+> >>          /**
+> >>           * @alpha_property:
+> >>           * Optional alpha property for this plane. See
+> >>
+> >> --
+> >> 2.41.0
+> >>
+> >
+>
+
