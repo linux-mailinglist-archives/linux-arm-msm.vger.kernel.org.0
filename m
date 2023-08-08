@@ -2,525 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0004E773BF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 17:58:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43014773B67
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 17:50:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231374AbjHHP6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 11:58:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54560 "EHLO
+        id S230117AbjHHPuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 11:50:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230517AbjHHP50 (ORCPT
+        with ESMTP id S229934AbjHHPsC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 11:57:26 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D6159F6;
-        Tue,  8 Aug 2023 08:44:01 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3785waNI027031;
-        Tue, 8 Aug 2023 06:14:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Z+YoQRvp5w4t9wXjYhRR/QHF47BeYoKYT/xPD6UE0rA=;
- b=SNf4ltofDcPbaKUSx/fQhrrVZr0LFbRa4cpaEqmQ9pCu+4pYtnlZwApTQbzwfiE9s3IR
- vHqY/5OXixu3cfiOtMbBpJxX2nOH9rKQrJuVvsKZhxalTtaCqhQbSyy/zEstMSjpU4hU
- vBPj68X/ZcClOrJxgbE6Mh68GTo9++SUKpPMybzQwDqr+Yh8kD4VAUZ2G5OPAEZ424KL
- Hw2DWWCzgjM365984s0MaO4sbQ1WoU4aKSDwhqArrYzfkJ1kM/E43utwqc4n6ROsTCHY
- VoAXah+FvyBLRX82SwHQSOaxCMeRIGkfAbFt4tt6vksd7BKSEc6hWMSrcWngMg4nihcX Kg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sba0qrkfw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Aug 2023 06:14:10 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3786E9x6011302
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Aug 2023 06:14:09 GMT
-Received: from [192.168.143.77] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
- 2023 23:14:09 -0700
-Message-ID: <240099bf-0a28-9ddd-7d85-12ef227fda6a@quicinc.com>
-Date:   Mon, 7 Aug 2023 23:14:09 -0700
+        Tue, 8 Aug 2023 11:48:02 -0400
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2060d.outbound.protection.outlook.com [IPv6:2a01:111:f403:704b::60d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ED0244AC
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 08:41:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KOi3q6Myqxl9o7g43rk4Tz72fkfy8pHd8WztWqLzQ6xNmWKbrwr+9ts5NLnSDMLhuecN1gE0Tvyt5FjlmCOb0aiR50azvmSrMKTbbI4qQCr4jOCVmE06jl7VSt044Rr5pm3VGZTR0BLOdts18D3uqBmzP18A+BD/74l/U1x2Vna+qJE6NTHAYn4+eT1RKDKQ+jdrrHsSson4n1rSyjpR6ywZKD17aN1lfNGA/6pkPMkNNBODv8hA4LCwyE+1U3p+h7esZV1aiphi2LyR71+iy6YB6wamLEJoBUDFd7s/kIs3HrDQKxDLuCnNAj9lDenHo4P2gz9GZ10zuvjem1B7Ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fnelpG8v8QwAIkGcMwUmaDyrR5LVfThthyEFJqMoyTw=;
+ b=RQ6Elqx69tJ/UpBH4dNwmKGvpOZzA0aITOQMTiSMEJcLiGco+Drku/UOPIjgRnavSi72PoAJBudWbBk+oKcQsKGmMCBT7CxzN6lAXyytErME6pNjR1UQ+oHvMol4BVwEbBpTLYPeaqlm/YrbklIoDlz9RsYolY1Qewa1AAfxrr7Yz9dF4sW9CVGKoHYqQAb19eYOZqSnci2ErmXgbsYBEg/iSXdxNdeaPZwAWal6/gLyZJR+en46nN7SFLyTpz47DwwRqMKdSACtr7/QNdnCntiE47pj71UZbxLT2hUPp3J7OJvOgQxr0k+QkrcWNFYfVbE5NqvB8089WhS5Zl7Wjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quectel.com; dmarc=pass action=none header.from=quectel.com;
+ dkim=pass header.d=quectel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quectel.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fnelpG8v8QwAIkGcMwUmaDyrR5LVfThthyEFJqMoyTw=;
+ b=D7xp8BoLeIBSCsXnB7FhRvcx7ZAWYyU2CA7SCo5TuNHlhuxoEltkuMf1yErYwzg6/nZJ5ltNxlbH6GIuJdZi6tJKFlTkBC7RfZIjhTl6LygrwbM/a4mJWLNlxkD2atWSXB0zREJWVMzkHTxCVD0fUsFz/9CBcOXFMTFzhh08eFs=
+Received: from TY0PR06MB5053.apcprd06.prod.outlook.com (2603:1096:400:1be::13)
+ by SI2PR06MB5267.apcprd06.prod.outlook.com (2603:1096:4:1e6::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.26; Tue, 8 Aug
+ 2023 06:40:48 +0000
+Received: from TY0PR06MB5053.apcprd06.prod.outlook.com
+ ([fe80::c99a:8bdd:8dc0:bd76]) by TY0PR06MB5053.apcprd06.prod.outlook.com
+ ([fe80::c99a:8bdd:8dc0:bd76%6]) with mapi id 15.20.6652.026; Tue, 8 Aug 2023
+ 06:40:47 +0000
+From:   =?utf-8?B?RHVrZSBYaW4o6L6b5a6J5paHKQ==?= <duke.xin@quectel.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        =?utf-8?B?RHVrZSBYaW4o6L6b5a6J5paHKQ==?= <duke_xinanwen@163.com>
+CC:     "loic.poulain@linaro.org" <loic.poulain@linaro.org>,
+        "slark_xiao@163.com" <slark_xiao@163.com>,
+        "fabio.porcedda@gmail.com" <fabio.porcedda@gmail.com>,
+        "johan+linaro@kernel.org" <johan+linaro@kernel.org>,
+        "bhelgaas@google.com" <bhelgaas@google.com>,
+        "mhi@lists.linux.dev" <mhi@lists.linux.dev>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        =?utf-8?B?SmVycnkgTWVuZyjokpnmnbAp?= <jerry.meng@quectel.com>
+Subject: =?utf-8?B?5Zue5aSNOiBbUEFUQ0ggdjJdIGJ1czogbWhpOiBob3N0OiBwY2lfZ2VuZXJp?=
+ =?utf-8?Q?c:_Add_support_for_Lenovo_RM520N-GL?=
+Thread-Topic: [PATCH v2] bus: mhi: host: pci_generic: Add support for Lenovo
+ RM520N-GL
+Thread-Index: AQHZyNwRrxgh0Fbq8UmfzcLR6An+NK/f8Y0AgAAB0TA=
+Date:   Tue, 8 Aug 2023 06:40:47 +0000
+Message-ID: <TY0PR06MB5053F9DD342DC9557D640305840DA@TY0PR06MB5053.apcprd06.prod.outlook.com>
+References: <798f2e1bf279511ad3cfb8daa48b52198-8-23kernel.org@g.corp-email.com>
+ <20230808062908.GB4990@thinkpad>
+In-Reply-To: <20230808062908.GB4990@thinkpad>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=quectel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY0PR06MB5053:EE_|SI2PR06MB5267:EE_
+x-ms-office365-filtering-correlation-id: b3ea5ec2-0390-41cd-7f37-08db97da6659
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: si6Y+eBUx1XFYwhaAQIJkcmK71jJ0AIi630n+hgBIAMEXCGKieKGme8uLRiM6taMw8jL/r0k0lln/hSwH1LXqeOhhoQpyGXR7hGKsfjBO3Q33e60nOzlh0q5sSXnnKZChUfy4/kBuX3wdAgIbdLR87X+SSylHMxiZMhZpCYCmzySdZ02MYajmtaQsDhDH1yAoidUdqVPTD8Yq85qMN4iX4rQtQ9c7zxOw8ed6bjhVttnozvkifAfb5NfWgWuAfVDKwdVqbRIDH9H+EUj1+0bvEm/r8yTYU7SQ3epfg8EHZOL4NhByuO7FhwsXZAMGv7mfOLQcsb6XO4O705ubTG2aegChnD8tgvzru+i29lbczGCyXxf5hGjdcajlFraIfJnbI9gZujrRxUGa31ds/WXKr3A9rks72G3biheCxUYnUb7FG+7DgCnTdgne3DrNTVJdvYBMuSa0/Kh0HjXznA5B4HF8yCu9oP/voQhRnxW1Dg4O3ZoMltVKBwRZFoGirz3vxJ6BGWEky1ddVLyR5tkv7Y7ZRk/R/DVbFRvfTZaMGZkaKc9Jvi49Jcirw6L00Hund8fZZYyC13WDbwihNGNkCuP/XtH4jQQ9flL+igPZnbObFNQob3tNzbVxRy1M33EwFidda0vvCIDRdUJau8J9Coe95UdI6gXnmllivlYT0yoaAbqUjuRGiUsJS0OLRUj
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY0PR06MB5053.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(376002)(346002)(39860400002)(366004)(396003)(90021799007)(1800799003)(186006)(451199021)(90011799007)(52536014)(38070700005)(41300700001)(26005)(107886003)(2906002)(5660300002)(83380400001)(8936002)(55016003)(122000001)(86362001)(15974865002)(316002)(33656002)(7696005)(54906003)(110136005)(76116006)(478600001)(6506007)(66446008)(38100700002)(64756008)(66476007)(66556008)(71200400001)(66946007)(224303003)(9686003)(4326008)(85182001)(41533002);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NmU3ZUJzQWlkQXQ3dXA0T2V4Q3B5Z1R4SFJsdVpjOGVXWjR1ZHA0QXMzUFk2?=
+ =?utf-8?B?cThFQURtZGttZzluU0Z3b2VpWUtkNFFSRVNSa3BRckZURy9BQmRiU3MxdE1G?=
+ =?utf-8?B?MjZGeGsrUXkyd2orYXYxZDNXWTdKU1JuN1A3dDZQakVVakJNVVZvbGpZdWlW?=
+ =?utf-8?B?MTNxc1FmdU13MDliZlhoVUNlOGtNV2RLRzQrT2V3NHhTKzh1VnY2NlhQbVZv?=
+ =?utf-8?B?ZjJ4dmtPZ0RUM1A0cGpIdXU5Z3N1Vyt3Rnh4SHhQajJ4RXl3MG9XSmxnNDZF?=
+ =?utf-8?B?Q3dHS2lYNmRpaHZNRVJVeDlrUkNiRzR5dmFROXNWVWQycDMxK002QldaYjE5?=
+ =?utf-8?B?R2NEYnQrSXNnMldkaENwYWFKM0YyTU1WaDR3RGhnb2JUZHhXanA1aXN1c2ZE?=
+ =?utf-8?B?YkF6QlFuL0JZKzBSTXNtY3M2WEkrOHR6UjBXblplbndYTjVPR2xBOStxUmpH?=
+ =?utf-8?B?ZEU0QW1nZGIzZjBZL1BrQitocXZIVWZYdFRKVzM5SVJqVHJ2eU5CNG5yMjBz?=
+ =?utf-8?B?YnVEWHNWUEFvS2VVUzJCQlE4MDJuWFZ2M3YvQ2pxNFNBaWtRMU1idXNGK0Jj?=
+ =?utf-8?B?UnlSYlNGbVNUZWUycDFCaFlxUFZ2eU1BaHkyUG9JMVFMZ2FsVHppZjE1TnlJ?=
+ =?utf-8?B?YnkyRTNYME9ZN0xSZUNiT3AzWDJCRWt5QVdRdWtWektwL3RhMWwyKzZ0TnN6?=
+ =?utf-8?B?VXhScmJ1L21XQS91WHlydGpaYk9BWjE5Z2tvZDJ6eitGMGljYTN4YXlxWWtt?=
+ =?utf-8?B?c3plUDNhZnZza04zVVR5TmMyL2xwRktJK0xEZW5NRTRLaC9DOE5taHJJZWJl?=
+ =?utf-8?B?dHFIaUZOaWxsYU93TXJvbzhxVHJLYW5aWXJZeVhreEZXVDZzTU10Lyt3VGgy?=
+ =?utf-8?B?MWpWSjUzNE9LK0h4WGJiV0gvNm94d05nc3V4MHo1MEt4STArZE5QZnBOU1l6?=
+ =?utf-8?B?ajVvZko2V1kyM0JQczFLUTdaVkdUMno3a0VzK2RCWTBkRjhqQ1MrdXJLRnJM?=
+ =?utf-8?B?YjVSUFhsOUJvdkl2NG5ZTTNISi9oWURZWS9QTUdMOHphcHI1WEVLenM3QSs2?=
+ =?utf-8?B?czRubitLTEhHMkVYZGxFNEJndGxyYUxldlBwMzhPUWM4MFhpRnB4cHhWdk43?=
+ =?utf-8?B?eUZjNmcyWi9vVzhrNkR3a0c5amxrYVB3OE5JZ3prNjEwZjEvRlhKSWl6VHFy?=
+ =?utf-8?B?MGNGZURiQ3VsRmRBdE93QUd5NXhzaGVuM0VjNEFrNk1VT1RmMTBqWHQ5Y1A0?=
+ =?utf-8?B?SkkxcmQ2NTFWTWZGNTljbStlbHpubFNqdExOLzVwaDlkMk5ndnRmQ0RCaXVP?=
+ =?utf-8?B?N1JRSU1Jb3RYNlYrOHNaeE9UMVltdG9oY3R3NHd4YVNhOXc3b2UyVThyQmtk?=
+ =?utf-8?B?MFFjNW1kdkY5N1dFck9WNDByVUdXVFF2TXVDeC83MFVRSS9TSEV6a3VTUVR6?=
+ =?utf-8?B?VmplMjlTaC9UU0RRQXVmU09UMUVtbHFRM2RxK3k5TVhqVDJhdSt5OEdrWXhP?=
+ =?utf-8?B?RW1KZzBTTGoyZzVZMm56Q3NiYkhpaHE2Mlp3Zms3a2dHSlhIZkFCOHF2WEFQ?=
+ =?utf-8?B?VnI0NEpocWpJOXNtRWNKbzVMNi9uRnRRMlEzWlhDQjZnVWk1R3VSUWJMeHZz?=
+ =?utf-8?B?aFdEQkdlWWRBejh3eEljd2wrUXFDaG9HeDZSRnVqbFY1bWphbjhVT3RFOS9x?=
+ =?utf-8?B?ZzBmT25YQVVZeU1yeEZIZlJSSENnaUpUVk0wQW9VeGVaMUFQMGpoK0piaU0w?=
+ =?utf-8?B?bWlnSjJOUlFoRWdDdG1QVkF5M3V3eldaRjhmdGNSYUhibmtOZDZhSW94K1VW?=
+ =?utf-8?B?RW4yUTE4VGh3alloL3lMUVEvbXBwVUVOR0d6SFRtVEVYYXJaN0lBaWJsWm5M?=
+ =?utf-8?B?ejRrY0ZjSzQ3c2oyOUpyM2t3Rmp2TGZ2dVpxTDA4K2lCWkFmeVRIa1l6WGJK?=
+ =?utf-8?B?WHA1Y21pQWdtWUM4RWxadVJLQ1h5QnIvNm1VQzNIYkt1cnduMUViQ2J5NEZr?=
+ =?utf-8?B?ckdHeC9YZ3RWODVITXVuMWpxUk82c0IwSnl0ZDBVYldXUklHaUVad3FtVitu?=
+ =?utf-8?B?TzZkV2U4UXcwUHRKRWNvbnhpcW9IQWVHeWZZd1ZONWlTR0pHcG9ER1BTRnpj?=
+ =?utf-8?Q?NGDvWkDB2Rd+SVhgEXkwF8ZvU?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH V1] scsi: ufs: qcom: Align programming sequence as per HW
- spec
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>, <mani@kernel.org>,
-        <quic_cang@quicinc.com>, <quic_asutoshd@quicinc.com>,
-        <avri.altman@wdc.com>, <martin.petersen@oracle.com>,
-        <beanhuo@micron.com>
-CC:     <bvanassche@acm.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <jejb@linux.ibm.com>, <linux-arm-msm@vger.kernel.org>,
-        <quic_ziqichen@quicinc.com>,
-        "Naveen Kumar Goud Arepalli" <quic_narepall@quicinc.com>
-References: <20230807155026.28671-1-quic_nitirawa@quicinc.com>
-Content-Language: en-US
-From:   "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-In-Reply-To: <20230807155026.28671-1-quic_nitirawa@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iOV8u8dKw-LTCm9VXayL2mS8btWu4Pqa
-X-Proofpoint-ORIG-GUID: iOV8u8dKw-LTCm9VXayL2mS8btWu4Pqa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-08_04,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 mlxscore=0 bulkscore=0
- adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1011
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308080055
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-OriginatorOrg: quectel.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY0PR06MB5053.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3ea5ec2-0390-41cd-7f37-08db97da6659
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Aug 2023 06:40:47.8281
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7730d043-e129-480c-b1ba-e5b6a9f476aa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CCFMJeTSzQcfvn74r0Gz2OPndcxos+wTlslfaknz8g9tjsmS5lUztJuhrxWvUISNbdf1bJ8qfntVwbfKk1MAMg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5267
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/7/2023 8:50 AM, Nitin Rawat wrote:
-> Align clock configuration as per Qualcomm UFS controller
-> hardware specification.
-> 
-> This change updates UFS_SYS1CLK_1US, CORE_CLK_1US_CYCLES,
-> PA_VS_CORE_CLK_40NS_CYCLES timer configuration for Qunipro
-> and UTP to align with Qualcomm UFS HW specification.
-> 
-> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->   drivers/ufs/host/ufs-qcom.c | 262 +++++++++++++++++++++++++++---------
->   drivers/ufs/host/ufs-qcom.h |  20 ++-
->   2 files changed, 215 insertions(+), 67 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index e7164ce7336b..836894c112c1 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -91,10 +91,7 @@ struct __ufs_qcom_bw_table {
->   };
-> 
->   static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
-> -
->   static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
-> -static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
-> -						       u32 clk_cycles);
-> 
->   static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
->   {
-> @@ -531,8 +528,9 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
->   /*
->    * Return: zero for success and non-zero in case of a failure.
->    */
-> -static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-> -			       u32 hs, u32 rate, bool update_link_startup_timer)
-> +static int __ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-> +				 u32 hs, u32 rate, bool link_startup,
-> +				 bool is_pre_scale_up)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->   	struct ufs_clk_info *clki;
-> @@ -563,11 +561,16 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
->   	/*
->   	 * The Qunipro controller does not use following registers:
->   	 * SYS1CLK_1US_REG, TX_SYMBOL_CLK_1US_REG, CLK_NS_REG &
-> -	 * UFS_REG_PA_LINK_STARTUP_TIMER
-> -	 * But UTP controller uses SYS1CLK_1US_REG register for Interrupt
-> -	 * Aggregation logic.
-> -	*/
-> -	if (ufs_qcom_cap_qunipro(host) && !ufshcd_is_intr_aggr_allowed(hba))
-> +	 * UFS_REG_PA_LINK_STARTUP_TIMER.
-> +	 * However UTP controller uses SYS1CLK_1US_REG register for Interrupt
-> +	 * Aggregation logic and Auto hibern8 logic.
-> +	 * It is mandatory to write SYS1CLK_1US_REG register on UFS host
-> +	 * controller V4.0.0 onwards.
-> +	 */
-> +	if (ufs_qcom_cap_qunipro(host) &&
-> +	    !(ufshcd_is_intr_aggr_allowed(hba) ||
-> +	    ufshcd_is_auto_hibern8_supported(hba) ||
-> +	    host->hw_ver.major >= 4))
->   		return 0;
-> 
->   	if (gear == 0) {
-> @@ -576,8 +579,14 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
->   	}
-> 
->   	list_for_each_entry(clki, &hba->clk_list_head, list) {
-> -		if (!strcmp(clki->name, "core_clk"))
-> -			core_clk_rate = clk_get_rate(clki->clk);
-> +		if (!strcmp(clki->name, "core_clk")) {
-> +			if (is_pre_scale_up)
-> +				core_clk_rate = clki->max_freq;
-> +			else
-> +				core_clk_rate = clk_get_rate(clki->clk);
-> +			break;
-> +		}
-> +
->   	}
-> 
->   	/* If frequency is smaller than 1MHz, set to 1MHz */
-> @@ -657,7 +666,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
->   		mb();
->   	}
-> 
-> -	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
-> +	if (link_startup && host->hw_ver.major != 0x5) {
->   		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
->   			      REG_UFS_CFG0);
->   		/*
-> @@ -670,6 +679,114 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
->   	return 0;
->   }
-> 
-> +static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-> +			       u32 hs, u32 rate, bool link_startup)
-Hi Nitin,
-
-How about adding scale_up param to this function ufs_qcom_cfg_timers() 
-as below:
-
-static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-			       u32 hs, u32 rate, bool link_startup,
-			       bool scale_up)
-
-Then replace all references to __ufs_qcom_cfg_timers() with 
-ufs_qcom_cfg_timers()?
-
-It is hard to follow these two almost identical functions with 2 flags 
-invoked from different places, so try to get rid of one.
-
-> +{
-> +	return  __ufs_qcom_cfg_timers(hba, gear, hs, rate,
-> +				      link_startup, false);
-> +}
-> +
-> +static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
-> +				      u32 clk_1us_cycles,
-> +				      u32 clk_40ns_cycles,
-> +				      bool scale_up)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	u32 mask = MAX_CORE_CLK_1US_CYCLES_MASK;
-> +	u32 reg, clk_cycles;
-Remove the clk_cycles variable and re-use the variable reg?
-
-> +	u32 offset = 0;
-> +	int err;
-> +
-> +	/* Bit mask and offset changed on UFS host controller V4.0.0 onwards */
-> +	if (host->hw_ver.major >= 4) {
-> +		mask = MAX_CORE_CLK_1US_CYCLES_MASK_V4;
-> +		offset = MAX_CORE_CLK_1US_CYCLES_OFFSET_V4;
-> +	}
-> +
-> +	if (clk_1us_cycles > mask)
-> +		return -EINVAL;
-> +
-> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
-> +	if (err)
-> +		return err;
-> +
-> +	reg &= ~(mask << offset);
-> +	reg |= clk_1us_cycles << offset;
-> +
-> +	if (scale_up)
-> +		reg |= CORE_CLK_DIV_EN_BIT;
-> +	else
-> +		reg &= ~CORE_CLK_DIV_EN_BIT;
-> +
-> +	err = ufshcd_dme_set(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), reg);
-> +	if (err)
-> +		return err;
-> +
-> +	/*
-> +	 * UFS host controller V4.0.0 onwards needs to program
-> +	 * PA_VS_CORE_CLK_40NS_CYCLES attribute per programmed
-> +	 * frequency of unipro core clk of UFS host controller.
-> +	 */
-> +	if (host->hw_ver.major >= 4) {
-> +		if (clk_40ns_cycles > PA_VS_CORE_CLK_40NS_CYCLES_MASK)
-> +			return -EINVAL;
-> +
-> +		err = ufshcd_dme_get(hba,
-Nitpicking..You can probably fit all 3 params on 1 line once you replace 
-clk_cycles with reg.
-
-> +				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
-> +				     &clk_cycles);
-> +		if (err)
-> +			return err;
-> +
-> +		clk_cycles &= ~PA_VS_CORE_CLK_40NS_CYCLES_MASK;
-> +		clk_cycles |= clk_40ns_cycles;
-> +
-> +		err = ufshcd_dme_set(hba,
-Same comment as above.
-
-> +				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
-> +				     clk_cycles);
-> +	}
-> +
-> +	return err;
-> +}
-> +
-> +static int ufs_qcom_cfg_core_clk_ctrl(struct ufs_hba *hba)
-> +{
-> +	struct list_head *head = &hba->clk_list_head;
-> +	struct ufs_clk_info *clki;
-> +	u32 max_freq = 0;
-> +	int err;
-> +
-> +	list_for_each_entry(clki, head, list) {
-> +		if (!IS_ERR_OR_NULL(clki->clk) &&
-> +		    (!strcmp(clki->name, "core_clk_unipro"))) {
-> +			max_freq = clki->max_freq;
-> +			break;
-> +		}
-> +	}
-> +
-> +	switch (max_freq) {
-> +	case MHZ_403:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16, true);
-> +		break;
-> +	case MHZ_300:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12, true);
-> +		break;
-> +	case MHZ_201_5:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8, true);
-> +		break;
-> +	case MHZ_150:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6, true);
-> +		break;
-> +	case MHZ_100:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, true);
-> +		break;
-> +	default:
-> +		dev_err(hba->dev, "unipro max_freq=%u entry missing\n", max_freq);
-> +		err = -EINVAL;
-> +		break;
-> +	}
-> +
-> +	return err;
-> +}
->   static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
->   					enum ufs_notify_change_status status)
->   {
-> @@ -685,13 +802,15 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
->   			return -EINVAL;
->   		}
-> 
-> -		if (ufs_qcom_cap_qunipro(host))
-> -			/*
-> -			 * set unipro core clock cycles to 150 & clear clock
-> -			 * divider
-> -			 */
-> -			err = ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba,
-> -									  150);
-> +		if (ufs_qcom_cap_qunipro(host)) {
-> +			err = ufs_qcom_cfg_core_clk_ctrl(hba);
-> +			if (err) {
-> +				dev_err(hba->dev,
-> +					"%s cfg core clk ctrl failed\n",
-> +					__func__);
-> +				return err;
-> +			}
-> +		}
-> 
->   		/*
->   		 * Some UFS devices (and may be host) have issues if LCC is
-> @@ -1296,69 +1415,52 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
->   	phy_exit(host->generic_phy);
->   }
-> 
-> -static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
-> -						       u32 clk_cycles)
-> +static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
->   {
-> -	int err;
-> -	u32 core_clk_ctrl_reg;
-> -
-> -	if (clk_cycles > DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK)
-> -		return -EINVAL;
-> -
-> -	err = ufshcd_dme_get(hba,
-> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -			    &core_clk_ctrl_reg);
-> -	if (err)
-> -		return err;
-> -
-> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
-> -	core_clk_ctrl_reg |= clk_cycles;
-> -
-> -	/* Clear CORE_CLK_DIV_EN */
-> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
-> +	int err = 0;
-> 
-> -	return ufshcd_dme_set(hba,
-> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -			    core_clk_ctrl_reg);
-> -}
-> +	if (!ufs_qcom_cap_qunipro(host))
-> +		goto out;
-> 
-> -static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
-> -{
-> -	/* nothing to do as of now */
-> -	return 0;
-> +	if (attr) {
-> +		err = __ufs_qcom_cfg_timers(hba, attr->gear_rx,
-> +					    attr->pwr_rx, attr->hs_rate,
-> +					    false, true);
-> +		if (err)
-> +			dev_err(hba->dev, "%s ufs cfg timer failed\n",
-> +					  __func__);
-> +	}
-> +	err = ufs_qcom_cfg_core_clk_ctrl(hba);
-> +out:
-> +	return err;
->   }
-> 
->   static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
->   {
-> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> -
-> -	if (!ufs_qcom_cap_qunipro(host))
-> -		return 0;
-> -
-> -	/* set unipro core clock cycles to 150 and clear clock divider */
-> -	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 150);
-> +	return 0;
->   }
-> 
->   static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->   	int err;
-> -	u32 core_clk_ctrl_reg;
-> +	u32 reg;
-> 
->   	if (!ufs_qcom_cap_qunipro(host))
->   		return 0;
-> 
-> -	err = ufshcd_dme_get(hba,
-> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -			    &core_clk_ctrl_reg);
-> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
-> +	if (err)
-> +		return err;
-> 
->   	/* make sure CORE_CLK_DIV_EN is cleared */
-> -	if (!err &&
-> -	    (core_clk_ctrl_reg & DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT)) {
-> -		core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-> +	if (reg & CORE_CLK_DIV_EN_BIT) {
-> +		reg &= ~CORE_CLK_DIV_EN_BIT;
->   		err = ufshcd_dme_set(hba,
->   				    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -				    core_clk_ctrl_reg);
-> +				    reg);
->   	}
-> 
->   	return err;
-> @@ -1367,12 +1469,44 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
->   static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
-> +	struct list_head *head = &hba->clk_list_head;
-> +	struct ufs_clk_info *clki;
-> +	u32 curr_freq = 0;
-> +	int err;
-> 
->   	if (!ufs_qcom_cap_qunipro(host))
->   		return 0;
-> 
-> -	/* set unipro core clock cycles to 75 and clear clock divider */
-> -	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 75);
-> +	if (attr)
-> +		ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
-> +				    attr->hs_rate, false);
-> +
-> +	list_for_each_entry(clki, head, list) {
-> +		if (!IS_ERR_OR_NULL(clki->clk) &&
-> +		    (!strcmp(clki->name, "core_clk_unipro"))) {
-> +			curr_freq = clk_get_rate(clki->clk);
-> +			break;
-> +		}
-> +	}
-> +
-> +	switch (curr_freq) {
-> +	case MHZ_37_5:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2, false);
-> +		break;
-> +	case MHZ_75:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3, false);
-> +		break;
-> +	case MHZ_100:
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, false);
-> +		break;
-> +	default:
-> +		err = -EINVAL;
-> +		dev_err(hba->dev, "unipro curr_freq=%u entry missing\n", curr_freq);
-> +		break;
-> +	}
-> +
-> +	return err;
->   }
-> 
->   static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index d6f8e74bd538..da7b5ee7c1cf 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -79,6 +79,17 @@ enum {
->   	UFS_MEM_CQIS_VS		= 0x8,
->   };
-> 
-> +
-> +/* QCOM UFS host controller core clk frequencies */
-> +#define MHZ_37_5	37500000
-> +#define MHZ_50		50000000
-> +#define MHZ_75		75000000
-> +#define MHZ_100		100000000
-> +#define MHZ_150		150000000
-> +#define MHZ_300		300000000
-> +#define MHZ_201_5	201500000
-> +#define MHZ_403		403000000
-> +
->   #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
->   #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
-> 
-> @@ -129,9 +140,12 @@ enum {
->   #define PA_VS_CONFIG_REG1	0x9000
->   #define DME_VS_CORE_CLK_CTRL	0xD002
->   /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
-> -#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
-> -#define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
-> -
-> +#define MAX_CORE_CLK_1US_CYCLES_MASK_V4			0xFFF
-> +#define MAX_CORE_CLK_1US_CYCLES_OFFSET_V4		0x10
-> +#define MAX_CORE_CLK_1US_CYCLES_MASK			0xFF
-> +#define CORE_CLK_DIV_EN_BIT				BIT(8)
-> +#define PA_VS_CORE_CLK_40NS_CYCLES			0x9007
-> +#define PA_VS_CORE_CLK_40NS_CYCLES_MASK			0x3F
-Remove the 1 extra tab in between the macro names and their values?
-
->   static inline void
->   ufs_qcom_get_controller_revision(struct ufs_hba *hba,
->   				 u8 *major, u16 *minor, u16 *step)
-> --
-> 2.17.1
-> 
-
+SGkgTWFuaQ0KDQpHb3QgaXQuICANCg0KVGhhbmsgeW91IHZlcnkgbXVjaCBmb3IgeW91ciBwYXRp
+ZW50IHJldmlldy4gDQoNCg0K6L6b5a6J5paHICBEdWtlIFhpbiB8IFNvZnR3YXJlIERlcGFydG1l
+bnQgSVggRW5naW5lZXIgfCBRdWVjdGVsIFdpcmVsZXNzIFNvbHV0aW9ucyBDby4sIEx0ZC4gDQog
+ICAgICAgICAgICANCk1vYmlsZTogKzg2LTE1Mzc1NDU2MTgzIHwgRW1haWwgOiBEdWtlLnhpbkBx
+dWVjdGVsLmNvbSAgfCBUZWw6ICs4Ni0wNTUxLTY1ODY5Mzg2LTg2MzINCldlYnNpdGU6IHd3dy5x
+dWVjdGVsLmNvbSAgfCBRUTogNjAyNjU5MDcyIHwgV2VjaGF0OiAxNTM3NTQ1NjE4Mw0KDQpCdWls
+ZGluZyAxLUMsIENoaW5hIFNwZWVjaCBWYWxsZXkgQXJlYSBBLCAzMzM1IFhpeW91IFJvYWQsIEhp
+Z2gtdGVjaCBab25lLCBIZWZlaSwgQW5odWkgMjMwMDg4LCBDaGluYSAgICANCuWuieW+veecgeWQ
+iOiCpeW4gumrmOaWsOWMuuS5oOWPi+i3rzMzMzXlj7fkuK3lm73vvIjlkIjogqXvvInlm73pmYXm
+mbrog73or63pn7PkuqfkuJrlm61B5Yy6MeWPt+S4reivlealvCAyMzAwODgNCkhROiBCdWlsZGlu
+ZyA1LCBTaGFuZ2hhaSBCdXNpbmVzcyBQYXJrIFBoYXNlIElJSSAoQXJlYSBCKSwgTm8uMTAxNiBU
+aWFubGluIFJvYWQsIE1pbmhhbmcgRGlzdHJpY3QsIFNoYW5naGFpIDIwMDIzMywgQ2hpbmENCuaA
+u+mDqO+8muS4iua1t+W4gumXteihjOWMuueUsOael+i3rzEwMTblj7fnp5HmioDnu7/mtLIz5pyf
+77yIQuWMuu+8iTXlj7fmpbwgIDIwMDIzMw0KDQotLS0tLemCruS7tuWOn+S7ti0tLS0tDQrlj5Hk
+u7bkuro6IE1hbml2YW5uYW4gU2FkaGFzaXZhbSA8bWFuaUBrZXJuZWwub3JnPiANCuWPkemAgeaX
+tumXtDogMjAyM+W5tDjmnIg45pelIDE0OjI5DQrmlLbku7bkuro6IER1a2UgWGluKOi+m+WuieaW
+hykgPGR1a2VfeGluYW53ZW5AMTYzLmNvbT4NCuaKhOmAgTogbG9pYy5wb3VsYWluQGxpbmFyby5v
+cmc7IHNsYXJrX3hpYW9AMTYzLmNvbTsgZmFiaW8ucG9yY2VkZGFAZ21haWwuY29tOyBqb2hhbits
+aW5hcm9Aa2VybmVsLm9yZzsgYmhlbGdhYXNAZ29vZ2xlLmNvbTsgbWhpQGxpc3RzLmxpbnV4LmRl
+djsgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5lbC5vcmc7IEplcnJ5IE1lbmco6JKZ5p2wKSA8amVy
+cnkubWVuZ0BxdWVjdGVsLmNvbT47IER1a2UgWGluKOi+m+WuieaWhykgPGR1a2UueGluQHF1ZWN0
+ZWwuY29tPg0K5Li76aKYOiBSZTogW1BBVENIIHYyXSBidXM6IG1oaTogaG9zdDogcGNpX2dlbmVy
+aWM6IEFkZCBzdXBwb3J0IGZvciBMZW5vdm8gUk01MjBOLUdMDQoNCk9uIFN1biwgQXVnIDA2LCAy
+MDIzIGF0IDA4OjA0OjU0UE0gLTA3MDAsIER1a2UgWGluKOi+m+WuieaWhykgd3JvdGU6DQo+IFRo
+ZSBRdWVjdGVsIG5ldyBSTTUyME4tR0wgcHJvZHVjdCB3b3JrcyB3aXRoIHRoZSBRdWVjdGVsJ3Mg
+ZXhpc3RpbmcgDQo+IFJNNTIwTi1HTCBtb2RlbSBzZXR0aW5ncy5CdXQgdGhpcyBvbmUgaXMgZGVz
+aWduZWQgZm9yIGxlbm92byBsYXB0b3AgDQo+IHVzZWNhc2UsIGhlbmNlIFF1ZWN0ZWwgZ290IGEg
+bmV3IFBJRC4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IER1a2UgWGluKOi+m+WuieaWhykgPGR1a2Vf
+eGluYW53ZW5AMTYzLmNvbT4NCg0KVHdlYWtlZCBjb21taXQgbWVzc2FnZSBhbmQgYXBwbGllZCB0
+byBtaGktbmV4dCB3aXRoIG15IHJldmlld2VkLWJ5IHRhZy4gUGxlYXNlIGRvIG5vdCBhZGQgdGFn
+cyBvbiB5b3VyIG93bi4NCg0KLSBNYW5pDQoNCj4gUmV2aWV3ZWQtYnk6IE1hbml2YW5uYW4gU2Fk
+aGFzaXZhbSA8bWFuaUBrZXJuZWwub3JnPg0KPiAtLS0NCj4gQ2hhbmdlbG9nDQo+IA0KPiB2MSAt
+PiB2Mg0KPiANCj4gKiBBZGp1c3RlZCBkZXNjcmlwdGlvbiBvZiBxdWVjdGVsIG1vZGVtIGFuZCBs
+aW1pdCBjaGFyYWN0ZXIgbGVuZ3RoIHRvIDc1IGNoYXJhY3RlcnMuDQo+IC0tLQ0KPiAgZHJpdmVy
+cy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYyB8IDMgKysrDQo+ICAxIGZpbGUgY2hhbmdlZCwg
+MyBpbnNlcnRpb25zKCspDQo+IA0KPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9idXMvbWhpL2hvc3Qv
+cGNpX2dlbmVyaWMuYyANCj4gYi9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jDQo+
+IGluZGV4IGZjZDgwYmM5Mjk3OC4uZTRmMmZiNjdkZmFmIDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJz
+L2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jDQo+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9ob3N0
+L3BjaV9nZW5lcmljLmMNCj4gQEAgLTYwNCw2ICs2MDQsOSBAQCBzdGF0aWMgY29uc3Qgc3RydWN0
+IHBjaV9kZXZpY2VfaWQgbWhpX3BjaV9pZF90YWJsZVtdID0gew0KPiAgCS8qIFJNNTIwTi1HTCAo
+c2R4NngpLCBlU0lNICovDQo+ICAJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfUVVFQ1RFTCwg
+MHgxMDA0KSwNCj4gIAkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX3F1ZWN0
+ZWxfcm01eHhfaW5mbyB9LA0KPiArCS8qIFJNNTIwTi1HTCAoc2R4NngpLCBMZW5vdm8gdmFyaWFu
+dCAqLw0KPiArCXsgUENJX0RFVklDRShQQ0lfVkVORE9SX0lEX1FVRUNURUwsIDB4MTAwNyksDQo+
+ICsJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9xdWVjdGVsX3JtNXh4X2lu
+Zm8gfSwNCj4gIAl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9RVUVDVEVMLCAweDEwMGQpLCAv
+KiBFTTE2MFItR0wgKHNkeDI0KSAqLw0KPiAgCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25n
+X3QpICZtaGlfcXVlY3RlbF9lbTF4eF9pbmZvIH0sDQo+ICAJeyBQQ0lfREVWSUNFKFBDSV9WRU5E
+T1JfSURfUVVFQ1RFTCwgMHgyMDAxKSwgLyogRU0xMjBSLUdMIGZvciBGQ0NMIA0KPiAoc2R4MjQp
+ICovDQo+IC0tDQo+IDIuMjUuMQ0KPiANCg0KLS0NCuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCv
+jSDgrprgrqTgrr7grprgrr/grrXgrq7gr40NCg==
