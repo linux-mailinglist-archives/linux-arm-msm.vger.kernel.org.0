@@ -2,80 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1259F773F3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 18:44:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 031917741C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:28:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233327AbjHHQos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 12:44:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42388 "EHLO
+        id S234620AbjHHR2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 13:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233272AbjHHQoD (ORCPT
+        with ESMTP id S234622AbjHHR1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 12:44:03 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53AA991BB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 08:56:00 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3177163aa97so4846542f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 08:56:00 -0700 (PDT)
+        Tue, 8 Aug 2023 13:27:46 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E77920D00
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:11:58 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-98377c5d53eso808014966b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:11:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691510133; x=1692114933;
+        d=linaro.org; s=google; t=1691511072; x=1692115872;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rVTTn1AZhgKJEPeBZ7tIT6HQycZWcyfVoqPDmg5RGC4=;
-        b=EaQGXIPQ3j4vzWDTfWQhmgqY1GD88nEnrxhRrg/4Gcf1jwlXlMQP9aWomOPdrM5nFO
-         RywJRevD93f+VhA3MQgZVVeX52fNMrDqIjKGpvfCdNVB7tSg58HtAylh4APPhM27zoot
-         i2anFqi87KoD0B0O+1uXw/s9SAYWTcqHf8sTtSQdMu+N6cy6CGbvIfhNblx821NkAiIu
-         uyU1INw92dwgLUIZvBdm0Nvha7P0ylmMZfNmLVGtj3K9YohfsSOHa5BOoT45m89pujHg
-         jlhTLBUP64tjeWoJI7D+4M69Ge5l1zyiKZMFhL1uUyV2pUZwz2OglZkp5U/ZDnNJa8D/
-         FvWw==
+        bh=SQTPnoKiIFHGykdzh3Jg/xVXffznXdQisKSdG+HDZEk=;
+        b=UY+tMYPPaPbmoC1eP8biGMO+E7XNPbqkwfRZgB9XTgWGH6hVXvULUmcaKqC7RHSZ+j
+         Lzr/5VVtvRxRXrhISu7ImbFJhTa9Cj92vkOvCQCf8XtA0k4gRyxK8GKIxle7jZTqv9rT
+         ExWjYlxagbvpwf+NBaQktBwdiRNyeA/yHOLfzDkGc5OcLtEiaJgSfl3MMMIyXdS0ovZh
+         pv+FIo+s1TwBUom53oDs4eKTvRkHxe0/UZnccGayHwiakO7y/vOxRWHz8Ut45il/sqkG
+         wXB9Fc2V4HipuI19W/JPfX5nSTAp771Q+ek38hM6YfXEUfO+KNyVCwfI/8tKulM/CC5M
+         3yTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691510133; x=1692114933;
+        d=1e100.net; s=20221208; t=1691511072; x=1692115872;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rVTTn1AZhgKJEPeBZ7tIT6HQycZWcyfVoqPDmg5RGC4=;
-        b=E5TdY5tVvxIb/0r1rVknykF56PweRA/YpAhbZuqKmOpku5g+FT6/IcR337O83np5p8
-         VyDWXdFr8YCRoyjPvz8JpdB/0/oTJzlVT6oJbTOU1LTv3oi7XDvsS2qS8z1M5v3UOMJH
-         b3236PpQC24135BYJFNmgj31tBrJ1y3f7pOGC/1Ow9yHb5jeV/aWLAzgjrozhHeb9zaq
-         2uzFgATcKJ6OTW054C5E3qQM5eSES/HcE350OPcFFX50021aReq1L538O/pBzh4zjFve
-         X+qYzcOCKKDUJr10m5jPFsTfd2N6MVmAIz/796S0ADPusICXzULvTpYQnx9T+xzB6RxO
-         xU5w==
-X-Gm-Message-State: AOJu0YyseCxrs9oxMl3C4NO2YjN04ag8sRBTIuRPJjRxsrVEX60be+DJ
-        9scMxQv3SOPJAsmOhPebE9sMGg==
-X-Google-Smtp-Source: AGHT+IGpiD830YQ5k6d6CQ5DckWiWf96jV+8KhexPtwkxYkpVDql5DrULb/UEUFZH/jZ/IltlIY3WQ==
-X-Received: by 2002:a5d:4d8a:0:b0:314:15b7:1fb5 with SMTP id b10-20020a5d4d8a000000b0031415b71fb5mr8767362wru.34.1691510133363;
-        Tue, 08 Aug 2023 08:55:33 -0700 (PDT)
+        bh=SQTPnoKiIFHGykdzh3Jg/xVXffznXdQisKSdG+HDZEk=;
+        b=bvT0mUbOMTGi2uIRUhyLlJsRQM6dZYLWBHDcuGZFh7hp6hkeeYIUC86d0bOTXRStIj
+         cHARrYoGw9BSWH25SV5ybdsBlb09Bx318eIEwiNvGkXM1no1D12a4tXhg6wsnwEuTLM/
+         3d0/cZyROZTtJiJNdgsXOwywU9/j6/ZNe/hbZCT/wOaOip+lEkEZbvrObnaEn+9NlpvS
+         OYaM9QxkkEXmSnD54WpFQwycq0IHjiJ+vtbxpl8bj59Sw1FnP0tyB6vLhDen4eAO/AIf
+         CZxZXYUAa87cE3vCWBD0hFHrQc//NC+wGCyRn9cX+K1GJ05DDjFQ/Ae7cX1/HBGY2QMJ
+         HN6A==
+X-Gm-Message-State: AOJu0Yx8BN3872G2eTEwMQc/rovk5fvi2Kvbe0w2bY2Wh9Zkw5UP9OV4
+        LjS+FZjHRpzZzBtUm0Cx1tSy7Q==
+X-Google-Smtp-Source: AGHT+IEMsESLGQkXQx+kpgO+wxI+wDiplVtQniuxW5Cvb6B2vzZsyVQqK7MvxwG7hiy813KQia7yyA==
+X-Received: by 2002:a17:906:5350:b0:993:eef2:5d59 with SMTP id j16-20020a170906535000b00993eef25d59mr83612ejo.0.1691511072541;
+        Tue, 08 Aug 2023 09:11:12 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id x21-20020a05600c21d500b003fe18d03188sm14189615wmj.17.2023.08.08.08.55.30
+        by smtp.gmail.com with ESMTPSA id rk22-20020a170907215600b00982a92a849asm6884385ejb.91.2023.08.08.09.11.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 08:55:32 -0700 (PDT)
-Message-ID: <7698ce68-c393-d566-25b9-7b2a08dd8274@linaro.org>
-Date:   Tue, 8 Aug 2023 17:55:29 +0200
+        Tue, 08 Aug 2023 09:11:12 -0700 (PDT)
+Message-ID: <0c444142-3623-fa15-4bf6-df57d9804fdf@linaro.org>
+Date:   Tue, 8 Aug 2023 18:11:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v3 2/9] i2c: mlxbf: Use dev_err_probe in probe function
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add board id for lazor/limozeen
 Content-Language: en-US
-To:     Andi Shyti <andi.shyti@kernel.org>
-Cc:     Liao Chang <liaochang1@huawei.com>, florian.fainelli@broadcom.com,
-        rjui@broadcom.com, sbranden@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com, yangyicong@hisilicon.com,
-        aisheng.dong@nxp.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        kblaiech@nvidia.com, asmaa@nvidia.com, loic.poulain@linaro.org,
-        rfoss@kernel.org, ardb@kernel.org, gcherian@marvell.com,
-        linux-i2c@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-References: <20230808012954.1643834-1-liaochang1@huawei.com>
- <20230808012954.1643834-3-liaochang1@huawei.com>
- <a5b2f1a2-d509-0949-fc1d-929476c2618b@linaro.org>
- <20230808112907.4rnvmyha4v6cg5ds@intel.intel>
- <29e20953-5660-079e-2136-0962eec9cab5@linaro.org>
- <20230808114706.g27gy3rajqvjykce@intel.intel>
+References: <20230802095753.13644-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20230802175628.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230808114706.g27gy3rajqvjykce@intel.intel>
+In-Reply-To: <20230802175628.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,67 +83,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/08/2023 13:47, Andi Shyti wrote:
-> Hi Krzysztof,
+On 02/08/2023 11:57, Sheng-Liang Pan wrote:
+> add BRD_ID(0, Z, 0) = 10 for new board with ALC5682i-VS
 > 
-> On Tue, Aug 08, 2023 at 01:31:31PM +0200, Krzysztof Kozlowski wrote:
->> On 08/08/2023 13:29, Andi Shyti wrote:
->>> Hi Krzysztof,
->>>
->>> On Tue, Aug 08, 2023 at 10:36:40AM +0200, Krzysztof Kozlowski wrote:
->>>> On 08/08/2023 03:29, Liao Chang wrote:
->>>>> Use the dev_err_probe function instead of dev_err in the probe function
->>>>> so that the printed messge includes the return value and also handles
->>>>> -EPROBE_DEFER nicely.
->>>>>
->>>>> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
->>>>> Signed-off-by: Liao Chang <liaochang1@huawei.com>
->>>>
->>>> ...
->>>>
->>>>> @@ -2413,10 +2399,8 @@ static int mlxbf_i2c_probe(struct platform_device *pdev)
->>>>>  	ret = devm_request_irq(dev, irq, mlxbf_i2c_irq,
->>>>>  			       IRQF_SHARED | IRQF_PROBE_SHARED,
->>>>>  			       dev_name(dev), priv);
->>>>> -	if (ret < 0) {
->>>>> -		dev_err(dev, "Cannot get irq %d\n", irq);
->>>>> -		return ret;
->>>>> -	}
->>>>> +	if (ret < 0)
->>>>> +		return dev_err_probe(dev, ret, "Cannot get irq %d\n", irq);
->>>>
->>>> I don't think this is needed:
->>>> https://lore.kernel.org/all/20230721094641.77189-1-frank.li@vivo.com/
->>>
->>> Hmm, that's a bit borderline, I'd say. The change to
->>
->> What's borderline exactly? devm_request_threaded_irq_probe() is coming,
->> right? If it is accepted this hunk is useless and soon should be
->> replaced with proper one.
+> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+> ---
 > 
-> Such change is out of the scope of this series, there are two
-> options that I'd prefer (in the listed order):
+>  arch/arm64/boot/dts/qcom/Makefile             |  5 ++
+>  ...sc7180-trogdor-lazor-limozeen-nots-r10.dts | 39 +++++++++++++
+>  .../sc7180-trogdor-lazor-limozeen-nots-r9.dts |  4 +-
+>  .../sc7180-trogdor-lazor-limozeen-r10.dts     | 55 +++++++++++++++++++
+>  .../qcom/sc7180-trogdor-lazor-limozeen-r9.dts |  4 +-
+>  .../dts/qcom/sc7180-trogdor-lazor-r10-kb.dts  | 33 +++++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r10-lte.dts | 37 +++++++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r10.dts     | 29 ++++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   |  4 +-
+>  .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  |  4 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts |  4 +-
+>  11 files changed, 208 insertions(+), 10 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
 > 
->  1. accept the patch as it is, this patch is not sent today the
->     first time and at the current state it's correct.
->  2. not accept a change on this line
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 337abc4ceb17..73e745fb1ff0 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -109,11 +109,16 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9-kb.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9-lte.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r10.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r10-kb.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r10-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r4.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r9.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r10.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r4.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r5.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r9.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r10.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-lte-parade.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-lte-ti.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-parade.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
+> new file mode 100644
+> index 000000000000..63602feceea6
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
+> @@ -0,0 +1,39 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Lazor Limozeen board device tree source
+> + *
+> + * Copyright 2021 Google LLC.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sc7180.dtsi"
+> +#include "sc7180-trogdor-parade-ps8640.dtsi"
+> +#include "sc7180-trogdor-lazor.dtsi"
+> +#include "sc7180-trogdor-lte-sku.dtsi"
+> +
+> +/ {
+> +	model = "Google Lazor Limozeen without Touchscreen (rev10+, rt5682s)";
+> +	compatible = "google,lazor-sku6", "google,lazor-sku18", "qcom,sc7180";
+> +};
+> +
+> +/delete-node/&ap_ts;
+> +
+> +&panel {
+> +	compatible = "edp-panel";
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
+> +};
+> +
+> +&alc5682 {
+> +	compatible = "realtek,rt5682s";
+> +	realtek,dmic1-clk-pin = <2>;
+> +	realtek,dmic-clk-rate-hz = <2048000>;
+> +};
+> +
+> +&sound {
 
-The 2 is what I commented here. This change should not be made and
-instead we should just switch all such users to new API, because this is
-preferred for all error messages, when applicable and does not result in
-lost context. If there was no such API, sure, but we have this API coming.
-
-> 
-> Replacing devm_request_irq belongs to another series and,
-> besides, I don't want to ask Liao to hold on this series for such
-> trivialities.
-
-So the comment about this redundant and unneeded change, thus switching
-to new API you call 'triviality' but a comment of yours of changing the
-tone of error message to 'please' is appropriate.
-https://lore.kernel.org/all/20230807231320.svssge6uymw3jiho@intel.intel/
-
-That's double standards.
+Overrides are ordered by name.
 
 Best regards,
 Krzysztof
