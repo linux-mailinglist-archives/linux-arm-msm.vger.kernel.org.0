@@ -2,260 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E37B7741E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:29:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C674F7742C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:50:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232817AbjHHR3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 13:29:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38552 "EHLO
+        id S232859AbjHHRuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 13:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231911AbjHHR3W (ORCPT
+        with ESMTP id S231256AbjHHRti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:29:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720E88C081;
-        Tue,  8 Aug 2023 09:12:39 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3787fpLT005135;
-        Tue, 8 Aug 2023 08:53:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OMwYtRs4LUqPPcFIZYxm+1oFsKNkdcYpbIPZoUAL5zI=;
- b=C6IWDb8/1tVepnPL8JWQhXexemT3y6x5ALrxv4kGFR1m/ONcu740DYII5LQbKTmPGRJq
- zWvEXUJ6fPUTHSjbdThFUm0fmeLedKiEKVMHGsju8C/bBqan2VFmMS0D1TshR4prAfEn
- kWhHPTH/YdjMn6oDgpnS7XHdslweKEYMYzafV5a360xoie/4zmLTVZkLwO4+MFNBGqqW
- FfxzNuqI9wkkZvgfiW2qWrQ9DiWvv5gUCjvTRmfHp2Vq1KLk3yyXEMDiYhhT+fWY3qys
- fblVt1LvQzXHscXjrGzln3wkQaku1hiRpzWAOKip8npcsHsUgNJn/tESCK17Vfu2Ocei WA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbb3y8t44-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Aug 2023 08:53:38 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3788rb2G029968
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Aug 2023 08:53:37 GMT
-Received: from [10.253.74.171] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
- 2023 01:53:35 -0700
-Message-ID: <be205d43-b558-47eb-0250-b7415474b6e9@quicinc.com>
-Date:   Tue, 8 Aug 2023 16:53:32 +0800
+        Tue, 8 Aug 2023 13:49:38 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259BD26E5B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:22:02 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-522382c4840so8306827a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:22:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691511691; x=1692116491;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X+614xtHjgD1nkm8xRBKqqyV2uZni5hqr1Y2F11sHVk=;
+        b=TJ7PRA2PDtaxpnBSUjyoSCUDN1beWb8gdNDBqjpRHQy761VztiaUhWbUhtuaJCSVBM
+         IHot0Ud9xW5qclNcs43gjlqagjkzoGaRRWfMgcEBs+PhnCXhm9FhVY3NEcArh5EhSD4L
+         G77ReTVfnOtIu7lyx+cpYdhc95uxXKFg8h2RHof0t4P1srJr29OTOmW/xtKokR4DnyTc
+         W0G59ti1vSOFWFP/0WC0Dhbb6vGOiq0y3REJ+7CheVerfZp1M4b8aXObPuSxvecLmAeg
+         i+Fhj4Qa2nmkwkxFQ3HMmrLk4tbnHh9naXZV5rC+9uJiJBynTdr/HdtxVE5YeWMjkRa6
+         b84Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691511691; x=1692116491;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=X+614xtHjgD1nkm8xRBKqqyV2uZni5hqr1Y2F11sHVk=;
+        b=CbuKcI/BUQznAgydm+c6owr9Eq8iucDfIjfHT2VIfjxrabgxFS5Hxtl4u2MNXw4WUK
+         fruxCwKrM6jYFnkbtXSEu+0ypYStnPoLgqaayChmemZJhLDDHK5sds3/PPeVDnGWSn8l
+         qZfCwgT3Bb28u8PrykQ396Ma8wibR84Hgpr5XLCoImd/7/yvrnv9vf8zopQ1XJ5Edco4
+         laZNL6aH3wZP9C8LoqWfK5XDrkVQBr5SHcnuc1LA/Qbza9MoTCEzccjK0+AIODQD2FQg
+         FIa64AdhnpZDMkintEJ9H6fs4Yv3BDK0jwJdcHJR7APa0ZQmowY25W0ONiFg8PP8P1yY
+         7V2A==
+X-Gm-Message-State: AOJu0YwDA3sgfa4Mxjiq+JfVf/w34cQtI/1Fx/wVlcSi4nBP4TZ37EY8
+        V6dSM5CNj7iQit2FX8yZD5lgS5/2dJMFdmh5CF0=
+X-Google-Smtp-Source: AGHT+IFVMdcEkHvqjIMX5oEgG2oBE7nbsEMOVRk5VcpuTnRc1mcmt8mNUyLq7GYjCrQ3jyb2zmb5Gw==
+X-Received: by 2002:a05:6512:e9b:b0:4fe:5680:db1f with SMTP id bi27-20020a0565120e9b00b004fe5680db1fmr7912704lfb.53.1691487891249;
+        Tue, 08 Aug 2023 02:44:51 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id i6-20020a056512006600b004fdba93b92asm1818884lfo.252.2023.08.08.02.44.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Aug 2023 02:44:50 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Tue, 08 Aug 2023 11:44:42 +0200
+Subject: [PATCH v2 2/6] arm64: dts: qcom: msm8998: Add missing power domain
+ to MMSS SMMU
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add SDX75 based modem
- support
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
-References: <1691460215-45383-1-git-send-email-quic_qianyu@quicinc.com>
- <20230808075103.GD4990@thinkpad>
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20230808075103.GD4990@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Kig8R0Xi3gs_mxtfSGLhYIz6YstNcAFs
-X-Proofpoint-GUID: Kig8R0Xi3gs_mxtfSGLhYIz6YstNcAFs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-08_07,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 mlxlogscore=999
- suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308080079
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230531-topic-8998_mmssclk-v2-2-34273e275c51@linaro.org>
+References: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
+In-Reply-To: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Imran Khan <kimran@codeaurora.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Joonwoo Park <joonwoop@codeaurora.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691487885; l=854;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=/yznmFUOFfvt3H81R22ABUv0eOeLe9LUwSr+QNKzGV0=;
+ b=6ok/LWtlPH6zSyy5UMAq/t5bgWP3Ud7Ij9vBySuwjh3vMiS1gJVjxUKw6nLHyS95ARxX+LJAd
+ Ibm+ib3FKxpBIIhASbXVDOfZYxEwn1cNsRmJHG+sQTEmtuUOfL5elUO
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The MMSS SMMU has its own power domain. Attach it so that we can drop
+the "keep it always-on" hack.
 
-On 8/8/2023 3:51 PM, Manivannan Sadhasivam wrote:
-> On Tue, Aug 08, 2023 at 10:03:35AM +0800, Qiang Yu wrote:
->> Add generic info for SDX75 based modems. SDX75 takes longer than expected
->> (default, 8 seconds) to set ready after reboot. Hence add optional ready
->> timeout parameter to wait enough for device ready as part of power up
->> sequence.
->>
->> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->> ---
->>   drivers/bus/mhi/host/init.c        |  1 +
->>   drivers/bus/mhi/host/main.c        |  7 ++++++-
->>   drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
->>   drivers/bus/mhi/host/pm.c          |  6 +++++-
->>   include/linux/mhi.h                |  4 ++++
->>   5 files changed, 38 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->> index f78aefd..65ceac1 100644
->> --- a/drivers/bus/mhi/host/init.c
->> +++ b/drivers/bus/mhi/host/init.c
->> @@ -881,6 +881,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
->>   	if (!mhi_cntrl->timeout_ms)
->>   		mhi_cntrl->timeout_ms = MHI_TIMEOUT_MS;
->>   
->> +	mhi_cntrl->ready_timeout_ms = config->ready_timeout_ms;
->>   	mhi_cntrl->bounce_buf = config->use_bounce_buf;
->>   	mhi_cntrl->buffer_len = config->buf_len;
->>   	if (!mhi_cntrl->buffer_len)
->> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->> index 74a7543..8590926 100644
->> --- a/drivers/bus/mhi/host/main.c
->> +++ b/drivers/bus/mhi/host/main.c
->> @@ -43,8 +43,13 @@ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
->>   				    u32 mask, u32 val, u32 delayus)
->>   {
->>   	int ret;
->> -	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
->> +	u32 out, retry;
->> +	u32 timeout_ms = mhi_cntrl->timeout_ms;
->>   
->> +	if (mhi_cntrl->ready_timeout_ms && mask == MHISTATUS_READY_MASK)
->> +		timeout_ms = mhi_cntrl->ready_timeout_ms;
-> Instead of handling the timeout inside mhi_poll_reg_field(), you should pass the
-> appropriate timeout value to this function.
-OK, will do.
->
->> +
->> +	retry = (timeout_ms * 1000) / delayus;
->>   	while (retry--) {
->>   		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, &out);
->>   		if (ret)
->> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
->> index fcd80bc..9c601f0 100644
->> --- a/drivers/bus/mhi/host/pci_generic.c
->> +++ b/drivers/bus/mhi/host/pci_generic.c
->> @@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->>   	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
->>   };
->>   
->> +static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
->> +	.max_channels = 128,
->> +	.timeout_ms = 8000,
->> +	.ready_timeout_ms = 50000,
->> +	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
->> +	.ch_cfg = modem_qcom_v1_mhi_channels,
->> +	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
->> +	.event_cfg = modem_qcom_v1_mhi_events,
->> +};
->> +
->>   static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->>   	.max_channels = 128,
->>   	.timeout_ms = 8000,
->> @@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->>   	.event_cfg = modem_qcom_v1_mhi_events,
->>   };
->>   
->> +static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
->> +	.name = "qcom-sdx75m",
->> +	.fw = "qcom/sdx75m/xbl.elf",
->> +	.edl = "qcom/sdx75m/edl.mbn",
->> +	.config = &modem_qcom_v2_mhiv_config,
->> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->> +	.dma_data_width = 32,
->> +	.sideband_wake = false,
->> +};
->> +
->>   static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
->>   	.name = "qcom-sdx65m",
->>   	.fw = "qcom/sdx65m/xbl.elf",
->> @@ -597,6 +617,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->>   		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
->>   	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->>   		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
->> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
->> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
->>   	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
->>   		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->>   	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
->> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
->> index 8a4362d..6f049e0 100644
->> --- a/drivers/bus/mhi/host/pm.c
->> +++ b/drivers/bus/mhi/host/pm.c
->> @@ -1202,14 +1202,18 @@ EXPORT_SYMBOL_GPL(mhi_power_down);
->>   int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
->>   {
->>   	int ret = mhi_async_power_up(mhi_cntrl);
->> +	u32 timeout_ms;
->>   
->>   	if (ret)
->>   		return ret;
->>   
->> +	/* Some devices need more time to set ready during power up */
->> +	timeout_ms = mhi_cntrl->ready_timeout_ms ?
->> +		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
-> Since you are using this extended timeout value in a couple of places (not just
-> for checking READY_STATE), it is better to use the existing "timeout_ms"
-> parameter.
->
-> - Mani
+Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-We use ready_timeout_ms here is because READY_STATE is polled in a 
-workqueue,  in parallel with waiting valid EE.
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index e40f6461f4fd..39db67211fae 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -2770,6 +2770,8 @@ mmss_smmu: iommu@cd00000 {
+ 				<GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
++
++			power-domains = <&mmcc BIMC_SMMU_GDSC>;
+ 		};
+ 
+ 		remoteproc_adsp: remoteproc@17300000 {
 
-That means we start to wait valid EE and poll ready like at same time 
-instead of starting to wait EE after ready state.
+-- 
+2.41.0
 
-Thus the total time it takes to wait valid EE is about the time for 
-polling ready.
-
->>   	wait_event_timeout(mhi_cntrl->state_event,
->>   			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
->>   			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
->> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
->> +			   msecs_to_jiffies(timeout_ms));
->>   
->>   	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
->>   	if (ret)
->> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->> index f6de4b6..a43e5f8 100644
->> --- a/include/linux/mhi.h
->> +++ b/include/linux/mhi.h
->> @@ -266,6 +266,7 @@ struct mhi_event_config {
->>    * struct mhi_controller_config - Root MHI controller configuration
->>    * @max_channels: Maximum number of channels supported
->>    * @timeout_ms: Timeout value for operations. 0 means use default
->> + * @ready_timeout_ms: Timeout value for waiting device to be ready (optional)
->>    * @buf_len: Size of automatically allocated buffers. 0 means use default
->>    * @num_channels: Number of channels defined in @ch_cfg
->>    * @ch_cfg: Array of defined channels
->> @@ -277,6 +278,7 @@ struct mhi_event_config {
->>   struct mhi_controller_config {
->>   	u32 max_channels;
->>   	u32 timeout_ms;
->> +	u32 ready_timeout_ms;
->>   	u32 buf_len;
->>   	u32 num_channels;
->>   	const struct mhi_channel_config *ch_cfg;
->> @@ -326,6 +328,7 @@ struct mhi_controller_config {
->>    * @pm_mutex: Mutex for suspend/resume operation
->>    * @pm_lock: Lock for protecting MHI power management state
->>    * @timeout_ms: Timeout in ms for state transitions
->> + * @ready_timeout_ms: Timeout in ms for waiting device to be ready (optional)
->>    * @pm_state: MHI power management state
->>    * @db_access: DB access states
->>    * @ee: MHI device execution environment
->> @@ -413,6 +416,7 @@ struct mhi_controller {
->>   	struct mutex pm_mutex;
->>   	rwlock_t pm_lock;
->>   	u32 timeout_ms;
->> +	u32 ready_timeout_ms;
->>   	u32 pm_state;
->>   	u32 db_access;
->>   	enum mhi_ee_type ee;
->> -- 
->> 2.7.4
->>
