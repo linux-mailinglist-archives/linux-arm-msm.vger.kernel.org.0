@@ -2,84 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 610F2774B52
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 22:45:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54BCC774B55
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 22:45:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234651AbjHHUpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 16:45:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59204 "EHLO
+        id S234711AbjHHUpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 16:45:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233904AbjHHUoz (ORCPT
+        with ESMTP id S234682AbjHHUoz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 8 Aug 2023 16:44:55 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 049E336FE2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:36:18 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99c10ba30afso3656566b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:36:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691512548; x=1692117348;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m5cHR9R1zj6+fWN0kfJbhPUfhYqf7kqDHOcaH9ExP6c=;
-        b=jRTKeVsOf984+lIgrFU5D8NZZeOuwCCJ4xio+1N1CYFobkXJCj+wsOJgrz2UE32vSH
-         1VUvfbv+LRQaLXPS9ADPklaR1ZJYGri3wFwGA6XHR4F/blWxjWYayWC/aJ+1j2RPDyB2
-         oHtg/bzDlC6KCpV7UKnmjPO/9zG2VpNTnKbO7HASH1zdZEDz4aeKM1aHm2+Xm4vj5P4z
-         F14YuLZsdF0U0sa8K3yb4qCPktnfgHNuwV+XYGb4IVZtJbNFLI2t5J1xZoW6RAf/CUMb
-         SstHDBFxmCoX4GgdEHJQhGAQzX+BK8HB5uznyqPJN612W801+0gmqR0eknUoOPTA/R6T
-         qeJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691512548; x=1692117348;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=m5cHR9R1zj6+fWN0kfJbhPUfhYqf7kqDHOcaH9ExP6c=;
-        b=MhE1/tmVp3KtozGJWC1NV39jhC94pZ+vsUdCYANCN5d2hhlE7HyU3jqGXlty5Vl79s
-         RSqlsxGZYaXKuSSzsTsx4UCDc62MipZALdI90cZEUl5n67yCYYrP19M0daC55WqQlOnb
-         roTlUdYA6gpu8D1b8u/j5sIC3bjzwPg9l7+mbk2U/ddCf95hSn8qXDXi47AL228XxvJC
-         jQkidatge/ArNIZORW5CdqQMomcYmWi2Lvhsr3LZIzEWjEbIqupYo9jZ/Jd4+E5vfPwA
-         mhftXFg8oeabcGd3DPWRWvdcerSJQD3w/SLbXGQBSVNu5QGQ1bGRRgHAwREYjsaF9ho/
-         FR3w==
-X-Gm-Message-State: AOJu0Yx3+0UFaqoNE9K3eQussrq8XAFxCKBvZq8eUUhiLgAwpiKsx32C
-        mEZEYDXLgeke54RFF4VnAqlOwpvGXlJVg7vXusc=
-X-Google-Smtp-Source: AGHT+IFa8hs7gdLp6TteRabPqqDMtp2xucJzNgO9gR2weT3XgRWhGg1PX/JaOpY6/dejTFD0ACc/DA==
-X-Received: by 2002:a05:6512:32a4:b0:4fb:fdf1:8b25 with SMTP id q4-20020a05651232a400b004fbfdf18b25mr3031231lfe.24.1691495025312;
-        Tue, 08 Aug 2023 04:43:45 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id j20-20020ac253b4000000b004fbdba4b075sm1861679lfh.57.2023.08.08.04.43.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 04:43:44 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 08 Aug 2023 13:43:39 +0200
-Subject: [PATCH v3 08/10] interconnect: qcom: sdm660: Set AB/IB
- coefficients
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B0936872;
+        Tue,  8 Aug 2023 09:36:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9731C624EB;
+        Tue,  8 Aug 2023 11:47:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44FCC433C7;
+        Tue,  8 Aug 2023 11:47:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691495229;
+        bh=uVffECseHnMN3v5iLYcqI1db1hTkaBuKZvryPwhJRns=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Znte4XL62lM+ZoiSFMMi+ZXkDB/EClSpHnqye3sCmKTMqec/e7YyJNR5+nZQoYA4l
+         scVziRZl7NQ4rsxCHgCm8Fjdc+tS10aFWvW+7wfBkws5VCdIMltVR8YdgAhNn6xXxg
+         W/WOpbeeXFXcHul+rCsI5IpteRHcJ7sHauxBB6tIkyVIIydP8dY1CISRrxBLQAcu3I
+         xJiOxeC6+pY40RCYUQF48rEFLIZZSKVgqMOzjKbXyW1bbsByzdP/LRkdU5hJJOBubd
+         wjTswi09bGo/2KsX3da1teP7sbgafryxurl2jfa+0I4Na6ni7Sed3xkrEMm8RoDlJE
+         bbaakn0Dobnvg==
+Date:   Tue, 8 Aug 2023 13:47:06 +0200
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Liao Chang <liaochang1@huawei.com>, florian.fainelli@broadcom.com,
+        rjui@broadcom.com, sbranden@broadcom.com,
+        bcm-kernel-feedback-list@broadcom.com, yangyicong@hisilicon.com,
+        aisheng.dong@nxp.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        kblaiech@nvidia.com, asmaa@nvidia.com, loic.poulain@linaro.org,
+        rfoss@kernel.org, ardb@kernel.org, gcherian@marvell.com,
+        linux-i2c@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/9] i2c: mlxbf: Use dev_err_probe in probe function
+Message-ID: <20230808114706.g27gy3rajqvjykce@intel.intel>
+References: <20230808012954.1643834-1-liaochang1@huawei.com>
+ <20230808012954.1643834-3-liaochang1@huawei.com>
+ <a5b2f1a2-d509-0949-fc1d-929476c2618b@linaro.org>
+ <20230808112907.4rnvmyha4v6cg5ds@intel.intel>
+ <29e20953-5660-079e-2136-0962eec9cab5@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230726-topic-icc_coeff-v3-8-dee684d6cdd2@linaro.org>
-References: <20230726-topic-icc_coeff-v3-0-dee684d6cdd2@linaro.org>
-In-Reply-To: <20230726-topic-icc_coeff-v3-0-dee684d6cdd2@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691495013; l=1519;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=EjLG3n/q4YI8bbEqplfHVOwV0syrmI4lAF1qcHGTJvw=;
- b=EnNVF/Cr9uzLzEU4BBg3kNfteX8HGav2OxqYe3b702ezBcqQnBiKJXPeKjEEqpkCP0IXg0ZPZ
- 0Il6GgQVQ25CyjPK0/MyGHqxPxzBT36JDWPV8X6rvNGRMAfLmNFuhLu
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <29e20953-5660-079e-2136-0962eec9cab5@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,51 +67,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some buses and nodes need additional manual adjustments atop the usual
-calculations. Fill in the missing coefficients.
+Hi Krzysztof,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/sdm660.c | 4 ++++
- 1 file changed, 4 insertions(+)
+On Tue, Aug 08, 2023 at 01:31:31PM +0200, Krzysztof Kozlowski wrote:
+> On 08/08/2023 13:29, Andi Shyti wrote:
+> > Hi Krzysztof,
+> > 
+> > On Tue, Aug 08, 2023 at 10:36:40AM +0200, Krzysztof Kozlowski wrote:
+> >> On 08/08/2023 03:29, Liao Chang wrote:
+> >>> Use the dev_err_probe function instead of dev_err in the probe function
+> >>> so that the printed messge includes the return value and also handles
+> >>> -EPROBE_DEFER nicely.
+> >>>
+> >>> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+> >>> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+> >>
+> >> ...
+> >>
+> >>> @@ -2413,10 +2399,8 @@ static int mlxbf_i2c_probe(struct platform_device *pdev)
+> >>>  	ret = devm_request_irq(dev, irq, mlxbf_i2c_irq,
+> >>>  			       IRQF_SHARED | IRQF_PROBE_SHARED,
+> >>>  			       dev_name(dev), priv);
+> >>> -	if (ret < 0) {
+> >>> -		dev_err(dev, "Cannot get irq %d\n", irq);
+> >>> -		return ret;
+> >>> -	}
+> >>> +	if (ret < 0)
+> >>> +		return dev_err_probe(dev, ret, "Cannot get irq %d\n", irq);
+> >>
+> >> I don't think this is needed:
+> >> https://lore.kernel.org/all/20230721094641.77189-1-frank.li@vivo.com/
+> > 
+> > Hmm, that's a bit borderline, I'd say. The change to
+> 
+> What's borderline exactly? devm_request_threaded_irq_probe() is coming,
+> right? If it is accepted this hunk is useless and soon should be
+> replaced with proper one.
 
-diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
-index 36962f7bd7bb..7392bebba334 100644
---- a/drivers/interconnect/qcom/sdm660.c
-+++ b/drivers/interconnect/qcom/sdm660.c
-@@ -602,6 +602,7 @@ static struct qcom_icc_node mas_mdp_p0 = {
- 	.name = "mas_mdp_p0",
- 	.id = SDM660_MASTER_MDP_P0,
- 	.buswidth = 16,
-+	.ib_coeff = 50,
- 	.mas_rpm_id = 8,
- 	.slv_rpm_id = -1,
- 	.qos.ap_owned = true,
-@@ -621,6 +622,7 @@ static struct qcom_icc_node mas_mdp_p1 = {
- 	.name = "mas_mdp_p1",
- 	.id = SDM660_MASTER_MDP_P1,
- 	.buswidth = 16,
-+	.ib_coeff = 50,
- 	.mas_rpm_id = 61,
- 	.slv_rpm_id = -1,
- 	.qos.ap_owned = true,
-@@ -1540,6 +1542,7 @@ static const struct qcom_icc_desc sdm660_bimc = {
- 	.num_nodes = ARRAY_SIZE(sdm660_bimc_nodes),
- 	.bus_clk_desc = &bimc_clk,
- 	.regmap_cfg = &sdm660_bimc_regmap_config,
-+	.ab_coeff = 153,
- };
- 
- static struct qcom_icc_node * const sdm660_cnoc_nodes[] = {
-@@ -1659,6 +1662,7 @@ static const struct qcom_icc_desc sdm660_mnoc = {
- 	.intf_clocks = mm_intf_clocks,
- 	.num_intf_clocks = ARRAY_SIZE(mm_intf_clocks),
- 	.regmap_cfg = &sdm660_mnoc_regmap_config,
-+	.ab_coeff = 153,
- };
- 
- static struct qcom_icc_node * const sdm660_snoc_nodes[] = {
+Such change is out of the scope of this series, there are two
+options that I'd prefer (in the listed order):
 
--- 
-2.41.0
+ 1. accept the patch as it is, this patch is not sent today the
+    first time and at the current state it's correct.
+ 2. not accept a change on this line
 
+Replacing devm_request_irq belongs to another series and,
+besides, I don't want to ask Liao to hold on this series for such
+trivialities.
+
+Thank you,
+Andi
+
+> Instead of making many trivial changes doing the same, all these series
+> should be aligned.
+> 
+> > devm_request_irq/devm_request_threaded_irq_probe seems like
+> > something for another series. But for now, I think I'll accept
+> > this as it is since it fits within the scope of this current
+> > series.
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
