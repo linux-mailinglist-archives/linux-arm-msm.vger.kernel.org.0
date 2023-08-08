@@ -2,171 +2,308 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A2A07740E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:12:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B878774030
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:00:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbjHHRMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 13:12:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33676 "EHLO
+        id S233923AbjHHRAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 13:00:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbjHHRLg (ORCPT
+        with ESMTP id S233681AbjHHQ6d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:11:36 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5883169697
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:04:48 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99357737980so850539866b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:04:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691510684; x=1692115484;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2UuNhIPZQtVYzGmtMAw0xH3Mxdy93w7NQpbLuvaKjSg=;
-        b=bsXG1fGulGkQJ6slL7CEmEiBxY3vKw/HYFzPk7D7T4p+PSfUPQK8i7tP0luFwvxR/M
-         WhUHkaS8lp4afrmexAQW+aXE3Txi/ZGwIf3pB4tzIUlvLzvQG7NgTavfyV4F2u5vO2ZA
-         mUFDmb2me11GTbrHuZRNBkMJjXdRo3egLbkH1lQhuIzIvcVJadDlD8/LCSLq7yWCoEgl
-         WyetURXfUsEF0T342Ay6ynlTBUYuwjfr6t7MrcYM7H0RULAFfD0ubx7TkEC6avyAbs7l
-         I2bZgBAfnbcW7i38X9oq8bGYnCPuInzjBb0xFs+aNwUXxHftmPe/lyYCCDrUMw1XOAR9
-         Mzvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691510684; x=1692115484;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2UuNhIPZQtVYzGmtMAw0xH3Mxdy93w7NQpbLuvaKjSg=;
-        b=HE5ralLgj+nrwUiaf4c4EOjCkrJECUQhso3BQTDozDQGNIgZV2A7iiYso9Xvb2N5iL
-         0VWso8T3TkW5J+FARRI/BjcllBJ10de+Cyd7YkBJfIm9nsSuh4lVWZf7p/D98PEoXxeQ
-         QkUYEowxd64e2Ww4cgTAlFfIQxu2WHsvdwvN9Wr7hG8bmSlmx3CkEmSVou5iph1vWNAx
-         AiU0YGT/w/DczL6HE7QPDKuPbrBtiYABUORWdxcr2bJ5eOlCtYrOcW1T5pnw+U2EAtLt
-         pjK969g4mgmytLUJ6kOc4CK3sWI+8uD003/GAlfBoRlwcSKWlf+vNBo+nE2PaLMqKxc3
-         nNAQ==
-X-Gm-Message-State: AOJu0YwqRmzi+KLecTKOUkYEXn8ZKIPE8L39o8Ei1m1izLmS56M4u/ki
-        gs6YsqMSGf10yhUlaYwiK6uAI3jsJxwBI0h37D0=
-X-Google-Smtp-Source: AGHT+IHe6NP3MzfgZSWbkR7jxRMoFmcA9NIiePawh4EYEM7Q9mrKbCLB6JP4QQacs26mWD9MoLIIVw==
-X-Received: by 2002:ac2:4ece:0:b0:4f8:5604:4b50 with SMTP id p14-20020ac24ece000000b004f856044b50mr7020474lfr.64.1691487899167;
-        Tue, 08 Aug 2023 02:44:59 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id i6-20020a056512006600b004fdba93b92asm1818884lfo.252.2023.08.08.02.44.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 02:44:58 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 08 Aug 2023 11:44:46 +0200
-Subject: [PATCH v2 6/6] dt-bindings: arm-smmu: Fix MSM8998 clocks
- description
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-8998_mmssclk-v2-6-34273e275c51@linaro.org>
-References: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
-In-Reply-To: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Imran Khan <kimran@codeaurora.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691487885; l=2406;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=GiTo3aHVWSJqXeRVvBwFrjMpXiRsIg5liCVx9M1P4EU=;
- b=Nxs8hOuPBNmdHqXrObFj394Ryc0kynWXqn1i40tZ53Cb01Hzw6WwtFi+3X0Jcw4BcgOd603j0
- ZWoh4q6XnKVBZvu54Q3HrIhvJNMsEM/z8rSRfzNPESDS1/k+Iq2OYtg
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Tue, 8 Aug 2023 12:58:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FDA55901;
+        Tue,  8 Aug 2023 09:00:09 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3786wDSB006364;
+        Tue, 8 Aug 2023 10:00:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=lD6hjJMAqN8E6FnyY2yf36/AWoZiWhCTs0fWAqCMBIg=;
+ b=c9y7MzImP2y9F0OFMwN5Nf/N06h0ApmIggjNANmIOGfwpe06iggRgiiBK33RM9FdWbDb
+ T3NYTo+wEZJK19BdnkRlL3hWN97U0QKPHWojJRG2yzNI+g4luXdROzgvDtZd04oq8exH
+ +HtTdD0eJCrYsPPkqgJ+2o4CYgZZJ+rdrvoNtl4rk8Ih9cA8DmZeRqOl7GlYstGdF7C6
+ OXP/eQKWaBlVfeOkmya0rKF7/MXgp7c2U14Xu69vTX3wHgemoVu5xqfn9SgYvVc9X1UP
+ 8fmPm6w0+61Fn46fdWbWps95WCXZhb8w+eZdy6peK/RQ+IYnEXBR+nyOuuOTDqKfjcQg Fw== 
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbcacrtb1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Aug 2023 10:00:14 +0000
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 378A0CYs025875;
+        Tue, 8 Aug 2023 10:00:12 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 3s9fgkpa3q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 08 Aug 2023 10:00:12 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 378A0CA7025868;
+        Tue, 8 Aug 2023 10:00:12 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 378A0Cnr025861;
+        Tue, 08 Aug 2023 10:00:12 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
+        id 4276A4C37; Tue,  8 Aug 2023 18:00:11 +0800 (CST)
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+To:     mani@kernel.org, quic_jhugo@quicinc.com
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v2] bus: mhi: host: pci_generic: Add SDX75 based modem support
+Date:   Tue,  8 Aug 2023 18:00:09 +0800
+Message-Id: <1691488809-85310-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: o0UXGTYf3JJx3F7FgGyk2IUXYRmWD09t
+X-Proofpoint-ORIG-GUID: o0UXGTYf3JJx3F7FgGyk2IUXYRmWD09t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-08_09,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308080089
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8998 was abusingly referencing one of the internal bus clocks, that
-were recently dropped from Linux (because the original implementation
-did not make much sense), circumventing the interconnect framework.
+Add generic info for SDX75 based modems. SDX75 takes longer than expected
+(default, 8 seconds) to set ready after reboot. Hence add optional ready
+timeout parameter to wait enough for device ready as part of power up
+sequence.
 
-Fix it.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 ---
- .../devicetree/bindings/iommu/arm,smmu.yaml        | 41 ++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+v1->v2: pass appropriate timeout value to mhi_poll_reg_field
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 3a31a979709b..cf29ab10501c 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -270,6 +270,47 @@ allOf:
-           contains:
-             enum:
-               - qcom,msm8998-smmu-v2
-+    then:
-+      anyOf:
-+        - properties:
-+            clock-names:
-+              items:
-+                - const: bus
-+            clocks:
-+              items:
-+                - description: bus clock required for downstream bus access and for
-+                    the smmu ptw
-+        - properties:
-+            clock-names:
-+              items:
-+                - const: iface
-+                - const: mem
-+                - const: mem_iface
-+            clocks:
-+              items:
-+                - description: interface clock required to access smmu's registers
-+                    through the TCU's programming interface.
-+                - description: bus clock required for memory access
-+                - description: bus clock required for GPU memory access
-+        - properties:
-+            clock-names:
-+              items:
-+                - const: iface-mm
-+                - const: iface-smmu
-+                - const: bus-smmu
-+            clocks:
-+              items:
-+                - description: interface clock required to access mnoc's registers
-+                    through the TCU's programming interface.
-+                - description: interface clock required to access smmu's registers
-+                    through the TCU's programming interface.
-+                - description: bus clock required for the smmu ptw
+ drivers/bus/mhi/host/init.c        |  1 +
+ drivers/bus/mhi/host/internal.h    |  2 +-
+ drivers/bus/mhi/host/main.c        |  5 +++--
+ drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
+ drivers/bus/mhi/host/pm.c          | 24 +++++++++++++++++-------
+ include/linux/mhi.h                |  4 ++++
+ 6 files changed, 48 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index f78aefd..65ceac1 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -881,6 +881,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
+ 	if (!mhi_cntrl->timeout_ms)
+ 		mhi_cntrl->timeout_ms = MHI_TIMEOUT_MS;
+ 
++	mhi_cntrl->ready_timeout_ms = config->ready_timeout_ms;
+ 	mhi_cntrl->bounce_buf = config->use_bounce_buf;
+ 	mhi_cntrl->buffer_len = config->buf_len;
+ 	if (!mhi_cntrl->buffer_len)
+diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+index 2e139e7..30ac415 100644
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -321,7 +321,7 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+ 				    u32 *out);
+ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+ 				    void __iomem *base, u32 offset, u32 mask,
+-				    u32 val, u32 delayus);
++				    u32 val, u32 delayus, u32 timeout_ms);
+ void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+ 		   u32 offset, u32 val);
+ int __must_check mhi_write_reg_field(struct mhi_controller *mhi_cntrl,
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index 74a7543..c0215d1 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -40,10 +40,11 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+ 
+ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+ 				    void __iomem *base, u32 offset,
+-				    u32 mask, u32 val, u32 delayus)
++				    u32 mask, u32 val, u32 delayus,
++				    u32 timeout_ms)
+ {
+ 	int ret;
+-	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
++	u32 out, retry = (timeout_ms * 1000) / delayus;
+ 
+ 	while (retry--) {
+ 		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, &out);
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index fcd80bc..9c601f0 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+ 	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
+ };
+ 
++static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
++	.max_channels = 128,
++	.timeout_ms = 8000,
++	.ready_timeout_ms = 50000,
++	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
++	.ch_cfg = modem_qcom_v1_mhi_channels,
++	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
++	.event_cfg = modem_qcom_v1_mhi_events,
++};
 +
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-               - qcom,sdm630-smmu-v2
-               - qcom,sm6375-smmu-v2
-     then:
-
+ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+ 	.max_channels = 128,
+ 	.timeout_ms = 8000,
+@@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+ 	.event_cfg = modem_qcom_v1_mhi_events,
+ };
+ 
++static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
++	.name = "qcom-sdx75m",
++	.fw = "qcom/sdx75m/xbl.elf",
++	.edl = "qcom/sdx75m/edl.mbn",
++	.config = &modem_qcom_v2_mhiv_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++};
++
+ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+ 	.name = "qcom-sdx65m",
+ 	.fw = "qcom/sdx65m/xbl.elf",
+@@ -597,6 +617,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
++		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index 8a4362d..a2f2fee 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -163,6 +163,7 @@ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
+ 	enum mhi_pm_state cur_state;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	u32 interval_us = 25000; /* poll register field every 25 milliseconds */
++	u32 timeout_ms;
+ 	int ret, i;
+ 
+ 	/* Check if device entered error state */
+@@ -173,14 +174,18 @@ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
+ 
+ 	/* Wait for RESET to be cleared and READY bit to be set by the device */
+ 	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+-				 MHICTRL_RESET_MASK, 0, interval_us);
++				 MHICTRL_RESET_MASK, 0, interval_us,
++				 mhi_cntrl->timeout_ms);
+ 	if (ret) {
+ 		dev_err(dev, "Device failed to clear MHI Reset\n");
+ 		return ret;
+ 	}
+ 
++	timeout_ms = mhi_cntrl->ready_timeout_ms ?
++		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+ 	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHISTATUS,
+-				 MHISTATUS_READY_MASK, 1, interval_us);
++				 MHISTATUS_READY_MASK, 1, interval_us,
++				 timeout_ms);
+ 	if (ret) {
+ 		dev_err(dev, "Device failed to enter MHI Ready\n");
+ 		return ret;
+@@ -479,7 +484,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+ 
+ 		/* Wait for the reset bit to be cleared by the device */
+ 		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+-				 MHICTRL_RESET_MASK, 0, 25000);
++				 MHICTRL_RESET_MASK, 0, 25000, mhi_cntrl->timeout_ms);
+ 		if (ret)
+ 			dev_err(dev, "Device failed to clear MHI Reset\n");
+ 
+@@ -492,8 +497,8 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+ 		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
+ 			/* wait for ready to be set */
+ 			ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs,
+-						 MHISTATUS,
+-						 MHISTATUS_READY_MASK, 1, 25000);
++						 MHISTATUS, MHISTATUS_READY_MASK,
++						 1, 25000, mhi_cntrl->timeout_ms);
+ 			if (ret)
+ 				dev_err(dev, "Device failed to enter READY state\n");
+ 		}
+@@ -1111,7 +1116,8 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+ 	if (state == MHI_STATE_SYS_ERR) {
+ 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ 		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+-				 MHICTRL_RESET_MASK, 0, interval_us);
++				 MHICTRL_RESET_MASK, 0, interval_us,
++				 mhi_cntrl->timeout_ms);
+ 		if (ret) {
+ 			dev_info(dev, "Failed to reset MHI due to syserr state\n");
+ 			goto error_exit;
+@@ -1202,14 +1208,18 @@ EXPORT_SYMBOL_GPL(mhi_power_down);
+ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+ {
+ 	int ret = mhi_async_power_up(mhi_cntrl);
++	u32 timeout_ms;
+ 
+ 	if (ret)
+ 		return ret;
+ 
++	/* Some devices need more time to set ready during power up */
++	timeout_ms = mhi_cntrl->ready_timeout_ms ?
++		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+ 	wait_event_timeout(mhi_cntrl->state_event,
+ 			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+ 			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+-			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
++			   msecs_to_jiffies(timeout_ms));
+ 
+ 	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
+ 	if (ret)
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index e065101..129964c 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -266,6 +266,7 @@ struct mhi_event_config {
+  * struct mhi_controller_config - Root MHI controller configuration
+  * @max_channels: Maximum number of channels supported
+  * @timeout_ms: Timeout value for operations. 0 means use default
++ * @ready_timeout_ms: Timeout value for waiting device to be ready (optional)
+  * @buf_len: Size of automatically allocated buffers. 0 means use default
+  * @num_channels: Number of channels defined in @ch_cfg
+  * @ch_cfg: Array of defined channels
+@@ -277,6 +278,7 @@ struct mhi_event_config {
+ struct mhi_controller_config {
+ 	u32 max_channels;
+ 	u32 timeout_ms;
++	u32 ready_timeout_ms;
+ 	u32 buf_len;
+ 	u32 num_channels;
+ 	const struct mhi_channel_config *ch_cfg;
+@@ -331,6 +333,7 @@ struct mhi_controller_config {
+  * @pm_mutex: Mutex for suspend/resume operation
+  * @pm_lock: Lock for protecting MHI power management state
+  * @timeout_ms: Timeout in ms for state transitions
++ * @ready_timeout_ms: Timeout in ms for waiting device to be ready (optional)
+  * @pm_state: MHI power management state
+  * @db_access: DB access states
+  * @ee: MHI device execution environment
+@@ -420,6 +423,7 @@ struct mhi_controller {
+ 	struct mutex pm_mutex;
+ 	rwlock_t pm_lock;
+ 	u32 timeout_ms;
++	u32 ready_timeout_ms;
+ 	u32 pm_state;
+ 	u32 db_access;
+ 	enum mhi_ee_type ee;
 -- 
-2.41.0
+2.7.4
 
