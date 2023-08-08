@@ -2,319 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F385D773566
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 02:34:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C10A577358C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 02:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbjHHAeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 20:34:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45214 "EHLO
+        id S230133AbjHHAvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 20:51:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjHHAeD (ORCPT
+        with ESMTP id S229744AbjHHAu7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 20:34:03 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB6F1703
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 17:34:01 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3780WrEq014902;
-        Tue, 8 Aug 2023 00:33:44 GMT
+        Mon, 7 Aug 2023 20:50:59 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11202170B;
+        Mon,  7 Aug 2023 17:50:57 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3780ccxa011108;
+        Tue, 8 Aug 2023 00:50:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=WMFAHO81Ehu/mXvWjylWdRrhxiHNUS08a5q96AhxYYE=;
- b=MEwMN5X8DzBgOkeQR9nMWVE3cMPFPrubMsYiijj46txV3cXrcj2/VBOEhmHqlOmAjxOa
- 0Usoe/5rB/zMk6srNxQ0XLn8t8dMIj72fTxuo3QSp2xR+qhV7NDLRhIr3iwghgkP9apE
- h+JDRNcxzV/ege8vKmZYR2kwEVhu5tytm1syguOeZxtioJDREq4Ka1GELaoS3yoYBSGo
- dkJSKGp+Fi/WA1NBhH5lfo67CW92GifeIR0xiUISCNSe2NKswCjkpUr2BB4DQZfP+hzN
- loJRYWl6epRx8YJdtFPf/lxGE5RD4f0wC5Ple1te/HS8eiab8a4+u+n62L1fg23I6Cq6 3w== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sax18sp06-1
+ bh=dq+Ac7H1VO2uWs6wuXTd+gQ6CJsKUJs85h+IpW2YRbI=;
+ b=hUn3or2/X2hqdPPg4Rop39d223H9UL+ZBo8eFVCge0EkKrUOGssbAfywM0MBsuO+03yM
+ 9aQmVLAjSX4p0f/YAL2b+dFtzEswM2DVGOZYqMnuwhNULaKD7DCq2jRcuHgo3WZ4G9H2
+ w8f5nxtiAzUIasbPLXLSE/sOxkafZbHa+hQhcSds2l4c70++brO2BEV1im8KOUik0ETz
+ IaxlX2SoMQOwTFn9DPxLjlwhfyqdaJnCi2MGf5FcapGWUZCrG9nt2qFD1dTfKpl9UKOV
+ ypLCWJJrt7wbiS1XtRZqU7bBxmJT1W7JsRbJKt4U+5wJ06ujab4g4Kld9undFrSUPUcV Bw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sb6jbrf1f-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Aug 2023 00:33:44 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3780XhLt022254
+        Tue, 08 Aug 2023 00:50:25 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3780oO2H013279
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Aug 2023 00:33:43 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 8 Aug 2023 00:50:24 GMT
+Received: from [10.110.124.178] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
- 2023 17:33:42 -0700
-Message-ID: <9a2e3ab2-a95f-3dee-b89c-aa69ffd9387e@quicinc.com>
-Date:   Mon, 7 Aug 2023 17:33:41 -0700
+ 2023 17:50:23 -0700
+Message-ID: <be6ef3e4-a3d6-3af8-0a47-506e2275b40b@quicinc.com>
+Date:   Mon, 7 Aug 2023 17:50:22 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH 1/2] drm/msm/dpu: move writeback's
- atomic_check to dpu_writeback.c
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v4 10/32] ASoC: qcom: Add USB backend ASoC driver for Q6
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230519023011.3837868-1-dmitry.baryshkov@linaro.org>
- <20230519023011.3837868-2-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230519023011.3837868-2-dmitry.baryshkov@linaro.org>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <quic_jackp@quicinc.com>, <oneukum@suse.com>,
+        <albertccwang@google.com>, <o-takashi@sakamocchi.jp>
+References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
+ <20230725023416.11205-11-quic_wcheng@quicinc.com>
+ <37018459-ee43-d853-1d73-3c6234a265b2@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <37018459-ee43-d853-1d73-3c6234a265b2@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hxdK-WwxXfS0xJ2psYBZvdCNNmsnLAJZ
-X-Proofpoint-ORIG-GUID: hxdK-WwxXfS0xJ2psYBZvdCNNmsnLAJZ
+X-Proofpoint-ORIG-GUID: U7G8aZINZ3sI_IoYSnETSuLdn7RXEAEz
+X-Proofpoint-GUID: U7G8aZINZ3sI_IoYSnETSuLdn7RXEAEz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-08-07_27,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 phishscore=0
- impostorscore=0 mlxscore=0 suspectscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308080003
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ bulkscore=0 mlxlogscore=923 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 clxscore=1015 mlxscore=0 phishscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308080005
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Pierre,
 
-
-On 5/18/2023 7:30 PM, Dmitry Baryshkov wrote:
-> dpu_encoder_phys_wb is the only user of encoder's atomic_check callback.
-> Move corresponding checks to drm_writeback_connector's implementation
-> and drop the dpu_encoder_phys_wb_atomic_check() function.
+On 7/25/2023 1:45 AM, Pierre-Louis Bossart wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-
-I dont think this is correct even though I can make writeback work with 
-these. The issue is that, in the recent changes which I was holding back 
-posting till I reviewed this, I use the API 
-drm_atomic_helper_check_wb_encoder_state() to check the supported 
-formats in writeback (something which should have been present from the 
-beginning).
-
-It seems incorrect to call this from the connector's atomic_check.
-
-And I checked the writeback job validation across other vendor drivers 
-and the validation seems to be in encoder's atomic_check and not the 
-connector's.
-
-I dont want to break that pattern for MSM alone.
-
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 54 ------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  4 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 57 ++++++++++++++++++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h |  3 +-
->   4 files changed, 60 insertions(+), 58 deletions(-)
+>> +struct q6usb_port_data {
+>> +	struct q6afe_usb_cfg usb_cfg;
+>> +	struct snd_soc_usb *usb;
+>> +	struct q6usb_offload priv;
+>> +	int active_idx;
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> index e14646c0501c..e73d5284eb2a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> @@ -225,59 +225,6 @@ static void dpu_encoder_phys_wb_setup_cdp(struct dpu_encoder_phys *phys_enc)
->   	}
->   }
->   
-> -/**
-> - * dpu_encoder_phys_wb_atomic_check - verify and fixup given atomic states
-> - * @phys_enc:	Pointer to physical encoder
-> - * @crtc_state:	Pointer to CRTC atomic state
-> - * @conn_state:	Pointer to connector atomic state
-> - */
-> -static int dpu_encoder_phys_wb_atomic_check(
-> -		struct dpu_encoder_phys *phys_enc,
-> -		struct drm_crtc_state *crtc_state,
-> -		struct drm_connector_state *conn_state)
-> -{
-> -	struct drm_framebuffer *fb;
-> -	const struct drm_display_mode *mode = &crtc_state->mode;
-> -
-> -	DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
-> -			phys_enc->hw_wb->idx, mode->name, mode->hdisplay, mode->vdisplay);
-> -
-> -	if (!conn_state || !conn_state->connector) {
-> -		DPU_ERROR("invalid connector state\n");
-> -		return -EINVAL;
-> -	} else if (conn_state->connector->status !=
-> -			connector_status_connected) {
-> -		DPU_ERROR("connector not connected %d\n",
-> -				conn_state->connector->status);
-> -		return -EINVAL;
-> -	}
-> -
-> -	if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
-> -		return 0;
-> -
-> -	fb = conn_state->writeback_job->fb;
-> -
-> -	DPU_DEBUG("[fb_id:%u][fb:%u,%u]\n", fb->base.id,
-> -			fb->width, fb->height);
-> -
-> -	if (fb->width != mode->hdisplay) {
-> -		DPU_ERROR("invalid fb w=%d, mode w=%d\n", fb->width,
-> -				mode->hdisplay);
-> -		return -EINVAL;
-> -	} else if (fb->height != mode->vdisplay) {
-> -		DPU_ERROR("invalid fb h=%d, mode h=%d\n", fb->height,
-> -				  mode->vdisplay);
-> -		return -EINVAL;
-> -	} else if (fb->width > phys_enc->hw_wb->caps->maxlinewidth) {
-> -		DPU_ERROR("invalid fb w=%d, maxlinewidth=%u\n",
-> -				  fb->width, phys_enc->hw_wb->caps->maxlinewidth);
-> -		return -EINVAL;
-> -	}
-> -
-> -	return 0;
-> -}
-> -
-> -
->   /**
->    * _dpu_encoder_phys_wb_update_flush - flush hardware update
->    * @phys_enc:	Pointer to physical encoder
-> @@ -652,7 +599,6 @@ static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
->   	ops->enable = dpu_encoder_phys_wb_enable;
->   	ops->disable = dpu_encoder_phys_wb_disable;
->   	ops->destroy = dpu_encoder_phys_wb_destroy;
-> -	ops->atomic_check = dpu_encoder_phys_wb_atomic_check;
->   	ops->wait_for_commit_done = dpu_encoder_phys_wb_wait_for_commit_done;
->   	ops->prepare_for_kickoff = dpu_encoder_phys_wb_prepare_for_kickoff;
->   	ops->handle_post_kickoff = dpu_encoder_phys_wb_handle_post_kickoff;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 10bd0fd4ff48..78b8e7fc1de8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -661,8 +661,8 @@ static int _dpu_kms_initialize_writeback(struct drm_device *dev,
->   		return PTR_ERR(encoder);
->   	}
->   
-> -	rc = dpu_writeback_init(dev, encoder, wb_formats,
-> -			n_formats);
-> +	rc = dpu_writeback_init(dev, encoder, wb_formats, n_formats,
-> +				dpu_rm_get_wb(&dpu_kms->rm, info.h_tile_instance[0])->caps->maxlinewidth);
->   	if (rc) {
->   		DPU_ERROR("dpu_writeback_init, rc = %d\n", rc);
->   		drm_encoder_cleanup(encoder);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> index 2a5a68366582..7f345a5c8be3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> @@ -4,6 +4,7 @@
->    */
->   
->   #include <drm/drm_edid.h>
-> +#include <drm/drm_framebuffer.h>
->   
->   #include "dpu_writeback.h"
->   
-> @@ -24,6 +25,57 @@ static int dpu_wb_conn_get_modes(struct drm_connector *connector)
->   			dev->mode_config.max_height);
->   }
->   
-> +static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
-> +				    struct drm_atomic_state *state)
-> +{
-> +	struct drm_writeback_connector *wb_conn = drm_connector_to_writeback(connector);
-> +	struct dpu_wb_connector *dpu_wb_conn = to_dpu_wb_conn(wb_conn);
-> +	struct drm_connector_state *conn_state =
-> +		drm_atomic_get_new_connector_state(state, connector);
-> +	struct drm_crtc *crtc = conn_state->crtc;
-> +	struct drm_crtc_state *crtc_state;
-> +	const struct drm_display_mode *mode;
-> +	struct drm_framebuffer *fb;
-> +
-> +	crtc_state = drm_atomic_get_crtc_state(state, crtc);
-> +	if (IS_ERR(crtc_state))
-> +		return PTR_ERR(crtc_state);
-> +
-> +	mode = &crtc_state->mode;
-> +
-> +	DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
-> +		  connector->base.id, mode->name, mode->hdisplay, mode->vdisplay);
-> +
-> +	if (!conn_state || !conn_state->connector) {
-> +		DPU_ERROR("invalid connector state\n");
-> +		return -EINVAL;
-> +	} else if (conn_state->connector->status != connector_status_connected) {
-> +		DPU_ERROR("connector not connected %d\n", conn_state->connector->status);
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
-> +		return 0;
-> +
-> +	fb = conn_state->writeback_job->fb;
-> +
-> +	DPU_DEBUG("[fb_id:%u][fb:%u,%u]\n", fb->base.id, fb->width, fb->height);
-> +
-> +	if (fb->width != mode->hdisplay) {
-> +		DPU_ERROR("invalid fb w=%d, mode w=%d\n", fb->width, mode->hdisplay);
-> +		return -EINVAL;
-> +	} else if (fb->height != mode->vdisplay) {
-> +		DPU_ERROR("invalid fb h=%d, mode h=%d\n", fb->height, mode->vdisplay);
-> +		return -EINVAL;
-> +	} else if (fb->width > dpu_wb_conn->maxlinewidth) {
-> +		DPU_ERROR("invalid fb w=%d, maxlinewidth=%u\n",
-> +			  fb->width, dpu_wb_conn->maxlinewidth);
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static const struct drm_connector_funcs dpu_wb_conn_funcs = {
->   	.reset = drm_atomic_helper_connector_reset,
->   	.fill_modes = drm_helper_probe_single_connector_modes,
-> @@ -59,12 +111,13 @@ static void dpu_wb_conn_cleanup_job(struct drm_writeback_connector *connector,
->   
->   static const struct drm_connector_helper_funcs dpu_wb_conn_helper_funcs = {
->   	.get_modes = dpu_wb_conn_get_modes,
-> +	.atomic_check = dpu_wb_conn_atomic_check,
->   	.prepare_writeback_job = dpu_wb_conn_prepare_job,
->   	.cleanup_writeback_job = dpu_wb_conn_cleanup_job,
->   };
->   
->   int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
-> -		const u32 *format_list, u32 num_formats)
-> +		const u32 *format_list, u32 num_formats, u32 maxlinewidth)
->   {
->   	struct dpu_wb_connector *dpu_wb_conn;
->   	int rc = 0;
-> @@ -73,6 +126,8 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
->   	if (!dpu_wb_conn)
->   		return -ENOMEM;
->   
-> +	dpu_wb_conn->maxlinewidth = maxlinewidth;
-> +
->   	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
->   
->   	/* DPU initializes the encoder and sets it up completely for writeback
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
-> index 5a75ea916101..4b11cca8014c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
-> @@ -18,6 +18,7 @@
->   struct dpu_wb_connector {
->   	struct drm_writeback_connector base;
->   	struct drm_encoder *wb_enc;
-> +	u32 maxlinewidth;
->   };
->   
->   static inline struct dpu_wb_connector *to_dpu_wb_conn(struct drm_writeback_connector *conn)
-> @@ -26,6 +27,6 @@ static inline struct dpu_wb_connector *to_dpu_wb_conn(struct drm_writeback_conne
->   }
->   
->   int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
-> -		const u32 *format_list, u32 num_formats);
-> +		const u32 *format_list, u32 num_formats, u32 maxlinewidth);
->   
->   #endif /*_DPU_WRITEBACK_H */
+> what is an 'active_idx' ?
+> 
+> 
+
+active_idx carries the USB sound card we're going to be offloading.
+
+>> +static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
+>> +			int connected)
+>> +{
+>> +	struct snd_soc_dapm_context *dapm;
+>> +	struct q6usb_port_data *data;
+>> +
+>> +	dapm = snd_soc_component_get_dapm(usb->component);
+>> +	data = dev_get_drvdata(usb->component->dev);
+> 
+> shouldn't you test that 'dapm' and 'data' are not NULL ?
+> 
+
+q6usb_component_probe() would be the one that registers to SOC USB to 
+add this callback.  At that time, the component's dev and dapm 
+references should be populated, so that should ensure that those are 
+valid.  However, we could see that usb->component to be NULL, as that 
+assignment happens after adding the port.  Instead I will add a check 
+for usb->component before attempting to access the dapm/data params.
+
+Another thing I will modify is to add a component removal callback, 
+which will remove the SOC USB port.  That will ensure that no 
+connection_cb() events are issued, so we don't run into any NULL pointer 
+issues during the remove path.
+
+>> +
+>> +	if (connected) {
+> 
+> this goes back to my earlier comment that you treat 'connected' as a
+> boolean.
+> 
+
+Done, changed to boolean.
+
+>> +		snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
+>> +		/* We only track the latest USB headset plugged in */
+>> +		data->active_idx = card_idx;
+>> +	} else {
+>> +		snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
+>> +	}
+>> +	snd_soc_dapm_sync(dapm);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int q6usb_component_probe(struct snd_soc_component *component)
+>> +{
+>> +	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
+>> +	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
+>> +
+>> +	snd_soc_dapm_disable_pin(dapm, "USB_RX_BE");
+>> +	snd_soc_dapm_sync(dapm);
+>> +
+>> +	data->usb = snd_soc_usb_add_port(component->dev, &data->priv, q6usb_alsa_connection_cb);
+>> +	if (IS_ERR(data->usb)) {
+>> +		dev_err(component->dev, "failed to add usb port\n");
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	data->usb->component = component;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct snd_soc_component_driver q6usb_dai_component = {
+>> +	.probe = q6usb_component_probe,
+> 
+> erm, if you have a .probe that adds a port, don't you need a remove that
+> removes the same port, and sets the pin state as well?
+> 
+
+Will add this as mentioned above.
+
+>> +	.name = "q6usb-dai-component",
+>> +	.dapm_widgets = q6usb_dai_widgets,
+>> +	.num_dapm_widgets = ARRAY_SIZE(q6usb_dai_widgets),
+>> +	.dapm_routes = q6usb_dapm_routes,
+>> +	.num_dapm_routes = ARRAY_SIZE(q6usb_dapm_routes),
+>> +	.of_xlate_dai_name = q6usb_audio_ports_of_xlate_dai_name,
+>> +};
+>> +
+>> +static int q6usb_dai_dev_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device_node *node = pdev->dev.of_node;
+>> +	struct q6usb_port_data *data;
+>> +	struct device *dev = &pdev->dev;
+>> +	struct of_phandle_args args;
+>> +	int ret;
+>> +
+>> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+>> +	if (!data)
+>> +		return -ENOMEM;
+>> +
+>> +	ret = of_property_read_u32(node, "qcom,usb-audio-intr-num",
+>> +				&data->priv.intr_num);
+>> +	if (ret) {
+>> +		dev_err(&pdev->dev, "failed to read intr num.\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	ret = of_parse_phandle_with_fixed_args(node, "iommus", 1, 0, &args);
+>> +	if (ret < 0)
+>> +		data->priv.sid = -1;
+>> +	else
+>> +		data->priv.sid = args.args[0] & SID_MASK;
+>> +
+>> +	data->priv.domain = iommu_get_domain_for_dev(&pdev->dev);
+>> +
+>> +	data->priv.dev = dev;
+>> +	dev_set_drvdata(dev, data);
+>> +
+>> +	ret = devm_snd_soc_register_component(dev, &q6usb_dai_component,
+>> +					q6usb_be_dais, ARRAY_SIZE(q6usb_be_dais));
+>> +	if (ret < 0)
+>> +		return ret;
+>> +
+>> +	return 0;
+> 
+> return devm_snd_soc_register_component
+> 
+>> +}
+>> +
+>> +static int q6usb_dai_dev_remove(struct platform_device *pdev)
+>> +{
+>> +	snd_soc_usb_remove_port(&pdev->dev);
+> 
+> that seems wrong, the port is added in the component probe, not the
+> platform device probe.
+> 
+
+Will fix this.
+
+Thanks
+Wesley Cheng
