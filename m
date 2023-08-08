@@ -2,148 +2,494 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9419A7745D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 20:46:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7039774449
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 20:16:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230219AbjHHSqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 14:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38220 "EHLO
+        id S235565AbjHHSQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 14:16:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbjHHSqf (ORCPT
+        with ESMTP id S235402AbjHHSQD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 14:46:35 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 232294BBE6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:52:08 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3fe5c0e57d2so19447025e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691513526; x=1692118326;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gAg8mzz6tXJyaH1tEofpHQ5TEsFiQj+ho2hy+w4Tmaw=;
-        b=FP0cVtNAZoMaxGnU8effZh1c7cO3r4KW3vUQZf99L576sDDRJugLX1sGc7GO8dz+tx
-         uGIpaUUgUHJjozblFXJP5mT9WwQFm+jLLwM3P4+XU4VaKhePZ2m/hfJbtln5T1f7TEko
-         aQeyHldzJjKGT5rQYdf8hF23QkvICPPo6B/Cdo/mOJOW7HRzfXJxXkpfZsMYytHIYWeI
-         svE9Xofu9bG5a1T7bydNXHyN34m4qm8cdhPmEjvAd0Dhm3JOFsCzuJ8T7B5pPBySeGNK
-         5GNzCLLTXstC4dCLPIGieaCr5M1E3JD2Yghrpr8keW6WXrTAo7C2gY2h2MDpskSFpl7W
-         gV6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691513526; x=1692118326;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gAg8mzz6tXJyaH1tEofpHQ5TEsFiQj+ho2hy+w4Tmaw=;
-        b=PdC1PBX98/cMUgjX5EnrmhHBmB09uzk/SkAbNbLP78vo4U5Rnij+JX9MMc2AE9d3iv
-         0nmx1NPuJrqCkKpH6HiApNVHj413Fe7v8xDBOMEUxmnwAcv98+SlWbpqvu6gjzMlc4VD
-         4eGtF7L0LP4bVqnVWEmdHumFrsXZdGcr27Uk67mVXM64J8RQPlyfbz6nIdVm+6jeDagE
-         aYQmGD6w8NwKWRtiFP2EQdqwVnDSPrMBSm0EplG7cBQhJlYTDOTrl5nAp7Pet7Zr4KdP
-         8bhkypCoqvYDO9lXH8HiAtHM/mZhSQhs6+t3HsAHioNiyNkPmvVlKezfTbwpqibJlktJ
-         fwPw==
-X-Gm-Message-State: AOJu0YyePLYwBQBaWQrDj3rImixX2upjjYlwjcb44aE2CXgHMkjnv6Fs
-        52+ze7sSdphiwxI0gEsqSL0IIBVbmodqVNKTags=
-X-Google-Smtp-Source: AGHT+IHZdXCtug2ljX6dDSj6oQkG8V1UJLNKTYOKnSjmV42sR9+Wv2CCmrrKVl5VAmfJlHe6DhBOLg==
-X-Received: by 2002:a05:6512:2018:b0:4fd:c771:ed86 with SMTP id a24-20020a056512201800b004fdc771ed86mr6615303lfb.67.1691487895251;
-        Tue, 08 Aug 2023 02:44:55 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id i6-20020a056512006600b004fdba93b92asm1818884lfo.252.2023.08.08.02.44.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 02:44:54 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 08 Aug 2023 11:44:44 +0200
-Subject: [PATCH v2 4/6] clk: qcom: mmcc-msm8998: Don't check halt bit on
- some branch clks
+        Tue, 8 Aug 2023 14:16:03 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A047A0FC;
+        Tue,  8 Aug 2023 10:22:41 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 49E94408F4;
+        Tue,  8 Aug 2023 15:10:40 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1691489441; bh=j7da2n+mSgbTjlclhAj0t2xfxus9GDBFVbDFbPAlExU=;
+        h=From:Date:Subject:To:Cc:From;
+        b=lJtmSunRFPLSmUsvO9YyMgV/kOdO45cRD9yZkxUiEqyRCFJOM8KRxclTPM9mMLy85
+         7rcZ5Rwqze+pbbN82zCPCY1elovbUwNjfbighuKwYkI49z+4KSOXGNjCUnC6d5WiXj
+         vMi032kh8F388Zdxb+blbOg2rfnVj49+JbhpSHNOSiHCkC6n84YqKukmSrIU7VLanW
+         MorMTXJ3OuR/cQ7EI+r/+R2DbJKyO4LtIZgPxo4xeywQYF7cPu7wMlI8AIi4dEhtKd
+         QdTQ0hNqtZzmh8xTtWZrler47qvEEWS6yajNTfhTyYJ5vCJKbds3qk6zX9CfGoHFa+
+         24g8Vlch8e2Qg==
+From:   Nikita Travkin <nikita@trvn.ru>
+Date:   Tue, 08 Aug 2023 15:10:13 +0500
+Subject: [PATCH] arm64: dts: qcom: sc7180: Split up TF-A related PSCI
+ configuration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-8998_mmssclk-v2-4-34273e275c51@linaro.org>
-References: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
-In-Reply-To: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+Message-Id: <20230808-sc7180-tfa-fw-v1-1-666d5d8467e5@trvn.ru>
+X-B4-Tracking: v=1; b=H4sIAIQU0mQC/x3MQQqAIBBA0avErBsYK1C7SrQQG2s2FhoVSHdPW
+ r7F/wUyJ+EMY1Mg8SVZ9lih2gb85uLKKEs1dNT1ZMhg9loZwjM4DDdaa3q1aGfJDlCbI3GQ5/9
+ N8/t+NwSja18AAAA=
+To:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Imran Khan <kimran@codeaurora.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     David Wronek <davidwronek@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691487885; l=1407;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=haDOFYx+cWB8WYF0AFsxGiNUFhwDHpLSQyDe+vgkap0=;
- b=ZrMZ0b0kru/BioU+kcPyTGDosiv5UYR3dvjZ97R7NYb1CKIWbtfb6OQL9uoCg1eDGTN2RtwgC
- KnIylLEWD68BzoXZqSp7GXw9MgJJMQxVOqARg8YLk04oG4zFHl8Kfq8
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12709; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=j7da2n+mSgbTjlclhAj0t2xfxus9GDBFVbDFbPAlExU=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBk0hSfbBZH2sqsXP0N+kCcP8s3Z2nzarS1qYkTT
+ lTQyUDTkbiJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZNIUnwAKCRBDHOzuKBm/
+ dWbhD/93ef/iHle2n6/LqGxfsKDkG5mWc9E7vlOzUQMPCTuTnDXYStAMRtSEJMB5+UwSyTayhKf
+ aE0EyTCzOm0UsboO6fe2qHdwd8iSR5Vz16iihPPBHY/J5uNIXzokCuZn28ZpHgwuANa8FnBiNv3
+ bGjQOWTjhZ1JKOYcuPlonL4ST5Th/KdrfT5A7vsHb2M356VJP8fgC2bpiRDI5l7HYVSPD0XELy9
+ bfItecesCI+Vjl2uOUu6JRMP75EZK5vQEPwGOHr+ZMZC3dd/U/22X+yU3/5iv1CNf3ppenFwB3p
+ JnzjaX124MKUwW1iBPEPNSmE8pLS1UuZbkp1zs7WytC+MvlmA1ZuIxeElEKtRtquUg43M5QG8+w
+ f2Zscks58TAYPt3y1fpRBOYfGN1kWrQ7/M6edtpl1Rp5K4lvfHF/Gm2r+j4lWlq3yEe9p/RTU8M
+ zuFJgApRfRHgBobLFtvwUTuXKSDIMBcxMfHcKkiX2gW6qeToDIbuGCTZ5yTkMkzL83dlWU8LYWc
+ BQxuo2lfPgf2uJNuQchz2ljUmY/tBzrKMgwGK8jgElcMuRn2SnAnsUwGgY4uJnrd4+0ZwcHKwR7
+ /ZHNBB8VSVt+Dc6DTrIuFpqK8Dj+AkL1X0w2mcidxsHz82Vc/Zvs2OiP0/S4mG/V+BOhnpXlpE6
+ YoALrDIshbCaetQ==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some branch clocks are governed externally and we're only supposed to
-send a request concerning their shutdown, not actually ensure it happens.
+When initially submitted, the sc7180 support only targeted CROS devices
+that make use of alternative TF-A firmware and not the official Qualcomm
+firmware. The PSCI implementations in those firmwares differ however so
+devices that use qcom firmware, like WoA laptops such as aspire1 need
+different setup.
 
-Use the BRANCH_HALT_SKIP define to skip checking the halt bit.
+This commit adjusts the SoC dtsi to the OSI mode PSCI setup, common to
+the Qualcomm firmware and introduces new sc7180-firmware-tfa.dtsi that
+overrides the PSCI setup for the PC mode and uses TF-A specific
+psci-suspend-param. This dtsi is added to all boards that appear to use
+TF-A.
 
-Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 3 +++
- 1 file changed, 3 insertions(+)
+This series unlocks low power states on various 7c devices such as
+Aspire 1 and a few not-yet-submitted WoA laptops as well as for all the
+sm7125 devices proposed on the lists [1]. It should create no change for
+existing TF-A users.
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index c62aa270af1c..d0a5440e2291 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2452,6 +2452,7 @@ static struct clk_branch fd_ahb_clk = {
- 
- static struct clk_branch mnoc_ahb_clk = {
- 	.halt_reg = 0x5024,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x5024,
- 		.enable_mask = BIT(0),
-@@ -2467,6 +2468,7 @@ static struct clk_branch mnoc_ahb_clk = {
- 
- static struct clk_branch bimc_smmu_ahb_clk = {
- 	.halt_reg = 0xe004,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.hwcg_reg = 0xe004,
- 	.hwcg_bit = 1,
- 	.clkr = {
-@@ -2484,6 +2486,7 @@ static struct clk_branch bimc_smmu_ahb_clk = {
- 
- static struct clk_branch bimc_smmu_axi_clk = {
- 	.halt_reg = 0xe008,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.hwcg_reg = 0xe008,
- 	.hwcg_bit = 1,
- 	.clkr = {
+With this, at least on Aspire 1 I can observe the qcom_stats counting
+suspend time:
 
+    # grep "" -R /sys/kernel/debug/qcom_stats/
+    ddr:Count: 2
+    ddr:Last Entered At: 2787856692
+    ddr:Last Exited At: 3030611778
+    ddr:Accumulated Duration: 761257025
+    cxsd:Count: 2
+    cxsd:Last Entered At: 2787867135
+    cxsd:Last Exited At: 3030596907
+    cxsd:Accumulated Duration: 761205999
+    aosd:Count: 2
+    aosd:Last Entered At: 2787867643
+    aosd:Last Exited At: 3030595637
+    aosd:Accumulated Duration: 761202409
+    modem:Count: 59
+    modem:Last Entered At: 2784580484
+    modem:Last Exited At: 3032145065
+    modem:Accumulated Duration: 1834999138
+
+The suspend-param values and timings are verified with the downstream
+atoll.dtsi and are similar to some other platforms [2].
+
+[1] https://lore.kernel.org/linux-arm-msm/20230723190725.1619193-1-davidwronek@gmail.com/
+[2] https://lore.kernel.org/linux-arm-msm/20230531-topic-rsc-v1-2-b4a985f57b8b@linaro.org/
+---
+ arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi | 107 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts           |   1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi      |   1 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi              | 127 +++++++++++++++++-----
+ 4 files changed, 206 insertions(+), 30 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi b/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
+new file mode 100644
+index 000000000000..ee35a454dbf6
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
+@@ -0,0 +1,107 @@
++// SPDX-License-Identifier: BSD-3-Clause
++
++/*
++ * Devices that use SC7180 with TrustedFirmware-A
++ * need PSCI PC mode instead of the OSI mode provided
++ * by Qualcomm firmware.
++ */
++
++&CPU0 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU1 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU2 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU3 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU4 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU5 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU6 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU7 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++/delete-node/ &domain_idle_states;
++
++&idle_states {
++	CLUSTER_SLEEP_0: cluster-sleep-0 {
++		compatible = "arm,idle-state";
++		idle-state-name = "cluster-power-down";
++		arm,psci-suspend-param = <0x40003444>;
++		entry-latency-us = <3263>;
++		exit-latency-us = <6562>;
++		min-residency-us = <9926>;
++		local-timer-stop;
++	};
++};
++
++/delete-node/ &CPU_PD0;
++/delete-node/ &CPU_PD1;
++/delete-node/ &CPU_PD2;
++/delete-node/ &CPU_PD3;
++/delete-node/ &CPU_PD4;
++/delete-node/ &CPU_PD5;
++/delete-node/ &CPU_PD6;
++/delete-node/ &CPU_PD7;
++/delete-node/ &CLUSTER_PD;
++
++&apps_rsc {
++	/delete-property/ power-domains;
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index a1c50be4ad95..0146fb0036d4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -11,6 +11,7 @@
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include "sc7180.dtsi"
++#include "sc7180-firmware-tfa.dtsi"
+ #include "pm6150.dtsi"
+ #include "pm6150l.dtsi"
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index af16e36bcb40..5a33e16a8b67 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -13,6 +13,7 @@
+ #include <dt-bindings/sound/sc7180-lpass.h>
+ 
+ #include "sc7180.dtsi"
++#include "sc7180-firmware-tfa.dtsi"
+ /* PMICs depend on spmi_bus label and so must come after sc7180.dtsi */
+ #include "pm6150.dtsi"
+ #include "pm6150l.dtsi"
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 9af94e267f84..a79c0f2e1879 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -79,9 +79,8 @@ CPU0: cpu@0 {
+ 			reg = <0x0 0x0>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <415>;
+ 			dynamic-power-coefficient = <137>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+@@ -109,9 +108,8 @@ CPU1: cpu@100 {
+ 			reg = <0x0 0x100>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <415>;
+ 			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_100>;
+@@ -134,9 +132,8 @@ CPU2: cpu@200 {
+ 			reg = <0x0 0x200>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <415>;
+ 			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_200>;
+@@ -159,9 +156,8 @@ CPU3: cpu@300 {
+ 			reg = <0x0 0x300>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <415>;
+ 			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_300>;
+@@ -184,9 +180,8 @@ CPU4: cpu@400 {
+ 			reg = <0x0 0x400>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD4>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <415>;
+ 			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_400>;
+@@ -209,9 +204,8 @@ CPU5: cpu@500 {
+ 			reg = <0x0 0x500>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD5>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <415>;
+ 			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_500>;
+@@ -234,9 +228,8 @@ CPU6: cpu@600 {
+ 			reg = <0x0 0x600>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &BIG_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD6>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <480>;
+ 			next-level-cache = <&L2_600>;
+@@ -259,9 +252,8 @@ CPU7: cpu@700 {
+ 			reg = <0x0 0x700>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &BIG_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
++			power-domains = <&CPU_PD7>;
++			power-domain-names = "psci";
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <480>;
+ 			next-level-cache = <&L2_700>;
+@@ -314,7 +306,7 @@ core7 {
+ 			};
+ 		};
+ 
+-		idle-states {
++		idle_states: idle-states {
+ 			entry-method = "psci";
+ 
+ 			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+@@ -356,15 +348,34 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+ 				min-residency-us = <5555>;
+ 				local-timer-stop;
+ 			};
++		};
+ 
+-			CLUSTER_SLEEP_0: cluster-sleep-0 {
+-				compatible = "arm,idle-state";
++		domain_idle_states: domain-idle-states {
++			CLUSTER_SLEEP_PC: cluster-sleep-0 {
++				compatible = "domain-idle-state";
++				idle-state-name = "cluster-l3-power-collapse";
++				arm,psci-suspend-param = <0x41000044>;
++				entry-latency-us = <2752>;
++				exit-latency-us = <3048>;
++				min-residency-us = <6118>;
++			};
++
++			CLUSTER_SLEEP_CX_RET: cluster-sleep-1 {
++				compatible = "domain-idle-state";
++				idle-state-name = "cluster-cx-retention";
++				arm,psci-suspend-param = <0x41001244>;
++				entry-latency-us = <3638>;
++				exit-latency-us = <4562>;
++				min-residency-us = <8467>;
++			};
++
++			CLUSTER_AOSS_SLEEP: cluster-sleep-2 {
++				compatible = "domain-idle-state";
+ 				idle-state-name = "cluster-power-down";
+-				arm,psci-suspend-param = <0x40003444>;
++				arm,psci-suspend-param = <0x4100b244>;
+ 				entry-latency-us = <3263>;
+ 				exit-latency-us = <6562>;
+-				min-residency-us = <9926>;
+-				local-timer-stop;
++				min-residency-us = <9826>;
+ 			};
+ 		};
+ 	};
+@@ -567,6 +578,61 @@ pmu {
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
++
++		CPU_PD0: cpu0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
++		};
++
++		CPU_PD1: cpu1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
++		};
++
++		CPU_PD2: cpu2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
++		};
++
++		CPU_PD3: cpu3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
++		};
++
++		CPU_PD4: cpu4 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
++		};
++
++		CPU_PD5: cpu5 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
++		};
++
++		CPU_PD6: cpu6 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
++		};
++
++		CPU_PD7: cpu7 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
++		};
++
++		CLUSTER_PD: cpu-cluster0 {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_SLEEP_PC
++					      &CLUSTER_SLEEP_CX_RET
++					      &CLUSTER_AOSS_SLEEP>;
++		};
+ 	};
+ 
+ 	reserved_memory: reserved-memory {
+@@ -3597,6 +3663,7 @@ apps_rsc: rsc@18200000 {
+ 					  <SLEEP_TCS   3>,
+ 					  <WAKE_TCS    3>,
+ 					  <CONTROL_TCS 1>;
++			power-domains = <&CLUSTER_PD>;
+ 
+ 			rpmhcc: clock-controller {
+ 				compatible = "qcom,sc7180-rpmh-clk";
+
+---
+base-commit: a8726072d7bfe7b2795f4ba99e07bb514c095063
+change-id: 20230808-sc7180-tfa-fw-99831d7a9094
+
+Best regards,
 -- 
-2.41.0
+Nikita Travkin <nikita@trvn.ru>
 
