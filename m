@@ -2,90 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE10774C4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7527D774C5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:07:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235919AbjHHVEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 17:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53426 "EHLO
+        id S231804AbjHHVHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 17:07:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234470AbjHHVEN (ORCPT
+        with ESMTP id S232080AbjHHVHV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:04:13 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C2A6A6B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:03:21 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b9db1de50cso94218041fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:03:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691528597; x=1692133397;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QHqFXZ6x0OPm4ZMw7WQeV7WZNp4cmRIh/Av5DgwSNhQ=;
-        b=GQUbyw4eRYjKwQkU5ZMU/yeNnQVDHGDQdMvp/qWJGIY57WAbwVGFi3beDujQ6DoFkD
-         deiVVsvTtEZZT6uz3lACeVQkh5886v4aLsOAyuUfgqCdxir+SLFu3rEcv/obMnTgAxV6
-         yeT6l1GhG/sudeo/uTTdKZ6jai9Xn4aKc26RgdSxgq++VhsSyRGJvplJDSb6NoUkD/GT
-         n7gasiqw7oDvjknFzGddWUp60RVM3W+FruMhz6u1/NVVghH+5FQtkH0QLVLDIku2uxVB
-         KXS6GSjqoyok0rp9k5ki1PYoDqyKfqxCOF6v9cL4guXjzVK7F5scYE3AT77rYIwvzera
-         R0dw==
+        Tue, 8 Aug 2023 17:07:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0D921B4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:06:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1691528797;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=yk2jMcUKin7KHZxfkihPedUxC+ohlFBFrxtCM2fiaX8=;
+        b=CRpgi2YM6ScAlWcve4pi1QqvaN7YN5HPgx6ZqHBrpFbHGKRsN0DRe8zIVydAfwjTG5jvgx
+        rhEequFmMYU+hNrmvHNILu8SeUr2aq1gyganaXbCYzCfRSkN8/5v+p23kfOZjzGBs8928u
+        2GdyT7C3LConkydEqMzSlUGikV3VYVY=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-163-y8bOZntTOcu5AT6oX_1hlQ-1; Tue, 08 Aug 2023 17:06:36 -0400
+X-MC-Unique: y8bOZntTOcu5AT6oX_1hlQ-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-63d0b65ae89so3220596d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:06:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691528597; x=1692133397;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QHqFXZ6x0OPm4ZMw7WQeV7WZNp4cmRIh/Av5DgwSNhQ=;
-        b=DVZGmb4fdiE+m24sux+fIfk1IotXiODPPVK+e8i4voZJ6RYXO+x8VPkXaAq52HZ85H
-         oHSpcn/7Q6K9z0MhqxC74hBprG77yLH0J5qwZ0G+sp0NNVuqfpunJikkZbGAlvTaDufM
-         m7KbCQ0hG3JCAaNW9oNCL3mD4birR9g06Nd9XHWeheARZen2R4CPo7jpWBUUf1NYXwCr
-         Glf09Qs2jAtc972aMdoEt4RUvF93R6+Es6ihhRlQPEx8X+lJcpkEIdZfvkmjMwzyOzbB
-         7o67rVb9huzQilf3in0zYd2tyKYg66RGW6h970+NcThjAr5HxvaE7VEUhjdT+d1s5J7e
-         xEOQ==
-X-Gm-Message-State: AOJu0YzuRen87Z3l/bTmCxsQ+Jfhe6zo59Mv6zbyyty/57Vg/QIz7xy7
-        B59Sv3s5SPDkg5Uy30jll87/Nw==
-X-Google-Smtp-Source: AGHT+IFIE0Szj/KgGDm5MrS0BWlSGQSLooWZrPv7OJdSkMIOa28C2Xb44HY47TOrwSvtshviQefZoA==
-X-Received: by 2002:a2e:9d54:0:b0:2b9:dfd1:3808 with SMTP id y20-20020a2e9d54000000b002b9dfd13808mr460068ljj.25.1691528597563;
-        Tue, 08 Aug 2023 14:03:17 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id h11-20020a2eb0eb000000b002b6cc17add3sm2431483ljl.25.2023.08.08.14.03.15
+        d=1e100.net; s=20221208; t=1691528795; x=1692133595;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yk2jMcUKin7KHZxfkihPedUxC+ohlFBFrxtCM2fiaX8=;
+        b=C36FgldIti3JRHLclR3mvIrwm2IR7eBKz5HvdN5/yn51uf1hOOzgtwtfVHMQ1kl4B3
+         pNR0hQjxuWxYQEydzPHKcJQ8IRpa2qIApt72xG38jmwjC6pZ25vqEMaLGYfUSSxOuBpz
+         ip306kDNJXAsJgCsKgKo/FVgPX11N2I3g/wWgqEpUEZV92cKulU4e/UNMPqpNIgDAdeJ
+         SLaJqiA2XtviM8vmo5sf7/IdxJPXRDFMXmeB7O/p3sTULJN2sMJ6/av32rZNnEWoPoPf
+         db5cZnJoZmotPochw5f8WN2F1BXfcZU1zrJNaTyI9xYvBii70ak25QeiHfPtluQHQjhu
+         8WqA==
+X-Gm-Message-State: AOJu0Yxtp7I54OJxiHOeUpJHzn2YMAcyviTFxP4fhuq9Tk+muIevMlo9
+        HDnMDCO3gYXLAEU/Oo6x8hJ6AmAUJ7hCkfvdhsjUtnIh+k71He1FHXAwqb1cxwbLDQnnBKMrk2Z
+        XFsiMlt2W7tSHO0JcIojRK9winA==
+X-Received: by 2002:a05:6214:4114:b0:63d:3b2:482f with SMTP id kc20-20020a056214411400b0063d03b2482fmr12798277qvb.5.1691528795429;
+        Tue, 08 Aug 2023 14:06:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsnwPimCXVkyjta9FS/2+45j9WVrBZygFxns7FwKn06ZeNICuX0tldF9IOYDjKZKH2ghDHZg==
+X-Received: by 2002:a05:6214:4114:b0:63d:3b2:482f with SMTP id kc20-20020a056214411400b0063d03b2482fmr12798262qvb.5.1691528795172;
+        Tue, 08 Aug 2023 14:06:35 -0700 (PDT)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id p9-20020a0ce189000000b0063f822dae2csm2597025qvl.54.2023.08.08.14.06.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 14:03:17 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 08 Aug 2023 23:02:52 +0200
-Subject: [PATCH v2 14/14] drm/msm/a6xx: Poll for GBIF unhalt status in
- hw_init
+        Tue, 08 Aug 2023 14:06:34 -0700 (PDT)
+Date:   Tue, 8 Aug 2023 16:06:32 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Ninad Naik <quic_ninanaik@quicinc.com>, agross@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_ppareek@quicinc.com, psodagud@quicinc.com,
+        quic_kprasan@quicinc.com, quic_ymg@quicinc.com,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: Add intr_target_width field to support
+ increased number of interrupt targets
+Message-ID: <pdag3mk5fru4x7zc3lljrt3mlg2g2pa6l6h7l6fyd6n2kjydli@yvxpnjelwfns>
+References: <20230718064246.12429-1-quic_ninanaik@quicinc.com>
+ <fskuol2q4wbfilrz3x3dcmikhjgfsajgnuqjnp4petxr2ne6at@zfnonisxnjh3>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230628-topic-a7xx_drmmsm-v2-14-1439e1b2343f@linaro.org>
-References: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
-In-Reply-To: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691528566; l=1394;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=adxhdr38vQ+H8w1ud+VW4JLIkAtv3z4AL0XqkuOgPHs=;
- b=XQDGBxuHYfbbYepOx78RUkDMexkbi9oIwe5G+gOBDPTNfeODBiBmltLstJo8wG7FOZvlbmixK
- dJY8My1JyIxAjexcNUki8A3SAwf+Ej9E7lDVtfvwQXhZtaZ6C1DidhH
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fskuol2q4wbfilrz3x3dcmikhjgfsajgnuqjnp4petxr2ne6at@zfnonisxnjh3>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,40 +86,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some GPUs - particularly A7xx ones - are really really stubborn and
-sometimes take a longer-than-expected time to finish unhalting GBIF.
+On Tue, Jul 18, 2023 at 08:32:59AM -0700, Bjorn Andersson wrote:
+> On Tue, Jul 18, 2023 at 12:12:46PM +0530, Ninad Naik wrote:
+> > SA8775 and newer target have added support for an increased number of
+> > interrupt targets. To implement this change, the intr_target field, which
+> > is used to configure the interrupt target in the interrupt configuration
+> > register is increased from 3 bits to 4 bits.
+> >
+> > In accordance to these updates, a new intr_target_width member is
+> > introduced in msm_pingroup structure. This member stores the value of
+> > width of intr_target field in the interrupt configuration register. This
+> > value is used to dynamically calculate and generate mask for setting the
+> > intr_target field. By default, this mask is set to 3 bit wide, to ensure
+> > backward compatibility with the older targets.
+> >
+> > Changes in v2 :
+> > -----------------
+> > - Changed initial definition of intr_target_mask variable to use GENMASK().
+> > - Update commit subject appropiately.
+> > - Add Fixes tag.
+> > - v1 : https://lore.kernel.org/all/20230714061010.15817-1-quic_ninanaik@quicinc.com/
+>
+> Thanks for adding a good changelog, very much appreciated. The changelog
+> should be added below the '---' line though, as it typically don't add
+> value to the git history (except drivers/gpu/* which wants it here...).
+>
+> Perhaps Linus can drop it as he applies the patch, no need to resubmit
+> unless he ask you to.
+>
+> Thanks,
+> Bjorn
+>
 
-Note that this is not caused by the request a few lines above.
+Gentle ping on this one... but then I realized that linusw isn't CC'ed
+on this patch directly, and I'm unsure of what the workflow is for
+pinctrl. ./scripts/get_maintainer.pl shows he should have been in the CC
+list ideally :)
 
-Poll for the unhalt ack to make sure we're not trying to write bits to
-an essentially dead GPU that can't receive data on its end of the bus.
-Failing to do this will result in inexplicable GMU timeouts or worse.
+Maybe send a v3 with the changelog dropped from the actual message (i.e.
+follow Bjorn's advice), and make sure to include the folks
+get_maintainer tells you to so this gets picked up (or maybe just saying
+Linus' name will make him appear out of the woodworks if we're lucky):
 
-This is a rather ugly hack which introduces a whole lot of latency.
+    ahalaney@fedora ~/git/linux-next (git)-[7de73ad15b73] % b4 am 20230718064246.12429-1-quic_ninanaik@quicinc.com
+    Grabbing thread from lore.kernel.org/all/20230718064246.12429-1-quic_ninanaik@quicinc.com/t.mbox.gz
+    Analyzing 3 messages in the thread
+    Checking attestation on all messages, may take a moment...
+    ---
+      ✓ [PATCH v2] pinctrl: qcom: Add intr_target_width field to support increased number of interrupt targets
+      ---
+      ✓ Signed: DKIM/quicinc.com
+    ---
+    Total patches: 1
+    ---
+     Link: https://lore.kernel.org/r/20230718064246.12429-1-quic_ninanaik@quicinc.com
+     Base: applies clean to current tree
+           git checkout -b v2_20230718_quic_ninanaik_quicinc_com HEAD
+           git am ./v2_20230718_quic_ninanaik_pinctrl_qcom_add_intr_target_width_field_to_support_increased_number_of_in.mbx
+    ahalaney@fedora ~/git/linux-next (git)-[7de73ad15b73] % ./scripts/get_maintainer.pl ./v2_20230718_quic_ninanaik_pinctrl_qcom_add_intr_target_width_field_to_support_increased_number_of_in.mbx
+    Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
+    Bjorn Andersson <andersson@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
+    Konrad Dybcio <konrad.dybcio@linaro.org> (maintainer:ARM/QUALCOMM SUPPORT,blamed_fixes:1/1=100%)
+    Linus Walleij <linus.walleij@linaro.org> (maintainer:PIN CONTROL SUBSYSTEM,blamed_fixes:1/1=100%)
+    Bartosz Golaszewski <bartosz.golaszewski@linaro.org> (blamed_fixes:1/1=100%)
+    Yadu MG <quic_ymg@quicinc.com> (blamed_fixes:1/1=100%)
+    Prasad Sodagudi <quic_psodagud@quicinc.com> (blamed_fixes:1/1=100%)
+    linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
+    linux-gpio@vger.kernel.org (open list:PIN CONTROL SUBSYSTEM)
+    linux-kernel@vger.kernel.org (open list)
+    ahalaney@fedora ~/git/linux-next (git)-[7de73ad15b73] %
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+I'm eager to get this fix in so I can describe a missing IRQ or two
+wrt ethernet GPIOs and submit that without stating the dependency
+on this fix! :)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 2313620084b6..11cb410e0ac7 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1629,6 +1629,10 @@ static int hw_init(struct msm_gpu *gpu)
- 		mb();
- 	}
- 
-+	/* Some GPUs are stubborn and take their sweet time to unhalt GBIF! */
-+	if (adreno_is_a7xx(adreno_gpu) && a6xx_has_gbif(adreno_gpu))
-+		spin_until(!gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK));
-+
- 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
- 
- 	if (adreno_is_a619_holi(adreno_gpu))
-
--- 
-2.41.0
+Thanks,
+Andrew
 
