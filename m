@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0126774270
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A2A07740E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:12:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233921AbjHHRp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 13:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52316 "EHLO
+        id S230008AbjHHRMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 13:12:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234841AbjHHRo7 (ORCPT
+        with ESMTP id S230437AbjHHRLg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:44:59 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5789003
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:20:23 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso90511151fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:20:23 -0700 (PDT)
+        Tue, 8 Aug 2023 13:11:36 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5883169697
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:04:48 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99357737980so850539866b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:04:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691511582; x=1692116382;
+        d=linaro.org; s=google; t=1691510684; x=1692115484;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dlY5pXEYcBgHeb5qjzLwZeG+1V5JyWmwzq+8kailYB8=;
-        b=AXjpokP7gQlPyYtxe8cBC/8fim2+gbeg90MTM4kUgmoLF0tmWNdFW7nPBr3+MCeTbp
-         p4481l+F9NbhxT7Rzm6htviNdxEBCWWKPQg2GI6QT/AZWkhJZTV8XnD6Qfth1lZp/xR+
-         4YBSxRz/xfbmSZIAHfHRljmEoE9rcoTtwAUtPGrSzRW7mbbM4itdxdq75h46dyQi0GFn
-         ZbXYuNMdgXXLXuAun6MS9joYtGW4N5JwdbQgXEafNZ05sEhleHCCNJEN1K/0EKHNHJ2L
-         YVAbcNcKohiUoFjvMANbk2l0+Tu07TEwVn3GGTwsXCrY8wK13HwcXns4Koiws3ciWL98
-         5CoQ==
+        bh=2UuNhIPZQtVYzGmtMAw0xH3Mxdy93w7NQpbLuvaKjSg=;
+        b=bsXG1fGulGkQJ6slL7CEmEiBxY3vKw/HYFzPk7D7T4p+PSfUPQK8i7tP0luFwvxR/M
+         WhUHkaS8lp4afrmexAQW+aXE3Txi/ZGwIf3pB4tzIUlvLzvQG7NgTavfyV4F2u5vO2ZA
+         mUFDmb2me11GTbrHuZRNBkMJjXdRo3egLbkH1lQhuIzIvcVJadDlD8/LCSLq7yWCoEgl
+         WyetURXfUsEF0T342Ay6ynlTBUYuwjfr6t7MrcYM7H0RULAFfD0ubx7TkEC6avyAbs7l
+         I2bZgBAfnbcW7i38X9oq8bGYnCPuInzjBb0xFs+aNwUXxHftmPe/lyYCCDrUMw1XOAR9
+         Mzvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691511582; x=1692116382;
+        d=1e100.net; s=20221208; t=1691510684; x=1692115484;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dlY5pXEYcBgHeb5qjzLwZeG+1V5JyWmwzq+8kailYB8=;
-        b=c6mzxIRQVHDElT11U5HI+VVNZucmsh9RH9gAAphVwrBxkwuBkIjM2tNK35M7aRBd3J
-         Rnnc+l86pHnksOKwV7iLxoBRF6ua1Jtsyc0e70eHU2Hk5cILCf3hPBq3VEoyzgGErXuK
-         z4dvXUJCyLdzTXDbXJpGUcOJ2ETbl/XDGJj+GEOU/2ZYvc7K5vqH+iRRKMkwcE9UpQXS
-         GRUIu7T9m/wvjPp3qrygRgkRfRJ48fQncNqDo7FzY+pfkYqryN9YF0N1KfOkaSuxgSwd
-         PI/Wye5y6j2gByD+IL31n051UzbdXNi/zspEEEy+jMRYMqVJnChXGFxU8/2A2xIjsgH7
-         XRjA==
-X-Gm-Message-State: AOJu0Yy6ukYmAhwZs/E95O3in+Bb+ojzwXz2avyje5y2zz0ErRnzi/r6
-        OPElT5Qjz9qb4pk6KTIvkOBuangvbqmoedy73p4=
-X-Google-Smtp-Source: AGHT+IHh37iYuUiKI2GbU0AYhtJBCPFDqyHRg6hHZo0rvcAp0zMmu3aywLaX3w+vkrjWoKcJi+lCTw==
-X-Received: by 2002:a05:6512:20c1:b0:4f8:58af:ebd7 with SMTP id u1-20020a05651220c100b004f858afebd7mr6593359lfr.39.1691487897383;
-        Tue, 08 Aug 2023 02:44:57 -0700 (PDT)
+        bh=2UuNhIPZQtVYzGmtMAw0xH3Mxdy93w7NQpbLuvaKjSg=;
+        b=HE5ralLgj+nrwUiaf4c4EOjCkrJECUQhso3BQTDozDQGNIgZV2A7iiYso9Xvb2N5iL
+         0VWso8T3TkW5J+FARRI/BjcllBJ10de+Cyd7YkBJfIm9nsSuh4lVWZf7p/D98PEoXxeQ
+         QkUYEowxd64e2Ww4cgTAlFfIQxu2WHsvdwvN9Wr7hG8bmSlmx3CkEmSVou5iph1vWNAx
+         AiU0YGT/w/DczL6HE7QPDKuPbrBtiYABUORWdxcr2bJ5eOlCtYrOcW1T5pnw+U2EAtLt
+         pjK969g4mgmytLUJ6kOc4CK3sWI+8uD003/GAlfBoRlwcSKWlf+vNBo+nE2PaLMqKxc3
+         nNAQ==
+X-Gm-Message-State: AOJu0YwqRmzi+KLecTKOUkYEXn8ZKIPE8L39o8Ei1m1izLmS56M4u/ki
+        gs6YsqMSGf10yhUlaYwiK6uAI3jsJxwBI0h37D0=
+X-Google-Smtp-Source: AGHT+IHe6NP3MzfgZSWbkR7jxRMoFmcA9NIiePawh4EYEM7Q9mrKbCLB6JP4QQacs26mWD9MoLIIVw==
+X-Received: by 2002:ac2:4ece:0:b0:4f8:5604:4b50 with SMTP id p14-20020ac24ece000000b004f856044b50mr7020474lfr.64.1691487899167;
+        Tue, 08 Aug 2023 02:44:59 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id i6-20020a056512006600b004fdba93b92asm1818884lfo.252.2023.08.08.02.44.55
+        by smtp.gmail.com with ESMTPSA id i6-20020a056512006600b004fdba93b92asm1818884lfo.252.2023.08.08.02.44.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 02:44:56 -0700 (PDT)
+        Tue, 08 Aug 2023 02:44:58 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 08 Aug 2023 11:44:45 +0200
-Subject: [PATCH v2 5/6] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
+Date:   Tue, 08 Aug 2023 11:44:46 +0200
+Subject: [PATCH v2 6/6] dt-bindings: arm-smmu: Fix MSM8998 clocks
+ description
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-8998_mmssclk-v2-5-34273e275c51@linaro.org>
+Message-Id: <20230531-topic-8998_mmssclk-v2-6-34273e275c51@linaro.org>
 References: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
 In-Reply-To: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -85,11 +86,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691487885; l=1105;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691487885; l=2406;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=87zmBNCrKExC5fA2pDw1hJreUEORhjqL4+NYXqa3bgY=;
- b=VT9trWuRQROU5ByyIvzOsud1+jUCahMFSSwl7lXsHgNEroaV6TNcWL2Qi+2HDnBgH+uqXNQKx
- XLni2Mv9lxlCRZ/eHiiHKdcIHZUZoGsQGa7E5QjDCIxTVH8MTuWmOw8
+ bh=GiTo3aHVWSJqXeRVvBwFrjMpXiRsIg5liCVx9M1P4EU=;
+ b=Nxs8hOuPBNmdHqXrObFj394Ryc0kynWXqn1i40tZ53Cb01Hzw6WwtFi+3X0Jcw4BcgOd603j0
+ ZWoh4q6XnKVBZvu54Q3HrIhvJNMsEM/z8rSRfzNPESDS1/k+Iq2OYtg
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -102,38 +103,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
-HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
-it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
-votable.
+MSM8998 was abusingly referencing one of the internal bus clocks, that
+were recently dropped from Linux (because the original implementation
+did not make much sense), circumventing the interconnect framework.
 
-Fix all of these issues.
+Fix it.
 
-Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/iommu/arm,smmu.yaml        | 41 ++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index d0a5440e2291..4fdc41e7d2a8 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2627,11 +2627,13 @@ static struct gdsc camss_cpp_gdsc = {
- static struct gdsc bimc_smmu_gdsc = {
- 	.gdscr = 0xe020,
- 	.gds_hw_ctrl = 0xe024,
-+	.cxcs = (unsigned int []){ 0xe008 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "bimc_smmu",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = HW_CTRL | ALWAYS_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct clk_regmap *mmcc_msm8998_clocks[] = {
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index 3a31a979709b..cf29ab10501c 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -270,6 +270,47 @@ allOf:
+           contains:
+             enum:
+               - qcom,msm8998-smmu-v2
++    then:
++      anyOf:
++        - properties:
++            clock-names:
++              items:
++                - const: bus
++            clocks:
++              items:
++                - description: bus clock required for downstream bus access and for
++                    the smmu ptw
++        - properties:
++            clock-names:
++              items:
++                - const: iface
++                - const: mem
++                - const: mem_iface
++            clocks:
++              items:
++                - description: interface clock required to access smmu's registers
++                    through the TCU's programming interface.
++                - description: bus clock required for memory access
++                - description: bus clock required for GPU memory access
++        - properties:
++            clock-names:
++              items:
++                - const: iface-mm
++                - const: iface-smmu
++                - const: bus-smmu
++            clocks:
++              items:
++                - description: interface clock required to access mnoc's registers
++                    through the TCU's programming interface.
++                - description: interface clock required to access smmu's registers
++                    through the TCU's programming interface.
++                - description: bus clock required for the smmu ptw
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
+               - qcom,sdm630-smmu-v2
+               - qcom,sm6375-smmu-v2
+     then:
 
 -- 
 2.41.0
