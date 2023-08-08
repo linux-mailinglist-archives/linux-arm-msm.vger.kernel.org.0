@@ -2,116 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69343774A23
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 22:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 762ED774C00
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:02:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234336AbjHHUUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 16:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46484 "EHLO
+        id S231818AbjHHVCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 17:02:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231283AbjHHUUL (ORCPT
+        with ESMTP id S231485AbjHHVCv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 16:20:11 -0400
+        Tue, 8 Aug 2023 17:02:51 -0400
 Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F2A18C19
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 12:25:43 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so94184561fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 12:25:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6061EE54
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:02:50 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9c66e2e36so3099581fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691522741; x=1692127541;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZWz3qQqLo6+NTjkOSd8uE4a4XgzJ8kEH78fcuevPkok=;
-        b=gg1WtVATKemk/CosT+oqfEbMRt445E08XkyuE2z2K2MPa7ahPqTMVFgmeax06Exd8y
-         hGZYkEEaP6JFDJiqM8D0UCF/oZcSKJB3EazRyWIoFBIDzyncrjU3wnuHZBFofOQZpaL4
-         GdWDmBV05Y/5f61iNYKpVHUnRSgLwcbn3JqSr8ihwoXWbwGmqy7o6n7OhpCfNG21Ly2p
-         DzRkyWtoguqSP3mF9W7iIUVcQLCC9C08BqYCmhAa2OU+kzcSLviQYoZ4IM+xjfYlftmc
-         VYT7fzljTvpyyaEY/5bwnNcNEs9DekW3Au7uMTwhwcj5Zjyc8F6vg8qKGey0f554SfoT
-         YMJg==
+        d=linaro.org; s=google; t=1691528568; x=1692133368;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3P34b/1ma59FLttG1cQJqYU6A3Cv7kli+dnFU1B7pgw=;
+        b=SvILppwzHI+9Ubi5q64fEItmP2yIkds1QdhCpbBlvFNhQzLstXUavt86288C4GEyBK
+         rn5WmEo5R6YtwM8F+i1Q+qOJkxcMxHmVafcb6//Ztb7vExgr6jtrj9/kL3RfFA9SrVI/
+         veNjg4F9psz1PXD4JGEY67UBuEwQCkNY7c0OHD+IU4hPOw6NfrInszz4s+ZnDkQnAB7I
+         b87442JKlQiyWdH5Zg4q8YgzkUmxUW2gIXX8RGhQ13t5W4llS28E/yvK8X1PGtE7V7Bu
+         CNCd32oYEPdNi/2xTTN3z/FLl9+VsByE3RfN5wlklVBSJoLTF1+pScpVZyxhOzXDtip1
+         9/Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691522741; x=1692127541;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZWz3qQqLo6+NTjkOSd8uE4a4XgzJ8kEH78fcuevPkok=;
-        b=LVxFW6YF4dpWccCX4+ojHN4RwXKXRR73PRVsrp8NXvo2RFtaE18juVFt529yXSSuO+
-         1i3nui5FVVeTo3tqSxciJ1wcg35q90XWCGdwIS1NrMQ9evNGYC+fnTz+hej9C/5bdc8I
-         A+3MT3vjQ2rLcPb5SRj5Jq4AKfo/p89RYnT6oIdtpuH9CaGzLm1aObtGivM/yr0rS3Nh
-         tQ3iBby/jhI0nEQmVvMxZk7cm0/JagUf967OaiiEL5pv3b/8sg0Dw7ro2xpc23Mc+5sQ
-         RZ+KxlfnuzHmfoOfhlR4kxxI0RwDHlKK9BQN/Emg1thQk1VZcWc0GOE2zLCOpOvVvhn5
-         jpbA==
-X-Gm-Message-State: AOJu0YzmTOf1X5gSOuKbhrbR57jSszR8imae6T4Hy1xCrgo6UHIqXa74
-        OqWqG2v5IFW4ko5xLK5v+u9+ZA==
-X-Google-Smtp-Source: AGHT+IHOpky/qe6Tx3XP5zbsSQMRA2DWMpyV8S0K8pPuXyFNWfzUl6Rsd3cg9LmpHVQUe+/RMbc84g==
-X-Received: by 2002:a2e:8893:0:b0:2b6:a5df:c7fb with SMTP id k19-20020a2e8893000000b002b6a5dfc7fbmr333200lji.26.1691522741098;
-        Tue, 08 Aug 2023 12:25:41 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691528568; x=1692133368;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3P34b/1ma59FLttG1cQJqYU6A3Cv7kli+dnFU1B7pgw=;
+        b=T7PkI3ZLZ72N4lS6k6ZG8tCeOnZTJXq+6luXAws0/BAWDmuSK0T7jUMTSUUiyZE/vT
+         iSe13LWwU+vYRyWFfBbNNXuZVnsO36XMSMpgSLBkgiEQx3XnKdTXvKgw+s6/SKqsEYVD
+         4x5UQDJf/mOQ16k5Ix7acWWlQHGGYaJ4LGXJ8TwA18BrNOlvKEM/Zx/G1m+zSlxy76q0
+         0AnleM0fwjqIgu8020Y/N20j3wLFGtRRN0iR3tLYZHrGi7aioiCy28w+jp242fe7J1xW
+         ux1ZJDaWQJh9RwYyGNjoLdycD8i5u6cMsU19vrFNL/Sx0Z8jOihH4jPcWP3WdC+FSb4y
+         YdiQ==
+X-Gm-Message-State: AOJu0Yw+oirAqfFgz4Ddm9IxSR7cw9rE7TRkMUlqIY3utgfle4K2zrfS
+        nDbvj0xqjL47DIaxdBUVTkNtzg==
+X-Google-Smtp-Source: AGHT+IGHL7VCZl32wqCp2jnfDoOO0FgloZVtld9xzhtXOZv99HywIwA5QJc20hltfUJx2vGx0SoAhA==
+X-Received: by 2002:a2e:96d6:0:b0:2b6:cb3f:97e2 with SMTP id d22-20020a2e96d6000000b002b6cb3f97e2mr340774ljj.16.1691528568465;
+        Tue, 08 Aug 2023 14:02:48 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id o21-20020a2e9455000000b002b9bf5b071bsm2404162ljh.20.2023.08.08.12.25.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 12:25:40 -0700 (PDT)
-Message-ID: <595198d4-eb60-4307-bfde-4e032ce7988c@linaro.org>
-Date:   Tue, 8 Aug 2023 21:25:39 +0200
+        by smtp.gmail.com with ESMTPSA id h11-20020a2eb0eb000000b002b6cc17add3sm2431483ljl.25.2023.08.08.14.02.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Aug 2023 14:02:47 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 00/14] A7xx support
+Date:   Tue, 08 Aug 2023 23:02:38 +0200
+Message-Id: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] arm64: dts: qcom: sa8775p: add a node for the
- second serdes PHY
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG6t0mQC/32NQQqDMBAAvyI5NyWJom1P/qNIiXGjC5rIxopF/
+ Hu3PqDHGRhmFwkIIYlHtguCFRPGwGAumXCDDT1I7JiFUSZXpbnJJc7opK227dXRNKVJapP7XHV
+ V6XwluGttAtmSDW7gMrzHkeVM4HE7R8+GecC0RPqc31X/7L/FqqVi4YviXoJy2tQjBkvxGqkXz
+ XEcX/7jt0vIAAAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230808190144.19999-1-brgl@bgdev.pl>
- <20230808190144.19999-2-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230808190144.19999-2-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691528566; l=4016;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=28tVoyoZGi5ChYeTjClZPV9YNYzKToRLj0C2cpckT8w=;
+ b=RgpQP0zsl9mFXTKGli673/415ZK5uFGxg3V/njRZPs5d6JltKmhZpln3HGk20bN8dwDnBAlzi
+ E0GHwdH9KFCC0pEWDcBu8GuAaPMvE/TrGIsCvTwVCALH/HsP/+fbPIf
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -120,14 +94,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8.08.2023 21:01, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Add a node for the SerDes PHY used by EMAC1 on sa8775p-ride.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This series attempts to introduce Adreno 700 support (with A730 and A740
+found on SM8450 and SM8550 respectively), reusing much of the existing
+A6xx code. This submission largely lays the groundwork for expansion and
+more or less gives us feature parity (on the kernel side, that is) with
+existing A6xx parts.
 
-Konrad
+On top of introducing a very messy set of three (!) separate and
+obfuscated deivce identifiers for each 7xx part, this generation
+introduces very sophisticated hardware multi-threading and (on some SKUs)
+hardware ray-tracing (not supported yet).
+
+After this series, a long-overdue cleanup of drm/msm/adreno is planned
+in preparation for adding more features and removing some hardcoding.
+
+The last patch is a hack that may or may not be necessary depending
+on your board's humour.. eh.. :/
+
+Developed atop (and hence depends on) [1]
+
+The corresponding devicetree patches are initially available at [2] and
+will be posted after this series gets merged. To test it, you'll also need
+firmware that you need to obtain from your board (there's none with a
+redistributable license, sorry..). Most likely it will be in one of
+these directories on your stock android installation:
+
+* /vendor/firmware
+* /vendor/firmware_mnt
+* /system
+
+..but some vendors make it hard and you have to do some grepping ;)
+
+Requires [3] to work on the userspace side. You'll almost cerainly want
+to test it alongside Zink with a lot of debug flags (early impl), like:
+
+TU_DEBUG=sysmem,nolrz,flushall,noubwc MESA_LOADER_DRIVER_OVERRIDE=zink kmscube
+
+[1] https://lore.kernel.org/linux-arm-msm/20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org/
+[2] https://github.com/SoMainline/linux/commits/topic/a7xx_dt
+[3] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/23217
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Rebase on chipid changes
+- Reuse existing description for qcom,aoss in patch 2
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org
+
+---
+Konrad Dybcio (14):
+      dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
+      dt-bindings: display/msm/gmu: Allow passing QMP handle
+      dt-bindings: display/msm/gpu: Allow A7xx SKUs
+      drm/msm/a6xx: Add missing regs for A7XX
+      drm/msm/a6xx: Introduce a6xx_llc_read
+      drm/msm/a6xx: Move LLC accessors to the common header
+      drm/msm/a6xx: Bail out early if setting GPU OOB fails
+      drm/msm/a6xx: Add skeleton A7xx support
+      drm/msm/a6xx: Send ACD state to QMP at GMU resume
+      drm/msm/a6xx: Mostly implement A7xx gpu_state
+      drm/msm/a6xx: Add A730 support
+      drm/msm/a6xx: Add A740 support
+      drm/msm/a6xx: Vastly increase HFI timeout
+      drm/msm/a6xx: Poll for GBIF unhalt status in hw_init
+
+ .../devicetree/bindings/display/msm/gmu.yaml       |  47 +-
+ .../devicetree/bindings/display/msm/gpu.yaml       |   4 +-
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   9 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 204 +++++--
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   8 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 667 ++++++++++++++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  15 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  61 +-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  90 ++-
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |  30 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   7 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  28 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h               |   2 +
+ 15 files changed, 1094 insertions(+), 133 deletions(-)
+---
+base-commit: b30de2c05cf2166f4e2c68850efc8dcea1c89780
+change-id: 20230628-topic-a7xx_drmmsm-123f30d76cf7
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
