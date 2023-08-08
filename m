@@ -2,83 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7527D774C5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:07:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D48D774C8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:11:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231804AbjHHVHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 17:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59732 "EHLO
+        id S235778AbjHHVLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 17:11:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232080AbjHHVHV (ORCPT
+        with ESMTP id S235779AbjHHVLb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:07:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0D921B4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1691528797;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=yk2jMcUKin7KHZxfkihPedUxC+ohlFBFrxtCM2fiaX8=;
-        b=CRpgi2YM6ScAlWcve4pi1QqvaN7YN5HPgx6ZqHBrpFbHGKRsN0DRe8zIVydAfwjTG5jvgx
-        rhEequFmMYU+hNrmvHNILu8SeUr2aq1gyganaXbCYzCfRSkN8/5v+p23kfOZjzGBs8928u
-        2GdyT7C3LConkydEqMzSlUGikV3VYVY=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-y8bOZntTOcu5AT6oX_1hlQ-1; Tue, 08 Aug 2023 17:06:36 -0400
-X-MC-Unique: y8bOZntTOcu5AT6oX_1hlQ-1
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-63d0b65ae89so3220596d6.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:06:35 -0700 (PDT)
+        Tue, 8 Aug 2023 17:11:31 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B31F749E2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:09:18 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so96425451fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:09:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691528957; x=1692133757;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BIVqZlvPJ9fgIaaNuTsdRAq85ukf0lxErXcc6/G+RDw=;
+        b=cgKD8XBmozGfOgW54nzq5EcoYV7HcP2vaLw+8iMB+rd3pQjaIs/IY9HMh/6uzJfZJo
+         6jYSi564yHGL2hg0stid4EoXcZfuclprPJgZutgb55YvCYARZlyHa+0MGZzUf+S7/ruV
+         EJETcwMTV7Qi4y5HE3DKawKJCwMQjuPYcoTqFMkIVVjAWl6vRnpcdFYxd8u4/uOqO8wQ
+         B0C/oYXExB07Vl0sDXrvW93AEiNqSUtRUkoQ7KQn1JYG074+ciAPzMwSPXUSukuVcaU9
+         n6vzppf6dwT0yk/bFjTKExjgjZ49TpXmzPJNf8GOVFjJCPQYo+JxhdO+I5O86Z0cp+iT
+         DP/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691528795; x=1692133595;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1691528957; x=1692133757;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yk2jMcUKin7KHZxfkihPedUxC+ohlFBFrxtCM2fiaX8=;
-        b=C36FgldIti3JRHLclR3mvIrwm2IR7eBKz5HvdN5/yn51uf1hOOzgtwtfVHMQ1kl4B3
-         pNR0hQjxuWxYQEydzPHKcJQ8IRpa2qIApt72xG38jmwjC6pZ25vqEMaLGYfUSSxOuBpz
-         ip306kDNJXAsJgCsKgKo/FVgPX11N2I3g/wWgqEpUEZV92cKulU4e/UNMPqpNIgDAdeJ
-         SLaJqiA2XtviM8vmo5sf7/IdxJPXRDFMXmeB7O/p3sTULJN2sMJ6/av32rZNnEWoPoPf
-         db5cZnJoZmotPochw5f8WN2F1BXfcZU1zrJNaTyI9xYvBii70ak25QeiHfPtluQHQjhu
-         8WqA==
-X-Gm-Message-State: AOJu0Yxtp7I54OJxiHOeUpJHzn2YMAcyviTFxP4fhuq9Tk+muIevMlo9
-        HDnMDCO3gYXLAEU/Oo6x8hJ6AmAUJ7hCkfvdhsjUtnIh+k71He1FHXAwqb1cxwbLDQnnBKMrk2Z
-        XFsiMlt2W7tSHO0JcIojRK9winA==
-X-Received: by 2002:a05:6214:4114:b0:63d:3b2:482f with SMTP id kc20-20020a056214411400b0063d03b2482fmr12798277qvb.5.1691528795429;
-        Tue, 08 Aug 2023 14:06:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsnwPimCXVkyjta9FS/2+45j9WVrBZygFxns7FwKn06ZeNICuX0tldF9IOYDjKZKH2ghDHZg==
-X-Received: by 2002:a05:6214:4114:b0:63d:3b2:482f with SMTP id kc20-20020a056214411400b0063d03b2482fmr12798262qvb.5.1691528795172;
-        Tue, 08 Aug 2023 14:06:35 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id p9-20020a0ce189000000b0063f822dae2csm2597025qvl.54.2023.08.08.14.06.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 14:06:34 -0700 (PDT)
-Date:   Tue, 8 Aug 2023 16:06:32 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Ninad Naik <quic_ninanaik@quicinc.com>, agross@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_ppareek@quicinc.com, psodagud@quicinc.com,
-        quic_kprasan@quicinc.com, quic_ymg@quicinc.com,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH v2] pinctrl: qcom: Add intr_target_width field to support
- increased number of interrupt targets
-Message-ID: <pdag3mk5fru4x7zc3lljrt3mlg2g2pa6l6h7l6fyd6n2kjydli@yvxpnjelwfns>
-References: <20230718064246.12429-1-quic_ninanaik@quicinc.com>
- <fskuol2q4wbfilrz3x3dcmikhjgfsajgnuqjnp4petxr2ne6at@zfnonisxnjh3>
+        bh=BIVqZlvPJ9fgIaaNuTsdRAq85ukf0lxErXcc6/G+RDw=;
+        b=kQ2kcjKZ33kWWayDcbiQMVfAq/k7O9qHv1a501OHocuoAd9Z3Ev2qG+zoUTHRzCdjT
+         SYuhSfgwKBVz25MCQjOJoYCk7RZn+s0CnSaj2HjA2cM4pr9BqJEJIA8H7iQNMxyvB2EV
+         RMTbp8yzjRmY3e7ahb0H/446tiJCZ20/ZxuSM8uuIDNjQPRPJWWid38ei3Y/AuNqIvNX
+         1NSLLjBzwuYT6gtiS2/05YpE0j4XzLYSjFaesvHMuwDKMfN2ldf1OaZO4OAK7aCz7O3x
+         pzecxo7lwLZuRirmFWZG4ucnohQ65rEUzvzOzuvr0WCVltdpKxOoHnylusoukKMi1O45
+         mt+w==
+X-Gm-Message-State: AOJu0YyH4MtFU4Z4j39uZy7YAYz6COsJgTMrymu7WhzpC8KB2TIEfItF
+        +BeCqxRn40GgVusPZlp739RvaA==
+X-Google-Smtp-Source: AGHT+IEzO5jVRFsFGsfZ03UX1LalSIb1Qb+8s6PoBz0649mQjtw/9h3dPqrZr43hrT4zp5MpyRLpXw==
+X-Received: by 2002:a05:651c:151:b0:2b9:aa4d:3729 with SMTP id c17-20020a05651c015100b002b9aa4d3729mr478671ljd.28.1691528956955;
+        Tue, 08 Aug 2023 14:09:16 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id l13-20020a2e700d000000b002b9c0822951sm2395753ljc.119.2023.08.08.14.09.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Aug 2023 14:09:16 -0700 (PDT)
+Message-ID: <4b9544e0-e947-467b-bc1f-5c5de8490642@linaro.org>
+Date:   Tue, 8 Aug 2023 23:09:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fskuol2q4wbfilrz3x3dcmikhjgfsajgnuqjnp4petxr2ne6at@zfnonisxnjh3>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=unavailable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/8] arm64: dts: qcom: sa8775p-ride: index the first
+ SGMII PHY
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230808190144.19999-1-brgl@bgdev.pl>
+ <20230808190144.19999-6-brgl@bgdev.pl>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230808190144.19999-6-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,80 +120,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 18, 2023 at 08:32:59AM -0700, Bjorn Andersson wrote:
-> On Tue, Jul 18, 2023 at 12:12:46PM +0530, Ninad Naik wrote:
-> > SA8775 and newer target have added support for an increased number of
-> > interrupt targets. To implement this change, the intr_target field, which
-> > is used to configure the interrupt target in the interrupt configuration
-> > register is increased from 3 bits to 4 bits.
-> >
-> > In accordance to these updates, a new intr_target_width member is
-> > introduced in msm_pingroup structure. This member stores the value of
-> > width of intr_target field in the interrupt configuration register. This
-> > value is used to dynamically calculate and generate mask for setting the
-> > intr_target field. By default, this mask is set to 3 bit wide, to ensure
-> > backward compatibility with the older targets.
-> >
-> > Changes in v2 :
-> > -----------------
-> > - Changed initial definition of intr_target_mask variable to use GENMASK().
-> > - Update commit subject appropiately.
-> > - Add Fixes tag.
-> > - v1 : https://lore.kernel.org/all/20230714061010.15817-1-quic_ninanaik@quicinc.com/
->
-> Thanks for adding a good changelog, very much appreciated. The changelog
-> should be added below the '---' line though, as it typically don't add
-> value to the git history (except drivers/gpu/* which wants it here...).
->
-> Perhaps Linus can drop it as he applies the patch, no need to resubmit
-> unless he ask you to.
->
-> Thanks,
-> Bjorn
->
+On 8.08.2023 21:01, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> We'll be adding a second SGMII PHY on the same MDIO bus, so let's index
+> the first one for better readability.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Gentle ping on this one... but then I realized that linusw isn't CC'ed
-on this patch directly, and I'm unsure of what the workflow is for
-pinctrl. ./scripts/get_maintainer.pl shows he should have been in the CC
-list ideally :)
-
-Maybe send a v3 with the changelog dropped from the actual message (i.e.
-follow Bjorn's advice), and make sure to include the folks
-get_maintainer tells you to so this gets picked up (or maybe just saying
-Linus' name will make him appear out of the woodworks if we're lucky):
-
-    ahalaney@fedora ~/git/linux-next (git)-[7de73ad15b73] % b4 am 20230718064246.12429-1-quic_ninanaik@quicinc.com
-    Grabbing thread from lore.kernel.org/all/20230718064246.12429-1-quic_ninanaik@quicinc.com/t.mbox.gz
-    Analyzing 3 messages in the thread
-    Checking attestation on all messages, may take a moment...
-    ---
-      ✓ [PATCH v2] pinctrl: qcom: Add intr_target_width field to support increased number of interrupt targets
-      ---
-      ✓ Signed: DKIM/quicinc.com
-    ---
-    Total patches: 1
-    ---
-     Link: https://lore.kernel.org/r/20230718064246.12429-1-quic_ninanaik@quicinc.com
-     Base: applies clean to current tree
-           git checkout -b v2_20230718_quic_ninanaik_quicinc_com HEAD
-           git am ./v2_20230718_quic_ninanaik_pinctrl_qcom_add_intr_target_width_field_to_support_increased_number_of_in.mbx
-    ahalaney@fedora ~/git/linux-next (git)-[7de73ad15b73] % ./scripts/get_maintainer.pl ./v2_20230718_quic_ninanaik_pinctrl_qcom_add_intr_target_width_field_to_support_increased_number_of_in.mbx
-    Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-    Bjorn Andersson <andersson@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-    Konrad Dybcio <konrad.dybcio@linaro.org> (maintainer:ARM/QUALCOMM SUPPORT,blamed_fixes:1/1=100%)
-    Linus Walleij <linus.walleij@linaro.org> (maintainer:PIN CONTROL SUBSYSTEM,blamed_fixes:1/1=100%)
-    Bartosz Golaszewski <bartosz.golaszewski@linaro.org> (blamed_fixes:1/1=100%)
-    Yadu MG <quic_ymg@quicinc.com> (blamed_fixes:1/1=100%)
-    Prasad Sodagudi <quic_psodagud@quicinc.com> (blamed_fixes:1/1=100%)
-    linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-    linux-gpio@vger.kernel.org (open list:PIN CONTROL SUBSYSTEM)
-    linux-kernel@vger.kernel.org (open list)
-    ahalaney@fedora ~/git/linux-next (git)-[7de73ad15b73] %
-
-I'm eager to get this fix in so I can describe a missing IRQ or two
-wrt ethernet GPIOs and submit that without stating the dependency
-on this fix! :)
-
-Thanks,
-Andrew
-
+Konrad
