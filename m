@@ -2,88 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07B9277429E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D851F774396
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 20:07:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232310AbjHHRrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 13:47:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37328 "EHLO
+        id S235288AbjHHSHx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 14:07:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234901AbjHHRpy (ORCPT
+        with ESMTP id S235462AbjHHSHV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:45:54 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975C825ED3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 09:20:51 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3178fa77b27so4854895f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 09:20:51 -0700 (PDT)
+        Tue, 8 Aug 2023 14:07:21 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7161315A8CD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 10:08:16 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5217ad95029so7630664a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 10:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691511621; x=1692116421;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1691514494; x=1692119294;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nuIvq2h/BPP3D5cIRCobslq+P4j3Ukg7i7rEMjlM13A=;
-        b=VK+97OZsOlMh0gtAleSSv2OK+2/K/V+DlFAn/Yx0ld69fT4vzXMxWZxDvPgiYdO3/H
-         EYKIV8bhAStmQFNUrnKvWCFrIhkUyD5fG4tg93rpR5eZX0uUdekdlbacngUm1HgkOvee
-         j3xGX7TGEu0Ox+5ABsqHbYHW9VJj+B+tZI4YagADW9za223aZWbfC5E8/rzcE1BaReKx
-         GwKRPJ0cfKZLaRU5YkaltQpQQOlgE9CrrOBphU0Nbk6ZvnKYK8TbbQscoGaWvFohQTIe
-         z5Kdqtu78jFYphosDhqCLF7HLsZ/ADIjFEr94dXSROjKm/3SyelmMuE0GYrZCAlkpoD8
-         EtMg==
+        bh=UyS/L7dLf5HA1aT+dxr0rfvSOnR4w8+8xr/m/2kmCIY=;
+        b=V/SoexmwX66lF2fbTsoeTC/9DLE3bmBy9c6mBOfd4qe9O80NJuguf96b2W/6Qjzhpv
+         QsP67X6BB+I6Dba/QWRc1nZK4gT3JXRMIVts3Of53BslAR/Q65CbfpS620HTOVEGoQPG
+         vIvIflJtPg1yc980/8OAfbaO/H9IAfgs1gXFpKifEbLlzet3NY02IuVShqcl2Y86W4Ms
+         wSzkDWB6t09vZPbAp7aa/GfTfEPXVdRk9KcpeYCOjk9rnn6UXoArxXF7415rExJkrQVg
+         2epVDuSXfGPlwesEAuuFi66xLi1FLxBfH9SauDrtSnGkLZ7Cs46LQF8RYv9oxFuN95LG
+         ixGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691511621; x=1692116421;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1691514494; x=1692119294;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nuIvq2h/BPP3D5cIRCobslq+P4j3Ukg7i7rEMjlM13A=;
-        b=TXG9W0yOmYjoGRSUeImYUtQ5xq6Tv0/dLHiLHNslrb2bM+jc+gQI75mIHhzT/lQPTd
-         JrnIWFpV5wciBfZqAPpyYBMntoH82U51MVrT3qBh9FQCrq2EJ7IKE4Zetii4UcCM6S06
-         xPg6686bfbw4Rf3M9zOXy059fb8EO9LJZ8+9wTYJzfT59zizRzRUVg7sCSM3cyzMXWMl
-         /YY7MnCaey6B9Cri+xbRAXgKGpP2rgcENrxkuYU1a2O2igBX0NQuH7w1MLn/H7Rr6Pm4
-         zQ+XukdzaZuFiftoKpPltJa13HUL60NSkK02vL9B97m1QKqdyaXQmeQYSR/bS/TgQGUx
-         VduA==
-X-Gm-Message-State: AOJu0YzYsN2rhTVJ7WefmUw+GxQulZNfdaw54to/bOBRIpGWYXSYrlnV
-        yR52jIJZjaiFqI0PXAEjVulsow==
-X-Google-Smtp-Source: AGHT+IGG6cx4NxloHY9qu9bkpwF/v/G7D1G7UI779iSRivcmdLz5bmQnplAjeu12YJonXRuef1UCvA==
-X-Received: by 2002:a5d:4574:0:b0:317:ef17:2351 with SMTP id a20-20020a5d4574000000b00317ef172351mr3658176wrc.65.1691511621014;
-        Tue, 08 Aug 2023 09:20:21 -0700 (PDT)
+        bh=UyS/L7dLf5HA1aT+dxr0rfvSOnR4w8+8xr/m/2kmCIY=;
+        b=RN51ZliGf8Yk/BN3qSOELIqNWyn2yMjRDaG/QPRaTrvGaHJkKta05rdfTmLUlC4X6n
+         bAVou315t9oBKpcasoZH46aizHabFMH078I9g0AYYlcOS6D/yvT9hs0kJ+Gl9jJSb75K
+         XTbSzZftFYAxRvxq2hB1ycfuJ9CwLwNuMQbUcrcClZeik0VQi8Ev5SpmR+IcocAfhmt6
+         NvbASgZWKNfpsFcB1CjDIAtZghZN5+5/3gtRz3UIyGSro60ip4EG5SQGUpN2vfaRLFEG
+         /rLjsb1CCuWe7WOuARTnb3fcF0PJX7JPaVGCU+4r0Xm6fZtaHs5229Bq6zdWnX6k7v4E
+         MRbQ==
+X-Gm-Message-State: AOJu0YxBNvolPLGrcFYmGIaxtumA8IydDwtEmjoV4BwkCSKIWytif1zk
+        nqutetg3fORsAEVQUkCPmwIq3XCUUhUYHdB6Gqg=
+X-Google-Smtp-Source: AGHT+IG5ejXw8mSfMpGS3YO2cZNr5f38aIplR/Hy2qVkoP54+cIeF0lk06XFWiAgsKDzR7RqHr3rDA==
+X-Received: by 2002:a2e:904c:0:b0:2b9:4b2b:89d8 with SMTP id n12-20020a2e904c000000b002b94b2b89d8mr7661614ljg.35.1691474242601;
+        Mon, 07 Aug 2023 22:57:22 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id a5-20020a5d4565000000b0030647449730sm14050046wrc.74.2023.08.08.09.20.19
+        by smtp.gmail.com with ESMTPSA id bn10-20020a170906c0ca00b00992b0745548sm6162130ejb.152.2023.08.07.22.57.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 09:20:20 -0700 (PDT)
-Message-ID: <41d46805-c5a1-6c0d-6b5f-caf499d10d4a@linaro.org>
-Date:   Tue, 8 Aug 2023 18:20:18 +0200
+        Mon, 07 Aug 2023 22:57:21 -0700 (PDT)
+Message-ID: <d1172ed6-ee3b-83b6-1656-c91e35fbc2df@linaro.org>
+Date:   Tue, 8 Aug 2023 07:57:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v13 04/10] dt-bindings: soc: qcom: cpr3: Add bindings for
- CPR3 driver
+Subject: Re: [PATCH 2/3] dt-bindings: clock: add qca8386/qca8084 clock and
+ reset definitions
+To:     Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com
+References: <20230801085352.22873-1-quic_luoj@quicinc.com>
+ <20230801085352.22873-3-quic_luoj@quicinc.com>
+ <ef996a7e-6eba-4366-c3ea-0d08f2768e98@linaro.org>
+ <cf9788f0-a115-5ff9-1195-f4f302551e04@quicinc.com>
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20230217-topic-cpr3h-v13-0-d01cff1c54cf@linaro.org>
- <20230217-topic-cpr3h-v13-4-d01cff1c54cf@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230217-topic-cpr3h-v13-4-d01cff1c54cf@linaro.org>
+In-Reply-To: <cf9788f0-a115-5ff9-1195-f4f302551e04@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,66 +84,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/08/2023 14:37, Konrad Dybcio wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On 08/08/2023 07:19, Jie Luo wrote:
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,nsscc-qca8k
+>>
+>> SoC name is before IP block names. See:
+>> Documentation/devicetree/bindings/arm/qcom-soc.yaml
+>>
+>> qca8k is not SoC specific. I don't know what you are documenting here,
+>> but if this is a SoC, then follow SoC rules.
+>>
+>> If this is not SoC, it confuses me a bit to use GCC binding.
+>>
+>> Anyway, this was not tested, as pointed out by bot... Please test the
+>> code before sending.
+>>
+>> Best regards,
+>> Krzysztof
+>>
 > 
-> Add the bindings for the CPR3 driver to the documentation.
+> Hi Krzysztof,
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> [Konrad: Make binding check pass; update AGdR's email]
-> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 291 +++++++++++++++++++++
->  1 file changed, 291 insertions(+)
+> Thanks for the review comments.
+> qca8383/qca8084 is a network chip that support switch mode and PHY mode,
+> the hardware register is accessed by MDIO bus, which is not a SOC.
 > 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-> new file mode 100644
-> index 000000000000..d797abc5d5fe
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-> @@ -0,0 +1,291 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr3.yaml#"
+> But it has the self-contained clock controller system, the clock 
+> framework of qca8386/qca8084 is same as the GCC of ipq platform such as 
+> ipq9574.
 
-Drop quotes.
+OK
 
-It does not look like you tested the bindings, at least after quick
-look. Please run `make dt_binding_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
-Maybe you need to update your dtschema and yamllint.
+> 
+> would you help advise whether we can document it with the compatible
+> "qcom,qca8k-nsscc"?
 
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Core Power Reduction v3/v4/Hardened (CPR3, CPR4, CPRh)
-> +
-> +description:
-> +  CPR (Core Power Reduction) is a technology to reduce core power of a CPU
-> +  (or another device). Each OPP of a device corresponds to a "corner" that
-> +  has a range of valid voltages for a particular frequency.
-> +  The CPR monitors dynamic factors such as temperature, etc. and suggests
-> +  or (in the CPR-hardened case) applies voltage adjustments to save power
-> +  and meet silicon characteristic requirements for a given chip unit.
-> +
-> +maintainers:
-> +  - AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - description: CPRv3 controller
-
-Nit, since you are going to resend, then: Drop description, it's the
-same as compatible.
-
-> +        items:
-> +          - const: qcom,cpr3
-> +      - description: CPRv4 controller
-
-Ditto
-
+For example:
+qcom,qca8084-nsscc
 
 Best regards,
 Krzysztof
