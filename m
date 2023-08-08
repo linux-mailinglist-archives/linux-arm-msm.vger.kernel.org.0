@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 762ED774C00
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:02:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5D65774C01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:02:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231818AbjHHVCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 17:02:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56884 "EHLO
+        id S232545AbjHHVCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 17:02:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231485AbjHHVCv (ORCPT
+        with ESMTP id S231485AbjHHVCw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:02:51 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6061EE54
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:02:50 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9c66e2e36so3099581fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:02:50 -0700 (PDT)
+        Tue, 8 Aug 2023 17:02:52 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01132FB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:02:52 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b9b5ee9c5aso98352321fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691528568; x=1692133368;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3P34b/1ma59FLttG1cQJqYU6A3Cv7kli+dnFU1B7pgw=;
-        b=SvILppwzHI+9Ubi5q64fEItmP2yIkds1QdhCpbBlvFNhQzLstXUavt86288C4GEyBK
-         rn5WmEo5R6YtwM8F+i1Q+qOJkxcMxHmVafcb6//Ztb7vExgr6jtrj9/kL3RfFA9SrVI/
-         veNjg4F9psz1PXD4JGEY67UBuEwQCkNY7c0OHD+IU4hPOw6NfrInszz4s+ZnDkQnAB7I
-         b87442JKlQiyWdH5Zg4q8YgzkUmxUW2gIXX8RGhQ13t5W4llS28E/yvK8X1PGtE7V7Bu
-         CNCd32oYEPdNi/2xTTN3z/FLl9+VsByE3RfN5wlklVBSJoLTF1+pScpVZyxhOzXDtip1
-         9/Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691528568; x=1692133368;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1691528570; x=1692133370;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3P34b/1ma59FLttG1cQJqYU6A3Cv7kli+dnFU1B7pgw=;
-        b=T7PkI3ZLZ72N4lS6k6ZG8tCeOnZTJXq+6luXAws0/BAWDmuSK0T7jUMTSUUiyZE/vT
-         iSe13LWwU+vYRyWFfBbNNXuZVnsO36XMSMpgSLBkgiEQx3XnKdTXvKgw+s6/SKqsEYVD
-         4x5UQDJf/mOQ16k5Ix7acWWlQHGGYaJ4LGXJ8TwA18BrNOlvKEM/Zx/G1m+zSlxy76q0
-         0AnleM0fwjqIgu8020Y/N20j3wLFGtRRN0iR3tLYZHrGi7aioiCy28w+jp242fe7J1xW
-         ux1ZJDaWQJh9RwYyGNjoLdycD8i5u6cMsU19vrFNL/Sx0Z8jOihH4jPcWP3WdC+FSb4y
-         YdiQ==
-X-Gm-Message-State: AOJu0Yw+oirAqfFgz4Ddm9IxSR7cw9rE7TRkMUlqIY3utgfle4K2zrfS
-        nDbvj0xqjL47DIaxdBUVTkNtzg==
-X-Google-Smtp-Source: AGHT+IGHL7VCZl32wqCp2jnfDoOO0FgloZVtld9xzhtXOZv99HywIwA5QJc20hltfUJx2vGx0SoAhA==
-X-Received: by 2002:a2e:96d6:0:b0:2b6:cb3f:97e2 with SMTP id d22-20020a2e96d6000000b002b6cb3f97e2mr340774ljj.16.1691528568465;
-        Tue, 08 Aug 2023 14:02:48 -0700 (PDT)
+        bh=hS8c4wyB3wtjZLqyo7PC6T7LpcZXGBfeQFGSCqAfqLk=;
+        b=lqkaAoh41MhSMh/CKlh0pgemoK+C1ZZeoxjazQT9iwnQtnGJyFbuTVVwP8AA5DmVtw
+         NdG5QY1C8SgLlr/JYHDankbQVJ+5nbBkSeZAG6ct4meH5GMbtggV0TBlZanCizE6UXFV
+         AJhdN+GWrfpXsNcOZBHorjcR5O8rfG2ZKlRog9G+Xh+YVlexC4CS/6TJVyCxACn7cBd6
+         ZlGvAbVVLTLXZ5BhRVUsVs4l8YDTfRi28+3PcLxw/nkbNDLgqACtrPsCyWvkX8Pelmbv
+         mI4+tGiHXEe4Rj5jbnyi1n50X5a+9STXoKTUK2nhvnOmjNQm/nTVU/MNMAOywhEImAIF
+         v6cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691528570; x=1692133370;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hS8c4wyB3wtjZLqyo7PC6T7LpcZXGBfeQFGSCqAfqLk=;
+        b=HzOzTAQXErb9Q8Ql/ldj8rerA72HQfTTjb/setB7jfBdyA3uUWyIC/v6y8Zqvllz9j
+         yfSpEvXWaCJW1lc8EA/LeCPm+TmQR5t8nf6gsMh6yf+2n4KB1/NGgttDxyFrHzX/w0HN
+         g3BMZnUCtPuFMZhM591ZVYVVdB81VKNuwJudOXUPuYwiZkhdj5ZmooHEjL7XbsCgQvbl
+         GnCAw32EwDFSY7xJSQ6Xb5EquDcl4cdtv0Hh6TE7uO+U+DcSfkHFKGEBXUespqv7/QRU
+         8k9yD0BRVopQOPR3+xtDgiaLPUtlNBWDQF3WwFAm4hUlv63WV+KTQDe/hZFZyX/n9zVH
+         tArQ==
+X-Gm-Message-State: AOJu0YyYT5jjNb9i7ybSlZ/ucN1R+JGLtnxpgxm4/1avfoD0UfuzMR9M
+        Ky0O3bmzszRaIbvN4M7b2BKcKw==
+X-Google-Smtp-Source: AGHT+IHGfhZxTyBRzijfbQw22JrjBKP3ZlPHO3havq5nM/dZu9mn+HvCruRTBcPXH6PabOfDIhRpMQ==
+X-Received: by 2002:a2e:8798:0:b0:2b9:f13b:6135 with SMTP id n24-20020a2e8798000000b002b9f13b6135mr508198lji.18.1691528570199;
+        Tue, 08 Aug 2023 14:02:50 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id h11-20020a2eb0eb000000b002b6cc17add3sm2431483ljl.25.2023.08.08.14.02.46
+        by smtp.gmail.com with ESMTPSA id h11-20020a2eb0eb000000b002b6cc17add3sm2431483ljl.25.2023.08.08.14.02.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 14:02:47 -0700 (PDT)
+        Tue, 08 Aug 2023 14:02:49 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v2 00/14] A7xx support
-Date:   Tue, 08 Aug 2023 23:02:38 +0200
-Message-Id: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
+Date:   Tue, 08 Aug 2023 23:02:39 +0200
+Subject: [PATCH v2 01/14] dt-bindings: display/msm/gmu: Add Adreno 7[34]0
+ GMU
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAG6t0mQC/32NQQqDMBAAvyI5NyWJom1P/qNIiXGjC5rIxopF/
- Hu3PqDHGRhmFwkIIYlHtguCFRPGwGAumXCDDT1I7JiFUSZXpbnJJc7opK227dXRNKVJapP7XHV
- V6XwluGttAtmSDW7gMrzHkeVM4HE7R8+GecC0RPqc31X/7L/FqqVi4YviXoJy2tQjBkvxGqkXz
- XEcX/7jt0vIAAAA
+Message-Id: <20230628-topic-a7xx_drmmsm-v2-1-1439e1b2343f@linaro.org>
+References: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
+In-Reply-To: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -77,11 +77,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691528566; l=4016;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691528566; l=2826;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=28tVoyoZGi5ChYeTjClZPV9YNYzKToRLj0C2cpckT8w=;
- b=RgpQP0zsl9mFXTKGli673/415ZK5uFGxg3V/njRZPs5d6JltKmhZpln3HGk20bN8dwDnBAlzi
- E0GHwdH9KFCC0pEWDcBu8GuAaPMvE/TrGIsCvTwVCALH/HsP/+fbPIf
+ bh=W4TNDfqRe8poCgRB2PojMgbpj1+i/wuiEusxrpkSZtc=;
+ b=9gary2WEBMhPBMDBnH9hw+LpjpkqnncTuqSe2xl+THzCZIpP0KDeutd1AkzYS5KZk93EM1sWG
+ FO9Bjvrh4+gBM5RPfq/WGGuEHFTlKd9KDTuputRiNJC/q3f+unC1/x0
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,92 +94,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series attempts to introduce Adreno 700 support (with A730 and A740
-found on SM8450 and SM8550 respectively), reusing much of the existing
-A6xx code. This submission largely lays the groundwork for expansion and
-more or less gives us feature parity (on the kernel side, that is) with
-existing A6xx parts.
+The GMU on the A7xx series is pretty much the same as on the A6xx parts.
+It's now "smarter", needs a bit less register writes and controls more
+things (like inter-frame power collapse) mostly internally (instead of
+us having to write to G[PM]U_[CG]X registers from APPS)
 
-On top of introducing a very messy set of three (!) separate and
-obfuscated deivce identifiers for each 7xx part, this generation
-introduces very sophisticated hardware multi-threading and (on some SKUs)
-hardware ray-tracing (not supported yet).
+The only difference worth mentioning is the now-required DEMET clock,
+which is strictly required for things like asserting reset lines, not
+turning it on results in GMU not being fully functional (all OOB requests
+would fail and HFI would hang after the first submitted OOB).
 
-After this series, a long-overdue cleanup of drm/msm/adreno is planned
-in preparation for adding more features and removing some hardcoding.
+Describe the A730 and A740 GMU.
 
-The last patch is a hack that may or may not be necessary depending
-on your board's humour.. eh.. :/
-
-Developed atop (and hence depends on) [1]
-
-The corresponding devicetree patches are initially available at [2] and
-will be posted after this series gets merged. To test it, you'll also need
-firmware that you need to obtain from your board (there's none with a
-redistributable license, sorry..). Most likely it will be in one of
-these directories on your stock android installation:
-
-* /vendor/firmware
-* /vendor/firmware_mnt
-* /system
-
-..but some vendors make it hard and you have to do some grepping ;)
-
-Requires [3] to work on the userspace side. You'll almost cerainly want
-to test it alongside Zink with a lot of debug flags (early impl), like:
-
-TU_DEBUG=sysmem,nolrz,flushall,noubwc MESA_LOADER_DRIVER_OVERRIDE=zink kmscube
-
-[1] https://lore.kernel.org/linux-arm-msm/20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org/
-[2] https://github.com/SoMainline/linux/commits/topic/a7xx_dt
-[3] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/23217
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Changes in v2:
-- Rebase on chipid changes
-- Reuse existing description for qcom,aoss in patch 2
-- Pick up tags
-- Link to v1: https://lore.kernel.org/r/20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org
+ .../devicetree/bindings/display/msm/gmu.yaml       | 40 +++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
----
-Konrad Dybcio (14):
-      dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
-      dt-bindings: display/msm/gmu: Allow passing QMP handle
-      dt-bindings: display/msm/gpu: Allow A7xx SKUs
-      drm/msm/a6xx: Add missing regs for A7XX
-      drm/msm/a6xx: Introduce a6xx_llc_read
-      drm/msm/a6xx: Move LLC accessors to the common header
-      drm/msm/a6xx: Bail out early if setting GPU OOB fails
-      drm/msm/a6xx: Add skeleton A7xx support
-      drm/msm/a6xx: Send ACD state to QMP at GMU resume
-      drm/msm/a6xx: Mostly implement A7xx gpu_state
-      drm/msm/a6xx: Add A730 support
-      drm/msm/a6xx: Add A740 support
-      drm/msm/a6xx: Vastly increase HFI timeout
-      drm/msm/a6xx: Poll for GBIF unhalt status in hw_init
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+index 5fc4106110ad..20ddb89a4500 100644
+--- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+@@ -21,7 +21,7 @@ properties:
+   compatible:
+     oneOf:
+       - items:
+-          - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
++          - pattern: '^qcom,adreno-gmu-[67][0-9][0-9]\.[0-9]$'
+           - const: qcom,adreno-gmu
+       - const: qcom,adreno-gmu-wrapper
+ 
+@@ -213,6 +213,44 @@ allOf:
+             - const: axi
+             - const: memnoc
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,adreno-gmu-730.1
++              - qcom,adreno-gmu-740.1
++    then:
++      properties:
++        reg:
++          items:
++            - description: Core GMU registers
++            - description: Resource controller registers
++            - description: GMU PDC registers
++        reg-names:
++          items:
++            - const: gmu
++            - const: rscc
++            - const: gmu_pdc
++        clocks:
++          items:
++            - description: GPU AHB clock
++            - description: GMU clock
++            - description: GPU CX clock
++            - description: GPU AXI clock
++            - description: GPU MEMNOC clock
++            - description: GMU HUB clock
++            - description: GPUSS DEMET clock
++        clock-names:
++          items:
++            - const: ahb
++            - const: gmu
++            - const: cxo
++            - const: axi
++            - const: memnoc
++            - const: hub
++            - const: demet
++
+   - if:
+       properties:
+         compatible:
 
- .../devicetree/bindings/display/msm/gmu.yaml       |  47 +-
- .../devicetree/bindings/display/msm/gpu.yaml       |   4 +-
- drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   9 +
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 204 +++++--
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
- drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   8 +
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 667 ++++++++++++++++++---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  15 +
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  61 +-
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  90 ++-
- drivers/gpu/drm/msm/adreno/adreno_device.c         |  30 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   7 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  28 +-
- drivers/gpu/drm/msm/msm_ringbuffer.h               |   2 +
- 15 files changed, 1094 insertions(+), 133 deletions(-)
----
-base-commit: b30de2c05cf2166f4e2c68850efc8dcea1c89780
-change-id: 20230628-topic-a7xx_drmmsm-123f30d76cf7
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.41.0
 
