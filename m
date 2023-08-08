@@ -2,125 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF5FE773F50
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 18:45:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A1FC773CD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 18:09:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233422AbjHHQpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 12:45:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56214 "EHLO
+        id S232025AbjHHQJ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 12:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233317AbjHHQoi (ORCPT
+        with ESMTP id S231835AbjHHQIX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 12:44:38 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A58A16BE7;
-        Tue,  8 Aug 2023 08:56:10 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3784FSFh001613;
-        Tue, 8 Aug 2023 05:15:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=lfcTAt6G52PFyMvl+jt86UgekCwkOtCLCvWH8CsbZpE=;
- b=jod/S4QyFJp9dZcCk05zuvB1OyT307eDXSHqMRv6OGpuN52FyX5FsW0RUJlQ5iCylXln
- YJKxT4oTC1CfIcZaf8YaKVE4HfHUTWY5rfEsoKn+ekoqVGzV3Kh8O0xwmdfWgN5flXTR
- F9tYTmtoqmDNfpu4yEi2uWdJQIiuWNnVMMVeLcdjcyXGfVTxlUptFRMi8cnBTn9+3LEa
- xrajTNjFsEAWKVU84YDYvYTVRpvDf14pAp2It3bO36dPm4g9IYC52GW+OHjojNNa8SQ2
- AdYDKSyY7xSjNYXWwmxcCSMmjewpJ1y/9u+tmCtYrkdvSeLBPl4mQFVCoT5I7C4+C2Ag Cg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbcacra14-1
+        Tue, 8 Aug 2023 12:08:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC80E72B1;
+        Tue,  8 Aug 2023 08:46:15 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3784Emmx011882;
+        Tue, 8 Aug 2023 05:19:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PIdgMZR8W+Ik6UeWAcjVFurIfmZejnHlq4mvtB1MIRY=;
+ b=HyW7PCKJacgBLG6Orka3HZgv2VdB/Qoiq6cGDeLrl6QaZ8CpgEgdpjmuyZL+X7PP3LI5
+ WqaGs2HCSq9eiKIuP4F2ZwIuOSG1aZDrG/C7VXU3X4FlbUpFj6CUBYBONSAG114ifopZ
+ KcfV69ckVlzFJI9r+Vy+VygrqSi5AfS+bB7iXjL1+QWoy5LtLGXOuoQMnh+iHvd+ZXmb
+ gDJoTGCiPtQsPGfnM/UWEe00ENoPn3tf4oYG/L1XYVrHYcN7fKWBDcup+nyWU2YPuZAF
+ 2+dLC4PvvkVDjPfPUvZcFA324t6xhAYt6R7NsBoupF4uNaErAswGroJfIHHAK3L34Wwo Qw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sb7bb8sqh-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Aug 2023 05:15:08 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3785F8D5003566
+        Tue, 08 Aug 2023 05:19:11 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3785J9qc031032
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Aug 2023 05:15:08 GMT
-Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 7 Aug 2023 22:15:03 -0700
-From:   Imran Shaik <quic_imrashai@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: qdu1000: Add ECPRI clock controller
-Date:   Tue, 8 Aug 2023 10:44:07 +0530
-Message-ID: <20230808051407.647395-5-quic_imrashai@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230808051407.647395-1-quic_imrashai@quicinc.com>
-References: <20230808051407.647395-1-quic_imrashai@quicinc.com>
+        Tue, 8 Aug 2023 05:19:10 GMT
+Received: from [10.253.9.41] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 7 Aug
+ 2023 22:19:06 -0700
+Message-ID: <cf9788f0-a115-5ff9-1195-f4f302551e04@quicinc.com>
+Date:   Tue, 8 Aug 2023 13:19:02 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 2/3] dt-bindings: clock: add qca8386/qca8084 clock and
+ reset definitions
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20230801085352.22873-1-quic_luoj@quicinc.com>
+ <20230801085352.22873-3-quic_luoj@quicinc.com>
+ <ef996a7e-6eba-4366-c3ea-0d08f2768e98@linaro.org>
+Content-Language: en-US
+From:   Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <ef996a7e-6eba-4366-c3ea-0d08f2768e98@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8D-4n_fei29CHE7_p4RcNzS7QqD_7WuS
-X-Proofpoint-ORIG-GUID: 8D-4n_fei29CHE7_p4RcNzS7QqD_7WuS
+X-Proofpoint-GUID: OLwaJZaka2cXgwYjJ3UdM-BCW9JfqH3y
+X-Proofpoint-ORIG-GUID: OLwaJZaka2cXgwYjJ3UdM-BCW9JfqH3y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-08-08_03,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 mlxscore=0 adultscore=0 malwarescore=0
- mlxlogscore=871 bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308080046
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 mlxscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308080046
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for ECPRI clock controller on qcom QDU1000
-and QRU1000 SoCs.
 
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qdu1000.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-index 1c0e5d271e91..63930f944b65 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-@@ -381,6 +381,20 @@ gcc: clock-controller@80000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		ecpricc: clock-controller@280000 {
-+			compatible = "qcom,qdu1000-ecpricc";
-+			reg = <0x0 0x00280000 0x0 0x31c00>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				<&gcc GCC_ECPRI_CC_GPLL0_CLK_SRC>,
-+				<&gcc GCC_ECPRI_CC_GPLL1_EVEN_CLK_SRC>,
-+				<&gcc GCC_ECPRI_CC_GPLL2_EVEN_CLK_SRC>,
-+				<&gcc GCC_ECPRI_CC_GPLL3_CLK_SRC>,
-+				<&gcc GCC_ECPRI_CC_GPLL4_CLK_SRC>,
-+				<&gcc GCC_ECPRI_CC_GPLL5_EVEN_CLK_SRC>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+		};
-+
- 		gpi_dma0: dma-controller@900000  {
- 			compatible = "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma";
- 			reg = <0x0 0x900000 0x0 0x60000>;
--- 
-2.25.1
+On 8/7/2023 2:52 PM, Krzysztof Kozlowski wrote:
+> On 01/08/2023 10:53, Luo Jie wrote:
+>> QCA8386/QCA8084 includes the clock & reset controller that is
+>> accessed by MDIO bus. Two work modes are supported, qca8386 works
+>> as switch mode, qca8084 works as PHY mode.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+>>   .../bindings/clock/qcom,nsscc-qca8k.yaml      |  59 ++++++++++
+>>   include/dt-bindings/clock/qcom,nsscc-qca8k.h  | 102 ++++++++++++++++++
+>>   include/dt-bindings/reset/qcom,nsscc-qca8k.h  |  76 +++++++++++++
+>>   3 files changed, 237 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+>>   create mode 100644 include/dt-bindings/clock/qcom,nsscc-qca8k.h
+>>   create mode 100644 include/dt-bindings/reset/qcom,nsscc-qca8k.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml b/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+>> new file mode 100644
+>> index 000000000000..8fb77156070c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,nsscc-qca8k.yaml
+>> @@ -0,0 +1,59 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,nsscc-qca8k.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm NSS Clock & Reset Controller on QCA8386/QCA8084
+>> +
+>> +maintainers:
+>> +  - Luo Jie <quic_luoj@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm NSS clock control module provides the clocks and resets
+>> +  on QCA8386(switch mode)/QCA8084(PHY mode)
+>> +
+>> +  See also::
+>> +    include/dt-bindings/clock/qcom,nsscc-qca8k.h
+>> +    include/dt-bindings/reset/qcom,nsscc-qca8k.h
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,nsscc-qca8k
+> 
+> SoC name is before IP block names. See:
+> Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> 
+> qca8k is not SoC specific. I don't know what you are documenting here,
+> but if this is a SoC, then follow SoC rules.
+> 
+> If this is not SoC, it confuses me a bit to use GCC binding.
+> 
+> Anyway, this was not tested, as pointed out by bot... Please test the
+> code before sending.
+> 
+> Best regards,
+> Krzysztof
+> 
 
+Hi Krzysztof,
+
+Thanks for the review comments.
+qca8383/qca8084 is a network chip that support switch mode and PHY mode,
+the hardware register is accessed by MDIO bus, which is not a SOC.
+
+But it has the self-contained clock controller system, the clock 
+framework of qca8386/qca8084 is same as the GCC of ipq platform such as 
+ipq9574.
+
+would you help advise whether we can document it with the compatible
+"qcom,qca8k-nsscc"?
+
+Jie.
