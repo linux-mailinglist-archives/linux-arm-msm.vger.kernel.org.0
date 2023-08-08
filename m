@@ -2,249 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F8A97736FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 04:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1893A773711
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 04:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbjHHCoh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Aug 2023 22:44:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60266 "EHLO
+        id S231128AbjHHCu4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Aug 2023 22:50:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231145AbjHHCog (ORCPT
+        with ESMTP id S230318AbjHHCut (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Aug 2023 22:44:36 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2BD1FF6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Aug 2023 19:44:15 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1bc8045e09dso1996815ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Aug 2023 19:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20221208.gappssmtp.com; s=20221208; t=1691462655; x=1692067455;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZZ3n364wJBBn5i6olC7X8xOphz5aoEwi3PPn9Humxy4=;
-        b=c9iOPpy41VC6QSzv5vLbmCPsxZB2K7hAItf8MEtryT/BAlfvdA0UPM4PAg3DtN7rr+
-         GFW2nm1AoLFEe5zmSSiqyIhn92P6iecybeuExkqa7jbnj+LEVM1LioV7SZGiR/8Kzy2+
-         mJYrJW8XMi2+dbRvP7Xg6QuSzUnp/yHkq29M7vbAYNrF1NokfShgkpn7COiSBb38dkF0
-         MWE0ZNG9ZS4LzaWgVeAy0Pmh7etHcKYaOYLW+oCVP3Q2zlcEbOnfLG0lI+GjqQwBJGqv
-         OKDqkP3u3mDYRaZI2hDArPl64kIP09oRYh791qhymi4aMBqJthtqlGcAIAw7e+Im4Q2d
-         AiTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691462655; x=1692067455;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZ3n364wJBBn5i6olC7X8xOphz5aoEwi3PPn9Humxy4=;
-        b=N4CS8SH2tBQbMYsOlVm380OnKu+EX7K7txL3hW+fDnZfYxonnZcODl1HlVW5CGOIgC
-         paD0fSejid9/5QZ2OM8wbAJehyJA0xp9W4L5SBOXXZf+K4eeqyfrsq6Dbloee4HRgnCL
-         a7w0ovAyGrk5ZjkWX8OF8NjlEB0dp5p7YUh8YYgDeKQjr6wfxxYn5TI6FofiX6NHob+T
-         Im707jt60MTnDEV/11QMAiQZnV1OLoo8a6yicy/duTlhzyQoItQx/jYkphQb4jD5IK3I
-         asE/qo76FDiIuK6y30gDEUhSbd/iggzCiVDVw5YNIG3BHc4r2ILp3MI1mnAU9Hy2I9io
-         vQzg==
-X-Gm-Message-State: AOJu0YxyThHkpU3A3Mpn5m+vYAOPY481r/ZVQFWS7kdXEFLXXvl2kDVG
-        D4SjuDa1C5kyKTqvOiIIflzByw==
-X-Google-Smtp-Source: AGHT+IEZT2gUmOSYrkIbMjP5ySF6z1UEt5Q+o+GMN8zU98oO9pgzqqi+i8QK+swPthTlPTk4WQ36Qw==
-X-Received: by 2002:a17:902:7287:b0:1b3:f5c7:4e75 with SMTP id d7-20020a170902728700b001b3f5c74e75mr9699662pll.58.1691462654669;
-        Mon, 07 Aug 2023 19:44:14 -0700 (PDT)
-Received: from dread.disaster.area (pa49-180-166-213.pa.nsw.optusnet.com.au. [49.180.166.213])
-        by smtp.gmail.com with ESMTPSA id u2-20020a170902e80200b001b893b689a0sm7632067plg.84.2023.08.07.19.44.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Aug 2023 19:44:14 -0700 (PDT)
-Received: from dave by dread.disaster.area with local (Exim 4.96)
-        (envelope-from <david@fromorbit.com>)
-        id 1qTChf-002XBg-27;
-        Tue, 08 Aug 2023 12:44:11 +1000
-Date:   Tue, 8 Aug 2023 12:44:11 +1000
-From:   Dave Chinner <david@fromorbit.com>
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-Cc:     akpm@linux-foundation.org, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu, steven.price@arm.com,
-        cel@kernel.org, senozhatsky@chromium.org, yujie.liu@intel.com,
-        gregkh@linuxfoundation.org, muchun.song@linux.dev,
-        simon.horman@corigine.com, dlemoal@kernel.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-Subject: Re: [PATCH v4 46/48] mm: shrinker: make memcg slab shrink lockless
-Message-ID: <ZNGr+1orhHaBORJG@dread.disaster.area>
-References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
- <20230807110936.21819-47-zhengqi.arch@bytedance.com>
+        Mon, 7 Aug 2023 22:50:49 -0400
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26AA10C0;
+        Mon,  7 Aug 2023 19:50:47 -0700 (PDT)
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3781jD6I011184;
+        Tue, 8 Aug 2023 02:50:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-03-30;
+ bh=iacwFyTqZfahHyyEkmBoZR5f7zZK+DDgWiccFC0bGF0=;
+ b=lfK73tl1ZVp+JX1rnC5iaeJZIsQglPeInVdZV6A3vTgTEDkIBFeKLgi3c/p7SGvuQBI6
+ oFoq4KK6tbz1rixkYda7PEYO3UVeuQgzfSgxnMz8j3o6GzjuoNfP+0QCJMjWyKH/0fIY
+ jje5ziJ2Dlaiw9Scwz17ZpJHSFimwVbLJ2q2XSc9ZQfAgshOVmQfdv7yw926+tBVKT8i
+ kuj1PrOkWbZb3jlmebnScbaS0yc79lBd8YxbYgkeAOMBq12Y3MYhrC3luMYBunnOorsg
+ IrtQdDovLF9PjncZTJSzcAfxhXvsJ76NCd2Cym/Awt96TK1rk2Bu+YPA6kXZgpNYXEg4 SA== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3s9eyuc491-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 08 Aug 2023 02:50:38 +0000
+Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 37806DoV027337;
+        Tue, 8 Aug 2023 02:50:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3s9cv561nh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 08 Aug 2023 02:50:37 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3782oade010815;
+        Tue, 8 Aug 2023 02:50:37 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3s9cv561mp-3;
+        Tue, 08 Aug 2023 02:50:36 +0000
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] scsi: ufs: qcom: Add interconnect support
+Date:   Mon,  7 Aug 2023 22:50:28 -0400
+Message-Id: <169146270858.4040832.9863920717883598606.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230731145020.41262-1-manivannan.sadhasivam@linaro.org>
+References: <20230731145020.41262-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230807110936.21819-47-zhengqi.arch@bytedance.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-07_28,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=696 bulkscore=0
+ adultscore=0 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308080023
+X-Proofpoint-GUID: _Tev_mNlBygBktnZapHAtMHG0n4HQkRT
+X-Proofpoint-ORIG-GUID: _Tev_mNlBygBktnZapHAtMHG0n4HQkRT
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 07, 2023 at 07:09:34PM +0800, Qi Zheng wrote:
-> Like global slab shrink, this commit also uses refcount+RCU method to make
-> memcg slab shrink lockless.
+On Mon, 31 Jul 2023 20:20:18 +0530, Manivannan Sadhasivam wrote:
 
-This patch does random code cleanups amongst the actual RCU changes.
-Can you please move the cleanups to a spearate patch to reduce the
-noise in this one?
+> This series adds interconnect support to Qcom UFS driver. Interconnect support
+> is added to Qcom UFS driver for scaling the interconnect path dynamically. This
+> is required to avoid boot crash in recent SoCs and also to save power during
+> runtime. More information is available in patch 2/2.
+> 
+> Credits
+> =======
+> 
+> [...]
 
-> diff --git a/mm/shrinker.c b/mm/shrinker.c
-> index d318f5621862..fee6f62904fb 100644
-> --- a/mm/shrinker.c
-> +++ b/mm/shrinker.c
-> @@ -107,6 +107,12 @@ static struct shrinker_info *shrinker_info_protected(struct mem_cgroup *memcg,
->  					 lockdep_is_held(&shrinker_rwsem));
->  }
->  
-> +static struct shrinker_info *shrinker_info_rcu(struct mem_cgroup *memcg,
-> +					       int nid)
-> +{
-> +	return rcu_dereference(memcg->nodeinfo[nid]->shrinker_info);
-> +}
+Applied to 6.6/scsi-queue, thanks!
 
-This helper doesn't add value. It doesn't tell me that
-rcu_read_lock() needs to be held when it is called, for one....
+[1/2] scsi: ufs: core: Add enums for UFS lanes
+      https://git.kernel.org/mkp/scsi/c/e0d01da2cb0f
+[2/2] scsi: ufs: qcom: Add support for scaling interconnects
+      https://git.kernel.org/mkp/scsi/c/03ce80a1bb86
 
->  static int expand_one_shrinker_info(struct mem_cgroup *memcg, int new_size,
->  				    int old_size, int new_nr_max)
->  {
-> @@ -198,7 +204,7 @@ void set_shrinker_bit(struct mem_cgroup *memcg, int nid, int shrinker_id)
->  		struct shrinker_info_unit *unit;
->  
->  		rcu_read_lock();
-> -		info = rcu_dereference(memcg->nodeinfo[nid]->shrinker_info);
-> +		info = shrinker_info_rcu(memcg, nid);
-
-... whilst the original code here was obviously correct.
-
->  		unit = info->unit[shriner_id_to_index(shrinker_id)];
->  		if (!WARN_ON_ONCE(shrinker_id >= info->map_nr_max)) {
->  			/* Pairs with smp mb in shrink_slab() */
-> @@ -211,7 +217,7 @@ void set_shrinker_bit(struct mem_cgroup *memcg, int nid, int shrinker_id)
->  
->  static DEFINE_IDR(shrinker_idr);
->  
-> -static int prealloc_memcg_shrinker(struct shrinker *shrinker)
-> +static int shrinker_memcg_alloc(struct shrinker *shrinker)
-
-Cleanups in a separate patch.
-
-> @@ -253,10 +258,15 @@ static long xchg_nr_deferred_memcg(int nid, struct shrinker *shrinker,
->  {
->  	struct shrinker_info *info;
->  	struct shrinker_info_unit *unit;
-> +	long nr_deferred;
->  
-> -	info = shrinker_info_protected(memcg, nid);
-> +	rcu_read_lock();
-> +	info = shrinker_info_rcu(memcg, nid);
->  	unit = info->unit[shriner_id_to_index(shrinker->id)];
-> -	return atomic_long_xchg(&unit->nr_deferred[shriner_id_to_offset(shrinker->id)], 0);
-> +	nr_deferred = atomic_long_xchg(&unit->nr_deferred[shriner_id_to_offset(shrinker->id)], 0);
-> +	rcu_read_unlock();
-> +
-> +	return nr_deferred;
->  }
-
-This adds two rcu_read_lock() sections to every call to
-do_shrink_slab(). It's not at all clear ifrom any of the other code
-that do_shrink_slab() now has internal rcu_read_lock() sections....
-
-> @@ -464,18 +480,23 @@ static unsigned long shrink_slab_memcg(gfp_t gfp_mask, int nid,
->  	if (!mem_cgroup_online(memcg))
->  		return 0;
->  
-> -	if (!down_read_trylock(&shrinker_rwsem))
-> -		return 0;
-> -
-> -	info = shrinker_info_protected(memcg, nid);
-> +again:
-> +	rcu_read_lock();
-> +	info = shrinker_info_rcu(memcg, nid);
->  	if (unlikely(!info))
->  		goto unlock;
->  
-> -	for (; index < shriner_id_to_index(info->map_nr_max); index++) {
-> +	if (index < shriner_id_to_index(info->map_nr_max)) {
->  		struct shrinker_info_unit *unit;
->  
->  		unit = info->unit[index];
->  
-> +		/*
-> +		 * The shrinker_info_unit will not be freed, so we can
-> +		 * safely release the RCU lock here.
-> +		 */
-> +		rcu_read_unlock();
-
-Why - what guarantees that the shrinker_info_unit exists at this
-point? We hold no reference to it, we hold no reference to any
-shrinker, etc. What provides this existence guarantee?
-
-> +
->  		for_each_set_bit(offset, unit->map, SHRINKER_UNIT_BITS) {
->  			struct shrink_control sc = {
->  				.gfp_mask = gfp_mask,
-> @@ -485,12 +506,14 @@ static unsigned long shrink_slab_memcg(gfp_t gfp_mask, int nid,
->  			struct shrinker *shrinker;
->  			int shrinker_id = calc_shrinker_id(index, offset);
->  
-> +			rcu_read_lock();
->  			shrinker = idr_find(&shrinker_idr, shrinker_id);
-> -			if (unlikely(!shrinker || !(shrinker->flags & SHRINKER_REGISTERED))) {
-> -				if (!shrinker)
-> -					clear_bit(offset, unit->map);
-> +			if (unlikely(!shrinker || !shrinker_try_get(shrinker))) {
-> +				clear_bit(offset, unit->map);
-> +				rcu_read_unlock();
->  				continue;
->  			}
-> +			rcu_read_unlock();
->  
->  			/* Call non-slab shrinkers even though kmem is disabled */
->  			if (!memcg_kmem_online() &&
-> @@ -523,15 +546,20 @@ static unsigned long shrink_slab_memcg(gfp_t gfp_mask, int nid,
->  					set_shrinker_bit(memcg, nid, shrinker_id);
->  			}
->  			freed += ret;
-> -
-> -			if (rwsem_is_contended(&shrinker_rwsem)) {
-> -				freed = freed ? : 1;
-> -				goto unlock;
-> -			}
-> +			shrinker_put(shrinker);
-
-Ok, so why is this safe to call without holding the rcu read lock?
-The global shrinker has to hold the rcu_read_lock() whilst calling
-shrinker_put() to guarantee the validity of the list next pointer,
-but we don't hold off RCU here so what guarantees a racing global
-shrinker walk doesn't trip over this shrinker_put() call dropping
-the refcount to zero and freeing occuring in a different context...
-
-
-> +		/*
-> +		 * We have already exited the read-side of rcu critical section
-> +		 * before calling do_shrink_slab(), the shrinker_info may be
-> +		 * released in expand_one_shrinker_info(), so reacquire the
-> +		 * shrinker_info.
-> +		 */
-> +		index++;
-> +		goto again;
-
-With that, what makes the use of shrinker_info in
-xchg_nr_deferred_memcg() in do_shrink_slab() coherent and valid?
-
--Dave.
 -- 
-Dave Chinner
-david@fromorbit.com
+Martin K. Petersen	Oracle Linux Engineering
