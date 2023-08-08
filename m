@@ -2,229 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FA667741A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 19:25:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21A1B773EF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 18:39:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234576AbjHHRZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 13:25:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56746 "EHLO
+        id S233207AbjHHQjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 12:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234403AbjHHRZ0 (ORCPT
+        with ESMTP id S233011AbjHHQi5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:25:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F41CE2026B;
-        Tue,  8 Aug 2023 09:10:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B779761034;
-        Tue,  8 Aug 2023 07:51:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CD2C433C8;
-        Tue,  8 Aug 2023 07:51:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691481075;
-        bh=zYWbFm1/5e8c6yGDQtvPeFqNeW0eye+n0KrF9/tpOdg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GORxKpn1qyJyRQAUVa0NRqqSh8gH5UfcYN0OvvFB7FG/dfmcImQ+icgXX1KJg9jQl
-         rMBpdeKHebLqlWNag/1Y8MPpXj51WDMPpuTS1kcKVx+gdFVbxVDDkmU1+rve/8FZZO
-         Owc4ILSLZbL016K2AMJJOYtePbeaIxDNzGDIYifvaf6te/4W+wqZbVZGFnb05Mb6Is
-         pU2EuXskXyLHnNmmCgrMUJbRokD3hCAKXv0uQDSNRYSxi+IlEovYeaA/+9/183/1WB
-         ChrUYpmF6JDWPaJXyYo7j8Fcjg4u92dc6mwNX8OCHEmvcRq43cjqJDjQxVCQHnA+bZ
-         7RIbDMbII6Srg==
-Date:   Tue, 8 Aug 2023 13:21:03 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Qiang Yu <quic_qianyu@quicinc.com>
-Cc:     quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add SDX75 based modem
- support
-Message-ID: <20230808075103.GD4990@thinkpad>
-References: <1691460215-45383-1-git-send-email-quic_qianyu@quicinc.com>
+        Tue, 8 Aug 2023 12:38:57 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04DCB3A4DF;
+        Tue,  8 Aug 2023 08:54:10 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37858eka010911;
+        Tue, 8 Aug 2023 08:32:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Ub00QPPpk/iL7zcoQhlqqhUzZpIWn5fLPHHt0AbE4WQ=;
+ b=Mb9y5DBEtG42ZQ1OsA6AVslg9FTOzLa/z/YnwK/+Wug/7oRDhRpYg32ue7zITP3Yzhxn
+ CrVFYHqrF0UIWCb4lktbxn0RDiGbljSDQsGPZkG1fS1SDjfgiGbb9KctbjHxx/54el1q
+ AVpYyQsEkYsNsAwvYFYXW+ik7KbsilCIjEdGRWhaBaTSvZ4vzQ4AJ4TGuPc3w2oIIhFU
+ vVCC1TKr+zgt2dutGQ6uhSUK0uD0BoGpC3jpKU3eAAiUtqwt57mLZTkGTRIoZySAd1t7
+ hyV1ekD1hpSBERevrYRl1fRT+WuEDIXcUmP2TnPNpzPji0WaMfKGbA+2jSTBRx5kopkL 6w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbcacrn0p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Aug 2023 08:32:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3788WU28012945
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Aug 2023 08:32:30 GMT
+Received: from [10.216.8.0] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
+ 2023 01:32:24 -0700
+Message-ID: <dc800b15-e35d-207b-73a8-9a3d2261f4f5@quicinc.com>
+Date:   Tue, 8 Aug 2023 14:02:21 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1691460215-45383-1-git-send-email-quic_qianyu@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v10 06/11] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230727223307.8096-1-quic_kriskura@quicinc.com>
+ <20230727223307.8096-7-quic_kriskura@quicinc.com>
+ <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 77Zs1XQU6JxIJkvWcShiIMdEHzrE2gaC
+X-Proofpoint-ORIG-GUID: 77Zs1XQU6JxIJkvWcShiIMdEHzrE2gaC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-08_06,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308080076
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 08, 2023 at 10:03:35AM +0800, Qiang Yu wrote:
-> Add generic info for SDX75 based modems. SDX75 takes longer than expected
-> (default, 8 seconds) to set ready after reboot. Hence add optional ready
-> timeout parameter to wait enough for device ready as part of power up
-> sequence.
+  +
+>> +enum dwc3_qcom_phy_irq_identifier {
+>> +	HS_PHY_IRQ = 0,
+>> +	DP_HS_PHY_IRQ,
+>> +	DM_HS_PHY_IRQ,
+>> +	SS_PHY_IRQ,
+>>   };
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
->  drivers/bus/mhi/host/init.c        |  1 +
->  drivers/bus/mhi/host/main.c        |  7 ++++++-
->  drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
->  drivers/bus/mhi/host/pm.c          |  6 +++++-
->  include/linux/mhi.h                |  4 ++++
->  5 files changed, 38 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index f78aefd..65ceac1 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -881,6 +881,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
->  	if (!mhi_cntrl->timeout_ms)
->  		mhi_cntrl->timeout_ms = MHI_TIMEOUT_MS;
->  
-> +	mhi_cntrl->ready_timeout_ms = config->ready_timeout_ms;
->  	mhi_cntrl->bounce_buf = config->use_bounce_buf;
->  	mhi_cntrl->buffer_len = config->buf_len;
->  	if (!mhi_cntrl->buffer_len)
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 74a7543..8590926 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -43,8 +43,13 @@ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
->  				    u32 mask, u32 val, u32 delayus)
->  {
->  	int ret;
-> -	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
-> +	u32 out, retry;
-> +	u32 timeout_ms = mhi_cntrl->timeout_ms;
->  
-> +	if (mhi_cntrl->ready_timeout_ms && mask == MHISTATUS_READY_MASK)
-> +		timeout_ms = mhi_cntrl->ready_timeout_ms;
-
-Instead of handling the timeout inside mhi_poll_reg_field(), you should pass the
-appropriate timeout value to this function.
-
-> +
-> +	retry = (timeout_ms * 1000) / delayus;
->  	while (retry--) {
->  		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, &out);
->  		if (ret)
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index fcd80bc..9c601f0 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->  	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
->  };
->  
-> +static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 8000,
-> +	.ready_timeout_ms = 50000,
-> +	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-> +	.ch_cfg = modem_qcom_v1_mhi_channels,
-> +	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
-> +	.event_cfg = modem_qcom_v1_mhi_events,
-> +};
-> +
->  static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->  	.max_channels = 128,
->  	.timeout_ms = 8000,
-> @@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->  	.event_cfg = modem_qcom_v1_mhi_events,
->  };
->  
-> +static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
-> +	.name = "qcom-sdx75m",
-> +	.fw = "qcom/sdx75m/xbl.elf",
-> +	.edl = "qcom/sdx75m/edl.mbn",
-> +	.config = &modem_qcom_v2_mhiv_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.sideband_wake = false,
-> +};
-> +
->  static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
->  	.name = "qcom-sdx65m",
->  	.fw = "qcom/sdx65m/xbl.elf",
-> @@ -597,6 +617,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
-> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 8a4362d..6f049e0 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -1202,14 +1202,18 @@ EXPORT_SYMBOL_GPL(mhi_power_down);
->  int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
->  {
->  	int ret = mhi_async_power_up(mhi_cntrl);
-> +	u32 timeout_ms;
->  
->  	if (ret)
->  		return ret;
->  
-> +	/* Some devices need more time to set ready during power up */
-> +	timeout_ms = mhi_cntrl->ready_timeout_ms ?
-> +		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
-
-Since you are using this extended timeout value in a couple of places (not just
-for checking READY_STATE), it is better to use the existing "timeout_ms"
-parameter.
-
-- Mani
-
->  	wait_event_timeout(mhi_cntrl->state_event,
->  			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
->  			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
-> +			   msecs_to_jiffies(timeout_ms));
->  
->  	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
->  	if (ret)
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index f6de4b6..a43e5f8 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -266,6 +266,7 @@ struct mhi_event_config {
->   * struct mhi_controller_config - Root MHI controller configuration
->   * @max_channels: Maximum number of channels supported
->   * @timeout_ms: Timeout value for operations. 0 means use default
-> + * @ready_timeout_ms: Timeout value for waiting device to be ready (optional)
->   * @buf_len: Size of automatically allocated buffers. 0 means use default
->   * @num_channels: Number of channels defined in @ch_cfg
->   * @ch_cfg: Array of defined channels
-> @@ -277,6 +278,7 @@ struct mhi_event_config {
->  struct mhi_controller_config {
->  	u32 max_channels;
->  	u32 timeout_ms;
-> +	u32 ready_timeout_ms;
->  	u32 buf_len;
->  	u32 num_channels;
->  	const struct mhi_channel_config *ch_cfg;
-> @@ -326,6 +328,7 @@ struct mhi_controller_config {
->   * @pm_mutex: Mutex for suspend/resume operation
->   * @pm_lock: Lock for protecting MHI power management state
->   * @timeout_ms: Timeout in ms for state transitions
-> + * @ready_timeout_ms: Timeout in ms for waiting device to be ready (optional)
->   * @pm_state: MHI power management state
->   * @db_access: DB access states
->   * @ee: MHI device execution environment
-> @@ -413,6 +416,7 @@ struct mhi_controller {
->  	struct mutex pm_mutex;
->  	rwlock_t pm_lock;
->  	u32 timeout_ms;
-> +	u32 ready_timeout_ms;
->  	u32 pm_state;
->  	u32 db_access;
->  	enum mhi_ee_type ee;
-> -- 
-> 2.7.4
+> This enum is unused.
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+Hi Bjorn,
+
+  I didn't use the enum directly, but used its members in the 
+get_port_irq call below.
+
+> [..]
+>> +static int dwc3_get_acpi_index(const struct dwc3_acpi_pdata *pdata, int irq_index)
+>> +{
+>> +	int acpi_index = -1;
+>> +
+>> +	if (!pdata)
+>> +		return -1;
+>> +
+>> +	if (irq_index == DP_HS_PHY_IRQ)
+>> +		acpi_index = pdata->dp_hs_phy_irq_index;
+>> +	else if (irq_index == DM_HS_PHY_IRQ)
+>> +		acpi_index = pdata->dm_hs_phy_irq_index;
+>> +	else if (irq_index == SS_PHY_IRQ)
+>> +		acpi_index = pdata->ss_phy_irq_index;
+> 
+> It looks favourable to put these in an array, instead of having to pull
+> them out of 4 different variables conditionally.
+> 
+>> +
+>> +	return acpi_index;
+>> +}
+>> +
+>> +static int dwc3_get_port_irq(struct platform_device *pdev, u8 port_index)
+>> +{
+>> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>> +	bool is_mp_supported = (qcom->data->num_ports > 1) ? true : false;
+>> +	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
+>> +	char *disp_name;
+>> +	int acpi_index;
+>> +	char *dt_name;
+>> +	int ret;
+>> +	int irq;
+>> +	int i;
+>> +
+>> +	/*
+>> +	 * We need to read only DP/DM/SS IRQ's here.
+>> +	 * So loop over from 1->3 and accordingly modify respective phy_irq[].
+>> +	 */
+>> +	for (i = 1; i < MAX_PHY_IRQ; i++) {
+>> +
+>> +		if (!is_mp_supported && (port_index == 0)) {
+>> +			if (i == DP_HS_PHY_IRQ) {
+>> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"dp_hs_phy_irq");
+>> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"qcom_dwc3 DP_HS");
+>> +			} else if (i == DM_HS_PHY_IRQ) {
+>> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"dm_hs_phy_irq");
+>> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"qcom_dwc3 DM_HS");
+>> +			} else if (i == SS_PHY_IRQ) {
+>> +				dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"ss_phy_irq");
+>> +				disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>> +					"qcom_dwc3 SS");
+Bjorn, Konrad,
+
+If we are to remove this repetitive loops, we might need to make a 2D 
+array for all of Dp/Dm/Ss interrutps and make a global array of names to 
+be used for irq lookup and use them to reduce the if-else-if stuff here. 
+If that is fine, I can make those changes, else I would like to stick to 
+this approach for now because if we don't add the global array of names, 
+prepping them seperately for dp/dm/ss would again lead us to making 
+if-else loops like above.
+
+Please let me know your thoughts on this.
+
+Regards,
+Krishna,
