@@ -2,80 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 926DB773B6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 17:50:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 625CE773EF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 18:39:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbjHHPuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 11:50:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56998 "EHLO
+        id S233173AbjHHQjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 12:39:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbjHHPsg (ORCPT
+        with ESMTP id S232020AbjHHQjH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 11:48:36 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F37A4696
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 08:41:53 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99bcfe28909so801801066b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 08:41:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691509301; x=1692114101;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HMEaWb1xblsQVJcXEol8oykgDk7Z/s9Dq4Nd7yRCjng=;
-        b=m8RJUnggZk+8BJbj8xr3VVE/vG+UEjuAA+YMwfpYe0beo8AMMJQqBxAlZUJWLmGJNA
-         8nSTxcF6wFPYcaC4Fii1LKWR1NKvmvX4ZhXB8AcCwvWAHphVDG2DDv672stB79VLsncZ
-         wYCucJWWF7s+7raUKXTN6jfst8mAdvH7K0r6pm6DiBXvJdIyHuAyKIy+TlX87vBRPDIm
-         clI/mm0s1RSxdbYJas7g5DFwEE/2qM6af7nD0nsY8zR3Q2BWoN6gNFCH/v0ISIA5B3vo
-         xmbB+yxVlNIf3pjHjgrcPp6AnTaaj10A2o3I4NU7GyzzFC+UIki1cD7fV1UUem3dwnXK
-         51vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691509301; x=1692114101;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HMEaWb1xblsQVJcXEol8oykgDk7Z/s9Dq4Nd7yRCjng=;
-        b=VxVJ8M0JIzWpecSvBoA9I5n2FPGGkGqcelv6v6ErJSMFa69/H89SJ0GYT4WVhbI8vm
-         bSV7QCC0j205Ui5dUB3BYNPZiGKlYdkYn7nvzHfs9oVoSndebOAnJIifH/BUIlkVFrNB
-         9hjAkGYt9FpCsPSSmE2wyQbgZkfbq6P/9acRFQamnJpY8zoC1kXxD1KnbrYzopX+vTLD
-         YqNMbiRJ5LsKOkAUTycTOcW8PSXDf4Rkx4fcDwU+HS9xRLBQkdWO+jkHoJUpLS2aLOtp
-         DGjlhXmNqjx25oMFXX1Jegv6BIcA/3PQXco3iVdETZShkbygARs2V/VwBQALtj6CEutm
-         Ia7Q==
-X-Gm-Message-State: AOJu0YzWi4m5sXUQV69AO3HebZIniuc7MDhjGe06fhiPrfIL4raWlVde
-        sBScJXCf3rr3Hzxuo5vr7/1qvXAKOZ5l87fzgQQ=
-X-Google-Smtp-Source: AGHT+IG+hPH130GsaAWOXOCOgUJ4jN56dYOBsImJMdrSAJG+P3lNXldoERLeCFvY2fbEGvnW5W5Tww==
-X-Received: by 2002:a05:6402:514:b0:51e:309:2e12 with SMTP id m20-20020a056402051400b0051e03092e12mr10221930edv.28.1691483803097;
-        Tue, 08 Aug 2023 01:36:43 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id d13-20020a50fe8d000000b0051e1660a34esm6227195edt.51.2023.08.08.01.36.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 01:36:42 -0700 (PDT)
-Message-ID: <a5b2f1a2-d509-0949-fc1d-929476c2618b@linaro.org>
-Date:   Tue, 8 Aug 2023 10:36:40 +0200
+        Tue, 8 Aug 2023 12:39:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C51683A4FA;
+        Tue,  8 Aug 2023 08:54:14 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3785A2Yr031096;
+        Tue, 8 Aug 2023 05:14:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Fmz3qLzzVzkUuJIGAGdFC/9V+7J2bvmS0Cf4X/w7sXc=;
+ b=iOK78fj43T/5QRw/NNz3entg05zFIbdqEyZRNeE65+/mKorpRyMKk7pUv4rPh8A5a6EZ
+ ub97Acpqe16HTq/hf6SooVT6lPMj1KbtfW06FQjzllLYYzh7MNRFtLTCiUjRvt2m0fPW
+ 3jpZKS67fFPj7RNjrsvmBU7PmS8cTkAH0infAN2rEAEF5QNC/rTMOwNUu/WkDQg0UbHa
+ avTod7a1ML6jPJN85eVFtnPKSXvRIzGZW+bd1OEicYf0GBv3AuHaP8wWzi67YmU6UrxQ
+ +a8nayoFd5w7KIv4XjHgAVlRm2BFMy4qxkqfWnYYhYypJVSsp7LrhdObNw9FbdJoCxPp Pg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3saxbbsyh0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Aug 2023 05:14:48 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3785EmIW026298
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Aug 2023 05:14:48 GMT
+Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 7 Aug 2023 22:14:43 -0700
+From:   Imran Shaik <quic_imrashai@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Taniya Das <quic_tdas@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+Subject: [PATCH 0/4] Add support for Qualcomm ECPRI clock controller
+Date:   Tue, 8 Aug 2023 10:44:03 +0530
+Message-ID: <20230808051407.647395-1-quic_imrashai@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 2/9] i2c: mlxbf: Use dev_err_probe in probe function
-Content-Language: en-US
-To:     Liao Chang <liaochang1@huawei.com>, andi.shyti@kernel.org,
-        florian.fainelli@broadcom.com, rjui@broadcom.com,
-        sbranden@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
-        yangyicong@hisilicon.com, aisheng.dong@nxp.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, kblaiech@nvidia.com,
-        asmaa@nvidia.com, loic.poulain@linaro.org, rfoss@kernel.org,
-        ardb@kernel.org, gcherian@marvell.com
-Cc:     linux-i2c@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230808012954.1643834-1-liaochang1@huawei.com>
- <20230808012954.1643834-3-liaochang1@huawei.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230808012954.1643834-3-liaochang1@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PYpobbKEwLOX1aBqXvUYJM5ZPLiVOMrV
+X-Proofpoint-GUID: PYpobbKEwLOX1aBqXvUYJM5ZPLiVOMrV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-08_03,2023-08-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=784 bulkscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308080046
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,30 +86,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/08/2023 03:29, Liao Chang wrote:
-> Use the dev_err_probe function instead of dev_err in the probe function
-> so that the printed messge includes the return value and also handles
-> -EPROBE_DEFER nicely.
-> 
-> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+The ECPRI clock controller support for QDU1000 and QRU1000. The clock
+controller has a special branch which requires an additional memory to
+be enabled/disabled before the branch ops.
 
-...
+Imran Shaik (3):
+  dt-bindings: clock: qcom: Add ECPRICC clocks for QDU1000 and QRU1000
+  clk: qcom: Add ECPRICC driver support for QDU1000 and QRU1000
+  arm64: dts: qcom: qdu1000: Add ECPRI clock controller
 
-> @@ -2413,10 +2399,8 @@ static int mlxbf_i2c_probe(struct platform_device *pdev)
->  	ret = devm_request_irq(dev, irq, mlxbf_i2c_irq,
->  			       IRQF_SHARED | IRQF_PROBE_SHARED,
->  			       dev_name(dev), priv);
-> -	if (ret < 0) {
-> -		dev_err(dev, "Cannot get irq %d\n", irq);
-> -		return ret;
-> -	}
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "Cannot get irq %d\n", irq);
+Taniya Das (1):
+  clk: qcom: branch: Add mem ops support for branch2 clocks
 
-I don't think this is needed:
-https://lore.kernel.org/all/20230721094641.77189-1-frank.li@vivo.com/
+ .../bindings/clock/qcom,qdu1000-ecpricc.yaml  |   68 +
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi         |   14 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-branch.c                 |   38 +
+ drivers/clk/qcom/clk-branch.h                 |    4 +
+ drivers/clk/qcom/ecpricc-qdu1000.c            | 3808 +++++++++++++++++
+ .../dt-bindings/clock/qcom,qdu1000-ecpricc.h  |  192 +
+ 8 files changed, 4133 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,qdu1000-ecpricc.yaml
+ create mode 100644 drivers/clk/qcom/ecpricc-qdu1000.c
+ create mode 100644 include/dt-bindings/clock/qcom,qdu1000-ecpricc.h
 
-Best regards,
-Krzysztof
+-- 
+2.25.1
 
