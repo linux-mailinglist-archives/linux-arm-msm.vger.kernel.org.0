@@ -2,132 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D00C8774CA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:12:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6306774D1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:37:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236353AbjHHVMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 17:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53966 "EHLO
+        id S229904AbjHHVhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 17:37:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236644AbjHHVMQ (ORCPT
+        with ESMTP id S229437AbjHHVhB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:12:16 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D14172A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:11:30 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe58faa5cfso7523066e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691529088; x=1692133888;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h1R5RAuDcNFHnQizuPMLw4ddvp2/D6Ygtoh2+KaZC84=;
-        b=P0ir7ms0UHD/psQzlbfBnE6aSnmQk0XsVkcsi4yX92VZiYhQs0Mp8KQeRgzGDo4dx7
-         U4paScWKzKP2FNrEsyDlPjm6gjr7gkB/UVWS9e1AAoium4aqbHnCoO9sIcfiw52I5Wpg
-         GsvOSghr/aOfBX+l2QjlUnQXR6a2i7i+XKcQCVHidw1n/CiwhI2NWIeY1mAp2JEkKEyB
-         BtinggjGs7cd07RLHgVU/D2nbJK9Ns8pch+F37wZvKWo0krIFg3Vi9VSb4b/BaAwZO96
-         QToFQYVeY6bntPAqeuMW1UYbZZFTNolgPkM6F9EfFs4izOXArDEOpL2T+gEvJaQjF4vR
-         5o7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691529088; x=1692133888;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h1R5RAuDcNFHnQizuPMLw4ddvp2/D6Ygtoh2+KaZC84=;
-        b=KG96pwyzl4YCLVK8gzJNsetrPyMIOAfbk7cgPkHoesorFkYsiATqH33NXYEfgo2/33
-         H3+unMD1UxLb4UIVMxIePjgKMHRGnvDRsfC04TZhcofRvjaz8pwGLvT8aDFXEaj5f9qv
-         mOm0t/W/hy2yA4EdTTFVZ63t1FZTBnD3ZijOVmHuHlL4I9eeNI4Eey9oZAzXMINNmaFl
-         hC8KQMJu4IhUuv+jeF9qwp9PVnBfY/69yBKNufvQ3jpGkZWXe79fna3VMtvCHsKKnOiv
-         a2eKv14aOnp+rQvG5nofIWKBKReGnnzAWWnAyIxZuKH3ql391aU/gwqRh6PDrOKzIVHX
-         J5uQ==
-X-Gm-Message-State: AOJu0YzA4dcVRz/5DiQ3OqOwvlQZs7w2GSqWcRYFLfDt/dXDTLJoBjQj
-        PTifS2uRMm5lrq8UlpL9BN69RA==
-X-Google-Smtp-Source: AGHT+IGYzCzaBx+RT4uIMPcpMzVvff8YWRBwXmJ34frHeKF/XozlNEO8qPoGltWMrBJecOYoNTXNsA==
-X-Received: by 2002:a2e:b005:0:b0:2ba:18e5:1063 with SMTP id y5-20020a2eb005000000b002ba18e51063mr441282ljk.50.1691529088351;
-        Tue, 08 Aug 2023 14:11:28 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id l13-20020a2e700d000000b002b9c0822951sm2395753ljc.119.2023.08.08.14.11.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 14:11:27 -0700 (PDT)
-Message-ID: <72891405-eddc-4644-88ba-bfa9baa6e62f@linaro.org>
-Date:   Tue, 8 Aug 2023 23:11:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] arm64: dts: qcom: sa8775p-ride: enable the second
- SerDes PHY
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Tue, 8 Aug 2023 17:37:01 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 689FCE0;
+        Tue,  8 Aug 2023 14:36:54 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 378LV7Hj018705;
+        Tue, 8 Aug 2023 21:36:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=Qk6K9+TYy+1m4aEUOdLzo2C2V+e6vt2G0LOr/J3Kpo0=;
+ b=AxHaOfdl45f8/pnPxB+2OUJa8sz8CYhD8vcCJqN/x4y+/fkKTUBlN773qlqAHinhNtwR
+ 52AS/8nLBDr7aJtfcQ86neEX1Pq6SexveN22cexNb0yRcIfA3ANhmC+/GrNAhtkfyvBF
+ ZZQRj2L2PzN10KwfJGOl9DGo9TWw6VsGKQ+AWXj3A8B40VjW6DcfCuO3dIt/2MgOWfsN
+ PudvDnTplLXLgVRNCEauduhudSmZnxwULD0joqIc9t5xWZvmbwaNDrN507vGR52ixbUv
+ mOJqYeNIPANMOgBxor0/e7WH1g9OIi1Y/GITxQzYqvG15dn/0E9MtObzTRt9uLHq+Z2W PA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbppch05e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Aug 2023 21:36:49 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 378LamUv010257
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Aug 2023 21:36:48 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 8 Aug 2023 14:36:47 -0700
+Date:   Tue, 8 Aug 2023 14:36:46 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Eric Chanudet <echanude@redhat.com>
+CC:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230808190144.19999-1-brgl@bgdev.pl>
- <20230808190144.19999-4-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230808190144.19999-4-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable rtc
+Message-ID: <20230808213646.GK1428172@hu-bjorande-lv.qualcomm.com>
+References: <20230718145105.3464105-1-echanude@redhat.com>
+ <dtussvqzf7x5p633pxt3julkffhzt5rxwp3aghs4ocj5odq4la@ed6jhcv76hbk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <dtussvqzf7x5p633pxt3julkffhzt5rxwp3aghs4ocj5odq4la@ed6jhcv76hbk>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 49BktmncCXWbgiWUX3N8J99I3BA-44fm
+X-Proofpoint-GUID: 49BktmncCXWbgiWUX3N8J99I3BA-44fm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-08_20,2023-08-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 impostorscore=0 mlxscore=0 spamscore=0 adultscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ mlxlogscore=957 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308080192
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8.08.2023 21:01, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Fri, Jul 21, 2023 at 08:59:30PM -0700, Bjorn Andersson wrote:
+> On Tue, Jul 18, 2023 at 10:46:10AM -0400, Eric Chanudet wrote:
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> [..]
+> > +&pmm8540a_sdam_7 {
+> > +	status = "okay";
+> > +
+> > +	rtc_offset: rtc-offset@ac {
+> > +		reg = <0xac 0x4>;
 > 
-> Enable the second SerDes PHY on sa8775p-ride development board.
+> I'm still trying to get confirmation that this is a good choice.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
+I'm recommended that you use 0xa0 from SDAM2, "preferably in the second
+PMM8540", instead.
+
+Can you please give this a try, Eric?
+
+Regards,
+Bjorn
