@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABEE7774C12
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:03:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E67C0774C17
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:03:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235021AbjHHVDC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 17:03:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57008 "EHLO
+        id S233555AbjHHVDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 17:03:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234253AbjHHVC6 (ORCPT
+        with ESMTP id S231645AbjHHVDA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:02:58 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55C32132
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:02:56 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe61ae020bso5736610e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:02:56 -0700 (PDT)
+        Tue, 8 Aug 2023 17:03:00 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53095BD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 14:02:58 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so95426231fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 14:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691528575; x=1692133375;
+        d=linaro.org; s=google; t=1691528576; x=1692133376;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YiSVmhvbZ5wDLNmlxl7Dw8tGNwgQ0Tshc2ZD4z2JryU=;
-        b=qBya5IN2zpvucFsRjFYq9wlTNOUXihOSSMVK6BC5+NdXjn27jik6Ao/7upPuSRpt4R
-         D12ocbHVYF0NH1hWo9clSgd4EJT395Ktvd7hyoGQhoSaHVaP2z8K5dlMKHfnOyV0rzRj
-         2iWyKfFXaznQAnzinzfL7BF/x0u0VOWnFXx6e/M0fzL+uYa3cz9QjBZGAnHpy2+gSHh7
-         azSQuN/EjdL3ElMCR69zRdZ7hHs4LGs5fQ59vKjUfn5axTYjmij82XD09rkmM7kYeTk0
-         uizjom5WLv7df8gkMucfh3flNvOyqNb+5YWOJYQIu5e+15xTLBALoU0dGYSW2t7LAGHg
-         2NRg==
+        bh=lqz7w9DN46LollZ8B8cwAps5w+FdCgj3qIXMhHKzaOA=;
+        b=w7TM1+29aq7mu8DdyFgFg7q+tgvrgq72wC0QJ1yMpAwOb7RgSgZuGmuKEmbwBXvDzu
+         ZORquxMncRCJAal/oUKm5zZRUGD1FqYFfzQ+4NTN6QCZ0Y3Asgd/KkBWNo83AxuryI1P
+         NQSnjjqfQXWMDTi2eZdHcQY761nqfLPi6OY8rh5nBD0ll44gRz/jzi769Z7XLoYuTpij
+         KBrP87k27wq+4TguJ2Yp7Y0Ckz+HjaXAf6AAVgEo+iBKZv6sNjDiHAUjGYfSq7mNB6mg
+         YAx08WwEv6X0ml8XbTkRlerFClWzFHI+E+h8nagjK0xKUFXVCFyQcD/ze9bF7Sw1u+0z
+         wzdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691528575; x=1692133375;
+        d=1e100.net; s=20221208; t=1691528576; x=1692133376;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YiSVmhvbZ5wDLNmlxl7Dw8tGNwgQ0Tshc2ZD4z2JryU=;
-        b=YRL7ag4X3simrXbEGu7b8L2M8EIQtmEEAnwcbcFIzwY7DaZZ1Rsc0VnVdntcCbuAay
-         obvKI2qj4V1sBTYtGw/NFA2n3ZItJoEQKOY/86DoAq24AnUQqZKfto6eV+YspUa6E3Rd
-         iAKWCcMHhIGahyLvdt64MfH0xTkTOomFA0meuXap/dBZogGNeYpU1j9LVTYz1SPy4rJf
-         ext25ZvQ8NgCC6BCoKzBZl1QWZuPF+qHNjVb3f2XAB62Odml3z00ayfMw5MPT65Y4cMZ
-         KWaMNvwCKA+6nFsox6k+SVRDtRbtrRu51OZuFLLLKb7u60JS5LNqrV7eH19JeDPvnCX8
-         QUQQ==
-X-Gm-Message-State: AOJu0YwkKbNAEbbQOa7yEu51V6vKiixQwaY5L9gZ0oiiRudkrUZdtae+
-        IBvltleiDYFXgYtLJA6UtPs9yw==
-X-Google-Smtp-Source: AGHT+IFxAKQT5MUfj+PHAERXrFF2Y6Hvxy828nnXyA1PkhOB5PJNVuwwuMhstbA4gcEqnszu3et7Ww==
-X-Received: by 2002:a2e:7e06:0:b0:2b9:c5fd:d649 with SMTP id z6-20020a2e7e06000000b002b9c5fdd649mr459172ljc.24.1691528575195;
-        Tue, 08 Aug 2023 14:02:55 -0700 (PDT)
+        bh=lqz7w9DN46LollZ8B8cwAps5w+FdCgj3qIXMhHKzaOA=;
+        b=RvhK1GO7uA1d13HJwKX9RcdW9JlP9N4DeTyawn3fdc+BkxslHo9HTcjTBL/RM4DijE
+         Y74TDsi+ukw5ljRTVx7TgYjUJuF6WDOR2A3R4oHC/vuqpkC3P7LaVIaA8cGNW/ratrKJ
+         uJ2JrAG5lYMExyvNlsjByBCaEfyEivYK9TIiYW1t+h3g3Sb0DPXwipn/SdMYM4DBj7yi
+         IwHqvPfVI9eREYw1XFPqRgRcUoFNhLrO1buNPEpASYSX8Q4ZuQRsT5EOgmxYtzttSVN4
+         Vw3XzeDZ5Zb7Lz1C+Hb5P+dPLu0cmqEk8V4+qRvps8UOD86fqsePjgzFODcfyMMDgkAb
+         0Vgg==
+X-Gm-Message-State: AOJu0YysTtv1RoS8PKWeOdk8iUw2X6axl4AWHozOy8GmI65SK164Bq6n
+        wV4UnVAkTh625SF6UfJAn+ASQw==
+X-Google-Smtp-Source: AGHT+IE0PLzf8rTXtsLHDVnz0HqqaD6Vde/Y6FvOMzx+RT7sb+AooJgdWRW4uKO3Beejot6Pj8JL3g==
+X-Received: by 2002:a2e:a307:0:b0:2b6:c886:681 with SMTP id l7-20020a2ea307000000b002b6c8860681mr492063lje.6.1691528576656;
+        Tue, 08 Aug 2023 14:02:56 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id h11-20020a2eb0eb000000b002b6cc17add3sm2431483ljl.25.2023.08.08.14.02.53
+        by smtp.gmail.com with ESMTPSA id h11-20020a2eb0eb000000b002b6cc17add3sm2431483ljl.25.2023.08.08.14.02.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 14:02:54 -0700 (PDT)
+        Tue, 08 Aug 2023 14:02:56 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 08 Aug 2023 23:02:42 +0200
-Subject: [PATCH v2 04/14] drm/msm/a6xx: Add missing regs for A7XX
+Date:   Tue, 08 Aug 2023 23:02:43 +0200
+Subject: [PATCH v2 05/14] drm/msm/a6xx: Introduce a6xx_llc_read
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230628-topic-a7xx_drmmsm-v2-4-1439e1b2343f@linaro.org>
+Message-Id: <20230628-topic-a7xx_drmmsm-v2-5-1439e1b2343f@linaro.org>
 References: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
 In-Reply-To: <20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -75,94 +75,49 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691528566; l=2751;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691528566; l=1048;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=qjjhDjYdtW67El5WC1tRT4syRzMoZ1olgqU/rNJYQOA=;
- b=KhMeG9bzNskqMk1YYRADJEC9kZlT9P7Z3UpXir4Ee0NVVfrqFNiQ8blcPO9scWtlWqs0h/NNl
- k3V2wwAtXwIAcJFD4FBNY+mnmg/AbXa9BU1X5um5eDiUKgVcHA/Gg4s
+ bh=TnlFTvDdHhoi4rVAYZ2tyAwm56dDVRIuWBaJyWSlozw=;
+ b=a/SUmHuwx6GbHQKZ+zB6XePPj9sI9E9dNkhNkm4geJQBC/XMyObKFtFrnDWlvJ+i/rulMyMRt
+ UaeyhJm1kS7BUbCC3ZrXmWHAvbWEMsshMCIBeYdQFx+cLTGdOsb1k+7
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add some missing definitions required for A7 support.
-
-This may be substituted with a mesa header sync.
+Add a helper that does exactly what it says on the can, it'll be
+required for A7xx.
 
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx.xml.h     | 9 +++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h | 8 ++++++++
- 2 files changed, 17 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx.xml.h b/drivers/gpu/drm/msm/adreno/a6xx.xml.h
-index 1c051535fd4a..863b5e3b0e67 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx.xml.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx.xml.h
-@@ -1114,6 +1114,12 @@ enum a6xx_tex_type {
- #define REG_A6XX_CP_MISC_CNTL					0x00000840
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 1ed202c4e497..0fef92f71c4e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1740,6 +1740,11 @@ static void a6xx_llc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 mask, u32 or)
+ 	return msm_rmw(a6xx_gpu->llc_mmio + (reg << 2), mask, or);
+ }
  
- #define REG_A6XX_CP_APRIV_CNTL					0x00000844
-+#define A6XX_CP_APRIV_CNTL_CDWRITE				0x00000040
-+#define A6XX_CP_APRIV_CNTL_CDREAD				0x00000020
-+#define A6XX_CP_APRIV_CNTL_RBRPWB				0x00000008
-+#define A6XX_CP_APRIV_CNTL_RBPRIVLEVEL				0x00000004
-+#define A6XX_CP_APRIV_CNTL_RBFETCH				0x00000002
-+#define A6XX_CP_APRIV_CNTL_ICACHE				0x00000001
- 
- #define REG_A6XX_CP_PREEMPT_THRESHOLD				0x000008c0
- 
-@@ -1939,6 +1945,8 @@ static inline uint32_t REG_A6XX_RBBM_PERFCTR_RBBM_SEL(uint32_t i0) { return 0x00
- 
- #define REG_A6XX_RBBM_CLOCK_HYST_TEX_FCHE			0x00000122
- 
-+#define REG_A7XX_RBBM_CLOCK_HYST2_VFD				0x0000012f
++static u32 a6xx_llc_read(struct a6xx_gpu *a6xx_gpu, u32 reg)
++{
++	return msm_readl(a6xx_gpu->llc_mmio + (reg << 2));
++}
 +
- #define REG_A6XX_RBBM_LPAC_GBIF_CLIENT_QOS_CNTL			0x000005ff
- 
- #define REG_A6XX_DBGC_CFG_DBGBUS_SEL_A				0x00000600
-@@ -8252,5 +8260,6 @@ static inline uint32_t A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1_BYTEL15(uint32_t val)
- 
- #define REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1			0x00000002
- 
-+#define REG_A7XX_CX_MISC_TCM_RET_CNTL				0x00000039
- 
- #endif /* A6XX_XML */
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
-index fcd9eb53baf8..5b66efafc901 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
-@@ -360,6 +360,12 @@ static inline uint32_t A6XX_GMU_GPU_NAP_CTRL_SID(uint32_t val)
- 
- #define REG_A6XX_GMU_GENERAL_7					0x000051cc
- 
-+#define REG_A6XX_GMU_GENERAL_8					0x000051cd
-+
-+#define REG_A6XX_GMU_GENERAL_9					0x000051ce
-+
-+#define REG_A6XX_GMU_GENERAL_10					0x000051cf
-+
- #define REG_A6XX_GMU_ISENSE_CTRL				0x0000515d
- 
- #define REG_A6XX_GPU_CS_ENABLE_REG				0x00008920
-@@ -471,6 +477,8 @@ static inline uint32_t A6XX_GMU_GPU_NAP_CTRL_SID(uint32_t val)
- 
- #define REG_A6XX_RSCC_SEQ_BUSY_DRV0				0x00000101
- 
-+#define REG_A7XX_RSCC_SEQ_MEM_0_DRV0_A740			0x00000154
-+
- #define REG_A6XX_RSCC_SEQ_MEM_0_DRV0				0x00000180
- 
- #define REG_A6XX_RSCC_TCS0_DRV0_STATUS				0x00000346
+ static void a6xx_llc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 value)
+ {
+ 	msm_writel(value, a6xx_gpu->llc_mmio + (reg << 2));
 
 -- 
 2.41.0
