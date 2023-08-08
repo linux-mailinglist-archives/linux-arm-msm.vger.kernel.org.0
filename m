@@ -2,168 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DDEB774CE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 23:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69343774A23
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Aug 2023 22:20:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236188AbjHHVUc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 17:20:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37206 "EHLO
+        id S234336AbjHHUUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Aug 2023 16:20:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236541AbjHHVUM (ORCPT
+        with ESMTP id S231283AbjHHUUL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 17:20:12 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E23FF838B;
-        Tue,  8 Aug 2023 12:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691522219; x=1723058219;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=g2nPMWJVqJSdxvBU7K5NZtxMaqmdJgy/2x1pLE1f54o=;
-  b=DrD/v9O1C2QCtnofNHII9SCm3O55urGoOvc7rq3RrDuHoNUtGTTtxNks
-   zn3RuAh7y5XlRci8eD5iozAGseNlNRyZwz9p27VuzqtPq+FgRcmF/NeA0
-   vJeLrldAjEflU9jbxYd5CsIchPoSFcy57CejlrFlCWivPucEJ02Vlo2Zl
-   YroLPcJY0UVPHABh7RvFK9BSKHmlBOhdaum0mWQtEjMlLakWckGJ66IBm
-   B4aTf40115vk/imOjhwvcIHRZclnDiMKlDBim5kA8wJygkuTMOj4UeW3C
-   pbcNhfitrmnkoRGWodgx6vK0qy8fu1LCSMQ8wZmt4FhN9WaDQifbFKgOg
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="373710777"
-X-IronPort-AV: E=Sophos;i="6.01,157,1684825200"; 
-   d="scan'208";a="373710777"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2023 12:16:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="801445416"
-X-IronPort-AV: E=Sophos;i="6.01,157,1684825200"; 
-   d="scan'208";a="801445416"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by fmsmga004.fm.intel.com with ESMTP; 08 Aug 2023 12:16:10 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qTSBd-0005Yk-3C;
-        Tue, 08 Aug 2023 19:16:09 +0000
-Date:   Wed, 9 Aug 2023 03:15:46 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Tue, 8 Aug 2023 16:20:11 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F2A18C19
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 12:25:43 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so94184561fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 12:25:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691522741; x=1692127541;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZWz3qQqLo6+NTjkOSd8uE4a4XgzJ8kEH78fcuevPkok=;
+        b=gg1WtVATKemk/CosT+oqfEbMRt445E08XkyuE2z2K2MPa7ahPqTMVFgmeax06Exd8y
+         hGZYkEEaP6JFDJiqM8D0UCF/oZcSKJB3EazRyWIoFBIDzyncrjU3wnuHZBFofOQZpaL4
+         GdWDmBV05Y/5f61iNYKpVHUnRSgLwcbn3JqSr8ihwoXWbwGmqy7o6n7OhpCfNG21Ly2p
+         DzRkyWtoguqSP3mF9W7iIUVcQLCC9C08BqYCmhAa2OU+kzcSLviQYoZ4IM+xjfYlftmc
+         VYT7fzljTvpyyaEY/5bwnNcNEs9DekW3Au7uMTwhwcj5Zjyc8F6vg8qKGey0f554SfoT
+         YMJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691522741; x=1692127541;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZWz3qQqLo6+NTjkOSd8uE4a4XgzJ8kEH78fcuevPkok=;
+        b=LVxFW6YF4dpWccCX4+ojHN4RwXKXRR73PRVsrp8NXvo2RFtaE18juVFt529yXSSuO+
+         1i3nui5FVVeTo3tqSxciJ1wcg35q90XWCGdwIS1NrMQ9evNGYC+fnTz+hej9C/5bdc8I
+         A+3MT3vjQ2rLcPb5SRj5Jq4AKfo/p89RYnT6oIdtpuH9CaGzLm1aObtGivM/yr0rS3Nh
+         tQ3iBby/jhI0nEQmVvMxZk7cm0/JagUf967OaiiEL5pv3b/8sg0Dw7ro2xpc23Mc+5sQ
+         RZ+KxlfnuzHmfoOfhlR4kxxI0RwDHlKK9BQN/Emg1thQk1VZcWc0GOE2zLCOpOvVvhn5
+         jpbA==
+X-Gm-Message-State: AOJu0YzmTOf1X5gSOuKbhrbR57jSszR8imae6T4Hy1xCrgo6UHIqXa74
+        OqWqG2v5IFW4ko5xLK5v+u9+ZA==
+X-Google-Smtp-Source: AGHT+IHOpky/qe6Tx3XP5zbsSQMRA2DWMpyV8S0K8pPuXyFNWfzUl6Rsd3cg9LmpHVQUe+/RMbc84g==
+X-Received: by 2002:a2e:8893:0:b0:2b6:a5df:c7fb with SMTP id k19-20020a2e8893000000b002b6a5dfc7fbmr333200lji.26.1691522741098;
+        Tue, 08 Aug 2023 12:25:41 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id o21-20020a2e9455000000b002b9bf5b071bsm2404162ljh.20.2023.08.08.12.25.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Aug 2023 12:25:40 -0700 (PDT)
+Message-ID: <595198d4-eb60-4307-bfde-4e032ce7988c@linaro.org>
+Date:   Tue, 8 Aug 2023 21:25:39 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] arm64: dts: qcom: sa8775p: add a node for the
+ second serdes PHY
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 3/3] usb: typec: nb7vpq904m: switch to
- DRM_SIMPLE_BRIDGE
-Message-ID: <202308090347.sZtwmCUB-lkp@intel.com>
-References: <20230802011845.4176631-4-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230802011845.4176631-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230808190144.19999-1-brgl@bgdev.pl>
+ <20230808190144.19999-2-brgl@bgdev.pl>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20230808190144.19999-2-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On 8.08.2023 21:01, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add a node for the SerDes PHY used by EMAC1 on sa8775p-ride.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on usb/usb-testing usb/usb-next usb/usb-linus drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.5-rc5 next-20230808]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-add-transparent-bridge-helper/20230802-091932
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230802011845.4176631-4-dmitry.baryshkov%40linaro.org
-patch subject: [PATCH v3 3/3] usb: typec: nb7vpq904m: switch to DRM_SIMPLE_BRIDGE
-config: s390-randconfig-r033-20230808 (https://download.01.org/0day-ci/archive/20230809/202308090347.sZtwmCUB-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce: (https://download.01.org/0day-ci/archive/20230809/202308090347.sZtwmCUB-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202308090347.sZtwmCUB-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/gpu/drm/bridge/simple-bridge.c:212:18: error: no member named 'of_node' in 'struct drm_bridge'
-           sbridge->bridge.of_node = pdev->dev.of_node;
-           ~~~~~~~~~~~~~~~ ^
-   1 error generated.
-
-
-vim +212 drivers/gpu/drm/bridge/simple-bridge.c
-
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  168  
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  169  static int simple_bridge_probe(struct platform_device *pdev)
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  170  {
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  171  	struct simple_bridge *sbridge;
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  172  	struct device_node *remote;
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  173  
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  174  	sbridge = devm_kzalloc(&pdev->dev, sizeof(*sbridge), GFP_KERNEL);
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  175  	if (!sbridge)
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  176  		return -ENOMEM;
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  177  	platform_set_drvdata(pdev, sbridge);
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  178  
-272378ec0eb972 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-02-26  179  	sbridge->info = of_device_get_match_data(&pdev->dev);
-272378ec0eb972 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-02-26  180  
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  181  	/* Get the next bridge in the pipeline. */
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  182  	remote = of_graph_get_remote_node(pdev->dev.of_node, 1, -1);
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  183  	if (!remote)
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  184  		return -EINVAL;
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  185  
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  186  	sbridge->next_bridge = of_drm_find_bridge(remote);
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  187  	of_node_put(remote);
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  188  
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  189  	if (!sbridge->next_bridge) {
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  190  		dev_dbg(&pdev->dev, "Next bridge not found, deferring probe\n");
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  191  		return -EPROBE_DEFER;
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  192  	}
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  193  
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  194  	/* Get the regulator and GPIO resources. */
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  195  	sbridge->vdd = devm_regulator_get_optional(&pdev->dev, "vdd");
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  196  	if (IS_ERR(sbridge->vdd)) {
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  197  		int ret = PTR_ERR(sbridge->vdd);
-af948a25ecb214 drivers/gpu/drm/bridge/dumb-vga-dac.c  Chen-Yu Tsai     2016-11-16  198  		if (ret == -EPROBE_DEFER)
-af948a25ecb214 drivers/gpu/drm/bridge/dumb-vga-dac.c  Chen-Yu Tsai     2016-11-16  199  			return -EPROBE_DEFER;
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  200  		sbridge->vdd = NULL;
-af948a25ecb214 drivers/gpu/drm/bridge/dumb-vga-dac.c  Chen-Yu Tsai     2016-11-16  201  		dev_dbg(&pdev->dev, "No vdd regulator found: %d\n", ret);
-af948a25ecb214 drivers/gpu/drm/bridge/dumb-vga-dac.c  Chen-Yu Tsai     2016-11-16  202  	}
-af948a25ecb214 drivers/gpu/drm/bridge/dumb-vga-dac.c  Chen-Yu Tsai     2016-11-16  203  
-2df6428e290a61 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-02-26  204  	sbridge->enable = devm_gpiod_get_optional(&pdev->dev, "enable",
-2df6428e290a61 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-02-26  205  						  GPIOD_OUT_LOW);
-db8496d0b50519 drivers/gpu/drm/bridge/simple-bridge.c Ye Xingchen      2023-03-22  206  	if (IS_ERR(sbridge->enable))
-db8496d0b50519 drivers/gpu/drm/bridge/simple-bridge.c Ye Xingchen      2023-03-22  207  		return dev_err_probe(&pdev->dev, PTR_ERR(sbridge->enable),
-db8496d0b50519 drivers/gpu/drm/bridge/simple-bridge.c Ye Xingchen      2023-03-22  208  				     "Unable to retrieve enable GPIO\n");
-2df6428e290a61 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-02-26  209  
-00686ac55d0a21 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-05-26  210  	/* Register the bridge. */
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  211  	sbridge->bridge.funcs = &simple_bridge_bridge_funcs;
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26 @212  	sbridge->bridge.of_node = pdev->dev.of_node;
-272378ec0eb972 drivers/gpu/drm/bridge/simple-bridge.c Laurent Pinchart 2020-02-26  213  	sbridge->bridge.timings = sbridge->info->timings;
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  214  
-94ded532ffdb42 drivers/gpu/drm/bridge/dumb-vga-dac.c  Laurent Pinchart 2020-02-26  215  	drm_bridge_add(&sbridge->bridge);
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  216  
-47e34278549ca4 drivers/gpu/drm/bridge/dumb-vga-dac.c  Inki Dae         2017-07-03  217  	return 0;
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  218  }
-56fe8b6f499167 drivers/gpu/drm/bridge/dumb-vga-dac.c  Maxime Ripard    2016-09-30  219  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Konrad
