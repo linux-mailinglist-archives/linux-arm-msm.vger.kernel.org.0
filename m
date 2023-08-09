@@ -2,444 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B3B9776982
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 22:10:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D17897769D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 22:23:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231509AbjHIUKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 16:10:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52210 "EHLO
+        id S234240AbjHIUXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 16:23:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233170AbjHIUKC (ORCPT
+        with ESMTP id S234212AbjHIUXw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 16:10:02 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93EC10D4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 13:10:00 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b703a0453fso3228711fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 13:10:00 -0700 (PDT)
+        Wed, 9 Aug 2023 16:23:52 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D552100
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 13:23:50 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe2d218eedso1599545e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 13:23:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691611799; x=1692216599;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=V6XLoKrNgsmk7viP+YC7H/buNRrtbWmWLQbvsiyzw8s=;
-        b=SWw8OjNw3SwTMTbDbAdjStjekRnYIGbTxaLFqj7VZ8YRRHs+LysmN+7XVw8kda/PtO
-         rdC5HziWhvDaH5qW4shzQ3dHjNkF8CUKFfWYFJW6xlS327hdaxDl2710wM10z9yEl2mB
-         A/deqeCRvh9RnjTisET8RpzPexrbAo5hanJpNqj1Ey+j3pVYF090U0eD3vAuVwzppRVk
-         ccwN9vPzWeoUToZQmbWUTRICbTQxOwX/EDX7IaamJvtsv/nZsTwmeEvQPeQB7AjEv9G9
-         sLfmLlpB4jnPJlyRnr5oNBcLqgcVFjGWB9ymK9BrpNnvKsF+9sm31p2zdRLfemsFaSHy
-         dOIQ==
+        d=linaro.org; s=google; t=1691612629; x=1692217429;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2DximsJWOMVIoGnB96qhZq1Yh39vcR2POpMx/oQPi2M=;
+        b=gPgp6IDHHjbSuuyMk5QrE7vOdsBlr/T+vduXsYhapHHZITIDvxDFh0BEm3+tdI8Gjq
+         YeQ7BREykq+P/QGFNFXM3Jj0RkML2bDHNuVPQP4QFF1OXNQorxZoUCkcLeHQmk8UGHuM
+         J5HTWpWh+aN/Iesp4RtordniiPPZgQ7VLzqjkYweJKXTMWQ6vrEu29XQkflKf6uzV0wd
+         d88ojICUuQ8DmO4Q67Lkx5+NbHQvvZmtpFxNAsojPiwa/tzrPhPHHDPy82hsdgcrSGJM
+         pKuMwTML9AgH+8sPzWRWz9Qv1voMchmOFRgXdEvuj1HBA0K78yKErs+oKX6Fi90W8pkn
+         ZZFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691611799; x=1692216599;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1691612629; x=1692217429;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=V6XLoKrNgsmk7viP+YC7H/buNRrtbWmWLQbvsiyzw8s=;
-        b=jIvhJLu62QFj9eKvqU4+uvs25y3wTwHeaWCnipwoRERWtG9pFPttTNQrTQ+cfjvx67
-         C/U7+bQcb8LDzrmFnSFI7epHnazaasgj43RnA78fPxB728UXkn0n6ZRKi55RdC28PWXX
-         Xoz9si5j0VtAolLcvb1HIdakxV0TtCbxHhEZ+07RtJrI106mg02mo+8Ts5pr+FC8H9JA
-         9uFnnGdW9w/cTmuZF1vL9aXqAnn7kr12XGuO+NxeUl2APN5pjk2e9URu7O6pIwTcUT8Z
-         cs2CbZ7aChAPaxvXxPvRomzv88+mdjlrJpuKA07nxl6uFWHYXfIs55OgaWqIX/TUkYHe
-         bHkw==
-X-Gm-Message-State: AOJu0YyYEqwkDQDzW5csD/63lHdp2YBXGfDmPjFtBzTw07dYuwhS+KHJ
-        WmiJizdFqVRd93kQH/W2sTdNVg==
-X-Google-Smtp-Source: AGHT+IF08/jyxQ5gzR560y3uAW97Bxj0LaAmp3w5Urt8jwoTQWN4Z96Gu6Aw1SQJqPEenrTb+JlBng==
-X-Received: by 2002:a05:6512:3c89:b0:4fe:3e89:fcb2 with SMTP id h9-20020a0565123c8900b004fe3e89fcb2mr148854lfv.34.1691611798990;
-        Wed, 09 Aug 2023 13:09:58 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id q7-20020a19a407000000b004fb7848bacbsm2413405lfc.46.2023.08.09.13.09.57
+        bh=2DximsJWOMVIoGnB96qhZq1Yh39vcR2POpMx/oQPi2M=;
+        b=WkAoswnCl7WIbCNUI/0PkHlwFdiXgEkPtjxhxMtaw2XNhl1HoXHLbxfR6Gbt84bI4d
+         ZkQuC+r5x7RSBN9fS2w97vhlb7lBDiwH6ZOSGqYwhct3F1Lfx3EivYPFd7qBt9yHwz1A
+         UyyHDKrKQZ02pwscT9kZ9TEifkpmneNqVDlUvvhTfE1QUsslkqHoIVB8Sj6ZhBtUqebr
+         7jqkk4Y/gW1hODXv6WpgIt+CQUC7OdF9YOYWxUUlhl/9Azt4vmhqipY/3MSQoarQxiQz
+         EIEE4B07hj5YhvuNu6+ETn1txMhPffogEZGWgBWequsl50vEv14qPdoXzh33791MoCi0
+         OA5g==
+X-Gm-Message-State: AOJu0YzWW2LiRnsIUG7xxWEYXS9vflXho08SzxSX4bOoamvkeyA0lXty
+        lET7/XDB/bohIxZiSIHza2/YJw==
+X-Google-Smtp-Source: AGHT+IGzp+md8YZSNVNfxErMWy63hUNjXxvGD0YgUJ7giJITYGUt7XI0MaArI1OKYf1wcRcsCFpabQ==
+X-Received: by 2002:a05:600c:260c:b0:3f6:91c:4e86 with SMTP id h12-20020a05600c260c00b003f6091c4e86mr151830wma.3.1691612629090;
+        Wed, 09 Aug 2023 13:23:49 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 14-20020a05600c22ce00b003fba2734f1esm2927509wmg.1.2023.08.09.13.23.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 13:09:58 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 09 Aug 2023 22:09:48 +0200
-Subject: [PATCH RFC DNM] perf: Add support for Qualcomm Last-Level Cache
- Controller PMU
+        Wed, 09 Aug 2023 13:23:48 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, loic.poulain@linaro.org, rfoss@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/6] apq8016: camss: Update dts with various fixes
+Date:   Wed,  9 Aug 2023 21:23:37 +0100
+Message-Id: <20230809202343.1098425-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230809-topic-llcc_pmu-v1-1-dd27bd1f44c9@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIvy02QC/x2N0QqDMAwAf0XyvECtINNfERltjDNQa2nnEMR/N
- /h4B8edUDgLF+irEzL/pcgWFepXBbS4+GWUSRmssY15mw5/WxLCEIg+ad2RWu4mT03rawsaeVc
- YfXaRFs3iHoLKlHmW47kM43Xdyo44kXUAAAA=
-To:     Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691611797; l=10142;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=IzGgwLJxOKyAxkA8Yg1aDkGbo/ZbfTkcq54Y5dHJP0s=;
- b=cE7QfOpiF3356UHbu2pxSFkILkOv+GWOUHFGJiRq1PViCKFM994930wpcSrvmHWXF3U1Nc5uW
- CIdSSLOw1bCBfN7eacHd/VKEzxmraxGsFnbPK3J/FQlDl5l1TENlhjr
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the Qualcomm LLCC (Last-Level Cache Controller) PMU,
-which provides a single event, expressing cache read misses.
+V2:
+- Adds R/B - Konrad
+- Adds newline as flagged - Konrad
+- Squashes patch#6 into patch#5 ammends commit log
+- Following up on TPG comentary:
+  The CAMSS would not have populated device nodes prior to this series
+  save for the case a user had a D3 Engineering board.
+  Splitting out the sensor from the core board is correct w/r/t the
+  hardware/dts since few db410c have the mezzanine.
+  Once split we can enable the basic camss node by default and thus get the
+  TPG going for both the mezzanine and non-mezzanine cases.
 
-Based on the vendor driver found in the msm-5.10 downstream kernel.
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts-v2
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-Hi, I've been trying to get this driver going upstream by cleaning it
-up and adding the necessary perf boilerplate (the original Qualcomm one
-only pokes at the PMU from within the kernel itself) to use the
-userspace tool.
+V1:
+This is a series which updates the apq8016-sbc to fixup CAMSS support.
 
-I can not however get it to cooperate.. in this iteration I get a PMU
-event registered (though with only a "raw" name - no "x OR y" like with
-other PMUs on the system) as:
+The first four patches fixup the current state of the ov5640 bindings for
+the apq8016.
 
-llcc_pmu/read_miss/                                [Kernel PMU event]
+Following on from that we move the ov5640 sensor from the main apq8016-sbc
+into a standalone mezzanine dts with an accompanying patch to enable the
+sensor by default in the mezzaine. This makes sense since the D3
+Engineering camera mezzanine is but one of a slew of camera mezzanines we
+can attach here.
 
-but the .read callback is never called when I run:
+The final patch switches on CAMSS in the core apq8016-sbc allowing us to use
+the test-pattern-generator TPG on apq8016-sbc with or without a camera mezzaine
+attached. This to me is a good idea since it means we can test out and
+verify the CAMSS on this board absent a camera mezzaine on the main apq8016
+board.
 
-sudo perf stat -C 0 -a -e llcc_pmu/read_miss/ stress-ng -C 8 -c 8 -m 10
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts
 
-which always returns 0
+Bryan O'Donoghue (6):
+  arm64: dts: qcom: apq8016-sbc: Fix ov5640 regulator supply names
+  arm64: dts: qcom: apq8016-sbc: Fix ov5640 data-lanes declaration
+  arm64: dts: qcom: apq8016-sbc: Set ov5640 assigned-clock
+  arm64: dts: qcom: apq8016-sbc: Rename ov5640 enable-gpios to
+    powerdown-gpios
+  arm64: dts: qcom: apq8016-sbc-d3-camera-mezzanine: Move default ov5640
+    to a standalone dts
+  arm64: dts: qcom: apq8016-sbc: Enable camss for non-mezzanine cases
 
-if I add --always-kernel I get:
-<not supported>      llcc_pmu/read_miss/
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ .../qcom/apq8016-sbc-d3-camera-mezzanine.dts  | 55 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts      | 40 +-------------
+ 3 files changed, 57 insertions(+), 39 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
 
-So, here's me asking for some help. It's probably missing some small
-detail, as per usual..
----
- drivers/perf/Kconfig         |   8 ++
- drivers/perf/Makefile        |   1 +
- drivers/perf/qcom_llcc_pmu.c | 277 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 286 insertions(+)
-
-diff --git a/drivers/perf/Kconfig b/drivers/perf/Kconfig
-index 273d67ecf6d2..31d848c88d8a 100644
---- a/drivers/perf/Kconfig
-+++ b/drivers/perf/Kconfig
-@@ -155,6 +155,14 @@ config QCOM_L3_PMU
- 	   Adds the L3 cache PMU into the perf events subsystem for
- 	   monitoring L3 cache events.
- 
-+config QCOM_LLCC_PMU
-+	tristate "Qualcomm Technologies LLCC PMU"
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on OF
-+	help
-+	  Support for the last-level cache performance monitor unit found
-+	  on some Qualcomm Snapdragon SoCs.
-+
- config THUNDERX2_PMU
- 	tristate "Cavium ThunderX2 SoC PMU UNCORE"
- 	depends on ARCH_THUNDER2 || COMPILE_TEST
-diff --git a/drivers/perf/Makefile b/drivers/perf/Makefile
-index 16b3ec4db916..eb02574780b5 100644
---- a/drivers/perf/Makefile
-+++ b/drivers/perf/Makefile
-@@ -12,6 +12,7 @@ obj-$(CONFIG_FSL_IMX9_DDR_PMU) += fsl_imx9_ddr_perf.o
- obj-$(CONFIG_HISI_PMU) += hisilicon/
- obj-$(CONFIG_QCOM_L2_PMU)	+= qcom_l2_pmu.o
- obj-$(CONFIG_QCOM_L3_PMU) += qcom_l3_pmu.o
-+obj-$(CONFIG_QCOM_LLCC_PMU) += qcom_llcc_pmu.o
- obj-$(CONFIG_RISCV_PMU) += riscv_pmu.o
- obj-$(CONFIG_RISCV_PMU_LEGACY) += riscv_pmu_legacy.o
- obj-$(CONFIG_RISCV_PMU_SBI) += riscv_pmu_sbi.o
-diff --git a/drivers/perf/qcom_llcc_pmu.c b/drivers/perf/qcom_llcc_pmu.c
-new file mode 100644
-index 000000000000..db290ae141a7
---- /dev/null
-+++ b/drivers/perf/qcom_llcc_pmu.c
-@@ -0,0 +1,277 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/perf_event.h>
-+#include <linux/platform_device.h>
-+#include <linux/spinlock.h>
-+
-+struct llcc_pmu {
-+	struct pmu		pmu;
-+	struct hlist_node	node;
-+	void __iomem		*base;
-+	struct perf_event	event;
-+	raw_spinlock_t		lock;
-+	u64			*llcc_stats;
-+};
-+#define to_llcc_pmu(p) (container_of(p, struct llcc_pmu, pmu))
-+
-+#define LLCC_READ_MISS_EV 	0x1000
-+
-+#define CNT_SCALING_FACTOR	0x3
-+
-+#define MAX_NUM_CPUS		16
-+
-+#define MON_CFG(m)		((m)->base + 0x200)
-+ #define MON_CFG_ENABLE(cpu)	BIT(cpu)
-+ #define MON_CFG_CLEARn(cpu)	BIT(16 + cpu)
-+
-+#define MON_CNT(m)		((m)->base + 0x220)
-+ #define MON_CNT_VAL		GENMASK(23, 0)
-+#define MON_CNTn(m, cpu)	(MON_CNT(m) + 0x4 * cpu)
-+
-+static DEFINE_PER_CPU(unsigned int, users_alive);
-+
-+static void mon_enable(struct llcc_pmu *llcc_pmu, int cpu)
-+{
-+	u32 val;
-+
-+	val = readl_relaxed(MON_CFG(llcc_pmu));
-+	val |= MON_CFG_ENABLE(cpu);
-+	writel_relaxed(val, MON_CFG(llcc_pmu));
-+}
-+
-+static void mon_disable(struct llcc_pmu *llcc_pmu, int cpu)
-+{
-+	u32 val;
-+
-+	val = readl_relaxed(MON_CFG(llcc_pmu));
-+	val &= ~MON_CFG_ENABLE(cpu);
-+	writel_relaxed(val, MON_CFG(llcc_pmu));
-+}
-+
-+static void mon_clear(struct llcc_pmu *llcc_pmu, int cpu)
-+{
-+	u32 val;
-+
-+	val = readl_relaxed(MON_CFG(llcc_pmu));
-+
-+	val |= MON_CFG_CLEARn(cpu);
-+	writel_relaxed(val, MON_CFG(llcc_pmu));
-+
-+	val &= ~MON_CFG_CLEARn(cpu);
-+	writel_relaxed(val, MON_CFG(llcc_pmu));
-+}
-+
-+static int qcom_llcc_event_init(struct perf_event *event)
-+{
-+	struct llcc_pmu *llcc_pmu = to_llcc_pmu(event->pmu);
-+
-+	if (event->attr.type != event->pmu->type)
-+		return -ENOENT;
-+
-+	if (event->attach_state & PERF_ATTACH_TASK)
-+		return -EINVAL;
-+
-+	if (is_sampling_event(event)) {
-+		dev_dbg(llcc_pmu->pmu.dev, "Per-task counters are unsupported\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	if (has_branch_stack(event)) {
-+		dev_dbg(llcc_pmu->pmu.dev, "Filtering is unsupported\n");
-+		return -EINVAL;
-+	}
-+
-+	if (event->cpu < 0) {
-+		dev_warn(llcc_pmu->pmu.dev, "Can't provide per-task data!\n");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
-+static void qcom_llcc_event_read(struct perf_event *event)
-+{
-+	struct llcc_pmu *llcc_pmu = to_llcc_pmu(event->pmu);
-+	unsigned long irq_flags;
-+	int cpu = event->cpu;
-+	u64 readout;
-+
-+	raw_spin_lock_irqsave(&llcc_pmu->lock, irq_flags);
-+
-+	mon_disable(llcc_pmu, cpu);
-+
-+	readout = FIELD_GET(MON_CNT_VAL, readl_relaxed(MON_CNTn(llcc_pmu, cpu)));
-+	readout <<= CNT_SCALING_FACTOR;
-+
-+	llcc_pmu->llcc_stats[cpu] += readout;
-+
-+	mon_clear(llcc_pmu, cpu);
-+	mon_enable(llcc_pmu, cpu);
-+
-+	if (!(event->hw.state & PERF_HES_STOPPED))
-+		local64_set(&event->count, llcc_pmu->llcc_stats[cpu]);
-+
-+	raw_spin_unlock_irqrestore(&llcc_pmu->lock, irq_flags);
-+}
-+
-+static void qcom_llcc_pmu_start(struct perf_event *event, int flags)
-+{
-+	if (flags & PERF_EF_RELOAD)
-+		WARN_ON(!(event->hw.state & PERF_HES_UPTODATE));
-+
-+	event->hw.state = 0;
-+}
-+
-+static void qcom_llcc_event_stop(struct perf_event *event, int flags)
-+{
-+	qcom_llcc_event_read(event);
-+	event->hw.state |= PERF_HES_STOPPED | PERF_HES_UPTODATE;
-+}
-+
-+static int qcom_llcc_event_add(struct perf_event *event, int flags)
-+{
-+	struct llcc_pmu *llcc_pmu = to_llcc_pmu(event->pmu);
-+	unsigned int cpu_users;
-+
-+	raw_spin_lock(&llcc_pmu->lock);
-+
-+	cpu_users = per_cpu(users_alive, event->cpu);
-+	if (!cpu_users)
-+		mon_enable(llcc_pmu, event->cpu);
-+
-+	cpu_users++;
-+	per_cpu(users_alive, event->cpu) = cpu_users;
-+
-+	raw_spin_unlock(&llcc_pmu->lock);
-+
-+	event->hw.state = PERF_HES_STOPPED | PERF_HES_UPTODATE;
-+
-+	if (flags & PERF_EF_START)
-+		qcom_llcc_pmu_start(event, PERF_EF_RELOAD);
-+
-+	return 0;
-+}
-+
-+static void qcom_llcc_event_del(struct perf_event *event, int flags)
-+{
-+	struct llcc_pmu *llcc_pmu = to_llcc_pmu(event->pmu);
-+	unsigned int cpu_users;
-+
-+	raw_spin_lock(&llcc_pmu->lock);
-+
-+	cpu_users = per_cpu(users_alive, event->cpu);
-+	cpu_users--;
-+	if (!cpu_users)
-+		mon_disable(llcc_pmu, event->cpu);
-+
-+	per_cpu(users_alive, event->cpu) = cpu_users;
-+
-+	raw_spin_unlock(&llcc_pmu->lock);
-+}
-+
-+static ssize_t llcc_pmu_event_show(struct device *dev, struct device_attribute *attr, char *page)
-+{
-+	struct perf_pmu_events_attr *pmu_attr;
-+
-+	pmu_attr = container_of(attr, struct perf_pmu_events_attr, attr);
-+
-+	return sysfs_emit(page, "event=0x%04llx\n", pmu_attr->id);
-+}
-+
-+static struct attribute *qcom_llcc_pmu_events[] = {
-+	PMU_EVENT_ATTR_ID(read_miss, llcc_pmu_event_show, LLCC_READ_MISS_EV),
-+	NULL,
-+};
-+
-+static const struct attribute_group qcom_llcc_pmu_events_group = {
-+	.name = "events",
-+	.attrs = qcom_llcc_pmu_events,
-+};
-+
-+PMU_FORMAT_ATTR(event, "config:0-15");
-+static struct attribute *qcom_llcc_pmu_format_attrs[] = {
-+	&format_attr_event.attr,
-+	NULL,
-+};
-+
-+static const struct attribute_group qcom_llcc_pmu_format_group = {
-+	.name = "format",
-+	.attrs = qcom_llcc_pmu_format_attrs,
-+};
-+
-+static const struct attribute_group *qcom_llcc_pmu_attr_groups[] = {
-+	&qcom_llcc_pmu_format_group,
-+	&qcom_llcc_pmu_events_group,
-+	NULL,
-+};
-+
-+static int qcom_llcc_pmu_probe(struct platform_device *pdev)
-+{
-+	static struct llcc_pmu *llcc_pmu;
-+	int ret;
-+
-+	if (num_possible_cpus() > MAX_NUM_CPUS)
-+		return dev_err_probe(&pdev->dev, -EINVAL,
-+				     "LLCC PMU only supports <=%u CPUs\n",
-+				     MAX_NUM_CPUS);
-+
-+	llcc_pmu = devm_kzalloc(&pdev->dev, sizeof(*llcc_pmu), GFP_KERNEL);
-+	if (!llcc_pmu)
-+		return -ENOMEM;
-+
-+	llcc_pmu->llcc_stats = devm_kcalloc(&pdev->dev, num_possible_cpus(),
-+					    sizeof(*llcc_pmu->llcc_stats), GFP_KERNEL);
-+
-+	llcc_pmu->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(llcc_pmu->base))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(llcc_pmu->base),
-+				     "Failed to register LLCC PMU\n");
-+
-+	llcc_pmu->pmu = (struct pmu) {
-+		.event_init	= qcom_llcc_event_init,
-+		.add		= qcom_llcc_event_add,
-+		.del		= qcom_llcc_event_del,
-+		.start		= qcom_llcc_pmu_start,
-+		.stop		= qcom_llcc_event_stop,
-+		.read		= qcom_llcc_event_read,
-+
-+		.attr_groups	= qcom_llcc_pmu_attr_groups,
-+		.capabilities	= PERF_PMU_CAP_NO_EXCLUDE,
-+		.task_ctx_nr	= perf_invalid_context,
-+
-+		.module		= THIS_MODULE,
-+	};
-+
-+	raw_spin_lock_init(&llcc_pmu->lock);
-+
-+	ret = perf_pmu_register(&llcc_pmu->pmu, "llcc_pmu", -1);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "Failed to register LLCC PMU\n");
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id qcom_llcc_pmu_match_table[] = {
-+	{ .compatible = "qcom,llcc-pmu-v2" },
-+	{ }
-+};
-+
-+static struct platform_driver qcom_llcc_pmu_driver = {
-+	.probe = qcom_llcc_pmu_probe,
-+	.driver = {
-+		.name = "qcom-llcc-pmu",
-+		.of_match_table = qcom_llcc_pmu_match_table,
-+		.suppress_bind_attrs = true,
-+	},
-+};
-+module_platform_driver(qcom_llcc_pmu_driver);
-+
-+MODULE_DEVICE_TABLE(of, qcom_llcc_pmu_match_table);
-+MODULE_DESCRIPTION("QCOM LLCC PMU");
-+MODULE_LICENSE("GPL");
-
----
-base-commit: 21ef7b1e17d039053edaeaf41142423810572741
-change-id: 20230809-topic-llcc_pmu-c6e9dbc36b12
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.39.2
 
