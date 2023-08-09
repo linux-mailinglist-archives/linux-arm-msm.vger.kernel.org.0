@@ -2,105 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A54967754A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 10:01:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70A017754B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 10:02:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231822AbjHIIBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 04:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58196 "EHLO
+        id S229838AbjHIICi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 04:02:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231715AbjHIIBh (ORCPT
+        with ESMTP id S229783AbjHIICi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 04:01:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778701BFF;
-        Wed,  9 Aug 2023 01:01:37 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3795piZq024099;
-        Wed, 9 Aug 2023 08:01:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=70SZTvO4eDdQJlq3XrzHQEoTE1pLe0Iq86lajdoq0jc=;
- b=f5PMqvfyZUNIrhxgcXCNi5DKus8WEftA7+gKRaEs7CL7tKZvv0SB7JkIgg6utfeeYhC0
- M0BP2k6sYZfPMtl5dbKpFZV9gqGHLzJvdwnqr7FzXeQQ5/4MhXY6zIo/mWsfQYZb2iq0
- m/IV3w1uZVcNyMkr6faQ6Key6X9a4oTBZpsOKg67P7GqvFqc+uX11avOg8o5tr8LJHWv
- Dw9OwJnV2m29cygpO+elG0dVW91CaH06qag4Re/DrWnZFuIUI2SZb4XVd1XIEKDVw0iW
- hGvSj0PGQDLu3pwKTRDSnj7WVOUISv/2mvEEzbDTeNHDH3EVTVFEWGZWiF2b/ma+mLDf Mw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbpqs1yje-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 09 Aug 2023 08:01:24 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37981NfS001180
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 9 Aug 2023 08:01:23 GMT
-Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 9 Aug 2023 01:01:19 -0700
-From:   Luo Jie <quic_luoj@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, Luo Jie <quic_luoj@quicinc.com>
-Subject: [PATCH v1 4/4] arm64: defconfig: Enable qca8k nss clock controller
-Date:   Wed, 9 Aug 2023 16:00:47 +0800
-Message-ID: <20230809080047.19877-5-quic_luoj@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230809080047.19877-1-quic_luoj@quicinc.com>
-References: <20230809080047.19877-1-quic_luoj@quicinc.com>
+        Wed, 9 Aug 2023 04:02:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456B71FC2;
+        Wed,  9 Aug 2023 01:02:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C4E966302E;
+        Wed,  9 Aug 2023 08:02:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE382C433C7;
+        Wed,  9 Aug 2023 08:02:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691568155;
+        bh=RGgJ0entgYCUagS5IzNaQUQFxxpHtnwZKXcXxBX55aM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aWxue7mmxXai4i8fgyUFTZKxRBVv1/eUfvCc7lWWn2/v+T0dDw2LxQYk1uDpj2GDQ
+         wtW15wbExemCPVVQ8H/QGuw6++ZOLgmYUTslvFmyB+t8FNEBur6NT49BuqXnHTt+2f
+         8QMArWscV4SzexKiPmRaE5A+Ka2uaoVIRINY4mPczoVblhGYRDbLzUZU4bvQor8pdl
+         VJyzGsoOQw39qCl3tZdUQfvqwrDY2TvEANwOOn1ZU5Ak71uN1As0sZtXpakY5AvmzQ
+         rW0GVi3ZrJpmHN95yOcyyafSlIM6xKdow18d9xmcFwvRStX3sR7oEZy3LwVCaXptS3
+         cGH26QCe8gBag==
+Date:   Wed, 9 Aug 2023 10:02:32 +0200
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Liao Chang <liaochang1@huawei.com>, florian.fainelli@broadcom.com,
+        rjui@broadcom.com, sbranden@broadcom.com,
+        bcm-kernel-feedback-list@broadcom.com, yangyicong@hisilicon.com,
+        aisheng.dong@nxp.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        kblaiech@nvidia.com, asmaa@nvidia.com, loic.poulain@linaro.org,
+        rfoss@kernel.org, ardb@kernel.org, gcherian@marvell.com,
+        linux-i2c@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/9] i2c: mlxbf: Use dev_err_probe in probe function
+Message-ID: <20230809080232.ktoryciynfuhnmnk@intel.intel>
+References: <20230808012954.1643834-1-liaochang1@huawei.com>
+ <20230808012954.1643834-3-liaochang1@huawei.com>
+ <a5b2f1a2-d509-0949-fc1d-929476c2618b@linaro.org>
+ <20230808112907.4rnvmyha4v6cg5ds@intel.intel>
+ <29e20953-5660-079e-2136-0962eec9cab5@linaro.org>
+ <20230808114706.g27gy3rajqvjykce@intel.intel>
+ <7698ce68-c393-d566-25b9-7b2a08dd8274@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iIzuF0l81Nkq7Ok1dImNotKR1jBOr-C2
-X-Proofpoint-ORIG-GUID: iIzuF0l81Nkq7Ok1dImNotKR1jBOr-C2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-09_06,2023-08-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 mlxlogscore=684 malwarescore=0
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308090070
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7698ce68-c393-d566-25b9-7b2a08dd8274@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable clock controller config for Qualcomm qca8386/qca8084 chip.
+On Tue, Aug 08, 2023 at 05:55:29PM +0200, Krzysztof Kozlowski wrote:
+> On 08/08/2023 13:47, Andi Shyti wrote:
+> > Hi Krzysztof,
+> > 
+> > On Tue, Aug 08, 2023 at 01:31:31PM +0200, Krzysztof Kozlowski wrote:
+> >> On 08/08/2023 13:29, Andi Shyti wrote:
+> >>> Hi Krzysztof,
+> >>>
+> >>> On Tue, Aug 08, 2023 at 10:36:40AM +0200, Krzysztof Kozlowski wrote:
+> >>>> On 08/08/2023 03:29, Liao Chang wrote:
+> >>>>> Use the dev_err_probe function instead of dev_err in the probe function
+> >>>>> so that the printed messge includes the return value and also handles
+> >>>>> -EPROBE_DEFER nicely.
+> >>>>>
+> >>>>> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+> >>>>> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+> >>>>
+> >>>> ...
+> >>>>
+> >>>>> @@ -2413,10 +2399,8 @@ static int mlxbf_i2c_probe(struct platform_device *pdev)
+> >>>>>  	ret = devm_request_irq(dev, irq, mlxbf_i2c_irq,
+> >>>>>  			       IRQF_SHARED | IRQF_PROBE_SHARED,
+> >>>>>  			       dev_name(dev), priv);
+> >>>>> -	if (ret < 0) {
+> >>>>> -		dev_err(dev, "Cannot get irq %d\n", irq);
+> >>>>> -		return ret;
+> >>>>> -	}
+> >>>>> +	if (ret < 0)
+> >>>>> +		return dev_err_probe(dev, ret, "Cannot get irq %d\n", irq);
+> >>>>
+> >>>> I don't think this is needed:
+> >>>> https://lore.kernel.org/all/20230721094641.77189-1-frank.li@vivo.com/
+> >>>
+> >>> Hmm, that's a bit borderline, I'd say. The change to
+> >>
+> >> What's borderline exactly? devm_request_threaded_irq_probe() is coming,
+> >> right? If it is accepted this hunk is useless and soon should be
+> >> replaced with proper one.
+> > 
+> > Such change is out of the scope of this series, there are two
+> > options that I'd prefer (in the listed order):
+> > 
+> >  1. accept the patch as it is, this patch is not sent today the
+> >     first time and at the current state it's correct.
+> >  2. not accept a change on this line
+> 
+> The 2 is what I commented here. This change should not be made and
+> instead we should just switch all such users to new API, because this is
+> preferred for all error messages, when applicable and does not result in
+> lost context. If there was no such API, sure, but we have this API coming.
 
-Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+To me the patch is correct... I am OK also with 2, but I find 1
+more complete... let's say that it's a matter of taste?
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index a25d783dfb95..23801799bb0d 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1180,6 +1180,7 @@ CONFIG_IPQ_GCC_5332=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
-+CONFIG_IPQ_NSSCC_QCA8K=y
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_MMCC_8994=m
--- 
-2.17.1
+> > Replacing devm_request_irq belongs to another series and,
+> > besides, I don't want to ask Liao to hold on this series for such
+> > trivialities.
+> 
+> So the comment about this redundant and unneeded change, thus switching
+> to new API you call 'triviality' but a comment of yours of changing the
+> tone of error message to 'please' is appropriate.
+> https://lore.kernel.org/all/20230807231320.svssge6uymw3jiho@intel.intel/
+> 
+> That's double standards.
 
+That was a joke, the review was somewhere else in my comment.
+
+Thanks for your inputs,
+Andi
