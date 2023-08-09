@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BA98775354
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:58:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD2C3775359
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:59:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbjHIG6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 02:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51052 "EHLO
+        id S231171AbjHIG7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 02:59:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjHIG6B (ORCPT
+        with ESMTP id S229814AbjHIG7a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 02:58:01 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A6D19BC;
-        Tue,  8 Aug 2023 23:58:00 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3794mU3j006140;
-        Wed, 9 Aug 2023 06:57:39 GMT
+        Wed, 9 Aug 2023 02:59:30 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B7B019BC;
+        Tue,  8 Aug 2023 23:59:29 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3795SeCG027257;
+        Wed, 9 Aug 2023 06:59:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sDAzChPYaYK2YcYKrSGLrEXUad7K9IrVw0yerHSx1WE=;
- b=hxKuZ1VfmeJ/2+uKku1diVpIdsT/ylv/kBsQ3/i/kce4JAetjEi5j0sdRFGlWvU2XOpZ
- 2BEidNG4RP3aWKKxrM/VS3Afso+w1pghecMrV0sVAeUj4J8r6T5iFTTl8ZlA23ViVxif
- 2sTgObospM91+G/ou3QgYOrIeliYwsAB5slziK88qBtml1CIdE4GKSCnZQM8XDOhdNAk
- dHFDMtzmCmm1H8zs/vbNP2OKWW71EU2MuvKtf1Uwb/PI4KPe61Voz3VzGKHtrWxyLxON
- m6i1t6CumlU2OnrKPzgBG+n4R0JE8taX3HjP1sahgNr5gdjpAN58cVAm3Em/AD0YNPfe 4g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sc1ny0g6h-1
+ bh=1KAZVnnVfcDStYfdro82HDZhSg8f14qqJ8BNvobI0MI=;
+ b=NmO4UMS5BE1og9J9/KVjDrglA8BskYsbTW4hGav8OQiyeFSbxmS8Ar5zFabjqWE7gRuB
+ /ZL2GrRtSqBpKRyOQnmENfoOz7+aYA8IYG43niI7VSd73/Cuw7OfhiO33fCub3W8YALO
+ DrOAo1DbbGiMBO+xz17KuyLS4kOWc4hb9RA1NLfIdoai4VUgrdmdH+3WQFtK7AIv0sA8
+ A/qdV1paist9MeTnmE3FBONhI1dpzuS7g4uBb64X/0oBwSEP6CQtN+H1ncRkurIR6pwl
+ /MYJNNI8Q+E/4tvFhGItYPzAPDeJTmxxiZjWj5nIE9phJj9j9MidjbHYWGNKrJ3mkAbC qA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbppchurv-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 09 Aug 2023 06:57:39 +0000
+        Wed, 09 Aug 2023 06:59:17 +0000
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3796vank017387
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3796xGY6030180
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 9 Aug 2023 06:57:36 GMT
+        Wed, 9 Aug 2023 06:59:16 GMT
 Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
- 2023 23:57:32 -0700
-Message-ID: <a96dde91-38c6-3758-18e1-e322aea54eea@quicinc.com>
-Date:   Wed, 9 Aug 2023 14:57:29 +0800
+ 2023 23:59:11 -0700
+Message-ID: <59a4ce95-0b9d-b48b-73cb-29ade99b28c3@quicinc.com>
+Date:   Wed, 9 Aug 2023 14:59:08 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
@@ -66,9 +66,9 @@ CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
         <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
 References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
  <1690269353-10829-10-git-send-email-quic_taozha@quicinc.com>
- <6105f48f-86b2-3a68-a33f-e2bb3ed6f9c9@arm.com>
+ <4cfd50c3-834c-8f8d-187b-8cfe38d7ece0@arm.com>
 From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <6105f48f-86b2-3a68-a33f-e2bb3ed6f9c9@arm.com>
+In-Reply-To: <4cfd50c3-834c-8f8d-187b-8cfe38d7ece0@arm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -76,20 +76,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 10o3MD95-cV0bJt0g0F46nz0A_Czv2Z4
-X-Proofpoint-ORIG-GUID: 10o3MD95-cV0bJt0g0F46nz0A_Czv2Z4
+X-Proofpoint-ORIG-GUID: UGHbLC7AQt45raFVi9WChjgQTJBNgjd3
+X-Proofpoint-GUID: UGHbLC7AQt45raFVi9WChjgQTJBNgjd3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-08-09_04,2023-08-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 mlxscore=0 spamscore=0 adultscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2306200000 definitions=main-2308090061
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -97,7 +96,7 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 8/7/2023 5:24 PM, Suzuki K Poulose wrote:
+On 8/7/2023 6:58 PM, Suzuki K Poulose wrote:
 > On 25/07/2023 08:15, Tao Zhang wrote:
 >> Add the nodes to set value for DSB edge control and DSB edge
 >> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
@@ -262,6 +261,20 @@ On 8/7/2023 5:24 PM, Suzuki K Poulose wrote:
 >> +    for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
 >> +        bytes = sysfs_emit_at(buf, size,
 >> +                  "Val:0x%x\n", drvdata->dsb->edge_ctrl[i]);
+>
+> This feels a bit odd. edget_ctrl_val allows storing one "edge ctrl"
+> value, while "show"ing all EDCR values. We could split them to :
+>
+> Read only sysfs files:
+>
+> dsb_edcr0 ... dsb_edcr15
+>
+> for each EDCR register (similarly for the mask)
+>
+> and may be show the specific edge_ctrl_line for with the above 
+> function for selected index.
+Sure, I will update this in the next patch series.
+>
 >> +        if (bytes <= 0)
 >> +            break;
 >> +        size += bytes;
@@ -306,6 +319,10 @@ On 8/7/2023 5:24 PM, Suzuki K Poulose wrote:
 >> +    return size;
 >> +}
 >> +static DEVICE_ATTR_RW(dsb_edge_ctrl_val);
+>
+> This can be WO attribute to write to a given line.
+I will update this in the next patch series.
+>
 >> +
 >> +static ssize_t dsb_edge_ctrl_mask_show(struct device *dev,
 >> +                        struct device_attribute *attr,
@@ -320,6 +337,14 @@ On 8/7/2023 5:24 PM, Suzuki K Poulose wrote:
 >> +    for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++) {
 >> +        bytes = sysfs_emit_at(buf, size,
 >> +                  "Val:0x%x\n", drvdata->dsb->edge_ctrl_mask[i]);
+>
+> As mentioned above, please don't do this. One value per file. Add
+>
+> dsb_edcmr0..dsb_edcmr7
+>
+> and print only the selected index mask for this function.
+I will update this in the next patch series.
+>
 >> +        if (bytes <= 0)
 >> +            break;
 >> +        size += bytes;
@@ -353,28 +378,82 @@ On 8/7/2023 5:24 PM, Suzuki K Poulose wrote:
 >> +    else
 >> +        set &= ~BIT(EDCMR_TO_WORD_SHIFT(drvdata->dsb->edge_ctrl_idx));
 >> +        drvdata->dsb->edge_ctrl_mask[reg] = set;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
+>> +
+>>   static ssize_t dsb_trig_type_show(struct device *dev,
+>>                        struct device_attribute *attr, char *buf)
+>>   {
+>> @@ -374,6 +527,9 @@ static DEVICE_ATTR_RW(dsb_trig_ts);
+>>     static struct attribute *tpdm_dsb_attrs[] = {
+>>       &dev_attr_dsb_mode.attr,
+>> +    &dev_attr_dsb_edge_ctrl_idx.attr,
+>> +    &dev_attr_dsb_edge_ctrl_val.attr,
+>> +    &dev_attr_dsb_edge_ctrl_mask.attr,
+>>       &dev_attr_dsb_trig_ts.attr,
+>>       &dev_attr_dsb_trig_type.attr,
+>>       NULL,
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.h
+>> index 49fffb1..4afdb29 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+>> @@ -12,6 +12,8 @@
+>>   /* DSB Subunit Registers */
+>>   #define TPDM_DSB_CR        (0x780)
+>>   #define TPDM_DSB_TIER        (0x784)
+>> +#define TPDM_DSB_EDCR(n)    (0x808 + (n * 4))
+>> +#define TPDM_DSB_EDCMR(n)    (0x848 + (n * 4))
+>>     /* Enable bit for DSB subunit */
+>>   #define TPDM_DSB_CR_ENA        BIT(0)
+>> @@ -34,6 +36,16 @@
+>>   #define TPDM_DSB_TEST_MODE        GENMASK(10, 9)
+>>   #define TPDM_DSB_HPSEL        GENMASK(6, 2)
+>>   +#define EDCRS_PER_WORD                16
+>> +#define EDCR_TO_WORD_IDX(r)            ((r) / EDCRS_PER_WORD)
+>> +#define EDCR_TO_WORD_SHIFT(r)        ((r % EDCRS_PER_WORD) * 2)
+>> +#define EDCR_TO_WORD_VAL(val, r)    (val << EDCR_TO_WORD_SHIFT(r))
+>> +#define EDCR_TO_WORD_MASK(r)        EDCR_TO_WORD_VAL(0x3, r)
+>> +
+>> +#define EDCMRS_PER_WORD                32
+>> +#define EDCMR_TO_WORD_IDX(r)        ((r) / EDCMRS_PER_WORD)
+>> +#define EDCMR_TO_WORD_SHIFT(r)        ((r) % EDCMRS_PER_WORD)
+>> +
+>>   /* TPDM integration test registers */
+>>   #define TPDM_ITATBCNTRL        (0xEF0)
+>>   #define TPDM_ITCNTRL        (0xF00)
+>> @@ -60,14 +72,26 @@
+>>   #define TPDM_PIDR0_DS_IMPDEF    BIT(0)
+>>   #define TPDM_PIDR0_DS_DSB    BIT(1)
+>>   +#define TPDM_DSB_MAX_LINES    256
+>> +/* MAX number of EDCR registers */
+>> +#define TPDM_DSB_MAX_EDCR    16
+>> +/* MAX number of EDCMR registers */
+>> +#define TPDM_DSB_MAX_EDCMR    8
+>> +
+>>   /**
+>>    * struct dsb_dataset - specifics associated to dsb dataset
+>> - * @mode:             DSB programming mode
+>> - * @trig_ts:          Enable/Disable trigger timestamp.
+>> - * @trig_type:        Enable/Disable trigger type.
+>> + * @mode:               DSB programming mode
+>> + * @edge_ctrl_idx       Index number of the edge control
+>> + * @edge_ctrl:          Save value for edge control
+>> + * @edge_ctrl_mask:     Save value for edge control mask
+>> + * @trig_ts:            Enable/Disable trigger timestamp.
+>> + * @trig_type:          Enable/Disable trigger type.
+>>    */
+>>   struct dsb_dataset {
+>>       u32                mode;
+>> +    u32                edge_ctrl_idx;
+>> +    u32                edge_ctrl[TPDM_DSB_MAX_EDCR];
+>> +    u32                edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
 >
->
-> drivers/hwtracing/coresight/coresight-tpdm.c: In function 
-> ‘dsb_edge_ctrl_mask_store’:
-> drivers/hwtracing/coresight/coresight-tpdm.c:449:2: error: this ‘else’ 
-> clause does not guard... [-Werror=misleading-indentation]
->   else
->   ^~~~
-> drivers/hwtracing/coresight/coresight-tpdm.c:451:3: note: ...this 
-> statement, but the latter is misleadingly indented as if it were 
-> guarded by the ‘else’
->    drvdata->dsb->edge_ctrl_mask[reg] = set;
->    ^~~~~~~
-> cc1: all warnings being treated as errors
-> make[4]: *** [scripts/Makefile.build:243: 
-> drivers/hwtracing/coresight/coresight-tpdm.o] Error 1
-> make[3]: *** [scripts/Makefile.build:480: drivers/hwtracing/coresight] 
-> Error 2
-> make[2]: *** [scripts/Makefile.build:480: drivers] Error 2
-> make[1]: *** [/ssd/src/LINUX-CORESIGHT/Makefile:2032: .] Error 2
-> make: *** [Makefile:234: __sub-make] Error 2
->
+> Please keep them aligned with the rest of the fields.
+
 I will update this in the next patch series.
 
 
@@ -382,4 +461,12 @@ Best,
 
 Tao
 
+>
+>>       bool            trig_ts;
+>>       bool            trig_type;
+>
 > Suzuki
+>
+>
+>>   };
+>
