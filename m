@@ -2,113 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 079CD776A17
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 22:35:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 372C8776A82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 22:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234486AbjHIUfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 16:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35882 "EHLO
+        id S230127AbjHIUrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 16:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234460AbjHIUfl (ORCPT
+        with ESMTP id S229470AbjHIUrb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 16:35:41 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047142115
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 13:35:39 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fe5eb84d43so1476155e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 13:35:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691613337; x=1692218137;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u2cvjbfix/wPh0u/PHG3ITrkDIPmnvtrUnb/pWLaP6c=;
-        b=jj1+uWLCc+4FcR4qZUoxtzm4+9MlriK4bTUnuOslgEG390QjTtygyyyjXQZEbKBZba
-         mn5IqC10OyupOZI8ITaiuSsvTgcO8Rg9PImx//+wxsDStBoQL0cvAdNbTVOXbIoSZEed
-         nOksH3IrBlsS1SdZw0vPzdv3ARZNnMq/ASjD9iVh9UWhG//5WRTo6YyHTCe0Wgh82npx
-         TyXXq5vLyww7VNVZxhM8Op86z2HruArUZjocnCzIYJYKGATRgkyjIrvpW2p8FCr2sDFz
-         hFSZrQ4wUeq4uJlkqlLZc467tYWByBNRSV1cllmBuPAIcVAQyT8Nm6DPvhm0PtH/aKFv
-         10wA==
+        Wed, 9 Aug 2023 16:47:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D94A100
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 13:46:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1691614006;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=85iBUVX8eS0NmdKzdH/Axj5AnNYS26psyU6bLHIwJdo=;
+        b=ACxudyZ4LhqPcXOoRch6+rOqvH8mkh0S5hoRtUMawcuQ8DPZw9UkHxf9RoOfqOZqbdzW9p
+        QFGpZK6tw3PuQnl7RVT+/eVE3w6/rlynIdp+BGPvwr6MdR768FjMvshGKXW2JfSHp0c9X7
+        ZQ1s8XcdM7w8drCEpD1HroQu2zASzaQ=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-482-H_AcwKLBNNSDJ1cOTgwPmA-1; Wed, 09 Aug 2023 16:46:45 -0400
+X-MC-Unique: H_AcwKLBNNSDJ1cOTgwPmA-1
+Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-1bf00c27c39so193214fac.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 13:46:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691613337; x=1692218137;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u2cvjbfix/wPh0u/PHG3ITrkDIPmnvtrUnb/pWLaP6c=;
-        b=QGEA+Y0wee+nCT1V45WH83nfDdM7982YHEXh58mMa5oioDLrvD0HAsIge8oBTuOHYq
-         mGz7S8T9Q7upBm7XYk2j4o9mTCXKNaMRQMVxPn594RPiYjtfzJ1iGAjyEgPt9uMEY664
-         vrzlv1dDXWHh9RzQWfSEIBAW/vLKM6hglWa8cA71GchoMXpOqCK70VSnxO0gnPwC/RRc
-         Xr3ITEVLBkuuxnOvR/3ocsAUGRRcHXiH20EqhJKXtE1K70/ZOk4y9WvDlMv3kRjMmOUQ
-         fXPGiULadrH8WbnmK0qutvEXUS4OEGnqwfnrNoi7MXOpxUcjOLGfPWoAS3bp3Zup3L5N
-         DeHA==
-X-Gm-Message-State: AOJu0YxcibZtBjoO4+JTYWHHMrjt0O/6m5UMDH8PRZSuC1qTNisFyS9Z
-        DED6Em0IEWRz54An8cO1VSW4QA==
-X-Google-Smtp-Source: AGHT+IHAofglJPs0oPNqBPoKh/jI6ZbUcFrRC/bkQ/hpY8gz2qEoxH3jaYn97GuGcNiA8pM9QzrsOQ==
-X-Received: by 2002:a5d:522e:0:b0:317:54e2:26ca with SMTP id i14-20020a5d522e000000b0031754e226camr376873wra.50.1691613337493;
-        Wed, 09 Aug 2023 13:35:37 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x12-20020adfec0c000000b0031274a184d5sm17699490wrn.109.2023.08.09.13.35.36
+        d=1e100.net; s=20221208; t=1691614004; x=1692218804;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=85iBUVX8eS0NmdKzdH/Axj5AnNYS26psyU6bLHIwJdo=;
+        b=YQNeBnrdDnva1O6ffeDWFq8lIZjI4yG+iRPutEa1zLi8HAWMDJWOf9j8nCKfKllDma
+         GPHQ9hXROfIezM9s2VXTR5a0eddULE1Az/Nzc+MjlyXFBWZQfHXT5Td5Sn5eS3+MX5F6
+         YPuHYtftawYtcMvmV+Px/0tOXtzWrthGph3xtyUMAJoKBySS2VIzm8xsSF6Er6yGfszN
+         gwwQQM0zCuqEUwbPsAz/COkT1hpywfn792UnAEETbMippwvbv6ELcM8dN04DVmVxdcg0
+         NUgWp5tFEGMUTiEK9j1vHVLsbmmeF2SWVANdzNyoiic5RgWF/S0GlDvAiIvKietXbiQ7
+         4VMQ==
+X-Gm-Message-State: AOJu0Yy9xT1PonipONe5hi013R6a1EiNHpgPIF/zvOK1aEVGGwOMPA0n
+        N3yAuvkIH9gll+jPRsIJPx3LGhrDNiLyyXCdeKgAYjpnmtCaGerAZgW5wJWFncd47uAzRcbGzKw
+        9daXVDm0jUl8pZQ3Q0N0ExZf8lmmG/z7nPg==
+X-Received: by 2002:a05:6870:5582:b0:1bf:d05f:f77 with SMTP id n2-20020a056870558200b001bfd05f0f77mr409991oao.48.1691614004598;
+        Wed, 09 Aug 2023 13:46:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTQI8VRZ5ZtLNFhgexiawYP5A6CmaRJ60ckOfjRSba4+LVLgx2G+xZX97LXEEFCJ6PqJ2IWA==
+X-Received: by 2002:a05:6870:5582:b0:1bf:d05f:f77 with SMTP id n2-20020a056870558200b001bfd05f0f77mr409962oao.48.1691614004283;
+        Wed, 09 Aug 2023 13:46:44 -0700 (PDT)
+Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
+        by smtp.gmail.com with ESMTPSA id d8-20020a0ce448000000b0063d26033b74sm4733922qvm.39.2023.08.09.13.46.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 13:35:37 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: [PATCH 1/1] arm64: dts: qcom: sdm845: Enable CAMSS on the bare rb3 board
-Date:   Wed,  9 Aug 2023 21:35:34 +0100
-Message-Id: <20230809203534.1100030-2-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230809203534.1100030-1-bryan.odonoghue@linaro.org>
-References: <20230809203534.1100030-1-bryan.odonoghue@linaro.org>
+        Wed, 09 Aug 2023 13:46:43 -0700 (PDT)
+Date:   Wed, 9 Aug 2023 16:46:43 -0400
+From:   Eric Chanudet <echanude@redhat.com>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable rtc
+Message-ID: <xraquthrzcadd7aucxym4e4x72barlq6dbmbsbxcn7pbr2yehv@amyzztu3xmcg>
+References: <20230718145105.3464105-1-echanude@redhat.com>
+ <dtussvqzf7x5p633pxt3julkffhzt5rxwp3aghs4ocj5odq4la@ed6jhcv76hbk>
+ <20230808213646.GK1428172@hu-bjorande-lv.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230808213646.GK1428172@hu-bjorande-lv.qualcomm.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable CAMSS on the standard RB3 as it is possible to run the test pattern
-generator (TPG) without any populated ports/endpoints.
+On Tue, Aug 08, 2023 at 02:36:46PM -0700, Bjorn Andersson wrote:
+> On Fri, Jul 21, 2023 at 08:59:30PM -0700, Bjorn Andersson wrote:
+> > On Tue, Jul 18, 2023 at 10:46:10AM -0400, Eric Chanudet wrote:
+> > > diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> > [..]
+> > > +&pmm8540a_sdam_7 {
+> > > +	status = "okay";
+> > > +
+> > > +	rtc_offset: rtc-offset@ac {
+> > > +		reg = <0xac 0x4>;
+> > 
+> > I'm still trying to get confirmation that this is a good choice.
+> > 
+> 
+> I'm recommended that you use 0xa0 from SDAM2, "preferably in the second
+> PMM8540", instead.
+> 
+> Can you please give this a try, Eric?
 
-media-ctl --reset
-yavta --no-query -w '0x009f0903 9' /dev/v4l-subdev4
-yavta --list /dev/v4l-subdev4
-media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SGRBG10_1X10/3280x2464]'
-media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SGRBG10_1X10/3280x2464]'
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-media-ctl -d /dev/media0 -p
-yavta -B capture-mplane --capture=5 -n 5 -I -f SGRBG10P -s 3280x2464 --file=TPG-SGRBG10-3280x2464-000-#.bin /dev/video2
+That worked, the offset was saved and read back upon rebooting from the
+system. I did get a defer on some tests waiting for the second pmic,
+which I presume is not surprising:
+[    0.257064] spmi spmi-0: PMIC arbiter version v5 (0x50020000)
+[    8.340386] platform c440000.spmi:pmic@0:rtc@6000: error -EPROBE_DEFER: wait for supplier /soc@0/spmi@c440000/pmic@4/nvram@b110/rtc-offset@a0
+[    8.393201] platform c440000.spmi:pmic@0:rtc@6000: error -EPROBE_DEFER: wait for supplier /soc@0/spmi@c440000/pmic@4/nvram@b110/rtc-offset@a0
+[    8.465407] rtc-pm8xxx c440000.spmi:pmic@0:rtc@6000: registered as rtc0
+[    8.479612] rtc-pm8xxx c440000.spmi:pmic@0:rtc@6000: setting system clock to 2023-08-09T19:16:08 UTC (1691608568)
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+Here is the v3 with the changes:
+    https://lore.kernel.org/linux-arm-msm/20230809203506.1833205-1-echanude@redhat.com
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index d6b464cb61d6f..14f9afbd75e54 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -410,6 +410,13 @@ vreg_bob: bob {
- 	};
- };
- 
-+&camss {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l26a_1p2>;
-+};
-+
- &cdsp_pas {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/cdsp.mbn";
+Thank you again for the feedback.
+
 -- 
-2.39.2
+Eric Chanudet
 
