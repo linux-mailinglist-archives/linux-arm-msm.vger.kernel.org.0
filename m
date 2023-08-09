@@ -2,416 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 142C27752A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:14:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB5477752AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:15:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbjHIGOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 02:14:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34776 "EHLO
+        id S229621AbjHIGPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 02:15:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230097AbjHIGOq (ORCPT
+        with ESMTP id S229602AbjHIGPg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 02:14:46 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E211CE61;
-        Tue,  8 Aug 2023 23:14:45 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3795NlIl022614;
-        Wed, 9 Aug 2023 06:14:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QaLLrT1DxNhi29uidPiOrlv8YgYilIuY2UepnXH9uN0=;
- b=BT0IpvNTm05L8QdfQQna3vIDL2eygpAHIIe65LRZ7MBmWEH5toa2g5BNuvR2lKzty8xJ
- 1c6ob2HSRm7x1y6zRY+wvFBwUuF22A4TSrp0D23LYRXxmR/XY5tLMyjW5/JQtopvg5wi
- UXX6MR4VZlc8oguvnieI8WWGLMOrvEgV1OnRSWTGt2BJ9M0MkfYS7E+7qypnWfKBsc10
- vUH5164uCdmBBtfgolq0P+3oMy6i4ADpMqmqELidnUbZfiaW5mZ/N826u0m6GirGazum
- el3F+VNF9LjQ6jpdvVRNVXKaqJJfk26/xY2WcMmsvJ3Giq/rAHUS0oMI2AKLfUeNnARZ 9g== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sc34h87fb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 09 Aug 2023 06:14:33 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3796EVJZ003347
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 9 Aug 2023 06:14:31 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
- 2023 23:14:27 -0700
-Message-ID: <91c8470e-0f74-d964-37ee-b18ab689cba8@quicinc.com>
-Date:   Wed, 9 Aug 2023 14:14:24 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v7 04/13] coresight-tpda: Add DSB dataset support
+        Wed, 9 Aug 2023 02:15:36 -0400
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2086.outbound.protection.outlook.com [40.107.95.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790B8133;
+        Tue,  8 Aug 2023 23:15:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NSt7+R0WqGiZKXXOV8kK/g42X7tU3jaLmcogER24j8boq4nvKQhXrO85UY0zK35zgOzF8RSPlp9U6WyFW0MjCQNSfCU7z50GLwUKOUZpd3rBEC1MeYerbs+yjgbcwA1xFJcMUbnz/yMylTm0juXnLr3vwixQNTPfEa/a/BZ5gDsO42XsMSajKhoXxkirrix+sjF2rVPoNpiGYcM/q6W/Phlejq40X+e8BXF/ohjbe8Cje+Llv6YkGtsR+ESg7M989u0XEdk4JP+xO7yT0k2j+cKBKG9BaSGWpwLrIBQuGnfkK5fRuSPXIL1WsAbmLJ7p1B4PKg0+gOhocmTSeP2PQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XqKdQWNsZujQELLTqxPkmyoj62uEMHdzP7cZc4NWsc4=;
+ b=QKJFiQkPMYH8edANr0BlIBmgFS1Tnad8fbOXXtSA60tIN7GdF5BUZgpKse9XFB3NV5LBchDSAP8AIUqlOGmXpR0LSfvJvsYBpV+L5Ol/CNQXoa1gq6rykqgc92nMa+Yk52OsLDSE3OXDfg151nyhE7+6z+9lc+IuW4v8XGffdzoZu3FjBVJ34M3S5kW5f1aXjGP6Mz4LBfoP8meKCW5nZ8vnJTRi9/6sdz3s2qWkZn7TWqz0YsKTsXaNzY7z4MYbeaEzrP7omV/8X89fzeu3DWCKxuiZ0AEJn7LvY492TcjuD1SkK7GIHu/riS1kpTvmlw4nZm6tkeVu74Ras8Cyig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XqKdQWNsZujQELLTqxPkmyoj62uEMHdzP7cZc4NWsc4=;
+ b=gKAYPQse0GC/UbtnGwG3yCJMRG7wNcxuWfnPbyy6bUobMjilnguO2GnJPH2BFqZng3AQthUuDo/pjJlRQoJHuDTtnB8nSQmXRYrzWJYom+vQGhYQLJiTtMlnJGW/Ni0DbE7ygj/kOh/wnirQ6NPboB2qiypRedXidERPPy+OCIA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by CY5PR12MB6228.namprd12.prod.outlook.com (2603:10b6:930:20::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.27; Wed, 9 Aug
+ 2023 06:15:33 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::3d:c14:667a:1c81]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::3d:c14:667a:1c81%4]) with mapi id 15.20.6652.028; Wed, 9 Aug 2023
+ 06:15:33 +0000
+Message-ID: <c2b0d96e-b768-b295-c672-3ae52e14b10b@amd.com>
+Date:   Wed, 9 Aug 2023 08:15:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH -next 1/7] drm/amdkfd: Remove unnecessary NULL values
 Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
- <1690269353-10829-5-git-send-email-quic_taozha@quicinc.com>
- <94b9ae0f-b6ed-1d72-f86a-d33842527681@arm.com>
- <43d94873-53be-d142-9075-a781b9de9f69@arm.com>
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <43d94873-53be-d142-9075-a781b9de9f69@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Ruan Jinjie <ruanjinjie@huawei.com>, Felix.Kuehling@amd.com,
+        alexander.deucher@amd.com, Xinhui.Pan@amd.com, airlied@gmail.com,
+        daniel@ffwll.ch, harry.wentland@amd.com, sunpeng.li@amd.com,
+        Rodrigo.Siqueira@amd.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, tzimmermann@suse.de, inki.dae@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, bskeggs@redhat.com,
+        kherbst@redhat.com, lyude@redhat.com, kraxel@redhat.com,
+        gurchetansingh@chromium.org, olvaffe@gmail.com,
+        paulo.miguel.almeida.rodenas@gmail.com, wenjing.liu@amd.com,
+        haoping.liu@amd.com, Charlene.Liu@amd.com, chiahsuan.chung@amd.com,
+        george.shen@amd.com, sancchen@amd.com, tony.tascioglu@amd.com,
+        jaehyun.chung@amd.com, tales.aparecida@gmail.com, drv@mailo.com,
+        aurabindo.pillai@amd.com, quic_vpolimer@quicinc.com,
+        jiasheng@iscas.ac.cn, noralf@tronnes.org,
+        jose.exposito89@gmail.com, javierm@redhat.com,
+        mairacanal@riseup.net, davidgow@google.com,
+        arthurgrillo@riseup.net, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org
+References: <20230809034445.434902-1-ruanjinjie@huawei.com>
+ <20230809034445.434902-2-ruanjinjie@huawei.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20230809034445.434902-2-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uqrj080pMJPVAbhQALvuV30TsEDMKjvR
-X-Proofpoint-GUID: uqrj080pMJPVAbhQALvuV30TsEDMKjvR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-09_03,2023-08-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308090054
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-ClientProxiedBy: FR3P281CA0207.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a5::12) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|CY5PR12MB6228:EE_
+X-MS-Office365-Filtering-Correlation-Id: db2f1aeb-8c33-4dcf-672e-08db98a0098a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 9lBNf5pI3/wHCv3eD6u2IqjyxcG0626nG1CbrHWZJ2S3wW7ztPIG8rsvQYRfW4S44nU1+gbiMpQLO5bE2p3xYe91G3iAT9DjZA2b8s59lzqzAHfQNRaze0qJv6QCsFswEYuQj/mBv+9WcBAx9yv3Gwe3Zd0+5quqAj37YtKibpWB+UEYoFvopudW0EVd3sThQ7GiYn+aDId86fj9vQF235dlwqnPMnCvHacG1c5T3pdznj4PJz0vdIuAcZK2g1lgMxX/eJMBRPFXLdxaTZNPZq8oKfiHuw79zWGkWcuMl+bHOF+Pgwcecvhfx4RWxOFuiAYHIJ6hgQE0n69ADAOAs6FbTe7tVsmh9t3wVVQ5/Qdxzt8P7ZRBCqTvX/I79+I49zgmkgm4Nmp+bRrkneDZZdi4EFmy7ykdFumkkGL0WIHydRtRbp7s2Atl3QNgZtGsyPHYsgnQrY6FcLgJi3HdxnWYbQU29x/65H23YBvOq2oqqCk7XSQVf7lCQ+fBwGoXWSSR74GmOCCnJ6KnEcp/3jwlGdRv/fcYZXGN8z7gazVgT5U3wne+RXs0oucfv5J/fbM9WLN41BuYg1c+tMVpRgOixlcFt5Yj2Y7PKt5iFntEphVOYc6a0mlCN3A5iK4rneHBFZXAIZPT6ANwKMS0rl8gN2LYw8FyBh1bjU4BWiI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(396003)(39860400002)(376002)(136003)(346002)(1800799006)(451199021)(186006)(7416002)(7406005)(8936002)(5660300002)(8676002)(41300700001)(316002)(83380400001)(31696002)(86362001)(2906002)(6512007)(31686004)(6666004)(6486002)(1191002)(2616005)(6506007)(66556008)(36756003)(66946007)(66476007)(921005)(478600001)(38100700002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eFB6ZDE5V2w5NSt0UVZaK2tQcGJXNUF5Y2kreWNzMnV4VDE5bGQ5Um1MVC83?=
+ =?utf-8?B?NHVrd1p5V2pGOFJMYUFFa0huZ01SMlVmN1dsQ2dQOUtqSU5yUm52TzkyWGs4?=
+ =?utf-8?B?VERhQUc3Z0FVdDNlenBlcTgzZzRLU1p2TTdtNVEyeVZldTFuVVFYVlErUFMz?=
+ =?utf-8?B?WkkwTnVmdUJyVjFFYTlSdlpNNllYWTI5U0o3Mkh2TkFyNHE1Vm5wRERxWFpn?=
+ =?utf-8?B?UnJmUndleGZDTG9DRW5HOWF6cWtPdTBmM015RUJ6S21WNlhvMEQ4T1J5TVY1?=
+ =?utf-8?B?OHcybnk5VW1ET01sNUZOQVhFT3pOYkRid2lwYW55SXZrQ29ldUF2UStqTnFC?=
+ =?utf-8?B?UlNjUm94aWV4aDNFditxZC9KRXh5UnQwQ2VCQUtOYlJPS1cxaHYrNWpWTWxw?=
+ =?utf-8?B?RVBMS2NxS2ZJTTM0dlZVT3RFODdBc0g1cnFBcGtXbW9FMGlnNVh6VTdMdHhi?=
+ =?utf-8?B?YlRFSDBNajhMcURsTkRocUxGY0hXaktpdkNnSExnZVVrZW1qTGxWN1QrcFpa?=
+ =?utf-8?B?U1FmZGwxOW0yTDJ3N1B0ZnU2VzlOeURmTkFtTGlyRmp6NTVOU2QzSTJLcE9U?=
+ =?utf-8?B?RE1NZ0N1ZERNMHJkL0MrVU41emEwOGJjMG9IenhibTJpNmJSMURVWko4aGNF?=
+ =?utf-8?B?YmMvOXJ0NExZUlBFZ0l0eElma3dyWTQwREJiYzFDcit5bVNJRmEwMkhZQ3pB?=
+ =?utf-8?B?OC9Zb3kzcnhpSFgxeXpZMUlVM3NCaDd4NWxDOUFNam10SktEalA5YkpGRGpq?=
+ =?utf-8?B?MzlyNmNZdUFzS0kyNmhPZWNiak5rUGN5WmNYcWV4TVNhbFN4cFpvemJzWUlx?=
+ =?utf-8?B?aXBPN2oyWEdPSXVGNE10NmxJWHQxZ2VIUjVZZGc0b20ybzlsaW5vSTNkejU2?=
+ =?utf-8?B?Q0U1SjYvaUsvSlE2cUora3pvWklxdFRNd09MMGQrVUIxTUFWaDJ4NkgzcE53?=
+ =?utf-8?B?dWZKZUM4bWVwNXVrcnprNHpZRXZrM2ZOa3Jvc3o3dWpHdTU0ZWg5ZHlCaWVm?=
+ =?utf-8?B?RVc0aS9oU0tkK3M0SklvQStDSVJWR3I4Z0F6bnJXN3pxUzkxSEJKT2NaeFdl?=
+ =?utf-8?B?dW4wUGpUaWJGMEhIYzRPYUl6N0Q5ZksxRnFseGtwc3FvYWZ2Q1M4TFhaRzdj?=
+ =?utf-8?B?VWJ1eHZHSFl6cXp1N3VCdFpsajduc3l0K2wxWlNJQTM2R0NNWFF5Qy9uQ2RG?=
+ =?utf-8?B?ZkVac0x1S0duSHdmMHVGUFdYaWdUUmQ1QU5PN3VCaytsQlE5Zmh2TnZGNU1o?=
+ =?utf-8?B?V0hHa3Y5U1I4dXJOalIzbHBNdE1PdjZOTzZDaUY0Y2JOaXNDV0FEWi83blQ3?=
+ =?utf-8?B?VTBmNEtvQ3R1SHBnUmRoLzBJL1RveDBFUGkyYktoS3dRNm8wYlY5eENNaG9R?=
+ =?utf-8?B?SXBPdnBYMzl6OEhEa3hBT3N3Z09NSEI2VGxRam9NbEVSR3hjZHV6T2psUlhQ?=
+ =?utf-8?B?cFE5SG0yQS9RS3RPWGQvZSt6NlBocnBtdjd3ZjJ0TkgwTHFDbG1NWXZDNnN1?=
+ =?utf-8?B?ampkMjRWeU1BaXBzOENwZVNTaUtXTFFTelNBVFdrVDFLekJwOHlpM2E5ckZr?=
+ =?utf-8?B?SlBmS3UzZThDNGRFZEYzTXB0Tm5uMXMzZTd6Y1Y0MGR2M0FBM3p2Q0FxeWZT?=
+ =?utf-8?B?MXVkUFpnUWVWZHZBbXJXYUMxK2RGbzJvZ09aT1hSSUt6bGhsQ0FCTHRWeHlt?=
+ =?utf-8?B?b0NDMTU3ZHNaRnNBZTd6cUFvTW4ycWw4ZmZFVzhFcVl2YlZDQmdBYjFGOFR4?=
+ =?utf-8?B?K2NYSEo3cGlGRnlnU05hdmk3Nzk4bEthUHNjZ2lDTWg2VkhqelVVRkxHSW1m?=
+ =?utf-8?B?RjJYRkd3djM2L1JJTTl3RGs2eXl0VXVON1M5Yk9UdFE1cWVWdFk3TzlibEdv?=
+ =?utf-8?B?eVM3ZGNuV1ZuSWUrZUtyaW5DZ0pFWWpIRktUdU9NOVVCcDNQaklNZU5pUm9L?=
+ =?utf-8?B?NGZpN2g5M09xVitKZUNXYVFrblRVbkhtVTFKdzZ6Z0htaGI1L1hOT2ZTbWNR?=
+ =?utf-8?B?ZmtJQmphSjkyU0FJRGphT1JaUU9KNHN4WmpnZnNCWFpjaHExQU5xZUdiODRI?=
+ =?utf-8?B?V3QxUnlLSFZtMm5PanZSV2pXNk5pdFFjeW9WNVBTbG8wa0J4MGlxME4zcXE2?=
+ =?utf-8?B?a1g4Mm5EYTRFRDUxRjZZcFNXZ0lVOVR5T0RLUTZ6T0JieFIwSld4S3g0dUVI?=
+ =?utf-8?Q?lCL/gFM7KuZktA/kSXMsflTLet2M5HLpXg4TlNI433YX?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: db2f1aeb-8c33-4dcf-672e-08db98a0098a
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Aug 2023 06:15:32.9069
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SNlZEvRvIgEQhQzuGsOmJQYPSJsOurd+bv1gYRBgzDXrWuVsEs0AqZbg1XYXknjU
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6228
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 8/7/2023 5:12 PM, Suzuki K Poulose wrote:
-> On 04/08/2023 16:02, Suzuki K Poulose wrote:
->> On 25/07/2023 08:15, Tao Zhang wrote:
->>> Read the DSB element size from the device tree. Set the register
->>> bit that controls the DSB element size of the corresponding port.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-tpda.c | 96 
->>> +++++++++++++++++++++++++---
->>>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->>>   2 files changed, 90 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->>> b/drivers/hwtracing/coresight/coresight-tpda.c
->>> index 8d2b9d2..7c71342 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>> @@ -21,6 +21,58 @@
->>>   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
->>> +/* Search and read element data size from the TPDM node in
->>
->> minor nit:
->>
->> /*
->>   * Search ...
->>
->>> + * the devicetree. Each input port of TPDA is connected to
->>> + * a TPDM. Different TPDM supports different types of dataset,
->>> + * and some may support more than one type of dataset.
->>> + * Parameter "inport" is used to pass in the input port number
->>> + * of TPDA, and it is set to 0 in the recursize call.
->>
->>> + * Parameter "parent" is used to pass in the original call.
->>
->> Please remove references to the past and describe "match_inport"
->>
->>> + */
->>> +static int tpda_set_element_size(struct tpda_drvdata *drvdata,
->>> +               struct coresight_device *csdev, int inport, bool 
->>> match_inport)
->>
->> May be we could switch the order of the parameters:
->>
->> match_inport, int port
->>
->> Or even inport < 0, implies, port wont be matched.
->>
->> i.e.,
->>
->> tpda_set_element_size(drvdata, child, inport)
->>
->>> +{
->>> +    static int nr_inport;
->>> +    int i;
->>> +    static bool tpdm_found;
->>> +    struct coresight_device *in_csdev;
->>> +
->>> +    if (inport > (TPDA_MAX_INPORTS - 1))
->>> +        return -EINVAL;
->>> +
->>> +    if (match_inport) {
->>> +        nr_inport = inport;
->>> +        tpdm_found = false;
->>> +    }
->>
->> Could we not avoid the static variables and this dance by making the 
->> function return the dsb_size ? See further down.
->>
->>
->>> +
->>> +    for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>> +        in_csdev = csdev->pdata->in_conns[i]->src_dev;
->>> +        if (!in_csdev)
->>> +            break;
->>          continue ?
->>> +
->>> +        if (match_inport)
->>> +            if (csdev->pdata->in_conns[i]->dest_port != inport)
->>> +                continue;
->>> +
->>> +        if ((in_csdev->type == CORESIGHT_DEV_TYPE_SOURCE) &&
->>> +                (in_csdev->subtype.source_subtype
->>> +                == CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM)) {
->>
->> Please provide a helper :
->>
->> static bool coresight_device_is_tpdm(csdev) {
->>      return
->>       (csdev->type == CORESIGHT_DEV_TYPE_SOURCE) &&
->>       (in_csdev->subtype.source_subtype ==
->>          CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
->> }
->>
->>
->>
->>> + of_property_read_u8(in_csdev->dev.parent->of_node,
->>> +                    "qcom,dsb-element-size", 
->>> &drvdata->dsb_esize[nr_inport]);
->>
->>
->>
->>> +            if (!tpdm_found)
->>> +                tpdm_found = true;
->>> +            else
->>> +                dev_warn(drvdata->dev,
->>> +                    "More than one TPDM is mapped to the TPDA input 
->>> port %d.\n",
->>> +                    nr_inport);
->>> +            continue;
->>> +        }
->>> +        tpda_set_element_size(drvdata, in_csdev, 0, false);
->>> +    }
->>> +
->>
->> /*
->>   * Read the DSB element size from the TPDM device
->>   * Returns
->>   *    the size read from the firmware if available.
->>   *    0 - Otherwise, with a Warning once.
->>   */
->> static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
->> {
->>      int rc, size = 0;
->>
->>      rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->>                       "qcom,dsb-element-size", &size);
->>      if (rc)
->>          dev_warn_once(&in->dev, "Failed to read TPDM DSB Element 
->> size: %d\n",
->>          rc);
->>      return size;
->> }
->>
->> static int tpda_get_element_size(struct coresight_device *csdev,
->>                   int inport)
->> {
->>      int dsb_size = -ENOENT;
->>
->>      for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>          in = csdev->pdata->in_conns[i]->src_dev;
->>          if (!in)
->>              continue;
->>          if (coresight_device_is_tpdm(in)) {
->>              /* Ignore the TPDMs that do not match port */
->>              if (inport > 0 &&
->>                  (csdev->pdata->in_conns[i]->dest_port !=
->>                  inport))
->>                  continue;
->>              size = tpdm_read_dsb_element_size(csdev);
->>          } else {
->>              /* Recurse down the path */
->>              size = tpda_set_element_size(in, -1);
->>          }
->>
->>          if (size < 0)
->>              return size;
->>          /* We have found a size, save it. */
->>          if (dsb_size < 0) {
->>              dsb_size = size;
->>          } else {
->>              /* We have duplicate TPDMs */
->>              return -EEXIST;
->>          }
->>      }
->>      return dsb_size;
->> }
->>
->>
->>
->>
->>> +    return 0;
->>> +}
->>> +
->>>   /* Settings pre enabling port control register */
->>>   static void tpda_enable_pre_port(struct tpda_drvdata *drvdata)
->>>   {
->>> @@ -32,26 +84,43 @@ static void tpda_enable_pre_port(struct 
->>> tpda_drvdata *drvdata)
->>>       writel_relaxed(val, drvdata->base + TPDA_CR);
->>>   }
->>> -static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->>> +static int tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->>>   {
->>>       u32 val;
->>>       val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
->>> +    /*
->>> +     * Configure aggregator port n DSB data set element size
->>> +     * Set the bit to 0 if the size is 32
->>> +     * Set the bit to 1 if the size is 64
->>> +     */
->>> +    if (drvdata->dsb_esize[port] == 32)
->>> +        val &= ~TPDA_Pn_CR_DSBSIZE;
->>> +    else if (drvdata->dsb_esize[port] == 64)
->>> +        val |= TPDA_Pn_CR_DSBSIZE;
->>
->> Couldn't this be detected via tpda_get_element_size()? see below.
->>
->>> +    else
->>> +        return -EINVAL;
->>> +
->>>       /* Enable the port */
->>>       val |= TPDA_Pn_CR_ENA;
->>>       writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->>> +
->>> +    return 0;
->>>   }
->>> -static void __tpda_enable(struct tpda_drvdata *drvdata, int port)
->>> +static int __tpda_enable(struct tpda_drvdata *drvdata, int port)
->>>   {
->>> +    int ret;
->>> +
->>>       CS_UNLOCK(drvdata->base);
->>>       if (!drvdata->csdev->enable)
->>>           tpda_enable_pre_port(drvdata);
->>> -    tpda_enable_port(drvdata, port);
->>> -
->>> +    ret = tpda_enable_port(drvdata, port);
->>>       CS_LOCK(drvdata->base);
->>> +
->>> +    return ret;
->>>   }
->>>   static int tpda_enable(struct coresight_device *csdev,
->>> @@ -59,16 +128,23 @@ static int tpda_enable(struct coresight_device 
->>> *csdev,
->>>                  struct coresight_connection *out)
->>>   {
->>>       struct tpda_drvdata *drvdata = 
->>> dev_get_drvdata(csdev->dev.parent);
->>> +    int ret;
->>> +
->>> +    ret = tpda_set_element_size(drvdata, csdev, in->dest_port, true);
->>
->>      size  = tpda_get_element_size(csdev, in->dest_port);
->>      switch (size) {
->>      case 32:
->>      case 64:
->>          break;
+Am 09.08.23 um 05:44 schrieb Ruan Jinjie:
+> The NULL initialization of the pointers assigned by kzalloc() first is
+> not necessary, because if the kzalloc() failed, the pointers will be
+> assigned NULL, otherwise it works as usual. so remove it.
 >
-> We also need :
->
->     case 0:
->         return -ENOENT;
+> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
 
-I will update this in the next patch series.
+Reviewed-by: Christian König <christian.koenig@amd.com> for this one, 
+the amd display code and the radeon stuff.
 
+Thanks,
+Christian.
 
-Best,
+> ---
+>   drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
+> index 863cf060af48..d01bb57733b3 100644
+> --- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
+> +++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c
+> @@ -48,7 +48,7 @@ int pipe_priority_map[] = {
+>   
+>   struct kfd_mem_obj *allocate_hiq_mqd(struct kfd_node *dev, struct queue_properties *q)
+>   {
+> -	struct kfd_mem_obj *mqd_mem_obj = NULL;
+> +	struct kfd_mem_obj *mqd_mem_obj;
+>   
+>   	mqd_mem_obj = kzalloc(sizeof(struct kfd_mem_obj), GFP_KERNEL);
+>   	if (!mqd_mem_obj)
+> @@ -64,7 +64,7 @@ struct kfd_mem_obj *allocate_hiq_mqd(struct kfd_node *dev, struct queue_properti
+>   struct kfd_mem_obj *allocate_sdma_mqd(struct kfd_node *dev,
+>   					struct queue_properties *q)
+>   {
+> -	struct kfd_mem_obj *mqd_mem_obj = NULL;
+> +	struct kfd_mem_obj *mqd_mem_obj;
+>   	uint64_t offset;
+>   
+>   	mqd_mem_obj = kzalloc(sizeof(struct kfd_mem_obj), GFP_KERNEL);
 
-Tao
-
->
-> Suzuki
->
->
->>      case -EEXIST:
->>          dev_warn_once("Detected multiple TPDMs on port %d", ..)
->>          fallthrough;
->>      default:
->>          return size;
->>      }
->>
->>      drvdata->dsb_esize[in->dest_port] = size;
->>
->> Suzuki
->>
->>
->>
->>> +    if (ret)
->>> +        return ret;
->>>       spin_lock(&drvdata->spinlock);
->>> -    if (atomic_read(&in->dest_refcnt) == 0)
->>> -        __tpda_enable(drvdata, in->dest_port);
->>> +    if (atomic_read(&in->dest_refcnt) == 0) {
->>> +        ret = __tpda_enable(drvdata, in->dest_port);
->>> +        if (!ret) {
->>> +            atomic_inc(&in->dest_refcnt);
->>> +            dev_dbg(drvdata->dev, "TPDA inport %d enabled.\n", 
->>> in->dest_port);
->>> +        }
->>> +    }
->>> -    atomic_inc(&in->dest_refcnt);
->>>       spin_unlock(&drvdata->spinlock);
->>> -
->>> -    dev_dbg(drvdata->dev, "TPDA inport %d enabled.\n", in->dest_port);
->>> -    return 0;
->>> +    return ret;
->>>   }
->>>   static void __tpda_disable(struct tpda_drvdata *drvdata, int port)
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h 
->>> b/drivers/hwtracing/coresight/coresight-tpda.h
->>> index 0399678..12a1472 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
->>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
->>> @@ -10,6 +10,8 @@
->>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
->>>   /* Aggregator port enable bit */
->>>   #define TPDA_Pn_CR_ENA        BIT(0)
->>> +/* Aggregator port DSB data set element size bit */
->>> +#define TPDA_Pn_CR_DSBSIZE        BIT(8)
->>>   #define TPDA_MAX_INPORTS    32
->>> @@ -23,6 +25,7 @@
->>>    * @csdev:      component vitals needed by the framework.
->>>    * @spinlock:   lock for the drvdata value.
->>>    * @enable:     enable status of the component.
->>> + * @dsb_esize:  DSB element size for each inport, it must be 32 or 64.
->>>    */
->>>   struct tpda_drvdata {
->>>       void __iomem        *base;
->>> @@ -30,6 +33,7 @@ struct tpda_drvdata {
->>>       struct coresight_device    *csdev;
->>>       spinlock_t        spinlock;
->>>       u8            atid;
->>> +    u8            dsb_esize[TPDA_MAX_INPORTS];
->>>   };
->>>   #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
->>
->
