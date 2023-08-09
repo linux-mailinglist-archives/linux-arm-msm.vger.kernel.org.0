@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 920D67763EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 17:35:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EEDF776419
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 17:39:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234426AbjHIPfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 11:35:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57264 "EHLO
+        id S234474AbjHIPjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 11:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233654AbjHIPfU (ORCPT
+        with ESMTP id S234472AbjHIPjY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 11:35:20 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB1630DB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 08:34:44 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5234f2c6c1dso1592046a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 08:34:44 -0700 (PDT)
+        Wed, 9 Aug 2023 11:39:24 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E822689
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 08:38:43 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b9b50be31aso106375621fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 08:38:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691595275; x=1692200075;
+        d=linaro.org; s=google; t=1691595519; x=1692200319;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ay4rOaVl7rQWfxgs/lZW3TV6yN7gvT00cFA2eir0n/8=;
-        b=u9PFlZVoW/AeylJwTNSDMKr2sZeGySeDeMwi5mwqjbqfdrrbPBECV/5CDVHgtPF7uC
-         a1gTFv+rRWNQr1wqQ98GKn52t/q1/lu/gRxFGdGoBv6dCQoFDHMtS51JxoqfM+dM/o9X
-         DAskVeuxU/eNHljkfUVOsqzdM0tigmAqgz9YENjVW8BGqSlhZJ+txcW7a3WUyF6qRaWa
-         SPMLxqfiadLvyjRsGhc++uCZtbUOaQQWj6LzypQ74YfbEfqFAuGhtitlzcoAb8eIX8rV
-         DaerDqHt4ba+gm78c/JkmajrMmTYBLBSpUaaixqKnLaH7ZSHbjLv6vUow3RE3BCKk5up
-         G8Jw==
+        bh=r707B4tVygZaMVBucHiTCFygPxl557dnSQW/UZnC7uU=;
+        b=OfOOw7Ha21cX+SrmOxpMaIRauiUgty3GCDD5tHf3R//xmOQmpMk3DI7KnmCF/uATwX
+         WPS6+SIz7fGfnN/kVipZDGgZTRwfJoaYOzYyzvGF7TIbYNRY1QJCL8gGL/cYIk+xVv/T
+         dKFqxukjYgUZP//nnFvnK6HoSUL65xHxPiYhk8eVkk5zYYhLFYUb4hQ4eVGfMyfKC5z+
+         Ciy1KJlQF9FyedEKpvxdiPIpIi0t2thhWdG6G/DhlAfwrxNufHrsz5kwZLeIttDMH6hw
+         XbxqJYLA0Uu+q5PM5CXPiiuNE5B28LBrzQv3yzuZrLhVdF2Px9tCLglV81NNJZaAkPPY
+         j8KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691595275; x=1692200075;
+        d=1e100.net; s=20221208; t=1691595519; x=1692200319;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ay4rOaVl7rQWfxgs/lZW3TV6yN7gvT00cFA2eir0n/8=;
-        b=BmQGPhSog/vEGfaUfx9n8N3wAKy58A4gPtMU3cBphiZylTiEEw8w1+DAxBl0BuAYoV
-         ksao9xLnVrYcyuskPYUWT9CRjo+Ag3dPh+G6n4ZfqRdznLimZU9hdKSIaroSM/rG1qWs
-         iGApK91v4Aj+3Xmk2EuYeFgXjV5eoIvG32yqiPG8dpqARF21T4weoxAuj+cnjZPrWTFb
-         SIXgOKoC15XVeD/81xRj3n4eqKeUaI3lRfomaN16xvTCK+Uzcmu93ptQwpz9infFEevg
-         JqkHAtQk+a/UNi3B+PBf1WRxe39dfSawF7NTkKfaAebd4EBIHPLT+iz0uDLve4V9k+Dm
-         yqNQ==
-X-Gm-Message-State: AOJu0YzQrpzA3ECOdWeXsJz7HgTUjcfHISv7ykoI/LYaAvs3AQx6vOFj
-        3XMI6/XbnRadktbgU+eQ+ccnjw==
-X-Google-Smtp-Source: AGHT+IEyn98eEWe724oKDhZcUo28dwdN4dtQOxLsYiPlUt37JKU4TwvEnkGLy99Wzn2+cnMbA16/Jg==
-X-Received: by 2002:aa7:d44f:0:b0:523:20ca:de55 with SMTP id q15-20020aa7d44f000000b0052320cade55mr2457669edr.22.1691595274932;
-        Wed, 09 Aug 2023 08:34:34 -0700 (PDT)
+        bh=r707B4tVygZaMVBucHiTCFygPxl557dnSQW/UZnC7uU=;
+        b=kueXiC2BM20KmWshMum7eBZhJjm7olJswm2+ERH8v8UxDrKeWmJpVqoQKREMBmwSJk
+         L251ZDwx8u+eCfp4HuZ9GsuIKp8WNsqeIOcrkNw4bLiqvcLSI7bsgD/dLG7oUr/Sh4vu
+         aApIiktbDybtCa+b28DosUyEhsJMXf/qq3q4KDGFQmP343/gtfH+cYLgxiKAzEm1uXJi
+         Owi5HasE3KYnVgxqDFd99dpUZwfubl9Zn2CGNpYa6VI1jo/5IeEU8jTtUYsRnNV/EtAg
+         AgrueP+MhmTz9siMTXE1RGzv0l3s+4uap1eHXxMG4zghhWdrPmD1+fys82hXU20t5GGU
+         FiDA==
+X-Gm-Message-State: AOJu0YxOngp0qpdVUaDDQRd1Ned/+3KaZN87Kd3A1qKNmKOza0cObGCX
+        w86whP+5EfvQUZWtjbLlcIfeNw==
+X-Google-Smtp-Source: AGHT+IEwCkohKzjzb9m/9Gqa3Pcdu5zzc0ctCyzc48SRmLCFKPtbVms2jwuQZiO6czAxnYqiUKT8jg==
+X-Received: by 2002:a2e:6e18:0:b0:2b6:e2cd:20f5 with SMTP id j24-20020a2e6e18000000b002b6e2cd20f5mr2121599ljc.9.1691595519512;
+        Wed, 09 Aug 2023 08:38:39 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id x22-20020aa7cd96000000b0051e26c7a154sm8179068edv.18.2023.08.09.08.34.33
+        by smtp.gmail.com with ESMTPSA id h11-20020a170906854b00b0099cb1a2cab0sm6773292ejy.28.2023.08.09.08.38.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 08:34:34 -0700 (PDT)
-Message-ID: <19d885aa-3740-1287-715c-5ecb913c8a72@linaro.org>
-Date:   Wed, 9 Aug 2023 17:34:32 +0200
+        Wed, 09 Aug 2023 08:38:39 -0700 (PDT)
+Message-ID: <18d2241a-98ab-6a57-1c4f-d961a4b37c6b@linaro.org>
+Date:   Wed, 9 Aug 2023 17:38:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v1 2/4] dt-bindings: clock: add qca8386/qca8084 clock and
- reset definitions
+Subject: Re: [PATCH v1 3/4] clk: qcom: add clock controller driver for
+ qca8386/qca8084
 Content-Language: en-US
 To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
         agross@kernel.org, konrad.dybcio@linaro.org,
@@ -67,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_srichara@quicinc.com
 References: <20230809080047.19877-1-quic_luoj@quicinc.com>
- <20230809080047.19877-3-quic_luoj@quicinc.com>
+ <20230809080047.19877-4-quic_luoj@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230809080047.19877-3-quic_luoj@quicinc.com>
+In-Reply-To: <20230809080047.19877-4-quic_luoj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,72 +83,125 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 09/08/2023 10:00, Luo Jie wrote:
-> QCA8386/QCA8084 includes the clock & reset controller that is
-> accessed by MDIO bus. Two work modes are supported, qca8386 works
-> as switch mode, qca8084 works as PHY mode.
+> Add clock & reset controller driver for qca8386/qca8084.
 > 
 > Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > ---
+>  drivers/clk/qcom/Kconfig       |    8 +
+>  drivers/clk/qcom/Makefile      |    1 +
+>  drivers/clk/qcom/nsscc-qca8k.c | 2195 ++++++++++++++++++++++++++++++++
+>  3 files changed, 2204 insertions(+)
+>  create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 263e55d75e3f..d84705ff920d 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -195,6 +195,14 @@ config IPQ_GCC_9574
+>  	  i2c, USB, SD/eMMC, etc. Select this for the root clock
+>  	  of ipq9574.
+>  
+> +config IPQ_NSSCC_QCA8K
+> +	tristate "QCA8K(QCA8386 or QCA8084) NSS Clock Controller"
 
-Thank you for your patch. There is something to discuss/improve.
+Is it specific to some arch? We keep ARM or ARM64 for most of the entries.
 
+> +	help
+> +	  Support for NSS(Network SubSystem) clock controller on
+> +	  qca8386/qca8084 chip.
+> +	  Say Y if you want to use network features of switch or PHY
+> +	  device. Select this for the root clock of qca8k.
 > +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: qcom,qca8084-nsscc
-> +      - items:
-> +          - enum:
-> +              - qcom,qca8085-nsscc
-> +              - qcom,qca8082-nsscc
-> +              - qcom,qca8386-nsscc
-> +              - qcom,qca8385-nsscc
-> +              - qcom,qca8384-nsscc
+>  config MSM_GCC_8660
+>  	tristate "MSM8660 Global Clock Controller"
+>  	depends on ARM || COMPILE_TEST
 
-Please keep this enum sorder alphanumerically.
+...
 
-> +          - const: qcom,qca8084-nsscc
+> +static int nss_cc_qca8k_probe(struct mdio_device *mdiodev)
+> +{
+> +	struct device *dev = &mdiodev->dev;
+> +	struct regmap *regmap;
+> +	struct qcom_reset_controller *reset;
+> +	struct qcom_cc_desc desc = nss_cc_qca8k_desc;
+> +	size_t num_clks = desc.num_clks;
+> +	struct clk_regmap **rclks = desc.clks;
+> +	struct qcom_cc *cc;
+> +	int ret, i;
 > +
-> +  clocks:
-> +    items:
-> +      - description: Chip XO source
-> +      - description: UNIPHY0 RX 312P5M/125M clock source
-> +      - description: UNIPHY0 TX 312P5M/125M clock source
-> +      - description: UNIPHY1 RX 312P5M/125M clock source
-> +      - description: UNIPHY1 TX 312P5M/125M clock source
-> +      - description: UNIPHY1 RX 312P5M clock source
-> +      - description: UNIPHY1 TX 312P5M clock source
+> +	cc = devm_kzalloc(dev, sizeof(*cc), GFP_KERNEL);
+> +	if (!cc)
+> +		return -ENOMEM;
 > +
-> +  reg:
-> +    items:
-> +      - description: MDIO bus address for Clock & Reset Controller register
+> +	cc->rclks = rclks;
+> +	cc->num_rclks = num_clks;
+> +	reset = &cc->reset;
 > +
-> +required:
-> +  - compatible
-> +  - clocks
-> +  - reg
+> +	regmap = devm_regmap_init(dev, NULL, mdiodev->bus, desc.config);
 > +
-> +allOf:
-> +  - $ref: qcom,gcc.yaml#
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    mdio {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      clock-controller@800000 {
-> +        compatible = "qcom,qca8084-nsscc";
-> +        reg = <24>;
 
-I think changes from your previous version... Unit address must match
-it, so clock-controller@24
+Drop blank line.
 
+> +	if (IS_ERR(regmap)) {
+> +		dev_err(dev, "Failed to init MDIO regmap\n");
 
-> +        clocks = <&qca8k_xo>,
-> +                 <&qca8k_uniphy0_rx>,
+All of error returns could be converted return dev_err_probe(), just to
+have smaller code. Not a requirement, though.
+
+> +		return PTR_ERR(regmap);
+> +	}
+> +
+> +	reset->rcdev.of_node = dev->of_node;
+> +	reset->rcdev.dev = dev;
+> +	reset->rcdev.ops = &qcom_reset_ops;
+> +	reset->rcdev.owner = dev->driver->owner;
+> +	reset->rcdev.nr_resets = desc.num_resets;
+> +	reset->regmap = regmap;
+> +	reset->reset_map = desc.resets;
+> +
+> +	ret = devm_reset_controller_register(dev, &reset->rcdev);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to register QCA8K reset controller: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	for (i = 0; i < num_clks; i++) {
+> +		if (!rclks[i])
+> +			continue;
+> +
+> +		ret = devm_clk_register_regmap(dev, rclks[i]);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to regmap register for QCA8K clock: %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	ret = devm_of_clk_add_hw_provider(dev, qcom_qca8k_clk_hw_get, cc);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to register provider for QCA8K clock: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	dev_info(dev, "Registered NSSCC QCA8K clocks\n");
+
+Drop the simple info for probe status. Kernel has other ways to do this.
+
+> +	return ret;
+> +}
+> +
+> +static const struct of_device_id nss_cc_qca8k_match_table[] = {
+> +	{ .compatible = "qcom,qca8085-nsscc" },
+> +	{ .compatible = "qcom,qca8084-nsscc" },
+> +	{ .compatible = "qcom,qca8082-nsscc" },
+> +	{ .compatible = "qcom,qca8386-nsscc" },
+> +	{ .compatible = "qcom,qca8385-nsscc" },
+> +	{ .compatible = "qcom,qca8384-nsscc" },
+
+You only need qca8084 here. Drop all other entries.
+
+> +	{ }
+> +};
+
 
 
 Best regards,
