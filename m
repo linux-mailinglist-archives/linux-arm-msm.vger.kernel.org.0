@@ -2,101 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9696E775E9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 14:12:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FA49775E73
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 14:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbjHIMMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 08:12:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34290 "EHLO
+        id S229625AbjHIMGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 08:06:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231309AbjHIMMa (ORCPT
+        with ESMTP id S229683AbjHIMGI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 08:12:30 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFDD1BF0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 05:12:29 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5217ad95029so8777502a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 05:12:29 -0700 (PDT)
+        Wed, 9 Aug 2023 08:06:08 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FF2C1728
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 05:06:07 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe4f5290daso10537062e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 05:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691583148; x=1692187948;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qFvAA/v39L86qjDqi6cHkK3yiYvvs9Qa9ISV4luSpBA=;
-        b=tdSvXZ+BdfkaUDDGp6yIk2M/QfK6VnQ7Wt/SxsMRWUGanoHRO6dFOEXzSJQ7qbn1wZ
-         wy8U1H1KLw9ScmVHJ9g2H2jh9/nPKsMQfyBTw5/HBNYX4v5sCpf+38p7T49sp2iwii4Y
-         luYrh5dQUtYkedH6wBL19GQBgaenwQAJu6etjxz9el5fSxhPeAE/wEIhI1nD59MzCGhO
-         5TlslP2kEo9BZiYj3rnSO16mH0W3vAc7mg1UT6gBVQiGY5Dx49RAyI1poobAWA9sGBQN
-         w1D+YkPz7WFEY/ciHErDC5h1LpLbO5A7t1MW/VXyX9mg0zVWPN54cDomBcNhKfTkyMHM
-         irtg==
+        d=linaro.org; s=google; t=1691582765; x=1692187565;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KpfeP6ke2WO44ZDyhI7CO+XkyqQhOu2fn++jvazaiLE=;
+        b=T8Ew4HbpeSHjuhq1tHJi7MsnBq6uonaK7Ap0YpGjhGFSkZ/MKnYmHCZHflSf/1gKa9
+         nmI7FnFwfqYg0tNwCCct3Ajo8C0EePO/Sxom6Jd6PixhWTX611ahj8Rh+j6wrSJZ4rHE
+         kGQca2VJDo6U8WFBuYqz8d84cl7xNfAXlXP/4v9GNxzbx/VUjYFgfEcS7ValCxifrOn/
+         9TMwFLw/f+sGNX6QB9hgdJBI373fle6TwXW/vl66R9z7gE16Ekdbgl4Udzkyb8CQQmTH
+         aXT7ImUaNKjc4HXwmTV6H/jrv74jlwRV59QSU/K8eLBfbppELg2Wd6+c/j9AK4/p+e9Y
+         C8yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691583148; x=1692187948;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qFvAA/v39L86qjDqi6cHkK3yiYvvs9Qa9ISV4luSpBA=;
-        b=Co/GxuYQPqpEJkZZERegxiZXSPssmUiucibNM/mjzWf1lLj4Duz2lEUXpnbD00/fS3
-         Ww2xPWyl21dLi0/aN1nS7lLj+8T8reUXFI+LthSNCC+EsHn+WipwzpILZcFTk4BItL+/
-         TtxkBBDwp3fAPxZaVsgwCjz2TORotOArxP0VkHGsE6u5F582PGD7mXPCSfk4yWEQegh2
-         SOAWxKIS4xIykU24fstBUM8mq5QGrfNX/nGZCgJy6TZ0EEUi+lPyd0DoyXmlk5uV6kex
-         aezejoAFaYPJHGtTIoZkX1ioDWxhNrrzW9MGX3d3CXxHvyft2lyEa5Dp3l9c9BySHieK
-         3LIg==
-X-Gm-Message-State: AOJu0YxmryX1925OZNwTuBZ1Jaeh00/PVNwKmNbsNG55L0XwDihUjaBn
-        DfoRhuWh1EGA0THoYopP5UPNlWk148HSz1H7gPE=
-X-Google-Smtp-Source: AGHT+IFdMKH9L8wd2454RCyOpWWrJie6RwmaDWZQZMXoneh38svP9bLig4ymV9a7EA2LKFm1dKwF8g==
-X-Received: by 2002:a05:600c:248b:b0:3fb:b530:a4e4 with SMTP id 11-20020a05600c248b00b003fbb530a4e4mr2033263wms.8.1691582678366;
-        Wed, 09 Aug 2023 05:04:38 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b13-20020a05600c11cd00b003fe1a96845bsm1808573wmi.2.2023.08.09.05.04.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 05:04:37 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, loic.poulain@linaro.org, rfoss@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: [PATCH 2/7] arm64: dts: qcom: apq8016-sbc: Fix ov5640 data-lanes declaration
-Date:   Wed,  9 Aug 2023 13:04:27 +0100
-Message-Id: <20230809120432.1036405-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230809120432.1036405-1-bryan.odonoghue@linaro.org>
-References: <20230809120432.1036405-1-bryan.odonoghue@linaro.org>
+        d=1e100.net; s=20221208; t=1691582765; x=1692187565;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KpfeP6ke2WO44ZDyhI7CO+XkyqQhOu2fn++jvazaiLE=;
+        b=eBnV9DxclX33eGg9jNDQ5GZNJyq8uSKOfEvDtUNoWs2+iU8tV+baiQCCZKKAatytSl
+         q7xA33jYa4App5A39zJfvX94W7aXeyt5RjHU2uYGguKupPdbqFm9LlQanMOd1gKGDSfn
+         ewbXI++2VyD0COwONoHCvEWe+9AmTpR2zro2T63Jx3kFTya+0a0Mh1oQQeIguOjN3IhN
+         ng34iTmepzJHGKC4LWQ/RcHrAQkBTCeM+8o/t6rXA5ElNjqnJl9zWOAA+6S6i0W287y4
+         mV8uk0V2ehFH8fr5qJKx5+JcceiaSK2JfFtIyVm1VrxdGvhnBdw1CXh40ttw2jcDtdkD
+         hWOg==
+X-Gm-Message-State: AOJu0YycDObk75szrT55TYQFR1oxE9paa+lwxRyUra6jxouWg3ArzPUH
+        KZObDnx/P8t9cvOgaAE1FIefJg==
+X-Google-Smtp-Source: AGHT+IGlPEoWQXB5IWbrFHZodK4i4UROjvg7Gl0dFVNkkRftggjg1/1ew0ibEySA8reminjHzf2AXQ==
+X-Received: by 2002:ac2:5b8f:0:b0:4fe:d9e:a47 with SMTP id o15-20020ac25b8f000000b004fe0d9e0a47mr1727944lfn.69.1691582765424;
+        Wed, 09 Aug 2023 05:06:05 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id p20-20020ac246d4000000b004fe5608e412sm2292105lfo.170.2023.08.09.05.06.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 05:06:04 -0700 (PDT)
+Message-ID: <e54fcd4f-f98e-4930-8941-b39f0504d585@linaro.org>
+Date:   Wed, 9 Aug 2023 14:06:03 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: apq8016-sbc: Fix ov5640 regulator
+ supply names
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        loic.poulain@linaro.org, rfoss@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230809120432.1036405-1-bryan.odonoghue@linaro.org>
+ <20230809120432.1036405-2-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230809120432.1036405-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The yaml constraint for data-lanes is [1, 2] not [0, 2]. The driver itself
-doesn't do anything with the data-lanes declaration save count the number
-of specified data-lanes and calculate the link rate so, this change doesn't
-have any functional side-effects.
+On 9.08.2023 14:04, Bryan O'Donoghue wrote:
+> The ov5640 driver expects DOVDD, AVDD and DVDD as regulator supply names.
+> 
+> The ov5640 has depended on these names since the driver was committed
+> upstream in 2017. Similarly apq8016-sbc.dtsi has had completely different
+> regulator names since its own initial commit in 2020.
+> 
+> Perhaps the regulators were left on in previous 410c bootloaders. In any
+> case today on 6.5 we won't switch on the ov5640 without correctly naming
+> the regulators.
+> 
+> Fixes: 39e0ce6cd1bf ("arm64: dts: qcom: apq8016-sbc: Add CCI/Sensor nodes")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 75b4e5ff7c95c..0481a4a82090a 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -291,7 +291,7 @@ camera_rear@3b {
- 
- 		port {
- 			ov5640_ep: endpoint {
--				data-lanes = <0 2>;
-+				data-lanes = <1 2>;
- 				remote-endpoint = <&csiphy0_ep>;
- 			};
- 		};
--- 
-2.39.2
-
+Konrad
