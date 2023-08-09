@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC5A7754EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 10:19:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65A2E7754F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 10:19:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbjHIITO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 04:19:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S229861AbjHIITV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 04:19:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230457AbjHIITN (ORCPT
+        with ESMTP id S230481AbjHIITU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 04:19:13 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE081705
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 01:19:12 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-686b91c2744so4785479b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 01:19:12 -0700 (PDT)
+        Wed, 9 Aug 2023 04:19:20 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A6AA1705
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 01:19:19 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-1bbaa549c82so5176793fac.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 01:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691569152; x=1692173952;
+        d=linaro.org; s=google; t=1691569159; x=1692173959;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/olz3+pT5vGvwMXGNPW6pUJny4Ruwz46zxkrZbI5uIk=;
-        b=jrHUjZszg5aGthu3ZzuRR0j78xTaWrwJpMn+vkNQr9IJXSakR4x5Ei6YuIp+pJBl0x
-         UNOiXLU3ceDbWiBviK/yfh8Qdz3vxlgYE1JF6+mzFKzKN5k1FvVI/qYfKcm7TFj1h5WV
-         P7/Da4xm8nmh69i7JnsA+wrU++NQOaD4uf2GXGc6IFVrnkBLCRextjiGgMDIeEJC5jO1
-         sStB4HpxqjEaTSac41m8tNH9PImtWQm7T1InfKdnLT+LbzQcOaPZowLZ1w05kBlTEwZ4
-         PmwNpC99+17i7mfnGxf53IFmzIf1SB+Ic/cCjYLeXeZ1OVeipjxpu9cHtwgoNPVbaFxt
-         8Ysw==
+        bh=+Okzh3I3dzCaHx/bUTlDK1L8F0UIhPrJOUlojekDh3o=;
+        b=w2eFjDPWzAORfg5gZl6b/D1O0q/g5sM0KeZ+LXfzb3SM+XbwJxbmWCbWx3rRzDCu7c
+         1JvwydZmEXJtvccfgbMkxkGswri3FZ+fGJX33NDK1Zh9kQNNRv1fQVC/tE685qq2XAQW
+         gV2wmTEIDwGATUzoDSViYRrEkmmh9JiaCd0ReuFeiCOxRaf62//2DQ3mrAu4b1sHmRET
+         ehY+a0EF3Fo7cIU4XXfORfkvwncFgxW2yUZuHXT+h05cfPbHMSp4yB9Y4y69xtJE/SSr
+         RameDHrn1aH7WrVf6pIEoanaKU+oUPdIl6Nj12hW8Y8lujHiO01d5GKMSuHpbBU5MTdy
+         BbOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691569152; x=1692173952;
+        d=1e100.net; s=20221208; t=1691569159; x=1692173959;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/olz3+pT5vGvwMXGNPW6pUJny4Ruwz46zxkrZbI5uIk=;
-        b=iSX4Jpw1h80fWl6mndA1yxGm27LZlCT8NcwynqFqFlTR9vPIbfLA/CPRcVrLISZgxb
-         zPmbJv+zdR9Z2G6ofYZlIxPMAh2lRvK3mnb6o7bNfRpOGpH0Z3l5JpbJWxeddOC+BhwQ
-         v57/82mv1I3whM1KnyCDHzTJCRDHMezBCYja8u7xYeEsy64dSjeOX0sg04tBxNiuxaSu
-         L2pB0xF4k30DFVi5HKjrVG+5dCTyVqCi41Xao9MoXka1aMBEA7R0oGmtq2rwYXS6bjJU
-         urfVxzN6ZghSQQ6h2Hp9zxywiJSub9PZAMJykJEcD4LHTxAm35BLQpiu8rvHUAbP0qnD
-         du0Q==
-X-Gm-Message-State: AOJu0YzlHtOd4CzIKHyh8t+e6RSOR32tzUe5j2ozeZCuK+hjnGHklfj3
-        4sBwFBxgPaoabuAxFuwaZsLG
-X-Google-Smtp-Source: AGHT+IGb/j2HSoijwa29RVJtTy6775ilCzzT+Qk8BKibKLGP8453uYMb168de6FT/MJQOAVUiKpziA==
-X-Received: by 2002:a05:6a20:cea2:b0:13b:9a09:674b with SMTP id if34-20020a056a20cea200b0013b9a09674bmr1594955pzb.36.1691569152270;
-        Wed, 09 Aug 2023 01:19:12 -0700 (PDT)
+        bh=+Okzh3I3dzCaHx/bUTlDK1L8F0UIhPrJOUlojekDh3o=;
+        b=U5jQKy/SaR1VSNStkubjchmYZqJ+LVW4VayfyqpX5YzCB5O7vnTomigKAYCYCkgdbx
+         Nl9VwbQGr0GFYqywnjue3QC7AVG2KWqZqJDhjtjHirjBwjxfef9BjAYWsPCXcdhlm6BW
+         cPfVPUIHUtlnvtNAs9ADpbEF3VuZC1lEr9E4eMuRntBoGBh9O3B7wNzX8UzjzOOGBslN
+         2u8vvkJcyVmcUYDwqfRNrSIRoRRwQ9wRu2BOKKRUeS78OJOjXS6ZNivk4qpdWqqmsl7q
+         ElQVPKSJ6RBd3pF6L8qEGmS62AFe/1k7SHYU0X8cqkZ3Dj3MaTN/Rq1sthxm+muXQOiT
+         cFAQ==
+X-Gm-Message-State: AOJu0Yx/4C/6bgxdhuakm9HTrDeVPd5NqEwDlHqn+oI1TzIvklYIO5vy
+        qkjk78NJKnVOlLbR1cbsX1Mu
+X-Google-Smtp-Source: AGHT+IF8RxjtXdMtgun8QOPi+B+HN1viKgLXoYS1LWbrh0VyxHAqKv9TBjzGUa1hBSNQ+BNOnmQ3FQ==
+X-Received: by 2002:a05:6870:418c:b0:1bf:b863:b64 with SMTP id y12-20020a056870418c00b001bfb8630b64mr1897438oac.19.1691569158866;
+        Wed, 09 Aug 2023 01:19:18 -0700 (PDT)
 Received: from localhost.localdomain ([117.207.25.122])
-        by smtp.gmail.com with ESMTPSA id v13-20020a62a50d000000b00686ee7ba3easm9331881pfm.216.2023.08.09.01.19.06
+        by smtp.gmail.com with ESMTPSA id v13-20020a62a50d000000b00686ee7ba3easm9331881pfm.216.2023.08.09.01.19.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 01:19:11 -0700 (PDT)
+        Wed, 09 Aug 2023 01:19:18 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
 Cc:     robh@kernel.org, gustavo.pimentel@synopsys.com,
@@ -57,9 +57,9 @@ Cc:     robh@kernel.org, gustavo.pimentel@synopsys.com,
         linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 1/2] PCI: dwc: Add host_post_init() callback
-Date:   Wed,  9 Aug 2023 13:48:39 +0530
-Message-Id: <20230809081840.16034-2-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 2/2] PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops
+Date:   Wed,  9 Aug 2023 13:48:40 +0530
+Message-Id: <20230809081840.16034-3-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230809081840.16034-1-manivannan.sadhasivam@linaro.org>
 References: <20230809081840.16034-1-manivannan.sadhasivam@linaro.org>
@@ -75,42 +75,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This callback can be used by the platform drivers to do configuration once
-all the devices are scanned. Like changing LNKCTL of all downstream devices
-to enable ASPM etc...
+ASPM is supported by Qcom host controllers/bridges on most of the recent
+platforms and so the devices tested so far. But for enabling ASPM by
+default (without Kconfig/cmdline/sysfs), BIOS has to enable ASPM on both
+host bridge and downstream devices during boot. Unfortunately, none of the
+BIOS available on Qcom platforms enables ASPM. Due to this, the platforms
+making use of Qcom SoCs draw high power during runtime.
+
+To fix this power issue, users/distros have to enable ASPM using configs
+such as (Kconfig/cmdline/sysfs) or the BIOS has to start enabling ASPM.
+The latter may happen in the future, but that won't address the issue on
+current platforms. Also, asking users/distros to enable a feature to get
+the power management right would provide an unpleasant out-of-the-box
+experience.
+
+So the apt solution is to enable ASPM in the controller driver itself. And
+this is being accomplished by calling pci_enable_link_state() in the newly
+introduced host_post_init() callback for all the devices connected to the
+bus. This function enables all supported link low power states for both
+host bridge and the downstream devices.
+
+Due to limited testing, ASPM is only enabled for platforms making use of
+ops_1_9_0 callbacks.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c | 3 +++
- drivers/pci/controller/dwc/pcie-designware.h      | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 28 ++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index cf61733bf78d..5ad42cdc2325 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -505,6 +505,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (ret)
- 		goto err_stop_link;
- 
-+	if (pp->ops->host_post_init)
-+		pp->ops->host_post_init(pp);
-+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index cee4e400a695..ef843328a9a0 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -219,6 +219,7 @@ struct qcom_pcie_ops {
+ 	int (*get_resources)(struct qcom_pcie *pcie);
+ 	int (*init)(struct qcom_pcie *pcie);
+ 	int (*post_init)(struct qcom_pcie *pcie);
++	void (*host_post_init)(struct qcom_pcie *pcie);
+ 	void (*deinit)(struct qcom_pcie *pcie);
+ 	void (*ltssm_enable)(struct qcom_pcie *pcie);
+ 	int (*config_sid)(struct qcom_pcie *pcie);
+@@ -964,6 +965,22 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
  	return 0;
+ }
  
- err_stop_link:
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 615660640801..e595ae9456da 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -291,6 +291,7 @@ enum dw_pcie_core_rst {
- struct dw_pcie_host_ops {
- 	int (*host_init)(struct dw_pcie_rp *pp);
- 	void (*host_deinit)(struct dw_pcie_rp *pp);
-+	void (*host_post_init)(struct dw_pcie_rp *pp);
- 	int (*msi_host_init)(struct dw_pcie_rp *pp);
++static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
++{
++	/* Downstream devices need to be in D0 state before enabling PCI PM substates */
++	pci_set_power_state(pdev, PCI_D0);
++	pci_enable_link_state(pdev, PCIE_LINK_STATE_ALL);
++
++	return 0;
++}
++
++static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
++{
++	struct dw_pcie_rp *pp = &pcie->pci->pp;
++
++	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
++}
++
+ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+ {
+ 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+@@ -1216,9 +1233,19 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
+ 	pcie->cfg->ops->deinit(pcie);
+ }
+ 
++static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	struct qcom_pcie *pcie = to_qcom_pcie(pci);
++
++	if (pcie->cfg->ops->host_post_init)
++		pcie->cfg->ops->host_post_init(pcie);
++}
++
+ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+ 	.host_init	= qcom_pcie_host_init,
+ 	.host_deinit	= qcom_pcie_host_deinit,
++	.host_post_init	= qcom_pcie_host_post_init,
  };
  
+ /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+@@ -1280,6 +1307,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+ 	.get_resources = qcom_pcie_get_resources_2_7_0,
+ 	.init = qcom_pcie_init_2_7_0,
+ 	.post_init = qcom_pcie_post_init_2_7_0,
++	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+ 	.deinit = qcom_pcie_deinit_2_7_0,
+ 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+ 	.config_sid = qcom_pcie_config_sid_1_9_0,
 -- 
 2.25.1
 
