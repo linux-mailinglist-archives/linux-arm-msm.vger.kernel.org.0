@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68C3B776956
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 21:59:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33426776961
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 22:00:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231961AbjHIT7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 15:59:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46424 "EHLO
+        id S231127AbjHIUAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 16:00:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230074AbjHIT7q (ORCPT
+        with ESMTP id S232305AbjHIUAT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 15:59:46 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FA010E0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 12:59:45 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b962c226ceso3211391fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 12:59:45 -0700 (PDT)
+        Wed, 9 Aug 2023 16:00:19 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C6601718
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 13:00:18 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b9cdba1228so3144411fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 13:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691611183; x=1692215983;
+        d=linaro.org; s=google; t=1691611216; x=1692216016;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=D6FUj+LMASIvlFO7A003cQAN8uYMLoKNwmsed17sZzg=;
-        b=Tq/MHFiRhJZQRaeiJQqB5B+MpW/wj6kc3gjJp10frqpYR/4fQGvIs4j9PctmP9nEX7
-         oe4//9aFHy2G0zWom+IBuuqlhRScgDim9c+em9KIkjAywooWmatBb4/C2ID+LAfD+w4H
-         vLDzJLCih3Mvz6rjKhOADrkf63tuBy918c764R8W+l5gHG0UCKPA1jwfJo5/dsiA1kAQ
-         xdoOXHC1fMwcUsy7SHJqNOkRGNUotwcFK3QUOIrb4EG1r80NZnRbn+Eyehsy+m3IDVWM
-         uCMCjq6a7WtBXmEVqyp8RTlfrq9/W9teOakZUbHrAJq2DowXRQLDWVgZbAqu4xvxsnim
-         SwtQ==
+        bh=eGLeYfZmvfVl2Lmvhg+3kVtmeLdGoOz6yJsVXypuz1E=;
+        b=OhaLoafP1sI9RSuCifcFeFpJK5HsyT0peOnm8ApvVUJdiRnP7VXNUVvix+AhTBXVjX
+         2xjJ6t+hSgWmzvDn9wR5KKINZTymIuLKdb6r9f4bIR8HEPjQVZHtUqiJ6Fovfdm+d4nY
+         OmdmJ65xhkVHMvZ3bsgmGI/QBuDuN4KafZrJEtvOTJrusSICGGsLwBDkL/MRfqp9pwar
+         BDirRx5J4Y8B1yL5RIbf53fpnOt610cCleVCzE/Ag1xl00zsrgafQ+UtPbpapcj9Z9ab
+         LBoua6NnfmMLYSE5BmQymiew99O5gi+tsHSoULyoDOkthXnPZ0tcBkYOw8OZzMnvlphx
+         vZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691611183; x=1692215983;
+        d=1e100.net; s=20221208; t=1691611216; x=1692216016;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D6FUj+LMASIvlFO7A003cQAN8uYMLoKNwmsed17sZzg=;
-        b=j0hEn15yWSR2XsujbTrJVNTpKa5gyYFx4DatVQeRBfYCm9lF2cHcmGUcoMVR3ceOYm
-         7al9uHL4BnAPkvyNagnKkPSUA1BmQGO6b0qx1+a0MvlGDnx4PwZEcN6RiLWZ+sfaNwTa
-         QPqtKh7JL4IChW9JcYMrf8Agf/eYziKtHckVxomOYVv3EYGhIwwolzbIILVQ8hXAElup
-         +fs2FkvktCbbogvOoSevZLAccJ5xfg3ln99SICXtHvYPTI1o2WeZ6Q9l5GvRGXsisRoE
-         +ndX6QgIzyLlP/oIplAuEwdVD5oZM535uFqWKsnNUB00zi8Zv/Ynez8GHxuVkKS29kn0
-         qekQ==
-X-Gm-Message-State: AOJu0YxRYdbkND9AmDYNf4dvVG03CXlkUXmOrQPHDsleY4b3R1YDl6gO
-        088Fa1bjCWyaNrDIilw1dteRdw==
-X-Google-Smtp-Source: AGHT+IGvnQXkDtl6/W7aBbRfwimSlZLADd8TE9E72tPLBndR9OihoOrNeulJS0h+E1obOwfdZZXPDA==
-X-Received: by 2002:a05:651c:1053:b0:2b9:b693:c906 with SMTP id x19-20020a05651c105300b002b9b693c906mr162862ljm.27.1691611183479;
-        Wed, 09 Aug 2023 12:59:43 -0700 (PDT)
+        bh=eGLeYfZmvfVl2Lmvhg+3kVtmeLdGoOz6yJsVXypuz1E=;
+        b=TKd3Ur/lPZwTOrxQGSxpKp422vuDQOlKbzLtZ//W5AxqnsVkFq2QHyMN76tEYNs0qo
+         BSiSpLlwrQSrRjsJdHWxt8FW2aF2Hi0jtG7cQY6zpPh7yhTsuoL9VJBFWQ/jsBNXH/v9
+         aPk0G5EYMxnt9nNHEVrNJnQ9cQApV8VWNFCVXDsbkUa/IT+hu6EE36W9OAOh8saIp4W+
+         LrzuYmzXlU/HM+pijSHA77wdO2A4gtsKuglTsEvzstrzlW0OGF4JOBYpDhgr5xfEkqVM
+         thjlCQPAb+hmaIzOxY2n52tQlwC+VaBsTBU8IQmg0LiIlZa8Hutk7wconK/skPUqQSUM
+         ySQA==
+X-Gm-Message-State: AOJu0YymqgPBNKHdmQ4TtYTOfUlJCGmnwxkSeKwn/ovIXn4ui9KIdkgH
+        Ifq+1fSjudJnI/30S5wSjmie6VliUj6fChwKrws=
+X-Google-Smtp-Source: AGHT+IHJ+vT+QJQMzKYZKxsoo6ICD25DqFqDwUtHfl51WFyWyV1WBpAQinGAstwe0znrJem3yC1aGg==
+X-Received: by 2002:a2e:b60a:0:b0:2b9:c8fb:8df6 with SMTP id r10-20020a2eb60a000000b002b9c8fb8df6mr148623ljn.33.1691611216531;
+        Wed, 09 Aug 2023 13:00:16 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id c19-20020a05651c015300b002b9358f5088sm2876186ljd.53.2023.08.09.12.59.42
+        by smtp.gmail.com with ESMTPSA id c19-20020a05651c015300b002b9358f5088sm2876186ljd.53.2023.08.09.13.00.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 12:59:43 -0700 (PDT)
-Message-ID: <1e8fb9ba-9b18-487d-aa2e-4b246ae5b352@linaro.org>
-Date:   Wed, 9 Aug 2023 21:59:41 +0200
+        Wed, 09 Aug 2023 13:00:16 -0700 (PDT)
+Message-ID: <28452f19-be57-46db-bfc8-4ba8573de1d0@linaro.org>
+Date:   Wed, 9 Aug 2023 22:00:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] clk: qcom: branch: Add mem ops support for branch2
- clocks
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: qdu1000: Add ECPRI clock controller
 Content-Language: en-US
 To:     Imran Shaik <quic_imrashai@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -71,7 +70,7 @@ Cc:     Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
         Ajit Pandey <quic_ajipan@quicinc.com>,
         Jagadeesh Kona <quic_jkona@quicinc.com>
 References: <20230808051407.647395-1-quic_imrashai@quicinc.com>
- <20230808051407.647395-3-quic_imrashai@quicinc.com>
+ <20230808051407.647395-5-quic_imrashai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,7 +107,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230808051407.647395-3-quic_imrashai@quicinc.com>
+In-Reply-To: <20230808051407.647395-5-quic_imrashai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -122,51 +121,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 8.08.2023 07:14, Imran Shaik wrote:
-> From: Taniya Das <quic_tdas@quicinc.com>
+> Add device node for ECPRI clock controller on qcom QDU1000
+> and QRU1000 SoCs.
 > 
-> Clock CBCRs with memories need an update for memory before enable/disable
-> of the clock. Add support for the mem ops to handle this sequence.
-> 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 > ---
->  drivers/clk/qcom/clk-branch.c | 38 +++++++++++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-branch.h |  4 ++++
->  2 files changed, 42 insertions(+)
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
-> index fc4735f74f0f..95ffcd380039 100644
-> --- a/drivers/clk/qcom/clk-branch.c
-> +++ b/drivers/clk/qcom/clk-branch.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /*
->   * Copyright (c) 2013, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> index 1c0e5d271e91..63930f944b65 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -381,6 +381,20 @@ gcc: clock-controller@80000 {
+>  			#power-domain-cells = <1>;
+>  		};
 >  
->  #include <linux/kernel.h>
-> @@ -134,6 +135,43 @@ static void clk_branch2_disable(struct clk_hw *hw)
->  	clk_branch_toggle(hw, false, clk_branch2_check_halt);
->  }
->  
-> +static int clk_branch2_mem_enable(struct clk_hw *hw)
-> +{
-> +	struct clk_branch *br = to_clk_branch(hw);
-> +	u32 val;
-> +	int count = 200;
-> +
-> +	regmap_update_bits(br->clkr.regmap, br->mem_enable_reg,
-> +			br->mem_enable_ack_bit, br->mem_enable_ack_bit);
-> +
-> +	regmap_read(br->clkr.regmap, br->mem_ack_reg, &val);
-> +
-> +	while (count-- > 0) {
-> +		if (val & br->mem_enable_ack_bit)
-One more comment, since the variable is named "ack bit", perhaps the
-value within could be a bit number and you could use BIT() here.
-
-Otherwise with you having chosen u8 for the type, there's not a whole
-lot of flexibility.
+> +		ecpricc: clock-controller@280000 {
+> +			compatible = "qcom,qdu1000-ecpricc";
+> +			reg = <0x0 0x00280000 0x0 0x31c00>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				<&gcc GCC_ECPRI_CC_GPLL0_CLK_SRC>,
+> +				<&gcc GCC_ECPRI_CC_GPLL1_EVEN_CLK_SRC>,
+> +				<&gcc GCC_ECPRI_CC_GPLL2_EVEN_CLK_SRC>,
+> +				<&gcc GCC_ECPRI_CC_GPLL3_CLK_SRC>,
+> +				<&gcc GCC_ECPRI_CC_GPLL4_CLK_SRC>,
+> +				<&gcc GCC_ECPRI_CC_GPLL5_EVEN_CLK_SRC>;
+Please align the entries with the first < (probably missing a single
+space in the front)
 
 Konrad
