@@ -2,182 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50EAA7764E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 18:18:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D971776592
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 18:52:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbjHIQSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 12:18:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33868 "EHLO
+        id S231374AbjHIQwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 12:52:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbjHIQS3 (ORCPT
+        with ESMTP id S231441AbjHIQwe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 12:18:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0CD51982;
-        Wed,  9 Aug 2023 09:18:25 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 379F7Kbd015177;
-        Wed, 9 Aug 2023 16:18:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pc+j7IaGMjxp0gWLH/cgKwZFlgWmLlLO/9/+BwPqzeo=;
- b=MJlzFhUrRSUHKJysr6TuYDlhd1iYS/ouQn6Hcs0uKBowN+fs2AUDTXES9eKdy5tVGdi7
- HIdV0LDXbuRSImfdZSXvrJwVg/DIYoWfdcPtkqaKwl1db6XtS9abTASw6EBHwI3MdbC4
- KPKAmtdsPb4jDosiBakhdB8Aonu3Q6yW8mivWZn+d0HYKw/7rD9jTRDkafVVutm6Vleb
- rla4uIAdAzJLpwStK1+98Bn8KakXzgSXPzvCe81W3AjU27dUStVXVbMvYRhkGpxOSwye
- A2f/HiVL9T4AdERYuH/Df7mwaDB1etnk9md0m7slHzSxAOFnhrOT6dDuv5O1fg5igR9T zQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sc1ny1rhb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 09 Aug 2023 16:18:09 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 379GI8FN018967
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 9 Aug 2023 16:18:08 GMT
-Received: from [10.216.57.155] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 9 Aug
- 2023 09:18:02 -0700
-Message-ID: <a8750c05-15d4-1b58-c274-39f24ac018ca@quicinc.com>
-Date:   Wed, 9 Aug 2023 21:47:58 +0530
+        Wed, 9 Aug 2023 12:52:34 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC522683
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 09:52:22 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b9c0391749so682761fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 09:52:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691599939; x=1692204739;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TQJEv5Vw7ZJZLzL74/YFszGSXRtz97IWL9b+9KOEYBk=;
+        b=ZO9GM7kMXDoegIZvjBMStvrp6k0mAqPeeKnZVncyjI7+NV+JiqCs4v1oWOzjGWf5i3
+         jWjFOuQ9uQTMZCKyW4vhy1nIipCY47B5mMkYGIEbldjoVUEFPleKpQEuJK1DlGg2mA9G
+         +oX5pZ4MY+Q7IwuV3YHqwG38AGslp4Xfs0rYVMITikLmthAjz+17AHdkyiYBk1F5Sr32
+         wnS9cOcy0IRxja9nUUeFC31S9eb800X6nntcGCReQQS27uzpd+Mjk9s/e56lWTsfp3nL
+         QSX/GXd7MrzDvYzDji+t/p/ChlJy04GchzD9M3hRWqz8DmP8+kgqElQYr1Smv8rEQ/aB
+         Uksw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691599939; x=1692204739;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TQJEv5Vw7ZJZLzL74/YFszGSXRtz97IWL9b+9KOEYBk=;
+        b=UZ/oPFRnNyMRxVq41fdZu2qBRYhjIK9ICKzA0TNVVL96/1++SH4BtU66dhOSCtRB18
+         52YsMxqV26n25IEr20lPbFadAdBboHYo5LWRYyN4hMwGTHLB7LhePsv1BkGAY/KYpxFr
+         FtPlj2sb9bDjlNRTbZlzSpLbKsy00G04bBf4GxkmBTqOCdf18JQD5tC6uhxNMjndTFew
+         cGnduwStxGWprZ628veD22IPp/JdL3SSuNUt+mzMa0NWnjLAoZ86Ee0J81stAMz410XB
+         H9NzHfUYloaND1sEwqxITZEX74Q4C7fVvIov0yN76X1xgjT59nepNAonPuNpCZAFmIHE
+         /6mw==
+X-Gm-Message-State: AOJu0Yw0mZbvelZGW5qKLxVw68uWa8AuxHIbFPXHqVHM/LQRLtaxSivN
+        JT6Zra8QKmMZrcLelZBS5ypdO5tbH/aQAVBmogg=
+X-Google-Smtp-Source: AGHT+IHKrr6dngxD5jbf0lI7E9pc6JW/R62gAP8zLLoHL2aQJmFdV+8JZpgmrPwhkyIEldKOTgVLyQ==
+X-Received: by 2002:a2e:b0fc:0:b0:2b9:ee3e:240c with SMTP id h28-20020a2eb0fc000000b002b9ee3e240cmr2392361ljl.24.1691599939431;
+        Wed, 09 Aug 2023 09:52:19 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id x10-20020a2e880a000000b002b9f03729e2sm2787141ljh.36.2023.08.09.09.52.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 09:52:18 -0700 (PDT)
+Message-ID: <cc9e6464-5e47-4044-9785-c57167f0e1c5@linaro.org>
+Date:   Wed, 9 Aug 2023 18:52:17 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: Feedback on Qualcomm's minidump (debug) solution for end user
- device crash
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/15] clk: qcom: gcc-sm6375: Unregister critical clocks
 Content-Language: en-US
-To:     Kukjin Kim <kgene.kim@gmail.com>, Brian Masney <bmasney@redhat.com>
-CC:     Krzysztof Kozlowski <krzk@kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Nishanth Menon <nm@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>
-References: <ZNEJAh0in/fjq6s9@brian-x1>
- <1DAA278D-BDFE-4880-8453-99F098D4E259@gmail.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1DAA278D-BDFE-4880-8453-99F098D4E259@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 75Jwzds8lHrLoCfIBzffa-zf_i-VWGcn
-X-Proofpoint-ORIG-GUID: 75Jwzds8lHrLoCfIBzffa-zf_i-VWGcn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-09_13,2023-08-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 mlxlogscore=881 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308090143
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+To:     Johan Hovold <johan@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-3-27784d27a4f4@linaro.org>
+ <ZLaRtrH85v4kpSvb@hovoldconsulting.com>
+ <33a26241-026a-9466-5dd6-e3202b29f57c@linaro.org>
+ <ybugl2m7o5cnzj4lv5ksit2rip6yvths5ieo3xlw6cycto2zax@2jimga475z2t>
+ <ZLeiM6l6tu6XDzrr@hovoldconsulting.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZLeiM6l6tu6XDzrr@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/9/2023 1:19 PM, Kukjin Kim wrote:
-> 
->> 2023. 8. 8. 오전 12:08, Brian Masney <bmasney@redhat.com> 작성:
->>
->> ﻿On Mon, Aug 07, 2023 at 06:01:27PM +0530, Mukesh Ojha wrote:
->>>> On 7/30/2023 5:14 PM, Krzysztof Kozlowski wrote:
->>>> On 24/07/2023 18:59, Brian Masney wrote:
->>>>> + linux-arm-kernel list
+On 19.07.2023 10:43, Johan Hovold wrote:
+> On Tue, Jul 18, 2023 at 09:23:52AM -0700, Bjorn Andersson wrote:
+>> On Tue, Jul 18, 2023 at 03:26:51PM +0200, Konrad Dybcio wrote:
+>>> On 18.07.2023 15:20, Johan Hovold wrote:
+>>>> On Mon, Jul 17, 2023 at 05:19:10PM +0200, Konrad Dybcio wrote:
+>>>>> Some clocks need to be always-on, but we don't really do anything
+>>>>> with them, other than calling enable() once and telling Linux they're
+>>>>> enabled.
 >>>>>
->>>>> On Thu, Jul 20, 2023 at 08:32:24PM +0530, Mukesh Ojha wrote:
->>>>>> Hi Samsung/MTK/Any other SOC vendors,
->>>>>>
->>>>>> This is to bring to your notice that, we (Qualcomm) are working on
->>>>>> upstreaming our minidump solution which is to address the problem of
->>>>>> debugging on field device crashes where collecting entire ddr dump
->>>>>> would not be feasible and collecting minimal data from the ddr would
->>>>>> help in debug direction or even help in root causing issue.
->>>>>>
->>>>>> We have recently posted v4 version here [1]
->>>>>>
->>>>>> Based on comments[2], community is more worried about, if each SOC
->>>>>> vendor come up with their own dumping method today or in future and
->>>>>> whether it can have a common solution to a similar problem faced by
->>>>>> other SOC vendor.
->>>>>>
->>>>>> We wanted to take your feedback if you also encounter a similar problem
->>>>>> or maintain something similar solution in downstream which can be
->>>>>> upstreamed. This will help us in a way to have a common solution in
->>>>>> upstream.
->>>>>>
->>>>>> [1]
->>>>>> https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com/
->>>>>>
->>>>>> [2]
->>>>>> https://lore.kernel.org/lkml/CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com/
->>>>>
->>>>> Adding the main ARM list to solicit feedback from other silicon
->>>>> manufacturers.
->>>>>
->>>>> The cover sheet on the v4 patch set is available at:
->>>>> https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
+>>>>> Unregister them to save a couple of bytes and, perhaps more
+>>>>> importantly, allow for runtime suspend of the clock controller device,
+>>>>> as CLK_IS_CRITICAL prevents the latter.
 >>>>
->>>> I doubt anyone follows the lists, so at least Cc some maintainers.
+>>>> But this doesn't sound right. How can you disable a controller which
+>>>> still has clocks enabled?
 >>>>
->>>> +Cc Alim, Kukjin, Vignesh, Nishanth, Matthias.
+>>>> Shouldn't instead these clocks be modelled properly so that they are
+>>>> only enabled when actually needed?
+>>> Hm.. We do have clk_branch2_aon_ops, but something still needs to
+>>> toggle these clocks.
 >>>
->>> Thanks @Krzysztof/@Brian for extending the list.
 >>
->> Hi Mukesh,
+>> Before we started replacing these clocks with static votes, I handled
+>> exactly this problem in the turingcc-qcs404 driver by registering the
+>> ahb clock with a pm_clk_add(). The clock framework will then
+>> automagically keep the clock enabled around operations, but it will also
+>> keep the runtime state active as long as the clock is prepared.
 >>
->> Since no one has responded yet: I suspect your best bet to land the
->> minidump functionality upstream is to refactor it to use the pstore
->> functionality that Rob suggested:
->>
->> https://lore.kernel.org/lkml/CAL_JsqK7MHR09U5h01=Gf1ZLeDVCgZdN-W1hQRH3AX+E94_uUg@mail.gmail.com/
->>
->> Brian
->>
-> Hi all,
+>> As mentioned in an earlier reply today, there's no similarity to this in
+>> the reset or gdsc code, so we'd need to add that in order to rely on
+>> such mechanism.
 > 
-> Sorry for the late response and thanks for the asking.
+> This reminds me of:
 > 
-> In Samsung side, we’re checking about that internally as well. I’d like to know whether the minidump upstreaming is considered to be used in other chipset or some logic of that can be used. In addition, if Samsung wants, own the way upstreaming can be acceptable. It doesn’t mean we have a plan at this moment though.
-
-Thanks for the response @Kukjin
-
-It is not something considered already instead it is what Qualcomm has
-support for its SOC in the downstream and we want to upstream the linux
-drivers and Minidump will need boot firmware support to be able to be
-used by other SOC vendors.
-
-So, the reason of seeking feedback on exactly the problem statement
-to debug crash from field devices where complete ddr dump is not
-feasible instead collect minimal information available to debug
-crashes and also about if SOC vendors have any solution for this
-issue which is common and upstream-able and can be leveraged.
-
-So, if the problem statement is valid and now it is the time to
-share and get conclusion on some common solution, Feel free to
-check and comment on our minidump patches.
-
-https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com/
-
--Mukesh
-
+> 	4cc47e8add63 ("clk: qcom: gdsc: Remove direct runtime PM calls")
 > 
-> Thanks,
-> Kukjin Kim <kgene(at)kernel.org>
+> which recently removed a broken attempt to implement this for gdscs.
+> 
+> Just stumbled over GENPD_FLAG_PM_CLK which may provide a way forward at
+> least for genpd (but see below).
+> 
+>>> I *think* we could leave a permanent vote in probe() without breaking
+>>> runtime pm! I'll give it a spin bit later..
+>>>
+>>
+>> Modelling the AHB clock in DT and putting a devm_clk_get_enabled() would
+>> properly connect the two, and thereby handle probe order between the two
+>> clock controllers.
+> 
+> Yeah, this dependency really should be described eventually.
+> 
+>> But it would prevent the power-domain of the parent provider to ever
+>> suspending. Using pm_clk_add() this would at least depend on client
+>> votes.
+> 
+> IIUC using pm_clk_add() would also prevent the parent from suspending
+> due to that resume call in clk_prepare().
+> 
+> And this mechanism is also used for GENPD_FLAG_PM_CLK...
+So.. how do we go about solving the issue that this patch tried to
+address?
+
+Konrad
