@@ -2,160 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE6FF775469
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 09:49:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A00775492
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 09:58:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjHIHti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 03:49:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57938 "EHLO
+        id S231596AbjHIH6k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 03:58:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbjHIHti (ORCPT
+        with ESMTP id S231582AbjHIH6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 03:49:38 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B20B19A1;
-        Wed,  9 Aug 2023 00:49:37 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1b8b2b60731so41001515ad.2;
-        Wed, 09 Aug 2023 00:49:37 -0700 (PDT)
+        Wed, 9 Aug 2023 03:58:40 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D95FF1736
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 00:58:38 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fe24dd8898so55252055e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 00:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691567376; x=1692172176;
-        h=to:references:message-id:cc:date:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8I7R8nlVGLuiSPOLBhq2QOhIEsWu1cNAXuEA6AAZ6Y4=;
-        b=gplYjsedbl+L0IMXDxKHXFkPZeM9BKJ6vdw3uzY4RBtaoSoSqNugVSLPiVcFHB6+VS
-         1F9tOA7VwRg2TU839OuuOBCz/4mG+v9oV+DBtG9rZXzcxiS+kH1WSeEsv5noTTKNlOrr
-         k/bkejas5fOq6sR2HYvbwEVdA62KFSVNFRJgy1vbEpDHSU3Klfhyns64kMeiJeIsy31n
-         NUGlpFDMuZfzSVAMxAptr9XrmEKQKK2iHZdrFCUvqxkXoyBWyPMBE2UctCo2EXeAw0zq
-         ocscXGUIQ/RRw9j3PYU33dYnln80vFeLbKBsxbqJsoKg4o2DXHJRi9KJCUla5BwV35WT
-         18UQ==
+        d=linaro.org; s=google; t=1691567917; x=1692172717;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZMK/MF4QoWmTRy/7r0rvm+M3cYZZiIVGcbwV1xMbPtA=;
+        b=Vc8dhEQ337HqN7x0eJ4phDB03/f2AB2NN5lkvQCHkvLd/y/o1qMKmve35y1fmkXnXj
+         6XCOWfZ7W+iBw3WdwemShbMpzo8oJieUXB+gC2lWNvEDwQUdMjEYlSBIO8ElbkEi4yYS
+         /3QMcjzkMS0z0v6FiVnVRVgyGp1bABtgpk0w6YHK9sqMNZ8oeFq21hnd4y2ALjEeeuvG
+         fGsN9vHSFOPPE8hjRAiAd2wFRiSXxvlpEYC/vBqhsE3CWM4ImAqIFD8oLK8x2UTFcxc6
+         FfMMSxwVsNLY7rnIlSbXJiZqiKXEFl1RnlBwnXKKgeMtPVYpqanYqRJLTcNzWV+i+PUd
+         efrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691567376; x=1692172176;
-        h=to:references:message-id:cc:date:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8I7R8nlVGLuiSPOLBhq2QOhIEsWu1cNAXuEA6AAZ6Y4=;
-        b=dU8UiHC24+ae5KU8V+7UIvPP/VzTgDORkfN8/SXIYmJlkVz8/TjmmnPePxGlehUf8h
-         VoRzFfv+WEn12/tt96tfBTPL/iVms2JNzvdfKzxxm95SZLVFW62vCjE23DiHmXAJ1CQk
-         C2P7bdTZ4cmBSn4kjoOd0RYAMJ7AUVkPROrJNQTwcO+q72yMxSBt0WtKIfNTXd9AB3dN
-         jgK7xpWQUU0asIgjEoBm04RP6xQ4z3kWjnuYNWmL/p4iYCYPHGhFBNkjU7D9mdN59fUW
-         ATXwqk+c0Q8C/mZYVQjEG0AR514MulPjrAxJfF3KybNPj/ok+Rhu9zBBJcq6ZbYlVJjB
-         nHqA==
-X-Gm-Message-State: AOJu0YyzlrhFI71maaJ2l6Gie59C1oAmrO2PPH1hbqMUTbeUS4SmwZ5J
-        gPl7PnOiSFZJM71jBOPmHZY=
-X-Google-Smtp-Source: AGHT+IG1mqiqcQOPg+6OklA7lwp3XuUGcNchKQNJtVUmasQCc5+fZq7s0O2q3Rrn9aR1oooYJYwE+Q==
-X-Received: by 2002:a17:902:ea09:b0:1b9:e1d6:7c7d with SMTP id s9-20020a170902ea0900b001b9e1d67c7dmr1518767plg.47.1691567376420;
-        Wed, 09 Aug 2023 00:49:36 -0700 (PDT)
-Received: from smtpclient.apple ([2001:e60:a880:2dc4:934:4e53:662c:983c])
-        by smtp.gmail.com with ESMTPSA id 21-20020a170902c21500b001b0358848b0sm10359361pll.161.2023.08.09.00.49.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 00:49:35 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Subject: Re: Feedback on Qualcomm's minidump (debug) solution for end user device crash
-From:   Kukjin Kim <kgene.kim@gmail.com>
-In-Reply-To: <ZNEJAh0in/fjq6s9@brian-x1>
-Date:   Wed, 9 Aug 2023 16:49:23 +0900
-Cc:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        lkml <linux-kernel@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Nishanth Menon <nm@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>
-Message-Id: <1DAA278D-BDFE-4880-8453-99F098D4E259@gmail.com>
-References: <ZNEJAh0in/fjq6s9@brian-x1>
-To:     Brian Masney <bmasney@redhat.com>
-X-Mailer: iPhone Mail (20G75)
+        d=1e100.net; s=20221208; t=1691567917; x=1692172717;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZMK/MF4QoWmTRy/7r0rvm+M3cYZZiIVGcbwV1xMbPtA=;
+        b=KHD/CeQEQiBJNFgMhz1Dw4L5Pf2fud9k25S1vDTrmhrK5wTKc9SbT/Uun2GBSVV5VX
+         sRBh32YOph1cPetWZIFXRrgn6Kilf4bdqmvco0aWhqjx+EW6VmtqyR7kM2RO6eUz34y5
+         Ac0AdE7VU9MVRsSWoiucqThbkM8xzb843+LX5mhEkctgccFda/oz7ta4ljxVnrSqxsF5
+         /CKmQTb+Ad9xBHgbeRZsTgCN5Oq7B2p3GKMQRwpN/CqmCb0m9xjzU8uyuS41gS+Nhh+n
+         leqKQr+9f97/Gbps7a5C/Be3bEfVHMKEY9uJRgZRVEYv3JLSIah36PNC+K1HSlusAksj
+         Jvfw==
+X-Gm-Message-State: AOJu0Yx0TBWv2utFpfAHHNg/5atLPOWDMl+PmbsSXCy0GZA3PtkjXZlw
+        MqB3JZV7xB8w467YJ6notpCE/A==
+X-Google-Smtp-Source: AGHT+IH6Gfg0Ox1ijcaH3Yo/doK/gmTY3rCMIO8FuqulZi8laqcGMrnU8wQH8fU1K7v2TXfqSmiz6Q==
+X-Received: by 2002:a05:600c:205a:b0:3fb:d1db:5454 with SMTP id p26-20020a05600c205a00b003fbd1db5454mr1563638wmg.35.1691567917371;
+        Wed, 09 Aug 2023 00:58:37 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id q12-20020a7bce8c000000b003fe26244858sm1136784wmj.46.2023.08.09.00.58.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Aug 2023 00:58:36 -0700 (PDT)
+Date:   Wed, 9 Aug 2023 10:58:34 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     oe-kbuild@lists.linux.dev,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
+        linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v3 1/3] drm/display: add transparent bridge helper
+Message-ID: <79f07f7d-1de0-4a48-961e-30b6789e3b6b@kadam.mountain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230802011845.4176631-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,MIME_QP_LONG_LINE,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dmitry,
 
-> 2023. 8. 8. =EC=98=A4=EC=A0=84 12:08, Brian Masney <bmasney@redhat.com> =EC=
-=9E=91=EC=84=B1:
->=20
-> =EF=BB=BFOn Mon, Aug 07, 2023 at 06:01:27PM +0530, Mukesh Ojha wrote:
->>> On 7/30/2023 5:14 PM, Krzysztof Kozlowski wrote:
->>> On 24/07/2023 18:59, Brian Masney wrote:
->>>> + linux-arm-kernel list
->>>>=20
->>>> On Thu, Jul 20, 2023 at 08:32:24PM +0530, Mukesh Ojha wrote:
->>>>> Hi Samsung/MTK/Any other SOC vendors,
->>>>>=20
->>>>> This is to bring to your notice that, we (Qualcomm) are working on
->>>>> upstreaming our minidump solution which is to address the problem of
->>>>> debugging on field device crashes where collecting entire ddr dump
->>>>> would not be feasible and collecting minimal data from the ddr would
->>>>> help in debug direction or even help in root causing issue.
->>>>>=20
->>>>> We have recently posted v4 version here [1]
->>>>>=20
->>>>> Based on comments[2], community is more worried about, if each SOC
->>>>> vendor come up with their own dumping method today or in future and
->>>>> whether it can have a common solution to a similar problem faced by
->>>>> other SOC vendor.
->>>>>=20
->>>>> We wanted to take your feedback if you also encounter a similar proble=
-m
->>>>> or maintain something similar solution in downstream which can be
->>>>> upstreamed. This will help us in a way to have a common solution in
->>>>> upstream.
->>>>>=20
->>>>> [1]
->>>>> https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quic=
-inc.com/
->>>>>=20
->>>>> [2]
->>>>> https://lore.kernel.org/lkml/CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiy=
-ei-u9=3DCv=3Dw@mail.gmail.com/
->>>>=20
->>>> Adding the main ARM list to solicit feedback from other silicon
->>>> manufacturers.
->>>>=20
->>>> The cover sheet on the v4 patch set is available at:
->>>> https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_moj=
-ha@quicinc.com/
->>>=20
->>> I doubt anyone follows the lists, so at least Cc some maintainers.
->>>=20
->>> +Cc Alim, Kukjin, Vignesh, Nishanth, Matthias.
->>=20
->> Thanks @Krzysztof/@Brian for extending the list.
->=20
-> Hi Mukesh,
->=20
-> Since no one has responded yet: I suspect your best bet to land the
-> minidump functionality upstream is to refactor it to use the pstore
-> functionality that Rob suggested:
->=20
-> https://lore.kernel.org/lkml/CAL_JsqK7MHR09U5h01=3DGf1ZLeDVCgZdN-W1hQRH3AX=
-+E94_uUg@mail.gmail.com/
->=20
-> Brian
->=20
-Hi all,
+kernel test robot noticed the following build warnings:
 
-Sorry for the late response and thanks for the asking.
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-In Samsung side, we=E2=80=99re checking about that internally as well. I=E2=80=
-=99d like to know whether the minidump upstreaming is considered to be used i=
-n other chipset or some logic of that can be used. In addition, if Samsung w=
-ants, own the way upstreaming can be acceptable. It doesn=E2=80=99t mean we h=
-ave a plan at this moment though.
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-add-transparent-bridge-helper/20230802-091932
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230802011845.4176631-2-dmitry.baryshkov%40linaro.org
+patch subject: [PATCH v3 1/3] drm/display: add transparent bridge helper
+config: x86_64-randconfig-m001-20230808 (https://download.01.org/0day-ci/archive/20230809/202308090559.RMlH2Dl6-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230809/202308090559.RMlH2Dl6-lkp@intel.com/reproduce)
 
-Thanks,
-Kukjin Kim <kgene(at)kernel.org>=
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202308090559.RMlH2Dl6-lkp@intel.com/
+
+smatch warnings:
+drivers/gpu/drm/display/drm_simple_bridge.c:41 drm_simple_bridge_register() warn: possible memory leak of 'adev'
+
+vim +/adev +41 drivers/gpu/drm/display/drm_simple_bridge.c
+
+abf701043719cd Dmitry Baryshkov 2023-08-02  30  int drm_simple_bridge_register(struct device *parent)
+abf701043719cd Dmitry Baryshkov 2023-08-02  31  {
+abf701043719cd Dmitry Baryshkov 2023-08-02  32  	struct auxiliary_device *adev;
+abf701043719cd Dmitry Baryshkov 2023-08-02  33  	int ret;
+abf701043719cd Dmitry Baryshkov 2023-08-02  34  
+abf701043719cd Dmitry Baryshkov 2023-08-02  35  	adev = kzalloc(sizeof(*adev), GFP_KERNEL);
+abf701043719cd Dmitry Baryshkov 2023-08-02  36  	if (!adev)
+abf701043719cd Dmitry Baryshkov 2023-08-02  37  		return -ENOMEM;
+abf701043719cd Dmitry Baryshkov 2023-08-02  38  
+abf701043719cd Dmitry Baryshkov 2023-08-02  39  	ret = ida_alloc(&simple_bridge_ida, GFP_KERNEL);
+abf701043719cd Dmitry Baryshkov 2023-08-02  40  	if (ret < 0)
+abf701043719cd Dmitry Baryshkov 2023-08-02 @41  		return ret;
+
+kfree(adev);
+
+abf701043719cd Dmitry Baryshkov 2023-08-02  42  
+abf701043719cd Dmitry Baryshkov 2023-08-02  43  	adev->id = ret;
+abf701043719cd Dmitry Baryshkov 2023-08-02  44  	adev->name = "simple_bridge";
+abf701043719cd Dmitry Baryshkov 2023-08-02  45  	adev->dev.parent = parent;
+abf701043719cd Dmitry Baryshkov 2023-08-02  46  	adev->dev.of_node = parent->of_node;
+abf701043719cd Dmitry Baryshkov 2023-08-02  47  	adev->dev.release = drm_simple_bridge_release;
+abf701043719cd Dmitry Baryshkov 2023-08-02  48  
+abf701043719cd Dmitry Baryshkov 2023-08-02  49  	ret = auxiliary_device_init(adev);
+abf701043719cd Dmitry Baryshkov 2023-08-02  50  	if (ret) {
+abf701043719cd Dmitry Baryshkov 2023-08-02  51  		kfree(adev);
+
+This needs to ida_free(&simple_bridge_ida, adev->id) as well.  There is
+a smatch check for this (check_unwind.c) but I guess I plan to re-write
+it a bit before I turn that on.
+
+abf701043719cd Dmitry Baryshkov 2023-08-02  52  		return ret;
+abf701043719cd Dmitry Baryshkov 2023-08-02  53  	}
+abf701043719cd Dmitry Baryshkov 2023-08-02  54  
+abf701043719cd Dmitry Baryshkov 2023-08-02  55  	ret = auxiliary_device_add(adev);
+abf701043719cd Dmitry Baryshkov 2023-08-02  56  	if (ret) {
+abf701043719cd Dmitry Baryshkov 2023-08-02  57  		auxiliary_device_uninit(adev);
+abf701043719cd Dmitry Baryshkov 2023-08-02  58  		return ret;
+abf701043719cd Dmitry Baryshkov 2023-08-02  59  	}
+abf701043719cd Dmitry Baryshkov 2023-08-02  60  
+abf701043719cd Dmitry Baryshkov 2023-08-02  61  	return devm_add_action_or_reset(parent, drm_simple_bridge_unregister_adev, adev);
+abf701043719cd Dmitry Baryshkov 2023-08-02  62  }
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
