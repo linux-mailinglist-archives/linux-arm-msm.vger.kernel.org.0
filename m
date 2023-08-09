@@ -2,143 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9E6A77519C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 05:45:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08050775284
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:07:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230357AbjHIDps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Aug 2023 23:45:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52010 "EHLO
+        id S230333AbjHIGHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 02:07:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbjHIDpn (ORCPT
+        with ESMTP id S229535AbjHIGHN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Aug 2023 23:45:43 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207911BC3;
-        Tue,  8 Aug 2023 20:45:42 -0700 (PDT)
-Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.56])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4RLGB70k3szVklh;
-        Wed,  9 Aug 2023 11:43:43 +0800 (CST)
-Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Wed, 9 Aug
- 2023 11:45:35 +0800
-From:   Ruan Jinjie <ruanjinjie@huawei.com>
-To:     <Felix.Kuehling@amd.com>, <alexander.deucher@amd.com>,
-        <christian.koenig@amd.com>, <Xinhui.Pan@amd.com>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>, <harry.wentland@amd.com>,
-        <sunpeng.li@amd.com>, <Rodrigo.Siqueira@amd.com>,
-        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
-        <tzimmermann@suse.de>, <inki.dae@samsung.com>,
-        <sw0312.kim@samsung.com>, <kyungmin.park@samsung.com>,
-        <krzysztof.kozlowski@linaro.org>, <alim.akhtar@samsung.com>,
-        <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
-        <marijn.suijten@somainline.org>, <bskeggs@redhat.com>,
-        <kherbst@redhat.com>, <lyude@redhat.com>, <kraxel@redhat.com>,
-        <gurchetansingh@chromium.org>, <olvaffe@gmail.com>,
-        <paulo.miguel.almeida.rodenas@gmail.com>, <wenjing.liu@amd.com>,
-        <haoping.liu@amd.com>, <Charlene.Liu@amd.com>,
-        <chiahsuan.chung@amd.com>, <george.shen@amd.com>,
-        <sancchen@amd.com>, <tony.tascioglu@amd.com>,
-        <jaehyun.chung@amd.com>, <tales.aparecida@gmail.com>,
-        <drv@mailo.com>, <aurabindo.pillai@amd.com>,
-        <quic_vpolimer@quicinc.com>, <jiasheng@iscas.ac.cn>,
-        <noralf@tronnes.org>, <jose.exposito89@gmail.com>,
-        <javierm@redhat.com>, <mairacanal@riseup.net>,
-        <davidgow@google.com>, <arthurgrillo@riseup.net>,
-        <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <nouveau@lists.freedesktop.org>,
-        <virtualization@lists.linux-foundation.org>
-CC:     <ruanjinjie@huawei.com>
-Subject: [PATCH -next 7/7] drm: Remove unnecessary NULL values
-Date:   Wed, 9 Aug 2023 11:44:45 +0800
-Message-ID: <20230809034445.434902-8-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230809034445.434902-1-ruanjinjie@huawei.com>
-References: <20230809034445.434902-1-ruanjinjie@huawei.com>
+        Wed, 9 Aug 2023 02:07:13 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C09DA0;
+        Tue,  8 Aug 2023 23:07:12 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37966wkW007636;
+        Wed, 9 Aug 2023 06:06:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=aZsVBu02JiyW5Swloc47iNwzt+jAuULdBSzBSZXg9DM=;
+ b=os7CQJHjNprE/U+2vr8lwsAYU4FZwJVoHPUh+E1jFqQ8zTNDYAYRICO7u3iik4ob/R/c
+ 4hk1ASBqRVUQGiMDjUaw+fseec385yaW5+w+ywY4agFILXw6QubYVpPxqxs2YZ4ZqG7Q
+ F7iqhef0jIjMjbBpY3lwt/jtA+atUC/el+1CvYCNCPoFl6+M9O1Ul/kIaL3FtzXcrF18
+ 6bw/x2BzmBu9RVhD0ajQQ6gu2LJp3wfWC3yK0MfhIeXWJAq/gmlV5z52HNumcYhvRIKd
+ mEB08hh+lZsA79D3IZclEeW3MzojeaiQcBxqvyYhcc9OkL0RK9b9/yxhJBkgFkB+15tU 8g== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sc34h8736-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 09 Aug 2023 06:06:58 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37966v75015508
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 9 Aug 2023 06:06:57 GMT
+Received: from [10.216.29.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
+ 2023 23:06:50 -0700
+Message-ID: <3c8dff80-eec8-1721-8ab0-3cf12d4c1df4@quicinc.com>
+Date:   Wed, 9 Aug 2023 11:36:48 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.90.53.73]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v10 06/11] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230727223307.8096-1-quic_kriskura@quicinc.com>
+ <20230727223307.8096-7-quic_kriskura@quicinc.com>
+ <pyxerd3lirbh2p43m74ohwocjjb7uh56xxmaxbrkay3svossik@ksd3yojw5wgr>
+ <dc800b15-e35d-207b-73a8-9a3d2261f4f5@quicinc.com>
+ <30b1fe67-bab5-4add-8d89-cc8e06cd8c7f@linaro.org>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <30b1fe67-bab5-4add-8d89-cc8e06cd8c7f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1CMebO6c8W1VlfX3hvG17Hwu-oVd_i4S
+X-Proofpoint-GUID: 1CMebO6c8W1VlfX3hvG17Hwu-oVd_i4S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-09_03,2023-08-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308090054
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The NULL initialization of the pointers assigned by kzalloc() first is
-not necessary, because if the kzalloc() failed, the pointers will be
-assigned NULL, otherwise it works as usual. so remove it.
 
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
----
- drivers/gpu/drm/drm_agpsupport.c          | 2 +-
- drivers/gpu/drm/drm_atomic_uapi.c         | 2 +-
- drivers/gpu/drm/exynos/exynos_drm_ipp.c   | 2 +-
- drivers/gpu/drm/nouveau/dispnv04/tvnv17.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_agpsupport.c b/drivers/gpu/drm/drm_agpsupport.c
-index a4ad6fd13abc..158709849481 100644
---- a/drivers/gpu/drm/drm_agpsupport.c
-+++ b/drivers/gpu/drm/drm_agpsupport.c
-@@ -384,7 +384,7 @@ int drm_legacy_agp_free_ioctl(struct drm_device *dev, void *data,
- struct drm_agp_head *drm_legacy_agp_init(struct drm_device *dev)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev->dev);
--	struct drm_agp_head *head = NULL;
-+	struct drm_agp_head *head;
- 
- 	head = kzalloc(sizeof(*head), GFP_KERNEL);
- 	if (!head)
-diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-index 98d3b10c08ae..5a433af75132 100644
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -942,7 +942,7 @@ int drm_atomic_get_property(struct drm_mode_object *obj,
- static struct drm_pending_vblank_event *create_vblank_event(
- 		struct drm_crtc *crtc, uint64_t user_data)
- {
--	struct drm_pending_vblank_event *e = NULL;
-+	struct drm_pending_vblank_event *e;
- 
- 	e = kzalloc(sizeof *e, GFP_KERNEL);
- 	if (!e)
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_ipp.c b/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-index ea9f66037600..419d0afccdb9 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-@@ -695,7 +695,7 @@ static int exynos_drm_ipp_task_setup_buffers(struct exynos_drm_ipp_task *task,
- static int exynos_drm_ipp_event_create(struct exynos_drm_ipp_task *task,
- 				 struct drm_file *file_priv, uint64_t user_data)
- {
--	struct drm_pending_exynos_ipp_event *e = NULL;
-+	struct drm_pending_exynos_ipp_event *e;
- 	int ret;
- 
- 	e = kzalloc(sizeof(*e), GFP_KERNEL);
-diff --git a/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c b/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
-index 670c9739e5e1..9accb2a12719 100644
---- a/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
-+++ b/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
-@@ -789,7 +789,7 @@ nv17_tv_create(struct drm_connector *connector, struct dcb_output *entry)
- {
- 	struct drm_device *dev = connector->dev;
- 	struct drm_encoder *encoder;
--	struct nv17_tv_encoder *tv_enc = NULL;
-+	struct nv17_tv_encoder *tv_enc;
- 
- 	tv_enc = kzalloc(sizeof(*tv_enc), GFP_KERNEL);
- 	if (!tv_enc)
--- 
-2.34.1
+On 8/8/2023 5:20 PM, Konrad Dybcio wrote:
+> On 8.08.2023 10:32, Krishna Kurapati PSSNV wrote:
+>>   +
+>>>> +enum dwc3_qcom_phy_irq_identifier {
+>>>> +    HS_PHY_IRQ = 0,
+>>>> +    DP_HS_PHY_IRQ,
+>>>> +    DM_HS_PHY_IRQ,
+>>>> +    SS_PHY_IRQ,
+>>>>    };
+>>>
+>>> This enum is unused.
+>>>
+>>
+>> Hi Bjorn,
+>>
+>>   I didn't use the enum directly, but used its members in the get_port_irq call below.
+>>
+>>> [..]
+>>>> +static int dwc3_get_acpi_index(const struct dwc3_acpi_pdata *pdata, int irq_index)
+>>>> +{
+>>>> +    int acpi_index = -1;
+>>>> +
+>>>> +    if (!pdata)
+>>>> +        return -1;
+>>>> +
+>>>> +    if (irq_index == DP_HS_PHY_IRQ)
+>>>> +        acpi_index = pdata->dp_hs_phy_irq_index;
+>>>> +    else if (irq_index == DM_HS_PHY_IRQ)
+>>>> +        acpi_index = pdata->dm_hs_phy_irq_index;
+>>>> +    else if (irq_index == SS_PHY_IRQ)
+>>>> +        acpi_index = pdata->ss_phy_irq_index;
+>>>
+>>> It looks favourable to put these in an array, instead of having to pull
+>>> them out of 4 different variables conditionally.
+>>>
+>>>> +
+>>>> +    return acpi_index;
+>>>> +}
+>>>> +
+>>>> +static int dwc3_get_port_irq(struct platform_device *pdev, u8 port_index)
+>>>> +{
+>>>> +    struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>>>> +    bool is_mp_supported = (qcom->data->num_ports > 1) ? true : false;
+>>>> +    const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
+>>>> +    char *disp_name;
+>>>> +    int acpi_index;
+>>>> +    char *dt_name;
+>>>> +    int ret;
+>>>> +    int irq;
+>>>> +    int i;
+>>>> +
+>>>> +    /*
+>>>> +     * We need to read only DP/DM/SS IRQ's here.
+>>>> +     * So loop over from 1->3 and accordingly modify respective phy_irq[].
+>>>> +     */
+>>>> +    for (i = 1; i < MAX_PHY_IRQ; i++) {
+>>>> +
+>>>> +        if (!is_mp_supported && (port_index == 0)) {
+>>>> +            if (i == DP_HS_PHY_IRQ) {
+>>>> +                dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>>>> +                    "dp_hs_phy_irq");
+>>>> +                disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>>>> +                    "qcom_dwc3 DP_HS");
+>>>> +            } else if (i == DM_HS_PHY_IRQ) {
+>>>> +                dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>>>> +                    "dm_hs_phy_irq");
+>>>> +                disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>>>> +                    "qcom_dwc3 DM_HS");
+>>>> +            } else if (i == SS_PHY_IRQ) {
+>>>> +                dt_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>>>> +                    "ss_phy_irq");
+>>>> +                disp_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+>>>> +                    "qcom_dwc3 SS");
+>> Bjorn, Konrad,
+>>
+>> If we are to remove this repetitive loops, we might need to make a 2D array for all of Dp/Dm/Ss interrutps and make a global array of names to be used for irq lookup and use them to reduce the if-else-if stuff here. If that is fine, I can make those changes, else I would like to stick to this approach for now because if we don't add the global array of names, prepping them seperately for dp/dm/ss would again lead us to making if-else loops like above.
+>>
+>> Please let me know your thoughts on this.
+> Can we not just reuse the associated interrupt-names from the devicetree
+> if present?
+> 
+Hi Konrad,
 
+  Thanks for the comments but one more confirmation.
+We can read the interrupts from DT but I believe the compatible would 
+still need to stay. We need the num_ports information not just for 
+registering interrupts but for modifying the pwr_event_irq registers 
+during suspend/resume. If we rely on the interrupts to find the number 
+of ports, the user is free to remove any IRQ and we might end up in a 
+situation where glue and core are not having same view of how many 
+number of ports present. So I believe its best to keep the compatible 
+and get num_ports info from there and rely on reading interrupt-names to 
+get interrupts cleanly. Can you let me know your view on the same.
+
+Regards,
+Krishna,
