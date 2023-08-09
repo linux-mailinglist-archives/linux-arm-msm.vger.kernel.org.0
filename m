@@ -2,127 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44FA577689F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 21:25:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D43BF7768DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 21:39:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231682AbjHITY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 15:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
+        id S229685AbjHITjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 15:39:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230047AbjHITYm (ORCPT
+        with ESMTP id S233527AbjHITjK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 15:24:42 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F19D4491
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 12:23:33 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so2624151fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 12:23:32 -0700 (PDT)
+        Wed, 9 Aug 2023 15:39:10 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5C4F10F3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 12:39:09 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so2871621fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 12:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691609010; x=1692213810;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=21HEsmbiedjTaQYN+YmBvmbLDGnvjM6qjUPmRAgPnt8=;
-        b=DrZfXM4lIxtoyH3O9jh9t+9OzDkrZCpeTWD/LZcVCWX1c/E9ML9zSxILQaCeQ3vVsm
-         1Pk0MY/Dz1HN5XCPG5YRJUse/89eWMnLFU0bI4BLNjXFFmgiRB7pphjVfafB1QUvtwmv
-         uNZxHYGV7Ni1tbOpmf8eDNqe0RhTgP2zq8q0cxWYi2Z/O4tq8f3iHFLLrvAW3+Miz6P0
-         fXe6jX42FU6n/w+ppnmrD7NrfPv9AHXJa+0lryicx6nDpyQiWauf/e+COWN/JIzrOjZj
-         eu1om/mmPXUBYBrGH92PDzZKgtqllXGJ7yoF+9aZXj05nKbI4+I3N3H7qzv/O4kF80Nl
-         beJw==
+        d=linaro.org; s=google; t=1691609948; x=1692214748;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5jmLyZ5qsVOGSKE5nYY/XIbEhaHmVwTjqouIJNSf7rI=;
+        b=UyRYRvp6A8hBzlKaRKrNzhCNdCZICVHzg/qXEz+UT5Fi9KcAaJaBykzgqAwgwcpT/P
+         6pCy3/948rqF+40usGpNU4LuKy9fa05lpOOCthDZRSdEu0XAbOMz01grDiKbZvBV/sJu
+         1wLbypSPrO9W+H4naSAKfu8GqDU4vv1hoiFT9hnR2B/sPGlWf61YV1eAK5ms6XqWJmmW
+         WGP/CB+E/UIwgc+UW1dE77A+ymI3eWApiKM97cOhd5OyX9ZCuHWakqXAV/fCyWzh+C84
+         uaibbym3GVI6YOS3dU20MSlPrhCLPYzaviXcrRqIxgFilfRMG07hIOjENz2ZTVDuTYu/
+         iVwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691609010; x=1692213810;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=21HEsmbiedjTaQYN+YmBvmbLDGnvjM6qjUPmRAgPnt8=;
-        b=gpJ7x2Qw6Lef0QyFPmshVtZJKl9nZmYBhVSvUB2YBknisneZkn8rHKen7JH/tGPJXC
-         um8hD6uF8JOcniE21GGJDyYxcJp56JIyuqbJVWhL/Eh/Ko8duEkD4zgKJKJbtXfBZc1A
-         3GNPXZNRIsi8ij8V3+/RPd/38TY4wcd42RjE2gtiF0GI8JrwNPYVXav5+ulo1+xCWi5p
-         i/7da17p7JgM+JH7/NFAqQM+wmWzZ8kAuD5qe1amrqpIYWsCJe2EIVJSaaXHZW+MfN/p
-         Vhcw82qiG5h6ERE00sDB0oY/O9T2uJVxANqnB2/Ef4SnLC1bGV6njUbWiPTENwO9GnCs
-         WPTQ==
-X-Gm-Message-State: AOJu0YyuPVUlLTJVdTTF5Iv4W/kMKrke0DeZpn1uioEPhjfP8a/fmPst
-        LdfZ+3+ox0VP77txZ2dhbSVk1g==
-X-Google-Smtp-Source: AGHT+IHtW8va2eXBRSQopk22akFmA3p08PkSCvVi0Nm3nO/RU7pswQt6sFvTtg43WWcY1uuYnspmkg==
-X-Received: by 2002:a2e:88c2:0:b0:2b8:67ce:4ad7 with SMTP id a2-20020a2e88c2000000b002b867ce4ad7mr117243ljk.6.1691609010038;
-        Wed, 09 Aug 2023 12:23:30 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691609948; x=1692214748;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5jmLyZ5qsVOGSKE5nYY/XIbEhaHmVwTjqouIJNSf7rI=;
+        b=JL5ogYHEtIiSZRsMOqlVCgFycakXERCnYRyS6Xowcg4VgDgC/dfGc7aPnFbnJ2WYsp
+         4HFGA3U3+KfUwWh9DxviXtgYVNnuLUDUd2XOHrCApylndlmvw2wYvlEcRWvBNcZWMktk
+         DJ5RL0+abGahHhL8vDMieU87K/gRF1MCdB7+utE20vuZM3ik7WIt9q8BqDBKNNGF+NwD
+         3juujZK331eeB6C6vMyIcHLOjMytvZ93DlrVpcUq2vgND8m0/d1ND6z/ZsEQ5sgCBqLb
+         RR75SmAxHITHbs32MYa8lrG7qDLaIQ4w1ZOKXYjaD2NPYKTIxgFgrdyDAfahGwVzVHwx
+         28Dw==
+X-Gm-Message-State: AOJu0YxlcF+bJh3gKBaBMkSuDGJqKedytS4HKm895wGKoRI1dGqKmmuV
+        WI4f1V9tXIuNsdTc3GHi92YWFBI6A7NYFfziK0k=
+X-Google-Smtp-Source: AGHT+IH8iIbSc2i/fHslt6od09mNscVpJv3FRCvqGxwdmpCToHIG3FH/nKHDBSWPCdLjUzENf6xIqA==
+X-Received: by 2002:a2e:8893:0:b0:2b9:5fd2:763a with SMTP id k19-20020a2e8893000000b002b95fd2763amr136182lji.35.1691609948107;
+        Wed, 09 Aug 2023 12:39:08 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id y16-20020a05651c021000b002b936cf7530sm2870405ljn.126.2023.08.09.12.23.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 12:23:29 -0700 (PDT)
-Message-ID: <085b3f9f-9e70-4f62-9dbd-4a1ddf1a0c19@linaro.org>
-Date:   Wed, 9 Aug 2023 21:23:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] interconnect: qcom: rpmh: sm8550: mask to send as
- vote
-Content-Language: en-US
-To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Mike Tipton <mdtipton@codeaurora.org>
-References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
+        by smtp.gmail.com with ESMTPSA id x6-20020a2e9c86000000b002b9fe77d00dsm2885287lji.93.2023.08.09.12.39.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Aug 2023 12:39:07 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH 0/5] MPM pin mappings
+Date:   Wed, 09 Aug 2023 21:38:53 +0200
+Message-Id: <20230809-topic-mpm_mappings-v1-0-5e17dd76b3c8@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE3r02QC/x2N0QrCMAwAf2Xk2UDXTZn+igzJaroF1qy0KsLYv
+ xt8vIPjdqhchCvcmh0Kf6TKpgbtqYGwkM6M8jQG73znBnfF15YlYMrpkShn0bli18boh/PF9z2
+ BhRNVxqmQhsVSfa+ryVw4yvd/uo/H8QNFnvSAeQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691609947; l=983;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=T5Gz0zorupBsGdJnfNzc+lNBLG7ID2DnaWLzds/HTeQ=;
+ b=SEmr8AV3WmgkCRDQK0St3O5sEFeD4cSLLAir0u5TmjK1sYy2scF0mb4EfeHwYVhfvIa8y7LDL
+ pybnSM3qDlQAlH9l9IYiWeHHTT2DDp9bC75jPmIg5KuMmML73FvBKfp
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.06.2023 14:50, neil.armstrong@linaro.org wrote:
-> On the SM8550 SoC, some nodes requires a specific bit mark
-> instead of a bandwidth when voting.
-> 
-> Add an enable_mask variable to be used instead of bandwidth.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-Georgi,
+This series adds the MPM wakeirq mappings for some SoCs and fixes my
+"big oops" within the 8998 driver.
 
-please pick this up and I'll fix up the ACV situation mentioned
-by Bjorn as an incremental change.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (5):
+      pinctrl: qcom: msm8998: Fix MPM mappings
+      pinctrl: qcom: msm8996: Add MPM pin mappings
+      pinctrl: qcom: sm6115: Add MPM pin mappings
+      pinctrl: qcom: sm6125: Add MPM pin mappings
+      pinctrl: qcom: sdm660: Add MPM pin mappings
 
-Konrad
+ drivers/pinctrl/qcom/pinctrl-msm8996.c | 15 +++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-msm8998.c | 19 ++++++++++---------
+ drivers/pinctrl/qcom/pinctrl-sdm660.c  | 14 ++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-sm6115.c  | 12 ++++++++++++
+ drivers/pinctrl/qcom/pinctrl-sm6125.c  | 14 ++++++++++++++
+ 5 files changed, 65 insertions(+), 9 deletions(-)
+---
+base-commit: 21ef7b1e17d039053edaeaf41142423810572741
+change-id: 20230809-topic-mpm_mappings-31ff2856244a
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
