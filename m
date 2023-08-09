@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87638775E81
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 14:09:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD00B775E83
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 14:10:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231145AbjHIMJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 08:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38284 "EHLO
+        id S231232AbjHIMKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 08:10:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbjHIMJc (ORCPT
+        with ESMTP id S230389AbjHIMKB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 08:09:32 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B53E21982
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 05:09:31 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe0d5f719dso11166888e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 05:09:31 -0700 (PDT)
+        Wed, 9 Aug 2023 08:10:01 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8323A1BF0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 05:10:00 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so10928391e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 05:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691582970; x=1692187770;
+        d=linaro.org; s=google; t=1691582999; x=1692187799;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YbUhZJRH2Swt1RzSf7B35hlDtwAL49/ygLDb80eFcP4=;
-        b=BkgaNaoHXX0hlw11AgXWgj0m0u7VA77dSFhiUp0EGHb3RCBjiyeiVdWwG8o71Yr8Zt
-         wnNHEE7oJX2MqFtB7MmScpLRH2MadvADY4DrxMr+eEjkFyhUaI5W/3UbWemlQHuDLbGu
-         CCpm8q8izp/dyh7iSb4A3SSS5j6EgNkLRO/2H9X4s1sZTubNZjQd4zilciYRJISn/nXo
-         /OIr3yHmqnQ/yyw0rJWpENSZXj5PlUWDzHe73nwy86ntrWfMZ1f1kCS79DNhozyMondg
-         iEh5JWPPALLRSturHgUO8b0PqmlBKe91NfT/huvi7CYyeatXJjAcOcvwtTZJMSLvZbyh
-         Mq6w==
+        bh=luDc3X4iTZXrFD9cxX0UuTHsLxl+/qMB5IyjbjFRUjo=;
+        b=U9pXjZ7bc6SvKv2uYe7r6OazudqrqJWF/SUOuu9CDQiDpg9s51CLO2wy+3KteDyVj6
+         r7ya6OEfb7TlS9MZD8PR+PbCYF29HYPjXRPqPX4O3Ll500RMuy3PLRJd3JAB7YnuTCeC
+         6tHMxS5JGPf1XebNnnNe24hGqMv1Efpt2CjM8sWzxQ6atDaevTvnRat93yueDJTz54eH
+         nwF7sBJSW3cBn+PfIWm9Jt4BHLdb8KlPZfOuCYnnzyZ7dh/j3cDXh14ui7pTjDYEMFCz
+         C+DbZqK/aTPEVfp0V7FfeWtqxvfuEJusT0jliwYW8Mdkpnf/ocXZmEwLzX1Evg9pKdiz
+         OnwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691582970; x=1692187770;
+        d=1e100.net; s=20221208; t=1691582999; x=1692187799;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YbUhZJRH2Swt1RzSf7B35hlDtwAL49/ygLDb80eFcP4=;
-        b=jRnCX6sLHCI8mJGZeHpnxupDszmM8ovz2jam4Ac1p71QTIIu1kls+3Svdv85rryQO8
-         w8QbLYACLIsA3qAFo4iUkD6BVy0kltd1mnzQzy+uEL45dvRMebx3kiDU0VyjIzV/UFtK
-         e/u/rqXOJRfV3Vf5SGCPJxLukZjfL9BQX/leSL4lWgmBGZY22jEfoumPwD9GNQh9F6zz
-         U6OMQHniCBN4yYBM64/9N+t5kcGpsbmUT5SAcHjcglBNcbF+xLXuUqhX0JCLT12ClxwL
-         clZ3R48Ro0d22UBgEQSR32ebQVyBELJ2P3qRSkwXo7B7CyR9iNCv3QqmvOpHj/gTsGuq
-         HN2g==
-X-Gm-Message-State: AOJu0YxSbRj1LE+6Oi/5lweO91QVQw3RcxMsg+wOK3B2Rq0YtUppRn+n
-        k5j//kP0kK+CjTFnbqSH+FL5JQ==
-X-Google-Smtp-Source: AGHT+IF29E3OmnCuwjbvDt3aIMmzcYelyrHGi1ocGJeV7t8JAzJn0TKLb2F/R2U9yb+6cTNYUqbSpw==
-X-Received: by 2002:a05:6512:2094:b0:4f8:75cf:fdd7 with SMTP id t20-20020a056512209400b004f875cffdd7mr1646124lfr.22.1691582969858;
-        Wed, 09 Aug 2023 05:09:29 -0700 (PDT)
+        bh=luDc3X4iTZXrFD9cxX0UuTHsLxl+/qMB5IyjbjFRUjo=;
+        b=KT2hYAplheBlU+zDf2r3ToXq7YtnuWgrPc7MOFSDPupswEM4M8YVnBeCtEHLUVQG+Q
+         9J03S6jeELTZOjazknkUyAhkFoUIPF3QablLWoV3SKQrEo94lcdEHoosyP4i4NouzMq0
+         VkfcnBk2ZD+3p+Cr8G27DU5W2hIDeWoUDAOeRCkLHr69/SZAK7q3ucNcHxtbKMm5+mCZ
+         am01bbg2VOuX0getiU6T10zdUYQ1cj/qVL3tuLgrWu0UbZua10bi2O5vop6WexTtDrRK
+         ZbE/lB6px9Y0soYc1eTT934/uqbwOvopoQTmISYpJwy5Nil9eAoVfW8WiFaWoXYoer5A
+         dpLw==
+X-Gm-Message-State: AOJu0Yyg/irVXe4/oNYaLkp0xdZh7sVty12GSC+hrHI1vsZHxtT5LWIH
+        DB3G4jybhXti2okFiroFKjIil7xsYyrvJM6qOeI=
+X-Google-Smtp-Source: AGHT+IGzN+CwJWErTZsGOaI6liu70JUjJuwESyp2RIH4ZQdhQsWYWY74J0/QtUi+vlKNcHHMxEKhhg==
+X-Received: by 2002:a05:6512:3055:b0:4f8:5604:4b50 with SMTP id b21-20020a056512305500b004f856044b50mr2326526lfb.64.1691582998752;
+        Wed, 09 Aug 2023 05:09:58 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id c6-20020ac244a6000000b004fb8603f6e0sm2304491lfm.12.2023.08.09.05.09.28
+        by smtp.gmail.com with ESMTPSA id c6-20020ac244a6000000b004fb8603f6e0sm2304491lfm.12.2023.08.09.05.09.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 05:09:29 -0700 (PDT)
-Message-ID: <df22dd29-1e4c-4cce-952a-f513a86f0da5@linaro.org>
-Date:   Wed, 9 Aug 2023 14:09:28 +0200
+        Wed, 09 Aug 2023 05:09:58 -0700 (PDT)
+Message-ID: <d82e66f4-dcbe-4829-aa43-3ed3a50365ef@linaro.org>
+Date:   Wed, 9 Aug 2023 14:09:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: apq8016-sbc-d3-camera-mezzanine:
- Move default ov5640 to a standalone dts
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: apq8016-sbc-d3-camera-mezzanine:
+ Enable the sensor by default
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -64,7 +64,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230809120432.1036405-1-bryan.odonoghue@linaro.org>
- <20230809120432.1036405-6-bryan.odonoghue@linaro.org>
+ <20230809120432.1036405-7-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230809120432.1036405-6-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230809120432.1036405-7-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,52 +115,11 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 9.08.2023 14:04, Bryan O'Donoghue wrote:
-> At the moment we define a single ov5640 sensor in the apq8016-sbc and
-> disable that sensor.
-> 
-> The sensor mezzanine for this is a D3 Engineering Dual ov5640 mezzanine
-> card. Move the definition from the apq8016-sbc where it shouldn't be to a
-> standalone dts.
+> With a standalone mezzanine the sensor ought to be enabled by default.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |  1 +
->  .../qcom/apq8016-sbc-d3-camera-mezzanine.dts  | 57 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dts      | 49 ----------------
->  3 files changed, 58 insertions(+), 49 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f15548dbfa56e..19016765ba4c6 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -1,5 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
-> new file mode 100644
-> index 0000000000000..6155fa92c717f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
-> @@ -0,0 +1,57 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023, Linaro Ltd.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "apq8016-sbc.dts"
-> +
-> +&camss {
-> +	status = "okay";
-> +	ports {
-If there's going to be a v2, please add a newline after status here.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+imo this should have been squashed into patch 5, with a mention in
+the commit message
 
 Konrad
