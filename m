@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D75AE7765B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 18:56:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3D2C7765C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 18:57:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232009AbjHIQ40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 12:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55088 "EHLO
+        id S229830AbjHIQ5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 12:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbjHIQ4Z (ORCPT
+        with ESMTP id S231532AbjHIQ5m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 12:56:25 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11435268A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 09:56:21 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe0eb0ca75so11088612e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 09:56:20 -0700 (PDT)
+        Wed, 9 Aug 2023 12:57:42 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F3C1FEE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 09:57:41 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fe700f9bf7so4844697e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 09:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691600179; x=1692204979;
+        d=linaro.org; s=google; t=1691600259; x=1692205059;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=k3HBBhvAubwIXqCLGeN3G4sW7wh4F3k2098rANL9m5E=;
-        b=xbHKi9qaDFiRfH6p91xW/iuRv05hAEO1yVqI4rkQOC9xaO8p0C3G0nQxomfMyMz9SJ
-         W79T8qUsaynXCsSDGnOeXDVm+N3SZXvTD0H0ETegumhKmGhswcwOcokkMpykkUXcdDPj
-         /94zqv0zdn+JWUBylsW4/m0VfCh5g9VEnXlaUtOqZRFqa765ARQ8vIAX3vUUpgU9xX4p
-         0hkjMIQcQs4trwy5m1rTiRvz4JnjCNynZ1vaEzVp7IcT4bP2Y0AYyDfrE2mPIZ0uvXnl
-         l9fe3DdqFZhdX3QDf0T/gh+gylvLX1iq/3YTCz0AgFkataekqBtt4S0fNjMb3zNVOmrs
-         ebpA==
+        bh=9SwjkrtbBdvnKp1CLgMxq8tPU9f9jLUb9Hlz9cpzZxE=;
+        b=E6syc6hqoaAZUUBF4fGuPuUWf4xZWrs5mMtSouMKQicI/58wnet8z/bY9wCSA4hFw6
+         /a8vQz1Xf7wFyzZyYyGNdLx054Z2cOyzeGuKOXXLT7kSt/0hbZO5X131fAQeYWTwq9vh
+         P6e8GUus9hyAZV/Wjr4WjGxpygkpyLlHTG6VIjU328/a2aN1ttqE2VLr4pqmrSxQQUP4
+         qJE/9gZrKaHZ/y7ZHKzid3PTLaOOtv39/rm46f/z5aWDHO9ymRG8W/nJsqXsd+QiUiiZ
+         +IIui74CX0UeSPNWTM3b3lnQGLIJ/VSolqzIx1Dob3jj/GhyeM+aMnJH3IJhzo1S1+/O
+         pAEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691600179; x=1692204979;
+        d=1e100.net; s=20221208; t=1691600259; x=1692205059;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k3HBBhvAubwIXqCLGeN3G4sW7wh4F3k2098rANL9m5E=;
-        b=Ab5yINtRYhRxnvWdB/i4dFoeZup/QdZN84aLZthryXC3thpvjXjaoYQ+tz2u9dK91g
-         MH7T/TudG7VC1zK5JtnIX2PJz0Y/TkhGpWck6Z9/LXvRXSVIHB0LtqLNNXFTA+rYLiZV
-         KZmG/1A5QC2v4DgcyJnsuq2mMwWXWmIeWaC2OojkKNP3GQLfvHQAoHxS2/4pm9XX70Hi
-         JxdMiNppn5HQ6/vPxsKAZqVp3i7zYPPs02Zlk7nSlUXtvbdie7u4PfbLw36ABP3ZWFoA
-         Bf7vO57FPH/QOoUCx+qhDJo31e0j9Ku8wbMK/z1Hrjz1yk8ZH9qm3r2bZwj/5JSykD8M
-         JNBA==
-X-Gm-Message-State: AOJu0YxvUbWzVwEHZsfdHPW9OVFuW4Yw2SY4pDIxTIcmd4PC1PallQbU
-        PfR8c0YB/uze4nQSIKuln4lI/w==
-X-Google-Smtp-Source: AGHT+IF+WPSJQqsmhEQlzdm6vzAWXDf4J8DNbAZneDG2ViA2qtZINJQ8eJ7cxzsBloFELqP5SnoOKQ==
-X-Received: by 2002:a05:6512:3da7:b0:4fb:987b:ec3c with SMTP id k39-20020a0565123da700b004fb987bec3cmr2427977lfv.56.1691600178670;
-        Wed, 09 Aug 2023 09:56:18 -0700 (PDT)
+        bh=9SwjkrtbBdvnKp1CLgMxq8tPU9f9jLUb9Hlz9cpzZxE=;
+        b=BJAFoEuEh+2vHU92tn4k/lvF8EgyShQWEXh3qAMwBpmUlkal08WULz/EAuuRw1Wsrn
+         Bl4waxYuWMPwkbVPFcV5ru/Rui9gjhMQKFyyBwrjpQ2sc70hgMkNR7eYBjAhMGqaO+aQ
+         J5dSs3bbFnAuJk6hyRGDGxc3hubmT+jGfA2ETAm5TJYpcM+LCu3Ausya/vGD8gSK2ujJ
+         dmt+WH89Yv7n7zJXRpoxwYYWQH20F3RYaWrOxDGHvD0efyYl7po8v9hUioScLJQgsZ/K
+         2mUUsxFw/DCZ+hZI5pMNfk+B92goany3v3sS0lpFmq1jlStD76A97LqXWIm+rcXNIRzF
+         d8Bw==
+X-Gm-Message-State: AOJu0YxkDzdOEA8p15XJ/e9V362PtFGjg6T0jYUPQcqP5UejSLRGZzvU
+        851l4zZsVG4Uoe1JLaPFZ1zf9A==
+X-Google-Smtp-Source: AGHT+IEpVU/zA7IaovaR7l55hFcFmalZtuufk4bocR1C5z/SeH0TR3We0ihl5k7u0kLrLZRqPvGSiA==
+X-Received: by 2002:a05:6512:32d1:b0:4fe:cc2:247a with SMTP id f17-20020a05651232d100b004fe0cc2247amr2645694lfg.49.1691600259478;
+        Wed, 09 Aug 2023 09:57:39 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id x15-20020ac25dcf000000b004fb12e0c3eesm2353626lfq.193.2023.08.09.09.56.17
+        by smtp.gmail.com with ESMTPSA id x15-20020ac25dcf000000b004fb12e0c3eesm2353626lfq.193.2023.08.09.09.57.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 09:56:18 -0700 (PDT)
-Message-ID: <7009b7c7-8c53-47b1-9648-6d8fc8c4134a@linaro.org>
-Date:   Wed, 9 Aug 2023 18:56:16 +0200
+        Wed, 09 Aug 2023 09:57:39 -0700 (PDT)
+Message-ID: <bca30002-8ba9-42a0-8b9f-4dcc8c4ee7e2@linaro.org>
+Date:   Wed, 9 Aug 2023 18:57:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] clk: qcom: branch: Add clk_branch2_qca8k_ops
+Subject: Re: [PATCH v1 3/4] clk: qcom: add clock controller driver for
+ qca8386/qca8084
 Content-Language: en-US
 To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
         agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
@@ -65,7 +66,7 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_srichara@quicinc.com
 References: <20230809080047.19877-1-quic_luoj@quicinc.com>
- <20230809080047.19877-2-quic_luoj@quicinc.com>
+ <20230809080047.19877-4-quic_luoj@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,11 +103,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230809080047.19877-2-quic_luoj@quicinc.com>
+In-Reply-To: <20230809080047.19877-4-quic_luoj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,16 +117,19 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 9.08.2023 10:00, Luo Jie wrote:
-> Add the clk_branch2_qca8k_ops for supporting clock controller
-> where the hardware register is accessed by MDIO bus, and the
-> spin clock can't be used because of sleep during the MDIO
-> operation.
-> 
-> The clock is enabled by the .prepare instead of .enable when
-> the clk_branch2_qca8k_ops is used.
+> Add clock & reset controller driver for qca8386/qca8084.
 > 
 > Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > ---
-clk_branch2_mdio_ops?
+[...]
+
+> +static const struct of_device_id nss_cc_qca8k_match_table[] = {
+> +	{ .compatible = "qcom,qca8085-nsscc" },
+> +	{ .compatible = "qcom,qca8084-nsscc" },
+> +	{ .compatible = "qcom,qca8082-nsscc" },
+> +	{ .compatible = "qcom,qca8386-nsscc" },
+> +	{ .compatible = "qcom,qca8385-nsscc" },
+> +	{ .compatible = "qcom,qca8384-nsscc" },
+Are they 1:1 identical as far as NSS_CC goes?
 
 Konrad
