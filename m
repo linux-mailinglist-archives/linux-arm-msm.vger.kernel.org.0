@@ -2,61 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27537776709
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 20:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D85AE776729
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 20:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbjHISPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 14:15:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54778 "EHLO
+        id S231580AbjHIS0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 14:26:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230246AbjHISPk (ORCPT
+        with ESMTP id S231555AbjHIS0y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 14:15:40 -0400
+        Wed, 9 Aug 2023 14:26:54 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8281987;
-        Wed,  9 Aug 2023 11:15:39 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 379F8act005806;
-        Wed, 9 Aug 2023 18:15:32 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47E11987;
+        Wed,  9 Aug 2023 11:26:53 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 379Gcupr026067;
+        Wed, 9 Aug 2023 18:25:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=TdTJK7rXmdvom4IujR3FyQVvWCyDKaXZBuauVoQ6NAU=;
- b=fiOJ69Y3LbVUAxCdMFyXFMdoy7dgkk1tOlpPCPOiExlPAWbLuR6QDdYQ0YuHEgASHNoa
- XvA4NNlNscEzGTaiH1eTYI1JB7oynd/wrBrnZ1f/FaPNUuHIZVC6Q6HY6CVtrcsEWstN
- DImUPFEsEKUIHZ7tTPbTY/IX6HkoAuyUHVKXgdr34Ve8wVzzKtLY1Uj5KNrVX9kUvszC
- QQpUQD/A5eLWrJGKEvcQ+j8DELOH1YNy2vCJWfWntjllmvrayRuyuJ4JSvylI87wQKIw
- /vqlwIhfQf1NFDC4Xi5Dx7mk9J8ZG6ZYJGqkR2ldgaxfQDo6x1TgTVHmTEsP9oujEDgn +w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3scbd4gpvd-1
+ bh=YCgiBM4BbljO43y/sO1vpGYc+7zxImzLm/TIWJmBVVk=;
+ b=b+nuwSy5/Ek76gI8mD3B51q5kPqX+r0T+TPnM6dALzZ76O+vFtNzmAdVbSNR+B9CdJsW
+ N+ucxzyf9IOqoeyZTi/aOBFs/wQHwz447mI3a6CbF5bSvl8xZqenP2Bw2u0nMpAReajT
+ X2p4ZfvOszsr/xCm2GYqMdAK4qiBGGqfUtG7d93RszOrzw9fZfeaRlOMlhqziZ4+7rAO
+ FWBXx7JntOSm3uxUHjwgzKjZgUOUE7JCFwNVcNUbjwsKdkgkClaG6ywZP9+VT6G4NjKC
+ rOzSx/D85ayP7k+aP/LeS/olxJb+aFyr3VrSs8bV8R0IF443Tzn098/T2uKi92BTy0KP kQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sc5es1juc-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 09 Aug 2023 18:15:32 +0000
+        Wed, 09 Aug 2023 18:25:52 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 379IFVLA026746
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 379IPpbm021701
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 9 Aug 2023 18:15:31 GMT
+        Wed, 9 Aug 2023 18:25:51 GMT
 Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 9 Aug
- 2023 11:15:30 -0700
-Message-ID: <3dd7ba0d-61d5-813f-6895-56e2943cb465@quicinc.com>
-Date:   Wed, 9 Aug 2023 12:15:29 -0600
+ 2023 11:25:49 -0700
+Message-ID: <6615b537-c98d-3df2-df30-dd6873fda685@quicinc.com>
+Date:   Wed, 9 Aug 2023 12:25:48 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH v5] accel/qaic: tighten integer overflow checking in
- map_user_pages()
+Subject: Re: [PATCH v2 1/6] arm64: dts: qcom: msm8998: Drop bus clock
+ reference from MMSS SMMU
 Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-CC:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <kernel-janitors@vger.kernel.org>
-References: <e6cbc8a3-c2ae-46be-a731-494470c0a21c@moroto.mountain>
- <67e728b4-7d3f-447d-bbaa-2f69f65bb63e@kadam.mountain>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Imran Khan <kimran@codeaurora.org>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>,
+        Joonwoo Park <joonwoop@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "Joerg Roedel" <joro@8bytes.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>
+References: <20230531-topic-8998_mmssclk-v2-0-34273e275c51@linaro.org>
+ <20230531-topic-8998_mmssclk-v2-1-34273e275c51@linaro.org>
 From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <67e728b4-7d3f-447d-bbaa-2f69f65bb63e@kadam.mountain>
+In-Reply-To: <20230531-topic-8998_mmssclk-v2-1-34273e275c51@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -64,16 +81,16 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rXp-Fn8L1kFksLKKSkADqc8ELJa3HSda
-X-Proofpoint-ORIG-GUID: rXp-Fn8L1kFksLKKSkADqc8ELJa3HSda
+X-Proofpoint-ORIG-GUID: qTPUuL47BmDAjV_eUU6eIGiDySv95qaf
+X-Proofpoint-GUID: qTPUuL47BmDAjV_eUU6eIGiDySv95qaf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-08-09_16,2023-08-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- phishscore=0 bulkscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501 mlxscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=932
+ spamscore=0 mlxscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 bulkscore=0 impostorscore=0 clxscore=1011
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308090160
+ definitions=main-2308090161
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -84,204 +101,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/7/2023 8:43 AM, Dan Carpenter wrote:
-> On Mon, Aug 07, 2023 at 05:09:34PM +0300, Dan Carpenter wrote:
->> The encode_dma() function has some validation on in_trans->size but it's
->> not complete and it would be more clear to move those checks to
->> find_and_map_user_pages().
->>
->> The encode_dma() had two checks:
->>
->> 	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
->> 		return -EINVAL;
->>
->> It's not sufficeint to just check if in_trans->size is zero.  The
-
-sufficient
-
->> resources->xferred_dma_size variable represent the number of bytes
->> already transferred.  If we have already transferred more bytes than
->> in_trans->size then there are negative bytes remaining which doesn't
->> make sense.  Check for that as well.
->>
->> I introduced a new variable "remaining" which represents the amount
-
-introduce (commit text should be present tense per my understanding)
-
->> we want to transfer (in_trans->size) minus the ammount we have already
-
-amount
-
->> transferred (resources->xferred_dma_size).
->>
->> The check in encode_dma() checked that "addr + size" could not overflow
->> however we may already have transferred some bytes so the real starting
->> address is "xfer_start_addr" so check that "xfer_start_addr + size"
->> cannot overflow instead.  Also check that "addr +
->> resources->xferred_dma_size cannot overflow.
->>
->> My other concern was that we are dealing with u64 values but on 32bit
->> systems the kmalloc() function will truncate the sizes to 32 bits.  So
->> I calculated "total = in_trans->size + offset_in_page(xfer_start_addr);"
->> and returned -EINVAL if it were >= SIZE_MAX.  This will not affect 64bit
->> systems.
->>
->> Fixes: 129776ac2e38 ("accel/qaic: Add control path")
->> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
->> ---
->> This is re-write re-write of the previous version.
->>
->> I am not necessarily sure it is correct.  Please review carefully.  In
->> particular, please check how "total" is calculated.  Maybe it would make
->> more sense to write that as:
->>
->> 	total = remaining + offset_in_page(xfer_start_addr);
-
-I think this makes more sense.
-
->>
->> The other question I had is should we add a check:
->>
->> 	if (remaining == 0)
->> 		return 0;
-
-I don't see why adding this would hurt anything.  I don't believe it is 
-necessary.  Remaining is a function of of the driver code and not an 
-external input.  The driver transfers as much as it can, and stops when 
-everything is sent (remaining == 0).  If we hit this check, it is a 
-driver bug.
-
->>
->>   drivers/accel/qaic/qaic_control.c | 23 +++++++++++++++--------
->>   1 file changed, 15 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
->> index cfbc92da426f..d64505bcf4ae 100644
->> --- a/drivers/accel/qaic/qaic_control.c
->> +++ b/drivers/accel/qaic/qaic_control.c
->> @@ -392,18 +392,28 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
->>   				   struct qaic_manage_trans_dma_xfer *in_trans,
->>   				   struct ioctl_resources *resources, struct dma_xfer *xfer)
->>   {
->> +	u64 xfer_start_addr, remaining, end, total;
->>   	unsigned long need_pages;
->>   	struct page **page_list;
->>   	unsigned long nr_pages;
->>   	struct sg_table *sgt;
->> -	u64 xfer_start_addr;
->>   	int ret;
->>   	int i;
->>   
->> -	xfer_start_addr = in_trans->addr + resources->xferred_dma_size;
->> +	if (check_add_overflow(in_trans->addr, resources->xferred_dma_size, &xfer_start_addr))
->> +		return -EINVAL;
->> +
->> +	if (in_trans->size == 0 ||
->> +	    in_trans->size < resources->xferred_dma_size ||
->> +	    check_add_overflow(xfer_start_addr, in_trans->size, &end))
->                                                  ^^^^^^^^^^^^^^
-> This should be remaining.  So maybe it should be something like this
-> with a return 0 for no bytes remaining and total calculated differently.
-
-Yep, should be remaining.  Your below proposed version looks good to me.
-
+On 8/8/2023 3:44 AM, Konrad Dybcio wrote:
+> The MMSS SMMU has been abusingly consuming the exposed RPM interconnect
+> clock. Drop it.
 > 
-> 	if (check_add_overflow(in_trans->addr, resources->xferred_dma_size, &xfer_start_addr))
-> 		return -EINVAL;
-> 
-> 	if (in_trans->size < resources->xferred_dma_size)
-> 		return -EINVAL;
+> Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8998.dtsi | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-This check should never hit unless we have a driver bug.  I don't object 
-to having it though.
-
-> 	remaining = in_trans->size - resources->xferred_dma_size;
-> 	if (remaining == 0)
-> 		return 0;
-> 
-> 	if (check_add_overflow(xfer_start_addr, remaining, &end))
-> 		return -EINVAL;
-> 
-> 	/* Still not really sure why total is calculated this way */
-
-Physical memory layout.
-
-Lets say remaining is 4k, and PAGE_SIZE is 4k.
-
-4k / 4k = 1 so we need 1 page.
-
-Except, if that 4k remaining is some remainder of the transfer and not 
-the complete transfer, then where we start the transfer matters.
-
-If the remaining 4k starts right at a page boundary, then we just need a 
-single page.  However, if the remaining 4k starts X bytes into a page 
-(where X is non-zero), we would actually be transferring data from two 
-physical pages, even though 4k can be fully represented by one page.
-
-This representation might make a bit more sense (although I argue it is 
-wrong) -
-
-total = remaining;
-need_pages = DIV_ROUND_UP(total, PAGE_SIZE);
-if (offset_in_page(xfer_state_addr))
-	need_pages++;
-
-Where this breaks down is when the start addr and the remaining combine 
-to fit into a page.
-
-Assume remaining == 5k and PAGE_SIZE == 4k.  offset_in_page() is going 
-to return 1k.
-
-The right answer is 2 pages.  The first page will contain 3k (4k - 1k 
-from the offset) and the second page will contain 2k.
-
-DIV_ROUND_UP(remaining, PAGE_SIZE) == 5k / 4k == 2
-
-DIV_ROUND_UP(remaining + offset_in_page(), PAGE_SIZE) == (5k + 1k) / 4k == 2
-
-Seems like we need a comment explaining this.
-
-> 	total = remaining + offset_in_page(xfer_start_addr);
-> 	if (total >= SIZE_MAX)
-> 		return -EINVAL;
-> 
-> 	need_pages = DIV_ROUND_UP(total, PAGE_SIZE);
-> 
-> regards,
-> dan carpenter
-> 
->> +		return -EINVAL;
->>   
->> -	need_pages = DIV_ROUND_UP(in_trans->size + offset_in_page(xfer_start_addr) -
->> -				  resources->xferred_dma_size, PAGE_SIZE);
->> +	remaining = in_trans->size - resources->xferred_dma_size;
->> +	total = in_trans->size + offset_in_page(xfer_start_addr);
->> +	if (total >= SIZE_MAX)
->> +		return -EINVAL;
->> +
->> +	need_pages = DIV_ROUND_UP(total - resources->xferred_dma_size, PAGE_SIZE);
->>   
->>   	nr_pages = need_pages;
->>   
->> @@ -435,7 +445,7 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
->>   
->>   	ret = sg_alloc_table_from_pages(sgt, page_list, nr_pages,
->>   					offset_in_page(xfer_start_addr),
->> -					in_trans->size - resources->xferred_dma_size, GFP_KERNEL);
->> +					remaining, GFP_KERNEL);
->>   	if (ret) {
->>   		ret = -ENOMEM;
->>   		goto free_sgt;
->> @@ -566,9 +576,6 @@ static int encode_dma(struct qaic_device *qdev, void *trans, struct wrapper_list
->>   	    QAIC_MANAGE_EXT_MSG_LENGTH)
->>   		return -ENOMEM;
->>   
->> -	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
->> -		return -EINVAL;
->> -
->>   	xfer = kmalloc(sizeof(*xfer), GFP_KERNEL);
->>   	if (!xfer)
->>   		return -ENOMEM;
->> -- 
->> 2.39.2
-
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
