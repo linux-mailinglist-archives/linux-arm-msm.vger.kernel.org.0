@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BC367754EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 10:19:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECC5A7754EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 10:19:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbjHIITH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 04:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36504 "EHLO
+        id S230156AbjHIITO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 04:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbjHIITH (ORCPT
+        with ESMTP id S230457AbjHIITN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 04:19:07 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57911E7D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 01:19:06 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-1bc479cc815so5170406fac.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 01:19:06 -0700 (PDT)
+        Wed, 9 Aug 2023 04:19:13 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE081705
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 01:19:12 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-686b91c2744so4785479b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 01:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691569145; x=1692173945;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1dO0fGXVkB6dDvOJvamtXS5ttOLi34wClCgZVQXXSJ8=;
-        b=fhmLGYJO7+qqXrUKU3dLw1C9KNcWX6EA1ZpYrt5wE7dPOIBYnglTiQWrNkQ4Oz94Ot
-         euX8EGdzFWJm6WHuiu6XZljYwJtJ2An9tufSo/uEaJkaMAHnYSBg/TxyfpDm3BEiZOjd
-         ObVHVuLKLJaSPka3Nlvs8BD0ep8WVv8OLiF9y9PVfA9Bp6pkhGSfodX9KbwGbs+qut7w
-         /CTDwdGzTcUI4Z83FQXJcs3GthwIRRkG26BZVHXPmWA8m4K0rKdvEEqJcwx+VKrURLKZ
-         shHdAnHS6q/aPkAz80+zLEYUoxgahnaL03HxmOTk3CDNLnD/08kRwxZWeGqMs2GAnHa5
-         aV6w==
+        d=linaro.org; s=google; t=1691569152; x=1692173952;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/olz3+pT5vGvwMXGNPW6pUJny4Ruwz46zxkrZbI5uIk=;
+        b=jrHUjZszg5aGthu3ZzuRR0j78xTaWrwJpMn+vkNQr9IJXSakR4x5Ei6YuIp+pJBl0x
+         UNOiXLU3ceDbWiBviK/yfh8Qdz3vxlgYE1JF6+mzFKzKN5k1FvVI/qYfKcm7TFj1h5WV
+         P7/Da4xm8nmh69i7JnsA+wrU++NQOaD4uf2GXGc6IFVrnkBLCRextjiGgMDIeEJC5jO1
+         sStB4HpxqjEaTSac41m8tNH9PImtWQm7T1InfKdnLT+LbzQcOaPZowLZ1w05kBlTEwZ4
+         PmwNpC99+17i7mfnGxf53IFmzIf1SB+Ic/cCjYLeXeZ1OVeipjxpu9cHtwgoNPVbaFxt
+         8Ysw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691569145; x=1692173945;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1dO0fGXVkB6dDvOJvamtXS5ttOLi34wClCgZVQXXSJ8=;
-        b=Obepcxf6smk+/9lroLIQxklWCC8ya5VHytBr4ZKl/bfayIvIpOEmU3y5RkFNZPqdTI
-         8YUKm0Kv43QoKKd6zk5z0c47kz9CvAkWH3QT5fnSnSi+283PcLHgfrxOUTCNada0fvs/
-         nsUD0+cXPWOV2EUOZW61D+QWo9Gi3XaQEy2jdRqbEICr39ax1TWWDNXYKesLEqz4ujL8
-         EdvZV7p55qzPnNig8rAQMDQ1nSZWV8p0qnGImwPb+A7cyYVhJ2Ui7Iz637terpp1jhHg
-         h0QqTmmtpOpNw/gGiB0isp7th/8HT0/qZgSnBwntxKqfs6xpv+yWV3w4BKcOLS0BfXv3
-         NnHg==
-X-Gm-Message-State: AOJu0YyaLeH0CJNmbozk8tleyddy3mRttvGGupoQfP/eBZyyRslFnA0u
-        NrI2XLvdf+WVlrUtsqDRm6DQ
-X-Google-Smtp-Source: AGHT+IHLhiTa1iK8j77LftG5ziiKVv7wb75Pz56OZcxKlLru9eds2r4O/GVW8Znek2Ua6SUJaRVTDQ==
-X-Received: by 2002:a05:6870:610a:b0:1be:dbd2:2bfe with SMTP id s10-20020a056870610a00b001bedbd22bfemr1810603oae.57.1691569145636;
-        Wed, 09 Aug 2023 01:19:05 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691569152; x=1692173952;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/olz3+pT5vGvwMXGNPW6pUJny4Ruwz46zxkrZbI5uIk=;
+        b=iSX4Jpw1h80fWl6mndA1yxGm27LZlCT8NcwynqFqFlTR9vPIbfLA/CPRcVrLISZgxb
+         zPmbJv+zdR9Z2G6ofYZlIxPMAh2lRvK3mnb6o7bNfRpOGpH0Z3l5JpbJWxeddOC+BhwQ
+         v57/82mv1I3whM1KnyCDHzTJCRDHMezBCYja8u7xYeEsy64dSjeOX0sg04tBxNiuxaSu
+         L2pB0xF4k30DFVi5HKjrVG+5dCTyVqCi41Xao9MoXka1aMBEA7R0oGmtq2rwYXS6bjJU
+         urfVxzN6ZghSQQ6h2Hp9zxywiJSub9PZAMJykJEcD4LHTxAm35BLQpiu8rvHUAbP0qnD
+         du0Q==
+X-Gm-Message-State: AOJu0YzlHtOd4CzIKHyh8t+e6RSOR32tzUe5j2ozeZCuK+hjnGHklfj3
+        4sBwFBxgPaoabuAxFuwaZsLG
+X-Google-Smtp-Source: AGHT+IGb/j2HSoijwa29RVJtTy6775ilCzzT+Qk8BKibKLGP8453uYMb168de6FT/MJQOAVUiKpziA==
+X-Received: by 2002:a05:6a20:cea2:b0:13b:9a09:674b with SMTP id if34-20020a056a20cea200b0013b9a09674bmr1594955pzb.36.1691569152270;
+        Wed, 09 Aug 2023 01:19:12 -0700 (PDT)
 Received: from localhost.localdomain ([117.207.25.122])
-        by smtp.gmail.com with ESMTPSA id v13-20020a62a50d000000b00686ee7ba3easm9331881pfm.216.2023.08.09.01.18.59
+        by smtp.gmail.com with ESMTPSA id v13-20020a62a50d000000b00686ee7ba3easm9331881pfm.216.2023.08.09.01.19.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 01:19:05 -0700 (PDT)
+        Wed, 09 Aug 2023 01:19:11 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
 Cc:     robh@kernel.org, gustavo.pimentel@synopsys.com,
@@ -56,44 +57,60 @@ Cc:     robh@kernel.org, gustavo.pimentel@synopsys.com,
         linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 0/2] PCI: qcom: Enable ASPM on host bridge and devices
-Date:   Wed,  9 Aug 2023 13:48:38 +0530
-Message-Id: <20230809081840.16034-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/2] PCI: dwc: Add host_post_init() callback
+Date:   Wed,  9 Aug 2023 13:48:39 +0530
+Message-Id: <20230809081840.16034-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230809081840.16034-1-manivannan.sadhasivam@linaro.org>
+References: <20230809081840.16034-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This callback can be used by the platform drivers to do configuration once
+all the devices are scanned. Like changing LNKCTL of all downstream devices
+to enable ASPM etc...
 
-This series enables ASPM by default on the host bridge and devices of selected
-Qcom platforms.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/pci/controller/dwc/pcie-designware-host.c | 3 +++
+ drivers/pci/controller/dwc/pcie-designware.h      | 1 +
+ 2 files changed, 4 insertions(+)
 
-The motivation behind enabling ASPM in the controller driver is provided in the
-commit message of patch 2/2.
-
-This series has been tested on SC8280-CRD and Lenovo Thinkpad X13s laptop
-and it helped save ~0.6W of power during runtime.
-
-- Mani
-
-Manivannan Sadhasivam (2):
-  PCI: dwc: Add host_post_init() callback
-  PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops
-
- .../pci/controller/dwc/pcie-designware-host.c |  3 ++
- drivers/pci/controller/dwc/pcie-designware.h  |  1 +
- drivers/pci/controller/dwc/pcie-qcom.c        | 28 +++++++++++++++++++
- 3 files changed, 32 insertions(+)
-
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index cf61733bf78d..5ad42cdc2325 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -505,6 +505,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+ 	if (ret)
+ 		goto err_stop_link;
+ 
++	if (pp->ops->host_post_init)
++		pp->ops->host_post_init(pp);
++
+ 	return 0;
+ 
+ err_stop_link:
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 615660640801..e595ae9456da 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -291,6 +291,7 @@ enum dw_pcie_core_rst {
+ struct dw_pcie_host_ops {
+ 	int (*host_init)(struct dw_pcie_rp *pp);
+ 	void (*host_deinit)(struct dw_pcie_rp *pp);
++	void (*host_post_init)(struct dw_pcie_rp *pp);
+ 	int (*msi_host_init)(struct dw_pcie_rp *pp);
+ };
+ 
 -- 
 2.25.1
 
