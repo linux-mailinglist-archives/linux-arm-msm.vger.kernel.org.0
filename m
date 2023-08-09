@@ -2,175 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CD91775EA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 14:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C8B7775EC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 14:21:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231331AbjHIMPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 08:15:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41564 "EHLO
+        id S229708AbjHIMVN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 08:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231178AbjHIMPU (ORCPT
+        with ESMTP id S229886AbjHIMVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 08:15:20 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45D501BDA
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Aug 2023 05:15:19 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe07f0636bso11149681e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Aug 2023 05:15:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691583317; x=1692188117;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bxw/xaaJV3+Iip8T6jKXtUBlM5YfX4PgIk+tvcp/OHk=;
-        b=mszWcv2iLSFJ0r4IjdINd8g0daJ4ysdCRmK04/kRytVSaUX65tI7NDjdr+6v5zIe+T
-         xALfbDF2m1ZMGnIMC16uPQVXdbkwUEu05G4Vv8ZVZAe/b8pVeVYZsa8x8OiqpZJdHvzl
-         XbX3t4Mv+cUHGxM4ohfT01p6z5IC3PfbBiqM41wNqCr+0tIb/zdjkaODMfcyU3AQEfVz
-         HBgzc1mY2qMaO3V8sfQfqvvyU29Wiisf1K8hyqJ4BpMwoyGC8mI64W+xZzMW+AGAWeQI
-         Zmkfa+6YS11NaWm3A8zQX8ZfrX3W1sl3nsQvvVi3YRtXf5UhXejkQt1lgxnzGY836ZKS
-         7FIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691583317; x=1692188117;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bxw/xaaJV3+Iip8T6jKXtUBlM5YfX4PgIk+tvcp/OHk=;
-        b=eqB367G35fhCeJ1lR0Jt/xsmh3aCwijEatbAdxIDTbE/QtsTgocIZRNQ47lQnekYSF
-         tM8ZRvTKmxDyugpNwfeeuN8WRW/MjpQwfFw6F9rWelc9YJgtaQ0BzvtsrBTsjCGDXzMX
-         YSotG0Bsst5YnYLYfi7IUci2Cy1ukPPaTLNKCJAP5OEpFsz+KY/7JozphNUO1hNob4D+
-         Vvmk+P7ePfiQ04FxcjFfUbbTFFUeXU24n3AotHPDsBS9n3uEMxCAH9y9dmEWSn8AOvP/
-         QoaQCrtFe6ANpWKPHp1c+F/loUh652ZSnWQYubiBlA3+Lo15oDU5ixlzo5cWzXSwsYzo
-         gViw==
-X-Gm-Message-State: AOJu0YzMtMW+nTlJlS9djrhMeX30dyn/wQ5PUknNJRYho5LOJF8j+DUt
-        b3z+ZHWmxcp9Hkti1tckqhlKSQ==
-X-Google-Smtp-Source: AGHT+IGf4sBYoS7qaPzoTQs2A+62/45io7Ja4q7AitEu8asjTCMlx/qzuiMy0oGQJpzCNjcoywPIYw==
-X-Received: by 2002:a19:770a:0:b0:4f8:bfb4:e4c4 with SMTP id s10-20020a19770a000000b004f8bfb4e4c4mr1526108lfc.19.1691583317486;
-        Wed, 09 Aug 2023 05:15:17 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id e6-20020ac25466000000b004f85d247069sm2274348lfn.218.2023.08.09.05.15.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 05:15:16 -0700 (PDT)
-Message-ID: <15b545a2-14be-47ba-a665-8ae986a7f9cd@linaro.org>
-Date:   Wed, 9 Aug 2023 14:15:14 +0200
+        Wed, 9 Aug 2023 08:21:12 -0400
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57AC21BF7;
+        Wed,  9 Aug 2023 05:21:09 -0700 (PDT)
+Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mx1.riseup.net (Postfix) with ESMTPS id 4RLTg92fWjzDqvR;
+        Wed,  9 Aug 2023 12:21:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1691583669; bh=tOT1osPBkbssLomMjoThRwJE147WBpwQAMeRtw90GuY=;
+        h=Date:Subject:To:References:From:In-Reply-To:From;
+        b=IDkghb3X7iLAhB5K/j0a1CzlhGQNnbfrl2ctXwsTHj1rlJK0MC2sLv2+1Jadi7Qpp
+         HWTvlhL1LGnteIGGqHuMtbvVi8jCUt/W/VCL3QlRCvzVpBNOlUFxyEKnL5VY8UOENJ
+         2aOuQJnhe3NUOK8nOLVo7dfL/O7V2qLYh0MbTgZc=
+X-Riseup-User-ID: 1B173ED595774DAA80A1634FEEC2C579ED06EC718622D16C28AC21164FC3FA17
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4RLTfs23FLzJmsF;
+        Wed,  9 Aug 2023 12:20:52 +0000 (UTC)
+Message-ID: <28268a1b-090c-237a-79dd-ca58de712a1e@riseup.net>
+Date:   Wed, 9 Aug 2023 09:20:50 -0300
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] media: dt-bindings: Document SC8280XP/SM8350 Venus
+Subject: Re: [PATCH -next 6/7] drm/format-helper: Remove unnecessary NULL
+ values
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org>
- <84ab9380-2fb2-76f9-2eb9-71d9202718cc@linaro.org>
- <659e30a7-80f7-4fd8-af58-45505213a2ef@linaro.org>
- <ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org>
- <fa5dc696-6c67-49d0-b158-f1e3398813e2@linaro.org>
- <816359f7-ad4d-659f-db39-c971e1b1cd9a@linaro.org>
- <0feda32e-5430-4f35-b18a-7afce63a970c@linaro.org>
- <d09df249-cc6d-9708-bfa6-ae5cc7929697@linaro.org>
- <4bd04709-155f-4750-8638-e73b653b1482@linaro.org>
- <0cba0158-8a9f-68b6-6bb3-dab0272a5ce0@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <0cba0158-8a9f-68b6-6bb3-dab0272a5ce0@linaro.org>
+To:     Ruan Jinjie <ruanjinjie@huawei.com>, Felix.Kuehling@amd.com,
+        alexander.deucher@amd.com, christian.koenig@amd.com,
+        Xinhui.Pan@amd.com, airlied@gmail.com, daniel@ffwll.ch,
+        harry.wentland@amd.com, sunpeng.li@amd.com,
+        Rodrigo.Siqueira@amd.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, tzimmermann@suse.de, inki.dae@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, bskeggs@redhat.com,
+        kherbst@redhat.com, lyude@redhat.com, kraxel@redhat.com,
+        gurchetansingh@chromium.org, olvaffe@gmail.com,
+        paulo.miguel.almeida.rodenas@gmail.com, wenjing.liu@amd.com,
+        haoping.liu@amd.com, Charlene.Liu@amd.com, chiahsuan.chung@amd.com,
+        george.shen@amd.com, sancchen@amd.com, tony.tascioglu@amd.com,
+        jaehyun.chung@amd.com, tales.aparecida@gmail.com, drv@mailo.com,
+        aurabindo.pillai@amd.com, quic_vpolimer@quicinc.com,
+        jiasheng@iscas.ac.cn, noralf@tronnes.org,
+        jose.exposito89@gmail.com, javierm@redhat.com,
+        mairacanal@riseup.net, davidgow@google.com,
+        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org
+References: <20230809034445.434902-1-ruanjinjie@huawei.com>
+ <20230809034445.434902-7-ruanjinjie@huawei.com>
+From:   Arthur Grillo <arthurgrillo@riseup.net>
+In-Reply-To: <20230809034445.434902-7-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.08.2023 21:05, Bryan O'Donoghue wrote:
-> On 07/08/2023 19:55, Konrad Dybcio wrote:
->> On 7.08.2023 20:49, Bryan O'Donoghue wrote:
->>> On 07/08/2023 19:45, Konrad Dybcio wrote:
->>>> That can be taken care of with match data.
->>>>
->>>> Konrad
->>>
->>> Well perhaps.
->>>
->>> I'm just sticking my oar in, to elucidate.
->>>
->>> The compat sub-nodes aren't just a random choice with no logic. They exist to select between what you assign the blocks to be, encoder, decoder or any admixture thereof.
->>>
->>> A functionality we want to maintain.
->> Surely something like a modparam would be more suitable here?
->>
->> Konrad
-> 
-> Hmm.
-> 
-> Well from earlier in the thread the question "why do we have these compat strings" is because we can have any combination of encoder/decoder assigned.
-> 
-> If there's a cogent argument _still_ to be made to transition to some new way of assignment then fine so long as we don't break that basic flexibility.
-> 
-> Though my own €0.02 is that a module parameter is more of a PITA than a compat string.
-> 
-> OTOH I could make the argument, that the high probability is most people - probably all, just instantiate a single encoder and decoder and aren't aware of or using the inbuilt flexibility.
-> 
-> @stan probably has the right idea what to do.
-Actually..
-
-Has anybody tested this, ever, with the mainline driver?
-
-Do we have anyone using this?
-
-Is anybody willing to maintain that, test for regressions and
-fix them in a reasonable amount of time?
 
 
-If we don't have at least 2x "yes" here, I don't think it makes sense
-to worry about it..
+On 09/08/23 00:44, Ruan Jinjie wrote:
+> The NULL initialization of the pointers assigned by
+> kunit_kzalloc() first is not necessary, because if kunit_kzalloc()
+> failed, the pointers will be assigned NULL, otherwise it works
+> as usual. so remove it.
+> 
+> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+> ---
+>  .../gpu/drm/tests/drm_format_helper_test.c    | 28 +++++++++----------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
 
-Konrad
+Reviewed-by: Arthur Grillo <arthurgrillo@riseup.net>
+
+Best Regards,
+~Arthur Grillo
+
+> 
+> diff --git a/drivers/gpu/drm/tests/drm_format_helper_test.c b/drivers/gpu/drm/tests/drm_format_helper_test.c
+> index 474bb7a1c4ee..1db12d8ed23c 100644
+> --- a/drivers/gpu/drm/tests/drm_format_helper_test.c
+> +++ b/drivers/gpu/drm/tests/drm_format_helper_test.c
+> @@ -452,7 +452,7 @@ static size_t conversion_buf_size(u32 dst_format, unsigned int dst_pitch,
+>  
+>  static u16 *le16buf_to_cpu(struct kunit *test, const __le16 *buf, size_t buf_size)
+>  {
+> -	u16 *dst = NULL;
+> +	u16 *dst;
+>  	int n;
+>  
+>  	dst = kunit_kzalloc(test, sizeof(*dst) * buf_size, GFP_KERNEL);
+> @@ -467,7 +467,7 @@ static u16 *le16buf_to_cpu(struct kunit *test, const __le16 *buf, size_t buf_siz
+>  
+>  static u32 *le32buf_to_cpu(struct kunit *test, const __le32 *buf, size_t buf_size)
+>  {
+> -	u32 *dst = NULL;
+> +	u32 *dst;
+>  	int n;
+>  
+>  	dst = kunit_kzalloc(test, sizeof(*dst) * buf_size, GFP_KERNEL);
+> @@ -482,7 +482,7 @@ static u32 *le32buf_to_cpu(struct kunit *test, const __le32 *buf, size_t buf_siz
+>  
+>  static __le32 *cpubuf_to_le32(struct kunit *test, const u32 *buf, size_t buf_size)
+>  {
+> -	__le32 *dst = NULL;
+> +	__le32 *dst;
+>  	int n;
+>  
+>  	dst = kunit_kzalloc(test, sizeof(*dst) * buf_size, GFP_KERNEL);
+> @@ -509,7 +509,7 @@ static void drm_test_fb_xrgb8888_to_gray8(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_gray8_result *result = &params->gray8_result;
+>  	size_t dst_size;
+> -	u8 *buf = NULL;
+> +	u8 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -539,7 +539,7 @@ static void drm_test_fb_xrgb8888_to_rgb332(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_rgb332_result *result = &params->rgb332_result;
+>  	size_t dst_size;
+> -	u8 *buf = NULL;
+> +	u8 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -569,7 +569,7 @@ static void drm_test_fb_xrgb8888_to_rgb565(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_rgb565_result *result = &params->rgb565_result;
+>  	size_t dst_size;
+> -	u16 *buf = NULL;
+> +	u16 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -605,7 +605,7 @@ static void drm_test_fb_xrgb8888_to_xrgb1555(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_xrgb1555_result *result = &params->xrgb1555_result;
+>  	size_t dst_size;
+> -	u16 *buf = NULL;
+> +	u16 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -636,7 +636,7 @@ static void drm_test_fb_xrgb8888_to_argb1555(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_argb1555_result *result = &params->argb1555_result;
+>  	size_t dst_size;
+> -	u16 *buf = NULL;
+> +	u16 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -667,7 +667,7 @@ static void drm_test_fb_xrgb8888_to_rgba5551(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_rgba5551_result *result = &params->rgba5551_result;
+>  	size_t dst_size;
+> -	u16 *buf = NULL;
+> +	u16 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -698,7 +698,7 @@ static void drm_test_fb_xrgb8888_to_rgb888(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_rgb888_result *result = &params->rgb888_result;
+>  	size_t dst_size;
+> -	u8 *buf = NULL;
+> +	u8 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -732,7 +732,7 @@ static void drm_test_fb_xrgb8888_to_argb8888(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_argb8888_result *result = &params->argb8888_result;
+>  	size_t dst_size;
+> -	u32 *buf = NULL;
+> +	u32 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -763,7 +763,7 @@ static void drm_test_fb_xrgb8888_to_xrgb2101010(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_xrgb2101010_result *result = &params->xrgb2101010_result;
+>  	size_t dst_size;
+> -	u32 *buf = NULL;
+> +	u32 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -794,7 +794,7 @@ static void drm_test_fb_xrgb8888_to_argb2101010(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_argb2101010_result *result = &params->argb2101010_result;
+>  	size_t dst_size;
+> -	u32 *buf = NULL;
+> +	u32 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
+> @@ -825,7 +825,7 @@ static void drm_test_fb_xrgb8888_to_mono(struct kunit *test)
+>  	const struct convert_xrgb8888_case *params = test->param_value;
+>  	const struct convert_to_mono_result *result = &params->mono_result;
+>  	size_t dst_size;
+> -	u8 *buf = NULL;
+> +	u8 *buf;
+>  	__le32 *xrgb8888 = NULL;
+>  	struct iosys_map dst, src;
+>  
