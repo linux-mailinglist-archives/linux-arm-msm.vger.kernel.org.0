@@ -2,435 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87E4B77532D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:49:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB2E677534C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Aug 2023 08:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231282AbjHIGtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 02:49:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46408 "EHLO
+        id S229526AbjHIG4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 02:56:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231326AbjHIGta (ORCPT
+        with ESMTP id S229533AbjHIG4V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 02:49:30 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02FC51FD2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Aug 2023 23:49:28 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6872c60b572so1363337b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Aug 2023 23:49:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20221208.gappssmtp.com; s=20221208; t=1691563767; x=1692168567;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OaX0WW3K5j/cYotLswcusFGMUMFAt4KZtE+a2oPsO70=;
-        b=K9O1kugi7B3nfptDzv5IYLlLtIIJpjyPR3c0U2B6vItnfOKbjm5W/ZaXcGG4E5VixB
-         D45v7hipgQNj1xSvLoRjqcRhHfWoInVc5cOfptIUZvvqRN6CX2cMVhDv6K+/TIyT9ST0
-         lOUHaMIcEJgyskcdI/o6gHDnJeqMcBqJsdBWRv7cgvNwwkk51Fw2qLZTxiWpVuamvxd+
-         pLQA8Cea0tXiqIurI06V+kL2RoxbojhhHDvPeAra/4CMdfmkvu5Jw0SNbuE/zNcTi45z
-         M/r/uZh3mauEuV2JdHJ0+Q+2ORB5YM0fK4OyWLcUgfLXX2xm9jo69UF9ERKormqJs8rG
-         t7Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691563767; x=1692168567;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OaX0WW3K5j/cYotLswcusFGMUMFAt4KZtE+a2oPsO70=;
-        b=gu8YwrqypYGTDsn7OvKFLfxu6tqHitTxfusQC70qJ6hNxlFff+X1s9visBoAYxFrdQ
-         qC0hFOenuq+f/fzKrLZiQIv207J9eVb7WoNHOzE/c4OjG4xUETCVzBbXfBV6wsrsVogd
-         0Qsrtim3jz+Hf4ZCjCl42ynYb/TudbommGhFBgVYG/0dLOZ8ALBCGghECI3jtl7CzWqq
-         TSOYnxz2wZPxWPEUzqXD0SRX7rj6La2X7hIFZb25XMzdKrc6buG2Gfgs8Lr3f44nlCK1
-         qfVE+8F4abqgtdriqJVniUlLP6vs0rbWxIarrZXf2A1sNPQffalBu7BcyqGLXE1liLnA
-         ktlA==
-X-Gm-Message-State: AOJu0YwiRi20keJJnXuNf1sFK5Vi49nS5zktPNTFJOsxobwWCPHdxvgv
-        kppx/c9oaFwrKzMB065i52aJW9uc5YsZxDcX3q+22g==
-X-Google-Smtp-Source: AGHT+IFJVMaYxxvgHApDMRJkiyIdFCFETCfc03+qqxhuyMNQjrTxw3X84osCvuuOWuLt1yNfeSeXXg==
-X-Received: by 2002:a05:6a00:e8c:b0:67f:7403:1fe8 with SMTP id bo12-20020a056a000e8c00b0067f74031fe8mr2053784pfb.3.1691563767447;
-        Tue, 08 Aug 2023 23:49:27 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id u6-20020a62ed06000000b006833bcc95b0sm9184161pfh.115.2023.08.08.23.49.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 23:49:27 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sc7180: Add board id for lazor/limozeen
-Date:   Wed,  9 Aug 2023 14:49:08 +0800
-Message-Id: <20230809144516.v3.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230809064908.193739-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20230809064908.193739-1-sheng-liang.pan@quanta.corp-partner.google.com>
+        Wed, 9 Aug 2023 02:56:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98FFC133;
+        Tue,  8 Aug 2023 23:56:20 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3795EQaa002770;
+        Wed, 9 Aug 2023 06:56:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=l6Q3kAo4PoDen4OMsfQREJFgN9uoVTu7wtELKaISERI=;
+ b=ma4UaLE4UeHHDGx3BEfRl3CNaPViN2Jin2VxF9kfYwleQDdiGFgtMHsPU/719W9AeoKk
+ tk9PM5c6XkQiQOMQOmprGbDD/ZaXUzeUiPLvdi6StQq6XRLlDc7+/424Wq71Dlg1Cu+C
+ Q6+6CktQdD6s4loiQ2RME2Ensotkgg5AF4848JXGt9flZjecqAtAdlyCVgz3TyTZrhVL
+ h5LzBPVs8hV+Z0Yf+UFjhUtyZpcFYABjWRjp/VEhn8eNFqYbnahoJByWBDDxsjm+i7E5
+ oHO1KUQ5v8FoADe1FvAtRgMfMMb+/hVJCnjMhduT8PgRpGsVxENBULB4ALilXLISjSHx Tg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sbp17hymr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 09 Aug 2023 06:56:06 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3796u4XW028326
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 9 Aug 2023 06:56:04 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 8 Aug
+ 2023 23:56:00 -0700
+Message-ID: <fb6b0f72-3138-d40a-221b-57012cb133be@quicinc.com>
+Date:   Wed, 9 Aug 2023 14:55:57 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v7 07/13] coresight-tpdm: Add nodes to set trigger
+ timestamp and type
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
+ <1690269353-10829-8-git-send-email-quic_taozha@quicinc.com>
+ <73a5313d-9ab2-f5f9-42af-c3d9939198c6@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <73a5313d-9ab2-f5f9-42af-c3d9939198c6@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: py_pP_6sFWYkdz2RWOvHH3Via35XFN3C
+X-Proofpoint-GUID: py_pP_6sFWYkdz2RWOvHH3Via35XFN3C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-09_04,2023-08-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ malwarescore=0 mlxlogscore=999 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 spamscore=0 mlxscore=0 adultscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308090061
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-add BRD_ID(0, Z, 0) = 10 for new board with ALC5682i-VS
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
+On 8/7/2023 5:42 PM, Suzuki K Poulose wrote:
+> On 25/07/2023 08:15, Tao Zhang wrote:
+>> The nodes are needed to set or show the trigger timestamp and
+>> trigger type. This change is to add these nodes to achieve these
+>> function.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 ++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 94 
+>> ++++++++++++++++++++++
+>>   2 files changed, 118 insertions(+)
+>>
+>> diff --git 
+>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index dbc2fbd0..0b7b4ad 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -21,3 +21,27 @@ Description:
+>>             Accepts only one value -  1.
+>>           1 : Reset the dataset of the tpdm
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_type
+>> +Date:        March 2023
+>> +KernelVersion    6.5
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the trigger type of DSB tpdm. Read the trigger
+>> +        type of DSB tpdm.
+>
+> Please use: (RW) instead of (Write).
+>
+>         (RW) Set/Get the trigger type of the DSB for TPDM.
+> Similarly for the items below.
+I will update this in the next patch series.
+>
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB trigger type to false
+>> +        1 : Set the DSB trigger type to true
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_ts
+>> +Date:        March 2023
+>> +KernelVersion    6.5
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the trigger timestamp of DSB tpdm. Read the
+>> +        trigger timestamp of DSB tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB trigger type to false
+>> +        1 : Set the DSB trigger type to true
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index acc3eea..62efc18 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -20,6 +20,18 @@
+>>     DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>>   +static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>> +                       struct attribute *attr, int n)
+>
+> Please keep the alignment.
+I will update this in the next patch series.
+>
+>> +{
+>> +    struct device *dev = kobj_to_dev(kobj);
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    if (drvdata && (drvdata->datasets & TPDM_PIDR0_DS_DSB))
+>
+> As suggested earlier, add a wrapper for the above check.
+I will update this in the next patch series.
+>
+>> +        return attr->mode;
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
+>>   {
+>>       if (drvdata->datasets & TPDM_PIDR0_DS_DSB) {
+>> @@ -229,8 +241,90 @@ static struct attribute_group tpdm_attr_grp = {
+>>       .attrs = tpdm_attrs,
+>>   };
+>>   +static ssize_t dsb_trig_type_show(struct device *dev,
+>> +                     struct device_attribute *attr, char *buf)
+>
+> Please follow the above alignment for all functions throughout the 
+> series. There are unaligned parameter lists scattered around the series.
 
-Changes in v3:
-- sort out the node order alphabetically
+I will update this in the next patch series.
 
-Changes in v2:
-- correct newly create dts files
 
- arch/arm64/boot/dts/qcom/Makefile             |  5 ++
- ...sc7180-trogdor-lazor-limozeen-nots-r10.dts | 40 +++++++++++++
- .../sc7180-trogdor-lazor-limozeen-nots-r9.dts |  4 +-
- .../sc7180-trogdor-lazor-limozeen-r10.dts     | 56 +++++++++++++++++++
- .../qcom/sc7180-trogdor-lazor-limozeen-r9.dts |  4 +-
- .../dts/qcom/sc7180-trogdor-lazor-r10-kb.dts  | 34 +++++++++++
- .../dts/qcom/sc7180-trogdor-lazor-r10-lte.dts | 38 +++++++++++++
- .../dts/qcom/sc7180-trogdor-lazor-r10.dts     | 30 ++++++++++
- .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   |  4 +-
- .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  |  4 +-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts |  4 +-
- 11 files changed, 213 insertions(+), 10 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
+Best,
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 337abc4ceb17..73e745fb1ff0 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -109,11 +109,16 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9-kb.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9-lte.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r10.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r10-kb.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r10-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r9.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r10.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r9.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r10.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-lte-parade.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-lte-ti.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-parade.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
-new file mode 100644
-index 000000000000..bfeddd287aaf
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
-@@ -0,0 +1,40 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Lazor Limozeen board device tree source
-+ *
-+ * Copyright 2023 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Lazor Limozeen without Touchscreen (rev10+)";
-+	compatible = "google,lazor-sku6", "google,lazor-sku18", "qcom,sc7180";
-+};
-+
-+/delete-node/&ap_ts;
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&panel {
-+	compatible = "edp-panel";
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-index cef57c15b70b..e3f1f30a7fc3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-@@ -13,8 +13,8 @@
- #include "sc7180-trogdor-lte-sku.dtsi"
- 
- / {
--	model = "Google Lazor Limozeen without Touchscreen (rev9+)";
--	compatible = "google,lazor-sku6", "google,lazor-sku18", "qcom,sc7180";
-+	model = "Google Lazor Limozeen without Touchscreen (rev9)";
-+	compatible = "google,lazor-rev9-sku6", "google,lazor-rev9-sku18", "qcom,sc7180";
- };
- 
- /delete-node/&ap_ts;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts
-new file mode 100644
-index 000000000000..7e22cec29ee9
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts
-@@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Lazor Limozeen board device tree source
-+ *
-+ * Copyright 2023 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Lazor Limozeen (rev10+)";
-+	compatible = "google,lazor-sku4", "google,lazor-sku15", "qcom,sc7180";
-+};
-+
-+/delete-node/&ap_ts;
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&ap_ts_pen_1v8 {
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth3500";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vcc33-supply = <&pp3300_ts>;
-+
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
-+&panel {
-+	compatible = "auo,b116xa01";
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-index 2038a82bc0e7..3b6053f3e62b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-@@ -13,8 +13,8 @@
- #include "sc7180-trogdor-lte-sku.dtsi"
- 
- / {
--	model = "Google Lazor Limozeen (rev9+)";
--	compatible = "google,lazor-sku4", "google,lazor-sku15", "qcom,sc7180";
-+	model = "Google Lazor Limozeen (rev9)";
-+	compatible = "google,lazor-rev9-sku4", "google,lazor-rev9-sku15", "qcom,sc7180";
- };
- 
- /delete-node/&ap_ts;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
-new file mode 100644
-index 000000000000..6e44e6e04144
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
-@@ -0,0 +1,34 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Lazor board device tree source
-+ *
-+ * Copyright 2023 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-lite.dtsi"
-+
-+/ {
-+	model = "Google Lazor (rev10+) with KB Backlight";
-+	compatible = "google,lazor-sku2", "qcom,sc7180";
-+};
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&keyboard_backlight {
-+	status = "okay";
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
-new file mode 100644
-index 000000000000..a79b7cc5bfb1
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
-@@ -0,0 +1,38 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Lazor board device tree source
-+ *
-+ * Copyright 2023 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Lazor (rev10+) with LTE";
-+	compatible = "google,lazor-sku0", "google,lazor-sku10", "qcom,sc7180";
-+};
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&ap_sar_sensor_i2c {
-+	status = "okay";
-+};
-+
-+&keyboard_backlight {
-+	status = "okay";
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
-new file mode 100644
-index 000000000000..5a58e94c228e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
-@@ -0,0 +1,30 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Lazor board device tree source
-+ *
-+ * Copyright 2023 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-lite.dtsi"
-+
-+/ {
-+	model = "Google Lazor (rev10+)";
-+	compatible = "google,lazor", "qcom,sc7180";
-+};
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-index 960f7b7ce094..f74a1985cac6 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-@@ -13,8 +13,8 @@
- #include "sc7180-lite.dtsi"
- 
- / {
--	model = "Google Lazor (rev9+) with KB Backlight";
--	compatible = "google,lazor-sku2", "qcom,sc7180";
-+	model = "Google Lazor (rev9) with KB Backlight";
-+	compatible = "google,lazor-rev9-sku2", "qcom,sc7180";
- };
- 
- &keyboard_backlight {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-index 438ab9cd3389..15dcf95da311 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-@@ -13,8 +13,8 @@
- #include "sc7180-trogdor-lte-sku.dtsi"
- 
- / {
--	model = "Google Lazor (rev9+) with LTE";
--	compatible = "google,lazor-sku0", "google,lazor-sku10", "qcom,sc7180";
-+	model = "Google Lazor (rev9) with LTE";
-+	compatible = "google,lazor-rev9-sku0", "google,lazor-rev9-sku10", "qcom,sc7180";
- };
- 
- &ap_sar_sensor_i2c {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-index 56dd222650d3..44f61bc56f81 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-@@ -13,6 +13,6 @@
- #include "sc7180-lite.dtsi"
- 
- / {
--	model = "Google Lazor (rev9+)";
--	compatible = "google,lazor", "qcom,sc7180";
-+	model = "Google Lazor (rev9)";
-+	compatible = "google,lazor-rev9", "qcom,sc7180";
- };
--- 
-2.34.1
+Tao
 
+>
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->trig_type);
+>> +}
+>> +
+>> +/*
+>> + * Trigger type (boolean):
+>> + * false - Disable trigger type.
+>> + * true  - Enable trigger type.
+>> + */
+>> +static ssize_t dsb_trig_type_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->trig_type = true;
+>> +    else
+>> +        drvdata->dsb->trig_type = false;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_trig_type);
+>> +
+>> +static ssize_t dsb_trig_ts_show(struct device *dev,
+>> +                     struct device_attribute *attr, char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->trig_ts);
+>> +}
+>> +
+>> +/*
+>> + * Trigger timestamp (boolean):
+>> + * false - Disable trigger timestamp.
+>> + * true  - Enable trigger timestamp.
+>> + */
+>> +static ssize_t dsb_trig_ts_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->trig_ts = true;
+>> +    else
+>> +        drvdata->dsb->trig_ts = false;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_trig_ts);
+>> +
+>> +static struct attribute *tpdm_dsb_attrs[] = {
+>> +    &dev_attr_dsb_trig_ts.attr,
+>> +    &dev_attr_dsb_trig_type.attr,
+>> +    NULL,
+>> +};
+>> +
+>> +static struct attribute_group tpdm_dsb_attr_grp = {
+>> +    .attrs = tpdm_dsb_attrs,
+>> +    .is_visible = tpdm_dsb_is_visible,
+>> +};
+>> +
+>>   static const struct attribute_group *tpdm_attr_grps[] = {
+>>       &tpdm_attr_grp,
+>> +    &tpdm_dsb_attr_grp,
+>>       NULL,
+>>   };
+>
+> Rest looks fine.
+>
+> Suzuk
+>
