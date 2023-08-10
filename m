@@ -2,73 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41BC67776E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:26:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F34037776F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:27:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234491AbjHJL02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 07:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54020 "EHLO
+        id S229619AbjHJL1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 07:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234435AbjHJL01 (ORCPT
+        with ESMTP id S234487AbjHJL1e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 07:26:27 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 835D82698
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:26:26 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fe5c0e5747so4510445e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:26:26 -0700 (PDT)
+        Thu, 10 Aug 2023 07:27:34 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9CCC26A8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:27:32 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fe1e1142caso7065075e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:27:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691666785; x=1692271585;
+        d=linaro.org; s=google; t=1691666851; x=1692271651;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0tTnJRznSRZRdOph0O6zcCrYZpGpbt3RxvxZjdVmHkE=;
-        b=fKJ+XgKfS6t6OZDf5M7jPUsCyW9CxjMy/rf5IpsMyVGixbslL5/c8+CUJ+pDk7tHoa
-         V/JUS2s0qjrb8TP01tAcL0IcZ8nIuK0TX3bIQ4J6vUorWnmDmJDtpOR6R8JQSNFzDZlY
-         LOYoRSc3UzkxNvrE4Sebp/Frl0mAnRt4+H5sX1rsq/Lx1iMtyq9MakfrVXzpxSOnzjUH
-         PaeH7rWr9u4HkiJdSbkqvoCKE4IArcLZU6ef/2qZVCpIj4e7Spx4VTAmVcIswwyLIyrS
-         ZMRjj5yg3V4yGMTXu4mys6kQi65osuj0z7DD+ZvJkDiStuGoigYzxgr4n7zmr8qu0pmR
-         2m7g==
+        bh=FDbzZey8z8DtjOGfcUbD6PYAKPLiO9y+FZZkbeDm/yY=;
+        b=jxmtsAJjcEPs8cRRbIh7ZgDTTpeRxDiC3NZPtDMXJcegH6VfgS6mHiHmS6gEgHhH8f
+         6hMy0HXP6QI0b3hEkl+gnD/L5UVI1dp/n7C4kcVnG/Ahwd3MX9U7NYJwHWWwlnvD4/sN
+         OJNSKYipquGsdoZORbouk0pTNYTNGFG19mddKFlYS+kkSeI+EPv7mANB8L3+J/eTpm7w
+         Eyg2NdiPSPmzin05dvifrn55Wyqr6escz4bJLOR8pO5AfLm75aA6hSAQJo89ZrZd0Q8d
+         p2JcW2gDEtaHbF7qYFMHK0sJrYg0ceYduPbRiZoNiRomZEal7je0QBaI33AMH4FYrwSY
+         FsJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691666785; x=1692271585;
+        d=1e100.net; s=20221208; t=1691666851; x=1692271651;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0tTnJRznSRZRdOph0O6zcCrYZpGpbt3RxvxZjdVmHkE=;
-        b=YEe6N+gDkztgCWiSVAI3hVloJKUiyzZm4ok2Ff6fYSrS48S1d9CR3etSjVxAmEhaUg
-         yF6GRlgDJVzt0cWOvgkyhxkjbsGQLQsiE72K873MAjXwGehzKvOrX8QJL5Y06h2BicVD
-         o++yMOyCcEUXBXB80O4lck2/M3Li5Ghvv8XVujejtmqXBatTVjxh1dtNFHYd8g4k7/1L
-         H4XwsoLBenJJRUlndMf7vulIWVfo8gULgHFtmGswPFywHYMMH7kWedDfPwbBkUdEn8/F
-         H27cbD7Ljf+79G0SUb5y3yaLANg5Y9v4wcWhYrafg9EY3kICaoiRYHYWTTXRkGkAEjyh
-         uRAg==
-X-Gm-Message-State: AOJu0Yx1sr/BnxMZ6R1kGEVVKASRl+FGDW7870Y4XKN323ablBIu9SDy
-        ieQ9+pZ0VQ4BNrLMUWoin2p55g==
-X-Google-Smtp-Source: AGHT+IHdFYAAEgnvQD6jGM2SnDVCS+3Wzj/A1stVZmaHIXLVFIBuw9so+aEaH6Q6sDmmr8ES3lrCEw==
-X-Received: by 2002:a05:600c:a3a1:b0:3fb:b18a:f32d with SMTP id hn33-20020a05600ca3a100b003fbb18af32dmr1453763wmb.17.1691666785048;
-        Thu, 10 Aug 2023 04:26:25 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o13-20020a05600c378d00b003fe2de3f94fsm1839494wmr.12.2023.08.10.04.26.23
+        bh=FDbzZey8z8DtjOGfcUbD6PYAKPLiO9y+FZZkbeDm/yY=;
+        b=KnyyEZYkj9k+Ne/ZcvNlAMqK+SSrUstzcsf/dWU39TPXgdQIQbFPoxsJSAPPbw9YFm
+         OUiCwLTmxgxpkRJTY0uAPDv98aNRfGmDnjbELeFsqSqqvg54m4z2AJjElZXbCoKDwVM3
+         VmP5qEDj8mxh+hsuPKrXp2fzK+Y2ZgN4/5Kpbim1oVLzjOBf1U/5XP8E3lQltQ64ktLW
+         Hv9zKv6rbD3aX3e/S2CxvsswBqCYNPfQZCCPpOMzXuxdCTLHH8EeSRr6/1ri4nXa3Gld
+         m+ifCdNRzRjU7hLPEZuK3VbdbEjXk2/nYtu42rMhG7SNuV2TXzm5J32aiwulJsVVDXwD
+         /JgQ==
+X-Gm-Message-State: AOJu0Yz2mam0sYZugjwBHIXOZlNzycj2j4hjAX8u5vedsE2Aj0iwocOB
+        Ek1hF4TcazUKgbSSb6pe3eXx5Q==
+X-Google-Smtp-Source: AGHT+IHLENZ3IIOqh0ZfoD3+FGlR+9ECXsB/eKGjaTzjh9wztsBxBUxpOQYfG7csZwYPpeMgWwDfNQ==
+X-Received: by 2002:a5d:508e:0:b0:314:2732:e81e with SMTP id a14-20020a5d508e000000b003142732e81emr1740898wrt.8.1691666851414;
+        Thu, 10 Aug 2023 04:27:31 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.113])
+        by smtp.gmail.com with ESMTPSA id j13-20020a5d452d000000b003179d7ed4f3sm1903355wra.12.2023.08.10.04.27.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 04:26:24 -0700 (PDT)
-Message-ID: <e8b53000-8640-5345-1d8f-2a75f2ee0805@linaro.org>
-Date:   Thu, 10 Aug 2023 12:26:23 +0100
+        Thu, 10 Aug 2023 04:27:30 -0700 (PDT)
+Message-ID: <4e05a1fb-f6f2-3219-b41d-67351c70a7ff@linaro.org>
+Date:   Thu, 10 Aug 2023 13:27:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/4] venus: hfi: fix the check to handle session buffer
- requirement
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sc7180: Add board id for
+ lazor/limozeen
 Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hans.verkuil@cisco.com, tfiga@chromium.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
- <1691634304-2158-3-git-send-email-quic_vgarodia@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1691634304-2158-3-git-send-email-quic_vgarodia@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        dianders@chromium.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org
+References: <20230809064908.193739-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20230809144516.v3.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
+ <cd15df3a-eadc-13d6-7088-3ad785ea733e@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <cd15df3a-eadc-13d6-7088-3ad785ea733e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
@@ -80,32 +82,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/08/2023 03:25, Vikash Garodia wrote:
-> Buffer requirement, for different buffer type, comes from video firmware.
-> While copying these requirements, there is an OOB possibility when the
-> payload from firmware is more than expected size. Fix the check to avoid
-> the OOB possibility.
+On 10/08/2023 11:30, Sheng-Liang Pan wrote:
+> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
-> Reviewed-by: Nathan Hebert <nhebert@chromium.org>
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> ---
->   drivers/media/platform/qcom/venus/hfi_msgs.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>> Isn't this duplicated with r9? Probably other places as well... or....
+>> separate r10 add rt5682s node which different with r9.
+> we separate r10 add rt5682s which differentwith r9
 > 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index 3d5dadf..3e85bd8 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -398,7 +398,7 @@ session_get_prop_buf_req(struct hfi_msg_session_property_info_pkt *pkt,
->   		memcpy(&bufreq[idx], buf_req, sizeof(*bufreq));
->   		idx++;
->   
-> -		if (idx > HFI_BUFFER_TYPE_MAX)
-> +		if (idx >= HFI_BUFFER_TYPE_MAX)
->   			return HFI_ERR_SESSION_INVALID_PARAMETER;
->   
->   		req_bytes -= sizeof(struct hfi_buffer_requirements);
+> 
+>>> -	model = "Google Lazor Limozeen without Touchscreen (rev9+)";
+>>> -	compatible = "google,lazor-sku6", "google,lazor-sku18", "qcom,sc7180";
+>>> +	model = "Google Lazor Limozeen without Touchscreen (rev9)";
+>>> +	compatible = "google,lazor-rev9-sku6", "google,lazor-rev9-sku18", "qcom,sc7180";
+> 
+>> Your patch 2 does not make any sense. Didn't you touch it in patch 2?
+>> Really, what is happening here?
+> patch 2 explain why we added new sku for no-eSIM.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+So which commit explain why you touch the same line twice? Sorry, this
+does not make sense.
+
+Best regards,
+Krzysztof
+
