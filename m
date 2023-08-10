@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D62377778D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:52:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0BB977779A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:54:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234627AbjHJLwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 07:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37406 "EHLO
+        id S232608AbjHJLyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 07:54:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234037AbjHJLwi (ORCPT
+        with ESMTP id S229848AbjHJLyq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 07:52:38 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA18125
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:52:37 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fe12820bffso6861985e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:52:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1691668356; x=1692273156;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LzeCdbBciwn7kH7WZmbFrdgE1gfhiupvQ81rtSDk07c=;
-        b=118qziD2W+rfwz0DpuQFBmynEfBXPsFJSqJJ4k6Lxr2K620u++rUm3BYhCybqgaT/B
-         GWgi8pRP4OAKAKKD6DQ19lRlZfn3tRQ4O7o6eKMZaCxj17D/ZU30A6t0gn1pwh/ptlfh
-         xKMOZXhSqnl8AF0mCuOIIJ2zcAuFI+RjR9eHfEkaMz+G5y8jZSuoxjzrNk3JG40QgfFd
-         d56Ug28KkYd8IVXyyGl7u0bbPkuBgqMtR7tkNqoxXVVWQKJNUJc2yPsDFGNhfs57Xq/5
-         Y8CRtwMOgBJlgeabA/WyT7uigmRWUe1l2rwJjbYLg9g+SjpCQ/JzGVY5JSIqF62ioHdg
-         wCJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691668356; x=1692273156;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LzeCdbBciwn7kH7WZmbFrdgE1gfhiupvQ81rtSDk07c=;
-        b=hYVSdqHKS6Sz3ZvbHNtLEP3QvJ539IgUTzRHmtrnzC1x5vTc08abqDLJdHj1AWa5Tm
-         p7liJnDt0nKMfW1UU38xuUt5YG5Upr18oG+nTxqMcSEMSdLurtV2zdlEZvLUI4K6SH8u
-         hWl+4WoMhBkv12zMM9aiNHjmuCkOvGai1d9BohNf0pVERyGQ7XjRR3Nq1cB5USTkSPGX
-         B/j6UHmIXECBqEJoDe5SJRBg/DPkRh9tsX077cvvO0piQkCx4H2KLPNYux6GpZ1iJ4l3
-         ef+STIl3TJRVNpAvb5nUgNDUVGXH9Gfm8Z1uR6xgncypmzS1QarJ3vDRCGnpLfPQJCq2
-         lATQ==
-X-Gm-Message-State: AOJu0YxdeSzbyQMaeYOaqiyyBF7L7BEoPxfWudeGe5OVTeP7jTHSzwzW
-        7R7LH95utyWWfrQPadUe5wJqAA==
-X-Google-Smtp-Source: AGHT+IFpMuAhv3k//+OE0f3WJUydfC1p15CKoDeiqUpsdDCYRM24s+94jA9tJ2Y94hDl1IjZzGG/gQ==
-X-Received: by 2002:a05:600c:2210:b0:3fb:d1c1:9b79 with SMTP id z16-20020a05600c221000b003fbd1c19b79mr1598472wml.30.1691668356070;
-        Thu, 10 Aug 2023 04:52:36 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t18-20020adff612000000b00317b0155502sm1967652wrp.8.2023.08.10.04.52.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 04:52:35 -0700 (PDT)
-Message-ID: <d7bf9370-ac5a-8d5a-f0f7-06b6a97092c8@nexus-software.ie>
-Date:   Thu, 10 Aug 2023 12:52:34 +0100
+        Thu, 10 Aug 2023 07:54:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2941136;
+        Thu, 10 Aug 2023 04:54:45 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37AALjkF021976;
+        Thu, 10 Aug 2023 11:54:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=RnPMVJ0E3kytxu+Z1p+pHlrHkeIXYvpU/cENA2V4ecs=;
+ b=cCxdTu9JxbbXJNlRGTYmiMl45mz3yem+NBt1f1YqO7fUwAQDln1qDMQSPh/49dPFArAv
+ 7llJwT2m8lKYxdPljHkcUTMZUG5O0bIEVZczVxs+cg8Jz7uDhFhR8jmo8nZm5UMGNJ0l
+ TrKT0IeDJkO0h8QKz2R4Fb6IhXRrSQFbYP/ShG7CqrfZ2tozWqXIPkgxOt8e1Rg+8/Fy
+ jLRxm42jutNoW6Gi3205vBGi8Q+HmJMiAvMC2SqEFt6gQqnRVr3R7dArfbhVZ909zKJh
+ Q/afBW49IzFlTKF6b9NO5nHqdomLfHzseryP7p7jppjlf6cyjfMwJkBTSMNmgr7CScNd 3g== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3scr39gxv5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 10 Aug 2023 11:54:35 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37ABsYlc024761
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 10 Aug 2023 11:54:34 GMT
+Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 10 Aug 2023 04:54:30 -0700
+From:   Luo Jie <quic_luoj@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, Luo Jie <quic_luoj@quicinc.com>
+Subject: [PATCH v3 0/3] add clock controller of qca8386/qca8084
+Date:   Thu, 10 Aug 2023 19:54:16 +0800
+Message-ID: <20230810115419.25539-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 4/6] soc: qcom: Add LLCC support for multi channel DDR
-Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230810061140.15608-1-quic_kbajaj@quicinc.com>
- <20230810061140.15608-5-quic_kbajaj@quicinc.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20230810061140.15608-5-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7HeM7SEYPDYkp1_j0BltRtqUPohzB1ZF
+X-Proofpoint-ORIG-GUID: 7HeM7SEYPDYkp1_j0BltRtqUPohzB1ZF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-10_10,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0 phishscore=0
+ adultscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308100100
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,124 +78,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/08/2023 07:11, Komal Bajaj wrote:
-> Add LLCC support for multi channel DDR configuration
-> based on a feature register.
-> 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->   drivers/soc/qcom/llcc-qcom.c | 27 +++++++++++++++++++++++++--
->   1 file changed, 25 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 76e8083d053d..4fad2cff5e1e 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -12,6 +12,7 @@
->   #include <linux/kernel.h>
->   #include <linux/module.h>
->   #include <linux/mutex.h>
-> +#include <linux/nvmem-consumer.h>
->   #include <linux/of.h>
->   #include <linux/of_device.h>
->   #include <linux/regmap.h>
-> @@ -998,6 +999,24 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
->   	return ret;
->   }
-> 
-> +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u8 *cfg_index, int num_config)
-> +{
-> +	int ret;
-> +
-> +	ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
-> +	if (ret == -ENOENT || ret == -EOPNOTSUPP) {
-> +		if (num_config != DEF_NUM_CFG)
-> +			return -EINVAL;
-> +		*cfg_index = DEF_NUM_CFG - 1;
-> +		return 0;
-> +	}
-> +
-> +	if (!ret && *cfg_index >= num_config)
-> +		ret = -EINVAL;
-> +
-> +	return ret;
-> +}
-> +
->   static int qcom_llcc_remove(struct platform_device *pdev)
->   {
->   	/* Set the global pointer to a error code to avoid referencing it */
-> @@ -1034,6 +1053,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->   	const struct qcom_llcc_config *cfg;
->   	const struct llcc_slice_config *llcc_cfg;
->   	u32 sz;
-> +	u8 cfg_index;
->   	u32 version;
->   	struct regmap *regmap;
-> 
-> @@ -1051,11 +1071,14 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->   	}
-> 
->   	cfgs = of_device_get_match_data(&pdev->dev);
-> -	if (!cfgs || cfgs->num_config != DEF_NUM_CFG) {
-> +	if (!cfgs) {
->   		ret = -EINVAL;
->   		goto err;
->   	}
-> -	cfg = &cfgs->llcc_config[DEF_NUM_CFG - 1];
-> +	ret = qcom_llcc_get_cfg_index(pdev, &cfg_index, cfgs->num_config);
-> +	if (ret)
-> +		goto err;
-> +	cfg = &cfgs->llcc_config[cfg_index];
-> 
->   	ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
->   	if (ret)
-> --
-> 2.41.0
-> 
+qca8xxx is 4 * 2.5GBaseT ports chip, working as switch mode
+named by qca8386, or working as PHY mode named by qca8084,
+clock hardware reigster is accessed by MDIO bus.
 
-This patch doesn't apply to -next
+This patch series add the clock controller of qca8363/qca8084,
+and add the clock ops clk_branch2_mdio_ops to avoid spin lock
+used during the clock operation of qca8k clock controller where
+the sleep happens when accessing clock control register by MDIO
+bus.
 
-deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ git checkout -b 
-llc-review-v0 linux-next/master
-branch 'llc-review-v0' set up to track 'linux-next/master'.
-Switched to a new branch 'llc-review-v0'
-deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ git am < 
-../patches/linux/lllc-review/v0/\[PATCH\ 1_6\]\ dt-bindings\:\ cache\:\ 
-qcom\,llcc\:\ Add\ LLCC\ compatible\ for\ QDU1000_QRU1000\ -\ Komal\ 
-Bajaj\ \<quic_kbajaj@quicinc.com\>\ -\ 2023-08-10\ 0711.eml
-Applying: dt-bindings: cache: qcom,llcc: Add LLCC compatible for 
-QDU1000/QRU1000
-deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ git am < 
-../patches/linux/lllc-review/v0/\[PATCH\ 2_6\]\ soc\:\ qcom\:\ llcc\:\ 
-Refactor\ llcc\ driver\ to\ support\ multiple\ configuration\ -\ Komal\ 
-Bajaj\ \<quic_kbajaj@quicinc.com\>\ -\ 2023-08-10\ 0711.eml
-Applying: soc: qcom: llcc: Refactor llcc driver to support multiple 
-configuration
-deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ git am < 
-../patches/linux/lllc-review/v0/\[PATCH\ 3_6\]\ nvmem\:\ core\:\ Add\ 
-stub\ for\ nvmem_cell_read_u8\ -\ Komal\ Bajaj\ 
-\<quic_kbajaj@quicinc.com\>\ -\ 2023-08-10\ 0711.eml
-Applying: nvmem: core: Add stub for nvmem_cell_read_u8
-deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ git am < 
-../patches/linux/lllc-review/v0/\[PATCH\ 4_6\]\ soc\:\ qcom\:\ Add\ 
-LLCC\ support\ for\ multi\ channel\ DDR\ -\ Komal\ Bajaj\ 
-\<quic_kbajaj@quicinc.com\>\ -\ 2023-08-10\ 0711.eml
-Applying: soc: qcom: Add LLCC support for multi channel DDR
-error: patch failed: drivers/soc/qcom/llcc-qcom.c:12
-error: drivers/soc/qcom/llcc-qcom.c: patch does not apply
-Patch failed at 0001 soc: qcom: Add LLCC support for multi channel DDR
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
+Changes in v2:
+	* remove clock flag CLK_ENABLE_MUTEX_LOCK.
+	* add clock ops clk_branch2_qca8k_ops.
+	* improve yaml file for fixing dtschema warnings.
+	* enable clock controller driver in defconfig.
 
-6f48f84d73ab5 (HEAD -> llc-review-v0) HEAD@{0}: am --abort
-6f48f84d73ab5 (HEAD -> llc-review-v0) HEAD@{1}: am: nvmem: core: Add 
-stub for nvmem_cell_read_u8
-7e5adcab05af4 HEAD@{2}: am: soc: qcom: llcc: Refactor llcc driver to 
-support multiple configuration
-0990c31774948 HEAD@{3}: am: dt-bindings: cache: qcom,llcc: Add LLCC 
-compatible for QDU1000/QRU1000
-21ef7b1e17d03 (tag: next-20230809, linux-next/master) HEAD@{4}: 
-checkout: moving from linux-next-23-08-07-db410c-rb3-camss-dts-v2 to 
-llc-review-v0
+Changes in v3:
+	* rename clk_branch2_qca8k_ops to clk_branch2_mdio_ops.
+	* fix review comments on yaml file.
+	* use dev_err_probe on driver probe error.
+	* only use the compatible "qcom,qca8084-nsscc".
+	* remove enable clock controller driver patch.
 
----
-bod
+Luo Jie (3):
+  clk: qcom: branch: Add clk_branch2_mdio_ops
+  dt-bindings: clock: add qca8386/qca8084 clock and reset definitions
+  clk: qcom: add clock controller driver for qca8386/qca8084
+
+ .../bindings/clock/qcom,qca8k-nsscc.yaml      |   79 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-branch.c                 |    8 +
+ drivers/clk/qcom/clk-branch.h                 |    2 +
+ drivers/clk/qcom/nsscc-qca8k.c                | 2180 +++++++++++++++++
+ include/dt-bindings/clock/qcom,qca8k-nsscc.h  |  101 +
+ include/dt-bindings/reset/qcom,qca8k-nsscc.h  |   75 +
+ 8 files changed, 2454 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,qca8k-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+ create mode 100644 include/dt-bindings/clock/qcom,qca8k-nsscc.h
+ create mode 100644 include/dt-bindings/reset/qcom,qca8k-nsscc.h
+
+
+base-commit: 29afcd69672a4e3d8604d17206d42004540d6d5c
+-- 
+2.17.1
+
