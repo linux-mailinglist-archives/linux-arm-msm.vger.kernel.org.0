@@ -2,137 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D5667775C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 12:27:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B777776D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:25:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231954AbjHJK1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 06:27:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44598 "EHLO
+        id S234089AbjHJLZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 07:25:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230419AbjHJK1e (ORCPT
+        with ESMTP id S232354AbjHJLZD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 06:27:34 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55FB583;
-        Thu, 10 Aug 2023 03:27:34 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37A70Ejf000792;
-        Thu, 10 Aug 2023 10:27:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MF8W2MQknXtxWB0YP9TugQ1+T/6dWLvtq+y16AGC6F4=;
- b=d6Vk0ORWqMX0QROw9LRZQB8hbKoCgyztHcHzhsfcPL9miQfA3zERrtliHsWEDTbmxYIN
- /jxkuZRQti76USV4cb87M5DNCU1d9BgsU3wXosfTrn++g3R7j5Ob828X945C+6VoET0s
- QbL8DhFhz6c0Oq4Cs6awgOinZHyAIFgX/AO6UJBrHhR8ftSXcb9uSfb4JezzTWreibb4
- dckjAAlnkEC9N8lKQi9cmHA/ruViMWttGjjmm0wYQ3Yiz8IdMv3FCMuuegbyA4Vo8Ova
- XfLrDUaWUgk68tTjNAvSZLpVWYrNUCaSLUtPc0+eYRvbGu/E1PxogkcbHywpm7ojqUdW wA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3scbcgj5gw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Aug 2023 10:27:30 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37AARSRY000746
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Aug 2023 10:27:28 GMT
-Received: from [10.214.230.142] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 10 Aug
- 2023 03:27:24 -0700
-Message-ID: <8636b916-749e-2bf7-8ec6-202aff4ab872@quicinc.com>
-Date:   Thu, 10 Aug 2023 15:57:20 +0530
+        Thu, 10 Aug 2023 07:25:03 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB01910D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:25:02 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-317dcdae365so732284f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691666701; x=1692271501;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YgZPoGo8LH6qyDp5ljGcAmzKnfrqRqiwjnWanmEDZhg=;
+        b=X14rlqeMcQOp84Dddr/YJnsen7wMwNzbKp0gyAt1pPHT8isM4Qh2aHHlWH0/TBZJE+
+         rvQmzd2F1wyu1rZy0BVHGl1qBh6Mbfj07ROKcb5CYG/aXA7LmHahT6w0Bq+HjOgHBK9Z
+         DdkLj1yxuEefKEqk/BRXlFCIz31J2Xm9rqQ0hetNqkcpD11kAPft4J6rtHUzail6tiKt
+         wCEvqcS3HkG6METqJV1EHCRIon0DigBe+xkM71dVw9JltiT8MYzRJ4b2zi+sEWtDB/dR
+         yXL5Fq1Cwl89uAeLYSEsVbb1Vu7Fbem1S2qKFak+MaMCwCDyD7CCf7FJgk+rR8oFioIY
+         wQoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691666701; x=1692271501;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YgZPoGo8LH6qyDp5ljGcAmzKnfrqRqiwjnWanmEDZhg=;
+        b=e7yB06ttHJGZTVXv9v/HYE7s/0ZdAC4RaYfgfW1TEMWODscNcd58+joYJzQVVD/kjw
+         /deZv2frk7n/nvzvppETdSF0bx4IH1uhLufUiA+Glq3F++F6OdSKzWca2Oc0zbV/Xzkc
+         RDKEJft3N40UrdlE2DS5TbbKPAUU7KbF/wDuZ6buD8UALw2efgRxTKJBS3OY7ngMw3XZ
+         7tIga9HAL0sqoZQBd8wP+IPSGIurD5JnKacv65peLPNkAcCYOnYBqOvPAvo0Dj39Dok6
+         SjjX7XpPcR/KtaKNBOVgsRS+JpxPz3HAK1S8C4A7BnllHAudsRkM5vt5EPboqKUz6NBY
+         xpfg==
+X-Gm-Message-State: AOJu0Yx1AYxRxiQSxeGYEJmkIjUlEcK78nUE50Gu59G4TQApO1TQJ0mr
+        Tw6a2aGgA1brRxZsdeH9PX1/ig==
+X-Google-Smtp-Source: AGHT+IGfZsiwHjt2cNBhpcThPXYSTnM54RIKj2hBnCzqRN17f566/wRRMFAOgnvnSoVKhs1KDjB4zg==
+X-Received: by 2002:adf:e98a:0:b0:317:a423:40e1 with SMTP id h10-20020adfe98a000000b00317a42340e1mr1723864wrm.55.1691666701266;
+        Thu, 10 Aug 2023 04:25:01 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d63c8000000b0031773e3cf46sm1906271wrw.61.2023.08.10.04.25.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Aug 2023 04:25:00 -0700 (PDT)
+Message-ID: <922c02e5-3081-45d4-4635-150393970bf8@linaro.org>
+Date:   Thu, 10 Aug 2023 12:24:59 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 1/6] dt-bindings: cache: qcom,llcc: Add LLCC compatible
- for QDU1000/QRU1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/4] venus: hfi: add checks to perform sanity on queue
+ pointers
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     <agross@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <srinivas.kandagatla@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <robh+dt@kernel.org>, <andersson@kernel.org>
-References: <20230810061140.15608-1-quic_kbajaj@quicinc.com>
- <20230810061140.15608-2-quic_kbajaj@quicinc.com>
- <169165201539.3911513.11768504895031523847.robh@kernel.org>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <169165201539.3911513.11768504895031523847.robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, tfiga@chromium.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1691634304-2158-2-git-send-email-quic_vgarodia@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <1691634304-2158-2-git-send-email-quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oxwFGdCQeg4h8ge6Jd9iFaREzYwkZ9WO
-X-Proofpoint-ORIG-GUID: oxwFGdCQeg4h8ge6Jd9iFaREzYwkZ9WO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-10_10,2023-08-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- adultscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308100087
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 10/08/2023 03:25, Vikash Garodia wrote:
+> Read and write pointers are used to track the packet index in the memory
+> shared between video driver and firmware. There is a possibility of OOB
+> access if the read or write pointer goes beyond the queue memory size.
+> Add checks for the read and write pointer to avoid OOB access.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/venus/hfi_venus.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index f0b4638..4ddabb1 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -206,6 +206,11 @@ static int venus_write_queue(struct venus_hfi_device *hdev,
+>   
+>   	new_wr_idx = wr_idx + dwords;
+>   	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
+> +
+> +	if (wr_ptr < (u32 *)queue->qmem.kva ||
+> +	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
+> +		return -EINVAL;
+> +
+>   	if (new_wr_idx < qsize) {
+>   		memcpy(wr_ptr, packet, dwords << 2);
+>   	} else {
+> @@ -273,6 +278,11 @@ static int venus_read_queue(struct venus_hfi_device *hdev,
+>   	}
+>   
+>   	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
+> +
+> +	if (rd_ptr < (u32 *)queue->qmem.kva ||
+> +	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
+> +		return -EINVAL;
+> +
+>   	dwords = *rd_ptr >> 2;
+>   	if (!dwords)
+>   		return -EINVAL;
 
-
-On 8/10/2023 12:50 PM, Rob Herring wrote:
-> On Thu, 10 Aug 2023 11:41:35 +0530, Komal Bajaj wrote:
->> Add LLCC compatible for QDU1000/QRU1000 SoCs and add optional
->> nvmem-cells and nvmem-cell-names properties to support multiple
->> configurations for multi channel DDR.
->>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
->
->
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230810061140.15608-2-quic_kbajaj@quicinc.com
->
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-
-Hi Rob,
-I did run the same steps locally after upgrading dtschema too, but it 
-didn't reported any kind of error.
-Here also, error is not mentioned, can you please state what's the error 
-reported with this patch?
-
-Thanks
-Komal
-
->
-
+What is the bit-shifting for ?
