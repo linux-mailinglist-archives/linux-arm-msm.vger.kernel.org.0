@@ -2,104 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 412F6777872
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:32:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A2EE7778EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:59:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234668AbjHJMcp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 08:32:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
+        id S235197AbjHJM7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 08:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233466AbjHJMcp (ORCPT
+        with ESMTP id S230458AbjHJM7a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 08:32:45 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C594212F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:44 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fbea147034so7392815e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:44 -0700 (PDT)
+        Thu, 10 Aug 2023 08:59:30 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850D22694
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:59:28 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b962535808so13949151fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691670763; x=1692275563;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1691672367; x=1692277167;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=j5O6S5cTT7TzSxKaal4vevEeC0NclQJzrHwGKjOFl6s=;
-        b=BfIaee3Lcj8qYJHLQu8XtdrtrkK3iy4IT5y/zneaauAP6nRE4NQ3ljlm5dEgwgM4Cz
-         Q69slVoxUeOAIExRX5jtO+kunnNQwf0n11zwaQxbibFC/+eyvS+eTPNES9LON6oJzsOO
-         YgNHModAJ45O+eZo5Lwjd9xQK2m1AXxInA8MeCrfU9wgv80pR010odgZANa+uowCRYe0
-         a1WGPveqeUHKU9/GRRrOxWj/GQUcXiKhJrpfNJitxgAObCyVVvcX3isPeFbT30VRz2eJ
-         cCN/qUrcQywvK++8UWA/Km5sHIBEtl23HdBBEnIBLdyVOikxXiuKYh3ZlZzjkBOLPaF3
-         FURQ==
+        bh=wk+zm0d06jLEAReFRShjOq87rLOotXXr0iiPkZag8v8=;
+        b=B2ZGQfi0E7+mq4GCi8OBMFKMDMOjt4TrHm+hgbNq8F3Aqm3MAL3Jobc9Ha3MZWhOZy
+         111TJ7gn1uN2vB+eBX9mEtn05EE2WByZLoAvvsJPMqpTEYHLcmBNiZbub125LZQNEDPB
+         sSO97uANHNKYP2Mpxlsz6iZx/Q/X5hprkwqopbO+RJShvrATMHCY1C/GV56njdtl452a
+         46bBueehDI1O8D6ITJ1JJJoyTp/PFCTeGx7MFvFyUh1dTYZR0ZIW41VOyIJHIu/JBlLf
+         +2cfGm48gvtSDhQfggumQebIM6yzy9tVxKhw51JUz2pvCfE8/PLjkaVWYmuupsMi+6GM
+         t4mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691670763; x=1692275563;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1691672367; x=1692277167;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j5O6S5cTT7TzSxKaal4vevEeC0NclQJzrHwGKjOFl6s=;
-        b=i5rKDqdWFx9YWyoLB8/W12+Yv16/yA/M2RVUtCaRokNwcsDvc6Z2jeq6+LPJp8tM0R
-         ppAki8VnQZcUFFcA5kCZbPy4yVySvo7VBaUZLSV3qBuiAaF6BChlqC2rhFKgBcgNrzuK
-         xKdI4RNjKU1burHddZ30+F0x4NmDReCkImQXUNS+0Gz5yedIyCFWwv0hCAA5kOlz0+Xj
-         Lei8qGi1chI7ApEyNHBv6SnvTnloHZ1HivEwocnTaLzCf4NTteFSzilLVWMs+9QRRQOx
-         J+OkXchQTP2WYcoqd2KTfQ99Jawk4e6PLnfoT9jKt3JVgREtzvMnq/TpmC6kcD/Us8js
-         pVvg==
-X-Gm-Message-State: AOJu0Yz+zRPgx6hD67Wv9/eQRCzSWLNjd2xTeH8HCBKxGCY3yt940WT7
-        PzsVwIYjE7NZzrPfTZzPdeWyDQ==
-X-Google-Smtp-Source: AGHT+IFuVneGQIDaMr1RkNoAw4cn27A2/NQxJ9hWSiXS8vP+8EUUVB+CTE3oAfBIMeLmNV3l9MA9Hg==
-X-Received: by 2002:a1c:6a07:0:b0:3fb:e4ce:cc65 with SMTP id f7-20020a1c6a07000000b003fbe4cecc65mr1776219wmc.25.1691670762723;
-        Thu, 10 Aug 2023 05:32:42 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b15-20020a05600c11cf00b003fd2e898aa3sm3827836wmi.0.2023.08.10.05.32.41
+        bh=wk+zm0d06jLEAReFRShjOq87rLOotXXr0iiPkZag8v8=;
+        b=i88jLn20htbo4MmgZHl+pbmIZNr93EBksbjNriWjxxE0OJsSXgLRE7QJbpBI0HFVFo
+         SAESQbQp4YZ1RNxIQIxRnQ6Kfw16LjJgbaOpSLaHSNLXbvXUcuyL8v1LErSfNgLsW4Pm
+         JFDWnKgL2gSAzCrbT9rudQMyF0CTjghboRZgQ2B23b6dAm5NHoizpVVcfEyygVntqGzn
+         vg/Pzc0uM5Xs80UJpXkCwMI6PPtdtZ99cZRDxki82CJKB+PoFONCPkEJ7Nk1qzxgwp7V
+         DyeJItT9ts94WaGRiqE1MAVgtWDcxAeg444p8zRCgYsRzTGoye/Rdjev2gLSQ6dbSjAH
+         h8Yg==
+X-Gm-Message-State: AOJu0YzM8lXLLbxjdTQyLwF9q/vXyQwJSw+EK6eYw/4MvR0ufrLMTYc0
+        8zcBv7H3OXeaAE4lorovjw7pBD1/Ilz++AVfWao=
+X-Google-Smtp-Source: AGHT+IHTsZWeX9PLzv0ARPxF/b9bUQFJCXF2d4FgPRJaPHGroko/PDHFHw8TSdTAoBpe9wcNjgif0A==
+X-Received: by 2002:a2e:8555:0:b0:2b6:ad79:a4fb with SMTP id u21-20020a2e8555000000b002b6ad79a4fbmr1937417ljj.1.1691672366726;
+        Thu, 10 Aug 2023 05:59:26 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id n12-20020a2e720c000000b002b9fdfdab75sm354562ljc.12.2023.08.10.05.59.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 05:32:42 -0700 (PDT)
-Message-ID: <a663ea2c-4724-20b3-628e-8831b6989655@linaro.org>
-Date:   Thu, 10 Aug 2023 13:32:41 +0100
+        Thu, 10 Aug 2023 05:59:26 -0700 (PDT)
+Message-ID: <9dec09fa-a5a3-416c-9b4d-4b4c4e10320b@linaro.org>
+Date:   Thu, 10 Aug 2023 14:59:24 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 4/6] soc: qcom: Add LLCC support for multi channel DDR
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] clk: qcom: add clock controller driver for
+ qca8386/qca8084
 Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230810061140.15608-1-quic_kbajaj@quicinc.com>
- <20230810061140.15608-5-quic_kbajaj@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230810061140.15608-5-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
+        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com
+References: <20230810115419.25539-1-quic_luoj@quicinc.com>
+ <20230810115419.25539-4-quic_luoj@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230810115419.25539-4-quic_luoj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/08/2023 07:11, Komal Bajaj wrote:
-> +	ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
-> +	if (ret == -ENOENT || ret == -EOPNOTSUPP) {
-> +		if (num_config != DEF_NUM_CFG)
-> +			return -EINVAL;
+On 10.08.2023 13:54, Luo Jie wrote:
+> Add clock & reset controller driver for qca8386/qca8084.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
 
-In other words if multi-chan-ddr is not present in the dts and the 
-num_config != 1 return -EINVAL
+> +struct qcom_cc {
+> +	struct qcom_reset_controller reset;
+> +	struct clk_regmap **rclks;
+> +	size_t num_rclks;
+> +};
+This all, including the probe func, is required because of the MDIO dance,
+I assume?
 
-You can just as easily say if (num_config > 1) and drop the define from 
-this code.
+Commonizing that would make more sense should more clocks like this appear
+in the future.
 
-> +		*cfg_index = DEF_NUM_CFG - 1;
-> +		return 0;
+[...]
 
-*cfg_index = 0;
+> +static struct clk_branch nss_cc_switch_core_clk = {
+> +	.halt_reg = 0x8,
+> +	.clkr = {
+> +		.enable_reg = 0x8,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "nss_cc_switch_core_clk",
+> +			.parent_hws = (const struct clk_hw *[]) {
+> +				&nss_cc_switch_core_clk_src.clkr.hw,
+> +			},
+> +			.num_parents = 1,
+> +			/* Can be disabled in PHY mode for power saving */
+Well it clearly cannot be disabled if it has the CLK_IS_CRITICAL flag :D
 
-For example if #define DEF_NUM_CFG 0x20 then taking the last index of it 
-would be 100% wrong.
+What's the "PHY mode" you're talking about?
 
-Please kill that define.
+> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+> +			.ops = &clk_branch2_mdio_ops,
+> +		},
+> +	},
+> +};
+I see a whole bunch of CRITICAL clocks.. please make sure these clocks
+are actually necessary for Linux to know about (i.e. if we don't need
+to call any operations on them, we might just skip registering them
+with the driver).
 
----
-bod
+Konrad
+
