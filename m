@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37D31777707
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:31:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C03477771A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 13:33:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235002AbjHJLbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 07:31:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58464 "EHLO
+        id S235154AbjHJLdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 07:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234970AbjHJLbN (ORCPT
+        with ESMTP id S235222AbjHJLdG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 07:31:13 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C003E4B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:31:12 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fe4cdb724cso7225165e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:31:12 -0700 (PDT)
+        Thu, 10 Aug 2023 07:33:06 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5863B10E7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:33:06 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fbd33a57b6so7179055e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 04:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691667071; x=1692271871;
+        d=linaro.org; s=google; t=1691667185; x=1692271985;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3RXPprJU2hE5cjuYnx4i6Sk1OK80+5yCKiP5CQ+QSgM=;
-        b=iHF2MTU5fL8hJmdrBzYuTDiTez4b+1cyTh51MWBygiHIGstB79dxwzTB2UpKguaPnv
-         mYhPMMCrBzaZUl4dkAw7An9j4KAUZe6AE38e6Qx8huGrEZ3SqQP3VboHcogkhB7ts2o2
-         abIsgI8h7upMpFwml6siZTv81Ms63FP4nlxDIAsPCaUI9UYFBClborQFOHHjgR4IWfw6
-         OOzEQYWw+ywLBi6WYE1WfPGfd/e6Fs8DJaBih2HAZXGgiw1YKmxUY98mqozGXCi7LW2h
-         MFzNCj++scnSkxiXk/VKN30pMezoAR9LLAHOnjSFl/Afg2RH+vRj+U13bsTKVk2vDG94
-         enTA==
+        bh=NCTwr/RVCGoszSXddEUdfx1O0WifeiqiEgEcr9ECasQ=;
+        b=IIHGWbSZ1ejCYiSRvqGh4bfzAois9X59DkIZVAKv14+kXyl2KDFmmEjo4vXZYjkw2k
+         0ZwchPRpqzPnvNH6rRdm1WH6fOyEtC7l4jFjGmzgrBhECAh68++mZU3ho8g7fos8hnlW
+         2yb1Y9A2aQCTlgx57GtTMuIjuzLlY1ZG9fTFI0spKWajE7tbDGESP/C3EsWLj9swEUzF
+         T172l/DHuQAqfIuD277B3oDhJEh78nPSdVBoZtjHBAaB52Y1d9nmxoAqKxejmJRN/AcO
+         eordFPLHl5hn9i7ulD5c3yGSJVwPIZxNGkn12WFvF5GLlM7GilhhFiPg8ikjZUKjsALt
+         K+nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691667071; x=1692271871;
+        d=1e100.net; s=20221208; t=1691667185; x=1692271985;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3RXPprJU2hE5cjuYnx4i6Sk1OK80+5yCKiP5CQ+QSgM=;
-        b=INK0/pNOrUWh/I2mUO27W9WVPeOlF5GzG/b8YO/lKo6QMgeDaHFoetU5jTb7SCcrQZ
-         BiYCftt7ikh0g+A5pkG9INIgZPUtIpQPuPiMBnZS1XrxwGVZ5agy1dUT1ThaUxYpSUxC
-         virmb5ilE42LZrjpReGxyP7LkIxue8SQTQlxJAIeqdiycRPXaA3/26izUbEGtvWVi0Ep
-         uLKhjgb/ON5eWfvlEADfAikmsZfb5yjQcOe1gR2l+li8ODYPmMj8gMNq2kU/iK472mgl
-         Y2F+kGqtVqRa7OrhUrky6JoNCdtyEhGAzEbQl+U024qIXk8ScTTl6YtzV6vyrJm9L8JD
-         JNyQ==
-X-Gm-Message-State: AOJu0YwIzMhOm2IRJpYRlFUXPYgOBKxDA2T3Bk17SqJzX7ihoO1EctMx
-        4+ejYEiOKCQjT3lpcaaMYssEdQ==
-X-Google-Smtp-Source: AGHT+IGgoU7CaH3jrKEgzmN3TkhCvzlo2bonJN+g/P6j6+GtXJDgXP7CtM9BrRR4HEoPTcmlS4OBlQ==
-X-Received: by 2002:a7b:c859:0:b0:3fe:1232:93fa with SMTP id c25-20020a7bc859000000b003fe123293famr1692343wml.22.1691667071069;
-        Thu, 10 Aug 2023 04:31:11 -0700 (PDT)
+        bh=NCTwr/RVCGoszSXddEUdfx1O0WifeiqiEgEcr9ECasQ=;
+        b=HtbjSK3dTMBg2z56dgCJQKV4we1ecQXZMT3JiBI9xjPRRD8xR6u3iNb7b+7l8mScBp
+         AxVEVQWT1pyRlaNzmi/uJ704MD8sE52DsECafzzd7JO6oxNUvynysHlC3IWm4o3SyePv
+         ltnl5c4kXNS2OYh+PdbND24p0XfKXWDNTR9lWd/UVox1vZaqXGVj9VYQmRW+NyOZ0AzE
+         ijri62sj3+/FcLRKnrc7fxlyvh7+GYKw6wrhFc+SSXkPIiZakm+3XiGaq7hZ6NrSADf1
+         NrkJ707n/vDuFz1WtODhmrwIV3CrP+G5T/ELollFceHC5/9hGUAMoROf0rCEsBJK3K8J
+         gqxg==
+X-Gm-Message-State: AOJu0Yw+xodXrdogS6gnVqcDhY020fi4VlXNn8Pc6tYPbCUl8OOT9f5A
+        T3U48UpouItUug+EYMY0rDIwzg==
+X-Google-Smtp-Source: AGHT+IGSkS/oszYotJ3+uTNE38wjfUZxnENSkluTysbX1quYhadAuP5DDYRYmMs7uFKh09EBJFBpzw==
+X-Received: by 2002:a5d:4683:0:b0:317:5182:7b55 with SMTP id u3-20020a5d4683000000b0031751827b55mr1925007wrq.42.1691667184827;
+        Thu, 10 Aug 2023 04:33:04 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x1-20020a05600c21c100b003fe1e3937aesm1831728wmj.20.2023.08.10.04.31.09
+        by smtp.gmail.com with ESMTPSA id n11-20020a5d6b8b000000b0031417b0d338sm1868735wrx.87.2023.08.10.04.33.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 04:31:10 -0700 (PDT)
-Message-ID: <59b61d65-a827-d252-cdc2-a256f99cb4d9@linaro.org>
-Date:   Thu, 10 Aug 2023 12:31:09 +0100
+        Thu, 10 Aug 2023 04:33:04 -0700 (PDT)
+Message-ID: <fec4a8c7-206f-7af8-4ea9-c919a677bf7e@linaro.org>
+Date:   Thu, 10 Aug 2023 12:33:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v2 3/4] venus: hfi: add checks to handle capabilities from
- firmware
+Subject: Re: [PATCH v2 4/4] venus: hfi_parser: Add check to keep the number of
+ codecs within range
 Content-Language: en-US
 To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
         stanimir.k.varbanov@gmail.com, agross@kernel.org,
@@ -65,14 +65,14 @@ To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, stable@vger.kernel.org
 References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
- <1691634304-2158-4-git-send-email-quic_vgarodia@quicinc.com>
+ <1691634304-2158-5-git-send-email-quic_vgarodia@quicinc.com>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1691634304-2158-4-git-send-email-quic_vgarodia@quicinc.com>
+In-Reply-To: <1691634304-2158-5-git-send-email-quic_vgarodia@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,45 +81,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/08/2023 03:25, Vikash Garodia wrote:
-> The hfi parser, parses the capabilities received from venus firmware and
-> copies them to core capabilities. Consider below api, for example,
-> fill_caps - In this api, caps in core structure gets updated with the
-> number of capabilities received in firmware data payload. If the same api
-> is called multiple times, there is a possibility of copying beyond the max
-> allocated size in core caps.
-> Similar possibilities in fill_raw_fmts and fill_profile_level functions.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> ---
->   drivers/media/platform/qcom/venus/hfi_parser.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
-> index 6cf74b2..9d6ba22 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-> @@ -86,6 +86,9 @@ static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
->   {
->   	const struct hfi_profile_level *pl = data;
->   
-> +	if (cap->num_pl + num >= HFI_MAX_PROFILE_COUNT)
+> +	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
 > +		return;
 > +
->   	memcpy(&cap->pl[cap->num_pl], pl, num * sizeof(*pl));
->   	cap->num_pl += num;
->   }
 
-Why append and discard though ?
+Shouldn't this be >= ?
 
-Couldn't we reset/reinitalise the relevant indexes in hfi_sys_init_done() ?
-
-Can subsequent notifications from the firmware give a new capability set 
-? Presumably not.
-
-IMO though instead of throwing away the new data, we should throw away 
-the old data, no ?
+struct hfi_plat_caps caps[MAX_CODEC_NUM];
 
 ---
 bod
+
