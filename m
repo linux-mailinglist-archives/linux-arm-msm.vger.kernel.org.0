@@ -2,69 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 743EA777832
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:23:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEF8D77786E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:32:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235075AbjHJMXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 08:23:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50700 "EHLO
+        id S233279AbjHJMcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 08:32:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234904AbjHJMXN (ORCPT
+        with ESMTP id S231618AbjHJMcU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 08:23:13 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0D0211F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:23:11 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fe1d462762so7427735e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:23:11 -0700 (PDT)
+        Thu, 10 Aug 2023 08:32:20 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67A72129
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:19 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe48d0ab0fso1276749e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691670190; x=1692274990;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Zr/Mhw5ILyK63+MjSQ6uC1kOGczJiabTmNqreNeP1g8=;
-        b=a733kCJZWdgy8S7SLUwWDixfAOOrZUbYpqO8z29w0ie5I7U490jMLttJrXPGbc2pnT
-         1Zrx4FSgC4TuIO6UVsyBRcDmaRNK5rj6wwHBMp9J62hIRTEEc9W9OuJMahon+VAs93Tn
-         Yt5WsEK5+EwDWInCqcZOFFpDoAOUF0bj6xaurNkbi7CkNPWArDnxuQACNRpGkGHoBM3Q
-         hQMih1T77HUb9IezaYkynEgMNkn9RbRkBdudKWGXEH3ekhXIrojRZA2/w8zblDddVsCc
-         pT4G8jinfS5CnsCDnyoGXzoiYr9pGy930Pp4d1hWoYr1vnYYdBJw3MasaWom5fg+b2kA
-         EM6A==
+        d=linaro.org; s=google; t=1691670738; x=1692275538;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CmGKxPi0eyaqPvETfFkR9uScmRKAMJF01s7N1ZWCXaM=;
+        b=iBO9f0Qj465jFopyH5a+UTLtH6/oTui64p7tmCYEtCVRU+zy1Jm5cSqJmouNPSEnTq
+         tCx9O0H2pFdYH+nhBJuEza93aDcXquAWKj/Z5nfvjjHDmTZw9iNc9zvbQ/1Z8Ag1Owp2
+         x/sO9YxUZsdJaZlt0PN9cRbr/q63M/47pdHrHrNItLipF5lwI2s5skLOYXRPgo1xPLBW
+         OCYftUOyWNtWRMSlLi5pXwq1eJL+zifeW14ky78PU6HUIXVxvVDwC3fauaduDF/Bew+3
+         K/W6oqWjm6PejGC/RF/7H2adSlI6xuB6VMLGiMTyqflkIWfyDSk9ntu0nlk7AjNWv3C+
+         y4cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691670190; x=1692274990;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zr/Mhw5ILyK63+MjSQ6uC1kOGczJiabTmNqreNeP1g8=;
-        b=KVEYjJZq/SQOofZyass08iW29pgAFrY30cBeFobPUfnB18Q/8rewqKZwJjlQ8Jhm/W
-         a4j7HA9awSNkv1aw48i4dDTrojR2ERiKjbwQxxJvFV/ZZUEAy4o8LzpE/iIqAHyADyvU
-         hSncBlHn+7RG0hKJu2gVG2SkWpDjQVNWwWwkq31D0k1yGB8q2//wcCe1vmLZHHws83DF
-         AvhWAS0hifHESlQLCJLvQVRAaGnMOn0IRQV2AMnQP3ILp6AcEqh91yWEGRgFJAhxwoba
-         kMqQGB2sdoXu9l9b5jzXtBtB0Nt+JW7g7CkcHskki8vPaBxh61Z7qgWgX3me2k2I4yGX
-         KGRg==
-X-Gm-Message-State: AOJu0YymA13zWGsJ10B2viYL4Gx0XSs15FUV1VfL47ZmKY+WgQH3pZ1L
-        JWX1W6t8+EeC6t+K1Kv8L5nFMQ==
-X-Google-Smtp-Source: AGHT+IGXYtn2GpsCxrnbibEKzmgQkNNcdoFU2U3Bo5Oti8uDK9Ygc+2fIlj12Rg8GpXrcTsnR2aDOA==
-X-Received: by 2002:a05:600c:2288:b0:3fe:1deb:82 with SMTP id 8-20020a05600c228800b003fe1deb0082mr1917714wmf.7.1691670190436;
-        Thu, 10 Aug 2023 05:23:10 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id u16-20020a5d4690000000b00313de682eb3sm2003995wrq.65.2023.08.10.05.23.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 05:23:10 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 15:23:06 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        kernel-janitors@vger.kernel.org
-Subject: [PATCH] accel/qaic: Clean up integer overflow checking in
- map_user_pages()
-Message-ID: <24d3348b-25ac-4c1b-b171-9dae7c43e4e0@moroto.mountain>
+        d=1e100.net; s=20221208; t=1691670738; x=1692275538;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CmGKxPi0eyaqPvETfFkR9uScmRKAMJF01s7N1ZWCXaM=;
+        b=P+sLvdReZ4Imp7xpUxtgOsYjkcacqpj9jqp4nCPkgHcJYTeBS+kLbD5bNbPnzNjQwB
+         ZfE09owaFp8OYBCGsmQAxGCCX0oHwHS+TSMz6HraoZRMZ05vdT1fnp86WgTU4Hw9WcHF
+         V+njiVsueNv6+GLPP/WIrR0zuP3tOf3sHJ0Q15MVUod8hY2WlCcLMDo8bQdRm1LQ4x2z
+         dXnVuOKZhWS7Gy4fEYSxISlpuOqHABgGsQ2GUYGNQvWnmzZP1p/nT3bulUq3Qm9nwHPm
+         Hi9QNDfK2Tg89XqB6fvkBPFkTFm3o5nym/hzN8M3R3Ockpr0fGygAVdQjXkShodWxVRN
+         pnyQ==
+X-Gm-Message-State: AOJu0YznkiBv16ZQ2QVu275QVlV6oG9FTl/pLEcBqtEPOyHtnItD0u38
+        6zYRBArPaqLtUB4RGCQ1M1H8ibjz59kAsS0KWNk=
+X-Google-Smtp-Source: AGHT+IE655F2p8mZAtG/fmSt9waGlMQ7jfbT0WUw2GSG93VHxZrhFHtvCl00ftjMEWCdNR2vvnaC/Q==
+X-Received: by 2002:a19:7118:0:b0:4fb:8bea:f5f6 with SMTP id m24-20020a197118000000b004fb8beaf5f6mr1365313lfc.34.1691670737908;
+        Thu, 10 Aug 2023 05:32:17 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id m29-20020a056512015d00b004fb744ccb83sm264048lfo.298.2023.08.10.05.32.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Aug 2023 05:32:17 -0700 (PDT)
+Message-ID: <b55880dd-6cd3-4be3-9300-d5aa8a922422@linaro.org>
+Date:   Thu, 10 Aug 2023 14:32:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] pinctrl: qcom: sm6115: Add MPM pin mappings
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230809-topic-mpm_mappings-v1-0-5e17dd76b3c8@linaro.org>
+ <20230809-topic-mpm_mappings-v1-3-5e17dd76b3c8@linaro.org>
+ <ZNSPi3mDScn9ZMNJ@gerhold.net>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZNSPi3mDScn9ZMNJ@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -74,115 +115,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The encode_dma() function has some validation on in_trans->size but it
-would be more clear to move those checks to find_and_map_user_pages().
+On 10.08.2023 09:19, Stephan Gerhold wrote:
+> On Wed, Aug 09, 2023 at 09:38:56PM +0200, Konrad Dybcio wrote:
+>> Add pin <-> wakeirq mappings to allow for waking up the AP from sleep
+>> through MPM-connected pins.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/pinctrl/qcom/pinctrl-sm6115.c | 12 ++++++++++++
+>>  1 file changed, 12 insertions(+)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-sm6115.c b/drivers/pinctrl/qcom/pinctrl-sm6115.c
+>> index 2a06025f4885..4e91c75ad952 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-sm6115.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-sm6115.c
+>> @@ -867,6 +867,16 @@ static const struct msm_pingroup sm6115_groups[] = {
+>>  	[120] = SDC_QDSD_PINGROUP(sdc2_data, SOUTH, 0x73000, 9, 0),
+>>  };
+>>  
+>> +static const struct msm_gpio_wakeirq_map sm6115_mpm_map[] = {
+>> +	{ 0, 84 }, { 3, 75 }, { 4, 16 }, { 6, 59 }, { 8, 63 }, { 11, 17 }, { 13, 18 },
+>> +	{ 14, 51 }, { 17, 20 }, { 18, 52 }, { 19, 53 }, { 24, 6 }, { 25, 71 }, { 27, 73 },
+>> +	{ 28, 41 }, { 31, 27 }, { 32, 54 }, { 33, 55 }, { 34, 56 }, { 35, 57 }, { 36, 58 },
+>> +	{ 39, 28 }, { 46, 29 }, { 62, 60 }, { 63, 61 }, { 64, 62 }, { 65, 30 }, { 66, 31 },
+>> +	{ 67, 32 }, { 69, 33 }, { 70, 34 }, { 72, 72 }, { 75, 35 }, { 79, 36 }, { 80, 21 },
+>> +	{ 81, 38 }, { 83, 9 }, { 84, 39 }, { 85, 40 }, { 86, 19 }, { 87, 42 }, { 88, 43 },
+>> +	{ 89, 45 }, { 91, 74 }, { 93, 46 }, { 94, 47 }, { 95, 48 }, { 96, 49 }, { 97, 50 },
+>> +};
+> 
+> Did you omit the mappings for GPIO 99-112 here on purpose?
+My downstream didn't have that. I'll take a look.
 
-The encode_dma() had two checks:
+> 
+> The order here looks fine BTW. Maybe downstream changed the order and
+> you got confused? :)
+Yes it changed between iterations, more than one time I think..
 
-	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
-		return -EINVAL;
+Still thinking about that 8998 thing..
 
-The in_trans->addr variable is the starting address.  The in_trans->size
-variable is the total size of the transfer.  The transfer can occur in
-parts and the resources->xferred_dma_size tracks how many bytes we have
-already transferred.
-
-This patch introduces a new variable "remaining" which represents the
-amount we want to transfer (in_trans->size) minus the amount we have
-already transferred (resources->xferred_dma_size).
-
-I have modified the check for if in_trans->size is zero to instead check
-if in_trans->size is less than resources->xferred_dma_size.  If we have
-already transferred more bytes than in_trans->size then there are negative
-bytes remaining which doesn't make sense.  If there are zero bytes
-remaining to be copied, just return success.
-
-The check in encode_dma() checked that "addr + size" could not overflow
-and barring a driver bug that should work, but it's easier to check if
-we do this in parts.  First check that "in_trans->addr +
-resources->xferred_dma_size" is safe.  Then check that "xfer_start_addr +
-remaining" is safe.
-
-My final concern was that we are dealing with u64 values but on 32bit
-systems the kmalloc() function will truncate the sizes to 32 bits.  So
-I calculated "total = in_trans->size + offset_in_page(xfer_start_addr);"
-and returned -EINVAL if it were >= SIZE_MAX.  This will not affect 64bit
-systems.
-
-Fixes: 129776ac2e38 ("accel/qaic: Add control path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
----
-v6: it turns out this patch is mostly a clean up instead of a bug fix.
-    The only real issue is the 32bit truncation bug, and no one is going to
-    be using this driver on 32bit.
-
-    This patch does change the behavior to return 0 for
-    in_trans->size == 0 as discussed earlier.
-
-v5: re-write
----
- drivers/accel/qaic/qaic_control.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index cfbc92da426f..388abd40024b 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -392,18 +392,31 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
- 				   struct qaic_manage_trans_dma_xfer *in_trans,
- 				   struct ioctl_resources *resources, struct dma_xfer *xfer)
- {
-+	u64 xfer_start_addr, remaining, end, total;
- 	unsigned long need_pages;
- 	struct page **page_list;
- 	unsigned long nr_pages;
- 	struct sg_table *sgt;
--	u64 xfer_start_addr;
- 	int ret;
- 	int i;
- 
--	xfer_start_addr = in_trans->addr + resources->xferred_dma_size;
-+	if (check_add_overflow(in_trans->addr, resources->xferred_dma_size, &xfer_start_addr))
-+		return -EINVAL;
- 
--	need_pages = DIV_ROUND_UP(in_trans->size + offset_in_page(xfer_start_addr) -
--				  resources->xferred_dma_size, PAGE_SIZE);
-+	if (in_trans->size < resources->xferred_dma_size)
-+		return -EINVAL;
-+	remaining = in_trans->size - resources->xferred_dma_size;
-+	if (remaining == 0)
-+		return 0;
-+
-+	if (check_add_overflow(xfer_start_addr, remaining, &end))
-+		return -EINVAL;
-+
-+	total = remaining + offset_in_page(xfer_start_addr);
-+	if (total >= SIZE_MAX)
-+		return -EINVAL;
-+
-+	need_pages = DIV_ROUND_UP(total, PAGE_SIZE);
- 
- 	nr_pages = need_pages;
- 
-@@ -435,7 +448,7 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
- 
- 	ret = sg_alloc_table_from_pages(sgt, page_list, nr_pages,
- 					offset_in_page(xfer_start_addr),
--					in_trans->size - resources->xferred_dma_size, GFP_KERNEL);
-+					remaining, GFP_KERNEL);
- 	if (ret) {
- 		ret = -ENOMEM;
- 		goto free_sgt;
-@@ -566,9 +579,6 @@ static int encode_dma(struct qaic_device *qdev, void *trans, struct wrapper_list
- 	    QAIC_MANAGE_EXT_MSG_LENGTH)
- 		return -ENOMEM;
- 
--	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
--		return -EINVAL;
--
- 	xfer = kmalloc(sizeof(*xfer), GFP_KERNEL);
- 	if (!xfer)
- 		return -ENOMEM;
--- 
-2.39.2
-
+Konrad
