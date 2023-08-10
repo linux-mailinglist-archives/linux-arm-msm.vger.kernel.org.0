@@ -2,98 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B41C777997
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 15:29:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D53727779A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 15:31:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235302AbjHJN3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 09:29:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53350 "EHLO
+        id S234838AbjHJNbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 09:31:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233425AbjHJN3N (ORCPT
+        with ESMTP id S234175AbjHJNbd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 09:29:13 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C561F2106
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:29:10 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9cdbf682eso13918171fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:29:10 -0700 (PDT)
+        Thu, 10 Aug 2023 09:31:33 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560B52108
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:31:32 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso1410689e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura.hr; s=sartura; t=1691674149; x=1692278949;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ggdZ4XY1iyuyGYCuXDSqEBNlGtJDtI1zfdyeI7JfU4g=;
-        b=weriFHGUujpIhTpjbDqe5WHkhcuVt23H8ey84ziXNWkddK61gwpUT83eV+crojnsqY
-         YaAh/K4HXCPKHvmGzXS2uE61WYqYhoRMQsxAmPJnX7MXnrwgiNE0/fzJYVnlA0ycVAm+
-         onARqzviG0px4STv9Wu8P6JSZ6ho1ZbGsPa2y/ZVzsmpW8Agk2Qg9oGoUF2UtpG0zHuU
-         8cEfYUMOHF5eZHbrVQ+uFWa+wSHqSx+bpu2dUMddyfxASUkkCrn9d+D2mst7G4DuDCKw
-         MYk/a78CgZTz3rnONokhwR5i9IxPtlVjSyQ4xVU62Fg6a3iwfPmKtmv5LHRab+faaFRX
-         JyBA==
+        d=linaro.org; s=google; t=1691674290; x=1692279090;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jyF59jb7XIhUgJDXmFS2OOFcx7NZkIFgG/Rqxn0RT0o=;
+        b=kVn/I5IYPahUdK5sFIGoSWbKZ3MukmI322WHISGghjcCX3c9AE07TIOqCS7OPf86OX
+         dQ/+HhKCxMoWBKJRqi37sZCmvoJiodCtSw7v8KAm3ZQPzvT8VvloCDS8SIv+KSg89/Rd
+         CXEXQj+wuIog3OQIjc2bpWSZgxUUR9SklIkG4PhDxwxcSi+AV2cZEaHUjH0QEo/16n12
+         JtekHD4Bpxe/4HjiTyVCTXJsD8EoYC+o1P1VwlRQxE9hl4R0ZCz2lXsymcjirmHVmAIX
+         Vd2X/zpaMdvJcTMAltlE8EHAXb9AXPlMJx09/GbsAd9sdzgpWc8JYDyR3Ctnz4h31nhD
+         /n/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691674149; x=1692278949;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ggdZ4XY1iyuyGYCuXDSqEBNlGtJDtI1zfdyeI7JfU4g=;
-        b=ity7mZ7odfgWkjuZ6jHe2S0gQ5upz5ECxe0lR1/uwXnxmohE+8eHZcwIYmMW1Y1d/w
-         yJe7U1V7Jx3cM95oFmW1Ru6tEOVos0kjJn06RKcXlN4fkonM0qJkwW3RWYTbGcLEfFHQ
-         0iY7TEEGl9fp1vL6u/x4Wp7iBAtPKvGB5ReKSVGkmK2Wt40n7MmB0yU/1RIUP6i2/992
-         NFyjO3J5e1fDeydpXoVozyz9J7qkgqSWLFfoXMxmw7HdqrDblP6GFQH4vmQfboi7EJx7
-         1haPbSyITd7OPTVuYQw0mJaYyxi3Gy+rLZ9Znm5W9auZFLhZv6sDeyxDpS4WvYeFKZBS
-         m9SA==
-X-Gm-Message-State: AOJu0Yxy2cvx4T6sgr8QEESIgUuWZVlz2uE0EyrqIfnKGoqcDPzZAkki
-        O7sKSF/f5asA2waoruVy9xsQPg==
-X-Google-Smtp-Source: AGHT+IFyQLSVI1PI8OdHmd9Bwhh8DppcsoZdi218UWEQJXLxuZZTWyG2nLaCRRSUsUciLeTkIqpSuQ==
-X-Received: by 2002:a2e:8756:0:b0:2b6:fa3e:f2fa with SMTP id q22-20020a2e8756000000b002b6fa3ef2famr1935253ljj.32.1691674148887;
-        Thu, 10 Aug 2023 06:29:08 -0700 (PDT)
-Received: from fedora.. ([88.207.97.255])
-        by smtp.googlemail.com with ESMTPSA id l1-20020a170906938100b0099b76c3041csm948654ejx.7.2023.08.10.06.29.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 06:29:08 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     luka.perkov@sartura.hr, Robert Marko <robert.marko@sartura.hr>
-Subject: [PATCH] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
-Date:   Thu, 10 Aug 2023 15:28:21 +0200
-Message-ID: <20230810132904.367418-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.41.0
+        d=1e100.net; s=20221208; t=1691674290; x=1692279090;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jyF59jb7XIhUgJDXmFS2OOFcx7NZkIFgG/Rqxn0RT0o=;
+        b=jBNf1167oJQU6uJ8u0GXNXssfEXzdCHK3ksuEvRTn8Ux5nSlxkpDvHMKdA1zQ3Quus
+         s7wN24b4kd64RWXdQobss6FkRvafKNZ7iSul/L2mFIdpQurHPXm+xUTnQl2jCtE9refo
+         trFKiKBQnHs/t8Z3+KppbqtEHTG8NpWZYlPEalDi39VsxAc3DfNaHZan7+R2ja1xfKQj
+         uK4pBCrVytAVE/HcaQ6zU0GPf9u13Jf6Ooge+F5kcbmDWsgwsVC/tuQyvPJyfT8isWaL
+         hH8d6M1M0kFxK+NukQosq5NA6u1NthZwVM6BEO4YOVpfKUMVBbbXEGUIpQbYRSZxgnlL
+         NmMg==
+X-Gm-Message-State: AOJu0YzOoOgzzmrZaFRXmnRGoyh3g6iOZgS+rzP+0df57GzPX4J8a/vA
+        B9VeOjCdthcMyetgJfBEi94NGQ==
+X-Google-Smtp-Source: AGHT+IEf/EEK46S0pJMntYoPn+2rk2vVmqiwXGt8nK/cC2gclTl0hGi7P54L2LQEhX6Q/wSdk7YADQ==
+X-Received: by 2002:ac2:4db2:0:b0:4f3:93d6:f969 with SMTP id h18-20020ac24db2000000b004f393d6f969mr1668114lfe.59.1691674290444;
+        Thu, 10 Aug 2023 06:31:30 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id k22-20020ac24576000000b004fe8424c750sm292664lfm.47.2023.08.10.06.31.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Aug 2023 06:31:29 -0700 (PDT)
+Message-ID: <697f72b0-e274-4bfa-be7e-8a0f2c5859a8@linaro.org>
+Date:   Thu, 10 Aug 2023 15:31:28 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: apq8016-sbc: Set ov5640
+ assigned-clock
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        loic.poulain@linaro.org, rfoss@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230809202343.1098425-1-bryan.odonoghue@linaro.org>
+ <20230809202343.1098425-4-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230809202343.1098425-4-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Using GCC_DCD_XO_CLK as the XO clock for SDHCI controller is not correct,
-it seems that I somehow made a mistake of passing it instead of the fixed
-XO clock.
+On 9.08.2023 22:23, Bryan O'Donoghue wrote:
+> The driver for the ov5640 doesn't do a set-rate, instead it expects the
+> clock to already be set at an appropriate rate.
+> 
+> Similarly the yaml for ov5640 doesn't understand clock-frequency. Convert
+> from clock-rate to assigned-clock and assigned-clock-rate to remediate.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Fixes: 04b3b72b5b8f ("ARM: dts: qcom: ipq4019: Add SDHCI controller node")
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
----
- arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-index 5492aeed14a5..450179fbed32 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-@@ -231,8 +231,7 @@ sdhci: mmc@7824900 {
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 			bus-width = <8>;
--			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_DCD_XO_CLK>;
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>, <&xo>;
- 			clock-names = "iface", "core", "xo";
- 			status = "disabled";
- 		};
--- 
-2.41.0
-
+Konrad
