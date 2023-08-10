@@ -2,140 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7CC57779A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 15:32:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC9D2777ACF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 16:33:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234311AbjHJNc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 09:32:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47330 "EHLO
+        id S235765AbjHJOdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 10:33:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235092AbjHJNc0 (ORCPT
+        with ESMTP id S229629AbjHJOdz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 09:32:26 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D0A2106
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:32:25 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b9e6cc93d8so15161301fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:32:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691674343; x=1692279143;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r2hvzc0/1aBrNqzZzTGyqyJTlVDNyjsVWwE019TYziQ=;
-        b=zuR5ty9b7hzdDBnzOhT0iWoAVt8msYi3U+McoO3FzxCFK8WhPx86M0Yns1GW1/6iQv
-         IcFp8K9zPu2rlCDwspluWTCHnqyzlzvaNEq5lBwNN0pcOX6bRUVyCc5xJL0yeOr+wK3a
-         t2dHxUYfYyYUAlirC4QwxSTeKyuvO8CMHn6PKS3Lr9TyJfBbSuOOMqumPNQWPbg9Fvfp
-         zdbRAyNfnDZjoxBeqH6Li8mgmSu1o8EEuO8PE6rUtJ1wgR7gbNj3khzQTkU62OGazc2i
-         8mwn75QRd31ERCAgsewZZZmbpbfdfMpSdtNtZi2vp13xGDL7KpDO6lccJHQxNopkKCHI
-         GeoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691674343; x=1692279143;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r2hvzc0/1aBrNqzZzTGyqyJTlVDNyjsVWwE019TYziQ=;
-        b=iMzFPq7Np0B1+OIoc4bM3vMBX8EIlfix0xSzlXBlEkqL6T21U7F3D8kG+T0iD1xwSp
-         1b2qI+a+k+MbMXRY99pNbkh7/ftlw4JArRoDQxvSzYY2TSQax/S+oKKi7BZoo4x0+NG1
-         TC9+YmxhAvX5L0Y5ln1k8640t4xagPaDtANZlbNSCp/oKL+eKA+Bqe8hoSekjgzfUc80
-         b0hYmdyauNjOEdbgg0hqR8YSO5wrLa7ivO6zFpkyr0Rvoxq1MLYcdNeMIE1HE+iq0vQQ
-         kC40CNLwOaEUB59+mnfht2omD5EUTlxIVUY2ggHaZlQMncggBJATqdYMALEnMYJYTkWQ
-         4gow==
-X-Gm-Message-State: AOJu0YxUwZAWLpCGzwDgCM+CAdqXuV26OzH+UHGW2kmozALchWhvfF8i
-        iKLOIgIg5tPtKV9ADzGClklAag==
-X-Google-Smtp-Source: AGHT+IHdy+ShWXUqf2tdiaideD3enD7YtLaHQHB6RYmfX5YEf7YmGPbaSfZ/zHNFZnUDlQY8lyKFlQ==
-X-Received: by 2002:a05:6512:3248:b0:4fd:d0d5:8771 with SMTP id c8-20020a056512324800b004fdd0d58771mr1515803lfr.18.1691674343412;
-        Thu, 10 Aug 2023 06:32:23 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id k22-20020ac24576000000b004fe8424c750sm292664lfm.47.2023.08.10.06.32.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 06:32:23 -0700 (PDT)
-Message-ID: <a23417f0-54e6-4a97-8981-dd7546e2981a@linaro.org>
-Date:   Thu, 10 Aug 2023 15:32:22 +0200
+        Thu, 10 Aug 2023 10:33:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058D22698;
+        Thu, 10 Aug 2023 07:33:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 90A0A6341B;
+        Thu, 10 Aug 2023 14:33:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD37C433C8;
+        Thu, 10 Aug 2023 14:33:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691678034;
+        bh=WqlM6z8LVtWUOQQF2diUDLPd+E8rFCp1jue2qltP+o8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=p26mWUsjFPi/9fGERTPqWNn3k2cdqyogDgIvZeRO5qJeB0+AcANXUzJhj8N+azueZ
+         CUMjB2fmvq7kj3+fkWZyYaR2eJBscJeo+XoL+uxRQAaMvzGactfPD1w8PcLjP833hJ
+         w65nYa3MF0qXIm8aT5amGeCvaPI8LZmn90cDdgT5Z07pOgx2tmBVwAQiOOBcC6z3lw
+         +d4GQCvfJASLQTKGWgWcKwmhrQ6RacnM2iZ194MlmXz+J6a3lyH4yRDw9QpA+cGkxw
+         tF+z2cdoBkmcQF7ZaD56OzhOZesVhaV5fy6FEIuAzktEVOReVrX3MK1X944yZ2IIDX
+         ojDjrf0u3K5lw==
+Date:   Thu, 10 Aug 2023 07:36:45 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     Hugo Villeneuve <hugo@hugovil.com>, agross@kernel.org,
+        konrad.dybcio@linaro.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, bartosz.golaszewski@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        dianders@chromium.org, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com
+Subject: Re: [PATCH RESEND] tty: serial: qcom-geni-serial: Poll primary
+ sequencer irq status after cancel_tx
+Message-ID: <7mdlnuxzm7rxstl2r3kyyiuefbj3wpyqprzufdrsxe7hy5fvfo@tdwfhi6a27hj>
+References: <1691583100-15689-1-git-send-email-quic_vnivarth@quicinc.com>
+ <20230809091951.fbcc682d00deacd4d7b55b44@hugovil.com>
+ <9be10770-d3df-467e-0541-8839bcd22fee@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: apq8016-sbc: Enable camss for
- non-mezzanine cases
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        loic.poulain@linaro.org, rfoss@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230809202343.1098425-1-bryan.odonoghue@linaro.org>
- <20230809202343.1098425-7-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230809202343.1098425-7-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9be10770-d3df-467e-0541-8839bcd22fee@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9.08.2023 22:23, Bryan O'Donoghue wrote:
-> When we have no camera mezzanine attached it is still possible to run the
-> test-pattern generator of the CSID block.
+On Wed, Aug 09, 2023 at 10:51:54PM +0530, Vijaya Krishna Nivarthi wrote:
+> Hi,
 > 
-> As an example:
+> Thank you very much for the review...
 > 
-> media-ctl --reset
-> 
-> yavta --no-query -w '0x009f0903 1' /dev/v4l-subdev2
-> yavta --list /dev/v4l-subdev2
-> 
-> media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:UYVY8_1X16/1920x1080 field:none]'
-> media-ctl -l '"msm_csid0":1->"msm_ispif0":0[1]'
-> media-ctl -d /dev/media0 -V '"msm_ispif0":0[fmt:UYVY8_1X16/1920x1080 field:none]'
-> media-ctl -l '"msm_ispif0":1->"msm_vfe0_rdi0":0[1]'
-> media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:UYVY8_1X16/1920x1080]'
-> media-ctl -d /dev/media0 -p
-> 
-> yavta -B capture-mplane --capture=5 -n 5 -I -f UYVY -s 1920x1080 --file=TPG-UYVU-1920x1080-000-#.bin /dev/video0
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Hm.. perhaps the ports could be just defined in soc dtsi?
 
-Konrad
+Thank you for the bug fix, Vijaya.
+
+> 
+> On 8/9/2023 6:49 PM, Hugo Villeneuve wrote:
+> > On Wed,  9 Aug 2023 17:41:40 +0530
+> > Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com> wrote:
+> > 
+> > > TX is handled by primary sequencer. After cancelling primary command, poll
+> > > primary sequencer's irq status instead of that of secondary.
+> > Hi,
+> > it is not clear to me if this is a bug fix or an improvement?
+> This is a bug fix.
+
+Please describe the actual problem you're solving, to allow others
+working in and around this driver to know what issue(s) are corrected.
+
+This will save others debugging time, and it will teach others to help
+you maintain this driver.
+
+The section in the documentation on how to describe your changes is
+good, please read it:
+https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+
+> > 
+> > > While at it, also remove a couple of redundant lines that read from IRQ_EN
+> > > register and write back same.
+> > This should go into a separate patch.
+> 
+> The changes were too close by so I wasn't sure it could be split into 2
+> patches.
+> 
+> I see that the earlier patch has already been signed off by Greg. (I did a
+> RESEND after realising that I had Bjorn Andersson's email address incorrect)
+
+Please use ./scripts/get_maintainer.pl on the upstream tree, as this
+uses up to date information about recipients.
+
+> 
+> Will post another version if original patch doesn't get merged for any
+> reason.
+> 
+
+Please double check linux-next [1], if it's unclear if Greg picked up
+your previous patch (he's usually quite explicit about it...). I really
+would like some more details on the bug fix...
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/
+
+Regards,
+Bjorn
