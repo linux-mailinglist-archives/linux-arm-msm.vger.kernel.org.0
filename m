@@ -2,166 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCBD3778209
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:20:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B2BB77820B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235693AbjHJUUx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 16:20:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52804 "EHLO
+        id S230172AbjHJUV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 16:21:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233283AbjHJUUx (ORCPT
+        with ESMTP id S230019AbjHJUV0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 16:20:53 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F4F272C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:20:51 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9b5ee9c5aso21316581fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:20:51 -0700 (PDT)
+        Thu, 10 Aug 2023 16:21:26 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5492B2718;
+        Thu, 10 Aug 2023 13:21:25 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1bb84194bf3so9749655ad.3;
+        Thu, 10 Aug 2023 13:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691698849; x=1692303649;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iylCfLaU0WQeliCWu5KpopM/+sElU6AE+n+9QM8qgEw=;
-        b=ep8hRVZdMzqruJheKzUHAmze1qyUq+zqpuYl+uMRbps5KlZNVCXqd9nh19kPvO9smP
-         kR2BCwXmlS4AXHmMwMKR0ornVlXjGEMMonwWDqaOKGqcE+C/OtYPu8bUvWjFsYRKN7Wa
-         YAdvgEE0JTvuZvGNYChHrsYhwXNbD1lbKNXORbJ8+7y+244BHYizxE+hcPBj2p1QpVN4
-         8B+VoN0OlCzcX38N2a6WuLmB5uXhny0Byp9wt5+oSHHIFFaix+1G5DfbSl43rKwcRirI
-         E4HmRq4fHr7taAE90tnNZAQsCesR7QSHpYp7f2kDNNUvZEeJUO5TAipYPGH8Np6eCpqw
-         HNaw==
+        d=gmail.com; s=20221208; t=1691698885; x=1692303685;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uM9oSpoHkYT2DcfSPpn70J1M+BqeZpakFeN9BFvYGzE=;
+        b=bCqhtWyEB2t09xb65w/pVDjkpdX6VKNl7wZgQ92Ih3+86M71/5vq2AbinuqUHbGJ1n
+         Nk9x4I0bsOtDdprY/JS2D648XkQqZMd/4cZXoPWINjDQoXKsM0n1SswZjfgjnKgK0dFM
+         ZNdNtrByyWs/qC0/oXQ+HtmXaBhkOmQxXEX17yeLCSgLA3i76TIzhhdHA2yurNthQPcc
+         83wDQsfZT6UkXEYJ5c85VN22BNISO2i+aQIz01Avg1tQ8FY+gtyXImTUx3JF2czI7Gv/
+         E71GcJkcYtIISPLdohoAHrArdPaVV2usIZ/r4ebsiowGDFlkL4gw0DDkD0Korbz7LCp0
+         rx3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691698849; x=1692303649;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iylCfLaU0WQeliCWu5KpopM/+sElU6AE+n+9QM8qgEw=;
-        b=CPs9MsYUFHxpsvYtzp4IBH+x2p+22N/ulZlyYWKkL22tg1gYAtAQ+L9+OcpTAv0+jq
-         DaZFZ+WVtmTVSaGBgKZjU1gzunZfZivlnACGMurU1hY+1DDk6wZsdu6bsrX8CKHj8sWF
-         wwEJcl3LNV1c6EMzNik068sBw8zeY8EJl4cVEvLU7Tx8CGqKHN1t6btV/ZiGoMXHcI1y
-         1sXycX9TuMc/oWOLlz78GWvTCOQTCq6NUjsHwoWWNxbxyfy+jqEEuPuQKyxRiCxs8s4q
-         LLhdUJCRXs+b49MFA2B6+OIjrHXTHK4d0sDsoMQEbLDfMlCM/PlM3PX+kJw+R7S1H1Cq
-         BlSg==
-X-Gm-Message-State: AOJu0Yw0uwhdkgg2knJ6MeK9NSS/hw0oEgsInOKWINEvyrP3ZNpHbysB
-        uUnrDGCheTsEG2GKlHKmv8zLow==
-X-Google-Smtp-Source: AGHT+IGFsVQ+aLTQvgk+3yiiMebqGId5YXGFOUQf3/d82qwOQz63Laj76O1e/ilgzea4em0jwG/dgQ==
-X-Received: by 2002:a2e:a316:0:b0:2b9:b067:9554 with SMTP id l22-20020a2ea316000000b002b9b0679554mr69177lje.2.1691698849331;
-        Thu, 10 Aug 2023 13:20:49 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id a23-20020a2eb177000000b002b9f0b25ff6sm510087ljm.4.2023.08.10.13.20.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 13:20:48 -0700 (PDT)
-Message-ID: <590c091c-7fbe-4169-b5cc-0e98de96d883@linaro.org>
-Date:   Thu, 10 Aug 2023 22:20:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm670: add frequency profile
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1691698885; x=1692303685;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uM9oSpoHkYT2DcfSPpn70J1M+BqeZpakFeN9BFvYGzE=;
+        b=KzwFagUzK6QR7vWNWOegVeAY+30mHClSCzKMyKUWth5vlsOTaGbdXkTQfrLjo/G3w5
+         1NMpvIQh6BWhpiz8uqdHDA4nH5u/7oxDd55LzXziDlgs3KiKMYB/6yQq6e/VqWJRv4RL
+         bWt+U49qNBo+xX5fGv0+qpRba6AcAUeJOC7kA0fR+CQqsGcg8KKZ2yMCmCEzTKZU9qTO
+         YXI+IjwJkp6GONYjeV+c0PvZf6AJiBfl5rafkMfsyuuyBelizMcb1765fgweAFczeTlP
+         1Fsqtt8iknHn4FjbT8qWVYf+s6fyygRrKzo7CwHS7aeqVO7bqMsuXRNSwivZXdnLKI/3
+         zrHg==
+X-Gm-Message-State: AOJu0Yx7lEPBZ/ZVy3ERUrCfvYzeQdWeOKLrgMw0vtIqtFQt9ocfBn0P
+        ev+WZc+1ytdVmegt39CJxEw=
+X-Google-Smtp-Source: AGHT+IHbAS2wQug/C4bgk4YFQ4QP3+Kmb+w8MV68jK8pSrNMnu97wRc/+PpQfmI19PE2qwm2bAXwFw==
+X-Received: by 2002:a17:902:bb91:b0:1b8:4ec2:5200 with SMTP id m17-20020a170902bb9100b001b84ec25200mr2845817pls.2.1691698884604;
+        Thu, 10 Aug 2023 13:21:24 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
+        by smtp.gmail.com with ESMTPSA id b13-20020a170903228d00b001ab2b4105ddsm2190292plh.60.2023.08.10.13.21.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Aug 2023 13:21:24 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230802011548.387519-6-mailingradian@gmail.com>
- <20230802011548.387519-10-mailingradian@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230802011548.387519-10-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: Push down GMU lock
+Date:   Thu, 10 Aug 2023 13:21:14 -0700
+Message-ID: <20230810202118.138386-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2.08.2023 03:15, Richard Acayan wrote:
-> Add the coefficients for the CPU frequencies to aid in frequency
-> scaling.
-> 
-> Profiling setup:
->  - freqbench (https://github.com/kdrag0n/freqbench)
->  - LineageOS kernel, android_kernel_google_msm-4.9
->  - recommended configuration options by freqbench
->  - disabled options that require clang or 32-bit compilers
->  - mmc governor switched from simple_ondemand to powersave
-> 
->     Frequency domains: cpu1 cpu6
->     Offline CPUs: cpu1 cpu2 cpu3 cpu4 cpu5 cpu6 cpu7
->     Sampling power every 1000 ms
->     Baseline power usage: 445 mW
-> 
->     ===== CPU 1 =====
->     Frequencies: 300 576 748 998 1209 1324 1516 1612 1708
-> 
->      300:  1114     3.7 C/MHz     43 mW   11.6 J   25.8 I/mJ   269.4 s
->      576:  2138     3.7 C/MHz     51 mW    7.1 J   42.2 I/mJ   140.3 s
->      748:  2780     3.7 C/MHz     67 mW    7.3 J   41.3 I/mJ   107.9 s
->      998:  3706     3.7 C/MHz     73 mW    5.9 J   51.1 I/mJ    80.9 s
->     1209:  4490     3.7 C/MHz     86 mW    5.7 J   52.2 I/mJ    66.8 s
->     1324:  4918     3.7 C/MHz     90 mW    5.5 J   54.6 I/mJ    61.0 s
->     1516:  5631     3.7 C/MHz    103 mW    5.5 J   54.9 I/mJ    53.3 s
->     1612:  5987     3.7 C/MHz    109 mW    5.5 J   55.0 I/mJ    50.1 s
->     1708:  6344     3.7 C/MHz    126 mW    5.9 J   50.5 I/mJ    47.3 s
-> 
->     ===== CPU 6 =====
->     Frequencies: 300 652 825 979 1132 1363 1536 1747 1843 1996
-> 
->      300:  1868     6.2 C/MHz     53 mW    8.5 J   35.2 I/mJ   160.6 s
->      652:  4073     6.2 C/MHz     96 mW    7.1 J   42.4 I/mJ    73.7 s
->      825:  5132     6.2 C/MHz    117 mW    6.9 J   43.7 I/mJ    58.5 s
->      979:  6099     6.2 C/MHz    151 mW    7.4 J   40.4 I/mJ    49.2 s
->     1132:  7071     6.2 C/MHz    207 mW    8.8 J   34.1 I/mJ    42.4 s
->     1363:  8482     6.2 C/MHz    235 mW    8.3 J   36.1 I/mJ    35.4 s
->     1536:  9578     6.2 C/MHz    287 mW    9.0 J   33.3 I/mJ    31.3 s
->     1747: 10892     6.2 C/MHz    340 mW    9.4 J   32.0 I/mJ    27.6 s
->     1843: 11471     6.2 C/MHz    368 mW    9.6 J   31.1 I/mJ    26.2 s
->     1996: 12425     6.2 C/MHz    438 mW   10.6 J   28.3 I/mJ    24.2 s
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
-I've looked into this a bit and upstream handling of dynamic power seems
-broken on qcom.. Trying to resolve this
+From: Rob Clark <robdclark@chromium.org>
 
-Konrad
+Fix another lockdep splat by pushing the GMU lock further down in the
+pm_resume path, so that we aren't holding it while preparing/enabling
+clks.  Fixes:
+
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   ------------------------------------------------------
+   6.4.3-debug+ #14 Not tainted
+   ffffffe487cefb98 (prepare_lock){+.+.}-{3:3}, at: clk_prepare_lock+0x70/0x98
+   ring0/408 is trying to acquire lock:
+   already holding lock:
+
+   ffffff809600c6c0 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}, at: a6xx_gmu_pm_resume+0x40/0x170 [msm]
+
+   which lock already depends on the new lock.
+   the existing dependency chain (in reverse order) is:
+
+   -> #4 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}:
+
+          mutex_lock_nested+0x2c/0x38
+          __mutex_lock+0xc8/0x388
+          msm_devfreq_target+0x170/0x18c [msm]
+          a6xx_gpu_set_freq+0x38/0x64 [msm]
+          devfreq_update_target+0xb4/0xf0
+          devfreq_set_target+0x90/0x1e4
+          devfreq_monitor+0x3c/0x10c
+          update_devfreq+0x1c/0x28
+          worker_thread+0x1f0/0x260
+          process_one_work+0x288/0x3d8
+          ret_from_fork+0x10/0x20
+          kthread+0xf0/0x100
+   -> #3 (&df->lock){+.+.}-{3:3}:
+
+          mutex_lock_nested+0x2c/0x38
+          __mutex_lock+0xc8/0x388
+          devfreq_simple_ondemand_func+0x5c/0x128
+          msm_devfreq_get_dev_status+0x4c/0x104 [msm]
+          update_devfreq+0x1c/0x28
+          devfreq_update_target+0x68/0xf0
+          process_one_work+0x288/0x3d8
+          devfreq_monitor+0x3c/0x10c
+          kthread+0xf0/0x100
+          worker_thread+0x1f0/0x260
+
+          ret_from_fork+0x10/0x20
+          devfreq_add_device+0x1b4/0x564
+   -> #2 (&devfreq->lock){+.+.}-{3:3}:
+          msm_devfreq_init+0xa8/0x16c [msm]
+          devm_devfreq_add_device+0x6c/0xb8
+          adreno_gpu_init+0x248/0x2b0 [msm]
+          msm_gpu_init+0x368/0x54c [msm]
+          adreno_bind+0x264/0x2bc [msm]
+          a6xx_gpu_init+0x2d0/0x384 [msm]
+          msm_drm_bind+0x2d0/0x5f4 [msm]
+          component_bind_all+0x124/0x1f4
+          __component_add+0xd4/0x128
+          try_to_bring_up_aggregate_device+0x88/0x1a4
+          dp_display_probe+0x37c/0x3c0 [msm]
+          component_add+0x1c/0x28
+          really_probe+0x148/0x280
+          platform_probe+0x70/0xc0
+          driver_probe_device+0x44/0x100
+          __driver_probe_device+0xfc/0x114
+          bus_for_each_drv+0xb0/0xd8
+          __device_attach_driver+0x64/0xdc
+          device_initial_probe+0x1c/0x28
+          __device_attach+0xe4/0x140
+          deferred_probe_work_func+0xb0/0xc8
+          bus_probe_device+0x44/0xb0
+          worker_thread+0x1f0/0x260
+          process_one_work+0x288/0x3d8
+          ret_from_fork+0x10/0x20
+          kthread+0xf0/0x100
+   -> #1 (fs_reclaim){+.+.}-{0:0}:
+
+          fs_reclaim_acquire+0x50/0x9c
+          __fs_reclaim_acquire+0x3c/0x48
+          __kmem_cache_alloc_node+0x60/0x18c
+          slab_pre_alloc_hook.constprop.0+0x40/0x250
+          clk_rcg2_dfs_determine_rate+0x60/0x214
+          kmalloc_trace+0x44/0x88
+          clk_core_round_rate_nolock+0x84/0x118
+          clk_core_determine_round_nolock+0xb8/0xf0
+          clk_round_rate+0x6c/0xd0
+          clk_core_round_rate_nolock+0xd8/0x118
+          geni_se_clk_freq_match+0x44/0xe4
+          geni_se_clk_tbl_get+0x78/0xc0
+          geni_spi_set_clock_and_bw+0x54/0x104
+          get_spi_clk_cfg+0x50/0xf4
+          __spi_pump_transfer_message+0x200/0x4d8
+          spi_geni_prepare_message+0x130/0x174
+          spi_sync_locked+0x18/0x24
+          __spi_sync+0x13c/0x23c
+          cros_ec_xfer_high_pri_work+0x28/0x3c
+          do_cros_ec_pkt_xfer_spi+0x124/0x3f0
+          kthread+0xf0/0x100
+          kthread_worker_fn+0x14c/0x27c
+
+          ret_from_fork+0x10/0x20
+          __lock_acquire+0xdf8/0x109c
+   -> #0 (prepare_lock){+.+.}-{3:3}:
+          __mutex_lock+0xc8/0x388
+          lock_acquire+0x234/0x284
+          clk_prepare_lock+0x70/0x98
+          mutex_lock_nested+0x2c/0x38
+          clk_bulk_prepare+0x50/0x9c
+          clk_prepare+0x24/0x50
+          a6xx_gmu_pm_resume+0x48/0x170 [msm]
+          a6xx_gmu_resume+0x94/0x7d8 [msm]
+          pm_generic_runtime_resume+0x30/0x44
+          adreno_runtime_resume+0x2c/0x38 [msm]
+          rpm_callback+0x78/0x7c
+          __rpm_callback+0x4c/0x134
+          __pm_runtime_resume+0x78/0xbc
+          rpm_resume+0x3a4/0x46c
+          msm_gpu_submit+0x4c/0x12c [msm]
+          pm_runtime_get_sync.isra.0+0x14/0x20 [msm]
+          drm_sched_main+0x264/0x354 [gpu_sched]
+          msm_job_run+0x88/0x128 [msm]
+          ret_from_fork+0x10/0x20
+          kthread+0xf0/0x100
+   other info that might help us debug this:
+
+   Chain exists of:
+
+     prepare_lock --> &df->lock --> &a6xx_gpu->gmu.lock
+
+    Possible unsafe locking scenario:
+          ----                    ----
+          CPU0                    CPU1
+                                  lock(&df->lock);
+     lock(&a6xx_gpu->gmu.lock);
+     lock(prepare_lock);
+                                  lock(&a6xx_gpu->gmu.lock);
+    *** DEADLOCK ***
+
+   3 locks held by ring0/408:
+
+    #1: ffffff809600c170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x7c/0x128 [msm]
+    #0: ffffffe487d5ae50 (dma_fence_map){++++}-{0:0}, at: drm_sched_main+0x54/0x354 [gpu_sched]
+
+    #2: ffffff809600c6c0 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}, at: a6xx_gmu_pm_resume+0x40/0x170 [msm]
+   CPU: 1 PID: 408 Comm: ring0 Not tainted 6.4.3-debug+ #14
+   stack backtrace:
+   Call trace:
+   Hardware name: Google Villager (rev1+) with LTE (DT)
+    show_stack+0x20/0x30
+    dump_backtrace+0xb4/0xf0
+    dump_stack+0x18/0x24
+    dump_stack_lvl+0x60/0x84
+    check_noncircular+0x78/0xac
+    print_circular_bug+0x1cc/0x234
+    lock_acquire+0x234/0x284
+    __lock_acquire+0xdf8/0x109c
+    mutex_lock_nested+0x2c/0x38
+    __mutex_lock+0xc8/0x388
+    clk_prepare+0x24/0x50
+    clk_prepare_lock+0x70/0x98
+    a6xx_gmu_resume+0x94/0x7d8 [msm]
+    clk_bulk_prepare+0x50/0x9c
+    adreno_runtime_resume+0x2c/0x38 [msm]
+    a6xx_gmu_pm_resume+0x48/0x170 [msm]
+    __rpm_callback+0x4c/0x134
+    pm_generic_runtime_resume+0x30/0x44
+    rpm_resume+0x3a4/0x46c
+    rpm_callback+0x78/0x7c
+    pm_runtime_get_sync.isra.0+0x14/0x20 [msm]
+    __pm_runtime_resume+0x78/0xbc
+    msm_job_run+0x88/0x128 [msm]
+    msm_gpu_submit+0x4c/0x12c [msm]
+    drm_sched_main+0x264/0x354 [gpu_sched]
+    kthread+0xf0/0x100
+    ret_from_fork+0x10/0x20
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 ++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 --
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 3e0033666a2a..5eb0e812f168 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -965,6 +965,8 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	/* Set the bus quota to a reasonable value for boot */
+ 	a6xx_gmu_set_initial_bw(gpu, gmu);
+ 
++	mutex_lock(&gmu->lock);
++
+ 	/* Enable the GMU interrupt */
+ 	gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_CLR, ~0);
+ 	gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_MASK, ~A6XX_GMU_IRQ_MASK);
+@@ -1009,6 +1011,8 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 		pm_runtime_put(gmu->dev);
+ 	}
+ 
++	mutex_unlock(&gmu->lock);
++
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 67dd2eeecf62..da300dce10fa 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1914,9 +1914,7 @@ static int a6xx_gmu_pm_resume(struct msm_gpu *gpu)
+ 
+ 	trace_msm_gpu_resume(0);
+ 
+-	mutex_lock(&a6xx_gpu->gmu.lock);
+ 	ret = a6xx_gmu_resume(a6xx_gpu);
+-	mutex_unlock(&a6xx_gpu->gmu.lock);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+2.41.0
+
