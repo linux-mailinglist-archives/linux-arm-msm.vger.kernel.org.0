@@ -2,78 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B2BB77820B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:21:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C7E77825D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:51:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230172AbjHJUV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 16:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44184 "EHLO
+        id S229550AbjHJUvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 16:51:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbjHJUV0 (ORCPT
+        with ESMTP id S229929AbjHJUvh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 16:21:26 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5492B2718;
-        Thu, 10 Aug 2023 13:21:25 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1bb84194bf3so9749655ad.3;
-        Thu, 10 Aug 2023 13:21:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691698885; x=1692303685;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uM9oSpoHkYT2DcfSPpn70J1M+BqeZpakFeN9BFvYGzE=;
-        b=bCqhtWyEB2t09xb65w/pVDjkpdX6VKNl7wZgQ92Ih3+86M71/5vq2AbinuqUHbGJ1n
-         Nk9x4I0bsOtDdprY/JS2D648XkQqZMd/4cZXoPWINjDQoXKsM0n1SswZjfgjnKgK0dFM
-         ZNdNtrByyWs/qC0/oXQ+HtmXaBhkOmQxXEX17yeLCSgLA3i76TIzhhdHA2yurNthQPcc
-         83wDQsfZT6UkXEYJ5c85VN22BNISO2i+aQIz01Avg1tQ8FY+gtyXImTUx3JF2czI7Gv/
-         E71GcJkcYtIISPLdohoAHrArdPaVV2usIZ/r4ebsiowGDFlkL4gw0DDkD0Korbz7LCp0
-         rx3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691698885; x=1692303685;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uM9oSpoHkYT2DcfSPpn70J1M+BqeZpakFeN9BFvYGzE=;
-        b=KzwFagUzK6QR7vWNWOegVeAY+30mHClSCzKMyKUWth5vlsOTaGbdXkTQfrLjo/G3w5
-         1NMpvIQh6BWhpiz8uqdHDA4nH5u/7oxDd55LzXziDlgs3KiKMYB/6yQq6e/VqWJRv4RL
-         bWt+U49qNBo+xX5fGv0+qpRba6AcAUeJOC7kA0fR+CQqsGcg8KKZ2yMCmCEzTKZU9qTO
-         YXI+IjwJkp6GONYjeV+c0PvZf6AJiBfl5rafkMfsyuuyBelizMcb1765fgweAFczeTlP
-         1Fsqtt8iknHn4FjbT8qWVYf+s6fyygRrKzo7CwHS7aeqVO7bqMsuXRNSwivZXdnLKI/3
-         zrHg==
-X-Gm-Message-State: AOJu0Yx7lEPBZ/ZVy3ERUrCfvYzeQdWeOKLrgMw0vtIqtFQt9ocfBn0P
-        ev+WZc+1ytdVmegt39CJxEw=
-X-Google-Smtp-Source: AGHT+IHbAS2wQug/C4bgk4YFQ4QP3+Kmb+w8MV68jK8pSrNMnu97wRc/+PpQfmI19PE2qwm2bAXwFw==
-X-Received: by 2002:a17:902:bb91:b0:1b8:4ec2:5200 with SMTP id m17-20020a170902bb9100b001b84ec25200mr2845817pls.2.1691698884604;
-        Thu, 10 Aug 2023 13:21:24 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
-        by smtp.gmail.com with ESMTPSA id b13-20020a170903228d00b001ab2b4105ddsm2190292plh.60.2023.08.10.13.21.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 13:21:24 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx: Push down GMU lock
-Date:   Thu, 10 Aug 2023 13:21:14 -0700
-Message-ID: <20230810202118.138386-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        Thu, 10 Aug 2023 16:51:37 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15DF62737;
+        Thu, 10 Aug 2023 13:51:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A9E1560DF5;
+        Thu, 10 Aug 2023 20:51:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F93AC433C8;
+        Thu, 10 Aug 2023 20:51:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691700696;
+        bh=uc4/S/7TCcbiz3P0S21vusgTyPBdVSAtY0wrKfV+NU4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XH9SRp89dPOffEfPah0TaR37jsZy1zBWGbXRJ6Rv+HDnKeFrlNpUkFRve+ba25i63
+         4tRVK6D36VmYTm5NKUOp2ChFdHpPWQCKEvHq1ozxaJn4n7JZpB0WJHXLWEPo6USPFJ
+         lGd3kggEq7JWiiiNvC8hUuiVvImck5guQctjREbzvda3JpPJoV9Tshm/uuWTzKWBMi
+         SfIJvNpTvjD1diEeye20FfpuiZrlhO3iFJAm2iQzzRlaHBt4dhzy08GUhqDvvMNH9N
+         WZuJ0TOmquSmZI9hjgZwnz3Er5+skOtn5wbmm+L1g2SPH6bYdSrgNlvgTuza3nx0d5
+         TqvmF8Gg/0Byw==
+Received: (nullmailer pid 1155354 invoked by uid 1000);
+        Thu, 10 Aug 2023 20:51:32 -0000
+Date:   Thu, 10 Aug 2023 14:51:32 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     krzysztof.kozlowski+dt@linaro.org, peng.fan@nxp.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-phy@lists.infradead.org, vkoul@kernel.org, rafal@milecki.pl,
+        quic_srichara@quicinc.com, konrad.dybcio@linaro.org,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
+        kishon@kernel.org, agross@kernel.org, conor+dt@kernel.org,
+        will@kernel.org, catalin.marinas@arm.com, arnd@arndb.de,
+        linux-kernel@vger.kernel.org, nfraprado@collabora.com,
+        geert+renesas@glider.be
+Subject: Re: [PATCH v7 1/5] dt-bindings: phy: qcom,m31: Document qcom,m31 USB
+ phy
+Message-ID: <20230810205132.GA1154887-robh@kernel.org>
+References: <cover.1691660905.git.quic_varada@quicinc.com>
+ <0d42f556ab28123b2b508521a0c79c7597b8b0fd.1691660905.git.quic_varada@quicinc.com>
+ <169166288301.4166332.13436758125497162213.robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <169166288301.4166332.13436758125497162213.robh@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,224 +68,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Thu, Aug 10, 2023 at 04:21:23AM -0600, Rob Herring wrote:
+> 
+> On Thu, 10 Aug 2023 15:26:04 +0530, Varadarajan Narayanan wrote:
+> > Document the M31 USB2 phy present in IPQ5332.
+> > 
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> > v7:
+> > 	Move 'compatible' to be the first entry
+> > 	In the example have 'usb-phy' instead of 'usb2-phy'
+> > 	Add 'Reviewed-by: Krzysztof Kozlowski'
+> > 	'make dt_binding_check DT_SCHEMA_FILES=qcom,ipq5332-usb-hsphy.yaml' passed
+> > 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom,ipq5332-usb-hsphy.yaml dtbs_check' passed
+> > v6:
+> > 	Add 'Co-developed-by: Sricharan'
+> > 	Add 'const' to compatible, vdd-supply
+> > 	Remove label and use usb2-phy for nodename in the example
+> > v5:
+> > 	Add '#phy-cells', to be able to use generic phy
+> > 	Remove 'Reviewed-by: Krzysztof Kozlowski' due to above change
+> > v4:
+> > 	Move M31 URL to description
+> > 	Remove maxItems and relevant content from clock-names
+> > 	Change node name to generic name
+> > 	'make dt_binding_check DT_SCHEMA_FILES=qcom' passed
+> > v3:
+> > 	Incorporate review comments. Will bring in ipq5018 compatible
+> > 	string while posting ipq5018 usb patchset.
+> > 
+> > v1:
+> > 	Rename qcom,m31.yaml -> qcom,ipq5332-usb-hsphy.yaml
+> > 	Drop default binding "m31,usb-hsphy"
+> > 	Add clock
+> > 	Remove 'oneOf' from compatible
+> > 	Remove 'qscratch' region from register space as it is not needed
+> > 	Remove reset-names
+> > 	Fix the example definition
+> > ---
+> >  .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml       | 59 ++++++++++++++++++++++
+> >  1 file changed, 59 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> > 
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> 
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/0d42f556ab28123b2b508521a0c79c7597b8b0fd.1691660905.git.quic_varada@quicinc.com
 
-Fix another lockdep splat by pushing the GMU lock further down in the
-pm_resume path, so that we aren't holding it while preparing/enabling
-clks.  Fixes:
+The bot was having an issue. This can be ignored.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   ------------------------------------------------------
-   6.4.3-debug+ #14 Not tainted
-   ffffffe487cefb98 (prepare_lock){+.+.}-{3:3}, at: clk_prepare_lock+0x70/0x98
-   ring0/408 is trying to acquire lock:
-   already holding lock:
-
-   ffffff809600c6c0 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}, at: a6xx_gmu_pm_resume+0x40/0x170 [msm]
-
-   which lock already depends on the new lock.
-   the existing dependency chain (in reverse order) is:
-
-   -> #4 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}:
-
-          mutex_lock_nested+0x2c/0x38
-          __mutex_lock+0xc8/0x388
-          msm_devfreq_target+0x170/0x18c [msm]
-          a6xx_gpu_set_freq+0x38/0x64 [msm]
-          devfreq_update_target+0xb4/0xf0
-          devfreq_set_target+0x90/0x1e4
-          devfreq_monitor+0x3c/0x10c
-          update_devfreq+0x1c/0x28
-          worker_thread+0x1f0/0x260
-          process_one_work+0x288/0x3d8
-          ret_from_fork+0x10/0x20
-          kthread+0xf0/0x100
-   -> #3 (&df->lock){+.+.}-{3:3}:
-
-          mutex_lock_nested+0x2c/0x38
-          __mutex_lock+0xc8/0x388
-          devfreq_simple_ondemand_func+0x5c/0x128
-          msm_devfreq_get_dev_status+0x4c/0x104 [msm]
-          update_devfreq+0x1c/0x28
-          devfreq_update_target+0x68/0xf0
-          process_one_work+0x288/0x3d8
-          devfreq_monitor+0x3c/0x10c
-          kthread+0xf0/0x100
-          worker_thread+0x1f0/0x260
-
-          ret_from_fork+0x10/0x20
-          devfreq_add_device+0x1b4/0x564
-   -> #2 (&devfreq->lock){+.+.}-{3:3}:
-          msm_devfreq_init+0xa8/0x16c [msm]
-          devm_devfreq_add_device+0x6c/0xb8
-          adreno_gpu_init+0x248/0x2b0 [msm]
-          msm_gpu_init+0x368/0x54c [msm]
-          adreno_bind+0x264/0x2bc [msm]
-          a6xx_gpu_init+0x2d0/0x384 [msm]
-          msm_drm_bind+0x2d0/0x5f4 [msm]
-          component_bind_all+0x124/0x1f4
-          __component_add+0xd4/0x128
-          try_to_bring_up_aggregate_device+0x88/0x1a4
-          dp_display_probe+0x37c/0x3c0 [msm]
-          component_add+0x1c/0x28
-          really_probe+0x148/0x280
-          platform_probe+0x70/0xc0
-          driver_probe_device+0x44/0x100
-          __driver_probe_device+0xfc/0x114
-          bus_for_each_drv+0xb0/0xd8
-          __device_attach_driver+0x64/0xdc
-          device_initial_probe+0x1c/0x28
-          __device_attach+0xe4/0x140
-          deferred_probe_work_func+0xb0/0xc8
-          bus_probe_device+0x44/0xb0
-          worker_thread+0x1f0/0x260
-          process_one_work+0x288/0x3d8
-          ret_from_fork+0x10/0x20
-          kthread+0xf0/0x100
-   -> #1 (fs_reclaim){+.+.}-{0:0}:
-
-          fs_reclaim_acquire+0x50/0x9c
-          __fs_reclaim_acquire+0x3c/0x48
-          __kmem_cache_alloc_node+0x60/0x18c
-          slab_pre_alloc_hook.constprop.0+0x40/0x250
-          clk_rcg2_dfs_determine_rate+0x60/0x214
-          kmalloc_trace+0x44/0x88
-          clk_core_round_rate_nolock+0x84/0x118
-          clk_core_determine_round_nolock+0xb8/0xf0
-          clk_round_rate+0x6c/0xd0
-          clk_core_round_rate_nolock+0xd8/0x118
-          geni_se_clk_freq_match+0x44/0xe4
-          geni_se_clk_tbl_get+0x78/0xc0
-          geni_spi_set_clock_and_bw+0x54/0x104
-          get_spi_clk_cfg+0x50/0xf4
-          __spi_pump_transfer_message+0x200/0x4d8
-          spi_geni_prepare_message+0x130/0x174
-          spi_sync_locked+0x18/0x24
-          __spi_sync+0x13c/0x23c
-          cros_ec_xfer_high_pri_work+0x28/0x3c
-          do_cros_ec_pkt_xfer_spi+0x124/0x3f0
-          kthread+0xf0/0x100
-          kthread_worker_fn+0x14c/0x27c
-
-          ret_from_fork+0x10/0x20
-          __lock_acquire+0xdf8/0x109c
-   -> #0 (prepare_lock){+.+.}-{3:3}:
-          __mutex_lock+0xc8/0x388
-          lock_acquire+0x234/0x284
-          clk_prepare_lock+0x70/0x98
-          mutex_lock_nested+0x2c/0x38
-          clk_bulk_prepare+0x50/0x9c
-          clk_prepare+0x24/0x50
-          a6xx_gmu_pm_resume+0x48/0x170 [msm]
-          a6xx_gmu_resume+0x94/0x7d8 [msm]
-          pm_generic_runtime_resume+0x30/0x44
-          adreno_runtime_resume+0x2c/0x38 [msm]
-          rpm_callback+0x78/0x7c
-          __rpm_callback+0x4c/0x134
-          __pm_runtime_resume+0x78/0xbc
-          rpm_resume+0x3a4/0x46c
-          msm_gpu_submit+0x4c/0x12c [msm]
-          pm_runtime_get_sync.isra.0+0x14/0x20 [msm]
-          drm_sched_main+0x264/0x354 [gpu_sched]
-          msm_job_run+0x88/0x128 [msm]
-          ret_from_fork+0x10/0x20
-          kthread+0xf0/0x100
-   other info that might help us debug this:
-
-   Chain exists of:
-
-     prepare_lock --> &df->lock --> &a6xx_gpu->gmu.lock
-
-    Possible unsafe locking scenario:
-          ----                    ----
-          CPU0                    CPU1
-                                  lock(&df->lock);
-     lock(&a6xx_gpu->gmu.lock);
-     lock(prepare_lock);
-                                  lock(&a6xx_gpu->gmu.lock);
-    *** DEADLOCK ***
-
-   3 locks held by ring0/408:
-
-    #1: ffffff809600c170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x7c/0x128 [msm]
-    #0: ffffffe487d5ae50 (dma_fence_map){++++}-{0:0}, at: drm_sched_main+0x54/0x354 [gpu_sched]
-
-    #2: ffffff809600c6c0 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}, at: a6xx_gmu_pm_resume+0x40/0x170 [msm]
-   CPU: 1 PID: 408 Comm: ring0 Not tainted 6.4.3-debug+ #14
-   stack backtrace:
-   Call trace:
-   Hardware name: Google Villager (rev1+) with LTE (DT)
-    show_stack+0x20/0x30
-    dump_backtrace+0xb4/0xf0
-    dump_stack+0x18/0x24
-    dump_stack_lvl+0x60/0x84
-    check_noncircular+0x78/0xac
-    print_circular_bug+0x1cc/0x234
-    lock_acquire+0x234/0x284
-    __lock_acquire+0xdf8/0x109c
-    mutex_lock_nested+0x2c/0x38
-    __mutex_lock+0xc8/0x388
-    clk_prepare+0x24/0x50
-    clk_prepare_lock+0x70/0x98
-    a6xx_gmu_resume+0x94/0x7d8 [msm]
-    clk_bulk_prepare+0x50/0x9c
-    adreno_runtime_resume+0x2c/0x38 [msm]
-    a6xx_gmu_pm_resume+0x48/0x170 [msm]
-    __rpm_callback+0x4c/0x134
-    pm_generic_runtime_resume+0x30/0x44
-    rpm_resume+0x3a4/0x46c
-    rpm_callback+0x78/0x7c
-    pm_runtime_get_sync.isra.0+0x14/0x20 [msm]
-    __pm_runtime_resume+0x78/0xbc
-    msm_job_run+0x88/0x128 [msm]
-    msm_gpu_submit+0x4c/0x12c [msm]
-    drm_sched_main+0x264/0x354 [gpu_sched]
-    kthread+0xf0/0x100
-    ret_from_fork+0x10/0x20
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 ++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 --
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 3e0033666a2a..5eb0e812f168 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -965,6 +965,8 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 	/* Set the bus quota to a reasonable value for boot */
- 	a6xx_gmu_set_initial_bw(gpu, gmu);
- 
-+	mutex_lock(&gmu->lock);
-+
- 	/* Enable the GMU interrupt */
- 	gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_CLR, ~0);
- 	gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_MASK, ~A6XX_GMU_IRQ_MASK);
-@@ -1009,6 +1011,8 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 		pm_runtime_put(gmu->dev);
- 	}
- 
-+	mutex_unlock(&gmu->lock);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 67dd2eeecf62..da300dce10fa 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1914,9 +1914,7 @@ static int a6xx_gmu_pm_resume(struct msm_gpu *gpu)
- 
- 	trace_msm_gpu_resume(0);
- 
--	mutex_lock(&a6xx_gpu->gmu.lock);
- 	ret = a6xx_gmu_resume(a6xx_gpu);
--	mutex_unlock(&a6xx_gpu->gmu.lock);
- 	if (ret)
- 		return ret;
- 
--- 
-2.41.0
-
+Rob
