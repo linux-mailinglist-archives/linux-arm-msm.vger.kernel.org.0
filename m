@@ -2,183 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE64D7781FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:14:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCBD3778209
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:20:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235078AbjHJUOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 16:14:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33462 "EHLO
+        id S235693AbjHJUUx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 16:20:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234444AbjHJUOW (ORCPT
+        with ESMTP id S233283AbjHJUUx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 16:14:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CF172728
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:13:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1691698419;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+r56t3s1kQWK8kt8Jy4XEcKaftYVcIdjxsSpjYz1P5c=;
-        b=cvLR2EZWjUGU0nkGJ5mv1uJ12RPNhRec+74/VBlh5jPh8Q1EcecP5Z7Y2VAhO7SYAXbA2u
-        4bGqxl5u62Reh8G3p3p3jb8d2lj3rCBP9Pira+7k3gyEYUgBaZ7GGY5o3jjPNgAPUP9DR9
-        00GVlM3gbjV1f1cuWzxNifcdS3ypwwY=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-CCInBW0OM-WvB63oL4kqpg-1; Thu, 10 Aug 2023 16:13:38 -0400
-X-MC-Unique: CCInBW0OM-WvB63oL4kqpg-1
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-40fefde5a99so15233521cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:13:38 -0700 (PDT)
+        Thu, 10 Aug 2023 16:20:53 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F4F272C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:20:51 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9b5ee9c5aso21316581fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:20:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691698849; x=1692303649;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iylCfLaU0WQeliCWu5KpopM/+sElU6AE+n+9QM8qgEw=;
+        b=ep8hRVZdMzqruJheKzUHAmze1qyUq+zqpuYl+uMRbps5KlZNVCXqd9nh19kPvO9smP
+         kR2BCwXmlS4AXHmMwMKR0ornVlXjGEMMonwWDqaOKGqcE+C/OtYPu8bUvWjFsYRKN7Wa
+         YAdvgEE0JTvuZvGNYChHrsYhwXNbD1lbKNXORbJ8+7y+244BHYizxE+hcPBj2p1QpVN4
+         8B+VoN0OlCzcX38N2a6WuLmB5uXhny0Byp9wt5+oSHHIFFaix+1G5DfbSl43rKwcRirI
+         E4HmRq4fHr7taAE90tnNZAQsCesR7QSHpYp7f2kDNNUvZEeJUO5TAipYPGH8Np6eCpqw
+         HNaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691698417; x=1692303217;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+r56t3s1kQWK8kt8Jy4XEcKaftYVcIdjxsSpjYz1P5c=;
-        b=B1EPg1aS2bvyN2lFUg26YfVoRwB1AgrXhg0qv18OitXTIm2C+XpBZHWktib+rKDiiz
-         i1+HdQyMPTDdfT4kiznRovyztMEeijhxI8m1277lKFj+zvZRbDeRLOjOYSXeoacrgxhm
-         tD4soLGzurkCywq7I7KW0tSy21/5H/9Krr4HOrZoIjXwRmekBTzqatzlXKlV648c0lRY
-         3Hgc4BmEPEdJmM67SHptNb6Rltg+GfWm5XGBI2CljOH/npgcNWgZCSXbGmsz3gErLjOg
-         1ZgUn1cgytdUZ1NM78M8e+obOEtUQHHNQqjafb2OgfCkWoewhItsZ7z+H1TtAxk7rJA7
-         iOZQ==
-X-Gm-Message-State: AOJu0Ywm8JyLLTBXo3gYJPyD3K5WEZAeTSjy6QyLJ2USqX+fdyAPbpc5
-        1jdPT+TPb86d4nrzUYduGT21DQmQ8Ok/R9lb1JrOsb6YbHW82Mm+vsi7wGd6d2PUUgvxKlaL3e/
-        yqXy8AW+04pUPvghO/XIo+F3KQcmtPSJjlg==
-X-Received: by 2002:ac8:7dc1:0:b0:406:8bc4:2530 with SMTP id c1-20020ac87dc1000000b004068bc42530mr5219633qte.43.1691698417364;
-        Thu, 10 Aug 2023 13:13:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKTzKCd2z8Ms3vp2vzj84CZ85ZAldrpdKTbL/uZZd4q88+UU0E8JPW2ch0tmersN+0Xl1xOQ==
-X-Received: by 2002:ac8:7dc1:0:b0:406:8bc4:2530 with SMTP id c1-20020ac87dc1000000b004068bc42530mr5219609qte.43.1691698417081;
-        Thu, 10 Aug 2023 13:13:37 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id h10-20020ac8714a000000b003f3937c16c4sm720285qtp.5.2023.08.10.13.13.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 13:13:36 -0700 (PDT)
-Date:   Thu, 10 Aug 2023 15:13:34 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1691698849; x=1692303649;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iylCfLaU0WQeliCWu5KpopM/+sElU6AE+n+9QM8qgEw=;
+        b=CPs9MsYUFHxpsvYtzp4IBH+x2p+22N/ulZlyYWKkL22tg1gYAtAQ+L9+OcpTAv0+jq
+         DaZFZ+WVtmTVSaGBgKZjU1gzunZfZivlnACGMurU1hY+1DDk6wZsdu6bsrX8CKHj8sWF
+         wwEJcl3LNV1c6EMzNik068sBw8zeY8EJl4cVEvLU7Tx8CGqKHN1t6btV/ZiGoMXHcI1y
+         1sXycX9TuMc/oWOLlz78GWvTCOQTCq6NUjsHwoWWNxbxyfy+jqEEuPuQKyxRiCxs8s4q
+         LLhdUJCRXs+b49MFA2B6+OIjrHXTHK4d0sDsoMQEbLDfMlCM/PlM3PX+kJw+R7S1H1Cq
+         BlSg==
+X-Gm-Message-State: AOJu0Yw0uwhdkgg2knJ6MeK9NSS/hw0oEgsInOKWINEvyrP3ZNpHbysB
+        uUnrDGCheTsEG2GKlHKmv8zLow==
+X-Google-Smtp-Source: AGHT+IGFsVQ+aLTQvgk+3yiiMebqGId5YXGFOUQf3/d82qwOQz63Laj76O1e/ilgzea4em0jwG/dgQ==
+X-Received: by 2002:a2e:a316:0:b0:2b9:b067:9554 with SMTP id l22-20020a2ea316000000b002b9b0679554mr69177lje.2.1691698849331;
+        Thu, 10 Aug 2023 13:20:49 -0700 (PDT)
+Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
+        by smtp.gmail.com with ESMTPSA id a23-20020a2eb177000000b002b9f0b25ff6sm510087ljm.4.2023.08.10.13.20.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Aug 2023 13:20:48 -0700 (PDT)
+Message-ID: <590c091c-7fbe-4169-b5cc-0e98de96d883@linaro.org>
+Date:   Thu, 10 Aug 2023 22:20:46 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm670: add frequency profile
+Content-Language: en-US
+To:     Richard Acayan <mailingradian@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 0/9] arm64: dts: qcom: enable EMAC1 on sa8775p
-Message-ID: <j57dowviaas552jt6fdynyowkwm6j6xjc5ixjdk2v4nn4doibn@qnr47drkhljp>
-References: <20230810080909.6259-1-brgl@bgdev.pl>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230810080909.6259-1-brgl@bgdev.pl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230802011548.387519-6-mailingradian@gmail.com>
+ <20230802011548.387519-10-mailingradian@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230802011548.387519-10-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 10, 2023 at 10:09:00AM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 2.08.2023 03:15, Richard Acayan wrote:
+> Add the coefficients for the CPU frequencies to aid in frequency
+> scaling.
 > 
-> This series contains changes required to enable EMAC1 on sa8775p-ride.
-> This iteration no longer depends on any changes to the stmmac driver to
-> be functional. It turns out I was mistaken in thinking that the two
-> MACs' MDIO masters share the MDIO clock and data lines. In reality, only
-> one MAC is connected to an MDIO bus and it controlls PHYs for both MAC0
-> and MAC1. The MDIO master on MAC1 is not connected to anything.
+> Profiling setup:
+>  - freqbench (https://github.com/kdrag0n/freqbench)
+>  - LineageOS kernel, android_kernel_google_msm-4.9
+>  - recommended configuration options by freqbench
+>  - disabled options that require clang or 32-bit compilers
+>  - mmc governor switched from simple_ondemand to powersave
 > 
+>     Frequency domains: cpu1 cpu6
+>     Offline CPUs: cpu1 cpu2 cpu3 cpu4 cpu5 cpu6 cpu7
+>     Sampling power every 1000 ms
+>     Baseline power usage: 445 mW
+> 
+>     ===== CPU 1 =====
+>     Frequencies: 300 576 748 998 1209 1324 1516 1612 1708
+> 
+>      300:  1114     3.7 C/MHz     43 mW   11.6 J   25.8 I/mJ   269.4 s
+>      576:  2138     3.7 C/MHz     51 mW    7.1 J   42.2 I/mJ   140.3 s
+>      748:  2780     3.7 C/MHz     67 mW    7.3 J   41.3 I/mJ   107.9 s
+>      998:  3706     3.7 C/MHz     73 mW    5.9 J   51.1 I/mJ    80.9 s
+>     1209:  4490     3.7 C/MHz     86 mW    5.7 J   52.2 I/mJ    66.8 s
+>     1324:  4918     3.7 C/MHz     90 mW    5.5 J   54.6 I/mJ    61.0 s
+>     1516:  5631     3.7 C/MHz    103 mW    5.5 J   54.9 I/mJ    53.3 s
+>     1612:  5987     3.7 C/MHz    109 mW    5.5 J   55.0 I/mJ    50.1 s
+>     1708:  6344     3.7 C/MHz    126 mW    5.9 J   50.5 I/mJ    47.3 s
+> 
+>     ===== CPU 6 =====
+>     Frequencies: 300 652 825 979 1132 1363 1536 1747 1843 1996
+> 
+>      300:  1868     6.2 C/MHz     53 mW    8.5 J   35.2 I/mJ   160.6 s
+>      652:  4073     6.2 C/MHz     96 mW    7.1 J   42.4 I/mJ    73.7 s
+>      825:  5132     6.2 C/MHz    117 mW    6.9 J   43.7 I/mJ    58.5 s
+>      979:  6099     6.2 C/MHz    151 mW    7.4 J   40.4 I/mJ    49.2 s
+>     1132:  7071     6.2 C/MHz    207 mW    8.8 J   34.1 I/mJ    42.4 s
+>     1363:  8482     6.2 C/MHz    235 mW    8.3 J   36.1 I/mJ    35.4 s
+>     1536:  9578     6.2 C/MHz    287 mW    9.0 J   33.3 I/mJ    31.3 s
+>     1747: 10892     6.2 C/MHz    340 mW    9.4 J   32.0 I/mJ    27.6 s
+>     1843: 11471     6.2 C/MHz    368 mW    9.6 J   31.1 I/mJ    26.2 s
+>     1996: 12425     6.2 C/MHz    438 mW   10.6 J   28.3 I/mJ    24.2 s
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+I've looked into this a bit and upstream handling of dynamic power seems
+broken on qcom.. Trying to resolve this
 
-I've taken this for a quick (disconnected from network) spin, and things
-work as expected without having anything plugged in.
-
-I'm trying to get someone to plug it in so I can test that networking
-actually works, but the interesting bit is the phy/mdio bit here, and
-that's at least working ok I can tell. The rest is boilerplate similar
-to the other MAC instance which works fine.
-
-Removing the driver results in the following oops, but that's already
-discussed[0] and is independent of the devicetree description:
-
-I'd add a test tag but I want to wait for some network traffic tests
-before I do such. I wouldn't wait on picking it up just because of
-that though.
-
-[0] https://lore.kernel.org/netdev/ZNKLjuxnR2+V3g1D@shell.armlinux.org.uk/
-
-[root@dhcp19-243-28 ~]# modprobe -r dwmac_qcom_ethqos
-[ 1260.620402] qcom-ethqos 23040000.ethernet eth1: stmmac_dvr_remove: removing driver
-[ 1260.655724] qcom-ethqos 23040000.ethernet eth1: FPE workqueue stop
-[ 1261.034265] qcom-ethqos 23000000.ethernet eth0: stmmac_dvr_remove: removing driver
-[ 1261.042108] Unable to handle kernel paging request at virtual address dead000000000122
-[ 1261.050379] Mem abort info:
-[ 1261.053251]   ESR = 0x0000000096000044
-[ 1261.057113]   EC = 0x25: DABT (current EL), IL = 32 bits
-[ 1261.062573]   SET = 0, FnV = 0
-[ 1261.065712]   EA = 0, S1PTW = 0
-[ 1261.068946]   FSC = 0x04: level 0 translation fault
-[ 1261.073956] Data abort info:
-[ 1261.076916]   ISV = 0, ISS = 0x00000044, ISS2 = 0x00000000
-[ 1261.082552]   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
-[ 1261.087882]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[ 1261.093338] [dead000000000122] address between user and kernel address ranges
-[ 1261.100667] Internal error: Oops: 0000000096000044 [#1] PREEMPT SMP
-[ 1261.107096] Modules linked in: r8152 rfkill marvell dwmac_qcom_ethqos(-) qcom_pon stmmac_platform crct10dif_ce stmmac spi_geni_qcom i2c_qcom_geni phy_qcom_qmp_usb phy_qcom_sgmii_eth phy_qcom_snps_femto_v2 pcs_xpcs qcom_wdt socinfo phy_qcom_qmp_pcie fuse ufs_qcom phy_qcom_qmp_ufs
-[ 1261.132407] CPU: 2 PID: 610 Comm: modprobe Not tainted 6.5.0-rc4-next-20230731-00008-g18ccccee8230 #7
-[ 1261.141860] Hardware name: Qualcomm SA8775P Ride (DT)
-[ 1261.147042] pstate: 00400005 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ 1261.154185] pc : device_link_put_kref+0x44/0x110
-[ 1261.158926] lr : device_link_put_kref+0xf4/0x110
-[ 1261.163662] sp : ffff800082a938e0
-[ 1261.167066] x29: ffff800082a938e0 x28: ffff6ec68bdc9d80 x27: 0000000000000000
-[ 1261.174390] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-[ 1261.181714] x23: ffff800082a93b38 x22: ffff6ec68690f2d8 x21: ffff6ec6896aed30
-[ 1261.189031] x20: ffff6ec68246b830 x19: ffff6ec68246b800 x18: 0000000000000006
-[ 1261.196355] x17: ffff9259b7856000 x16: ffffdc7b42e3eaec x15: 725f7276645f6361
-[ 1261.203679] x14: 0000000000000000 x13: 0000000000000002 x12: 0000000000000000
-[ 1261.210996] x11: 0000000000000040 x10: ffffdc7b447de0b0 x9 : ffffdc7b447de0a8
-[ 1261.218321] x8 : ffff6ec680400028 x7 : 0000000000000000 x6 : 0000000000000000
-[ 1261.225645] x5 : ffff6ec680400000 x4 : 00000000c0000000 x3 : ffff6ec6896ae8b0
-[ 1261.232963] x2 : dead000000000122 x1 : dead000000000122 x0 : ffff6ec68246b830
-[ 1261.240287] Call trace:
-[ 1261.242806]  device_link_put_kref+0x44/0x110
-[ 1261.247190]  device_link_del+0x30/0x48
-[ 1261.251040]  phy_detach+0x24/0x15c
-[ 1261.254530]  phy_disconnect+0x44/0x5c
-[ 1261.258295]  phylink_disconnect_phy+0x64/0xb0
-[ 1261.262764]  stmmac_release+0x58/0x2d4 [stmmac]
-[ 1261.267425]  __dev_close_many+0xac/0x14c
-[ 1261.271458]  dev_close_many+0x88/0x134
-[ 1261.275308]  unregister_netdevice_many_notify+0x130/0x7d0
-[ 1261.280852]  unregister_netdevice_queue+0xd4/0xdc
-[ 1261.285682]  unregister_netdev+0x24/0x38
-[ 1261.289715]  stmmac_dvr_remove+0x80/0x150 [stmmac]
-[ 1261.294636]  devm_stmmac_pltfr_remove+0x24/0x48 [stmmac_platform]
-[ 1261.300887]  devm_action_release+0x14/0x20
-[ 1261.305090]  devres_release_all+0xa0/0x100
-[ 1261.309293]  device_unbind_cleanup+0x18/0x68
-[ 1261.313676]  device_release_driver_internal+0x1f4/0x228
-[ 1261.319039]  driver_detach+0x4c/0x98
-[ 1261.322708]  bus_remove_driver+0x6c/0xbc
-[ 1261.326739]  driver_unregister+0x30/0x60
-[ 1261.330772]  platform_driver_unregister+0x14/0x20
-[ 1261.335603]  qcom_ethqos_driver_exit+0x18/0x1a8 [dwmac_qcom_ethqos]
-[ 1261.342035]  __arm64_sys_delete_module+0x19c/0x288
-[ 1261.346952]  invoke_syscall+0x48/0x110
-[ 1261.350804]  el0_svc_common.constprop.0+0xc4/0xe4
-[ 1261.355636]  do_el0_svc+0x38/0x94
-[ 1261.359040]  el0_svc+0x2c/0x84
-[ 1261.362178]  el0t_64_sync_handler+0x120/0x12c
-[ 1261.366646]  el0t_64_sync+0x190/0x194
-[ 1261.370413] Code: d2802441 aa1403e0 f2fbd5a1 f9000462 (f9000043) 
-[ 1261.376661] ---[ end trace 0000000000000000 ]---
-Segmentation fault
-
+Konrad
