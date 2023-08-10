@@ -2,155 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEF8D77786E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:32:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 412F6777872
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:32:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233279AbjHJMcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 08:32:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35692 "EHLO
+        id S234668AbjHJMcp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 08:32:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231618AbjHJMcU (ORCPT
+        with ESMTP id S233466AbjHJMcp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 08:32:20 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67A72129
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:19 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe48d0ab0fso1276749e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:19 -0700 (PDT)
+        Thu, 10 Aug 2023 08:32:45 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C594212F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:44 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fbea147034so7392815e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:32:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691670738; x=1692275538;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CmGKxPi0eyaqPvETfFkR9uScmRKAMJF01s7N1ZWCXaM=;
-        b=iBO9f0Qj465jFopyH5a+UTLtH6/oTui64p7tmCYEtCVRU+zy1Jm5cSqJmouNPSEnTq
-         tCx9O0H2pFdYH+nhBJuEza93aDcXquAWKj/Z5nfvjjHDmTZw9iNc9zvbQ/1Z8Ag1Owp2
-         x/sO9YxUZsdJaZlt0PN9cRbr/q63M/47pdHrHrNItLipF5lwI2s5skLOYXRPgo1xPLBW
-         OCYftUOyWNtWRMSlLi5pXwq1eJL+zifeW14ky78PU6HUIXVxvVDwC3fauaduDF/Bew+3
-         K/W6oqWjm6PejGC/RF/7H2adSlI6xuB6VMLGiMTyqflkIWfyDSk9ntu0nlk7AjNWv3C+
-         y4cw==
+        d=linaro.org; s=google; t=1691670763; x=1692275563;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j5O6S5cTT7TzSxKaal4vevEeC0NclQJzrHwGKjOFl6s=;
+        b=BfIaee3Lcj8qYJHLQu8XtdrtrkK3iy4IT5y/zneaauAP6nRE4NQ3ljlm5dEgwgM4Cz
+         Q69slVoxUeOAIExRX5jtO+kunnNQwf0n11zwaQxbibFC/+eyvS+eTPNES9LON6oJzsOO
+         YgNHModAJ45O+eZo5Lwjd9xQK2m1AXxInA8MeCrfU9wgv80pR010odgZANa+uowCRYe0
+         a1WGPveqeUHKU9/GRRrOxWj/GQUcXiKhJrpfNJitxgAObCyVVvcX3isPeFbT30VRz2eJ
+         cCN/qUrcQywvK++8UWA/Km5sHIBEtl23HdBBEnIBLdyVOikxXiuKYh3ZlZzjkBOLPaF3
+         FURQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691670738; x=1692275538;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CmGKxPi0eyaqPvETfFkR9uScmRKAMJF01s7N1ZWCXaM=;
-        b=P+sLvdReZ4Imp7xpUxtgOsYjkcacqpj9jqp4nCPkgHcJYTeBS+kLbD5bNbPnzNjQwB
-         ZfE09owaFp8OYBCGsmQAxGCCX0oHwHS+TSMz6HraoZRMZ05vdT1fnp86WgTU4Hw9WcHF
-         V+njiVsueNv6+GLPP/WIrR0zuP3tOf3sHJ0Q15MVUod8hY2WlCcLMDo8bQdRm1LQ4x2z
-         dXnVuOKZhWS7Gy4fEYSxISlpuOqHABgGsQ2GUYGNQvWnmzZP1p/nT3bulUq3Qm9nwHPm
-         Hi9QNDfK2Tg89XqB6fvkBPFkTFm3o5nym/hzN8M3R3Ockpr0fGygAVdQjXkShodWxVRN
-         pnyQ==
-X-Gm-Message-State: AOJu0YznkiBv16ZQ2QVu275QVlV6oG9FTl/pLEcBqtEPOyHtnItD0u38
-        6zYRBArPaqLtUB4RGCQ1M1H8ibjz59kAsS0KWNk=
-X-Google-Smtp-Source: AGHT+IE655F2p8mZAtG/fmSt9waGlMQ7jfbT0WUw2GSG93VHxZrhFHtvCl00ftjMEWCdNR2vvnaC/Q==
-X-Received: by 2002:a19:7118:0:b0:4fb:8bea:f5f6 with SMTP id m24-20020a197118000000b004fb8beaf5f6mr1365313lfc.34.1691670737908;
-        Thu, 10 Aug 2023 05:32:17 -0700 (PDT)
-Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id m29-20020a056512015d00b004fb744ccb83sm264048lfo.298.2023.08.10.05.32.16
+        d=1e100.net; s=20221208; t=1691670763; x=1692275563;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j5O6S5cTT7TzSxKaal4vevEeC0NclQJzrHwGKjOFl6s=;
+        b=i5rKDqdWFx9YWyoLB8/W12+Yv16/yA/M2RVUtCaRokNwcsDvc6Z2jeq6+LPJp8tM0R
+         ppAki8VnQZcUFFcA5kCZbPy4yVySvo7VBaUZLSV3qBuiAaF6BChlqC2rhFKgBcgNrzuK
+         xKdI4RNjKU1burHddZ30+F0x4NmDReCkImQXUNS+0Gz5yedIyCFWwv0hCAA5kOlz0+Xj
+         Lei8qGi1chI7ApEyNHBv6SnvTnloHZ1HivEwocnTaLzCf4NTteFSzilLVWMs+9QRRQOx
+         J+OkXchQTP2WYcoqd2KTfQ99Jawk4e6PLnfoT9jKt3JVgREtzvMnq/TpmC6kcD/Us8js
+         pVvg==
+X-Gm-Message-State: AOJu0Yz+zRPgx6hD67Wv9/eQRCzSWLNjd2xTeH8HCBKxGCY3yt940WT7
+        PzsVwIYjE7NZzrPfTZzPdeWyDQ==
+X-Google-Smtp-Source: AGHT+IFuVneGQIDaMr1RkNoAw4cn27A2/NQxJ9hWSiXS8vP+8EUUVB+CTE3oAfBIMeLmNV3l9MA9Hg==
+X-Received: by 2002:a1c:6a07:0:b0:3fb:e4ce:cc65 with SMTP id f7-20020a1c6a07000000b003fbe4cecc65mr1776219wmc.25.1691670762723;
+        Thu, 10 Aug 2023 05:32:42 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id b15-20020a05600c11cf00b003fd2e898aa3sm3827836wmi.0.2023.08.10.05.32.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 05:32:17 -0700 (PDT)
-Message-ID: <b55880dd-6cd3-4be3-9300-d5aa8a922422@linaro.org>
-Date:   Thu, 10 Aug 2023 14:32:16 +0200
+        Thu, 10 Aug 2023 05:32:42 -0700 (PDT)
+Message-ID: <a663ea2c-4724-20b3-628e-8831b6989655@linaro.org>
+Date:   Thu, 10 Aug 2023 13:32:41 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] pinctrl: qcom: sm6115: Add MPM pin mappings
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230809-topic-mpm_mappings-v1-0-5e17dd76b3c8@linaro.org>
- <20230809-topic-mpm_mappings-v1-3-5e17dd76b3c8@linaro.org>
- <ZNSPi3mDScn9ZMNJ@gerhold.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 4/6] soc: qcom: Add LLCC support for multi channel DDR
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZNSPi3mDScn9ZMNJ@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230810061140.15608-1-quic_kbajaj@quicinc.com>
+ <20230810061140.15608-5-quic_kbajaj@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230810061140.15608-5-quic_kbajaj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.08.2023 09:19, Stephan Gerhold wrote:
-> On Wed, Aug 09, 2023 at 09:38:56PM +0200, Konrad Dybcio wrote:
->> Add pin <-> wakeirq mappings to allow for waking up the AP from sleep
->> through MPM-connected pins.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/pinctrl/qcom/pinctrl-sm6115.c | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-sm6115.c b/drivers/pinctrl/qcom/pinctrl-sm6115.c
->> index 2a06025f4885..4e91c75ad952 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-sm6115.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-sm6115.c
->> @@ -867,6 +867,16 @@ static const struct msm_pingroup sm6115_groups[] = {
->>  	[120] = SDC_QDSD_PINGROUP(sdc2_data, SOUTH, 0x73000, 9, 0),
->>  };
->>  
->> +static const struct msm_gpio_wakeirq_map sm6115_mpm_map[] = {
->> +	{ 0, 84 }, { 3, 75 }, { 4, 16 }, { 6, 59 }, { 8, 63 }, { 11, 17 }, { 13, 18 },
->> +	{ 14, 51 }, { 17, 20 }, { 18, 52 }, { 19, 53 }, { 24, 6 }, { 25, 71 }, { 27, 73 },
->> +	{ 28, 41 }, { 31, 27 }, { 32, 54 }, { 33, 55 }, { 34, 56 }, { 35, 57 }, { 36, 58 },
->> +	{ 39, 28 }, { 46, 29 }, { 62, 60 }, { 63, 61 }, { 64, 62 }, { 65, 30 }, { 66, 31 },
->> +	{ 67, 32 }, { 69, 33 }, { 70, 34 }, { 72, 72 }, { 75, 35 }, { 79, 36 }, { 80, 21 },
->> +	{ 81, 38 }, { 83, 9 }, { 84, 39 }, { 85, 40 }, { 86, 19 }, { 87, 42 }, { 88, 43 },
->> +	{ 89, 45 }, { 91, 74 }, { 93, 46 }, { 94, 47 }, { 95, 48 }, { 96, 49 }, { 97, 50 },
->> +};
-> 
-> Did you omit the mappings for GPIO 99-112 here on purpose?
-My downstream didn't have that. I'll take a look.
+On 10/08/2023 07:11, Komal Bajaj wrote:
+> +	ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
+> +	if (ret == -ENOENT || ret == -EOPNOTSUPP) {
+> +		if (num_config != DEF_NUM_CFG)
+> +			return -EINVAL;
 
-> 
-> The order here looks fine BTW. Maybe downstream changed the order and
-> you got confused? :)
-Yes it changed between iterations, more than one time I think..
+In other words if multi-chan-ddr is not present in the dts and the 
+num_config != 1 return -EINVAL
 
-Still thinking about that 8998 thing..
+You can just as easily say if (num_config > 1) and drop the define from 
+this code.
 
-Konrad
+> +		*cfg_index = DEF_NUM_CFG - 1;
+> +		return 0;
+
+*cfg_index = 0;
+
+For example if #define DEF_NUM_CFG 0x20 then taking the last index of it 
+would be 100% wrong.
+
+Please kill that define.
+
+---
+bod
