@@ -2,187 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64F08777BD8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 17:12:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C66D777BFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 17:20:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234383AbjHJPMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 11:12:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46220 "EHLO
+        id S231195AbjHJPUc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 11:20:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbjHJPMQ (ORCPT
+        with ESMTP id S230123AbjHJPUc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 11:12:16 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD8F26A6;
-        Thu, 10 Aug 2023 08:12:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1691680324; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=XizLHJw7yl3zi6N8hCtoxt5oplwQ4YrT1kIl3IQIpNKkyQJ+NrfYuZy4v2OYG+sruw
-    b20+mPprgNcEn8GWVrkJV5M7g1PR1gIShCjVDRMTeIrdNpzcJioGAsn+YoBQMBm1TU1K
-    cueKLoiWd9/zD6NuAvp5XvE/YyI+DkYHbdhW36Irx54JuJy/PSvWCQNvSZJKiJXLYDQX
-    jevwfGnNS1yvvxLb18zKAOIrKM8Tf3SKs+qWCcnKTNgnKpQMIjDr/WIzY+8TiVroXYhN
-    T9PksamUE9+uiwk2jABX1FGu7EWN3UpRFQw9RI99V6sfxAWsyl6lyUgqII3aB7B2gtQ1
-    ruUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1691680324;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=T9+zQBuT+g2tnRm61S5ACvqdYYVH+w2kKssk3QT+WNQ=;
-    b=XPll/sJZuBqnz0G25319I5OpOyQtJ3d0DMG7VFb9h/20IYDgSGwhI10hh2EeetQ1aD
-    TcijpiC/Uijzcd3Mv+H1WMKEihZ/Q/c9ckoKRPAFyuVCpoRtcWGyfwhExyLM4r09Gvue
-    s2YRshJ3qhWN2aKswsM1uFh5VU/l/2c25CY9iz+x6bqkkqeFXi23AYnt1zW620wJ+iuZ
-    g5BAu9C142c4/eeJgWDyZRhafSItzcdDR7kGFEn+s9eJFlymmWYcNlWHQbfgdE/sRAXs
-    tJ43ko+W2KNf2EvVkkhwuH8SmOfrnQYr6pmZ0ArxNgPHkZ/pt52j/QJ8PgDSIXc3FQfs
-    X2lA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1691680324;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=T9+zQBuT+g2tnRm61S5ACvqdYYVH+w2kKssk3QT+WNQ=;
-    b=DEt0qVePZOetbBYvODsIUppXal8WaDWUtaxVHt38WZF8eIh9aoE0sNWVSziaXfcT8g
-    6igrVLgpryssux33BhFEBs5TdCxs1CgWmOn4i3cG8biEWT46KHs1DlJqxwVjjcUlg1jk
-    1QL/IhbY190XjXuvR4qcFAJHdEjSZus8GTTFVjCN/YZJR1Xbmmvo6fEhQSaRmYDPj4+y
-    k8K54POerT1rQuMeRcdIc3lRP3fNfHqKW3lj+Cf0i18/XBYKic2ek5aC3ewCAzFYCamA
-    iYE/4v9xo6wTPibRmWT9/6NLBFC8m8nJb6flPQXt0W+wnZSOnNMGc12y4wVcvdWwB9Cf
-    LNcQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1691680324;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=T9+zQBuT+g2tnRm61S5ACvqdYYVH+w2kKssk3QT+WNQ=;
-    b=5vMJFEOg5zjM4y8rZnJRag+vqQudxh9Nbjx/Z15ARnmpQwrhICHq2H93i18+YIO538
-    I1yxGf2dRiqVRsIXepAg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8p+L1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.6 DYNA|AUTH)
-    with ESMTPSA id k61817z7AFC4rP1
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 10 Aug 2023 17:12:04 +0200 (CEST)
-Date:   Thu, 10 Aug 2023 17:11:57 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, loic.poulain@linaro.org, rfoss@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] arm64: dts: qcom:
- apq8016-sbc-d3-camera-mezzanine: Move default ov5640 to a standalone dts
-Message-ID: <ZNT9nLaSBZvm1HNe@gerhold.net>
-References: <20230809202343.1098425-1-bryan.odonoghue@linaro.org>
- <20230809202343.1098425-6-bryan.odonoghue@linaro.org>
+        Thu, 10 Aug 2023 11:20:32 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8571890;
+        Thu, 10 Aug 2023 08:20:31 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37ADTO5g022254;
+        Thu, 10 Aug 2023 15:19:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=FQTCIdCDZFdwitFmat+HWiYspb+Ntw8Z6YHrX5EBeRQ=;
+ b=aSq+mqx+9R+U3Kltk2BFd2Lg13jEMLyL9sxYpoTNTrQgG42WA+Egj81wnXn6h6TTY6WL
+ ///Yd0dZPhlNMLPG8B5rpx9niWtQjwRln6npE6/TP7eXkPVdg7P7XPQMqozbh22znLf3
+ nQXOly7eWYGoQS4CS8AXBDOfp3V/5x9gEi36eaJMfr9XwaXsM2mVyKNQMURSNqkYZBOg
+ yBYC7UOCt+9hdeqZcNTMCJOzKjWKS2oMtxvKHGWLvdZEL9ju79szHLgGe20bBjdfD8xb
+ jrD2AaWQwJtIol9/9snycGIdeHm7+81B7Hx67fnTe6QKI9SITmkGysDP+9lryDETrHhy Jw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3scqsj1f1v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 10 Aug 2023 15:19:56 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37AFJdxM003329
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 10 Aug 2023 15:19:40 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 10 Aug 2023 08:19:39 -0700
+Date:   Thu, 10 Aug 2023 08:19:38 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <nfraprado@collabora.com>,
+        <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <quic_srichara@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v7 2/5] phy: qcom-m31: Introduce qcom,m31 USB phy driver
+Message-ID: <20230810151938.GP1428172@hu-bjorande-lv.qualcomm.com>
+References: <cover.1691660905.git.quic_varada@quicinc.com>
+ <b17b55b2ff2277bb9bfa99acdb2f98ed420dfb6e.1691660905.git.quic_varada@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20230809202343.1098425-6-bryan.odonoghue@linaro.org>
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <b17b55b2ff2277bb9bfa99acdb2f98ed420dfb6e.1691660905.git.quic_varada@quicinc.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4z3Pg5_OydcxxP-Hb2M4_Cj_bUNVhuis
+X-Proofpoint-GUID: 4z3Pg5_OydcxxP-Hb2M4_Cj_bUNVhuis
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-10_12,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 clxscore=1011 suspectscore=0 mlxscore=0 mlxlogscore=729
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308100131
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_NONE,T_SPF_HELO_TEMPERROR
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Aug 10, 2023 at 03:26:05PM +0530, Varadarajan Narayanan wrote:
 
-just some nitpicks. Some of them were present before already but maybe
-you can prepend or append another cleanup patch while at it. :)
+"qcom,m31" is quite DT-ish, how about:
 
-On Wed, Aug 09, 2023 at 09:23:42PM +0100, Bryan O'Donoghue wrote:
-> At the moment we define a single ov5640 sensor in the apq8016-sbc and
-> disable that sensor.
-> 
-> The sensor mezzanine for this is a D3 Engineering Dual ov5640 mezzanine
-> card. Move the definition from the apq8016-sbc where it shouldn't be to a
-> standalone dts.
-> 
+"phy: qcom: Introduce M31 USB PHY driver"
 
-I wonder what would be required to implement this using a DT overlay,
-rather than a standalone separate DT? Seems like there are some .dtso
-files in upstream Linux.
+> Add the M31 USB2 phy driver.
 
-I'm also fine with the separate DTB personally, though.
+Please expand this. The documentation [1] says "describe your problem",
+so you can at least state what the M31 driver is and/or where this block
+is found.
 
-> Enables the sensor by default, as we are adding a standalone mezzanine
-> structure.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  1 +
->  .../qcom/apq8016-sbc-d3-camera-mezzanine.dts  | 55 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dts      | 49 -----------------
->  3 files changed, 56 insertions(+), 49 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f15548dbfa56e..19016765ba4c6 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -1,5 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
-> new file mode 100644
-> index 0000000000000..ef0e76e424898
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
-> @@ -0,0 +1,55 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023, Linaro Ltd.
-> + */
+[1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
 
-I assume you have permission from the original contributor to relicense
-this? apq8016-sbc.dts is GPL.
+Thanks for addressing my previous feedback.
 
-> +
-> +/dts-v1/;
-> +
-> +#include "apq8016-sbc.dts"
-> +
-
-Please also move the fixed regulators here, they're part of the
-mezzanine, not the DB410c.
-
-> +&camss {
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@0 {
-> +			reg = <0>;
-> +			csiphy0_ep: endpoint {
-> +				data-lanes = <0 2>;
-> +				remote-endpoint = <&ov5640_ep>;
-> +				status = "okay";
-
-Should be unneeded since it's not set to disabled anywhere?
-
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&cci {
-> +	status = "okay";
-> +};
-> +
-> +&cci_i2c0 {
-> +	camera_rear@3b {
-
-camera@
-
-Thanks,
-Stephan
+Regards,
+Bjorn
