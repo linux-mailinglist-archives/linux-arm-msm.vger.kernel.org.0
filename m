@@ -2,112 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD0B6776E0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 04:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDF83776E19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 04:34:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231314AbjHJC0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Aug 2023 22:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40418 "EHLO
+        id S229787AbjHJCeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Aug 2023 22:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232363AbjHJC0O (ORCPT
+        with ESMTP id S229514AbjHJCeE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Aug 2023 22:26:14 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9AA2132;
-        Wed,  9 Aug 2023 19:26:07 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37A27wbd013577;
-        Thu, 10 Aug 2023 02:26:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=qnnfa/E2csSoEJfzcMjz6VRCrhnXshNrlw1QRh2X2YU=;
- b=ggcipcEMktPwU5XxEfwvspOlXm1GSbPGBkV62okWvwekGlEeh8zs06blBJnFiDCdVnmV
- aV9YqxdBB+gdOLekoGwIZzwLhVQxDbuUzQWqs42P6D0nzDJMLEd12Jff62ghp1uofjAt
- Mq7pgDUlNstjyAwjZUGEhY947db1qkZtHPeANXejQUka0cHuRxu0yAmmpX/fyAZDDGbW
- ie3iTVh0efBPqx5/TvAJePMcNPqFuxJUh4kfoaHppUI2hIM86/JDHecTi9oelHV0cmHv
- X7cwpdVd9WCw3gXXqGCEZeqCbDAUx4YOOTJYLeis3qwtekqGO53A+nY3zyn0rfNFJEVz Tg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3scbcghbrn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Aug 2023 02:26:03 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37A2Q0Jd008904
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Aug 2023 02:26:00 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 9 Aug 2023 19:25:56 -0700
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-To:     <stanimir.k.varbanov@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>,
-        <hans.verkuil@cisco.com>, <tfiga@chromium.org>
-CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-Subject: [PATCH v2 4/4] venus: hfi_parser: Add check to keep the number of codecs within range
-Date:   Thu, 10 Aug 2023 07:55:04 +0530
-Message-ID: <1691634304-2158-5-git-send-email-quic_vgarodia@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
-References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
+        Wed, 9 Aug 2023 22:34:04 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072E41BF7;
+        Wed,  9 Aug 2023 19:34:04 -0700 (PDT)
+Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.55])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RLrWx3vfBzkXxQ;
+        Thu, 10 Aug 2023 10:31:09 +0800 (CST)
+Received: from [10.67.110.108] (10.67.110.108) by
+ kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Thu, 10 Aug 2023 10:33:59 +0800
+Message-ID: <46a39960-ad79-ca65-6b2b-ccaf982965f5@huawei.com>
+Date:   Thu, 10 Aug 2023 10:33:58 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZYW-dGODzw6ay9RIlfUHdLJyQ7XjRCKE
-X-Proofpoint-ORIG-GUID: ZYW-dGODzw6ay9RIlfUHdLJyQ7XjRCKE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-10_01,2023-08-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- adultscore=0 phishscore=0 mlxlogscore=925 mlxscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308100019
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v3 9/9] i2c: synquacer: Use dev_err_probe in probe
+ function
+To:     Andi Shyti <andi.shyti@kernel.org>
+CC:     <florian.fainelli@broadcom.com>, <rjui@broadcom.com>,
+        <sbranden@broadcom.com>, <bcm-kernel-feedback-list@broadcom.com>,
+        <yangyicong@hisilicon.com>, <aisheng.dong@nxp.com>,
+        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
+        <kernel@pengutronix.de>, <festevam@gmail.com>, <linux-imx@nxp.com>,
+        <kblaiech@nvidia.com>, <asmaa@nvidia.com>,
+        <loic.poulain@linaro.org>, <rfoss@kernel.org>, <ardb@kernel.org>,
+        <gcherian@marvell.com>, <linux-i2c@vger.kernel.org>,
+        <linux-rpi-kernel@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20230808012954.1643834-1-liaochang1@huawei.com>
+ <20230808012954.1643834-10-liaochang1@huawei.com>
+ <20230809192117.h7rn6vwmvxdnkr2a@intel.intel>
+From:   "Liao, Chang" <liaochang1@huawei.com>
+In-Reply-To: <20230809192117.h7rn6vwmvxdnkr2a@intel.intel>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.110.108]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemi500012.china.huawei.com (7.221.188.12)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Supported codec bitmask is populated from the payload from venus firmware.
-There is a possible case when all the bits in the codec bitmask is set. In
-such case, core cap for decoder is filled  and MAX_CODEC_NUM is utilized.
-Now while filling the caps for encoder, it can lead to access the caps
-array beyong 32 index. Hence leading to OOB write.
-The fix counts the supported encoder and decoder. If the count is more than
-max, then it skips accessing the caps.
+Hi Andi and Krzysztof,
 
-Cc: stable@vger.kernel.org
-Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/venus/hfi_parser.c | 3 +++
- 1 file changed, 3 insertions(+)
+在 2023/8/10 3:21, Andi Shyti 写道:
+> Hi Liao,
+> 
+> On Tue, Aug 08, 2023 at 09:29:54AM +0800, Liao Chang wrote:
+>> Use the dev_err_probe function instead of dev_err in the probe function
+>> so that the printed messge includes the return value and also handles
+>> -EPROBE_DEFER nicely.
+>>
+>> Signed-off-by: Liao Chang <liaochang1@huawei.com>
+> 
+> After some discussions and time, I think it's right to r-b this
+> patch. If you agree more with Krzysztof, feel free to follow his
+> recommendation and send another version otherwise I will go ahead
+> and take this series in my branch. I do not really mind, both
+> arguments are valid.
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
-index 9d6ba22..c438395 100644
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -19,6 +19,9 @@ static void init_codecs(struct venus_core *core)
- 	struct hfi_plat_caps *caps = core->caps, *cap;
- 	unsigned long bit;
- 
-+	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
-+		return;
-+
- 	for_each_set_bit(bit, &core->dec_codecs, MAX_CODEC_NUM) {
- 		cap = &caps[core->codecs_count++];
- 		cap->codec = BIT(bit);
+I saw that Frank Li developed some new APIs that look like they would be very
+helpful for aligning the error messages of devm_request_irq in device probes.
+However, the patches have been pending for weeks and the author hasn't sent a
+new version. So I'm not planning to switch to the new APIs in this patch series,
+if there are no objections.
+
+Do I need to resend a new revision to add your R-B at this patch?
+
+Thanks.
+
+> 
+> Reviewed-by: Andi Shyti <andi.shyti@kernel.org> 
+> 
+> Thanks,
+> Andi
+
 -- 
-2.7.4
-
+BR
+Liao, Chang
