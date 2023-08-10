@@ -2,104 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A06AB777547
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 12:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAA277775A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 12:21:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234721AbjHJKCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 06:02:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59458 "EHLO
+        id S234447AbjHJKVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 06:21:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235201AbjHJKBb (ORCPT
+        with ESMTP id S234310AbjHJKVa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 06:01:31 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 332244203
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 03:00:09 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fe4cdb727cso6864475e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 03:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691661608; x=1692266408;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d8XAqj3aGEtdE6at3bi6u1wUfJ6SEiB57bY3VUBfMBk=;
-        b=AG6E5H6ARz4vDKIOAGnjdR9hy/OpJScVKRNmRp3Wrzato1I1GaRyliztyM/u+kxjBY
-         NmapSqKcXSoGm4VRp5Bcx7OJHLVjwwxBuukJVIk0b/vHRCab8t/Bn8ksmpXzDkX5dDUO
-         zkXPpery89e86DPj6aaoNVZx4gzyUXgW38Kam9l/bdVqlE9ZgzxZ9II0vsMcW31uI6TM
-         OZ9g3tH8ci9G3OqQZZwzh+r9405im+nwFmoPnZwXaOnz+Of/KRnmTTk2bZw392Q2BIdt
-         kcW0UgPFOMEx7iM1iBmfMljPLuDIJ7STqtz85oHazTk8vwf2KM7sjOG/tfyST0tvphNy
-         nbbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691661608; x=1692266408;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=d8XAqj3aGEtdE6at3bi6u1wUfJ6SEiB57bY3VUBfMBk=;
-        b=d2rSqVP1ecJX+Tn4KgTp32sHjVjTU7hPnAo9STP8Z+BOTWitINScY5eOw9vAw/5mAr
-         xQ5gv0b8COt2a+qakvq2R09XgSckubdAXyhvM+chHMDjbgpzEZIH0FxQaWKhTsTIF+RZ
-         0hnBYHorXFVGNOxwGK+dEeRO3e6+9XYwpoEaC0Z0Rf4vA5iV7mNhV2CryVxfjQEI4R+0
-         jLim+s088jFj5PXGZdGLG24HD0oFdkuR1nu125715e/1URPfViWXu4iW8fQ7e0GExUNx
-         GxaGik7tRErb11W0wd9onQk0/In5dDQWCSPUOrrvhBjH6lzu4lO+t1GYZQDnYYE0beva
-         AwhA==
-X-Gm-Message-State: AOJu0YwTQqPLWIz5g0HB9xKAVFUs+FKVTp1z10BGj5AXdbmdukgb/2xU
-        2Otbl2uHsNg+Uv7GAADgnK7TSA==
-X-Google-Smtp-Source: AGHT+IHliYy2HqHHgp/KIkQzMp24rK41dN7k1g4MIPlcQ9M6boir9waqqJgGDx9oq9DBIp3zWCJsbQ==
-X-Received: by 2002:a05:600c:c3:b0:3fb:c9f4:1506 with SMTP id u3-20020a05600c00c300b003fbc9f41506mr1548236wmm.1.1691661607672;
-        Thu, 10 Aug 2023 03:00:07 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id y9-20020a7bcd89000000b003fba6a0c881sm4498953wmj.43.2023.08.10.03.00.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 03:00:07 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>, Sinan Kaya <okaya@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Cc:     Andi Shyti <andi.shyti@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dmaengine: mmp: fix Wvoid-pointer-to-enum-cast warning
-Date:   Thu, 10 Aug 2023 12:00:00 +0200
-Message-Id: <20230810100000.123515-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230810100000.123515-1-krzysztof.kozlowski@linaro.org>
-References: <20230810100000.123515-1-krzysztof.kozlowski@linaro.org>
+        Thu, 10 Aug 2023 06:21:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78A14B8;
+        Thu, 10 Aug 2023 03:21:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 07A7360C7C;
+        Thu, 10 Aug 2023 10:21:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C2BC433C7;
+        Thu, 10 Aug 2023 10:21:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691662888;
+        bh=oybIrBf8qc1EyJx3sCeJKlPY87KvRgQCcYV+qZ6Gkvk=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=BAodO7MMr7OOuyeY+GfD75beCBGOJnyVTnbJeNJwsOwDTzZxBa9rODobwq4npIZba
+         S5qJL1Rw7Qz43b3dj1R3q2M32SjaE9F27AxVZZYksNufFMPsUpsgWrT7hUrB1wxYs2
+         aYFzJse8FIpeTPyg4pAicuO168duOaphCp0pXKGD+mfhX6KDDUKK6DBXRfEPe1tq3Y
+         iAo8DQ2rKpOTBrLL+Txc+8FAZXXTGy9dZoerA8qBrWjLYfsUuArE2qyoixU+trRX1i
+         oIHnPgzxjQZDRXaxM2kSbiWq8a2NsS0Qzmv6harh1rwBpAK3ECbYXRBhLT+a7T7RWy
+         kmEqtiSa+65SQ==
+Received: (nullmailer pid 4166374 invoked by uid 1000);
+        Thu, 10 Aug 2023 10:21:23 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     krzysztof.kozlowski+dt@linaro.org, peng.fan@nxp.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-phy@lists.infradead.org, vkoul@kernel.org, rafal@milecki.pl,
+        quic_srichara@quicinc.com, konrad.dybcio@linaro.org,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, kishon@kernel.org,
+        agross@kernel.org, conor+dt@kernel.org, will@kernel.org,
+        catalin.marinas@arm.com, arnd@arndb.de,
+        linux-kernel@vger.kernel.org, nfraprado@collabora.com,
+        geert+renesas@glider.be
+In-Reply-To: <0d42f556ab28123b2b508521a0c79c7597b8b0fd.1691660905.git.quic_varada@quicinc.com>
+References: <cover.1691660905.git.quic_varada@quicinc.com>
+ <0d42f556ab28123b2b508521a0c79c7597b8b0fd.1691660905.git.quic_varada@quicinc.com>
+Message-Id: <169166288301.4166332.13436758125497162213.robh@kernel.org>
+Subject: Re: [PATCH v7 1/5] dt-bindings: phy: qcom,m31: Document qcom,m31
+ USB phy
+Date:   Thu, 10 Aug 2023 04:21:23 -0600
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-'type' is an enum, thus cast of pointer on 64-bit compile test with W=1
-causes:
 
-  mmp_tdma.c:649:10: error: cast to smaller integer type 'enum mmp_tdma_type' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+On Thu, 10 Aug 2023 15:26:04 +0530, Varadarajan Narayanan wrote:
+> Document the M31 USB2 phy present in IPQ5332.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v7:
+> 	Move 'compatible' to be the first entry
+> 	In the example have 'usb-phy' instead of 'usb2-phy'
+> 	Add 'Reviewed-by: Krzysztof Kozlowski'
+> 	'make dt_binding_check DT_SCHEMA_FILES=qcom,ipq5332-usb-hsphy.yaml' passed
+> 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom,ipq5332-usb-hsphy.yaml dtbs_check' passed
+> v6:
+> 	Add 'Co-developed-by: Sricharan'
+> 	Add 'const' to compatible, vdd-supply
+> 	Remove label and use usb2-phy for nodename in the example
+> v5:
+> 	Add '#phy-cells', to be able to use generic phy
+> 	Remove 'Reviewed-by: Krzysztof Kozlowski' due to above change
+> v4:
+> 	Move M31 URL to description
+> 	Remove maxItems and relevant content from clock-names
+> 	Change node name to generic name
+> 	'make dt_binding_check DT_SCHEMA_FILES=qcom' passed
+> v3:
+> 	Incorporate review comments. Will bring in ipq5018 compatible
+> 	string while posting ipq5018 usb patchset.
+> 
+> v1:
+> 	Rename qcom,m31.yaml -> qcom,ipq5332-usb-hsphy.yaml
+> 	Drop default binding "m31,usb-hsphy"
+> 	Add clock
+> 	Remove 'oneOf' from compatible
+> 	Remove 'qscratch' region from register space as it is not needed
+> 	Remove reset-names
+> 	Fix the example definition
+> ---
+>  .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml       | 59 ++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/dma/mmp_tdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
-index d49fa6bc6775..52b726fc5f04 100644
---- a/drivers/dma/mmp_tdma.c
-+++ b/drivers/dma/mmp_tdma.c
-@@ -646,7 +646,7 @@ static int mmp_tdma_probe(struct platform_device *pdev)
- 
- 	of_id = of_match_device(mmp_tdma_dt_ids, &pdev->dev);
- 	if (of_id)
--		type = (enum mmp_tdma_type) of_id->data;
-+		type = (uintptr_t) of_id->data;
- 	else
- 		type = platform_get_device_id(pdev)->driver_data;
- 
--- 
-2.34.1
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/0d42f556ab28123b2b508521a0c79c7597b8b0fd.1691660905.git.quic_varada@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
