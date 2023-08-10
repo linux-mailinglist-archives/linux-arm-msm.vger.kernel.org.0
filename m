@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A2EE7778EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 14:59:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F6F77778F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 15:01:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235197AbjHJM7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 08:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50806 "EHLO
+        id S234661AbjHJNBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 09:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230458AbjHJM7a (ORCPT
+        with ESMTP id S233602AbjHJNA7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 08:59:30 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850D22694
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:59:28 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b962535808so13949151fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 05:59:28 -0700 (PDT)
+        Thu, 10 Aug 2023 09:00:59 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B1732694
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:00:58 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe3678010eso1357379e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 06:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691672367; x=1692277167;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1691672456; x=1692277256;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wk+zm0d06jLEAReFRShjOq87rLOotXXr0iiPkZag8v8=;
-        b=B2ZGQfi0E7+mq4GCi8OBMFKMDMOjt4TrHm+hgbNq8F3Aqm3MAL3Jobc9Ha3MZWhOZy
-         111TJ7gn1uN2vB+eBX9mEtn05EE2WByZLoAvvsJPMqpTEYHLcmBNiZbub125LZQNEDPB
-         sSO97uANHNKYP2Mpxlsz6iZx/Q/X5hprkwqopbO+RJShvrATMHCY1C/GV56njdtl452a
-         46bBueehDI1O8D6ITJ1JJJoyTp/PFCTeGx7MFvFyUh1dTYZR0ZIW41VOyIJHIu/JBlLf
-         +2cfGm48gvtSDhQfggumQebIM6yzy9tVxKhw51JUz2pvCfE8/PLjkaVWYmuupsMi+6GM
-         t4mA==
+        bh=eqaq2qh+s+LndcnV3vQwifPWzpMoy4YKSrxCHAVgNTM=;
+        b=LtJxCDHcud+FCX7JX/xsiIqAayB9O8LCNdsWksT4hTu/LT9PCaaugwwkKxkWTrmG0t
+         /EJVnECdK3JIHGkMeywGDr8Z9MnfNAd7Cf6ELzhJzu9QvhzHmj4tC0X5s4CXsALAru0h
+         8pObSCG/L9PM4DBlzfbsNLyAW3ENqnGhooqSdfCUfwZoc8LUan0pWi9uppgn2emhA8SJ
+         4PWKPQtcomB9avni5FY1iDjADQKi6WpMA7FLrfHHZzRqYsUdfx/1fJP+11cdHrZ/OPag
+         q6tzaBYVPSwH9GrPvan0Lf62kpKiL9IS0/dXvn9AKAslVMaT+m3Rgx57yN5zJ87kC0ow
+         vwgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691672367; x=1692277167;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1691672456; x=1692277256;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wk+zm0d06jLEAReFRShjOq87rLOotXXr0iiPkZag8v8=;
-        b=i88jLn20htbo4MmgZHl+pbmIZNr93EBksbjNriWjxxE0OJsSXgLRE7QJbpBI0HFVFo
-         SAESQbQp4YZ1RNxIQIxRnQ6Kfw16LjJgbaOpSLaHSNLXbvXUcuyL8v1LErSfNgLsW4Pm
-         JFDWnKgL2gSAzCrbT9rudQMyF0CTjghboRZgQ2B23b6dAm5NHoizpVVcfEyygVntqGzn
-         vg/Pzc0uM5Xs80UJpXkCwMI6PPtdtZ99cZRDxki82CJKB+PoFONCPkEJ7Nk1qzxgwp7V
-         DyeJItT9ts94WaGRiqE1MAVgtWDcxAeg444p8zRCgYsRzTGoye/Rdjev2gLSQ6dbSjAH
-         h8Yg==
-X-Gm-Message-State: AOJu0YzM8lXLLbxjdTQyLwF9q/vXyQwJSw+EK6eYw/4MvR0ufrLMTYc0
-        8zcBv7H3OXeaAE4lorovjw7pBD1/Ilz++AVfWao=
-X-Google-Smtp-Source: AGHT+IHTsZWeX9PLzv0ARPxF/b9bUQFJCXF2d4FgPRJaPHGroko/PDHFHw8TSdTAoBpe9wcNjgif0A==
-X-Received: by 2002:a2e:8555:0:b0:2b6:ad79:a4fb with SMTP id u21-20020a2e8555000000b002b6ad79a4fbmr1937417ljj.1.1691672366726;
-        Thu, 10 Aug 2023 05:59:26 -0700 (PDT)
+        bh=eqaq2qh+s+LndcnV3vQwifPWzpMoy4YKSrxCHAVgNTM=;
+        b=kKp3CeeBE7h6omxewgXcUyftaq1JO9tZFL0LIs5/ze2QRMquTfjov1EV/Ivp7uqADA
+         h5Us2u+MdCcTx4j4OUJQDNrP2Yw9y1GyHdV7VJw8UYiN+VID4ar4cDmNgpI7xeWbNbsV
+         2I5HooYeNQop38h8raNHxRmqDY7M4sh+FMvWNCoXBVOyYwfXfUVJdZUXXeeRpOyuN3Qs
+         ZU/gzx3aO6JFVCQkcnCOhVPsugZ1TQth0ZVQWyN94mMafKQZ0dvYYiOOinduZ9kMyIs2
+         RYZ7cqloPoIoUxJcCAOrQkWykDKS04gnh4x6nQTcDq2FcehX9IZiGm3jUDTGinJEGfH3
+         5nbg==
+X-Gm-Message-State: AOJu0Yy1E+LObfbnHKqehYo3z8fgUQJbC0NDH/ZDKYTJaKzmtdiUrXfC
+        XfaTKTeCG7XqaZrAeaS6nzDPKw==
+X-Google-Smtp-Source: AGHT+IHVGeEHAhNupz7Y8GGIUNrg0/gXepcebg5L4eteUR6BJZyZB003DRwhW9l41F/KAzXUKNOosg==
+X-Received: by 2002:a2e:9997:0:b0:2b6:e283:32cb with SMTP id w23-20020a2e9997000000b002b6e28332cbmr2003663lji.23.1691672456229;
+        Thu, 10 Aug 2023 06:00:56 -0700 (PDT)
 Received: from [192.168.1.101] (abxi185.neoplus.adsl.tpnet.pl. [83.9.2.185])
-        by smtp.gmail.com with ESMTPSA id n12-20020a2e720c000000b002b9fdfdab75sm354562ljc.12.2023.08.10.05.59.25
+        by smtp.gmail.com with ESMTPSA id n12-20020a2e720c000000b002b9fdfdab75sm354562ljc.12.2023.08.10.06.00.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 05:59:26 -0700 (PDT)
-Message-ID: <9dec09fa-a5a3-416c-9b4d-4b4c4e10320b@linaro.org>
-Date:   Thu, 10 Aug 2023 14:59:24 +0200
+        Thu, 10 Aug 2023 06:00:55 -0700 (PDT)
+Message-ID: <19d47ac3-ca9f-4181-b3ed-e2bba473dda8@linaro.org>
+Date:   Thu, 10 Aug 2023 15:00:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] clk: qcom: add clock controller driver for
- qca8386/qca8084
+Subject: Re: [PATCH v7 2/5] phy: qcom-m31: Introduce qcom,m31 USB phy driver
 Content-Language: en-US
-To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com
-References: <20230810115419.25539-1-quic_luoj@quicinc.com>
- <20230810115419.25539-4-quic_luoj@quicinc.com>
+        p.zabel@pengutronix.de, arnd@arndb.de, geert+renesas@glider.be,
+        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
+        quic_srichara@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <cover.1691660905.git.quic_varada@quicinc.com>
+ <b17b55b2ff2277bb9bfa99acdb2f98ed420dfb6e.1691660905.git.quic_varada@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230810115419.25539-4-quic_luoj@quicinc.com>
+In-Reply-To: <b17b55b2ff2277bb9bfa99acdb2f98ed420dfb6e.1691660905.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,50 +116,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.08.2023 13:54, Luo Jie wrote:
-> Add clock & reset controller driver for qca8386/qca8084.
+On 10.08.2023 11:56, Varadarajan Narayanan wrote:
+> Add the M31 USB2 phy driver.
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-
-> +struct qcom_cc {
-> +	struct qcom_reset_controller reset;
-> +	struct clk_regmap **rclks;
-> +	size_t num_rclks;
-> +};
-This all, including the probe func, is required because of the MDIO dance,
-I assume?
-
-Commonizing that would make more sense should more clocks like this appear
-in the future.
-
 [...]
 
-> +static struct clk_branch nss_cc_switch_core_clk = {
-> +	.halt_reg = 0x8,
-> +	.clkr = {
-> +		.enable_reg = 0x8,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(const struct clk_init_data) {
-> +			.name = "nss_cc_switch_core_clk",
-> +			.parent_hws = (const struct clk_hw *[]) {
-> +				&nss_cc_switch_core_clk_src.clkr.hw,
-> +			},
-> +			.num_parents = 1,
-> +			/* Can be disabled in PHY mode for power saving */
-Well it clearly cannot be disabled if it has the CLK_IS_CRITICAL flag :D
-
-What's the "PHY mode" you're talking about?
-
-> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> +			.ops = &clk_branch2_mdio_ops,
-> +		},
-> +	},
-> +};
-I see a whole bunch of CRITICAL clocks.. please make sure these clocks
-are actually necessary for Linux to know about (i.e. if we don't need
-to call any operations on them, we might just skip registering them
-with the driver).
+> + #define FSEL				BIT(4)
+> + #define RETENABLEN			BIT(3)
+> + #define FREQ_24MHZ			(GENMASK(6, 6) | GENMASK(4, 4))
+GENMASK(x, x) is BIT(x)
 
 Konrad
-
