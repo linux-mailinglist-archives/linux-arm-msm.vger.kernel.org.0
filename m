@@ -2,148 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B67D7781D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 21:51:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE64D7781FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Aug 2023 22:14:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233810AbjHJTvs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 15:51:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
+        id S235078AbjHJUOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Aug 2023 16:14:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233606AbjHJTve (ORCPT
+        with ESMTP id S234444AbjHJUOW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 15:51:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A68272C;
-        Thu, 10 Aug 2023 12:51:30 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37AJmgGU024332;
-        Thu, 10 Aug 2023 19:50:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ON17pte0fAWnNDXQvwTNTiMcKz70Djo11ZzU/VVTxV0=;
- b=aH7oRT4jQWTjU/OYJm4vKIlq4k78K1q70kAbO4RGdScN65fIss5rX6OUDacw+GngDWKX
- Z7oF7tgR4nVSIwPMnB6Kn5dtu7cCyFiBBe2SV0L5EN6/lG0ENmJqQQ5kCvo/xu71a0jb
- z1iaIGAzo0LEutI5wV4tpUHLT6o6FmDwwGPkyUWmkUGIopJUSzNrNlt5fQyy5MJKSA8o
- JSP+8hWJuO8bAoVVoxeT6cBEAnT4zEnl44AR0PxD9MZYE7B90E6xf7frU2mG6Q0cQx3D
- g1P+qeR4UrtQEN9A06D3LwekUUd3SxKtcTkWa2XB4qlfG0hmEX/4Z7pK4V90Cmv4iHw4 zA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3scx4vscq4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Aug 2023 19:50:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37AJoJwD006158
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Aug 2023 19:50:19 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 10 Aug
- 2023 12:50:17 -0700
-Message-ID: <fcf9fb85-0e78-21db-ee73-aee5193f37ce@quicinc.com>
-Date:   Thu, 10 Aug 2023 13:50:16 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v3 5/6] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 10 Aug 2023 16:14:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CF172728
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1691698419;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+r56t3s1kQWK8kt8Jy4XEcKaftYVcIdjxsSpjYz1P5c=;
+        b=cvLR2EZWjUGU0nkGJ5mv1uJ12RPNhRec+74/VBlh5jPh8Q1EcecP5Z7Y2VAhO7SYAXbA2u
+        4bGqxl5u62Reh8G3p3p3jb8d2lj3rCBP9Pira+7k3gyEYUgBaZ7GGY5o3jjPNgAPUP9DR9
+        00GVlM3gbjV1f1cuWzxNifcdS3ypwwY=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-CCInBW0OM-WvB63oL4kqpg-1; Thu, 10 Aug 2023 16:13:38 -0400
+X-MC-Unique: CCInBW0OM-WvB63oL4kqpg-1
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-40fefde5a99so15233521cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Aug 2023 13:13:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691698417; x=1692303217;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+r56t3s1kQWK8kt8Jy4XEcKaftYVcIdjxsSpjYz1P5c=;
+        b=B1EPg1aS2bvyN2lFUg26YfVoRwB1AgrXhg0qv18OitXTIm2C+XpBZHWktib+rKDiiz
+         i1+HdQyMPTDdfT4kiznRovyztMEeijhxI8m1277lKFj+zvZRbDeRLOjOYSXeoacrgxhm
+         tD4soLGzurkCywq7I7KW0tSy21/5H/9Krr4HOrZoIjXwRmekBTzqatzlXKlV648c0lRY
+         3Hgc4BmEPEdJmM67SHptNb6Rltg+GfWm5XGBI2CljOH/npgcNWgZCSXbGmsz3gErLjOg
+         1ZgUn1cgytdUZ1NM78M8e+obOEtUQHHNQqjafb2OgfCkWoewhItsZ7z+H1TtAxk7rJA7
+         iOZQ==
+X-Gm-Message-State: AOJu0Ywm8JyLLTBXo3gYJPyD3K5WEZAeTSjy6QyLJ2USqX+fdyAPbpc5
+        1jdPT+TPb86d4nrzUYduGT21DQmQ8Ok/R9lb1JrOsb6YbHW82Mm+vsi7wGd6d2PUUgvxKlaL3e/
+        yqXy8AW+04pUPvghO/XIo+F3KQcmtPSJjlg==
+X-Received: by 2002:ac8:7dc1:0:b0:406:8bc4:2530 with SMTP id c1-20020ac87dc1000000b004068bc42530mr5219633qte.43.1691698417364;
+        Thu, 10 Aug 2023 13:13:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKTzKCd2z8Ms3vp2vzj84CZ85ZAldrpdKTbL/uZZd4q88+UU0E8JPW2ch0tmersN+0Xl1xOQ==
+X-Received: by 2002:ac8:7dc1:0:b0:406:8bc4:2530 with SMTP id c1-20020ac87dc1000000b004068bc42530mr5219609qte.43.1691698417081;
+        Thu, 10 Aug 2023 13:13:37 -0700 (PDT)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id h10-20020ac8714a000000b003f3937c16c4sm720285qtp.5.2023.08.10.13.13.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Aug 2023 13:13:36 -0700 (PDT)
+Date:   Thu, 10 Aug 2023 15:13:34 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Imran Khan <kimran@codeaurora.org>,
-        "Rajendra Nayak" <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "Joerg Roedel" <joro@8bytes.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>
-References: <20230531-topic-8998_mmssclk-v3-0-ba1b1fd9ee75@linaro.org>
- <20230531-topic-8998_mmssclk-v3-5-ba1b1fd9ee75@linaro.org>
- <23575f97-332b-0392-fc20-0a52775d03b9@quicinc.com>
- <868ee2b6-3b48-4d32-9614-fa9b3e057257@linaro.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <868ee2b6-3b48-4d32-9614-fa9b3e057257@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LNS1hyyiaTAfk4vw9rA0AZEOHVvgjMGC
-X-Proofpoint-GUID: LNS1hyyiaTAfk4vw9rA0AZEOHVvgjMGC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-10_16,2023-08-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=993 malwarescore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308100172
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 0/9] arm64: dts: qcom: enable EMAC1 on sa8775p
+Message-ID: <j57dowviaas552jt6fdynyowkwm6j6xjc5ixjdk2v4nn4doibn@qnr47drkhljp>
+References: <20230810080909.6259-1-brgl@bgdev.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230810080909.6259-1-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/10/2023 12:46 PM, Konrad Dybcio wrote:
-> On 10.08.2023 20:20, Jeffrey Hugo wrote:
->> On 8/9/2023 1:20 PM, Konrad Dybcio wrote:
->>> The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
->>> HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
->>> it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
->>> votable.
->>
->> I appear to have confused HW_CTRL with hw_ctrl_addr.  Thanks for fixing that.
->>
->> I recall I made it always-on for display handoff.  The bootloader on the laptops will enable the display, which means the MDP is active and using the SMMU.  The SMMU is powered by the GDSC as you know.  The MDP is going to be polling a framebuffer in DDR, which EFI services (efifb) is going to be updating.  All of this is active during linux boot, which is how the kernel bootlog gets printed on screen.
-> This is essentially a missing / mis-configuration from the linux/dt POV and
-> I think the consensus for using display without describing it properly with
-> mdss has been to do one of:
+On Thu, Aug 10, 2023 at 10:09:00AM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> - adding a simple-framebuffer node with all the necessary clocks/pds
-> - adding "clk_ignore_unused pd_ignore_unused" to your cmdline
+> This series contains changes required to enable EMAC1 on sa8775p-ride.
+> This iteration no longer depends on any changes to the stmmac driver to
+> be functional. It turns out I was mistaken in thinking that the two
+> MACs' MDIO masters share the MDIO clock and data lines. In reality, only
+> one MAC is connected to an MDIO bus and it controlls PHYs for both MAC0
+> and MAC1. The MDIO master on MAC1 is not connected to anything.
 > 
->>
->> If I remember right, the GDSC will be registered.  When it is done probing, there will be no consumers.  So the Linux framework will step in and turn it off before the consumers come up.  This kills power to the SMMU.  If the SMMU doesn't come back on before the MDP polls DDR again, you get a bus hang and a crash.
-> Yep
-> 
->> I assumed that any msm8998 device would be using the MDP/GPU and thus the SMMU would pretty much always be powered on.
-> This flag however bans putting it to sleep when not in use.
-> 
->>
->> I expected this patch to break the laptop.  It does not in my testing. However, I see that I disabled the MMCC node in DT with a todo about the display.  So the GDSC is never registered, and then never gets turned off.  I believe that todo is pending some updates I need to make to the TI DSI/eDP bridge because the I2C port on the bridge is not wired up.  I should really dust that off and complete it.
-> Right, so what you have now is a third, untold "solution" to the problem
-> described above.. not really a supported configuration as it's not "correct"
-> 
-> I'd happily see you wire up the bridge et al though!
-> 
-> 
->> Regardless, even with the todo addressed, I think removing always-on will still break the laptops unless the bootloader handoff of display was solved and I missed it.
->>
->> I get that for your usecase, a phone where the bootloader does not init the display, always-on has the potential to burn extra power.  I'm not sure how to make both of us happy through.
->>
->> Do you have any suggestions?
-> Hope my replies above are enough.
 
-I still think there is an issue, but my setup is not as complete as your 
-on mainline.  I'll clean things up and we'll solve the issues when we 
-get to them.
+I've taken this for a quick (disconnected from network) spin, and things
+work as expected without having anything plugged in.
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+I'm trying to get someone to plug it in so I can test that networking
+actually works, but the interesting bit is the phy/mdio bit here, and
+that's at least working ok I can tell. The rest is boilerplate similar
+to the other MAC instance which works fine.
+
+Removing the driver results in the following oops, but that's already
+discussed[0] and is independent of the devicetree description:
+
+I'd add a test tag but I want to wait for some network traffic tests
+before I do such. I wouldn't wait on picking it up just because of
+that though.
+
+[0] https://lore.kernel.org/netdev/ZNKLjuxnR2+V3g1D@shell.armlinux.org.uk/
+
+[root@dhcp19-243-28 ~]# modprobe -r dwmac_qcom_ethqos
+[ 1260.620402] qcom-ethqos 23040000.ethernet eth1: stmmac_dvr_remove: removing driver
+[ 1260.655724] qcom-ethqos 23040000.ethernet eth1: FPE workqueue stop
+[ 1261.034265] qcom-ethqos 23000000.ethernet eth0: stmmac_dvr_remove: removing driver
+[ 1261.042108] Unable to handle kernel paging request at virtual address dead000000000122
+[ 1261.050379] Mem abort info:
+[ 1261.053251]   ESR = 0x0000000096000044
+[ 1261.057113]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 1261.062573]   SET = 0, FnV = 0
+[ 1261.065712]   EA = 0, S1PTW = 0
+[ 1261.068946]   FSC = 0x04: level 0 translation fault
+[ 1261.073956] Data abort info:
+[ 1261.076916]   ISV = 0, ISS = 0x00000044, ISS2 = 0x00000000
+[ 1261.082552]   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+[ 1261.087882]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[ 1261.093338] [dead000000000122] address between user and kernel address ranges
+[ 1261.100667] Internal error: Oops: 0000000096000044 [#1] PREEMPT SMP
+[ 1261.107096] Modules linked in: r8152 rfkill marvell dwmac_qcom_ethqos(-) qcom_pon stmmac_platform crct10dif_ce stmmac spi_geni_qcom i2c_qcom_geni phy_qcom_qmp_usb phy_qcom_sgmii_eth phy_qcom_snps_femto_v2 pcs_xpcs qcom_wdt socinfo phy_qcom_qmp_pcie fuse ufs_qcom phy_qcom_qmp_ufs
+[ 1261.132407] CPU: 2 PID: 610 Comm: modprobe Not tainted 6.5.0-rc4-next-20230731-00008-g18ccccee8230 #7
+[ 1261.141860] Hardware name: Qualcomm SA8775P Ride (DT)
+[ 1261.147042] pstate: 00400005 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 1261.154185] pc : device_link_put_kref+0x44/0x110
+[ 1261.158926] lr : device_link_put_kref+0xf4/0x110
+[ 1261.163662] sp : ffff800082a938e0
+[ 1261.167066] x29: ffff800082a938e0 x28: ffff6ec68bdc9d80 x27: 0000000000000000
+[ 1261.174390] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+[ 1261.181714] x23: ffff800082a93b38 x22: ffff6ec68690f2d8 x21: ffff6ec6896aed30
+[ 1261.189031] x20: ffff6ec68246b830 x19: ffff6ec68246b800 x18: 0000000000000006
+[ 1261.196355] x17: ffff9259b7856000 x16: ffffdc7b42e3eaec x15: 725f7276645f6361
+[ 1261.203679] x14: 0000000000000000 x13: 0000000000000002 x12: 0000000000000000
+[ 1261.210996] x11: 0000000000000040 x10: ffffdc7b447de0b0 x9 : ffffdc7b447de0a8
+[ 1261.218321] x8 : ffff6ec680400028 x7 : 0000000000000000 x6 : 0000000000000000
+[ 1261.225645] x5 : ffff6ec680400000 x4 : 00000000c0000000 x3 : ffff6ec6896ae8b0
+[ 1261.232963] x2 : dead000000000122 x1 : dead000000000122 x0 : ffff6ec68246b830
+[ 1261.240287] Call trace:
+[ 1261.242806]  device_link_put_kref+0x44/0x110
+[ 1261.247190]  device_link_del+0x30/0x48
+[ 1261.251040]  phy_detach+0x24/0x15c
+[ 1261.254530]  phy_disconnect+0x44/0x5c
+[ 1261.258295]  phylink_disconnect_phy+0x64/0xb0
+[ 1261.262764]  stmmac_release+0x58/0x2d4 [stmmac]
+[ 1261.267425]  __dev_close_many+0xac/0x14c
+[ 1261.271458]  dev_close_many+0x88/0x134
+[ 1261.275308]  unregister_netdevice_many_notify+0x130/0x7d0
+[ 1261.280852]  unregister_netdevice_queue+0xd4/0xdc
+[ 1261.285682]  unregister_netdev+0x24/0x38
+[ 1261.289715]  stmmac_dvr_remove+0x80/0x150 [stmmac]
+[ 1261.294636]  devm_stmmac_pltfr_remove+0x24/0x48 [stmmac_platform]
+[ 1261.300887]  devm_action_release+0x14/0x20
+[ 1261.305090]  devres_release_all+0xa0/0x100
+[ 1261.309293]  device_unbind_cleanup+0x18/0x68
+[ 1261.313676]  device_release_driver_internal+0x1f4/0x228
+[ 1261.319039]  driver_detach+0x4c/0x98
+[ 1261.322708]  bus_remove_driver+0x6c/0xbc
+[ 1261.326739]  driver_unregister+0x30/0x60
+[ 1261.330772]  platform_driver_unregister+0x14/0x20
+[ 1261.335603]  qcom_ethqos_driver_exit+0x18/0x1a8 [dwmac_qcom_ethqos]
+[ 1261.342035]  __arm64_sys_delete_module+0x19c/0x288
+[ 1261.346952]  invoke_syscall+0x48/0x110
+[ 1261.350804]  el0_svc_common.constprop.0+0xc4/0xe4
+[ 1261.355636]  do_el0_svc+0x38/0x94
+[ 1261.359040]  el0_svc+0x2c/0x84
+[ 1261.362178]  el0t_64_sync_handler+0x120/0x12c
+[ 1261.366646]  el0t_64_sync+0x190/0x194
+[ 1261.370413] Code: d2802441 aa1403e0 f2fbd5a1 f9000462 (f9000043) 
+[ 1261.376661] ---[ end trace 0000000000000000 ]---
+Segmentation fault
 
