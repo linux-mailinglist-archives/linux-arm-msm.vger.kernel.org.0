@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71B4D779B2C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 01:21:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33DC3779B28
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 01:21:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234532AbjHKXVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 19:21:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38800 "EHLO
+        id S236819AbjHKXVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 19:21:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236290AbjHKXU7 (ORCPT
+        with ESMTP id S235988AbjHKXU6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 19:20:59 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98952E60
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:20:50 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9d3dacb33so38839751fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:20:50 -0700 (PDT)
+        Fri, 11 Aug 2023 19:20:58 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB14110DF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:20:51 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9a2033978so38209271fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691796049; x=1692400849;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cV4tsrxG8dKLtwbvlLZrJHxxzCbK480ko/ypaGkgV4Q=;
-        b=Ax3O2xJ5PLlPTu6RUI3touh7PyQ35gwyIOL3IUmkRUq5Eyt/nSyyM3FcLwY9bQ03kx
-         kxAGQho4+1rSf4Drua8ucLK2+o/Cpa/dXj/mqtzp3YTp0z+TpIv8jfVy5NvvWHbFvgpF
-         zD5yaGdJyGppndaUaTKeTTmFkA4JWNSIjNIVtoTPzcgwMya+fal9fHsgAUpQ0XWjLNxj
-         4Nh04uA6XgxQ99IvV7YFsp0WQY6+6lM8d1hAtHpLgbq6Bbt1efOhPdHhdzlQaWB8R+Fi
-         SGpA/5KaHOVMC7v0gGKScwyaIVpODxL7o7kn40voBy+hI7jbFgWkmWai4QlOMDh/TPcb
-         dlHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691796049; x=1692400849;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1691796050; x=1692400850;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cV4tsrxG8dKLtwbvlLZrJHxxzCbK480ko/ypaGkgV4Q=;
-        b=CSJNBJdYuG6OAYLTA9GUBRLR0UXcOLUACAxSLFqMxpkN4EUTLtyQvQQK88V3OfxSzy
-         GbPn+jcThNyetEZStWCGkcgMEspnPfFitGEhQYhtcddHM2y1FI15tm8Cga5uaD0X+CfK
-         QCfjKMm7WHxV9dYhDheWMu489COAPXGZMBc36w5vdb6uYanmURdwpHP8vhfsk+/fxXhC
-         xRSoVAAWSm/WxTUqfjyRd/OFpDdvUalZf9b6qVBYlD+C9Ye4/db3KauhPaezElljA7pO
-         1XQmf1LKnuaRVSvkDVYXpTlJpA//1xKaqPog7lrOiB+VeFDrVFqdkV+kbbRhdHkuCDtf
-         k6Rw==
-X-Gm-Message-State: AOJu0YxHYUZCVKgQH9E8o6R7OcV7SKPxpZe4EEXbmIl9R7YKDcsBsZ25
-        d9NMW99PHeJ2R4FNL1/jej6iIw==
-X-Google-Smtp-Source: AGHT+IGP6H12hOqxQ1FPiFqeG+WhBodEDlQUpkBuCAnbXz8oCsiAfhsSV8isxE/5pyiBXOgt1lpcrQ==
-X-Received: by 2002:a2e:9bd7:0:b0:2b9:ee3e:2407 with SMTP id w23-20020a2e9bd7000000b002b9ee3e2407mr2656190ljj.38.1691796048866;
-        Fri, 11 Aug 2023 16:20:48 -0700 (PDT)
+        bh=uz6R0a2lDWgownlpflckA3+OeKw2fDdHaI0SCf0yt7A=;
+        b=Ivn2Ql+gAKUDsNpbBUixamgvMM3ZmKLiLTK9QIaHJ9GY+X6dAgQEJ8QPID7BD+EU9W
+         M+00l6G/K+7NWDq7Ae8cuZwdGRSNPTpBMSTnJJ9ZrF4QwPEbmP8uZaOy8y+akLi7zl7q
+         J7FFQCQntpxE+nm8WRK1IEzdqYRTEf3rDR3Yjtomp6ZMZOM4BZHhJZ9bWtA8gLaUWq7j
+         ZTq8mf39vlwl5PL3xy0FDpi95boxH2PQcCGb17hkLmymV2b2e+1FuQN8cJctlTTi82f5
+         Tk425blHtT3/7yWvCyeqyOCFj3cfFBbkZp4j52afKmFW/ZTAGX3YYLCPkzp/Q60dCvgn
+         F5KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691796050; x=1692400850;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uz6R0a2lDWgownlpflckA3+OeKw2fDdHaI0SCf0yt7A=;
+        b=UqO60fzbzIzM2WQPU0isd7+2yMoRvgLJlpKP6HEUdreuPRrId8LSZbArSr87hIuY4d
+         BWaLcKf5mluVShxR873XH1I09a0LI5c7JdpXSdR/kNAhiI/PMfZapPhB1Whcyxc0fOrD
+         W0Zcz85t+9tacj+blhqQ8FivEEMK5Q2MVo4bweX+FRI1L/Dk8fkw1eu6AWnV/gCRzzLJ
+         6kCWoW32VogkN1XbdO0DG+BFv/wFf0yqPWb5ZSmwv5NF7/3SnMeQ+T9xbHuqd47Jmmjb
+         rGgmWC8sLYcwEqQMt6ribY3xoHu0eCbA4Uc9PI0u/XaYIUgJIE6yPDLqGUhk9MqUpDaU
+         xdbA==
+X-Gm-Message-State: AOJu0Yw5+Yy43/P217ZsKPHL08thnjrNvnAvmcMD9IDtvtLn6W32JlNi
+        7GWrax+RPYcUoJPdMm2+wgtI0Q==
+X-Google-Smtp-Source: AGHT+IFI2V0FzzMJZScLp6RFJYVvQYRffGx82vXI1TVqYSyOjmx9Zrhyz3fSCY2mYxEL4tLxqMST8Q==
+X-Received: by 2002:a2e:9cd8:0:b0:2b9:e53f:e201 with SMTP id g24-20020a2e9cd8000000b002b9e53fe201mr2580611ljj.31.1691796050234;
+        Fri, 11 Aug 2023 16:20:50 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id z26-20020a2e965a000000b002b9ea00a7bbsm1038210ljh.60.2023.08.11.16.20.47
+        by smtp.gmail.com with ESMTPSA id z26-20020a2e965a000000b002b9ea00a7bbsm1038210ljh.60.2023.08.11.16.20.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 16:20:48 -0700 (PDT)
+        Fri, 11 Aug 2023 16:20:49 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v2 00/11] Hook up ACV enable_mask for everybody
-Date:   Sat, 12 Aug 2023 01:20:43 +0200
-Message-Id: <20230811-topic-acv-v2-0-765ad70e539a@linaro.org>
+Date:   Sat, 12 Aug 2023 01:20:44 +0200
+Subject: [PATCH v2 01/11] interconnect: qcom: qdu1000: Set ACV enable_mask
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEvC1mQC/22NTQ6CMBBGr2Jm7RhaEdGV9zAshjLAJKQlU2w0h
- LtbWbt8L9/PCpFVOML9sIJykijBZ7DHA7iR/MAoXWawhT0XtTG4hFkckkt4teSopq7qSwM531J
- kbJW8G3PDv6Ypy1m5l/d+8GwyjxKXoJ/9L5mf/TedDBZI9aWt+Fb2ZdU9JvGk4RR0gGbbti8s2
- qfvuAAAAA==
+Message-Id: <20230811-topic-acv-v2-1-765ad70e539a@linaro.org>
+References: <20230811-topic-acv-v2-0-765ad70e539a@linaro.org>
+In-Reply-To: <20230811-topic-acv-v2-0-765ad70e539a@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Mike Tipton <quic_mdtipton@quicinc.com>,
@@ -79,11 +78,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691796047; l=2199;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1691796047; l=731;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=ZhqVasBs5JcNfqRzP2c924DJFqpbO689MilHfaR3h0M=;
- b=g/bUkj2s/Ckk77tqNlAI929FpEGa/h6+MIsQB9RWnJi1JwMv0aFVuyypjeW4Z29ZCCPMstgnx
- ibwuYjFnYarD7fL1QGe9w2u+BfXVL12p8G4/GbZtniseDVauM9sZIqI
+ bh=eAYIAGKGkyPgXqB6Szfdp1AcvaqJfI9568TWcLfILiU=;
+ b=obg4LadaGTfUwgN07bevr7gtSMgt5nvJ0SohwpWwR9GzL6KNCTBwBq+U+4P6dldgzvB7vl4LO
+ UoerQT3/5fuCWe04QDxWk3HdsfLnW5RvSUKkhwVOU4B+haucm773nuv
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,55 +95,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the downstream kernel, ACV enable_mask has not been mentioned
-explicitly, rather being handled by a sneaky if-condition [1], [2].
+ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
 
-Add it to all RPMh platforms to actually enable that BCM.
-
-Based atop [3].
-
-[1] https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L556-567
-[2] https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L475-495
-[3] https://lore.kernel.org/linux-arm-msm/20230811-topic-icc_retire_macrosd-v1-0-c03aaeffc769@linaro.org/T/#t
-
+Fixes: 1f51339f7dd0 ("interconnect: qcom: Add QDU1000/QRU1000 interconnect driver")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Changes in v2:
-- Remove the define and use raw BIT(3) as the APPS mask may change (Mike)
-- Pick up tags (Bjorn)
-- Link to v1: https://lore.kernel.org/r/20230811-topic-acv-v1-0-a85b6e94f46d@linaro.org
+ drivers/interconnect/qcom/qdu1000.c | 1 +
+ 1 file changed, 1 insertion(+)
 
----
-Konrad Dybcio (11):
-      interconnect: qcom: qdu1000: Set ACV enable_mask
-      interconnect: qcom: sc7180: Set ACV enable_mask
-      interconnect: qcom: sc7280: Set ACV enable_mask
-      interconnect: qcom: sc8180x: Set ACV enable_mask
-      interconnect: qcom: sc8280xp: Set ACV enable_mask
-      interconnect: qcom: sdm670: Set ACV enable_mask
-      interconnect: qcom: sdm845: Set ACV enable_mask
-      interconnect: qcom: sm6350: Set ACV enable_mask
-      interconnect: qcom: sm8150: Set ACV enable_mask
-      interconnect: qcom: sm8250: Set ACV enable_mask
-      interconnect: qcom: sm8350: Set ACV enable_mask
+diff --git a/drivers/interconnect/qcom/qdu1000.c b/drivers/interconnect/qcom/qdu1000.c
+index bf800dd7d4ba..a7392eb73d4a 100644
+--- a/drivers/interconnect/qcom/qdu1000.c
++++ b/drivers/interconnect/qcom/qdu1000.c
+@@ -769,6 +769,7 @@ static struct qcom_icc_node xs_sys_tcu_cfg = {
+ 
+ static struct qcom_icc_bcm bcm_acv = {
+ 	.name = "ACV",
++	.enable_mask = BIT(3),
+ 	.num_nodes = 1,
+ 	.nodes = { &ebi },
+ };
 
- drivers/interconnect/qcom/qdu1000.c  | 1 +
- drivers/interconnect/qcom/sc7180.c   | 1 +
- drivers/interconnect/qcom/sc7280.c   | 1 +
- drivers/interconnect/qcom/sc8180x.c  | 1 +
- drivers/interconnect/qcom/sc8280xp.c | 1 +
- drivers/interconnect/qcom/sdm670.c   | 1 +
- drivers/interconnect/qcom/sdm845.c   | 1 +
- drivers/interconnect/qcom/sm6350.c   | 1 +
- drivers/interconnect/qcom/sm8150.c   | 1 +
- drivers/interconnect/qcom/sm8250.c   | 1 +
- drivers/interconnect/qcom/sm8350.c   | 1 +
- 11 files changed, 11 insertions(+)
----
-base-commit: ee4aa20e094643232438b896f49a405361406fbf
-change-id: 20230811-topic-acv-72aca8ad6f41
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.41.0
 
