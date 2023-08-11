@@ -2,190 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6052E778D37
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:12:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F99F778E0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:45:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236138AbjHKLMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 07:12:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
+        id S234459AbjHKLpH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 07:45:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236141AbjHKLMt (ORCPT
+        with ESMTP id S229592AbjHKLpH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 07:12:49 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8F4E65
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:12:42 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fe8c3b5ca0so2923302e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691752361; x=1692357161;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cZU6zi2nPFzYLNoD/G2lzwzZB0LUCeWtjqe+ZzV6G1g=;
-        b=vOIfIHBPyS0NU/kYqHQxLPGm6HTJRG4Oj4vnVzUkG1zOivm8As+n26T8YZ2Lyy8rin
-         al5t+SM3jqP57I3vERvtQgB6x5uE9npApfqYDag9BpV/Qr5E6aEdXfdylt7TP9aRvRoO
-         BF23I/8JyFL7TNQJp3E396X2ofleNygIRxNUQD8zc24CCXXIoguUZ1XjsPkQBcKo1Wpa
-         WMWUdbaKYHxMIf0GY+UmUCN9IyS99wPbKY0NVGfh9FDZDxg5s8fUnBb6HmvnwqDPO/8+
-         Ohl0RFzkgfGaNH1jtr0YGUf+X8M244uZ5R7r5ATUqKGxcEJ0Cqf2+T6e4vIASFiN7MUw
-         zisA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691752361; x=1692357161;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cZU6zi2nPFzYLNoD/G2lzwzZB0LUCeWtjqe+ZzV6G1g=;
-        b=BjaQMJp7GMv0OMKL9nIVE3orJDLrJ9YMjM/ePr4OyScw8FnCkZG1058sR6DlG7n7rX
-         6romxkJybIwM5nxnQKgFIPoMRzGYN/TgnlJbnjNRmSup2j8V++q6D/GhUqKVy80JnB0O
-         Ek26Wa4VHCh4xvv5f+/YfLfMuM5SSv5PVxiTmKbUZ2Nz2tJedLQwex1sCKRA72g+i9W8
-         n6QbJqPxmSqUr3L6hQOKOBaUyxvqVMOukiIXeo1mbFJZSKJFZZEwrpjU4bSSO5BkdVzw
-         GiKF94Nf12l+yzX3l5+E1rScRy8N4M2++0uf8iXbiwlPdhUhXtCUnkMj4kiQZNaxlOQA
-         HkOQ==
-X-Gm-Message-State: AOJu0YxPESpHzonC+lrmp1rngtp4gFcyXpYh9O3DPO2PWAjPIiern6rB
-        4wdors7aVD96GDasiydZYM7C9Q==
-X-Google-Smtp-Source: AGHT+IEZHbUb7GrSaO9dtbl5/CH1M6CKJ/V1RryGx0Mm+BnmseSTLxKoHhdZBXWWV4cYC+HLlTywhQ==
-X-Received: by 2002:a05:6512:3994:b0:4fe:958:88ad with SMTP id j20-20020a056512399400b004fe095888admr1530951lfu.10.1691752361092;
-        Fri, 11 Aug 2023 04:12:41 -0700 (PDT)
-Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id m8-20020ac24288000000b004fcddf3671dsm687780lfh.177.2023.08.11.04.12.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 04:12:40 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 11 Aug 2023 13:12:38 +0200
-Subject: [PATCH] media: venus: pm_helpers: Unify v3 and v4 venc/vdec_get
+        Fri, 11 Aug 2023 07:45:07 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148D6FA;
+        Fri, 11 Aug 2023 04:45:06 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 978E767064;
+        Fri, 11 Aug 2023 11:45:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2C8C433C7;
+        Fri, 11 Aug 2023 11:45:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691754305;
+        bh=HgsOUOeNqsvIxm4oNsewNMVpaiOcHnB2xfANePA9Be0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=UpfOv9qZlwxRn/qlxTzxcY/QgqJLAAKzicpbRq+yX1+NA+aCpIDWqDuqg6Zmkn01Y
+         cTgqdOMsWSlYQzZD5dXSik6j0qRG8D7wdmIEGsLw1ZklsEBxYVtg/xjJ8y8u3Un6K7
+         1ukyAuPWrj1puZsT5CxcYnGfKV2Rle/EerrVONdDOVHyMFRqF74qTie0Zm0eOasXvO
+         cgwZVhCTBXhYyGxYZzCHw3YfhHkwrnIlC7XbyDzlz6szNRhyFxvlyBrjyxWFd9phxg
+         hv3nbx6MZRlXXhl8OHcOGSPweVycxYDaofHEZsVfrRHzKvsezVnae4fqawg6J8ccyc
+         F+1Y/ergM8A2A==
+From:   Will Deacon <will@kernel.org>
+To:     agross@kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        luca@z3ntu.xyz, conor+dt@kernel.org, robin.murphy@arm.com,
+        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
+        konrad.dybcio@linaro.org, iommu@lists.linux.dev,
+        kernel@collabora.com, andersson@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        joro@8bytes.org, linux-kernel@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v5 0/6] Add support for Qualcomm's legacy IOMMU v2
+Date:   Fri, 11 Aug 2023 12:44:51 +0100
+Message-Id: <169158176438.300170.11135849217509321045.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20230622092742.74819-1-angelogioacchino.delregno@collabora.com>
+References: <20230622092742.74819-1-angelogioacchino.delregno@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230811-topic-venus_dedup-v1-1-c4b4af499ef2@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAKYX1mQC/x2N0QqDMAwAf0XyvEBjYZT9yhijtnEGpJZmFUH89
- 4U93sFxJyg3YYXHcELjXVS2YkC3AdISy4dRsjGMbvQuEOF3q5Jw59L1nTn3ii7MFHz28U4E1k1
- RGacWS1qsLH1dTdbGsxz/0fN1XT+YbcsYeAAAAA==
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691752359; l=2860;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=uyxymekY3d16mvMpRx8+gp/jIwxJUIC361Pq17TAh/M=;
- b=jcrrvya02orIr1hZgvW49M7Pw4iD9SyGsN8Giott5VDaCFr3j6WZh6tT1rNX+GKqmREo/LN6H
- FSdt3fc8RjJD6IYdB3nHhdOuW4O1PvhQ2NsRmvukXeVnHKpxvTpi6kl
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-They do the same thing, except v3 and earlier are expected to have the
-old style of bindings (i.e. core clock per core under video-enc/decoder
-subnode).
+On Thu, 22 Jun 2023 11:27:36 +0200, AngeloGioacchino Del Regno wrote:
+> This series adds support for handling "v2" firmware's IOMMU, found
+> on at least MSM8956 and MSM8976 (some other SoCs also need the same
+> but I honestly don't remember which ones precisely).
+> 
+> This is strictly required to get functional IOMMUs on these SoCs.
+> 
+> I'm sorry for not performing a much needed schema conversion on
+> qcom,iommu.txt, but I really didn't have time to do that :-(
+> 
+> [...]
 
-Unify them to stop duplicating needlessly.
+Applied drivers updated to will (for-joerg/arm-smmu/updates), thanks!
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/media/platform/qcom/venus/pm_helpers.c | 34 ++++++++------------------
- 1 file changed, 10 insertions(+), 24 deletions(-)
+[2/6] iommu/qcom: Use the asid read from device-tree if specified
+      https://git.kernel.org/will/c/fcf226f1f708
+[3/6] iommu/qcom: Disable and reset context bank before programming
+      https://git.kernel.org/will/c/9f3fef23d9b5
+[4/6] iommu/qcom: Index contexts by asid number to allow asid 0
+      https://git.kernel.org/will/c/ec5601661bfc
+[6/6] iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
+      https://git.kernel.org/will/c/e30c960d3f44
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 48c9084bb4db..83d1e68bb9ca 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -295,6 +295,8 @@ static int core_get_v1(struct venus_core *core)
- {
- 	int ret;
- 
-+	legacy_binding = true;
-+
- 	ret = core_clks_get(core);
- 	if (ret)
- 		return ret;
-@@ -349,6 +351,9 @@ static int vdec_get_v3(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
- 
-+	if (!legacy_binding)
-+		return 0;
-+
- 	return vcodec_clks_get(core, dev, core->vcodec0_clks,
- 			       core->res->vcodec0_clks);
- }
-@@ -374,6 +379,9 @@ static int venc_get_v3(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
- 
-+	if (!legacy_binding)
-+		return 0;
-+
- 	return vcodec_clks_get(core, dev, core->vcodec1_clks,
- 			       core->res->vcodec1_clks);
- }
-@@ -764,17 +772,6 @@ static int coreid_power_v4(struct venus_inst *inst, int on)
- 	return ret;
- }
- 
--static int vdec_get_v4(struct device *dev)
--{
--	struct venus_core *core = dev_get_drvdata(dev);
--
--	if (!legacy_binding)
--		return 0;
--
--	return vcodec_clks_get(core, dev, core->vcodec0_clks,
--			       core->res->vcodec0_clks);
--}
--
- static void vdec_put_v4(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -809,17 +806,6 @@ static int vdec_power_v4(struct device *dev, int on)
- 	return ret;
- }
- 
--static int venc_get_v4(struct device *dev)
--{
--	struct venus_core *core = dev_get_drvdata(dev);
--
--	if (!legacy_binding)
--		return 0;
--
--	return vcodec_clks_get(core, dev, core->vcodec1_clks,
--			       core->res->vcodec1_clks);
--}
--
- static void venc_put_v4(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -1180,10 +1166,10 @@ static const struct venus_pm_ops pm_ops_v4 = {
- 	.core_get = core_get_v4,
- 	.core_put = core_put_v4,
- 	.core_power = core_power_v4,
--	.vdec_get = vdec_get_v4,
-+	.vdec_get = vdec_get_v3,
- 	.vdec_put = vdec_put_v4,
- 	.vdec_power = vdec_power_v4,
--	.venc_get = venc_get_v4,
-+	.venc_get = venc_get_v3,
- 	.venc_put = venc_put_v4,
- 	.venc_power = venc_power_v4,
- 	.coreid_power = coreid_power_v4,
-
----
-base-commit: 21ef7b1e17d039053edaeaf41142423810572741
-change-id: 20230811-topic-venus_dedup-08f183d3a611
-
-Best regards,
+Cheers,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+Will
 
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
