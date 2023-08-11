@@ -2,95 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 368CA77930C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 17:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FCAC77930D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 17:28:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbjHKP1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 11:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48178 "EHLO
+        id S235460AbjHKP2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 11:28:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235991AbjHKP1d (ORCPT
+        with ESMTP id S234100AbjHKP23 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 11:27:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3C830D5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 08:27:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id ACA3F6752B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 15:27:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9944EC433C8;
-        Fri, 11 Aug 2023 15:27:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691767652;
-        bh=wIE4vbh0AneyUpoS4kBL64opYSG1KdIy+uogO0XCkW8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qsqnZ5VUF9Cb/NSm6bENgrPHlAjVw2qXkfMVFEAQK+OQ709EDhkSAM4JdQC+/9Qi3
-         L9WQM0IhV3YOuHdoTEKrLL/Ry3HMliOng3HB4vwd/83g2syVc33bF8kLBsuP/kaIug
-         sDxTpebpK+mbe0FTh/LDay9TNE05j4LBH5rNRJCQdam5A8AOC1X5xPd94/TNGLYH/h
-         6OFI43YQE74kwUIsOBamCkT0BhJtI8MYOZ4NJpNI+oVG8DPVR7bEoCLNKnf2f8DeH3
-         QeJHE+VI8sHQ0PnhUuZFxCTcCoCZAhwrc3OlcwuViFc1dFX4jFSLiAK3aN7489EhbR
-         MIuQF3RA8UMuw==
-Date:   Fri, 11 Aug 2023 20:57:25 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Daniele Palmas <dnlplm@gmail.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] bus: mhi: host: pci_generic: add support for Telit
- FE990
-Message-ID: <20230811152725.GC5296@thinkpad>
-References: <20230804094039.365102-1-dnlplm@gmail.com>
+        Fri, 11 Aug 2023 11:28:29 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78E07103;
+        Fri, 11 Aug 2023 08:28:29 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37BFD0xh029825;
+        Fri, 11 Aug 2023 15:28:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=GTLC/9oog8RQrxN6IW0FCIdY74XoZYDDW9/DkbpmGMk=;
+ b=Oki+6Vwty2BGlRcI9znoK0KvhBq7SdnViSycIVF8B4kSJtD4WurJLmLZUJQm78pY/jHc
+ mg21D4wCS6RTEdqjInYg6hXpCOKA4a1FVKsOtwLQZY9AczPmGw2BvM38XnTj69TLVlpH
+ aR9tifWT2e3qc8xaIpjJxyO+c7A5AsA3ShvUiqZmLKwpT6e/8ORgsfYT5+Jf0NyphZ4U
+ 3lCZrdowbZfXVMiUp6bx+VvOCvqZAW1SMhuyWYvH9anhf4LjsIVtuRz0syXEo/aihB3M
+ GksY5/KkcVYW/NBYo2/2+t6MPxM01Vu/c0QeH4p6tSsMbKPMXnmNwgmAZuwQK7ncjJvK Yw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd8yuj3y0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 11 Aug 2023 15:28:21 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37BFSKxc012614
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 11 Aug 2023 15:28:20 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 11 Aug 2023 08:28:20 -0700
+Date:   Fri, 11 Aug 2023 08:28:19 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 00/20] Retire DEFINE_QBCM/DEFINE_QNODE macros
+Message-ID: <20230811152819.GS1428172@hu-bjorande-lv.qualcomm.com>
+References: <20230811-topic-icc_retire_macrosd-v1-0-c03aaeffc769@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230804094039.365102-1-dnlplm@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230811-topic-icc_retire_macrosd-v1-0-c03aaeffc769@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 95bMim_Kaa5V5sWhfdgD6MgPS15McVWH
+X-Proofpoint-ORIG-GUID: 95bMim_Kaa5V5sWhfdgD6MgPS15McVWH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-11_06,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 mlxlogscore=905 adultscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308110141
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 04, 2023 at 11:40:39AM +0200, Daniele Palmas wrote:
-> Add support for Telit FE990 that has the same configuration than FN990:
+On Fri, Aug 11, 2023 at 02:15:11PM +0200, Konrad Dybcio wrote:
+> This is ripped out of the bigger patch series at [1], as this part
+> doesn't really have any dependencies and (hopefully) brings no
+> functional change.
 > 
-> $ lspci -vv
-> 04:00.0 Unassigned class [ff00]: Qualcomm Device 0308
->     Subsystem: Device 1c5d:2015
+> Compile-tested for the most part, bloat-o-meter reports no size change
 > 
-> Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 
-Applied to mhi-next with suggested changes!
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-- Mani
+Regards,
+Bjorn
 
+> [1] https://lore.kernel.org/linux-arm-msm/20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org/
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/bus/mhi/host/pci_generic.c | 3 +++
->  1 file changed, 3 insertions(+)
+> Konrad Dybcio (20):
+>       interconnect: qcom: sc7180: Retire DEFINE_QNODE
+>       interconnect: qcom: sdm670: Retire DEFINE_QNODE
+>       interconnect: qcom: sdm845: Retire DEFINE_QNODE
+>       interconnect: qcom: sdx55: Retire DEFINE_QNODE
+>       interconnect: qcom: sdx65: Retire DEFINE_QNODE
+>       interconnect: qcom: sm6350: Retire DEFINE_QNODE
+>       interconnect: qcom: sm8150: Retire DEFINE_QNODE
+>       interconnect: qcom: sm8250: Retire DEFINE_QNODE
+>       interconnect: qcom: sm8350: Retire DEFINE_QNODE
+>       interconnect: qcom: icc-rpmh: Retire DEFINE_QNODE
+>       interconnect: qcom: sc7180: Retire DEFINE_QBCM
+>       interconnect: qcom: sdm670: Retire DEFINE_QBCM
+>       interconnect: qcom: sdm845: Retire DEFINE_QBCM
+>       interconnect: qcom: sdx55: Retire DEFINE_QBCM
+>       interconnect: qcom: sdx65: Retire DEFINE_QBCM
+>       interconnect: qcom: sm6350: Retire DEFINE_QBCM
+>       interconnect: qcom: sm8150: Retire DEFINE_QBCM
+>       interconnect: qcom: sm8250: Retire DEFINE_QBCM
+>       interconnect: qcom: sm8350: Retire DEFINE_QBCM
+>       interconnect: qcom: icc-rpmh: Retire DEFINE_QBCM
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index fcd80bc92978..676f3ae33ae9 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -595,6 +595,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* Telit FN990 */
->  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
->  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
-> +	/* Telit FE990, same configuration than FN990 */
-> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
-> +		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
+>  drivers/interconnect/qcom/bcm-voter.h |    8 -
+>  drivers/interconnect/qcom/icc-rpmh.h  |   10 -
+>  drivers/interconnect/qcom/sc7180.c    | 1613 ++++++++++++++++++++++++++---
+>  drivers/interconnect/qcom/sdm670.c    | 1386 ++++++++++++++++++++++---
+>  drivers/interconnect/qcom/sdm845.c    | 1655 +++++++++++++++++++++++++++---
+>  drivers/interconnect/qcom/sdx55.c     |  843 ++++++++++++++--
+>  drivers/interconnect/qcom/sdx65.c     |  830 +++++++++++++--
+>  drivers/interconnect/qcom/sm6350.c    | 1526 +++++++++++++++++++++++++---
+>  drivers/interconnect/qcom/sm8150.c    | 1686 ++++++++++++++++++++++++++++---
+>  drivers/interconnect/qcom/sm8250.c    | 1745 ++++++++++++++++++++++++++++----
+>  drivers/interconnect/qcom/sm8350.c    | 1798 +++++++++++++++++++++++++++++----
+>  11 files changed, 11786 insertions(+), 1314 deletions(-)
+> ---
+> base-commit: 39a1ff5094638b367bbd17e6a79591c67eed1a67
+> change-id: 20230811-topic-icc_retire_macrosd-2d4c4f5356bc
+> 
+> Best regards,
 > -- 
-> 2.37.1
+> Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
