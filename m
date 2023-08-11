@@ -2,117 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41C6377854F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 04:20:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E22BB77870A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 07:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230428AbjHKCT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Aug 2023 22:19:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36256 "EHLO
+        id S229992AbjHKFqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 01:46:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjHKCT6 (ORCPT
+        with ESMTP id S229499AbjHKFqW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Aug 2023 22:19:58 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9753E2724;
-        Thu, 10 Aug 2023 19:19:57 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37B1xvgf020538;
-        Fri, 11 Aug 2023 02:19:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=vBR7HgckOBL8Gr8JQ1V2+7FWLv7X9l13BJtRZ89G2iM=;
- b=gfGk2nSwCstE7/LBQ7qa1SDN9ZDYNfSGiM2mQJbFX7tKxJg4Tj5vVtFCIFzIMY2ze/+6
- QdsUry9lBY1VMxrxZgIsmyhbF0V7xDDUyah5AsU9ORPqKfhr+Jg6i15QEjQLo9NqlBeB
- OTnbW/zX79dbwipUXJP4PxoSIYS7qXk9+S9Or0yCjwqx2MKk0HvouWvtshoBUKcTy68d
- B9Di+2ASUxP+KMFgwMmNO25GKOxMMEWSnZrtucbtCLraEy+kjPhIFYsxxC/Gmw9vUEGi
- WghOeBVXR7wlYSiZLv2hC9n44WxUQHsJbu/M5/xLxcn/HU0U+P/oM0JD6TvNPa8gt/K2 1Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd90608ba-1
+        Fri, 11 Aug 2023 01:46:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5572C2129;
+        Thu, 10 Aug 2023 22:46:22 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37B5S5D7025313;
+        Fri, 11 Aug 2023 05:46:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nxam5uLiOS+ilAH4M3/4VI/E/PX8AR4P1eyPM/zX4X0=;
+ b=moDdks376QQFP/mdj9ok0oqB4BOIOb1NhGhJ4sIc6TSqIFepatXtk/V20cd/ezMI+uq4
+ GHPNj+1eRRjUBiXn22OGTduFVAH6fgo+vygMfKZ9cwbufgr8xh9tlgQV07AASAweJcGW
+ aUXdfSqWnLREX4wN29UDTPwX3QvuhOKv4vuMTs6rZOl30TVIhiXugYW7qniD3+qU9SDe
+ JRgqXmZRXK5NZitQSxwTVj3AP+I7feVD9YAvSxNZXTU/jVMPQ2BIJjX+yj/UlNuEV8ee
+ 9c5svEfqftJ4ngOlhxK41ikubae4nXIVONgA48G2RuNs1m+BUxYXgOGvL5dXVKZJNPxL Lg== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd8yegjvr-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 02:19:53 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37B2Jq45011080
+        Fri, 11 Aug 2023 05:46:07 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37B5k7NO005715
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 02:19:52 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 10 Aug 2023 19:19:52 -0700
-Date:   Thu, 10 Aug 2023 19:19:50 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>
-CC:     Eric Biggers <ebiggers@kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-        "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>,
-        Om Prakash Singh <omprsing@qti.qualcomm.com>,
-        "Prasad Sodagudi (QUIC)" <quic_psodagud@quicinc.com>,
-        "Arun Menon (SSG)" <avmenon@quicinc.com>,
-        "abel.vesa@linaro.org" <abel.vesa@linaro.org>,
-        "Seshu Madhavi Puppala (QUIC)" <quic_spuppala@quicinc.com>
-Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
- ufs
-Message-ID: <20230811021950.GQ1428172@hu-bjorande-lv.qualcomm.com>
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <20230720025541.GA2607@sol.localdomain>
- <ca11701e403f48b6839b26c47a1b537f@quicinc.com>
- <20230810053642.GD923@sol.localdomain>
- <371088f78c6d4febbbfaf3c1a12cf19f@quicinc.com>
+        Fri, 11 Aug 2023 05:46:07 GMT
+Received: from [10.50.43.50] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 10 Aug
+ 2023 22:46:03 -0700
+Message-ID: <07cf0c21-9a50-122c-10f2-d6e3a660f143@quicinc.com>
+Date:   Fri, 11 Aug 2023 11:16:00 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <371088f78c6d4febbbfaf3c1a12cf19f@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 1/4] venus: hfi: add checks to perform sanity on queue
+ pointers
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mchehab@kernel.org>, <hans.verkuil@cisco.com>,
+        <tfiga@chromium.org>
+CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1691634304-2158-2-git-send-email-quic_vgarodia@quicinc.com>
+ <922c02e5-3081-45d4-4635-150393970bf8@linaro.org>
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <922c02e5-3081-45d4-4635-150393970bf8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: s5UTdnchEBXw_-T3x-mxWF8YOCgmGGFj
-X-Proofpoint-ORIG-GUID: s5UTdnchEBXw_-T3x-mxWF8YOCgmGGFj
+X-Proofpoint-ORIG-GUID: Wa4nTJAa0sckw_0c-U2Di6d6T1RD4lR_
+X-Proofpoint-GUID: Wa4nTJAa0sckw_0c-U2Di6d6T1RD4lR_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-08-10_20,2023-08-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- suspectscore=0 malwarescore=0 mlxscore=0 clxscore=1011 spamscore=0
- mlxlogscore=694 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308110020
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ impostorscore=0 spamscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308110052
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 11, 2023 at 12:27:18AM +0000, Gaurav Kashyap (QUIC) wrote:
-> 
 
-Gaurav, it is impossible to decode what part of this message is from
-Eric and what is from you. You must use a proper email client, and
-follow proper etiquette on these mailing lists.
-
+On 8/10/2023 4:54 PM, Bryan O'Donoghue wrote:
+> On 10/08/2023 03:25, Vikash Garodia wrote:
+>> Read and write pointers are used to track the packet index in the memory
+>> shared between video driver and firmware. There is a possibility of OOB
+>> access if the read or write pointer goes beyond the queue memory size.
+>> Add checks for the read and write pointer to avoid OOB access.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_venus.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index f0b4638..4ddabb1 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -206,6 +206,11 @@ static int venus_write_queue(struct venus_hfi_device *hdev,
+>>         new_wr_idx = wr_idx + dwords;
+>>       wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
+>> +
+>> +    if (wr_ptr < (u32 *)queue->qmem.kva ||
+>> +        wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
+>> +        return -EINVAL;
+>> +
+>>       if (new_wr_idx < qsize) {
+>>           memcpy(wr_ptr, packet, dwords << 2);
+>>       } else {
+>> @@ -273,6 +278,11 @@ static int venus_read_queue(struct venus_hfi_device *hdev,
+>>       }
+>>         rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
+>> +
+>> +    if (rd_ptr < (u32 *)queue->qmem.kva ||
+>> +        rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
+>> +        return -EINVAL;
+>> +
+>>       dwords = *rd_ptr >> 2;
+>>       if (!dwords)
+>>           return -EINVAL;
 > 
-> -----Original Message-----
-> From: Eric Biggers <ebiggers@kernel.org> 
-> Sent: Wednesday, August 9, 2023 10:37 PM
-> To: Gaurav Kashyap (QUIC) <quic_gaurkash@quicinc.com>
-> Cc: linux-scsi@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-mmc@vger.kernel.org; linux-block@vger.kernel.org; linux-fscrypt@vger.kernel.org; Om Prakash Singh <omprsing@qti.qualcomm.com>; Prasad Sodagudi (QUIC) <quic_psodagud@quicinc.com>; Arun Menon (SSG) <avmenon@quicinc.com>; abel.vesa@linaro.org; Seshu Madhavi Puppala (QUIC) <quic_spuppala@quicinc.com>
-> Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and ufs
-> 
-> On Tue, Aug 01, 2023 at 05:31:59PM +0000, Gaurav Kashyap (QUIC) wrote:
-> > 
-> > According to your cover letter, this feature requires a custom TrustZone image to work on SM8550.  Will that image be made available outside Qualcomm?
-> > --> Unfortunately, I don't think there is a way to do that. You can still request for one through our customer engineering team like before.
-> 
-> I think it's already been shown that that is not a workable approach.
-> 
-
-I agree.
+> What is the bit-shifting for ?
+If the query is related to dwords, the bit shift is to convert the size of
+packet in words.
 
 Regards,
-Bjorn
+Vikash
