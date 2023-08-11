@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAEE2778E57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:56:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98DD9778E6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:57:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234317AbjHKL4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 07:56:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58356 "EHLO
+        id S235924AbjHKL54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 07:57:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229999AbjHKL4P (ORCPT
+        with ESMTP id S234523AbjHKL5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 07:56:15 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A491F11F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:56:14 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe2de785e7so3050638e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:56:14 -0700 (PDT)
+        Fri, 11 Aug 2023 07:57:53 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E2730F0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:57:48 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe1489ced6so3058443e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691754973; x=1692359773;
+        d=linaro.org; s=google; t=1691755067; x=1692359867;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ekg8d7VnSEmC/9widfKE7c1klznCQGBPRD9AlwjwCNk=;
-        b=luCkbIMvgW4IRGoXPX89ZUU3Gx8kEnm5/2hEsCllbBFMZd8Ff7WtRLHzSF0emKhN08
-         fgjZELOebZH6vI5GQhzf1Kp6xmSKQRBeWuOgvBGLK1i0F25s//6/A0C0LoSH2OKWhk/F
-         C7QoYlami3klNXzKk1FQiuAOeUCgoXy70wVi9niDpxcA/Ozj3hifS13ewer7F7Krc21X
-         d8EiWRtMMs9DGkoEZroxHqMMmGAnRBwqXAMABr1npvsA9zW1vVdWfL0foqk5vz2hhOdY
-         6DxeB3Erv1SaUx5tDqzMKv7HihTWbr76LixOTfSagGkbSW20XBvQuItkLJsY56YdLiOR
-         liQg==
+        bh=PGRjmcPR0ggWOyPN0x8FFsJH5U36A3nsKo7NqXApY5c=;
+        b=gZhN7DrVpJJrz2QSkHmOvpCKCmf+zWa7XN5Et5MZAvJfzNVM4mPJYRm+zGUXwT8YCV
+         C410+FCk5OAsDMdaqjxDupGY0c2n0Md3+pNjI9VKekbE8h98Rta8Rh5it+8uIPUnRqNO
+         fjruaU4jfnNiKSJymBO+FVEUvd9MiZOP9LSt9UgYs8pUNa/1tCEmJ3n7BwCauoo2G+FC
+         9JUFtm4mHH+bDUr5A67I93p1bXM8Z8uDbmAOCVwksx4wGo0+7RV1z0t2C7cwSNFZAYCP
+         WgFsX2XYyUo5AAUZDzFolbX3ik1x1RHsFvqoQ4cUr7fXiIj6BgYZzzNJZRzeA8W4Siri
+         bnZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691754973; x=1692359773;
+        d=1e100.net; s=20221208; t=1691755067; x=1692359867;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ekg8d7VnSEmC/9widfKE7c1klznCQGBPRD9AlwjwCNk=;
-        b=BoM52Br2KrtxcadGBReGjOhcMXB9+8MO5rZXNweQaj+7Y3EbL8WnLnmmJGnlYBEwWC
-         cVSIaszmSjcLnG5w1TnARY4ISAxWDojdn/VloJCR8ygKSwh7NR4UfgSAmVW192ZOOlmK
-         VErlykT92yJsa4WFf5WNDhnkJgWV+yW/GjBXoxaK4PArBc+L0gg9O+87U4OhXMBApu9C
-         50jNpXh9SgodGeBJutod7sDbg5LrjYyMBmnduP7/eZ3oSej+D4CIRdat1jcx5q+sgD9W
-         tynWdM2gk/VXOVdDZqNbEZa/CZT6XdGdeSUiMsl1dMbFqLDGjmxO34xgmApVQJ8XdgRK
-         0eAg==
-X-Gm-Message-State: AOJu0YwxbYK/FjMP9jMoLCwylB/bUjT6RsCdvWLNKCIVduNDY0GvB4qQ
-        CLtx5if5lM+ocTyzejcgVDa5Hw==
-X-Google-Smtp-Source: AGHT+IEKsQ60XDMTqPSCT9CvfsU5kRYoXu9i7QC5VpCaRTRcmPgMild251awN4s/7Z04kduV7m/Sgw==
-X-Received: by 2002:a05:6512:3e3:b0:4f9:5a87:1028 with SMTP id n3-20020a05651203e300b004f95a871028mr1068758lfq.30.1691754972916;
-        Fri, 11 Aug 2023 04:56:12 -0700 (PDT)
+        bh=PGRjmcPR0ggWOyPN0x8FFsJH5U36A3nsKo7NqXApY5c=;
+        b=l1zCsTthJASdY6LLTh9746VM4VxfauCawJQLqiQkgCV/uaJUxiqOd3IdUYEM2kvBlT
+         Xjw8KLctjHbPaK4Npz6o8m27OTN3Oxnkk+3G7K7wTLp1T5bpzAxS5Pskgx23p+Io9qBZ
+         dUEMOGUpKMdygLRiCQmTzMa5rPl0//QMOU7wC0uwuuysPnn5QCaZZESgGYR7ZbBoeaeE
+         srAwlwAOb3cW2XNEx6RbGAwWoJyk9BosdUxtBTxKCre3jaZyexDQPm+T+WyrnfNxtmGJ
+         Xb04IZimpBM5/+ALk2ZHzTtwuXgMRHHX1DZXn4F8PyqHkW988TkqGE500i2uX9h7kWsQ
+         Jo9A==
+X-Gm-Message-State: AOJu0Yx+SFSf86/XBxvnfDZyNHnEyLAVpl8q9AE0KhGLBeFZ+ScaHOW9
+        /otkaYqGgeVMQDjoK+s/iHaEmw==
+X-Google-Smtp-Source: AGHT+IHfFNzj7TZoosPHfQcFyI/Zru3Fx/9Sh4T8l7y7AepoDwWD2lbzXLfTuQnLVPbUobihqR0zDA==
+X-Received: by 2002:a05:6512:acd:b0:4fd:faa1:fefc with SMTP id n13-20020a0565120acd00b004fdfaa1fefcmr1171122lfu.56.1691755066613;
+        Fri, 11 Aug 2023 04:57:46 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id l25-20020ac24319000000b004fe0c0235ddsm704728lfh.143.2023.08.11.04.56.11
+        by smtp.gmail.com with ESMTPSA id l25-20020ac24319000000b004fe0c0235ddsm704728lfh.143.2023.08.11.04.57.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Aug 2023 04:56:12 -0700 (PDT)
-Message-ID: <838c5cb2-8dc8-4214-b8ba-54649ca8c6d3@linaro.org>
-Date:   Fri, 11 Aug 2023 13:56:11 +0200
+        Fri, 11 Aug 2023 04:57:46 -0700 (PDT)
+Message-ID: <b881d6d4-3187-44cd-ac0c-66c3c1b8aef4@linaro.org>
+Date:   Fri, 11 Aug 2023 13:57:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: pm_helpers: Unify v3 and v4 venc/vdec_get
+Subject: Re: [PATCH 0/2] Improve enable_mask handling
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
+        Georgi Djakov <djakov@kernel.org>,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230811-topic-venus_dedup-v1-1-c4b4af499ef2@linaro.org>
- <85603f46-6520-6afa-1560-9ccd171475d8@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20230811-topic-icc_fix_1he-v1-0-5c96ccef3399@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,119 +103,31 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <85603f46-6520-6afa-1560-9ccd171475d8@linaro.org>
+In-Reply-To: <20230811-topic-icc_fix_1he-v1-0-5c96ccef3399@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.08.2023 13:52, Bryan O'Donoghue wrote:
-> On 11/08/2023 12:12, Konrad Dybcio wrote:
->> They do the same thing, except v3 and earlier are expected to have the
->> old style of bindings (i.e. core clock per core under video-enc/decoder
->> subnode).
->>
->> Unify them to stop duplicating needlessly.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/media/platform/qcom/venus/pm_helpers.c | 34 ++++++++------------------
->>   1 file changed, 10 insertions(+), 24 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
->> index 48c9084bb4db..83d1e68bb9ca 100644
->> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->> @@ -295,6 +295,8 @@ static int core_get_v1(struct venus_core *core)
->>   {
->>       int ret;
->>   +    legacy_binding = true;
->> +
->>       ret = core_clks_get(core);
->>       if (ret)
->>           return ret;
->> @@ -349,6 +351,9 @@ static int vdec_get_v3(struct device *dev)
->>   {
->>       struct venus_core *core = dev_get_drvdata(dev);
->>   +    if (!legacy_binding)
->> +        return 0;
->> +
->>       return vcodec_clks_get(core, dev, core->vcodec0_clks,
->>                      core->res->vcodec0_clks);
->>   }
->> @@ -374,6 +379,9 @@ static int venc_get_v3(struct device *dev)
->>   {
->>       struct venus_core *core = dev_get_drvdata(dev);
->>   +    if (!legacy_binding)
->> +        return 0;
->> +
->>       return vcodec_clks_get(core, dev, core->vcodec1_clks,
->>                      core->res->vcodec1_clks);
->>   }
->> @@ -764,17 +772,6 @@ static int coreid_power_v4(struct venus_inst *inst, int on)
->>       return ret;
->>   }
->>   -static int vdec_get_v4(struct device *dev)
->> -{
->> -    struct venus_core *core = dev_get_drvdata(dev);
->> -
->> -    if (!legacy_binding)
->> -        return 0;
->> -
->> -    return vcodec_clks_get(core, dev, core->vcodec0_clks,
->> -                   core->res->vcodec0_clks);
->> -}
->> -
->>   static void vdec_put_v4(struct device *dev)
->>   {
->>       struct venus_core *core = dev_get_drvdata(dev);
->> @@ -809,17 +806,6 @@ static int vdec_power_v4(struct device *dev, int on)
->>       return ret;
->>   }
->>   -static int venc_get_v4(struct device *dev)
->> -{
->> -    struct venus_core *core = dev_get_drvdata(dev);
->> -
->> -    if (!legacy_binding)
->> -        return 0;
->> -
->> -    return vcodec_clks_get(core, dev, core->vcodec1_clks,
->> -                   core->res->vcodec1_clks);
->> -}
->> -
->>   static void venc_put_v4(struct device *dev)
->>   {
->>       struct venus_core *core = dev_get_drvdata(dev);
->> @@ -1180,10 +1166,10 @@ static const struct venus_pm_ops pm_ops_v4 = {
->>       .core_get = core_get_v4,
->>       .core_put = core_put_v4,
->>       .core_power = core_power_v4,
->> -    .vdec_get = vdec_get_v4,
->> +    .vdec_get = vdec_get_v3,
->>       .vdec_put = vdec_put_v4,
->>       .vdec_power = vdec_power_v4,
->> -    .venc_get = venc_get_v4,
->> +    .venc_get = venc_get_v3,
->>       .venc_put = venc_put_v4,
->>       .venc_power = venc_power_v4,
->>       .coreid_power = coreid_power_v4,
->>
->> ---
->> base-commit: 21ef7b1e17d039053edaeaf41142423810572741
->> change-id: 20230811-topic-venus_dedup-08f183d3a611
->>
->> Best regards,
+On 11.08.2023 13:55, Konrad Dybcio wrote:
+> As pointed out by Bjorn and Mike in [1], we can simplify the handling
+> of enable_mask-based BCMs. This series attemps to do so and fixes a bug
+> that snuck in.
 > 
-> This makes sense.
+> Gave a quick spin on 8450, doesn't seem to have exploded.
 > 
-> It'd be nice to get rid of the top-level static bool and bury it in the core venus structure but, that's not a problem with your patch.
-That's the plan, just that untangling this mess will take some time
+> [1] https://lore.kernel.org/linux-arm-msm/113b50f8-35f6-73fc-4fc9-302262927c5e@quicinc.com/
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
++CC Mike's QUIC address, looks like the tree I based it on didn't
+yet catch the CAF mailmap patch
 
 Konrad
