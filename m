@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13922779AE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 00:58:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A50E779AF4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 01:06:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235650AbjHKW63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 18:58:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41132 "EHLO
+        id S237173AbjHKXGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 19:06:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234910AbjHKW62 (ORCPT
+        with ESMTP id S236977AbjHKXEM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 18:58:28 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B05C26A2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 15:58:28 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe44955decso2852225e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 15:58:28 -0700 (PDT)
+        Fri, 11 Aug 2023 19:04:12 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35D044A7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:02:21 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fe61ae020bso3862289e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:02:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691794706; x=1692399506;
+        d=linaro.org; s=google; t=1691794940; x=1692399740;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WE2ZDql8Tv4YXUVI5BnaQPvuG6YZuD41+7T1wuevdUw=;
-        b=BFA8oC4+WAPHJ4k1Gu3oLw0M8W4p1i25J18crYf0Q0Hkbr735DdJad9KlMyITLv2ZW
-         P+BTW54dsOkbLiexM3ioWZEqkdCzFzXtsptphQ1ML+jT6X/RcMOSQkCK52fdTlrK80hK
-         lqN0ORmvOKGB/UTgl7XaeLicDTNTcNKZpEA8XKjelrjpWGNGRblKp1LBJ+ihGRZTKb2z
-         jHMPdF/NIW5wdMq93MUIEw8breCWhA5lwHDMtg2M2hXyTKpCV9ASde0UL4KlM3Ph20Q+
-         n34aoqcTXHGUMGAEHbYx5AeskrlyVwrv8gUIfME3NLuw5UEnla8pQwp1kBj4AmpAst3Z
-         n2Hg==
+        bh=sT1uR+cf7e1evx8m1N53/kqWjqSw5gEDum8c1pesGBE=;
+        b=G+9TuSqPsKMfTgDJ6Oy763ox7t2rbvrj0Xj4oypFCf75GKespz953IqRpOh3Rxp9FE
+         9VY+JO1iWTV2udUjr0g9lp/BUb+SB0FnPa4Il5jnYjjx7yY2EHii9k4tNRljsesIXKH5
+         VeXNHQpXEeVBdwj8V9HNbUQvF3msVjFRFdTsv3fPRlFpH3xXqSOlMLc6S+IGsIHl40fx
+         PiFksdsRtcQtrRG0lZ5itFXQWLjs13iVuZlBq0xnBNwJvQz4Mp94J4n5xvz28/1g0xdt
+         gaqQhYUC39XLT7rEmtK5C/+aeA6AM+P4FuTG4K2xkTksXr5mOR5AvSeUjSbj0XDTOvuT
+         Afrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691794706; x=1692399506;
+        d=1e100.net; s=20221208; t=1691794940; x=1692399740;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WE2ZDql8Tv4YXUVI5BnaQPvuG6YZuD41+7T1wuevdUw=;
-        b=J/sBMCvK9orTkBcuujXen5NCCpBtpJ97WUJG4usTNTLEYoIA/PezfVWpGBdHM6Sonh
-         AZoLhZldWOeLMZLh3e58Pn+gJo5M6dHOkx5bwEjVXTjahMK7rftLjNqjBsHHCQsSUWPc
-         +oLtMGyL73UJbSN28EzDP8/xs+6KLoplJAGHo3Ov1nHcFPF/w3mxa/HdKqiu9YQVQqZ4
-         eEMswsasE2/7lMg7saeHk4libsA/X3MAJ57DBU8J2jpww9wqCRLJoVFms+CYZm2b6AGu
-         InXst/7O/JjLJsF6eJRl1zxqdmc6CyCENM2wjoT5Xd6bVjcOIQS9R0ZCUYAY+c/fQUMh
-         qODQ==
-X-Gm-Message-State: AOJu0Yw3hN6yXsVfwm9nnBP4/vtOOkvxZwyFNgmSD+I37bNp9oe2eAvv
-        BOVxVIdbqm3Q+hDDT/eNiOx2jg==
-X-Google-Smtp-Source: AGHT+IEIDdZHxnS3sHxLL29Jh74kHohifLvD8BK8S+vgg6zTpywrpSSxiz+UldOBc3D4SXCeJmggbg==
-X-Received: by 2002:a05:6512:4029:b0:4f8:4b19:9533 with SMTP id br41-20020a056512402900b004f84b199533mr2356986lfb.19.1691794706282;
-        Fri, 11 Aug 2023 15:58:26 -0700 (PDT)
+        bh=sT1uR+cf7e1evx8m1N53/kqWjqSw5gEDum8c1pesGBE=;
+        b=KrGbx276NiP+Xwfj94zvEwWOzUb0h4SunusHjlRDimph+ixq48wUjKPpkYBikb0kQ1
+         DIxatImE3Qk8VIbLBdquhW7vn3Sf1ivLWg2neouVcf0G6n8fJiTtQsn8/8HFhoJj/Pkh
+         W9Aw+r2TBidYIn8ViWDTtBF4ID+wy3GvTlYmtqNCUB+tI7tvZclZs+JuM02w5Okq4mNI
+         tyNEm1sugBc/RD8h/6kWV/QeOwajgn3PrTPaUxdnhmN70FnLlnrGQ5JNmbEdDAsVqJ6z
+         1MihOvQjRGS2zfYA9tiup5UZQUCkkzYfO83jnWSoYqiuz/4PzuAMyOK3Jzzj66zQqGKL
+         HArQ==
+X-Gm-Message-State: AOJu0YwG0VZ8sOFzO2SYKXV8OAprQi53hBmC04cqwllCrqoiKXH5VFUC
+        8Kp+Icl9HaVwHIEy+973qORSdQ==
+X-Google-Smtp-Source: AGHT+IFdyKA/K8FtlyVqffYc8nEeW+KRP+PJ4MSdP6VA1xBuAPT/TEUDZ9YnaoZmP7BekLNDDkPYxw==
+X-Received: by 2002:a05:6512:ea9:b0:4fb:cc99:4e90 with SMTP id bi41-20020a0565120ea900b004fbcc994e90mr3270700lfb.37.1691794939907;
+        Fri, 11 Aug 2023 16:02:19 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id w7-20020a05651204c700b004fbb610c354sm890107lfq.0.2023.08.11.15.58.25
+        by smtp.gmail.com with ESMTPSA id c26-20020a19761a000000b004fe3512e26dsm884105lff.291.2023.08.11.16.02.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Aug 2023 15:58:25 -0700 (PDT)
-Message-ID: <b0494557-5676-4157-bc3b-bacd189c38d9@linaro.org>
-Date:   Sat, 12 Aug 2023 00:58:25 +0200
+        Fri, 11 Aug 2023 16:02:19 -0700 (PDT)
+Message-ID: <5077fd56-c1af-4b1b-be4c-8a7396824e94@linaro.org>
+Date:   Sat, 12 Aug 2023 01:02:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] dt-bindings: arm: qcom: Document MSM8x26-based Lumia
- phones
+Subject: Re: [PATCH 2/7] ARM: dts: qcom: add common device tree for
+ MSM8x26-based Lumia phones
 Content-Language: en-US
 To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>,
+        Jack Matthews <jm5112356@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
 References: <20230811213728.23726-1-rayyan@ansari.sh>
- <20230811213728.23726-2-rayyan@ansari.sh>
+ <20230811213728.23726-3-rayyan@ansari.sh>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,11 +105,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230811213728.23726-2-rayyan@ansari.sh>
+In-Reply-To: <20230811213728.23726-3-rayyan@ansari.sh>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,30 +119,95 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11.08.2023 23:35, Rayyan Ansari wrote:
-> Document MSM8226 and MSM8926 Lumias.
+> Add a common device tree for Lumias based on the Qualcomm MSM8x26
+> family of chipsets.
 > 
+> Currently supports:
+> - Framebuffer
+> - Touchscreen
+> - Keys
+> - Regulators
+> - MMC
+> - USB
+> - UART
+> 
+> Co-authored-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+> Co-authored-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> Co-authored-by: Jack Matthews <jm5112356@gmail.com>
+> Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> Signed-off-by: Jack Matthews <jm5112356@gmail.com>
 > Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 450f616774e0..ea4b1c530461 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -181,9 +181,18 @@ properties:
->  
->        - items:
->            - enum:
-> +              - microsoft,dempsey
-> +              - microsoft,makepeace
-> +              - microsoft,moneypenny
->                - samsung,s3ve3g
->            - const: qcom,msm8226
->  
-> +      - items:
-> +          - enum:
-> +              - microsoft,superman-lte
-The '9' in msm8926 means "LTE".. is there a non-LTE superman?
+Would be really nice if you could squash it with patch 3 so that
+this code is immediately compilable.
+
+[...]
+
+> +	gpio_keys: gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&gpio_keys_active>;
+property-n
+property-names
+
+[...]
+
+> +	reserved-memory {
+> +		ranges;
+That's already there in soc dtsi
+
+> +
+> +		smem_region: smem@fa00000 {
+Swap the subnodes to keep the nodes ordered by unit address
+> +			reg = <0xfa00000 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		display_reserved: framebuffer@3200000 {
+> +			reg = <0x3200000 0x800000>;
+> +			no-map;
+> +		};
+> +	};
+> +};
+> +
+> +&blsp1_i2c5 {
+> +	status = "okay";
+> +
+> +	touchscreen@4b {
+> +		compatible = "syna,rmi4-i2c";
+> +		reg = <0x4b>;
+> +
+> +		interrupts-extended = <&tlmm 17 IRQ_TYPE_EDGE_FALLING>;
+> +		vdd-supply = <&pm8226_l15>;
+> +		vio-supply = <&pm8226_l6>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&touchscreen_on>;
+ditto
+
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		rmi4-f01@1 {
+> +			reg = <0x01>;
+> +			syna,nosleep-mode = <1>;
+> +		};
+> +
+> +		rmi4-f11@11 {
+> +			reg = <0x11>;
+> +			syna,sensor-type = <1>;
+> +		};
+> +	};
+> +};
+[...]
+
+> +
+> +&tlmm {
+> +	gpio_keys_active: gpio-keys-active {
+Run `make CHECK_DTBS=1 qcom/msm8226-something-lumia` and fix the warnings
+before Krzysztof gets angry :D
 
 Konrad
