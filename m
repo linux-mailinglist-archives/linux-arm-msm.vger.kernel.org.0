@@ -2,112 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 826D8778915
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 10:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95033778922
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 10:46:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234224AbjHKInB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 04:43:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50866 "EHLO
+        id S229927AbjHKIq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 04:46:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233983AbjHKIm7 (ORCPT
+        with ESMTP id S229445AbjHKIqZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 04:42:59 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BDE2D6D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 01:42:58 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31781e15a0cso1569454f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 01:42:58 -0700 (PDT)
+        Fri, 11 Aug 2023 04:46:25 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B0A2738
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 01:46:19 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-3a78604f47fso1597547b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 01:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691743377; x=1692348177;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n0L7TNaPDjG2oP47xE9wFsvrLG+cbfbskrmcmsHvf/A=;
-        b=I/sxIutcJCbO+pIGSgszv7i8DqFLycVyBoKVrOr3LmgHlime0xzpYp9Rrvzt9NV4NV
-         +c8l6GC+YxH+6+aVHQnCzvsoNemJRwsLRatFuoyJhBvkx3gvLS5RJvIPOpGOLj3BXIk1
-         385nGLNLDt2N4CS7WS4Rn4IX7w0JF4XqUrBzoY33GYt8lO3c25zukscckGy1l0F/I+Kc
-         41nICKGyNYrALjpF5YM0Ft0vHsTFtcQVdkpJCD1DRx+1n8cx7TZK5hKFZxipzfRdlxCd
-         fMRT97i7jbpWrN5K71Gl6IZ8I4cUsXQy+MmhE7f43/30aPT4E4IbwCOXubeNZO78suTJ
-         Pj0Q==
+        d=sartura.hr; s=sartura; t=1691743578; x=1692348378;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WKtJlKIudcy7aKKHmKppipYFtVVkWK8lZUiluohc5xs=;
+        b=V1dIl57VkIS3nFpjQpFIs6MA0l32uD7MvRbvj0xJRthWbdZUaBzqc2+FvOINTzDwV8
+         cYL+LClC2c/U+22UYqKLD5Gp5WzohISuB3eGJvg2k62a6NNur8f2RIhax4tqNq6HT3hd
+         nFScR9BhGhsRSv9LPy+NtRID8mz6fvVBJ16ZdBdoyteygigPFPtS5GRh++asG3mD9yd+
+         dt7JJw3aHxKoTYHvLee7GisG48XTnz58rdpjLR/3N5GDR7vueYzm9/JyOZ2YS88VZhTf
+         X9ffJp7HoDvaB7hyy7nptOIH7DW1fFsJ6L03BfuG7EAJRFm8Mru+qefJEBmM83xvkwGN
+         v+Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691743377; x=1692348177;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n0L7TNaPDjG2oP47xE9wFsvrLG+cbfbskrmcmsHvf/A=;
-        b=RT/UTFYXSQQfIVVgQOy894l+LHdJtco3wtzZTwZ4hjpdv4ZQF7TBbyz07TGmHLry63
-         xjtZ8h0xWrST/N5untYDPVO00KjLkue6UobBAlKp+D76ficpqoUpryVB9u9RThVmL8HA
-         2CZwiTjmGo5tsnuvleK1q/yE7RCUfDPLbZA9SN2If+kQZzl35NTX9I2tvS1E/vs2jKJi
-         L6PPQrRdFdigyw+VmYZHf1iVDSxKs1pQ8f0jYAcQ0MuQ7oH8vfloSwBrHNpznlvo46Gl
-         cgHq98VnmYtC2rhg6G6u8MdxTaecfKjhLNqFlk67d3fK+9J3nstDXlH1YkjgiGa+wcS2
-         yd/A==
-X-Gm-Message-State: AOJu0YwrSro3tG0C32IRUERGwVDOYE6uK3cOjHN4bAzfrWizSHcaqlgn
-        cXx6qUewRS4qeWKjwRCUKFtjIw==
-X-Google-Smtp-Source: AGHT+IEBcDWEXnDQ+Jh9eDdyDB1YdaPUSUloa6qFH16PZEYc9Ai9H0YWD0g3C7bqPWqWLPCCEenR7w==
-X-Received: by 2002:adf:ef4a:0:b0:314:1b36:f440 with SMTP id c10-20020adfef4a000000b003141b36f440mr814509wrp.70.1691743377366;
-        Fri, 11 Aug 2023 01:42:57 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id u16-20020a5d4690000000b00313de682eb3sm4669333wrq.65.2023.08.11.01.42.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Aug 2023 01:42:56 -0700 (PDT)
-Message-ID: <8b72ce47-c338-2061-f11a-c0a608686d8c@linaro.org>
-Date:   Fri, 11 Aug 2023 09:42:55 +0100
+        d=1e100.net; s=20221208; t=1691743578; x=1692348378;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WKtJlKIudcy7aKKHmKppipYFtVVkWK8lZUiluohc5xs=;
+        b=EFlt2OKYDSDF/sneaR10LJjHcOQJ9np7XRWEFGQOsd+ObeJ39+NbUOKnc/JX7GE7FU
+         1VEEtGp+DCtyjbfTeTcREEeGs/jR45zgYeeHWz4G/QwZ+9NzPjGbAqUcF5PoUMAQB+1J
+         6ifxEWQz/7i7w1q1yrBiD+UAKWpkDno6V9abA16EJw/0lqpSi1yjjcP7e0gvT27ydWuK
+         +ypeAY5HJ2yeALnXAJveQGbDSzpGf3n4QmB0ufglO5b7BRpAkaKuwjKv3B44+aWXNkuR
+         Rqpe/k0tHLROURWxiO1db5mb3nSq3HMSzGuBSUH/YSngpJ41WuRZbOfsQ4k/2rjhK414
+         wVVg==
+X-Gm-Message-State: AOJu0YzTAL4ZEEEuLJ+gDW0ZFuDJtODHIGXvM4sm3o9ykxM7Ujqxc9E/
+        rE17gv7BpO6ErVs4msnlEOEcifP/SidrDq/iMsbOhg==
+X-Google-Smtp-Source: AGHT+IF4kwiHVZ+e3oWoKQhT6vWvqXLEgnfBCFRqv0uUjOIWSXMnFW8ahdTpF7sGGp7nhgz8GdihxQFibxdlJFhxoMw=
+X-Received: by 2002:a05:6358:2791:b0:134:d4b6:1c47 with SMTP id
+ l17-20020a056358279100b00134d4b61c47mr1577466rwb.22.1691743578593; Fri, 11
+ Aug 2023 01:46:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 4/4] venus: hfi_parser: Add check to keep the number of
- codecs within range
-Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hans.verkuil@cisco.com, tfiga@chromium.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
- <1691634304-2158-5-git-send-email-quic_vgarodia@quicinc.com>
- <fec4a8c7-206f-7af8-4ea9-c919a677bf7e@linaro.org>
- <2214c31b-eca2-012e-a100-21252a724e7c@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <2214c31b-eca2-012e-a100-21252a724e7c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20230810132904.367418-1-robert.marko@sartura.hr> <900276ca-a682-4be0-a3dd-1794a3e62224@linaro.org>
+In-Reply-To: <900276ca-a682-4be0-a3dd-1794a3e62224@linaro.org>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Fri, 11 Aug 2023 10:46:07 +0200
+Message-ID: <CA+HBbNFGrF7gCKGuQuYRb6iZnzxV+=Gvde5DVi16vUnFfs1ZMA@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, luka.perkov@sartura.hr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/08/2023 07:04, Vikash Garodia wrote:
-> 
-> On 8/10/2023 5:03 PM, Bryan O'Donoghue wrote:
->> On 10/08/2023 03:25, Vikash Garodia wrote:
->>> +    if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) >
->>> MAX_CODEC_NUM)
->>> +        return;
->>> +
->>
->> Shouldn't this be >= ?
-> Not needed. Lets take a hypothetical case when core->dec_codecs has initial 16
-> (0-15) bits set and core->enc_codecs has next 16 bits (16-31) set. The bit count
-> would be 32. The codec loop after this check would run on caps array index 0-31.
-> I do not see a possibility for OOB access in this case.
-> 
->>
->> struct hfi_plat_caps caps[MAX_CODEC_NUM];
->>
->> ---
->> bod
->>
+On Thu, Aug 10, 2023 at 7:56=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> On 10.08.2023 15:28, Robert Marko wrote:
+> > Using GCC_DCD_XO_CLK as the XO clock for SDHCI controller is not correc=
+t,
+> > it seems that I somehow made a mistake of passing it instead of the fix=
+ed
+> > XO clock.
+> >
+> > Fixes: 04b3b72b5b8f ("ARM: dts: qcom: ipq4019: Add SDHCI controller nod=
+e")
+> > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> > ---
+> Is this another IPQ without RPM?
 
-Are you not doing a general defensive coding pass in this series ie
+Yes, AFAIK there is no RPM on this one.
 
-"[PATCH v2 2/4] venus: hfi: fix the check to handle session buffer 
-requirement"
+>
+> If so, this patch looks good, but please take the liberty to make clocks
+> and clock-names one-per-line :)
 
----
-bod
+Will do in v2.
+
+Regards,
+Robert
+>
+> Konrad
+
+
+
+--=20
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura Ltd.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
