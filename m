@@ -2,126 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99D40778E4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:55:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAEE2778E57
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:56:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235539AbjHKLza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 07:55:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54378 "EHLO
+        id S234317AbjHKL4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 07:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234317AbjHKLz0 (ORCPT
+        with ESMTP id S229999AbjHKL4P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 07:55:26 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FB72D61
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:55:24 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe28f92d8eso3060888e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:55:24 -0700 (PDT)
+        Fri, 11 Aug 2023 07:56:15 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A491F11F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:56:14 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe2de785e7so3050638e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691754923; x=1692359723;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ch1MMPzXxt2ZLlG7nltXMcHjVLEaj7rMyA9/R+Q9Z3Y=;
-        b=oeoNxyzUCf/7wTNdJY6f32WjV37AuuwyBZga1pT/Vxsyaq7xfywmkt9c59bHuAf6hE
-         nvDCDMSIbVhuTykuD24U0eXWxmHvkSQ/GCgaM9q5vz9gX7MaE6/Y9CgB5cgTyx5USUmM
-         d54N90N1LVZnrVnUPmlWeH52bp8QU+LXy1GPEHV+p07/F/4mkwc7uUp6lUwKSG9Ivps7
-         9OUk6s30Y55GTUmWqKTmfKi2Sf3UGGOUT7jH9dwgGGlES2Nc5posp4ZQ1poNWeIzp58V
-         Rw/eunQPHMaXzpf9MUXpP5pdFAg/noTjajEOYWhQYKGk7b6Hiw90keq4TVdK3eBwJthC
-         mxEA==
+        d=linaro.org; s=google; t=1691754973; x=1692359773;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ekg8d7VnSEmC/9widfKE7c1klznCQGBPRD9AlwjwCNk=;
+        b=luCkbIMvgW4IRGoXPX89ZUU3Gx8kEnm5/2hEsCllbBFMZd8Ff7WtRLHzSF0emKhN08
+         fgjZELOebZH6vI5GQhzf1Kp6xmSKQRBeWuOgvBGLK1i0F25s//6/A0C0LoSH2OKWhk/F
+         C7QoYlami3klNXzKk1FQiuAOeUCgoXy70wVi9niDpxcA/Ozj3hifS13ewer7F7Krc21X
+         d8EiWRtMMs9DGkoEZroxHqMMmGAnRBwqXAMABr1npvsA9zW1vVdWfL0foqk5vz2hhOdY
+         6DxeB3Erv1SaUx5tDqzMKv7HihTWbr76LixOTfSagGkbSW20XBvQuItkLJsY56YdLiOR
+         liQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691754923; x=1692359723;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ch1MMPzXxt2ZLlG7nltXMcHjVLEaj7rMyA9/R+Q9Z3Y=;
-        b=K0sHHS/4nORQxQFhtc4V/Joory2DGjlmghd05kI3qQg8P68N8/Su9bT3UnFLCH0pX2
-         pzHi2mnxVg860YwlPEQa4oZJh5SkrGV6f8Q0cRTTNyn5Xp/12QLvirtqZWJGzm0rXc8j
-         c3r1XJ8u8NQXUEQ6FQa/kz7rIn92rA9cJ37HROVAL4PqXSS8to32qyNY+8Jgf4bsUpFR
-         WhZMrQr3c6+IKx1WMDg5athLEDnej2UkLLSZO6y5cr85mYMIaBJgLcDHi0yMVinrCiSV
-         hJk2xCt5ypLGlJQnALd/tema9uxScmTESqaNfWuuSURRH6uqbU3stDB8Ezznf/dUQkjr
-         xHIA==
-X-Gm-Message-State: AOJu0YzU+DdA8Xww76y0u2xWzRTXgo2n9m/FjozXELnpF8QpAzgxfxBC
-        zDHtyOnOqvk//Dz8/OrlVm2RFg==
-X-Google-Smtp-Source: AGHT+IGWAiMNIiztaw+MSdWe2bowZ2pGCFgH/LkYVAzY8FUXhxigTgDv5wnxvaZ2/jT3M8aUTATP8w==
-X-Received: by 2002:a05:6512:1154:b0:4f8:5885:61e with SMTP id m20-20020a056512115400b004f85885061emr1303842lfg.40.1691754923165;
-        Fri, 11 Aug 2023 04:55:23 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1691754973; x=1692359773;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ekg8d7VnSEmC/9widfKE7c1klznCQGBPRD9AlwjwCNk=;
+        b=BoM52Br2KrtxcadGBReGjOhcMXB9+8MO5rZXNweQaj+7Y3EbL8WnLnmmJGnlYBEwWC
+         cVSIaszmSjcLnG5w1TnARY4ISAxWDojdn/VloJCR8ygKSwh7NR4UfgSAmVW192ZOOlmK
+         VErlykT92yJsa4WFf5WNDhnkJgWV+yW/GjBXoxaK4PArBc+L0gg9O+87U4OhXMBApu9C
+         50jNpXh9SgodGeBJutod7sDbg5LrjYyMBmnduP7/eZ3oSej+D4CIRdat1jcx5q+sgD9W
+         tynWdM2gk/VXOVdDZqNbEZa/CZT6XdGdeSUiMsl1dMbFqLDGjmxO34xgmApVQJ8XdgRK
+         0eAg==
+X-Gm-Message-State: AOJu0YwxbYK/FjMP9jMoLCwylB/bUjT6RsCdvWLNKCIVduNDY0GvB4qQ
+        CLtx5if5lM+ocTyzejcgVDa5Hw==
+X-Google-Smtp-Source: AGHT+IEKsQ60XDMTqPSCT9CvfsU5kRYoXu9i7QC5VpCaRTRcmPgMild251awN4s/7Z04kduV7m/Sgw==
+X-Received: by 2002:a05:6512:3e3:b0:4f9:5a87:1028 with SMTP id n3-20020a05651203e300b004f95a871028mr1068758lfq.30.1691754972916;
+        Fri, 11 Aug 2023 04:56:12 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id b17-20020ac25631000000b004fe4a4c61f0sm691729lff.191.2023.08.11.04.55.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Aug 2023 04:55:22 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 11 Aug 2023 13:55:08 +0200
-Subject: [PATCH 2/2] interconnect: qcom: bcm-voter: Use enable_maks for
- keepalive voting
+        by smtp.gmail.com with ESMTPSA id l25-20020ac24319000000b004fe0c0235ddsm704728lfh.143.2023.08.11.04.56.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Aug 2023 04:56:12 -0700 (PDT)
+Message-ID: <838c5cb2-8dc8-4214-b8ba-54649ca8c6d3@linaro.org>
+Date:   Fri, 11 Aug 2023 13:56:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230811-topic-icc_fix_1he-v1-2-5c96ccef3399@linaro.org>
-References: <20230811-topic-icc_fix_1he-v1-0-5c96ccef3399@linaro.org>
-In-Reply-To: <20230811-topic-icc_fix_1he-v1-0-5c96ccef3399@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: venus: pm_helpers: Unify v3 and v4 venc/vdec_get
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Mike Tipton <mdtipton@codeaurora.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
+        Mauro Carvalho Chehab <mchehab@kernel.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1691754919; l=1365;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=ooKoWDrIZBGoRmYbzBT936ZVDY0VC6/O2RuTPuEpqXc=;
- b=tWCHfvHPwWdJ+l7tj7scfETlbh3LpPB3jM6S4mCR0aIO+zrEmhfuWOqfuwneYYhij6dzsCNvi
- Cy/1avBW7rKA2app07sfTr621oIoFoYrJIqh+oReAI5Z/rxilUUBNQM
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230811-topic-venus_dedup-v1-1-c4b4af499ef2@linaro.org>
+ <85603f46-6520-6afa-1560-9ccd171475d8@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <85603f46-6520-6afa-1560-9ccd171475d8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-BCMs with an enable_mask expect to only have that specific value written
-to them. The current implementation only works by miracle for BCMs with
-enable mask == BIT(0), as the minimal vote we've been using so far just
-so happens to be equal to that.
+On 11.08.2023 13:52, Bryan O'Donoghue wrote:
+> On 11/08/2023 12:12, Konrad Dybcio wrote:
+>> They do the same thing, except v3 and earlier are expected to have the
+>> old style of bindings (i.e. core clock per core under video-enc/decoder
+>> subnode).
+>>
+>> Unify them to stop duplicating needlessly.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/media/platform/qcom/venus/pm_helpers.c | 34 ++++++++------------------
+>>   1 file changed, 10 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> index 48c9084bb4db..83d1e68bb9ca 100644
+>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> @@ -295,6 +295,8 @@ static int core_get_v1(struct venus_core *core)
+>>   {
+>>       int ret;
+>>   +    legacy_binding = true;
+>> +
+>>       ret = core_clks_get(core);
+>>       if (ret)
+>>           return ret;
+>> @@ -349,6 +351,9 @@ static int vdec_get_v3(struct device *dev)
+>>   {
+>>       struct venus_core *core = dev_get_drvdata(dev);
+>>   +    if (!legacy_binding)
+>> +        return 0;
+>> +
+>>       return vcodec_clks_get(core, dev, core->vcodec0_clks,
+>>                      core->res->vcodec0_clks);
+>>   }
+>> @@ -374,6 +379,9 @@ static int venc_get_v3(struct device *dev)
+>>   {
+>>       struct venus_core *core = dev_get_drvdata(dev);
+>>   +    if (!legacy_binding)
+>> +        return 0;
+>> +
+>>       return vcodec_clks_get(core, dev, core->vcodec1_clks,
+>>                      core->res->vcodec1_clks);
+>>   }
+>> @@ -764,17 +772,6 @@ static int coreid_power_v4(struct venus_inst *inst, int on)
+>>       return ret;
+>>   }
+>>   -static int vdec_get_v4(struct device *dev)
+>> -{
+>> -    struct venus_core *core = dev_get_drvdata(dev);
+>> -
+>> -    if (!legacy_binding)
+>> -        return 0;
+>> -
+>> -    return vcodec_clks_get(core, dev, core->vcodec0_clks,
+>> -                   core->res->vcodec0_clks);
+>> -}
+>> -
+>>   static void vdec_put_v4(struct device *dev)
+>>   {
+>>       struct venus_core *core = dev_get_drvdata(dev);
+>> @@ -809,17 +806,6 @@ static int vdec_power_v4(struct device *dev, int on)
+>>       return ret;
+>>   }
+>>   -static int venc_get_v4(struct device *dev)
+>> -{
+>> -    struct venus_core *core = dev_get_drvdata(dev);
+>> -
+>> -    if (!legacy_binding)
+>> -        return 0;
+>> -
+>> -    return vcodec_clks_get(core, dev, core->vcodec1_clks,
+>> -                   core->res->vcodec1_clks);
+>> -}
+>> -
+>>   static void venc_put_v4(struct device *dev)
+>>   {
+>>       struct venus_core *core = dev_get_drvdata(dev);
+>> @@ -1180,10 +1166,10 @@ static const struct venus_pm_ops pm_ops_v4 = {
+>>       .core_get = core_get_v4,
+>>       .core_put = core_put_v4,
+>>       .core_power = core_power_v4,
+>> -    .vdec_get = vdec_get_v4,
+>> +    .vdec_get = vdec_get_v3,
+>>       .vdec_put = vdec_put_v4,
+>>       .vdec_power = vdec_power_v4,
+>> -    .venc_get = venc_get_v4,
+>> +    .venc_get = venc_get_v3,
+>>       .venc_put = venc_put_v4,
+>>       .venc_power = venc_power_v4,
+>>       .coreid_power = coreid_power_v4,
+>>
+>> ---
+>> base-commit: 21ef7b1e17d039053edaeaf41142423810572741
+>> change-id: 20230811-topic-venus_dedup-08f183d3a611
+>>
+>> Best regards,
+> 
+> This makes sense.
+> 
+> It'd be nice to get rid of the top-level static bool and bury it in the core venus structure but, that's not a problem with your patch.
+That's the plan, just that untangling this mess will take some time
 
-Use the correct value with keepalive voting.
-
-Fixes: d8630f050d3f ("interconnect: qcom: Add support for mask-based BCMs")
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/bcm-voter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-index 82433f35717f..a28b87eec3da 100644
---- a/drivers/interconnect/qcom/bcm-voter.c
-+++ b/drivers/interconnect/qcom/bcm-voter.c
-@@ -78,10 +78,10 @@ static void bcm_aggregate_1he(struct qcom_icc_bcm *bcm)
- 	}
- 
- 	if (bcm->keepalive) {
--		bcm->vote_x[QCOM_ICC_BUCKET_AMC] = 1;
--		bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = 1;
--		bcm->vote_y[QCOM_ICC_BUCKET_AMC] = 1;
--		bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = 1;
-+		bcm->vote_x[QCOM_ICC_BUCKET_AMC] = bcm->enable_mask;
-+		bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = bcm->enable_mask;
-+		bcm->vote_y[QCOM_ICC_BUCKET_AMC] = bcm->enable_mask;
-+		bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = bcm->enable_mask;
- 	}
- }
- 
-
--- 
-2.41.0
-
+Konrad
