@@ -2,78 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E05C4779B68
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 01:36:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0E46779B88
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 01:47:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236407AbjHKXgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 19:36:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36870 "EHLO
+        id S237270AbjHKXrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 19:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237144AbjHKXgp (ORCPT
+        with ESMTP id S231371AbjHKXrn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 19:36:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80F9310F5;
-        Fri, 11 Aug 2023 16:36:44 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37BNV01M017838;
-        Fri, 11 Aug 2023 23:36:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=Wz/s1t3Tr5SELcyNkAxXzTZrYb2YMuANF05aY9pa+Do=;
- b=oPDo7c2fDfQfCuab6dpTNzPEz3IQzj3wCmmo3bAdFrFKBQtNivLCM1QAtqSMe5nts/Nw
- X8ZEAOhJSQ2gnlZN5phTHec0B64p5o/oV1JbEd3w0aGYAG38xXsbPIT7xcYmq+Uqw0v/
- R9H5ebVi6EkPazxDIlwgzp6WAOXPs7OuuorL2XY9DDCY2V1Nlpl3t7IDX7+mGqQuXOc4
- xx6cVz8dFctLjB0qmTa8SkhQvkFl9DBZKAwctsLHGcqVb1cOskQwREv106qy6Jbn6bpq
- hVLNGwOJ9S9SBSDCmFO2l5X+yQ4QuhhHMl+rTmqGC2dYE7NMcIjWBDBSymBKajMfFLWw Vw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd9032yaj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 23:36:37 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37BNaajM013921
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 23:36:36 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Fri, 11 Aug 2023 16:36:36 -0700
-Date:   Fri, 11 Aug 2023 16:36:34 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>
-CC:     Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH v2 2/4] soc: qcom: aoss: Add debugfs interface for
- sending messages
-Message-ID: <20230811233634.GU1428172@hu-bjorande-lv.qualcomm.com>
-References: <20230811205839.727373-1-quic_bjorande@quicinc.com>
- <20230811205839.727373-3-quic_bjorande@quicinc.com>
+        Fri, 11 Aug 2023 19:47:43 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775551702
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:47:42 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3fe2d218eedso22883385e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 16:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691797661; x=1692402461;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vmPpz4LCaDoZPw2B7U3w5DHuzdPqZsglckegaLGREXw=;
+        b=nrbCXe3zevFVHfSYLQN9e4arPs5g4ge+ZXcfTza7FzlO6eOPxvkGmLg2wMb8SyAhIe
+         OJeLVuz0ZzI8BzdK/tvVG+mDQ0+JMnCi2Jv+DQdEYFZ8hd4fJFjsQtzX+okbgrryZX0a
+         JbACNpEg5xs8zU6u6Tbv9RNf44ouYRe4fzMPGzhGHX3e5T/L4VvFdlTg4kMcd+WaF+mz
+         aW04dyGkX3lBQvH/ElmgdL+oM5ruU+rD8ADjHE+CJyVeR/jC0qi4jC1blGJAmtqTIJng
+         LnGt8rgQ3v4kmbzM7Okk6ja5MTo225hXHaEWAyzJEVTGvQcq83XGUS1z4+ZTiSQmHMYf
+         i7/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691797661; x=1692402461;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vmPpz4LCaDoZPw2B7U3w5DHuzdPqZsglckegaLGREXw=;
+        b=KhpT/vuu4h/dni6dyEhBie9ntK06Mec2d9VpGqrdHoMeWgMpClQb+TPdCmch/hZwo9
+         RAduAUkXGjXAaUSM+26hUvjEJ7Kw9YAVquoPaJ+ARclTTkNkQvvPCi9CSfI8mml0diMD
+         MaW2dbaFd2qCPWplxcODrwFoyVLvpJzCqZNcg8Ba+3RNOFohdbYV5NMwdxYnxTaf5FlR
+         1ZxTWpJ8xIdOFmj0Zvws0NGi3f7IBPInG2nW+O2NcxOhpRnB1ctCheUU2E0KEffO8xTV
+         wXWj58a6HSPtbhVGBTKm56PXP5r9Zn94bFfgrax05TsVmib2CDyTaImPuHObfp5a18vv
+         cMmg==
+X-Gm-Message-State: AOJu0Yx5xrR94ODeyx8XI62xVow4CN3AyMwCsw1N0sWBW8zYJAdkecUC
+        rLMxnkpje1Ko1xw28X1+kFEsIg==
+X-Google-Smtp-Source: AGHT+IEvXO89Wf7pxRGeb83+ECbk4RBaAtG85EAFkCsiLHriYQSSF52CWl6GM4T7QWu8r8Ex2ufS6g==
+X-Received: by 2002:a05:600c:3787:b0:3fe:89be:cd3 with SMTP id o7-20020a05600c378700b003fe89be0cd3mr2111753wmr.22.1691797660968;
+        Fri, 11 Aug 2023 16:47:40 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 20-20020a05600c025400b003fa98908014sm9599051wmj.8.2023.08.11.16.47.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Aug 2023 16:47:40 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/7] apq8016: camss: Update dts with various fixes
+Date:   Sat, 12 Aug 2023 00:47:31 +0100
+Message-ID: <20230811234738.2859417-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230811205839.727373-3-quic_bjorande@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 40COawU98F_ix_CpRWSSooNik5pJkQUH
-X-Proofpoint-GUID: 40COawU98F_ix_CpRWSSooNik5pJkQUH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-11_15,2023-08-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=999 adultscore=0 clxscore=1015 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308110215
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -84,46 +71,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 11, 2023 at 01:58:37PM -0700, Bjorn Andersson wrote:
-> From: Chris Lew <clew@codeaurora.org>
-> 
-> In addition to the normal runtime commands, the Always On Processor
-> (AOP) provides a number of debug commands which can be used during
-> system debugging for things such as preventing power collapse or placing
-> floor votes for certain resources. Some of these are documented in the
-> Robotics RB5 "Debug AOP ADB" linked below.
-> 
-> Provide a debugfs interface for the developer/tester to send these
-> commands to the AOP.
-> 
-> Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-88500-3/85_Debugging_AOP_ADB.html
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> [bjorn: Dropped debugfs guards, improve error codes, rewrote commit message]
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/soc/qcom/qcom_aoss.c | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index 880fe234ca0a..13bf13ab78d6 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2019, Linaro Ltd
->   */
->  #include <linux/clk-provider.h>
-> +#include <linux/debugfs.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/mailbox_client.h>
-> @@ -82,6 +83,7 @@ struct qmp {
->  
->  	struct clk_hw qdss_clk;
->  	struct qmp_cooling_device *cooling_devs;
-> +	struct dentry *debugfs_file;
+V3:
+- Fixes licensing boilerplate error in d3 mezzanine - Stephan
+- Moves regulators into d3 mezzanine - Stephan
+- Drops redundant enable of camss in d3 mezzanine - Stephan
+- Declares ports in core dtsi - Konrad
+- Adds R/B for assigned-clocks - Konrad
 
-Simon Horman pointed out in the previous version that this isn't added
-to kernel-doc, and I missed correcting this.
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts-v3
 
-Regards,
-Bjorn
+V2:
+- Adds R/B - Konrad
+- Adds newline as flagged - Konrad
+- Squashes patch#6 into patch#5 ammends commit log
+- Following up on TPG comentary:
+  The CAMSS would not have populated device nodes prior to this series
+  save for the case a user had a D3 Engineering board.
+  Splitting out the sensor from the core board is correct w/r/t the
+  hardware/dts since few db410c have the mezzanine.
+  Once split we can enable the basic camss node by default and thus get the
+  TPG going for both the mezzanine and non-mezzanine cases.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts-v2
+
+V1:
+This is a series which updates the apq8016-sbc to fixup CAMSS support.
+
+The first four patches fixup the current state of the ov5640 bindings for
+the apq8016.
+
+Following on from that we move the ov5640 sensor from the main apq8016-sbc
+into a standalone mezzanine dts with an accompanying patch to enable the
+sensor by default in the mezzaine. This makes sense since the D3
+Engineering camera mezzanine is but one of a slew of camera mezzanines we
+can attach here.
+
+The final patch switches on CAMSS in the core apq8016-sbc allowing us to use
+the test-pattern-generator TPG on apq8016-sbc with or without a camera mezzaine
+attached. This to me is a good idea since it means we can test out and
+verify the CAMSS on this board absent a camera mezzaine on the main apq8016
+board.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts
+
+Bryan O'Donoghue (7):
+  arm64: dts: qcom: msm8916: Define CAMSS ports in core dtsi
+  arm64: dts: qcom: apq8016-sbc: Fix ov5640 regulator supply names
+  arm64: dts: qcom: apq8016-sbc: Fix ov5640 data-lanes declaration
+  arm64: dts: qcom: apq8016-sbc: Set ov5640 assigned-clock
+  arm64: dts: qcom: apq8016-sbc: Rename ov5640 enable-gpios to
+    powerdown-gpios
+  arm64: dts: qcom: apq8016-sbc-d3-camera-mezzanine: Move default ov5640
+    to a standalone dts
+  arm64: dts: qcom: apq8016-sbc: Enable camss for non-mezzanine cases
+
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ .../qcom/apq8016-sbc-d3-camera-mezzanine.dts  | 81 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts      | 68 ----------------
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  8 ++
+ 4 files changed, 90 insertions(+), 68 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3-camera-mezzanine.dts
+
+-- 
+2.41.0
+
