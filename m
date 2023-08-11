@@ -2,141 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C10817793BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 18:02:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43E017793D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 18:05:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231894AbjHKQC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 12:02:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40138 "EHLO
+        id S235398AbjHKQFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 12:05:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbjHKQC4 (ORCPT
+        with ESMTP id S234001AbjHKQFN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 12:02:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA562712;
-        Fri, 11 Aug 2023 09:02:55 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37BE8tlJ003488;
-        Fri, 11 Aug 2023 16:02:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Vtcrm6TGoZeha/hA7zUOsnUwE/o4vL/NhmGMJB0DCrM=;
- b=AD1JNN+5CKB0cSks1RDrHXr8NdnQmaq8VyWH3SmHRtbWu3lGH17Fp4KtH9pfevazJZEa
- qdZMqZCtmljKjJVhIPDNhxQnFOGDQBtt6fy8Ya81Bf9FLuBvYTY8YO3CD4ebPxLP+M78
- cGCPbgNUwS9iBnzCAZvilTjX9CIlLGJTfdmlHrlAtl0reEPDnJGcjIs/0Mh6SPhJMcEC
- E5cML3LXjNG6uEzzNJOzmJymKzvDMNwK1n6a63l1nD6Y1V/6f/EGm1tFqeyIyDdbsF2W
- FvpGiq5j+UEGB9pitoGrm9nzIAePKGPh9k/wSvYd3OTAMO/UWzWJAtsMtKk0sELqCSd/ HQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd8ywt4fw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 16:02:47 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37BG2klO021382
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Aug 2023 16:02:46 GMT
-Received: from [10.50.43.50] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 11 Aug
- 2023 09:02:42 -0700
-Message-ID: <060f4dbe-63d6-1c60-14ca-553bf1536e5a@quicinc.com>
-Date:   Fri, 11 Aug 2023 21:32:39 +0530
+        Fri, 11 Aug 2023 12:05:13 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0501C10DE;
+        Fri, 11 Aug 2023 09:05:12 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1bc3d94d40fso18907155ad.3;
+        Fri, 11 Aug 2023 09:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691769911; x=1692374711;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AZRMmH5v/BxY4ax8oeXvl1jWy77Sd8S2/awGfYcHbs8=;
+        b=GJDMPCHFPULCocVk+R3xk7keeGDRvu06pOGCvVMjSbu8Kw9nnq63erYCOvZFYAWPlD
+         WNg42PS21/FFwxvdwKtbv5GOf6PXH7K5PS7FyenLew/86kHLK4M28fvXYhzwJJpdHFMn
+         S5pvK5VnHIv+96UI2jf8lVuyerbdY5LORdZy+VYqORYkQGJZrHt7thOwwMZWHB+MOmk3
+         7kwAW8abFxjMm5qgmiqJmt4YnjHBWUdnYlg8Fdh1tDYIyBZtlRD+CU3mzkg5WGkbwoXC
+         9UrH66Da4SlXXwXWOiLAMq+01u34d+mTOWYV97gy+iFWmn9wl8TFyy+BSzY7MIttRAP/
+         KGsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691769911; x=1692374711;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AZRMmH5v/BxY4ax8oeXvl1jWy77Sd8S2/awGfYcHbs8=;
+        b=llSfY3Bqpon78w1CFRbzb37Zvk5UuDGSVzn4MbXsYr/P9S4yzS6IjyuuCusXWuhPZl
+         /tOdO7NGcRnqMJAa20F2XSlMQP+a2TpO+l4bmQyhsvGc7BODLlPvoPZlfX9P/2rEBGrU
+         7JpoYTECrs+JuHT+5kh2iTBSxjbBvS5SJs9Hz2lUZyLsI2+y3drp1B9HZUdzsZ9phg3+
+         thXc2WbQnH8Y3aS4uHdLv6JQJYWM48FPpeBgd2OhJpfLkoPGnrAl9bNCRrgYd9Y7nLvP
+         xdCut64Mii0yrtcbjfQeugasjTf98lhHlsraCHPcbZvMdC7CVVsMB0qpo725ONbAzBEz
+         OYmA==
+X-Gm-Message-State: AOJu0Yyo4dKhDMM5Jmd5YertIgLo/wVzPW8e3W88fuQqStHsuDMyaFZq
+        2UqZuM8gnkSSQ0Tok1dmUes=
+X-Google-Smtp-Source: AGHT+IGAXs29hkurPfxRsosPHD9dA5tnRT8kdv9dJQhVbh1vnorPPHLqbLtmGuzzWKlU7fmXj1LrnQ==
+X-Received: by 2002:a17:902:ecc6:b0:1b8:1335:b775 with SMTP id a6-20020a170902ecc600b001b81335b775mr3280309plh.0.1691769911361;
+        Fri, 11 Aug 2023 09:05:11 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
+        by smtp.gmail.com with ESMTPSA id iw12-20020a170903044c00b001bb9d6b1baasm4089085plb.198.2023.08.11.09.05.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Aug 2023 09:05:10 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a690: Switch to a660_gmu.bin
+Date:   Fri, 11 Aug 2023 09:05:03 -0700
+Message-ID: <20230811160505.174574-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 4/4] venus: hfi_parser: Add check to keep the number of
- codecs within range
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>, <hans.verkuil@cisco.com>,
-        <tfiga@chromium.org>
-CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
- <1691634304-2158-5-git-send-email-quic_vgarodia@quicinc.com>
- <fec4a8c7-206f-7af8-4ea9-c919a677bf7e@linaro.org>
- <2214c31b-eca2-012e-a100-21252a724e7c@quicinc.com>
- <8b72ce47-c338-2061-f11a-c0a608686d8c@linaro.org>
- <e880da07-ccd4-e427-ed34-20b284dc7838@quicinc.com>
- <8f1a4ca0-dde8-fa5d-bca3-d317886609de@linaro.org>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <8f1a4ca0-dde8-fa5d-bca3-d317886609de@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ybwBM6XWvryys9pOtFMvjAcK1xl7V8qy
-X-Proofpoint-ORIG-GUID: ybwBM6XWvryys9pOtFMvjAcK1xl7V8qy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-11_07,2023-08-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 spamscore=0 suspectscore=0
- impostorscore=0 phishscore=0 mlxlogscore=517 lowpriorityscore=0
- clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308110147
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+There isn't actually a a690_gmu.bin.  But it appears that the normal
+a660_gmu.bin works fine.  Normally all the devices within a sub-
+generation (or "family") will use the same fw, and a690 is in the a660
+family.
 
-On 8/11/2023 4:11 PM, Bryan O'Donoghue wrote:
-> On 11/08/2023 09:49, Vikash Garodia wrote:
->>
->> On 8/11/2023 2:12 PM, Bryan O'Donoghue wrote:
->>> On 11/08/2023 07:04, Vikash Garodia wrote:
->>>>
->>>> On 8/10/2023 5:03 PM, Bryan O'Donoghue wrote:
->>>>> On 10/08/2023 03:25, Vikash Garodia wrote:
->>>>>> +    if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) >
->>>>>> MAX_CODEC_NUM)
->>>>>> +        return;
->>>>>> +
->>>>>
->>>>> Shouldn't this be >= ?
->>>> Not needed. Lets take a hypothetical case when core->dec_codecs has initial 16
->>>> (0-15) bits set and core->enc_codecs has next 16 bits (16-31) set. The bit
->>>> count
->>>> would be 32. The codec loop after this check would run on caps array index
->>>> 0-31.
->>>> I do not see a possibility for OOB access in this case.
->>>>
->>>>>
->>>>> struct hfi_plat_caps caps[MAX_CODEC_NUM];
->>>>>
->>>>> ---
->>>>> bod
->>>>>
->>>
->>> Are you not doing a general defensive coding pass in this series ie
->>>
->>> "[PATCH v2 2/4] venus: hfi: fix the check to handle session buffer requirement"
->>
->> In "PATCH v2 2/4", there is a possibility if the check does not consider "=".
->> Here in this patch, I do not see a possibility.
->>
->>>
->>> ---
->>> bod
-> 
-> But surely hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) ==
-> MAX_CODEC_NUM is an invalid offset ?
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-No, it isn't. Please run through the loop with the bitmasks added upto 32 and
-see if there is a possibility of OOB.
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 1ed270dae148..756a9cfe1cbf 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -478,7 +478,7 @@ static const struct adreno_info gpulist[] = {
+ 		.family = ADRENO_6XX_GEN4,
+ 		.fw = {
+ 			[ADRENO_FW_SQE] = "a660_sqe.fw",
+-			[ADRENO_FW_GMU] = "a690_gmu.bin",
++			[ADRENO_FW_GMU] = "a660_gmu.bin",
+ 		},
+ 		.gmem = SZ_4M,
+ 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+-- 
+2.41.0
 
-> 
-> ---
-> bod
