@@ -2,126 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03950778C29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 12:41:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FD8B778C99
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 13:02:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230254AbjHKKlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 06:41:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46638 "EHLO
+        id S234473AbjHKLCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 07:02:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234207AbjHKKll (ORCPT
+        with ESMTP id S235371AbjHKLB6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 06:41:41 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09E1120
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 03:41:40 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3159d5e409dso1763209f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 03:41:40 -0700 (PDT)
+        Fri, 11 Aug 2023 07:01:58 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDAB4E68
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:01:54 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99bcc0adab4so252107466b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 04:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691750499; x=1692355299;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RncF6ccyWdgiKANFFFDRTdDe2RHMHSG6x0t3CEmTPBc=;
-        b=zgFghbc3TnB5zV77tCtSvgULe6XORX612ZhELOiTxS9Z5kCfXgFNkcEPGmf3vd5c5y
-         idLe7HgE7ZUhRka5QdwCgjZCG20AbjSKAsgmivGH97AkCxyg4o9dqSAEiKDlIY5shZ0c
-         1lOu86MGtyqvb/sIRqg9VIHKHWRtBltIHDqx5V1dKV6aNCmxdXL9eLOuv3DGVwnpkukt
-         LrhMsEeMG4FmC5N9u9do2SQi7FfBTVS05cXBZqqFPfCB0SfwLz4SG4dxoFMN5CgiC0O6
-         1JHwJMGYR8ibZRRk5xYmXfOidPhdbH/wKsGKIOSZzHuWk9nx/ldtksRgUqUh+r+mp/QY
-         av1Q==
+        d=sartura.hr; s=sartura; t=1691751713; x=1692356513;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fveq6PGN3gWXEUx4KXNg92eNPtqGmETUjIV8dFbBH3I=;
+        b=XXX8cav2N5IOf9GHsIcdv3FF/7SnG6Vtz/X7exfj9Pa1kNMGk1iUg+FA3lrIFPnw3A
+         DBEPJVqzmeTz/xgzCm7yXb84Jifh+mAYtZYM+Eqmufn8jfAUHJeIgKsRzyM+ZKVIhH10
+         8W3Ohao0qjEc5tbxQtQWcMWIdu7//F8InZIqW3MYl+vkI6bQvufiSvrrQ87U8RrANVQ+
+         a91ARyEcWWstSHRfFwH07IXhH6aJvfk6OKTHPUfWbm7v/INgEX8PveMu1Ft7q2gtJwbW
+         96Dlt33miooM6YfQyp+eIKPe4VrbrBOgjRlKYDw9vtU288kKbvWeBLc1zHYBD6nsF3O9
+         Tapg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691750499; x=1692355299;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RncF6ccyWdgiKANFFFDRTdDe2RHMHSG6x0t3CEmTPBc=;
-        b=ZRSQJ0fl1XPAFk+Rw13iOfzgYDh7DgB1brW7qZoxKGdXCwNqc9kagF0LQaFSLFPce0
-         /SEbnpqySp3RUTobEyKuhMTxnD/kuC3nwkqoMVOWVT0vCKS0MHjHA0jMD/37JQblK376
-         h2ZruZbe94U5OTlL4uUbWjvcpeuLZzFr/EgmsIPRgiHw/QVSRPJPAmNYoNbzphT9jVeR
-         nXBBG93LtkPWXefpxhs7IyxWFuC6JGxUDByfkB7N113De2yT9SGepEfQkQP41r7t2n2U
-         2MWNsxrhMxC5zUNoAdh0AArYBw+V0UDfcMcUvcwwBdOX5GYUwJm/hNPm+FBon6bDFsCF
-         Q9kA==
-X-Gm-Message-State: AOJu0YwfIFcTxnmy/bX00oAspu5DmH9foZSi+IHp3DHRVsG1xfp6Lnct
-        iYM5uKgjRkI886mM3XTCJMwAnw==
-X-Google-Smtp-Source: AGHT+IHHj4vcpFwgQZNe6OP5GFfkkYEm8iojN1TMcxqbt4fTf8CpEhLGaCo/Aq6a/Tws9yLqCchyHw==
-X-Received: by 2002:adf:f384:0:b0:317:de66:259b with SMTP id m4-20020adff384000000b00317de66259bmr4206750wro.15.1691750499215;
-        Fri, 11 Aug 2023 03:41:39 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o11-20020a056000010b00b0031431fb40fasm5007824wrx.89.2023.08.11.03.41.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Aug 2023 03:41:38 -0700 (PDT)
-Message-ID: <8f1a4ca0-dde8-fa5d-bca3-d317886609de@linaro.org>
-Date:   Fri, 11 Aug 2023 11:41:37 +0100
+        d=1e100.net; s=20221208; t=1691751713; x=1692356513;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fveq6PGN3gWXEUx4KXNg92eNPtqGmETUjIV8dFbBH3I=;
+        b=S8/I/DRKvbcg3coSErr4+QBOqcoBCy/o001hK5oOW2WYOCSllXhkavxnHh8RrEY6r7
+         xeyUkMfR5pPV+wvzNyGBuwhA4rpamZHmcjhNmgx4rDzCJ7nl3BMMObUnikZzHrMJ/bJP
+         cDmRhCukvaqUuchBJUzjZYLMvzqaWl23n6C37na3oH3U8sWcqKKroc1KbQL6LZOQA/iX
+         oOl6UC5wthqBUr65Pz1AvOK3nyBlOhJM/+IJaMoSfxTEy5IsCUYNn7rHeySyY5E1OsIg
+         LCgrs5IrYKAYNXKkj8iQowk9CTpDWIcERvn6J7Q4vE8Zl2TP5Wisr4XOjDmvbOHpqOqh
+         89BQ==
+X-Gm-Message-State: AOJu0Yy+9P8l10ezSzCn4J2tckDbXulDDgI5nxD7zLmqEHMwADw8NfF4
+        Lk4M5pgPgGOduGiXRhH28ODksw==
+X-Google-Smtp-Source: AGHT+IHL1RcjnuUMBLw6U+H9UcMBTxfxIdpZPuC3pS3RxmU9ZEnu6dNClTxIAvFRA/VlJIp21KRVIA==
+X-Received: by 2002:a17:906:318d:b0:99b:f645:224 with SMTP id 13-20020a170906318d00b0099bf6450224mr1392297ejy.9.1691751713272;
+        Fri, 11 Aug 2023 04:01:53 -0700 (PDT)
+Received: from fedora.. ([188.252.220.253])
+        by smtp.googlemail.com with ESMTPSA id i18-20020a1709061cd200b0098e422d6758sm2088179ejh.219.2023.08.11.04.01.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Aug 2023 04:01:52 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     luka.perkov@sartura.hr, Robert Marko <robert.marko@sartura.hr>
+Subject: [PATCH v2] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
+Date:   Fri, 11 Aug 2023 13:01:16 +0200
+Message-ID: <20230811110150.229966-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 4/4] venus: hfi_parser: Add check to keep the number of
- codecs within range
-Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hans.verkuil@cisco.com, tfiga@chromium.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <1691634304-2158-1-git-send-email-quic_vgarodia@quicinc.com>
- <1691634304-2158-5-git-send-email-quic_vgarodia@quicinc.com>
- <fec4a8c7-206f-7af8-4ea9-c919a677bf7e@linaro.org>
- <2214c31b-eca2-012e-a100-21252a724e7c@quicinc.com>
- <8b72ce47-c338-2061-f11a-c0a608686d8c@linaro.org>
- <e880da07-ccd4-e427-ed34-20b284dc7838@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <e880da07-ccd4-e427-ed34-20b284dc7838@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/08/2023 09:49, Vikash Garodia wrote:
-> 
-> On 8/11/2023 2:12 PM, Bryan O'Donoghue wrote:
->> On 11/08/2023 07:04, Vikash Garodia wrote:
->>>
->>> On 8/10/2023 5:03 PM, Bryan O'Donoghue wrote:
->>>> On 10/08/2023 03:25, Vikash Garodia wrote:
->>>>> +    if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) >
->>>>> MAX_CODEC_NUM)
->>>>> +        return;
->>>>> +
->>>>
->>>> Shouldn't this be >= ?
->>> Not needed. Lets take a hypothetical case when core->dec_codecs has initial 16
->>> (0-15) bits set and core->enc_codecs has next 16 bits (16-31) set. The bit count
->>> would be 32. The codec loop after this check would run on caps array index 0-31.
->>> I do not see a possibility for OOB access in this case.
->>>
->>>>
->>>> struct hfi_plat_caps caps[MAX_CODEC_NUM];
->>>>
->>>> ---
->>>> bod
->>>>
->>
->> Are you not doing a general defensive coding pass in this series ie
->>
->> "[PATCH v2 2/4] venus: hfi: fix the check to handle session buffer requirement"
-> 
-> In "PATCH v2 2/4", there is a possibility if the check does not consider "=".
-> Here in this patch, I do not see a possibility.
-> 
->>
->> ---
->> bod
+Using GCC_DCD_XO_CLK as the XO clock for SDHCI controller is not correct,
+it seems that I somehow made a mistake of passing it instead of the fixed
+XO clock.
 
-But surely hweight_long(core->dec_codecs) + 
-hweight_long(core->enc_codecs) == MAX_CODEC_NUM is an invalid offset ?
-
+Fixes: 04b3b72b5b8f ("ARM: dts: qcom: ipq4019: Add SDHCI controller node")
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
 ---
-bod
+Changes in v2:
+* Make clocks and clock-names one-per-line
+---
+ arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
+index 5492aeed14a5..80c04915f0e8 100644
+--- a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
+@@ -231,9 +231,12 @@ sdhci: mmc@7824900 {
+ 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "hc_irq", "pwr_irq";
+ 			bus-width = <8>;
+-			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>,
+-				 <&gcc GCC_DCD_XO_CLK>;
+-			clock-names = "iface", "core", "xo";
++			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_SDCC1_APPS_CLK>,
++				 <&xo>;
++			clock-names = "iface",
++				      "core",
++				      "xo";
+ 			status = "disabled";
+ 		};
+ 
+-- 
+2.41.0
+
