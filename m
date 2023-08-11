@@ -2,130 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EA617792E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 17:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C81C1779308
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Aug 2023 17:27:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236258AbjHKPWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 11:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
+        id S234473AbjHKP1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 11:27:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235529AbjHKPWQ (ORCPT
+        with ESMTP id S229535AbjHKP1U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 11:22:16 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA542D7F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 08:22:13 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe457ec6e7so3390949e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Aug 2023 08:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691767331; x=1692372131;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xvhws/g1BZTUGbCqpOulNEVGp43xvK18EOpJG1rCW+s=;
-        b=zrszuNYIR2F3efMAp16y0Rt8EbK0h72reRCs+JAH12C1ZFh42ITIA6JhK6U8Shsdzj
-         wllOgSx8pj6/bwkzVLtKeLCrXG0C2nDvN2uCxKuX8kTrtuhZtKukRBqZMXUk1xYRAWu4
-         QfT9BEH3jtsEIRUuRZuIVi94c78DuXnOF9dvedHytcdPoOQIm1VEx9SRUr6QJvDCpAD+
-         gDJIHGJkK2n2iFF65i9pjtUvTPAoe3bLKils+kI5YyfsPYdapDPg0sKPspn5L9Ed6dF7
-         clRWDC1LHhVGnscSPZQbm3ROV2KOuIiiRn0MH8DjLie5Drz4C9olS48wgQ7cYI3vaE0h
-         eQVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691767331; x=1692372131;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xvhws/g1BZTUGbCqpOulNEVGp43xvK18EOpJG1rCW+s=;
-        b=ac8vASBUSQy2ZFzAgCxY81RJf611IH0NLRHtaZpDbIyR2LRPNrgnFqi6etlBUEhJSX
-         Ys+ips36CM5MwUkqDI8DjFnBI7QjQ3bkcmoAGH7U/GSwp7MoJ1GoRify+9wdXrASfWq6
-         DC/06CxCn2eT2uZ77XAU5TAPygkxGCPhpkGanzV8tXBQft1MiD/jdzAMbym5k4u4mqEl
-         jaXGGcZgtNARTGlnFMLC0oeh1RMhukkH/fZ/NNyngwA9vmYJNaMpx5uomul0yqbN12bw
-         wzq4GNtfXU2M6hlHFxVDoIZ55tX1XAVu2OgEM6q6QlWMlD5WDymQqPF036noENA446XS
-         6TqA==
-X-Gm-Message-State: AOJu0YyLfR3npWBwh+PTDcw3Qie33aDIxIgUuLwCwsRDJfllgdQXy1km
-        UCYpqDLMkFxhSUtqK1gE8iYYqw==
-X-Google-Smtp-Source: AGHT+IESFNIZsv/+DbgtyeIyKwfX9aPTj953k72rjW6Q1qwuedS0MpFtmr3tB9lDH+i0QsAQJgEPfw==
-X-Received: by 2002:a05:6512:3139:b0:4fb:a0f1:f8b8 with SMTP id p25-20020a056512313900b004fba0f1f8b8mr1209044lfd.63.1691767331177;
-        Fri, 11 Aug 2023 08:22:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id t20-20020ac24c14000000b004fe33e05eebsm764292lfq.203.2023.08.11.08.22.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Aug 2023 08:22:10 -0700 (PDT)
-Message-ID: <da7e221b-7392-4fc0-a864-b8a9e490138c@linaro.org>
-Date:   Fri, 11 Aug 2023 17:22:09 +0200
+        Fri, 11 Aug 2023 11:27:20 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F788F5;
+        Fri, 11 Aug 2023 08:27:20 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37BE5L7M023199;
+        Fri, 11 Aug 2023 15:26:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=Mzquj8eTvhvEyz0nSaD8F2VvGcyfO5NM+CW4hTL1NQw=;
+ b=EDHbNOObH+THUyxh3BkK+qoHQ/le0emdST4x+V978qX/EqJFMb1Kooa889paOnZTKMJf
+ gBxDuulNW7bp6EMafClvMWgMg2FPwIxa4kgAp9SR+7to/atrGGWj3Meh88Qq71oTJd+S
+ pUvvuBfux0B659QjYHyb7+Mvbc5TarDS6I8w1ArtQH0G1IONj1lSut8TV6HRrhaDt6ez
+ jFk49kewju3gyZHciAAnhI+xMnIfdcuSDxIZCkKn0N+k789Rua5PRWELngrtgMEosomm
+ dzBmObml8obsg+YfGNSQRjuDet2lPM5C2ATCanwkoHEjz5DTnl5GgTPZNqitFZ1V8tur nw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd8yda2cj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 11 Aug 2023 15:26:44 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37BFQhja009600
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 11 Aug 2023 15:26:43 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 11 Aug 2023 08:26:43 -0700
+Date:   Fri, 11 Aug 2023 08:26:41 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] interconnect: qcom: bcm-voter: Improve enable_mask
+ handling
+Message-ID: <20230811152641.GR1428172@hu-bjorande-lv.qualcomm.com>
+References: <20230811-topic-icc_fix_1he-v1-0-5c96ccef3399@linaro.org>
+ <20230811-topic-icc_fix_1he-v1-1-5c96ccef3399@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Robert Marko <robert.marko@sartura.hr>
-Cc:     luka.perkov@sartura.hr
-References: <20230810132904.367418-1-robert.marko@sartura.hr>
- <169176724024.691796.7369934702328451965.b4-ty@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <169176724024.691796.7369934702328451965.b4-ty@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230811-topic-icc_fix_1he-v1-1-5c96ccef3399@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MFFk38_6czTssm7vmajHSBtUZ9HPpD75
+X-Proofpoint-ORIG-GUID: MFFk38_6czTssm7vmajHSBtUZ9HPpD75
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-11_06,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 phishscore=0 mlxlogscore=801 bulkscore=0 clxscore=1011
+ spamscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2308110141
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.08.2023 17:20, Bjorn Andersson wrote:
+On Fri, Aug 11, 2023 at 01:55:07PM +0200, Konrad Dybcio wrote:
+> We don't need all the complex arithmetic for BCMs utilizing enable_mask,
+> as all we need to do is to determine whether there's any user (or
+> keepalive) asking for it to be on.
 > 
-> On Thu, 10 Aug 2023 15:28:21 +0200, Robert Marko wrote:
->> Using GCC_DCD_XO_CLK as the XO clock for SDHCI controller is not correct,
->> it seems that I somehow made a mistake of passing it instead of the fixed
->> XO clock.
->>
->>
+> Separate the logic for such BCMs for a small speed boost.
 > 
-> Applied, thanks!
-> 
-> [1/1] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
->       commit: 43a0ce827528bdc7f4d38d48d13987db24a4e7b1
-Please pick the v2 instead
 
-Konrad
+Suggested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+Regards,
+Bjorn
