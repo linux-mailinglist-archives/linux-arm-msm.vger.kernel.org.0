@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7B08779F42
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 12:50:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 427B3779F5C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 12:53:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236932AbjHLKsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 06:48:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46392 "EHLO
+        id S232942AbjHLKxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 06:53:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236302AbjHLKr6 (ORCPT
+        with ESMTP id S229727AbjHLKxn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 06:47:58 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0132D44
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 03:47:59 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe82ac3ab4so4192397e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 03:47:59 -0700 (PDT)
+        Sat, 12 Aug 2023 06:53:43 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CC161BD2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 03:53:15 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9cdbf682eso41900371fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 03:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691837278; x=1692442078;
+        d=linaro.org; s=google; t=1691837589; x=1692442389;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nGcrVf003yK2erEWEoiIkw0tjzg3iatGlyB30FwyTjw=;
-        b=Xobh+OykBF6XBlMT3nEpKT52NjlOvlbQuCzXw9dSJq1LCsStcp8V/jMkVABlrvq1EL
-         BSZvnLKdZfvjjMgOgXmtUaL+O5CN+A9RrJkCkmfzsF+vXN/jnLNMmLKGjUjEiIL1nA9O
-         APeM6ft6yYrp1X3JF5Ug9sLNBRRQiaXMfxyDB4LwasBZnDIds9UsfsUQ3hmaEzPH6m2S
-         t72u+kJg+FnH5cGgzzlFArZ49ymjLWzAkya/a+PHRXAUcbVGFh6Svedp0aV2+EDa9sEb
-         3cN+DaTelz9YQ0oQPf7j0vohxTvfoeDjh60/VyBJVVgQaYIzzMdWvCIw2awtIxzt5kZQ
-         yJxQ==
+        bh=ynCHtirdWZFV2YnMO46lqjPWpR3icApZ23ZDZH0k+dM=;
+        b=vvObwF8hDdx4+qgTZ9PAHZ7f9g9FgJzrVgn70l/iyPbebF98u6F0T2CqCdxBZdM9q+
+         1oOfr8KXTNvLYrd9d2O37dc/CKBY8EiHjL05BCu2xagydSE934Wj//B9F2OZlXP6VSuI
+         dWdPIuoChhakcjqXNB7E/FvNAWMvxRbjQqUsfjw4d6/PqNzvbHPivRaOxNs8GkszKcmp
+         cIq6s2pBe9ToK7K+MGJF/5JOqLHzPOTKOdEGH9QDtr9N3mdwpXGackfWq+p9s5dRIbhl
+         lDsI+vmxqXTda1h6BcFOHqpBSRx3aWFrt8HYJieqpgQC4pXF3m66MO2r5r1OfDd+nML3
+         RDkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691837278; x=1692442078;
+        d=1e100.net; s=20221208; t=1691837589; x=1692442389;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nGcrVf003yK2erEWEoiIkw0tjzg3iatGlyB30FwyTjw=;
-        b=Y46+y8oVmT6YEFRKbc4uyeP/RkkNHtPJRV+NpVwiyiV0tfg5fEf5Zg6GFrGw3IKrao
-         iVV7ispRRxPlKra5sNGDIKPiLVDD65RJ/kRB67r8LP+RD0SXc6s/7lSjpaEWmLiEhm2U
-         MuMbhZyYlJaFm3BowPI5T7koB5SZWe498TNev4gf30A8mo5zGsnhyCz6sMTstDgcLkcR
-         9iBmFRcwmvGSbRcqKuEUUoIn+waFBIOq1SkzOo/9lzcyrtokDsx5FnxsDRZj1iVWomB7
-         HvwCxghT+CLqUIOrGYRJ0c7BkaPn5CNaQgAggv2wBOv76jLg/fz442vwuZs9rndQncQ4
-         j/kA==
-X-Gm-Message-State: AOJu0YyJv9nSkE0lr50J8sbSn2HZj8p1lb7w4fyE+4G+3y3D1MdDyzPw
-        n//9UpwZ1bsbmKpgqPq1GkPQMA==
-X-Google-Smtp-Source: AGHT+IF+TI4Q250JYkV7gz7PaIqFFpXovCnn6y2ru/ac9wJEvLFdV3dA7igEiIMqIrdc9Cx1Z+/QhQ==
-X-Received: by 2002:a05:6512:2202:b0:4f8:72b6:eae with SMTP id h2-20020a056512220200b004f872b60eaemr3998046lfu.40.1691837277677;
-        Sat, 12 Aug 2023 03:47:57 -0700 (PDT)
+        bh=ynCHtirdWZFV2YnMO46lqjPWpR3icApZ23ZDZH0k+dM=;
+        b=J5MuA47ne6Ws5fLAN8/ZsJl1wLq/MANVO1Je4/YIMsbO0++Ra5OvZ+N50dbB5P/yR8
+         T8uxLJ/Pp/mBk2ctFAnWby8FtSpj61nTfhsCDNA59t0jjbvkErKbuzAnuMynU/T14zc3
+         DyhVWioy4FxBrswinZ1kgkv512Ol1VV26Ghax2XPptKGPw18YgNr4ADnZbTVLsjWgYLG
+         iPXwUXHyM5uaWoAk7+fD75CI5xssQw/GiKrIWnzykNYkgvPWmwiSvVYxzapuK7Tx/HVc
+         ek+ql4vyNCYZQRFZLj7GNuu7dyoCfn6x04eXKxIoMGk2ZNzCEmTnkI0VYXae2hbjMsdU
+         GU4A==
+X-Gm-Message-State: AOJu0YzMXKxvRdjz84hiyDKJwCHq5ei4dHIyA0l9WhpmYB07jMnLZH/U
+        00h1dr3d9JIUpKAcIqvPW0dBJQ==
+X-Google-Smtp-Source: AGHT+IElm6BgHNQE+UBVDHKoX0lnx+9468Dp9MGCh8ikdXs4JIP3v4m7/kNHxzmw0Bzb2XixCtFpiA==
+X-Received: by 2002:a05:6512:3487:b0:4fe:5051:f253 with SMTP id v7-20020a056512348700b004fe5051f253mr2732409lfr.9.1691837589549;
+        Sat, 12 Aug 2023 03:53:09 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id h9-20020a197009000000b004fdd6c37e9asm1076108lfc.112.2023.08.12.03.47.56
+        by smtp.gmail.com with ESMTPSA id b24-20020ac247f8000000b004fe333128c0sm1088359lfp.242.2023.08.12.03.53.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Aug 2023 03:47:57 -0700 (PDT)
-Message-ID: <e784f70f-3232-42e6-bf4c-67075abd210a@linaro.org>
-Date:   Sat, 12 Aug 2023 12:47:56 +0200
+        Sat, 12 Aug 2023 03:53:09 -0700 (PDT)
+Message-ID: <074d2bf6-1f89-4ec9-80de-52deeb1c319f@linaro.org>
+Date:   Sat, 12 Aug 2023 12:53:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: ipq4019-ap.dk01.1: align flash node
- with bindings
+Subject: Re: [PATCH v2 1/4] soc: qcom: aoss: Move length requirements from
+ caller
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230811210142.403160-1-robimarko@gmail.com>
- <20230811210142.403160-2-robimarko@gmail.com>
- <4c96210b-4567-4cb5-80bb-7adca6c5f124@linaro.org>
- <CAOX2RU6X0Tww4UkTKVfc=PLY=RKVJdsm+gomytT0vOydTF+Hnw@mail.gmail.com>
- <7116b473-7f22-43df-af39-81e5f6db4507@linaro.org>
- <CAOX2RU6nMvpTkGdwBoLJrES5v0qARnDDT6nCVd-DZid7p3pg6Q@mail.gmail.com>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Chris Lew <quic_clew@quicinc.com>
+Cc:     Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Andrew Lunn <andrew@lunn.ch>
+References: <20230811205839.727373-1-quic_bjorande@quicinc.com>
+ <20230811205839.727373-2-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -104,48 +105,32 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAOX2RU6nMvpTkGdwBoLJrES5v0qARnDDT6nCVd-DZid7p3pg6Q@mail.gmail.com>
+In-Reply-To: <20230811205839.727373-2-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12.08.2023 11:55, Robert Marko wrote:
-> On Sat, 12 Aug 2023 at 00:56, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 11.08.2023 23:35, Robert Marko wrote:
->>> On Fri, 11 Aug 2023 at 23:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>
->>>> On 11.08.2023 23:01, Robert Marko wrote:
->>>>> Rename the SPI-NOR node to flash@0, remove #address-cells and #size-cells
->>>>> as they should be under the partitions subnode and use the generic
->>>>> jedec,spi-nor compatible.
->>>>>
->>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>>> ---
->>>> You can also do "nandmanufacturer,mx25l25635e", "jedec,spi-nor"
->>>
->>> Hi,
->>> I grepped the vendor U-Boot to make sure it's not being triggered off
->>> the mx25l25635e
->>> compatible but the only hit is the IC support itself.
->>> MX25L25635 was just the original NOR IC Qualcomm used on the board so
->>> to me it made
->>> most sense to just use the JEDEC compatible as NOR itself is JEDEC NOR
->>> compatible.
->> OK if dynamic identification works fine
+On 11.08.2023 22:58, Bjorn Andersson wrote:
+> The existing implementation of qmp_send() requires the caller to provide
+> a buffer which is of word-aligned. The underlying reason for this is
+> that message ram only supports word accesses, but pushing this
+> requirement onto the clients results in the same boiler plate code
+> sprinkled in every call site.
 > 
-> It should work fine, datasheet is clear that its JEDEC compatible.
-> That being said, I dont actually have the board, just figured it was
-> time for a cleanup as
-> OpenWrt has been patching DK01 and DK04 for ages.
-Hm. Do we know whether there are still users of this boards?
+> By using a temporary buffer in qmp_send() we can hide the underlying
+> hardware limitations from the clients and allow them to pass their
+> NUL-terminates C string directly.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
