@@ -2,121 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0B43779BEC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 02:30:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20CF5779C45
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 03:36:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236632AbjHLAaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Aug 2023 20:30:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34706 "EHLO
+        id S235805AbjHLBgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Aug 2023 21:36:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjHLAaW (ORCPT
+        with ESMTP id S229573AbjHLBgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Aug 2023 20:30:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B622686;
-        Fri, 11 Aug 2023 17:30:22 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37C0BQPe013062;
-        Sat, 12 Aug 2023 00:28:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qYH12/iPlU8v63BB6B/eawPaI6tpN34REP1QbZ/mXAw=;
- b=N3J8OrKymS16F5cxSaXkaN5mzFUX93QnwUNuhPgoV34lm9SZg8yiFt6PS/jk4Ya4tytB
- TmMnW3ZYX5cENUsujWmD01SCQ70uvLqGTroKsoW1c/E+/A2MsPsjWztwpZxWvKScTWY+
- 1zV2DU9ZjYhpZjVZjUbQ5J0BsW7oqRc7+9/53UyO651n3IxDEKgoYlsQW5NfhuCZBIgU
- yRGrh3CMaXR8WwfWsSAV00WtAvb176HkPkru/lLRSe2FV9GfhU2WBQk0ddzZhDXNXz1/
- jEuwSyYIS8cXZbaePcIOX5dgIdvLxG2tIh25jCVxEVChXH7x8+bZjPK8RbDikNlYwIXM zg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sd8yuk36w-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 12 Aug 2023 00:28:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37C0SmSf008800
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 12 Aug 2023 00:28:48 GMT
-Received: from [10.110.20.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 11 Aug
- 2023 17:28:44 -0700
-Message-ID: <75c88834-a931-86d6-91d0-5bdba24bca34@quicinc.com>
-Date:   Fri, 11 Aug 2023 17:28:43 -0700
+        Fri, 11 Aug 2023 21:36:48 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D41130F8;
+        Fri, 11 Aug 2023 18:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1691804207; x=1723340207;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=InQwijdXw9W+QsSLGg97dJTKcOqeU8+07ewmIVxJV4I=;
+  b=mvSGxcEfJHBWtXYluUgJ0C6zu5ZlZ1H2yYzXTO/vCqIkcJ8CMa0OQHHJ
+   giZXNZb281Tbb2iEg4xKhlpcNyl19b46JNdqDWiXRYcBcaRRE24jcpmUg
+   h0uO4whoWLmzTscf7feeXOFi/dfC8139aitEs9/RdW2Lat3tmhityGiHJ
+   UoG1tuZbv0rBoK6ozvKKmC+Hn3OzjDKw/bF+aCwXrWwajLMcrepVfYdi+
+   svBorweuXS3n2zS3gZqFmzsDu1G61oqB4E27A5e4SeuQIm8eH6RHXn3Wf
+   doMXDVL9UUQWzxMEg8zN2jktclZfY48dWveG3D9oCb0C1kly1TkZIaO5/
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="371797629"
+X-IronPort-AV: E=Sophos;i="6.01,167,1684825200"; 
+   d="scan'208";a="371797629"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 18:36:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="1063472658"
+X-IronPort-AV: E=Sophos;i="6.01,167,1684825200"; 
+   d="scan'208";a="1063472658"
+Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.254.215.79]) ([10.254.215.79])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 18:36:35 -0700
+Message-ID: <dde32ea5-2b1a-1148-c329-3c52ffcb71a7@linux.intel.com>
+Date:   Sat, 12 Aug 2023 09:36:33 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH -next 3/7] drm/msm: Remove unnecessary NULL values
+ Thunderbird/102.14.0
+Cc:     baolu.lu@linux.intel.com, Dmitry Osipenko <digetx@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v6 02/25] iommu: Add IOMMU_DOMAIN_PLATFORM
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+References: <2-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
 Content-Language: en-US
-To:     Ruan Jinjie <ruanjinjie@huawei.com>, <Felix.Kuehling@amd.com>,
-        <alexander.deucher@amd.com>, <christian.koenig@amd.com>,
-        <Xinhui.Pan@amd.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <harry.wentland@amd.com>, <sunpeng.li@amd.com>,
-        <Rodrigo.Siqueira@amd.com>, <maarten.lankhorst@linux.intel.com>,
-        <mripard@kernel.org>, <tzimmermann@suse.de>,
-        <inki.dae@samsung.com>, <sw0312.kim@samsung.com>,
-        <kyungmin.park@samsung.com>, <krzysztof.kozlowski@linaro.org>,
-        <alim.akhtar@samsung.com>, <robdclark@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
-        <marijn.suijten@somainline.org>, <bskeggs@redhat.com>,
-        <kherbst@redhat.com>, <lyude@redhat.com>, <kraxel@redhat.com>,
-        <gurchetansingh@chromium.org>, <olvaffe@gmail.com>,
-        <paulo.miguel.almeida.rodenas@gmail.com>, <wenjing.liu@amd.com>,
-        <haoping.liu@amd.com>, <Charlene.Liu@amd.com>,
-        <chiahsuan.chung@amd.com>, <george.shen@amd.com>,
-        <sancchen@amd.com>, <tony.tascioglu@amd.com>,
-        <jaehyun.chung@amd.com>, <tales.aparecida@gmail.com>,
-        <drv@mailo.com>, <aurabindo.pillai@amd.com>,
-        <quic_vpolimer@quicinc.com>, <jiasheng@iscas.ac.cn>,
-        <noralf@tronnes.org>, <jose.exposito89@gmail.com>,
-        <javierm@redhat.com>, <mairacanal@riseup.net>,
-        <davidgow@google.com>, <arthurgrillo@riseup.net>,
-        <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <nouveau@lists.freedesktop.org>,
-        <virtualization@lists.linux-foundation.org>
-References: <20230809034445.434902-1-ruanjinjie@huawei.com>
- <20230809034445.434902-4-ruanjinjie@huawei.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230809034445.434902-4-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <2-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8JUTKJ4SUFP-OUokVlxpVpG_EeUxAsA0
-X-Proofpoint-ORIG-GUID: 8JUTKJ4SUFP-OUokVlxpVpG_EeUxAsA0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-11_15,2023-08-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 mlxlogscore=999 adultscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308120001
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/8/2023 8:44 PM, Ruan Jinjie wrote:
-> The NULL initialization of the pointers assigned by kzalloc() first is
-> not necessary, because if the kzalloc() failed, the pointers will be
-> assigned NULL, otherwise it works as usual. so remove it.
+On 2023/8/3 8:07, Jason Gunthorpe wrote:
+> This is used when the iommu driver is taking control of the dma_ops,
+> currently only on S390 and power spapr. It is designed to preserve the
+> original ops->detach_dev() semantic that these S390 was built around.
 > 
-> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+> Provide an opaque domain type and a 'default_domain' ops value that allows
+> the driver to trivially force any single domain as the default domain.
+> 
+> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   drivers/iommu/iommu.c | 14 +++++++++++++-
+>   include/linux/iommu.h |  6 ++++++
+>   2 files changed, 19 insertions(+), 1 deletion(-)
 > 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 5e3cdc9f3a9e78..c64365169b678d 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -1705,6 +1705,17 @@ iommu_group_alloc_default_domain(struct iommu_group *group, int req_type)
+>   
+>   	lockdep_assert_held(&group->mutex);
+>   
+> +	/*
+> +	 * Allow legacy drivers to specify the domain that will be the default
+> +	 * domain. This should always be either an IDENTITY or PLATFORM domain.
+> +	 * Do not use in new drivers.
+> +	 */
+> +	if (bus->iommu_ops->default_domain) {
+> +		if (req_type)
+> +			return ERR_PTR(-EINVAL);
+> +		return bus->iommu_ops->default_domain;
+> +	}
+> +
+>   	if (req_type)
+>   		return __iommu_group_alloc_default_domain(bus, group, req_type);
+>   
+> @@ -1967,7 +1978,8 @@ void iommu_domain_free(struct iommu_domain *domain)
+>   	if (domain->type == IOMMU_DOMAIN_SVA)
+>   		mmdrop(domain->mm);
+>   	iommu_put_dma_cookie(domain);
+> -	domain->ops->free(domain);
+> +	if (domain->ops->free)
+> +		domain->ops->free(domain);
+>   }
+>   EXPORT_SYMBOL_GPL(iommu_domain_free);
+>   
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index e05c93b6c37fba..87aebba474e093 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -64,6 +64,7 @@ struct iommu_domain_geometry {
+>   #define __IOMMU_DOMAIN_DMA_FQ	(1U << 3)  /* DMA-API uses flush queue    */
+>   
+>   #define __IOMMU_DOMAIN_SVA	(1U << 4)  /* Shared process address space */
+> +#define __IOMMU_DOMAIN_PLATFORM	(1U << 5)
+>   
+>   #define IOMMU_DOMAIN_ALLOC_FLAGS ~__IOMMU_DOMAIN_DMA_FQ
+>   /*
+> @@ -81,6 +82,8 @@ struct iommu_domain_geometry {
+>    *				  invalidation.
+>    *	IOMMU_DOMAIN_SVA	- DMA addresses are shared process addresses
+>    *				  represented by mm_struct's.
+> + *	IOMMU_DOMAIN_PLATFORM	- Legacy domain for drivers that do their own
+> + *				  dma_api stuff. Do not use in new drivers.
+>    */
+>   #define IOMMU_DOMAIN_BLOCKED	(0U)
+>   #define IOMMU_DOMAIN_IDENTITY	(__IOMMU_DOMAIN_PT)
+> @@ -91,6 +94,7 @@ struct iommu_domain_geometry {
+>   				 __IOMMU_DOMAIN_DMA_API |	\
+>   				 __IOMMU_DOMAIN_DMA_FQ)
+>   #define IOMMU_DOMAIN_SVA	(__IOMMU_DOMAIN_SVA)
+> +#define IOMMU_DOMAIN_PLATFORM	(__IOMMU_DOMAIN_PLATFORM)
+>   
+>   struct iommu_domain {
+>   	unsigned type;
+> @@ -256,6 +260,7 @@ struct iommu_iotlb_gather {
+>    * @owner: Driver module providing these ops
+>    * @identity_domain: An always available, always attachable identity
+>    *                   translation.
+> + * @default_domain: If not NULL this will always be set as the default domain.
+>    */
+>   struct iommu_ops {
+>   	bool (*capable)(struct device *dev, enum iommu_cap);
+> @@ -290,6 +295,7 @@ struct iommu_ops {
+>   	unsigned long pgsize_bitmap;
+>   	struct module *owner;
+>   	struct iommu_domain *identity_domain;
+> +	struct iommu_domain *default_domain;
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+I am imaging whether we can merge above two pointers into a single one.
+It is either an IDENTITY or PLATFORM domain and the core will choose it
+as the default domain of a group if iommu_group_alloc_default_domain()
+fails to allocate one through the iommu dev_ops.
+
+Those iommu drivers that could result in a NULL default domain could
+provide such domain and guarantee that this domain is always usable for
+devices.
+
+Probably we could give it a more meaningful name? For example,
+supplemental_domain or rescue_domain?
+
+I am not sure whether this can address the NULL-default-domain issues
+of all drivers this series tries to address. So just for discussion
+purpose.
+
+Best regards,
+baolu
