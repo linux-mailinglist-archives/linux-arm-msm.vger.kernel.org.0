@@ -2,58 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 972D577A01F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 15:25:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 616AF77A03F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 16:07:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232001AbjHLNZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 09:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
+        id S236368AbjHLOH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 10:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjHLNZY (ORCPT
+        with ESMTP id S231479AbjHLOH2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 09:25:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D41C312D;
-        Sat, 12 Aug 2023 06:25:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A515616C0;
-        Sat, 12 Aug 2023 13:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5EEC433C8;
-        Sat, 12 Aug 2023 13:25:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691846726;
-        bh=acH4iXVTyH8arS/ZaHuARQxhgHeP/BeIYrb55TADdkU=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=jAiS+JBekZTpk11e3gPdsoJbBUwLcAk1BW7fhTrlvoEpXh1oHTasqLgyWGfcZPSzz
-         4/ibQ9r78l0t5JL+dg6qjHC3AzfI/Md+HLbZVAkEyHIn8MKPtfdb+DLqIIZwr30hZp
-         cG+easCVHSQevriIlAyaxuy5/S3A/ww2WWJ5593CgthT3siQLb3Cxz+xPzaUwXZ1Fo
-         brm+K7/WXhcp2THjIIXfHj5b8Q4mtzIe1ae67QJ5gbUppBdUYakj8BHhkoAlDo51s1
-         buIH8ZeLnl+FPQe+VWTCEKaRx5fKCspy1uALEsuSEImjrjNAeJ9UiYUgJnW9Tu8RTp
-         f28LAOd2evR2w==
-Message-ID: <7c045f1e-4d20-b798-bd74-8e8b9d8ea7e6@kernel.org>
-Date:   Sat, 12 Aug 2023 16:25:21 +0300
+        Sat, 12 Aug 2023 10:07:28 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29D910DF;
+        Sat, 12 Aug 2023 07:07:31 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-563f752774fso1640159a12.1;
+        Sat, 12 Aug 2023 07:07:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691849251; x=1692454051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gKs+nmXh2okBRRkMC1A5GYGwlm6oKTAGXOM3H5VF5U0=;
+        b=L/QP2fuhNg4AWoBTIP2ff3B8Jk1X6Iq12i2GoJOQqYYxSyzGDc9WXSPhmJfiscP2a4
+         VvCDHe/kV5yOD2u8YMmdwP/XNQTZCBb2IRgypAmL4A68gSf7qr9U0BPbzSk1+ymKCBgD
+         wvbiirbr/TY8eygb8KQBnqyrlayvFb2+SVA2Dhe49EvvDRn9fS5eaOftglqOqS7ig5z0
+         NZ2jn3kfcS0kZQsn7c+Q9zQvdtmLgOzH0ZuLipGetVBGv/G+U1G24bf7a19yYN2w1CK0
+         SuwStjNiyKIxuGSZ9jJKwoLqlnbMJ/40Oy9BDK47ka8KVaIsyM+9X/OPasSqzQGwH6Xd
+         GwBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691849251; x=1692454051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gKs+nmXh2okBRRkMC1A5GYGwlm6oKTAGXOM3H5VF5U0=;
+        b=frHr/xMjuIXcovkE18ogW+rrMPhtp5DiobMSmlsmjbNFeyFkxa+XRj8D2F0tDtHV/Z
+         hjKsl/2QvXPOFy7GCV5p7ERkFxWaBPBF9TqGBygfYt0SiDYf3gizujNR+nK/KkR5MLX4
+         jWVgVQtvcwo7u/lXS7wlaDJiP7MVZBlAnOQRenjW204Hf+JVEzPn4IPFVuDARJQB0mQ7
+         p5M1338BFHbt44bqlCJ1ffRRwPGan8RTNU8tnVVkP8XfteHw7wa5Xui7z24VpPzKa7AA
+         qcxbPN79AHjYziZwaxt58BuO03BCBO3VX2KJquuB/0dfVayV6SP+MuyldQix5jFHCYER
+         kyzg==
+X-Gm-Message-State: AOJu0YzRTLYvbJL/03N5EcJel3535UCBI05axKU0BJxNBNY4JoqNj49l
+        hGCp/6tvIFsw8MXr3It6gH9v8ZwT6+myuzDSvfc=
+X-Google-Smtp-Source: AGHT+IFXZbA0I/yz6onJu4tTM/i3tiGk1z1edu3AjiBMtQmYt6zUC9gdgcjrXFw4z0fTlxfx5SecXKIVyUESQjCQAKM=
+X-Received: by 2002:a17:90b:3b88:b0:268:468b:2510 with SMTP id
+ pc8-20020a17090b3b8800b00268468b2510mr2799380pjb.37.1691849251165; Sat, 12
+ Aug 2023 07:07:31 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 1/3] debugfs: Add write support to debugfs_create_str()
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Cc:     rafael@kernel.org, corbet@lwn.net, linux-pm@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_okukatla@quicinc.com,
-        quic_viveka@quicinc.com, peterz@infradead.org,
-        quic_pkondeti@quicinc.com
-References: <20230807142914.12480-1-quic_mdtipton@quicinc.com>
- <20230807142914.12480-2-quic_mdtipton@quicinc.com>
- <2023081203-happier-mutable-e4f0@gregkh>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <2023081203-happier-mutable-e4f0@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+References: <20230811210142.403160-1-robimarko@gmail.com> <20230811210142.403160-2-robimarko@gmail.com>
+ <4c96210b-4567-4cb5-80bb-7adca6c5f124@linaro.org> <CAOX2RU6X0Tww4UkTKVfc=PLY=RKVJdsm+gomytT0vOydTF+Hnw@mail.gmail.com>
+ <7116b473-7f22-43df-af39-81e5f6db4507@linaro.org> <CAOX2RU6nMvpTkGdwBoLJrES5v0qARnDDT6nCVd-DZid7p3pg6Q@mail.gmail.com>
+ <e784f70f-3232-42e6-bf4c-67075abd210a@linaro.org>
+In-Reply-To: <e784f70f-3232-42e6-bf4c-67075abd210a@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Sat, 12 Aug 2023 16:07:20 +0200
+Message-ID: <CAOX2RU7cLoK206hLkfDr+Ry8QgS5F48EEiSbJ+gbGK_xkXBDpA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: ipq4019-ap.dk01.1: align flash node
+ with bindings
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,108 +73,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+On Sat, 12 Aug 2023 at 12:47, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 12.08.2023 11:55, Robert Marko wrote:
+> > On Sat, 12 Aug 2023 at 00:56, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> On 11.08.2023 23:35, Robert Marko wrote:
+> >>> On Fri, 11 Aug 2023 at 23:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>
+> >>>> On 11.08.2023 23:01, Robert Marko wrote:
+> >>>>> Rename the SPI-NOR node to flash@0, remove #address-cells and #size-cells
+> >>>>> as they should be under the partitions subnode and use the generic
+> >>>>> jedec,spi-nor compatible.
+> >>>>>
+> >>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>>>> ---
+> >>>> You can also do "nandmanufacturer,mx25l25635e", "jedec,spi-nor"
+> >>>
+> >>> Hi,
+> >>> I grepped the vendor U-Boot to make sure it's not being triggered off
+> >>> the mx25l25635e
+> >>> compatible but the only hit is the IC support itself.
+> >>> MX25L25635 was just the original NOR IC Qualcomm used on the board so
+> >>> to me it made
+> >>> most sense to just use the JEDEC compatible as NOR itself is JEDEC NOR
+> >>> compatible.
+> >> OK if dynamic identification works fine
+> >
+> > It should work fine, datasheet is clear that its JEDEC compatible.
+> > That being said, I dont actually have the board, just figured it was
+> > time for a cleanup as
+> > OpenWrt has been patching DK01 and DK04 for ages.
+> Hm. Do we know whether there are still users of this boards?
 
-Thanks for the comments!
+I honestly doubt it as they have been broken in OpenWrt for years and
+nobody complained.
+So we are currently removing support for them, but I still wanted to
+at least fixup the DTS state
+upstream.
+These boards are not obtainable anymore.
 
-On 12.08.23 13:40, Greg KH wrote:
-> On Mon, Aug 07, 2023 at 07:29:12AM -0700, Mike Tipton wrote:
->> Currently, debugfs_create_str() only supports reading strings from
->> debugfs. Add support for writing them as well.
->>
->> Based on original implementation by Peter Zijlstra [0]. Write support
->> was present in the initial patch version, but dropped in v2 due to lack
->> of users. We have a user now, so reintroduce it.
->>
->> [0] https://lore.kernel.org/all/YF3Hv5zXb%2F6lauzs@hirez.programming.kicks-ass.net/
->>
->> Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
->> ---
->>   fs/debugfs/file.c | 48 +++++++++++++++++++++++++++++++++++++++++++++--
->>   1 file changed, 46 insertions(+), 2 deletions(-)
->>
->> diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
->> index b7711888dd17..87b3753aa4b1 100644
->> --- a/fs/debugfs/file.c
->> +++ b/fs/debugfs/file.c
->> @@ -904,8 +904,52 @@ EXPORT_SYMBOL_GPL(debugfs_create_str);
->>   static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
->>   				      size_t count, loff_t *ppos)
->>   {
->> -	/* This is really only for read-only strings */
->> -	return -EINVAL;
->> +	struct dentry *dentry = F_DENTRY(file);
->> +	char *old, *new = NULL;
->> +	int pos = *ppos;
->> +	int r;
->> +
->> +	r = debugfs_file_get(dentry);
->> +	if (unlikely(r))
->> +		return r;
->> +
->> +	old = *(char **)file->private_data;
->> +
->> +	/* only allow strict concatenation */
->> +	r = -EINVAL;
->> +	if (pos && pos != strlen(old))
->> +		goto error;
->> +
->> +	r = -E2BIG;
->> +	if (pos + count + 1 > PAGE_SIZE)
->> +		goto error;
->> +
->> +	r = -ENOMEM;
->> +	new = kmalloc(pos + count + 1, GFP_KERNEL);
->> +	if (!new)
->> +		goto error;
->> +
->> +	if (pos)
->> +		memcpy(new, old, pos);
->> +
->> +	r = -EFAULT;
->> +	if (copy_from_user(new + pos, user_buf, count))
->> +		goto error;
->> +
->> +	new[pos + count] = '\0';
->> +	strim(new);
->> +
->> +	rcu_assign_pointer(*(char **)file->private_data, new);
->> +	synchronize_rcu();
->> +	kfree(old);
->> +
->> +	debugfs_file_put(dentry);
->> +	return count;
->> +
->> +error:
->> +	kfree(new);
->> +	debugfs_file_put(dentry);
->> +	return r;
->>   }
-> 
-> So you just added write support for ALL debugfs files that use the
-> string interface, what did you just allow to break?
-
-Not really. According to the existing code, the write support for strings
-is enabled only when the file is created with +w permissions. For read-only
-files, we use fops_str_ro, which is the case for all existing string files:
-
-$ git grep -w debugfs_create_str | egrep -v "fs/debugfs/file.c|include/linux/debugfs.h"
-drivers/firmware/arm_scmi/driver.c:	debugfs_create_str("instance_name", 0400, top_dentry,
-drivers/firmware/arm_scmi/driver.c:	debugfs_create_str("type", 0400, trans, (char **)&dbg->type);
-drivers/opp/debugfs.c:	debugfs_create_str("of_name", S_IRUGO, d, (char **)&opp->of_name);
-
-For fops_str_ro, the .write function is not implemented, so nothing should break?
-
-> I recommend just using your own debugfs file function instead, as this
-> could cause bad problems, right?
-
-Agree, and that should be exactly what this patch does.
-
-> Are you sure that all string calls can
-> handle the variable be freed underneath it like this call will allow to
-> happen?
-
-Looks fine, at least for this patch-set.
-
-Thanks,
-Georgi
+Regards,
+Robert
+>
+> Konrad
