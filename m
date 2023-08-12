@@ -2,133 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEAD4779D2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 07:01:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 524B2779DDC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 09:17:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233189AbjHLFBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 01:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43600 "EHLO
+        id S230108AbjHLHRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 03:17:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231685AbjHLFBj (ORCPT
+        with ESMTP id S233512AbjHLHRH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 01:01:39 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91881736;
-        Fri, 11 Aug 2023 22:01:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691816498; x=1723352498;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=8ESbiLHr+YCgav0uKLzgJWB6fuptDUr8xuFAEutcc9g=;
-  b=eIia5ItIbWR7COp6ipg1ZQK3kKUaSAtgQVwByV6TodkErLoK9i2Zsu0g
-   +w1MyPO8lc7EoPA1FiowUtDJNtte6F0JNuMqxWH3NJkNw3LcEj16zuk0L
-   ahq48G7XRZuPo9cPAyXURGBLC0ON1ZvJ0JBUZ7V6bYcu+RLcUeawojK+i
-   uy5RT1taXg+4yDuB4tT2pSd5g9QYfuj+a46/IYgOyeuhANSwkh8cJtKcK
-   +vMwvHXVkQ7Wtxwrkanxw9TEAW8ueR8nLB4oZrUjhtTe+6d6kgQav3iGy
-   TZolSmW8RXCs+AXptWYxThvEXUJ5AAzxesu45bcPmiTG0VlkkSTYf8Vg/
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="375513664"
-X-IronPort-AV: E=Sophos;i="6.01,167,1684825200"; 
-   d="scan'208";a="375513664"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 22:01:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="767872740"
-X-IronPort-AV: E=Sophos;i="6.01,167,1684825200"; 
-   d="scan'208";a="767872740"
-Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.254.214.60]) ([10.254.214.60])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 22:01:26 -0700
-Message-ID: <d4451419-627b-36de-0b0f-3a7e8bc59a35@linux.intel.com>
-Date:   Sat, 12 Aug 2023 13:01:24 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Cc:     baolu.lu@linux.intel.com, Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v6 15/25] iommufd/selftest: Make the mock iommu driver
- into a real driver
-Content-Language: en-US
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        Sat, 12 Aug 2023 03:17:07 -0400
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467E530D7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 00:17:07 -0700 (PDT)
+Date:   Sat, 12 Aug 2023 07:16:56 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1691824622; x=1692083822;
+        bh=wloyDf2AvvZTQdPHrX71Q0Ws9rmThiu4roUkb67nTc4=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=VIaky06o9ZRLuUwaGnEi8dJFW5k1FDUqLG5uaD2Luu+Ea6hXdL1BLD1Ido7E0ZRuJ
+         7rRoBbtzB0mqm7qcCvYSm4DFiQniFGa40iyogd1HPMUx7SRL0oL0JFliNQ3gJk3VD+
+         DfBqhPMSHRNqutppytprFgFtCOaQck9hSLmhXC8O+SPifMpUUcb4swWHFzNGd01g5K
+         VXaGzRVLfFITTUslx4MJ9tJyjUWmvwkXlnOyYSegyHXFTmSMpIQHNUyiRagt8tytUW
+         uXYFM/B0zprHztIQxYBvc0yn5fD5K2xyuVuKokTUZzdDZiGDHzwz6ickY1VJ9vOJ4X
+         Z1ZKtoECsRCrA==
+To:     linux-kernel@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-References: <15-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
-From:   Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <15-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v2] arm64: dts: qcom: msm8916-samsung-e5: Add touchscreen
+Message-ID: <20230812071448.4710-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/8/3 8:08, Jason Gunthorpe wrote:
-> +/*
-> + * Register an iommu driver against a single bus. This is only used by iommufd
-> + * selftest to create a mock iommu driver. The caller must provide
-> + * some memory to hold a notifier_block.
-> + */
-> +int iommu_device_register_bus(struct iommu_device *iommu,
-> +			      const struct iommu_ops *ops, struct bus_type *bus,
-> +			      struct notifier_block *nb)
-> +{
-> +	int err;
-> +
-> +	iommu->ops = ops;
-> +	nb->notifier_call = iommu_bus_notifier;
-> +	err = bus_register_notifier(bus, nb);
-> +	if (err)
-> +		return err;
-> +
-> +	spin_lock(&iommu_device_lock);
-> +	list_add_tail(&iommu->list, &iommu_device_list);
-> +	spin_unlock(&iommu_device_lock);
-> +
-> +	bus->iommu_ops = ops;
-> +	err = bus_iommu_probe(bus);
+Similar to A5, E5 uses a Melfas MMS345L touchscreen that is connected to
+blsp_i2c5. Add it to the device tree.
 
-By the way, bus_iommu_probe() has been changed in iommu-next, so it
-needs to be rebased here.
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+---
+v2: use interrupts-extended
+ .../boot/dts/qcom/msm8916-samsung-e5.dts      | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-Best regards,
-baolu
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts b/arch/arm64/b=
+oot/dts/qcom/msm8916-samsung-e5.dts
+index 777eb934eb4b..fad2535255f7 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
+@@ -22,3 +22,23 @@ / {
+ =09compatible =3D "samsung,e5", "qcom,msm8916";
+ =09chassis-type =3D "handset";
+ };
++
++&blsp_i2c5 {
++=09status =3D "okay";
++
++=09touchscreen@48 {
++=09=09compatible =3D "melfas,mms345l";
++=09=09reg =3D <0x48>;
++
++=09=09interrupts-extended =3D <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
++
++=09=09touchscreen-size-x =3D <720>;
++=09=09touchscreen-size-y =3D <1280>;
++
++=09=09avdd-supply =3D <&reg_vdd_tsp_a>;
++=09=09vdd-supply =3D <&pm8916_l6>;
++
++=09=09pinctrl-0 =3D <&ts_int_default>;
++=09=09pinctrl-names =3D "default";
++=09};
++};
+--=20
+2.39.2
+
+
