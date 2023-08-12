@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC4E77A05E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 16:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E2F977A0DA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 17:48:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232649AbjHLOPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 10:15:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42624 "EHLO
+        id S229690AbjHLPsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 11:48:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbjHLOPo (ORCPT
+        with ESMTP id S229452AbjHLPsE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 10:15:44 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF4F171F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 07:15:47 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b974031aeaso44999201fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 07:15:47 -0700 (PDT)
+        Sat, 12 Aug 2023 11:48:04 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499761725
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 08:48:07 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe655796faso4661833e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 08:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691849746; x=1692454546;
+        d=linaro.org; s=google; t=1691855285; x=1692460085;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qvNfKvAylgC4uffqZdOpDtDEQniAKRUYrpspZKXOdVw=;
-        b=uaob22TaDg5gc6wd2x6oAmstMdvuIntX/ooZtiKg/Mabf45YKhmTbWO8SHjMIZsmW3
-         0TopC3dapyE1aOYoTlTw7cmcM0cTZN4EvHhKD4Uy7efPeb7SU9dVfCcbE0JtS4sE7ZiK
-         9sGwOTAsSJXsd0LdxnzbaMkw7wcbnPoeBWv3jXa/l5eyzv9UiX2APimfvuOLdpug+RAe
-         Q0M8uRxz1X1m4V81nJ0BV+XDfB0tzrhEOBBJsUdRF7y9IHo6kKySH4h4Z2Jn4r5PowRC
-         Jt/gwaJizugCV/xagAy3n95q6fXwXfsHZtZ7ajNBW/Vch+OcY6d/5AjgsUDW/APLAIOM
-         hcjg==
+        bh=+7EmhC7IvfDMyhQW+vcMkOmpd2esE3mk9TXXEdkzT+8=;
+        b=A7GLIvcjYO96fYqCj6TXYiCoi+IFnBozs0dHCAMwuIz1SVTqmQ13MSQKg5x6B+Q1wI
+         2DkJ+RIxYyp9toISocgyAfo7Jhn3dQ/81rS6BEU4y4q8k/7beXVZ1e5FG0SLrxejg17N
+         1mJ7gWGKiYjgVonsWK8eyOWkMAnm9AsMBSlv7Bon+NDVz7C90oWfrQwK5OH4Q2PvJ9G7
+         WxIaWUlsAzFflKy2hjdtmhXhKEH47ts0iEHEWN4xIQ9QNbHG+PUqfu209LvsseRrO+ZL
+         93bN3XBWozPYK33/amI2eDS8i0Ek4WZWU+xmoc4RmOduDwmgXb76cDxMhPQMdkJ6J0T8
+         wkUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691849746; x=1692454546;
+        d=1e100.net; s=20221208; t=1691855285; x=1692460085;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qvNfKvAylgC4uffqZdOpDtDEQniAKRUYrpspZKXOdVw=;
-        b=UInnu+ikdxQ98/8TMjvbnfMqEft4qXZArG7+g1G6DjmCq+n/De22HwWJ6LpiCPCLnf
-         1Wy7uzGf9wn9gUFoSTrRaWNM9e6yxmsSSHRsv0ZRu67LfV/EQ2vVU0VKfP+APeY5UEnt
-         tMdA946+tWtvFZYZLUPH2ya3Tp+BHtvyeciMOXkxsLtUTQeQeYJ4WedI/um+/fVBEK5O
-         8jz4hni3D/303Cg0Jm3TfCtxhBpnqWOjqzRvBUxQmjNLYaaYMQKqgkDiNRs0UoEr3wBE
-         XnAngDsQssOju1rvz+srjCH2PFT8Vgtik3++q9KIY5Ig04GoCvQeXjBiq6DaYCC8hIxk
-         Fwvg==
-X-Gm-Message-State: AOJu0YyBAFiKXi99WVa6ttFc017keXUlW8rZOwGwjhk18G4Psz6c2na7
-        i1vgJ3fF2gbHno317A1GHGirMA==
-X-Google-Smtp-Source: AGHT+IFL6tE/6U9ldoGNxkeCqcwrKZNfJf7CoWEEGGip0Ja1JpmeFtdg+zMsAU41yxbwqNhXljwMJw==
-X-Received: by 2002:a2e:964e:0:b0:2b6:bb08:91c4 with SMTP id z14-20020a2e964e000000b002b6bb0891c4mr3858490ljh.42.1691849745828;
-        Sat, 12 Aug 2023 07:15:45 -0700 (PDT)
+        bh=+7EmhC7IvfDMyhQW+vcMkOmpd2esE3mk9TXXEdkzT+8=;
+        b=NDNTQ8z4lXwXNq0rT49jpUj3TdTCjLD4MeCXd1Jz37UVL5YIec0QTu3YJrnjziMSnM
+         qgTjn2xunOYo1cG8Scg3AB8htMQ/YJdACP3lqsBedfca0GuYToD5JKweoeB5QXISUR9B
+         3nv4bD2HPnQqny1ROTFP7GBsA/mXBTx26ytm5m3bJopYu7pUo9r/ESLL2RqUFbapCmnR
+         kgc6y3fQTzFybcQdWoNRQD9fy44OXDWhUFnY0D+LLSAsFuuOrcIeiIZp3MxZ8+cGSVgc
+         iGPqCAogUVjJ7Ex2bw9QQdrcf+VscRid86l1ELM56pVGjBE3PADDVls0pzeRX/VMJW65
+         lkgQ==
+X-Gm-Message-State: AOJu0Yx5xyPWLndy9utiSgibfFHvUyRoU17RdQoe4N5PpH74vVtxu8Mj
+        0v6km5JGphH35nwd3e9ikA7j2w==
+X-Google-Smtp-Source: AGHT+IH+/xOszBXGiiStoi3yRcILGLTaELHC86haK/0LqUTXljUMl1J1PwCbM3VVp5BWwhMudgfdKw==
+X-Received: by 2002:a19:5e49:0:b0:4fd:d7ac:2654 with SMTP id z9-20020a195e49000000b004fdd7ac2654mr2709878lfi.13.1691855285513;
+        Sat, 12 Aug 2023 08:48:05 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id j22-20020a2e3c16000000b002b6cb598558sm1405915lja.49.2023.08.12.07.15.44
+        by smtp.gmail.com with ESMTPSA id d25-20020ac25459000000b004fde91ea57bsm1177780lfn.11.2023.08.12.08.48.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Aug 2023 07:15:45 -0700 (PDT)
-Message-ID: <7fdee4c2-4c14-4a7f-b161-52ccd2458d3f@linaro.org>
-Date:   Sat, 12 Aug 2023 16:15:44 +0200
+        Sat, 12 Aug 2023 08:48:05 -0700 (PDT)
+Message-ID: <6e1271b0-61b2-4e7c-ae38-c436134e288f@linaro.org>
+Date:   Sat, 12 Aug 2023 17:48:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: ipq4019-ap.dk01.1: align flash node
- with bindings
+Subject: Re: [PATCH v3 5/7] clk: qcom: hfpll: Add MSM8976 PLL data
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Caleb Connolly <caleb.connolly@linaro.org>
-References: <20230811210142.403160-1-robimarko@gmail.com>
- <20230811210142.403160-2-robimarko@gmail.com>
- <4c96210b-4567-4cb5-80bb-7adca6c5f124@linaro.org>
- <CAOX2RU6X0Tww4UkTKVfc=PLY=RKVJdsm+gomytT0vOydTF+Hnw@mail.gmail.com>
- <7116b473-7f22-43df-af39-81e5f6db4507@linaro.org>
- <CAOX2RU6nMvpTkGdwBoLJrES5v0qARnDDT6nCVd-DZid7p3pg6Q@mail.gmail.com>
- <e784f70f-3232-42e6-bf4c-67075abd210a@linaro.org>
- <CAOX2RU7cLoK206hLkfDr+Ry8QgS5F48EEiSbJ+gbGK_xkXBDpA@mail.gmail.com>
- <389904f7-86fa-48be-ba30-aa8cfeb44353@linaro.org>
- <CAOX2RU5OeGdhk2DoG-noE2RHDmQ-6TnFxVRwHCnmWXWRZE6-5g@mail.gmail.com>
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230812112534.8610-1-a39.skl@gmail.com>
+ <20230812112534.8610-6-a39.skl@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,7 +107,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAOX2RU5OeGdhk2DoG-noE2RHDmQ-6TnFxVRwHCnmWXWRZE6-5g@mail.gmail.com>
+In-Reply-To: <20230812112534.8610-6-a39.skl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -122,61 +120,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12.08.2023 16:12, Robert Marko wrote:
-> On Sat, 12 Aug 2023 at 16:08, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 12.08.2023 16:07, Robert Marko wrote:
->>> On Sat, 12 Aug 2023 at 12:47, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>
->>>> On 12.08.2023 11:55, Robert Marko wrote:
->>>>> On Sat, 12 Aug 2023 at 00:56, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>>>
->>>>>> On 11.08.2023 23:35, Robert Marko wrote:
->>>>>>> On Fri, 11 Aug 2023 at 23:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>>>>>
->>>>>>>> On 11.08.2023 23:01, Robert Marko wrote:
->>>>>>>>> Rename the SPI-NOR node to flash@0, remove #address-cells and #size-cells
->>>>>>>>> as they should be under the partitions subnode and use the generic
->>>>>>>>> jedec,spi-nor compatible.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>>>>>>> ---
->>>>>>>> You can also do "nandmanufacturer,mx25l25635e", "jedec,spi-nor"
->>>>>>>
->>>>>>> Hi,
->>>>>>> I grepped the vendor U-Boot to make sure it's not being triggered off
->>>>>>> the mx25l25635e
->>>>>>> compatible but the only hit is the IC support itself.
->>>>>>> MX25L25635 was just the original NOR IC Qualcomm used on the board so
->>>>>>> to me it made
->>>>>>> most sense to just use the JEDEC compatible as NOR itself is JEDEC NOR
->>>>>>> compatible.
->>>>>> OK if dynamic identification works fine
->>>>>
->>>>> It should work fine, datasheet is clear that its JEDEC compatible.
->>>>> That being said, I dont actually have the board, just figured it was
->>>>> time for a cleanup as
->>>>> OpenWrt has been patching DK01 and DK04 for ages.
->>>> Hm. Do we know whether there are still users of this boards?
->>>
->>> I honestly doubt it as they have been broken in OpenWrt for years and
->>> nobody complained.
->>> So we are currently removing support for them, but I still wanted to
->>> at least fixup the DTS state
->>> upstream.
->>> These boards are not obtainable anymore.
->> I also noticed they were detached from the other snapdragons in u-boot
->> for no good reason (at first glance anyway).
+On 12.08.2023 13:24, Adam Skladowski wrote:
+> Add PLL configuration for MSM8976 SoC, this SoC offers 3 HFPLL.
+> Small cluster offers two presets for 652-902Mhz range and 902Mhz-1.47Ghz.
+> For simplicity only add second range as smaller frequencies can be obtained
+> via apcs divider or safe parent this also saves us
+> a hassle of reconfiguring VCO bit and config_val.
+> A72 and CCI cluster only use single frequency range with their
+> outputs/post_dividers/vco_bits being static.
 > 
-> If you are talking about the mainline U-Boot then yeah, my basic port was done
-> years ago and I knew way less about the SoC then now.
-> Currently its on my TODO to merge them with Snapdragon and add some proper
-> GPIO and pinctrl drivers as well as using the Linux DTS.
-Take a look at this branch of mine [1], I already did some of that.
-
-If you wish to upstream that, please coordinate with Caleb (+CC) who
-may be interested in the same in parallel.
-
-[1] https://github.com/konradybcio/u-boot/commits/konrad/rb1_forcepushing
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
