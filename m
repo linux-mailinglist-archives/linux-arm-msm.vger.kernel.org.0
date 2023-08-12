@@ -2,73 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7F3C779F61
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 12:56:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BED6779F83
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 13:13:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236855AbjHLK4I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 06:56:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
+        id S231649AbjHLLMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 07:12:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234859AbjHLK4H (ORCPT
+        with ESMTP id S229727AbjHLLMi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 06:56:07 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78234D8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 03:56:10 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2ba1e9b1fa9so42588761fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 03:56:10 -0700 (PDT)
+        Sat, 12 Aug 2023 07:12:38 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D3BE58
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 04:12:40 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fe457ec6e7so4463339e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 04:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691837769; x=1692442569;
+        d=linaro.org; s=google; t=1691838759; x=1692443559;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bsDkru9Cd+QMTZjL2vgJUI/oZABtMlJwLOLZa2FBIZQ=;
-        b=EJT6/mzyqQ+CKZcR2kelRqxT0uENV3F00mPCB/UsYdG5YU0KYPHnEa/gBLovhF16Nc
-         gVJ65wg7LoldMKfPbBdBd67ypgY12njXFp4x/gtlwTuLNvNxxyAxrmYaQbkXZyl/XFZM
-         nH0J1se8jdOoahAnmJcM9Ky2Wuf2dNoF1z0iaeaPX+cnFRcEE5q4dEE+faXrAwKDCM6m
-         xIQ4hSNM2JZaw4NSmmr2tk0SbwKIs+P8Zj2ts+WHNqC5at629LYK3um1y5bz8kLw0olO
-         PazfDJDwywrYCtXVYMDc3MEi3ZREqx0NU47ykbN/dheL3CWEBD42yU8bMci99GBRAjIp
-         0iFA==
+        bh=por8WKnXF3emS3isa7wTr89iB4qKBMqD7r9+SqYpX+o=;
+        b=pkTWeEiCbUOvYNhd85B73Lcor+gywNMajWXVQb4+/LTatWxnf95S9ZJ7TJuY2CBB+s
+         Hzf7m05amiq/IYBZ/wlBJShXReV/7pcUijFTCqqPPqbpCAdT67NRE+z+hPw0ZG+PdjTu
+         jstD/040J2gZbvyP4bUFAACvS0Zg47kHyxrx3vyeIlsXfdRNzz+CBEc3HxOKIgi28QCi
+         A1y2eTBQq5woIRmrsySvL+Lvo5ZtqBUpdUBj8wZeBymDXf4NTfO131SfR3YVQLTrQpB5
+         siUsZllx6WOUglqirZqyBIgc6Tyb77dQX6ptLFfHhS0TLr90muXKIoUNugqlIkpe/Axd
+         GPCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691837769; x=1692442569;
+        d=1e100.net; s=20221208; t=1691838759; x=1692443559;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bsDkru9Cd+QMTZjL2vgJUI/oZABtMlJwLOLZa2FBIZQ=;
-        b=hWtvDFVV7IrFwGffK3hy12dZ2yOXlQyOyvC85EUbo5bmM1RnT3kyaHxGIIoxmb3yxN
-         QviUNIik57vboS8ivwto/EaNrJ71mymozRBmpRy5Vt/E9rxMMut0FpJfIUlypiBKttHm
-         81jY2i1M+aFqB0dVFjPB6zMrGOsFdDmemV7MGXL4GLqopwhLVqFgCOLMArydMJ+C+1dz
-         StmZ+Teak/UiXPLPwQZDWi/P++5bN7iIgoxc013iLEScal6c6YvDAkhEaRCvW34L5PWT
-         A7mhEWBO9HMVufdCO06tlpEF8ATIg9qSsTnmO9Lccv7jAN4tLCbb/uvjhATCyKxIbzJ0
-         e6bQ==
-X-Gm-Message-State: AOJu0Ywj5hXK0FUiCKZVqQKUMw+issEIIatLHpnwvnUB3qFHT4TNks5c
-        RqmKtOLh/HoVBm9mVJ4tRWGzNw==
-X-Google-Smtp-Source: AGHT+IHaRMtZA8KV8vXFuM5ViYSywNipf5JO30re//r254mA78KVIzZ+yN58RLe7xg8AazfEEXYGuA==
-X-Received: by 2002:a2e:7412:0:b0:2b9:4418:b46e with SMTP id p18-20020a2e7412000000b002b94418b46emr3127642ljc.21.1691837768724;
-        Sat, 12 Aug 2023 03:56:08 -0700 (PDT)
+        bh=por8WKnXF3emS3isa7wTr89iB4qKBMqD7r9+SqYpX+o=;
+        b=iSvvd70LGY98lH2Tb/af5dSVPmh+KEQyZvI2ZilSXKtBhwGl3AFeobyqCa5lzDWE8t
+         mNc6Q/0BxBWeNw27g/+9EPev8Od2PuIO8mL4ZKprJ8/W8J6z7aSAm1FoRIbtYI4CgAhE
+         fHgWJ3B0VfmfBRt7Xt4+GwnDGj1P6o8OcJIqnSsfIUCkux52M+mhQOXSZqyKm2buniYB
+         LTZypPlRBnhWR33Whij0gm/wHOuqhUyWpAJggcpe0VL+5fD+YSMXFkstE/AVXwXkwNbo
+         +RyPrxjUcSIycZPgkiFVuwC0+eNYWvg0O4ceAJUyv5q9VziEGRLW59liTxnP8u+Am2jr
+         BFow==
+X-Gm-Message-State: AOJu0YwDqGnK5vXd8a5avpNMT1/d/afxiMCKoPuKdHbc6ml8pHzdtTgr
+        Ex8v3cmRRbZ7YDlcNEL7dsUWNw==
+X-Google-Smtp-Source: AGHT+IHvd3jBTg79VOGWrxtLvJ5V6LVqj/19tNsKZIeDRXjdruHQEOORBLq3v9Mts1c6C7s9aw3egQ==
+X-Received: by 2002:a05:6512:110d:b0:4f8:770f:1b01 with SMTP id l13-20020a056512110d00b004f8770f1b01mr3468852lfg.19.1691838758840;
+        Sat, 12 Aug 2023 04:12:38 -0700 (PDT)
 Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id j21-20020a2e8015000000b002b83dbc71c9sm1335439ljg.54.2023.08.12.03.56.07
+        by smtp.gmail.com with ESMTPSA id ep12-20020a056512484c00b004fe18abbf07sm1092765lfb.212.2023.08.12.04.12.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Aug 2023 03:56:08 -0700 (PDT)
-Message-ID: <631d5a82-7d24-49cd-9868-74c7b3c08bcd@linaro.org>
-Date:   Sat, 12 Aug 2023 12:56:06 +0200
+        Sat, 12 Aug 2023 04:12:38 -0700 (PDT)
+Message-ID: <244d165a-1e53-401e-be36-6bb3f4f260ae@linaro.org>
+Date:   Sat, 12 Aug 2023 13:12:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] clk: qcom: add clock controller driver for
- qca8386/qca8084
+Subject: Re: [PATCH 1/3] soc: qcom: pmic_glink: enable UCSI for SM8350
 Content-Language: en-US
-To:     Jie Luo <quic_luoj@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com
-References: <20230810115419.25539-1-quic_luoj@quicinc.com>
- <20230810115419.25539-4-quic_luoj@quicinc.com>
- <9dec09fa-a5a3-416c-9b4d-4b4c4e10320b@linaro.org>
- <9a55016f-0049-f185-f2be-d138fe33384b@quicinc.com>
+To:     wuxilin123@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20230806-xiaomi-star-v1-0-0c384e8b5737@gmail.com>
+ <20230806-xiaomi-star-v1-1-0c384e8b5737@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -105,11 +104,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <9a55016f-0049-f185-f2be-d138fe33384b@quicinc.com>
+In-Reply-To: <20230806-xiaomi-star-v1-1-0c384e8b5737@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -118,73 +117,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.08.2023 13:49, Jie Luo wrote:
+On 5.08.2023 19:03, Xilin Wu via B4 Relay wrote:
+> From: Xilin Wu <wuxilin123@gmail.com>
 > 
+> UCSI is supported on SM8350. Allow it to enable USB role switch and
+> altmode notifications on SM8350.
 > 
-> On 8/10/2023 8:59 PM, Konrad Dybcio wrote:
->> On 10.08.2023 13:54, Luo Jie wrote:
->>> Add clock & reset controller driver for qca8386/qca8084.
->>>
->>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->>> ---
->>
->>> +struct qcom_cc {
->>> +    struct qcom_reset_controller reset;
->>> +    struct clk_regmap **rclks;
->>> +    size_t num_rclks;
->>> +};
->> This all, including the probe func, is required because of the MDIO dance,
->> I assume?
->>
->> Commonizing that would make more sense should more clocks like this appear
->> in the future.
->>
-> Hi Konrad,
-> Thanks for the review.
-> the structure qcom_cc is not because of MDIO dance, this is the common structure used by other qcom clock drivers such as gcc-ipq9574 in the probe function.
-> 
-> seems that we can't make any more commonization on this, please let me know if there is any idea on this.
-My main point is, why can't you use qcom_cc_really_probe?
+> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> ---
+I can confirm this is also required for my SM8350 Xperia 1 III.
 
-> 
->> [...]
->>
->>> +static struct clk_branch nss_cc_switch_core_clk = {
->>> +    .halt_reg = 0x8,
->>> +    .clkr = {
->>> +        .enable_reg = 0x8,
->>> +        .enable_mask = BIT(0),
->>> +        .hw.init = &(const struct clk_init_data) {
->>> +            .name = "nss_cc_switch_core_clk",
->>> +            .parent_hws = (const struct clk_hw *[]) {
->>> +                &nss_cc_switch_core_clk_src.clkr.hw,
->>> +            },
->>> +            .num_parents = 1,
->>> +            /* Can be disabled in PHY mode for power saving */
->> Well it clearly cannot be disabled if it has the CLK_IS_CRITICAL flag :D
->>
->> What's the "PHY mode" you're talking about?
-> Yes, the clock with flag CLK_IS_CRITICAL needs to be enabled, the hardware register needs to be configured to enable it, it is disabled by default.
-> 
-> this clock branch is necessary for the switch mode that has switch features such routing and fdb forwarding, i will remove the CLK_IS_CRITICAL from the clock that is not needed for the PHY mode, we can enable it later when configuring it as switch mode.
-> 
-> As for PHY mode, the device works as only PHY device, that includes 4 PHY ports, no switch functions.
-It's still not obvious at all what "phy mode" or "switch mode" are.
-Are they usecases for a device based on this SoC?
+You will however need to rebase this patch atop next, sm8550_client_mask
+no longer exists.
 
 Konrad
-> 
->>
->>> +            .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
->>> +            .ops = &clk_branch2_mdio_ops,
->>> +        },
->>> +    },
->>> +};
->> I see a whole bunch of CRITICAL clocks.. please make sure these clocks
->> are actually necessary for Linux to know about (i.e. if we don't need
->> to call any operations on them, we might just skip registering them
->> with the driver).
->>
->> Konrad
->>
-> yes, Konrad, the clocks with  CLK_IS_CRITICAL need to be enabled manually, all clocks are disabled after reset(by default).
