@@ -2,123 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 945DD779F86
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 13:13:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2F7D779F97
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 13:27:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234277AbjHLLN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 07:13:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57714 "EHLO
+        id S232348AbjHLL1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 07:27:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbjHLLN2 (ORCPT
+        with ESMTP id S231307AbjHLL1D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 07:13:28 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED42B1BB
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 04:13:30 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe9f226cdbso475892e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 04:13:30 -0700 (PDT)
+        Sat, 12 Aug 2023 07:27:03 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 536FC110;
+        Sat, 12 Aug 2023 04:27:06 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe426521adso4244232e87.0;
+        Sat, 12 Aug 2023 04:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691838809; x=1692443609;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bRgkX9tQK0t3IPEOZ+f7p0GaTppX6/IGc7KRFoS2aCg=;
-        b=fGmKXAkvvjS1Pb8UGd7zCDVvkuVgJb8gOpjzvpA/Gre9bBLGyebS2hHYd++IP6yRgx
-         kgTTk2uNDK9gegSI9xNhqbq8GBeEZWCsj3OYHL50oKHN7su72Gp11qfQrc6eIm/9jKfT
-         9Tyu0MW06dgtZcMZYV7gHeBBX82/JUSfc0pzd5jGUqnXDwbxR04xaEcUg+MOTicKTf74
-         +GUqrdsv006rWwizhoZAktdUZn9x0QT8fs+V7Eih+wiawEp9JO7WZ0lO0XhAbuf+PtOy
-         mtd5Clm/8Tl9B1eEyYjJBQ/2vt2nqVY0VpORj7Sdy3Ys1f/uQ95D8rBq4SGiNeaZT1x7
-         TJFw==
+        d=gmail.com; s=20221208; t=1691839624; x=1692444424;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LrLDm8EhYfUEnK4RhbnUNMHzrTklLh0zDri9OxXh0HM=;
+        b=gva37Gk9U90pwSQWeKYkK8Au/OjnS+YOMBEoG8r6iYskk1vk2HPkK3U/EIA2xz0P8w
+         ac2iYm3IsIlRcfEKdhK0B5dCvXmnkZFJ3eqam8/gyPYnKDRzkdxHqkd0UZfOQV6ypGRk
+         k6pLk4LrxZ3NbfGg/6q1/j7ymWL5XnmBw2iWOOBF42uPsjnsdD9pq0rmB+zdncsncbiu
+         A6hQxLxY4SgvhXZevCIuo8RAxkmNYIG1J2Z9UDUv24uFuA5yqzVd0x7YyvIeYmTe5Bk0
+         laScfvHXZreX1zudT6cPAprizc7eLkdIm2pAbGp0u80rmSUeSovQw8mFqQuYoe90vkRU
+         XbPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691838809; x=1692443609;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bRgkX9tQK0t3IPEOZ+f7p0GaTppX6/IGc7KRFoS2aCg=;
-        b=E796NqUVk8ZsPKOXrrM8BZldlnaDvygMO0tE0EFAmv+KaX+nUV30d33Ad3Y5Dx0cEX
-         fcBtv6rZhfh0HkHTaz71uWn1/jppkrnKCI2kha64qc/TPTL6tBiPRVKeWboKflmoo8Eg
-         EoLo3LtfdvOlyKJBH26WEZYu8tEPDu6gwJfXMui/eeSJAiK60xhuD9ueKvuQhZCrbBB9
-         p3g/qgaqy2m0L/Dl9aDpIju27mKoW9aQnpIMqzV0V1Z5T/SNhmTaa2cptsG/2IjXZP83
-         7eDDaDUnNrMdxw6h0/69vFgFQFnb7Xw2SJt0MOakJtwppCd+0dY8oT+ktwWd/bIddWzS
-         mtiw==
-X-Gm-Message-State: AOJu0YwaYSllbdhfT8T+E84qtGXLjkL/uTozLCj6LYOIix9LHegq1KO3
-        LDQww4VUMfOHsUwItDemg4UHFQ==
-X-Google-Smtp-Source: AGHT+IFswA+h4U1yQ6iBhoJ9SlJt8A6HgFr+3OspRzNgpT/zEdU8SfMT9WMey4ugLfu/Wq4/dzeRVg==
-X-Received: by 2002:a05:6512:3c87:b0:4fb:cb10:64d0 with SMTP id h7-20020a0565123c8700b004fbcb1064d0mr4245458lfv.29.1691838809233;
-        Sat, 12 Aug 2023 04:13:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id ep12-20020a056512484c00b004fe18abbf07sm1092765lfb.212.2023.08.12.04.13.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Aug 2023 04:13:28 -0700 (PDT)
-Message-ID: <576aef93-6f99-4e60-8e54-d2b4eea5d4b1@linaro.org>
-Date:   Sat, 12 Aug 2023 13:13:27 +0200
+        d=1e100.net; s=20221208; t=1691839624; x=1692444424;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LrLDm8EhYfUEnK4RhbnUNMHzrTklLh0zDri9OxXh0HM=;
+        b=iyx0zY5TEON1rq4qj4XfiBZLhIowbG44IKFIVCg2SEOIx8QZEwJ2u2JjsYl6NHj1ph
+         PXdVrF9gpwpD3JJUVVthvgnuG62b2FVc/HXvy2pFai9Wbm2noj2N2DGTwi0BwnV3NZ05
+         3oXCMnfWO0ZGX5ma8pyuo7o1/Hm/yzTKJ58xanqXEtDGys2WYhko06+3YE7eyEMtQhDz
+         IjXRY26qwMT6758us2PVNCpft3fmeUQhT7VE2W6PjfclVSO/QaM0A8MxAwaFoYc5tffT
+         flpSbyX3TDeRZmI3lIy+fuGYS5vPXfDBxNjeKEgLQuUzxvK7gfPkoJDRRTAyOnEAAxRi
+         4Xyw==
+X-Gm-Message-State: AOJu0Yyab+dmVxcmDH6Pyqm6XB3ptHM40KdLVTQIL6l3yhu5BT25coix
+        acsO3YYhcG1kdAAL9h3escUAEHHLqGvujw==
+X-Google-Smtp-Source: AGHT+IF2/cJ7UE3CDLAFj8zZQGzwYdRrLLqmF2U7MPf9xjIQ/WYWZO72FV/pdnvPt37s7gmnZbtDeA==
+X-Received: by 2002:a19:7511:0:b0:4f3:b708:f554 with SMTP id y17-20020a197511000000b004f3b708f554mr2786118lfe.47.1691839624225;
+        Sat, 12 Aug 2023 04:27:04 -0700 (PDT)
+Received: from localhost.localdomain (bzd150.neoplus.adsl.tpnet.pl. [83.30.49.150])
+        by smtp.gmail.com with ESMTPSA id w3-20020ac24423000000b004fe2f085d5csm1087289lfl.299.2023.08.12.04.27.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Aug 2023 04:27:03 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/7] MSM8976 PLL,RPMPD and DTS changes
+Date:   Sat, 12 Aug 2023 13:24:43 +0200
+Message-Id: <20230812112534.8610-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] arm64: dts: qcom: msm8916: Define CAMSS ports in
- core dtsi
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230811234738.2859417-1-bryan.odonoghue@linaro.org>
- <20230811234738.2859417-2-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230811234738.2859417-2-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12.08.2023 01:47, Bryan O'Donoghue wrote:
-> Each CSIPHY in CAMMS maps to a port here in the dtsi, since the number of
-> CSIPHYs is fixed per SoC define the 8916 ports for both available PHYs.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This patch series fixes introduce support for msm8976 pll,
+also brings some adjustments and fixes domains setup and few dts nitpicks.
 
-Konrad
+Changes since v1
+================
+1. Fixed few styling issues
+2. Changed compatibles for plls
+3. Added fixes: tag to first patch
+
+Changes since v2
+================
+1. Fixed lacking .data in pll match_data
+2. Increased freq supported by A72PLL to include bin2
+3. Fixed remaining IPC bits
+4. Added R-b tags
+5. Changed commit msg for lpass dts patch
+6. Rebased patches on next-20230728
+
+Adam Skladowski (7):
+  drivers: genpd: qcom: rpmpd: Fix MSM8976 power domains setup
+  clk: qcom: clk-hfpll: Configure l_val in init when required
+  clk: qcom: hfpll: Allow matching pdata
+  dt-bindings: clock: qcom,hfpll: Document MSM8976 compatibles
+  clk: qcom: hfpll: Add MSM8976 PLL data
+  arm64: dts: qcom: msm8976: Split lpass region
+  arm64: dts: qcom: msm8976: Fix ipc bit shifts
+
+ .../devicetree/bindings/clock/qcom,hfpll.txt  |  3 +
+ arch/arm64/boot/dts/qcom/msm8976.dtsi         | 15 +++--
+ drivers/clk/qcom/clk-hfpll.c                  |  4 ++
+ drivers/clk/qcom/clk-hfpll.h                  |  1 +
+ drivers/clk/qcom/hfpll.c                      | 59 ++++++++++++++++++-
+ drivers/genpd/qcom/rpmpd.c                    | 27 ++++-----
+ 6 files changed, 85 insertions(+), 24 deletions(-)
+
+-- 
+2.41.0
+
