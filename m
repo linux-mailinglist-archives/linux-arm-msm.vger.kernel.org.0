@@ -2,127 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79254779E64
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 11:06:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9CE9779EB7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 11:56:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231685AbjHLI65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 04:58:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
+        id S236803AbjHLJ4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 05:56:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235890AbjHLI64 (ORCPT
+        with ESMTP id S229499AbjHLJ4D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 04:58:56 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986672D70
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 01:58:59 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b9b50be31aso41134731fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 01:58:59 -0700 (PDT)
+        Sat, 12 Aug 2023 05:56:03 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F76D100;
+        Sat, 12 Aug 2023 02:56:07 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-56c74961e0cso2243975eaf.3;
+        Sat, 12 Aug 2023 02:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691830737; x=1692435537;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hYbPUuykwQwOHi0MPBU1OzFW8wA7SV2JKxk4e1RDLfE=;
-        b=PnwWhAwbl1uVFo7XnJWtl23ecJ5xOehV5datI5WMkUrUzcd0FxF2k7gvww15t5X/G+
-         vIJfyPJ4qem3/8o4eGf3fHF0v2ggIR4y5fsK5QqRLfqYuzxzt2fyoNOdx9xLLqLmhCRC
-         nuPMYVivWCIOXxq5LdIb1M7yLeDpwFehudO3tp5vTJ6HT9R6vV346WMdJgs31Ft/BBrD
-         IyMdbwyfn6+QnEo3rJN8Ng2JzWqHxWSPsKvxN9hTJ8Za0shQpb+LiBpguOdaoU5Aid7Z
-         eb96r662XX9c0ZecqQUmr0Q1ctEpgDHEZZgYshVqmL6sXKGX1dwq0wRjVoMI+KWa6ZIX
-         hseQ==
+        d=gmail.com; s=20221208; t=1691834166; x=1692438966;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U8wjaQXSLMzRwh0cRitdikC2z6aQUD+mqTclR1K6a5M=;
+        b=flFkz6QkLIfqczqvD5zVuAarSOCtSsACYOuyvURalMYE11GpQE7pGasz9SsWJDUW/Y
+         uqw6/EFyK58IHMbs6GV5pVtkdh7bWLig+dyV7dJ0EX/4/SgMc+lDRv/CVM/yLtv5435U
+         RJLZTrbNgVzr/2YrcmNB98HzhFF+B5a5X39WQlaejo8KJNZHrzXqh/H28JC7PTl0se9N
+         rKZdYvsnAAsFPr+pgXd9xVPRNopg7V9anRl3pobqDaDcJQiSOQu9T2AOkW8HDPaxR/wc
+         GZndQ3NuNJzE2mS/KHFI3pml3ThWUFNXKMD3Eg/MxgeHRfIHS/nYX+R3nDNLmqfYY2it
+         z5HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691830737; x=1692435537;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hYbPUuykwQwOHi0MPBU1OzFW8wA7SV2JKxk4e1RDLfE=;
-        b=cUwTsB6+VhafGgNNzGlNLDwUYNwbi9m6Ma1zW1CNE4ABgXLwr1ZjbMLVEgm9h/iGCO
-         5gawxmEAAIKVP9PJ1b2A0iHbI3JsIRkJDlepSbi74Yzp04p9YGt9De6DvyBrGbaDMtG3
-         RGWdANT+bGItcnEQXhNRd1a00kfUoOF85ZdGxkMcSVrJCzENQwOTNwS3QMKRk/z0eVMP
-         +ufqtI//ShdqX4iGB98D6rzDeLyNGjl5XL2kzeQ+/hv3sNCJfb3mzDsAZ6Swyykm6xA3
-         Z96muIcKLxUBLtTdxlrcbWwdcOlecYvsc4J0eR4eN84FUE8TnkXRFeViCXz0526eCnfj
-         P/Kg==
-X-Gm-Message-State: AOJu0Yw6OXxZeJE7AHAxLoGSVY1P9RECIEwVKk47XtIGdIbCCnIO3lnd
-        sOJdRYW/pZLCXepH5fW+JjkeeA==
-X-Google-Smtp-Source: AGHT+IFHqHH+Cm/BlTpeIzknN2D+kRiXm5A7YGsL0ucqX0yw+F/yMZ7F39guJqgsyQta28L/+UpmZA==
-X-Received: by 2002:a05:6512:4002:b0:4fd:da65:d10 with SMTP id br2-20020a056512400200b004fdda650d10mr3891198lfb.36.1691830737399;
-        Sat, 12 Aug 2023 01:58:57 -0700 (PDT)
-Received: from [192.168.1.101] (abyj188.neoplus.adsl.tpnet.pl. [83.9.29.188])
-        by smtp.gmail.com with ESMTPSA id l26-20020a19c21a000000b004fe30e400a3sm212494lfc.111.2023.08.12.01.58.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Aug 2023 01:58:57 -0700 (PDT)
-Message-ID: <d827f3df-cd65-4149-b08f-7ba3aba5b8a7@linaro.org>
-Date:   Sat, 12 Aug 2023 10:58:55 +0200
+        d=1e100.net; s=20221208; t=1691834166; x=1692438966;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U8wjaQXSLMzRwh0cRitdikC2z6aQUD+mqTclR1K6a5M=;
+        b=G62zSSfi+Q2xJo0WjqCinwfVt50R7QR8peMduKiOYMjuJ6fBrHy4nnumz95x4KloZv
+         Xtgz73TrpYwNMh2HPH5zFcoZlaDqquuEvxrc/+tIgk91z+j/2aSBWubs1XAg6fl8HuGj
+         B0DsM1Q7FadLdi9XbutGzkrOiFQnwYYYmVKo6GlMLd6ffaiA0iygouKTNM2UmEPSjeyK
+         KyYtoP0fLO9gHt6V/sssGQMW5LAFNgmCJV/iOK4zsQYYfrOYizV3qWeA5UMISfXzXsh4
+         mLU5N6MupH4lBY8B+cWgBHtl+Y/1PkMU28EbxNF9NjuBycMqTuOFo+cNNkgW5gbPv92m
+         iLnw==
+X-Gm-Message-State: AOJu0YyXE6Zy4aoO6aktH4XIPDC46lwianLubv1k346nf9esL2IBX0Jt
+        FZ6v/HpmjoftnUCfXJZuAlS+8+YLmAV9PSHW+pTbWrCW
+X-Google-Smtp-Source: AGHT+IFPkv3F2BAgtU0mz7BhUPJx9bjS9SnrspuiRZr04lLjBdoBf66zikjRMd5dtb5tc9QAUZLGqq6jDryDMQlZiPw=
+X-Received: by 2002:a05:6870:8301:b0:18b:1936:30ee with SMTP id
+ p1-20020a056870830100b0018b193630eemr5165190oae.56.1691834166433; Sat, 12 Aug
+ 2023 02:56:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-e5: Add touchscreen
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+References: <20230811210142.403160-1-robimarko@gmail.com> <20230811210142.403160-2-robimarko@gmail.com>
+ <4c96210b-4567-4cb5-80bb-7adca6c5f124@linaro.org> <CAOX2RU6X0Tww4UkTKVfc=PLY=RKVJdsm+gomytT0vOydTF+Hnw@mail.gmail.com>
+ <7116b473-7f22-43df-af39-81e5f6db4507@linaro.org>
+In-Reply-To: <7116b473-7f22-43df-af39-81e5f6db4507@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Sat, 12 Aug 2023 11:55:55 +0200
+Message-ID: <CAOX2RU6nMvpTkGdwBoLJrES5v0qARnDDT6nCVd-DZid7p3pg6Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: ipq4019-ap.dk01.1: align flash node
+ with bindings
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230812071448.4710-1-linmengbo0689@protonmail.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230812071448.4710-1-linmengbo0689@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12.08.2023 09:16, Lin, Meng-Bo wrote:
-> Similar to A5, E5 uses a Melfas MMS345L touchscreen that is connected to
-> blsp_i2c5. Add it to the device tree.
-> 
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Sat, 12 Aug 2023 at 00:56, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 11.08.2023 23:35, Robert Marko wrote:
+> > On Fri, 11 Aug 2023 at 23:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> On 11.08.2023 23:01, Robert Marko wrote:
+> >>> Rename the SPI-NOR node to flash@0, remove #address-cells and #size-cells
+> >>> as they should be under the partitions subnode and use the generic
+> >>> jedec,spi-nor compatible.
+> >>>
+> >>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>> ---
+> >> You can also do "nandmanufacturer,mx25l25635e", "jedec,spi-nor"
+> >
+> > Hi,
+> > I grepped the vendor U-Boot to make sure it's not being triggered off
+> > the mx25l25635e
+> > compatible but the only hit is the IC support itself.
+> > MX25L25635 was just the original NOR IC Qualcomm used on the board so
+> > to me it made
+> > most sense to just use the JEDEC compatible as NOR itself is JEDEC NOR
+> > compatible.
+> OK if dynamic identification works fine
 
-Konrad
+It should work fine, datasheet is clear that its JEDEC compatible.
+That being said, I dont actually have the board, just figured it was
+time for a cleanup as
+OpenWrt has been patching DK01 and DK04 for ages.
+
+Regards,
+Robert
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> Konrad
