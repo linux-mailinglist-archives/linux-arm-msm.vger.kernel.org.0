@@ -2,81 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E26677A1E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Aug 2023 20:38:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C51D477A481
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Aug 2023 03:15:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbjHLSiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 14:38:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57756 "EHLO
+        id S229475AbjHMBOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 21:14:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjHLSiL (ORCPT
+        with ESMTP id S229468AbjHMBOz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 14:38:11 -0400
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1552E7E;
-        Sat, 12 Aug 2023 11:38:13 -0700 (PDT)
-Received: from newone.lan (unknown [10.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Sat, 12 Aug 2023 21:14:55 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7F9127;
+        Sat, 12 Aug 2023 18:14:58 -0700 (PDT)
+Received: from [192.168.2.249] (109-252-150-127.dynamic.spd-mgts.ru [109.252.150.127])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id F2AAE160C2B;
-        Sat, 12 Aug 2023 20:38:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1691865492;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=70fzX3Ds3lMsrQYPboUy38IZdBvKC3O1QnaoqSjqxPQ=;
-        b=wif4D/cQ1UYnVepfbilEkiQfp2XfeoyBzlnLb/sLvbfcRleTQ26BqKwATufCWvUf6g6BHP
-        tQHQp+UUrIm154SYRZ9bHvat/Zre6S4Zi2mcng/cvtZViKDi9oneLXiYLRirY9ucJiXegp
-        aGknfctESy7D8XxD7msWSonYRu+H2h0=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: msm8960: drop 2nd clock frequency from timer
-Date:   Sat, 12 Aug 2023 20:38:10 +0200
-Message-Id: <20230812183811.375671-1-david@ixit.cz>
-X-Mailer: git-send-email 2.40.1
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id F222866071B8;
+        Sun, 13 Aug 2023 02:14:51 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1691889295;
+        bh=bPp/hkEoDS0ZxAQiv7IPH0ePMv+YAdVNwR7xflkKTfA=;
+        h=Date:Subject:To:References:From:In-Reply-To:From;
+        b=Uz8KDonPc/gBgbinrFzsCdc6rgNcwCbXiIogKVRXysqJJtxOGqNEF2OUOR+rVnrXd
+         VwOSU59ZkqE9I2R9CNOpO28dhmbVc2RZcZcaxEONC0OAH+wxz6POH8Rza1irhAgWQX
+         3jNxUqWp9qemwwuadE6DSax0voEzK6ad/MwWNwyqoUmdMClJ0GuN+GntG6o/Y2+G20
+         US0ec6J00OLr7/jjIhU8IlmjV5yvwReELAfpnaFBKL055tF1xHd83m+Q1gCsxqJfu1
+         GvuSjjhWUWtbQvALG3p1XUa66zNV9izcGryYx+W8Bq2+CW9UGz0xQnSZk7uepiAzPw
+         5WLxzXW8kcnpw==
+Message-ID: <325014e7-cb8d-54e0-eead-7727c8ec2f07@collabora.com>
+Date:   Sun, 13 Aug 2023 04:14:49 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,PDS_RDNS_DYNAMIC_FP,
-        RCVD_IN_DNSWL_BLOCKED,RDNS_DYNAMIC,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH -next 5/7] drm/virtio: Remove an unnecessary NULL value
+Content-Language: en-US
+To:     Ruan Jinjie <ruanjinjie@huawei.com>, Felix.Kuehling@amd.com,
+        alexander.deucher@amd.com, christian.koenig@amd.com,
+        Xinhui.Pan@amd.com, airlied@gmail.com, daniel@ffwll.ch,
+        harry.wentland@amd.com, sunpeng.li@amd.com,
+        Rodrigo.Siqueira@amd.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, tzimmermann@suse.de, inki.dae@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, bskeggs@redhat.com,
+        kherbst@redhat.com, lyude@redhat.com, kraxel@redhat.com,
+        gurchetansingh@chromium.org, olvaffe@gmail.com,
+        paulo.miguel.almeida.rodenas@gmail.com, wenjing.liu@amd.com,
+        haoping.liu@amd.com, Charlene.Liu@amd.com, chiahsuan.chung@amd.com,
+        george.shen@amd.com, sancchen@amd.com, tony.tascioglu@amd.com,
+        jaehyun.chung@amd.com, tales.aparecida@gmail.com, drv@mailo.com,
+        aurabindo.pillai@amd.com, quic_vpolimer@quicinc.com,
+        jiasheng@iscas.ac.cn, noralf@tronnes.org,
+        jose.exposito89@gmail.com, javierm@redhat.com,
+        mairacanal@riseup.net, davidgow@google.com,
+        arthurgrillo@riseup.net, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org
+References: <20230809034445.434902-1-ruanjinjie@huawei.com>
+ <20230809034445.434902-6-ruanjinjie@huawei.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20230809034445.434902-6-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver reads only one clock frequency, and the schema does not
-allow more than one frequency here.
+On 8/9/23 06:44, Ruan Jinjie wrote:
+> The NULL initialization of the pointer assigned by kzalloc() first is
+> not necessary, because if the kzalloc() failed, the pointer will be
+> assigned NULL, otherwise it works as usual. so remove it.
+> 
+> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+> ---
+>  drivers/gpu/drm/virtio/virtgpu_submit.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/virtio/virtgpu_submit.c b/drivers/gpu/drm/virtio/virtgpu_submit.c
+> index 3c00135ead45..82563dbec2ab 100644
+> --- a/drivers/gpu/drm/virtio/virtgpu_submit.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
+> @@ -274,7 +274,7 @@ static int virtio_gpu_fence_event_create(struct drm_device *dev,
+>  					 struct virtio_gpu_fence *fence,
+>  					 u32 ring_idx)
+>  {
+> -	struct virtio_gpu_fence_event *e = NULL;
+> +	struct virtio_gpu_fence_event *e;
+>  	int ret;
+>  
+>  	e = kzalloc(sizeof(*e), GFP_KERNEL);
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm/boot/dts/qcom/qcom-msm8660.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi
-index 78023ed2fdf7..23f7b67d9d61 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi
-@@ -109,8 +109,7 @@ timer@2000000 {
- 				     <1 1 0x301>,
- 				     <1 2 0x301>;
- 			reg = <0x02000000 0x100>;
--			clock-frequency = <27000000>,
--					  <32768>;
-+			clock-frequency = <27000000>;
- 			cpu-offset = <0x40000>;
- 		};
- 
 -- 
-2.40.1
+Best regards,
+Dmitry
 
