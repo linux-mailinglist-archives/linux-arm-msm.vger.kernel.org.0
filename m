@@ -2,148 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D13B777A5D8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Aug 2023 11:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC40577A607
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Aug 2023 12:56:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230503AbjHMJsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Aug 2023 05:48:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
+        id S229849AbjHMK4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Aug 2023 06:56:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjHMJsk (ORCPT
+        with ESMTP id S229712AbjHMK4m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Aug 2023 05:48:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C696410CE;
-        Sun, 13 Aug 2023 02:48:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 632336227B;
-        Sun, 13 Aug 2023 09:48:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DBAC433C8;
-        Sun, 13 Aug 2023 09:48:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691920121;
-        bh=MA2+PJqOeFmwFTlNJcRp71uT1hWwf5woRDqJwXhaHMo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q+WHGTVquOf/ckiSKobRJ5wScQSNFvIY1LaVLpN6w0Fa6X7x9IzpNCpE3Piosk/bI
-         A4rMXam+DF0xUHDWesbB/vFghPLBx8ySWheDDlBTmIZ07icF+qPN0w/uIODJwkUfyM
-         aUoUbWynTck/Jzu2aA3sLFR2AtwSUGCelcbUQBRgwqEhtcL20mAGUFIpJLEvuZG/A2
-         8o9tPc/YLtR8QahlAKjRjYuf3tM/tqm9tOYcNurrAiSv9iOEyVlncOpIGa6gW6BI3a
-         GcJN5bxTiVPxppfx7hMYd95NUx+o8VQ+0knKk8puNPWkg2tqidmqRP9ELuibna0IYG
-         +LP+5j+mBCTYQ==
-Date:   Sun, 13 Aug 2023 10:48:36 +0100
-From:   Conor Dooley <conor@kernel.org>
+        Sun, 13 Aug 2023 06:56:42 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D83170E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Aug 2023 03:56:44 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d62b9bd5b03so3343247276.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Aug 2023 03:56:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691924203; x=1692529003;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nnCAXcHQ5YbbgyoTwMdYIMHDBrk3F+4fVGdkjI2OoZM=;
+        b=iOuIxXiPcej0r67OfAA+KmyeRoR8tl1Qzg8AzJ+Q6x9HfQB9l/fmQ3m0RIawpKYpXI
+         Fn+XK/OhY67bvUOpfo/L66cS1zHhXwod5sVb+GnOiMtbK1qXZ5l4QWLFxk464KaxWNls
+         Rvm6cKFKFzjvRMXs2q774ImxcLW6otu+bVydg6MpW6Sd/fkE/AaKhbVXowUQyk1oWFA5
+         ZoT0T9qJRLKbH1ED9KINRrajkDSFaowxHUTuwoV7LpqMpRNjjLNjkmmdnHMqzK74kzei
+         QGf3Zr1v8fA0ZAOBqVp1tC0I9n7SUSCyozN/zv5rXTbdhpHddZQuL+XulTKa5EK0mL/p
+         Cg1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691924203; x=1692529003;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nnCAXcHQ5YbbgyoTwMdYIMHDBrk3F+4fVGdkjI2OoZM=;
+        b=A+DGE8adaLCpSBszlLzQSeMWZCKP+y6tSM2VkvIB1GCTuY9jOdbosGZAaBEE1G2pVf
+         iJKr2R3xUd70svqh6Bbe4qZfTeQe0RRqqEkAJt+vhvLBiz7x/r7nE7tFLcfVLpy29ue+
+         aUNm0Q4L1plckdB9lruwEJRUUWSEtje0JfDRX1hroDPXrR/cH97MQGPUQ0FOX5oRtzDP
+         Xh4Dnv0xZSZsLvVsxQ+RGYooZoJmgrOkwPssMThhL7H3B+RkFs0qkLo93CyrfaWzUdgf
+         F+686RhoKlJdyGiPWkdGG1JEHehScvtwaODwhdWEw9pi5hwvfWUVOdFbTciWiJCMYLxD
+         dgVg==
+X-Gm-Message-State: AOJu0YytslbFgxE6c2dO7abT66Q6REDApPaX8jOSB83ON/mi+VRKc28O
+        h6Mhqak3t+sqnaep+toEilNpYZ/284yXGVyeJgBGzw==
+X-Google-Smtp-Source: AGHT+IFB1bUAZwI2DUr/FWaK8qZnieSurYZeAHm5xX+MszEu4nGhXFgKs4+dBfm5GfEVDJZKeulaCwIjwDWANu1uE6E=
+X-Received: by 2002:a25:dad7:0:b0:d62:ba45:539f with SMTP id
+ n206-20020a25dad7000000b00d62ba45539fmr6989446ybf.43.1691924203356; Sun, 13
+ Aug 2023 03:56:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230806-xiaomi-star-v1-0-0c384e8b5737@gmail.com>
+ <20230806-xiaomi-star-v1-1-0c384e8b5737@gmail.com> <244d165a-1e53-401e-be36-6bb3f4f260ae@linaro.org>
+In-Reply-To: <244d165a-1e53-401e-be36-6bb3f4f260ae@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 13 Aug 2023 13:56:32 +0300
+Message-ID: <CAA8EJpqiaEamZ6u9D_Sn-bgn8qdpqsQ2EMt7Tb9hKr5kNO2JFg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] soc: qcom: pmic_glink: enable UCSI for SM8350
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     wuxilin123@gmail.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom,prng: Add SM8450
-Message-ID: <20230813-velvet-folic-10625075aedd@spud>
-References: <20230811-topic-8450_prng-v1-0-01becceeb1ee@linaro.org>
- <20230811-topic-8450_prng-v1-1-01becceeb1ee@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Ayu4EmJnvOAjxhgj"
-Content-Disposition: inline
-In-Reply-To: <20230811-topic-8450_prng-v1-1-01becceeb1ee@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 12 Aug 2023 at 14:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 5.08.2023 19:03, Xilin Wu via B4 Relay wrote:
+> > From: Xilin Wu <wuxilin123@gmail.com>
+> >
+> > UCSI is supported on SM8350. Allow it to enable USB role switch and
+> > altmode notifications on SM8350.
+> >
+> > Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> > ---
+> I can confirm this is also required for my SM8350 Xperia 1 III.
 
---Ayu4EmJnvOAjxhgj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Last time I checked it, UCSI was broken on the SM8350 HDK. Trying to
+enable it caused pmic_glink to stop working after some port
+operations.
 
-On Fri, Aug 11, 2023 at 10:50:56PM +0200, Konrad Dybcio wrote:
-> SM8450's PRNG does not require a core clock reference. Add a new
-> compatible with a qcom,prng-ee fallback and handle that.
->=20
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-
-Thanks,
-Conor.
-
-> ---
->  .../devicetree/bindings/crypto/qcom,prng.yaml      | 24 ++++++++++++++++=
-+-----
->  1 file changed, 19 insertions(+), 5 deletions(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Do=
-cumentation/devicetree/bindings/crypto/qcom,prng.yaml
-> index bb42f4588b40..36b0ebd9a44b 100644
-> --- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-> +++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-> @@ -11,9 +11,13 @@ maintainers:
-> =20
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,prng  # 8916 etc.
-> -      - qcom,prng-ee  # 8996 and later using EE
-> +    oneOf:
-> +      - enum:
-> +          - qcom,prng  # 8916 etc.
-> +          - qcom,prng-ee  # 8996 and later using EE
-> +      - items:
-> +          - const: qcom,sm8450-prng-ee
-> +          - const: qcom,prng-ee
-> =20
->    reg:
->      maxItems: 1
-> @@ -28,8 +32,18 @@ properties:
->  required:
->    - compatible
->    - reg
-> -  - clocks
-> -  - clock-names
-> +
-> +allOf:
-> +  - if:
-> +      not:
-> +        properties:
-> +          compatible:
-> +            contains:
-> +              const: qcom,sm8450-prng-ee
-> +    then:
-> +      required:
-> +        - clocks
-> +        - clock-names
-> =20
->  additionalProperties: false
-> =20
->=20
-> --=20
-> 2.41.0
->=20
-
---Ayu4EmJnvOAjxhgj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZNim9AAKCRB4tDGHoIJi
-0gpPAP9xK4CE35RqLQN5w2zN+bQ2RtZFfGU2Rd+iS2cXdKx7MAD8CZwhnVxeDnWh
-ehZFdNmoaPawbCYAclmBc7ISspdejgA=
-=6i5X
------END PGP SIGNATURE-----
-
---Ayu4EmJnvOAjxhgj--
+-- 
+With best wishes
+Dmitry
