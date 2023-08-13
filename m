@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C51D477A481
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Aug 2023 03:15:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 088F277A490
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Aug 2023 03:59:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbjHMBOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Aug 2023 21:14:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55892 "EHLO
+        id S230115AbjHMB7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Aug 2023 21:59:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjHMBOz (ORCPT
+        with ESMTP id S229458AbjHMB7s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Aug 2023 21:14:55 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7F9127;
-        Sat, 12 Aug 2023 18:14:58 -0700 (PDT)
-Received: from [192.168.2.249] (109-252-150-127.dynamic.spd-mgts.ru [109.252.150.127])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: dmitry.osipenko)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id F222866071B8;
-        Sun, 13 Aug 2023 02:14:51 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1691889295;
-        bh=bPp/hkEoDS0ZxAQiv7IPH0ePMv+YAdVNwR7xflkKTfA=;
-        h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=Uz8KDonPc/gBgbinrFzsCdc6rgNcwCbXiIogKVRXysqJJtxOGqNEF2OUOR+rVnrXd
-         VwOSU59ZkqE9I2R9CNOpO28dhmbVc2RZcZcaxEONC0OAH+wxz6POH8Rza1irhAgWQX
-         3jNxUqWp9qemwwuadE6DSax0voEzK6ad/MwWNwyqoUmdMClJ0GuN+GntG6o/Y2+G20
-         US0ec6J00OLr7/jjIhU8IlmjV5yvwReELAfpnaFBKL055tF1xHd83m+Q1gCsxqJfu1
-         GvuSjjhWUWtbQvALG3p1XUa66zNV9izcGryYx+W8Bq2+CW9UGz0xQnSZk7uepiAzPw
-         5WLxzXW8kcnpw==
-Message-ID: <325014e7-cb8d-54e0-eead-7727c8ec2f07@collabora.com>
-Date:   Sun, 13 Aug 2023 04:14:49 +0300
+        Sat, 12 Aug 2023 21:59:48 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B261716
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 18:59:51 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id 41be03b00d2f7-565334377d0so2452239a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Aug 2023 18:59:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=networkplumber-org.20221208.gappssmtp.com; s=20221208; t=1691891991; x=1692496791;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+/CZUr4BOJ9A4g/EJQv8nU92G8B2uTxt26ZdHAnXEYE=;
+        b=aju+GZQHRpAdyNoxsn8XjpHFaGx99Nac8OJpnJv7FLjEt/hK5UCfwSWuIMHUYYlreV
+         TazrcadpFr7Y85Smp3TlAmqGKiV7L2vmJ75VWlzCnfuTBSWy9ug3uZC2vytQVrHRPDkA
+         ymWdhmlCUhRns28plQ3nkiVwt3Z7z+JpM535sPfVX2tHJVhBbsUzPQjV1pxpN9mGfWPB
+         L0eHjk758FaPVvLRegbFW/Y2IY6uRVxgEIGzRzBay+c/GgAq0YyJh7wP3zZTtWNj7GmJ
+         XmvUx9KwFGaxm9rR0Gisd7PtpocRzjyJU2HsOP7vNgEmt9MybTLU1EN0k63EApvAtggc
+         7E1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691891991; x=1692496791;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+/CZUr4BOJ9A4g/EJQv8nU92G8B2uTxt26ZdHAnXEYE=;
+        b=Cn/AFAPM3T0v4akGJMSstU3A2ym2YAyTMuHPeySbz2OGH6cfs7fp/WeFYk24nyn7T7
+         +dxsdOp9MOsp7gxRqLL4sfzU+pn1jtfL2IoYu08LS3VPQ30K6z9j2vkGxkauE1D7x6Qo
+         dMpsygIaBLpnmtLEV6XxpwDa/+gk5kGf/NZkezGCVJr6kWesvcaxXIjgScbnDegTvl+z
+         c5svM7NjL8Fd0GJ48jslweICvUx5TM7XOe0MZ4jNEI+jxCCexFFDfUkvvHuwFnQ0grLl
+         r48miK0y/5oYZrOFokImA5yfHKlO8nobfs5NUCg7Zx33zpkjgRwFscTjb/7CF5d2BP79
+         Elww==
+X-Gm-Message-State: AOJu0YxscNMDEouJkHy1IGUM6emz+s547JsxXnc8mx0qh6sElPo6YkOj
+        dt373ZoMu0dW/oZRsM5EFBJ9pw==
+X-Google-Smtp-Source: AGHT+IGZT3lRbxWdL/X9cnKcEexajsiBHi3p3oFjfhI3xk2LEh/pfewN4xIUNkXnJoHSXccsgbK9TQ==
+X-Received: by 2002:a17:90a:e651:b0:268:13c4:b800 with SMTP id ep17-20020a17090ae65100b0026813c4b800mr5485381pjb.21.1691891990780;
+        Sat, 12 Aug 2023 18:59:50 -0700 (PDT)
+Received: from hermes.local (204-195-127-207.wavecable.com. [204.195.127.207])
+        by smtp.gmail.com with ESMTPSA id m8-20020a17090a4d8800b00267ae12b80bsm7268411pjh.34.2023.08.12.18.59.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Aug 2023 18:59:50 -0700 (PDT)
+Date:   Sat, 12 Aug 2023 18:59:48 -0700
+From:   Stephen Hemminger <stephen@networkplumber.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Andrew Lunn <andrew@lunn.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Chris Lew <quic_clew@quicinc.com>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+Subject: Re: [PATCH v2 2/4] soc: qcom: aoss: Add debugfs interface for
+ sending messages
+Message-ID: <20230812185948.29f1d53b@hermes.local>
+In-Reply-To: <20230811233228.GT1428172@hu-bjorande-lv.qualcomm.com>
+References: <20230811205839.727373-1-quic_bjorande@quicinc.com>
+        <20230811205839.727373-3-quic_bjorande@quicinc.com>
+        <d212e5a7-e9e5-4297-85fb-030818f7c647@lunn.ch>
+        <20230811233228.GT1428172@hu-bjorande-lv.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH -next 5/7] drm/virtio: Remove an unnecessary NULL value
-Content-Language: en-US
-To:     Ruan Jinjie <ruanjinjie@huawei.com>, Felix.Kuehling@amd.com,
-        alexander.deucher@amd.com, christian.koenig@amd.com,
-        Xinhui.Pan@amd.com, airlied@gmail.com, daniel@ffwll.ch,
-        harry.wentland@amd.com, sunpeng.li@amd.com,
-        Rodrigo.Siqueira@amd.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, tzimmermann@suse.de, inki.dae@samsung.com,
-        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, bskeggs@redhat.com,
-        kherbst@redhat.com, lyude@redhat.com, kraxel@redhat.com,
-        gurchetansingh@chromium.org, olvaffe@gmail.com,
-        paulo.miguel.almeida.rodenas@gmail.com, wenjing.liu@amd.com,
-        haoping.liu@amd.com, Charlene.Liu@amd.com, chiahsuan.chung@amd.com,
-        george.shen@amd.com, sancchen@amd.com, tony.tascioglu@amd.com,
-        jaehyun.chung@amd.com, tales.aparecida@gmail.com, drv@mailo.com,
-        aurabindo.pillai@amd.com, quic_vpolimer@quicinc.com,
-        jiasheng@iscas.ac.cn, noralf@tronnes.org,
-        jose.exposito89@gmail.com, javierm@redhat.com,
-        mairacanal@riseup.net, davidgow@google.com,
-        arthurgrillo@riseup.net, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org
-References: <20230809034445.434902-1-ruanjinjie@huawei.com>
- <20230809034445.434902-6-ruanjinjie@huawei.com>
-From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <20230809034445.434902-6-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,33 +83,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/9/23 06:44, Ruan Jinjie wrote:
-> The NULL initialization of the pointer assigned by kzalloc() first is
-> not necessary, because if the kzalloc() failed, the pointer will be
-> assigned NULL, otherwise it works as usual. so remove it.
+On Fri, 11 Aug 2023 16:32:28 -0700
+Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+
+> On Fri, Aug 11, 2023 at 11:01:50PM +0200, Andrew Lunn wrote:
+> > > +static ssize_t qmp_debugfs_write(struct file *file, const char __user *userstr,
+> > > +				 size_t len, loff_t *pos)
+> > > +{
+> > > +	struct qmp *qmp = file->private_data;
+> > > +	char buf[QMP_MSG_LEN];
+> > > +	int ret;
+> > > +
+> > > +	if (!len || len >= QMP_MSG_LEN)
+> > > +		return -EINVAL;
+> > > +
+> > > +	if (copy_from_user(buf, userstr, len))
+> > > +		return -EFAULT;
+> > > +	buf[len] = '\0';
+> > > +
+> > > +	ret = qmp_send(qmp, buf);
+> > > +	if (ret < 0)
+> > > +		return ret;  
+> > 
+> > Sorry, but you still appear to be sending binary blobs from userspace
+> > to the firmware. This is not liked.
+> >   
 > 
-> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-> ---
->  drivers/gpu/drm/virtio/virtgpu_submit.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/virtio/virtgpu_submit.c b/drivers/gpu/drm/virtio/virtgpu_submit.c
-> index 3c00135ead45..82563dbec2ab 100644
-> --- a/drivers/gpu/drm/virtio/virtgpu_submit.c
-> +++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
-> @@ -274,7 +274,7 @@ static int virtio_gpu_fence_event_create(struct drm_device *dev,
->  					 struct virtio_gpu_fence *fence,
->  					 u32 ring_idx)
->  {
-> -	struct virtio_gpu_fence_event *e = NULL;
-> +	struct virtio_gpu_fence_event *e;
->  	int ret;
->  
->  	e = kzalloc(sizeof(*e), GFP_KERNEL);
+> As mentioned in the cover letter, I do recognize your concern here. I
+> don't see it as a realistic way to work around the kernel for reasons of
+> being proprietary - given that we don't have debugfs mounted in the vast
+> majority of product.
 
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-
--- 
-Best regards,
-Dmitry
-
+Anyone who cares about security, and has things like kernel lockdown turned on
+is going to be scared by this. If you allow API to tell firmware to do any arbitrary thing
+it means you could be telling firmware "please read this area of kernel memory for me"
