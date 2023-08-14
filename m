@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7735977B652
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 12:15:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02A2377B64E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 12:15:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236628AbjHNKOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 06:14:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48592 "EHLO
+        id S236488AbjHNKOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 06:14:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236621AbjHNKOX (ORCPT
+        with ESMTP id S236651AbjHNKOZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 06:14:23 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C00D710D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 03:14:21 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99bf8e5ab39so566357366b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 03:14:21 -0700 (PDT)
+        Mon, 14 Aug 2023 06:14:25 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9010C10E2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 03:14:23 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso550456966b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 03:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1692008060; x=1692612860;
+        d=fairphone.com; s=fair; t=1692008062; x=1692612862;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SkXTYbxi8WsuAx3brFiN3d9aFfnzOfLnWqXE8pepV8E=;
-        b=SW3PgpkMGdRLpwTKiD2cGqxzUT4MRFRGhPbqlmmV1bg9hpAqQ4GiQUFDoj8Ipv2XSA
-         U2xu2X4WEY/spbe5GWKQ5tpSOawfizR9yldqvPWA0ZqihXwA6jAP2CF6kukIgDabu6nr
-         DJgc6y4Bg05Giv+k3zOOUTbWDQofSs07j181Tykuy8fW/R79mQPdWMoMi9+EjYntMwJz
-         /pnRimwEp2P1W4xq3Dp53k/nw9tN24SL2oJ1q/0rZEO/RZWQCW/8KtKsgEzUYiHTTmv7
-         T5f8x8+ouQrK1r74zKdFQrVqTWitMrq1tL0x6bzxVtPfDthWyMQMURnmaQqYbQX1szHM
-         POqg==
+        bh=M8oO/PwgsW79kOUbldrma34w+xKKDHQ32lW8yb4A9TU=;
+        b=xTyyDV4bqm7A76/QoUoulaPJJxQ/9mx2vWKTZgbgYy16q39AQmya0IeogAfYfDPsvB
+         4jwmq16zkvVhmqMXMZvPFNKBlkT6sVrETGpwdkhmukLgp+RW8qSRIGp+jiINrupjri6Q
+         d9SC6OgyXmWcyIiVXdCnxCLV9s84IcIQcS8qRtPfzjDXSR2uuS8TP8dvnD51ZYjBCK1T
+         VKtumtkYqThr0PA8UqhUllBTF/Ju7p/63jBaT5CpgrTggvAAkOSCWdZxg/ynvVeILgJt
+         l5VbmWeMpQa9h263jOJTDz2MLe8hUziqYKernZMqM6XBZS//EZghP4MlQqIhv7x/CBZj
+         Glaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692008060; x=1692612860;
+        d=1e100.net; s=20221208; t=1692008062; x=1692612862;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SkXTYbxi8WsuAx3brFiN3d9aFfnzOfLnWqXE8pepV8E=;
-        b=fhIFRWspcx2CknCpcJOn1vE5OiJ7jpRGuYh40f/nofDRT8MRrKlrVrbKvn9mflLW9L
-         RboIpA9b8rzKw+JFGmec47oDGogp/BiMWcCJFCdizTp6bfM/pwBUgjt7SSpABP6fUiih
-         jl9do+eNspJj4g7wcYmu9NRbrDtwajG9w7e1oMejxO5463aryvflLRpChBZxPohxUBjM
-         X5DVFfR6fH4OlBwFiZSr7Glqitiu4A68wqNSvch0CrTnI7aOQNtCW+R8fqsual5uJ4zQ
-         kQG1fpn43JQqAI6HFtkebXI6aFbqFMrmdJFcMURfdhvz25RXXiO46YL3EjvQdRKY3Ynd
-         WOSQ==
-X-Gm-Message-State: AOJu0Yxz/n3x+0ViepGbagv4aSBUag8mijO7KnguU2MQg0ITju35wq4i
-        1QjGTEnpmTJZ9NPD9vyUcENDN2etEVCzGj0HJUC8AQ==
-X-Google-Smtp-Source: AGHT+IFoHxMBCJ6ihiQY7oKhpRGwHadxLpkZDfkgnb07niT0v85Ddz8JnmeAUkKxzzzYDvSl1egqGA==
-X-Received: by 2002:a17:906:30cf:b0:99c:bb4d:f59e with SMTP id b15-20020a17090630cf00b0099cbb4df59emr7476010ejb.63.1692008060084;
-        Mon, 14 Aug 2023 03:14:20 -0700 (PDT)
+        bh=M8oO/PwgsW79kOUbldrma34w+xKKDHQ32lW8yb4A9TU=;
+        b=YEhVcl00xqGOM2+TPrYuvXMftAZOY8HCoz4aIculojLXsrCM24jx2s7vk8gTlTK8jG
+         mCSAfn81IzwxQ3wlJ+GOR40RK5tJClK5hSBydouRsntouYVsn1y+mmSoGvJq5caCrv0l
+         3utkrDbJxdxi6PgERy4uByE52eRrrjTNMZ8Nep1IlVDmdU0c9jcZzfSeSPZjk3/zCnKX
+         a9QR2zxVGCk/o31OFuAzOcJK99G6xMFrv2nhuM2t9aorfeaaBYbGVfQiHqyBUR6Cmhzd
+         MGjzdami2z0pU2r3ZrOE9q/w43jALVz5wVpSyVitmdhny4bQpruur+czzxlZ4zV0lAiO
+         Vs5A==
+X-Gm-Message-State: AOJu0YzipDmMivPOTDTCooyQW20OyIkUDLzHwYRBQ2TatT55F9yrqbyn
+        0DNCPcWwP5zU0FDP3VlWgr+LVmXUT0wpJLNnVLcF2Q==
+X-Google-Smtp-Source: AGHT+IFPnyhVQ4mf+lfev7hGeghOLu2St2ZJl1ynlBYniqCScspLIKrSCuVG9bxHMqdE24EjqBnMTg==
+X-Received: by 2002:a17:906:5307:b0:98f:c9b:24ed with SMTP id h7-20020a170906530700b0098f0c9b24edmr8108333ejo.67.1692008061827;
+        Mon, 14 Aug 2023 03:14:21 -0700 (PDT)
 Received: from otso.luca.vpn.lucaweiss.eu (212095005216.public.telering.at. [212.95.5.216])
-        by smtp.gmail.com with ESMTPSA id os5-20020a170906af6500b00993a37aebc5sm5472870ejb.50.2023.08.14.03.14.18
+        by smtp.gmail.com with ESMTPSA id os5-20020a170906af6500b00993a37aebc5sm5472870ejb.50.2023.08.14.03.14.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Aug 2023 03:14:19 -0700 (PDT)
+        Mon, 14 Aug 2023 03:14:21 -0700 (PDT)
 From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Mon, 14 Aug 2023 12:14:13 +0200
-Subject: [PATCH v6 1/4] dt-bindings: ufs: qcom: Add reg-names property for
- ICE
+Date:   Mon, 14 Aug 2023 12:14:14 +0200
+Subject: [PATCH v6 2/4] dt-bindings: ufs: qcom: Add sm6115 binding
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230814-dt-binding-ufs-v6-1-fd94845adeda@fairphone.com>
+Message-Id: <20230814-dt-binding-ufs-v6-2-fd94845adeda@fairphone.com>
 References: <20230814-dt-binding-ufs-v6-0-fd94845adeda@fairphone.com>
 In-Reply-To: <20230814-dt-binding-ufs-v6-0-fd94845adeda@fairphone.com>
 To:     Andy Gross <agross@kernel.org>,
@@ -79,7 +78,10 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-crypto@vger.kernel.org,
         Luca Weiss <luca.weiss@fairphone.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Eric Biggers <ebiggers@google.com>,
+        Iskren Chernev <me@iskren.info>
 X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -91,60 +93,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
-in the bindings so the existing dts can validate successfully.
+From: Iskren Chernev <me@iskren.info>
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Add SM6115 UFS to DT schema.
+
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Iskren Chernev <me@iskren.info>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ .../devicetree/bindings/ufs/qcom,ufs.yaml          | 30 ++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index bdfa86a0cc98..4cc3f8f03b33 100644
+index 4cc3f8f03b33..2b0831622cf0 100644
 --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
 +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -79,6 +79,11 @@ properties:
-     minItems: 1
-     maxItems: 2
- 
-+  reg-names:
-+    items:
-+      - const: std
-+      - const: ice
-+
-   required-opps:
-     maxItems: 1
- 
-@@ -134,6 +139,8 @@ allOf:
-         reg:
-           minItems: 1
+@@ -29,6 +29,7 @@ properties:
+           - qcom,sa8775p-ufshc
+           - qcom,sc8280xp-ufshc
+           - qcom,sdm845-ufshc
++          - qcom,sm6115-ufshc
+           - qcom,sm6350-ufshc
+           - qcom,sm8150-ufshc
+           - qcom,sm8250-ufshc
+@@ -204,6 +205,35 @@ allOf:
+         reg-names:
            maxItems: 1
-+        reg-names:
-+          maxItems: 1
  
-   - if:
-       properties:
-@@ -162,6 +169,10 @@ allOf:
-         reg:
-           minItems: 2
-           maxItems: 2
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm6115-ufshc
++    then:
++      properties:
++        clocks:
++          minItems: 8
++          maxItems: 8
++        clock-names:
++          items:
++            - const: core_clk
++            - const: bus_aggr_clk
++            - const: iface_clk
++            - const: core_clk_unipro
++            - const: ref_clk
++            - const: tx_lane0_sync_clk
++            - const: rx_lane0_sync_clk
++            - const: ice_core_clk
++        reg:
++          minItems: 2
++          maxItems: 2
 +        reg-names:
 +          minItems: 2
 +      required:
 +        - reg-names
- 
-   - if:
-       properties:
-@@ -190,6 +201,8 @@ allOf:
-         reg:
-           minItems: 1
-           maxItems: 1
-+        reg-names:
-+          maxItems: 1
- 
++
      # TODO: define clock bindings for qcom,msm8994-ufshc
  
+   - if:
 
 -- 
 2.41.0
