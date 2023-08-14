@@ -2,189 +2,548 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7CDC77BB6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 16:23:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03C6D77BBAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 16:30:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbjHNOWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 10:22:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36778 "EHLO
+        id S232460AbjHNOaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 10:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231589AbjHNOWP (ORCPT
+        with ESMTP id S232613AbjHNO3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 10:22:15 -0400
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2061.outbound.protection.outlook.com [40.107.237.61])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8101BE3;
-        Mon, 14 Aug 2023 07:22:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NgfAEOr6p+V/X4GMmxKdww3XpAXGtvAFDeLOuErCXrH2nE4eQ/x0VtjFHWRQoHVci1F0ozIJ9wcOmo3EMyKMULEOzRkvwXEVPdkAkt4abJxrYLzMsfxqcyDOfm5smVKng13zJYzwAvZn0p4VvrfHBsQgOi6HNkHiEN9DUUeRHAipBHpjxlM16IC/FAF7uvP+JIGeacPq0MuY/C89Ajxb+S4JpLqcPey7iTDkL4G5529SFDFiPOA0dGPfrYJNchUneSNtQbGLBv5OUx/Sl8SuLQgAfp3w/GzFu5iu6Wh7gzAAvDttxsRFkH4VmM6cYVmxaRiGVBIQpR3ADM7b9Wklbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OefzYpC7Pd4tpcuEpwZDpGJaWX50q3u3CFtKFxg5RNA=;
- b=S7AXWev435tSwCB7hQG2CP7VMEPBJUwQUYTQEv+V4PiLiu1cvPIfpzB6GuBTUFFs5bUa2E2m/uiEUwlG25Hi0oQVlM1ltNJ6GiDPQacj0j2Rw1Vfmz8hEdyuNFtrJgX/Y86EdSPyR5viiwXjQiPzNgoA24jZDAKScnJwDZ1jf3JkcHCUjFBGK5wFPnic38zp2zOfoInJthfLQiyj8eQb6ocnN3O/eKrpwLferxs0URGmAVTS1UeJ2R6MicksOvctqqO2k2vFh9n40tbrPHlh4cowdRNrBVZnWBbIvQomoQ+aiiZVU5SFdZUQQfzf3wHy92HhkE30jAME8bGip7fReQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OefzYpC7Pd4tpcuEpwZDpGJaWX50q3u3CFtKFxg5RNA=;
- b=TAn0ZOVxXz6/CYe2MZDQZBV/QwCcww+E/4L+wYQkZCU+0b4asw/8f6oKJUkidtBpTifdEIDm9hcBnycAnLNpxEF/6hZL1BK7uyJbH+uK7BZ04wPztb51eHHRThnCtDsjPn/aolhhaySED0QcQPisedTJp44ZkGKOkvGS5w++KPuCL/0QNs2lvDP2V30ghnRYyNr9CBavIT6tQNnudS3yqmtAZcF/bmMc4OGNtLx9zwzBaitOhy7GBOeYs9WJDLfKGLBxFChaKT6FLp7+68His5GTMNaAag5qAjx7vTZ/taKXllQPFBaDwB0x/CFyqN1KnDjUiLkJbHRSo0t61hLFYw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by PH0PR12MB7487.namprd12.prod.outlook.com (2603:10b6:510:1e9::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.30; Mon, 14 Aug
- 2023 14:22:10 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1%6]) with mapi id 15.20.6678.022; Mon, 14 Aug 2023
- 14:22:10 +0000
-Date:   Mon, 14 Aug 2023 11:22:08 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Baolu Lu <baolu.lu@linux.intel.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v6 02/25] iommu: Add IOMMU_DOMAIN_PLATFORM
-Message-ID: <ZNo4kGyba/xNFXcw@nvidia.com>
-References: <2-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
- <b772c318-80b0-944a-dfe9-beb70127dc88@linux.intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b772c318-80b0-944a-dfe9-beb70127dc88@linux.intel.com>
-X-ClientProxiedBy: CH0PR03CA0062.namprd03.prod.outlook.com
- (2603:10b6:610:cc::7) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH0PR12MB7487:EE_
-X-MS-Office365-Filtering-Correlation-Id: 224c7ab4-7854-41e8-1787-08db9cd1d8c3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: IvOLb5ED/aOVtkePsqsj7V1WRYNp5cmxS9/y4mWuY0YV42q5Nl1+V5+xcV3hJepvF8Kf0eGTjN/xIhMYQ+VSbDdhF26AI+NVJFoqjn5iRUpjEo5gmtzl3qH9bH72yUnj6rN1lVQ2FKax2jHdEbCzHNsYnj1hp6ycyWwni0tnJ/g9W4aoVvATwk/zre+yvV4rfioaahR3kNy4QCka6OsTXNlbqdXfIuYXoRNoQJdizMg38H0/IAJY0Gn++eXE7yluv+mQo6ZslaO8pkyRDd8x5NO6srbvg760NyusMrR0Q0y2DudBd78mYm++IrDXrspW532MkfHqJRjCry1EYZQ8cTltel3hmOg0FMcGuCv8nA/5Jlm9o+JHZBnJw21X0lslw3pIbSerz6b29I3g3scOJ0EFiX05RrFLZyB1rB99lon+zphzuvlnOxhAueHTkf9xfn6TuIGd6sp45hwDO6MkR0aFte1siCNMRdOACrH2WqyISU8HnGJif1XwVD67kkAH5WlZ+9OjoeJK3qPFDYDK3Kvfm4YnZf+VWcXy+oYjAMSe6b8Bs8PLy4U9Li2VyJ+z
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(136003)(376002)(366004)(39860400002)(346002)(396003)(186006)(451199021)(1800799006)(54906003)(66556008)(66946007)(6486002)(6512007)(6916009)(478600001)(66476007)(26005)(6506007)(107886003)(41300700001)(7416002)(7406005)(8936002)(5660300002)(38100700002)(86362001)(316002)(8676002)(36756003)(2906002)(2616005)(4326008)(83380400001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?E0K+o6rxXnrshRkoeRe6YUc8YyssWMUnd0TPZLq+RQBjucrwQ76q69i1HshX?=
- =?us-ascii?Q?smSCWhFOxWEIRfm1OWL3hSt/GRmYpW9JiDT1PlExwlRM5dqf5vrVM5CkbXXy?=
- =?us-ascii?Q?6L8zcEFZUbYbAv4xPKKFohi6uL75MGSJMEsmE3S5HVPg77c5KSIWSn1/uJry?=
- =?us-ascii?Q?9fhY3jgmLWHiBnF4ChMy78YdhE0c0GmMuQzGiSG9850RDJTxwfj488fnoomV?=
- =?us-ascii?Q?JRQFVD4loZpS5KkEcsen/OzNlBwh8l/KX+qg4hun+HthgqGQHtLdorXxGVb+?=
- =?us-ascii?Q?QTLb+05y4iA0GBGE4OMDUfa23hShXakF01JP4355yPbwjFQxB6jw4EwjP+kr?=
- =?us-ascii?Q?vyjL9hF7hGxlg3GUyqVG5SFfMGUk4Ne5vBnR/QRp9FAcLwY6DBAg/OhjTGjs?=
- =?us-ascii?Q?p2TZ0rZ59LiLolo0LN3ROfues0ZVaqruVc42084cWA4XRKflqwOckbi/VpJL?=
- =?us-ascii?Q?N6FSC6/SeQ+vblvH2shtf6iJHntIcFtmxbE8lmHiLYUkLRjSikZOylPbTeAq?=
- =?us-ascii?Q?GWrcd8EHru2aNtGaWBuVw7LrcdHdJ5GZsp/WjJM+CzfHO6ZtP4FahnVgB2Gc?=
- =?us-ascii?Q?zWv6f7RNOZujie6QMIkRTxhh2lOn1j6SHvZnU3rJ94tWZZDC43UKiUE776Sl?=
- =?us-ascii?Q?Dr6/vyOKHfPDRM02dUU0L1bZpV43Jhh09r+eiWnOEhGDGdWqSkC4eqiDXmuH?=
- =?us-ascii?Q?vT61HVyGGz68bu5O4IDe+iRKkOM+k12JaH8+S7AFsDlSe52MVJkntwDlnCBv?=
- =?us-ascii?Q?1L6LJHOFjfxVVR8XG4UAR0hEkgjwK1FVBaaLoRwU7a+46r9YzJ7oOFOBctUb?=
- =?us-ascii?Q?fQzx2Jo7xYpJqOrt0u3EExRxG6hTq1QwK89uTJ+hk/WARUzspgqm0SpQ0L6O?=
- =?us-ascii?Q?0jexkSENgD9LMNA+UUQL1yYvzuIBDGZCXPUENQSDrCfiKAmHLiomo+jy+F1E?=
- =?us-ascii?Q?GjNIkdrRH3mChyymnk2jj5okvfm1CQH3Ke2ccbpvPX7Vsu0KR/v+ob1UERNO?=
- =?us-ascii?Q?2ByGAKttnPnt0TA5gy5ZwVhLMZ6JcJcS4Y8qPa4uCC6bSo2+9Ir+r/PDgWIb?=
- =?us-ascii?Q?U5oPyhyoxYsrtIn/hoH/NC5ab7HX48i9bAL8ry9ZoqNHPjQtJCAiLDheod5j?=
- =?us-ascii?Q?mjTsd0Wece9k/9dyTI47ky46LlnVacdUe6YItQnxo0XLu6ySCB/JzRGgNpAi?=
- =?us-ascii?Q?HD0kPRiWsyV8xn04HvLz7oO2glaJxuR+8kjmJ3z3xqxy8fLVKKJpEzJinV1F?=
- =?us-ascii?Q?UQyI3vpVevAmj/6hswanmKD+/yzA8om6GD34nToXmMIoU4sb+95kRvFEnsFL?=
- =?us-ascii?Q?nZIHaR4BV/rSfSZ+M90n0zyk18pGpegHm81HbsWYxFhv1Ybf6TkymhSVkRSX?=
- =?us-ascii?Q?CbxLquTMS7kOFUrfm8fCONuS4YiQZ7l9pn9aLzf1qOBv2pdYUmzKpvUd1i9F?=
- =?us-ascii?Q?GygerYvrsBVobqC8KkYGdMzyMV4/lEMq7XN+CKA1ou8tIN9AzuW1E7QP9YyY?=
- =?us-ascii?Q?oKnVwXRLswbJo9PMEmuBHB3Nne7HSv2JU6k3MjVAmheCEgYrBTAq/sIVTRqa?=
- =?us-ascii?Q?oGeBVw1970fC4OIziQk+JMQXuDC6UzZeOjNQIzvk?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 224c7ab4-7854-41e8-1787-08db9cd1d8c3
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2023 14:22:10.5236
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MRjDWak2GRz78rO8bH+ZBu3QUTUPQMjWLyIBbs3xIze1Tb4Udxdh3cCnTuweAw3Z
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7487
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=no autolearn_force=no version=3.4.6
+        Mon, 14 Aug 2023 10:29:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A867EB2;
+        Mon, 14 Aug 2023 07:29:41 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37E8DcOc012499;
+        Mon, 14 Aug 2023 14:29:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=H6QlD0okV7GFC+hCV25c4CG5lhvZpuQPN2uyH93m/iI=;
+ b=hoO32FWIJYvTB9OGPAHy/kB6fWIXJNBhJGM4zeKsqftSa+w63z4EgJzI+CgWCoS3y7AP
+ Nwv2Cai2olEeS0tgPiuVz0l5ikAI8HyYP31wb7o+WOsLHQn5t2BtVWWIT/fge44P+FI/
+ GcICspXnc8WDYGjSZlz1SWLTGn8/o5HzKI/Z6sBmDR272XNG90Oa+fAsrW5Eq+8c8oTV
+ IuwT3eDUy23xBbHMLyO44N+qnnUz9UtTsm+pFxkjm1xHNPh3zJCvSn7m97EdIGVvx2WL
+ vEB1MrG29Y6OcMQtZ6brBTOVWI62GO+PFh8OAOREVoWaFKwXxAC4j68a9FYnfxjAAkXr eQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3se3gn443d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 14:29:18 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 37EET6o2024414;
+        Mon, 14 Aug 2023 14:29:06 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3se35k838y-1;
+        Mon, 14 Aug 2023 14:29:06 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37EET6wh024409;
+        Mon, 14 Aug 2023 14:29:06 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 37EET6uN024408;
+        Mon, 14 Aug 2023 14:29:06 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
+        id 588015000A7; Mon, 14 Aug 2023 19:59:05 +0530 (+0530)
+From:   Nitin Rawat <quic_nitirawa@quicinc.com>
+To:     mani@kernel.org, quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
+        avri.altman@wdc.com, martin.petersen@oracle.com, beanhuo@micron.com
+Cc:     bvanassche@acm.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
+        linux-arm-msm@vger.kernel.org, quic_ziqichen@quicinc.com,
+        Nitin Rawat <quic_nitirawa@quicinc.com>,
+        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+Subject: [PATCH V4] scsi: ufs: qcom: Align programming sequence as per HW spec
+Date:   Mon, 14 Aug 2023 19:59:03 +0530
+Message-Id: <20230814142903.22780-1-quic_nitirawa@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: moRMeaSeceU78mPJFZ_4JJ7e_9ezUoJN
+X-Proofpoint-GUID: moRMeaSeceU78mPJFZ_4JJ7e_9ezUoJN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-14_10,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ impostorscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308140134
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Aug 12, 2023 at 09:41:50AM +0800, Baolu Lu wrote:
-> > index e05c93b6c37fba..87aebba474e093 100644
-> > --- a/include/linux/iommu.h
-> > +++ b/include/linux/iommu.h
-> > @@ -64,6 +64,7 @@ struct iommu_domain_geometry {
-> >   #define __IOMMU_DOMAIN_DMA_FQ	(1U << 3)  /* DMA-API uses flush queue    */
-> >   #define __IOMMU_DOMAIN_SVA	(1U << 4)  /* Shared process address space */
-> > +#define __IOMMU_DOMAIN_PLATFORM	(1U << 5)
-> >   #define IOMMU_DOMAIN_ALLOC_FLAGS ~__IOMMU_DOMAIN_DMA_FQ
-> >   /*
-> > @@ -81,6 +82,8 @@ struct iommu_domain_geometry {
-> >    *				  invalidation.
-> >    *	IOMMU_DOMAIN_SVA	- DMA addresses are shared process addresses
-> >    *				  represented by mm_struct's.
-> > + *	IOMMU_DOMAIN_PLATFORM	- Legacy domain for drivers that do their own
-> > + *				  dma_api stuff. Do not use in new drivers.
-> >    */
-> >   #define IOMMU_DOMAIN_BLOCKED	(0U)
-> >   #define IOMMU_DOMAIN_IDENTITY	(__IOMMU_DOMAIN_PT)
-> > @@ -91,6 +94,7 @@ struct iommu_domain_geometry {
-> >   				 __IOMMU_DOMAIN_DMA_API |	\
-> >   				 __IOMMU_DOMAIN_DMA_FQ)
-> >   #define IOMMU_DOMAIN_SVA	(__IOMMU_DOMAIN_SVA)
-> > +#define IOMMU_DOMAIN_PLATFORM	(__IOMMU_DOMAIN_PLATFORM)
-> 
-> Nit: As a default domain could be the type of IOMMU_DOMAIN_PLATFORM,
-> 
-> static const char *iommu_domain_type_str(unsigned int t)
-> 
-> needs to be updated, so that users can get a right string when reading
-> /sys/.../[group_id]/type.
+Align clock configuration as per Qualcomm UFS controller hardware
+specification. As part of this patch we are aligning sequence
+for SYS1CLK_1US, MAX_CORE_CLK_1US_CYCLES and
+PA_VS_CORE_CLK_40NS_CYCLES.
 
-Yeah, I missed that, fix it
+SYS1CLK_1US_REG represents the required number of system 1-clock
+cycles for one microsecond. MAX_CORE_CLK_1US_CYCLES represents the
+required number of Qunipro core clock for one microsecond.
+PA_VS_CORE_CLK_40NS_CYCLES represents the required number of
+Qunipro core clock for 40 nanoseconds.
 
-Thanks,
-Jason
+a) Support CORE_CLK_1US_CYCLES and PA_VS_CORE_CLK_40NS_CYCLES
+for multiple unipro clock frequencies. This is currently handled
+only for only 150Mhz and 75MHz. Also Configure SYS1CLK_1US_REG for
+pre scale up condition.
+
+b) Update offset for core_clk_1us_cycles in DME_VS_CORE_CLK_CTRL. This
+offset is changed from Qualcomm UFS Controller V4.0.0 onwards.
+
+c) Qualcomm UFS controller V4.0 and onwards PA_VS_CORE_CLK_40NS_CYCLES
+attribute needs to be programmed with frequency of unipro core clk of
+UFS host controller.
+
+d) Enable internal HW division of unipro core_clk based on scale up and
+scale down condition. This bit should be cleared before entering any
+SVS mode.
+
+Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+---
+
+Changes from v3:
+-Addressed bjorn comment to update commit msg to capture change details.
+
+Changes from v2:
+- Addressed bao comment, removed duplicate clock timer cfg API call
+
+Changes from v1:
+- Addressed bao comment, removed wrapper function
+- Tab alignment
+---
+ drivers/ufs/host/ufs-qcom.c | 261 ++++++++++++++++++++++++++----------
+ drivers/ufs/host/ufs-qcom.h |  20 ++-
+ 2 files changed, 207 insertions(+), 74 deletions(-)
+
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index f88febb23123..5b603886f3d1 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -91,10 +91,7 @@ static const struct __ufs_qcom_bw_table {
+ };
+
+ static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+-
+ static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+-static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+-						       u32 clk_cycles);
+
+ static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
+ {
+@@ -532,7 +529,8 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+  * Return: zero for success and non-zero in case of a failure.
+  */
+ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+-			       u32 hs, u32 rate, bool update_link_startup_timer)
++				 u32 hs, u32 rate, bool link_startup,
++				 bool is_pre_scale_up)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	struct ufs_clk_info *clki;
+@@ -563,11 +561,16 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+ 	/*
+ 	 * The Qunipro controller does not use following registers:
+ 	 * SYS1CLK_1US_REG, TX_SYMBOL_CLK_1US_REG, CLK_NS_REG &
+-	 * UFS_REG_PA_LINK_STARTUP_TIMER
+-	 * But UTP controller uses SYS1CLK_1US_REG register for Interrupt
+-	 * Aggregation logic.
+-	*/
+-	if (ufs_qcom_cap_qunipro(host) && !ufshcd_is_intr_aggr_allowed(hba))
++	 * UFS_REG_PA_LINK_STARTUP_TIMER.
++	 * However UTP controller uses SYS1CLK_1US_REG register for Interrupt
++	 * Aggregation logic and Auto hibern8 logic.
++	 * It is mandatory to write SYS1CLK_1US_REG register on UFS host
++	 * controller V4.0.0 onwards.
++	 */
++	if (ufs_qcom_cap_qunipro(host) &&
++	    !(ufshcd_is_intr_aggr_allowed(hba) ||
++	    ufshcd_is_auto_hibern8_supported(hba) ||
++	    host->hw_ver.major >= 4))
+ 		return 0;
+
+ 	if (gear == 0) {
+@@ -576,8 +579,14 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+ 	}
+
+ 	list_for_each_entry(clki, &hba->clk_list_head, list) {
+-		if (!strcmp(clki->name, "core_clk"))
+-			core_clk_rate = clk_get_rate(clki->clk);
++		if (!strcmp(clki->name, "core_clk")) {
++			if (is_pre_scale_up)
++				core_clk_rate = clki->max_freq;
++			else
++				core_clk_rate = clk_get_rate(clki->clk);
++			break;
++		}
++
+ 	}
+
+ 	/* If frequency is smaller than 1MHz, set to 1MHz */
+@@ -657,7 +666,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+ 		mb();
+ 	}
+
+-	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
++	if (link_startup && host->hw_ver.major != 0x5) {
+ 		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
+ 			      REG_UFS_CFG0);
+ 		/*
+@@ -670,6 +679,105 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+ 	return 0;
+ }
+
++static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
++				      u32 clk_1us_cycles,
++				      u32 clk_40ns_cycles,
++				      bool scale_up)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	u32 mask = MAX_CORE_CLK_1US_CYCLES_MASK;
++	u32 offset = 0;
++	u32 reg;
++	int err;
++
++	/* Bit mask and offset changed on UFS host controller V4.0.0 onwards */
++	if (host->hw_ver.major >= 4) {
++		mask = MAX_CORE_CLK_1US_CYCLES_MASK_V4;
++		offset = MAX_CORE_CLK_1US_CYCLES_OFFSET_V4;
++	}
++
++	if (clk_1us_cycles > mask)
++		return -EINVAL;
++
++	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
++	if (err)
++		return err;
++
++	reg &= ~(mask << offset);
++	reg |= clk_1us_cycles << offset;
++
++	if (scale_up)
++		reg |= CORE_CLK_DIV_EN_BIT;
++
++	err = ufshcd_dme_set(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), reg);
++	if (err)
++		return err;
++
++	/*
++	 * UFS host controller V4.0.0 onwards needs to program
++	 * PA_VS_CORE_CLK_40NS_CYCLES attribute per programmed
++	 * frequency of unipro core clk of UFS host controller.
++	 */
++	if (host->hw_ver.major >= 4) {
++		if (clk_40ns_cycles > PA_VS_CORE_CLK_40NS_CYCLES_MASK)
++			return -EINVAL;
++
++		err = ufshcd_dme_get(hba,
++				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
++				     &reg);
++		if (err)
++			return err;
++
++		reg &= ~PA_VS_CORE_CLK_40NS_CYCLES_MASK;
++		reg |= clk_40ns_cycles;
++
++		err = ufshcd_dme_set(hba,
++				     UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES),
++				     reg);
++	}
++
++	return err;
++}
++
++static int ufs_qcom_cfg_core_clk_ctrl(struct ufs_hba *hba)
++{
++	struct list_head *head = &hba->clk_list_head;
++	struct ufs_clk_info *clki;
++	u32 max_freq = 0;
++	int err;
++
++	list_for_each_entry(clki, head, list) {
++		if (!IS_ERR_OR_NULL(clki->clk) &&
++		    (!strcmp(clki->name, "core_clk_unipro"))) {
++			max_freq = clki->max_freq;
++			break;
++		}
++	}
++
++	switch (max_freq) {
++	case MHZ_403:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16, true);
++		break;
++	case MHZ_300:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12, true);
++		break;
++	case MHZ_201_5:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8, true);
++		break;
++	case MHZ_150:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6, true);
++		break;
++	case MHZ_100:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, true);
++		break;
++	default:
++		dev_err(hba->dev, "unipro max_freq=%u entry missing\n", max_freq);
++		err = -EINVAL;
++		break;
++	}
++
++	return err;
++}
+ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+ 					enum ufs_notify_change_status status)
+ {
+@@ -679,19 +787,21 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+ 	switch (status) {
+ 	case PRE_CHANGE:
+ 		if (ufs_qcom_cfg_timers(hba, UFS_PWM_G1, SLOWAUTO_MODE,
+-					0, true)) {
++					0, true, false)) {
+ 			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+ 				__func__);
+ 			return -EINVAL;
+ 		}
+
+-		if (ufs_qcom_cap_qunipro(host))
+-			/*
+-			 * set unipro core clock cycles to 150 & clear clock
+-			 * divider
+-			 */
+-			err = ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba,
+-									  150);
++		if (ufs_qcom_cap_qunipro(host)) {
++			err = ufs_qcom_cfg_core_clk_ctrl(hba);
++			if (err) {
++				dev_err(hba->dev,
++					"%s cfg core clk ctrl failed\n",
++					__func__);
++				return err;
++			}
++		}
+
+ 		/*
+ 		 * Some UFS devices (and may be host) have issues if LCC is
+@@ -926,7 +1036,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+ 	case POST_CHANGE:
+ 		if (ufs_qcom_cfg_timers(hba, dev_req_params->gear_rx,
+ 					dev_req_params->pwr_rx,
+-					dev_req_params->hs_rate, false)) {
++					dev_req_params->hs_rate, false, false)) {
+ 			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+ 				__func__);
+ 			/*
+@@ -1296,69 +1406,52 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
+ 	phy_exit(host->generic_phy);
+ }
+
+-static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+-						       u32 clk_cycles)
++static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+ {
+-	int err;
+-	u32 core_clk_ctrl_reg;
+-
+-	if (clk_cycles > DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK)
+-		return -EINVAL;
+-
+-	err = ufshcd_dme_get(hba,
+-			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+-			    &core_clk_ctrl_reg);
+-	if (err)
+-		return err;
+-
+-	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
+-	core_clk_ctrl_reg |= clk_cycles;
+-
+-	/* Clear CORE_CLK_DIV_EN */
+-	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
++	int err = 0;
+
+-	return ufshcd_dme_set(hba,
+-			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+-			    core_clk_ctrl_reg);
+-}
++	if (!ufs_qcom_cap_qunipro(host))
++		goto out;
+
+-static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+-{
+-	/* nothing to do as of now */
+-	return 0;
++	if (attr) {
++		err = ufs_qcom_cfg_timers(hba, attr->gear_rx,
++					    attr->pwr_rx, attr->hs_rate,
++					    false, true);
++		if (err)
++			dev_err(hba->dev, "%s ufs cfg timer failed\n",
++					  __func__);
++	}
++	err = ufs_qcom_cfg_core_clk_ctrl(hba);
++out:
++	return err;
+ }
+
+ static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
+ {
+-	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-
+-	if (!ufs_qcom_cap_qunipro(host))
+-		return 0;
+-
+-	/* set unipro core clock cycles to 150 and clear clock divider */
+-	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 150);
++	return 0;
+ }
+
+ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	int err;
+-	u32 core_clk_ctrl_reg;
++	u32 reg;
+
+ 	if (!ufs_qcom_cap_qunipro(host))
+ 		return 0;
+
+-	err = ufshcd_dme_get(hba,
+-			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+-			    &core_clk_ctrl_reg);
++	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
++	if (err)
++		return err;
+
+ 	/* make sure CORE_CLK_DIV_EN is cleared */
+-	if (!err &&
+-	    (core_clk_ctrl_reg & DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT)) {
+-		core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
++	if (reg & CORE_CLK_DIV_EN_BIT) {
++		reg &= ~CORE_CLK_DIV_EN_BIT;
+ 		err = ufshcd_dme_set(hba,
+ 				    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+-				    core_clk_ctrl_reg);
++				    reg);
+ 	}
+
+ 	return err;
+@@ -1367,19 +1460,50 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+ static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
++	struct list_head *head = &hba->clk_list_head;
++	struct ufs_clk_info *clki;
++	u32 curr_freq = 0;
++	int err;
+
+ 	if (!ufs_qcom_cap_qunipro(host))
+ 		return 0;
+
+-	/* set unipro core clock cycles to 75 and clear clock divider */
+-	return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 75);
++	if (attr)
++		ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
++					 attr->hs_rate, false, false);
++
++	list_for_each_entry(clki, head, list) {
++		if (!IS_ERR_OR_NULL(clki->clk) &&
++		   (!strcmp(clki->name, "core_clk_unipro"))) {
++			curr_freq = clk_get_rate(clki->clk);
++			break;
++		}
++	}
++
++	switch (curr_freq) {
++	case MHZ_37_5:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2, false);
++		break;
++	case MHZ_75:
++		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3, false);
++		break;
++	case MHZ_100:
++	err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, false);
++		break;
++	default:
++		err = -EINVAL;
++		dev_err(hba->dev, "unipro curr_freq=%u entry missing\n", curr_freq);
++		break;
++	}
++
++	return err;
+ }
+
+ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+ 		bool scale_up, enum ufs_notify_change_status status)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-	struct ufs_pa_layer_attr *dev_req_params = &host->dev_req_params;
+ 	int err = 0;
+
+ 	/* check the host controller state before sending hibern8 cmd */
+@@ -1409,11 +1533,6 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+ 			return err;
+ 		}
+
+-		ufs_qcom_cfg_timers(hba,
+-				    dev_req_params->gear_rx,
+-				    dev_req_params->pwr_rx,
+-				    dev_req_params->hs_rate,
+-				    false);
+ 		ufs_qcom_icc_update_bw(host);
+ 		ufshcd_uic_hibern8_exit(hba);
+ 	}
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index d6f8e74bd538..d10234f6280b 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -79,6 +79,17 @@ enum {
+ 	UFS_MEM_CQIS_VS		= 0x8,
+ };
+
++
++/* QCOM UFS host controller core clk frequencies */
++#define MHZ_37_5	37500000
++#define MHZ_50		50000000
++#define MHZ_75		75000000
++#define MHZ_100		100000000
++#define MHZ_150		150000000
++#define MHZ_300		300000000
++#define MHZ_201_5	201500000
++#define MHZ_403		403000000
++
+ #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
+ #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
+
+@@ -129,9 +140,12 @@ enum {
+ #define PA_VS_CONFIG_REG1	0x9000
+ #define DME_VS_CORE_CLK_CTRL	0xD002
+ /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
+-#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
+-#define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
+-
++#define MAX_CORE_CLK_1US_CYCLES_MASK_V4		0xFFF
++#define MAX_CORE_CLK_1US_CYCLES_OFFSET_V4	0x10
++#define MAX_CORE_CLK_1US_CYCLES_MASK		0xFF
++#define CORE_CLK_DIV_EN_BIT			BIT(8)
++#define PA_VS_CORE_CLK_40NS_CYCLES		0x9007
++#define PA_VS_CORE_CLK_40NS_CYCLES_MASK		0x3F
+ static inline void
+ ufs_qcom_get_controller_revision(struct ufs_hba *hba,
+ 				 u8 *major, u16 *minor, u16 *step)
+--
+2.17.1
+
