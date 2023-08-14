@@ -2,345 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B4B877B205
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 09:05:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE42F77B2CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 09:43:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232677AbjHNHEa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 03:04:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37628 "EHLO
+        id S231535AbjHNHnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 03:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233203AbjHNHEK (ORCPT
+        with ESMTP id S234220AbjHNHnI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 03:04:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0802FAB;
-        Mon, 14 Aug 2023 00:04:08 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37E4GaIW009459;
-        Mon, 14 Aug 2023 07:03:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=5zeGR2i8tHPzrMWC1nqfYif7cLLWBJlJ5IpQQoGMhl8=;
- b=JoA6yqMbThFWZWtk0QRDPxr3TCbxXtyYdKptMHSQZ2sKIGLqgKL+GcWQfUlQ46QIoY90
- m9vDPOOcIC0K4ncO/HKNN7nGIFTLdAAPLOU8Zh+cexoF6pMelkQrOaq+ZOB7ZZ6zyKey
- Bs7Qq/bw7zrLkNe0hTzt2g3lNIBUzgl85h/KMhrHNcLRbzb3shVTqmvqt5/vcCYsQH+2
- +cJpJpUU/sJoue1HsYPMixDIFrDRRcRu5ZaYY9EJt1NKc4VcaBzeJDR6FviWMVxd5RAe
- Iw6EvPxOJpJ8e814Ir03du6+Ww0pj/55tRULMXgMcewyq0saFtNXBvZ70I78hfWkDNac Ew== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3se40rk25y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 14 Aug 2023 07:03:53 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37E73q6l013086
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 14 Aug 2023 07:03:52 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 14 Aug
- 2023 00:03:47 -0700
-Message-ID: <c96a30f7-c201-950e-f024-371f0be324f7@quicinc.com>
-Date:   Mon, 14 Aug 2023 15:03:42 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v7 08/13] coresight-tpdm: Add node to set dsb programming
- mode
-Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-References: <1690269353-10829-1-git-send-email-quic_taozha@quicinc.com>
- <1690269353-10829-9-git-send-email-quic_taozha@quicinc.com>
- <2a134787-b0a7-1acd-7ea8-efc7c1920095@arm.com>
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <2a134787-b0a7-1acd-7ea8-efc7c1920095@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: W1isi5yUmiwX5Uu3LUki1qa28F7c3lp9
-X-Proofpoint-GUID: W1isi5yUmiwX5Uu3LUki1qa28F7c3lp9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-14_01,2023-08-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- mlxlogscore=999 suspectscore=0 clxscore=1015 adultscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308140063
-X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 14 Aug 2023 03:43:08 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A427E7E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 00:43:06 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-99bf8e5ab39so549053566b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 00:43:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1691998984; x=1692603784;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2SkdvgZrpNCBNVq541zdKdiiiiZ2r32O7R+V73IZDsk=;
+        b=00U/dncPTh9ZmUzHnFIyb73hQMRSaPdOjHn8oqd1W8BRRxeYfnEv84NGPhVX2cK1ga
+         QP53lHSy3yQcNMnGAoVrS++I07UQCfguw70JcoWUVzOk0V6W//jOCSdv+KHUdvUoB2nt
+         gbxVYdLiNkBAus3gXR+gncbVSHOvk6w9nRCGWHv4hnAe3CSok1c7W2TSbHE364dk9H/2
+         AUK8KIPQBHVYBsLku67CDRH8mqg+3HEC6bqo/8RZCdlxsdky02XpHexkAg4EV01JR/gD
+         YDiSatsEU49TahfnxvSEnijTY8Y9SRkus81W7aZEaS8BRZntO9GEJtbsBBUQp/Ns3q8k
+         q5Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691998984; x=1692603784;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2SkdvgZrpNCBNVq541zdKdiiiiZ2r32O7R+V73IZDsk=;
+        b=Iewm03xzwZKA6cJep++sPr76nXLRuQk52Xp9vtwmkCQJlvTNUenm9x+QbSLRXuuTrj
+         X8XJT4f5HUMGfcU9Vw1MzxTazYP00BIC61Y6Z4+q/D7az6wzX4beLKh/DaFLVCYWyUDP
+         nxVNfw0CIZcvR6gAlrVwXESYK9AYQr1Mx6a5PnwurCGKgp6NdI1FC+lLopUChdRhPYMw
+         29DS7KtnDlGjRO8o9Z6Ajh4O80LTDO/Gmbvx+EBd5X5kjoR8MITvXN8GReN7/h8x70qk
+         +SlyQ5IGjdHLi/cjcG3I+aW/kseevxC9qnMYv5eTPLGH+VYHofhNdQA5QZISEDN9oFg4
+         WSig==
+X-Gm-Message-State: AOJu0YyErt9ms0GkxPCHE9RnBW0aoXvhgj8DOZ1gBqUzOrg/Z9tDKFd5
+        pf0j5xc257VTN+uxUOto/AT3ow==
+X-Google-Smtp-Source: AGHT+IFKd2I6pYof/pk5jG621n7sFXOTIZnPv7RloCIWA3j4n30gcTqyNdbeoW7ZwFmBEbuortd0zA==
+X-Received: by 2002:a17:906:3019:b0:99b:65fa:e30f with SMTP id 25-20020a170906301900b0099b65fae30fmr7278786ejz.1.1691998984027;
+        Mon, 14 Aug 2023 00:43:04 -0700 (PDT)
+Received: from localhost (212095005216.public.telering.at. [212.95.5.216])
+        by smtp.gmail.com with ESMTPSA id a18-20020a17090640d200b00993a9a951fasm5448385ejk.11.2023.08.14.00.43.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Aug 2023 00:43:03 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 14 Aug 2023 09:43:02 +0200
+Message-Id: <CUS3KXRIND5J.VSB0PVWXZ4DO@otso>
+To:     "Fenglin Wu" <quic_fenglinw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+Cc:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>
+Subject: Re: [PATCH v4 0/3] Add support for vibrator in multiple PMICs
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.15.2
+References: <20230731053712.2220898-1-quic_fenglinw@quicinc.com>
+In-Reply-To: <20230731053712.2220898-1-quic_fenglinw@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Fenglin,
 
-On 8/7/2023 6:00 PM, Suzuki K Poulose wrote:
-> On 25/07/2023 08:15, Tao Zhang wrote:
->> Add node to set and show programming mode for TPDM DSB subunit.
->> Once the DSB programming mode is set, it will be written to the
->> register DSB_CR.
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> ---
->>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 15 ++++++
->>   drivers/hwtracing/coresight/coresight-tpdm.c       | 62 
->> ++++++++++++++++++++++
->>   drivers/hwtracing/coresight/coresight-tpdm.h       | 16 ++++++
->>   3 files changed, 93 insertions(+)
->>
->> diff --git 
->> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
->> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> index 0b7b4ad..2a82cd0 100644
->> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> @@ -45,3 +45,18 @@ Description:
->>           Accepts only one of the 2 values -  0 or 1.
->>           0 : Set the DSB trigger type to false
->>           1 : Set the DSB trigger type to true
->> +
->> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_mode
->> +Date:        March 2023
->> +KernelVersion    6.5
->> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
->> (QUIC) <quic_taozha@quicinc.com>
->> +Description:
->> +        (Write) Set the mode of DSB tpdm. Read the mode of DSB
->> +        tpdm.
->
-> (RW) ...
-Sure, I will update this to the next patch series.
->
->> +
->> +        Accepts the value needs to be greater than 0. What data
->> +        bits do is listed below.
->> +        Bit[0:1] : Test mode control bit for choosing the inputs.
->> +        Bit[3] : Set to 0 for low performance mode.
->> +                 Set to 1 for high performance mode.
->> +        Bit[4:8] : Select byte lane for high performance mode.
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
->> b/drivers/hwtracing/coresight/coresight-tpdm.c
->> index 62efc18..c38760b 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->> @@ -4,6 +4,7 @@
->>    */
->>     #include <linux/amba/bus.h>
->> +#include <linux/bitfield.h>
->>   #include <linux/bitmap.h>
->>   #include <linux/coresight.h>
->>   #include <linux/coresight-pmu.h>
->> @@ -42,6 +43,32 @@ static void tpdm_reset_datasets(struct 
->> tpdm_drvdata *drvdata)
->>       }
->>   }
->>   +static void set_dsb_test_mode(struct tpdm_drvdata *drvdata, u32 *val)
->> +{
->> +    u32 mode;
->> +
->> +    mode = TPDM_DSB_MODE_TEST(drvdata->dsb->mode);
->> +    *val &= ~TPDM_DSB_TEST_MODE;
->> +    *val |= FIELD_PREP(TPDM_DSB_TEST_MODE, mode);
->> +}
->> +
->> +static void set_dsb_hpsel_mode(struct tpdm_drvdata *drvdata, u32 *val)
->> +{
->> +    u32 mode;
->> +
->> +    mode = TPDM_DSB_MODE_HPBYTESEL(drvdata->dsb->mode);
->> +    *val &= ~TPDM_DSB_HPSEL;
->> +    *val |= FIELD_PREP(TPDM_DSB_HPSEL, mode);
->> +}
->> +
->> +static void set_dsb_perf_mode(struct tpdm_drvdata *drvdata, u32 *val)
->> +{
->> +    if (drvdata->dsb->mode & TPDM_DSB_MODE_PERF)
->> +        *val |= TPDM_DSB_CR_MODE;
->> +    else
->> +        *val &= ~TPDM_DSB_CR_MODE;
->> +}
->> +
->>   static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->>   {
->>       u32 val;
->> @@ -55,6 +82,12 @@ static void tpdm_enable_dsb(struct tpdm_drvdata 
->> *drvdata)
->>       writel_relaxed(val, drvdata->base + TPDM_DSB_TIER);
->>         val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
->
->> +    /* Set the test accurate mode */
->> +    set_dsb_test_mode(drvdata, &val);
->> +    /* Set the byte lane for high-performance mode */
->> +    set_dsb_hpsel_mode(drvdata, &val);
->> +    /* Set the performance mode */
->> +    set_dsb_perf_mode(drvdata, &val);
->
-> Couldn't all of them be combined to a single function, as they
-> operate on a single value to be written ?
->
->     set_dsb_mode(drvdata, &val);
->
-Yes, I will update this to the next patch series.
->
->>       /* Set trigger type */
->>       if (drvdata->dsb->trig_type)
->>           val |= TPDM_DSB_CR_TRIG_TYPE;
->> @@ -241,6 +274,34 @@ static struct attribute_group tpdm_attr_grp = {
->>       .attrs = tpdm_attrs,
->>   };
->>   +static ssize_t dsb_mode_show(struct device *dev,
->> +                  struct device_attribute *attr,
->> +                  char *buf)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +
->> +    return sysfs_emit(buf, "%lx\n",
->> +             (unsigned long)drvdata->dsb->mode);
->
-> It is u32 anyways, hence why not :
->
->         (buf, "%x\n", drvdata->dsb->mode) ?
->
-Sure, I will update this to the next patch series.
->
->> +}
->> +
->> +static ssize_t dsb_mode_store(struct device *dev,
->> +                   struct device_attribute *attr,
->> +                   const char *buf,
->> +                   size_t size)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +    unsigned long val;
->> +
->> +    if ((kstrtoul(buf, 0, &val)) || val < 0)
->> +        return -EINVAL;
->> +
->
-> Is it not an error :
->      if (val & ~TPDM_DSB_MODE_MASK) ?
+On Mon Jul 31, 2023 at 7:37 AM CEST, Fenglin Wu wrote:
+> Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, P=
+M7550BA.
+> It is very similar to the vibrator module inside PM8916 which is supporte=
+d in
+> pm8xxx-vib driver but just the drive amplitude is controlled with 2 regis=
+ters,
+> and the register base offset in each PMIC is different.
 
-We don't need to care about the data bits besides TPDM_DSB_MODE_MASK.
+Briefly tested on a SDM632+PMI632-based Fairphone 3.
 
-Do you think it is necessary to add this check?
+I didn't really check for vibration strength or anything more detailed
+but with the fftest tool the vibrator seems to work fine!
 
-If so, I can add this check in the next patch series.
+Diff is attached below. I can send the pmi632.dtsi change once this
+series is merged (unless you send something first).
 
->
->> +    spin_lock(&drvdata->spinlock);
->> +    drvdata->dsb->mode = val & TPDM_DSB_MODE_MASK;
->> +    spin_unlock(&drvdata->spinlock);
->> +    return size;
->> +}
->> +static DEVICE_ATTR_RW(dsb_mode);
->> +
->>   static ssize_t dsb_trig_type_show(struct device *dev,
->>                        struct device_attribute *attr, char *buf)
->>   {
->> @@ -312,6 +373,7 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
->>   static DEVICE_ATTR_RW(dsb_trig_ts);
->>     static struct attribute *tpdm_dsb_attrs[] = {
->> +    &dev_attr_dsb_mode.attr,
->>       &dev_attr_dsb_trig_ts.attr,
->>       &dev_attr_dsb_trig_type.attr,
->>       NULL,
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
->> b/drivers/hwtracing/coresight/coresight-tpdm.h
->> index 92c34cd..49fffb1 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
->> @@ -15,11 +15,25 @@
->>     /* Enable bit for DSB subunit */
->>   #define TPDM_DSB_CR_ENA        BIT(0)
->> +/* Enable bit for DSB subunit perfmance mode */
->> +#define TPDM_DSB_CR_MODE        BIT(1)
->>   /* Enable bit for DSB subunit trigger type */
->>   #define TPDM_DSB_CR_TRIG_TYPE        BIT(12)
->> +
->>   /* Enable bit for DSB subunit trigger timestamp */
->>   #define TPDM_DSB_TIER_XTRIG_TSENAB        BIT(1)
->>   +/* DSB programming modes */
->> +/* Test mode control bit*/
->> +#define TPDM_DSB_MODE_TEST(val)    (val & GENMASK(1, 0))
->
-> What is the difference between MODE_TEST ^ and the TEST_MODE ( below ).
-> Please could we have clear naming conventions ?
+Many thanks for sending these patches!
 
-"TPDM_DSB_MODE_TEST" is to collect the data of test mode from user space 
-input.
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3 (pm=
+i632)
 
-"TPDM_DSB_TEST_MODE" is to set the data bits collected by 
-"TPDM_DSB_MODE_TEST"
-
-to "TPDM_DSB_CR" register.
-
-I will prefix the macro which is related to "TPDM_DSB_CR" to identify.
-
->
->> +/* Performance mode */
->> +#define TPDM_DSB_MODE_PERF        BIT(3)
->
->> +/* High performance mode */
->> +#define TPDM_DSB_MODE_HPBYTESEL(val)    (val & GENMASK(8, 4))
->> +#define TPDM_DSB_MODE_MASK            GENMASK(8, 0)
->
->
->> +#define TPDM_DSB_TEST_MODE GENMASK(10, 9)
->> +#define TPDM_DSB_HPSEL        GENMASK(6, 2)
->
-> Ah, I read it again and these two are really TPDM_DSB_CR_x and
-> 1) Must be defined as such (to avoid any confusion as above)
-> 2) And defined closer to the other value defintions for the registers ?
-
-Sure, I will update this according to your advice in the next patch series.
+Regards
+Luca
 
 
-Best,
+diff --git a/arch/arm64/boot/dts/qcom/pmi632.dtsi b/arch/arm64/boot/dts/qco=
+m/pmi632.dtsi
+index 4eb79e0ce40a..41ef7dad508e 100644
+--- a/arch/arm64/boot/dts/qcom/pmi632.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi632.dtsi
+@@ -161,5 +161,11 @@ pmi632_lpg: pwm {
+=20
+ 			status =3D "disabled";
+ 		};
++
++		pmi632_vib: vibrator@5700 {
++			compatible =3D "qcom,pmi632-vib", "qcom,spmi-vib-gen2";
++			reg =3D <0x5700>;
++			status =3D "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64=
+/boot/dts/qcom/sdm632-fairphone-fp3.dts
+index 301eca9a4f31..0d89bc39f613 100644
+--- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
++++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+@@ -112,6 +112,10 @@ led@3 {
+ 	};
+ };
+=20
++&pmi632_vib {
++	status =3D "okay";
++};
++
+ &sdhc_1 {
+ 	status =3D "okay";
+ 	vmmc-supply =3D <&pm8953_l8>;
 
-Tao
+> Changes in v4:
+>   1. Update to use the combination of the HW type and register offset
+>      as the constant match data, the register base address defined in
+>      'reg' property will be added when accessing SPMI registers using
+>      regmap APIs.
+>   2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
+>
+> Changes in v3:
+>   1. Refactor the driver to support different type of the vibrators with
+>     better flexibility by introducing the HW type with corresponding
+>     register fields definitions.
+>   2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
+>     strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
+>     spmi-vib-gen2.
+> =20
+> Changes in v2:
+>   Remove the "pm7550ba-vib" compatible string as it's compatible with pm7=
+325b.
+>
+> Fenglin Wu (3):
+>   input: pm8xxx-vib: refactor to easily support new SPMI vibrator
+>   dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+>   input: pm8xxx-vibrator: add new SPMI vibrator support
+>
+>  .../bindings/input/qcom,pm8xxx-vib.yaml       |  16 +-
+>  drivers/input/misc/pm8xxx-vibrator.c          | 171 ++++++++++++------
+>  2 files changed, 132 insertions(+), 55 deletions(-)
 
->
->
-> Suzuki
->
->> +
->>   /* TPDM integration test registers */
->>   #define TPDM_ITATBCNTRL        (0xEF0)
->>   #define TPDM_ITCNTRL        (0xF00)
->> @@ -48,10 +62,12 @@
->>     /**
->>    * struct dsb_dataset - specifics associated to dsb dataset
->> + * @mode:             DSB programming mode
->>    * @trig_ts:          Enable/Disable trigger timestamp.
->>    * @trig_type:        Enable/Disable trigger type.
->>    */
->>   struct dsb_dataset {
->> +    u32                mode;
->>       bool            trig_ts;
->>       bool            trig_type;
->>   };
->
