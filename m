@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4426977B0A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 07:09:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1A8B77B0AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 07:11:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233239AbjHNFI6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 01:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39846 "EHLO
+        id S233248AbjHNFLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 01:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233335AbjHNFIy (ORCPT
+        with ESMTP id S233208AbjHNFKr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 01:08:54 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37052E5B;
-        Sun, 13 Aug 2023 22:08:53 -0700 (PDT)
+        Mon, 14 Aug 2023 01:10:47 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4F0E5B;
+        Sun, 13 Aug 2023 22:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691989733; x=1723525733;
+  t=1691989847; x=1723525847;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=fbQxPjZnY0DuGHhK25w0Zhh0FieYTmdMp1vAFT8U97s=;
-  b=PJKQ/u1OodAVVgWEMlcV6TFibn92FwNEYGzexI5HJ1GyrQzy19YKTnOF
-   kW55hlde0quLqSZHoWvbqFORtNE/WN9Zt4JOcvvA0YG1qBmtIluR3F2oN
-   9SQ2oHrRomH2+BowtGZ8nR1ZASeOYfKRO/nNodHC17Lyee+iuSevn1Wyv
-   cfrOGOfIQ0flguF9W/eHBKcBmf+WTSoM69mZIb8IhjQavZjSphb4h1wdn
-   kgdTh3N1VMCs7dTc9j27DDT+rGQ3L5fKz04CIUV1DpjfWqpUo6mEfurv6
-   +OEfDtviNpwiNQ1d+skgoLHoPKIUyYGteYt5QmNEBMPxowbc15TVCBXGC
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="402946760"
+  bh=TUpy0yCpdy1QocZ9SL6jg1gXIK1RHtcIWUumpNs6efA=;
+  b=Uwp/0Ua0pgDzAZwjgyNsRaLVOCF+OVBFYocNsHyq5C2piX48PAJCxJCV
+   w2HLlwhhzQ7lrkf4Sf7LwIL0VsUBl/3h/5YsLZ1sIBDbPG4H6NyIm5wln
+   2V8Rwb5hnsbQY3FR+ee+ygpj0t/mkaIpmGIep/XWE+SST1aEg6gJt/j+/
+   wh4kesZ2C/R34/Q5WjEvxIzHGGULNDe266rh5TKDvzT1OAaLl/Xh4Mena
+   D0BIP/ibAfi8whKvUJvD+VBlMNpuy0kTbsq66PhojWtBYnrlpaHAFyeEF
+   lXvDm+Mo//5hXmOFjqeTm0liJhlZlRp0E5veCjOcX0QuRbH2l4asfT/xo
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="369434655"
 X-IronPort-AV: E=Sophos;i="6.01,171,1684825200"; 
-   d="scan'208";a="402946760"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 22:08:52 -0700
+   d="scan'208";a="369434655"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 22:10:46 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="856945336"
+X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="710202088"
 X-IronPort-AV: E=Sophos;i="6.01,171,1684825200"; 
-   d="scan'208";a="856945336"
+   d="scan'208";a="710202088"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.255.29.49]) ([10.255.29.49])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 22:08:41 -0700
-Message-ID: <6675bf11-ed80-15b9-b8bc-dee65b595ba5@linux.intel.com>
-Date:   Mon, 14 Aug 2023 13:08:39 +0800
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 22:10:34 -0700
+Message-ID: <2997ef72-37bd-109b-d659-71f259c64eb5@linux.intel.com>
+Date:   Mon, 14 Aug 2023 13:10:32 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
@@ -50,7 +50,7 @@ Cc:     baolu.lu@linux.intel.com, Dmitry Osipenko <digetx@gmail.com>,
         Niklas Schnelle <schnelle@linux.ibm.com>,
         Steven Price <steven.price@arm.com>,
         Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v6 12/25] iommu/tegra-smmu: Support DMA domains in tegra
+Subject: Re: [PATCH v6 13/25] iommu/omap: Implement an IDENTITY domain
 Content-Language: en-US
 To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
@@ -86,69 +86,37 @@ To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
         Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
         Yong Wu <yong.wu@mediatek.com>,
         Chunyan Zhang <zhang.lyra@gmail.com>
-References: <12-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
+References: <13-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
 From:   Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <12-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
+In-Reply-To: <13-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/8/3 8:07, Jason Gunthorpe wrote:
-> All ARM64 iommu drivers should support IOMMU_DOMAIN_DMA to enable
-> dma-iommu.c.
+On 2023/8/3 8:08, Jason Gunthorpe wrote:
+> What omap does during omap_iommu_set_platform_dma() is actually putting
+> the iommu into identity mode.
 > 
-> tegra is blocking dma-iommu usage, and also default_domain's, because it
-> wants an identity translation. This is needed for some device quirk. The
-> correct way to do this is to support IDENTITY domains and use
-> ops->def_domain_type() to return IOMMU_DOMAIN_IDENTITY for only the quirky
-> devices.
+> Move to the new core support for ARM_DMA_USE_IOMMU by defining
+> ops->identity_domain.
 > 
-> Add support for IOMMU_DOMAIN_DMA and force IOMMU_DOMAIN_IDENTITY mode for
-> everything so no behavior changes.
+> This driver does not support IOMMU_DOMAIN_DMA, however it cannot be
+> compiled on ARM64 either. Most likely it is fine to support dma-iommu.c
 > 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 > ---
->   drivers/iommu/tegra-smmu.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/tegra-smmu.c b/drivers/iommu/tegra-smmu.c
-> index f63f1d4f0bd10f..6cba034905edbf 100644
-> --- a/drivers/iommu/tegra-smmu.c
-> +++ b/drivers/iommu/tegra-smmu.c
-> @@ -276,7 +276,7 @@ static struct iommu_domain *tegra_smmu_domain_alloc(unsigned type)
->   {
->   	struct tegra_smmu_as *as;
->   
-> -	if (type != IOMMU_DOMAIN_UNMANAGED)
-> +	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
->   		return NULL;
->   
->   	as = kzalloc(sizeof(*as), GFP_KERNEL);
-> @@ -989,6 +989,12 @@ static int tegra_smmu_def_domain_type(struct device *dev)
->   }
->   
->   static const struct iommu_ops tegra_smmu_ops = {
-> +	/*
-> +	 * FIXME: For now we want to run all translation in IDENTITY mode,
-> +	 * better would be to have a def_domain_type op do this for just the
-> +	 * quirky device.
-> +	 */
-> +	.default_domain = &tegra_smmu_identity_domain,
+>   drivers/iommu/omap-iommu.c | 21 ++++++++++++++++++---
+>   1 file changed, 18 insertions(+), 3 deletions(-)
 
-tegra_smmu_def_domain_type() has already forced the core to use
-ops->identity_domain, why do we still need ops->default_domain?
-
->   	.identity_domain = &tegra_smmu_identity_domain,
->   	.def_domain_type = &tegra_smmu_def_domain_type,
->   	.domain_alloc = tegra_smmu_domain_alloc,
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 
 Best regards,
 baolu
