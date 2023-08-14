@@ -2,167 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE42F77B2CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 09:43:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C88E77B30F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 09:55:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231535AbjHNHnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 03:43:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
+        id S234347AbjHNHzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 03:55:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234220AbjHNHnI (ORCPT
+        with ESMTP id S234387AbjHNHyo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 03:43:08 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A427E7E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 00:43:06 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-99bf8e5ab39so549053566b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 00:43:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1691998984; x=1692603784;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2SkdvgZrpNCBNVq541zdKdiiiiZ2r32O7R+V73IZDsk=;
-        b=00U/dncPTh9ZmUzHnFIyb73hQMRSaPdOjHn8oqd1W8BRRxeYfnEv84NGPhVX2cK1ga
-         QP53lHSy3yQcNMnGAoVrS++I07UQCfguw70JcoWUVzOk0V6W//jOCSdv+KHUdvUoB2nt
-         gbxVYdLiNkBAus3gXR+gncbVSHOvk6w9nRCGWHv4hnAe3CSok1c7W2TSbHE364dk9H/2
-         AUK8KIPQBHVYBsLku67CDRH8mqg+3HEC6bqo/8RZCdlxsdky02XpHexkAg4EV01JR/gD
-         YDiSatsEU49TahfnxvSEnijTY8Y9SRkus81W7aZEaS8BRZntO9GEJtbsBBUQp/Ns3q8k
-         q5Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691998984; x=1692603784;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2SkdvgZrpNCBNVq541zdKdiiiiZ2r32O7R+V73IZDsk=;
-        b=Iewm03xzwZKA6cJep++sPr76nXLRuQk52Xp9vtwmkCQJlvTNUenm9x+QbSLRXuuTrj
-         X8XJT4f5HUMGfcU9Vw1MzxTazYP00BIC61Y6Z4+q/D7az6wzX4beLKh/DaFLVCYWyUDP
-         nxVNfw0CIZcvR6gAlrVwXESYK9AYQr1Mx6a5PnwurCGKgp6NdI1FC+lLopUChdRhPYMw
-         29DS7KtnDlGjRO8o9Z6Ajh4O80LTDO/Gmbvx+EBd5X5kjoR8MITvXN8GReN7/h8x70qk
-         +SlyQ5IGjdHLi/cjcG3I+aW/kseevxC9qnMYv5eTPLGH+VYHofhNdQA5QZISEDN9oFg4
-         WSig==
-X-Gm-Message-State: AOJu0YyErt9ms0GkxPCHE9RnBW0aoXvhgj8DOZ1gBqUzOrg/Z9tDKFd5
-        pf0j5xc257VTN+uxUOto/AT3ow==
-X-Google-Smtp-Source: AGHT+IFKd2I6pYof/pk5jG621n7sFXOTIZnPv7RloCIWA3j4n30gcTqyNdbeoW7ZwFmBEbuortd0zA==
-X-Received: by 2002:a17:906:3019:b0:99b:65fa:e30f with SMTP id 25-20020a170906301900b0099b65fae30fmr7278786ejz.1.1691998984027;
-        Mon, 14 Aug 2023 00:43:04 -0700 (PDT)
-Received: from localhost (212095005216.public.telering.at. [212.95.5.216])
-        by smtp.gmail.com with ESMTPSA id a18-20020a17090640d200b00993a9a951fasm5448385ejk.11.2023.08.14.00.43.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Aug 2023 00:43:03 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 14 Aug 2023 09:43:02 +0200
-Message-Id: <CUS3KXRIND5J.VSB0PVWXZ4DO@otso>
-To:     "Fenglin Wu" <quic_fenglinw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <dmitry.baryshkov@linaro.org>
-Cc:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>
-Subject: Re: [PATCH v4 0/3] Add support for vibrator in multiple PMICs
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.15.2
-References: <20230731053712.2220898-1-quic_fenglinw@quicinc.com>
-In-Reply-To: <20230731053712.2220898-1-quic_fenglinw@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 14 Aug 2023 03:54:44 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A00F210CE;
+        Mon, 14 Aug 2023 00:54:35 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC2072F4;
+        Mon, 14 Aug 2023 00:55:17 -0700 (PDT)
+Received: from pluto (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 12ABC3F6C4;
+        Mon, 14 Aug 2023 00:54:33 -0700 (PDT)
+Date:   Mon, 14 Aug 2023 08:54:23 +0100
+From:   Cristian Marussi <cristian.marussi@arm.com>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     sudeep.holla@arm.com, lukasz.luba@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_rjendra@quicinc.com,
+        srinivas.kandagatla@linaro.org,
+        Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+Subject: Re: [PATCH] firmware: arm_scmi: Fixup perf microwatt support
+Message-ID: <ZNndrw3fHbuYw9x0@pluto>
+References: <20230811204818.30928-1-quic_sibis@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230811204818.30928-1-quic_sibis@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Fenglin,
+On Sat, Aug 12, 2023 at 02:18:18AM +0530, Sibi Sankar wrote:
+> The perf power scale value would currently be reported as bogowatts if the
+> platform firmware supports microwatt power scale and meets the perf major
+> version requirements. Fix this by populating version information in the
+> driver private data before the call to protocol attributes is made.
+> 
+> CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+> Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  drivers/firmware/arm_scmi/perf.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
 
-On Mon Jul 31, 2023 at 7:37 AM CEST, Fenglin Wu wrote:
-> Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, P=
-M7550BA.
-> It is very similar to the vibrator module inside PM8916 which is supporte=
-d in
-> pm8xxx-vib driver but just the drive amplitude is controlled with 2 regis=
-ters,
-> and the register base offset in each PMIC is different.
+Hi,
 
-Briefly tested on a SDM632+PMI632-based Fairphone 3.
+LGTM.
 
-I didn't really check for vibration strength or anything more detailed
-but with the fftest tool the vibrator seems to work fine!
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
 
-Diff is attached below. I can send the pmi632.dtsi change once this
-series is merged (unless you send something first).
+Thanks,
+Cristian
 
-Many thanks for sending these patches!
-
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3 (pm=
-i632)
-
-Regards
-Luca
-
-
-diff --git a/arch/arm64/boot/dts/qcom/pmi632.dtsi b/arch/arm64/boot/dts/qco=
-m/pmi632.dtsi
-index 4eb79e0ce40a..41ef7dad508e 100644
---- a/arch/arm64/boot/dts/qcom/pmi632.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi632.dtsi
-@@ -161,5 +161,11 @@ pmi632_lpg: pwm {
-=20
- 			status =3D "disabled";
- 		};
-+
-+		pmi632_vib: vibrator@5700 {
-+			compatible =3D "qcom,pmi632-vib", "qcom,spmi-vib-gen2";
-+			reg =3D <0x5700>;
-+			status =3D "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64=
-/boot/dts/qcom/sdm632-fairphone-fp3.dts
-index 301eca9a4f31..0d89bc39f613 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -112,6 +112,10 @@ led@3 {
- 	};
- };
-=20
-+&pmi632_vib {
-+	status =3D "okay";
-+};
-+
- &sdhc_1 {
- 	status =3D "okay";
- 	vmmc-supply =3D <&pm8953_l8>;
-
-> Changes in v4:
->   1. Update to use the combination of the HW type and register offset
->      as the constant match data, the register base address defined in
->      'reg' property will be added when accessing SPMI registers using
->      regmap APIs.
->   2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
->
-> Changes in v3:
->   1. Refactor the driver to support different type of the vibrators with
->     better flexibility by introducing the HW type with corresponding
->     register fields definitions.
->   2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
->     strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
->     spmi-vib-gen2.
-> =20
-> Changes in v2:
->   Remove the "pm7550ba-vib" compatible string as it's compatible with pm7=
-325b.
->
-> Fenglin Wu (3):
->   input: pm8xxx-vib: refactor to easily support new SPMI vibrator
->   dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
->   input: pm8xxx-vibrator: add new SPMI vibrator support
->
->  .../bindings/input/qcom,pm8xxx-vib.yaml       |  16 +-
->  drivers/input/misc/pm8xxx-vibrator.c          | 171 ++++++++++++------
->  2 files changed, 132 insertions(+), 55 deletions(-)
-
+> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> index c0cd556fbaae..30dedd6ebfde 100644
+> --- a/drivers/firmware/arm_scmi/perf.c
+> +++ b/drivers/firmware/arm_scmi/perf.c
+> @@ -1080,6 +1080,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
+>  	if (!pinfo)
+>  		return -ENOMEM;
+>  
+> +	pinfo->version = version;
+> +
+>  	ret = scmi_perf_attributes_get(ph, pinfo);
+>  	if (ret)
+>  		return ret;
+> @@ -1104,8 +1106,6 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
+>  	if (ret)
+>  		return ret;
+>  
+> -	pinfo->version = version;
+> -
+>  	return ph->set_priv(ph, pinfo);
+>  }
+>  
+> -- 
+> 2.17.1
+> 
