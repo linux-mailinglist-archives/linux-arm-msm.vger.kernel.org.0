@@ -2,72 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D256277B722
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 12:55:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DA7077B72D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 12:59:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233886AbjHNKzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 06:55:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35748 "EHLO
+        id S232643AbjHNK6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 06:58:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234808AbjHNKzF (ORCPT
+        with ESMTP id S234802AbjHNK6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 06:55:05 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1F4518F;
-        Mon, 14 Aug 2023 03:55:03 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-2681223aaacso2748597a91.0;
-        Mon, 14 Aug 2023 03:55:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692010503; x=1692615303;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hhmwSyjtQSxE/dkQdva/YxGtcysRwvIZ3JCpWE/74fU=;
-        b=kK+0yX5JEMbSzoqNOg9GH6WpHRbXUru+rWhxp1w12IjYg5tK+rOiM6CLsFMdbJqf/M
-         xO5z0zHZ/rpIUWs3GH/CNTbVAeUArH9pJueNnPTqgC1IQ37hAz2BEdLMQ9tZ98t/xkl1
-         tiYHtL7nMkfsG+UJRPgnHIdRSzzxrn+ZpwdffTf6K0FXjBUuGyWNcFyMOIBNUD9jaIBS
-         BMYofih2X5u9Ixb3gWNNWNubsl61NAqBEa2J7AQh5b2aWZKNKM1O68cC3ihTS3tyzIkM
-         nF8iwojrtuDXhhrmEw5MEmfgKkqaOlzYVSoBr/N+lf38hjPqwwv+o9J+hFLx3dMvkYwT
-         UCow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692010503; x=1692615303;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hhmwSyjtQSxE/dkQdva/YxGtcysRwvIZ3JCpWE/74fU=;
-        b=hgZ3OSU4AX5r55iZDe1HMnCoC+h85lQI0jJb9FoXpg3i5zAhE75ocxqdnIoUKWoNZO
-         bKQygEhVknkEt75By2inzeORCfRsnTtMfAYI4dryZv/RyqCp3CLdFAOjXLji98J/G4Lx
-         IhlxFoIQHzhozbMNuI2QAt7z0a1zCQ1HzLncqOh90UmNWMDnRMdf5OTaYHdYxHYirvmg
-         CkgouGTE0kPSgwlh5uQWk9fI953e+yna62cu7Yc13bbRCIvNqbbzm1zwT2GfKn+lSixs
-         uRW4QuvfVyljjjGFcUk1lPNIrQFA0sfBwMC3LRgFFCrCpuvcO/ih2TgfxnWPNNPNiFKQ
-         6npg==
-X-Gm-Message-State: AOJu0Yw6zqLzyU5SBB8992KLL0okfzBXohJiUeNCDL5ZuoBEYuKIB/E7
-        s6EeWq3qm+MWbpQitEjEbl1d4adYw2dHomE0gtc=
-X-Google-Smtp-Source: AGHT+IF7oSDdFynB6xKqblmAfUlYq6Y1BpV3hF5BMWuVAgi4SwVHzBomhRKtBwEF8OQ7fCq+UgOSA0Yz1sA76q/ihO4=
-X-Received: by 2002:a17:90b:78d:b0:268:5e70:507c with SMTP id
- l13-20020a17090b078d00b002685e70507cmr16221272pjz.4.1692010503156; Mon, 14
- Aug 2023 03:55:03 -0700 (PDT)
+        Mon, 14 Aug 2023 06:58:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E13C2109;
+        Mon, 14 Aug 2023 03:58:45 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37EAng7r023888;
+        Mon, 14 Aug 2023 10:58:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TpxlUtKjEJSvZzzD9sKu9m96D0X87KJp+Yzh5rie9SE=;
+ b=BknKqspmwygizK1OxMlK9Rou6YME3kkBzyveZVjQyMi1pz4XymkICSswJU7Dx7sI02XA
+ XwdkMeNdLfUOZdwxCTmfiP4GwcvKvxliz/tdQ33cLkq6fIfQ2bCjod6gHVu2ptspv1ST
+ pjR0dsQxtInyLlkAKOlG1pPKrK5ErNR8CHeZn/T4NP6Aq9l18T90d3/sBBaVYrLBjcgD
+ yEihaDaY5egK4IjzQAp7Fd1nn4uN00FNeRf1LFhWzttQFrkjA4atBTs8HDfIrUYWiYX8
+ eIKyXIdrsZVcTPgUtEpYV5HW+H4+8bMny2AvWEceFYVagRTlw+R3UhpAfRAZvI9NYs8s SA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3se3j93nj5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 10:58:35 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37EAwYNS023256
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 10:58:34 GMT
+Received: from [10.253.13.227] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 14 Aug
+ 2023 03:58:30 -0700
+Message-ID: <6ebdcbdc-409c-0c08-1e5d-f9aa0b92c3b2@quicinc.com>
+Date:   Mon, 14 Aug 2023 18:58:26 +0800
 MIME-Version: 1.0
-References: <20230811210142.403160-1-robimarko@gmail.com> <20230811210142.403160-2-robimarko@gmail.com>
- <4c96210b-4567-4cb5-80bb-7adca6c5f124@linaro.org> <CAOX2RU6X0Tww4UkTKVfc=PLY=RKVJdsm+gomytT0vOydTF+Hnw@mail.gmail.com>
- <7116b473-7f22-43df-af39-81e5f6db4507@linaro.org> <CAOX2RU6nMvpTkGdwBoLJrES5v0qARnDDT6nCVd-DZid7p3pg6Q@mail.gmail.com>
- <e784f70f-3232-42e6-bf4c-67075abd210a@linaro.org> <CAOX2RU7cLoK206hLkfDr+Ry8QgS5F48EEiSbJ+gbGK_xkXBDpA@mail.gmail.com>
- <389904f7-86fa-48be-ba30-aa8cfeb44353@linaro.org> <CAOX2RU5OeGdhk2DoG-noE2RHDmQ-6TnFxVRwHCnmWXWRZE6-5g@mail.gmail.com>
- <7fdee4c2-4c14-4a7f-b161-52ccd2458d3f@linaro.org>
-In-Reply-To: <7fdee4c2-4c14-4a7f-b161-52ccd2458d3f@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 14 Aug 2023 12:54:52 +0200
-Message-ID: <CAOX2RU6vG=cwW=A3zzMc0WT02a57LEpdZhHP_Bks5P_y486Fbg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: ipq4019-ap.dk01.1: align flash node
- with bindings
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 3/3] clk: qcom: add clock controller driver for
+ qca8386/qca8084
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <agross@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20230810115419.25539-1-quic_luoj@quicinc.com>
+ <20230810115419.25539-4-quic_luoj@quicinc.com>
+ <9dec09fa-a5a3-416c-9b4d-4b4c4e10320b@linaro.org>
+ <9a55016f-0049-f185-f2be-d138fe33384b@quicinc.com>
+ <631d5a82-7d24-49cd-9868-74c7b3c08bcd@linaro.org>
+Content-Language: en-US
+From:   Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <631d5a82-7d24-49cd-9868-74c7b3c08bcd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: k6VyMzyfW_Ejz_QeZLomfM7TLdkoEecw
+X-Proofpoint-GUID: k6VyMzyfW_Ejz_QeZLomfM7TLdkoEecw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-14_06,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 clxscore=1015 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308140101
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,70 +89,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 12 Aug 2023 at 16:15, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 12.08.2023 16:12, Robert Marko wrote:
-> > On Sat, 12 Aug 2023 at 16:08, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >> On 12.08.2023 16:07, Robert Marko wrote:
-> >>> On Sat, 12 Aug 2023 at 12:47, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>
-> >>>> On 12.08.2023 11:55, Robert Marko wrote:
-> >>>>> On Sat, 12 Aug 2023 at 00:56, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>>>
-> >>>>>> On 11.08.2023 23:35, Robert Marko wrote:
-> >>>>>>> On Fri, 11 Aug 2023 at 23:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>>>>>
-> >>>>>>>> On 11.08.2023 23:01, Robert Marko wrote:
-> >>>>>>>>> Rename the SPI-NOR node to flash@0, remove #address-cells and #size-cells
-> >>>>>>>>> as they should be under the partitions subnode and use the generic
-> >>>>>>>>> jedec,spi-nor compatible.
-> >>>>>>>>>
-> >>>>>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>>>>>>>> ---
-> >>>>>>>> You can also do "nandmanufacturer,mx25l25635e", "jedec,spi-nor"
-> >>>>>>>
-> >>>>>>> Hi,
-> >>>>>>> I grepped the vendor U-Boot to make sure it's not being triggered off
-> >>>>>>> the mx25l25635e
-> >>>>>>> compatible but the only hit is the IC support itself.
-> >>>>>>> MX25L25635 was just the original NOR IC Qualcomm used on the board so
-> >>>>>>> to me it made
-> >>>>>>> most sense to just use the JEDEC compatible as NOR itself is JEDEC NOR
-> >>>>>>> compatible.
-> >>>>>> OK if dynamic identification works fine
-> >>>>>
-> >>>>> It should work fine, datasheet is clear that its JEDEC compatible.
-> >>>>> That being said, I dont actually have the board, just figured it was
-> >>>>> time for a cleanup as
-> >>>>> OpenWrt has been patching DK01 and DK04 for ages.
-> >>>> Hm. Do we know whether there are still users of this boards?
-> >>>
-> >>> I honestly doubt it as they have been broken in OpenWrt for years and
-> >>> nobody complained.
-> >>> So we are currently removing support for them, but I still wanted to
-> >>> at least fixup the DTS state
-> >>> upstream.
-> >>> These boards are not obtainable anymore.
-> >> I also noticed they were detached from the other snapdragons in u-boot
-> >> for no good reason (at first glance anyway).
-> >
-> > If you are talking about the mainline U-Boot then yeah, my basic port was done
-> > years ago and I knew way less about the SoC then now.
-> > Currently its on my TODO to merge them with Snapdragon and add some proper
-> > GPIO and pinctrl drivers as well as using the Linux DTS.
-> Take a look at this branch of mine [1], I already did some of that.
->
-> If you wish to upstream that, please coordinate with Caleb (+CC) who
-> may be interested in the same in parallel.
->
-> [1] https://github.com/konradybcio/u-boot/commits/konrad/rb1_forcepushing
 
-That is great, though this is very low hanging fruit for me, I have
-plenty more of IPQ807x
-stuff that needs to make its way upstream.
 
-Regards,
-Robert
->
+On 8/12/2023 6:56 PM, Konrad Dybcio wrote:
+> On 11.08.2023 13:49, Jie Luo wrote:
+>>
+>>
+>> On 8/10/2023 8:59 PM, Konrad Dybcio wrote:
+>>> On 10.08.2023 13:54, Luo Jie wrote:
+>>>> Add clock & reset controller driver for qca8386/qca8084.
+>>>>
+>>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>>>> ---
+>>>
+>>>> +struct qcom_cc {
+>>>> +    struct qcom_reset_controller reset;
+>>>> +    struct clk_regmap **rclks;
+>>>> +    size_t num_rclks;
+>>>> +};
+>>> This all, including the probe func, is required because of the MDIO dance,
+>>> I assume?
+>>>
+>>> Commonizing that would make more sense should more clocks like this appear
+>>> in the future.
+>>>
+>> Hi Konrad,
+>> Thanks for the review.
+>> the structure qcom_cc is not because of MDIO dance, this is the common structure used by other qcom clock drivers such as gcc-ipq9574 in the probe function.
+>>
+>> seems that we can't make any more commonization on this, please let me know if there is any idea on this.
+> My main point is, why can't you use qcom_cc_really_probe?
+> 
+
+Hi Konrad,
+qcom_cc_really_probe is taking the platform_device as the input 
+parameter, but the nss_cc_qca8k_probe takes the mdio_device as the probe 
+parameter.
+
+>>
+>>> [...]
+>>>
+>>>> +static struct clk_branch nss_cc_switch_core_clk = {
+>>>> +    .halt_reg = 0x8,
+>>>> +    .clkr = {
+>>>> +        .enable_reg = 0x8,
+>>>> +        .enable_mask = BIT(0),
+>>>> +        .hw.init = &(const struct clk_init_data) {
+>>>> +            .name = "nss_cc_switch_core_clk",
+>>>> +            .parent_hws = (const struct clk_hw *[]) {
+>>>> +                &nss_cc_switch_core_clk_src.clkr.hw,
+>>>> +            },
+>>>> +            .num_parents = 1,
+>>>> +            /* Can be disabled in PHY mode for power saving */
+>>> Well it clearly cannot be disabled if it has the CLK_IS_CRITICAL flag :D
+>>>
+>>> What's the "PHY mode" you're talking about?
+>> Yes, the clock with flag CLK_IS_CRITICAL needs to be enabled, the hardware register needs to be configured to enable it, it is disabled by default.
+>>
+>> this clock branch is necessary for the switch mode that has switch features such routing and fdb forwarding, i will remove the CLK_IS_CRITICAL from the clock that is not needed for the PHY mode, we can enable it later when configuring it as switch mode.
+>>
+>> As for PHY mode, the device works as only PHY device, that includes 4 PHY ports, no switch functions.
+> It's still not obvious at all what "phy mode" or "switch mode" are.
+> Are they usecases for a device based on this SoC?
+> 
 > Konrad
+
+They are different chips, qca8084 works in PHY mode, however qca8386 
+works in switch mode, that is the different hardware device, but the 
+clock controller driver can be used by both.
