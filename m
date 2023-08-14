@@ -2,42 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C88E77B30F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 09:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0950B77B32B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 10:02:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234347AbjHNHzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 03:55:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41900 "EHLO
+        id S231669AbjHNICL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 04:02:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234387AbjHNHyo (ORCPT
+        with ESMTP id S233176AbjHNIBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 03:54:44 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A00F210CE;
-        Mon, 14 Aug 2023 00:54:35 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC2072F4;
-        Mon, 14 Aug 2023 00:55:17 -0700 (PDT)
-Received: from pluto (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 12ABC3F6C4;
-        Mon, 14 Aug 2023 00:54:33 -0700 (PDT)
-Date:   Mon, 14 Aug 2023 08:54:23 +0100
-From:   Cristian Marussi <cristian.marussi@arm.com>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     sudeep.holla@arm.com, lukasz.luba@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_rjendra@quicinc.com,
-        srinivas.kandagatla@linaro.org,
-        Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
-Subject: Re: [PATCH] firmware: arm_scmi: Fixup perf microwatt support
-Message-ID: <ZNndrw3fHbuYw9x0@pluto>
-References: <20230811204818.30928-1-quic_sibis@quicinc.com>
+        Mon, 14 Aug 2023 04:01:39 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 565E3B5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 01:01:38 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fe8a158fcbso22878625e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 01:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692000097; x=1692604897;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6iRD9A4irJNmOgu6eUxG8gRcHEW76etNPCgT+ma+/4M=;
+        b=mtoe8izgXzHXuALrWwwyl/olIUk2+XnUPjPqEHhXpft+LZRT5+Wi24R9EIqRg911Fu
+         Y51yihxEOqA/mUIs64B/6fNH/bDSgczY7eWaLQpZTTgbKR2G9nSa2Li0/swbJgoY3tA0
+         AzhEuHZzd8PesLeCOYs3kXox5IbAiNgpZK88DmCcb+JZ5AwEA/vEE6Npc4r0JZ9yR0so
+         I2c6QPgBQg63M+yps32jREj4fnUBKqAmQqlBYCsGxmW6doR/oWG2TVNaLLYSVqT/n/YH
+         QqwbepB8SP4+uW8FO36S/2RrXJWavK799imH/TNeGjuYAURxF5r3nS7Y+vEjluSDWKaT
+         c5Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692000097; x=1692604897;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6iRD9A4irJNmOgu6eUxG8gRcHEW76etNPCgT+ma+/4M=;
+        b=A3MMZcT9qKRQsaQlc/iDtWeM4eSfZn5fpvGpFnyYN3CTqcjBTUkMSmNGlGGsR3Usib
+         NVdxV5TKKAZr1/81z23xgV1reYdojADkfIyL0wVSGG5gHmOIgbJ7iAbTxxkjdtRyNx+B
+         kLfHWonWNXHCIrSgGxe4+x5FAKGQDE8FSY+DbvvzZXNup0YYtT7fRGiua32rqDyvZ5uJ
+         /4PsXsDlsOaN47rubaRXF7evdaytqRw52FInYs2dDu8Xph7tiOwvx8NvpRn/jvezXScl
+         fnxmtHRtStbuz4A1ZcQfFupkbJrtTqaQTDK26eqCKmULxI2MmAw7ZNwTwzIzhZ7vyRYn
+         xJCg==
+X-Gm-Message-State: AOJu0Yx4wp2+4eArKPyG9fqRlsYAX0XW5QmIeSc4hGgqzmzMOEui7S4W
+        /mTw0hGeZ7MWe7SGmUNceF2quQ==
+X-Google-Smtp-Source: AGHT+IHl+WyUuKJlARfd8AJ8xAj3jeBTIhgTCUmlckWdRylYB0YEauFV5hliIuK5c5ePGXkYuElu1A==
+X-Received: by 2002:a7b:c307:0:b0:3fe:1c33:2814 with SMTP id k7-20020a7bc307000000b003fe1c332814mr6794323wmj.30.1692000096756;
+        Mon, 14 Aug 2023 01:01:36 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c229100b003fc01f7a42dsm7998151wmf.8.2023.08.14.01.01.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Aug 2023 01:01:36 -0700 (PDT)
+Message-ID: <1dfaf72b-1e2a-e771-39f9-c3a5cf1c8463@linaro.org>
+Date:   Mon, 14 Aug 2023 10:01:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230811204818.30928-1-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sc7180: Add board id for
+ lazor/limozeen
+Content-Language: en-US
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        dianders@chromium.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org
+References: <20230809064908.193739-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20230809144516.v3.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
+ <cd15df3a-eadc-13d6-7088-3ad785ea733e@linaro.org>
+ <4e05a1fb-f6f2-3219-b41d-67351c70a7ff@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <4e05a1fb-f6f2-3219-b41d-67351c70a7ff@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -45,51 +83,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Aug 12, 2023 at 02:18:18AM +0530, Sibi Sankar wrote:
-> The perf power scale value would currently be reported as bogowatts if the
-> platform firmware supports microwatt power scale and meets the perf major
-> version requirements. Fix this by populating version information in the
-> driver private data before the call to protocol attributes is made.
+On 11/08/2023 05:46, Sheng-Liang Pan wrote:
+> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
-> Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  drivers/firmware/arm_scmi/perf.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> On 10/08/2023 11:30, Sheng-Liang Pan wrote:
+>>> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>>> Isn't this duplicated with r9? Probably other places as well... or....
+>>>> separate r10 add rt5682s node which different with r9.
+>>> we separate r10 add rt5682s which differentwith r9
+>>>
+>>>
+>>>>> -	model = "Google Lazor Limozeen without Touchscreen (rev9+)";
+>>>>> -	compatible = "google,lazor-sku6", "google,lazor-sku18", "qcom,sc7180";
+>>>>> +	model = "Google Lazor Limozeen without Touchscreen (rev9)";
+>>>>> +	compatible = "google,lazor-rev9-sku6", "google,lazor-rev9-sku18", "qcom,sc7180";
+>>>
+>>>> Your patch 2 does not make any sense. Didn't you touch it in patch 2?
+>>>> Really, what is happening here?
+>>> patch 2 explain why we added new sku for no-eSIM.
+>>
+>> So which commit explain why you touch the same line twice? Sorry, this
+>> does not make sense.
+>>
+>> Best regards,
+>> Krzysztof
 > 
+> We sort patch by change order,
+> fist request for non-eSIM, patch2 add new sku 10, 15 for non-eSIM, and 18, but keep the newset reversion is r9,
+> after add non-eSIM SKU, a sencond request for ALC5682i-VS, 
+> so continue patch2 we upreversion r10 which include rt5682s node.
 
-Hi,
+I barely can parse it, but anyway does not look right. You explained
+what you are doing but it does not explain why touching the same line
+twice. There is no point in making one board new SKU, but then
+immediately change it to something else. The previous commit is just no-op.
 
-LGTM.
+Best regards,
+Krzysztof
 
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-
-Thanks,
-Cristian
-
-> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-> index c0cd556fbaae..30dedd6ebfde 100644
-> --- a/drivers/firmware/arm_scmi/perf.c
-> +++ b/drivers/firmware/arm_scmi/perf.c
-> @@ -1080,6 +1080,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
->  	if (!pinfo)
->  		return -ENOMEM;
->  
-> +	pinfo->version = version;
-> +
->  	ret = scmi_perf_attributes_get(ph, pinfo);
->  	if (ret)
->  		return ret;
-> @@ -1104,8 +1106,6 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
->  	if (ret)
->  		return ret;
->  
-> -	pinfo->version = version;
-> -
->  	return ph->set_priv(ph, pinfo);
->  }
->  
-> -- 
-> 2.17.1
-> 
