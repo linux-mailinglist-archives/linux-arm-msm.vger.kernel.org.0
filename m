@@ -2,123 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0950B77B32B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 10:02:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B9C77B378
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 10:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbjHNICL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 04:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38576 "EHLO
+        id S233084AbjHNIKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 04:10:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233176AbjHNIBj (ORCPT
+        with ESMTP id S233258AbjHNIJp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 04:01:39 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 565E3B5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 01:01:38 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fe8a158fcbso22878625e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 01:01:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692000097; x=1692604897;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6iRD9A4irJNmOgu6eUxG8gRcHEW76etNPCgT+ma+/4M=;
-        b=mtoe8izgXzHXuALrWwwyl/olIUk2+XnUPjPqEHhXpft+LZRT5+Wi24R9EIqRg911Fu
-         Y51yihxEOqA/mUIs64B/6fNH/bDSgczY7eWaLQpZTTgbKR2G9nSa2Li0/swbJgoY3tA0
-         AzhEuHZzd8PesLeCOYs3kXox5IbAiNgpZK88DmCcb+JZ5AwEA/vEE6Npc4r0JZ9yR0so
-         I2c6QPgBQg63M+yps32jREj4fnUBKqAmQqlBYCsGxmW6doR/oWG2TVNaLLYSVqT/n/YH
-         QqwbepB8SP4+uW8FO36S/2RrXJWavK799imH/TNeGjuYAURxF5r3nS7Y+vEjluSDWKaT
-         c5Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692000097; x=1692604897;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6iRD9A4irJNmOgu6eUxG8gRcHEW76etNPCgT+ma+/4M=;
-        b=A3MMZcT9qKRQsaQlc/iDtWeM4eSfZn5fpvGpFnyYN3CTqcjBTUkMSmNGlGGsR3Usib
-         NVdxV5TKKAZr1/81z23xgV1reYdojADkfIyL0wVSGG5gHmOIgbJ7iAbTxxkjdtRyNx+B
-         kLfHWonWNXHCIrSgGxe4+x5FAKGQDE8FSY+DbvvzZXNup0YYtT7fRGiua32rqDyvZ5uJ
-         /4PsXsDlsOaN47rubaRXF7evdaytqRw52FInYs2dDu8Xph7tiOwvx8NvpRn/jvezXScl
-         fnxmtHRtStbuz4A1ZcQfFupkbJrtTqaQTDK26eqCKmULxI2MmAw7ZNwTwzIzhZ7vyRYn
-         xJCg==
-X-Gm-Message-State: AOJu0Yx4wp2+4eArKPyG9fqRlsYAX0XW5QmIeSc4hGgqzmzMOEui7S4W
-        /mTw0hGeZ7MWe7SGmUNceF2quQ==
-X-Google-Smtp-Source: AGHT+IHl+WyUuKJlARfd8AJ8xAj3jeBTIhgTCUmlckWdRylYB0YEauFV5hliIuK5c5ePGXkYuElu1A==
-X-Received: by 2002:a7b:c307:0:b0:3fe:1c33:2814 with SMTP id k7-20020a7bc307000000b003fe1c332814mr6794323wmj.30.1692000096756;
-        Mon, 14 Aug 2023 01:01:36 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c229100b003fc01f7a42dsm7998151wmf.8.2023.08.14.01.01.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Aug 2023 01:01:36 -0700 (PDT)
-Message-ID: <1dfaf72b-1e2a-e771-39f9-c3a5cf1c8463@linaro.org>
-Date:   Mon, 14 Aug 2023 10:01:34 +0200
+        Mon, 14 Aug 2023 04:09:45 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 300E2173B;
+        Mon, 14 Aug 2023 01:09:26 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37E4idOD007217;
+        Mon, 14 Aug 2023 08:08:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=HDoY6/Us+r9g/LOMwCv6Ik5IuktODBtk250YSHNs2q8=;
+ b=mRe9hrEQCeJJ3MfdG/9g63hrAxLQNZLvqCsDfkKF2UKEQoUBRGq3hnySHqla9q4F22ue
+ FHuIgMBu5NAkq0/kf292iFs4zvjdDY4CZxGlj3/oAGmdpDS7k7OYpQ6vyuCQFzPGy6J3
+ ut1ADmY0m2d0tId4QtwqQtfwZiPNJhS8BswXlK4bzm0+WASsR6EllnRIKl+vxvrVVX22
+ uKTy2EDzJjEjUzsCpsm+RQ8dQiBG8nEllgO4hshnGFMU/byo7grl2bWlze7HApbMGocI
+ UOv7hgenJCcuP7sPQmV0izrMFJlR/DUKMtA0GfFPi1sHrCM9hle4Iu32f+VbKi7dC+YX cQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3se3fmb80n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 08:08:13 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37E88C8o007204
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 08:08:12 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 14 Aug 2023 01:08:05 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <nfraprado@collabora.com>,
+        <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH v8 0/5] Enable IPQ5332 USB2
+Date:   Mon, 14 Aug 2023 13:36:00 +0530
+Message-ID: <cover.1691999761.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sc7180: Add board id for
- lazor/limozeen
-Content-Language: en-US
-To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        dianders@chromium.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org
-References: <20230809064908.193739-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230809144516.v3.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
- <cd15df3a-eadc-13d6-7088-3ad785ea733e@linaro.org>
- <4e05a1fb-f6f2-3219-b41d-67351c70a7ff@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <4e05a1fb-f6f2-3219-b41d-67351c70a7ff@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: djEjiLNa0k9EMEu0mvNU5H_--xPytzHr
+X-Proofpoint-ORIG-GUID: djEjiLNa0k9EMEu0mvNU5H_--xPytzHr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-14_03,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ mlxlogscore=445 suspectscore=0 impostorscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 clxscore=1015 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308140074
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/08/2023 05:46, Sheng-Liang Pan wrote:
-> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> On 10/08/2023 11:30, Sheng-Liang Pan wrote:
->>> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>>> Isn't this duplicated with r9? Probably other places as well... or....
->>>> separate r10 add rt5682s node which different with r9.
->>> we separate r10 add rt5682s which differentwith r9
->>>
->>>
->>>>> -	model = "Google Lazor Limozeen without Touchscreen (rev9+)";
->>>>> -	compatible = "google,lazor-sku6", "google,lazor-sku18", "qcom,sc7180";
->>>>> +	model = "Google Lazor Limozeen without Touchscreen (rev9)";
->>>>> +	compatible = "google,lazor-rev9-sku6", "google,lazor-rev9-sku18", "qcom,sc7180";
->>>
->>>> Your patch 2 does not make any sense. Didn't you touch it in patch 2?
->>>> Really, what is happening here?
->>> patch 2 explain why we added new sku for no-eSIM.
->>
->> So which commit explain why you touch the same line twice? Sorry, this
->> does not make sense.
->>
->> Best regards,
->> Krzysztof
-> 
-> We sort patch by change order,
-> fist request for non-eSIM, patch2 add new sku 10, 15 for non-eSIM, and 18, but keep the newset reversion is r9,
-> after add non-eSIM SKU, a sencond request for ALC5682i-VS, 
-> so continue patch2 we upreversion r10 which include rt5682s node.
+This patch series adds the relevant phy and controller
+configurations for enabling USB2 on IPQ5332
 
-I barely can parse it, but anyway does not look right. You explained
-what you are doing but it does not explain why touching the same line
-twice. There is no point in making one board new SKU, but then
-immediately change it to something else. The previous commit is just no-op.
+v8:
+	Driver:-
+		Change commit subject and message per review comments
+		Don't include of_platform.h
+		Change struct initialization coding style
+		GENMASK -> BIT for one of the defines
+v7:
+	Binding:-
+		Move 'compatible' to be the first entry
+		In the example have 'usb-phy' instead of 'usb2-phy'
+		Add 'Reviewed-by: Krzysztof Kozlowski'
+v6:
+	Binding and dts:-
+		Dropped the qcom,dwc3.yaml patch as it has been picked up for linux-next
+		Add const to compatible, vdd-supply
+		Move nodes per register address
+	Driver:-
+		Add vdd-supply
+		Cleanup error paths in probe with dev_err_probe
+v5:
+	Binding and dts:-
+		Fix email id
+		Removed 'Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>'
+		as had to change bindings file to be able to use generic phy instead of
+		usb-phy
 
-Best regards,
-Krzysztof
+	Driver:-
+		Remove unused definition
+		Use generic phy instead of usb-phy
+v4:
+	Binding and dts:-
+		Change node name (bindings & dts)
+	Driver:-
+		Remove unused enum
+		static const for '.data'
+		Error handling for devm_clk_get
+v3:
+	Fix bindings file based on review comments
+
+v1:
+	Cleanup DTS
+	Combine driver, kconfig and makefile patches
+	Remove unused functions from M31 driver
+	Drop the clock driver changes
+
+Varadarajan Narayanan (5):
+  dt-bindings: phy: qcom,m31: Document qcom,m31 USB phy
+  phy: qcom: Introduce M31 USB PHY driver
+  arm64: dts: qcom: ipq5332: Add USB related nodes
+  arm64: dts: qcom: ipq5332: Enable USB
+  arm64: defconfig: Enable M31 USB phy driver
+
+ .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml       |  59 +++++
+ arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts        |  23 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |  55 ++++
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/phy/qualcomm/Kconfig                       |  11 +
+ drivers/phy/qualcomm/Makefile                      |   1 +
+ drivers/phy/qualcomm/phy-qcom-m31.c                | 294 +++++++++++++++++++++
+ 7 files changed, 444 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-m31.c
+
+-- 
+2.7.4
 
