@@ -2,171 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1430F77BC65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 17:07:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0686D77BCAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 17:13:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231483AbjHNPHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 11:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36664 "EHLO
+        id S232868AbjHNPNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 11:13:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232558AbjHNPG6 (ORCPT
+        with ESMTP id S232761AbjHNPMt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 11:06:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ECD510C8;
-        Mon, 14 Aug 2023 08:06:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3464F61528;
-        Mon, 14 Aug 2023 15:06:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A20CC433C7;
-        Mon, 14 Aug 2023 15:06:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692025616;
-        bh=+NIKQGsKmMMJbWFy16rBGIgRnc+Ftb898/twa/T7r7g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iguzc7DllXfmP7krdyWbHbMkYboZP7rMjJtswoyw5kS5vxprid9l9xOYb6xNpnCzr
-         AEJVOetq7XDHHXuSKOd4mTRb5KyBr3CdWdremFn4n4EYE12cF2r6vP9i8hn3jh9srl
-         MeYbnYJHbNfND77dHGBaULNEXEiR3/xH7zEb79lZ1J6Y/At/0iNmuSN1kzJaveQno7
-         +5oSrtFk70ei0SFBZ97WzP2qH1NSNTH7on9oqtmpSegd1trHNElUPnWsn+PivJB/w7
-         hqu1ejd69/RfT2HNXM8OZAgKYKxxAorQufFasTlrrP4Qo4zZnPvegnJAsYxTVb73h4
-         IQ27ogWNy1muw==
-Date:   Mon, 14 Aug 2023 17:06:53 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Andi Shyti <andi.shyti@kernel.org>
-Cc:     Paul Cercueil <paul@crapouillou.net>, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Elie Morisse <syniurge@gmail.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Jan Dabros <jsd@semihalf.com>,
-        Jean Delvare <jdelvare@suse.com>,
-        Qii Wang <qii.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Peter Korsgaard <peter@korsgaard.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Conghui Chen <conghui.chen@intel.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Peter Rosin <peda@axentia.se>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-Subject: Re: [PATCH v2 00/22] i2c: Use new PM macros
-Message-ID: <ZNpDDWiqpGlZ01fb@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Paul Cercueil <paul@crapouillou.net>, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Elie Morisse <syniurge@gmail.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Jan Dabros <jsd@semihalf.com>, Jean Delvare <jdelvare@suse.com>,
-        Qii Wang <qii.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Peter Korsgaard <peter@korsgaard.com>, Andrew Lunn <andrew@lunn.ch>,
-        Vladimir Zapolskiy <vz@mleia.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Conghui Chen <conghui.chen@intel.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Peter Rosin <peda@axentia.se>, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-References: <20230722115046.27323-1-paul@crapouillou.net>
- <169100562778.1919254.5355387350651563678.b4-ty@kernel.org>
+        Mon, 14 Aug 2023 11:12:49 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE314E73
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 08:12:47 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fe2048c910so40822865e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 08:12:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692025966; x=1692630766;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RL8uW/i+vD2pJKOZ8MhjURQoVYYBJH2Wn25O5mxE3sc=;
+        b=W8sSGddp3Db1uk2FUMTNriElEU8D3HcGTFl7rl8i+0hlJlD3CzmGogjI/BP1Z6wNTi
+         txd4E13/vQqJJzXoVf0qde/UHdikHRGvLI1T7GsABcFfNeOlc3B7SSTA5wTPtzwBrGCC
+         HaBSppcnEJPfFOFPs8tuY/TXDlDMzhvoJPA13lgGIPZ1/c56ESx7AhQZ5pw1u6HoriXG
+         Md1orUzCfWpgZuZZt4Ldk8OkusX7k6y0vJwlFkQbsUeeCS7cGxtliSTD7yNaQ4HixjQR
+         0TL9CwVP3MPSWtulwZAEG5x0LSsRp3HYUf3t5s1AW5x9wqW9OfgcNx5XVDn6nc43uig8
+         CaXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692025966; x=1692630766;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RL8uW/i+vD2pJKOZ8MhjURQoVYYBJH2Wn25O5mxE3sc=;
+        b=KNH0dCRW+vr/JF60qlsjA0RCpBRoJiXoTPFwuza+jG5dpa6cyQIWuQc63WLMl3aSV4
+         9bSqCwcU2auC58pV7AhB/AXxJamAPNgrEoAZv9TLQQmlDj3V6PVOqBhT9zOT0VBoccjP
+         UOYpZgCjRDmjLQuPNopYUiBaKwkcdhPPUu8l+UQI07cqWmqF85RemlBE0D4h6mEv0lkf
+         skApIgOWYBY4NUCv2fAQBPtI3axUbQHKGL2ZukTLvmAKIGB6G7WuRbZO8JIvVNrSLgAp
+         M0eeS8Z2JkqTDJyS7pzBEARSQ3NQzpe4VbcH4BdTv6QbfE1MvPc2htesrbGOFuGvfK76
+         VcwA==
+X-Gm-Message-State: AOJu0Yyay0/T7XrXj02NrspmVBH4ZNCw5fe9MzTYYraoZlTTd+gOLGoB
+        +3ErO6sqDK61H0M+SzmUdTQlVQ==
+X-Google-Smtp-Source: AGHT+IGrWi8yDMGvnyI/h/pnxgHlDDJk4q/bcPsOgY+08reUDpTPRq24qQX5JfjBEfXa12qO5HYr/g==
+X-Received: by 2002:adf:e685:0:b0:316:f25c:d0c0 with SMTP id r5-20020adfe685000000b00316f25cd0c0mr7714740wrm.16.1692025966328;
+        Mon, 14 Aug 2023 08:12:46 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c021100b003fe1c332810sm17644572wmi.33.2023.08.14.08.12.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Aug 2023 08:12:45 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v0 00/13] media: qcom: camss: Add parameter passing to remove several outstanding bugs
+Date:   Mon, 14 Aug 2023 16:12:30 +0100
+Message-ID: <20230814151243.3801456-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YOrVHCxcIjSDhBYQ"
-Content-Disposition: inline
-In-Reply-To: <169100562778.1919254.5355387350651563678.b4-ty@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This second series of bugfixes stacks ontop of the Fixes series sent earlier.
 
---YOrVHCxcIjSDhBYQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Link: https://lore.kernel.org/linux-arm-msm/20230814141007.3721197-1-bryan.odonoghue@linaro.org/T/#t
 
-On Wed, Aug 02, 2023 at 10:10:34PM +0200, Andi Shyti wrote:
-> Hi
->=20
-> On Sat, 22 Jul 2023 13:50:24 +0200, Paul Cercueil wrote:
-> > Here is a revised version of my patchset that converts the I2C drivers
-> > to use the new PM macros.
-> >=20
-> > Changes since V1 include:
-> > - Previous patch [01/23] that updated the amd-mp2 driver has been
-> >   dropped per Jonathan's request.
-> > - [09/22]: Unfold _DEV_PM_OPS() macro
-> > - [10/22]: Convert to use regular device PM instead of using
-> >   platform_driver.{suspend,resume}. I figured it was OK to also change
-> >   it to use the new PM macros and keep it in one single patch.
-> > - [13/22]: Rewrap runtime PM line
-> >=20
-> > [...]
+Rather than send both series as one giant series, I opted to send a pure
+Fixes series above, with this second series a non-backport series i.e. no
+Fixes tags in this series.
 
-Applied to for-next (via Andi's branch), thanks!
+The existing CAMSS code relies on some hard-coded parameters buried inside
+of the driver, instead of passed via compat .data as arguably ought to be
+the case.
 
+This brittle model is an extending morass of spaghetti code. More than that
+in CAMSS Video Front Ends (VFEs) and the number of Raw Data Interfaces
+(RDIs) per VFE can vary from SoC to SoC. Indeed sm8250 has VFE and VFE Lite
+blocks which have a different number of RDIs per block.
 
---YOrVHCxcIjSDhBYQ
-Content-Type: application/pgp-signature; name="signature.asc"
+The use of defines as opposed to per-compat parameters inside of ISRs leads
+to either under-polling or over-polling the number of RDIs.
 
------BEGIN PGP SIGNATURE-----
+On top of all of that we have some hard-coded statements for clock names
+which breaks easily.
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmTaQwwACgkQFA3kzBSg
-KbaDMw//VbdoB1uujcbHlW8pgRVSqHqnF88zf15UYW4oQMPcz5HTf2NthklikoXP
-VZotOIw8HpQfsLEJc9ZOw6WaA+g1/1A0kJ6nft2+w4lXiT1lRRF0Nbq9VLDJ8iXS
-se9KGtH9oWoiaDSRWT3rcpPTW2C5sPMBl9nz9Uf6zzx43rq2ATtETKSp1qi+tNXe
-D2QeZ6Rq8U7xak/PyGO1DSM0IEHMygAQNWn7xU0GM8x5m/OREG1z4nodwrfgo0eO
-a1iXMQ1yhJWFE2bVR9RncJqOcq+fIjnQs9ckAHbVB3E4qjO8N9jW577W9AEnmxhi
-tAnS+LmXLz1exjmqAfeJ+R+KHUkT/Bj3eTNdnYk2vEdxR2OV+a87dfJMARmb1E5f
-/92dgijhP2RRi3gNzIidpmHVqFF2L0jEDkWjd9OiZtU6gTmlt1oi815msusEeYic
-AYR6Xr2bvlNuw0VCPyp2hn0NvhvzG3JZnTdZ3m0KYuqvX23wVf6Kp6PI+xnHqF8h
-tqW9h1oqXlbhY2BsoWgVgiECeVbd4kUNhPh4nKiA+BPov7NFkFs7lU5jz8qqvpEh
-d2O/6g2bL9qLQWmvOBMmQrLLtCXH5OQWSJMT+Y6gGtpfDlXYXZGVpGkPF3XWJCNP
-hwQhPiLVTevWUMJgFmIPd3hxyb8Brn6BDBx1qb8G1sciMZxYULw=
-=Jr5W
------END PGP SIGNATURE-----
+We can solve the under/over polling loop problem by transitioning loop
+controls from macros to parameters passed via probe().
 
---YOrVHCxcIjSDhBYQ--
+Similarly and unsurprisingly we can also solve the hard-coded clock problem
+by adding some string processing routines that take passed arguments.
+
+There is still some additional maintenance work to be done in this driver
+but before adding one more SoC the code needs to be made more extensible
+and less brittle.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/dc346c7f46c0680bcfb84fded6db97497fffe49a
+
+Bryan O'Donoghue (13):
+  media: qcom: camss: Amalgamate struct resource with struct
+    resource_ispif
+  media: qcom: camss: Start to move to module compat matched resources
+  media: qcom: camss: Drop useless NULL assignment for ispif resources
+  media: qcom: camss: Pass icc bandwidth table as a platform parameter
+  media: qcom: camss: Pass remainder of variables as resources
+  media: qcom: camss: Pass line_num from compat resources
+  media: qcom: camss: Assign the correct number of RDIs per VFE
+  media: qcom: camss: Use >= CAMSS_SDM845 for vfe_get/vfe_put
+  media: qcom: camss: Untangle if/else spaghetti in camss
+  media: qcom: camss: Improve error printout on icc_get fail
+  media: qcom: camss: Allow clocks vfeN vfe_liteN or vfe_lite
+  media: qcom: camss: Functionally decompose CSIPHY clock lookups
+  media: qcom: camss: Add support for setting CSIPHY clock name csiphyX
+
+ .../media/platform/qcom/camss/camss-csid.c    |  24 +-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |   8 +-
+ .../media/platform/qcom/camss/camss-csiphy.c  |  67 ++--
+ .../media/platform/qcom/camss/camss-ispif.c   |  32 +-
+ .../media/platform/qcom/camss/camss-ispif.h   |   4 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |   6 +-
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   2 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |   2 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |   2 -
+ .../media/platform/qcom/camss/camss-vfe-480.c |   5 +-
+ drivers/media/platform/qcom/camss/camss-vfe.c |  78 +++--
+ .../media/platform/qcom/camss/camss-video.c   |  16 +-
+ drivers/media/platform/qcom/camss/camss.c     | 292 +++++++++---------
+ drivers/media/platform/qcom/camss/camss.h     |  31 +-
+ 14 files changed, 315 insertions(+), 254 deletions(-)
+
+-- 
+2.41.0
+
