@@ -2,67 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E115477BFAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 20:19:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAD877BFEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 20:45:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbjHNSTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 14:19:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49548 "EHLO
+        id S231602AbjHNSo5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 14:44:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjHNSSg (ORCPT
+        with ESMTP id S231622AbjHNSot (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 14:18:36 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC7910E3;
-        Mon, 14 Aug 2023 11:18:35 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-99d6d5054bcso861685866b.1;
-        Mon, 14 Aug 2023 11:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692037113; x=1692641913;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iUHvcmtjpBkUa0SBqcJy0lr9ht+UJKtloUpURLnUdDw=;
-        b=oX2nvUVDie32EJdDYkJVp5WxIcjt4iN9G0NGMaiyCZ0TAKeF3h6Ebo32U9qJDevDBU
-         bhhMyROxbD7PnmD1oRcITMc4rQiuvXTKBuGq0NQ24mLWzV7Nd4tij+xIIalwxdFvPmkK
-         ZScjLQiQuJgoAt6cRT9L1ua21t/Tcnw0z9ux4S+dk1+IKrbj29i+ll4IQVS3sAElXcFB
-         LvZ1+hrm839cpPzEcL2mWCwFnZj76jnxk/NIiRIEGUEmG5Pikixy2y+GP1poY5MT1Y3Q
-         hNQPPtB4fAAnfkh7dejZgu0kiIa8Fm862GzToheS2pGvruSjTYNhByTDM3dNiNnz/294
-         wztQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692037113; x=1692641913;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iUHvcmtjpBkUa0SBqcJy0lr9ht+UJKtloUpURLnUdDw=;
-        b=lOx8rT4hQTPycgjOLddmDlkXnz93ttWBtEfEUWk4sF+KooZueeYiDWuP488bNJqQrl
-         4AGFJ8Wo5Jbu1Aal8d+WxzWUtC7TTGMDjct3bohsWuftpzmplxaTUa07fugPvD6M/dSx
-         l7zTkAYW0+Yuv4Uf5UxA5dGIor9qnEVIk1as+3dofWwNU7ABPafKYCVASA1AyU6vZk+c
-         9U+C4NQ0XPeLjUt6Dk/lgBjD0yngMT+OuJIxA4EJHfKBsp05vZfrAt11u7951K73Cfqy
-         XFtuPMluMXmU3ZODvxEc89tLYHo113aECGaYFE+NUdeS7HF4IDbJtIidbjdSrxPNjBvn
-         0U4g==
-X-Gm-Message-State: AOJu0Yzws7OLZnXM8K3JJP2TMFm42HCVEFL/nlUL+oP6CarfkDQ+7CUQ
-        DYyDZAPdqiPybFXbkLj8o/MYiytSfeY=
-X-Google-Smtp-Source: AGHT+IEewhGDlHSgt5R/Swu0Cg/wZGfU6CqlzFAie2hkwI9lwUVi3Ax+Gu4y+TgIiXf3Nt2KCNigsg==
-X-Received: by 2002:a17:907:2c59:b0:99c:ae54:6654 with SMTP id hf25-20020a1709072c5900b0099cae546654mr11429382ejc.14.1692037113040;
-        Mon, 14 Aug 2023 11:18:33 -0700 (PDT)
-Received: from localhost.localdomain ([78.97.234.98])
-        by smtp.gmail.com with ESMTPSA id ck9-20020a170906c44900b00993664a9987sm5947659ejb.103.2023.08.14.11.18.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Aug 2023 11:18:32 -0700 (PDT)
-From:   Andrei Coardos <aboutphysycs@gmail.com>
-To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     alex@shruggie.ro, sre@kernel.org, konrad.dybcio@linaro.org,
-        andersson@kernel.org, agross@kernel.org,
-        Andrei Coardos <aboutphysycs@gmail.com>
-Subject: [PATCH] power: reset: qcom-pon: removed unneeded call to platform_set_drvdata()
-Date:   Mon, 14 Aug 2023 21:18:23 +0300
-Message-Id: <20230814181823.3662-1-aboutphysycs@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Mon, 14 Aug 2023 14:44:49 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF99A1718;
+        Mon, 14 Aug 2023 11:44:28 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37EIKXaw001756;
+        Mon, 14 Aug 2023 18:44:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=SpgGKHaduwL36ft3cIlrRRhxImV4rgAUfwuQWWQnv8k=;
+ b=Zs4hdpsNvDFFGc3m+uyg22lgJxTJwRNUahU6hqosbuAqoAJlzH2970Cux3GsHlZ1eKXU
+ bwAWMO+Is1NJ9Gg44YOp7l3rkMp4JN06/RhmSm57VYWvVE6oe48ehmf9oDRi9Vi6Q9/U
+ 1fGeAoNZ6pzsWeKuYBeoNxKCIAR9dTNxx3xLXnIS2TAixE5v58BdRq7o29D+8e0iD5Vz
+ srEVxdoY2ehJj9DnavHU6ZD+NTdd6LBzkMHqTwsf3d22wLiWtImpbQO5GeI8wKTUpp9+
+ Q3xG1fo8XAY1uwGzrXz9WjHgjGEXkIUszY+6/vBtgnzTwccPt2Iyet/w8aPNu8cm2i43 mA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3se3j94mja-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 18:44:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37EIiJ7K009009
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 18:44:19 GMT
+Received: from [10.50.35.106] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 14 Aug
+ 2023 11:44:15 -0700
+Message-ID: <b4de638e-9cab-2662-92b0-e2d1a18018a1@quicinc.com>
+Date:   Tue, 15 Aug 2023 00:14:05 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 01/33] MAINTAINERS: Add Qualcomm Iris video accelerator
+ driver
+To:     Randy Dunlap <rdunlap@infradead.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mchehab@kernel.org>, <hans.verkuil@cisco.com>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-2-git-send-email-quic_vgarodia@quicinc.com>
+ <c29d5e28-5b9d-1327-0feb-e5ed27afcd3a@infradead.org>
+Content-Language: en-US
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <c29d5e28-5b9d-1327-0feb-e5ed27afcd3a@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rfxZxM8UNtrUJgD6bhcTm9lG7Le3srwM
+X-Proofpoint-GUID: rfxZxM8UNtrUJgD6bhcTm9lG7Le3srwM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-14_15,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 clxscore=1011 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308140173
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,29 +86,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function call was found to be unnecessary as there is no equivalent
-platform_get_drvdata() call to access the private data of the driver. Also,
-the private data is defined in this driver, so there is no risk of it being
-accessed outside of this driver file.
 
-Signed-off-by: Andrei Coardos <aboutphysycs@gmail.com>
----
- drivers/power/reset/qcom-pon.c | 2 --
- 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-index 1344b361a475..34478d60e2c1 100644
---- a/drivers/power/reset/qcom-pon.c
-+++ b/drivers/power/reset/qcom-pon.c
-@@ -80,8 +80,6 @@ static int pm8916_pon_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	platform_set_drvdata(pdev, pon);
--
- 	return devm_of_platform_populate(&pdev->dev);
- }
- 
--- 
-2.34.1
+On 7/29/2023 4:18 AM, Randy Dunlap wrote:
+> 
+> 
+> On 7/28/23 06:23, Vikash Garodia wrote:
+>> Add an entry for Iris video encoder/decoder accelerator driver.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>  MAINTAINERS | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 3be1bdf..ea633b2 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -17671,6 +17671,16 @@ T:	git git://linuxtv.org/media_tree.git
+>>  F:	Documentation/devicetree/bindings/media/*venus*
+>>  F:	drivers/media/platform/qcom/venus/
+>>  
+>> +QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
+> 
+> This entry should immediately follow:
+> QUALCOMM IPQ4019 VQMMC REGULATOR DRIVER
+> 
+> to keep the file in alphabetical order.
+> 
+Sure, will fix this in next version.
 
+Thanks,
+Dikshita
+
+>> +M:	Vikash Garodia <quic_vgarodia@quicinc.com>
+>> +M:	Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> +L:	linux-media@vger.kernel.org
+>> +L:	linux-arm-msm@vger.kernel.org
+>> +S:	Maintained
+>> +T:	git git://linuxtv.org/media_tree.git
+>> +F:	Documentation/devicetree/bindings/media/qcom,*-iris.yaml
+>> +F:	drivers/media/platform/qcom/iris/
+>> +
+>>  QUALCOMM WCN36XX WIRELESS DRIVER
+>>  M:	Loic Poulain <loic.poulain@linaro.org>
+>>  L:	wcn36xx@lists.infradead.org
+> 
