@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D3877AF6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 04:14:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 610FC77AF7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 04:21:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232036AbjHNCOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Aug 2023 22:14:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42278 "EHLO
+        id S232370AbjHNCVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Aug 2023 22:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231696AbjHNCOA (ORCPT
+        with ESMTP id S230072AbjHNCUk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Aug 2023 22:14:00 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE98A18E;
-        Sun, 13 Aug 2023 19:13:58 -0700 (PDT)
+        Sun, 13 Aug 2023 22:20:40 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4ACE11A;
+        Sun, 13 Aug 2023 19:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691979238; x=1723515238;
+  t=1691979640; x=1723515640;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=D0cMxkzz2W3U1WROUJDub6YFpGLwPPBS6a8Mkd5QN7w=;
-  b=LuqQTdrDh2DGwE/LALb1Q1pqR+Z4xes2EbCu1qAjfSS01wEVFEdQhDET
-   FGJ+6LrxU9dvs/7qS94wxrWs0cf03DvPfUkSlTNKtXTi1hz6H7ocGWtmF
-   75C+BlBtqO1Sti6PckAWNDABWkhUOGPvh+i2T2YHcgnlSdMZmmp3tWSs+
-   u8qv1f+cQNXiEJTGCSbZAfRaWYqUSODVJJNfxL2gur8XbUE5ZxmPdNqkd
-   JAadOhLd1vss7+h1Jk2QcJIdD1LSYKZobQQyILXhZWj2NxBhq55rG/WiQ
-   21PRqsTfqPZebC+rELr2Z5dRrIYPVZKqY/Oxt+qnFxk20anR9mqFPnBF9
+  bh=BKroavBK6EnBprtuPd4BTHpO6ajK8Y/4HL8VYFF7pWY=;
+  b=iAvFTew6TSMVPyd8EOi/EVXonMZhkSBLpW/pXuVtFtXeUiUFCBPfP77E
+   40MqmgLy+IRYa3tpPnk3fOf1Uom7FxN5meLfmMxjwegzn2KfuJQ3DXmk7
+   dqaaP6nkb+GOLzvN0xhRdmmpC3I5v40fcISqxlCG/a1AaP3Q/oR1uIX8K
+   t2v33xKaaLhCUbNwrPs4lq1dWwDjMw01EZ/IGARqlyMNSB6rv8QUfHN2h
+   /zcU0D2NytCyY4eav/h4L6i7mTEo5HxfYAoIcZlSZoMiq2QfiR0LX6lLo
+   mnrAohmvJ+nj78G/sZHPrFkB25GtdJb06KZPUKqX7HvW3iSDigyieuTUp
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="371948299"
+X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="374714062"
 X-IronPort-AV: E=Sophos;i="6.01,171,1684825200"; 
-   d="scan'208";a="371948299"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 19:13:58 -0700
+   d="scan'208";a="374714062"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 19:20:39 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="823277535"
+X-IronPort-AV: E=McAfee;i="6600,9927,10801"; a="768282809"
 X-IronPort-AV: E=Sophos;i="6.01,171,1684825200"; 
-   d="scan'208";a="823277535"
+   d="scan'208";a="768282809"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.255.29.49]) ([10.255.29.49])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 19:13:47 -0700
-Message-ID: <de9d9270-e510-b888-449c-d936a940d514@linux.intel.com>
-Date:   Mon, 14 Aug 2023 10:13:45 +0800
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2023 19:20:28 -0700
+Message-ID: <98f23aee-6861-3aa6-d50d-d712985a09c7@linux.intel.com>
+Date:   Mon, 14 Aug 2023 10:20:25 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
@@ -50,8 +50,8 @@ Cc:     baolu.lu@linux.intel.com, Dmitry Osipenko <digetx@gmail.com>,
         Niklas Schnelle <schnelle@linux.ibm.com>,
         Steven Price <steven.price@arm.com>,
         Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v6 03/25] powerpc/iommu: Setup a default domain and remove
- set_platform_dma_ops
+Subject: Re: [PATCH v6 04/25] iommu: Add IOMMU_DOMAIN_PLATFORM for S390
+Content-Language: en-US
 To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -86,14 +86,14 @@ To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
         Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
         Yong Wu <yong.wu@mediatek.com>,
         Chunyan Zhang <zhang.lyra@gmail.com>
-References: <3-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
-Content-Language: en-US
+References: <4-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
 From:   Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <3-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
+In-Reply-To: <4-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-8.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
         SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -102,25 +102,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2023/8/3 8:07, Jason Gunthorpe wrote:
-> POWER is using the set_platform_dma_ops() callback to hook up its private
-> dma_ops, but this is buired under some indirection and is weirdly
-> happening for a BLOCKED domain as well.
+> The PLATFORM domain will be set as the default domain and attached as
+> normal during probe. The driver will ignore the initial attach from a NULL
+> domain to the PLATFORM domain.
 > 
-> For better documentation create a PLATFORM domain to manage the dma_ops,
-> since that is what it is for, and make the BLOCKED domain an alias for
-> it. BLOCKED is required for VFIO.
+> After this, the PLATFORM domain's attach_dev will be called whenever we
+> detach from an UNMANAGED domain (eg for VFIO). This is the same time the
+> original design would have called op->detach_dev().
 > 
-> Also removes the leaky allocation of the BLOCKED domain by using a global
-> static.
+> This is temporary until the S390 dma-iommu.c conversion is merged.
 > 
+> Tested-by: Heiko Stuebner<heiko@sntech.de>
+> Tested-by: Niklas Schnelle<schnelle@linux.ibm.com>
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 > ---
->   arch/powerpc/kernel/iommu.c | 38 +++++++++++++++++--------------------
->   1 file changed, 17 insertions(+), 21 deletions(-)
-
-Not sure how to fix the fake blocking domain in this driver.
-
-But it's not the purpose of this patch, so
+>   drivers/iommu/s390-iommu.c | 21 +++++++++++++++++++--
+>   1 file changed, 19 insertions(+), 2 deletions(-)
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 
