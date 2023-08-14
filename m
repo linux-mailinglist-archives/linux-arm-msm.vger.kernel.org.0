@@ -2,174 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B260D77BD4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 17:41:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B52CE77BDB6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 18:14:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231517AbjHNPks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 11:40:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58984 "EHLO
+        id S231669AbjHNQOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 12:14:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232656AbjHNPkc (ORCPT
+        with ESMTP id S231673AbjHNQOE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 11:40:32 -0400
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2083.outbound.protection.outlook.com [40.107.237.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2416E10CE;
-        Mon, 14 Aug 2023 08:40:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=D6Nx9dHCLprArIOSEaQcSHcfUCZ/C/RIaPS6B0aXj+qTb7oOrC+N5zMPt2GXpO8OK02y+aEZ8W9/4DIGLVRP5w5KiCmpIX/0gkQwhmYyhDHXZouifZXDitaiY2pKh0RkLznlQYeySTLvIvHcnar80pqWBwnKA16FVzOaRayt3Cz13shM3Vb1HFDldOtuUPHZcPFComQLKF5KYGZ/BMdPb+I1e9VsdXkOKbO8KwCBAA3oIReF5l7QyfxKhFqLUpf41lxQ5oEpXbh5W8pJjrNegK7EEUwyX64xuwT+5pVZqDWp30C3q3UsJ9Elhz06GFsTfuy/cr+THSOn6UdIh17CTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YrteVFyviVj6MJDC8LV/yV7BPT1IC3NH0CTs3yCKRcM=;
- b=PXVMMiV66cls0OYQ7MhfBB4X1xFa1m/HIOLkIhV+xUt+MdA45uqhsZ43j9ao91ywy/vkBozYYk4MzSJYrUauiyYsXhI7S9ih6dCCs2WMFdM2rHYBuG2WMWHaTnsaNCWpsYJnlLbEDMiapZqsVxMvr7Z/1LHfF6Fx1lNw14pB9kT2vHhz4GUUfa+VdkM/s3TiGWM5qKjPaUrL9tOp4oIEv3s0gg9MnaTnV3hkbXzybniStjLLzrgkEo2mluusz2igPokx1aT/Teh8n3IqtoPYQFKb5VFBW2uEqkT1WfiICf67G3jr5OBMQz3z7UT4STOQ8DKe89y8y0FIMRj/Aapbew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YrteVFyviVj6MJDC8LV/yV7BPT1IC3NH0CTs3yCKRcM=;
- b=J+6nMO1O1qCoyXzo0BXpZNvOzq9ZGL0SIkgVTTF5+gDHgXWnu0pTg5xPvavgRp0/Pu4uuH5y7sNEWkYLKEgrZenzDDeDys+NsU1934aLRmWIlVZjFTEQMlLW9VJyOygnkY9rXBzdFsX9uPxjppnkByNYK01exj4pPv6jp7KIuqhupoaBUMeA/TflOoi9OUtYX0Sjo/aX/oTidIGvJmpYuBrBj9MyEpU919yG2J+NrhYD8MqgPAUv6CfORVn1TYWgnJ2El+txa91Gpl0HPn6bra4ZgWvUaBVHYIpwUcgGLmgFsBJoeZmqcbmWYMtOkBAM8wA4N8vbBK/EBs+Qaq2CpA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by LV3PR12MB9356.namprd12.prod.outlook.com (2603:10b6:408:20c::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.24; Mon, 14 Aug
- 2023 15:40:29 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1%6]) with mapi id 15.20.6678.022; Mon, 14 Aug 2023
- 15:40:29 +0000
-Date:   Mon, 14 Aug 2023 12:40:27 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Baolu Lu <baolu.lu@linux.intel.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v6 24/25] iommu: Convert simple drivers with DOMAIN_DMA
- to domain_alloc_paging()
-Message-ID: <ZNpK64GfQtFUUhPU@nvidia.com>
-References: <24-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
- <90d3070b-a3ff-7007-9b55-aef1e9b472aa@linux.intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <90d3070b-a3ff-7007-9b55-aef1e9b472aa@linux.intel.com>
-X-ClientProxiedBy: CH2PR05CA0002.namprd05.prod.outlook.com (2603:10b6:610::15)
- To LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+        Mon, 14 Aug 2023 12:14:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3026F106;
+        Mon, 14 Aug 2023 09:14:03 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37EFUnw7032293;
+        Mon, 14 Aug 2023 16:13:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Tk7BNyym1la7u0CA0aSkDYUvy3flaCroLHDQgpCk/mE=;
+ b=amlClTTVELZ4jFpRWzGHD40TUNLB+iuRpzyhnwLdLoY8f5U0vWv5CzEzqxHa5DDHUWQ2
+ jzcSX3hCeLQamTi+qrutBBaMkjuBSAPPh0eAaqscIM2bJfi++Wyxa/yFDtdP6qZA4uFB
+ RmllO8ExK8y9BzG4jWIbhOmMU6fA94lXxZHYgN8TC0J7R8CstJCviM0Z3uvujnnI3vBf
+ FlK1lCQKockk5/gXh/dYvIBDWeEk9SNSlG9Bb6lix24XqtFGi6qkcT3VfyeJyqkZE58D
+ wWWLNC4qdLTbBu6vfRFY9RlzG+4qpaRDD/01Yul1pkrYHAXLGs3tTljnevaWHSW3nlUE 2Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sffxt969n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 16:13:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37EGDn3S007529
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Aug 2023 16:13:49 GMT
+Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 14 Aug
+ 2023 09:13:46 -0700
+Message-ID: <0cfd73bb-3ae6-d7bd-296c-0c39d194464b@quicinc.com>
+Date:   Mon, 14 Aug 2023 21:43:37 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|LV3PR12MB9356:EE_
-X-MS-Office365-Filtering-Correlation-Id: 912156b9-4aa8-4fca-5bd4-08db9cdcc970
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Zb80+olHZD77pAQ1+hx58zxAqDpd5hIH8nbTs3gGU4n3y491ZpHE0xDaU/XJJPCjcsMf04/3GIAb8MGyuhxV8PIIaIH0osT1Jy+8kzlxiJ6yrCIijlEikOtEuyKW4kezlfyGcjXFfxVfygKR+B5OKL8nDwc2ZJ9Kq97RtnudfI1ax1nS6BHYp0KquvzIWBQ6BMAxBt/jwdgoKj0u42lSC7YKPDZfZeFKuGgEDqk9/Z8yYBwT32ENcIMqooOiZwW+n152yEV59oJASAvxhgZ3JwjvmgjHGVroDUgPQltsqpjGhTFeoxuaStHILc58jhmpxmNFzAjZkUjv836BY+dTaJY56mz6NVF+36Xj2gPyteVjwiXOR9Q/tDcWKuXpPJM7pGAnw6++/gtQHKoRikViaWZZlbUafwRV4DlkJX190zfLoAYenUo/vFdwPHw8FyFJVnbLENMobnT8d+tujxfR1z0H5KH8sjK44CsF+GVmhDPf0aaJQXDscOl+7m/735jX++UPpy/FoklrDeDJmOHFr6ISnd724xguM0h9rg20dv35MAO7TnMmvI/+rQbrzY5grSAh/ZCT1KTxZWEe2JF3lLOWOgdpsNj+AOrJshKWGtY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(39860400002)(396003)(376002)(366004)(136003)(346002)(451199021)(186006)(1800799006)(6486002)(6506007)(478600001)(36756003)(86362001)(2906002)(7406005)(7416002)(6512007)(26005)(107886003)(66946007)(4744005)(2616005)(38100700002)(316002)(4326008)(8676002)(66476007)(6916009)(66556008)(54906003)(5660300002)(41300700001)(8936002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?F2PskAawHjFn6ibdJbxuPIRoQb13KAj0UH73GMuK8RSRS4hRL5nngnMW2EIa?=
- =?us-ascii?Q?9MFEmA1jgaa/DbZ+C+xUx2D4Yk2y+0lbovKO3EzzrnuOrak1oglF/Lcagjrk?=
- =?us-ascii?Q?j0pdTheJIwJ1/dyWKts1p15dG2IuNXao5rWSgWoXClHPKLkECjwBmO2Xkbot?=
- =?us-ascii?Q?TPME7Mm/T3y6dG0hsod81yvyyLwQFO+5okkRNqhUb1Dn3N6EEabS9bmc7YaU?=
- =?us-ascii?Q?csSlcQUR7/ebr9FamjyrBeSnvhE535RHrkJnStcWQgauGEERN3oFd5fsePK+?=
- =?us-ascii?Q?i1ogEyzoISRpaIj/6lScR97KjM3aAd3mOyGg/XRxLo9T6E4duRXY3gZLfK6Z?=
- =?us-ascii?Q?WCarwpibiWLuUsLgrz8a6/BVGO/pKjiLTt1h8988VQk7yKIg59NhYR2BO5V9?=
- =?us-ascii?Q?S6YQZgOmqVYxMVYG7jheooJgeUqbfRwiunQXUKZfyXG03Z0jpFQIWfQeWHM4?=
- =?us-ascii?Q?AXwDSLjsk5oJn2V/8wverR8+mlR0qTNUB6h/62s9Tsz0ZHEJbTF9EXfpkmJh?=
- =?us-ascii?Q?tV22NP0++EfS4N0fv7mnqIhFsLH4I+vL8w84In6qPFb2EOBDrQjYIYYk/s9D?=
- =?us-ascii?Q?LmL/xP08nclfKXaajfhkPJF89m2NKUlgdBOKzugEFF1MXYv7xAL91ubIu8PW?=
- =?us-ascii?Q?jaxVxlN+5lhDPfJLP90dtI3Hd05GUnid03GNFz9oD5xa4zOrhc2iY+crZxKQ?=
- =?us-ascii?Q?8oTytFhIPplvZw7SwxKmyG42QYCLBrLraZf25S/u7WMMSgp63c4wG3BD5tlt?=
- =?us-ascii?Q?w62TRxVbRclpjOhS+HLg72wj+QAZqq9EWqHSLPaVbnIQdhp3CbRquPpndIR1?=
- =?us-ascii?Q?2ACB258fl6bdQvGxTJFMwgFEjFJrwE5UA8v6Ifoh44tcB+2Z5NnkDn+9ikRD?=
- =?us-ascii?Q?pMe8xQywNfqfZ9Y9lg10SA7Nj4vL0YQcmnKfk9byKc9Z+co0Qjj9BeeWrIAX?=
- =?us-ascii?Q?4WrI5eaefRx4MzrRv0u11BlMg9kkza5XGL8SNx6JqviNCm8JCd7JCHF0CJW3?=
- =?us-ascii?Q?VfPeAz7eBeFgRtFRY2IM7voXw0jthtDRiCiSxBq7qI5fZY+jdNXkK+J8Lqyp?=
- =?us-ascii?Q?PseIp9/F3pjSEL5dbxlC/x5XJwA75/z+wx0xNuyDcH7BR6BSS2MYqhHqflPl?=
- =?us-ascii?Q?RBVakmh7OzfkXpP79hc3hZ2I9BzxaFTVd/JyWuf1zJyJY/19HRHJAM/NZWlC?=
- =?us-ascii?Q?toshTISssEaAqHRiqLfKrGw3CSKHaCLh3DTVAulEsclMK7OMY+G6iNneJ/k9?=
- =?us-ascii?Q?g1401HY77V5NSQwWI3DxNV0jffUg8A8qRlKYHyky0MKueI+IXeTMldVwRXlk?=
- =?us-ascii?Q?PBrzOOX4nDAtlec5DcC58AzpoGLKCZBLl9Wtjpxe9eGnUyby47Ca7Q5Sj/vH?=
- =?us-ascii?Q?EnViWptqqMbfeADtj+Unc/Cw3ArYs0gKKCubFOPUcJ50fUE2VqZs91r7t/m+?=
- =?us-ascii?Q?OJycJLU9eD+bBurnhT9xA0teSs/yuUoijmRKwRD5x5vfUsK5YgMn7k47UKwX?=
- =?us-ascii?Q?EBRhiVSPW++BLigrMk0ZBUrRUocsdFRQb7NrSPJvM0d2ZDoc0lH3OZbHtklI?=
- =?us-ascii?Q?1JUmQEwG/lulxc/s6vQ1XXhu1OEz32UB3EuDtq5u?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 912156b9-4aa8-4fca-5bd4-08db9cdcc970
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2023 15:40:29.1867
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BbAn/tfYDXxhGLjbb7An6LaU4YAbKqWeBli1LWYMzBsnr/285zgHoNbOzQDexknC
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9356
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] firmware: arm_scmi: Fixup perf microwatt support
+To:     Sudeep Holla <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <lukasz.luba@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_rjendra@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>,
+        Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+References: <20230811204818.30928-1-quic_sibis@quicinc.com>
+ <20230814092503.xdzafmqu5h3shrlz@bogus>
+Content-Language: en-US
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20230814092503.xdzafmqu5h3shrlz@bogus>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7aSznZ1ZkMRrhvQfHc0tOhHrBOI4pRzH
+X-Proofpoint-GUID: 7aSznZ1ZkMRrhvQfHc0tOhHrBOI4pRzH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-14_12,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 adultscore=0 bulkscore=0
+ mlxscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308140149
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 14, 2023 at 02:58:14PM +0800, Baolu Lu wrote:
+Hey Sudeep,
 
-> > diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-> > index 0bf08b120cf105..056832a367c2af 100644
-> > --- a/drivers/iommu/sun50i-iommu.c
-> > +++ b/drivers/iommu/sun50i-iommu.c
-> > @@ -667,14 +667,11 @@ static phys_addr_t sun50i_iommu_iova_to_phys(struct iommu_domain *domain,
-> >   		sun50i_iova_get_page_offset(iova);
-> >   }
-> > -static struct iommu_domain *sun50i_iommu_domain_alloc(unsigned type)
-> > +static struct iommu_domain *
-> > +sun50i_iommu_domain_alloc_paging(struct device *paging)
+On 8/14/23 14:55, Sudeep Holla wrote:
+> On Sat, Aug 12, 2023 at 02:18:18AM +0530, Sibi Sankar wrote:
+>> The perf power scale value would currently be reported as bogowatts if the
+>> platform firmware supports microwatt power scale and meets the perf major
+>> version requirements. Fix this by populating version information in the
+>> driver private data before the call to protocol attributes is made.
+>>
+>> CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+>> Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+>>   drivers/firmware/arm_scmi/perf.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+>> index c0cd556fbaae..30dedd6ebfde 100644
+>> --- a/drivers/firmware/arm_scmi/perf.c
+>> +++ b/drivers/firmware/arm_scmi/perf.c
+>> @@ -1080,6 +1080,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
 > 
-> Why not "struct device *dev"?
+> Please rebase any patch when posting upstream on upstream kernel tree.
+> This definitely looks like some downstream tree. I will adjust and apply
+> this time. This file never crossed 1000 line and this patch indicates
+> otherwise, so I am sure Qcom has some downstream changes in this file now.
+
+Thanks for taking time to review the patch but zero points for the ^^
+deduction lol. The correct phrasing would be v6.5 rc6 hasn't crossed 1k
+lines but the patch was based on next-20230809 which has the perf level
+indexing mode support in addition :)
+
+- Sibi
+
 > 
-> Typo? Or anything I missed?
-
-Typo, I fixed it
-
-Thanks,
-Jason
