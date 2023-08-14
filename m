@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27EF877BCA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 17:13:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A9F577BCAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Aug 2023 17:13:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232816AbjHNPNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Aug 2023 11:13:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
+        id S232880AbjHNPNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Aug 2023 11:13:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232778AbjHNPMv (ORCPT
+        with ESMTP id S232788AbjHNPMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Aug 2023 11:12:51 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6B6E6A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 08:12:50 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fe12820bffso40220595e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 08:12:50 -0700 (PDT)
+        Mon, 14 Aug 2023 11:12:53 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4188C1B5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 08:12:52 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9b5ee9c5aso68809851fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 08:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692025969; x=1692630769;
+        d=linaro.org; s=google; t=1692025970; x=1692630770;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e3guWzZn/6c5CIoZe7iyvq9mt4EnNY7G4PvY6L/0SGU=;
-        b=vR3s4dOl1Lu5ALhgMmPvZzkP0TTEDoGBZjA2cuvSpgS5i8MdaLEjCffnROwuStBZr9
-         D7DrYzHdQNTKJ0tXzHEwNPyK/mT9eR4aIrUTmtRawCqfkogs2T0+/6KUaUq1UoYb38/G
-         Ag9O8QDfwW49CisDs1AWArqVc7XTQfe3PeMg5ZPpun3NbPqMLCbed5Zw+tFR/spZ+DHJ
-         /Pil94RJnpzRqG1vOdepYKdIin2PPIhT3oUx6NvNmMoERmEpbhoy96Zbf6+il7izGpEQ
-         8/aFt7NVZrrOPcWECAoLDHbN+W2TPXuInaaknDR1ftW2Lq1PbqmNkhQqsYROK2sjfJDb
-         0x4Q==
+        bh=qqmcrIOgwT4P/m/Qo0pGRwGzeNac3H+8rfjS3Os1OQE=;
+        b=za+f3pRtJG0rthDi5azffRqi/A06+IPasCTBle2NC/Bm/aznOXiFyp9Ig7FB9wMQxW
+         TVlgFlEZtqhAA5Jf4UCYqw7VStHHj0SDJHU1PMjBz3NqVbeAi5KoRuigXQEJupNeVzuD
+         P7/nQ4N+kyQSJNaHr9MxtKXMrxbeC9334qc4rP45XDFQPyrrhQ/pRIbXECzcM0RzHc7R
+         /SSA9W+LVG7KRObt37zdGiO6zrdGI1HyG+avmDmCjyRoBjtgaLhIcXNOauMNYMLYMCkD
+         e4XT2XaPSLloQ5c97fgAkHLpCQiqzU8mp285sjxs/aMrswG+Bul+CF9769pD29lj/5vj
+         wwXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692025969; x=1692630769;
+        d=1e100.net; s=20221208; t=1692025970; x=1692630770;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=e3guWzZn/6c5CIoZe7iyvq9mt4EnNY7G4PvY6L/0SGU=;
-        b=WtE5ud1Aae6xhMV9wJroZ6c2NjqZpEeBFZedIT6h1DOHXZ6gRAxMdlj2Uyjz9TCs5X
-         73siAZ2j1/3Ix7b9FnUDrVacQfGjbWphn0IoWachEOGdN0ASWNXR5bCKQZdYbD0on0ES
-         U8ZyHebjN0Bri68Ry2gwS/3O1OMJtwXc+qOgSPz+VvyhEbGxlqAdW5zLsNlAfKVgvBqF
-         i49L3wk1Nm3+STzU1u45b6EL6J16LqaDNpADKeUgSnXtbFNVd3qAydZAej1T6NzaBz6i
-         nLF/1/9KwaqAtW6MeYWyeMTgKp3tbUEFe3hlzyWVBU64YrtKIVd2sLN5UjiM9GRmfCEO
-         hmyg==
-X-Gm-Message-State: AOJu0Yxy4MMS9LM+KSkE8yW6MSAHSiSP+XcHe0RRYATwH/Z0DFZM3myM
-        8O92SPGQ+WkaGKjnnay3DKmtAg==
-X-Google-Smtp-Source: AGHT+IEksEKWVSh/XDnpfwX29OUeaNVkRbq1pFPq73ca7eluZ030PPcdcCygAruOaBN8r476zLzPrg==
-X-Received: by 2002:a05:600c:217:b0:3fe:34c2:654b with SMTP id 23-20020a05600c021700b003fe34c2654bmr7224177wmi.14.1692025968914;
-        Mon, 14 Aug 2023 08:12:48 -0700 (PDT)
+        bh=qqmcrIOgwT4P/m/Qo0pGRwGzeNac3H+8rfjS3Os1OQE=;
+        b=HzTB0VhAd849tdPjQkEXgH5B0Rm5eDP60x/aS+2O3NjPe05DOVwPOIS5rdAuYyYYNw
+         +l5l7o6FM1sXeUZOzCAX0PhcZ6gO1LGVDXRPtG3g0XclpAYo2GQYFqtof0kwqGOFoeY2
+         ZCQ49+3KmD8ksK3W8/Ftjk8J5FFQUdnF+rNYxxKOuejKyGsxiiwMFzz0lkG/0o77bzft
+         RyCBAxzlk40yTk3ra2kn5V0OZfyed7xKX0wsvqboc7ak3M9NzvavqBk2okIFZxdEHq4G
+         dRPIfwv92QfHBZtIXEMOWte/DOX50ICLk0rP488iOt/jvWs166tjonKTUs5deLhA68w1
+         VSiA==
+X-Gm-Message-State: AOJu0YwDQEDK5NKH9kwYqNn/RBl1B4m+7d3YbxLsBmxqN4+QJJYEhdoV
+        9SiZ4vCM+zjN/3lDb12+Ar8y8Q==
+X-Google-Smtp-Source: AGHT+IFP2/JfYkQLXDXM6RMvej5FYQ0Il9A4TqLJszbuZPWvX9l59q1ZFCk4VaLKQg7n15XSrxrKsQ==
+X-Received: by 2002:a2e:a174:0:b0:2b0:297c:cbdf with SMTP id u20-20020a2ea174000000b002b0297ccbdfmr7452279ljl.1.1692025970497;
+        Mon, 14 Aug 2023 08:12:50 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c021100b003fe1c332810sm17644572wmi.33.2023.08.14.08.12.47
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c021100b003fe1c332810sm17644572wmi.33.2023.08.14.08.12.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Aug 2023 08:12:48 -0700 (PDT)
+        Mon, 14 Aug 2023 08:12:49 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v0 02/13] media: qcom: camss: Start to move to module compat matched resources
-Date:   Mon, 14 Aug 2023 16:12:32 +0100
-Message-ID: <20230814151243.3801456-3-bryan.odonoghue@linaro.org>
+Subject: [PATCH v0 03/13] media: qcom: camss: Drop useless NULL assignment for ispif resources
+Date:   Mon, 14 Aug 2023 16:12:33 +0100
+Message-ID: <20230814151243.3801456-4-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230814151243.3801456-1-bryan.odonoghue@linaro.org>
 References: <20230814151243.3801456-1-bryan.odonoghue@linaro.org>
@@ -68,212 +68,41 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is a lot of unnecessary if/elsing in this code that arguably
-should never have made it upstream when adding a second let alone
-subsequent SoC.
-
-I'm guilty of not fixing the mess myself when adding in the sm8250.
-Before adding in any new SoCs or resources lets take the time to cleanup
-the resource passing.
-
-First step is to pass the generic struct camss_resources as a parameter
-per the compatible list.
-
-Subsequent patches will address the other somewhat dispirate strutures
-which we are also doing if/else on and assigning statically.
+The NULL pointer assignement is a redundant step our compiler will
+initialize unpopulated fields as zero. We check for logical ! later on
+in the code as opposed to NULL anyway.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 93 ++++++++++++-----------
- drivers/media/platform/qcom/camss/camss.h |  8 ++
- 2 files changed, 57 insertions(+), 44 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index de39dc987444f..d9e1672b74bd7 100644
+index d9e1672b74bd7..68eb45b2c0aaa 100644
 --- a/drivers/media/platform/qcom/camss/camss.c
 +++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/of_graph.h>
- #include <linux/pm_runtime.h>
- #include <linux/pm_domain.h>
-@@ -1120,47 +1121,12 @@ static int camss_of_parse_ports(struct camss *camss)
-  */
- static int camss_init_subdevices(struct camss *camss)
- {
--	const struct resources *csiphy_res;
--	const struct resources *csid_res;
--	const struct resources *ispif_res;
--	const struct resources *vfe_res;
- 	unsigned int i;
- 	int ret;
- 
--	if (camss->version == CAMSS_8x16) {
--		csiphy_res = csiphy_res_8x16;
--		csid_res = csid_res_8x16;
--		ispif_res = &ispif_res_8x16;
--		vfe_res = vfe_res_8x16;
--	} else if (camss->version == CAMSS_8x96) {
--		csiphy_res = csiphy_res_8x96;
--		csid_res = csid_res_8x96;
--		ispif_res = &ispif_res_8x96;
--		vfe_res = vfe_res_8x96;
--	} else if (camss->version == CAMSS_660) {
--		csiphy_res = csiphy_res_660;
--		csid_res = csid_res_660;
--		ispif_res = &ispif_res_660;
--		vfe_res = vfe_res_660;
--	}  else if (camss->version == CAMSS_845) {
--		csiphy_res = csiphy_res_845;
--		csid_res = csid_res_845;
--		/* Titan VFEs don't have an ISPIF  */
--		ispif_res = NULL;
--		vfe_res = vfe_res_845;
--	} else if (camss->version == CAMSS_8250) {
--		csiphy_res = csiphy_res_8250;
--		csid_res = csid_res_8250;
--		/* Titan VFEs don't have an ISPIF  */
--		ispif_res = NULL;
--		vfe_res = vfe_res_8250;
--	} else {
--		return -EINVAL;
--	}
--
- 	for (i = 0; i < camss->csiphy_num; i++) {
- 		ret = msm_csiphy_subdev_init(camss, &camss->csiphy[i],
--					     &csiphy_res[i], i);
-+					     &camss->res->csiphy_res[i], i);
- 		if (ret < 0) {
- 			dev_err(camss->dev,
- 				"Failed to init csiphy%d sub-device: %d\n",
-@@ -1172,7 +1138,7 @@ static int camss_init_subdevices(struct camss *camss)
- 	/* note: SM8250 requires VFE to be initialized before CSID */
- 	for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++) {
- 		ret = msm_vfe_subdev_init(camss, &camss->vfe[i],
--					  &vfe_res[i], i);
-+					  &camss->res->vfe_res[i], i);
- 		if (ret < 0) {
- 			dev_err(camss->dev,
- 				"Fail to init vfe%d sub-device: %d\n", i, ret);
-@@ -1182,7 +1148,7 @@ static int camss_init_subdevices(struct camss *camss)
- 
- 	for (i = 0; i < camss->csid_num; i++) {
- 		ret = msm_csid_subdev_init(camss, &camss->csid[i],
--					   &csid_res[i], i);
-+					   &camss->res->csid_res[i], i);
- 		if (ret < 0) {
- 			dev_err(camss->dev,
- 				"Failed to init csid%d sub-device: %d\n",
-@@ -1191,7 +1157,7 @@ static int camss_init_subdevices(struct camss *camss)
- 		}
- 	}
- 
--	ret = msm_ispif_subdev_init(camss, ispif_res);
-+	ret = msm_ispif_subdev_init(camss, camss->res->ispif_res);
- 	if (ret < 0) {
- 		dev_err(camss->dev, "Failed to init ispif sub-device: %d\n",
- 		ret);
-@@ -1554,6 +1520,10 @@ static int camss_probe(struct platform_device *pdev)
- 	if (!camss)
- 		return -ENOMEM;
- 
-+	camss->res = of_device_get_match_data(dev);
-+	if (!camss->res)
-+		return -ENODEV;
-+
- 	atomic_set(&camss->ref_count, 0);
- 	camss->dev = dev;
- 	platform_set_drvdata(pdev, camss);
-@@ -1735,12 +1705,47 @@ static void camss_remove(struct platform_device *pdev)
- 		camss_delete(camss);
- }
- 
-+static const struct camss_resources msm8916_resources = {
-+	.csiphy_res = csiphy_res_8x16,
-+	.csid_res = csid_res_8x16,
-+	.ispif_res = &ispif_res_8x16,
-+	.vfe_res = vfe_res_8x16,
-+};
-+
-+static const struct camss_resources msm8996_resources = {
-+	.csiphy_res = csiphy_res_8x96,
-+	.csid_res = csid_res_8x96,
-+	.ispif_res = &ispif_res_8x96,
-+	.vfe_res = vfe_res_8x96,
-+};
-+
-+static const struct camss_resources sdm660_resources = {
-+	.csiphy_res = csiphy_res_660,
-+	.csid_res = csid_res_660,
-+	.ispif_res = &ispif_res_660,
-+	.vfe_res = vfe_res_660,
-+};
-+
-+static const struct camss_resources sdm845_resources = {
-+	.csiphy_res = csiphy_res_845,
-+	.csid_res = csid_res_845,
-+	.ispif_res = NULL,
-+	.vfe_res = vfe_res_845,
-+};
-+
-+static const struct camss_resources sm8250_resources = {
-+	.csiphy_res = csiphy_res_8250,
-+	.csid_res = csid_res_8250,
-+	.ispif_res = NULL,
-+	.vfe_res = vfe_res_8250,
-+};
-+
- static const struct of_device_id camss_dt_match[] = {
--	{ .compatible = "qcom,msm8916-camss" },
--	{ .compatible = "qcom,msm8996-camss" },
--	{ .compatible = "qcom,sdm660-camss" },
--	{ .compatible = "qcom,sdm845-camss" },
--	{ .compatible = "qcom,sm8250-camss" },
-+	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
-+	{ .compatible = "qcom,msm8996-camss", .data = &msm8996_resources },
-+	{ .compatible = "qcom,sdm660-camss", .data = &sdm660_resources },
-+	{ .compatible = "qcom,sdm845-camss", .data = &sdm845_resources },
-+	{ .compatible = "qcom,sm8250-camss", .data = &sm8250_resources },
- 	{ }
+@@ -1729,14 +1729,12 @@ static const struct camss_resources sdm660_resources = {
+ static const struct camss_resources sdm845_resources = {
+ 	.csiphy_res = csiphy_res_845,
+ 	.csid_res = csid_res_845,
+-	.ispif_res = NULL,
+ 	.vfe_res = vfe_res_845,
  };
  
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index e95211cdb1fd6..f632ee49ad83e 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -79,6 +79,13 @@ enum icc_count {
- 	ICC_SM8250_COUNT = 4,
+ static const struct camss_resources sm8250_resources = {
+ 	.csiphy_res = csiphy_res_8250,
+ 	.csid_res = csid_res_8250,
+-	.ispif_res = NULL,
+ 	.vfe_res = vfe_res_8250,
  };
  
-+struct camss_resources {
-+	const struct resources *csiphy_res;
-+	const struct resources *csid_res;
-+	const struct resources *ispif_res;
-+	const struct resources *vfe_res;
-+};
-+
- struct camss {
- 	enum camss_version version;
- 	struct v4l2_device v4l2_dev;
-@@ -99,6 +106,7 @@ struct camss {
- 	struct device_link **genpd_link;
- 	struct icc_path *icc_path[ICC_SM8250_COUNT];
- 	struct icc_bw_tbl icc_bw_tbl[ICC_SM8250_COUNT];
-+	const struct camss_resources *res;
- };
- 
- struct camss_camera_interface {
 -- 
 2.41.0
 
