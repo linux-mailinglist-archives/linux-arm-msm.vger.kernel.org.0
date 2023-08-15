@@ -2,431 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB22A77D3B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 21:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34B6B77D406
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 22:18:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232819AbjHOTyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 15:54:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39308 "EHLO
+        id S230505AbjHOUSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 16:18:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240137AbjHOTxt (ORCPT
+        with ESMTP id S237402AbjHOURk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 15:53:49 -0400
-Received: from smtprelay02.ispgateway.de (smtprelay02.ispgateway.de [80.67.18.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFFB1BE8;
-        Tue, 15 Aug 2023 12:53:19 -0700 (PDT)
-Received: from [77.64.243.219] (helo=note-book.lan)
-        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <git@apitzsch.eu>)
-        id 1qW030-0003fk-Nz; Tue, 15 Aug 2023 21:49:46 +0200
-From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Date:   Tue, 15 Aug 2023 21:49:06 +0200
-Subject: [PATCH RESEND v3 2/2] arm64: dts: qcom: msm8939-longcheer-l9100:
- Add initial device tree
+        Tue, 15 Aug 2023 16:17:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F581BE6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 13:17:38 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37FJHDvN029298;
+        Tue, 15 Aug 2023 20:17:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=fo/8vx9iG79UB/hMaDM5BJQ3mB4rzJH4dTXcccXXiyU=;
+ b=W08L/7q6wTUWh57TqPMAidIgKdL/aaeSzwF9pIKFfvk4GJlxhK5LxPoeOJfR7B09ILl/
+ 4rZGwNqQxmoPG6k6upR8DK/wtxhs8zO4fjVVmps4zhbN7bmOvQojelVGCpi2rQG0djDA
+ 9TszbEK3uNjzn/+iaSS+f2ZXLlotcWEfjfeyQgyhmDLdC7bN49DPutK+asGIrypW+FvL
+ apjTL6zi4Zig5SeFlQ6MY/dd0HKb456ePzsosOFx/ONhTU+usXje7qLJvSePkxkaaL3l
+ lW88neDaC0V+/8NUkDOX5nDfnIQEM54zEIb0+xrrcDTeco8EqxtGU61D0igYqyeRkbAt IA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sgex38586-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Aug 2023 20:17:09 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37FKH8kZ010530
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Aug 2023 20:17:08 GMT
+Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 15 Aug
+ 2023 13:17:08 -0700
+Message-ID: <4212982a-e5fc-c7f2-1b4f-96f2e1848a74@quicinc.com>
+Date:   Tue, 15 Aug 2023 13:17:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20230815-bq_m5-v3-2-fd26d7c76a1f@apitzsch.eu>
-References: <20230815-bq_m5-v3-0-fd26d7c76a1f@apitzsch.eu>
-In-Reply-To: <20230815-bq_m5-v3-0-fd26d7c76a1f@apitzsch.eu>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/13] drm/msm/dpu: use devres-managed allocation for
+ MDP TOP
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-X-Mailer: b4 0.12.3
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230730011920.354575-1-dmitry.baryshkov@linaro.org>
+ <20230730011920.354575-6-dmitry.baryshkov@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230730011920.354575-6-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tRXR8fe8Bsy8UO5u0Yoy_gAcasI_gDYT
+X-Proofpoint-GUID: tRXR8fe8Bsy8UO5u0Yoy_gAcasI_gDYT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-15_19,2023-08-15_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=999
+ mlxscore=0 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308150183
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This dts adds support for BQ Aquaris M5 (Longcheer L9100) released in
-2015.
 
-Add a device tree with initial support for:
 
-- GPIO keys
-- Hall sensor
-- SDHCI
-- WCNSS (BT/WIFI)
-- Accelerometer/Magnetometer
-- Vibrator
-- Touchscreen
-- Front flash
+On 7/29/2023 6:19 PM, Dmitry Baryshkov wrote:
+> Use devm_kzalloc to create MDP TOP structure. This allows us to remove
+> corresponding kfree and drop dpu_hw_mdp_destroy() function.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c | 17 +++++++----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h |  8 +++++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    |  5 ++---
+>   3 files changed, 14 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> index cff48763ce25..481b373d9ccb 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> @@ -2,6 +2,8 @@
+>   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>    */
+>   
+> +#include <drm/drm_managed.h>
 
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 336 +++++++++++++++++++++
- 2 files changed, 337 insertions(+)
+Hi Dmitry,
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 23fd31d4bf5a..3200bc92853f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -39,6 +39,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-new file mode 100644
-index 000000000000..3fb3cd4be8e8
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-@@ -0,0 +1,336 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8939-pm8916.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-+
-+/ {
-+	model = "BQ Aquaris M5 (Longcheer L9100)";
-+	compatible = "longcheer,l9100", "qcom,msm8939";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* eMMC */
-+		mmc1 = &sdhc_2; /* SD card */
-+		serial0 = &blsp_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_hall_sensor_default>;
-+		pinctrl-names = "default";
-+
-+		label = "GPIO Hall Effect Sensor";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 20 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		label = "GPIO Buttons";
-+
-+		button-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led-0 {
-+			gpios = <&tlmm 17 GPIO_ACTIVE_HIGH>;
-+			color = <LED_COLOR_ID_WHITE>;
-+			default-state = "off";
-+			function = LED_FUNCTION_KBD_BACKLIGHT;
-+
-+			pinctrl-0 = <&button_backlight_default>;
-+			pinctrl-names = "default";
-+		};
-+	};
-+
-+	reg_ts_vdd: regulator-vdd-ts {
-+		compatible = "regulator-fixed";
-+		regulator-name = "regulator-vdd-ts";
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+
-+		gpio = <&tlmm 78 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&ts_vdd_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pm8916_pwm 0 100000>;
-+		brightness-levels = <0 255>;
-+		num-interpolated-steps = <255>;
-+		default-brightness-level = <128>;
-+		enable-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&lcd_bl_en_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	flash-led-controller {
-+		compatible = "ocs,ocp8110";
-+		flash-gpios = <&tlmm 8 GPIO_ACTIVE_HIGH>;
-+		enable-gpios = <&tlmm 49 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&camera_front_flash_default>;
-+		pinctrl-names = "default";
-+
-+		led {
-+			function = LED_FUNCTION_FLASH;
-+			color = <LED_COLOR_ID_WHITE>;
-+			flash-max-timeout-us = <250000>;
-+		};
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default &usb_id_switch_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+};
-+
-+&blsp_i2c3 {
-+	status = "okay";
-+
-+	magnetometer@d {
-+		compatible = "asahi-kasei,ak09911";
-+		reg = <0x0d>;
-+
-+		vdd-supply = <&pm8916_l17>;
-+		vid-supply = <&pm8916_l6>;
-+
-+		reset-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&mag_reset_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	light-sensor@23 {
-+		compatible = "liteon,ltr559";
-+		reg = <0x23>;
-+
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l5>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <113 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-0 = <&light_int_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	imu@68 {
-+		compatible = "bosch,bmi160";
-+		reg = <0x68>;
-+
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l6>;
-+	};
-+};
-+
-+&blsp_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@4a {
-+		compatible = "atmel,maxtouch";
-+		reg = <0x4a>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <13 IRQ_TYPE_LEVEL_LOW>;
-+
-+		reset-gpios = <&tlmm 12 GPIO_ACTIVE_LOW>;
-+
-+		vdda-supply = <&pm8916_l6>;
-+		vdd-supply = <&reg_ts_vdd>;
-+
-+		pinctrl-0 = <&ts_int_reset_default>;
-+		pinctrl-names = "default";
-+
-+		/* Keys listed from right to left */
-+		linux,keycodes = <KEY_APPSELECT KEY_HOMEPAGE KEY_BACK>;
-+	};
-+};
-+
-+&blsp_uart2 {
-+	status = "okay";
-+};
-+
-+&pm8916_mpps {
-+	pwm_out: mpp4-state {
-+		pins = "mpp4";
-+		function = "digital";
-+		power-source = <PM8916_MPP_VPH>;
-+		output-low;
-+		qcom,dtest = <1>;
-+	};
-+};
-+
-+&pm8916_pwm {
-+	pinctrl-0 = <&pwm_out>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&pm8916_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&pm8916_rpm_regulators {
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+};
-+
-+&pm8916_vib {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&wcnss {
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+};
-+
-+&tlmm {
-+	button_backlight_default: button-backlight-default-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	camera_front_flash_default: camera-front-flash-default-state {
-+		pins = "gpio8", "gpio49";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio107";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	lcd_bl_en_default: lcd-bl-en-default-state {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	light_int_default: light-int-default-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	mag_reset_default: mag-reset-default-state {
-+		pins = "gpio68";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	ts_int_reset_default: ts-int-reset-default-state {
-+		pins = "gpio12", "gpio13";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	ts_vdd_default: ts-vdd-default-state {
-+		pins = "gpio78";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	usb_id_switch_default: usb-id-switch-default-state {
-+		pins = "gpio121";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		output-high;
-+	};
-+};
+Is it possible to put this #include in a common header? Since it seems 
+that this is a common change for a lot of patches in this series.
 
--- 
-2.41.0
+Thanks,
 
+Jessica Zhang
+
+> +
+>   #include "dpu_hwio.h"
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_top.h"
+> @@ -268,16 +270,17 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+>   		ops->intf_audio_select = dpu_hw_intf_audio_select;
+>   }
+>   
+> -struct dpu_hw_mdp *dpu_hw_mdptop_init(const struct dpu_mdp_cfg *cfg,
+> -		void __iomem *addr,
+> -		const struct dpu_mdss_cfg *m)
+> +struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
+> +				      const struct dpu_mdp_cfg *cfg,
+> +				      void __iomem *addr,
+> +				      const struct dpu_mdss_cfg *m)
+>   {
+>   	struct dpu_hw_mdp *mdp;
+>   
+>   	if (!addr)
+>   		return ERR_PTR(-EINVAL);
+>   
+> -	mdp = kzalloc(sizeof(*mdp), GFP_KERNEL);
+> +	mdp = drmm_kzalloc(dev, sizeof(*mdp), GFP_KERNEL);
+>   	if (!mdp)
+>   		return ERR_PTR(-ENOMEM);
+>   
+> @@ -292,9 +295,3 @@ struct dpu_hw_mdp *dpu_hw_mdptop_init(const struct dpu_mdp_cfg *cfg,
+>   
+>   	return mdp;
+>   }
+> -
+> -void dpu_hw_mdp_destroy(struct dpu_hw_mdp *mdp)
+> -{
+> -	kfree(mdp);
+> -}
+> -
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> index 8b1463d2b2f0..6f3dc98087df 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> @@ -145,13 +145,15 @@ struct dpu_hw_mdp {
+>   
+>   /**
+>    * dpu_hw_mdptop_init - initializes the top driver for the passed config
+> + * @dev:  Corresponding device for devres management
+>    * @cfg:  MDP TOP configuration from catalog
+>    * @addr: Mapped register io address of MDP
+>    * @m:    Pointer to mdss catalog data
+>    */
+> -struct dpu_hw_mdp *dpu_hw_mdptop_init(const struct dpu_mdp_cfg *cfg,
+> -		void __iomem *addr,
+> -		const struct dpu_mdss_cfg *m);
+> +struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
+> +				      const struct dpu_mdp_cfg *cfg,
+> +				      void __iomem *addr,
+> +				      const struct dpu_mdss_cfg *m);
+>   
+>   void dpu_hw_mdp_destroy(struct dpu_hw_mdp *mdp);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 6e0643ea4868..d4f4cb402663 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -820,8 +820,6 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
+>   
+>   	dpu_kms->catalog = NULL;
+>   
+> -	if (dpu_kms->hw_mdp)
+> -		dpu_hw_mdp_destroy(dpu_kms->hw_mdp);
+>   	dpu_kms->hw_mdp = NULL;
+>   }
+>   
+> @@ -1091,7 +1089,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>   
+>   	dpu_kms->rm_init = true;
+>   
+> -	dpu_kms->hw_mdp = dpu_hw_mdptop_init(dpu_kms->catalog->mdp,
+> +	dpu_kms->hw_mdp = dpu_hw_mdptop_init(dev,
+> +					     dpu_kms->catalog->mdp,
+>   					     dpu_kms->mmio,
+>   					     dpu_kms->catalog);
+>   	if (IS_ERR(dpu_kms->hw_mdp)) {
+> -- 
+> 2.39.2
+> 
