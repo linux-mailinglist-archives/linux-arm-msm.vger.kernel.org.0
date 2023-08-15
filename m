@@ -2,205 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B6B77D406
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 22:18:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E4A177D440
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 22:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbjHOUSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 16:18:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52064 "EHLO
+        id S238195AbjHOUhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 16:37:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237402AbjHOURk (ORCPT
+        with ESMTP id S238366AbjHOUhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 16:17:40 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F581BE6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 13:17:38 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37FJHDvN029298;
-        Tue, 15 Aug 2023 20:17:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=fo/8vx9iG79UB/hMaDM5BJQ3mB4rzJH4dTXcccXXiyU=;
- b=W08L/7q6wTUWh57TqPMAidIgKdL/aaeSzwF9pIKFfvk4GJlxhK5LxPoeOJfR7B09ILl/
- 4rZGwNqQxmoPG6k6upR8DK/wtxhs8zO4fjVVmps4zhbN7bmOvQojelVGCpi2rQG0djDA
- 9TszbEK3uNjzn/+iaSS+f2ZXLlotcWEfjfeyQgyhmDLdC7bN49DPutK+asGIrypW+FvL
- apjTL6zi4Zig5SeFlQ6MY/dd0HKb456ePzsosOFx/ONhTU+usXje7qLJvSePkxkaaL3l
- lW88neDaC0V+/8NUkDOX5nDfnIQEM54zEIb0+xrrcDTeco8EqxtGU61D0igYqyeRkbAt IA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sgex38586-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 15 Aug 2023 20:17:09 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37FKH8kZ010530
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 15 Aug 2023 20:17:08 GMT
-Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 15 Aug
- 2023 13:17:08 -0700
-Message-ID: <4212982a-e5fc-c7f2-1b4f-96f2e1848a74@quicinc.com>
-Date:   Tue, 15 Aug 2023 13:17:07 -0700
+        Tue, 15 Aug 2023 16:37:19 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D9F213E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 13:36:45 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99c93638322so1205599966b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 13:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692131802; x=1692736602;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X6Sjc5kCdevNBIooFIAdaXcgvp9MHaLBrm4GmR4a5kI=;
+        b=fAj5Uun6fMmg8JwRtrO+awU+LcEYYn3b1AiRgb2/esrYZBkNM8tV10/hR44o06tYxe
+         x6tW13BtvxlFQHUYSqCIZV5Ry835ARs2CNw903bBXAvZ+OehESNUGsUEsnaUYN1sTHdq
+         shby10LOk+9SulpTwmNO7xf04GJoS2R8Ey3J9g6DxAo6+MKv19y5GR/Dmo7R97yAG+mL
+         F5k2GyoQ+ROmnqMzBPGvHOv7I5DwPEr+mJOC2jM2/HNe2rq9pxwgYcUGWrCIAJMvNhAe
+         dJ5rKDHjV9bKla4CBC1ge739eOZnuCIEhDBfWTLKGMk5tOMBE2eYhAYPy7bzn2RJ5Siw
+         +gfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692131802; x=1692736602;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X6Sjc5kCdevNBIooFIAdaXcgvp9MHaLBrm4GmR4a5kI=;
+        b=JrMHIbeZWltz8BhK4at9NBVUrE7qo1e8qkIWAyiAAyYlmpH8Bx7M5i8ezuK5F2bOVK
+         P8ufqu5Fi6n5c4dQLJuagD7RR5X4KvK/hv3Plb2gyqAknoabp2a52zMx+c+z/2pUBNG1
+         Hbyj8Vz/HgdFLP5erKmVU8VR+hWcRCBEwl3gh9TE7q1luXC5GPJspnR+ao3FW3TRU2Uv
+         +PtPEzuiOxJ3QMcHVttJ1fOH0rlqgjryY2KNLRdZ6+XSmTPpF1ErsJRPEEoGnzAq4L2T
+         gOHk/pBF8wEGC78cW1Sd5xz+NLrZ9jkF71d1zv5MZrpzfyxjAt7IZc9ifRZ8DGVC011C
+         /Ivg==
+X-Gm-Message-State: AOJu0YyeUP2ihqXgtYlEeqZbVmoH1Ya6VsMlNE8/v8w8aGorivMB37kG
+        zyxfaNAcQKXcWb/yeCm6pbmX2Q==
+X-Google-Smtp-Source: AGHT+IH4wM7nrkfOFTqG/v7+FSAdJxm80o8iaJuv9GJHnk6yEmOMGbDxs3H4ETByecHIE/WMvpi9VA==
+X-Received: by 2002:a17:906:6a04:b0:99b:dd23:4f01 with SMTP id qw4-20020a1709066a0400b0099bdd234f01mr3314224ejc.33.1692131802432;
+        Tue, 15 Aug 2023 13:36:42 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id f8-20020a17090624c800b009894b476310sm7407880ejb.163.2023.08.15.13.36.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Aug 2023 13:36:42 -0700 (PDT)
+Message-ID: <102328fa-5699-4731-d639-079bce8863a5@linaro.org>
+Date:   Tue, 15 Aug 2023 22:36:39 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/13] drm/msm/dpu: use devres-managed allocation for
- MDP TOP
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 1/7] dt-bindings: soc: qcom: Add qcom,pbs bindings
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230730011920.354575-1-dmitry.baryshkov@linaro.org>
- <20230730011920.354575-6-dmitry.baryshkov@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20230730011920.354575-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
+        lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org
+Cc:     luca.weiss@fairphone.com, konrad.dybcio@linaro.org,
+        u.kleine-koenig@pengutronix.de, quic_subbaram@quicinc.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org
+References: <20230814235918.10396-1-quic_amelende@quicinc.com>
+ <20230814235918.10396-2-quic_amelende@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230814235918.10396-2-quic_amelende@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tRXR8fe8Bsy8UO5u0Yoy_gAcasI_gDYT
-X-Proofpoint-GUID: tRXR8fe8Bsy8UO5u0Yoy_gAcasI_gDYT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-15_19,2023-08-15_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308150183
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/29/2023 6:19 PM, Dmitry Baryshkov wrote:
-> Use devm_kzalloc to create MDP TOP structure. This allows us to remove
-> corresponding kfree and drop dpu_hw_mdp_destroy() function.
+On 15/08/2023 01:59, Anjelique Melendez wrote:
+> Add binding for the Qualcomm Programmable Boot Sequencer device.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c | 17 +++++++----------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h |  8 +++++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    |  5 ++---
->   3 files changed, 14 insertions(+), 16 deletions(-)
+>  .../bindings/soc/qcom/qcom,pbs.yaml           | 46 +++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,pbs.yaml
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> index cff48763ce25..481b373d9ccb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> @@ -2,6 +2,8 @@
->   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->    */
->   
-> +#include <drm/drm_managed.h>
-
-Hi Dmitry,
-
-Is it possible to put this #include in a common header? Since it seems 
-that this is a common change for a lot of patches in this series.
-
-Thanks,
-
-Jessica Zhang
-
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,pbs.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,pbs.yaml
+> new file mode 100644
+> index 000000000000..b502ca72266a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,pbs.yaml
+> @@ -0,0 +1,46 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,pbs.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
->   #include "dpu_hwio.h"
->   #include "dpu_hw_catalog.h"
->   #include "dpu_hw_top.h"
-> @@ -268,16 +270,17 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
->   		ops->intf_audio_select = dpu_hw_intf_audio_select;
->   }
->   
-> -struct dpu_hw_mdp *dpu_hw_mdptop_init(const struct dpu_mdp_cfg *cfg,
-> -		void __iomem *addr,
-> -		const struct dpu_mdss_cfg *m)
-> +struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
-> +				      const struct dpu_mdp_cfg *cfg,
-> +				      void __iomem *addr,
-> +				      const struct dpu_mdss_cfg *m)
->   {
->   	struct dpu_hw_mdp *mdp;
->   
->   	if (!addr)
->   		return ERR_PTR(-EINVAL);
->   
-> -	mdp = kzalloc(sizeof(*mdp), GFP_KERNEL);
-> +	mdp = drmm_kzalloc(dev, sizeof(*mdp), GFP_KERNEL);
->   	if (!mdp)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -292,9 +295,3 @@ struct dpu_hw_mdp *dpu_hw_mdptop_init(const struct dpu_mdp_cfg *cfg,
->   
->   	return mdp;
->   }
-> -
-> -void dpu_hw_mdp_destroy(struct dpu_hw_mdp *mdp)
-> -{
-> -	kfree(mdp);
-> -}
-> -
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> index 8b1463d2b2f0..6f3dc98087df 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> @@ -145,13 +145,15 @@ struct dpu_hw_mdp {
->   
->   /**
->    * dpu_hw_mdptop_init - initializes the top driver for the passed config
-> + * @dev:  Corresponding device for devres management
->    * @cfg:  MDP TOP configuration from catalog
->    * @addr: Mapped register io address of MDP
->    * @m:    Pointer to mdss catalog data
->    */
-> -struct dpu_hw_mdp *dpu_hw_mdptop_init(const struct dpu_mdp_cfg *cfg,
-> -		void __iomem *addr,
-> -		const struct dpu_mdss_cfg *m);
-> +struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
-> +				      const struct dpu_mdp_cfg *cfg,
-> +				      void __iomem *addr,
-> +				      const struct dpu_mdss_cfg *m);
->   
->   void dpu_hw_mdp_destroy(struct dpu_hw_mdp *mdp);
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 6e0643ea4868..d4f4cb402663 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -820,8 +820,6 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
->   
->   	dpu_kms->catalog = NULL;
->   
-> -	if (dpu_kms->hw_mdp)
-> -		dpu_hw_mdp_destroy(dpu_kms->hw_mdp);
->   	dpu_kms->hw_mdp = NULL;
->   }
->   
-> @@ -1091,7 +1089,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   
->   	dpu_kms->rm_init = true;
->   
-> -	dpu_kms->hw_mdp = dpu_hw_mdptop_init(dpu_kms->catalog->mdp,
-> +	dpu_kms->hw_mdp = dpu_hw_mdptop_init(dev,
-> +					     dpu_kms->catalog->mdp,
->   					     dpu_kms->mmio,
->   					     dpu_kms->catalog);
->   	if (IS_ERR(dpu_kms->hw_mdp)) {
-> -- 
-> 2.39.2
-> 
+> +title: Qualcomm Technologies, Inc. Programmable Boot Sequencer
+> +
+> +maintainers:
+> +  - Anjelique Melendez <quic_amelende@quicinc.com>
+> +
+> +description: |
+> +  The Qualcomm Technologies, Inc. Programmable Boot Sequencer (PBS)
+> +  supports triggering power up and power down sequences for clients
+> +  upon request.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,pmi632-pbs
+> +      - const: qcom,pbs
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/spmi/spmi.h>
+> +
+> +    pmic@0 {
+
+This should be rather just "pmic", because the examples have
+address-cells=1 and size-cells=1, which is not correct in this context.
+
+Anyway:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
