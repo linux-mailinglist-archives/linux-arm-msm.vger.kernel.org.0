@@ -2,112 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E4E077CE4D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 16:41:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CA177CE6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 16:49:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237720AbjHOOlC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 10:41:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59716 "EHLO
+        id S237774AbjHOOsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 10:48:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237741AbjHOOki (ORCPT
+        with ESMTP id S237796AbjHOOsQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 10:40:38 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8421219B4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 07:40:19 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fbd33a57b6so54771955e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 07:40:19 -0700 (PDT)
+        Tue, 15 Aug 2023 10:48:16 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11EF293
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 07:48:14 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bb734a9081so26543571fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 07:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692110418; x=1692715218;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tSVBhXWt7TNqQc2EjdgZO4iqIf4JJ+I9/JS50KxzJlA=;
-        b=c1FhoFHSurN696QKAroMPnZ16COmvLtaNEktF3j2u1wj47fJqOMv7QcL/qQb1VO2Ji
-         bDhHJav9yC87r6vNTlSL3RcmxIEmCZdBChkTpqpCyWZAY94CkGjsiedFNAOOWU6S5wqd
-         go12bxplHbCD8AbFIpdMinjYIEXF9PufktTuNvH3v86C/geXFjs106A7+crr6JtxXowA
-         Ff+GZeRPklBU4WeuucxeVXdp2IUjYCQXW4eu6HYwbDeP7hgV0n5Y4DGV3kTh8UykOkR1
-         r5bPA+iuFWGqMp4WJ/55cTAXFF5KbGAeUQk34ml1NkvZw3OqHDYSLdpYWZpueSCvnmIz
-         0E9Q==
+        d=joelfernandes.org; s=google; t=1692110892; x=1692715692;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ibbiZiUA+psUXSR5jUh/+IlNRDXZdtdDillHT+rm3pU=;
+        b=U6hg5sg6uAKSWxt0HUVBLWSx0P/Va40jtTADSEVuzIH5KWeO3zdr21ZbxzFVKpfBlW
+         KB24HHDVpVo7o/EFigR2hlv89p5idw9I8cydSgr34swBjeccniKPaLFWsjj6eBP8fehe
+         xUIHKwJdDXkOatWNSUnQLVWbU7I6GIGScGp5w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692110418; x=1692715218;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tSVBhXWt7TNqQc2EjdgZO4iqIf4JJ+I9/JS50KxzJlA=;
-        b=fxYw1x2fEXgYLels6CCT6crRa6Y3RIL9BpOFBtdD6g/bsTismEfRJ7THAPgiz37VPk
-         57HiKHTBEAuApdhKr78NP+YHX4tkY4oP2E9tEjgIMYOgP9IVjI8poBT7Vbc3fdIFe+q5
-         DlUzLrdXU0lXKPcP9Avj0hSlCfADsCOeOqFbX2iPRZfV52wN6fSeVIMXNpcjGOShR+49
-         GN/6wMfVd+JX1ocdXoXyCATqbezn28DSHUX7Pt8HHxZ3t8EMud+MTnBoyt830P9LSSdy
-         m5y4V3ETbVW/XpTl1HNDe0p6DS1MtfDpdLSq7w7Hloi0eiqrtM2q7sx2M4KUE+RTnvbI
-         zdOg==
-X-Gm-Message-State: AOJu0YwZrNAIp0XmxIwbcGqEFZxxW2yTzGIKP6oB6Ij8qGD9/IqUxYA0
-        Xx+ABA1Gd1zLSg/5XRvMpnd3vywnHmKDnIq5UI8=
-X-Google-Smtp-Source: AGHT+IEpvGhIfubksCEdL/OmxuZ5TRCfuGwk3fp2l69wE+slGPPNFJE+xDrK2HYAyxr06BpBMBiNNw==
-X-Received: by 2002:a05:600c:217:b0:3fe:10d8:e7ef with SMTP id 23-20020a05600c021700b003fe10d8e7efmr11678457wmi.19.1692110417805;
-        Tue, 15 Aug 2023 07:40:17 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id g7-20020a7bc4c7000000b003fbdd5d0758sm17975681wmk.22.2023.08.15.07.40.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 07:40:17 -0700 (PDT)
-Message-ID: <3174c398-a19a-3b59-c2fc-3ec9a5e1a9df@linaro.org>
-Date:   Tue, 15 Aug 2023 16:40:15 +0200
+        d=1e100.net; s=20221208; t=1692110892; x=1692715692;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ibbiZiUA+psUXSR5jUh/+IlNRDXZdtdDillHT+rm3pU=;
+        b=EuzWpakur9SLM+iW1gEIUu5P5If1zyKJWbqEyG6oQbgQuFy2qSYOA7FOFGeNX78wKB
+         szxZVv29thDKbgZUu2G6GtBDC5oHTSw7mVQ6CBEieIFgpar8/ov2kfybVi4bFLdnJiGb
+         YXk9Hkg/jg6+GkrW3cRjluTSQYHNRUNqpe/9/YBRRQo0dEVGQiebznZNprRKfRCSmwSh
+         jU7GbTzFcmffY1cYjkfrYMGxYqJTLEb1r99xcSZjJlY4Q9NdA2Kcs6QumjbjdRSzyp2r
+         kmI+273noODTUciGfKxp2mFuWjrMcHuzcFJ/+gdp56Nmja4PB4VoXodrWBRAG4EDwOLW
+         B9SA==
+X-Gm-Message-State: AOJu0YzGqxZ8r9v+VyzFLg6jV6Ur6VSC+jraTTfE7y36wUF4KDZJ3tvu
+        0oGKCHuZj6/9EifTUnXMI8PpXYc3lY1K9ahj6iT+ng==
+X-Google-Smtp-Source: AGHT+IHTIyZF2a0Lewx1kaEyopouMrrXNjHT3NJi7iQHgr1EAUrSfMtmSq7xI4WQF76YzqD1XX4CAWsZeuHhipxQA3A=
+X-Received: by 2002:a2e:9206:0:b0:2b4:6a06:4c26 with SMTP id
+ k6-20020a2e9206000000b002b46a064c26mr710210ljg.2.1692110892069; Tue, 15 Aug
+ 2023 07:48:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5018: add WDT
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        wim@linux-watchdog.org, linux@roeck-us.net, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_saipraka@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230815141908.1084893-1-robimarko@gmail.com>
- <20230815141908.1084893-2-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230815141908.1084893-2-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
+ <20230620054031.1203960-1-juerg.haefliger@canonical.com> <b0460532-b5f1-7efc-49af-8d4feecc1085@linaro.org>
+ <20230815135214.15aeff63@gollum>
+In-Reply-To: <20230815135214.15aeff63@gollum>
+From:   Joel Fernandes <joel@joelfernandes.org>
+Date:   Tue, 15 Aug 2023 10:48:01 -0400
+Message-ID: <CAEXW_YShF2RMnsgTzjB1z6vLU+3oOv1vEPtWnmBT-NsREh88-g@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/adreno: Add missing MODULE_FIRMWARE macros
+To:     Juerg Haefliger <juerg.haefliger@canonical.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, airlied@gmail.com,
+        daniel@ffwll.ch, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, johan+linaro@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_abhinavk@quicinc.com,
+        quic_akhilpo@quicinc.com, ribalda@chromium.org,
+        robdclark@gmail.com, sean@poorly.run
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2023 16:17, Robert Marko wrote:
-> Add the required DT node for WDT operation.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 3285c86824cf..168322bfb11c 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -182,6 +182,13 @@ v2m1: v2m@1000 {
->  			};
->  		};
->  
-> +		watchdog: watchdog@b017000 {
-> +			compatible = "qcom,apss-wdt-ipq5018", "qcom,kpss-wdt";
-> +			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
+On Tue, Aug 15, 2023 at 7:52=E2=80=AFAM Juerg Haefliger
+<juerg.haefliger@canonical.com> wrote:
+>
+> On Thu, 22 Jun 2023 21:44:25 +0300
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+>
+> > On 20/06/2023 08:40, Juerg Haefliger wrote:
+> > > The driver references some firmware files that don't have correspondi=
+ng
+> > > MODULE_FIRMWARE macros and thus won't be listed via modinfo. Fix that=
+.
+> > >
+> > > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> > >
+> > > ---
+> > > v2:
+> > >    - Drop addition and removal of zap files (needs more discussion)
+> > >    - Add new a690_gmu.bin
+> > >    - Update commit subject and message accordingly
+> > > ---
+> > >   drivers/gpu/drm/msm/adreno/adreno_device.c | 11 +++++++++++
+> > >   1 file changed, 11 insertions(+)
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+>
 
-I think all GIC_SPI interrupts are level high.
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-> +			reg = <0x0b017000 0x40>;
+thanks,
 
-Keep the reg as second property.
-
-> +			clocks = <&sleep_clk>;
-> +		};
-
-Best regards,
-Krzysztof
-
+ - Joel
