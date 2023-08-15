@@ -2,67 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62D6877C995
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 10:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E123077C9A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 10:49:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235712AbjHOIpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 04:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44184 "EHLO
+        id S235450AbjHOItQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 04:49:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235730AbjHOIpQ (ORCPT
+        with ESMTP id S235812AbjHOIsp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 04:45:16 -0400
-Received: from out-56.mta1.migadu.com (out-56.mta1.migadu.com [IPv6:2001:41d0:203:375::38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B0AE73;
-        Tue, 15 Aug 2023 01:45:09 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1692089107;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=d2GQT27JBORMGN4q7RKbUYlAoigLeQM193KWTjK1+1c=;
-        b=FRL/ltyDk6h6CRg5cbkY9bVyLglBaTn6TN1AqP0hvLYmbCo7IPQK7K10OejYDI/exkfKch
-        6u6X9SpuAcMC1xJitcw9cZ/1rhmfJ5U48AMYSFpK2Bsy4fCi0AC+IGqXx9ZTbYi9bkVata
-        zUMcVl/PuRM8qvEN8trILpirtVGTVQA=
+        Tue, 15 Aug 2023 04:48:45 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D0094107;
+        Tue, 15 Aug 2023 01:48:43 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3FB661063;
+        Tue, 15 Aug 2023 01:49:25 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 73DBA3F762;
+        Tue, 15 Aug 2023 01:48:41 -0700 (PDT)
+Date:   Tue, 15 Aug 2023 09:48:38 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     cristian.marussi@arm.com, lukasz.luba@arm.com,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_rjendra@quicinc.com,
+        srinivas.kandagatla@linaro.org,
+        Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+Subject: Re: [PATCH] firmware: arm_scmi: Fixup perf microwatt support
+Message-ID: <20230815084838.46wqgiggnxc6rfpe@bogus>
+References: <20230811204818.30928-1-quic_sibis@quicinc.com>
+ <20230814092503.xdzafmqu5h3shrlz@bogus>
+ <0cfd73bb-3ae6-d7bd-296c-0c39d194464b@quicinc.com>
 MIME-Version: 1.0
-Subject: Re: [PATCH v4 02/48] mm: vmscan: move shrinker-related code into a
- separate file
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20230807110936.21819-3-zhengqi.arch@bytedance.com>
-Date:   Tue, 15 Aug 2023 16:44:21 +0800
-Cc:     Andrew Morton <akpm@linux-foundation.org>, david@fromorbit.com,
-        tkhai@ya.ru, Vlastimil Babka <vbabka@suse.cz>,
-        Roman Gushchin <roman.gushchin@linux.dev>, djwong@kernel.org,
-        Christian Brauner <brauner@kernel.org>,
-        "Paul E. McKenney" <paulmck@kernel.org>, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        simon.horman@corigine.com, dlemoal@kernel.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org, x86@kernel.org,
-        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-erofs@lists.ozlabs.org,
-        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
-        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
-        rcu@vger.kernel.org, netdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <BEE5622B-8E74-405C-9A5B-0CF410F8344E@linux.dev>
-References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
- <20230807110936.21819-3-zhengqi.arch@bytedance.com>
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0cfd73bb-3ae6-d7bd-296c-0c39d194464b@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,14 +48,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-> On Aug 7, 2023, at 19:08, Qi Zheng <zhengqi.arch@bytedance.com> wrote:
+On Mon, Aug 14, 2023 at 09:43:37PM +0530, Sibi Sankar wrote:
+> Hey Sudeep,
 > 
-> The mm/vmscan.c file is too large, so separate the shrinker-related
-> code from it into a separate file. No functional changes.
+> On 8/14/23 14:55, Sudeep Holla wrote:
+> > On Sat, Aug 12, 2023 at 02:18:18AM +0530, Sibi Sankar wrote:
+> > > The perf power scale value would currently be reported as bogowatts if the
+> > > platform firmware supports microwatt power scale and meets the perf major
+> > > version requirements. Fix this by populating version information in the
+> > > driver private data before the call to protocol attributes is made.
+> > > 
+> > > CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
+> > > Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
+> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > > ---
+> > >   drivers/firmware/arm_scmi/perf.c | 4 ++--
+> > >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> > > index c0cd556fbaae..30dedd6ebfde 100644
+> > > --- a/drivers/firmware/arm_scmi/perf.c
+> > > +++ b/drivers/firmware/arm_scmi/perf.c
+> > > @@ -1080,6 +1080,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
+> > 
+> > Please rebase any patch when posting upstream on upstream kernel tree.
+> > This definitely looks like some downstream tree. I will adjust and apply
+> > this time. This file never crossed 1000 line and this patch indicates
+> > otherwise, so I am sure Qcom has some downstream changes in this file now.
 > 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> Thanks for taking time to review the patch but zero points for the ^^
+> deduction lol. The correct phrasing would be v6.5 rc6 hasn't crossed 1k
+> lines but the patch was based on next-20230809 which has the perf level
+> indexing mode support in addition :)
 
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+You are right. Cristian reminded me about v3.2 perf changes in -next after
+I replied on this thread. I saw this as fix and was looking at only upstream
+tree and this didn't apply cleanly.
 
+-- 
+Regards,
+Sudeep
