@@ -2,78 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D937177C7E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 08:36:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2704977C7F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 08:43:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233820AbjHOGfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 02:35:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53924 "EHLO
+        id S235030AbjHOGnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 02:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235163AbjHOGfg (ORCPT
+        with ESMTP id S234738AbjHOGnC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 02:35:36 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8960E63
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 23:35:32 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99c93638322so1056006566b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Aug 2023 23:35:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1692081331; x=1692686131;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Laq6PLZD5mjNGl8B5CwbzlD1BLPbLGW1CktYeIcSz2s=;
-        b=s+r0v90PFyDxPteMQ4Q1nvVqnU9n3FQrvy9GiQjh133sKXmnnJW6mp3vKZU82EMYHk
-         XRZJj/KbtU8nT6GShMoB4ALcEsXJtB2876YeqoVP3gsYJYrbxh8m7DLFX9gLvAQj7yVV
-         3P26DVgoPaQ1ZQGfHlCcGco/Q+h8w9lPqnYUNjl+9OVDe5n1GnA9E9ZBFXBTiIer+MIk
-         E4ncG0CLvjYfafkEb4VaVzVYbRe6HZ2uvM+rkmlRyNsi2/sunEa9X3TLPFnPTUSTmuLi
-         VcJTQpg9q+qA8oZ7bMLpc8JxqvEqmdNYnc2sKpktQzhMBBjBbYILiLf+GQGCtiT81q+Q
-         U2kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692081331; x=1692686131;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Laq6PLZD5mjNGl8B5CwbzlD1BLPbLGW1CktYeIcSz2s=;
-        b=WJRC0S4btjbbUrCzgQSqM3WdY0sKrrD+Kxv9+W+GdftD5xhDsgfWrGym42Vl2a+BBL
-         cPXq+NY2/1ysWvs+1b8QlmJUKJkwqxmSjmNBPTspAT1AHPNXEb4T36gOAGQSALB7FLpX
-         pnfIspvlaSIVoadA+xigiBabQ6G8gEEDbZjmF3Z/napi7pZpA2KPJIp9XdOnnUxd5SEI
-         NWSr1j1P39+2hmGunuL01G07L3e2NmegUeCZefAQFEbFnUQnWoyGCZkINVaUCJV6nJTH
-         SEHpovn4wchbDw7QA8fgHqW9oiLF6wYRevCrzt9HC+tFLxsNexkCVa2lzAKUCxF6B/fy
-         ChyQ==
-X-Gm-Message-State: AOJu0YwYBhXaKnE4sMExnrwsQR8phS1Ax12FSM9aGAyhetnm7vdNT264
-        /8cK467FLm5cZZhTwfVfTkCSIg==
-X-Google-Smtp-Source: AGHT+IETPNF/Z7ilokCcWZfAWD0iGmFiBWijqpMV+ohFGBHjoHuPVeTOv2HfMMA3Ns4Wy2omaUMAFQ==
-X-Received: by 2002:a17:907:7b93:b0:991:d414:d889 with SMTP id ne19-20020a1709077b9300b00991d414d889mr1158350ejc.15.1692081331176;
-        Mon, 14 Aug 2023 23:35:31 -0700 (PDT)
-Received: from localhost (212095005038.public.telering.at. [212.95.5.38])
-        by smtp.gmail.com with ESMTPSA id c8-20020a17090654c800b0099cf91fe297sm6724368ejp.13.2023.08.14.23.35.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Aug 2023 23:35:30 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 15 Aug 2023 08:35:29 +0200
-Message-Id: <CUSWRRL6QOPU.1YM7S0F8F3V2D@otso>
-To:     "Fenglin Wu" <quic_fenglinw@quicinc.com>,
+        Tue, 15 Aug 2023 02:43:02 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A986127;
+        Mon, 14 Aug 2023 23:43:00 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37F6eHer029692;
+        Tue, 15 Aug 2023 06:42:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nH9TdN+9Ou+OLup3W8vXF8KOi6F2nLMXNpePTMty3Pw=;
+ b=TEnr36r8z8X6ycCjCSTdCOPm9MnZz+TeQlfUhh0BwYevNikLmLXL7UdYSzX6NpV4S/+y
+ iJI6VrMU1f//HhYUz/P84oat8PeDAz4+rWnqhGwBqckgjcXD+09K3l7Aw5b75yWB51nB
+ PEkdcXdEv0tCQp5CP0HRJZvHh9/+ng5yXCWWWApz3BGLZXOPDsHG2EgnloE5PR8U1oJ5
+ 7jNY2WgUa5J97hc6K78f6VPcvKja3/NigbO/TaH7+M22IOwldnLjA/Ci1OEWK/78H84a
+ yAvOPTzUV5ekeoNdFLh/xU59BNXtohOZw6Mld+fa8WiiYRKKxMSjhsRtM52a2qM/jLpA Ug== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sfqp1h7em-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Aug 2023 06:42:46 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37F6gjWR022595
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Aug 2023 06:42:45 GMT
+Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 14 Aug
+ 2023 23:42:42 -0700
+Message-ID: <d4cee19c-6f13-a1dc-d402-1d5c2b769ad1@quicinc.com>
+Date:   Tue, 15 Aug 2023 14:42:40 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v5 2/3] dt-bindings: input: qcom,pm8xxx-vib: add new SPMI
+ vibrator module
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
         <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
         <agross@kernel.org>, <andersson@kernel.org>,
         <dmitry.baryshkov@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Dmitry Torokhov" <dmitry.torokhov@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         <linux-input@vger.kernel.org>, <devicetree@vger.kernel.org>
-Cc:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
         <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>
-Subject: Re: [PATCH v5 2/3] dt-bindings: input: qcom,pm8xxx-vib: add new
- SPMI vibrator module
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.15.2
 References: <20230815060314.352103-1-quic_fenglinw@quicinc.com>
  <20230815060314.352103-3-quic_fenglinw@quicinc.com>
-In-Reply-To: <20230815060314.352103-3-quic_fenglinw@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+ <CUSWRRL6QOPU.1YM7S0F8F3V2D@otso>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <CUSWRRL6QOPU.1YM7S0F8F3V2D@otso>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0x4I6bYn13pn8C_SAAubBjQ-LITwhqcZ
+X-Proofpoint-ORIG-GUID: 0x4I6bYn13pn8C_SAAubBjQ-LITwhqcZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-15_05,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 bulkscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308150060
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,76 +89,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Fenglin,
 
-On Tue Aug 15, 2023 at 8:03 AM CEST, Fenglin Wu wrote:
-> Add compatible strings to support vibrator module inside PMI632,
-> PMI7250B, PM7325B, PM7550BA.
->
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> ---
->  .../bindings/input/qcom,pm8xxx-vib.yaml           | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml=
- b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-> index c8832cd0d7da..72b72c67a9b6 100644
+
+On 8/15/2023 2:35 PM, Luca Weiss wrote:
+> Hi Fenglin,
+> 
+> On Tue Aug 15, 2023 at 8:03 AM CEST, Fenglin Wu wrote:
+>> Add compatible strings to support vibrator module inside PMI632,
+>> PMI7250B, PM7325B, PM7550BA.
+>>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> ---
+>>   .../bindings/input/qcom,pm8xxx-vib.yaml           | 15 +++++++++++----
+>>   1 file changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+>> index c8832cd0d7da..72b72c67a9b6 100644
+>> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+>> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+>> @@ -11,10 +11,17 @@ maintainers:
+>>   
+>>   properties:
+>>     compatible:
+>> -    enum:
+>> -      - qcom,pm8058-vib
+>> -      - qcom,pm8916-vib
+>> -      - qcom,pm8921-vib
+>> +    oneOf:
+>> +      - enum:
+>> +          - qcom,pm8058-vib
+>> +          - qcom,pm8916-vib
+>> +          - qcom,pm8921-vib
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,pm7250b-vib
+>> +              - qcom,pm7325b-vib
+>> +              - qcom,pm7550ba-vib
+>> +          - const: qcom,pmi632-vib
+> 
+> With the new revision the standalone 'compatible = "qcom,pmi632-vib";'
+> doesn't pass validation anymore.
+> 
+> foo.dtb: vibrator@5700: compatible: 'oneOf' conditional failed, one must be fixed:
+>          ['qcom,pmi632-vib'] is too short
+>          'qcom,pmi632-vib' is not one of ['qcom,pm8058-vib', 'qcom,pm8916-vib', 'qcom,pm8921-vib']
+>          'qcom,pmi632-vib' is not one of ['qcom,pm7250b-vib', 'qcom,pm7325b-vib', 'qcom,pm7550ba-vib']
+>          from schema $id: http://devicetree.org/schemas/input/qcom,pm8xxx-vib.yaml#
+> 
+> I believe you need to add the compatible also like this:
+> 
+> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> index 72b72c67a9b6..2025d6a5423e 100644
 > --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
 > +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-> @@ -11,10 +11,17 @@ maintainers:
-> =20
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,pm8058-vib
-> -      - qcom,pm8916-vib
-> -      - qcom,pm8921-vib
-> +    oneOf:
-> +      - enum:
-> +          - qcom,pm8058-vib
-> +          - qcom,pm8916-vib
-> +          - qcom,pm8921-vib
-> +      - items:
-> +          - enum:
-> +              - qcom,pm7250b-vib
-> +              - qcom,pm7325b-vib
-> +              - qcom,pm7550ba-vib
-> +          - const: qcom,pmi632-vib
+> @@ -16,6 +16,7 @@ properties:
+>             - qcom,pm8058-vib
+>             - qcom,pm8916-vib
+>             - qcom,pm8921-vib
+> +          - qcom,pmi632-vib
+>         - items:
+>             - enum:
+>                 - qcom,pm7250b-vib
+> 
+Yeah, thanks for catching this. I will update it soon.
 
-With the new revision the standalone 'compatible =3D "qcom,pmi632-vib";'
-doesn't pass validation anymore.
-
-foo.dtb: vibrator@5700: compatible: 'oneOf' conditional failed, one must be=
- fixed:
-        ['qcom,pmi632-vib'] is too short
-        'qcom,pmi632-vib' is not one of ['qcom,pm8058-vib', 'qcom,pm8916-vi=
-b', 'qcom,pm8921-vib']
-        'qcom,pmi632-vib' is not one of ['qcom,pm7250b-vib', 'qcom,pm7325b-=
-vib', 'qcom,pm7550ba-vib']
-        from schema $id: http://devicetree.org/schemas/input/qcom,pm8xxx-vi=
-b.yaml#
-
-I believe you need to add the compatible also like this:
-
-diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b=
-/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-index 72b72c67a9b6..2025d6a5423e 100644
---- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-+++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-@@ -16,6 +16,7 @@ properties:
-           - qcom,pm8058-vib
-           - qcom,pm8916-vib
-           - qcom,pm8921-vib
-+          - qcom,pmi632-vib
-       - items:
-           - enum:
-               - qcom,pm7250b-vib
-
-
-Regards
-Luca
-
-> =20
->    reg:
->      maxItems: 1
-
+> 
+> Regards
+> Luca
+> 
+>>   
+>>     reg:
+>>       maxItems: 1
+> 
