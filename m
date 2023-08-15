@@ -2,109 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A95777CA2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 11:16:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BBD577CB5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 12:55:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjHOJPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 05:15:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
+        id S236559AbjHOKzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 06:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236046AbjHOJP2 (ORCPT
+        with ESMTP id S235380AbjHOKys (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 05:15:28 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D101984
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 02:15:23 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-99bed101b70so707477766b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 02:15:23 -0700 (PDT)
+        Tue, 15 Aug 2023 06:54:48 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAA3198B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 03:54:47 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fe9c20f449so18584565e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 03:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692090921; x=1692695721;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1692096886; x=1692701686;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ze5ObTtpb+O9rxTntCpaoYVBo6hW76OOXVC3qfWoqz8=;
-        b=iL4nBpa1LZ7tG9SMde7NSMb5L0c8rOGNT76wdFySWCOO0KxytEcQkII33/Y4ugK9IP
-         0CvkHGFxwqScK6O61uD9ov2ImrC8UJBbu2/svlE+MS4SX7WaR9HxiBQcY4JN50BjF6uB
-         uwfxyqh+H0ifF/L+Zt562ihCSGQIvfPuhaO07Lj7/BGgEHETUiDwbdWOQRUPUwNbGhFV
-         s8S/U7bpPXJk4k7xufe5dG8OS4blesmC9MJCs9uTjx7wTGXPquUfszOq3jtE44Jo/p3X
-         OYPnnoxPx7mm+OS/1NJDH9s0K6Qm1hl410bfigGArRKLTqThEQmcRiYMq6nC99NeT67A
-         tBCQ==
+        bh=izGaJdoL1altreQQeI/R6UtOKqdt35yr8igiBx2MuIQ=;
+        b=gw+JHf3mqzgtFz68AgrHI3GSFkV9a2+HzlqPyect5WvD24BwK3l+/tnt6ay6pZGaoA
+         kbAJnODUmeim0dArkO7wJV2JBEH4oXtWWNi6/4xSpP+I2JdWwUjJpFL84zwqDToreJOJ
+         fM9wh2TqQ4HTCc1+0iRrGs7UxoGORJ/+jVlD7HCxQvP0spE59lKeqCQbaG9V1vF399nF
+         /D5rAuI2350iX2lWNAczDeOVMYTWSJ4GHG/JgfVwWSPSA4HvOl9IIGxr81HPip0Ol3Pp
+         pZLas40x4vq17Cy7VwFLwXrNaieRuKIRab6o2+HrhoqnaW2pU4L0vFH428hvBrkZfRyV
+         VIlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692090921; x=1692695721;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1692096886; x=1692701686;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ze5ObTtpb+O9rxTntCpaoYVBo6hW76OOXVC3qfWoqz8=;
-        b=drqY1PodQOLt6jXw4utbLkkWgvwPTHi6bhMZOinCySuMqcZMSwCknbmID/dsZBvh29
-         6rmDVPBS58K3DZXdISNIXvWS8xyOmFCUBWrwF/+oNCm9wWXvKFHs5CT8G1Filg6/BbY9
-         ChWPY6/9fro85iMvS25lTXO6JYPNP6VVBsdd/NdCFA3MTitoPebLnq785DztcLw3kgjH
-         lcB8Jp3Xd3LlGf9+KKVUCca8UeB52NSNAR4MKhcUP8eXa3jH6RYKwBIo3GftNjVA7Hcc
-         w17HzwkemBBWYV1c0ed6JawvT4pXcOllLmoW7+cyN4/aQ9RUZ3S5BEeLlWt1kDqijEv9
-         HrZA==
-X-Gm-Message-State: AOJu0YyL/K7beazDFXWjYxzFJCgjOtuwWf1Pavnxriw+4QnjCg1GrKbO
-        k6zJN4LSIViqMWHBgMhfOw5Biw==
-X-Google-Smtp-Source: AGHT+IHL0Yt0Nl21n4oLa/TVXgO+c1ct/xVXLAY94QKOW8C+tl23w7X44rljo02S0XUhWgx6eKSeHQ==
-X-Received: by 2002:a17:907:78d3:b0:993:d88e:41ed with SMTP id kv19-20020a17090778d300b00993d88e41edmr10415864ejc.3.1692090921599;
-        Tue, 15 Aug 2023 02:15:21 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id qx27-20020a170906fcdb00b0098e0a937a6asm6764797ejb.69.2023.08.15.02.15.19
+        bh=izGaJdoL1altreQQeI/R6UtOKqdt35yr8igiBx2MuIQ=;
+        b=AmqGuFbjSjBbK+5BJhK/D4vQKyMS6d1X0heyjk/8IjgbH6s+zBalfv2amkGaDh6qJT
+         p2pqNNDKWPs6kso2ceOHfcuKHZJ7l6CZhNfNggFh7MxCNihGoc3doYqG7IvJuntvdUFL
+         aJdpDEBVqO729x2cOzopjzSgLsF0b2YSddmjPDeSY/Om6RXeMtfQJ8NdgoasKDtTM3TL
+         GrP6nkdZKb27p++2s0HC/iz83uNfQ94ME/T1kFk48cB/2wM3jM+LKcpvK3i5ZCu7ZnVW
+         QZ4UtrUzUq+o3Nq1JY/VB+dw5ZSk2Ca+H2opEOsDAtDQnv20ID83RhWjjdfVpZcHV0/w
+         YwnQ==
+X-Gm-Message-State: AOJu0Ywya2yK5/ai9C6+CBHlV3s+K6c8Sdi+1XXiLJ+Fmj5MV/vsl4e/
+        294HDGGOAGfkD89uPlroA2nqVRMQyzz4nOA/K5E=
+X-Google-Smtp-Source: AGHT+IH4Hp8wN8iHfFg55Mg7GHkGRDLAv96w3foaYjXJ0TWXNY9UaFNWwN9afBzZnHUY00zw0I8gIQ==
+X-Received: by 2002:a05:6000:1950:b0:30a:f030:8637 with SMTP id e16-20020a056000195000b0030af0308637mr8205101wry.22.1692096885889;
+        Tue, 15 Aug 2023 03:54:45 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h5-20020adffa85000000b003197efd1e7bsm4220267wrr.114.2023.08.15.03.54.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 02:15:21 -0700 (PDT)
-Message-ID: <3c702ccd-6a82-1121-0b4e-9529d82ccc13@linaro.org>
-Date:   Tue, 15 Aug 2023 11:15:18 +0200
+        Tue, 15 Aug 2023 03:54:45 -0700 (PDT)
+Message-ID: <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
+Date:   Tue, 15 Aug 2023 11:54:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v4 2/4] dt-bindings: clock: add qca8386/qca8084 clock and
- reset definitions
+ Thunderbird/102.8.0
+Subject: Re: sa8540p-ride crash when all PCI buses are disabled
 Content-Language: en-US
-To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com
-References: <20230815085205.9868-1-quic_luoj@quicinc.com>
- <20230815085205.9868-3-quic_luoj@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230815085205.9868-3-quic_luoj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org
+References: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2023 10:52, Luo Jie wrote:
-> QCA8386/QCA8084 includes the clock & reset controller that is
-> accessed by MDIO bus. Two work modes are supported, qca8386 works
-> as switch mode, qca8084 works as PHY mode.
+On 14/08/2023 23:36, Radu Rendec wrote:
+> Hello everyone,
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> I'm consistently getting a system crash followed by a ramdump on
+> sa8540p-ride (sc8280xp) when icc_sync_state() goes all the way through
+> (count == providers_count).
+> 
+> Context: all PCIe buses are disabled due to [1]. Previously, due to
+> some local kernel misconfiguration, icc_sync_state() never really did
+> anything (because count was always less than providers_count).
+> 
+> I was able to isolate the problem to the qns_pcie_gem_noc icc node.
+> What happens is that both avg_bw and peak_bw for this node end up as 0
+> after aggregate_requests() gets called. The request list associated
+> with the node is empty.
 
-This is a friendly reminder during the review process.
+If all PCIe buses are disabled, then of course the bandwidth requests 
+should say zero, the clocks should be disabled and any associated 
+regulators should be off.
 
-It looks like you received a tag and forgot to add it.
+> For testing purposes, I modified icc_sync_state() to skip calling
+> aggregate_requests() and subsequently p->set(n, n) for that particular
+> node only. With that change in place, the system no longer crashes.
 
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
+So what's happening is that a bus master in the system - perhaps not the 
+application processor is issuing a transaction to a register most likely 
+that is not clocked/powered.
 
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+Have you considered that one of the downstream devices might be causing 
+a PCIe bus transaction ?
 
-If a tag was not added on purpose, please state why and what changed.
+If you physically remove - can you physically remove - devices from the 
+PCIe bus does this error still occur ?
 
-Best regards,
-Krzysztof
+> Surprisingly, none of the icc nodes that link to qns_pcie_gem_noc (e.g.
+> xm_pcie3_0, xm_pcie3_1, etc.) has any associated request and so they
+> all have 0 bandwidth after aggregate_requests() gets called, but that
+> doesn't seem to be a problem and the system is stable. This makes me
+> think there is a missing link somewhere, and something doesn't claim
+> any bandwidth on qns_pcie_gem_noc when it should. And it's probably
+> none of the xm_pcie3_* nodes, since setting their bandwidth to 0 seems
+> to be fine.
 
+Yes so if you assume that the AP/kernel side has the right references, 
+counts, votes then consider another bus master - a thing that can 
+initiate a read or a write might be misbehaving.
+
+Assuming there is no misbehaving arm core - say a cDSP or aDSP piece of 
+code that wants to do something on the PCIe bus, might the culprit be 
+whatever you have connected to the bus ?
+
+Could something be driving the #WAKE signal and then transacting ?
+
+But also keep in mind depending on what you are doing with this system 
+if you have a bit of firmware in one of the DSP cores - does that 
+firmware have scope to talk to any devices on the PCIe bus ?
+
+I'd guess another firmware is unlikely but, a downstream device doing a 
+#WAKE when you have the PCIe nodes disabled would presumably be bad..
+
+Try looking for an upstream transaction from a device..
+
+---
+bod
