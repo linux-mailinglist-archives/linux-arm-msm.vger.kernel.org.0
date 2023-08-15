@@ -2,83 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 556C677CA08
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 11:11:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B1F977CA2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 11:16:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235868AbjHOJKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 05:10:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45506 "EHLO
+        id S235953AbjHOJPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 05:15:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235892AbjHOJKW (ORCPT
+        with ESMTP id S236040AbjHOJPF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 05:10:22 -0400
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23854171B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 02:10:18 -0700 (PDT)
-Received: by mail-oo1-xc2e.google.com with SMTP id 006d021491bc7-56ca1eebcd7so3731730eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 02:10:18 -0700 (PDT)
+        Tue, 15 Aug 2023 05:15:05 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2901210E5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 02:15:02 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1bb91c20602so9096615ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 02:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692090618; x=1692695418;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HTEF3mMEwF6YiiLngewsEfRU77YIxTEoS69H+Rwqbd0=;
-        b=VwWw7KpCrtSFxxsif4kM2FXRaUcWrnLoLuvxjuE1nnBjkoypFOscPY9JCuwbvSlGgn
-         vwhbP/Skv8j3YwESeAWmdtqakZGqvtlSDKkwVT7LHw5QwZqHiFoL8RLwdYdTxq89h86h
-         vwaDDJxFYoc2W9+3iBkXgLm9djhr1mownIn3JfHNIG/JY5Vxjx/dL0SEcr3RG2mEnkST
-         hUEJf596xX5FsfeZkwbbh6uPKY3XMRGrcCzlY5W9s7bWa/yrVyxS5co+w9GDiP/8ax6/
-         g5juva9uIG5s+i92ALBTFYyos7WX2At2iw31uNxPzDojAHSi4uraZqkxezPWFn1gNiHG
-         btwQ==
+        d=bytedance.com; s=google; t=1692090901; x=1692695701;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N6UPah3rxy6GE+IW6hhaEXFukV19/RQgo9PDGSDaxjc=;
+        b=B4NWnukFtWBpBFBooLjjX+4xRi6cYrfaI8iegReeVzLQWKPXXt1CxHdKL4/tZ0fNPM
+         0UExtQR6YZe58qkKHpbXtHQV0uPapic2RYOUTB+6Pi7LdOE1C7GEcaF7+zgpTtYtD/de
+         UlP+/TDXrfMVghqI9OT3wDmB4f+60Ecld4ptmi3g4OGE44+/xTS+dFaCetp2KrysicqF
+         +aYy3xTBT6yAIsFwZB/EdPqMFUGo82MatiM8ko8K8L/pW/bDYDRzwOeVlfM6AvdWPq+b
+         HcGAAnq5GXzxPWbDmjMNdTVLUEtTfSjxZmvfFI4JrMMNezs7y6COdvHcs3klmaxHW6vC
+         FHlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692090618; x=1692695418;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HTEF3mMEwF6YiiLngewsEfRU77YIxTEoS69H+Rwqbd0=;
-        b=YrW7G7eaRF4kH81EYR3qEoyKI1unOILr7k83OVJX7VKJ+M8pm59wSDGuP3xuM2ViLT
-         2/Djc8WwWEQJEn4FZ1ExeHN9nTsgMonpVeFFd25QvjVEuNWCEvQaYC9C9OH3c59LwEu2
-         8dyo4Q1ZO8HQW0CjSDY379s6wNfG/fdFafxptui9ZfFOHHtgUont4MvjGhAyUgW0Ancx
-         LlZ2DYv475zDTscAMv73vLzeW02GMqECipAGQyXb5+AhYf/n88nYMm2fvsYqcqGN3u/r
-         TZpsMInX0DHqCXyyRIAXeHVlG18SZgPd64WkxnkMgU2aMmF0hP2vWgWfhEkpGDyNWiaP
-         LMGw==
-X-Gm-Message-State: AOJu0YxdTT40gIem9KfbVlWB0IvIdo9x71zLr92S1PVEgufVzaiclRrs
-        yh0BgJIT3IVQRKIeqEXtVqumWOOa1hTRFlOl5VoCsg==
-X-Google-Smtp-Source: AGHT+IELEzEzRHt7+/91xk3FRpX9OXjbJ3v23mrOMtATDKEZGj8lJsjlFm1Ydv4GSP2Njf9WpzC6Tp2I3wO1jQVdj4A=
-X-Received: by 2002:a05:6358:2610:b0:139:d14c:d6ea with SMTP id
- l16-20020a056358261000b00139d14cd6eamr10111849rwc.9.1692090618249; Tue, 15
- Aug 2023 02:10:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692090901; x=1692695701;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N6UPah3rxy6GE+IW6hhaEXFukV19/RQgo9PDGSDaxjc=;
+        b=lX1Fnnn1vQl6bdBSe225uoWHy4zTOy6MKsZOuaXI8PFDTz6GX1ySqqpEwtPoB2o83k
+         Jwyx1zMU0+b+SnNw7Z6cvsW3q1fOKai8Qe19HBS/L+linQJBPH+Sw2IOaZq+jnW251KN
+         5fbBk5LD8bkCVtjnzAFu9FDc5AcZtoJoqDwB9oCI8432b9pOkwQdxr3KNJLMcctYO6mo
+         cPM8IElqqdBo9ap85FcqapLgV4I0QBD047kn+JroflDclT4F3CWN2L06xwoBzUxeqert
+         hrZ3ZR+IXbK3YeZXHBssgPMKqB7RLwiO8TjUIzHj43nrjrrx6BLnYQi5LgG0ba9fCHQQ
+         27TQ==
+X-Gm-Message-State: AOJu0YyCRlwyUPzQBdFZ59yuikDFq5qtttjMzu0OIr/hF8kBHnaj3HnF
+        06X9fMwU5dfN3YL1FCVAZ8EIJQ==
+X-Google-Smtp-Source: AGHT+IGKaQyK0d17VyjHV7p/Fr8yAF+2JMAJsl65uoihXD9UcmAUSi1eF134pFnOBdZUKl9ThFMr5Q==
+X-Received: by 2002:a17:902:e5c8:b0:1bb:83ec:832 with SMTP id u8-20020a170902e5c800b001bb83ec0832mr13866844plf.2.1692090901535;
+        Tue, 15 Aug 2023 02:15:01 -0700 (PDT)
+Received: from ?IPV6:fdbd:ff1:ce00:1c25:884:3ed:e1db:b610? ([240e:694:e21:b::2])
+        by smtp.gmail.com with ESMTPSA id io13-20020a17090312cd00b001b39ffff838sm10630843plb.25.2023.08.15.02.14.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Aug 2023 02:15:01 -0700 (PDT)
+Message-ID: <4f64cd2d-90e8-7902-7ef7-1ac58d51b2a8@bytedance.com>
+Date:   Tue, 15 Aug 2023 17:14:40 +0800
 MIME-Version: 1.0
-References: <20230814114518.26243-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230814114518.26243-1-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 15 Aug 2023 11:10:07 +0200
-Message-ID: <CACRpkdZvr7fvXyh7V2nMJTwDxtK=sUz=DBRtqhR=6YzZpb7DxQ@mail.gmail.com>
-Subject: Re: [GIT PULL] pinctrl: qcom: new drivers for v6.6
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [PATCH v4 01/48] mm: move some shrinker-related function
+ declarations to mm/internal.h
+Content-Language: en-US
+To:     Muchun Song <muchun.song@linux.dev>
+Cc:     Andrew Morton <akpm@linux-foundation.org>, david@fromorbit.com,
+        tkhai@ya.ru, Vlastimil Babka <vbabka@suse.cz>,
+        Roman Gushchin <roman.gushchin@linux.dev>, djwong@kernel.org,
+        Christian Brauner <brauner@kernel.org>,
+        "Paul E. McKenney" <paulmck@kernel.org>, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        yujie.liu@intel.com, Greg KH <gregkh@linuxfoundation.org>,
+        simon.horman@corigine.com, dlemoal@kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux-MM <linux-mm@kvack.org>, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
+References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
+ <20230807110936.21819-2-zhengqi.arch@bytedance.com>
+ <FC3AE898-443D-4ACB-BCB4-0F8F2F48CDD0@linux.dev>
+From:   Qi Zheng <zhengqi.arch@bytedance.com>
+In-Reply-To: <FC3AE898-443D-4ACB-BCB4-0F8F2F48CDD0@linux.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 14, 2023 at 1:45=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
 
-> That's what I got in my queue for v6.6.
 
-Thanks a lot for backing me up with this, pulled in!
+On 2023/8/15 16:36, Muchun Song wrote:
+> 
+> 
+>> On Aug 7, 2023, at 19:08, Qi Zheng <zhengqi.arch@bytedance.com> wrote:
+>>
+>> The following functions are only used inside the mm subsystem, so it's
+>> better to move their declarations to the mm/internal.h file.
+>>
+>> 1. shrinker_debugfs_add()
+>> 2. shrinker_debugfs_detach()
+>> 3. shrinker_debugfs_remove()
+>>
+>> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> 
+> Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+> 
+> One nit bellow.
+> 
+> [...]
+> 
+>> +
+>> +/*
+>> + * shrinker related functions
+>> + */
+> 
+> This is a multi-comment format. "/* shrinker related functions. */" is
+> the right one-line format of comment.
 
-Yours,
-Linus Walleij
+Will do.
+
+Thanks,
+Qi
+
+> 
+>> +
+>> +#ifdef CONFIG_SHRINKER_DEBUG
+>> +extern int shrinker_debugfs_add(struct shrinker *shrinker);
+>> +extern struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
+>> +      int *debugfs_id);
+>> +extern void shrinker_debugfs_remove(struct dentry *debugfs_entry,
+>> +    int debugfs_id);
+>> +#else /* CONFIG_SHRINKER_DEBUG */
+>> +static inline int shrinker_debugfs_add(struct shrinker *shrinker)
+>> +{
+>> +	return 0;
+>> +}
+>> +static inline struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
+>> +     int *debugfs_id)
+>> +{
+>> +	*debugfs_id = -1;
+>> +	return NULL;
+>> +}
+>> +static inline void shrinker_debugfs_remove(struct dentry *debugfs_entry,
+>> +	int debugfs_id)
+>> +{
+>> +}
+>> +#endif /* CONFIG_SHRINKER_DEBUG */
+>> +
+>> #endif /* __MM_INTERNAL_H */
+>> -- 
+>> 2.30.2
+>>
+> 
