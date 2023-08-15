@@ -2,229 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7711E77D48E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 22:47:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AE0877D4CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 23:07:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239356AbjHOUrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 16:47:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41308 "EHLO
+        id S239995AbjHOVHG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 17:07:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238452AbjHOUqd (ORCPT
+        with ESMTP id S239981AbjHOVGu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 16:46:33 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 344412701
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 13:46:08 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99bcf2de59cso761276166b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 13:46:08 -0700 (PDT)
+        Tue, 15 Aug 2023 17:06:50 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8544610EC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 14:06:48 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe426b8583so59000185e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 14:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692132366; x=1692737166;
+        d=linaro.org; s=google; t=1692133607; x=1692738407;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7/OQUgxZSXGdXEOLudPU0bFyRRP7WuyPv3FT7DpWnT8=;
-        b=nHZMv6M54PIa6JJHJm9nodNH2x1cC9DNjcRqerawVL/Vj1AnI/PA5aPr4hs9Z3NXVn
-         kXdbayxSToqo4dOGno043q9kyV9Mlt8NqNTXDDfycLi3Y2dUAZ8xGJO8e24PPdgvMcaH
-         JAjkQcVyUkesN+MyRJlfaRoK+AZupZpi/vKjV/vWsxb6HkTEB5xdW25cjg1jf3rWUIiV
-         gu5XXibUw0QI1gJ81H/4sMmjNqo8/anFedoub+m6HRrgcuo+PdZYQSqC1SHzYvGkoMU1
-         TW2RU9W27cMoI/HxMsWBPt0B2VB31Sbs2yE2gmGp+4K6nZSrF81SWnEI3TvuWndVwiSC
-         jQRg==
+        bh=Pm/+S7GL+s6rxl0CrepE+RJtzi+4NNC4FV8XfAplmZs=;
+        b=seUYquo5i1CaxnnpikjNxyne9ePL9rIeTdCMDV289jgplV7+bxRaFgGknqzS/9xIef
+         /Eo+CqC0AH5gxlEPjjATV4Kw475/fHfJHpwOvmNxRQF3w9apc1gQXapo8rPtwAzDINF6
+         y3Z7ns0IfcluxYkaIB7E/Bg44jCahRyi4PYNQWDJXYBd9e0JuOVkymXk4U0yFFbdzANy
+         64Pp6TN4IJxfPQD5sWIgHJFjasbhOP7Z/7kpWsfICNFlMogZ/vQiti4G9BK7GFFhPmgu
+         SobQcbYrHM+nX4EobDAt1i52HaXJAk0cRyyAYFVAt1/7RhP3CtPOijFH8psnjZcptp9G
+         /uvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692132366; x=1692737166;
+        d=1e100.net; s=20221208; t=1692133607; x=1692738407;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7/OQUgxZSXGdXEOLudPU0bFyRRP7WuyPv3FT7DpWnT8=;
-        b=U/8cfuRQUeUHFU8zcIhU1p3Ce2kDVcbn6GhbgZ/WmqJwIrQy1CFN9hB4VJMwBPJBt0
-         MQBWTkwYUJ0Q/bjKaiQkC2ZJX84cUWCVXUMwPtS/nEgG/5oWsOTfkNzRUnoscUnu1hmb
-         fEUqs3iVOI40IyVjV1tAJ4hVrODFkCQd5r09AVxsUf8kjtFGRZ1sc+Bn1QOy6d0LzhTz
-         jwY7ARxC6Xz2ui/OzdvDTY8vXbtcOyRjtevg2i5sO7PFb3dABgo1xrtUGePPQJ6cihZS
-         r4EgjmTMNigEzdAA6LLD+rUQrXlhMHWkNqOq321HQJ1/in+s4JYYjL8BaYSPqS6/OP8Y
-         UlJw==
-X-Gm-Message-State: AOJu0YxyuKsxFynzbIwlbPgTo8P+o6RoohfcJcDgEBA9TMgmOHurM6XV
-        aoXU3j4CxGhEmfcGSM8py4D5Jw==
-X-Google-Smtp-Source: AGHT+IGPiWnjNSugY+loxPrGX2qhA7sV6YAHpRpRKKXWp8S9BK8vl6Fy8EerZC/9V6h+MV0jyGT8pg==
-X-Received: by 2002:a17:907:7608:b0:99c:180a:ea61 with SMTP id jx8-20020a170907760800b0099c180aea61mr9891970ejc.32.1692132365721;
-        Tue, 15 Aug 2023 13:46:05 -0700 (PDT)
+        bh=Pm/+S7GL+s6rxl0CrepE+RJtzi+4NNC4FV8XfAplmZs=;
+        b=GFrBhaio3xkNOINXpxfTVVSZSNREiuFvQcGYxT9SB3YgMC+78JVoSRjDmNibqnOE0D
+         3NyMk14IS3WULBCy4bCSIjpNv2HqOBYM2QpxkJryCMEFiBs/rgPmrXmWtQ1/ljyVSB6+
+         xgZ758bbgWUU8RiQ/7OP3iH7R+bJwF2morg/yoD6CniLgmr1ZHB5K9gcN9SYxxx3BLzP
+         O1ZzX2FRTLc40erGC7BrsZsXgrc6T74V4TwD3uhBv4zHXN+Ur0e5rxlZ1B8JorcVi7V3
+         nhM58YVot0O4DvHFrswi/8YBXtoiU/OUWkBqm8o8ko2QFWq9fcNOmSmkMlnk1DZYy52g
+         VKbw==
+X-Gm-Message-State: AOJu0YxvwAihldbd0V1Y4i/dBD7KOAS/UJxEwz5fktnPouXnNWqm93ym
+        JiPvyrxMfyypuGHuV1MH1L1nJw==
+X-Google-Smtp-Source: AGHT+IGcod8rWFDnxW8A0sFUMzg4nVn9IHR6hKqRw5l8a134zB6nlVl1dQaEh1dMFoV0X3nuoh/Qqw==
+X-Received: by 2002:a7b:c449:0:b0:3f8:fc96:6bfd with SMTP id l9-20020a7bc449000000b003f8fc966bfdmr11017146wmi.17.1692133606905;
+        Tue, 15 Aug 2023 14:06:46 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id k18-20020a170906055200b0099bd453357esm7451666eja.41.2023.08.15.13.46.04
+        by smtp.gmail.com with ESMTPSA id u11-20020a05600c00cb00b003fe29f6b61bsm18871524wmm.46.2023.08.15.14.06.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 13:46:05 -0700 (PDT)
-Message-ID: <55d4090f-d2f3-ffb2-cc6f-a13222f14e47@linaro.org>
-Date:   Tue, 15 Aug 2023 22:46:03 +0200
+        Tue, 15 Aug 2023 14:06:46 -0700 (PDT)
+Message-ID: <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
+Date:   Tue, 15 Aug 2023 23:06:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: add sc7180-lazor board
- bindings
+Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230804095836.39551-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230804175734.v2.1.I7a950de49ec24b957e90d7fe7abd5f2f5f2e24c3@changeid>
- <3ed8a34b-5f7d-6547-7e34-35e4d0994bba@linaro.org>
- <CAD=FV=WqFo5PFB7+7ZOQtsTLYojjTn1VkaAQpMkqvWUFPOmBQg@mail.gmail.com>
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+References: <cover.1691049436.git.quic_gurus@quicinc.com>
+ <20230810185526.GC31860@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WqFo5PFB7+7ZOQtsTLYojjTn1VkaAQpMkqvWUFPOmBQg@mail.gmail.com>
+In-Reply-To: <20230810185526.GC31860@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2023 22:41, Doug Anderson wrote:
-> Hi,
-> 
-> On Sun, Aug 6, 2023 at 11:32 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 10/08/2023 20:55, Guru Das Srinagesh wrote:
+> On Aug 03 2023 01:23, Guru Das Srinagesh wrote:
+>> When pushing patches to upstream, the `get_maintainer.pl` script is used to
+>> determine whom to send the patches to. Instead of having to manually process
+>> the output of the script, add a wrapper script to do that for you.
 >>
->> On 04/08/2023 11:58, Sheng-Liang Pan wrote:
->>> Introduce more sc7180-lazor sku and board version configuration,
->>> add no-eSIM SKU 10 for Lazor, no-eSIM SKU 15 and 18 for Limozeen,
->>> add new board version 10 for audio codec ALC5682i-VS.
->>>
->>> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
->>> ---
->>>
->>> Changes in v2:
->>> - add new entry rev9 with Parade bridge chip
->>>
->>>  .../devicetree/bindings/arm/qcom.yaml         | 55 +++++++++++++++++++
->>>  1 file changed, 55 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>> index 450f616774e0..dce7b771a280 100644
->>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>> @@ -470,6 +470,11 @@ properties:
->>>            - const: google,lazor-rev8
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook Spin 513 Parade bridge chip (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9
->>> +          - const: qcom,sc7180
->>> +
->>>        - description: Acer Chromebook Spin 513 (newest rev)
->>>          items:
->>>            - const: google,lazor
->>> @@ -491,6 +496,11 @@ properties:
->>>            - const: google,lazor-rev8-sku2
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook Spin 513 Parade bridge chip with KB Backlight (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku2
->>> +          - const: qcom,sc7180
->>> +
->>>        - description: Acer Chromebook Spin 513 with KB Backlight (newest rev)
->>>          items:
->>>            - const: google,lazor-sku2
->>> @@ -512,11 +522,26 @@ properties:
->>>            - const: google,lazor-rev8-sku0
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook Spin 513 Parade bridge chip with LTE (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku0
->>> +          - const: qcom,sc7180
->>> +
->>>        - description: Acer Chromebook Spin 513 with LTE (newest rev)
->>>          items:
->>>            - const: google,lazor-sku0
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook Spin 513 Parade bridge chip with LTE no-esim (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku10
->>> +          - const: qcom,sc7180
->>> +
->>> +      - description: Acer Chromebook Spin 513 with LTE no-esim (newest rev)
->>> +        items:
->>> +          - const: google,lazor-sku10
->>> +          - const: qcom,sc7180
->>> +
->>>        - description: Acer Chromebook 511 (rev4 - rev8)
->>>          items:
->>>            - const: google,lazor-rev4-sku4
->>> @@ -526,6 +551,11 @@ properties:
->>>            - const: google,lazor-rev8-sku4
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook 511 Parade bridge chip (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku4
->>> +          - const: qcom,sc7180
->>> +
->>>        - description: Acer Chromebook 511 (newest rev)
->>>          items:
->>>            - const: google,lazor-sku4
->>> @@ -545,11 +575,36 @@ properties:
->>>            - const: google,lazor-rev8-sku6
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook 511 Parade bridge chip without Touchscreen (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku6
->>> +          - const: qcom,sc7180
->>> +
->>>        - description: Acer Chromebook 511 without Touchscreen (newest rev)
->>>          items:
->>>            - const: google,lazor-sku6
->>>            - const: qcom,sc7180
->>>
->>> +      - description: Acer Chromebook 511 Parade bridge chip no-esim (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku15
->>> +          - const: qcom,sc7180
->>> +
->>> +      - description: Acer Chromebook 511 no-esim (newest rev)
->>> +        items:
->>> +          - const: google,lazor-sku15
->>> +          - const: qcom,sc7180
->>> +
->>> +      - description: Acer Chromebook 511 Parade bridge chip without Touchscreen no-esim (rev9)
->>> +        items:
->>> +          - const: google,lazor-rev9-sku18
->>> +          - const: qcom,sc7180
->>> +
->>> +      - description: Acer Chromebook 511 without Touchscreen no-esim (newest rev)
->>> +        items:
->>> +          - const: google,lazor-sku18
->>
->> All of these entries (existing and new) should be just one entry with:
->>  - enum:
->>      - ....
->>      - ....
->>  - const: qcom,sc7180
+>> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
+>> editing it in-place.
 > 
-> I believe we've had this discussion before. At least twice. Here's a
-> link to the last time you said "Ah, OK, I guess this is fine".
-> 
-> https://lore.kernel.org/r/d3d4d90b-85b5-5ad9-78e6-5a074c21af4f@linaro.org
+> Could I request reviews from the other maintainers as well, please? Just to see
+> if I should continue working on this script or if the `b4` tool obviates the
+> need for such a script.
 
-Current solutions brings descriptions, so it has some benefits... I
-guess this is fine for third time. Maybe this time I will remember...
-Although I keep coming with several same questions to all SoC
-DTS/bindings which do things differently than common case. I will be
-coming because that's the price of doing things awkwardly or differently
-than everyone else, e.g. overriding by full DT path like in Tegra.
+I send a bit of patches but I use very simple workflow. It is really
+simple, so simple, that I was always surprised how people can make their
+life difficult with some complicated process to send patches... and then
+obviously skip some maintainers, because of that process.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I almost always feed git send-email with addresses from
+scripts/get_maintainers.pl. This tool would not bring any benefits to my
+simple workflow.
+
+For newcomers, OTOH, I would either recommend simple workflow or just
+use b4. Why? Because if you cannot use git-send-email, then it means
+your email setup will make your life difficult and adding maintainers to
+existing patch won't help you.
+
+This tool depends on the command line and shell interface of
+scripts/get_maintainers.pl which is another reason why it might not be a
+good idea.
 
 Best regards,
 Krzysztof
