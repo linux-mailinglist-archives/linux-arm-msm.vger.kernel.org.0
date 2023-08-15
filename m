@@ -2,92 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFC5277D176
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 20:05:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C8DA77D25B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 20:49:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238043AbjHOSEZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 14:04:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47182 "EHLO
+        id S239388AbjHOStQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 14:49:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238416AbjHOSEN (ORCPT
+        with ESMTP id S239493AbjHOStN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 14:04:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EAA41987;
-        Tue, 15 Aug 2023 11:04:12 -0700 (PDT)
+        Tue, 15 Aug 2023 14:49:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB99D1FE2;
+        Tue, 15 Aug 2023 11:48:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3982861309;
-        Tue, 15 Aug 2023 18:04:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D12DC433C9;
-        Tue, 15 Aug 2023 18:04:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E919763D89;
+        Tue, 15 Aug 2023 18:46:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4E5C433C8;
+        Tue, 15 Aug 2023 18:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692122651;
-        bh=mzbNzne3PD1b7Z60xa5BSWREMcguu9Lbh3k0qDDEqnI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TFxdue8orHKEsUJoqRmvAkg7i1FWDzK3aT5o1una/QIlGBbxpoRPQMz48jitc78la
-         jqPPzbnjmO+eEdnclI/4Hag3At/rhrOaZycktuADX3S7E1le7pMT/++mMHEKaNiiNN
-         40ESLPG1GqKGuEiU3wjOWj6iQtVE93MMmXcvblFZnbVTKE4TxqW+wYaf6oUx7PDIxH
-         fuy08mqTdZ/q0snWUmLARyyh/WjC2Lt/gTXQ82XhUutsTvtcBBBAt6onua7HsDt/iu
-         xCn3RmqpmBlUKQvm5stmJUeLx192DpJubKU3tWq5IpnF9x/aWRGLteXLmEAVAZo06B
-         bYLRxby9C4xwA==
-Date:   Tue, 15 Aug 2023 19:04:05 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        s=k20201202; t=1692125189;
+        bh=zv5pC+Qqu8iU5zcIUK+msSKv/nfgRX2M/72yR3ws9O4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=oQva9tmvM3AMR6Y79y6EIBuN+SqRjVKWd2QQEG54PUsyKb/WPEWDqarysEaMcu7CG
+         4Nw07IjgdX13tWg26/765cqt8v+jB8kr3PJ2bzc54e2drkN5JZZlgI1VglIBJYvUM7
+         f9zcJjKCXPVGOzy4mjkMEO0jxF0uuKVYwJ809t++2qEVjW/jZbHXAF+GE8tRvEyAZP
+         YoeTmFP8PSo4VGAiP8GBnXclPvCG0/JIxLJR+yNY6zrNo0Y8jlX5rf0jvu2o1SLeKZ
+         FwhgZAblcEVMpmamqhOvB6zrHRAK3pU2zCfPx3QFldU7ivRGOcFhdIFKynP7XUcrPD
+         ViAw79u+nJsNA==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] treewide: Update Guru Das Srinagesh's email address
-Message-ID: <20230815180405.GG648357@google.com>
-References: <20230728001622.4938-1-quic_gurus@quicinc.com>
- <20230728075416.GC8175@google.com>
- <20230803011016.GA1630536-robh@kernel.org>
+        David Heidelberg <david@ixit.cz>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] ARM: dts: apq8064: add support to gsbi4 uart
+Date:   Tue, 15 Aug 2023 11:49:11 -0700
+Message-ID: <169212535062.2466993.11739627292690261281.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230814150040.64133-1-david@ixit.cz>
+References: <20230814150040.64133-1-david@ixit.cz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230803011016.GA1630536-robh@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 02 Aug 2023, Rob Herring wrote:
 
-> On Fri, Jul 28, 2023 at 08:54:16AM +0100, Lee Jones wrote:
-> > On Thu, 27 Jul 2023, Guru Das Srinagesh wrote:
-> > 
-> > > Clean up my email address as the codeaurora.org address is not used
-> > > anymore.
-> > > 
-> > > Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 2 +-
-> > >  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml         | 2 +-
-> > 
-> > 2 patches isn't exactly 'treewide'.
-> > 
-> > Anyway, since there are not dependencies between the changes, please
-> > separate them out, one per subsystem.
+On Mon, 14 Aug 2023 17:00:40 +0200, David Heidelberg wrote:
+> This patch adds support to gsbi4 uart which is used in LG Mako.
 > 
-> I'm happy to take these patches via the DT tree. No real advantage to 
-> creating more work to split up these trivial changes.
+> 
 
-Sounds good.
+Applied, thanks!
 
+[1/1] ARM: dts: apq8064: add support to gsbi4 uart
+      commit: f6ce0896b4ec0683abfcc86a6facdacb72e1b23c
+
+Best regards,
 -- 
-Lee Jones [李琼斯]
+Bjorn Andersson <andersson@kernel.org>
