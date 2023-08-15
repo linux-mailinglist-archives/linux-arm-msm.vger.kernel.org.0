@@ -2,138 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BBD577CB5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 12:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB7DF77CB7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 13:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236559AbjHOKzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 06:55:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51964 "EHLO
+        id S236553AbjHOLHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 07:07:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235380AbjHOKys (ORCPT
+        with ESMTP id S236747AbjHOLGy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 06:54:48 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAA3198B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 03:54:47 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fe9c20f449so18584565e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 03:54:47 -0700 (PDT)
+        Tue, 15 Aug 2023 07:06:54 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94DF199E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 04:06:35 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b9e6cc93c6so80046931fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 04:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692096886; x=1692701686;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=izGaJdoL1altreQQeI/R6UtOKqdt35yr8igiBx2MuIQ=;
-        b=gw+JHf3mqzgtFz68AgrHI3GSFkV9a2+HzlqPyect5WvD24BwK3l+/tnt6ay6pZGaoA
-         kbAJnODUmeim0dArkO7wJV2JBEH4oXtWWNi6/4xSpP+I2JdWwUjJpFL84zwqDToreJOJ
-         fM9wh2TqQ4HTCc1+0iRrGs7UxoGORJ/+jVlD7HCxQvP0spE59lKeqCQbaG9V1vF399nF
-         /D5rAuI2350iX2lWNAczDeOVMYTWSJ4GHG/JgfVwWSPSA4HvOl9IIGxr81HPip0Ol3Pp
-         pZLas40x4vq17Cy7VwFLwXrNaieRuKIRab6o2+HrhoqnaW2pU4L0vFH428hvBrkZfRyV
-         VIlg==
+        d=linaro.org; s=google; t=1692097591; x=1692702391;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9QB9PMpIHxMSl15jEhQj2gUyUbqxC8jr5ruom3EkY7U=;
+        b=uZ9Pyq7+10EJjDPyRf5UqN3TIkIWm3We9xpznQgvTiZKVHFezbTxkaYLE9RdXGeS4h
+         kekfa+BbdjT83BQ9rZqKNj7Mg6ceouZx2aGeJPtfMBvsbU8m2Kaq43b6nTDdeb9uYBiy
+         DwlcciUQPHv3h6pt2dUu7WZa5V6160P5vawx5gzqloB9zg155vY1hUo8Cn/CvhsJs22w
+         NeGYb06D3FZc+qfrPRTRBMxEjrhFfFe+LP2Fv9Wkvfiq21nr1uyNirj4iEpRxE6epSYJ
+         PuTeR8cO5XTnNeM2YCRnoa66nbT1xbmL6sGzLzJnkpq9vIqYSe4qr+aJEyYH7NLu8orG
+         SB3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692096886; x=1692701686;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=izGaJdoL1altreQQeI/R6UtOKqdt35yr8igiBx2MuIQ=;
-        b=AmqGuFbjSjBbK+5BJhK/D4vQKyMS6d1X0heyjk/8IjgbH6s+zBalfv2amkGaDh6qJT
-         p2pqNNDKWPs6kso2ceOHfcuKHZJ7l6CZhNfNggFh7MxCNihGoc3doYqG7IvJuntvdUFL
-         aJdpDEBVqO729x2cOzopjzSgLsF0b2YSddmjPDeSY/Om6RXeMtfQJ8NdgoasKDtTM3TL
-         GrP6nkdZKb27p++2s0HC/iz83uNfQ94ME/T1kFk48cB/2wM3jM+LKcpvK3i5ZCu7ZnVW
-         QZ4UtrUzUq+o3Nq1JY/VB+dw5ZSk2Ca+H2opEOsDAtDQnv20ID83RhWjjdfVpZcHV0/w
-         YwnQ==
-X-Gm-Message-State: AOJu0Ywya2yK5/ai9C6+CBHlV3s+K6c8Sdi+1XXiLJ+Fmj5MV/vsl4e/
-        294HDGGOAGfkD89uPlroA2nqVRMQyzz4nOA/K5E=
-X-Google-Smtp-Source: AGHT+IH4Hp8wN8iHfFg55Mg7GHkGRDLAv96w3foaYjXJ0TWXNY9UaFNWwN9afBzZnHUY00zw0I8gIQ==
-X-Received: by 2002:a05:6000:1950:b0:30a:f030:8637 with SMTP id e16-20020a056000195000b0030af0308637mr8205101wry.22.1692096885889;
-        Tue, 15 Aug 2023 03:54:45 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id h5-20020adffa85000000b003197efd1e7bsm4220267wrr.114.2023.08.15.03.54.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 03:54:45 -0700 (PDT)
-Message-ID: <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
-Date:   Tue, 15 Aug 2023 11:54:44 +0100
+        d=1e100.net; s=20221208; t=1692097591; x=1692702391;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9QB9PMpIHxMSl15jEhQj2gUyUbqxC8jr5ruom3EkY7U=;
+        b=N8n3Xnn9aYwtI9q+ITBMQxrNYR5v9y5vOfAEBETYAprzOm0COwkI8lGDUQ9dgRjeuT
+         2OE+e7OjwYqzFXZfeq1ttAQlTXdw7DGdNOPWF5lVS+JobJ7kaeFrUNoP29/obkjRQcVV
+         oSrvhBX1U5dt6EWrqcg7/OmY4zTuKXs29UEZ+VT1j0vStbdlK960a5kjq39YtryWXSIf
+         v9iIxEO+Fyuc/fM4I1HCdRGBxX0pqkzx+U+U8RFuJ+KVqGUsqdwHLak2Ny82t6bdTNXF
+         iQyTOecOqah3EpI/gYqDEDaMzQ1PKpmoz9faCXP36eBYmtI5APFarejCaJPF7aXkslwW
+         Cbrw==
+X-Gm-Message-State: AOJu0YznGvGB/OWVoRj5wj8E5YaXWTQ/tWJD1agZs3rvi/2YumnxyoYK
+        /dvDDc+4J9mxocSl7ZxIRH8K2zMAu8+UwqD6wRE=
+X-Google-Smtp-Source: AGHT+IHFchTlULqciOQ9mFT5NakM1xgtrE/pnBhEiYjYqW2OdfYK6GfZqAb0ySIOgTvvuZ+tKjtkIw==
+X-Received: by 2002:a2e:80d3:0:b0:2bb:8eea:755a with SMTP id r19-20020a2e80d3000000b002bb8eea755amr676100ljg.49.1692097591089;
+        Tue, 15 Aug 2023 04:06:31 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id i23-20020a170906265700b00991bba473e2sm6852642ejc.85.2023.08.15.04.06.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Aug 2023 04:06:30 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: lpass-lpi: fix concurrent register updates
+Date:   Tue, 15 Aug 2023 13:06:25 +0200
+Message-Id: <20230815110625.317971-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: sa8540p-ride crash when all PCI buses are disabled
-Content-Language: en-US
-To:     Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org
-References: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/08/2023 23:36, Radu Rendec wrote:
-> Hello everyone,
-> 
-> I'm consistently getting a system crash followed by a ramdump on
-> sa8540p-ride (sc8280xp) when icc_sync_state() goes all the way through
-> (count == providers_count).
-> 
-> Context: all PCIe buses are disabled due to [1]. Previously, due to
-> some local kernel misconfiguration, icc_sync_state() never really did
-> anything (because count was always less than providers_count).
-> 
-> I was able to isolate the problem to the qns_pcie_gem_noc icc node.
-> What happens is that both avg_bw and peak_bw for this node end up as 0
-> after aggregate_requests() gets called. The request list associated
-> with the node is empty.
+The Qualcomm LPASS LPI pin controller driver uses one lock for guarding
+Read-Modify-Write code for slew rate registers.  However the pin
+configuration and muxing registers have exactly the same RMW code but
+are not protected.
 
-If all PCIe buses are disabled, then of course the bandwidth requests 
-should say zero, the clocks should be disabled and any associated 
-regulators should be off.
+Pin controller framework does not provide locking here, thus it is
+possible to trigger simultaneous change of pin configuration registers
+resulting in non-atomic changes.
 
-> For testing purposes, I modified icc_sync_state() to skip calling
-> aggregate_requests() and subsequently p->set(n, n) for that particular
-> node only. With that change in place, the system no longer crashes.
+Protect from concurrent access by re-using the same lock used to cover
+the slew rate register.  Using the same lock instead of adding second
+one will make more sense, once we add support for newer Qualcomm SoC,
+where slew rate is configured in the same register as pin
+configuration/muxing.
 
-So what's happening is that a bus master in the system - perhaps not the 
-application processor is issuing a transaction to a register most likely 
-that is not clocked/powered.
-
-Have you considered that one of the downstream devices might be causing 
-a PCIe bus transaction ?
-
-If you physically remove - can you physically remove - devices from the 
-PCIe bus does this error still occur ?
-
-> Surprisingly, none of the icc nodes that link to qns_pcie_gem_noc (e.g.
-> xm_pcie3_0, xm_pcie3_1, etc.) has any associated request and so they
-> all have 0 bandwidth after aggregate_requests() gets called, but that
-> doesn't seem to be a problem and the system is stable. This makes me
-> think there is a missing link somewhere, and something doesn't claim
-> any bandwidth on qns_pcie_gem_noc when it should. And it's probably
-> none of the xm_pcie3_* nodes, since setting their bandwidth to 0 seems
-> to be fine.
-
-Yes so if you assume that the AP/kernel side has the right references, 
-counts, votes then consider another bus master - a thing that can 
-initiate a read or a write might be misbehaving.
-
-Assuming there is no misbehaving arm core - say a cDSP or aDSP piece of 
-code that wants to do something on the PCIe bus, might the culprit be 
-whatever you have connected to the bus ?
-
-Could something be driving the #WAKE signal and then transacting ?
-
-But also keep in mind depending on what you are doing with this system 
-if you have a bit of firmware in one of the DSP cores - does that 
-firmware have scope to talk to any devices on the PCIe bus ?
-
-I'd guess another firmware is unlikely but, a downstream device doing a 
-#WAKE when you have the PCIe nodes disabled would presumably be bad..
-
-Try looking for an upstream transaction from a device..
-
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-bod
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+index e5a418026ba3..0b2839d27fd6 100644
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -32,7 +32,8 @@ struct lpi_pinctrl {
+ 	char __iomem *tlmm_base;
+ 	char __iomem *slew_base;
+ 	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
+-	struct mutex slew_access_lock;
++	/* Protects from concurrent register updates */
++	struct mutex lock;
+ 	DECLARE_BITMAP(ever_gpio, MAX_NR_GPIO);
+ 	const struct lpi_pinctrl_variant_data *data;
+ };
+@@ -103,6 +104,7 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ 	if (WARN_ON(i == g->nfuncs))
+ 		return -EINVAL;
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
+ 
+ 	/*
+@@ -128,6 +130,7 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ 
+ 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
+ 	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -233,14 +236,14 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 			if (slew_offset == LPI_NO_SLEW)
+ 				break;
+ 
+-			mutex_lock(&pctrl->slew_access_lock);
++			mutex_lock(&pctrl->lock);
+ 
+ 			sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 			sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
+ 			sval |= arg << slew_offset;
+ 			iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 
+-			mutex_unlock(&pctrl->slew_access_lock);
++			mutex_unlock(&pctrl->lock);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -256,6 +259,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+ 	}
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+@@ -264,6 +268,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
+ 
+ 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -461,7 +466,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
+ 	pctrl->chip.label = dev_name(dev);
+ 	pctrl->chip.can_sleep = false;
+ 
+-	mutex_init(&pctrl->slew_access_lock);
++	mutex_init(&pctrl->lock);
+ 
+ 	pctrl->ctrl = devm_pinctrl_register(dev, &pctrl->desc, pctrl);
+ 	if (IS_ERR(pctrl->ctrl)) {
+@@ -483,7 +488,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_pinctrl:
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	return ret;
+@@ -495,7 +500,7 @@ int lpi_pinctrl_remove(struct platform_device *pdev)
+ 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
+ 	int i;
+ 
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	for (i = 0; i < pctrl->data->npins; i++)
+-- 
+2.34.1
+
