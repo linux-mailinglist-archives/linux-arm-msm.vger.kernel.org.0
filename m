@@ -2,195 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 143DC77D50F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 23:23:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5081677D525
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 23:34:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjHOVXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 17:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33172 "EHLO
+        id S240003AbjHOVdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 17:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240262AbjHOVXH (ORCPT
+        with ESMTP id S240237AbjHOVd0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 17:23:07 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0101FF0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 14:22:33 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-319779f0347so2046147f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 14:22:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692134552; x=1692739352;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KpDKD+sVJdXYaU1Wg1EqC/TG70NEvYXh6Aa2hn+1SF8=;
-        b=mo/F20fQ0IV8rC45YQYoGu9fXtjd8xFk8bEPz3rwDZT0XHWjNk4OV5Lr/LFf7ENuVo
-         QB635uQyhyi1Q4gS55sUjBMzRCUIxg+5wP5bO4ReUuvpWM4UvA24KZKjIf0c9kLW5gjk
-         pCROeJkIUg446ZMz16e8O1FQKil2qyQItlpWlKbV5OYHoPUU4WujHdVUc3/R/IPzk8X5
-         dvWN+9S63vEuPvSnWrQ61TG4e8uYWynYWga8LpIb2Gn8GxmVnrAVVsM3B1f9T5qMbqXo
-         RBiuoQhMHPPxUDHNsiztpOLuZ9w58cOnDMgCnSWAKV/HKo5mN9aEy+q7q3BTv4DdrIkF
-         /zaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692134552; x=1692739352;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KpDKD+sVJdXYaU1Wg1EqC/TG70NEvYXh6Aa2hn+1SF8=;
-        b=VhojmHMPsZbIxr+PIApAO+J7DbjnV/kKCB8mHTwyOKCA4vPhJr+3QvOuNOxA4RQwiA
-         O+QEURjCldDZuEx34fAODjh0ex9KMCPmdSRgorCU9+q7wGHBQ4ghS962cDtjyI+UjJG8
-         sazc4nLW59ZSs/EONJV+4wAMr4CBwha3SYCtt3WJaf7+93J144IDcEuBMygx/HWpnhkx
-         4q9AqirSa+BUVpSulvcK6rzXEnGy0BNSyTWiwLeu+pwqWkTc1YuLtsVNVReCAfckwdbE
-         nQV9qmE91qLuHeeAYIZLZDmkbK2Wxv3nXjkyeHFkVjUxeBi5DFD9KvKmmHX9v9t+/HMC
-         k42g==
-X-Gm-Message-State: AOJu0YyaqYhv4CsoVeXOdSKnNjdDdUOYqka0G5Qx4tBCYP26vbnvh5YO
-        V9mjxHx9Hk2gr7veBdUTrxMDrA==
-X-Google-Smtp-Source: AGHT+IHKDvMEkLOSRPizQwXu+XFv7VpeI6lXHQZLj2L6dnAscAMJiSsjUaGqM5Fsq2M1+Cy5dP7Gng==
-X-Received: by 2002:a5d:6b88:0:b0:317:67bf:3387 with SMTP id n8-20020a5d6b88000000b0031767bf3387mr9434123wrx.60.1692134552252;
-        Tue, 15 Aug 2023 14:22:32 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id q18-20020a5d5752000000b00315af025098sm19078047wrw.46.2023.08.15.14.22.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 14:22:31 -0700 (PDT)
-Message-ID: <eb082e10-efc2-0f5f-95e1-4d2707c87c59@linaro.org>
-Date:   Tue, 15 Aug 2023 23:22:29 +0200
+        Tue, 15 Aug 2023 17:33:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EDE19A7;
+        Tue, 15 Aug 2023 14:33:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 58657611F6;
+        Tue, 15 Aug 2023 21:33:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B34EC433C8;
+        Tue, 15 Aug 2023 21:33:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692135204;
+        bh=tSSjd9zP2JKBKWarDV0Over61ZxmhPsZ5nxubi2sdJs=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=so6Dk9Hk3okHK2uXoZLQSaH58woPs7WLiKNF4MDdxc8lAbiYG3o7Ea+fOPq2Prtp5
+         fsPF6UalVezne3XQNQ4C0AUxMdFdqS3nGpWHvTJWUeZzP6I9jhN2lGprZYD3NkxoIW
+         vhTpG5epc5H+R3K2ZLfgiEUvfrPfebGPAMcQ9zfmBZJ8rNlz1MlY5Zd3CaiA9wO3k+
+         1lw4di6AVDK2BTYRAIhC+hIO4E9IUnNQm5+jrwaASO0IXYwapQPoMpNJ8IH6UtJmii
+         N4dVyGrM8LElDSRKqZVMW2tWexULIAkHR3Coc6fIY036DcIhiolb0i16v4KKEqEeBh
+         RB6hgrFJwPoHg==
+Message-ID: <aa699c29-6e63-cbf6-b6ee-1fad76478036@kernel.org>
+Date:   Tue, 15 Aug 2023 23:33:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7180: Add board id for
- lazor/limozeen
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5018: add WDT
+To:     Robert Marko <robimarko@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        wim@linux-watchdog.org, linux@roeck-us.net, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        quic_saipraka@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230815141908.1084893-1-robimarko@gmail.com>
+ <20230815141908.1084893-2-robimarko@gmail.com>
+ <3174c398-a19a-3b59-c2fc-3ec9a5e1a9df@linaro.org>
+ <CAOX2RU6HYBzhh0TBdsFj5AJPwqdv2xQ=XsA=L-BaCwNUxTx2Vg@mail.gmail.com>
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230804095836.39551-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230804175734.v2.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
- <0cc71595-ba11-11d4-1fcd-865721ede3f9@linaro.org>
- <CAD=FV=UfKXBQ6R0+5yY6WaNFS49=jmg2NTXrUPcyD3MBZA7A5A@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=UfKXBQ6R0+5yY6WaNFS49=jmg2NTXrUPcyD3MBZA7A5A@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <CAOX2RU6HYBzhh0TBdsFj5AJPwqdv2xQ=XsA=L-BaCwNUxTx2Vg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2023 23:10, Doug Anderson wrote:
-> Hi,
-> 
-> On Sun, Aug 6, 2023 at 11:34 PM Krzysztof Kozlowski
+On 15/08/2023 17:38, Robert Marko wrote:
+> On Tue, 15 Aug 2023 at 16:40, Krzysztof Kozlowski
 > <krzysztof.kozlowski@linaro.org> wrote:
 >>
->> On 04/08/2023 11:58, Sheng-Liang Pan wrote:
->>> add BRD_ID(0, Z, 0) = 10 for new board with ALC5682i-VS
+>> On 15/08/2023 16:17, Robert Marko wrote:
+>>> Add the required DT node for WDT operation.
 >>>
->>> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
 >>> ---
+>>>  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 7 +++++++
+>>>  1 file changed, 7 insertions(+)
 >>>
->>> Changes in v2:
->>> - correct newly create dts files
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> index 3285c86824cf..168322bfb11c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> @@ -182,6 +182,13 @@ v2m1: v2m@1000 {
+>>>                       };
+>>>               };
 >>>
+>>> +             watchdog: watchdog@b017000 {
+>>> +                     compatible = "qcom,apss-wdt-ipq5018", "qcom,kpss-wdt";
+>>> +                     interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
 >>
->>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
->>> new file mode 100644
->>> index 000000000000..5a58e94c228e
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
->>> @@ -0,0 +1,30 @@
->>> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
->>> +/*
->>> + * Google Lazor board device tree source
->>> + *
->>> + * Copyright 2023 Google LLC.
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include "sc7180-trogdor.dtsi"
->>> +#include "sc7180-trogdor-parade-ps8640.dtsi"
->>> +#include "sc7180-trogdor-lazor.dtsi"
->>> +#include "sc7180-lite.dtsi"
->>> +
->>> +/ {
->>> +     model = "Google Lazor (rev10+)";
->>> +     compatible = "google,lazor", "qcom,sc7180";
->>> +};
->>> +
->>> +&alc5682 {
->>> +     compatible = "realtek,rt5682s";
->>> +     /delete-property/ VBAT-supply;
->>
->> No, don't delete properties. First of all, why you do not have this
->> supply here? I doubt it... Especially that this DTS has vbat-supply
->> regulator!
->>
->> Second, define the properties where applicable instead.
+>> I think all GIC_SPI interrupts are level high.
 > 
-> It looks like v3 is out, but responding here since it looks like
-> Sheng-Liang didn't make any changes in v3 but also didn't respond and
-> explain why he didn't make any changes. Sheng-Liang: for future
-> reference you should make sure to address comments folks have on the
-> list. If your new version takes their feedback into account then
-> there's no reason to just respond with "Done", but if (like in this
-> case) you ignored feedback you need to say why.
+> They are most probably using GIC-500 which supports rising edge or
+> active high interrupts.
+> Both the older GIC-400 and newer GIC-600 also support the same.
 > 
-> In this case the extra "/delete-property/" is needed to pass bindings
-> checks. Specifically this revision of the board replaces the "rt5682i"
-> with the newer "rt5682s". This new codec is _almost_ a drop-in
-> replacement for the old codec with just a few tiny changes. One such
-> change is that the new codec doesn't need a "VBAT-supply".
+> Vendor DTS indicates this level, IPQ8074 and IPQ6018 which use the
+> same core, and it
+> seems the same WDT IP use the rising edge IRQ.
 > 
-> Since most trogdor devices have the older "rt5682i" codec, the default
-> in "sc7180-trogdor.dtsi" specifies the properties for that codec. Only
-> the handful of boards that have been spun to use the new codec have an
-> override like this. You can see that the override done here matches
-> the one done in a few other trogdor boards. A good grep is:
-> 
-> git grep -A4 realtek,rt5682s -- arch/arm64/boot/dts/qcom/sc7180-*
-> 
-> Ironically, that grep finds that "sc7180-trogdor-pazquel360.dtsi" is
-> missing the "/delete-property/" which I'm fairly certain means that
-> it's giving a validation warning today.
-> 
-> I'm happy to have a bikeshed discussion about doing this better. In a
-> previous reply [1] I suggested that it's probably time to move the
-> "realtek,rt5682s" snippet to something like
-> "sc7180-trogdor-rt5682s-sku.dtsi". Then we could include it in the
-> devices and avoid duplicating this bit of dts. I didn't insist on it,
-> but if you feel strongly then maybe Sheng-Liang could add that to his
-> series? Once done, we could have further bikeshed discussions about
-> whether we should continue to use the "/delete-property/" solution or
-> if we have to also create a "sc7180-trogdor-rt5682i-sku.dtsi" and
-> force all older SKUs to include that. Personally I don't hate this
-> "/delete-property/" but I don't care a whole lot either way.
 
-Thanks for explanation. I vote against /delete-property/ because it is
-error-prone and a bit confusing. The same with overriding compatibles -
-if possible, should be avoided. sc7180-trogdor-pazquel360.dtsi is doing
-both, but that's not the pattern I find easy to read.
+That's ok, but now I see missing Cc to DT, so standard message goes:
 
-I accept overriding supplies or pins, because these differ per board.
-But if common DTSI defines compatible, then it is common for everyone or
-it is not really part of common DTSI.
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC. It might happen, that command when run on an older
+kernel, gives you outdated entries. Therefore please be sure you base
+your patches on recent Linux kernel.
 
-IOW, the common DTSI should be more like a SoC DTSI - have only parts
-present there. I simplify here, because obviously SoC is a real thing
-piece of hardware and common board DTSI is not. It's just an
-abstraction... but anyway if different boards use different codecs, then
-I would say it is not part of common platform.
+You missed at least DT list (maybe more), so this won't be tested by
+automated tooling. Performing review on untested code might be a waste
+of time, thus I will skip this patch entirely till you follow the
+process allowing the patch to be tested.
+
+Please kindly resend and include all necessary To/Cc entries.
 
 Best regards,
 Krzysztof
