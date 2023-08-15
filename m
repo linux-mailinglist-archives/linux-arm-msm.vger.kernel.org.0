@@ -2,80 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08B5D77C897
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 09:34:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2736977C974
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 10:37:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234987AbjHOHdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 03:33:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48942 "EHLO
+        id S235680AbjHOIhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 04:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234877AbjHOHdP (ORCPT
+        with ESMTP id S235688AbjHOIhN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 03:33:15 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 116E8E73
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 00:33:14 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-99c3d3c3db9so689663766b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 00:33:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692084792; x=1692689592;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mbR8jCSs/QiaV6+2VKNjUs44H5IHvuOfBsH4XIH3FZA=;
-        b=b4S6bUYtiLhsX0nhZOEZvszfR31uQkNh1w9uS0GuIZK1cTGPVMfuQebopR4toCuhOZ
-         yW4bZeOdaiR7WtW3wj3SBlpnDP4o+Biu6f6/5yKJxA/CdulN4o4wUeKAmw8CPHJQzSx8
-         365a9V7SWjF2zSXP1fQuOLa0uXWi1LFUd0OKj6kYMU1hjDEHTioVMdDRX1R3q/YF7+5p
-         zzS6stfKAebdNm+/WDc9r5xA4vBaWMaW7OwBbdZzHYuuic9SkGayKeIu0+rTAgmpvYLW
-         xZtfNo81EbuPSaeZdXJJh6StuSc9WcJcY2euGdN13lTavvhL+xEgStOBqtEIHij6T7G2
-         tLNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692084792; x=1692689592;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mbR8jCSs/QiaV6+2VKNjUs44H5IHvuOfBsH4XIH3FZA=;
-        b=TmT+zmB5JJDYxTOU706gZP828nWDP45GI4g5SShiE1QkDaAwsJtzthjGs3xSdYoJYC
-         8kTkK4Uv+AKlDt5PQV/12nVX6Jn0ldcmq/tRiPn4qu1QyECY1YF7hprlRJsv0yXeeFPy
-         1dZt/c8ty9yWuic4kEz2RMKV2q0GNRMR1qT+LQMlbgtoDDSHfjzN+zf/MdOklM3t+B5n
-         lg3I61MYYAQXF0YB39Kut94RQ/9fPc4wBCOmp+haUzL67Y7TYXuU/7ERjdWg74+2aajh
-         4COh0BBS8hzt1lzUZlYe1g+k24PKdo0o0VaYkt3M3yZF9pIAL8eYhu5jvx6utYXwgqAG
-         t3Pg==
-X-Gm-Message-State: AOJu0YwnPDw8k/+f8H/Q4Wy/zeeU3SDYLW+DZUznVDRqopNxwnjlu6Ux
-        L93Pro0Fosy5R7nQ/D64N4EtajzucSW/HnGt4pc=
-X-Google-Smtp-Source: AGHT+IGYr6mviWLuAJOcMVHhWs6mcErZpsU6d2ANXHcTLWDqnzCdX+z3y/tcTK3XnSwggzX8pkDwyQ==
-X-Received: by 2002:a17:906:314c:b0:99b:64d0:f6c8 with SMTP id e12-20020a170906314c00b0099b64d0f6c8mr8910909eje.50.1692084792293;
-        Tue, 15 Aug 2023 00:33:12 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id w20-20020a170906385400b0097404f4a124sm6651143ejc.2.2023.08.15.00.33.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 00:33:11 -0700 (PDT)
-Message-ID: <79985698-2107-0aee-1395-81e3d9b4d727@linaro.org>
-Date:   Tue, 15 Aug 2023 09:33:09 +0200
+        Tue, 15 Aug 2023 04:37:13 -0400
+Received: from out-15.mta0.migadu.com (out-15.mta0.migadu.com [IPv6:2001:41d0:1004:224b::f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CB4D10F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 01:37:08 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+        t=1692088626;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=uBmn5bY96EnmwKJFlv+WltFrhGvpjIbZEKIiYirKvRY=;
+        b=vz0KHcPQmyiJWfmlN0KqRtShPV8OO94S7Ve+8NAyKaJzlfD3l3Gwdcs50vzwkyJwFeNk42
+        wWmdUe83i5yu+zc+P73iwMyGZC6f36VMufdeZyZpMS2xcjecgpOeJWBucmjek3/RmzHbqM
+        Esg+z/IvqlGN9dYsqiRnMi0+1ICkj/k=
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v6 2/3] dt-bindings: input: qcom,pm8xxx-vib: add new SPMI
- vibrator module
-Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org,
-        dmitry.baryshkov@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
-References: <20230815064917.387235-1-quic_fenglinw@quicinc.com>
- <20230815064917.387235-3-quic_fenglinw@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230815064917.387235-3-quic_fenglinw@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: Re: [PATCH v4 01/48] mm: move some shrinker-related function
+ declarations to mm/internal.h
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <20230807110936.21819-2-zhengqi.arch@bytedance.com>
+Date:   Tue, 15 Aug 2023 16:36:31 +0800
+Cc:     Andrew Morton <akpm@linux-foundation.org>, david@fromorbit.com,
+        tkhai@ya.ru, Vlastimil Babka <vbabka@suse.cz>,
+        Roman Gushchin <roman.gushchin@linux.dev>, djwong@kernel.org,
+        Christian Brauner <brauner@kernel.org>,
+        "Paul E. McKenney" <paulmck@kernel.org>, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        yujie.liu@intel.com, Greg KH <gregkh@linuxfoundation.org>,
+        simon.horman@corigine.com, dlemoal@kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux-MM <linux-mm@kvack.org>, x86@kernel.org,
+        kvm@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-erofs@lists.ozlabs.org,
+        linux-f2fs-devel@lists.sourceforge.net, cluster-devel@redhat.com,
+        linux-nfs@vger.kernel.org, linux-mtd@lists.infradead.org,
+        rcu@vger.kernel.org, netdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dm-devel@redhat.com, linux-raid@vger.kernel.org,
+        linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-xfs@vger.kernel.org, linux-btrfs@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FC3AE898-443D-4ACB-BCB4-0F8F2F48CDD0@linux.dev>
+References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
+ <20230807110936.21819-2-zhengqi.arch@bytedance.com>
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+X-Migadu-Flow: FLOW_OUT
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,15 +72,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2023 08:49, Fenglin Wu wrote:
-> Add compatible strings to support vibrator module inside PMI632,
-> PMI7250B, PM7325B, PM7550BA.
-> 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> ---
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
+> On Aug 7, 2023, at 19:08, Qi Zheng <zhengqi.arch@bytedance.com> wrote:
+>=20
+> The following functions are only used inside the mm subsystem, so it's
+> better to move their declarations to the mm/internal.h file.
+>=20
+> 1. shrinker_debugfs_add()
+> 2. shrinker_debugfs_detach()
+> 3. shrinker_debugfs_remove()
+>=20
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+
+One nit bellow.
+
+[...]
+
+> +
+> +/*
+> + * shrinker related functions
+> + */
+
+This is a multi-comment format. "/* shrinker related functions. */" is
+the right one-line format of comment.
+
+> +
+> +#ifdef CONFIG_SHRINKER_DEBUG
+> +extern int shrinker_debugfs_add(struct shrinker *shrinker);
+> +extern struct dentry *shrinker_debugfs_detach(struct shrinker =
+*shrinker,
+> +      int *debugfs_id);
+> +extern void shrinker_debugfs_remove(struct dentry *debugfs_entry,
+> +    int debugfs_id);
+> +#else /* CONFIG_SHRINKER_DEBUG */
+> +static inline int shrinker_debugfs_add(struct shrinker *shrinker)
+> +{
+> +	return 0;
+> +}
+> +static inline struct dentry *shrinker_debugfs_detach(struct shrinker =
+*shrinker,
+> +     int *debugfs_id)
+> +{
+> +	*debugfs_id =3D -1;
+> +	return NULL;
+> +}
+> +static inline void shrinker_debugfs_remove(struct dentry =
+*debugfs_entry,
+> +	int debugfs_id)
+> +{
+> +}
+> +#endif /* CONFIG_SHRINKER_DEBUG */
+> +
+> #endif /* __MM_INTERNAL_H */
+> --=20
+> 2.30.2
+>=20
 
