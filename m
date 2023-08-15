@@ -2,75 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C53577D256
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 20:49:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 000A577D3AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 21:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239220AbjHOStP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 14:49:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
+        id S240053AbjHOTxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 15:53:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239486AbjHOStN (ORCPT
+        with ESMTP id S240036AbjHOTwf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 14:49:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054712126;
-        Tue, 15 Aug 2023 11:48:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 02F6565F66;
-        Tue, 15 Aug 2023 18:46:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89533C433CD;
-        Tue, 15 Aug 2023 18:46:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692125191;
-        bh=na3DvkCy/DBRDdjxP4nOxRLkSN6S+gxI8DHXr/qxnlk=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=Ux0oRjjvmkgRP8eUypXP2QFTtsXJVfCnWm1Wm6qfWnpZuJmxCUv7lNY49/aT282SN
-         QeiZv7yIRac9DVvWY9fZcg+gWWAH3xVj2sVBXlVzCE3znq3vA6iVd4J7ZWbjGFXSS2
-         Xdo/Es+/9/iB2NnZNOXzWkGIduzoBVYvui9sRYnCtF4veut7EOSO5QDXWWo7b+CtKD
-         OlYWvzgIKb8BRR3THd9ZxkHeXxBXwdfH9YMbFjrrvYHdzHFe5/liNmZ1zuU8mFPfqb
-         JaIUO2eF9Fpl2RPMMLGuu+YVOEbRBfjcNSOYPRnNrWsoHpNU/mJTEb3Q2cWQ+aajTj
-         DmGhVqlJv7ToQ==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Robert Marko <robert.marko@sartura.hr>
-Subject: Re: (subset) [PATCH 1/2] dt-bindings: clock: qcom: ipq4019: add missing networking resets
-Date:   Tue, 15 Aug 2023 11:49:13 -0700
-Message-ID: <169212535063.2466993.11716205800707340678.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230814104119.96858-1-robert.marko@sartura.hr>
-References: <20230814104119.96858-1-robert.marko@sartura.hr>
+        Tue, 15 Aug 2023 15:52:35 -0400
+X-Greylist: delayed 166 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 15 Aug 2023 12:52:34 PDT
+Received: from smtprelay02.ispgateway.de (smtprelay02.ispgateway.de [80.67.18.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB1519A7;
+        Tue, 15 Aug 2023 12:52:34 -0700 (PDT)
+Received: from [77.64.243.219] (helo=note-book.lan)
+        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <git@apitzsch.eu>)
+        id 1qW02z-0003fk-OD; Tue, 15 Aug 2023 21:49:45 +0200
+From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+Subject: [PATCH RESEND v3 0/2] arm64: dts: qcom: msm8939-longcheer-l9100:
+ Add initial dts
+Date:   Tue, 15 Aug 2023 21:49:04 +0200
+Message-Id: <20230815-bq_m5-v3-0-fd26d7c76a1f@apitzsch.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This dts adds support for BQ Aquaris M5 (Longcheer L9100) released in
+2015.
 
-On Mon, 14 Aug 2023 12:40:23 +0200, Robert Marko wrote:
-> Add bindings for the missing networking resets found in IPQ4019 GCC.
-> 
-> 
+Add a device tree with initial support for:
 
-Applied, thanks!
+- GPIO keys
+- Hall sensor
+- SDHCI
+- WCNSS (BT/WIFI)
+- Accelerometer/Magnetometer
+- Vibrator
+- Touchscreen
+- Front flash
 
-[1/2] dt-bindings: clock: qcom: ipq4019: add missing networking resets
-      commit: 268edfe96ab8de82f1ba64a2098610e256bd6db7
-[2/2] clk: qcom: gcc-ipq4019: add missing networking resets
-      commit: 9bc66f973988dc4adc29d36824423448f8da8feb
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+---
+Changes in v3:
+- use "id-gpios" instead of "id-gpio" to avoid conflicts with
+  https://lore.kernel.org/linux-arm-msm/20230724103914.1779027-7-alexander.stein@ew.tq-group.com/
+  (v2 only contained the changelog entry, but not the actual change)
+- Link to v2: https://lore.kernel.org/r/20230725-bq_m5-v2-0-9779c249aeb1@apitzsch.eu
+
+Changes in v2:
+- add R-b to first patch
+- sort node extends/overrides by name, but keep &tlmm last, as done in
+  msm8939-samsung-a7.dts
+- use id-gpios, to avoid conflict with
+  https://lore.kernel.org/linux-arm-msm/20230724103914.1779027-7-alexander.stein@ew.tq-group.com/
+- don't enable mdss for now; postpone it till display support is added
+- Link to v1: https://lore.kernel.org/r/20230724-bq_m5-v1-0-17a0870a73be@apitzsch.eu
+
+---
+André Apitzsch (2):
+      dt-bindings: arm: qcom: Add BQ Aquaris M5
+      arm64: dts: qcom: msm8939-longcheer-l9100: Add initial device tree
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 336 +++++++++++++++++++++
+ 3 files changed, 338 insertions(+)
+---
+base-commit: 451cc82bd11eb6a374f4dbcfc1cf007eafea91ab
+change-id: 20230724-bq_m5-bc9afe378f8d
 
 Best regards,
 -- 
-Bjorn Andersson <andersson@kernel.org>
+André Apitzsch <git@apitzsch.eu>
+
