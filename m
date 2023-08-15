@@ -2,76 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B91B177D01E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 18:30:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFC5277D176
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 20:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238467AbjHOQ3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 12:29:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        id S238043AbjHOSEZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 14:04:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238474AbjHOQ3g (ORCPT
+        with ESMTP id S238416AbjHOSEN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 12:29:36 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C167F1999;
-        Tue, 15 Aug 2023 09:29:34 -0700 (PDT)
+        Tue, 15 Aug 2023 14:04:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EAA41987;
+        Tue, 15 Aug 2023 11:04:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D2AF565BE3;
-        Tue, 15 Aug 2023 16:29:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AC7C433C7;
-        Tue, 15 Aug 2023 16:29:30 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3982861309;
+        Tue, 15 Aug 2023 18:04:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D12DC433C9;
+        Tue, 15 Aug 2023 18:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692116972;
-        bh=LKI52qu5YBizA18cb57HmGDQiAUsDp91kpcEQdHzraY=;
+        s=k20201202; t=1692122651;
+        bh=mzbNzne3PD1b7Z60xa5BSWREMcguu9Lbh3k0qDDEqnI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pV5EzQcDpmN2hdz2XjMFQMAphqVL2zzdv/qIL8DZYuPbtPTdPMc72F/gi7w86tv8Q
-         jf07zRDlDhkfbwoV21soHOLdzXzVYsSTFiLNXgLkDGTiVQFIIKDb5lD2OpeGZeBdzS
-         r2wfohf0Z7hyWmWVzsPsuYypPWkTbcA43UyrN6D36no99ytFld9qJ6q7OmOVPUe5uT
-         wVmEDC/xKRzg1xOQeGcZdi7E7c/POjRuBm3gWz8K0Z2/HvVumZZjbz9jgolLU5FzOk
-         foLSXuBN6mC7oaZ6Kqw1jpWwPqfcykE+S6Nuu5aFtIOKqbXHbkfHb6Z1foL2JJ8kKu
-         UR3tKD29USwsw==
-Date:   Tue, 15 Aug 2023 09:32:16 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        arnd@arndb.de, geert+renesas@glider.be, nfraprado@collabora.com,
-        rafal@milecki.pl, peng.fan@nxp.com, quic_srichara@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v8 2/5] phy: qcom: Introduce M31 USB PHY driver
-Message-ID: <jkkamkixp7u2js7lvr3thfb4nbslevbymksvbfudblpci7wr32@jxmjl64y6yl7>
-References: <cover.1691999761.git.quic_varada@quicinc.com>
- <c8821bb0124a54cc774a2ff7b9c40df28eb7711e.1691999761.git.quic_varada@quicinc.com>
+        b=TFxdue8orHKEsUJoqRmvAkg7i1FWDzK3aT5o1una/QIlGBbxpoRPQMz48jitc78la
+         jqPPzbnjmO+eEdnclI/4Hag3At/rhrOaZycktuADX3S7E1le7pMT/++mMHEKaNiiNN
+         40ESLPG1GqKGuEiU3wjOWj6iQtVE93MMmXcvblFZnbVTKE4TxqW+wYaf6oUx7PDIxH
+         fuy08mqTdZ/q0snWUmLARyyh/WjC2Lt/gTXQ82XhUutsTvtcBBBAt6onua7HsDt/iu
+         xCn3RmqpmBlUKQvm5stmJUeLx192DpJubKU3tWq5IpnF9x/aWRGLteXLmEAVAZo06B
+         bYLRxby9C4xwA==
+Date:   Tue, 15 Aug 2023 19:04:05 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH] treewide: Update Guru Das Srinagesh's email address
+Message-ID: <20230815180405.GG648357@google.com>
+References: <20230728001622.4938-1-quic_gurus@quicinc.com>
+ <20230728075416.GC8175@google.com>
+ <20230803011016.GA1630536-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c8821bb0124a54cc774a2ff7b9c40df28eb7711e.1691999761.git.quic_varada@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230803011016.GA1630536-robh@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 14, 2023 at 01:36:02PM +0530, Varadarajan Narayanan wrote:
-> Add the M31 USB2 phy driver for the USB M31 PHY
-> (https://www.m31tech.com) found in Qualcomm IPQ5018, IPQ5332
-> SoCs.
+On Wed, 02 Aug 2023, Rob Herring wrote:
+
+> On Fri, Jul 28, 2023 at 08:54:16AM +0100, Lee Jones wrote:
+> > On Thu, 27 Jul 2023, Guru Das Srinagesh wrote:
+> > 
+> > > Clean up my email address as the codeaurora.org address is not used
+> > > anymore.
+> > > 
+> > > Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> > > ---
+> > >  Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 2 +-
+> > >  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml         | 2 +-
+> > 
+> > 2 patches isn't exactly 'treewide'.
+> > 
+> > Anyway, since there are not dependencies between the changes, please
+> > separate them out, one per subsystem.
 > 
+> I'm happy to take these patches via the DT tree. No real advantage to 
+> creating more work to split up these trivial changes.
 
-Thanks, this looks good to me now.
+Sounds good.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-Regards,
-Bjorn
+-- 
+Lee Jones [李琼斯]
