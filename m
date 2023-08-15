@@ -2,89 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E123077C9A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 10:49:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D8FA77C9B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Aug 2023 10:53:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235450AbjHOItQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 04:49:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56086 "EHLO
+        id S235775AbjHOIxE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 04:53:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235812AbjHOIsp (ORCPT
+        with ESMTP id S235789AbjHOIwr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 04:48:45 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D0094107;
-        Tue, 15 Aug 2023 01:48:43 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3FB661063;
-        Tue, 15 Aug 2023 01:49:25 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 73DBA3F762;
-        Tue, 15 Aug 2023 01:48:41 -0700 (PDT)
-Date:   Tue, 15 Aug 2023 09:48:38 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     cristian.marussi@arm.com, lukasz.luba@arm.com,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_rjendra@quicinc.com,
-        srinivas.kandagatla@linaro.org,
-        Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
-Subject: Re: [PATCH] firmware: arm_scmi: Fixup perf microwatt support
-Message-ID: <20230815084838.46wqgiggnxc6rfpe@bogus>
-References: <20230811204818.30928-1-quic_sibis@quicinc.com>
- <20230814092503.xdzafmqu5h3shrlz@bogus>
- <0cfd73bb-3ae6-d7bd-296c-0c39d194464b@quicinc.com>
+        Tue, 15 Aug 2023 04:52:47 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E43F19BC;
+        Tue, 15 Aug 2023 01:52:41 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37F7A9eV028826;
+        Tue, 15 Aug 2023 08:52:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=Kt3iFDmr8ZJ/XYq+so82jFjoXDuIgsJ3If0n1u9Tvy0=;
+ b=AdkTIVDJQGDr4+D1pwUHFFCtV6JnJY387h/KZYUj4zjaw74KexeApU4vcTWydPuAwk9P
+ K9YURbQ6yqitDgvPCEWDclcHXe2sdfFqhzeWhS2K441m6I9G3Sqg1GGYAg767/9F+ZHv
+ Nqv71bvifQF9TdyGaTAHPv4xZ16fbb75X/8JVE3xShBXWrlX79rKdvmojb4Dyg12QX2C
+ ppIGeSc6pZ3bW5Qjp9mRZQlnnkD7neSoi4gm7VAhAveThptI/6wa/97YRsl40hvhDDIe
+ VFGu/7jaK/uP36867eYG0MWQkqENTxN/6Gsc9UBlrC1n9ETecwNli4kz88OZBGGCL6Mc ZQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sfqp1hdey-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Aug 2023 08:52:25 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37F8qOrq025648
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Aug 2023 08:52:24 GMT
+Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 15 Aug 2023 01:52:20 -0700
+From:   Luo Jie <quic_luoj@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, Luo Jie <quic_luoj@quicinc.com>
+Subject: [PATCH v4 0/4] add clock controller of qca8386/qca8084
+Date:   Tue, 15 Aug 2023 16:52:01 +0800
+Message-ID: <20230815085205.9868-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0cfd73bb-3ae6-d7bd-296c-0c39d194464b@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: t5ORGL9dUWFDyV2fzh0CI5Bn_rwqQ_kN
+X-Proofpoint-ORIG-GUID: t5ORGL9dUWFDyV2fzh0CI5Bn_rwqQ_kN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-15_08,2023-08-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ mlxlogscore=957 bulkscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308150079
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 14, 2023 at 09:43:37PM +0530, Sibi Sankar wrote:
-> Hey Sudeep,
-> 
-> On 8/14/23 14:55, Sudeep Holla wrote:
-> > On Sat, Aug 12, 2023 at 02:18:18AM +0530, Sibi Sankar wrote:
-> > > The perf power scale value would currently be reported as bogowatts if the
-> > > platform firmware supports microwatt power scale and meets the perf major
-> > > version requirements. Fix this by populating version information in the
-> > > driver private data before the call to protocol attributes is made.
-> > > 
-> > > CC: Chandra Sekhar Lingutla <quic_lingutla@quicinc.com>
-> > > Fixes: 3630cd8130ce ("firmware: arm_scmi: Add SCMI v3.1 perf power-cost in microwatts")
-> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > > ---
-> > >   drivers/firmware/arm_scmi/perf.c | 4 ++--
-> > >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-> > > index c0cd556fbaae..30dedd6ebfde 100644
-> > > --- a/drivers/firmware/arm_scmi/perf.c
-> > > +++ b/drivers/firmware/arm_scmi/perf.c
-> > > @@ -1080,6 +1080,8 @@ static int scmi_perf_protocol_init(const struct scmi_protocol_handle *ph)
-> > 
-> > Please rebase any patch when posting upstream on upstream kernel tree.
-> > This definitely looks like some downstream tree. I will adjust and apply
-> > this time. This file never crossed 1000 line and this patch indicates
-> > otherwise, so I am sure Qcom has some downstream changes in this file now.
-> 
-> Thanks for taking time to review the patch but zero points for the ^^
-> deduction lol. The correct phrasing would be v6.5 rc6 hasn't crossed 1k
-> lines but the patch was based on next-20230809 which has the perf level
-> indexing mode support in addition :)
+qca8xxx is 4 * 2.5GBaseT ports chip, working as switch mode
+named by qca8386, or working as PHY mode named by qca8084,
+clock hardware reigster is accessed by MDIO bus.
 
-You are right. Cristian reminded me about v3.2 perf changes in -next after
-I replied on this thread. I saw this as fix and was looking at only upstream
-tree and this didn't apply cleanly.
+This patch series add the clock controller of qca8363/qca8084,
+and add the clock ops clk_branch2_mdio_ops to avoid spin lock
+used during the clock operation of qca8k clock controller where
+the sleep happens when accessing clock control register by MDIO
+bus.
 
+Changes in v2:
+	* remove clock flag CLK_ENABLE_MUTEX_LOCK.
+	* add clock ops clk_branch2_qca8k_ops.
+	* improve yaml file for fixing dtschema warnings.
+	* enable clock controller driver in defconfig.
+
+Changes in v3:
+	* rename clk_branch2_qca8k_ops to clk_branch2_mdio_ops.
+	* fix review comments on yaml file.
+	* use dev_err_probe on driver probe error.
+	* only use the compatible "qcom,qca8084-nsscc".
+	* remove enable clock controller driver patch.
+
+Changes in v4:
+	* add _qcom_cc_really_probe function.
+	* commonizing the probe function.
+	* remove flag CLK_IS_CRITICAL from clocks only needed
+	to be enabled in switch device.
+	* update device tree property reg to 0x10. 
+
+Luo Jie (4):
+  clk: qcom: branch: Add clk_branch2_mdio_ops
+  dt-bindings: clock: add qca8386/qca8084 clock and reset definitions
+  clk: qcom: common: add _qcom_cc_really_probe
+  clk: qcom: add clock controller driver for qca8386/qca8084
+
+ .../bindings/clock/qcom,qca8k-nsscc.yaml      |   79 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-branch.c                 |    7 +
+ drivers/clk/qcom/clk-branch.h                 |    1 +
+ drivers/clk/qcom/common.c                     |   10 +-
+ drivers/clk/qcom/common.h                     |    2 +
+ drivers/clk/qcom/nsscc-qca8k.c                | 2118 +++++++++++++++++
+ include/dt-bindings/clock/qcom,qca8k-nsscc.h  |  101 +
+ include/dt-bindings/reset/qcom,qca8k-nsscc.h  |   75 +
+ 10 files changed, 2400 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,qca8k-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+ create mode 100644 include/dt-bindings/clock/qcom,qca8k-nsscc.h
+ create mode 100644 include/dt-bindings/reset/qcom,qca8k-nsscc.h
+
+
+base-commit: 479b322ee6feaff612285a0e7f22c022e8cd84eb
 -- 
-Regards,
-Sudeep
+2.17.1
+
