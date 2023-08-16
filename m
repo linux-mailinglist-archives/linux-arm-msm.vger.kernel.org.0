@@ -2,82 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6B677E76E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:17:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9270477E76A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:16:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235728AbjHPRQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:16:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49282 "EHLO
+        id S234267AbjHPRQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 13:16:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345168AbjHPRQQ (ORCPT
+        with ESMTP id S1345206AbjHPRQG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:16:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BCD2D48;
-        Wed, 16 Aug 2023 10:16:13 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37GCMFPf026499;
-        Wed, 16 Aug 2023 17:15:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=zhkaB++sZDMq2yanj4e1JbYu42RN6uvd1pKF9zJHIZo=;
- b=JMP48rz/0Bzyzxpc1z//LFHnHF6VmQRM8qnKLyz//YLATs0DBCRAHGJxcWrT6zAvvBA1
- VGfk5cR5ltG7BnphZtYNl5VsHzHr0raLU8FARTtOrmcHWP2VuMBBZY2oEoXo/A5Q6OtU
- 7WRJ/fXotoZcOrcP7xCiKc4xFzLeaKcuNi0lcSMlWZzxbod5ngBEjj1gD/TH22Kwk/w4
- naGacPbUc4U7HGhRMkWDJJF+eThXAOg/DkNDWudOHrWWV8PWqTQkfT1rnEPH6AdF/0+V
- LAR8aAl4VGIrf/wuNIn5JqWj4H/K1LtKIvi71AnKiV3MsML4E7c6C1YpIdN9rdv8pcM+ BA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sg83rbd0a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Aug 2023 17:15:41 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37GHFeIX002878
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Aug 2023 17:15:40 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 16 Aug
- 2023 10:15:39 -0700
-Date:   Wed, 16 Aug 2023 10:15:38 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Nicolas Schier" <nicolas@fjasle.eu>,
-        Kees Cook <keescook@chromium.org>,
-        "Bjorn Andersson" <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <quic_pkondeti@quicinc.com>, <u.kleine-koenig@pengutronix.de>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
-Message-ID: <20230816171538.GB26279@quicinc.com>
-References: <cover.1691049436.git.quic_gurus@quicinc.com>
- <20230810185526.GC31860@quicinc.com>
- <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
+        Wed, 16 Aug 2023 13:16:06 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E90798
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:16:05 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6887480109bso1461702b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:16:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692206164; x=1692810964;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IYLhrFPidSEutv4YtNc5nqeGC4z90V1KraDOvbsXSkM=;
+        b=LkWfuiLg6Q14cNJ5pPVWl2Epz6OWxnMprvlAJNa2PsHTZU7rd8XO/VsB2JzPu1uKET
+         63T6iJxcGrLJpqc8e6zb5wU7ks8Yx0QFrxmE/NlymfcLwQjbyeEPuncvAOEjDknqc/xY
+         tENDUms4GYIkD8ohbe92f0Q11PwTW9vZZRm0Ky5p9F3kOW5HmAt/6wTZmj6X0tTQhqFH
+         eSnG3bARZ8sA8ImHjMaAqBHe2tszFd6F78eAsLrJDZKkARfrr04yseEk0GAAQL6WzU55
+         Tgqael2XLJskVLyRQ+xvmC3vORVlqakrguxbu3/4CyKdqZoC9zCE/AYVO4MJyrrbM0w9
+         49dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692206164; x=1692810964;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IYLhrFPidSEutv4YtNc5nqeGC4z90V1KraDOvbsXSkM=;
+        b=XBoHNmJtWqJts/divb8tPj7mgCawlqlg0oB4pr/7Bis0Uj9RlpXSXLCG2pvTpp7yCh
+         MLXFIGy0eD9AAEmB6gCDEw8gzIn9AsyWP1NjqfzbAwVwyoGjbZnprpbQpp98um2YuC69
+         xMbrbdjBFiktUKVEEDcEXsso0vvw/MPhBNSK3AqRqkYf59aw2GwBvBUqhensjDZZHVR0
+         6JknSmsUoaxRrVh0vQ27dxrdn/kzFvTB4k160oGiUK8UOgBdNL3dsaYpBL+SRu0A3PBz
+         MJkmTd2KXzB3l7vFXb1RNNcTP8+4BIwzpvC6KQcbC+MNMPdSKAANZBywsbpH33CpvmCr
+         CVbA==
+X-Gm-Message-State: AOJu0Ywi3lco0l7GVE3SOiF1RnCgot1s+4cLI10xpBQbTD/EL/pAX4IE
+        Od07HPOwD46/5l/uo17k396C
+X-Google-Smtp-Source: AGHT+IEjc4H8mTuRZSd8OdBQQbhZNjaNo5BnipeXywNGmtCRahTCRvXZPJK/iGgKkn8bXcHIelMTPg==
+X-Received: by 2002:a05:6a00:1a55:b0:688:11cc:ed88 with SMTP id h21-20020a056a001a5500b0068811cced88mr2939340pfv.33.1692206164496;
+        Wed, 16 Aug 2023 10:16:04 -0700 (PDT)
+Received: from thinkpad ([117.248.5.25])
+        by smtp.gmail.com with ESMTPSA id y13-20020aa7804d000000b00682af93093dsm11261392pfm.45.2023.08.16.10.16.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Aug 2023 10:16:04 -0700 (PDT)
+Date:   Wed, 16 Aug 2023 22:46:01 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Radu Rendec <rrendec@redhat.com>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: sa8540p-ride crash when all PCI buses are disabled
+Message-ID: <20230816171601.GB23057@thinkpad>
+References: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
+ <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
+ <3e0de46efe32e2e4c75fa3af9dabd0477e144823.camel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rlUvw-RXrUOWd5u-0bjWn0IL_MERk8Rr
-X-Proofpoint-ORIG-GUID: rlUvw-RXrUOWd5u-0bjWn0IL_MERk8Rr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-16_17,2023-08-15_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=630
- malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 mlxscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308160152
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3e0de46efe32e2e4c75fa3af9dabd0477e144823.camel@redhat.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -88,61 +75,135 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for the comments, Krzysztof.
-
-On Aug 15 2023 23:06, Krzysztof Kozlowski wrote:
-> On 10/08/2023 20:55, Guru Das Srinagesh wrote:
-> > On Aug 03 2023 01:23, Guru Das Srinagesh wrote:
-> >> When pushing patches to upstream, the `get_maintainer.pl` script is used to
-> >> determine whom to send the patches to. Instead of having to manually process
-> >> the output of the script, add a wrapper script to do that for you.
-> >>
-> >> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
-> >> editing it in-place.
+On Wed, Aug 16, 2023 at 12:25:50PM -0400, Radu Rendec wrote:
+> On Tue, 2023-08-15 at 11:54 +0100, Bryan O'Donoghue wrote:
+> > On 14/08/2023 23:36, Radu Rendec wrote:
+> > > I'm consistently getting a system crash followed by a ramdump on
+> > > sa8540p-ride (sc8280xp) when icc_sync_state() goes all the way through
+> > > (count == providers_count).
+> > > 
+> > > Context: all PCIe buses are disabled due to [1]. Previously, due to
+> > > some local kernel misconfiguration, icc_sync_state() never really did
+> > > anything (because count was always less than providers_count).
+> > > 
+> > > I was able to isolate the problem to the qns_pcie_gem_noc icc node.
+> > > What happens is that both avg_bw and peak_bw for this node end up as 0
+> > > after aggregate_requests() gets called. The request list associated
+> > > with the node is empty.
 > > 
-> > Could I request reviews from the other maintainers as well, please? Just to see
-> > if I should continue working on this script or if the `b4` tool obviates the
-> > need for such a script.
+> > If all PCIe buses are disabled, then of course the bandwidth requests
+> > should say zero, the clocks should be disabled and any associated 
+> > regulators should be off.
+> > 
+> > > For testing purposes, I modified icc_sync_state() to skip calling
+> > > aggregate_requests() and subsequently p->set(n, n) for that particular
+> > > node only. With that change in place, the system no longer crashes.
+> > 
+> > So what's happening is that a bus master in the system - perhaps not the 
+> > application processor is issuing a transaction to a register most likely 
+> > that is not clocked/powered.
 > 
-> I send a bit of patches but I use very simple workflow. It is really
-> simple, so simple, that I was always surprised how people can make their
-> life difficult with some complicated process to send patches... and then
-> obviously skip some maintainers, because of that process.
+> Yes, that was my assumption as well. But I didn't think it could be
+> something other than the AP. That is an interesting perspective.
+> 
+> My first thought was to analyze the ramdump and hopefully find some
+> clues there. But unfortunately that doesn't seem to be an option with
+> the tools that I have.
+> 
+> > Have you considered that one of the downstream devices might be causing 
+> > a PCIe bus transaction ?
+> 
+> No, I haven't considered that. If that's the case, it will probably be
+> even harder to debug.
+> 
 
-Exactly - this script aims to solve precisely that problem. It fills the gap
-between running `get_maintainers.pl` and having to manually edit its output to
-add "To: " and "Cc: " and somehow incorporate it in the body of the patch(es).
+If the PCIe controller node is disabled in devicetree, then none of the devices
+would be enumerated. In that case, they cannot initiate any transactions on
+their own.
 
-With this script, the workflow would be as simple as:
+Qcom observed a similar crash with PCIe SMMU when the PCIe controllers were not
+enabled in devicetree [1]. Since Qcom was going to enable PCIe controllers
+eventually, I concluded that the issue will be gone once they do it.
 
-  1. Generate patches using `git format-patch`
-  2. Run `add-maintainer.py` on the above patches
-  3. `git send-email` the patches.
+But looking at your issue, I think the transaction is triggered by PCIe SMMU as
+observed earlier. Since there are no active votes on the path after
+icc_sync_state(), it ends up in a crash.
 
-That's it - no need to manually work with email addresses.
-  
-> I almost always feed git send-email with addresses from
-> scripts/get_maintainers.pl. This tool would not bring any benefits to my
-> simple workflow.
+But did you disable all PCIe instances or just pcie2a? The revert patch you
+pointed only applies to pcie2a. But if you are disabling all PCIe instances,
+then I do not see a point in enabling PCIe SMMU as well. Could you try disabling
+the pcie_smmu node and check?
 
-In the light of the 3-step workflow I've envisioned above, could you please
-elaborate why not? If anything, it will only save a developer's time.
+- Mani
 
-> For newcomers, OTOH, I would either recommend simple workflow or just
-> use b4. Why? Because if you cannot use git-send-email, then it means
-> your email setup will make your life difficult and adding maintainers to
-> existing patch won't help you.
+[1] https://lore.kernel.org/linux-arm-msm/20230609054141.18938-3-quic_ppareek@quicinc.com/
 
-You've mentioned a "simple workflow" many times - could you please share more
-details on the steps you follow in your workflow for sending patches?
+> > If you physically remove - can you physically remove - devices from the 
+> > PCIe bus does this error still occur ?
+> 
+> This is a standard QDrive 3 reference board, so I think this is not an
+> option. Taking those things apart is very difficult, and I think all
+> peripherals are soldered onto the board anyway.
+> 
+> > > Surprisingly, none of the icc nodes that link to qns_pcie_gem_noc (e.g.
+> > > xm_pcie3_0, xm_pcie3_1, etc.) has any associated request and so they
+> > > all have 0 bandwidth after aggregate_requests() gets called, but that
+> > > doesn't seem to be a problem and the system is stable. This makes me
+> > > think there is a missing link somewhere, and something doesn't claim
+> > > any bandwidth on qns_pcie_gem_noc when it should. And it's probably
+> > > none of the xm_pcie3_* nodes, since setting their bandwidth to 0 seems
+> > > to be fine.
+> > 
+> > Yes so if you assume that the AP/kernel side has the right references, 
+> > counts, votes then consider another bus master - a thing that can 
+> > initiate a read or a write might be misbehaving.
+> 
+> There is one thing I wasn't aware of when I wrote the previous email.
+> As it turns out, bandwidth/clock control is done at the bcm level, not
+> at the icc node level. It looks like there is a single bcm called PCI0,
+> and it's linked to the qns_pcie_gem_noc node. The xm_pcie3_* icc nodes
+> are not linked to any bcm.
+> 
+> This means that *all* PCIe buses are shut down when qns_pcie_gem_noc is
+> disabled due to zero bandwidth. I was under the (wrong) impression
+> that, since all xm_pcie3_* nodes had no requests, each corresponding
+> PCIe bus would be shut down separately, leaving only qns_pcie_gem_noc
+> active (with my test change in place).
+> 
+> > Assuming there is no misbehaving arm core - say a cDSP or aDSP piece of 
+> > code that wants to do something on the PCIe bus, might the culprit be
+> > whatever you have connected to the bus ?
+> > 
+> > Could something be driving the #WAKE signal and then transacting ?
+> > 
+> > But also keep in mind depending on what you are doing with this system 
+> > if you have a bit of firmware in one of the DSP cores - does that 
+> > firmware have scope to talk to any devices on the PCIe bus ?
+> 
+> As I mentioned above, this is a standard QDrive 3 reference board.
+> Furthermore, I don't explicitly do anything with the DSPs. I just boot
+> a fairly recent upstream kernel (6.5-rc1) with a standard rootfs. The
+> boot firmware is whatever Qualcomm provides by default for these
+> systems. So, unless the boot firmware loads anything into the DSPs
+> behind my back (which I doubt), the DSPs should not even be running.
+> 
+> What is more likely though is that the boot firmware initializes a
+> bunch of PCIe devices and leaves them on.
+> 
+> > I'd guess another firmware is unlikely but, a downstream device doing a 
+> > #WAKE when you have the PCIe nodes disabled would presumably be bad..
+> > 
+> > Try looking for an upstream transaction from a device..
+> 
+> Yes, that makes sense. Do you have any suggestion on how to do that
+> without using any specialized hardware (such as JTAG pod or PCIe bus
+> analyzer)?
+> 
+> Thanks for all the input and suggestions!
+> 
+> --
+> Radu
+> 
 
-> This tool depends on the command line and shell interface of
-> scripts/get_maintainers.pl which is another reason why it might not be a
-> good idea.
-
-Could you please elaborate on why depending on the output of
-`get_maintainer.pl` is a bad idea? It's what everyone uses, no?
-
-Thank you.
-
-Guru Das.
+-- 
+மணிவண்ணன் சதாசிவம்
