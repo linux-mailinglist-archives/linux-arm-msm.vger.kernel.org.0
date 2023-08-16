@@ -2,125 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B94C077E9E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 21:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CEB077EA3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 22:01:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236292AbjHPTro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 15:47:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59866 "EHLO
+        id S1346049AbjHPUBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 16:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345880AbjHPTrd (ORCPT
+        with ESMTP id S1345946AbjHPUAm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 15:47:33 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB47E12C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 12:47:31 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe45da0a89so230224e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 12:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692215250; x=1692820050;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z4DiVaODc3NNqjwCm66F8RB3+saagdsgWHxtY6M6FSU=;
-        b=UC9E+GfPHLuTLXbLOB+OG0/QvBsTzmzti/MKnAQskfj3OGadzerUhaLPqIh312Y5uO
-         IEA903lUPocCSo0Li31sBO4FWvCqBnl4LtX9VW/DIMqNJqbS5/h4F0N43cgt/v0yb34r
-         CNGKzFzwm0S3Mf+Jjik8szkKshJmlHZsIbx0GwPhDRkJWpIPjSnbfnIx71913+QOGdqt
-         po5iXj3Nh2HPwiYgHgkw+ln2LISSSyXMGRhnrDtA1wFLjbRw+OYBKpUNfcahWQg/y+cR
-         htjXnZ9nuzvx2HRQfyajCByOVcUdKmVnxC5kqe5VM4SycPnzRRCgotfTRgsbjiJZ2ZUM
-         WucA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692215250; x=1692820050;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z4DiVaODc3NNqjwCm66F8RB3+saagdsgWHxtY6M6FSU=;
-        b=cFtlM7az+ZH8Li+xWq4/nogeFhHxQNypNASfk5jPMTPS6yMta9tpWMDH/O+7Ksvt1x
-         yGzRzmt0N8BQ86iUz6Y0ezPiRNNDgXR4Yfz+DmnTuBQtfOi9j+cTS4PEKEQwLcn1K6Hd
-         9L5keRxi8V827ypjFWYYGw7DordzipaZmRzapLl1uDnK+CXeBYZnAMMCtcqZ9UhguLAk
-         fbcPoYDA0OWwrAuV3iPErTK/buC6gooJttna5nN93B0K2HD2uLt4Sm6x8XGo6kDNZ72V
-         cI4goZ85/+7ecHYhODIDUlmJhfz3/vq5rdpZ8CVxhmUjlIHiIweh8vmJdAFQ33WyVSPB
-         JW8Q==
-X-Gm-Message-State: AOJu0Yw6MkiAX7/GzlrEAcOWBvksW/cKzrh2kTHbBaJrwT0NUaX074y9
-        U1JNJ2YvkZbeAKC9T7t5DxElCg==
-X-Google-Smtp-Source: AGHT+IGKOzX86gdZpQVVR2FYafqexKmLoxqJ1TdlsDBZbMN2EiTJf/OnN6IcQ2vdDBhyWzBrq0meZw==
-X-Received: by 2002:a05:6512:104c:b0:4fd:d254:edc6 with SMTP id c12-20020a056512104c00b004fdd254edc6mr263753lfb.26.1692215249900;
-        Wed, 16 Aug 2023 12:47:29 -0700 (PDT)
-Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id q25-20020ac25299000000b004ff8e845bcbsm518475lfm.301.2023.08.16.12.47.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 12:47:29 -0700 (PDT)
-Message-ID: <222eabdb-7a64-405a-95e8-2293f6186cae@linaro.org>
-Date:   Wed, 16 Aug 2023 21:47:18 +0200
+        Wed, 16 Aug 2023 16:00:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329DB1FE3;
+        Wed, 16 Aug 2023 13:00:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B73D06204B;
+        Wed, 16 Aug 2023 20:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 143C9C433C8;
+        Wed, 16 Aug 2023 20:00:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692216022;
+        bh=FqhxkuPdgVbJETSXDsWvg4mXVhYdn8SeQrY8c+xWq78=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=riEM3m7lIRonoMiBMuDX96KWnMnZ3fbs0J1JuZenDRx3CQ73U2CTT2VjIknevpnoR
+         nO7YTuKKyyqBPZrE7brSIShfw0RJdniaL2w08VfTRrR8Eo+YjxvhZVrGU47iT3e9JX
+         aanczv4Su2UTNPFM9HoAFrws9+wWuH9UnFPrno7OC/ZgY1k1IWdp4jeOPAxhPk9cxg
+         6pokkr7KKg7fGFXjSHSrRXqMMHdHIVfZv129b+sz2zCk3OMELAv6h9iD6PWBsgIN+e
+         ckJT6Skr+rRV+Q6CfnVZNYkHoixt0X+3p8BnJGWZ55mGTAL8wABQtKEXCMxflDvtuA
+         Y5SzwKJ8WvgbQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EA150C395C5;
+        Wed, 16 Aug 2023 20:00:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: ipq5018: add WDT
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, wim@linux-watchdog.org, linux@roeck-us.net,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, quic_saipraka@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230816161455.3310629-1-robimarko@gmail.com>
- <20230816161455.3310629-2-robimarko@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230816161455.3310629-2-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v4 0/3] Bluetooth: qca: enable WCN7850 support
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <169221602195.24089.4864640872066685763.git-patchwork-notify@kernel.org>
+Date:   Wed, 16 Aug 2023 20:00:21 +0000
+References: <20230816-topic-sm8550-upstream-bt-v4-0-2ea2212719f6@linaro.org>
+In-Reply-To: <20230816-topic-sm8550-upstream-bt-v4-0-2ea2212719f6@linaro.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     luiz.dentz@gmail.com, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        quic_bgodavar@quicinc.com, quic_rjliao@quicinc.com,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robh@kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.08.2023 18:14, Robert Marko wrote:
-> Add the required DT node for WDT operation.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
-> Changes in v2:
-> * Put the reg property as second in node
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hello:
 
-Konrad
+This series was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+
+On Wed, 16 Aug 2023 10:06:45 +0200 you wrote:
+> This serie enables WCN7850 on the Qualcomm SM8550 QRD
+> reference platform.
+> 
+> The WCN7850 is close to the WCN6855 but uses different
+> firmware names.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> [...]
+
+Here is the summary with links:
+  - [v4,1/3] dt-bindings: net: bluetooth: qualcomm: document WCN7850 chipset
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f38a5adcbd53
+  - [v4,2/3] Bluetooth: qca: use switch case for soc type behavior
+    https://git.kernel.org/bluetooth/bluetooth-next/c/08292727a9fc
+  - [v4,3/3] Bluetooth: qca: add support for WCN7850
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ef6d9b23aa58
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
