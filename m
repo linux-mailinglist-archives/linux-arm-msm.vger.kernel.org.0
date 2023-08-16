@@ -2,108 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D93477D620
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 00:32:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C65F77D6EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 02:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240423AbjHOWb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 18:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34448 "EHLO
+        id S240717AbjHPAKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Aug 2023 20:10:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240487AbjHOWbv (ORCPT
+        with ESMTP id S240745AbjHPAKf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 18:31:51 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFB20268F;
-        Tue, 15 Aug 2023 15:31:38 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id 6a1803df08f44-64189860374so29778276d6.0;
-        Tue, 15 Aug 2023 15:31:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692138698; x=1692743498;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OomGyd0GSBAwNJRjE2nyNQobuXxIzf9X/MGFA0o94qc=;
-        b=Ck8mWeH0ribxy+qr3OidONH5JyPv7xIFKC2ciBSri5aPQUIagF3mUH/BvJXeZGALvx
-         M0bwwDwIukJhUyWzQ2torPCOQfEE2I0gZ98yv+hNsR3U+dyB/xEGvrH6091eXxMe0q00
-         NYkjSmp2DMXQ4+8ZJE4Bq3HaoVhc9IhTi8DbyD2v3o/r6cVnebtAsDXxtZ8Gp8lpkxV+
-         OAVSWEQIvnePmhOK9kAubM7WoJRhrs7UZepjW8o2Yob85U4RU3gkcen+utVb0LuaB+U9
-         44FNL837ZNqAsJyul50lL/qRbTXKWzQbg5DQidhEdVbLTq9kAVY7FdwsKe85p5b2+/kD
-         Rqmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692138698; x=1692743498;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OomGyd0GSBAwNJRjE2nyNQobuXxIzf9X/MGFA0o94qc=;
-        b=GaabPj80mfbZRB7sgo77u6ktYNvyGCt3u5T5PclM3DexJ/mMiNGAkLzoHa1UScvZZJ
-         j8F+1BPk4HxV91ScjKWOBN4WvhTqenGGojSJW261JkXFQsGTB2bcE2U3LEdJaB1XSR+9
-         KNlLiCkyRBSUUPXVFHuXF4OcM8ewwsa4wRzkF4lN0UTHf7mo9dGDKwx6ArJeRUGNfSyz
-         Qsf55SL5jS6QLtipojh2fgpGiYVA7rW1oDTRTACzrRVjnMsBxiMmaE6JDi8SYzRCMV3E
-         7wMwR3BB+QcnTDIqKYtWkFCo5fr+O3qYLx2URR4aXqihjEjHBC13hCZx1Lqq/qeePmUT
-         94hA==
-X-Gm-Message-State: AOJu0YxtbXzM75PSuNwp/5YZxRRzGdYBGMqZed1ukF2QckV6nEBbVRXT
-        pf5XPbyuzRlZRbbS94yBqnQ=
-X-Google-Smtp-Source: AGHT+IFegE5lTvsMgT1ktCmwoJXrg2/AmOYJ/uCDmR0QRlT/ZQ66+uLEXzzOqreVhTdhfXteleyepg==
-X-Received: by 2002:a0c:e246:0:b0:623:557d:91ba with SMTP id x6-20020a0ce246000000b00623557d91bamr98231qvl.34.1692138697814;
-        Tue, 15 Aug 2023 15:31:37 -0700 (PDT)
-Received: from localhost ([2607:fea8:529e:7800::bdee])
-        by smtp.gmail.com with ESMTPSA id e6-20020a0cb446000000b00626161ea7a3sm4474507qvf.2.2023.08.15.15.31.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Aug 2023 15:31:37 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm670: add specific cpufreq compatible
-Date:   Tue, 15 Aug 2023 18:31:12 -0400
-Message-ID: <20230815223108.306018-8-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230815223108.306018-5-mailingradian@gmail.com>
-References: <20230815223108.306018-5-mailingradian@gmail.com>
+        Tue, 15 Aug 2023 20:10:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF0B71FF9;
+        Tue, 15 Aug 2023 17:10:33 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37FNk2fp014657;
+        Wed, 16 Aug 2023 00:10:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/sp3AgrnBEmHamq/qC++wlsR2QVoM6XWuGxyCMF61Ig=;
+ b=co+KvoqKdbGCQ/5pk2N5jWWD4+kkZL2nJ5pG7kZ1YhX8fgD3vVN/hcSAy9M8w5//6YRK
+ VyJXxBChWoeNHoYhCvaNRyJ6E95QOJlWclqFjYzL3FXc04pOEFLpnO24B5Yzoqs7xZtF
+ yxnyxGQ83e2fcA8Q2OV8sFaPp0UqzczRWMtoJ2gQDnRBwDorErRoMpCh1LOmq/Y+83+G
+ yqvNnpkCwuIW+43aS3wVN8tEHSFkat8BWCk05u2ThyB+rXy2PfHX3cWuPIKqiiZnwg7X
+ Y6R/S3ccDo4OlToo6hwSat2dkd0gT7yO88PBwV5g6Lj8xAMCYzxWuj5c1w0GHX2u5BoB nw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sfqp1jy25-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 00:10:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37G0A7NP008345
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 00:10:07 GMT
+Received: from [10.110.36.106] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 15 Aug
+ 2023 17:10:06 -0700
+Message-ID: <23a46503-ca45-26cb-c1df-f765e6db95d4@quicinc.com>
+Date:   Tue, 15 Aug 2023 17:09:58 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 4/7] leds: rgb: leds-qcom-lpg: Add support for PPG
+ through single SDAM
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>,
+        <luca.weiss@fairphone.com>, <konrad.dybcio@linaro.org>,
+        <u.kleine-koenig@pengutronix.de>, <quic_subbaram@quicinc.com>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+References: <20230814235918.10396-1-quic_amelende@quicinc.com>
+ <20230814235918.10396-5-quic_amelende@quicinc.com>
+ <vt2ma5qiqv4uvzdhhouvxo6ykvfcwlqjjvctcsorfy6dfh2efp@g4viqt2rqvz4>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <vt2ma5qiqv4uvzdhhouvxo6ykvfcwlqjjvctcsorfy6dfh2efp@g4viqt2rqvz4>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: negTXOjxz5dJg7NOVlXcGyezP1bGwF8U
+X-Proofpoint-ORIG-GUID: negTXOjxz5dJg7NOVlXcGyezP1bGwF8U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-15_21,2023-08-15_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 bulkscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308150217
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bindings for the CPU frequency scaling driver require a specific
-compatible for the SoC. Add the compatible.
 
-Fixes: 0c665213d126 ("arm64: dts: qcom: sdm670: add cpu frequency scaling")
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index 0ac39d3d68ca..77ec0de08c2c 100644
---- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -1520,7 +1520,7 @@ osm_l3: interconnect@17d41000 {
- 		};
- 
- 		cpufreq_hw: cpufreq@17d43000 {
--			compatible = "qcom,cpufreq-hw";
-+			compatible = "qcom,sdm670-cpufreq-hw", "qcom,cpufreq-hw";
- 			reg = <0 0x17d43000 0 0x1400>, <0 0x17d45800 0 0x1400>;
- 			reg-names = "freq-domain0", "freq-domain1";
- 
--- 
-2.41.0
+On 8/15/2023 8:38 AM, Bjorn Andersson wrote:
+> On Mon, Aug 14, 2023 at 04:59:15PM -0700, Anjelique Melendez wrote:
+
+[...]>> @@ -65,7 +83,12 @@ struct lpg_data;
+>>   * @lut_base:	base address of the LUT block (optional)
+>>   * @lut_size:	number of entries in the LUT block
+>>   * @lut_bitmap:	allocation bitmap for LUT entries
+>> - * @triled_base: base address of the TRILED block (optional)
+>> + * @pbs_dev:	PBS device
+>> + * @lpg_chan_nvmem:	LPG nvmem peripheral device
+>> + * @pbs_en_bitmap:	bitmap for tracking PBS triggers
+>> + * @lut_sdam_base:	offset where LUT pattern begins in nvmem
+>> + * @ppg_en:	Flag indicating whether PPG is enabled/used
+> 
+> Looking at its usage, it doesn't feel so much "is PPG enabled" as "does
+> this instance use PPG", it's not a thing that can be enabled/disabled in
+> runtime.
+> 
+> So "has_ppg" seems like a better name, or perhaps even "use_sdam" and
+> avoid "PPG" completely and make it clearer to the average reader?
+Sure, can update to be "use_sdam"
+
+
+[...]
+>> +static void lpg_sdam_configure_triggers(struct lpg_channel *chan)
+>> +{
+>> +	if (!chan->lpg->ppg_en)
+>> +		return;
+>> +
+>> +	if (chan->enabled && chan->pattern_set) {
+>> +		lpg_sdam_write(chan->lpg, SDAM_LUT_EN_OFFSET + chan->sdam_offset, 1);
+>> +		lpg_set_pbs_trigger(chan);
+>> +		chan->pattern_set = false;
+> 
+> Forgive me if I'm confused, but doesn't this mean that if I configure a
+> pattern and then set the brightness twice the pattern will be disabled
+> again?
+Yes, you are correct. With current code we continuously disable pattern.
+I took a look at the code again and found that it makes more sense to
+disable pattern in clear_pattern().
+
+
+[...]
+>> @@ -1363,7 +1618,9 @@ static int lpg_probe(struct platform_device *pdev)
+>>  	for (i = 0; i < lpg->num_channels; i++)
+>>  		lpg_apply_dtest(&lpg->channels[i]);
+>>  
+>> -	return lpg_add_pwm(lpg);
+>> +	ret = lpg_add_pwm(lpg);
+>> +
+>> +	return ret;
+> 
+> I'm failing to see the usefulness of this change.
+Sorry, looks like this was never reverted from an old change when I was debugging.
+Will revert back to original for next version. 
+
+Thanks,
+Anjelique
 
