@@ -2,131 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BE1977E0E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 13:52:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0016577E0FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 14:00:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244834AbjHPLwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 07:52:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54008 "EHLO
+        id S244926AbjHPMAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 08:00:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244903AbjHPLwG (ORCPT
+        with ESMTP id S244960AbjHPMAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 07:52:06 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C16212135
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:52:04 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fe2ba3e260so63012515e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:52:04 -0700 (PDT)
+        Wed, 16 Aug 2023 08:00:16 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63ED32123
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:00:15 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3110ab7110aso5897440f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692186723; x=1692791523;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kTUJIqUuvJpBEpmv4Fc4n2cbYwvZtXF9XlgfvfufwVo=;
-        b=T3sdARg0nYPapz3ox/SJbjs2LShMs9XEyARdb+QyUWd1UaYcM5eLoV1P1oxiBRlB/z
-         LLoMQySwr5gu01MKqJr2HUKh/Kc3DttbYXwisck//WgPQjHh5BaJksHur1qIRtVtEnCQ
-         gLsYnda5WjlUSAS5lLg0dX731KJUZQInbP06EefR8cEnv8elAqE/YgONzDk9JSYlaIDv
-         1X/GK/IYFMYZb1jYYRjMvgo+CjMKhbXvftEqRB7szZrHhZGD30ja5/ssagQwE8c+Ladz
-         l155JlTy5TWUxlQqx8yikXnqWdSI3PINEJfqw14z/6NKceGeaNOXz1Kzkk/A76m5dpMd
-         o72g==
+        d=linaro.org; s=google; t=1692187214; x=1692792014;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JXusQSBkKgzmVX0cQPtu5qS7/vO7l9owbd70EUmEIf0=;
+        b=BO0hYI+W5qp8L20ACZN9H5+4SPrMLXinnG5qBz5wd2WDyBHSsUVNdQIJreJUSNu9Bd
+         SsoxPP15yROXQXoR5IRKazEK/gZraQRJQLEPhNY/+nW2dIQp6jFAcNEsc7wKg/QmoLUE
+         KCp+v6YHUOHa3Nfq3F1R4qtaWDyZyCOnWJWSASqX2+aHBe6U20MFadhLoeeVsAVrTwTN
+         yWz3WTWT03e+ERzJFEak6tGARjzYVGw04Db47Q5uArI1Tu1QqtUJLEeAeNHoaC/h1MaT
+         Vjo2K3KdFuOvmUq5bV04lHp1ssmhuX/uNafuTGYFVQYTLekj1JKN7VI0gYkzUtRQ4bdw
+         ws0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692186723; x=1692791523;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kTUJIqUuvJpBEpmv4Fc4n2cbYwvZtXF9XlgfvfufwVo=;
-        b=gdVbFp0hH/Pbc3N3Wqq26uDIyZfNhvhrnD0pmHfFg4/2lSqmyDy+7joPAfSie0JhVg
-         XqWvTpD135ibz9uMzk542Dn0n7U+7s1BUiQd/i5mH8PSb4S0UivzIIjFBNTpI1fpOEi1
-         SGr7FjfG96DhHt5JfoCRxPWE2eZvg/+pOUN1xDduvA3zDShm/IrIHp7CDqXMUXlkv1CS
-         KAIj7+EwtngjiHXCdgufngC8KVNtXW6+KTjptuwwKYIFhTYS6KwLF89irxqP248Lmf4s
-         DqpOhC68momCbVmN//frVRai7HW6+hboJUA3L0IoPQm0Lfr89AqMyijamhE5r18h+JE1
-         zYlw==
-X-Gm-Message-State: AOJu0YwCXohCwTP+zphAmORP6XaZfw/4erz9nkmZRowmOPscd/9sY4xU
-        6T2LSiWV23q66SlwAvqPprT/Xg==
-X-Google-Smtp-Source: AGHT+IHvnASHedvOmPzr/nGlmoJv0wA6pOFu6rLk5qzIr/3ZASVR4rjqKOHbS4uv69pak+c2ma/oww==
-X-Received: by 2002:a05:600c:1d06:b0:3fe:26bf:65ea with SMTP id l6-20020a05600c1d0600b003fe26bf65eamr1244603wms.29.1692186723184;
-        Wed, 16 Aug 2023 04:52:03 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id fk3-20020a05600c0cc300b003fc05b89e5bsm21280663wmb.34.2023.08.16.04.52.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Aug 2023 04:52:02 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lee@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        sboyd@kernel.org, luca.weiss@fairphone.com
-Cc:     bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v9 7/7] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for usb_1_qmpphy
-Date:   Wed, 16 Aug 2023 12:51:51 +0100
-Message-ID: <20230816115151.501736-8-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230816115151.501736-1-bryan.odonoghue@linaro.org>
-References: <20230816115151.501736-1-bryan.odonoghue@linaro.org>
+        d=1e100.net; s=20221208; t=1692187214; x=1692792014;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JXusQSBkKgzmVX0cQPtu5qS7/vO7l9owbd70EUmEIf0=;
+        b=Tr9rhZLTnN4NgUYDOouJVGpq63R6y4ewzNipOHGtD6X1N5oxzd9P6kJyj5ZjxC8lvg
+         7GrzHCkY49neOXpryTU3ggK0OWUB6RaKY9Cf+3o+FcgeMmcD5L6xjHVIMfAelDYzTQQ/
+         6ZWe92Oj/NAgv4ZnkWOAnVTXo+zObhby2GTtzprGWL52EJtSL91/EUDGVVW8DT/2QUL3
+         43qpPyiY7vQZVEBdnMHzZCXtUWlURHphSZvlsIsoWsxJDtGMsB8PkVOeHChf/AXLvWDG
+         ts4nTzXwYX+/lkcHeDySsqikRuvYDP7yT4mKyQ9UHiHcroyq9scNhxqOrn14ErDJfRnk
+         8rww==
+X-Gm-Message-State: AOJu0Yx9Oi0KY+ZS4120V8kikbLM9ROpATzGAxcEy16yy2q1moqRc172
+        29oZRRvfegxZmbsbBwJev+hBKw==
+X-Google-Smtp-Source: AGHT+IEkAgTt7hKMOaQ6eYP4JU/vbFh5Hmk8g6lwro0vswB6yuqUEdRn3DD5J4Aav2PMognFo3JdPQ==
+X-Received: by 2002:adf:e3c1:0:b0:317:73d3:441a with SMTP id k1-20020adfe3c1000000b0031773d3441amr1268070wrm.46.1692187213814;
+        Wed, 16 Aug 2023 05:00:13 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id b2-20020adfde02000000b0031416362e23sm21092572wrm.3.2023.08.16.05.00.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Aug 2023 05:00:13 -0700 (PDT)
+Message-ID: <540b263a-3a1e-fd09-c6c2-18371e460e5e@linaro.org>
+Date:   Wed, 16 Aug 2023 13:00:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 01/33] MAINTAINERS: Add Qualcomm Iris video accelerator
+ driver
+Content-Language: en-US
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-2-git-send-email-quic_vgarodia@quicinc.com>
+ <c29d5e28-5b9d-1327-0feb-e5ed27afcd3a@infradead.org>
+ <b4de638e-9cab-2662-92b0-e2d1a18018a1@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <b4de638e-9cab-2662-92b0-e2d1a18018a1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch on USB orientation-switching for usb_1_qmp via TCPM. Detecting the
-orientation switch is required to get the PHY to reset and bring-up the PHY
-with the CC lines set to the appropriate lane.
+On 14/08/2023 19:44, Dikshita Agarwal wrote:
+> 
+> 
+> On 7/29/2023 4:18 AM, Randy Dunlap wrote:
+>>
+>>
+>> On 7/28/23 06:23, Vikash Garodia wrote:
+>>> Add an entry for Iris video encoder/decoder accelerator driver.
+>>>
+>>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>> ---
+>>>   MAINTAINERS | 10 ++++++++++
+>>>   1 file changed, 10 insertions(+)
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 3be1bdf..ea633b2 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -17671,6 +17671,16 @@ T:	git git://linuxtv.org/media_tree.git
+>>>   F:	Documentation/devicetree/bindings/media/*venus*
+>>>   F:	drivers/media/platform/qcom/venus/
+>>>   
+>>> +QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
+>>
+>> This entry should immediately follow:
+>> QUALCOMM IPQ4019 VQMMC REGULATOR DRIVER
+>>
+>> to keep the file in alphabetical order.
+>>
+> Sure, will fix this in next version.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+I think TBH before we see a next version, there needs to be a conclusive 
+argument on why a new driver - instead of an update to the existing 
+venus - is the way to go.
+
+We have an ongoing corpus of working code that people use. The attempt 
+to at least _try_ to integrate 8550 and beyond to upstream venus should 
+be made.
+
+If it fails, then we can discuss a branched driver.
+
+Its not up to me but, that's certainly my honest and unvarnished input.
+
+Instead of investing time in V2 - please invest time in upstream venus 
+or make the technical argument conclusively _prior_ to V2 as to why V2 
+and beyond is the "only" way forward for 8550 and beyond.
+
 ---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 12 ++++++++++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi     |  1 +
- 2 files changed, 13 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 3e34f4e2af14a..b878d765f8c42 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1290,6 +1290,11 @@ &usb_1_qmpphy {
- 
- 	vdda-phy-supply = <&vreg_l9a_1p2>;
- 	vdda-pll-supply = <&vreg_l18a_0p92>;
-+	orientation-switch;
-+};
-+
-+&usb_1_qmpphy_out {
-+	remote-endpoint = <&pm8150b_typec_mux_in>;
- };
- 
- &usb_2 {
-@@ -1374,6 +1379,13 @@ pm8150b_role_switch_in: endpoint {
- 					remote-endpoint = <&usb_1_role_switch_out>;
- 				};
- 			};
-+
-+			port@1 {
-+				reg = <1>;
-+				pm8150b_typec_mux_in: endpoint {
-+					remote-endpoint = <&usb_1_qmpphy_out>;
-+				};
-+			};
- 		};
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 733de2fd5e753..fe29b3da90c19 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3620,6 +3620,7 @@ ports {
- 
- 				port@0 {
- 					reg = <0>;
-+					usb_1_qmpphy_out: endpoint {};
- 				};
- 
- 				port@1 {
--- 
-2.41.0
+bod
 
