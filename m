@@ -2,135 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0016577E0FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 14:00:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70D7577E16D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 14:23:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244926AbjHPMAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 08:00:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32858 "EHLO
+        id S245098AbjHPMXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 08:23:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244960AbjHPMAQ (ORCPT
+        with ESMTP id S245153AbjHPMWu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 08:00:16 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63ED32123
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:00:15 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3110ab7110aso5897440f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:00:15 -0700 (PDT)
+        Wed, 16 Aug 2023 08:22:50 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D472D58
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:22:24 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4fe0eb0ca75so9763162e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692187214; x=1692792014;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1692188543; x=1692793343;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JXusQSBkKgzmVX0cQPtu5qS7/vO7l9owbd70EUmEIf0=;
-        b=BO0hYI+W5qp8L20ACZN9H5+4SPrMLXinnG5qBz5wd2WDyBHSsUVNdQIJreJUSNu9Bd
-         SsoxPP15yROXQXoR5IRKazEK/gZraQRJQLEPhNY/+nW2dIQp6jFAcNEsc7wKg/QmoLUE
-         KCp+v6YHUOHa3Nfq3F1R4qtaWDyZyCOnWJWSASqX2+aHBe6U20MFadhLoeeVsAVrTwTN
-         yWz3WTWT03e+ERzJFEak6tGARjzYVGw04Db47Q5uArI1Tu1QqtUJLEeAeNHoaC/h1MaT
-         Vjo2K3KdFuOvmUq5bV04lHp1ssmhuX/uNafuTGYFVQYTLekj1JKN7VI0gYkzUtRQ4bdw
-         ws0Q==
+        bh=6SVPI9u/mcgbeuFPm8+cRABDPuzkfsOkgYL/geOPsqA=;
+        b=fKUrvIBIXc7qYGyW2qRezMNsy2BzcC/BIje4Wd/pGZ1GT7whw98uEvNJZyz39vcF0r
+         bJfiPsIvxzeHdw4QgR9ZoKGDwb8HV0l1k7Hl0acZntx+etje3ExV1SeDBmjKnZXfjEzA
+         jh18lyAkr1Dpfbhp682dYo1bz4nIjrpXRJ/hvs5nJO6c8hCVbZq2wMTB1vERT8EdRsrh
+         mSOTbDGNfLEfIUOuYTOSrXGnCl2G1KHtJJrT4BFUGeAx3PyS4m79u2YavxSnXpvdkHvY
+         YoIAAnFBEeOYO7omILd6Mw/qaOx18wumSbL4iPaKqzHfqH+hfF+KWjeWuhN/i+dNj+fi
+         NrbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692187214; x=1692792014;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1692188543; x=1692793343;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JXusQSBkKgzmVX0cQPtu5qS7/vO7l9owbd70EUmEIf0=;
-        b=Tr9rhZLTnN4NgUYDOouJVGpq63R6y4ewzNipOHGtD6X1N5oxzd9P6kJyj5ZjxC8lvg
-         7GrzHCkY49neOXpryTU3ggK0OWUB6RaKY9Cf+3o+FcgeMmcD5L6xjHVIMfAelDYzTQQ/
-         6ZWe92Oj/NAgv4ZnkWOAnVTXo+zObhby2GTtzprGWL52EJtSL91/EUDGVVW8DT/2QUL3
-         43qpPyiY7vQZVEBdnMHzZCXtUWlURHphSZvlsIsoWsxJDtGMsB8PkVOeHChf/AXLvWDG
-         ts4nTzXwYX+/lkcHeDySsqikRuvYDP7yT4mKyQ9UHiHcroyq9scNhxqOrn14ErDJfRnk
-         8rww==
-X-Gm-Message-State: AOJu0Yx9Oi0KY+ZS4120V8kikbLM9ROpATzGAxcEy16yy2q1moqRc172
-        29oZRRvfegxZmbsbBwJev+hBKw==
-X-Google-Smtp-Source: AGHT+IEkAgTt7hKMOaQ6eYP4JU/vbFh5Hmk8g6lwro0vswB6yuqUEdRn3DD5J4Aav2PMognFo3JdPQ==
-X-Received: by 2002:adf:e3c1:0:b0:317:73d3:441a with SMTP id k1-20020adfe3c1000000b0031773d3441amr1268070wrm.46.1692187213814;
-        Wed, 16 Aug 2023 05:00:13 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b2-20020adfde02000000b0031416362e23sm21092572wrm.3.2023.08.16.05.00.11
+        bh=6SVPI9u/mcgbeuFPm8+cRABDPuzkfsOkgYL/geOPsqA=;
+        b=XglS3/XcG2zwuJjiD/1kUI5O13tzYkhc5vzKKGADPboj9LGyvW5nKcLle8jNz3zMh5
+         DDdgehWXHMznXlksRfrFqE+wiGLUlyCZeugmO90s9Ie8QMdlAqG9QEEUDjhp35zfYsMD
+         hM5at6U/rv0u5hUvPyuuuvuPvjVVVioxFKE5wb5BZZIMb0JkRcbwm5r8QqTSa21K6Y3J
+         ZFFgIroZvYMk8vpe+3onDtp3GtMOGm9MRczDFiOBJvf4WyxxWzQ32eQwOh9OmHDsopf8
+         Njw64g1mKIwGQyzREOyMsUqRzp+/V4Y8f26TKgbK0/3RQ5x+lz77Jjdu3k1xio6T/5UA
+         S7HQ==
+X-Gm-Message-State: AOJu0Yzpk9s8QP1LJ/Q4jHnP5MjO5+Y9gGeh2NBWW4TtJpzQy64Y7kaX
+        /bQkxJl98NnE7dRjhNAUuZthNQ==
+X-Google-Smtp-Source: AGHT+IFhGfy/vcTxgmHaLK2R36JKCtTnwfYbD5wD2riaRXetSdjzCBkFDJkO4ZucnZhPeQSw4cDj6A==
+X-Received: by 2002:a05:6512:473:b0:4fb:780d:2a49 with SMTP id x19-20020a056512047300b004fb780d2a49mr1469833lfd.5.1692188542987;
+        Wed, 16 Aug 2023 05:22:22 -0700 (PDT)
+Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
+        by smtp.gmail.com with ESMTPSA id c11-20020ac2530b000000b004fe0fead9e2sm536419lfh.165.2023.08.16.05.22.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 05:00:13 -0700 (PDT)
-Message-ID: <540b263a-3a1e-fd09-c6c2-18371e460e5e@linaro.org>
-Date:   Wed, 16 Aug 2023 13:00:10 +0100
+        Wed, 16 Aug 2023 05:22:22 -0700 (PDT)
+Message-ID: <0e111aaa-705b-4ae5-a07b-32691f01cc31@linaro.org>
+Date:   Wed, 16 Aug 2023 14:22:20 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 01/33] MAINTAINERS: Add Qualcomm Iris video accelerator
- driver
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] arm64: dts: qcom: sm8450: Add opp table support to
+ PCIe
 Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
- <1690550624-14642-2-git-send-email-quic_vgarodia@quicinc.com>
- <c29d5e28-5b9d-1327-0feb-e5ed27afcd3a@infradead.org>
- <b4de638e-9cab-2662-92b0-e2d1a18018a1@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <b4de638e-9cab-2662-92b0-e2d1a18018a1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
+        krzysztof.kozlowski@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1692102408-7010-1-git-send-email-quic_krichai@quicinc.com>
+ <1692102408-7010-3-git-send-email-quic_krichai@quicinc.com>
+ <dc14acb4-9fe8-4b3b-a9da-7f7915de4d5c@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <dc14acb4-9fe8-4b3b-a9da-7f7915de4d5c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/08/2023 19:44, Dikshita Agarwal wrote:
+On 16.08.2023 09:05, Pavan Kondeti wrote:
+> On Tue, Aug 15, 2023 at 05:56:47PM +0530, Krishna chaitanya chundru wrote:
+>> PCIe needs to choose the appropriate performance state of RPMH power
+>> domain based upon the PCIe gen speed.
+>>
+>> So, let's add the OPP table support to specify RPMH performance states.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 47 ++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 47 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index 595533a..681ea9c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -381,6 +381,49 @@
+>>  		};
+>>  	};
+>>  
+>> +	pcie0_opp_table: opp-table-pcie0 {
+>> +		compatible = "operating-points-v2";
+>> +
+>> +		opp-2500000 {
+>> +			opp-hz = /bits/ 64 <2500000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +		};
+>> +
+>> +		opp-5000000 {
+>> +			opp-hz = /bits/ 64 <5000000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +		};
+>> +
+>> +		opp-8000000 {
+>> +			opp-hz = /bits/ 64 <8000000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +		};
+>> +	};
+>> +
+>> +	pcie1_opp_table: opp-table-pcie1 {
+>> +		compatible = "operating-points-v2";
+>> +
+>> +		opp-2500000 {
+>> +			opp-hz = /bits/ 64 <2500000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +		};
+>> +
+>> +		opp-5000000 {
+>> +			opp-hz = /bits/ 64 <5000000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +		};
+>> +
+>> +		opp-8000000 {
+>> +			opp-hz = /bits/ 64 <8000000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +		};
+>> +
+>> +		opp-16000000 {
+>> +			opp-hz = /bits/ 64 <16000000>;
+>> +			opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+>> +		};
+>> +	};
+>> +
 > 
-> 
-> On 7/29/2023 4:18 AM, Randy Dunlap wrote:
->>
->>
->> On 7/28/23 06:23, Vikash Garodia wrote:
->>> Add an entry for Iris video encoder/decoder accelerator driver.
->>>
->>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> ---
->>>   MAINTAINERS | 10 ++++++++++
->>>   1 file changed, 10 insertions(+)
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 3be1bdf..ea633b2 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -17671,6 +17671,16 @@ T:	git git://linuxtv.org/media_tree.git
->>>   F:	Documentation/devicetree/bindings/media/*venus*
->>>   F:	drivers/media/platform/qcom/venus/
->>>   
->>> +QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
->>
->> This entry should immediately follow:
->> QUALCOMM IPQ4019 VQMMC REGULATOR DRIVER
->>
->> to keep the file in alphabetical order.
->>
-> Sure, will fix this in next version.
+> Should not we using required-opps property to pass the
+> rpmhpd_opp_xxx phandle so that when this OPP is selected based on your
+> clock rate, the appropriate OPP (voltage) would be selected on the RPMH side?
+Yes, opp-level is for opp providers.
 
-I think TBH before we see a next version, there needs to be a conclusive 
-argument on why a new driver - instead of an update to the existing 
-venus - is the way to go.
-
-We have an ongoing corpus of working code that people use. The attempt 
-to at least _try_ to integrate 8550 and beyond to upstream venus should 
-be made.
-
-If it fails, then we can discuss a branched driver.
-
-Its not up to me but, that's certainly my honest and unvarnished input.
-
-Instead of investing time in V2 - please invest time in upstream venus 
-or make the technical argument conclusively _prior_ to V2 as to why V2 
-and beyond is the "only" way forward for 8550 and beyond.
-
----
-bod
-
+Konrad
