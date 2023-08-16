@@ -2,173 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7A5577D7C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 03:40:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7E0F77D9D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 07:37:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241114AbjHPBje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Aug 2023 21:39:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
+        id S241897AbjHPFg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 01:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241110AbjHPBjP (ORCPT
+        with ESMTP id S241938AbjHPFgp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Aug 2023 21:39:15 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FEFF1FDE;
-        Tue, 15 Aug 2023 18:39:14 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37G1WQHV006698;
-        Wed, 16 Aug 2023 01:38:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=koRzxrmeNQzJ9pi6tjKMz8jrP9wCwbUXOe6N2acoMR8=;
- b=cUrakPLbQ1xfArW5yKWNrWezJ52VtZO1F/+tWlQnq4iP0dACVaRZC2LOtty80ILyMN53
- nq/eS2GE95FAYYEbd7eC0ZZhWpIb1fNi76cJJLXoEEcnyTSRk7/EfOtRj3lr4G1fdlRR
- 1C3fiC9rmIJs9bsMq/lyVic6NTYIWkZR2pnuZYXFogqETacbbminN/5e6ynRq8rgo8uR
- Vmbs3+2u0ch+MCslaxAvceIBot8vuQnnCRdCOuvTMMGJz/sF2ccB7Bf02b7u2nKMFkNX
- hHryA0pQpvfS3wCT43X+9vc9+iHsBSdX+G/Q6Y8lonjETtd6yZxS+oUqHhwInc/QR8Vo jQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sfuhujk7r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Aug 2023 01:38:47 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37G1ck9X021595
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Aug 2023 01:38:46 GMT
-Received: from [10.110.95.218] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 15 Aug
- 2023 18:38:44 -0700
-Message-ID: <d42b4db3-d36d-d8fd-90ca-e00c2151195c@quicinc.com>
-Date:   Tue, 15 Aug 2023 18:38:44 -0700
+        Wed, 16 Aug 2023 01:36:45 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB39626AF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 22:36:41 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b9fa64db41so93162911fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 22:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692164200; x=1692769000;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4Ik7oB2lk1wIqJS13yqGm2Jzcg954+ej63dLWafujLc=;
+        b=Jm6G45hlR9D4az3ti0gcPLs4wGjFIUBqIFwbcKTT3jMnFeIazCVB+qCferkNs9C6JC
+         LuRsPJjdBwO2uzLRbNl+S17gdQrKWedPjJYRcKsgYVKFRfAkf8lIAYQzjyWcne8C72yj
+         Cm9C7S1HNnh+mLFk07mZiH4rh8yiJhTe/AOEDLoz8kb2RCj8A1LzasCKZVN32qOXt/qw
+         MA+1il5inA5DhGyht9qIGQJgzt7x6t1LvPOdo+FaqAsyyLs4Vg8hkjRs7R6hqQGNtkjT
+         P8LbHQkpC2kQS5n3fZSGpdBHNEJkVw17Zlb2WR5yj8rSQ3Bz9WcUEQj898bFGkAzSXiU
+         YN2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692164200; x=1692769000;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Ik7oB2lk1wIqJS13yqGm2Jzcg954+ej63dLWafujLc=;
+        b=f9AqfdvR+i4jWL8eHp5ul245q35X6HtoM0SYTtY0REEoc7mvLRLKoN9P9cZ64nEdeM
+         DdfMaRI/wEto87korwTWxLeV/QxWi7GP2pp3WJAtbl3XpHGP0Oqd4avOjSs8Weh/zOh0
+         21C+TZPT+TJuZk4jzVxm7E9iEX9EB6RdWm2OMTDoYX+Vg7ERPuXULbNlHT1etAJxQ7HY
+         4cLg9nKXtAN/+O5X2KRmoIOUhUXs6s/HgRqgSsvKDHjkw7Rgb5YXth0tzEmh80iBmsI0
+         Vr0PYllZRjlkWKL3uo/lj1qOnxtvs/GbQjX9OBE1298s/6xNL9fJXGvTI+gmCumNdpHH
+         i6bA==
+X-Gm-Message-State: AOJu0Yx0QPPkf9bvjD2aAsn4NXBnZjAFmnyqjN8IcwhEVwwhlHXOzSx3
+        /F8rewV/gDzhy2bZ7ADPPyXuQQ==
+X-Google-Smtp-Source: AGHT+IFAs62wSEs2OIDQDCPJhNq9ervbfVQQNZaVRMpFSL1Wxj0WM+O93QtbpxtBP9I9KfbxKfhHKA==
+X-Received: by 2002:a05:6512:3410:b0:4fe:6fc:1fc7 with SMTP id i16-20020a056512341000b004fe06fc1fc7mr654460lfr.27.1692164200175;
+        Tue, 15 Aug 2023 22:36:40 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id v2-20020a5d6102000000b003141e629cb6sm19799961wrt.101.2023.08.15.22.36.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Aug 2023 22:36:39 -0700 (PDT)
+Message-ID: <02ade1e1-e319-2f95-4645-95e9f9f00843@linaro.org>
+Date:   Wed, 16 Aug 2023 07:36:38 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v4 31/32] sound: usb: card: Allow for rediscovery of
- connected USB SND devices
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 2/3] dt-bindings: cpufreq: cpufreq-qcom-hw: add SDM670
+ compatible
 Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <quic_jackp@quicinc.com>, <oneukum@suse.com>,
-        <albertccwang@google.com>, <o-takashi@sakamocchi.jp>
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-32-quic_wcheng@quicinc.com>
- <671a524d-b4c8-78d8-33de-40170a23d189@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <671a524d-b4c8-78d8-33de-40170a23d189@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Richard Acayan <mailingradian@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230815223108.306018-5-mailingradian@gmail.com>
+ <20230815223108.306018-7-mailingradian@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230815223108.306018-7-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Pa7zWAzvySZs5rUBazuPdUgsyvuZC4bf
-X-Proofpoint-ORIG-GUID: Pa7zWAzvySZs5rUBazuPdUgsyvuZC4bf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-15_22,2023-08-15_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- mlxscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308160013
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
+On 16/08/2023 00:31, Richard Acayan wrote:
+> The bindings for Qualcomm CPU frequency have a compatible for each SoC.
 
-On 7/25/2023 2:15 AM, Pierre-Louis Bossart wrote:
+Drop this sentence, it is not relevant.
+
+> Add the compatible for SDM670.
 > 
-> 
-> On 7/25/23 04:34, Wesley Cheng wrote:
->> In case of notifying SND platform drivers of connection events, some of
->> these use cases, such as offloading, require an ASoC USB backend device to
->> be initialized before the events can be handled.  If the USB backend device
->> has not yet been probed, this leads to missing initial USB audio device
->> connection events.
->>
->> Expose an API that traverses the usb_chip array for connected devices, and
->> to call the respective connection callback registered to the SND platform
->> driver.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   sound/usb/card.c | 19 +++++++++++++++++++
->>   sound/usb/card.h |  2 ++
->>   2 files changed, 21 insertions(+)
->>
->> diff --git a/sound/usb/card.c b/sound/usb/card.c
->> index 365f6d978608..27a89aaa0bf3 100644
->> --- a/sound/usb/card.c
->> +++ b/sound/usb/card.c
->> @@ -170,6 +170,25 @@ struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
->>   }
->>   EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
->>   
->> +/*
->> + * in case the platform driver was not ready at the time of USB SND
->> + * device connect, expose an API to discover all connected USB devices
->> + * so it can populate any dependent resources/structures.
->> + */
->> +void snd_usb_rediscover_devices(void)
->> +{
->> +	int i;
->> +
->> +	mutex_lock(&register_mutex);
->> +	for (i = 0; i < SNDRV_CARDS; i++) {
->> +		if (usb_chip[i])
->> +			if (platform_ops && platform_ops->connect_cb)
->> +				platform_ops->connect_cb(usb_chip[i]);
-> 
-> what happens if the USB device is removed while the platform device adds
-> a port?
-> 
-> This sounds super-racy to me. It's the same set of problems we're having
-> between audio and display/DRM, I would be surprised if this function
-> dealt with all corner cases of insertion/removal, bind/unbind.
-> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-The chip array entries are all populated and removed while under the 
-register_mutex, so going over your race condition, we should see:
+You missed to update rest of the file.
 
-Thread#1:
-q6usb_component_probe()
---> snd_soc_usb_add_port()
-   --> snd_usb_rediscover_devices()
-     --> mutex_lock(register_mutex)
-
-Thread#2
---> usb_audio_disconnect()
-   --> mutex_lock(register_mutex)
-
-So either thread#1 or thread#2 will complete first.  If
-
-Thread#1 completes before thread#2:
-   SOC USB will notify DPCM backend of the device connection.  Shortly 
-after, once thread#2 runs, we will get a disconnect event for the 
-connected device.
-
-Thread#2 completes before thread#1:
-   Then during snd_usb_rediscover_devices() we won't notify of any 
-connection for that particular chip index.
-
-Thanks
-Wesley Cheng
+Best regards,
+Krzysztof
 
