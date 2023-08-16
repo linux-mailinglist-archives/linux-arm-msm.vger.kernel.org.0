@@ -2,75 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A197A77E72E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:03:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE4A577E74E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:11:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241208AbjHPRDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:03:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44472 "EHLO
+        id S1344710AbjHPRKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 13:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345050AbjHPRC4 (ORCPT
+        with ESMTP id S1345108AbjHPRK2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:02:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFAE9103;
-        Wed, 16 Aug 2023 10:02:55 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37GCtD6G014036;
-        Wed, 16 Aug 2023 17:02:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=mQL/ubOpOCVvSH/YDZTWN5K9XhRt1hFWYAP3tg6tKgU=;
- b=jPAUN9O1LHn70sEhJs3otJlkwvdz76eHp1IWXDQmSbBNjpHnZQJGXeIAQN+UBye5lO1E
- 8BHwHQ9lYIQlkv6AjO5yXLMGgWQOPPQDX2jh9Lzgc6zCEFbRtWRs9DgRpay0NYkyMEki
- fs0kE3nDei26EXvmgh3GRmoj8qQ3wvFz1w8knTySimkHcvQBuIqb5OGdoPnKJ+u61LkF
- odpQUkAFirFc9AQ3aRyjE2BLfDpgOVxBJEex1EX59r4wrJjL2beL9ThuKnWIpzS5tXEI
- /PMq18xEFEO9Vz54JbvVwCfAec35NbBmG7cMI3JTQtQY/x/wXvsrI/7A9YTHaHjljItb /g== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sgf5uaarx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Aug 2023 17:02:40 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37GH2cJX016162
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Aug 2023 17:02:38 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 16 Aug
- 2023 10:02:37 -0700
-Date:   Wed, 16 Aug 2023 10:02:33 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Robert Marko <robimarko@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mojha@quicinc.com>,
-        <computersforpeace@gmail.com>
-Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
-Message-ID: <20230816170232.GA26279@quicinc.com>
-References: <20230816164641.3371878-1-robimarko@gmail.com>
- <20230816164641.3371878-2-robimarko@gmail.com>
+        Wed, 16 Aug 2023 13:10:28 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71C426B1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:10:22 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe21e7f3d1so10960736e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:10:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692205821; x=1692810621;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xxCwuqjPcl+IJA8BvbLFYWTyePxgeQPUkGWOK9EtNqI=;
+        b=mkpQ0woCJzp7wN5rDFIqeyIKJOlw6h0u+DTTiJDMtOJW+L32iGlp5pz8fhrqan4Olb
+         XunbnzPLRLro6Jntfn+eLF+sRpgYaiYRK3H2s9Meg83EV5cYy6agudihU/RuvpjT9MHJ
+         grK+uVRMBDEhFsMIztqySA+k7l+rnkvzadbFJvX7kQIAojgnwdqfdvVm32i81Pv8YzkK
+         QuM1qHm5WfxAf0Aga4LCOKUaGDLzgQR/tLsX8Jh9XQfuJ97KaYGJ1EUuSZ4eHI4MoATk
+         9q77ZN721sY7TvPU0kyRHSVJK/3yy+rJTIpWIpRFvsGXUQq103iPi7u8qzsQm+YDUVnf
+         QRMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692205821; x=1692810621;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xxCwuqjPcl+IJA8BvbLFYWTyePxgeQPUkGWOK9EtNqI=;
+        b=Ja1lOklgp+/jFvBtZquYxZ05QxnLVzuciVUEsIj6Q7BdnlDXRpluvNRpXfBNQJOxwH
+         u5b3+iCP3jk01p+qnbZ8Bo2hzLPopO5MvAfFwXvptmrDgan4m/LP/JV0kZUa9GN7vl7M
+         kDjah0uhyUFYh8lOenQJcxxmyxKRGwH4pJJGVSctSDyhe//0+iQOWz8xkuFvZzuow8nB
+         TImh/hnV9bg7bcIwMUfbDdomCB6znwbeCKjB/L1MC8N4Lz59KOiWODN3hjEbqnEIl0yS
+         g/0V2jh6ArXccLHxxkb2YgpkKpEqCVVKs8wiGqwniFun4eAh1lnSki5JMiE8TuZQyVt7
+         bAmg==
+X-Gm-Message-State: AOJu0YyO5l2rGlDu4C9g5dFBFc/5EXOldeiIeKinYtMvM59Hr0tGbXJj
+        HtJ4a3PRktQLazHAx9CM/9UCpA==
+X-Google-Smtp-Source: AGHT+IHWeo2IdfUkhGlh5jDKe2Y0lGdrKg2LDP7fAQshjPpk/ewwT2mUjd86rGsLoKWIDaWS2PvwzQ==
+X-Received: by 2002:a19:430b:0:b0:4fe:17d9:6755 with SMTP id q11-20020a19430b000000b004fe17d96755mr1710122lfa.25.1692205820994;
+        Wed, 16 Aug 2023 10:10:20 -0700 (PDT)
+Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
+        by smtp.gmail.com with ESMTPSA id eo12-20020a056512480c00b004f858249932sm3016609lfb.90.2023.08.16.10.10.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Aug 2023 10:10:20 -0700 (PDT)
+Message-ID: <0d4d7d4b-9cbc-40df-98f5-3c9696bf6b13@linaro.org>
+Date:   Wed, 16 Aug 2023 19:10:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230816164641.3371878-2-robimarko@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RRV8N2iztFnBwow1eBB_xDypdGCKMq6c
-X-Proofpoint-GUID: RRV8N2iztFnBwow1eBB_xDypdGCKMq6c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-16_17,2023-08-15_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 impostorscore=0
- mlxscore=0 mlxlogscore=516 clxscore=1011 adultscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308160149
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 02/14] media: qcom: camss: Start to move to module
+ compat matched resources
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230814162907.3878421-1-bryan.odonoghue@linaro.org>
+ <20230814162907.3878421-3-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230814162907.3878421-3-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -81,20 +115,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Aug 16 2023 18:45, Robert Marko wrote:
-> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
-> means that WDT being asserted or just trying to reboot will hang the board
-> in the debug mode and only pulling the power and repowering will help.
-> Some IPQ4019 boards like Google WiFI have it enabled as well.
+On 14.08.2023 18:28, Bryan O'Donoghue wrote:
+> There is a lot of unnecessary if/elsing in this code that arguably
+> should never have made it upstream when adding a second let alone
+> subsequent SoC.
 > 
-> Luckily, SDI can be disabled via an SCM call.
+> I'm guilty of not fixing the mess myself when adding in the sm8250.
+> Before adding in any new SoCs or resources lets take the time to cleanup
+> the resource passing.
 > 
-> So, lets use the boolean DT property to identify boards that have SDI
-> enabled by default and use the SCM call to disable SDI during SCM probe.
-> It is important to disable it as soon as possible as we might have a WDT
-> assertion at any time which would then leave the board in debug mode,
-> thus disabling it during SCM removal is not enough.
+> First step is to pass the generic struct camss_resources as a parameter
+> per the compatible list.
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Subsequent patches will address the other somewhat dispirate strutures
+> which we are also doing if/else on and assigning statically.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+[...]
 
-Reviewed-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+
+> -
+>  	for (i = 0; i < camss->csiphy_num; i++) {
+>  		ret = msm_csiphy_subdev_init(camss, &camss->csiphy[i],
+> -					     &csiphy_res[i], i);
+> +					     &camss->res->csiphy_res[i], i);
+&camss->res is used quite extensively, so I think it may be a good
+idea to keep the variable there, just make it point to the correct
+new thing.
+
+Konrad
