@@ -2,116 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D295677E707
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 18:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 281E377E708
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 18:55:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344975AbjHPQzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 12:55:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45974 "EHLO
+        id S1344987AbjHPQzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 12:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345024AbjHPQyu (ORCPT
+        with ESMTP id S1345058AbjHPQzF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 12:54:50 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30AC2273A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:54:45 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-5255ce77d70so5078058a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:54:45 -0700 (PDT)
+        Wed, 16 Aug 2023 12:55:05 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C1D2102
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:55:01 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6889078ee66so646670b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1692204882; x=1692809682;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gm1Xm6qKtBBHwZRiPDqXkb0hB+xtLzUrT5ZrlkndbII=;
-        b=dQDnG/N7VZdwLw1DTTaT5B5WAJfpsva5wbgd+rqRpn+WOWdKkh8H5rP16JLyH23euY
-         NG+JbR76x+DWsyHfriSqSML3lAja+p3e7d7EhkUo9gDXBeWI1wEL5ksge7gnznPHpcdH
-         zBxq38ZAat1KQ9pK2TfoRrxsraRLSJ/YQnlI8=
+        d=linaro.org; s=google; t=1692204901; x=1692809701;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=msBfPd8BuzD/GUlkblv4mwPk8fVn9ZKYLL0U+2C7Ff4=;
+        b=tJD5cEIiV7GNuFYaHRCvIaE0+8W2uzFOZ8eWkWn4XWh+DbkU+3hX+zMxdD3eD2c/yO
+         K2WDDvj1V6Ml0D7OkL9b4ncDhpVvJihwwKb1sQXWnHr2nnYmSSUHV5GwetWBIvoHZN0E
+         xT8TXGz3YmmwFnlUiREveMC52xdOKaZJvwc72j0fTqIiYySf2aylBzfm6KOZgZLQPEQb
+         jhAXupb0J2f6godJtF0D7xJBf3WRYs2aP6hTqFomDqVm8LGk9MmnTztZ0yjE6BXcSVsT
+         5ZkhS0Zt8aATqimnjdbGD7sBNVuV/ycB5ctOcGCKSax2M/bkfoYeOJdG/g7nQGHWmlBf
+         LYWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692204882; x=1692809682;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Gm1Xm6qKtBBHwZRiPDqXkb0hB+xtLzUrT5ZrlkndbII=;
-        b=RrXub6nPu0OxmjDSsJkl1QEOw9+plJHD64iMPF1p6ArfIxjPXGvUa4w96sCkI7yoQ6
-         X5qayx1By6piW9DDLvV8ThZPsLpobZeD8DffToJvN3W/wkL7UH32NDfZUe3kx1+5WR84
-         +3VpysxRXtnp9Y25CGfWxkl5t/ZYRuf8cq8aN773oSm6bp/5b5auW6g5x5KPCK/hP1PA
-         wurA1CjmjESNTIdF/rfEdvYtZZZGo1bb0yCpgtI5PYBwV3dDAfRLTZaUndp9Xcq5yHeR
-         taWyqX6/Svb8q8IHs7xFLc/xvUlz/hRBl6GQMnr8e3pC5nmf4u4qOErXpbuDtYHhbaLz
-         DxmQ==
-X-Gm-Message-State: AOJu0YzM8kGq47NXoKaRcQf2OAbtnfdQjADZ8AtoigIH9oR4AsPwrnGb
-        zDuoI/ajOaGapzkFXuT0vr7ze6fAeyBdmHrnNmUwOuxN
-X-Google-Smtp-Source: AGHT+IENRD9S99H9rfymN0R/kvpTvMP7zroBVyvm8hywRiGOj8sUa4i6Pg/7iTiAFarhTXeMZvmM9A==
-X-Received: by 2002:a17:906:cb16:b0:99b:e6ec:752c with SMTP id lk22-20020a170906cb1600b0099be6ec752cmr1906604ejb.70.1692204882123;
-        Wed, 16 Aug 2023 09:54:42 -0700 (PDT)
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com. [209.85.128.44])
-        by smtp.gmail.com with ESMTPSA id o19-20020a170906359300b00997c1d125fasm8774658ejb.170.2023.08.16.09.54.41
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 09:54:41 -0700 (PDT)
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-3fe1e44fd2bso3365e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:54:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:5024:b0:3f6:f4b:d4a6 with SMTP id
- n36-20020a05600c502400b003f60f4bd4a6mr218wmr.7.1692204880839; Wed, 16 Aug
- 2023 09:54:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230816060042.13110-1-krzysztof.kozlowski@linaro.org> <3a4bb4c3-ccbe-45a1-a7e9-ee3d31f73c9a@linaro.org>
-In-Reply-To: <3a4bb4c3-ccbe-45a1-a7e9-ee3d31f73c9a@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 16 Aug 2023 09:54:28 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V+W9qDXeHSDbRWC_dkPm5Ygwi_LG0Bu8k5dZ9UbxoPGA@mail.gmail.com>
-Message-ID: <CAD=FV=V+W9qDXeHSDbRWC_dkPm5Ygwi_LG0Bu8k5dZ9UbxoPGA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: drop unsupported qcom,adsp-bypass-mode
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        cros-qcom-dts-watchers@chromium.org,
+        d=1e100.net; s=20221208; t=1692204901; x=1692809701;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=msBfPd8BuzD/GUlkblv4mwPk8fVn9ZKYLL0U+2C7Ff4=;
+        b=ejlB45RbRpHAjNN2L98rTMFjAt5jra+fkFoNss/CLzR7Ebw7RL+iL3hiD/CN7+AJSq
+         XFSDXze+cWKYf/NkK24YLPJacXh9IE+H/MHOPvxU2tH4VxdQXKRHpIQwsgHnGLItnN+Q
+         Y4lC5jxwIJmugvuO193RGXhGNv/vMM9NMS4nybfVOjSMI+QYTJ6oAI/oFPo0rOgI8yYP
+         DJwy4yEf+WQzcG8zt3KRr9yDF6pRSEjUh+sEYfonfOe9ws85eP94Y96iwluok9z4yuLt
+         bVxxw/FvTIAzMWQ9B7BeuhJJrjhw9ru50GFa/GcsdqlTKYBZmDLafDN/z2a73v9X4QFN
+         y2zg==
+X-Gm-Message-State: AOJu0YzCsw8XkKjF4F7zST7dVZs6FmNSL3zYcWMBFmr7Y3u2emi9xNRa
+        bB9f9chJNg1t/epv53yQMBXU
+X-Google-Smtp-Source: AGHT+IE0VMMoFi/0xXy9WRxnp9BBxLzIGWSRRF/ZixvOl8lChvXu3J8yB9UY/E0Bkb2BJXL4r0oiPA==
+X-Received: by 2002:a05:6a21:778b:b0:13f:7c0e:dc74 with SMTP id bd11-20020a056a21778b00b0013f7c0edc74mr2426622pzc.55.1692204901191;
+        Wed, 16 Aug 2023 09:55:01 -0700 (PDT)
+Received: from thinkpad ([117.248.5.25])
+        by smtp.gmail.com with ESMTPSA id h27-20020a63385b000000b005641fadb844sm12265647pgn.49.2023.08.16.09.54.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Aug 2023 09:55:00 -0700 (PDT)
+Date:   Wed, 16 Aug 2023 22:24:55 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Johan Hovold <johan@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: Disconnect interrupt generation for QC targets when role switch
+ is enabled
+Message-ID: <20230816165455.GA23057@thinkpad>
+References: <af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Aug 11, 2023 at 05:21:03PM +0530, Krishna Kurapati PSSNV wrote:
+> Hi Thinh, Johan, Bjorn, Konrad,
+> 
+>   On QC targets today, the disconnect event in device mode is generated by
+> controller when software writes to QSCRATCH registers in qcom glue layer
+> rather than the vbus line being routed to dwc3 core IP for it to recognize
+> and generate conndone/disconnect events.
+> 
+> We need to write '1' to  UTMI_OTG_VBUS_VALID bit of QSCRATCH_HS_PHY_CTRL
+> register to generate a connection done event and "0" if we need to generate
+> a disconnect event during cable removal or mode switch. Exactly what is done
+> by "dwc3_qcom_vbus_override_enable" call in dwc3-qcom. In case the user
+> wants to enable runtime suspend for dwc3 and we don't generate a disconnect
+> event, the dwc->connected flag will be "true" and it would block suspend
+> entry.
+> 
+> Today, in dwc3-qcom, this qscratch modification is being done only for
+> vbus/host notifiers where I assume dwc3-qcom would be receiving these
+> notifications from charger driver regarding cable connect and removal and
+> since we are receiving a copy of the information in dwc3-qcom as well, we
+> would be knowing when to set/clear the VBUS_VALID bit.
+> 
+> But, when we have role switch in play, the role_set callback goes to DRD and
+> Qcom driver is agnostic of what is actually happening. While this doesn't
+> hinder mode switch, the role change notification never really reaches
+> dwc3-qcom and we would never set this bit to "0" and disconnect event is not
+> generated upon cable plug-out. Is there a way we can properly provide this
+> notification to qcom glue driver ?
+> 
+> I had some idea on how to get the role notification reach qcom glue driver
+> but wanted your opinion on whether they can be used or not:
+> 
+> 1. Register a vendor_hook from glue driver and invoke that during
+> __dwc3_set_mode.
+> 
+> 2. Let the role notification reach dwc3-qcom first and then let qcom driver
+> invoke role_set of drd. Something similar to what was implemented by Wesley
+> on [1].
+> 
+> But both the options require dwc3_probe to be done in sync with
+> of_platform_populate or we need to defer qcom probe if dwc3_probe is
+> deferred. Since we are leaning towards async probe, not sure if the above
+> two options would be proper.
+> 
+> Couple of more reasons to ask for the above two options:
+> 
+> 1. We would know when we are in device/host mode and we can avoid having any
+> layering violations in dwc3-qcom.
+> 
+> 2. When it comes to runtime pm implementation for dwc3-qcom, an effort was
+> done by Manivannan Sadhasivam previously [2], we can avoid modifying
+> xhci-plat.c to set autosuspend delay to any specific value. We would be able
+> to enable runtime/autosuspend for dwc->xhci->dev from dwc3-qcom itself upon
+> entering host mode.
+> 
 
-On Wed, Aug 16, 2023 at 4:41=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> On 16.08.2023 08:00, Krzysztof Kozlowski wrote:
-> > LPASS LPI pin controller node binding does not allow
-> > qcom,adsp-bypass-mode property:
-> >
-> >   sc7280-herobrine-crd.dtb: pinctrl@33c0000: 'qcom,adsp-bypass-mode' do=
-es not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
-> >
-> > Fixes: 32d4541abe0f ("arm64: dts: qcom: sc7280: add lpass lpi pin contr=
-oller node")
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > ---
-> Looks like it was never picked up
->
-> https://lore.kernel.org/linux-arm-msm/20230714-topic-lpass_lpi_cleanup-v1=
--3-dc18b5bd14f7@linaro.org/
->
-> Konrad
+Since you have quoted my series, I'd like to get clarification on one issue I'm
+seeing. When resuming from runtime suspend in host mode, dwc3-qcom driver gets
+the wakeup event and it resumes the xhci driver. But the XHCI IRQs are received
+after some delay. Due to this, xhci driver doesn't resume the device, instead,
+all the drivers (dwc3-qcom, dwc3-core, xhci) went to runtime suspend again.
 
-Yeah, it seems like picking up Konrad's is better. If nothing else,
-the "Fixes" tag in ${SUBJECT} is wrong. This property was actually
-valid/required on older kernels IIRC.
+But once the XHCI IRQs are received, dwc3-qcom gets the wakeup event and this
+time, xhci driver resumes the device.
 
--Doug
+This is the reason why I added the autosuspend delay of 200ms to allow the xhci
+driver to wait for IRQs before going to runtime suspend.
+
+Can you clarify why there is a delay in receiving XHCI IRQs?
+
+- Mani
+
+> Can you help let know your thoughts on the above two options or if there is
+> any way we can implement the role change / cable plug in(out) callback.
+> 
+> [1]: https://patchwork.kernel.org/project/linux-usb/patch/20201009082843.28503-4-wcheng@codeaurora.org/
+> [2]: https://patchwork.kernel.org/project/linux-usb/cover/20230325165217.31069-1-manivannan.sadhasivam@linaro.org/
+> 
+> Regards,
+> Krishna,
+
+-- 
+மணிவண்ணன் சதாசிவம்
