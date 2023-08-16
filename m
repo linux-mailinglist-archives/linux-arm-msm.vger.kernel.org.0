@@ -2,78 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7227077E80A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 571C277E86C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 20:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345318AbjHPR7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56514 "EHLO
+        id S244026AbjHPSNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 14:13:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345321AbjHPR64 (ORCPT
+        with ESMTP id S1345441AbjHPSNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:58:56 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E247A10C0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:58:54 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9b904bb04so109333911fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:58:54 -0700 (PDT)
+        Wed, 16 Aug 2023 14:13:00 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B001FE1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:12:57 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fe61ae020bso10715467e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:12:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692208733; x=1692813533;
+        d=linaro.org; s=google; t=1692209576; x=1692814376;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rL1d5IkkpVuyaHJUviWq3wb0oe5qxAALKeywaszABpo=;
-        b=f9t0VBOxRmhAPHWhEew70l7ub3eQ1HxIhoi1qa1w7k0EFrextvcWK3vdTGbL8aPiIp
-         Q3doG/2Mey7PKIb6XIlJpGeKG+0iLHUY8UBgSnrQIPFXhhGyHLw+xKpvSrDiA1HNg2t8
-         4iB2q0A2hkAjUVXDq7rDwqHxdT3j5VxELLYwucVD6Yz/vYDR5whteKmqLVsJ7Vh9sQQ4
-         kRQeYNrEfbQzhLq2/5knVeS4py+fev72cCaHwOr+TaFRX0JYmQ3RsbcPBUMTkCVLKrFI
-         c/CBNFc5T/LAcnl5wK4VNjQxiTtSqTfIuLwgUfh1hjoKKld+QQ6whrSD6mk1Smf35gKV
-         dWdg==
+        bh=rIOIAIAB2nZMmeJ2q/w7McIGNDOK18Jyp8rCuWMNUEA=;
+        b=DybbaXBOFIVURSPRYAPB/bM0Qx59UpXwMJn20HZ0mIZWx1KK3GnwJX/fXNxT/ZvdCb
+         js8LxqIeCBPYBFymVHarmLML734sZyulZpK359EKmt95FzZqoIhWEbHY5oRZJVkLMzlL
+         SPoFGx+0By/xCGEiR3uYEcllrEDrIydTsgwnHX3KwoHSEyiLFA6u+sknJXBMIUCIscSO
+         XPUP/USF0kDs55A64DD7QIDQVdIoeAx1N/TySJLLllr9gRmJ4o/XKFTaHyOSCvW4uNlA
+         UTubXfZYkHet/4Vi+8C6G+lVSslI904h2Ex8XQ3EuTHxfC4cJjTm4+Rm+2YlPmn+7HSy
+         96MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692208733; x=1692813533;
+        d=1e100.net; s=20221208; t=1692209576; x=1692814376;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rL1d5IkkpVuyaHJUviWq3wb0oe5qxAALKeywaszABpo=;
-        b=JB2GMG7BJYlQQLT2YWHn3IA2O0FJI/EtiykXb0nkDKEEtM0rPCFMyYzUuh1+TXPxUN
-         B3fT65nSs7KdK+6ph1fGJueLy3XWk9Ca5eynqNLOtu6or96WBIigwXqIdqT18y1wZXQT
-         U3bX5lYjppCixO7ZVYdsX3loT/y3ERYCgtrEklaxpxBCMMl4DneaCha5XT7OcmMMUtRP
-         GIdgS+3IbxxXdizgqZlzuXC+l1Lh9BmURbdXWelo7GMt56xqb7SDYzEYv01am/0cLRUL
-         Vubmxgq35/KM/CFXsoayoB5nE2uhnCejk91116zbCfrExAKMpfI/JVl3MPXa7iWW2Rw2
-         Ueng==
-X-Gm-Message-State: AOJu0YyOK5un6iCWVixNaQuEOFOROB6L2r5DoPeYxnbErbpFhm5x9pnl
-        mlaqTWxGfLW06YFALCSt1/O2xQ==
-X-Google-Smtp-Source: AGHT+IGmlFLezr5yGl7cSouAqe8XS1SwhcY8CrjyqarVswLmc7p7MEkLmDIAAfCbjQRhEMEbcAsTjw==
-X-Received: by 2002:a2e:9c99:0:b0:2b6:e618:b593 with SMTP id x25-20020a2e9c99000000b002b6e618b593mr2263846lji.31.1692208733180;
-        Wed, 16 Aug 2023 10:58:53 -0700 (PDT)
+        bh=rIOIAIAB2nZMmeJ2q/w7McIGNDOK18Jyp8rCuWMNUEA=;
+        b=kYy83by5VqZZYC0vxDOX2H+Dx2XBq8fX7axc8+AfRdO7NoEII+ZRkUSCvsgZUX1M6/
+         PzlCRpWSLTazp9/U9Nz8XKiIicFIogkzNwxvgUmHdiol87q2oK71dw+Tmkf35sAxMnbm
+         roR94/y8RbvOZfUYMreriJE3DPlE8t2879eqmWsYI8HZco9rijA3Bn5+8LNvUymC8c5s
+         iFzNbW/qqmISmBLBdDCQDoJ9rr3D6o+Y5zjj+w4L8nKizcT6Vb8xI0BlJDypSsvlgPoY
+         0dmDYO1m6n+j5Wb+Tx083x2tY3EUlGXZi+U4IRkpdn7v0PdVEK0h8C8MIuhHKGXEQ/ay
+         agKg==
+X-Gm-Message-State: AOJu0YyaNUrn1AqnPsgr/dMQZ+6KHNZyz7nF4g+uZafNWFxXaKvKb4H0
+        l9r5ERi/PItfQba+xbP/oH8/ew==
+X-Google-Smtp-Source: AGHT+IGVXtf9gH1OBvrJrM9BtUDz5r4jCbc8hwdm5q56kVF64Fc5atHpw0a7kqmBvumG/eEcLCTgkQ==
+X-Received: by 2002:a05:6512:31c6:b0:4f8:4245:ed57 with SMTP id j6-20020a05651231c600b004f84245ed57mr2631921lfe.35.1692209576231;
+        Wed, 16 Aug 2023 11:12:56 -0700 (PDT)
 Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id k22-20020a2e2416000000b002b9e0aeff68sm3581086ljk.95.2023.08.16.10.58.51
+        by smtp.gmail.com with ESMTPSA id i21-20020a056512007500b004fbc6a8ad08sm3008542lfo.306.2023.08.16.11.12.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 10:58:52 -0700 (PDT)
-Message-ID: <ef031105-3b77-484d-8f47-a6c0233dd9c2@linaro.org>
-Date:   Wed, 16 Aug 2023 19:58:51 +0200
+        Wed, 16 Aug 2023 11:12:55 -0700 (PDT)
+Message-ID: <cb1df40a-e879-4095-b5e5-f71a46e92120@linaro.org>
+Date:   Wed, 16 Aug 2023 20:12:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] venus: pm_helpers: Use dev_pm_genpd_set_hwmode to
- switch GDSC mode
+Subject: Re: [PATCH V1 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
+ for SC7280
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>
-Cc:     linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20230816145741.1472721-1-abel.vesa@linaro.org>
- <20230816145741.1472721-7-abel.vesa@linaro.org>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, andersson@kernel.org,
+        vkoul@kernel.org, agross@kernel.org, kishon@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Manish Pandey <quic_mapa@quicinc.com>
+References: <20230816154841.2183-1-quic_nitirawa@quicinc.com>
+ <20230816154841.2183-3-quic_nitirawa@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,7 +99,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230816145741.1472721-7-abel.vesa@linaro.org>
+In-Reply-To: <20230816154841.2183-3-quic_nitirawa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -123,52 +112,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.08.2023 16:57, Abel Vesa wrote:
-> From: Jagadeesh Kona <quic_jkona@quicinc.com>
+On 16.08.2023 17:48, Nitin Rawat wrote:
+> Add SC7280 specific register layout and table configs.
 > 
-> This change demonstrates the use of dev_pm_genpd_set_hwmode API from
-> video driver to switch the video mvs0 gdsc to SW/HW modes at runtime
-> based on requirement.
-> 
-> This change adds a new boolean array member vcodec_pmdomains_hwctrl in
-> venus_resources structure to indicate if GDSC's have HW control support
-> or not. This data is used in vcodec_control_v4() to check if GDSC has
-> support to switch to HW control mode and then call dev_pm_genpd_set_hwmode
-> to switch the GDSC mode.
-> 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
-[...]
+Looks very reasonable compared to what I can see downstream.
 
->  static int vcodec_control_v4(struct venus_core *core, u32 coreid, bool enable)
->  {
-> -	void __iomem *ctrl, *stat;
-> -	u32 val;
-> -	int ret;
-> -
-> -	if (IS_V6(core)) {
-> -		ctrl = core->wrapper_base + WRAPPER_CORE_POWER_CONTROL_V6;
-> -		stat = core->wrapper_base + WRAPPER_CORE_POWER_STATUS_V6;
-> -	} else if (coreid == VIDC_CORE_ID_1) {
-> -		ctrl = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_CONTROL;
-> -		stat = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_STATUS;
-> -	} else {
-> -		ctrl = core->wrapper_base + WRAPPER_VCODEC1_MMCC_POWER_CONTROL;
-> -		stat = core->wrapper_base + WRAPPER_VCODEC1_MMCC_POWER_STATUS;
-> -	}
-> -
-> -	if (enable) {
-> -		writel(0, ctrl);
-> -
-> -		ret = readl_poll_timeout(stat, val, val & BIT(1), 1, 100);
-> -		if (ret)
-> -			return ret;
-> -	} else {
-> -		writel(1, ctrl);
-This removal cries for better explanation.
-
-Has the venus hw been setting some registers that alter the GDSC's state?
-Or the hardware's expectations of the GDSC state?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
