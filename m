@@ -2,234 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65F9977E8C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 20:32:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CFAD77E93F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 21:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345536AbjHPSb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 14:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47162 "EHLO
+        id S1345295AbjHPTDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 15:03:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345556AbjHPSby (ORCPT
+        with ESMTP id S1345443AbjHPTC7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 14:31:54 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3630B12C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:31:52 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99de884ad25so158141866b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:31:52 -0700 (PDT)
+        Wed, 16 Aug 2023 15:02:59 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE10226BE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 12:02:57 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fe1e1142caso67546865e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 12:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1692210710; x=1692815510;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lx+mSV9nVDCSUCZ9Mp20Kvrcl4sv9ALrPuz3+qN6T0w=;
-        b=KF72xASUYluN/72dWo+aR6khFl46jSBhJ21VozdC9HBp/U7j4mfKg7Kmso6fv1RyrL
-         2UZad5fbNrfwGOKnAfHtkX/hd2+nvmLX7dQAa+BWV5Cbgg64KpeOk5Hf7TPAX1pQgEjP
-         3WKXN3vQrj7aSUja4t6Ql4ldSe+I6OKbb5C+g=
+        d=linaro.org; s=google; t=1692212576; x=1692817376;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JyfZGIe8QIpo/zFgxfH9BIcgCAtghxQQLdOWakBNcLQ=;
+        b=L2glqGJT/yBHfinN43hSX0i11SbAep15xq6Hka+FKmPGGE63wxJ6o+awrdOfGy42rI
+         MhiKZlDbtYMlA2+zhJIdhappycgeRlmM4326qW/6GuWhGuaY6468xkgvfUgMAdj+gEma
+         8yw1kpE536ykf3sceuVRwE2KaUFZhwnpkjbhN6e7lzvOx4/MKqUaM4FjVpAA2zACIIeW
+         Kbpe9LquAr64h+3yvQgG0ZRFcMNI1vJySW5j0FE/PFLp4TVWjmaBmAoLxFh4Cb3gDn5n
+         b2qkTOAM5nsxBa2iDQsiKyEWTOrueuj+t2Qbw3lzAEcVyz8zwyLqID54Bfqy8HwqXVoV
+         pPjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692210710; x=1692815510;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Lx+mSV9nVDCSUCZ9Mp20Kvrcl4sv9ALrPuz3+qN6T0w=;
-        b=Euzyq0dskZt51JYPPzA575vXbun/SpVZbFB8Jh5hBw4RGdNab01kuX9bUDcmI9WnL1
-         ljSS3CTzXMue19AkWIsk2To3SFRH3o+DXLU6OP/apr7GGCFNUD2a938Gdx2SuUWHQ38F
-         Z8QbeWyFccKhkHuvgces+V4Ldau/puRcmv6kfPN3tBLZZfW8T45mHplJ+0MuXlSiFeZt
-         zRjGkamVboQOHVLDljdF5w034HezYwXgmpB4QwoQN7iSA81XC1JZuPd+ItUIg80J+YFa
-         c300Lew/vf53SqVWj7IzPjJ7a2t5ea7KP4Oo+GqdheNe0NtvUL1YXKuW8NTznCRO/8Zu
-         ornw==
-X-Gm-Message-State: AOJu0YwfZ+Sm9DHkpGKUgDxPxoYSsmAXsR2BQsxcVu+KQ9klxf7hDKOB
-        xZFgdCUp7XmC/sDknI1IUQJxl7YVKSV2s1ktUvf6G/n2
-X-Google-Smtp-Source: AGHT+IF+sogyhyRA0lMjwAGQN0WwarbPNh2Ig/+lL1P8/Q2KxXRau5L4Z5BbUjhPrkfwX7gi26ro7A==
-X-Received: by 2002:a17:906:2109:b0:98d:fc51:b3dd with SMTP id 9-20020a170906210900b0098dfc51b3ddmr2195606ejt.41.1692210709985;
-        Wed, 16 Aug 2023 11:31:49 -0700 (PDT)
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com. [209.85.208.41])
-        by smtp.gmail.com with ESMTPSA id k21-20020a170906971500b0098de7d28c34sm8893528ejx.193.2023.08.16.11.31.49
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1692212576; x=1692817376;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JyfZGIe8QIpo/zFgxfH9BIcgCAtghxQQLdOWakBNcLQ=;
+        b=InLgqpZ+qorIC7/5KbuMAfuLV/P7v1+x9jbDk1ebnO0RWIWJ4VTuROtrM6wmA3ZJri
+         009Zp5zLzbeZ9Hg2gFfJfItVDO7cFQmF8Eok3Rfn19TUgltTDnOk+/gdoS3Rg6O3fWUS
+         kYMNJq03GNBZl+PPB7YDZaH1DRKtg+ZRPlTSGP/mt2YNpU130BxZMNmOk/ZfjBk2zwcG
+         0wCt6cVywN37pHPLgr/geMwSqjJxwImmAwj4lJFFIFTFyLnR1V7YU3Tjl0Uohk/xr2Va
+         FT99ivoVyHD5XlULdukBV8MD7BZEm8PqYJPnrZyMJwKIGNSkTTH8pwb+u/y5fzlWS9+e
+         3UYQ==
+X-Gm-Message-State: AOJu0YwCeQqn/MJiKXSbFfoijeE6KAEZbd5iqv74sQ7twIn9M9MhwIJA
+        CwWLtVh6pyBfyhZfMD7H3Q2roQ==
+X-Google-Smtp-Source: AGHT+IFc2XJDc5VMqSl4gXGVgBhk+WtsXNHc22KMT3tTtcmKPoPvenFckMrirB1W2x7hfD0FXNFjiA==
+X-Received: by 2002:a1c:ed0e:0:b0:3fa:95c7:e891 with SMTP id l14-20020a1ced0e000000b003fa95c7e891mr2307962wmh.35.1692212574096;
+        Wed, 16 Aug 2023 12:02:54 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 12-20020a05600c230c00b003fbc9d178a8sm287379wmo.4.2023.08.16.12.02.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 11:31:49 -0700 (PDT)
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-51e24210395so1993a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:31:49 -0700 (PDT)
-X-Received: by 2002:a50:a45b:0:b0:523:bdc9:48a9 with SMTP id
- v27-20020a50a45b000000b00523bdc948a9mr18121edb.0.1692210709094; Wed, 16 Aug
- 2023 11:31:49 -0700 (PDT)
+        Wed, 16 Aug 2023 12:02:53 -0700 (PDT)
+Message-ID: <0d8ccc53-1a4a-8a0a-6886-f7bf9c5ebd75@linaro.org>
+Date:   Wed, 16 Aug 2023 20:02:52 +0100
 MIME-Version: 1.0
-References: <20230804095836.39551-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230804175734.v2.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
- <0cc71595-ba11-11d4-1fcd-865721ede3f9@linaro.org> <CAD=FV=UfKXBQ6R0+5yY6WaNFS49=jmg2NTXrUPcyD3MBZA7A5A@mail.gmail.com>
- <eb082e10-efc2-0f5f-95e1-4d2707c87c59@linaro.org> <eb082e10-efc2-0f5f-95e1-4d2707c87c59@linaro.org/>
- <20230816095910.41305-1-sheng-liang.pan@quanta.corp-partner.google.com>
-In-Reply-To: <20230816095910.41305-1-sheng-liang.pan@quanta.corp-partner.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 16 Aug 2023 11:31:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VedSS62LKPHeHm8qXF_acVmjXODJS8V-EeC6eHSc9yNg@mail.gmail.com>
-Message-ID: <CAD=FV=VedSS62LKPHeHm8qXF_acVmjXODJS8V-EeC6eHSc9yNg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7180: Add board id for lazor/limozeen
-To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-Cc:     krzysztof.kozlowski@linaro.org, agross@kernel.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v1 02/14] media: qcom: camss: Start to move to module
+ compat matched resources
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230814162907.3878421-1-bryan.odonoghue@linaro.org>
+ <20230814162907.3878421-3-bryan.odonoghue@linaro.org>
+ <0d4d7d4b-9cbc-40df-98f5-3c9696bf6b13@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <0d4d7d4b-9cbc-40df-98f5-3c9696bf6b13@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 16/08/2023 18:10, Konrad Dybcio wrote:
+> On 14.08.2023 18:28, Bryan O'Donoghue wrote:
+>> There is a lot of unnecessary if/elsing in this code that arguably
+>> should never have made it upstream when adding a second let alone
+>> subsequent SoC.
+>>
+>> I'm guilty of not fixing the mess myself when adding in the sm8250.
+>> Before adding in any new SoCs or resources lets take the time to cleanup
+>> the resource passing.
+>>
+>> First step is to pass the generic struct camss_resources as a parameter
+>> per the compatible list.
+>>
+>> Subsequent patches will address the other somewhat dispirate strutures
+>> which we are also doing if/else on and assigning statically.
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+> [...]
+> 
+> 
+>> -
+>>   	for (i = 0; i < camss->csiphy_num; i++) {
+>>   		ret = msm_csiphy_subdev_init(camss, &camss->csiphy[i],
+>> -					     &csiphy_res[i], i);
+>> +					     &camss->res->csiphy_res[i], i);
+> &camss->res is used quite extensively, so I think it may be a good
+> idea to keep the variable there, just make it point to the correct
+> new thing.
+> 
+> Konrad
 
-On Wed, Aug 16, 2023 at 2:59=E2=80=AFAM Sheng-Liang Pan
-<sheng-liang.pan@quanta.corp-partner.google.com> wrote:
->
-> > On 15/08/2023 23:10, Doug Anderson wrote:
-> >> Hi,
-> >>
-> >> On Sun, Aug 6, 2023 at 11:34=E2=80=AFPM Krzysztof Kozlowski
-> >> <krzysztof.kozlowski@linaro.org> wrote:
-> >>>
-> >>> On 04/08/2023 11:58, Sheng-Liang Pan wrote:
-> >>>> add BRD_ID(0, Z, 0) =3D 10 for new board with ALC5682i-VS
-> >>>>
-> >>>> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.=
-google.com>
-> >>>> ---
-> >>>>
-> >>>> Changes in v2:
-> >>>> - correct newly create dts files
-> >>>>
-> >>>
-> >>>
-> >>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts b=
-/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
-> >>>> new file mode 100644
-> >>>> index 000000000000..5a58e94c228e
-> >>>> --- /dev/null
-> >>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
-> >>>> @@ -0,0 +1,30 @@
-> >>>> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> >>>> +/*
-> >>>> + * Google Lazor board device tree source
-> >>>> + *
-> >>>> + * Copyright 2023 Google LLC.
-> >>>> + */
-> >>>> +
-> >>>> +/dts-v1/;
-> >>>> +
-> >>>> +#include "sc7180-trogdor.dtsi"
-> >>>> +#include "sc7180-trogdor-parade-ps8640.dtsi"
-> >>>> +#include "sc7180-trogdor-lazor.dtsi"
-> >>>> +#include "sc7180-lite.dtsi"
-> >>>> +
-> >>>> +/ {
-> >>>> +     model =3D "Google Lazor (rev10+)";
-> >>>> +     compatible =3D "google,lazor", "qcom,sc7180";
-> >>>> +};
-> >>>> +
-> >>>> +&alc5682 {
-> >>>> +     compatible =3D "realtek,rt5682s";
-> >>>> +     /delete-property/ VBAT-supply;
-> >>>
-> >>> No, don't delete properties. First of all, why you do not have this
-> >>> supply here? I doubt it... Especially that this DTS has vbat-supply
-> >>> regulator!
-> >>>
-> >>> Second, define the properties where applicable instead.
-> >>
-> >> It looks like v3 is out, but responding here since it looks like
-> >> Sheng-Liang didn't make any changes in v3 but also didn't respond and
-> >> explain why he didn't make any changes. Sheng-Liang: for future
-> >> reference you should make sure to address comments folks have on the
-> >> list. If your new version takes their feedback into account then
-> >> there's no reason to just respond with "Done", but if (like in this
-> >> case) you ignored feedback you need to say why.
-> >>
-> >> In this case the extra "/delete-property/" is needed to pass bindings
-> >> checks. Specifically this revision of the board replaces the "rt5682i"
-> >> with the newer "rt5682s". This new codec is _almost_ a drop-in
-> >> replacement for the old codec with just a few tiny changes. One such
-> >> change is that the new codec doesn't need a "VBAT-supply".
-> >>
-> >> Since most trogdor devices have the older "rt5682i" codec, the default
-> >> in "sc7180-trogdor.dtsi" specifies the properties for that codec. Only
-> >> the handful of boards that have been spun to use the new codec have an
-> >> override like this. You can see that the override done here matches
-> >> the one done in a few other trogdor boards. A good grep is:
-> >>
-> >> git grep -A4 realtek,rt5682s -- arch/arm64/boot/dts/qcom/sc7180-*
-> >>
-> >> Ironically, that grep finds that "sc7180-trogdor-pazquel360.dtsi" is
-> >> missing the "/delete-property/" which I'm fairly certain means that
-> >> it's giving a validation warning today.
-> >>
-> >> I'm happy to have a bikeshed discussion about doing this better. In a
-> >> previous reply [1] I suggested that it's probably time to move the
-> >> "realtek,rt5682s" snippet to something like
-> >> "sc7180-trogdor-rt5682s-sku.dtsi". Then we could include it in the
-> >> devices and avoid duplicating this bit of dts. I didn't insist on it,
-> >> but if you feel strongly then maybe Sheng-Liang could add that to his
-> >> series? Once done, we could have further bikeshed discussions about
-> >> whether we should continue to use the "/delete-property/" solution or
-> >> if we have to also create a "sc7180-trogdor-rt5682i-sku.dtsi" and
-> >> force all older SKUs to include that. Personally I don't hate this
-> >> "/delete-property/" but I don't care a whole lot either way.
-> >
-> > Thanks for explanation. I vote against /delete-property/ because it is
-> > error-prone and a bit confusing. The same with overriding compatibles -
-> > if possible, should be avoided. sc7180-trogdor-pazquel360.dtsi is doing
-> > both, but that's not the pattern I find easy to read.
+Sure that makes sense
 
-OK, I tried it. I'm on the fence but don't object to it landing [1]
-
-
-> > I accept overriding supplies or pins, because these differ per board.
-> > But if common DTSI defines compatible, then it is common for everyone o=
-r
-> > it is not really part of common DTSI.
-> >
-> > IOW, the common DTSI should be more like a SoC DTSI - have only parts
-> > present there. I simplify here, because obviously SoC is a real thing
-> > piece of hardware and common board DTSI is not. It's just an
-> > abstraction... but anyway if different boards use different codecs, the=
-n
-> > I would say it is not part of common platform.
-> >
-> > Best regards,
-> > Krzysztof
-> >
-> >
-> Thank Doug's explain, as Doug says, we need "/delete-property/" to pass b=
-inding checks.
-> I read from https://lore.kernel.org/all/20221102182002.255282-9-nfraprado=
-@collabora.com/ which removed VBAT-supply;
->
-> I'd like to know what I can do for our project. Please advise.
-
-I've posted a series which I think will help [2] [1]. Assuming those
-look good, your action items would be:
-
-1. If they look good, you could provide "Reviewed-by" and/or
-"Tested-by" tags on my patches.
-
-2. You can send a new version of your patches based atop mine. You'd
-want to note in the cover letter and/or "after the cut" in the patch
-that your patches depend on mine.
-
-NOTE: there's no reason that the cleanup patches needed to be posted
-by me. As you get more familiar with upstream kernel development, you
-should be able to write similar patches yourself and include them in
-your series. It's perfectly OK to "cleanup" other boards as part of
-your series.
-
-
-[1] https://lore.kernel.org/r/20230816112143.2.I29a5a330b6994afca81871f74bb=
-acaf55b155937@changeid
-[2] https://lore.kernel.org/r/20230816112143.1.I7227efd47e0dc42b6ff243bd22a=
-a1a3e01923220@changeid
+---
+bod
