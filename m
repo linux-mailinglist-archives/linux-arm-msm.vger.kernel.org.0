@@ -2,69 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3D2077E7AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:34:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14A7B77E7F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:55:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345219AbjHPRd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41808 "EHLO
+        id S1344901AbjHPRzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 13:55:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345305AbjHPRdT (ORCPT
+        with ESMTP id S1345235AbjHPRyk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:33:19 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B92C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:33:18 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b962c226ceso106054321fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:33:18 -0700 (PDT)
+        Wed, 16 Aug 2023 13:54:40 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987D12710
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:54:38 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b974031aeaso107371681fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692207196; x=1692811996;
+        d=linaro.org; s=google; t=1692208477; x=1692813277;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hlJlE+pLzohqehJhGlKehccYlE2SfB36KPQVu33mNpA=;
-        b=IT7+QY425Z6hPqSdKlPUHX+BgJhLtUz6CFYhT0PlTQtFlEQp3u4BUH9ezBHaIx96Bz
-         ui88ZdlkKUT7is+qkZbkjMyDcdJH6GbV7MnC6VEckQZsUHMfOvbLqKGWyijgBg9ChGT6
-         9f3R+hd+zrXbeSiiNxnJHjdmBpKhYFNiB37oDDRW3A2yoR2RcBPfTnstsqsfefInvuM+
-         aoSYRGYGFQnicmMDeIhiFiSxjDEreLpCyU24/Cj490L5pq+Hxugq8udc+fyqZtdpvX1V
-         HYYaieabRVjIrZQb2H4Lpg7um+m4lXLayUDF5buetlGWJa1t6/z93ZJwjekdXvyHNZwr
-         49VA==
+        bh=1kL8iqatk1tnwSn5GpU5w8c60PHF1rwz6XWlzAwa8Vo=;
+        b=RtbmO0YudER5L1Uc4ZFUo9ZBzx/t54o4sieNUnhbYYsm942TpP+1GdStiSAzBi+FS7
+         sqk59Cfnbd3YynSWGdDz9bKNoGwN+CNVMqfnH3UOuv6O1YcoultZgbm3WqqFjYb1Mf5P
+         yYyCRLuFohvT0U0vjV2ou3v1hTzvJ64PjpeGR4IUjs8/7pg9FOTjInIS5xWZcyC+3d15
+         7C0r7FH4eD3BOhXNVscXbrjSJXu/Q+c50Ip7YFgUMEgK8eyujCH0+V9AodX/xPOYmKea
+         /xeRH+wRQGE+0a/IxHtTPH0DeSk3I8bI5RquLl2H0pzFvdtfBlszuD3ub0KSWdcyLd3k
+         Kdwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692207196; x=1692811996;
+        d=1e100.net; s=20221208; t=1692208477; x=1692813277;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hlJlE+pLzohqehJhGlKehccYlE2SfB36KPQVu33mNpA=;
-        b=HU0+fiFJBI+2KE3kvCph8kSiAG2TzXJ4HiJCKSL11ZiRQ7aeFyc16edIb84qXtHRKr
-         HqdYp3Y6SW74eLL7M3T4Sl+GQNbw9M8GRK2Xp2zPG7V7vJHZLiH9TNhya8Kl+m7dCFTv
-         FbmeyC66i6xkbqfJkjci/Mcrim1oD5nVw55enOMPBC3U67WuPpJFn4NPhOQom6f13sQK
-         g3cBKtqxpqXOFvgsnFjRWw/CGOXSUBjzEUdz9AQszdXI5q3FVVd8CtfMJDTue1uFgtNa
-         P0zeEXBy5EIqiBePcEHC6rsedyIkkDk9Joob8nKQLRL9iOvyv/yb/+nbuE329UN9kJa8
-         gNSg==
-X-Gm-Message-State: AOJu0YyK7tM/3IpkGlCc7xMYgxVZpcz8hGuMeO3PmiE4hg9L57bRa14y
-        XnqqdeHJ0eDdIjxRiICwnrwiE2aSIqJkSd2jsh8=
-X-Google-Smtp-Source: AGHT+IF2+esa9Q6gVnEqpMdQ6jiaFvZ66jD02ePRHhMaBTrMMqQR+eMYM/3bkmvze/MjJtR0+3h2AQ==
-X-Received: by 2002:a2e:8604:0:b0:2b9:ea17:5590 with SMTP id a4-20020a2e8604000000b002b9ea175590mr1867712lji.16.1692207196484;
-        Wed, 16 Aug 2023 10:33:16 -0700 (PDT)
+        bh=1kL8iqatk1tnwSn5GpU5w8c60PHF1rwz6XWlzAwa8Vo=;
+        b=WEXHvIcwCwedYSM/C8j6H/fnssiyRSAmacVz3g+PX1E2igV52uSRSs7zl0x5Jp/NCv
+         hgRuKU1GSsFlahb79veLe0ceug+6NvLozOlSteeAqP+eLUNqkzqV/pbIcFVsDJCxQn3B
+         YNQ0aaYQ9TZoozlKVhNLKT+/TfkQKQCucRJdOlkWSx7tMX7d1iNd/e7DYY/rHHZCci2A
+         tfZdRNjV2a9aSkllqS1z04NnQ5akvSY4/UdRilExoCnCsxUt77lybpPYXEimQNqH7VTj
+         JV9rzs2WfhuFxgphfagSkzXk5cpGZjf1cmVlXMTRQNn+u10WzhNIoknp+PdQYbCLVWHh
+         xP+w==
+X-Gm-Message-State: AOJu0Yw/8RWVvDWIQmqHtfTxHr23Hrpkkq8hI6FpzptH7yrS3sQD5K+l
+        ZlXbjT7TGBqUR6iFRL581JUMew==
+X-Google-Smtp-Source: AGHT+IHGzZTTHfXrVL3b9YGMttYGkyMK6z8Tqr/XW158Mk+GcAhb2SlTArg/bIfoHt4LdjLRGO5mdQ==
+X-Received: by 2002:a05:651c:226:b0:2b4:6e21:637e with SMTP id z6-20020a05651c022600b002b46e21637emr2336220ljn.16.1692208476804;
+        Wed, 16 Aug 2023 10:54:36 -0700 (PDT)
 Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id p17-20020a2ea411000000b002b9f9cb8e08sm3588267ljn.21.2023.08.16.10.33.15
+        by smtp.gmail.com with ESMTPSA id k22-20020a2e2416000000b002b9e0aeff68sm3581086ljk.95.2023.08.16.10.54.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 10:33:16 -0700 (PDT)
-Message-ID: <e89b4a5a-e634-45b5-a8dc-cf7d1a968ccc@linaro.org>
-Date:   Wed, 16 Aug 2023 19:33:14 +0200
+        Wed, 16 Aug 2023 10:54:36 -0700 (PDT)
+Message-ID: <5a3d3bef-29a6-478e-9f7e-374ffd42758b@linaro.org>
+Date:   Wed, 16 Aug 2023 19:54:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
+Subject: Re: [PATCH v2 2/6] PM: domains: Add the domain HW-managed mode to the
+ summary
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_mojha@quicinc.com
-Cc:     computersforpeace@gmail.com
-References: <20230816164641.3371878-1-robimarko@gmail.com>
- <20230816164641.3371878-2-robimarko@gmail.com>
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>
+Cc:     linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+References: <20230816145741.1472721-1-abel.vesa@linaro.org>
+ <20230816145741.1472721-3-abel.vesa@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,43 +109,45 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230816164641.3371878-2-robimarko@gmail.com>
+In-Reply-To: <20230816145741.1472721-3-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.08.2023 18:45, Robert Marko wrote:
-> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
-> means that WDT being asserted or just trying to reboot will hang the board
-> in the debug mode and only pulling the power and repowering will help.
-> Some IPQ4019 boards like Google WiFI have it enabled as well.
+On 16.08.2023 16:57, Abel Vesa wrote:
+> Now that domains support being managed by the HW, lets add that
+> information to the genpd summary.
 > 
-> Luckily, SDI can be disabled via an SCM call.
-> 
-> So, lets use the boolean DT property to identify boards that have SDI
-> enabled by default and use the SCM call to disable SDI during SCM probe.
-> It is important to disable it as soon as possible as we might have a WDT
-> assertion at any time which would then leave the board in debug mode,
-> thus disabling it during SCM removal is not enough.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Suggested-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-[...]
-
-
-> +	/*
-> +	 * Disable SDI if indicated by DT that it is enabled by default.
-> +	 */
-> +	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
-> +		qcom_scm_disable_sdi();
-Should we care about the return value?
+>  drivers/base/power/domain.c | 15 +++++++++++++--
+>  1 file changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index dfb4f1de540d..053b7b510825 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -3171,6 +3171,15 @@ static void rtpm_status_str(struct seq_file *s, struct device *dev)
+>  	seq_printf(s, "%-25s  ", p);
+>  }
+>  
+> +static void mode_status_str(struct seq_file *s, struct device *dev)
+> +{
+> +	struct generic_pm_domain_data *gpd_data;
+> +
+> +	gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> +
+> +	seq_printf(s, "%20s", gpd_data->hw_mode ? "HW_Mode" : "SW_Mode");
+That's a very personal opinion and take it for what it is, but I think
+"_Mode" is excessive given the column is named "mode"
 
 Konrad
