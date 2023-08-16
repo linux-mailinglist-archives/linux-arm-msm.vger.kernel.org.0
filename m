@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70D7577E16D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 14:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8A3377E181
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 14:26:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245098AbjHPMXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 08:23:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46384 "EHLO
+        id S245150AbjHPMZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 08:25:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245153AbjHPMWu (ORCPT
+        with ESMTP id S245153AbjHPMZ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 08:22:50 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D472D58
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:22:24 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4fe0eb0ca75so9763162e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:22:24 -0700 (PDT)
+        Wed, 16 Aug 2023 08:25:26 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4858EE7F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:25:24 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ff92e369dfso748814e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 05:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692188543; x=1692793343;
+        d=linaro.org; s=google; t=1692188722; x=1692793522;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6SVPI9u/mcgbeuFPm8+cRABDPuzkfsOkgYL/geOPsqA=;
-        b=fKUrvIBIXc7qYGyW2qRezMNsy2BzcC/BIje4Wd/pGZ1GT7whw98uEvNJZyz39vcF0r
-         bJfiPsIvxzeHdw4QgR9ZoKGDwb8HV0l1k7Hl0acZntx+etje3ExV1SeDBmjKnZXfjEzA
-         jh18lyAkr1Dpfbhp682dYo1bz4nIjrpXRJ/hvs5nJO6c8hCVbZq2wMTB1vERT8EdRsrh
-         mSOTbDGNfLEfIUOuYTOSrXGnCl2G1KHtJJrT4BFUGeAx3PyS4m79u2YavxSnXpvdkHvY
-         YoIAAnFBEeOYO7omILd6Mw/qaOx18wumSbL4iPaKqzHfqH+hfF+KWjeWuhN/i+dNj+fi
-         NrbQ==
+        bh=xAbQHP7sKapYIrB6lQZoOQgH7wxEomhI1JO4qOpxkPM=;
+        b=y0ET28zX1lYkHJjRziZWc3q7yOjUezLdl6VhzovfNh7GX9hT46/ODLAr5rbLiYyjsO
+         FxmPlLUV0Pk0yA48erwdI1cJzhcQYVUwTUfFqqFsKxe19lLaJsd3ch0B7lEYlr0sVaeE
+         j6y8ZPsSW3o/H5OSCGTMX7rPTrGKMZJE8I4P+HzbUyweJN98plDH7zX34yTxCflhqWiY
+         az648u64ZSkrtXF816QkU7kIfk+oxXFo7J8Ef1cVyYXofPKBffxbnDYMgrhLjFpuRW7b
+         v4o1RKpExjwzJJ2SVxz3qowStieWQaCGqnhshzno2CWoqL+CUeEmvJjgm838ObBVSduF
+         0m8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692188543; x=1692793343;
+        d=1e100.net; s=20221208; t=1692188722; x=1692793522;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6SVPI9u/mcgbeuFPm8+cRABDPuzkfsOkgYL/geOPsqA=;
-        b=XglS3/XcG2zwuJjiD/1kUI5O13tzYkhc5vzKKGADPboj9LGyvW5nKcLle8jNz3zMh5
-         DDdgehWXHMznXlksRfrFqE+wiGLUlyCZeugmO90s9Ie8QMdlAqG9QEEUDjhp35zfYsMD
-         hM5at6U/rv0u5hUvPyuuuvuPvjVVVioxFKE5wb5BZZIMb0JkRcbwm5r8QqTSa21K6Y3J
-         ZFFgIroZvYMk8vpe+3onDtp3GtMOGm9MRczDFiOBJvf4WyxxWzQ32eQwOh9OmHDsopf8
-         Njw64g1mKIwGQyzREOyMsUqRzp+/V4Y8f26TKgbK0/3RQ5x+lz77Jjdu3k1xio6T/5UA
-         S7HQ==
-X-Gm-Message-State: AOJu0Yzpk9s8QP1LJ/Q4jHnP5MjO5+Y9gGeh2NBWW4TtJpzQy64Y7kaX
-        /bQkxJl98NnE7dRjhNAUuZthNQ==
-X-Google-Smtp-Source: AGHT+IFhGfy/vcTxgmHaLK2R36JKCtTnwfYbD5wD2riaRXetSdjzCBkFDJkO4ZucnZhPeQSw4cDj6A==
-X-Received: by 2002:a05:6512:473:b0:4fb:780d:2a49 with SMTP id x19-20020a056512047300b004fb780d2a49mr1469833lfd.5.1692188542987;
-        Wed, 16 Aug 2023 05:22:22 -0700 (PDT)
+        bh=xAbQHP7sKapYIrB6lQZoOQgH7wxEomhI1JO4qOpxkPM=;
+        b=IuGfv6J8Xr8maCWvYbB0Tdk3ux7ji32s0XDylKa1z2lGuv3ZmTU5eOji9Mq5opYxnw
+         31HZBobTRWtJR/UGoQoe8cfoTD3cB+mdUJ55e8rcKdTEJ9V3jyc/GMkvSKY1SUjNb/Oo
+         AMlEK6HVgM2Z7dOybaQQto0bmv9c0h7C7OppI8rGG6t8uIAoIwsATAFB1zmnqEtINh1l
+         z8a5B3v/QL2xUJguNAP2r+wG7aVjwLF7ZfRYcY9vkwXXmaeTirLBhAUeIfwDK3yfYioV
+         xxbsm39TWtYwvv/19jP3cXfsW3sHi2/mKWcwf5sqLATxY3ldOA0w6E8gLsh59S1yWe9H
+         AKRQ==
+X-Gm-Message-State: AOJu0YxZCYGN4N/THMWAPUWNVPT4dlGsZiZMmk7Rhf/Rk2INSSVDZBXk
+        59tQ8e5LMMvWJjUa0aXcjWwASw==
+X-Google-Smtp-Source: AGHT+IFpMIJXR3wWWg94qt6mH4fJZzJPBr9QvkX6nr5jvshRtTFZXfFKihDs6EOv53nIE+CzM5fwEg==
+X-Received: by 2002:a19:5042:0:b0:4fd:d3aa:e425 with SMTP id z2-20020a195042000000b004fdd3aae425mr1239429lfj.27.1692188722442;
+        Wed, 16 Aug 2023 05:25:22 -0700 (PDT)
 Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id c11-20020ac2530b000000b004fe0fead9e2sm536419lfh.165.2023.08.16.05.22.21
+        by smtp.gmail.com with ESMTPSA id w5-20020ac24425000000b004ff940fa290sm173268lfl.158.2023.08.16.05.25.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 05:22:22 -0700 (PDT)
-Message-ID: <0e111aaa-705b-4ae5-a07b-32691f01cc31@linaro.org>
-Date:   Wed, 16 Aug 2023 14:22:20 +0200
+        Wed, 16 Aug 2023 05:25:22 -0700 (PDT)
+Message-ID: <417acc56-3432-4514-bccf-cd947d53b64f@linaro.org>
+Date:   Wed, 16 Aug 2023 14:25:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] arm64: dts: qcom: sm8450: Add opp table support to
- PCIe
+Subject: Re: [PATCH v1 3/3] PCI: qcom: Add OPP suuport for speed based
+ performance state of RPMH
 Content-Language: en-US
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
-        krzysztof.kozlowski@linaro.org, Andy Gross <agross@kernel.org>,
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
 References: <1692102408-7010-1-git-send-email-quic_krichai@quicinc.com>
- <1692102408-7010-3-git-send-email-quic_krichai@quicinc.com>
- <dc14acb4-9fe8-4b3b-a9da-7f7915de4d5c@quicinc.com>
+ <1692102408-7010-4-git-send-email-quic_krichai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,7 +109,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <dc14acb4-9fe8-4b3b-a9da-7f7915de4d5c@quicinc.com>
+In-Reply-To: <1692102408-7010-4-git-send-email-quic_krichai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -123,73 +122,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.08.2023 09:05, Pavan Kondeti wrote:
-> On Tue, Aug 15, 2023 at 05:56:47PM +0530, Krishna chaitanya chundru wrote:
->> PCIe needs to choose the appropriate performance state of RPMH power
->> domain based upon the PCIe gen speed.
->>
->> So, let's add the OPP table support to specify RPMH performance states.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 47 ++++++++++++++++++++++++++++++++++++
->>  1 file changed, 47 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 595533a..681ea9c 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -381,6 +381,49 @@
->>  		};
->>  	};
->>  
->> +	pcie0_opp_table: opp-table-pcie0 {
->> +		compatible = "operating-points-v2";
->> +
->> +		opp-2500000 {
->> +			opp-hz = /bits/ 64 <2500000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +		};
->> +
->> +		opp-5000000 {
->> +			opp-hz = /bits/ 64 <5000000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +		};
->> +
->> +		opp-8000000 {
->> +			opp-hz = /bits/ 64 <8000000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +		};
->> +	};
->> +
->> +	pcie1_opp_table: opp-table-pcie1 {
->> +		compatible = "operating-points-v2";
->> +
->> +		opp-2500000 {
->> +			opp-hz = /bits/ 64 <2500000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +		};
->> +
->> +		opp-5000000 {
->> +			opp-hz = /bits/ 64 <5000000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +		};
->> +
->> +		opp-8000000 {
->> +			opp-hz = /bits/ 64 <8000000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +		};
->> +
->> +		opp-16000000 {
->> +			opp-hz = /bits/ 64 <16000000>;
->> +			opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
->> +		};
->> +	};
->> +
+On 15.08.2023 14:26, Krishna chaitanya chundru wrote:
+> Before link training vote for the maximum performance state of RPMH
+> and once the link is up, vote for the performance state based upon
+> the link speed.
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 61 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 > 
-> Should not we using required-opps property to pass the
-> rpmhpd_opp_xxx phandle so that when this OPP is selected based on your
-> clock rate, the appropriate OPP (voltage) would be selected on the RPMH side?
-Yes, opp-level is for opp providers.
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 7a87a47..e29a986 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -22,6 +22,7 @@
+>  #include <linux/of_device.h>
+>  #include <linux/of_gpio.h>
+>  #include <linux/pci.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/pm_runtime.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/phy/pcie.h>
+> @@ -1357,6 +1358,51 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
+>  
+> +static void qcom_pcie_opp_update(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct dev_pm_opp *opp;
+> +	u32 offset, status;
+> +	uint32_t freq;
+> +	int speed;
+> +	int ret = 0;
+On top of Krzysztof's comments:
+
+ret is effectively unused
+
+[...]
+
+> +	opp = dev_pm_opp_find_freq_exact(pci->dev, freq, true);
+> +
+> +	if (!IS_ERR(opp)) {
+Unnecessary newline
 
 Konrad
