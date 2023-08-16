@@ -2,69 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9270477E76A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:16:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92B0C77E778
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:21:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234267AbjHPRQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:16:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54632 "EHLO
+        id S1345170AbjHPRU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 13:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345206AbjHPRQG (ORCPT
+        with ESMTP id S1345173AbjHPRUx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:16:06 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E90798
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:16:05 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6887480109bso1461702b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:16:05 -0700 (PDT)
+        Wed, 16 Aug 2023 13:20:53 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0517026B1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:20:52 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe8c3b5ca0so11027569e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692206164; x=1692810964;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=IYLhrFPidSEutv4YtNc5nqeGC4z90V1KraDOvbsXSkM=;
-        b=LkWfuiLg6Q14cNJ5pPVWl2Epz6OWxnMprvlAJNa2PsHTZU7rd8XO/VsB2JzPu1uKET
-         63T6iJxcGrLJpqc8e6zb5wU7ks8Yx0QFrxmE/NlymfcLwQjbyeEPuncvAOEjDknqc/xY
-         tENDUms4GYIkD8ohbe92f0Q11PwTW9vZZRm0Ky5p9F3kOW5HmAt/6wTZmj6X0tTQhqFH
-         eSnG3bARZ8sA8ImHjMaAqBHe2tszFd6F78eAsLrJDZKkARfrr04yseEk0GAAQL6WzU55
-         Tgqael2XLJskVLyRQ+xvmC3vORVlqakrguxbu3/4CyKdqZoC9zCE/AYVO4MJyrrbM0w9
-         49dQ==
+        d=linaro.org; s=google; t=1692206450; x=1692811250;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2EaI/gthp6oGSH/3KSg6Ply6CEER8r1o/EsLEDlma6U=;
+        b=z2/kjlne3CTStkK0lY2xsnOqxqG9n5e+//lQejSfnOJAsmfD2aLACUSP21yM17DsD9
+         H4bhDPLLlj6bO7ZiGc3cSpvLmX9SJAVB7xoJBuehe/E1LwHExtKmazgF5aiCwKwpd10g
+         KF0tLhJH6Ts4Ll4d5kpAT3Bf3XDZsPKOLGBxTRnoIdBFaO4nZ83znz6kjYu5vnOhbzSb
+         6pEpL42vFhuug1lzxky5oEhx3x4JMeYaRvR8s4PW7ljZK68++a+2vRlx0PAali81Z6Bu
+         yJ7DeANCKRFC3mBg6Ceu60YOAMYbEoT5Zhzxhy/XGbjR49/74Y/V8f+E1UA7xEN3YYNM
+         5rBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692206164; x=1692810964;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1692206450; x=1692811250;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IYLhrFPidSEutv4YtNc5nqeGC4z90V1KraDOvbsXSkM=;
-        b=XBoHNmJtWqJts/divb8tPj7mgCawlqlg0oB4pr/7Bis0Uj9RlpXSXLCG2pvTpp7yCh
-         MLXFIGy0eD9AAEmB6gCDEw8gzIn9AsyWP1NjqfzbAwVwyoGjbZnprpbQpp98um2YuC69
-         xMbrbdjBFiktUKVEEDcEXsso0vvw/MPhBNSK3AqRqkYf59aw2GwBvBUqhensjDZZHVR0
-         6JknSmsUoaxRrVh0vQ27dxrdn/kzFvTB4k160oGiUK8UOgBdNL3dsaYpBL+SRu0A3PBz
-         MJkmTd2KXzB3l7vFXb1RNNcTP8+4BIwzpvC6KQcbC+MNMPdSKAANZBywsbpH33CpvmCr
-         CVbA==
-X-Gm-Message-State: AOJu0Ywi3lco0l7GVE3SOiF1RnCgot1s+4cLI10xpBQbTD/EL/pAX4IE
-        Od07HPOwD46/5l/uo17k396C
-X-Google-Smtp-Source: AGHT+IEjc4H8mTuRZSd8OdBQQbhZNjaNo5BnipeXywNGmtCRahTCRvXZPJK/iGgKkn8bXcHIelMTPg==
-X-Received: by 2002:a05:6a00:1a55:b0:688:11cc:ed88 with SMTP id h21-20020a056a001a5500b0068811cced88mr2939340pfv.33.1692206164496;
-        Wed, 16 Aug 2023 10:16:04 -0700 (PDT)
-Received: from thinkpad ([117.248.5.25])
-        by smtp.gmail.com with ESMTPSA id y13-20020aa7804d000000b00682af93093dsm11261392pfm.45.2023.08.16.10.16.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Aug 2023 10:16:04 -0700 (PDT)
-Date:   Wed, 16 Aug 2023 22:46:01 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Radu Rendec <rrendec@redhat.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: sa8540p-ride crash when all PCI buses are disabled
-Message-ID: <20230816171601.GB23057@thinkpad>
-References: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
- <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
- <3e0de46efe32e2e4c75fa3af9dabd0477e144823.camel@redhat.com>
+        bh=2EaI/gthp6oGSH/3KSg6Ply6CEER8r1o/EsLEDlma6U=;
+        b=TyKcKMoPXKb4MAuyqPYpwhFMFCEx6o3hzbdj9vMlAw4QrwvorHyYAZoXlzK2vJKSWR
+         Njw/v5WXwJ9+se1q7gTltb25yrHwsJxsHG+7k0XW+Ik73P4En+JXrkbx6z3d+NiCRe43
+         tfy9hNooWT+4GqtQ/f4zYsXb5ocEn6Odbg3rfXNZLt2cQMu1Wvvx6fuRAyfudVE5dpBx
+         PfIlB5IHFxNTaYTfOmgu+5Si0I8Y6zRPYdBnNwLJfIefR/aERqfWk5tDIueTxRuhpwcr
+         uGKwkvfnagHxUS1xI8oSIF0siv6zoqdxYbkS3Rf7ncp1k0ULmxOo95MCy5GKWfGXFChl
+         eEwg==
+X-Gm-Message-State: AOJu0Yxdfrnuxk9nC25BC+eUlCYTCsIwA0kfhmoep5gT0uZq4U7vcRPT
+        rAWKGwT8Sphs1uy4yHB63Q0QrA==
+X-Google-Smtp-Source: AGHT+IHh5Bh4ZjfpgQq5HwyN9tyHh7F81amGdgQVD5axVUoUVSjHTKdXyRimYjj2PMxeEuPy+MX7qQ==
+X-Received: by 2002:a05:6512:250a:b0:4f9:556b:93c2 with SMTP id be10-20020a056512250a00b004f9556b93c2mr2351126lfb.1.1692206450298;
+        Wed, 16 Aug 2023 10:20:50 -0700 (PDT)
+Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
+        by smtp.gmail.com with ESMTPSA id a3-20020a056512020300b004fdda72ec16sm406496lfo.274.2023.08.16.10.20.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Aug 2023 10:20:49 -0700 (PDT)
+Message-ID: <eaed15ca-5c0b-420e-a11e-007ef5608019@linaro.org>
+Date:   Wed, 16 Aug 2023 19:20:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3e0de46efe32e2e4c75fa3af9dabd0477e144823.camel@redhat.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 04/14] media: qcom: camss: Pass icc bandwidth table as
+ a platform parameter
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230814162907.3878421-1-bryan.odonoghue@linaro.org>
+ <20230814162907.3878421-5-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230814162907.3878421-5-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -75,135 +115,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 16, 2023 at 12:25:50PM -0400, Radu Rendec wrote:
-> On Tue, 2023-08-15 at 11:54 +0100, Bryan O'Donoghue wrote:
-> > On 14/08/2023 23:36, Radu Rendec wrote:
-> > > I'm consistently getting a system crash followed by a ramdump on
-> > > sa8540p-ride (sc8280xp) when icc_sync_state() goes all the way through
-> > > (count == providers_count).
-> > > 
-> > > Context: all PCIe buses are disabled due to [1]. Previously, due to
-> > > some local kernel misconfiguration, icc_sync_state() never really did
-> > > anything (because count was always less than providers_count).
-> > > 
-> > > I was able to isolate the problem to the qns_pcie_gem_noc icc node.
-> > > What happens is that both avg_bw and peak_bw for this node end up as 0
-> > > after aggregate_requests() gets called. The request list associated
-> > > with the node is empty.
-> > 
-> > If all PCIe buses are disabled, then of course the bandwidth requests
-> > should say zero, the clocks should be disabled and any associated 
-> > regulators should be off.
-> > 
-> > > For testing purposes, I modified icc_sync_state() to skip calling
-> > > aggregate_requests() and subsequently p->set(n, n) for that particular
-> > > node only. With that change in place, the system no longer crashes.
-> > 
-> > So what's happening is that a bus master in the system - perhaps not the 
-> > application processor is issuing a transaction to a register most likely 
-> > that is not clocked/powered.
+On 14.08.2023 18:28, Bryan O'Donoghue wrote:
+> Pass the bandwidth table as a platform parameter not if/else derived
+> pointer to the static table.
 > 
-> Yes, that was my assumption as well. But I didn't think it could be
-> something other than the AP. That is an interesting perspective.
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss.c | 29 +++++++----------------
+>  drivers/media/platform/qcom/camss/camss.h |  3 ++-
+>  2 files changed, 11 insertions(+), 21 deletions(-)
 > 
-> My first thought was to analyze the ramdump and hopefully find some
-> clues there. But unfortunately that doesn't seem to be an option with
-> the tools that I have.
-> 
-> > Have you considered that one of the downstream devices might be causing 
-> > a PCIe bus transaction ?
-> 
-> No, I haven't considered that. If that's the case, it will probably be
-> even harder to debug.
-> 
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 68eb45b2c0aaa..1a195eb4298a5 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1484,21 +1484,15 @@ static int camss_configure_pd(struct camss *camss)
+>  static int camss_icc_get(struct camss *camss)
+>  {
+>  	const struct resources_icc *icc_res;
+> -	int nbr_icc_paths = 0;
+>  	int i;
+>  
+> -	if (camss->version == CAMSS_8250) {
+> -		icc_res = &icc_res_sm8250[0];
+> -		nbr_icc_paths =	ICC_SM8250_COUNT;
+> -	}
+> +	icc_res = camss->res->icc_res;
+Would initializing at declaration time fit in 100 chars?
 
-If the PCIe controller node is disabled in devicetree, then none of the devices
-would be enumerated. In that case, they cannot initiate any transactions on
-their own.
+lgtm otherwise
 
-Qcom observed a similar crash with PCIe SMMU when the PCIe controllers were not
-enabled in devicetree [1]. Since Qcom was going to enable PCIe controllers
-eventually, I concluded that the issue will be gone once they do it.
-
-But looking at your issue, I think the transaction is triggered by PCIe SMMU as
-observed earlier. Since there are no active votes on the path after
-icc_sync_state(), it ends up in a crash.
-
-But did you disable all PCIe instances or just pcie2a? The revert patch you
-pointed only applies to pcie2a. But if you are disabling all PCIe instances,
-then I do not see a point in enabling PCIe SMMU as well. Could you try disabling
-the pcie_smmu node and check?
-
-- Mani
-
-[1] https://lore.kernel.org/linux-arm-msm/20230609054141.18938-3-quic_ppareek@quicinc.com/
-
-> > If you physically remove - can you physically remove - devices from the 
-> > PCIe bus does this error still occur ?
-> 
-> This is a standard QDrive 3 reference board, so I think this is not an
-> option. Taking those things apart is very difficult, and I think all
-> peripherals are soldered onto the board anyway.
-> 
-> > > Surprisingly, none of the icc nodes that link to qns_pcie_gem_noc (e.g.
-> > > xm_pcie3_0, xm_pcie3_1, etc.) has any associated request and so they
-> > > all have 0 bandwidth after aggregate_requests() gets called, but that
-> > > doesn't seem to be a problem and the system is stable. This makes me
-> > > think there is a missing link somewhere, and something doesn't claim
-> > > any bandwidth on qns_pcie_gem_noc when it should. And it's probably
-> > > none of the xm_pcie3_* nodes, since setting their bandwidth to 0 seems
-> > > to be fine.
-> > 
-> > Yes so if you assume that the AP/kernel side has the right references, 
-> > counts, votes then consider another bus master - a thing that can 
-> > initiate a read or a write might be misbehaving.
-> 
-> There is one thing I wasn't aware of when I wrote the previous email.
-> As it turns out, bandwidth/clock control is done at the bcm level, not
-> at the icc node level. It looks like there is a single bcm called PCI0,
-> and it's linked to the qns_pcie_gem_noc node. The xm_pcie3_* icc nodes
-> are not linked to any bcm.
-> 
-> This means that *all* PCIe buses are shut down when qns_pcie_gem_noc is
-> disabled due to zero bandwidth. I was under the (wrong) impression
-> that, since all xm_pcie3_* nodes had no requests, each corresponding
-> PCIe bus would be shut down separately, leaving only qns_pcie_gem_noc
-> active (with my test change in place).
-> 
-> > Assuming there is no misbehaving arm core - say a cDSP or aDSP piece of 
-> > code that wants to do something on the PCIe bus, might the culprit be
-> > whatever you have connected to the bus ?
-> > 
-> > Could something be driving the #WAKE signal and then transacting ?
-> > 
-> > But also keep in mind depending on what you are doing with this system 
-> > if you have a bit of firmware in one of the DSP cores - does that 
-> > firmware have scope to talk to any devices on the PCIe bus ?
-> 
-> As I mentioned above, this is a standard QDrive 3 reference board.
-> Furthermore, I don't explicitly do anything with the DSPs. I just boot
-> a fairly recent upstream kernel (6.5-rc1) with a standard rootfs. The
-> boot firmware is whatever Qualcomm provides by default for these
-> systems. So, unless the boot firmware loads anything into the DSPs
-> behind my back (which I doubt), the DSPs should not even be running.
-> 
-> What is more likely though is that the boot firmware initializes a
-> bunch of PCIe devices and leaves them on.
-> 
-> > I'd guess another firmware is unlikely but, a downstream device doing a 
-> > #WAKE when you have the PCIe nodes disabled would presumably be bad..
-> > 
-> > Try looking for an upstream transaction from a device..
-> 
-> Yes, that makes sense. Do you have any suggestion on how to do that
-> without using any specialized hardware (such as JTAG pod or PCIe bus
-> analyzer)?
-> 
-> Thanks for all the input and suggestions!
-> 
-> --
-> Radu
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
+ 
