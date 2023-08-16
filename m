@@ -2,113 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5715F77DA57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 08:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 767C377DA6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 08:25:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242072AbjHPGQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 02:16:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
+        id S229983AbjHPGYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 02:24:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242095AbjHPGQB (ORCPT
+        with ESMTP id S242111AbjHPGYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 02:16:01 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D40D19A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 23:15:59 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9dc1bff38so91239861fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Aug 2023 23:15:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692166557; x=1692771357;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZMfGb0rOA/7xqhNtRRPREKtakzDUuWzOzMq996gsEP0=;
-        b=vN6UMP/XU8J5n+iOyYexM/xIIXYfqsetJrCDV/Ta0ER6rpfFlETuKV+CpkBf6Ct8AK
-         ggT4h3yq7jdtfWRk49r8i00I1gQK75LsCClW2pfYXABXmicKhz0inFRQRr10vrw7adPP
-         X47gc2cSIqliy2s8rFWHW5j0MpgX6mPgZZ3bTyAOSpDFZCLz5jGJ1NsyqyNbMFeXvQoU
-         Hnkd7OZM2jBQqeLFzppL8SNXDeZZpg0aimPnHQrW4xrBEvLE37SP/g+lgFZ+P0rZGUVR
-         8zJMUz9+UFqdMhuGnhOLZS78bTmoII5NktbtK6YIpoS8lu1g2e0j0fKkYbVV6dbn0JHw
-         +3eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692166557; x=1692771357;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZMfGb0rOA/7xqhNtRRPREKtakzDUuWzOzMq996gsEP0=;
-        b=bslQnhp+zctaEP/8R6B6q8zNVbTOnpH74e3a17eCFiwjRgi07VNgOAKASTSJe6gJld
-         wF/VLAaNaku7vSaJFxpJjV94JBkGs2O+moTenQwFObcAWMQ9Fbg7WqSLd7Xz2GOn96Ht
-         LjlICucDlfeefnOMBICLbdIwjAYmSfqxVdeZz5S300iH999UaNWR4JJH3BZ4NGyFSlIf
-         +Br/9qKdZ4OYzxlNkj4xeSjdxvH3R7T5A+dVB/ODUWCKZjd2Xr5jpIQDR/ZNJYitqEP6
-         wPESL3e6yr0p5mrFE8IMdXM4XIk8knQia3TNA28DbPA41arFSZhVfo3QWjOsFJhuMIk6
-         MCDw==
-X-Gm-Message-State: AOJu0Yx8UIE1lWzUBqz3xAhscQISkUwP8X1KfPrlbDtrYHbuWMmXEja8
-        H6J2/CEdXa/WM+GV7tPdEPncjw==
-X-Google-Smtp-Source: AGHT+IFW67iM9K/2flFifqFuA8nOR7be1cC94ihFx4kqQS3e0Sl5iMDdA6QDQ36NjhsOGBTBfkM33g==
-X-Received: by 2002:a2e:97d6:0:b0:2b9:e0ba:752a with SMTP id m22-20020a2e97d6000000b002b9e0ba752amr603353ljj.53.1692166557057;
-        Tue, 15 Aug 2023 23:15:57 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id e1-20020a5d5941000000b003141f96ed36sm20145891wri.0.2023.08.15.23.15.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 23:15:56 -0700 (PDT)
-Message-ID: <83cc4b10-34bf-ea91-7756-f345c0071479@linaro.org>
-Date:   Wed, 16 Aug 2023 08:15:54 +0200
+        Wed, 16 Aug 2023 02:24:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136D11BF8;
+        Tue, 15 Aug 2023 23:24:31 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37G612wd015796;
+        Wed, 16 Aug 2023 06:24:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=wOGy8q31OwGSHLjBUN/6k552T8JsiQ6RpOVrJjZ9GQc=;
+ b=hpvMYK86UXUwlF2AkiZeZ94uVtF2JXe+sdvpW9UmAoGDyj46mmdbM7e7o+FBp2C9WIur
+ PwXcpzTyScAoPJMQl1QNh2nypn+Y0hnw2XD4nJtYUz6n0eb8IYCezh9CqXRPxQFYfYPG
+ 6Er+Skady1kKi2l5GHyWSXyumIC7ae0/q1BHpNLmrmcWcX/snzIyNcqTNqDSc5FwT/gT
+ O7MYCOKG2CbHL1JxRCnP8RPioRbC9ao80InhpZavtBiM6CZje+a0aK6UgUZdS2k/IEh4
+ 8hnzwIlXgm83EfeVouYJHvr7xLhn+tCPIAcxjOOV30M4BtTrIqQ7HSL1C19ldbZLlsfq 5w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sfxbyjs6f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 06:24:23 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37G6OM1X030615
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 06:24:22 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 15 Aug 2023 23:24:15 -0700
+Date:   Wed, 16 Aug 2023 11:54:13 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+CC:     <manivannan.sadhasivam@linaro.org>, <helgaas@kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>,
+        <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v1 3/3] PCI: qcom: Add OPP suuport for speed based
+ performance state of RPMH
+Message-ID: <076196e4-36e5-4a90-b3cc-b0ffd61627a3@quicinc.com>
+References: <1692102408-7010-1-git-send-email-quic_krichai@quicinc.com>
+ <1692102408-7010-4-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v2 1/5] dt-bindings: firmware: qcom,scm: Document SDI
- disable
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     computersforpeace@gmail.com
-References: <20230815140030.1068590-1-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230815140030.1068590-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1692102408-7010-4-git-send-email-quic_krichai@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Rrl-ZOF2JigsSAiPTIPImHvdA8VeOZeF
+X-Proofpoint-ORIG-GUID: Rrl-ZOF2JigsSAiPTIPImHvdA8VeOZeF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-16_03,2023-08-15_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ spamscore=0 suspectscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 priorityscore=1501 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308160057
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2023 15:59, Robert Marko wrote:
-> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
-> means that WDT being asserted or just trying to reboot will hang the board
-> in the debug mode and only pulling the power and repowering will help.
-> Some IPQ4019 boards like Google WiFI have it enabled as well.
-> 
-> So, lets add a boolean property to indicate that SDI should be disabled.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+On Tue, Aug 15, 2023 at 05:56:48PM +0530, Krishna chaitanya chundru wrote:
+> Before link training vote for the maximum performance state of RPMH
+> and once the link is up, vote for the performance state based upon
+> the link speed.
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 61 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> index 4233ea839bfc..bf753192498a 100644
-> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> @@ -89,6 +89,14 @@ properties:
->        protocol to handle sleeping SCM calls.
->      maxItems: 1
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 7a87a47..e29a986 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -22,6 +22,7 @@
+>  #include <linux/of_device.h>
+>  #include <linux/of_gpio.h>
+>  #include <linux/pci.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/pm_runtime.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/phy/pcie.h>
+> @@ -1357,6 +1358,51 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
 >  
-> +  qcom,sdi-disable:
+> +static void qcom_pcie_opp_update(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct dev_pm_opp *opp;
+> +	u32 offset, status;
+> +	uint32_t freq;
+> +	int speed;
+> +	int ret = 0;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+> +	/* Only update constraints if link is up. */
+> +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
+> +		return;
+> +
+> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +
+> +	switch (speed) {
+> +	case 1:
+> +		freq = 2500000;
+> +		break;
+> +	case 2:
+> +		freq = 5000000;
+> +		break;
+> +	case 3:
+> +		freq = 8000000;
+> +		break;
+> +	default:
+> +		WARN_ON_ONCE(1);
+> +		fallthrough;
+> +	case 4:
+> +		freq = 16000000;
+> +		break;
+> +	}
+> +
+> +	opp = dev_pm_opp_find_freq_exact(pci->dev, freq, true);
+> +
+> +	if (!IS_ERR(opp)) {
+> +		ret = dev_pm_opp_get_voltage(opp);
+> +		dev_pm_opp_put(opp);
+> +	}
+> +
 
-The property should describe rather current hardware/firmware state,
-instead of expressing your intention for OS what to do. Therefore rather:
-qcom,sdi-enabled
-or
-qcom,secure-debug-image
+Where are we setting the OPP here?
 
+> +}
+> +
+>  static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+>  {
+>  	struct dw_pcie *pci = pcie->pci;
+> @@ -1439,8 +1485,10 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
+>  static int qcom_pcie_probe(struct platform_device *pdev)
+>  {
+>  	const struct qcom_pcie_cfg *pcie_cfg;
+> +	unsigned long max_freq = INT_MAX;
+>  	struct device *dev = &pdev->dev;
+>  	struct qcom_pcie *pcie;
+> +	struct dev_pm_opp *opp;
+>  	struct dw_pcie_rp *pp;
+>  	struct resource *res;
+>  	struct dw_pcie *pci;
+> @@ -1511,6 +1559,17 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_pm_runtime_put;
+>  
+> +	/* OPP table is optional */
+> +	ret = devm_pm_opp_of_add_table(dev);
+> +	if (ret && ret != -ENODEV) {
+> +		dev_err(dev, "Invalid OPP table in Device tree\n");
+> +		goto err_pm_runtime_put;
+> +	}
+> +
+> +	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+> +	if (!IS_ERR(opp))
+> +		dev_pm_opp_put(opp);
+> +
 
-Best regards,
-Krzysztof
+This OPP (corresponding to max freq) is not used, so how are we voting
+for max perf state during probe?
 
+>  	ret = pcie->cfg->ops->get_resources(pcie);
+>  	if (ret)
+>  		goto err_pm_runtime_put;
+> @@ -1531,6 +1590,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	qcom_pcie_icc_update(pcie);
+>  
+> +	qcom_pcie_opp_update(pcie);
+> +
+
+commit description says, OPP voting is done as per the link speed after
+probe? I don't see any calls to qcom_pcie_opp_update() outside probe.
+
+>  	if (pcie->mhi)
+>  		qcom_pcie_init_debugfs(pcie);
+>  
+> 
+
+Thanks,
+Pavan
