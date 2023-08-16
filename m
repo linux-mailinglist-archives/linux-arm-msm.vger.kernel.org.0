@@ -2,165 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F9E777E541
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 17:36:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A37C977E58E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 17:49:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235813AbjHPPfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 11:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60272 "EHLO
+        id S1344320AbjHPPtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 11:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344251AbjHPPfX (ORCPT
+        with ESMTP id S1344324AbjHPPtA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 11:35:23 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FD1E2717;
-        Wed, 16 Aug 2023 08:35:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1692200121; x=1723736121;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=yT6ZcXnMvTbf27Oj680hJO0tlEBXsOca4uKhlBJLAzo=;
-  b=b6iNXGQFQkTmoiSdAvHLQ9udPwHL9FT0/y4HPwwlyLLqpihjrXjw20uI
-   igYui9G4aVn3KjskoVbyxTefht3kyvFPxulQfIcsvZR9ps3ZINAev+kll
-   nVEx1Y1vcOYp7I8dx+cOKmEHECxWmkW59bO/fL4wGQtneYW4SCPaND/eS
-   KzvzCsS7hkq2RdknOdxmx1WrM12nbX/JOoIpoNjNXFE2HJBSWN6TFA8f4
-   skbQwAbGkvQBl2iypsId/RrDbYm75EGBNm1Tjf8iWE+3iNm6i/OY27/Ot
-   Xa7O9+729k81jSwljh0FoVIupP44rAf2NUAnmbEA/Q2RLmNR2F2ho3xVe
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10803"; a="372567695"
-X-IronPort-AV: E=Sophos;i="6.01,177,1684825200"; 
-   d="scan'208";a="372567695"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2023 08:35:20 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10803"; a="799648992"
-X-IronPort-AV: E=Sophos;i="6.01,177,1684825200"; 
-   d="scan'208";a="799648992"
-Received: from hvaughns-mobl.amr.corp.intel.com (HELO [10.209.184.121]) ([10.209.184.121])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2023 08:35:18 -0700
-Message-ID: <f00b31fe-a64a-366f-5b55-f55eaaffeac3@linux.intel.com>
-Date:   Wed, 16 Aug 2023 10:35:18 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v4 31/32] sound: usb: card: Allow for rediscovery of
- connected USB SND devices
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
-        Thinh.Nguyen@synopsys.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-usb@vger.kernel.org, alsa-devel@alsa-project.org,
-        quic_jackp@quicinc.com, oneukum@suse.com, albertccwang@google.com,
-        o-takashi@sakamocchi.jp
-References: <20230725023416.11205-1-quic_wcheng@quicinc.com>
- <20230725023416.11205-32-quic_wcheng@quicinc.com>
- <671a524d-b4c8-78d8-33de-40170a23d189@linux.intel.com>
- <d42b4db3-d36d-d8fd-90ca-e00c2151195c@quicinc.com>
-Content-Language: en-US
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <d42b4db3-d36d-d8fd-90ca-e00c2151195c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Wed, 16 Aug 2023 11:49:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E74026B5;
+        Wed, 16 Aug 2023 08:48:59 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37GCn9QJ001845;
+        Wed, 16 Aug 2023 15:48:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=q1VVgRd6l4S/kIJMK4NM0Qezc5H2bSqFKTnDSuMElGQ=;
+ b=WPcGeruemqs3LXBqt2q2rdaFIgB0z6lZX09sDrrqQ/xRWvogXtJZ4c5/pc+MP35OYETd
+ hPn08DkAMivzjN5yChTHppm/nynM1e5XgeVc/0ibkv4vG7uP9/El96816n3WSOkosHos
+ hY5+pRQHFoBHAsuPTCCbpUKo+WzHbx996E3DpzuoLmu4HCUvaBnZrL5whidPLeytzaiq
+ 5ioVdHo2ARe7ZkDXJpQNE41VtU5Khez96bFpCDeZW5t9XFVGbIjrygg4+Gj2yhBXRchJ
+ lRoOkHHe/51/9ir9qHGpwDAuwarnQBkFFXbeujQbCHdkXm0TMdm7H2GIQh0vKQ+ep1Sp MQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sg66hu8t9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 15:48:47 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 37GFmiWn002204;
+        Wed, 16 Aug 2023 15:48:44 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3se35maye0-1;
+        Wed, 16 Aug 2023 15:48:44 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37GFmi5I002198;
+        Wed, 16 Aug 2023 15:48:44 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 37GFmiuv002197;
+        Wed, 16 Aug 2023 15:48:44 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
+        id 635D85000A7; Wed, 16 Aug 2023 21:18:43 +0530 (+0530)
+From:   Nitin Rawat <quic_nitirawa@quicinc.com>
+To:     andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        agross@kernel.org, kishon@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: [PATCH V1 0/2] Add Phy Configuration support for SC7280
+Date:   Wed, 16 Aug 2023 21:18:39 +0530
+Message-Id: <20230816154841.2183-1-quic_nitirawa@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5seZ0W1TkW2-9uOLK8g4f9I-dyWR2hDw
+X-Proofpoint-GUID: 5seZ0W1TkW2-9uOLK8g4f9I-dyWR2hDw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-16_15,2023-08-15_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 clxscore=1011
+ priorityscore=1501 malwarescore=0 impostorscore=0 mlxlogscore=672
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308160137
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch adds Phy configuration support for Qualcomm SC7280 SOC.
 
+Nitin Rawat (2):
+  dt-bindings: phy: Add QMP UFS PHY comptible for SC7280
+  phy: qcom-qmp-ufs: Add Phy Configuration support for SC7280
 
-On 8/15/23 20:38, Wesley Cheng wrote:
-> Hi Pierre,
-> 
-> On 7/25/2023 2:15 AM, Pierre-Louis Bossart wrote:
->>
->>
->> On 7/25/23 04:34, Wesley Cheng wrote:
->>> In case of notifying SND platform drivers of connection events, some of
->>> these use cases, such as offloading, require an ASoC USB backend
->>> device to
->>> be initialized before the events can be handled.  If the USB backend
->>> device
->>> has not yet been probed, this leads to missing initial USB audio device
->>> connection events.
->>>
->>> Expose an API that traverses the usb_chip array for connected
->>> devices, and
->>> to call the respective connection callback registered to the SND
->>> platform
->>> driver.
->>>
->>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>> ---
->>>   sound/usb/card.c | 19 +++++++++++++++++++
->>>   sound/usb/card.h |  2 ++
->>>   2 files changed, 21 insertions(+)
->>>
->>> diff --git a/sound/usb/card.c b/sound/usb/card.c
->>> index 365f6d978608..27a89aaa0bf3 100644
->>> --- a/sound/usb/card.c
->>> +++ b/sound/usb/card.c
->>> @@ -170,6 +170,25 @@ struct snd_usb_stream
->>> *snd_usb_find_suppported_substream(int card_idx,
->>>   }
->>>   EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
->>>   +/*
->>> + * in case the platform driver was not ready at the time of USB SND
->>> + * device connect, expose an API to discover all connected USB devices
->>> + * so it can populate any dependent resources/structures.
->>> + */
->>> +void snd_usb_rediscover_devices(void)
->>> +{
->>> +    int i;
->>> +
->>> +    mutex_lock(&register_mutex);
->>> +    for (i = 0; i < SNDRV_CARDS; i++) {
->>> +        if (usb_chip[i])
->>> +            if (platform_ops && platform_ops->connect_cb)
->>> +                platform_ops->connect_cb(usb_chip[i]);
->>
->> what happens if the USB device is removed while the platform device adds
->> a port?
->>
->> This sounds super-racy to me. It's the same set of problems we're having
->> between audio and display/DRM, I would be surprised if this function
->> dealt with all corner cases of insertion/removal, bind/unbind.
->>
-> 
-> The chip array entries are all populated and removed while under the
-> register_mutex, so going over your race condition, we should see:
-> 
-> Thread#1:
-> q6usb_component_probe()
-> --> snd_soc_usb_add_port()
->   --> snd_usb_rediscover_devices()
->     --> mutex_lock(register_mutex)
-> 
-> Thread#2
-> --> usb_audio_disconnect()
->   --> mutex_lock(register_mutex)
-> 
-> So either thread#1 or thread#2 will complete first.  If
-> 
-> Thread#1 completes before thread#2:
->   SOC USB will notify DPCM backend of the device connection.  Shortly
-> after, once thread#2 runs, we will get a disconnect event for the
-> connected device.
-> 
-> Thread#2 completes before thread#1:
->   Then during snd_usb_rediscover_devices() we won't notify of any
-> connection for that particular chip index.
+ .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |   2 +
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 142 ++++++++++++++++++
+ 2 files changed, 144 insertions(+)
 
-You really want to capture this locking model as part of the commit
-messages or code, it'll help reviewers figure things out.
+--
+2.17.1
+
