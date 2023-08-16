@@ -2,590 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6596D77E894
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 20:23:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65F9977E8C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 20:32:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238858AbjHPSXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 14:23:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59860 "EHLO
+        id S1345536AbjHPSb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 14:31:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345470AbjHPSXC (ORCPT
+        with ESMTP id S1345556AbjHPSby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 14:23:02 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675E61FC3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:23:00 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1bd9b4f8e0eso43056585ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:23:00 -0700 (PDT)
+        Wed, 16 Aug 2023 14:31:54 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3630B12C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:31:52 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99de884ad25so158141866b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1692210180; x=1692814980;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=chromium.org; s=google; t=1692210710; x=1692815510;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iUX8EWH6XxBZ1I7CUpBjWN2BsINd0XvA+M8q/m5Tcq4=;
-        b=nxQDmsxYGQgt1pmspKwGen/8ySUvxdoei03W+P9hu1VNfDVnmpS+3LZ6QZEZk4JtL/
-         Gps2M1PdGBga1TDofqF+Jf7DEbMhX1pqc5/V3q75u2eDyIfmmLTLSk9xWPlWPSahtC+Y
-         UfdOO/QKwRG7PiHU8qJ859Pv3XhlxHzF79YxA=
+        bh=Lx+mSV9nVDCSUCZ9Mp20Kvrcl4sv9ALrPuz3+qN6T0w=;
+        b=KF72xASUYluN/72dWo+aR6khFl46jSBhJ21VozdC9HBp/U7j4mfKg7Kmso6fv1RyrL
+         2UZad5fbNrfwGOKnAfHtkX/hd2+nvmLX7dQAa+BWV5Cbgg64KpeOk5Hf7TPAX1pQgEjP
+         3WKXN3vQrj7aSUja4t6Ql4ldSe+I6OKbb5C+g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692210180; x=1692814980;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1692210710; x=1692815510;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iUX8EWH6XxBZ1I7CUpBjWN2BsINd0XvA+M8q/m5Tcq4=;
-        b=hlnDTAl3mLvmPLgq0a/fZqv6oMSRwtSZxDvQLu+0D8V1EX4OeeGQzNnWy4RVBC8AJp
-         D/ZbWeCyfRxweAiNdKX3AAOiy+YCLGnnH+wcvKAigIfVbh8jil59Wh64caSH+Q+cXaGE
-         c4SfX6TUL+Vt9sxQTDo3YyklebzgDPEouraV3gg8gxcdMYMiTFfuiVuaBFan3gRjA/Ht
-         uyItiP2uKOGqLxhHAhY70FKnxSxcq+Iy94vy6MlC3Pr+nVVT7f38NRGt+IrwrXV+S429
-         7wb/D4HiBC0ESNUZMRjigOu82WQMVwuK54cn6+S5Jzmn3gyjITOTs5G8KbMOjmEgHhVv
-         ttqQ==
-X-Gm-Message-State: AOJu0YzzunzrZTy/ev6Z58QovM+rYAis6avHI7mIDkuMm6ipaLAFRSDP
-        HL1/kVVT5IrY2K4K9TmNzebNhQ==
-X-Google-Smtp-Source: AGHT+IHDlries/+2hFLGANqXdR6jK+AX2VcRvKX9MNLKxY6glARprxeWkg9KRmNfMSh50GH3a4BlQA==
-X-Received: by 2002:a17:902:9b88:b0:1bb:ee1b:3cdf with SMTP id y8-20020a1709029b8800b001bbee1b3cdfmr2389094plp.67.1692210179792;
-        Wed, 16 Aug 2023 11:22:59 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:d195:f984:f71b:ed07])
-        by smtp.gmail.com with ESMTPSA id x18-20020a1709027c1200b001b9ff5aa2e7sm13440155pll.239.2023.08.16.11.22.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Aug 2023 11:22:59 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sc7180: Reorganize trogdor rt5682 audio codec dts
-Date:   Wed, 16 Aug 2023 11:21:54 -0700
-Message-ID: <20230816112143.2.I29a5a330b6994afca81871f74bbacaf55b155937@changeid>
-X-Mailer: git-send-email 2.41.0.694.ge786442a9b-goog
-In-Reply-To: <20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3e01923220@changeid>
-References: <20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3e01923220@changeid>
+        bh=Lx+mSV9nVDCSUCZ9Mp20Kvrcl4sv9ALrPuz3+qN6T0w=;
+        b=Euzyq0dskZt51JYPPzA575vXbun/SpVZbFB8Jh5hBw4RGdNab01kuX9bUDcmI9WnL1
+         ljSS3CTzXMue19AkWIsk2To3SFRH3o+DXLU6OP/apr7GGCFNUD2a938Gdx2SuUWHQ38F
+         Z8QbeWyFccKhkHuvgces+V4Ldau/puRcmv6kfPN3tBLZZfW8T45mHplJ+0MuXlSiFeZt
+         zRjGkamVboQOHVLDljdF5w034HezYwXgmpB4QwoQN7iSA81XC1JZuPd+ItUIg80J+YFa
+         c300Lew/vf53SqVWj7IzPjJ7a2t5ea7KP4Oo+GqdheNe0NtvUL1YXKuW8NTznCRO/8Zu
+         ornw==
+X-Gm-Message-State: AOJu0YwfZ+Sm9DHkpGKUgDxPxoYSsmAXsR2BQsxcVu+KQ9klxf7hDKOB
+        xZFgdCUp7XmC/sDknI1IUQJxl7YVKSV2s1ktUvf6G/n2
+X-Google-Smtp-Source: AGHT+IF+sogyhyRA0lMjwAGQN0WwarbPNh2Ig/+lL1P8/Q2KxXRau5L4Z5BbUjhPrkfwX7gi26ro7A==
+X-Received: by 2002:a17:906:2109:b0:98d:fc51:b3dd with SMTP id 9-20020a170906210900b0098dfc51b3ddmr2195606ejt.41.1692210709985;
+        Wed, 16 Aug 2023 11:31:49 -0700 (PDT)
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com. [209.85.208.41])
+        by smtp.gmail.com with ESMTPSA id k21-20020a170906971500b0098de7d28c34sm8893528ejx.193.2023.08.16.11.31.49
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Aug 2023 11:31:49 -0700 (PDT)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-51e24210395so1993a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 11:31:49 -0700 (PDT)
+X-Received: by 2002:a50:a45b:0:b0:523:bdc9:48a9 with SMTP id
+ v27-20020a50a45b000000b00523bdc948a9mr18121edb.0.1692210709094; Wed, 16 Aug
+ 2023 11:31:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230804095836.39551-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20230804175734.v2.3.Ie77732a87ab53d21bac47db309b75a796fa19337@changeid>
+ <0cc71595-ba11-11d4-1fcd-865721ede3f9@linaro.org> <CAD=FV=UfKXBQ6R0+5yY6WaNFS49=jmg2NTXrUPcyD3MBZA7A5A@mail.gmail.com>
+ <eb082e10-efc2-0f5f-95e1-4d2707c87c59@linaro.org> <eb082e10-efc2-0f5f-95e1-4d2707c87c59@linaro.org/>
+ <20230816095910.41305-1-sheng-liang.pan@quanta.corp-partner.google.com>
+In-Reply-To: <20230816095910.41305-1-sheng-liang.pan@quanta.corp-partner.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 16 Aug 2023 11:31:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VedSS62LKPHeHm8qXF_acVmjXODJS8V-EeC6eHSc9yNg@mail.gmail.com>
+Message-ID: <CAD=FV=VedSS62LKPHeHm8qXF_acVmjXODJS8V-EeC6eHSc9yNg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7180: Add board id for lazor/limozeen
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+Cc:     krzysztof.kozlowski@linaro.org, agross@kernel.org,
+        andersson@kernel.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It was asserted that the "/delete-property/ VBAT-supply;" that we
-needed to do in the rt5682s dts fragment was ugly. Let's change up all
-the trogdor device trees to make it explicit which version of "rt5682"
-we have and avoid the need for the "delete-property".
+Hi,
 
-As a side effect, this nicely gets rid of the need for a delete-node
-in coachz, which doesn't use "rt5682" at all.
+On Wed, Aug 16, 2023 at 2:59=E2=80=AFAM Sheng-Liang Pan
+<sheng-liang.pan@quanta.corp-partner.google.com> wrote:
+>
+> > On 15/08/2023 23:10, Doug Anderson wrote:
+> >> Hi,
+> >>
+> >> On Sun, Aug 6, 2023 at 11:34=E2=80=AFPM Krzysztof Kozlowski
+> >> <krzysztof.kozlowski@linaro.org> wrote:
+> >>>
+> >>> On 04/08/2023 11:58, Sheng-Liang Pan wrote:
+> >>>> add BRD_ID(0, Z, 0) =3D 10 for new board with ALC5682i-VS
+> >>>>
+> >>>> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.=
+google.com>
+> >>>> ---
+> >>>>
+> >>>> Changes in v2:
+> >>>> - correct newly create dts files
+> >>>>
+> >>>
+> >>>
+> >>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts b=
+/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
+> >>>> new file mode 100644
+> >>>> index 000000000000..5a58e94c228e
+> >>>> --- /dev/null
+> >>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
+> >>>> @@ -0,0 +1,30 @@
+> >>>> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> >>>> +/*
+> >>>> + * Google Lazor board device tree source
+> >>>> + *
+> >>>> + * Copyright 2023 Google LLC.
+> >>>> + */
+> >>>> +
+> >>>> +/dts-v1/;
+> >>>> +
+> >>>> +#include "sc7180-trogdor.dtsi"
+> >>>> +#include "sc7180-trogdor-parade-ps8640.dtsi"
+> >>>> +#include "sc7180-trogdor-lazor.dtsi"
+> >>>> +#include "sc7180-lite.dtsi"
+> >>>> +
+> >>>> +/ {
+> >>>> +     model =3D "Google Lazor (rev10+)";
+> >>>> +     compatible =3D "google,lazor", "qcom,sc7180";
+> >>>> +};
+> >>>> +
+> >>>> +&alc5682 {
+> >>>> +     compatible =3D "realtek,rt5682s";
+> >>>> +     /delete-property/ VBAT-supply;
+> >>>
+> >>> No, don't delete properties. First of all, why you do not have this
+> >>> supply here? I doubt it... Especially that this DTS has vbat-supply
+> >>> regulator!
+> >>>
+> >>> Second, define the properties where applicable instead.
+> >>
+> >> It looks like v3 is out, but responding here since it looks like
+> >> Sheng-Liang didn't make any changes in v3 but also didn't respond and
+> >> explain why he didn't make any changes. Sheng-Liang: for future
+> >> reference you should make sure to address comments folks have on the
+> >> list. If your new version takes their feedback into account then
+> >> there's no reason to just respond with "Done", but if (like in this
+> >> case) you ignored feedback you need to say why.
+> >>
+> >> In this case the extra "/delete-property/" is needed to pass bindings
+> >> checks. Specifically this revision of the board replaces the "rt5682i"
+> >> with the newer "rt5682s". This new codec is _almost_ a drop-in
+> >> replacement for the old codec with just a few tiny changes. One such
+> >> change is that the new codec doesn't need a "VBAT-supply".
+> >>
+> >> Since most trogdor devices have the older "rt5682i" codec, the default
+> >> in "sc7180-trogdor.dtsi" specifies the properties for that codec. Only
+> >> the handful of boards that have been spun to use the new codec have an
+> >> override like this. You can see that the override done here matches
+> >> the one done in a few other trogdor boards. A good grep is:
+> >>
+> >> git grep -A4 realtek,rt5682s -- arch/arm64/boot/dts/qcom/sc7180-*
+> >>
+> >> Ironically, that grep finds that "sc7180-trogdor-pazquel360.dtsi" is
+> >> missing the "/delete-property/" which I'm fairly certain means that
+> >> it's giving a validation warning today.
+> >>
+> >> I'm happy to have a bikeshed discussion about doing this better. In a
+> >> previous reply [1] I suggested that it's probably time to move the
+> >> "realtek,rt5682s" snippet to something like
+> >> "sc7180-trogdor-rt5682s-sku.dtsi". Then we could include it in the
+> >> devices and avoid duplicating this bit of dts. I didn't insist on it,
+> >> but if you feel strongly then maybe Sheng-Liang could add that to his
+> >> series? Once done, we could have further bikeshed discussions about
+> >> whether we should continue to use the "/delete-property/" solution or
+> >> if we have to also create a "sc7180-trogdor-rt5682i-sku.dtsi" and
+> >> force all older SKUs to include that. Personally I don't hate this
+> >> "/delete-property/" but I don't care a whole lot either way.
+> >
+> > Thanks for explanation. I vote against /delete-property/ because it is
+> > error-prone and a bit confusing. The same with overriding compatibles -
+> > if possible, should be avoided. sc7180-trogdor-pazquel360.dtsi is doing
+> > both, but that's not the pattern I find easy to read.
 
-A few notes:
-- This doesn't get rid of every "/delete-node/" in trogdor, just the
-  one that was used for rt5682s.
-- Though we no longer have any "/delete-node/", we do still override
-  the "model" in the "sound" node in one case (in pompom) since that
-  uses the "2mic" sound setup.
+OK, I tried it. I'm on the fence but don't object to it landing [1]
 
-This is validated to produce the same result (other than a few
-properties being reordered) when taking the dtbs generated by the
-kernel build and then doing:
 
-  for dtb in *trogdor*.dtb; do
-    dtc -I dtb -O dts $dtb -o out/$dtb.dts;
-  done
+> > I accept overriding supplies or pins, because these differ per board.
+> > But if common DTSI defines compatible, then it is common for everyone o=
+r
+> > it is not really part of common DTSI.
+> >
+> > IOW, the common DTSI should be more like a SoC DTSI - have only parts
+> > present there. I simplify here, because obviously SoC is a real thing
+> > piece of hardware and common board DTSI is not. It's just an
+> > abstraction... but anyway if different boards use different codecs, the=
+n
+> > I would say it is not part of common platform.
+> >
+> > Best regards,
+> > Krzysztof
+> >
+> >
+> Thank Doug's explain, as Doug says, we need "/delete-property/" to pass b=
+inding checks.
+> I read from https://lore.kernel.org/all/20221102182002.255282-9-nfraprado=
+@collabora.com/ which removed VBAT-supply;
+>
+> I'd like to know what I can do for our project. Please advise.
 
-Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-I'm pretty on the fence about this change. I wrote it up at
-Krzysztof's request. While I don't hate it, I'm not convinced that
-this is truly more understandable and it does cause a bit of extra
-duplication. Happy to let others/Bjorn decide.
+I've posted a series which I think will help [2] [1]. Assuming those
+look good, your action items would be:
 
- .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  1 -
- .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  2 +
- .../sc7180-trogdor-lazor-limozeen-nots-r5.dts |  1 +
- .../sc7180-trogdor-lazor-limozeen-nots-r9.dts |  1 +
- .../qcom/sc7180-trogdor-lazor-limozeen-r4.dts |  2 +
- .../qcom/sc7180-trogdor-lazor-limozeen-r9.dts |  1 +
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  1 +
- .../dts/qcom/sc7180-trogdor-lazor-r3-kb.dts   |  1 +
- .../dts/qcom/sc7180-trogdor-lazor-r3-lte.dts  |  1 +
- .../boot/dts/qcom/sc7180-trogdor-lazor-r3.dts |  1 +
- .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   |  1 +
- .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  |  1 +
- .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts |  1 +
- .../sc7180-trogdor-pazquel-lte-parade.dts     |  1 +
- .../qcom/sc7180-trogdor-pazquel-lte-ti.dts    |  1 +
- .../qcom/sc7180-trogdor-pazquel-parade.dts    |  1 +
- .../dts/qcom/sc7180-trogdor-pazquel-ti.dts    |  1 +
- .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  1 +
- .../qcom/sc7180-trogdor-quackingstick.dtsi    |  1 +
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  1 +
- .../dts/qcom/sc7180-trogdor-rt5682i-sku.dtsi  | 38 +++++++++++++++++++
- .../dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi  | 33 +++++++++++++---
- ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts | 12 +++++-
- .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  1 +
- ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  6 ++-
- .../sc7180-trogdor-wormdingler-rev1-inx.dts   |  1 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 27 -------------
- 27 files changed, 104 insertions(+), 36 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682i-sku.dtsi
+1. If they look good, you could provide "Reviewed-by" and/or
+"Tested-by" tags on my patches.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index a532cc4aac47..53f2b093bd40 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -10,7 +10,6 @@
- 
- /* Deleted nodes from sc7180-trogdor.dtsi */
- 
--/delete-node/ &alc5682;
- /delete-node/ &pp3300_codec;
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index b27dcd2ec856..ab51c3a930e1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -7,6 +7,8 @@
- 
- /* This file must be included after sc7180-trogdor.dtsi */
- 
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
-+
- / {
- 	/* BOARD-SPECIFIC TOP LEVEL NODES */
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
-index 7f01573b5543..e7da0d6e8ef5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Lazor Limozeen without Touchscreen (rev5 - rev8)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-index 913b5fc3ba76..400f9e18977f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Lazor Limozeen without Touchscreen (rev9+)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
-index d42dcd421146..8a24812b9a00 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
-@@ -11,6 +11,8 @@
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
-+
- 
- / {
- 	model = "Google Lazor Limozeen (rev4 - rev8)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-index 15d77dc5f956..09a4ff13f072 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Lazor Limozeen (rev9+)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index 80c7108bc51b..b60060a38426 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Lazor (rev1 - 2)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
-index 6ff81c1f7c44..3459b81c5628 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-lite.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-index e58e36e35950..ff8f47da109d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Lazor (rev3 - 8) with LTE";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-index 76c83f88cb41..dd8f6d95655e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-lite.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-index 960f7b7ce094..1c4f0773a242 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-lite.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-index 38027f13b9d0..ec73943abc4c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Lazor (rev9+) with LTE";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-index 56dd222650d3..6cedc0ba9653 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-lite.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
-index 767cb7450c0d..1c3d9f1381ca 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-pazquel.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Pazquel (Parade,LTE)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
-index 9145b74e9009..bf170471b00c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
-@@ -11,6 +11,7 @@
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-pazquel.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Pazquel (TI,LTE)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
-index 9a0e6632a786..60ae129b83c9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-pazquel.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Pazquel (Parade)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
-index 47c5970d8c22..31678a98ce2c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-pazquel.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Pazquel (TI)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index fd944842dd6c..8a1e267b3d8e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -8,6 +8,7 @@
- #include "sc7180-trogdor.dtsi"
- /* Must come after sc7180-trogdor.dtsi to modify cros_ec */
- #include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-index 62ab6427dd65..23c1c81900e8 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-@@ -8,6 +8,7 @@
- /dts-v1/;
- 
- #include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- /* This board only has 1 USB Type-C port. */
- /delete-node/ &usb_c1;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 671b3691f1bb..c9667751a990 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -10,6 +10,7 @@
- #include "sc7180-trogdor.dtsi"
- /* Must come after sc7180-trogdor.dtsi to modify cros_ec */
- #include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682i-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682i-sku.dtsi
-new file mode 100644
-index 000000000000..26f2f5de489c
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682i-sku.dtsi
-@@ -0,0 +1,38 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Trogdor dts fragment for SKUs with rt5682i
-+ *
-+ * Copyright 2023 Google LLC.
-+ */
-+
-+&hp_i2c {
-+	alc5682: codec@1a {
-+		compatible = "realtek,rt5682i";
-+		reg = <0x1a>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&hp_irq>;
-+
-+		#sound-dai-cells = <1>;
-+
-+		interrupt-parent = <&tlmm>;
-+		/*
-+		 * This will get ignored because the interrupt type
-+		 * is set in rt5682.c.
-+		 */
-+		interrupts = <28 IRQ_TYPE_EDGE_BOTH>;
-+
-+		AVDD-supply = <&pp1800_alc5682>;
-+		DBVDD-supply = <&pp1800_alc5682>;
-+		LDO1-IN-supply = <&pp1800_alc5682>;
-+		MICVDD-supply = <&pp3300_codec>;
-+		VBAT-supply = <&pp3300_audio>;
-+
-+		realtek,dmic1-data-pin = <1>;
-+		realtek,dmic1-clk-pin = <1>;
-+		realtek,jd-src = <1>;
-+	};
-+};
-+
-+&sound {
-+	model = "sc7180-rt5682-max98357a-1mic";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi
-index 66b8773309d4..ea036a73f875 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi
-@@ -1,15 +1,36 @@
- // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
- /*
-- * Google Trogdor dts fragment for SKUs with
-+ * Google Trogdor dts fragment for SKUs with rt5682s
-  *
-  * Copyright 2023 Google LLC.
-  */
- 
--&alc5682 {
--	compatible = "realtek,rt5682s";
--	/delete-property/ VBAT-supply;
--	realtek,dmic1-clk-pin = <2>;
--	realtek,dmic-clk-rate-hz = <2048000>;
-+&hp_i2c {
-+	alc5682: codec@1a {
-+		compatible = "realtek,rt5682s";
-+		reg = <0x1a>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&hp_irq>;
-+
-+		#sound-dai-cells = <1>;
-+
-+		interrupt-parent = <&tlmm>;
-+		/*
-+		 * This will get ignored because the interrupt type
-+		 * is set in rt5682.c.
-+		 */
-+		interrupts = <28 IRQ_TYPE_EDGE_BOTH>;
-+
-+		AVDD-supply = <&pp1800_alc5682>;
-+		DBVDD-supply = <&pp1800_alc5682>;
-+		LDO1-IN-supply = <&pp1800_alc5682>;
-+		MICVDD-supply = <&pp3300_codec>;
-+
-+		realtek,dmic1-data-pin = <1>;
-+		realtek,dmic1-clk-pin = <2>;
-+		realtek,dmic-clk-rate-hz = <2048000>;
-+		realtek,jd-src = <1>;
-+	};
- };
- 
- &sound {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
-index 842f07f16ed1..116f79c25a5d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
-@@ -10,10 +10,20 @@
- 
- /dts-v1/;
- 
--#include "sc7180-trogdor-wormdingler-rev1-boe.dts"
-+#include "sc7180-trogdor-wormdingler.dtsi"
- #include "sc7180-trogdor-rt5682s-sku.dtsi"
- 
- / {
- 	model = "Google Wormdingler rev1+ (BOE, rt5682s)";
- 	compatible = "google,wormdingler-sku1025", "qcom,sc7180";
- };
-+
-+&mdss_dsi0_phy {
-+	qcom,phy-rescode-offset-top = /bits/ 8 <31 31 31 31 (-32)>;
-+	qcom,phy-rescode-offset-bot = /bits/ 8 <31 31 31 31 (-32)>;
-+	qcom,phy-drive-ldo-level = <450>;
-+};
-+
-+&panel {
-+	compatible = "boe,tv110c9m-ll3";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
-index 6eeead70d3eb..72627760e2a4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
-@@ -11,6 +11,7 @@
- /dts-v1/;
- 
- #include "sc7180-trogdor-wormdingler.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Wormdingler rev1+ BOE panel board";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
-index 084870323606..0bf355e08f78 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
-@@ -10,10 +10,14 @@
- 
- /dts-v1/;
- 
--#include "sc7180-trogdor-wormdingler-rev1-inx.dts"
-+#include "sc7180-trogdor-wormdingler.dtsi"
- #include "sc7180-trogdor-rt5682s-sku.dtsi"
- 
- / {
- 	model = "Google Wormdingler rev1+ (INX, rt5682s)";
- 	compatible = "google,wormdingler-sku1", "qcom,sc7180";
- };
-+
-+&panel {
-+	compatible = "innolux,hj110iz-01a";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
-index dd34a2297ea0..4b165b826ab3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
-@@ -11,6 +11,7 @@
- /dts-v1/;
- 
- #include "sc7180-trogdor-wormdingler.dtsi"
-+#include "sc7180-trogdor-rt5682i-sku.dtsi"
- 
- / {
- 	model = "Google Wormdingler rev1+ INX panel board";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 5a33e16a8b67..46aaeba28604 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -372,7 +372,6 @@ keyboard_backlight: led-0 {
- 
- 	sound: sound {
- 		compatible = "google,sc7180-trogdor";
--		model = "sc7180-rt5682-max98357a-1mic";
- 
- 		audio-routing =
- 			"Headphone Jack", "HPOL",
-@@ -747,32 +746,6 @@ trackpad: trackpad@15 {
- hp_i2c: &i2c9 {
- 	status = "okay";
- 	clock-frequency = <400000>;
--
--	alc5682: codec@1a {
--		compatible = "realtek,rt5682i";
--		reg = <0x1a>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&hp_irq>;
--
--		#sound-dai-cells = <1>;
--
--		interrupt-parent = <&tlmm>;
--		/*
--		 * This will get ignored because the interrupt type
--		 * is set in rt5682.c.
--		 */
--		interrupts = <28 IRQ_TYPE_EDGE_BOTH>;
--
--		AVDD-supply = <&pp1800_alc5682>;
--		DBVDD-supply = <&pp1800_alc5682>;
--		LDO1-IN-supply = <&pp1800_alc5682>;
--		MICVDD-supply = <&pp3300_codec>;
--		VBAT-supply = <&pp3300_audio>;
--
--		realtek,dmic1-data-pin = <1>;
--		realtek,dmic1-clk-pin = <1>;
--		realtek,jd-src = <1>;
--	};
- };
- 
- &lpasscc {
--- 
-2.41.0.694.ge786442a9b-goog
+2. You can send a new version of your patches based atop mine. You'd
+want to note in the cover letter and/or "after the cut" in the patch
+that your patches depend on mine.
 
+NOTE: there's no reason that the cleanup patches needed to be posted
+by me. As you get more familiar with upstream kernel development, you
+should be able to write similar patches yourself and include them in
+your series. It's perfectly OK to "cleanup" other boards as part of
+your series.
+
+
+[1] https://lore.kernel.org/r/20230816112143.2.I29a5a330b6994afca81871f74bb=
+acaf55b155937@changeid
+[2] https://lore.kernel.org/r/20230816112143.1.I7227efd47e0dc42b6ff243bd22a=
+a1a3e01923220@changeid
