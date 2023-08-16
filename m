@@ -2,108 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C222277E624
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 18:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1BE177E656
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 18:27:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344589AbjHPQPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 12:15:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45356 "EHLO
+        id S233352AbjHPQ1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 12:27:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344650AbjHPQPW (ORCPT
+        with ESMTP id S1344686AbjHPQ0o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 12:15:22 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353AC2D48;
-        Wed, 16 Aug 2023 09:15:01 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-523100882f2so8809020a12.2;
-        Wed, 16 Aug 2023 09:15:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692202499; x=1692807299;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MRo0wEOJdVr9FA/EkBIE4ny8xfP0f3fZo+lmUorR//E=;
-        b=EASagsdEq1KtdOkLHAqPqNj2uQcHAXKB7YwY9qYO3vgXGxlMUsqkbGNQ1+wk//wD+4
-         boPrK/9hhwh1DcGJnN1ko3Pw/pfjS79JlbjtUmiK2phLRQ5qiQZEXG6QYg8/vMXeZW2n
-         Mws7KDeJ+A7tKfliMYArO39D7tyAX+jgIY//AZJPch9v8RapOAcB6U1NwnOuMllCXIyV
-         TD0QvaY8l+jkSc93IiC6PC196nSqSEutBq6OjVDrId8Mjp/4wb7PGB0CxfcNtaiI+pjU
-         9S6lrC4jhWxi6JEHL+YBqZMNfZ8m8lgwaNyzCdPLc/CSveRaY2JaSwTMATtYSTo4DO3o
-         8ZYQ==
+        Wed, 16 Aug 2023 12:26:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931701B4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:25:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1692203155;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=+2bMlQtvM0OHR8UP4XnRskGZ8QIiYjpG3sVJDPdEXek=;
+        b=QMRaZS0vJV1HIOeWsYX4gl8UcAwmgbAI8cshx6TndfufnWiTKy7ka7dfFf7TX5ReU8KS/D
+        /eByqOvkrkyBlz3evvTgiH5FFqP/A0r/a2umO5zvN6vJdc8SSMrA4VkVyfzuDg1+bD35oB
+        vBE9nSWp5IbrHiOw23L66ftrmu+T7ww=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-IJeAUnbzMwyH0uF8FEf3zA-1; Wed, 16 Aug 2023 12:25:54 -0400
+X-MC-Unique: IJeAUnbzMwyH0uF8FEf3zA-1
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-765ab532883so935675585a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 09:25:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692202499; x=1692807299;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MRo0wEOJdVr9FA/EkBIE4ny8xfP0f3fZo+lmUorR//E=;
-        b=BPd4SM7Xzyq9gqQzgbOnJKvI8Lfr1/pTo/W5xq6kCBOBX30tZIFuabHpTXtXfDc6OQ
-         7AaZKozn/R5qTFF07zdsBHQbb1FeCLxWX3+axMNQ0Eb6vCLgDeQz38Lsfd9lbxf4bkzz
-         JRYdojHlhD2JC2IqBh//JVef1ZzWrDtHlwaUWjL+NTKLW3/ZZBu0TLIv/Dh/HVaJ4QLV
-         AMxo7EJc7AsrcDoE4Dwv9VYunBlsEng0o5+e7rJXt95ru0F3oiDh+fG2Vv4l6xnvh+B1
-         9+69KUXOPe67nU/4RB3OWdwRCnO+zGKP/jqcApAOC0svT5UiRuJdP8fX0EgpYun9pt2Z
-         FW6A==
-X-Gm-Message-State: AOJu0YynoXDdo/inRgTtEwzbCXdFSFaRMBl3baGHF48Wjs3pg+0RfdOI
-        eU6DyecEsT/BdXMiwHP6C3s=
-X-Google-Smtp-Source: AGHT+IHDWW53CVY1YSIMx8RTzPqBIOpg4G2M/Enrgr0AHd1W2mdUUoAT0mjUn93SnLQ05/EFxGJKVw==
-X-Received: by 2002:a50:fc10:0:b0:523:4d60:71c0 with SMTP id i16-20020a50fc10000000b005234d6071c0mr2037441edr.33.1692202499564;
-        Wed, 16 Aug 2023 09:14:59 -0700 (PDT)
-Received: from fedora.. (dh207-98-254.xnet.hr. [88.207.98.254])
-        by smtp.googlemail.com with ESMTPSA id bo6-20020a0564020b2600b0052574ef0da1sm2536733edb.28.2023.08.16.09.14.58
+        d=1e100.net; s=20221208; t=1692203153; x=1692807953;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:to:from:subject:message-id:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+2bMlQtvM0OHR8UP4XnRskGZ8QIiYjpG3sVJDPdEXek=;
+        b=P23tkyklyhj96LmdY/LaYvX7GXVpP//f2DnCjCeQkytnOApMoZON2tVvHw6tqR/eVP
+         05zqRh/Ov5MBPAZxyZpZtKgZwu91EgBwXVMu6KXdDkXJdnihzv8ulZS2P7cf41/A5I+9
+         cPOHXKNL4AbqF+U1D7r8OTd/aZLj0Hkt6njdxqMCdFkI2j68+yUlvl+iERdTT3vFCI+6
+         zQzz3jRGeFRbLwgCKDRBncN27k2ilup9CvcQ/DkKNbjcr+C5zrO1UPo4aGWcAZiDcRkH
+         MAt7FzwOBpldB3q06pATPZsXlHTt3ItLObG0Am/wstGidg/N1nzgxabY65nU0VF1yj3m
+         SNxw==
+X-Gm-Message-State: AOJu0YyBSWU2ABNQV0CYwIzCVPpMY7WsuYNQlm8fJRLCrMFZ5ovdwYfH
+        24iUi6las27m+NNqRDPCDgagnaglF8/h3mO2MknDMUrTHhLS9M1LgirgHawuibi1pfurSJ4Evo0
+        NKCR7ZluYer0wpwVAr7kmamhlxFxS4NO0Og==
+X-Received: by 2002:a05:620a:46a6:b0:76c:e52f:f12b with SMTP id bq38-20020a05620a46a600b0076ce52ff12bmr2876274qkb.47.1692203152961;
+        Wed, 16 Aug 2023 09:25:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5p/6tniY4H4S5G/oSAYaMPLeTzJ9wqA3XwbuuOvl3AduATUr31RrRwBfY9/zzYL4yUanPTw==
+X-Received: by 2002:a05:620a:46a6:b0:76c:e52f:f12b with SMTP id bq38-20020a05620a46a600b0076ce52ff12bmr2876258qkb.47.1692203152636;
+        Wed, 16 Aug 2023 09:25:52 -0700 (PDT)
+Received: from thinkpad-p1.localdomain (cpe00fc8d79db03-cm00fc8d79db00.cpe.net.fido.ca. [72.137.118.218])
+        by smtp.gmail.com with ESMTPSA id e14-20020a05620a12ce00b0076ce477b85dsm4479980qkl.134.2023.08.16.09.25.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Aug 2023 09:14:59 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        wim@linux-watchdog.org, linux@roeck-us.net, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_saipraka@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: ipq5018: add WDT
-Date:   Wed, 16 Aug 2023 18:14:00 +0200
-Message-ID: <20230816161455.3310629-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230816161455.3310629-1-robimarko@gmail.com>
-References: <20230816161455.3310629-1-robimarko@gmail.com>
+        Wed, 16 Aug 2023 09:25:52 -0700 (PDT)
+Message-ID: <3e0de46efe32e2e4c75fa3af9dabd0477e144823.camel@redhat.com>
+Subject: Re: sa8540p-ride crash when all PCI buses are disabled
+From:   Radu Rendec <rrendec@redhat.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Date:   Wed, 16 Aug 2023 12:25:50 -0400
+In-Reply-To: <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
+References: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
+         <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the required DT node for WDT operation.
+On Tue, 2023-08-15 at 11:54 +0100, Bryan O'Donoghue wrote:
+> On 14/08/2023 23:36, Radu Rendec wrote:
+> > I'm consistently getting a system crash followed by a ramdump on
+> > sa8540p-ride (sc8280xp) when icc_sync_state() goes all the way through
+> > (count =3D=3D providers_count).
+> >=20
+> > Context: all PCIe buses are disabled due to [1]. Previously, due to
+> > some local kernel misconfiguration, icc_sync_state() never really did
+> > anything (because count was always less than providers_count).
+> >=20
+> > I was able to isolate the problem to the qns_pcie_gem_noc icc node.
+> > What happens is that both avg_bw and peak_bw for this node end up as 0
+> > after aggregate_requests() gets called. The request list associated
+> > with the node is empty.
+>=20
+> If all PCIe buses are disabled, then of course the bandwidth requests
+> should say zero, the clocks should be disabled and any associated=20
+> regulators should be off.
+>=20
+> > For testing purposes, I modified icc_sync_state() to skip calling
+> > aggregate_requests() and subsequently p->set(n, n) for that particular
+> > node only. With that change in place, the system no longer crashes.
+>=20
+> So what's happening is that a bus master in the system - perhaps not the=
+=20
+> application processor is issuing a transaction to a register most likely=
+=20
+> that is not clocked/powered.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
-Changes in v2:
-* Put the reg property as second in node
----
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+Yes, that was my assumption as well. But I didn't think it could be
+something other than the AP. That is an interesting perspective.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 3285c86824cf..b3fa7911788c 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -182,6 +182,13 @@ v2m1: v2m@1000 {
- 			};
- 		};
- 
-+		watchdog: watchdog@b017000 {
-+			compatible = "qcom,apss-wdt-ipq5018", "qcom,kpss-wdt";
-+			reg = <0x0b017000 0x40>;
-+			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&sleep_clk>;
-+		};
-+
- 		timer@b120000 {
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0x0b120000 0x1000>;
--- 
-2.41.0
+My first thought was to analyze the ramdump and hopefully find some
+clues there. But unfortunately that doesn't seem to be an option with
+the tools that I have.
+
+> Have you considered that one of the downstream devices might be causing=
+=20
+> a PCIe bus transaction ?
+
+No, I haven't considered that. If that's the case, it will probably be
+even harder to debug.
+
+> If you physically remove - can you physically remove - devices from the=
+=20
+> PCIe bus does this error still occur ?
+
+This is a standard QDrive 3 reference board, so I think this is not an
+option. Taking those things apart is very difficult, and I think all
+peripherals are soldered onto the board anyway.
+
+> > Surprisingly, none of the icc nodes that link to qns_pcie_gem_noc (e.g.
+> > xm_pcie3_0, xm_pcie3_1, etc.) has any associated request and so they
+> > all have 0 bandwidth after aggregate_requests() gets called, but that
+> > doesn't seem to be a problem and the system is stable. This makes me
+> > think there is a missing link somewhere, and something doesn't claim
+> > any bandwidth on qns_pcie_gem_noc when it should. And it's probably
+> > none of the xm_pcie3_* nodes, since setting their bandwidth to 0 seems
+> > to be fine.
+>=20
+> Yes so if you assume that the AP/kernel side has the right references,=
+=20
+> counts, votes then consider another bus master - a thing that can=20
+> initiate a read or a write might be misbehaving.
+
+There is one thing I wasn't aware of when I wrote the previous email.
+As it turns out, bandwidth/clock control is done at the bcm level, not
+at the icc node level. It looks like there is a single bcm called PCI0,
+and it's linked to the qns_pcie_gem_noc node. The xm_pcie3_* icc nodes
+are not linked to any bcm.
+
+This means that *all* PCIe buses are shut down when qns_pcie_gem_noc is
+disabled due to zero bandwidth. I was under the (wrong) impression
+that, since all xm_pcie3_* nodes had no requests, each corresponding
+PCIe bus would be shut down separately, leaving only qns_pcie_gem_noc
+active (with my test change in place).
+
+> Assuming there is no misbehaving arm core - say a cDSP or aDSP piece of=
+=20
+> code that wants to do something on the PCIe bus, might the culprit be
+> whatever you have connected to the bus ?
+>=20
+> Could something be driving the #WAKE signal and then transacting ?
+>=20
+> But also keep in mind depending on what you are doing with this system=
+=20
+> if you have a bit of firmware in one of the DSP cores - does that=20
+> firmware have scope to talk to any devices on the PCIe bus ?
+
+As I mentioned above, this is a standard QDrive 3 reference board.
+Furthermore, I don't explicitly do anything with the DSPs. I just boot
+a fairly recent upstream kernel (6.5-rc1) with a standard rootfs. The
+boot firmware is whatever Qualcomm provides by default for these
+systems. So, unless the boot firmware loads anything into the DSPs
+behind my back (which I doubt), the DSPs should not even be running.
+
+What is more likely though is that the boot firmware initializes a
+bunch of PCIe devices and leaves them on.
+
+> I'd guess another firmware is unlikely but, a downstream device doing a=
+=20
+> #WAKE when you have the PCIe nodes disabled would presumably be bad..
+>=20
+> Try looking for an upstream transaction from a device..
+
+Yes, that makes sense. Do you have any suggestion on how to do that
+without using any specialized hardware (such as JTAG pod or PCIe bus
+analyzer)?
+
+Thanks for all the input and suggestions!
+
+--
+Radu
 
