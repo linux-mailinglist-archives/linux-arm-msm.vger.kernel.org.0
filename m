@@ -2,87 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DADDA77DB9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 10:05:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFE2977DBB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 10:07:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234307AbjHPIEg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 04:04:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
+        id S242720AbjHPIHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 04:07:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242631AbjHPIEd (ORCPT
+        with ESMTP id S242741AbjHPIG4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 04:04:33 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C72109;
-        Wed, 16 Aug 2023 01:04:32 -0700 (PDT)
-Received: from dggpemm500017.china.huawei.com (unknown [172.30.72.53])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4RQgbH1PRfzVjsK;
-        Wed, 16 Aug 2023 16:02:19 +0800 (CST)
-Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
- dggpemm500017.china.huawei.com (7.185.36.178) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Wed, 16 Aug 2023 16:04:24 +0800
-Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
- (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Wed, 16 Aug
- 2023 16:04:23 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-clk@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC:     <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <agross@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_gokulsri@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <yangyingliang@huawei.com>
-Subject: [PATCH -next] clk: qcom: gcc-ipq5018: change some variable static
-Date:   Wed, 16 Aug 2023 16:01:13 +0800
-Message-ID: <20230816080113.1222352-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 16 Aug 2023 04:06:56 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B9312698
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 01:06:52 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fe32016bc8so56572645e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 01:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692173211; x=1692778011;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JEScRVk2p7TCkzthmHvScXKkSivAXxQZS8rbl/NgHlY=;
+        b=R7A+bMPMMMd+VokhgnlbmXQjAey6gG3sUo5oNPRK+tIgnBoY2X6woZrZY+9pIohQfF
+         nmZngXvQyTOHDZUTmqqUTurltM2C0y95c18yeCz+f62ejpKHMYLfpKG2naLmdsCbOw1A
+         8skaxm5RWgXJz46mHurQ6N2i9YRnn2zj5VrQ1iQs2yLC8xZL9ch3/yliFwMAoOFGkefl
+         mIL7Qm/mPsbUlyEtJyiFRp4zs4/6aOiOxPoc1YYm5vHhnNQZaAQLS8aJxtJm3+DJA4Nk
+         JMjlhcPqpAzVyrrvSyaHuhqWP9dfSMqiHxg3OzPVdI5nZZFCeLt+a3HiBYRXTpIDUUcQ
+         G3Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692173211; x=1692778011;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JEScRVk2p7TCkzthmHvScXKkSivAXxQZS8rbl/NgHlY=;
+        b=O7jBDQjpD3S7ZMUaHRdEuhIvyhPilDH1w1wuZHqN5wzTB7cxy0SABhFOJrbXPxJ6Sh
+         lSmAm2H1UzeQsTacw9fVjHDEg2OFZ7Id3Lq0u4NHvzOC6k2htR9/06/RYBOz1mp/33QA
+         pMaweP9SQkKfjORQqG6dWDNXqdiYfajIfJCbhn+yBWr/nSBHhiT4r6rqMHFnzMf9Sg7g
+         D+FovAQyRkbeRjpdcxjurDh9gbri+G2b7fga+JUEEM71s6sOkdya6YzLo5ZztgHygnFZ
+         JmnNWfpT9BRONr+e19Sc8vELRKpOJlUIo2iWapDOq++ZNuCriSEU9dBL6xKQHA/GnHSg
+         gBpw==
+X-Gm-Message-State: AOJu0YznxW+3dlEKtVJr/cGMhOPxZzukEBFExrmQTjXpEB3QwurkJDhe
+        Sj1qiDMIn3VVFMTBjl3qLflUTw==
+X-Google-Smtp-Source: AGHT+IFPmUXB4tJPw9TGc+c9MuPhyglV11opsGx1lwF/m+2dSp1eWuzkA+hkA6/atgxQPR5aF3oK1A==
+X-Received: by 2002:a5d:45c1:0:b0:314:1b36:f440 with SMTP id b1-20020a5d45c1000000b003141b36f440mr739436wrs.70.1692173209793;
+        Wed, 16 Aug 2023 01:06:49 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id x5-20020adfdcc5000000b00317878d83c6sm20430428wrm.72.2023.08.16.01.06.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Aug 2023 01:06:49 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 0/3] Bluetooth: qca: enable WCN7850 support
+Date:   Wed, 16 Aug 2023 10:06:45 +0200
+Message-Id: <20230816-topic-sm8550-upstream-bt-v4-0-2ea2212719f6@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpemm500007.china.huawei.com (7.185.36.183)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJWD3GQC/43OTQrCMBAF4KtI1o5M/troynuIizRNbaAmJalFk
+ d7d0Y2IIC7fg/ne3FnxOfjCdqs7y34OJaRIQa1XzPU2njyEljITKCRWAmFKY3BQzkZrhMtYpuz
+ tGZoJ2s4pibrbOq4YnTe2eGiyja4nIF6Ggcox+y5cX3uHI+U+lCnl22t+5s/2j6WZA4KqhdGV6
+ oypxX4I0ea0SfnEnuos/pUESVvTICrZSm7VlyTfkkH5Q5IkVaZWlmuk18yHtCzLA/4ALS9qAQA
+ A
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1575;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=HpliNodIkJkO7BfM8VD9wzTxvJGh7BpxG+eVr4WWBZ0=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk3IOX5iBmi6+J5FmBpVEMuboBu6ZKGjJO6WcJS3W8
+ mv5u61GJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZNyDlwAKCRB33NvayMhJ0e2+EA
+ CtYCVPI+CcDW00b1mzvsOvGphdKea1moRVXYfJxvuipJ4is7bMg/G1AKrvi6fgxz4oNMSuTD9ITSHY
+ 4T0Fy8KYoWUlGfj92OHZIK4jl1TPVzS9nLmqSxXceHu8ptMZ558tXQNLWNDLnyAVPW5cUKz0Kj1jkz
+ rlf4BJMtnJ9TGd3CYfWtY3hmwGz5Aa9luc4Qxh9KLVNPOIFsaVNJYENQuxkRGm9C+FDjE0KsXnjW0I
+ 2pbO7mNWBwyYod/C/XGcrAo+NklOJeyhgropv0QlXXYc/U7qHwbGrFmLZqU2OU+MaT8wtnzQDyhtbu
+ kolnzEVDmH2G3o4sSeWhxU7uYus8DWui3cXak3c6Pqmn2HZiOhU6xEExy7EDPxn7xcwBbTC6zN+Zfp
+ ps2O7plcEHn5Hmz3GB+9HGsy+OHYBbjyTDswOqYUJjVfVqJ9F5i/+iv1zT6dXVtQovXZSPm98r/ubt
+ S8YVX/8F4Ibnc4su+x4qhyLD5eYeCGi/uGB4qiF4321k5fEJd6lwuUCsmndD6zs+tXsK6K+sds41V5
+ cpEfKkjxonYeqv8FFvZ9F/9RhinwHNMUuly6KuRTCBYjQ/1SSmBdy37eKBfrvdyPRUCuZR19R944G+
+ 9nn1qdSIqCEt3NX7y+HkTS7nUcdfq4ldFE0WSUzc2bzAYs7a4Lz+l8i5q4FQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-lpass_axim_clk_src and lpass_sway_clk_src are only
-used in gcc-ipq5018.c now, change them to static.
+This serie enables WCN7850 on the Qualcomm SM8550 QRD
+reference platform.
 
-Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+The WCN7850 is close to the WCN6855 but uses different
+firmware names.
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/clk/qcom/gcc-ipq5018.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Changes in v4:
+- Changes subjects to Bluetooth
+- Fixed typo
+- Link to v3: https://lore.kernel.org/r/20230803-topic-sm8550-upstream-bt-v3-0-6874a1507288@linaro.org
 
-diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
-index 313ff2281ca7..19dc2b71cacf 100644
---- a/drivers/clk/qcom/gcc-ipq5018.c
-+++ b/drivers/clk/qcom/gcc-ipq5018.c
-@@ -826,7 +826,7 @@ static const struct freq_tbl ftbl_lpass_axim_clk_src[] = {
- 	{ }
- };
- 
--struct clk_rcg2 lpass_axim_clk_src = {
-+static struct clk_rcg2 lpass_axim_clk_src = {
- 	.cmd_rcgr = 0x2e028,
- 	.freq_tbl = ftbl_lpass_axim_clk_src,
- 	.hid_width = 5,
-@@ -844,7 +844,7 @@ static const struct freq_tbl ftbl_lpass_sway_clk_src[] = {
- 	{ }
- };
- 
--struct clk_rcg2 lpass_sway_clk_src = {
-+static struct clk_rcg2 lpass_sway_clk_src = {
- 	.cmd_rcgr = 0x2e040,
- 	.freq_tbl = ftbl_lpass_sway_clk_src,
- 	.hid_width = 5,
+Changes in v3:
+- Rebased on next-20230803 (including WCN3988 changes)
+- Dropped DT patches to be sent in a separate serie
+- Link to v2: https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v2-0-98b0043d31a4@linaro.org
+
+Changes in v2:
+- Convert if/else and qca_is_*() macros by switch/case to simplify adding now BT SoCs
+- Add bindings reviewed-by
+- Link to v1: https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v1-0-4728564f8872@linaro.org
+
+---
+Neil Armstrong (3):
+      dt-bindings: net: bluetooth: qualcomm: document WCN7850 chipset
+      Bluetooth: qca: use switch case for soc type behavior
+      Bluetooth: qca: add support for WCN7850
+
+ .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |  23 ++
+ drivers/bluetooth/btqca.c                          |  97 +++++---
+ drivers/bluetooth/btqca.h                          |  37 +--
+ drivers/bluetooth/hci_qca.c                        | 264 ++++++++++++++++-----
+ 4 files changed, 300 insertions(+), 121 deletions(-)
+---
+base-commit: ef66bf8aeb91fd331cf8f5dca8f9d7bca9ab2849
+change-id: 20230620-topic-sm8550-upstream-bt-dfc4305f9c14
+
+Best regards,
 -- 
-2.25.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
