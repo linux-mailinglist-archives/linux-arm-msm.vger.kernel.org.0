@@ -2,126 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FCE977E74B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6B677E76E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:17:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345087AbjHPRKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:10:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51910 "EHLO
+        id S235728AbjHPRQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 13:16:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345159AbjHPRKn (ORCPT
+        with ESMTP id S1345168AbjHPRQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:10:43 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E052102
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:10:41 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ff8cf11b90so2363290e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:10:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692205840; x=1692810640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vOSBwEf8b3zBWJUJxFHEEIdQkyQR/7l6EISTmPde1tE=;
-        b=y42vFXfApuhki15X4jeRgPXdeHCSDhvS7KvI6b92mmrbgkH/bPHcX5Ja9eoLlAhNyb
-         pwx5s/0fAos/e/n6t8uE6p+HhDprpiG2kRDjdhoP8FdRhHJQLe1ibxS+COaPnjx5/bNT
-         T13ms9rkW3u4zF1Q8p4yaF67ly7lcJ6yog3Uyn2XNoSOeIMekSi04pXjqQMQgk/1xJmf
-         Q4oB9B6gCyVz4st1hxja5ktxsYAzDn416QFmcxAn55Qe9S14ikh9Us/Sst8BbmnEz5i4
-         cylS8splN/ULc2ShEpS9vCwvg9dq5dgGFm0PpYL4o7/MVqowVWTGc1PBuRO0IFO8TrQ5
-         jV6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692205840; x=1692810640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vOSBwEf8b3zBWJUJxFHEEIdQkyQR/7l6EISTmPde1tE=;
-        b=QzTWNtciaeBbhx/12CfT0ObAYaUhIkouT+iu61piZwNHl+f/IJzwgdlfPLw/5645KR
-         lUrrmulVFdj8xoO7d6QqskQjNcrlSRU83h5dVt32v5O75LZlkZfShj9XQuAkyn0kwZC9
-         Td6yDX6AYVTEa7KMLWYxpKtGNU2fjnED2E1FSR9Bm45atrHaS82K1uiiTyGbXmn8C5Pj
-         Zk+vbq94nKf5rOEKUu5F7yeuf1ZqeCxZDgpC2NLdttsumhZ304D6JupraJPbtd0eWGXB
-         EXqvcQDTkSZEiqD6MVmxYZq9lrZ330E8nzaY2SwwHqjBjcVwcrqiEnXnpYVJyASfv2H1
-         WnEQ==
-X-Gm-Message-State: AOJu0YwfHvm+12lwCjPDIWbCOlaNzbLqq2gHmI4cYg8NMW5OwFc8Krkg
-        tOGaYJWBJvca/F++5GYbrWOX4w==
-X-Google-Smtp-Source: AGHT+IFTC5uyVV0E5vnCsIIYJ0Hn9713mzYDnWfs9n/yArGcq6olinZoSqso9+PtasddMiWo3h8nZA==
-X-Received: by 2002:a05:6512:4016:b0:4f8:70d8:28f8 with SMTP id br22-20020a056512401600b004f870d828f8mr2838400lfb.55.1692205839941;
-        Wed, 16 Aug 2023 10:10:39 -0700 (PDT)
-Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id eo12-20020a056512480c00b004f858249932sm3016609lfb.90.2023.08.16.10.10.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 10:10:39 -0700 (PDT)
-Message-ID: <511cb049-4b0a-4005-a1f7-59e0def6855f@linaro.org>
-Date:   Wed, 16 Aug 2023 19:10:38 +0200
+        Wed, 16 Aug 2023 13:16:16 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BCD2D48;
+        Wed, 16 Aug 2023 10:16:13 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37GCMFPf026499;
+        Wed, 16 Aug 2023 17:15:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=zhkaB++sZDMq2yanj4e1JbYu42RN6uvd1pKF9zJHIZo=;
+ b=JMP48rz/0Bzyzxpc1z//LFHnHF6VmQRM8qnKLyz//YLATs0DBCRAHGJxcWrT6zAvvBA1
+ VGfk5cR5ltG7BnphZtYNl5VsHzHr0raLU8FARTtOrmcHWP2VuMBBZY2oEoXo/A5Q6OtU
+ 7WRJ/fXotoZcOrcP7xCiKc4xFzLeaKcuNi0lcSMlWZzxbod5ngBEjj1gD/TH22Kwk/w4
+ naGacPbUc4U7HGhRMkWDJJF+eThXAOg/DkNDWudOHrWWV8PWqTQkfT1rnEPH6AdF/0+V
+ LAR8aAl4VGIrf/wuNIn5JqWj4H/K1LtKIvi71AnKiV3MsML4E7c6C1YpIdN9rdv8pcM+ BA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sg83rbd0a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 17:15:41 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37GHFeIX002878
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 17:15:40 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 16 Aug
+ 2023 10:15:39 -0700
+Date:   Wed, 16 Aug 2023 10:15:38 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        "Nicolas Schier" <nicolas@fjasle.eu>,
+        Kees Cook <keescook@chromium.org>,
+        "Bjorn Andersson" <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <quic_pkondeti@quicinc.com>, <u.kleine-koenig@pengutronix.de>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
+Message-ID: <20230816171538.GB26279@quicinc.com>
+References: <cover.1691049436.git.quic_gurus@quicinc.com>
+ <20230810185526.GC31860@quicinc.com>
+ <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/14] media: qcom: camss: Drop useless NULL assignment
- for ispif resources
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230814162907.3878421-1-bryan.odonoghue@linaro.org>
- <20230814162907.3878421-4-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230814162907.3878421-4-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rlUvw-RXrUOWd5u-0bjWn0IL_MERk8Rr
+X-Proofpoint-ORIG-GUID: rlUvw-RXrUOWd5u-0bjWn0IL_MERk8Rr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-16_17,2023-08-15_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=630
+ malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ clxscore=1015 mlxscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308160152
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.08.2023 18:28, Bryan O'Donoghue wrote:
-> The NULL pointer assignement is a redundant step our compiler will
-> initialize unpopulated fields as zero. We check for logical ! later on
-> in the code as opposed to NULL anyway.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Just squash it with patch 2?
+Thanks for the comments, Krzysztof.
 
-Konrad
+On Aug 15 2023 23:06, Krzysztof Kozlowski wrote:
+> On 10/08/2023 20:55, Guru Das Srinagesh wrote:
+> > On Aug 03 2023 01:23, Guru Das Srinagesh wrote:
+> >> When pushing patches to upstream, the `get_maintainer.pl` script is used to
+> >> determine whom to send the patches to. Instead of having to manually process
+> >> the output of the script, add a wrapper script to do that for you.
+> >>
+> >> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
+> >> editing it in-place.
+> > 
+> > Could I request reviews from the other maintainers as well, please? Just to see
+> > if I should continue working on this script or if the `b4` tool obviates the
+> > need for such a script.
+> 
+> I send a bit of patches but I use very simple workflow. It is really
+> simple, so simple, that I was always surprised how people can make their
+> life difficult with some complicated process to send patches... and then
+> obviously skip some maintainers, because of that process.
+
+Exactly - this script aims to solve precisely that problem. It fills the gap
+between running `get_maintainers.pl` and having to manually edit its output to
+add "To: " and "Cc: " and somehow incorporate it in the body of the patch(es).
+
+With this script, the workflow would be as simple as:
+
+  1. Generate patches using `git format-patch`
+  2. Run `add-maintainer.py` on the above patches
+  3. `git send-email` the patches.
+
+That's it - no need to manually work with email addresses.
+  
+> I almost always feed git send-email with addresses from
+> scripts/get_maintainers.pl. This tool would not bring any benefits to my
+> simple workflow.
+
+In the light of the 3-step workflow I've envisioned above, could you please
+elaborate why not? If anything, it will only save a developer's time.
+
+> For newcomers, OTOH, I would either recommend simple workflow or just
+> use b4. Why? Because if you cannot use git-send-email, then it means
+> your email setup will make your life difficult and adding maintainers to
+> existing patch won't help you.
+
+You've mentioned a "simple workflow" many times - could you please share more
+details on the steps you follow in your workflow for sending patches?
+
+> This tool depends on the command line and shell interface of
+> scripts/get_maintainers.pl which is another reason why it might not be a
+> good idea.
+
+Could you please elaborate on why depending on the output of
+`get_maintainer.pl` is a bad idea? It's what everyone uses, no?
+
+Thank you.
+
+Guru Das.
