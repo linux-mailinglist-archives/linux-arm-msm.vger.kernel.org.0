@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92B0C77E778
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3D2077E7AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 19:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345170AbjHPRU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 13:20:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54270 "EHLO
+        id S1345219AbjHPRd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 13:33:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345173AbjHPRUx (ORCPT
+        with ESMTP id S1345305AbjHPRdT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:20:53 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0517026B1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:20:52 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fe8c3b5ca0so11027569e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:20:51 -0700 (PDT)
+        Wed, 16 Aug 2023 13:33:19 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B92C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:33:18 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b962c226ceso106054321fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 10:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692206450; x=1692811250;
+        d=linaro.org; s=google; t=1692207196; x=1692811996;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2EaI/gthp6oGSH/3KSg6Ply6CEER8r1o/EsLEDlma6U=;
-        b=z2/kjlne3CTStkK0lY2xsnOqxqG9n5e+//lQejSfnOJAsmfD2aLACUSP21yM17DsD9
-         H4bhDPLLlj6bO7ZiGc3cSpvLmX9SJAVB7xoJBuehe/E1LwHExtKmazgF5aiCwKwpd10g
-         KF0tLhJH6Ts4Ll4d5kpAT3Bf3XDZsPKOLGBxTRnoIdBFaO4nZ83znz6kjYu5vnOhbzSb
-         6pEpL42vFhuug1lzxky5oEhx3x4JMeYaRvR8s4PW7ljZK68++a+2vRlx0PAali81Z6Bu
-         yJ7DeANCKRFC3mBg6Ceu60YOAMYbEoT5Zhzxhy/XGbjR49/74Y/V8f+E1UA7xEN3YYNM
-         5rBQ==
+        bh=hlJlE+pLzohqehJhGlKehccYlE2SfB36KPQVu33mNpA=;
+        b=IT7+QY425Z6hPqSdKlPUHX+BgJhLtUz6CFYhT0PlTQtFlEQp3u4BUH9ezBHaIx96Bz
+         ui88ZdlkKUT7is+qkZbkjMyDcdJH6GbV7MnC6VEckQZsUHMfOvbLqKGWyijgBg9ChGT6
+         9f3R+hd+zrXbeSiiNxnJHjdmBpKhYFNiB37oDDRW3A2yoR2RcBPfTnstsqsfefInvuM+
+         aoSYRGYGFQnicmMDeIhiFiSxjDEreLpCyU24/Cj490L5pq+Hxugq8udc+fyqZtdpvX1V
+         HYYaieabRVjIrZQb2H4Lpg7um+m4lXLayUDF5buetlGWJa1t6/z93ZJwjekdXvyHNZwr
+         49VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692206450; x=1692811250;
+        d=1e100.net; s=20221208; t=1692207196; x=1692811996;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2EaI/gthp6oGSH/3KSg6Ply6CEER8r1o/EsLEDlma6U=;
-        b=TyKcKMoPXKb4MAuyqPYpwhFMFCEx6o3hzbdj9vMlAw4QrwvorHyYAZoXlzK2vJKSWR
-         Njw/v5WXwJ9+se1q7gTltb25yrHwsJxsHG+7k0XW+Ik73P4En+JXrkbx6z3d+NiCRe43
-         tfy9hNooWT+4GqtQ/f4zYsXb5ocEn6Odbg3rfXNZLt2cQMu1Wvvx6fuRAyfudVE5dpBx
-         PfIlB5IHFxNTaYTfOmgu+5Si0I8Y6zRPYdBnNwLJfIefR/aERqfWk5tDIueTxRuhpwcr
-         uGKwkvfnagHxUS1xI8oSIF0siv6zoqdxYbkS3Rf7ncp1k0ULmxOo95MCy5GKWfGXFChl
-         eEwg==
-X-Gm-Message-State: AOJu0Yxdfrnuxk9nC25BC+eUlCYTCsIwA0kfhmoep5gT0uZq4U7vcRPT
-        rAWKGwT8Sphs1uy4yHB63Q0QrA==
-X-Google-Smtp-Source: AGHT+IHh5Bh4ZjfpgQq5HwyN9tyHh7F81amGdgQVD5axVUoUVSjHTKdXyRimYjj2PMxeEuPy+MX7qQ==
-X-Received: by 2002:a05:6512:250a:b0:4f9:556b:93c2 with SMTP id be10-20020a056512250a00b004f9556b93c2mr2351126lfb.1.1692206450298;
-        Wed, 16 Aug 2023 10:20:50 -0700 (PDT)
+        bh=hlJlE+pLzohqehJhGlKehccYlE2SfB36KPQVu33mNpA=;
+        b=HU0+fiFJBI+2KE3kvCph8kSiAG2TzXJ4HiJCKSL11ZiRQ7aeFyc16edIb84qXtHRKr
+         HqdYp3Y6SW74eLL7M3T4Sl+GQNbw9M8GRK2Xp2zPG7V7vJHZLiH9TNhya8Kl+m7dCFTv
+         FbmeyC66i6xkbqfJkjci/Mcrim1oD5nVw55enOMPBC3U67WuPpJFn4NPhOQom6f13sQK
+         g3cBKtqxpqXOFvgsnFjRWw/CGOXSUBjzEUdz9AQszdXI5q3FVVd8CtfMJDTue1uFgtNa
+         P0zeEXBy5EIqiBePcEHC6rsedyIkkDk9Joob8nKQLRL9iOvyv/yb/+nbuE329UN9kJa8
+         gNSg==
+X-Gm-Message-State: AOJu0YyK7tM/3IpkGlCc7xMYgxVZpcz8hGuMeO3PmiE4hg9L57bRa14y
+        XnqqdeHJ0eDdIjxRiICwnrwiE2aSIqJkSd2jsh8=
+X-Google-Smtp-Source: AGHT+IF2+esa9Q6gVnEqpMdQ6jiaFvZ66jD02ePRHhMaBTrMMqQR+eMYM/3bkmvze/MjJtR0+3h2AQ==
+X-Received: by 2002:a2e:8604:0:b0:2b9:ea17:5590 with SMTP id a4-20020a2e8604000000b002b9ea175590mr1867712lji.16.1692207196484;
+        Wed, 16 Aug 2023 10:33:16 -0700 (PDT)
 Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id a3-20020a056512020300b004fdda72ec16sm406496lfo.274.2023.08.16.10.20.49
+        by smtp.gmail.com with ESMTPSA id p17-20020a2ea411000000b002b9f9cb8e08sm3588267ljn.21.2023.08.16.10.33.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 10:20:49 -0700 (PDT)
-Message-ID: <eaed15ca-5c0b-420e-a11e-007ef5608019@linaro.org>
-Date:   Wed, 16 Aug 2023 19:20:48 +0200
+        Wed, 16 Aug 2023 10:33:16 -0700 (PDT)
+Message-ID: <e89b4a5a-e634-45b5-a8dc-cf7d1a968ccc@linaro.org>
+Date:   Wed, 16 Aug 2023 19:33:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/14] media: qcom: camss: Pass icc bandwidth table as
- a platform parameter
+Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230814162907.3878421-1-bryan.odonoghue@linaro.org>
- <20230814162907.3878421-5-bryan.odonoghue@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_mojha@quicinc.com
+Cc:     computersforpeace@gmail.com
+References: <20230816164641.3371878-1-robimarko@gmail.com>
+ <20230816164641.3371878-2-robimarko@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,48 +101,43 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230814162907.3878421-5-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230816164641.3371878-2-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.08.2023 18:28, Bryan O'Donoghue wrote:
-> Pass the bandwidth table as a platform parameter not if/else derived
-> pointer to the static table.
+On 16.08.2023 18:45, Robert Marko wrote:
+> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
+> means that WDT being asserted or just trying to reboot will hang the board
+> in the debug mode and only pulling the power and repowering will help.
+> Some IPQ4019 boards like Google WiFI have it enabled as well.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Luckily, SDI can be disabled via an SCM call.
+> 
+> So, lets use the boolean DT property to identify boards that have SDI
+> enabled by default and use the SCM call to disable SDI during SCM probe.
+> It is important to disable it as soon as possible as we might have a WDT
+> assertion at any time which would then leave the board in debug mode,
+> thus disabling it during SCM removal is not enough.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 > ---
->  drivers/media/platform/qcom/camss/camss.c | 29 +++++++----------------
->  drivers/media/platform/qcom/camss/camss.h |  3 ++-
->  2 files changed, 11 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 68eb45b2c0aaa..1a195eb4298a5 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1484,21 +1484,15 @@ static int camss_configure_pd(struct camss *camss)
->  static int camss_icc_get(struct camss *camss)
->  {
->  	const struct resources_icc *icc_res;
-> -	int nbr_icc_paths = 0;
->  	int i;
->  
-> -	if (camss->version == CAMSS_8250) {
-> -		icc_res = &icc_res_sm8250[0];
-> -		nbr_icc_paths =	ICC_SM8250_COUNT;
-> -	}
-> +	icc_res = camss->res->icc_res;
-Would initializing at declaration time fit in 100 chars?
+[...]
 
-lgtm otherwise
+
+> +	/*
+> +	 * Disable SDI if indicated by DT that it is enabled by default.
+> +	 */
+> +	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
+> +		qcom_scm_disable_sdi();
+Should we care about the return value?
 
 Konrad
- 
