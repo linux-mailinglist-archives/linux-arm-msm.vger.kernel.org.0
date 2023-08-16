@@ -2,157 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98E3677E0D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 13:52:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A69ED77E0D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 13:52:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244810AbjHPLwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 07:52:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59224 "EHLO
+        id S244805AbjHPLwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 07:52:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244865AbjHPLv6 (ORCPT
+        with ESMTP id S244875AbjHPLwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 07:51:58 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC19C2135
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:51:55 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe426b86a8so60105375e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:51:55 -0700 (PDT)
+        Wed, 16 Aug 2023 07:52:01 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2E72123
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:51:57 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fe4ad22eb0so62824745e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692186714; x=1692791514;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WUxp4xDGfeAwcS28zr7IxYfQXNI5BkebZS1gNm5QJRY=;
-        b=pW9lJq6wRUiJ4/JEhzw1GpAFHTDhrBtcJJpzr2N7WaVEB+SeBLEo9Y/DlEbj/Wx41s
-         ZPjx7lk/TH4m9Iq+SLtEzSLCM98B32vKFfDiVa6wImOgo0AWopy580+cBoFI+nSj4ORB
-         JFVKEet0tLXAgCtJq9PdOLspY/aiJ5hBvzQqQelNKGrI92HwvnqMJ2chkKEzTXwp8VhI
-         /nHdscKRUOiOglCTLwuovKACWc/IjpYaeodXXCBmmE5ut7JVipqY17IBPcK89HdjkgIK
-         H25lE3yKTm08B3PokAXhNhQ3qbClr2h9vo9j7Va7Zh/DCMrawh5mOw28uAop0sqblIqn
-         Qugw==
+        d=linaro.org; s=google; t=1692186715; x=1692791515;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G7oGum5pCxYXSoJ0gOXkhrsK7bDcAuYfzLXErLOePNc=;
+        b=Thzl6MEwqX2EG4ah95QbNXFdMDhTZJe6XEpejlyxl7vzueYv3X1GJtAIO/b7+9TdBM
+         1EU5gEg5dKdrA/w0zG9gflZyXzptlyBmT7Uv+dBu3pnbhYvujX0vs+AbgqJGYj0CGrX2
+         rK5OT8RNbFaHK8zxZiOVtEaUb1HCO6P4a9h8D3ZfKCp+HonAe9dai3veuPgOTEOILmDs
+         1L+ISeGDH4IRQXRQA4Yi6uENl8UOFgvinp+1Oj1m/58cQ53Lh3+qb+79/wdgFuQMRGcz
+         h0KBoGbwpo5tJQh/Xp1aHrEpagfYZwIrKfh33X2uucHT+Y5uv3388F//W2UiTFZEkh5o
+         Tpqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692186714; x=1692791514;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WUxp4xDGfeAwcS28zr7IxYfQXNI5BkebZS1gNm5QJRY=;
-        b=Ndcp3zi4U681HJConoLGSlt1FwlBwXBH0ZkSgfgBNt4eLYRRFgiE+ZQiteb5H5RtHN
-         Fc42MZCEmBAmKItYslomGWBSCsrPzMFKvafRS+LmjQZqzgyVb+UaVOK3xuJ03ZTqkbcU
-         vlM2AZ0CIpy+HCK/WhfVf3XY50xYglnc/kLH6rAm7whQNZLz85YCiVkgJUC8ArE2XACr
-         7UJ26z2DccUNSIkul4vnPQhdayjKdXejROiypuiS8jkBPKdMDOzc2YOVwMoif3II+wkY
-         rVXoIM1ql7chRjXv7sMATNDArL+TGYXYVtJErFHYolXONUWBAfnNLY5GPZwWQuFYiwrR
-         NHXw==
-X-Gm-Message-State: AOJu0YwS8yE8ZQmxlzgyxe+gWshDwzP/LOmtfZhb4hPOpWYr3IQ8MqwO
-        5cSl0WfZ+JAmnIs4n12t+dOhi8O3h6npaLjlsIE=
-X-Google-Smtp-Source: AGHT+IE/mdRqqXBlzx9+ClH9bKrcMBIUEXxq4luhrZZvrWUfk/knJkFDtiF9cSaffXivVPqxXu+TCA==
-X-Received: by 2002:a7b:c044:0:b0:3fa:99d6:4798 with SMTP id u4-20020a7bc044000000b003fa99d64798mr1196587wmc.37.1692186714223;
-        Wed, 16 Aug 2023 04:51:54 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692186715; x=1692791515;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G7oGum5pCxYXSoJ0gOXkhrsK7bDcAuYfzLXErLOePNc=;
+        b=Jb65MgaoSwM+4vxF9Clm91U4DGd5lMLnZt8EAwvIHAN/AEycjZmzoicvKcwgH47gMh
+         xOcppmxQONzn0WdfOeEL0YiJEN+tMcE8jqb0dqvJRDK+ZE3cuKpmeL85lBWZZMOtJ0BE
+         aNz8CSb1Gkbk7QA49Riy9AMiOhK3YXC9whk8Xx8SrOwsnv6zAPEExoW+3AMByuX3+6Zr
+         LjloaMI54wgfD/5MsZKxY40DuOIx7gFnY3RDeHEXDX0Pd6D+ObGujcEnNqciA7o9K8Yr
+         jBeJPyzbhyh9UNaStQpitC6m+auOA7c3j0VOgVZmAO03thxRL30GosPwpavEKDVUgdsp
+         MX8w==
+X-Gm-Message-State: AOJu0Yz6kybdaz/wOH3wIFFbEjsc6+aMInkogEA7lRXghb0QNpCAcB6t
+        b+QaJC7pXNJ75SocxjO0Saa9JA==
+X-Google-Smtp-Source: AGHT+IGKKt/5GN8Voyhb2f+eEeYq7Z0jaVDOdWiPNhgmcX5J8bnStHY5ce0fSMZ4EUt5JklZF49MRA==
+X-Received: by 2002:a7b:c4cb:0:b0:3fb:e573:4172 with SMTP id g11-20020a7bc4cb000000b003fbe5734172mr1253510wmk.31.1692186715540;
+        Wed, 16 Aug 2023 04:51:55 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id fk3-20020a05600c0cc300b003fc05b89e5bsm21280663wmb.34.2023.08.16.04.51.53
+        by smtp.gmail.com with ESMTPSA id fk3-20020a05600c0cc300b003fc05b89e5bsm21280663wmb.34.2023.08.16.04.51.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Aug 2023 04:51:53 -0700 (PDT)
+        Wed, 16 Aug 2023 04:51:54 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         lee@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
         sboyd@kernel.org, luca.weiss@fairphone.com
 Cc:     bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v9 0/7] Add Qualcomm PMIC TPCM support
-Date:   Wed, 16 Aug 2023 12:51:44 +0100
-Message-ID: <20230816115151.501736-1-bryan.odonoghue@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v9 1/7] dt-bindings: mfd: qcom,spmi-pmic: Add typec to SPMI device types
+Date:   Wed, 16 Aug 2023 12:51:45 +0100
+Message-ID: <20230816115151.501736-2-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230816115151.501736-1-bryan.odonoghue@linaro.org>
+References: <20230816115151.501736-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-V9:
+Add the PMIC Type-C port driver to the list of devices.
 
-- Reuses glink ports {} definitions and locations per Bjorn's request
-- Adds additional port @ 2 to 8250.dtsi as a result - Bjorn
-- Drops logic in previous patch
-  "dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add input and output ports"
-  No longer required
-- I've amended the names of the endpoints to match sc8280xp too - bod
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Bootable tree
-Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/usb-next-23-08-15-pm8150b-typec
-
-V8:
-- Makes pm8150b_typec::status = disabled by default - bod
-- Greg merged the TCPM description and driver to usb-next so two patches less now.
-  I've rebased this series on to usb-next using "--base=auto"
-  All of the kernel robot dts/yaml checks should now pass against usb-next / a4422ff221429c600c3dc5d0394fb3738b89d040
-
-V7:
-- Adds R/B to "dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add input and output ports" - Krzysztof
-- Fixes indicated, adds R/B to "dt-bindings: usb: Add Qualcomm PMIC Type-C" - Krzysztof
-- Fixes indicated, adds R/B to "usb: typec: qcom: Add Qualcomm PMIC Type-C driver" - Guenter
-- Fixes indicated, adds R/B to "usb: typec: qcom: Add Qualcomm PMIC Type-C driver" - Caleb
-- Adds R/B to "arm64: dts: qcom: sm8250: Define ports for qmpphy orientation-switching" - Konrad
-- Adds R/B to "arm64: dts: qcom: qrb5165-rb5: Switch on Type-C VBUS boost" - Konrad
-- Fixes indicated, adds R/B to "arm64: dts: qcom: qrb5165-rb5: Switch on basic TCPM" - Jianhua, Konrad
-- Connector ports/endpoints left inside of connector
-  Documentation/devicetree/bindings/connector/usb-connector.yaml - Jianhua
-- dwc3_role_switch_in -> usb_1_dwc3_role_switch_in
-  qmpphy_typec_mux_in -> usb_1_qmpphy_typec_mux_in
-  Both ports/endpoints defined inside of pm8150b dtsi - Konrad
-
-  I modified the name of both so that the port/endpoint would be directly
-  adjacent to the containing node in the dtsi file for code locality/readbility - bod
-
-- Fixes newline indicated "arm64: dts: qcom: qrb5165-rb5: Switch on TCPM usb-role-switching for usb_1" - Jianhua, Konrad
-- Fixes newline indicated "arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for usb_1_qmpphy" - Jianhua, Konrad
-
-- connector
-  I have left the connector defintion and its ports/endpoints in the platform dts
-
-  The reason for this
-  a) Prior art e.g. arch/arm64/boot/dts/qcom/sc8280xp*
-  b) The connector is really a non-SoC/PMIC component its something that is defined
-     for your platform.
-
-  I'm open to further debate on this topic:
-  Link: https://imgflip.com/i/7kw6ck
-
-- port@1 -> port@1 "arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for usb_1_qmpphy" - Jianhua
-
-- OF: graph: no port node found in /soc@0/spmi@c440000/pmic@2/typec@1500
-
-  I left this as-is since the DT model we want is to connect the connector directly to
-  the PHY for orientation or controller for data-role switching
-
-  I similarly didn't put this hack in place to remove the warning but "it would work"
-
-V6:
- - I'm dropping the previous V1-V6 log because the text is getting too long
-   here's a link to the previous cover letter instead
-   Link: https://lore.kernel.org/linux-arm-msm/20230501121111.1058190-1-bryan.odonoghue@linaro.org/
-
-Bryan O'Donoghue (7):
-  dt-bindings: mfd: qcom,spmi-pmic: Add typec to SPMI device types
-  arm64: dts: qcom: sm8250: Define ports for qmpphy
-    orientation-switching
-  arm64: dts: qcom: pm8150b: Add a TCPM description
-  arm64: dts: qcom: qrb5165-rb5: Switch on Type-C VBUS boost
-  arm64: dts: qcom: qrb5165-rb5: Switch on basic TCPM
-  arm64: dts: qcom: qrb5165-rb5: Switch on TCPM usb-role-switching for
-    usb_1
-  arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for
-    usb_1_qmpphy
-
- .../bindings/mfd/qcom,spmi-pmic.yaml          |  4 ++
- arch/arm64/boot/dts/qcom/pm8150b.dtsi         | 40 +++++++++++++
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      | 56 ++++++++++++++++++-
- arch/arm64/boot/dts/qcom/sm8250.dtsi          | 22 ++++++++
- 4 files changed, 121 insertions(+), 1 deletion(-)
-
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index 8b9a2008a354e..7fdbd15969d27 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -164,6 +164,10 @@ patternProperties:
+     type: object
+     $ref: /schemas/thermal/qcom,spmi-temp-alarm.yaml#
+ 
++  "^typec@[0-9a-f]+$":
++    type: object
++    $ref: /schemas/usb/qcom,pmic-typec.yaml#
++
+   "^usb-detect@[0-9a-f]+$":
+     type: object
+     $ref: /schemas/extcon/qcom,pm8941-misc.yaml#
 -- 
 2.41.0
 
