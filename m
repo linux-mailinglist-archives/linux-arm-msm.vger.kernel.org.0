@@ -2,216 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D3DA77E1D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 14:45:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A879577E251
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 15:15:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244688AbjHPMpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 08:45:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
+        id S245415AbjHPNOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 09:14:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244606AbjHPMor (ORCPT
+        with ESMTP id S245430AbjHPNOi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 08:44:47 -0400
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2059.outbound.protection.outlook.com [40.107.92.59])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 505E726B7;
-        Wed, 16 Aug 2023 05:44:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IWb9Q+f2EXppGaziNP28OUnaeQjMXy4c/b9vVVTlK6KKfHtX92XfP1H9noW6h15v8BeBYAOHbsa+Pgw5y+I/VF1jQRVaSntwQIGuhvqozmS/bFCGIvsOnKSapQjAtTkJq7oXseGNPdabVGpsznLHaka8Nerxf8DICVC7MMuSZftGXvl1O0Jgu2a5dJ2CY9RKqOcQPbLHtOxK3Jme4x7SMFsVrp7dFJvIjVwIAZ1XmMbtdiwDZ6rg2+hEAGUKZ2mC+KNu4xL5EyIUO9+K3qtijyCDgA03D2WvhpKzJm678Uihrbb70JSkwaZjnzCgzYbPq9uEEHxB9TZCN8Aq1t6FAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HTIS3tL6o8HXFow2YwPQlHE6eJ8x2zeA+YIsj9Z+Vbg=;
- b=K6+bLeOXOBBTbqjHoDEzbM8EcvtWgnkJ2F4fCPdXSxZefTQJ/Tv2DSZRFILp5OQMxplw4LE0p5dOnpeAW5mpq9JN3DD+3f3tvzhX7VrpkCd9u7uUJLTWyaxqAtxJSSs3f3yxc3zqIl/UTZJIMDHYSVv9oXCPAEnYyRGprfTqPl83NuNisKZDbYKtKbfa2f6GsN3xg2oE/Uejs/FF/FeBR602WGirKo7V7RLGAA36znHvC+rVG2HswV/Q7pdpllxgvwyRu5BTBosmKMVjgxQWQAD/2veQJZDSiPuixSOL5lDa2m5Zf/Ppf8ENB3QrfjoT+pJfUYkuL7voEL3lp7rhog==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HTIS3tL6o8HXFow2YwPQlHE6eJ8x2zeA+YIsj9Z+Vbg=;
- b=MvUcAMIqiNrh/5CBIMIilz1XobwuGwolomHxiVTgo2wex2AdsHvE9g4a1rIC/VIxVrqa4wVmYQ2vbVBXjYTTYQ2wY9yiYVIbO+nee49m0BHoS0g+SvOjQcLvSsRaqrRvfAihXK/slbWnAh5dxEXIMIeyytb/oLM2fHn8pcZFFRYXi41aY5aLhiS9wLIr5N+4+nmtoch9tV5lafCu5TscvtcmuEeJhCoICkui6Xp/3cDlI6xzcAX8bFe5tm0BO4cqC3Q7LEdPZ8qGCaSrz/HnOp9vMmmJHZS9GVgOLkWM9dCvJoLVoJNejXoRGDNzs23+70ImH5AWQn2kc+KWVWVisA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by PH8PR12MB7445.namprd12.prod.outlook.com (2603:10b6:510:217::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.26; Wed, 16 Aug
- 2023 12:44:43 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1%6]) with mapi id 15.20.6678.025; Wed, 16 Aug 2023
- 12:44:43 +0000
-Date:   Wed, 16 Aug 2023 09:44:41 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Baolu Lu <baolu.lu@linux.intel.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v6 08/25] iommu: Reorganize
- iommu_get_default_domain_type() to respect def_domain_type()
-Message-ID: <ZNzEubbluKrz6lWs@nvidia.com>
-References: <8-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com>
- <b50a464a-fa28-e359-1bc5-4f2b105326ad@linux.intel.com>
- <ZNpjmiBLneBC9oWe@nvidia.com>
- <c24e7eff-b28c-8152-6022-325ca89c8074@linux.intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c24e7eff-b28c-8152-6022-325ca89c8074@linux.intel.com>
-X-ClientProxiedBy: CH2PR20CA0028.namprd20.prod.outlook.com
- (2603:10b6:610:58::38) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+        Wed, 16 Aug 2023 09:14:38 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7607026BA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 06:14:34 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d6265142e21so6174567276.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 06:14:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692191673; x=1692796473;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ps0ezi6BbE/dOQS5Zv8WHPzCnGOgQGimydMZPi3OwEA=;
+        b=UHQsMab+UKQiY/x4Cvucj/6jRnXY5zYFK2PSNTZNBGfZDXjTsBo9ccfazJjcGGN+AL
+         hfrHdNs0SyBWb7hDrvjoe8aFe9XX75C1CrTdFbjQJouEBBT532gnWK0zj3sIqhV0GJ9c
+         zU9+3u56Eo67easSPJ0ULJ42cRGjSW9zTWQfR2lbkV0hYQowzonlXOgk3lbP+24gHeC7
+         A7kd02YCaSESRQafEid7jn3sinNprYibkrE/+kDGaKlvI0yjxO8AV8ztvg/8hk0Xo/c5
+         TJqdK+CEDIQnIxqYJpu11riGaaIcdtbGLv2p+Frvrw+bOnD3m9fCjCki8a5ns9G1nEYh
+         nWIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692191673; x=1692796473;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ps0ezi6BbE/dOQS5Zv8WHPzCnGOgQGimydMZPi3OwEA=;
+        b=fy2xZX99ct2JVs6IIzv5xnzErniHKEWe3NfzlI6MUb7s9tnkDVjbRoEvu+03HZKjjL
+         SQHDfcuizgnD8OChlmPSZz4Zeo6hPcEi6vLd78qC3/x9PbKq6qnIlQKg7IDqayjU611N
+         iJQIdA/SyPrcChRMTiFkXiQJFTVV9KivOswOGsl7YtMpZRYhxa0LoWHuwlCcnf++diIB
+         vM8NO5F1iR82EREbTgPkOxXlc8bMhCNueeHfYArgOEmCbnSD+sikOdbEQ/greNzrJng3
+         frH9TK5RhBpsykiuqMHEgG6k55VeBJyaIUD3edHHpPXKmbX64V47WoKGYzyJ+tjBBGMA
+         64KQ==
+X-Gm-Message-State: AOJu0YzsxDc3i7uQGnZrvC8hHgxpe5b7eYtU45VtndcuVs0KEJSaKKMt
+        51S+jlC/C5nhHFv0wCijLVoWEhFfJpgxur8jY2ilWA==
+X-Google-Smtp-Source: AGHT+IGKZ4RWnzjsWo4DnKHE3xoKinJgbhJCua6rwHR/iEng6W17crQo1AvKOP5s6UKzGEoNDQw+sgBOpsYORz89Njo=
+X-Received: by 2002:a25:dbc1:0:b0:d62:b91b:10e3 with SMTP id
+ g184-20020a25dbc1000000b00d62b91b10e3mr1670653ybf.48.1692191673659; Wed, 16
+ Aug 2023 06:14:33 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH8PR12MB7445:EE_
-X-MS-Office365-Filtering-Correlation-Id: d3f25203-f6e6-48bf-b6da-08db9e56907a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: EfcWWQv83+YJofu3dlHUx8ZSpBkFv+ou/rL0iku77GS2fpxFKJtHuYR99H88r7YwTu7XWtnYrVa7lO3DUS5jg8ypZ5J5cSAszyEHisZ2Ql15iOhOOwYX4OYSwYRFr6SzYX2xJkWqUXxN4QOEu5M+ugzcIukpqYLhd0N55391j8MEKrRJpoj44nMcYUiJEyprP79yToyix806bmGZmcqoMC0PPTB2ZtYN7NVzjuPBkU1Z0UQ1QGxzD3vpWvDzCGOo7fW/BHqdKnAfJrljMMEeCkltKXUpO0jm1Yv1N8rkNczIkAz4+BuW2J8u1P5TQEQAY9EILDskOEqhHZvuOp30v1Q+9H7VPoNsMOCUmuOIugcvm8TMshmI4n3G+ra/ndrZ4+74bx0rry+eFS1uKCmesG0rNKFlztzqpkeDIKnqLQlASrnmEv1cbz4w/r8w7ZhVqBVSXivNgEsUks5HI7IPm90r4Cc60V5zAV9vfIDnigyGapjuDfh0weyR6ZDbXrUzEimM5qMo+fNiSgD3QEWqKJt2rWdMm6KPDmEG9cUbM+8A27/LkG7pe8FMpc3Dr0Dh
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(366004)(376002)(136003)(1800799009)(451199024)(186009)(316002)(54906003)(6916009)(66946007)(66476007)(66556008)(41300700001)(5660300002)(38100700002)(8676002)(4326008)(8936002)(2906002)(83380400001)(26005)(478600001)(7416002)(7406005)(86362001)(6512007)(107886003)(6506007)(36756003)(2616005)(6486002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?YEFh7EViI9sw9XM5u/anGA7DFEO/4ik18m+UjLV1E9owrdDWtGikl4IJ5704?=
- =?us-ascii?Q?dQyxu5DpSr6jRzjPV2KGWSR4FPc/c5FqbYwMR8J3CMxQz+b/mqlMHGFxj8aC?=
- =?us-ascii?Q?P4li1BDiqm0fq3p1efavgYUFkoiMr37jkQljLO04ORJnT3spTfwBlOqFOM2A?=
- =?us-ascii?Q?4buifHbEKKiLvdjs/1vocGVQtEguGC6EFVmG0ge+urssgvEgM197Jde7ePEX?=
- =?us-ascii?Q?MdOVaf106dyKRxZ1EPg0Cqt30L380Qnbi4YaG0NsbFjbJ7NrivR9kGZjq4dM?=
- =?us-ascii?Q?9ZuDJVmYXJKxkrO7FAl33onaEIZ/LjiIXcvuRk4y5rWg0fV806ybq99CpIci?=
- =?us-ascii?Q?sxrSB7e3ztnsteXYqu8kGh7Y+aRa68Q+AVlEQLoMVTqDNaicNcj7Hd6yaNv4?=
- =?us-ascii?Q?u4Ht219ivTAciyo/iRW8mVGZyrf2rhDmaDHhc3WYrqkAaIIj2YOO4uSDzZnV?=
- =?us-ascii?Q?BcseGP7Tvo3D4/UZkFaC88C+8TDmGF2LilWRGjyME+8YqCZU3AxLr69SqGrD?=
- =?us-ascii?Q?YBiG+r9xt+FNt3ojTb+iRlwpZdtXgEPMAg6YcTXNhdgrqBI1xTQAveBt3wS7?=
- =?us-ascii?Q?Zr9OZO3ueeEsYFKyoW4/lZB/RNHCEb3y/ricMnhP+/9AofCy0X537zkZWfwG?=
- =?us-ascii?Q?4bn1eS8k/l8jS+zXDLsB3ib68rZGWyNSQLyDaz93DYY4ZkUojd75vL2k8rSs?=
- =?us-ascii?Q?cTDLG38jq2MFi7F1bjG+5hJjQqroY0Wf7HzaisqMg5rG9dp4bKzSkvhYbyum?=
- =?us-ascii?Q?bhU+cPcgJUKqiQhpQ3C/EVZ5qN6fURT2otcjzN9UMCOfDsQBQH7tbuq/jg0A?=
- =?us-ascii?Q?XK3xEpMUhOyGtThZB3nwjdNULwjSG+sg/CmdIBanIGXa+jOb02sXL5uF6SHP?=
- =?us-ascii?Q?6oDb6O/8JA2YO3nX0eD6UKFqXACI9zoBHqTYXKnoy7qnaw4H4ph2M2gMNqt3?=
- =?us-ascii?Q?4z30ETvBrpEDly3/IcbDsDVZiVxAJCeXgX2PykNr5HHNPQ1ZtWxDBS89xCXN?=
- =?us-ascii?Q?841P9DveR/c+7NC9GLPFK2ROlIlqi6MRIf98v0nLSDC6nuJccvy47qahrcgG?=
- =?us-ascii?Q?zHbee8pyTwwfd+FBYOxMlOEVO14KHpz86vDuwTd9PJgOtiYQ4f7SNDHWR1jZ?=
- =?us-ascii?Q?VBii4Um7hAvjsLMSlBHiqg4a4iM+8O7YcevYHOdK1nslrW1OUm1Jq4EQY38/?=
- =?us-ascii?Q?/U/FVZ2dUZEtfmhIkGqMtw42FiFJgclG8xr7Hf/4V2kECpuyifT0twKz6reH?=
- =?us-ascii?Q?h4G2DnoiMf8Fd9VUdY/dzhKXIec8gfUPgOyTooVBXZ289X+mQDuVbUTvRB5w?=
- =?us-ascii?Q?0wkv+mNBb40+M/42WeZt1Px0ym5qbRNNo8iOE6QQ/Dz3gapl2HAHA9OAzTkv?=
- =?us-ascii?Q?hosqrRJ+FWq/rz+6Q+B4zHDGYCB+f61uc+N3h4fa/WeWiiwdKZEHRpwLs7/N?=
- =?us-ascii?Q?oNg5tchl0zBvCNRhLXVUO9rpuw/nYzY6JZRLnXFZQta52wkLa0dJmQmEQXv/?=
- =?us-ascii?Q?ywrktU8BJFXMyxj3Q/RY4bcNrA4t4HbuaVUIR5evMLlZneiQ0ycageRlNG0Z?=
- =?us-ascii?Q?HTFhFvUEy7GB1qQ9XoExhL/bV2n6oknOx66RMf51?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3f25203-f6e6-48bf-b6da-08db9e56907a
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2023 12:44:43.4838
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XvkAla3FxciIfevCAI0JAvhgNXpBl1AUzC0EBX68AI1S/+CGyZcR9y9L1Hw0cA0m
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7445
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-2-git-send-email-quic_vgarodia@quicinc.com>
+ <c29d5e28-5b9d-1327-0feb-e5ed27afcd3a@infradead.org> <b4de638e-9cab-2662-92b0-e2d1a18018a1@quicinc.com>
+ <540b263a-3a1e-fd09-c6c2-18371e460e5e@linaro.org>
+In-Reply-To: <540b263a-3a1e-fd09-c6c2-18371e460e5e@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 16 Aug 2023 16:14:22 +0300
+Message-ID: <CAA8EJpq1o3VRMTgWb-uFf7qTQ897ishiJ9HTNWcxHgLyyfpAOg@mail.gmail.com>
+Subject: Re: [PATCH 01/33] MAINTAINERS: Add Qualcomm Iris video accelerator driver
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hans.verkuil@cisco.com, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 15, 2023 at 09:18:59AM +0800, Baolu Lu wrote:
+Hello,
 
-> > 	/*
-> > 	 * Try to recover, drivers are allowed to force IDENITY or DMA, IDENTITY
-> > 	 * takes precedence.
-> > 	 */
-> > 	if (cur_type || type == IOMMU_DOMAIN_IDENTITY)
-> > 		return IOMMU_DOMAIN_IDENTITY;
-> 
-> No need to check cur_type. It already returned if cur_type is 0.
+On Wed, 16 Aug 2023 at 15:00, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 14/08/2023 19:44, Dikshita Agarwal wrote:
+> >
+> >
+> > On 7/29/2023 4:18 AM, Randy Dunlap wrote:
+> >>
+> >>
+> >> On 7/28/23 06:23, Vikash Garodia wrote:
+> >>> Add an entry for Iris video encoder/decoder accelerator driver.
+> >>>
+> >>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> >>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> >>> ---
+> >>>   MAINTAINERS | 10 ++++++++++
+> >>>   1 file changed, 10 insertions(+)
+> >>>
+> >>> diff --git a/MAINTAINERS b/MAINTAINERS
+> >>> index 3be1bdf..ea633b2 100644
+> >>> --- a/MAINTAINERS
+> >>> +++ b/MAINTAINERS
+> >>> @@ -17671,6 +17671,16 @@ T: git git://linuxtv.org/media_tree.git
+> >>>   F:        Documentation/devicetree/bindings/media/*venus*
+> >>>   F:        drivers/media/platform/qcom/venus/
+> >>>
+> >>> +QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
+> >>
+> >> This entry should immediately follow:
+> >> QUALCOMM IPQ4019 VQMMC REGULATOR DRIVER
+> >>
+> >> to keep the file in alphabetical order.
+> >>
+> > Sure, will fix this in next version.
+>
+> I think TBH before we see a next version, there needs to be a conclusive
+> argument on why a new driver - instead of an update to the existing
+> venus - is the way to go.
+>
+> We have an ongoing corpus of working code that people use. The attempt
+> to at least _try_ to integrate 8550 and beyond to upstream venus should
+> be made.
+>
+> If it fails, then we can discuss a branched driver.
+>
+> Its not up to me but, that's certainly my honest and unvarnished input.
+>
+> Instead of investing time in V2 - please invest time in upstream venus
+> or make the technical argument conclusively _prior_ to V2 as to why V2
+> and beyond is the "only" way forward for 8550 and beyond.
 
-Yep
- 
-> > 	return cur_type;
-> > }
-> > 
-> > /*
-> >   * A target_type of 0 will select the best domain type. 0 can be returned in
-> >   * this case meaning the global default should be used.
-> >   */
-> > static int iommu_get_default_domain_type(struct iommu_group *group,
-> > 					 int target_type)
-> > {
-> > 	struct device *untrusted = NULL;
-> > 	struct group_device *gdev;
-> > 	int driver_type = 0;
-> > 
-> > 	lockdep_assert_held(&group->mutex);
-> > 
-> > 	/*
-> > 	 * ARM32 drivers supporting CONFIG_ARM_DMA_USE_IOMMU can declare an
-> > 	 * identity_domain and it will automatically become their default
-> > 	 * domain. Later on ARM_DMA_USE_IOMMU will install its UNMANAGED domain.
-> > 	 * Override the selection to IDENTITY.
-> > 	 */
-> > 	if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU)) {
-> > 		static_assert(!(IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU) &&
-> > 				IS_ENABLED(CONFIG_IOMMU_DMA)));
-> 
-> IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU) is duplicate with the condition in the
-> if statement. So only
-> 		static_assert(!IS_ENABLED(CONFIG_IOMMU_DMA));
-> ?
+I'd second this request. At the very least (as I wrote in response to
+another email), consider reworking venus into core and interface
+specific parts and making iris3 use a common base layer.
+We already have drivers which work across multiple platforms, taking
+care of differences. Few to name: GPU, display, sound, DSP, camss.
 
-static_assert doesn't work that way, it ignores its calling context
-and always checks during compilation, so the duplication is required
 
-> > 
-> > 	for_each_group_device(group, gdev) {
-> > 		driver_type = iommu_get_def_domain_type(group, gdev->dev,
-> > 							driver_type);
-> 
-> No need to call this in the loop body?
-
-Do need it, this only gets the def_domain_type of a single device so
-we have to iterate over all the devices in the group to 'reduce' the
-type for the group.
-
-Thanks,
-Jason
+-- 
+With best wishes
+Dmitry
