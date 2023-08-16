@@ -2,66 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A162077E0A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 13:43:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD74077E0BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Aug 2023 13:47:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234428AbjHPLmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Aug 2023 07:42:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59796 "EHLO
+        id S241664AbjHPLrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Aug 2023 07:47:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244757AbjHPLmU (ORCPT
+        with ESMTP id S244728AbjHPLqu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Aug 2023 07:42:20 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680E62128
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:42:14 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fe216edaf7so8714341e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:42:14 -0700 (PDT)
+        Wed, 16 Aug 2023 07:46:50 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269BB1FC8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:46:49 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b9fa64db41so97904371fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Aug 2023 04:46:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692186132; x=1692790932;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1692186407; x=1692791207;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bas6hCyrq5yvaQYyoovo0oL01lCqDvQI1WuSY5gP3xw=;
-        b=UEreo609MTylHajk5OCXFhsr+SlFlOxZQfgb9uDGSQ8T5WYmtsHnpDrm1Fiq5x1yEE
-         s2db1iEtk5v9vlXyVY6WM+wtgRmw0lPsm36lveWlEI7Rk/hRWBo1lWKDsl+ZehGHTzPK
-         yBfWGwKmPrLiX/9aONmSr6bU5NbSGloHkuFYQAdcPmy00ias1RsZTnYcj5A29ZFcycZz
-         HQP9ota0f91VBawjgo356fdL23rt5XkyF+7lFzxRILEnuWQMICMJIOkKmxGvGRS9aftX
-         nOOaygfFTaa4YkaI9AlXXN+HN3NrcpPPewgLPuGAIVdGmp/qsOneg+TbhO/hdqE6q0li
-         fxyA==
+        bh=JwbPK6uvDQ5KUsB6YxB7kesrVzkL+KaWlF+xSHDLwgg=;
+        b=k0sA6JSrN8PsZkopRof7O2RqdeCrs66aZdsF3mhfF9jNZ0C6AXZPNF9W0nfAeJzvaE
+         uvYMPgERHzjYlq3bkMLt72rlCOxZMCNH7uMOLDphlG6fGp0PV7gHeWJkb5EEeiRbw4bW
+         clJ/oN5jzHajD0xYcvnMr4dgkUu5bsoQSE0/ks/7ax6vPzhv7Vnc1zIUpqL5/zc8CLoQ
+         DBGpuNPn4vSeNCKEnvbKrowp2quHJZpz0UQTPjqJfUkEB1crlP2+pge8kQ/pW5moKCvf
+         eNgsudml0r/DUAGhdaPT1syiPZ7EQP0LH1lAlStc5tVq8p0nOcHtRgn0hUYB9FNDtvjj
+         EwXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692186132; x=1692790932;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1692186407; x=1692791207;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bas6hCyrq5yvaQYyoovo0oL01lCqDvQI1WuSY5gP3xw=;
-        b=PHUoKdEZgWQjyDGYF045tNq5VJCQGFvY0drQ4Zteqw5mzid80tiThiI12rgwaq4tz8
-         W/fBvGcM5NXiShtOB/nCUfoSQtr0xF3mZIl+K2wv3bfE7kUkdTuROl7Zg1U2k1fhTnGB
-         Mn1Z7TGotoWW3WZqzRFMOYkNhsJUQeln2xwqxNSpADZ2Q+WKpaaCuygqTjKHLK86ytG7
-         DJrI/oi3bKXsshHudw7eUkDNmTYo6qUJKptt/4vpckG7/kNnw7edHtY+AxYrMhv7joEx
-         +LOlXziGh/OSdscbZ3mfItN5PLRLpfelcD54Ds5H95InBIcA1WozkxFpPFTcjj/67RU6
-         sCiw==
-X-Gm-Message-State: AOJu0Yya2b8PWoz7ioSMtSdBSJRzuJGUqNVMnfafwXXS8G5/jAW2gBPE
-        o7ponlsbBTxqmwQQfF69XY+lbw==
-X-Google-Smtp-Source: AGHT+IHZ2FQfSAme1NOF6QKe+qwZ/ZlF4pSYaZWpDqD/b2HkublAyMwtqbIFXX/wzEoc6Xlx+c434w==
-X-Received: by 2002:a19:9158:0:b0:4fd:b7d4:70ec with SMTP id y24-20020a199158000000b004fdb7d470ecmr589126lfj.10.1692186132676;
-        Wed, 16 Aug 2023 04:42:12 -0700 (PDT)
+        bh=JwbPK6uvDQ5KUsB6YxB7kesrVzkL+KaWlF+xSHDLwgg=;
+        b=LJHU9c4TXay7fnpoI2riIwZiDbydl76QkunJPirZR1dcmi1+nB5OWWnz+WAMePi/aL
+         k+EeLKg4+HfkjSFfULrWFjgLrsTL/0tdLQU6eG0f/YMjJdAUvnWXxFv0id88ODmHYDOl
+         yI+ijRLYAOSacctcm6SNmHNtORAXfs2VHUudqutOPus3jDBbqcqJIjf30qT8l6hWTnnh
+         /sCMwWH+UVc9Vkr2UtOAlNGZ1AnC3CxF0UfuRTztgY0QS7e7Pxp1Kz4DrVty5vSGyPBr
+         CTgpLuQCXy+sfxCSqd4A4Uj2pW1SlisYKzb9Szcu/BdOpKvm9yrI2wbh2EZONbs0S3Qr
+         j+fg==
+X-Gm-Message-State: AOJu0YzqED8CWntscNebCf7UabMD1OOeSInTQWBDoAQgTUGyAjujLMUw
+        nOOdoi5Cxi89Y3GntGN33dWwNA==
+X-Google-Smtp-Source: AGHT+IH6MxyxiasC64eaoloy2XXiSix/UcoRzoHQK7B4ZRc7UjjFER8ik9vxQVWZxEMrvRQNPr1WpQ==
+X-Received: by 2002:a2e:9785:0:b0:2b6:d603:7667 with SMTP id y5-20020a2e9785000000b002b6d6037667mr1321366lji.8.1692186407379;
+        Wed, 16 Aug 2023 04:46:47 -0700 (PDT)
 Received: from [192.168.1.101] (abxi8.neoplus.adsl.tpnet.pl. [83.9.2.8])
-        by smtp.gmail.com with ESMTPSA id f14-20020a056512092e00b004fe4833ca5csm2874964lft.237.2023.08.16.04.42.11
+        by smtp.gmail.com with ESMTPSA id b13-20020a2e848d000000b002b6ad323248sm3470602ljh.10.2023.08.16.04.46.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Aug 2023 04:42:12 -0700 (PDT)
-Message-ID: <ddc110f7-adec-4ea7-b09c-e3fff0c77d85@linaro.org>
-Date:   Wed, 16 Aug 2023 13:42:11 +0200
+        Wed, 16 Aug 2023 04:46:47 -0700 (PDT)
+Message-ID: <b1663bc5-5740-4b73-9404-999e868ffecb@linaro.org>
+Date:   Wed, 16 Aug 2023 13:46:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next] clk: qcom: gcc-ipq5018: change some variable static
+Subject: Re: [PATCH 10/33] iris: vidc: add helper functions
 Content-Language: en-US
-To:     Yang Yingliang <yangyingliang@huawei.com>,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     andersson@kernel.org, agross@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, quic_gokulsri@quicinc.com,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com
-References: <20230816080113.1222352-1-yangyingliang@huawei.com>
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, mchehab@kernel.org, hans.verkuil@cisco.com,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-11-git-send-email-quic_vgarodia@quicinc.com>
+ <7a727add-6aa6-fe3d-b2bd-7e0bd2f93579@linaro.org>
+ <8d5b117e-4743-c006-7e7b-a15bd3866e6d@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -98,26 +102,70 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230816080113.1222352-1-yangyingliang@huawei.com>
+In-Reply-To: <8d5b117e-4743-c006-7e7b-a15bd3866e6d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.08.2023 10:01, Yang Yingliang wrote:
-> lpass_axim_clk_src and lpass_sway_clk_src are only
-> used in gcc-ipq5018.c now, change them to static.
+On 14.08.2023 21:15, Dikshita Agarwal wrote:
 > 
-> Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> On 7/28/2023 11:11 PM, Konrad Dybcio wrote:
+>> On 28.07.2023 15:23, Vikash Garodia wrote:
+>>> This implements common helper functions for v4l2 to vidc and
+>>> vice versa conversion for different enums.
+>>> Add helpers for state checks, buffer management, locks etc.
+>>>
+>>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>> ---
+>> [...]
+>>
+>>> +
+>>> +#define is_odd(val) ((val) % 2 == 1)
+>>> +#define in_range(val, min, max) (((min) <= (val)) && ((val) <= (max)))
+>>> +#define COUNT_BITS(a, out) {       \
+>> hweight.* functions?
+>>
+>> [...]
+>>
+> sure, will replace with hweight.
+>>> +
+>>> +const char *cap_name(enum msm_vidc_inst_capability_type cap_id)
+>>> +{
+>>> +	const char *name = "UNKNOWN CAP";
+>> Perhaps it'd be worth to include the unknown cap id here
+>>
+> could you please elaborate more on this.
+>>> +
+>>> +	if (cap_id >= ARRAY_SIZE(cap_name_arr))
+>>> +		goto exit;
+>>> +
+>>> +	name = cap_name_arr[cap_id];
+>>> +
+>>> +exit:
+>>> +	return name;
+>>> +}
+>> [...]
+>>
+>>> +
+>>> +const char *buf_name(enum msm_vidc_buffer_type type)
+>>> +{
+>>> +	const char *name = "UNKNOWN BUF";
+>> Similarly here
+>>
+> could you please elaborate more on this.
+Something like "UNKNOWN BUF (0x15)" instead of just "UNKNOWN BUF"
+would help us better understand whether the driver or the hardware
+is missing something.
+
 
 Konrad
