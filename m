@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A614C77F266
+	by mail.lfdr.de (Postfix) with ESMTP id 08AC577F264
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 10:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349079AbjHQIrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 04:47:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56884 "EHLO
+        id S1349073AbjHQIrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 04:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349122AbjHQIrS (ORCPT
+        with ESMTP id S1349124AbjHQIrT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 04:47:18 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F7D01BE7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 01:47:17 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4ff88239785so3901623e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 01:47:17 -0700 (PDT)
+        Thu, 17 Aug 2023 04:47:19 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A0F2D40
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 01:47:18 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9db1de50cso112258611fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 01:47:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692262035; x=1692866835;
+        d=linaro.org; s=google; t=1692262036; x=1692866836;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7t4knoTgcpMAoiThrLCBlOztZFf+DUVrX+KwaoYfcMU=;
-        b=KIyLDk/dvBbBr+oi6aL3Qh4GCX9z/AZi32P1SZ2JWWozSRLdTLU3rpxWYMthUOU8cF
-         5dnyfyMQOFx2RD7hpOKHeWg6b+OLqC5JjoAfHQOmBDsRFnC4PlTOgOWWYPXs5ToER3KE
-         nYMxDCRo0lfkG9EbBUAVkrk94rh9lpf1KYX1/nQ4jRcFuxv4Plep1z5Yl3J/n/T9KO0U
-         t+cQ/JoaskgiuFVnCN/mpT3anPVkfgHCC+5Kh3jezxrWMAy9vYTgLf8IsdFabD2gOrpN
-         S7355qWe1LWuvngCyZt5WIy2Lk/OQLaf3OWlXUxBThCUUqy02xH9qYEDiPwsjpbEfSUq
-         Jx4Q==
+        bh=SXF4axVpfnQZc7HkPv4M23jcSW6Nad8x6FO/hELVXtk=;
+        b=KeIwL005L17wegB+Rg1vq36NSvJ6orUxFS95TrJKtFt0WopjBMrkC2I9ew/rEi7E1I
+         IbpYd8g8w51ay3on0+Ph5E/y4Wx7qWrEldrKjVvtDI6A+Q7K966co2Z/VWVPipN0TE1j
+         7Dm5yu0cFvKEPz69yC7JoZgxj7DXJx1zBkDQvjHmVRJTgW+pZMBWBRAVfEPKYe/Lu1RU
+         SxDj299nvRwZToxlg3MkNk1eqLWefvUmGjSkM9mEh0paGpnbOxgRLF2bFLf0N6jHTBES
+         NN0otveHFhX5FrgPp5TDiFn8r7/NQrJVkO5BMK9WwWySTU+ZykgDMniRbhrOrqtWMvMZ
+         nXPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692262035; x=1692866835;
+        d=1e100.net; s=20221208; t=1692262036; x=1692866836;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7t4knoTgcpMAoiThrLCBlOztZFf+DUVrX+KwaoYfcMU=;
-        b=QV05RTxU7aVZ4+wrrgtlM3UGrnZmxwp7Of4E515fv3adNnNSi+h6xd/I1pCoVosclk
-         0hxQH/+bnwODtJT60JmgIprr3wDN/bowPsfSeg5Gx2D+mFHsElQJw32Miw5TPOYft+hM
-         FzdZrTqAEvmiFlCwIyR5Lrqec2lQzsktfksSf30J7TBwzbmYPUtAbVeQ5qrXiWQfQqXq
-         ROMBn0C+z/CAZxKlUTGhvDqlUEh65Mohj6itcLREo2IKPBUjNR9P4M2Y+4um8YbDLFUq
-         8bUXdcmPM3Alu8IE5ldtEd8TaIZRLGUx7/mbVShRfNppZcTUhESo81ZAlDUpE1hk6TG0
-         eq+w==
-X-Gm-Message-State: AOJu0YyHOdweZpSgMlzBnDkaUSMBt2uA/n/3mdUihRM4Ij4M107zghUC
-        xOLY372TLDWvlNDq6XMUMz2VzQ==
-X-Google-Smtp-Source: AGHT+IG6u5+6Wn1fn5uJ/gKC/iV1OP++u+3oO9FHrOsaeIxWT5kYxSQBPhf86/MysuEQZPUDuVryPQ==
-X-Received: by 2002:a05:6512:3c87:b0:4fa:f96c:745f with SMTP id h7-20020a0565123c8700b004faf96c745fmr4347010lfv.38.1692262035479;
-        Thu, 17 Aug 2023 01:47:15 -0700 (PDT)
+        bh=SXF4axVpfnQZc7HkPv4M23jcSW6Nad8x6FO/hELVXtk=;
+        b=JL21ln/QsWb5bQZFhjaek04f0hDMVZy+JdiYk13+IEngxJw2OW6WPdZlXKQBv91LLu
+         lyvQIA4ToQYKFW/9+CUtfVXBeo9YFJ2vRjtZ3LAtEBuF0bVqleW3ko/YOEKMng4gU4cu
+         EMa7c15rW0ZyNbc5oXGzY9M3zOCu7R86eE0MFBPggWoM2MesMQtXvBR2f0prqKys7FW7
+         vzn4icDq0u88ua0/H2tfH6t0Ub+0FUKUvTy+6FmjDMpsJPF2DhUF78yP75kgTMkJ5wKh
+         I+i/r3W7M/nFeZ8NeD1iDGlXk8DicXH0yqkWo0y2MLKYQjoDtOzKahEGT6mYthJ7VxU4
+         MIYQ==
+X-Gm-Message-State: AOJu0Yz6e0/qpikr7wCuAdeu1SjewYo9boNk2pUzlcmdScG3Ycm7b7US
+        7noXtQw7KNy2D7FnYdkm5aV2DA==
+X-Google-Smtp-Source: AGHT+IGUj/Sv4paGAaaX/Q/Q7T03J3gNmD7uJDqF9K5ZNUJ4tATH1mj/PmpsxJmzY/OMsosj/MzEtw==
+X-Received: by 2002:a2e:b0f3:0:b0:2b9:da28:c50b with SMTP id h19-20020a2eb0f3000000b002b9da28c50bmr3225704ljl.16.1692262036566;
+        Thu, 17 Aug 2023 01:47:16 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id m9-20020a05600c280900b003fe539b83f2sm2117285wmb.42.2023.08.17.01.47.14
+        by smtp.gmail.com with ESMTPSA id m9-20020a05600c280900b003fe539b83f2sm2117285wmb.42.2023.08.17.01.47.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Aug 2023 01:47:15 -0700 (PDT)
+        Thu, 17 Aug 2023 01:47:16 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 17 Aug 2023 10:47:06 +0200
-Subject: [PATCH v3 1/2] arm64: dts: qcom: sm8550: add UART14 nodes
+Date:   Thu, 17 Aug 2023 10:47:07 +0200
+Subject: [PATCH v3 2/2] arm64: dts: qcom: sm8550-qrd: add bluetooth support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230817-topic-sm8550-upstream-bt-v3-1-33f386e7b461@linaro.org>
+Message-Id: <20230817-topic-sm8550-upstream-bt-v3-2-33f386e7b461@linaro.org>
 References: <20230817-topic-sm8550-upstream-bt-v3-0-33f386e7b461@linaro.org>
 In-Reply-To: <20230817-topic-sm8550-upstream-bt-v3-0-33f386e7b461@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -69,20 +69,20 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1815;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1926;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=tbcjsIAk9XwFHFpbOFCyqYsyyRsIObVh70p79lbsc44=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk3d6QRCrxwV0Islpz/NTs+7AAEoluPNwqi8xMOTNu
- djmLQueJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZN3ekAAKCRB33NvayMhJ0Y5IEA
- DM58GC0KqJ6bccbUKVYJ29ocQyPZx5tdw1xVu5EUE3SOb5lmYlC/uNQbVvDo9+c9evu3UwfFqiUPZN
- WxsXOYYzTDwni3CUthKtZO0X0AEDU7PEywshrLqvu5rlOkxYDtL6aFg+tBCCe5WcsIPXRBG09hgLyL
- hIqaLNEuc7mBdrfy0m6BxsOiq2q+k5NmulpuLkRP7F10cWF5OZJxpBvyDyPSv4W51FWluBRHYbiaWq
- jjQq76EhgU68nythnMzULqGUXnkwEmdrqbKZ2l9v4qryp3B+ibgbmV3yrC0qKZFojsLD0+2OnrQat8
- GMZsu1qfiacURY2aL71sdLkZYHmFIJ5cu3whj1ztETh4bbUchxt4PynHgWH0t+2a854cHw7oPkrCr8
- uY5ROCoa9VD4A9gTDk0X1JN0r+U3xoziJhIWT5igbRwdB5J9HdWqCj/OqhWZSb0h31emBr42wB40Ci
- aqIMYakietssBD7dsb6jluiWWsY67FG3/cU6my8FxebAUonGFXCZ+84NUhaqrgVehbcOCSPDHzugxP
- oS1PHCURurCZ/iHrjIGMK/GPgQXlrVRUUnC+DIvxntMZ5I7F7+2UDZeKnso0LEOXnESNvZiAVfGZ4v
- ZiBGFQiJoQUhs0QxzGqTsx6oklUhJM2rr+rqjbYLrJfaQydytK4E9yVMSG+A==
+ bh=D7aZpsjhqSnrGCoPxr9KqIQ7RDCz7MWCm6a1lxWx+G8=;
+ b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBk3d6Rsd8ebRrEgKtaCrex40rwVc3bUy0nhP687qtd
+ vuul2RWJAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZN3ekQAKCRB33NvayMhJ0ZijD/
+ Ys94Bicb0tFRMwM26BCYz+CWFe8dlaNeiaMRvWNYE6DKuxuL5w2iQF6uoOcmvR6dL3TdBgIInxU405
+ Iqhw8EZVUta7/LewC61vkiaDyIDTviaF9OiWMMLpdy9UAAR8Z+lGg8f+atIce1fQZGURRvr7tTXQUH
+ mPNpROztR2ovjWrxFBdOqpnL592qGJzNuxnCTphj1ckmSBa+/kEIKI6m4harOIU0XhG2Bo74z70FQB
+ 4WOXrdhz9tb0oKKbd8Uzcnd2nKPEblnip6n7fdhAuYMsTZkxQivF9qER2IFVajMfvjdfMqn/0PBOdp
+ WzJiCpU1OZWZKIirY1kQO9pA9IuH9392GtM6hYpeng87JvI8co2tnkiyZM0RQMYG1onjSoRuQXkGWC
+ s1NYY6A9RsL/5ExaORMs/XTFTg+alV6FafK98pIzYTFyWZ3ddxs0pgLpQne1d9U7+QM+WN0Whkp1As
+ cP2bou1wgiqAnHU2prdkz5hm79/f8G3Co10ha7BBX+xDxgia3UJWPpdI2hctZpgxqpZCcex+1QgshK
+ KUQLXCQQzFdg/uH6ONq1qGJ79PYhXe7c1nvlliFn+6bD+x+OOhed3C229UTMgWISpiAh5LBf3/1IpV
+ dCrAPFoEbIS1R0A4zieM65pbeVdaBxp2agT+DirVl8jfvP7XizS9EzgzoA
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,62 +94,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the Geni High Speed UART QUP instance 2 element 6
-node and associated default pinctrl.
+Enable the WCN7850 bluetooth over the UART14 link.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 43 +++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index d115960bdeec..4be10a9bf933 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1054,6 +1054,20 @@ spi13: spi@894000 {
- 				status = "disabled";
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index 2c09ce8aeafd..a17c9f4f713f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -23,6 +23,7 @@ / {
  
-+			uart14: uart@898000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0 0x898000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S6_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart14_default>, <&qup_uart14_cts_rts>;
-+				interrupts = <GIC_SPI 461 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&clk_virt MASTER_QUP_CORE_2 0 &clk_virt SLAVE_QUP_CORE_2 0>,
-+						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_2 0>;
-+				interconnect-names = "qup-core", "qup-config";
-+				status = "disabled";
-+			};
-+
- 			i2c15: i2c@89c000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x0089c000 0 0x4000>;
-@@ -3498,6 +3512,22 @@ qup_uart7_default: qup-uart7-default-state {
- 				bias-disable;
- 			};
+ 	aliases {
+ 		serial0 = &uart7;
++		serial1 = &uart14;
+ 	};
  
-+			qup_uart14_default: qup-uart14-default-state {
-+				/* TX, RX */
-+				pins = "gpio78", "gpio79";
-+				function = "qup2_se6";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
+ 	wcd938x: audio-codec {
+@@ -765,6 +766,10 @@ &qupv3_id_0 {
+ 	status = "okay";
+ };
+ 
++&qupv3_id_1 {
++	status = "okay";
++};
 +
-+			qup_uart14_cts_rts: qup-uart14-cts-rts-state {
-+				/* CTS, RTS */
-+				pins = "gpio76", "gpio77";
-+				function = "qup2_se6";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
+ &remoteproc_adsp {
+ 	firmware-name = "qcom/sm8550/adsp.mbn",
+ 			"qcom/sm8550/adsp_dtb.mbn";
+@@ -842,6 +847,21 @@ wcd_tx: codec@0,3 {
+ &tlmm {
+ 	gpio-reserved-ranges = <32 8>;
+ 
++	bt_default: bt-default-state {
++		bt-en-pins {
++			pins = "gpio81";
++			function = "gpio";
++			drive-strength = <16>;
++			bias-disable;
++		};
 +
- 			sdc2_sleep: sdc2-sleep-state {
- 				clk-pins {
- 					pins = "sdc2_clk";
++		sw-ctrl-pins {
++			pins = "gpio82";
++			function = "gpio";
++			bias-pull-down;
++		};
++	};
++
+ 	sde_dsi_active: sde-dsi-active-state {
+ 		pins = "gpio133";
+ 		function = "gpio";
+@@ -883,6 +903,29 @@ &uart7 {
+ 	status = "okay";
+ };
+ 
++&uart14 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
++
++		vddio-supply = <&vreg_l15b_1p8>;
++		vddaon-supply = <&vreg_s4e_0p95>;
++		vdddig-supply = <&vreg_s4e_0p95>;
++		vddrfa0p8-supply = <&vreg_s4e_0p95>;
++		vddrfa1p2-supply = <&vreg_s4g_1p25>;
++		vddrfa1p9-supply = <&vreg_s6g_1p86>;
++
++		max-speed = <3200000>;
++
++		enable-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
++		swctrl-gpios = <&tlmm 82 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&bt_default>;
++		pinctrl-names = "default";
++	};
++};
++
+ &ufs_mem_hc {
+ 	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+ 	vcc-supply = <&vreg_l17b_2p5>;
 
 -- 
 2.34.1
