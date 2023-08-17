@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9EA277F949
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 16:39:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 763DA77F959
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 16:39:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352006AbjHQOiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 10:38:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35380 "EHLO
+        id S1352047AbjHQOit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 10:38:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352039AbjHQOi2 (ORCPT
+        with ESMTP id S1352049AbjHQOia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 10:38:28 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF1CB2D73
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 07:38:25 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31768ce2e81so6855027f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 07:38:25 -0700 (PDT)
+        Thu, 17 Aug 2023 10:38:30 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A0A30F0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 07:38:27 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-307d20548adso6824895f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 07:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692283104; x=1692887904;
+        d=linaro.org; s=google; t=1692283105; x=1692887905;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S0Y9xd+Pad6+mtTQhoMXOE7QF4dtRzmv/Ky6w4Tfu3A=;
-        b=wQKCHH6TcxUywK3COwOCBs8jAfRIwibpQvQ+OpFGsBhXvkkSpLemEQeURKg/1HYXmh
-         x/Q4hyJSl+cxZTz4OgMmyNnP3rX/N8rqwfq8AXVakMt32Igim9oBJ5cWE/5RQXH6gsoe
-         CKCKrvuXvGwXnGqRiFcEQ+pGSAxkZ1xbnGlt0tJH3uf1Mm7rzIXSDiXUD6jB/vvpQS8o
-         Z0v5+AwuYQv1JOEzAR6gtOsOqI0XdaqtKnEPpEFKCfVttkl0eIZLreJgXyWmmhnBeLw4
-         BOQxj1HzZ9pL+j8yO7X4rgX9p7UDoiPFmZmnMsiucP4Iy3mMVQzPlD5dblznzITcYACD
-         hF4Q==
+        bh=0x4ozwHcR60yAzmxM62laa6YE67TcNzLtskHx94XiuY=;
+        b=lnyPESLEq5waRKBCmfHRTRSDiJMaMK6x84qwzZBqxBrlQlgEecYgDNUzyVRHU72Pg/
+         2aPQDwhnHBuv3Yd6IeEH0Q9Vr/edZk7Rzn6eLZKjP2HamUkZZpqDXTFpwm1Pu/mRp6LG
+         7zLCjMN9awxCG5Lkbqvxke3FQGsj+5BuppVu+3N33Th6hFIq0vxe+bBrCnziko1SWe2U
+         q+F5JqvcfUV4QvWGeZfJPIKYEQB/F5ry7lOr393kEElUzj+lSLUbWTWzOwiAyopDyKTx
+         yuLQeaVIxR2NfgLPb+gKHPi8ZXZ41TG+uebwxSudfrzWexPoNT3siJrWgFQNYEUJWISj
+         OBsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692283104; x=1692887904;
+        d=1e100.net; s=20221208; t=1692283105; x=1692887905;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=S0Y9xd+Pad6+mtTQhoMXOE7QF4dtRzmv/Ky6w4Tfu3A=;
-        b=bEXi89M+tMwyR6yZ7mwDX1TvYIcXs/L3eBPjdyP+SLNyVd7ElG+1rEAUV8Wnr+CVzh
-         dJCKCu8UpGo2j1mnXHBAVcKve99QiJDohJm+sqlUYqX0PYOQwx9H6tYjs48OoKR8hk3p
-         H+fQ7dgpL3htW3yRuBSuOI06pPk2V1h3MKD4HvphBDLbFs24m092bg/eU8O1wnhMchHO
-         hIdRoe/53aUDdkAvrWb/Fi6BYiKdoAqWqxHJwTOb/dB5aG1kMGgdD/+ppjHOyKVNvMgf
-         mavMTUGeGHjl1KVC/9lh1Dto4cz4ZgBdkIAE07v7eFVImES29YxEhGPUjeCvIzqxJP56
-         AlDA==
-X-Gm-Message-State: AOJu0YyqLiOzRizyL4OTyW6CSmhRcDhUGKJr/fsJ+y+occcvwVIz6AIR
-        W2NxFPWmV5EycrqpNZhnst8xpQ==
-X-Google-Smtp-Source: AGHT+IEq4/W43gau+StdJCzkcA/Y/rJQMWKin+55+Qo60Xh1qP6chCciA/Wfc8w4Lqoe3kBwB4yNPg==
-X-Received: by 2002:a5d:4566:0:b0:317:58a8:baa with SMTP id a6-20020a5d4566000000b0031758a80baamr4331939wrc.28.1692283104543;
-        Thu, 17 Aug 2023 07:38:24 -0700 (PDT)
+        bh=0x4ozwHcR60yAzmxM62laa6YE67TcNzLtskHx94XiuY=;
+        b=VH1YxWEzHdRuIxbizfsEURX6j/Ux6d8erWrFYR8+6s3m/NLKDGtDHdLJcpfA0ZSrEB
+         EIbFPkjzayacQUQ38QwFZJl//Fb4RiuPxlej1V8Gh+4H55GaEi5BieFUNoQQtYzCz6/L
+         OO8jfcTJxAhYGT5zTZbKcdL0VHLblMZYwCK10GGv5+dDWIk0WX5TtAkBujmGUvmUm0Q/
+         LwuEz8gts0514lXOopCKpIYvCAxmdxd3+v30GeJ98dKgBGHqYnoOaKU4DUL1ShLHcqHr
+         mVscUBs4yUDGEgllccX07UYtzn1bdNgKQwBj1MYTNbTxtEMMwlcy7e3sqE3nT5VEB8Bu
+         7+bQ==
+X-Gm-Message-State: AOJu0YykvaxJHURXh03TC+PW5/Pqmk6t0wUN6H3o52IJqHcQ16shJNQA
+        NYXa7VUiROskqTO7ivBE4TVvLQ==
+X-Google-Smtp-Source: AGHT+IE6dL85QFPAMP7CMOzgNNj5rJDXYOaLhcZvtdN/L8GOsqINKR40uZwxwf9JlscHOfNzadSM9g==
+X-Received: by 2002:a5d:4391:0:b0:319:6d03:13ae with SMTP id i17-20020a5d4391000000b003196d0313aemr3627203wrq.55.1692283105724;
+        Thu, 17 Aug 2023 07:38:25 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id i8-20020a5d4388000000b0030647449730sm25218232wrq.74.2023.08.17.07.38.23
+        by smtp.gmail.com with ESMTPSA id i8-20020a5d4388000000b0030647449730sm25218232wrq.74.2023.08.17.07.38.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Aug 2023 07:38:23 -0700 (PDT)
+        Thu, 17 Aug 2023 07:38:25 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 07/13] media: qcom: camss: Use >= CAMSS_SDM845 for vfe_get/vfe_put
-Date:   Thu, 17 Aug 2023 15:38:06 +0100
-Message-ID: <20230817143812.677554-8-bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 08/13] media: qcom: camss: Untangle if/else spaghetti in camss
+Date:   Thu, 17 Aug 2023 15:38:07 +0100
+Message-ID: <20230817143812.677554-9-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230817143812.677554-1-bryan.odonoghue@linaro.org>
 References: <20230817143812.677554-1-bryan.odonoghue@linaro.org>
@@ -76,47 +76,231 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From sdm845 onwards we need to ensure the VFE is powered on prior to
-switching on the CSID.
+I refuse to add another SoC to this convoluted if/else structure. By the
+time we added in a third SoC we ought to have transitioned these control
+flow strutures to switches.
 
-Alternatively we could model up the GDSCs and clocks the CSID needs
-without the VFE but, there's a real question of the legitimacy of such a
-use-case.
+Adding in another Soc or two will make some of these if statements into
+five clause behemoths.
 
-For now drawing a line at sdm845 and switching on the associated VFEs is
-a perfectly valid thing to do.
-
-Rather than continually extend out this clause for at least two new SoCs
-with this same model - making the vfe_get/vfe_put path start to look
-like spaghetti we can simply test for >= sdm845 here.
+Introduce switches in the obvious places to despaghetiify.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../media/platform/qcom/camss/camss-csid.c    | 16 ++++---
+ .../media/platform/qcom/camss/camss-csiphy.c  | 22 ++++++---
+ drivers/media/platform/qcom/camss/camss-vfe.c | 45 +++++++++++++------
+ .../media/platform/qcom/camss/camss-video.c   | 16 ++++---
+ 4 files changed, 68 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 08991b070bd61..7ff450039ec3f 100644
+index 7ff450039ec3f..9e91d9414bebc 100644
 --- a/drivers/media/platform/qcom/camss/camss-csid.c
 +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -163,7 +163,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 	int ret = 0;
+@@ -576,15 +576,19 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+ 	csid->camss = camss;
+ 	csid->id = id;
  
- 	if (on) {
--		if (version == CAMSS_8250 || version == CAMSS_845) {
-+		if (version >= CAMSS_845) {
- 			ret = vfe_get(vfe);
- 			if (ret < 0)
- 				return ret;
-@@ -217,7 +217,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		regulator_bulk_disable(csid->num_supplies,
- 				       csid->supplies);
- 		pm_runtime_put_sync(dev);
--		if (version == CAMSS_8250 || version == CAMSS_845)
-+		if (version >= CAMSS_845)
- 			vfe_put(vfe);
+-	if (camss->res->version == CAMSS_8x16) {
++	switch (camss->res->version) {
++	case CAMSS_8x16:
+ 		csid->ops = &csid_ops_4_1;
+-	} else if (camss->res->version == CAMSS_8x96 ||
+-		   camss->res->version == CAMSS_660) {
++		break;
++	case CAMSS_8x96:
++	case CAMSS_660:
+ 		csid->ops = &csid_ops_4_7;
+-	} else if (camss->res->version == CAMSS_845 ||
+-		   camss->res->version == CAMSS_8250) {
++		break;
++	case CAMSS_845:
++	case CAMSS_8250:
+ 		csid->ops = &csid_ops_gen2;
+-	} else {
++		break;
++	default:
+ 		return -EINVAL;
+ 	}
+ 	csid->ops->subdev_init(csid);
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 593aec5c97bc2..0e8c2a59ea241 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -557,21 +557,31 @@ int msm_csiphy_subdev_init(struct camss *camss,
+ 	csiphy->id = id;
+ 	csiphy->cfg.combo_mode = 0;
+ 
+-	if (camss->res->version == CAMSS_8x16) {
++	switch (camss->res->version) {
++	case CAMSS_8x16:
++	{
+ 		csiphy->ops = &csiphy_ops_2ph_1_0;
+ 		csiphy->formats = csiphy_formats_8x16;
+ 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x16);
+-	} else if (camss->res->version == CAMSS_8x96 ||
+-		   camss->res->version == CAMSS_660) {
++		break;
++	}
++	case CAMSS_8x96:
++	case CAMSS_660:
++	{
+ 		csiphy->ops = &csiphy_ops_3ph_1_0;
+ 		csiphy->formats = csiphy_formats_8x96;
+ 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x96);
+-	} else if (camss->res->version == CAMSS_845 ||
+-		   camss->res->version == CAMSS_8250) {
++		break;
++	}
++	case CAMSS_845:
++	case CAMSS_8250:
++	{
+ 		csiphy->ops = &csiphy_ops_3ph_1_0;
+ 		csiphy->formats = csiphy_formats_sdm845;
+ 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_sdm845);
+-	} else {
++		break;
++	}
++	default:
+ 		return -EINVAL;
  	}
  
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index b789b3b2e4cfd..8f48401e31cd3 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -170,7 +170,9 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ {
+ 	struct vfe_device *vfe = to_vfe(line);
+ 
+-	if (vfe->camss->res->version == CAMSS_8x16)
++	switch (vfe->camss->res->version) {
++	case CAMSS_8x16:
++	{
+ 		switch (sink_code) {
+ 		case MEDIA_BUS_FMT_YUYV8_1X16:
+ 		{
+@@ -218,10 +220,13 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ 
+ 			return sink_code;
+ 		}
+-	else if (vfe->camss->res->version == CAMSS_8x96 ||
+-		 vfe->camss->res->version == CAMSS_660 ||
+-		 vfe->camss->res->version == CAMSS_845 ||
+-		 vfe->camss->res->version == CAMSS_8250)
++		break;
++	}
++	case CAMSS_8x96:
++	case CAMSS_660:
++	case CAMSS_845:
++	case CAMSS_8250:
++	{
+ 		switch (sink_code) {
+ 		case MEDIA_BUS_FMT_YUYV8_1X16:
+ 		{
+@@ -281,8 +286,12 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ 
+ 			return sink_code;
+ 		}
+-	else
+-		return 0;
++		break;
++	}
++	default:
++		break;
++	}
++	return 0;
+ }
+ 
+ int vfe_reset(struct vfe_device *vfe)
+@@ -1397,7 +1406,9 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 		init_completion(&l->output.sof);
+ 		init_completion(&l->output.reg_update);
+ 
+-		if (camss->res->version == CAMSS_8x16) {
++		switch (camss->res->version) {
++		case CAMSS_8x16:
++		{
+ 			if (i == VFE_LINE_PIX) {
+ 				l->formats = formats_pix_8x16;
+ 				l->nformats = ARRAY_SIZE(formats_pix_8x16);
+@@ -1405,8 +1416,11 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 				l->formats = formats_rdi_8x16;
+ 				l->nformats = ARRAY_SIZE(formats_rdi_8x16);
+ 			}
+-		} else if (camss->res->version == CAMSS_8x96 ||
+-			   camss->res->version == CAMSS_660) {
++			break;
++		}
++		case CAMSS_8x96:
++		case CAMSS_660:
++		{
+ 			if (i == VFE_LINE_PIX) {
+ 				l->formats = formats_pix_8x96;
+ 				l->nformats = ARRAY_SIZE(formats_pix_8x96);
+@@ -1414,11 +1428,16 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 				l->formats = formats_rdi_8x96;
+ 				l->nformats = ARRAY_SIZE(formats_rdi_8x96);
+ 			}
+-		} else if (camss->res->version == CAMSS_845 ||
+-			   camss->res->version == CAMSS_8250) {
++			break;
++		}
++		case CAMSS_845:
++		case CAMSS_8250:
++		{
+ 			l->formats = formats_rdi_845;
+ 			l->nformats = ARRAY_SIZE(formats_rdi_845);
+-		} else {
++			break;
++		}
++		default:
+ 			return -EINVAL;
+ 		}
+ 	}
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 46a89b5f6c171..e695724437ce1 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -1006,7 +1006,8 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
+ 
+ 	mutex_init(&video->lock);
+ 
+-	if (video->camss->res->version == CAMSS_8x16) {
++	switch (video->camss->res->version) {
++	case CAMSS_8x16:
+ 		if (is_pix) {
+ 			video->formats = formats_pix_8x16;
+ 			video->nformats = ARRAY_SIZE(formats_pix_8x16);
+@@ -1014,8 +1015,9 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
+ 			video->formats = formats_rdi_8x16;
+ 			video->nformats = ARRAY_SIZE(formats_rdi_8x16);
+ 		}
+-	} else if (video->camss->res->version == CAMSS_8x96 ||
+-		   video->camss->res->version == CAMSS_660) {
++		break;
++	case CAMSS_8x96:
++	case CAMSS_660:
+ 		if (is_pix) {
+ 			video->formats = formats_pix_8x96;
+ 			video->nformats = ARRAY_SIZE(formats_pix_8x96);
+@@ -1023,11 +1025,13 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
+ 			video->formats = formats_rdi_8x96;
+ 			video->nformats = ARRAY_SIZE(formats_rdi_8x96);
+ 		}
+-	}  else if (video->camss->res->version == CAMSS_845 ||
+-		    video->camss->res->version == CAMSS_8250) {
++		break;
++	case CAMSS_845:
++	case CAMSS_8250:
+ 		video->formats = formats_rdi_845;
+ 		video->nformats = ARRAY_SIZE(formats_rdi_845);
+-	} else {
++		break;
++	default:
+ 		ret = -EINVAL;
+ 		goto error_video_register;
+ 	}
 -- 
 2.41.0
 
