@@ -2,85 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0A6077FE82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 21:28:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C6C377FF03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 22:28:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236872AbjHQT1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 15:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46880 "EHLO
+        id S1349543AbjHQU1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 16:27:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354564AbjHQT1o (ORCPT
+        with ESMTP id S1354876AbjHQU12 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 15:27:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C31D1FF3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 12:27:42 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37HE0CX7024495;
-        Thu, 17 Aug 2023 19:27:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1AgtPxpK+4KO/5pmxW1d2FzBpUL8URkzXFOOIdlye6Y=;
- b=KIZ4EQz+YwdtZ0VKo4NCm5ISbsIxpz/LolRS2KL4wQAC6sDhiq8TqXy03TyqBfaVhM0w
- WXXmqDy+h/UR4UuSIRlP/7nJK2LEOPNTl7MybK/FarX1BTKL/oFnhnUICV7OzfCMVM78
- nHnpr6FAzd5FrzE4ZKqFOEx4U2qZznnU0QRMkqEbpg6BQoEaFraN6neTX2qL/Txp2Zhr
- wguhWlVEascvSCwtZEekKZPoy7hscTNvyp8LOQfjgrkdL7jNqWWrhIlS4sD1jpzomNiN
- 622xMK1MF00QLTBgKaQ2sJtqW/KvHavxkjjzmnw2vwt1Zf0q99wByJfUfBUmV68oa/gi Tg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sh0tnbach-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Aug 2023 19:27:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37HJRULu002029
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Aug 2023 19:27:30 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 17 Aug
- 2023 12:27:29 -0700
-Message-ID: <9f86ce98-156d-25cb-e35f-6d266d2eac14@quicinc.com>
-Date:   Thu, 17 Aug 2023 12:27:29 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dpu: drop
- dpu_encoder_phys_ops.atomic_mode_set
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Thu, 17 Aug 2023 16:27:28 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08AA4359C;
+        Thu, 17 Aug 2023 13:27:27 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8C34861FE9;
+        Thu, 17 Aug 2023 20:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D46C433C7;
+        Thu, 17 Aug 2023 20:27:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692304046;
+        bh=N4h/9erYEL2Ffzymz/cqNbvkGlt3eZnqrWxrHYkGXe0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=V/yD1h9UVs+NgvwbDl9HTmfJNXJ6mEYoHl38aNkAl0Wmd1P5l4eHBPwJcnmS+O2O8
+         C6d/2foh0R60c+a1DyqSNvWmHJaocrtdsFQTzgklsQWoQMjicRqDklBwBhM0Vae0zz
+         J52YsohD5EWek9U52xN159Q0BOOj6GHz+4IOgGvzqxVuHyTH5Vb5eQcMfHidfoNL48
+         bE77SXR1pPDEusyZ/YFm10VUA39MH0YMBTgdzp38HYLcUqPQcyX1ia1YGKQ8GtDBO8
+         js9ppJExaiqkDX8lOkwmogzgCp0IfoWRr3tfB9IrE+n8+UdOm97t/yLhpxOt7eOfFR
+         Ah0CQPGo0M/6g==
+Received: (nullmailer pid 2180435 invoked by uid 1000);
+        Thu, 17 Aug 2023 20:27:22 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230604144514.949628-1-dmitry.baryshkov@linaro.org>
- <20230604144514.949628-4-dmitry.baryshkov@linaro.org>
- <821d87bd-f428-57d1-ba30-29aed8fcdb65@quicinc.com>
- <93881487-6574-47df-92bc-b5fb4d174d33@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <93881487-6574-47df-92bc-b5fb4d174d33@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>
+Cc:     Conor Dooley <conor.dooley@microchip.com>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Subject: [PATCH v2] media: dt-bindings: Convert Omnivision OV7251 to DT schema
+Date:   Thu, 17 Aug 2023 15:27:13 -0500
+Message-Id: <20230817202713.2180195-1-robh@kernel.org>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7Yt3zFXJ2XWhtUeqb7r13fN_kZK3_oWb
-X-Proofpoint-ORIG-GUID: 7Yt3zFXJ2XWhtUeqb7r13fN_kZK3_oWb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-17_15,2023-08-17_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 mlxscore=0 phishscore=0 spamscore=0
- priorityscore=1501 adultscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308170175
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,259 +65,213 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Convert the OmniVision OV7251 Image Sensor binding to DT schema format.
 
+vddd-supply was listed as required, but the example and actual user
+don't have it. Also, the data brief says it has an internal regulator,
+so perhaps it is truly optional.
 
-On 8/17/2023 11:50 AM, Dmitry Baryshkov wrote:
-> On 08/08/2023 02:49, Abhinav Kumar wrote:
->>
->>
->> On 6/4/2023 7:45 AM, Dmitry Baryshkov wrote:
->>> The atomic_mode_set() callback only sets the phys_enc's IRQ data. As the
->>> INTF and WB are statically allocated to each encoder/phys_enc, drop the
->>> atomic_mode_set callback and set the IRQs during encoder init.
->>>
->>> For the CMD panel usecase some of IRQ indexes depend on the selected
->>> resources. Move setting them to the irq_enable() callback.
->>>
->>
->> The irq_enable() callback is called from the 
->> dpu_encoder_virt_atomic_enable() after the phys layer's enable.
->>
->> Thats late.
->>
->> So lets consider the case where command mode panel's clock is powered 
->> from bootloader (quite common).
->>
->> Now, as soon as the tearcheck is configured and interface is ON from 
->> the phys's enable(), nothing prevents / should prevent the interrupt 
->> from firing.
-> 
-> Please note that interrupt callbacks are also registered from the 
-> irq_control(). There is no way the interrupt can fire beforehand (and 
-> the call chain is dpu_encoder_virt_atomic_enable() -> 
-> dpu_encoder_resource_control() -> _dpu_encoder_resource_control_helper() 
-> -> _dpu_encoder_irq_control() -> irq_control().
-> 
-> If we ever want to move irq_control() to be called before phys's 
-> enable() callbacks, this will be a separate patchset, involving 
-> refactoring of dpu_encoder_resource_control().
-> 
+Add missing common "link-frequencies" which is used and required by the
+Linux driver.
 
-Ack, I will rebase my patches on top of this and re-test it.
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+v2:
+ - Add link-frequencies which the driver requires
+---
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml |   1 +
+ .../devicetree/bindings/media/i2c/ov7251.txt  |  52 ---------
+ .../bindings/media/i2c/ovti,ov7251.yaml       | 109 ++++++++++++++++++
+ 3 files changed, 110 insertions(+), 52 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/media/i2c/ov7251.txt
+ create mode 100644 Documentation/devicetree/bindings/media/i2c/ovti,ov7251.yaml
 
-Then will give my R-b, tested-by tags by Monday.
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+index ec79b7270437..042d4dc636ee 100644
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+@@ -269,6 +269,7 @@ examples:
+                 port {
+                     ov7251_ep: endpoint {
+                         data-lanes = <0 1>;
++                        link-frequencies = /bits/ 64 <240000000 319200000>;
+                         remote-endpoint = <&csiphy3_ep>;
+                     };
+                 };
+diff --git a/Documentation/devicetree/bindings/media/i2c/ov7251.txt b/Documentation/devicetree/bindings/media/i2c/ov7251.txt
+deleted file mode 100644
+index 8281151f7493..000000000000
+--- a/Documentation/devicetree/bindings/media/i2c/ov7251.txt
++++ /dev/null
+@@ -1,52 +0,0 @@
+-* Omnivision 1/7.5-Inch B&W VGA CMOS Digital Image Sensor
+-
+-The Omnivision OV7251 is a 1/7.5-Inch CMOS active pixel digital image sensor
+-with an active array size of 640H x 480V. It is programmable through a serial
+-I2C interface.
+-
+-Required Properties:
+-- compatible: Value should be "ovti,ov7251".
+-- clocks: Reference to the xclk clock.
+-- clock-names: Should be "xclk".
+-- clock-frequency: Frequency of the xclk clock.
+-- enable-gpios: Chip enable GPIO. Polarity is GPIO_ACTIVE_HIGH. This corresponds
+-  to the hardware pin XSHUTDOWN which is physically active low.
+-- vdddo-supply: Chip digital IO regulator.
+-- vdda-supply: Chip analog regulator.
+-- vddd-supply: Chip digital core regulator.
+-
+-The device node shall contain one 'port' child node with a single 'endpoint'
+-subnode for its digital output video port, in accordance with the video
+-interface bindings defined in
+-Documentation/devicetree/bindings/media/video-interfaces.txt.
+-
+-Example:
+-
+-	&i2c1 {
+-		...
+-
+-		ov7251: camera-sensor@60 {
+-			compatible = "ovti,ov7251";
+-			reg = <0x60>;
+-
+-			enable-gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>;
+-			pinctrl-names = "default";
+-			pinctrl-0 = <&camera_bw_default>;
+-
+-			clocks = <&clks 200>;
+-			clock-names = "xclk";
+-			clock-frequency = <24000000>;
+-
+-			vdddo-supply = <&camera_dovdd_1v8>;
+-			vdda-supply = <&camera_avdd_2v8>;
+-			vddd-supply = <&camera_dvdd_1v2>;
+-
+-			port {
+-				ov7251_ep: endpoint {
+-					clock-lanes = <1>;
+-					data-lanes = <0>;
+-					remote-endpoint = <&csi0_ep>;
+-				};
+-			};
+-		};
+-	};
+diff --git a/Documentation/devicetree/bindings/media/i2c/ovti,ov7251.yaml b/Documentation/devicetree/bindings/media/i2c/ovti,ov7251.yaml
+new file mode 100644
+index 000000000000..2e5187acbbb8
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/i2c/ovti,ov7251.yaml
+@@ -0,0 +1,109 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/i2c/ovti,ov7251.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: OmniVision OV7251 Image Sensor
++
++description:
++  The Omnivision OV7251 is a 1/7.5-Inch CMOS active pixel digital image sensor
++  with an active array size of 640H x 480V. It is programmable through a serial
++  I2C interface.
++
++maintainers:
++  - Todor Tomov <todor.too@gmail.com>
++
++properties:
++  compatible:
++    const: ovti,ov7251
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    description: XCLK Input Clock
++
++  clock-names:
++    const: xclk
++
++  clock-frequency:
++    description: Frequency of the xclk clock in Hz.
++
++  vdda-supply:
++    description: Analog voltage supply, 2.8 volts
++
++  vddd-supply:
++    description: Digital core voltage supply, 1.2 volts
++
++  vdddo-supply:
++    description: Digital I/O voltage supply, 1.8 volts
++
++  enable-gpios:
++    maxItems: 1
++    description:
++      Reference to the GPIO connected to the XSHUTDOWN pin, if any. Polarity
++      is GPIO_ACTIVE_HIGH.
++
++  port:
++    description: Digital Output Port
++    $ref: /schemas/graph.yaml#/$defs/port-base
++    additionalProperties: false
++
++    properties:
++      endpoint:
++        $ref: /schemas/media/video-interfaces.yaml#
++        unevaluatedProperties: false
++
++        properties:
++          clock-lanes:
++            maximum: 1
++
++          data-lanes:
++            maxItems: 1
++
++          link-frequencies: true
++
++        required:
++          - data-lanes
++          - link-frequencies
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - vdddo-supply
++  - vdda-supply
++  - port
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        camera@3c {
++            compatible = "ovti,ov7251";
++            reg = <0x3c>;
++            clocks = <&clks 1>;
++            clock-frequency = <24000000>;
++            vdddo-supply = <&ov7251_vdddo_1v8>;
++            vdda-supply = <&ov7251_vdda_2v8>;
++            vddd-supply = <&ov7251_vddd_1v5>;
++            enable-gpios = <&gpio1 19 GPIO_ACTIVE_HIGH>;
++
++            port {
++                ov7251_ep: endpoint {
++                    remote-endpoint = <&csi0_ep>;
++                    clock-lanes = <1>;
++                    data-lanes = <0>;
++                    link-frequencies = /bits/ 64 <240000000 319200000>;
++                };
++            };
++        };
++    };
++...
+-- 
+2.40.1
 
->>
->> So I feel / think mode_set is the correct location to assign these.
->>
->> I can ack patches 1 and 2 but I think you did those mainly for this 
->> one, so I would like to get some clarity on this part.
->>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  2 --
->>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  5 ---
->>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 32 ++++++++-----------
->>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 13 ++------
->>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 11 +------
->>>   5 files changed, 17 insertions(+), 46 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index cc61f0cf059d..6b5c80dc5967 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -1148,8 +1148,6 @@ static void 
->>> dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
->>>           phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
->>>           phys->cached_mode = crtc_state->adjusted_mode;
->>> -        if (phys->ops.atomic_mode_set)
->>> -            phys->ops.atomic_mode_set(phys, crtc_state, conn_state);
->>>       }
->>>   }
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->>> index faf033cd086e..24dbc28be4f8 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->>> @@ -67,8 +67,6 @@ struct dpu_encoder_phys;
->>>    * @is_master:            Whether this phys_enc is the current master
->>>    *                encoder. Can be switched at enable time. Based
->>>    *                on split_role and current mode (CMD/VID).
->>> - * @atomic_mode_set:        DRM Call. Set a DRM mode.
->>> - *                This likely caches the mode, for use at enable.
->>>    * @enable:            DRM Call. Enable a DRM mode.
->>>    * @disable:            DRM Call. Disable mode.
->>>    * @atomic_check:        DRM Call. Atomic check new DRM state.
->>> @@ -95,9 +93,6 @@ struct dpu_encoder_phys;
->>>   struct dpu_encoder_phys_ops {
->>>       void (*prepare_commit)(struct dpu_encoder_phys *encoder);
->>>       bool (*is_master)(struct dpu_encoder_phys *encoder);
->>> -    void (*atomic_mode_set)(struct dpu_encoder_phys *encoder,
->>> -            struct drm_crtc_state *crtc_state,
->>> -            struct drm_connector_state *conn_state);
->>>       void (*enable)(struct dpu_encoder_phys *encoder);
->>>       void (*disable)(struct dpu_encoder_phys *encoder);
->>>       int (*atomic_check)(struct dpu_encoder_phys *encoder,
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> index 3422b49f23c2..a0b7d8803e94 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> @@ -140,23 +140,6 @@ static void 
->>> dpu_encoder_phys_cmd_underrun_irq(void *arg, int irq_idx)
->>>       dpu_encoder_underrun_callback(phys_enc->parent, phys_enc);
->>>   }
->>> -static void dpu_encoder_phys_cmd_atomic_mode_set(
->>> -        struct dpu_encoder_phys *phys_enc,
->>> -        struct drm_crtc_state *crtc_state,
->>> -        struct drm_connector_state *conn_state)
->>> -{
->>> -    phys_enc->irq[INTR_IDX_CTL_START] = 
->>> phys_enc->hw_ctl->caps->intr_start;
->>> -
->>> -    phys_enc->irq[INTR_IDX_PINGPONG] = 
->>> phys_enc->hw_pp->caps->intr_done;
->>> -
->>> -    if (phys_enc->has_intf_te)
->>> -        phys_enc->irq[INTR_IDX_RDPTR] = 
->>> phys_enc->hw_intf->cap->intr_tear_rd_ptr;
->>> -    else
->>> -        phys_enc->irq[INTR_IDX_RDPTR] = 
->>> phys_enc->hw_pp->caps->intr_rdptr;
->>> -
->>> -    phys_enc->irq[INTR_IDX_UNDERRUN] = 
->>> phys_enc->hw_intf->cap->intr_underrun;
->>> -}
->>> -
->>>   static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
->>>           struct dpu_encoder_phys *phys_enc)
->>>   {
->>> @@ -287,6 +270,14 @@ static void 
->>> dpu_encoder_phys_cmd_irq_enable(struct dpu_encoder_phys *phys_enc)
->>>                       true,
->>>                       atomic_read(&phys_enc->vblank_refcount));
->>> +    phys_enc->irq[INTR_IDX_CTL_START] = 
->>> phys_enc->hw_ctl->caps->intr_start;
->>> +    phys_enc->irq[INTR_IDX_PINGPONG] = 
->>> phys_enc->hw_pp->caps->intr_done;
->>> +
->>> +    if (phys_enc->has_intf_te)
->>> +        phys_enc->irq[INTR_IDX_RDPTR] = 
->>> phys_enc->hw_intf->cap->intr_tear_rd_ptr;
->>> +    else
->>> +        phys_enc->irq[INTR_IDX_RDPTR] = 
->>> phys_enc->hw_pp->caps->intr_rdptr;
->>> +
->>>       dpu_core_irq_register_callback(phys_enc->dpu_kms,
->>>                          phys_enc->irq[INTR_IDX_PINGPONG],
->>>                          dpu_encoder_phys_cmd_pp_tx_done_irq,
->>> @@ -318,6 +309,10 @@ static void 
->>> dpu_encoder_phys_cmd_irq_disable(struct dpu_encoder_phys *phys_enc)
->>>       dpu_core_irq_unregister_callback(phys_enc->dpu_kms, 
->>> phys_enc->irq[INTR_IDX_UNDERRUN]);
->>>       dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, false);
->>>       dpu_core_irq_unregister_callback(phys_enc->dpu_kms, 
->>> phys_enc->irq[INTR_IDX_PINGPONG]);
->>> +
->>> +    phys_enc->irq[INTR_IDX_CTL_START] = -1;
->>> +    phys_enc->irq[INTR_IDX_PINGPONG] = -1;
->>> +    phys_enc->irq[INTR_IDX_RDPTR] = -1;
->>>   }
->>>   static void dpu_encoder_phys_cmd_tearcheck_config(
->>> @@ -737,7 +732,6 @@ static void dpu_encoder_phys_cmd_init_ops(
->>>           struct dpu_encoder_phys_ops *ops)
->>>   {
->>>       ops->is_master = dpu_encoder_phys_cmd_is_master;
->>> -    ops->atomic_mode_set = dpu_encoder_phys_cmd_atomic_mode_set;
->>>       ops->enable = dpu_encoder_phys_cmd_enable;
->>>       ops->disable = dpu_encoder_phys_cmd_disable;
->>>       ops->destroy = dpu_encoder_phys_cmd_destroy;
->>> @@ -775,6 +769,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
->>>       dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
->>>       phys_enc->intf_mode = INTF_MODE_CMD;
->>> +    phys_enc->irq[INTR_IDX_UNDERRUN] = 
->>> phys_enc->hw_intf->cap->intr_underrun;
->>> +
->>>       cmd_enc->stream_sel = 0;
->>>       phys_enc->has_intf_te = test_bit(DPU_INTF_TE,
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> index a550b290246c..3f2e0ebe3cfc 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> @@ -348,16 +348,6 @@ static bool 
->>> dpu_encoder_phys_vid_needs_single_flush(
->>>       return phys_enc->split_role != ENC_ROLE_SOLO;
->>>   }
->>> -static void dpu_encoder_phys_vid_atomic_mode_set(
->>> -        struct dpu_encoder_phys *phys_enc,
->>> -        struct drm_crtc_state *crtc_state,
->>> -        struct drm_connector_state *conn_state)
->>> -{
->>> -    phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
->>> -
->>> -    phys_enc->irq[INTR_IDX_UNDERRUN] = 
->>> phys_enc->hw_intf->cap->intr_underrun;
->>> -}
->>> -
->>>   static int dpu_encoder_phys_vid_control_vblank_irq(
->>>           struct dpu_encoder_phys *phys_enc,
->>>           bool enable)
->>> @@ -684,7 +674,6 @@ static int dpu_encoder_phys_vid_get_frame_count(
->>>   static void dpu_encoder_phys_vid_init_ops(struct 
->>> dpu_encoder_phys_ops *ops)
->>>   {
->>>       ops->is_master = dpu_encoder_phys_vid_is_master;
->>> -    ops->atomic_mode_set = dpu_encoder_phys_vid_atomic_mode_set;
->>>       ops->enable = dpu_encoder_phys_vid_enable;
->>>       ops->disable = dpu_encoder_phys_vid_disable;
->>>       ops->destroy = dpu_encoder_phys_vid_destroy;
->>> @@ -723,6 +712,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
->>>       dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
->>>       phys_enc->intf_mode = INTF_MODE_VIDEO;
->>> +    phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
->>> +    phys_enc->irq[INTR_IDX_UNDERRUN] = 
->>> phys_enc->hw_intf->cap->intr_underrun;
->>>       DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", 
->>> p->hw_intf->idx);
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
->>> index 858fe6656c9b..439f645e0bc9 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
->>> @@ -410,15 +410,6 @@ static void 
->>> dpu_encoder_phys_wb_irq_disable(struct dpu_encoder_phys *phys)
->>>           dpu_core_irq_unregister_callback(phys->dpu_kms, 
->>> phys->irq[INTR_IDX_WB_DONE]);
->>>   }
->>> -static void dpu_encoder_phys_wb_atomic_mode_set(
->>> -        struct dpu_encoder_phys *phys_enc,
->>> -        struct drm_crtc_state *crtc_state,
->>> -        struct drm_connector_state *conn_state)
->>> -{
->>> -
->>> -    phys_enc->irq[INTR_IDX_WB_DONE] = 
->>> phys_enc->hw_wb->caps->intr_wb_done;
->>> -}
->>> -
->>>   static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
->>>           struct dpu_encoder_phys *phys_enc)
->>>   {
->>> @@ -668,7 +659,6 @@ static bool 
->>> dpu_encoder_phys_wb_is_valid_for_commit(struct dpu_encoder_phys *phy
->>>   static void dpu_encoder_phys_wb_init_ops(struct 
->>> dpu_encoder_phys_ops *ops)
->>>   {
->>>       ops->is_master = dpu_encoder_phys_wb_is_master;
->>> -    ops->atomic_mode_set = dpu_encoder_phys_wb_atomic_mode_set;
->>>       ops->enable = dpu_encoder_phys_wb_enable;
->>>       ops->disable = dpu_encoder_phys_wb_disable;
->>>       ops->destroy = dpu_encoder_phys_wb_destroy;
->>> @@ -715,6 +705,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
->>>       dpu_encoder_phys_wb_init_ops(&phys_enc->ops);
->>>       phys_enc->intf_mode = INTF_MODE_WB_LINE;
->>> +    phys_enc->irq[INTR_IDX_WB_DONE] = 
->>> phys_enc->hw_wb->caps->intr_wb_done;
->>>       atomic_set(&wb_enc->wbirq_refcount, 0);
-> 
