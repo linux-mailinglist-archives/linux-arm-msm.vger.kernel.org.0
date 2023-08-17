@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EF5F780001
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 23:40:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FF20780004
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 23:40:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355374AbjHQVjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1355363AbjHQVjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 17 Aug 2023 17:39:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52390 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355429AbjHQVjQ (ORCPT
+        with ESMTP id S1355339AbjHQVjK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 17:39:16 -0400
+        Thu, 17 Aug 2023 17:39:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA80E4F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:38:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E49910C9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1692308309;
+        s=mimecast20190719; t=1692308314;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=aeAopVzD568TVshxf9B8QDlIPyA5uq6/h2SsMX6bHOQ=;
-        b=Sk69uA2UhWPIJaKwQtT3KEBlemrozPQ3zIaSVS6GMHa/x+YT/qZdgNzr18HSfi71AMBVeV
-        LK50eKQ3nBx07IuoLqD/t+DH4jQ6X4wHWKzp5E0on6M7Pq+7P9zBvHdh/VQe+Zu3BVk/MG
-        kZ6vY6DONEO8t2apR8la2gJ3EolPisU=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=t+Q9qx3hi2h+g9EvT9tp6a1ezCBYFQCJEttZz/Qfdlg=;
+        b=Y4QLRDilqiuJSUAggZ5U/5t1QTJkd1KSre5+GsI9nx+ohdwoJVLN3TPdpF5P5hYu/9WSti
+        PP5Q4x9h95qDBiket7hd/m58Xs0RAFuKrr8r/API4n563Onb11nWq9DrMtboF78hXf41NA
+        hXP7bVgxXEg42y1w1QpGFsUhpe1mxDI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-oanPxToSP-yK7aFDdo6tIA-1; Thu, 17 Aug 2023 17:38:27 -0400
-X-MC-Unique: oanPxToSP-yK7aFDdo6tIA-1
-Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-56e689f0b68so331859eaf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:38:27 -0700 (PDT)
+ us-mta-221-Wg5uUTE7NzGM94NIQcrnMg-1; Thu, 17 Aug 2023 17:38:33 -0400
+X-MC-Unique: Wg5uUTE7NzGM94NIQcrnMg-1
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-76d7a2c8133so37003685a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:38:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692308307; x=1692913107;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aeAopVzD568TVshxf9B8QDlIPyA5uq6/h2SsMX6bHOQ=;
-        b=Ti2p31lUpUltzOLgui6CtCnfcIuCIOcGOzX1BGFRIjqDYKaZpYKoEfO7LApDuO8PAG
-         qqHLjp2QYBlsm229bk8vyQq/lSbNQ174lIc+dY7uAJhXA2ZqpK1DsBQAuTtkFiZWcK/Y
-         Prs4/rn8Sj2cFw6FMxip3ub3U5qxPjDYxwifmjYGKTI/ETQDM+1tew60FKebD5o6urJ6
-         9fpstFfyuana+UdNHIS8Ua/igJPN1Esp80Pu6YMfvAq5ciPAI+4Dny4iFZMDC4OTZd4w
-         cEyDexF1YmB6ZdjeZljKsX9KAfMvjN7Ttp4OGUBBQnX0xM7lJu71mdEwXHLnK7MpxI6g
-         Mxjw==
-X-Gm-Message-State: AOJu0YySEFULhwMFQDP7EBPhYpzfvcrTb4dHeeJNqhbqzmq0qIuKwtU5
-        mwkUXW7xrhZXwawG/myI6w43XWaPV/FvewKXacz9FfNzYzvtmerY6PGXQeyQgrgtcfV1s8vNamj
-        OwrfiJdlsy1RVp9huLOLbPG7fwg==
-X-Received: by 2002:a05:6808:171c:b0:3a7:2c8c:349b with SMTP id bc28-20020a056808171c00b003a72c8c349bmr921241oib.37.1692308307142;
-        Thu, 17 Aug 2023 14:38:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPJW5TfwkgDsetnCbBa55QOOVFPM3Uo3yM8WAhR01KBK1NSTXWbo9Z4qrLH7/MW3ZAkV0ooA==
-X-Received: by 2002:a05:6808:171c:b0:3a7:2c8c:349b with SMTP id bc28-20020a056808171c00b003a72c8c349bmr921222oib.37.1692308306900;
-        Thu, 17 Aug 2023 14:38:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692308313; x=1692913113;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t+Q9qx3hi2h+g9EvT9tp6a1ezCBYFQCJEttZz/Qfdlg=;
+        b=LzI3U9vu+JerUBa2OGhgUj/wlYHbTEJe8wM0ESFbKdhocfSSpn7UINtQorngMcnQhB
+         3CeETIsnp80wbtHDoy41RUOIk6netyKmgKWi5Kwdet6Y6OXh90ai4U3I1D/7FtHC6/RA
+         3sPQ+zCRrERWjEMvk26UrgIGlWXznwhCs9mGTmq86QYS2nQsidgaGallGqnlM+BTwFZn
+         8TGCPGb6R3GkBpu70i2xZ1dfb8P89zG1CEgpIkCndb2fp6Gao2L/ZSTIQ9RbnUryAWzZ
+         XXQbMgoT7Zn2jBSuZSbRoSzANSGdBwij2m9KAclxFGuh58+ccVjqu4rUtS+5lo3E25kF
+         g3sA==
+X-Gm-Message-State: AOJu0Yx6bOY0HgnVmSc765Rhi4NYYmA3V8HAj+lL2LgY/G/xnUEKxkry
+        a+3B0IFz7xncZ5YVLVT3pkB/tRmYalEUQZtprY1YV5OWOcqTdkrIC1D+kt00mDgzmyYRZtalmuA
+        16xEvxbq6gD7iQxzam4qKPyvFSA==
+X-Received: by 2002:a37:ac1a:0:b0:76c:a908:a50a with SMTP id e26-20020a37ac1a000000b0076ca908a50amr864838qkm.64.1692308312820;
+        Thu, 17 Aug 2023 14:38:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHq1VG3xXKaLS9P5CbXK1T90KNGC83SeOzg9rVLkO2mrfMJbAHDwmt3qJWv5sUZsTvUTHMI+Q==
+X-Received: by 2002:a37:ac1a:0:b0:76c:a908:a50a with SMTP id e26-20020a37ac1a000000b0076ca908a50amr864819qkm.64.1692308312563;
+        Thu, 17 Aug 2023 14:38:32 -0700 (PDT)
 Received: from fedora.redhat.com ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id s1-20020ae9f701000000b0076c71c1d2f5sm96547qkg.34.2023.08.17.14.38.25
+        by smtp.gmail.com with ESMTPSA id s1-20020ae9f701000000b0076c71c1d2f5sm96547qkg.34.2023.08.17.14.38.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Aug 2023 14:38:26 -0700 (PDT)
+        Thu, 17 Aug 2023 14:38:32 -0700 (PDT)
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     andersson@kernel.org
 Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -62,10 +63,12 @@ Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, brgl@bgdev.pl,
         Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 0/2] sa8775p-ride: Describe ethernet phy IRQs
-Date:   Thu, 17 Aug 2023 16:37:15 -0500
-Message-ID: <20230817213815.638189-1-ahalaney@redhat.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: sa8775p-ride: Describe sgmii_phy0 irq
+Date:   Thu, 17 Aug 2023 16:37:16 -0500
+Message-ID: <20230817213815.638189-2-ahalaney@redhat.com>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230817213815.638189-1-ahalaney@redhat.com>
+References: <20230817213815.638189-1-ahalaney@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -79,16 +82,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that the hardware can detect the IRQs, let's describe them instead
-of polling the phys
+There's an irq hooked up, so let's describe it.
 
-Andrew Halaney (2):
-  arm64: dts: qcom: sa8775p-ride: Describe sgmii_phy0 irq
-  arm64: dts: qcom: sa8775p-ride: Describe sgmii_phy1 irq
+Prior to commit 9757300d2750
+("pinctrl: qcom: Add intr_target_width field to support increased number of interrupt targets")
+one would not see the IRQ fire, despite some (invasive) debugging
+showing that the GPIO was in fact asserted, resulting in the interface
+staying down.
 
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 2 ++
- 1 file changed, 2 insertions(+)
+Now that the IRQ is properly routed we can describe it.
 
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+---
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+index 81a7eeb9cfcd..8fde6935cd6e 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+@@ -285,6 +285,7 @@ sgmii_phy0: phy@8 {
+ 			compatible = "ethernet-phy-id0141.0dd4";
+ 			reg = <0x8>;
+ 			device_type = "ethernet-phy";
++			interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
+ 			reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
+ 			reset-assert-us = <11000>;
+ 			reset-deassert-us = <70000>;
 -- 
 2.41.0
 
