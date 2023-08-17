@@ -2,195 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9615477F165
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 09:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7EA377F208
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 10:25:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348565AbjHQHlW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 03:41:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36766 "EHLO
+        id S1348827AbjHQIYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 04:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348609AbjHQHlH (ORCPT
+        with ESMTP id S1348852AbjHQIYh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 03:41:07 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0DB330C0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 00:40:59 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52580a24128so2218290a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 00:40:59 -0700 (PDT)
+        Thu, 17 Aug 2023 04:24:37 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C5C12D5D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 01:24:35 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-6874a386ec7so1404454b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 01:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1692258058; x=1692862858;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GQ/pzkMGOFMvffvVhYx2x+xo33IWshzsEC8qLYrj/uQ=;
-        b=d1cQ/BjPg1yi2uUWuTc22jq1iHRqEP/NNmdkiQe2gkvtRNhiKrbQjjtDTix+BAo/Nf
-         0q8pfiyLBmoiJvUYU+yDZl4hHLzE9AjCXUjw9wQlFA7UNsM32fgyC5fD5sfCzfRBYBU1
-         jbxT0YecM2HmMSveJ0g6VJHbFTlQk7hTDSqSSWmzdkFVq3UwWwMn9F2SfYFV8lCd3AXo
-         2RjJhJhbAN2Cy1yWt3BaFa8R/sKPCTW88uwB0OjWwy0S06ThftBaSACRBa2AoOxFjxFe
-         doH2pYc2XmqjF54ebQobUTlD8ikmFYKEQddtpcfYpqOWexqx31958FzUL3A6W5zLXpdT
-         kpdQ==
+        d=quanta-corp-partner-google-com.20221208.gappssmtp.com; s=20221208; t=1692260675; x=1692865475;
+        h=content-transfer-encoding:from:in-reply-to:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vtlgCIuryLaOllepBHuZqfvLXaBJxG5kP8A128x7u5w=;
+        b=xjJFtNEn6A2iwld+nKGeQs3/p2ybWbTg3Dj9U+5W0saQV7IvsQxlfy5bir48RgqMjQ
+         wKW7YRIPYUL8xAoxN7fP+9ItmpFP4HtE8HDh7NRxgcsD4XQrpn0VCcmtd0wuKAg/Y19D
+         v45+N15hby6TF5peiRvF4Txdqu7lS7hXndpLX8ACz9BQeMWQBCTnLLbbP0uB6nv6Ij7X
+         k33/tbBMqfoW54UA4xYm4F7H32Kinnz9KrRb6gc99IfTADI3U9ulW9DdW8TV4ydubOlV
+         O65Roj7GnEOuXj32WLeGtMiyy2Aa4fx8INNogdlFelvdbSR7GNk2yXKN1LumAh+nHh0E
+         G5Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692258058; x=1692862858;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=GQ/pzkMGOFMvffvVhYx2x+xo33IWshzsEC8qLYrj/uQ=;
-        b=eSKL9G1tKfIebGdWCcAkY0VFSdnACMuz6HbkLvN0QqbSWhER/1ZPg6KN+yJCVaSjrq
-         abdF1dyLE/qdvGCrXpb9BVCY3BCknW/buKOsgiXki+JB00dxiEnyP9B15XBQPlyvKYaK
-         MhEdG7fsxOuLL8g1MNhmY9TVKmIuHE1rKS8yCnlBmY8Yo9bQ9jd9GifNLkb5t/oK9HOS
-         Bmw/5SZ84eo5gCfC4dCxksE7BJi4VEfERRm2lM43y5JdNsMOCvelYwtRte/4KCr0gvwr
-         b6lONvE5Ff01OHQcjNzQRpYRlAfjmZW0BHiEUfuznsK/BPXvle/9UnhEkiQ1qZYlR+fI
-         le8Q==
-X-Gm-Message-State: AOJu0Yxjijq1HWD7oDbEJ5ogy740PFYCi9MrkV1NPeUVlLj8i5zDzGik
-        N5ADh0u0LPiiDcUwDCwNtoBeFQ==
-X-Google-Smtp-Source: AGHT+IGf9rWZ9VohbsbOL72pJ0kHw3/hOLYWbEHXA0pN2GPS58vPMofCBOyp5A4Rss2bcsZNA/p6YQ==
-X-Received: by 2002:aa7:d6d8:0:b0:526:9cfb:c12 with SMTP id x24-20020aa7d6d8000000b005269cfb0c12mr978979edr.38.1692258057999;
-        Thu, 17 Aug 2023 00:40:57 -0700 (PDT)
-Received: from localhost (212095005038.public.telering.at. [212.95.5.38])
-        by smtp.gmail.com with ESMTPSA id d13-20020a05640208cd00b005259dd903e5sm1235721edz.67.2023.08.17.00.40.57
+        d=1e100.net; s=20221208; t=1692260675; x=1692865475;
+        h=content-transfer-encoding:from:in-reply-to:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vtlgCIuryLaOllepBHuZqfvLXaBJxG5kP8A128x7u5w=;
+        b=TvVsrOqwpNCJxDmtjqq+fClNFhM1RL35O1RCFKpF/t4KViSZO6Uq2mNtyAIypeOD5R
+         mXSaVSjLF61HE4/zfcyeHIROG5NZK7q5LwMocUKkBzmjWU6QR3VRl6q4vxB8ikY6zJyJ
+         aU/pFpHBtbPbv0DH5UkePlMfhuW/tiIRD/v81WMMyuYgoW9qIAlYlZI7U0mXOe7OmVsG
+         Dit3kUMLmaqClITsnoAwBPT7XQDm1BmKQWGxrQYiJFiaGQ2EvLCasi6j7X971eAl1MBK
+         Y1VRHzOd12vVr5iQj7hk91PSJ1pm8JMY+39vj8+oOVROQ4sawjNk7x0RwL0UGDWl4NJK
+         USbQ==
+X-Gm-Message-State: AOJu0YzxKUihdlPYjZKQbcv6TVtOmOBBYOtPIPLnuSxh33gXspG+dYl7
+        JembmqiLUgr2vtTvWuqye+QI2g==
+X-Google-Smtp-Source: AGHT+IGbKSuG9QUnW5n7HhYT5Yo39hvyPnt3KADftYUSDRjRTT/dV+ZAQvNEpD/l4Tk+nLysp/mhwQ==
+X-Received: by 2002:a05:6a00:4891:b0:668:834d:4bd with SMTP id dk17-20020a056a00489100b00668834d04bdmr4468593pfb.0.1692260675016;
+        Thu, 17 Aug 2023 01:24:35 -0700 (PDT)
+Received: from [192.168.0.224] (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
+        by smtp.gmail.com with ESMTPSA id i15-20020a63a84f000000b005634343cd9esm13256965pgp.44.2023.08.17.01.24.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Aug 2023 00:40:57 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 17 Aug 2023 09:40:56 +0200
-Message-Id: <CUUNEYUIT0RH.BEM9YN8OBG8E@otso>
-Cc:     "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: pm7250b: make SID configurable
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Luca Weiss" <luca.weiss@fairphone.com>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-X-Mailer: aerc 0.15.2
-References: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
- <20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com>
- <f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org>
- <CSIE9TYTQUHL.3E769C2Y4RAAO@otso>
- <c9eea8ec-b289-334c-9c0b-7c992184a265@linaro.org>
- <CAA8EJpoSpytSTm=y7oPD_SC+0-bd735KEczR1JgMc7RuMZ+A+g@mail.gmail.com>
- <CSIGK60CQSD8.1Q4SOANJRMASF@otso>
- <9040e9bb-a16c-0186-edba-da986350340c@linaro.org>
- <CSIK8F6MTIVE.2K2U2Q1LDA70H@otso>
-In-Reply-To: <CSIK8F6MTIVE.2K2U2Q1LDA70H@otso>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 17 Aug 2023 01:24:34 -0700 (PDT)
+Message-ID: <54f9b8db-e5e5-a109-3c96-1a215979661f@quanta.corp-partner.google.com>
+Date:   Thu, 17 Aug 2023 16:24:31 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Move trogdor rt5682s bits
+ to a fragment
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sheng-liang.pan@quanta.corp-partner.google.com
+References: <20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3e01923220@changeid>
+In-Reply-To: <20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3e01923220@changeid>
+From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Hi
 
-On Wed May 10, 2023 at 1:27 PM CEST, Luca Weiss wrote:
-> On Wed May 10, 2023 at 12:05 PM CEST, Krzysztof Kozlowski wrote:
-> > On 10/05/2023 10:34, Luca Weiss wrote:
-> > > On Wed May 10, 2023 at 10:07 AM CEST, Dmitry Baryshkov wrote:
-> > >> On Wed, 10 May 2023 at 09:55, Krzysztof Kozlowski
-> > >> <krzysztof.kozlowski@linaro.org> wrote:
-> > >>>
-> > >>> On 10/05/2023 08:47, Luca Weiss wrote:
-> > >>>> Hi Krzysztof,
-> > >>>>
-> > >>>> On Fri Apr 7, 2023 at 10:27 AM CEST, Krzysztof Kozlowski wrote:
-> > >>>>> On 07/04/2023 09:45, Luca Weiss wrote:
-> > >>>>>> Like other Qualcomm PMICs the PM7250B can be used on different a=
-ddresses
-> > >>>>>> on the SPMI bus. Use similar defines like the PMK8350 to make th=
-is
-> > >>>>>> possible.
-> > >>>>>>
-> > >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > >>>>>> ---
-> > >>>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++----=
----
-> > >>>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
-> > >>>>>>
-> > >>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/=
-boot/dts/qcom/pm7250b.dtsi
-> > >>>>>> index daa6f1d30efa..eeb476edc79a 100644
-> > >>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> > >>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> > >>>>>> @@ -7,6 +7,15 @@
-> > >>>>>>  #include <dt-bindings/interrupt-controller/irq.h>
-> > >>>>>>  #include <dt-bindings/spmi/spmi.h>
-> > >>>>>>
-> > >>>>>> +/* This PMIC can be configured to be at different SIDs */
-> > >>>>>> +#ifndef PM7250B_SID
-> > >>>>>> +   #define PM7250B_SID 2
-> > >>>>>
-> > >>>>> Drop indentation, although anyway I am against this. Please don't=
- bring
-> > >>>>> new patterns of this at least till we settle previous discussion.
-> > >>>>>
-> > >>>>> https://lore.kernel.org/linux-arm-msm/46658cbb-fff5-e98b-fdad-88f=
-a683a9c75@linaro.org/
-> > >>>>
-> > >>>> What's the outcome of the discussion? For this PMIC it's totally e=
-nough
-> > >>>> to have the SID configurable like in this patch, I don't think thi=
-s PMIC
-> > >>>> will be included twice in a board - at least I'm not aware of such=
- a
-> > >>>> configuration.
-> > >>>
-> > >>> We did not reach consensus and I still disagree with complex macros=
- or
-> > >>> macros depending on order of inclusion.
-> > >>
-> > >> I still think we should find a way to parametrise PMIC dtsi, however=
- I
-> > >> agree with Krzysztof that complex CPP is not a way to go.
-> > >=20
-> > > What about the macro already used in-tree and proposed with this patc=
-h?
-> > > I wouldn't say this is a "complex macro" since it's just a single num=
-ber
-> > > being replaced in a few places.
-> >
-> > Are you talking about the macro to which I responded: "or macros
-> > depending on order of inclusion." or something else?
+> Several trogdor boards have moved from the older rt5862i to the newer
+> rt5862s, at least on newer revisions of boards. Let's get rid of the
+> dts duplication across boards and promote this to a fragment.
 >
-> I thought you mean with ..
+> Note: The old boards used to override the "compatible" in the "sound"
+> node with the exact same thing that was in "sc7180-trogdor.dtsi"
+> ("google,sc7180-trogdor"). I got rid of that.
 >
-> > >>> We did not reach consensus and I still disagree with complex macros=
- or
-> > >>> macros depending on order of inclusion.
+> This is validated to produce the same result when taking the dtbs
+> generated by the kernel build and then doing:
 >
-> .. the macros proprosed in the patch you linked (that version that also
-> adjusts the labels based on the SID).
+>    for dtb in *trogdor*.dtb; do
+>      dtc -I dtb -O dts $dtb -o out/$dtb.dts;
+>    done
 >
-> I was asking if the patch I sent (with #define PM7250B_SID) would be
-> okay to take in at least until the bigger discussion has come to a
-> conclusion, since we already have upstream occurances of such a macro so
-> it's not a new concept.
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 >
-> Otherwise I'll just carry this patch in my local tree until this
-> situation has cleared up.
+>   .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts | 13 +------------
+>   .../dts/qcom/sc7180-trogdor-pazquel360.dtsi     | 13 +------------
+>   .../dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi    | 17 +++++++++++++++++
+>   ...180-trogdor-wormdingler-rev1-boe-rt5682s.dts | 13 +------------
+>   ...180-trogdor-wormdingler-rev1-inx-rt5682s.dts | 13 +------------
+>   5 files changed, 21 insertions(+), 48 deletions(-)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
+> index 36326ef972dc..d6db7d83adcf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
+> @@ -11,19 +11,13 @@
+>   #include "sc7180-trogdor-parade-ps8640.dtsi"
+>   #include <arm/cros-ec-keyboard.dtsi>
+>   #include "sc7180-trogdor-lte-sku.dtsi"
+> +#include "sc7180-trogdor-rt5682s-sku.dtsi"
+>   
+>   / {
+>   	model = "Google Kingoftown";
+>   	compatible = "google,kingoftown", "qcom,sc7180";
+>   };
+>   
+> -&alc5682 {
+> -	compatible = "realtek,rt5682s";
+> -	/delete-property/ VBAT-supply;
+> -	realtek,dmic1-clk-pin = <2>;
+> -	realtek,dmic-clk-rate-hz = <2048000>;
+> -};
+> -
+>   &ap_tp_i2c {
+>   	status = "okay";
+>   };
+> @@ -84,11 +78,6 @@ &pp3300_dx_edp {
+>   	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
+>   };
+>   
+> -&sound {
+> -	compatible = "google,sc7180-trogdor";
+> -	model = "sc7180-rt5682s-max98357a-1mic";
+> -};
+> -
+>   &wifi {
+>   	qcom,ath10k-calibration-variant = "GO_KINGOFTOWN";
+>   };
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+> index 273e2249f018..89034b6702f4 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+> @@ -7,13 +7,7 @@
+>   
+>   /* This file must be included after sc7180-trogdor.dtsi */
+>   #include "sc7180-trogdor-pazquel.dtsi"
+> -
+> -&alc5682 {
+> -	compatible = "realtek,rt5682s";
+> -	realtek,dmic1-clk-pin = <2>;
+> -	realtek,dmic-clk-rate-hz = <2048000>;
+> -	/delete-property/ VBAT-supply;
+> -};
+> +#include "sc7180-trogdor-rt5682s-sku.dtsi"
+>   
+>   ap_ts_pen_1v8: &i2c4 {
+>   	clock-frequency = <400000>;
+> @@ -64,11 +58,6 @@ CROS_STD_MAIN_KEYMAP
+>   	>;
+>   };
+>   
+> -&sound {
+> -	compatible = "google,sc7180-trogdor";
+> -	model = "sc7180-rt5682s-max98357a-1mic";
+> -};
+> -
+>   &wifi {
+>   	qcom,ath10k-calibration-variant = "GO_PAZQUEL360";
+>   };
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi
+> new file mode 100644
+> index 000000000000..66b8773309d4
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi
+> @@ -0,0 +1,17 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Trogdor dts fragment for SKUs with
+> + *
+> + * Copyright 2023 Google LLC.
+> + */
+> +
+> +&alc5682 {
+> +	compatible = "realtek,rt5682s";
+> +	/delete-property/ VBAT-supply;
+> +	realtek,dmic1-clk-pin = <2>;
+> +	realtek,dmic-clk-rate-hz = <2048000>;
+> +};
+> +
+> +&sound {
+> +	model = "sc7180-rt5682s-max98357a-1mic";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+> index 6225ab8329c3..842f07f16ed1 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+> @@ -11,20 +11,9 @@
+>   /dts-v1/;
+>   
+>   #include "sc7180-trogdor-wormdingler-rev1-boe.dts"
+> +#include "sc7180-trogdor-rt5682s-sku.dtsi"
+>   
+>   / {
+>   	model = "Google Wormdingler rev1+ (BOE, rt5682s)";
+>   	compatible = "google,wormdingler-sku1025", "qcom,sc7180";
+>   };
+> -
+> -&alc5682 {
+> -	compatible = "realtek,rt5682s";
+> -	/delete-property/ VBAT-supply;
+> -	realtek,dmic1-clk-pin = <2>;
+> -	realtek,dmic-clk-rate-hz = <2048000>;
+> -};
+> -
+> -&sound {
+> -	compatible = "google,sc7180-trogdor";
+> -	model = "sc7180-rt5682s-max98357a-1mic";
+> -};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+> index b40b068dad6a..084870323606 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+> @@ -11,20 +11,9 @@
+>   /dts-v1/;
+>   
+>   #include "sc7180-trogdor-wormdingler-rev1-inx.dts"
+> +#include "sc7180-trogdor-rt5682s-sku.dtsi"
+>   
+>   / {
+>   	model = "Google Wormdingler rev1+ (INX, rt5682s)";
+>   	compatible = "google,wormdingler-sku1", "qcom,sc7180";
+>   };
+> -
+> -&alc5682 {
+> -	compatible = "realtek,rt5682s";
+> -	/delete-property/ VBAT-supply;
+> -	realtek,dmic1-clk-pin = <2>;
+> -	realtek,dmic-clk-rate-hz = <2048000>;
+> -};
+> -
+> -&sound {
+> -	compatible = "google,sc7180-trogdor";
+> -	model = "sc7180-rt5682s-max98357a-1mic";
+> -};
 
-Has any decision been made in the meantime whether we can get this patch
-in (at least until we have a better solution)?
-
-Imo since this patch isn't introducing any new concept that isn't
-already present upstream so shouldn't be a big problem..
-
-Regards
-Luca
-
->
-> Regards
-> Luca
->
-> >
-> > Best regards,
-> > Krzysztof
+Reviewed-by: Sheng-Liang Pan 
+<sheng-liang.pan@quanta.corp-partner.google.com>
 
