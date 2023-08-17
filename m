@@ -2,141 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA03C77FFD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 23:25:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EF5F780001
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 23:40:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355333AbjHQVYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 17:24:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45162 "EHLO
+        id S1355374AbjHQVjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 17:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355341AbjHQVYe (ORCPT
+        with ESMTP id S1355429AbjHQVjQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 17:24:34 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C934D26B7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:24:27 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fe0d5f719dso271527e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692307466; x=1692912266;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tFUOLUXpj1dXg7TLVnO3NtdI64oXAg1azufv8G6+Zj0=;
-        b=P4C2CjcA9VNpVw3Df7IPAStdEG3gkltmqpOtebRM9iZhI96EamgMUOJlG7uE3Vmnt8
-         daePybAkK85mzqiH3aX9OxP1hYKE4N9xxrfvBrLTFMry5JTSjYByv7QZviw/+nFjYnXD
-         6e6mB1ssXK7U+Lpmf/wKTJeaE8p9Ygtg0JAZzCUgvhjxj9ym3xAaZUGxNyCKvchLsMR0
-         rcYtjIUmCW6TmwdqQFe5bXzO1C7KowWZ7wym+PMR+ffIDYh953bew/BTM2ZQFpY/kr/p
-         FU6lAWidC+wn/3sSHGl5HzX8egj7nBImPjN5H+qzVeuO9OgXSpRypgqHUWKYnvnTsdt+
-         IIDA==
+        Thu, 17 Aug 2023 17:39:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA80E4F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:38:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1692308309;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=aeAopVzD568TVshxf9B8QDlIPyA5uq6/h2SsMX6bHOQ=;
+        b=Sk69uA2UhWPIJaKwQtT3KEBlemrozPQ3zIaSVS6GMHa/x+YT/qZdgNzr18HSfi71AMBVeV
+        LK50eKQ3nBx07IuoLqD/t+DH4jQ6X4wHWKzp5E0on6M7Pq+7P9zBvHdh/VQe+Zu3BVk/MG
+        kZ6vY6DONEO8t2apR8la2gJ3EolPisU=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-463-oanPxToSP-yK7aFDdo6tIA-1; Thu, 17 Aug 2023 17:38:27 -0400
+X-MC-Unique: oanPxToSP-yK7aFDdo6tIA-1
+Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-56e689f0b68so331859eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 14:38:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692307466; x=1692912266;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tFUOLUXpj1dXg7TLVnO3NtdI64oXAg1azufv8G6+Zj0=;
-        b=EX/30f7OutiJevWrcypYuWCtjHcfcJEZ/baZAJlfRSEBHwLkvG6LHgy/LBLL4uXavj
-         iWG/+rNyxl/FGfWScV6khsZ62Ivw+bj3WY7It1ZfK5X7Uxb9K4o5aaclS+5n+wh0tcX3
-         UEAstpCtY+mrAzddt6oI1VkvCbe1AGeuBAVtJFfi2s+Tp8PWJtk4+LH551PQiSVxQsdd
-         q24bxJuejF7LLMWNFlpF3ftk8APa/sw4REaPeJUTODR9UsKh9RcGr1+Ve6RZyRRVl5Ha
-         OZuF+oPAwCyWmkNfuMaU02o2sWkuW5NE92UjMSvTiWGsUmw6SMfj0PuLhzYaGD3XR5vF
-         6c1g==
-X-Gm-Message-State: AOJu0Yw8hGcs/iZuUb4IJT+sWrMeaWbJMyUEm1uTZoej1FH4vtuYixKI
-        EdJWs7ua8TlI/m3HGqWXPEyLPw==
-X-Google-Smtp-Source: AGHT+IElWD75J4SIIC/MNWL6hF9/PvvD/kZT+7BtDaZ4TU+S9G5p/gNu72OiCqPgfHXNY+6jGjxwRw==
-X-Received: by 2002:a05:6512:477:b0:4f8:49a7:2deb with SMTP id x23-20020a056512047700b004f849a72debmr365449lfd.8.1692307465984;
-        Thu, 17 Aug 2023 14:24:25 -0700 (PDT)
-Received: from [192.168.1.101] (abxh52.neoplus.adsl.tpnet.pl. [83.9.1.52])
-        by smtp.gmail.com with ESMTPSA id c8-20020ac24148000000b004fe3bd81278sm57267lfi.70.2023.08.17.14.24.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Aug 2023 14:24:25 -0700 (PDT)
-Message-ID: <ad30a8ed-87d3-46dd-8b34-83f6cfac0e4a@linaro.org>
-Date:   Thu, 17 Aug 2023 23:24:23 +0200
+        d=1e100.net; s=20221208; t=1692308307; x=1692913107;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aeAopVzD568TVshxf9B8QDlIPyA5uq6/h2SsMX6bHOQ=;
+        b=Ti2p31lUpUltzOLgui6CtCnfcIuCIOcGOzX1BGFRIjqDYKaZpYKoEfO7LApDuO8PAG
+         qqHLjp2QYBlsm229bk8vyQq/lSbNQ174lIc+dY7uAJhXA2ZqpK1DsBQAuTtkFiZWcK/Y
+         Prs4/rn8Sj2cFw6FMxip3ub3U5qxPjDYxwifmjYGKTI/ETQDM+1tew60FKebD5o6urJ6
+         9fpstFfyuana+UdNHIS8Ua/igJPN1Esp80Pu6YMfvAq5ciPAI+4Dny4iFZMDC4OTZd4w
+         cEyDexF1YmB6ZdjeZljKsX9KAfMvjN7Ttp4OGUBBQnX0xM7lJu71mdEwXHLnK7MpxI6g
+         Mxjw==
+X-Gm-Message-State: AOJu0YySEFULhwMFQDP7EBPhYpzfvcrTb4dHeeJNqhbqzmq0qIuKwtU5
+        mwkUXW7xrhZXwawG/myI6w43XWaPV/FvewKXacz9FfNzYzvtmerY6PGXQeyQgrgtcfV1s8vNamj
+        OwrfiJdlsy1RVp9huLOLbPG7fwg==
+X-Received: by 2002:a05:6808:171c:b0:3a7:2c8c:349b with SMTP id bc28-20020a056808171c00b003a72c8c349bmr921241oib.37.1692308307142;
+        Thu, 17 Aug 2023 14:38:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPJW5TfwkgDsetnCbBa55QOOVFPM3Uo3yM8WAhR01KBK1NSTXWbo9Z4qrLH7/MW3ZAkV0ooA==
+X-Received: by 2002:a05:6808:171c:b0:3a7:2c8c:349b with SMTP id bc28-20020a056808171c00b003a72c8c349bmr921222oib.37.1692308306900;
+        Thu, 17 Aug 2023 14:38:26 -0700 (PDT)
+Received: from fedora.redhat.com ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id s1-20020ae9f701000000b0076c71c1d2f5sm96547qkg.34.2023.08.17.14.38.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Aug 2023 14:38:26 -0700 (PDT)
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     andersson@kernel.org
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, brgl@bgdev.pl,
+        Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 0/2] sa8775p-ride: Describe ethernet phy IRQs
+Date:   Thu, 17 Aug 2023 16:37:15 -0500
+Message-ID: <20230817213815.638189-1-ahalaney@redhat.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] interconnect: qcom: Annotate struct icc_onecell_data with
- __counted_by
-Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev, linux-hardening@vger.kernel.org
-References: <20230817204215.never.916-kees@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230817204215.never.916-kees@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.08.2023 22:42, Kees Cook wrote:
-> Prepare for the coming implementation by GCC and Clang of the __counted_by
-> attribute. Flexible array members annotated with __counted_by can have
-> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-> functions).
-> 
-> As found with Coccinelle[1], add __counted_by for struct icc_onecell_data.
-> Additionally, since the element count member must be set before accessing
-> the annotated flexible array member, move its initialization earlier.
-> 
-> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
-> 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Georgi Djakov <djakov@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-pm@vger.kernel.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
-> ---
-Very nice, thanks
+Now that the hardware can detect the IRQs, let's describe them instead
+of polling the phys
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Andrew Halaney (2):
+  arm64: dts: qcom: sa8775p-ride: Describe sgmii_phy0 irq
+  arm64: dts: qcom: sa8775p-ride: Describe sgmii_phy1 irq
 
-Konrad
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+-- 
+2.41.0
+
