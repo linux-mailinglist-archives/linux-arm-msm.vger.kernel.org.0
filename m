@@ -2,177 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E93577FF29
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 22:35:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5DD277FF36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 22:43:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347636AbjHQUes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 16:34:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34520 "EHLO
+        id S1354962AbjHQUmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 16:42:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354963AbjHQUeX (ORCPT
+        with ESMTP id S1354958AbjHQUmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 16:34:23 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9287B35B8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 13:34:10 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe8a1591c7so2462215e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 13:34:10 -0700 (PDT)
+        Thu, 17 Aug 2023 16:42:19 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444BE2D72
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 13:42:18 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1bc6535027aso1872395ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 13:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1692304449; x=1692909249;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aJanSbcbdRbqlFQWo2SBp1vOjmdCAm9+u8RhmfEAHas=;
-        b=HokACvUW0mjpLc8YiUL9KCHIpjZi7PunfjPeUHX6F+hjAFZ8BdwqsjEvDvr+7iRwVG
-         4RUuiYx72kRPxCLwwB7DdFYF8LNXJ3naJlB86oAWLH1YmN47FzCgCLklB55s8jPnmKSv
-         htCVokwgGAVZVfCchsvs3EHYtrIfyJGhbyy/int/Mmafg9jCf7KOSyodZjfmmPR91HGa
-         vfqJcPLKBW6Hu4qVQ8QLDIIE5mMlYp4V8C/+6JToFay+dieiQWQWy269oXSrq9rPtrUe
-         52UHXxT6IHvN+zic1Nru5lJKeD9q0GRPM2I09yq5wLSQp4EPMDxX6fz9RH8ROpVRu3Ox
-         3NPQ==
+        d=chromium.org; s=google; t=1692304938; x=1692909738;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GJmAzvapOutvPkrb5k8FqNTcJnY32flwAQr4+re3BlM=;
+        b=VzXNH3dV5IOgCFbXRiThrdo6uGwH5Ty9rguuRzFYLtZjhPNnNpR3XoUo71zdBOWeio
+         /fnXP3FvC7UVlPnoH6DjAhZRoNkE70NTxuzp/DEfQhI5KYUMdoQXPmrFhcPPfg+KZ1x8
+         jES41E3dA2rbmNcV/BlKUfrJDiD79PJRbZWio=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692304449; x=1692909249;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aJanSbcbdRbqlFQWo2SBp1vOjmdCAm9+u8RhmfEAHas=;
-        b=LVFykxUgYN1gCllt0WOBeTn7Ezg/fcdwHL/WcKXgQBPwsQPHyr9toGf8dteqivGgDs
-         NOXAz8rG35OdOjwQTfS8v9fqDbiU3jx5B0EZuKv/70IIaJnIcnP1v1nbYUrKH5jGN54T
-         FUgr3M4Ok0WBydqKEZwTWdp4wvDrCg4QRYsVYWAil2b+UwLVVWNx7nHZo0KEjIqoPeYd
-         g23gWWdp6JZkO77UpVKTKNSgqXI0GT//acfAWbWs6Qb3/Tlc4NKEQU4yxjRRR7C9Tomg
-         OQl+T3hbZW7h/N4W/4BOu9MR3Bj7zMEA1sROFRZTB9hHCqGQus3HQsrp3EFssm0Z0mec
-         n3dw==
-X-Gm-Message-State: AOJu0YyKHHMUakgXMqP++8ygNDwyygrFPIUgJmgobjNRW4ywSngsukxy
-        GjBgus32CMqm2WRnsS7AjGRxew==
-X-Google-Smtp-Source: AGHT+IFq0O851NzocA+e/CpjQ6uPrVChiJJ+FMGBCKsk+tDIGC8ffOouYN49JM4byaw7gqWx2KgfSA==
-X-Received: by 2002:adf:de8c:0:b0:317:e515:d623 with SMTP id w12-20020adfde8c000000b00317e515d623mr416308wrl.60.1692304449002;
-        Thu, 17 Aug 2023 13:34:09 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o2-20020adfcf02000000b0031423a8f4f7sm323543wrj.56.2023.08.17.13.34.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Aug 2023 13:34:08 -0700 (PDT)
-Message-ID: <653fd80b-0055-ddbd-3641-a38efaa3be9c@nexus-software.ie>
-Date:   Thu, 17 Aug 2023 21:34:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: qrb5165-rb5: add onboard USB-C
- redriver
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1692304938; x=1692909738;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GJmAzvapOutvPkrb5k8FqNTcJnY32flwAQr4+re3BlM=;
+        b=DeqVVycv6UC+yo99II9XX5EvYtqJLtUuwLmRK5VR8EKXnCMDF2KQwC1WYVs2WSVeYv
+         u4/e80RONzV9+Tna23FkaRcWJjfkwyBoLEx9nf8R4OH3UanWe/7WUiw+LtjXY6BhBHwF
+         Qcf3FWh7Eiows22icw/0bUxJe/lHB4ji7YNZy9V870rOpB1c9jJNcTZS99TqLiThxXkL
+         2IOpwkC+byqqr8bYVb2JzDdbcy9/uZKykwOrT+Xbezy3P8e/WUB5WS4MOZGWTH/r2YP3
+         5YvHYKfRXQgHJUFSpJoI/mLT1sZYMmyy71Z3CN5TGNyV03mAswqxs2XYNehxFQNiXBxH
+         wgJA==
+X-Gm-Message-State: AOJu0YwfuAwJXJtgEVAFRvgZeZ1lWQRgdkBV0tfnpdrhcJhMMgb2gqY0
+        tFJfM89lW/6wpST7zX8F143lvw==
+X-Google-Smtp-Source: AGHT+IHrogL0Xdsxq0CyyNb4Qufw7ZNxe4F/xPT8gesfxkYm5vRUzu7UKbzv9OQeL/RnSUHmy4YKLw==
+X-Received: by 2002:a17:902:e546:b0:1bb:a522:909a with SMTP id n6-20020a170902e54600b001bba522909amr594193plf.37.1692304937693;
+        Thu, 17 Aug 2023 13:42:17 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id b11-20020a170902bd4b00b001bdcc3a09c3sm177279plx.256.2023.08.17.13.42.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Aug 2023 13:42:17 -0700 (PDT)
+From:   Kees Cook <keescook@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Kees Cook <keescook@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230817145940.9887-1-dmitry.baryshkov@linaro.org>
- <20230817145940.9887-3-dmitry.baryshkov@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20230817145940.9887-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, linux-hardening@vger.kernel.org
+Subject: [PATCH] interconnect: qcom: Annotate struct icc_onecell_data with __counted_by
+Date:   Thu, 17 Aug 2023 13:42:15 -0700
+Message-Id: <20230817204215.never.916-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3789; i=keescook@chromium.org;
+ h=from:subject:message-id; bh=AYpdhVDwJu2OwMLTaV1ZMwBOcGX4aSqyJvLvspWtvFw=;
+ b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBk3oYnMGx9/0oGfe2HMN10NNHiagAkOhbRsVfwM
+ Ys/iO2HGTyJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZN6GJwAKCRCJcvTf3G3A
+ JuXoD/9ny0KtsXPv8eBrgFAzN2E9KziVmPDkfCMLhIKMVm9FuRbWrR3oO7uqOH33zE4R+E8DxWI
+ vzT6ZAjJdKarN8uMYb5eHUUsbuUD/7+XrJoKqCQMGxWBd+AEpClnwhmpeNJc8ZzHEtLHPzfi5WJ
+ iUvHSYP2eIiXrT1oXnGj4H1l1B35C+xFvAxgcRODvhlMJpHgzfREgVmAHBJdTrBJMZeA1LMnOkq
+ ml0Bp69oEDEjFw+CymU/YELRg/Xkjprjw5z5T3GP/wgEHSmLHDMx2YIYzcBRrJtbvxlHyfylA0k
+ ReHqltdFdWPI1MVxFUdj4THgbr9Y9AR6dLlV/55InecBVu8gdFxrIJAoJ5R9OsRWXsMHpueOgi0
+ HMmTvGCiaKOwt5pzw6emTq14UVPraxEW8Xz0q9WHanedlDMUxyS0qg8RdJvVqdTEXyEen3AUXlN
+ th13YeLFTH4K3jOyofErng0WWDPN096G/ae0fF2ck0hLypgE6zdkSEbAsKJKJMDpzgiYyyUClEm
+ gl0WSUFJukJYk+VL2MmtEwwc5hu6TizQW72YO6gptGmTbEpCb38JW2/PPHysfh3QhOfm3S74pyG
+ GafjfHCQgLQVnr8kocXTYYj+hhi9jLQ3VVgDRnhEqFXdHnygFu/pILCmvUSvu6Fe97NDDTvoH4v
+ fd65EX+ oPRAlh9g==
+X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/08/2023 15:59, Dmitry Baryshkov wrote:
-> Add the nb7vpq904m, onboard USB-C redriver / retimer.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 52 +++++++++++++++++++++++-
->   1 file changed, 50 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index 303d07f9c6e5..a4f7a9f9c22c 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -610,6 +610,46 @@ lt9611_out: endpoint {
->   /* LS-I2C1 */
->   &i2c15 {
->   	status = "okay";
-> +
-> +	typec-mux@1c {
-> +		compatible = "onnn,nb7vpq904m";
-> +		reg = <0x1c>;
-> +
-> +		vcc-supply = <&vreg_s4a_1p8>;
-> +
-> +		retimer-switch;
-> +		orientation-switch;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				redriver_usb_con_ss: endpoint {
-> +					remote-endpoint = <&pm8150b_typec_mux_in>;
-> +				};
-> +			};
-> +
-> +			port@1 {
-> +				reg = <1>;
-> +
-> +				redriver_phy_con_ss: endpoint {
-> +					remote-endpoint = <&usb_1_qmpphy_out>;
-> +					data-lanes = <0 1 2 3>;
-> +				};
-> +			};
-> +
-> +			port@2 {
-> +				reg = <2>;
-> +
-> +				redriver_usb_con_sbu: endpoint {
-> +					remote-endpoint = <&pm8150b_typec_sbu_out>;
-> +				};
-> +			};
-> +		};
-> +	};
->   };
->   
->   &mdss {
-> @@ -1299,7 +1339,7 @@ &usb_1_qmpphy {
->   };
->   
->   &usb_1_qmpphy_out {
-> -	remote-endpoint = <&pm8150b_typec_mux_in>;
-> +	remote-endpoint = <&redriver_phy_con_ss>;
->   };
->   
->   &usb_2 {
-> @@ -1388,7 +1428,15 @@ pm8150b_role_switch_in: endpoint {
->   			port@1 {
->   				reg = <1>;
->   				pm8150b_typec_mux_in: endpoint {
-> -					remote-endpoint = <&usb_1_qmpphy_out>;
-> +					remote-endpoint = <&redriver_usb_con_ss>;
-> +				};
-> +			};
-> +
-> +			port@2 {
-> +				reg = <2>;
-> +
-> +				pm8150b_typec_sbu_out: endpoint {
-> +					remote-endpoint = <&redriver_usb_con_sbu>;
->   				};
->   			};
->   		};
+Prepare for the coming implementation by GCC and Clang of the __counted_by
+attribute. Flexible array members annotated with __counted_by can have
+their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
+(for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
+functions).
 
-LGTM
+As found with Coccinelle[1], add __counted_by for struct icc_onecell_data.
+Additionally, since the element count member must be set before accessing
+the annotated flexible array member, move its initialization earlier.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+[1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
+
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Georgi Djakov <djakov@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ drivers/interconnect/qcom/icc-rpmh.c  | 3 +--
+ drivers/interconnect/qcom/msm8974.c   | 2 +-
+ drivers/interconnect/qcom/osm-l3.c    | 2 +-
+ include/linux/interconnect-provider.h | 2 +-
+ 4 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index 8053ec8ab01b..b9f27ce3b607 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -185,6 +185,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
++	data->num_nodes = num_nodes;
+ 
+ 	provider = &qp->provider;
+ 	provider->dev = dev;
+@@ -228,8 +229,6 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 		data->nodes[i] = node;
+ 	}
+ 
+-	data->num_nodes = num_nodes;
+-
+ 	ret = icc_provider_register(provider);
+ 	if (ret)
+ 		goto err_remove_nodes;
+diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
+index b85cab2f208f..885ca9d6d4ed 100644
+--- a/drivers/interconnect/qcom/msm8974.c
++++ b/drivers/interconnect/qcom/msm8974.c
+@@ -675,6 +675,7 @@ static int msm8974_icc_probe(struct platform_device *pdev)
+ 			    GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
++	data->num_nodes = num_nodes;
+ 
+ 	qp->bus_clks = devm_kmemdup(dev, msm8974_icc_bus_clocks,
+ 				    sizeof(msm8974_icc_bus_clocks), GFP_KERNEL);
+@@ -721,7 +722,6 @@ static int msm8974_icc_probe(struct platform_device *pdev)
+ 
+ 		data->nodes[i] = node;
+ 	}
+-	data->num_nodes = num_nodes;
+ 
+ 	ret = icc_provider_register(provider);
+ 	if (ret)
+diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
+index 056ac91225c4..dc321bb86d0b 100644
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -232,6 +232,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+ 	data = devm_kzalloc(&pdev->dev, struct_size(data, nodes, num_nodes), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
++	data->num_nodes = num_nodes;
+ 
+ 	provider = &qp->provider;
+ 	provider->dev = &pdev->dev;
+@@ -261,7 +262,6 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+ 
+ 		data->nodes[i] = node;
+ 	}
+-	data->num_nodes = num_nodes;
+ 
+ 	ret = icc_provider_register(provider);
+ 	if (ret)
+diff --git a/include/linux/interconnect-provider.h b/include/linux/interconnect-provider.h
+index e6d8aca6886d..7ba183f221f1 100644
+--- a/include/linux/interconnect-provider.h
++++ b/include/linux/interconnect-provider.h
+@@ -33,7 +33,7 @@ struct icc_node_data {
+  */
+ struct icc_onecell_data {
+ 	unsigned int num_nodes;
+-	struct icc_node *nodes[];
++	struct icc_node *nodes[] __counted_by(num_nodes);
+ };
+ 
+ struct icc_node *of_icc_xlate_onecell(struct of_phandle_args *spec,
+-- 
+2.34.1
+
