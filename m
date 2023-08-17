@@ -2,127 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E636577FA23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 17:02:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5273D77FA5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 17:09:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352584AbjHQPBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 11:01:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45190 "EHLO
+        id S1352798AbjHQPJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 11:09:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352638AbjHQPBa (ORCPT
+        with ESMTP id S1352909AbjHQPJO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 11:01:30 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D3B230F6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 08:01:23 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b9ba3d6157so121362911fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 08:01:23 -0700 (PDT)
+        Thu, 17 Aug 2023 11:09:14 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15F42173F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 08:08:39 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2bb9a063f26so27316401fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 08:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692284481; x=1692889281;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IBc6QaDxTFS6tQfFqsJ8yg6eqgbwOHaAbyKlG406ki8=;
-        b=Lg/jUfLeS/rzHBGQRSETNbqdn2ZkzOC5jjudr+sheFnLD3HG4BhfoBrUh6fWeUVhuT
-         LMdeD694kPQfvL1qtfJ4LHNjvt2UEsDQZcscZQUjUdsOcf3lFSflLOTLQg3HLXYmgPdu
-         SBey5GR8fOy5+yq4Vfpvwe3Nx1th1C2bLVsS4dR2Jz24pFa9UdLIZGAhWOqFQ64nSkaf
-         vCm/EAgeE24cKrQpSgaU2+ABR59oLjkRvrfZa1RWnP5x19l/j+LQbaoH/wyyfVS4pNF6
-         41jOud24rDbs6rdbVraAGIoMvz5dzSJ5R0EAStjnPQmx2FJpjnp5oxoAu7gI6AJc1hTJ
-         UjXQ==
+        d=linaro.org; s=google; t=1692284906; x=1692889706;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZQOKLFSRw5whge5pt965xQ0um1rH9VrSs87wuRePlok=;
+        b=xGXUTZ5Q9FjqCp8/YaNNnsp21FodXU1//vTz0vURJ3RfEpWlaLoB282d1n5XO+qI+M
+         yhm798wwKu4FLRmFw+k5e7xhQWReXOKietVaGdLqovu0iKlqwkYYl/zn4edgIY/G70OR
+         0F8DWIbVGR7XJW004YSIyPShD7MvoE0eFQs1L7tz8+kxnluQ0lKrmZfx/1fG+0QmKhBH
+         zw+pYW69FuCMmQcJXLRt2e4QfjxzLOUEaaN/YUggnO4eiXuzpgo8kVbBGgQ/LCYe0CEs
+         kDSO7Xbd8aEl1UMNjp9A7Idb+7horaUT1NSdjYrvFtUcogSIRP4IgQ26NRzVhhE9gC3h
+         Klaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692284481; x=1692889281;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IBc6QaDxTFS6tQfFqsJ8yg6eqgbwOHaAbyKlG406ki8=;
-        b=Aa0NL34PE1HddZf6ftqXcfFIiEtr2WE+7jv617Ni0//xV64Wakz1Acpc0nCNn6vuRz
-         iUHlL8HoI+bRHqF2eC47j0aEjVFwoJHdtEG1pD3FGsXrBYSj0hJGsL6LxPFXdf980g2B
-         5DstKgPwl9WU2oUTFNgL+HGYm1TF4GeFViiaXZH5ZPKdaw7vH7vLjDmUOjqM+ouakBHH
-         ovypxL+wd9eyTnWCwmnfFxKOFwLD983BTGQHfoMqTU4yJctwVwfmqBiZalJ90MCWQmRK
-         neatmvqyrBVzua01YWVT6frBnYW/BJqiUfcIzdQZrLgpALTNz6Lh+M1IqUpSCzRdO9/4
-         fFuA==
-X-Gm-Message-State: AOJu0YzDgro60nXRHtVPUaZIThISqpfhOYOKriXWt1SOwKfajHQB0zt1
-        Lysk8dVZgbQhDR7DUwMiCnUQIA==
-X-Google-Smtp-Source: AGHT+IEWkNoXn9HfjOdGDIsk4h6bzDoWQW2wmV22RP4fAC7+/ZuOMR9LS4OOwmW0/jXv1I0Im5PgMw==
-X-Received: by 2002:a2e:7a17:0:b0:2b9:e701:ac48 with SMTP id v23-20020a2e7a17000000b002b9e701ac48mr4055609ljc.32.1692284481529;
-        Thu, 17 Aug 2023 08:01:21 -0700 (PDT)
-Received: from [192.168.1.101] (abxh31.neoplus.adsl.tpnet.pl. [83.9.1.31])
-        by smtp.gmail.com with ESMTPSA id o16-20020a2e7310000000b002bb9b1db5b9sm762441ljc.8.2023.08.17.08.01.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Aug 2023 08:01:21 -0700 (PDT)
-Message-ID: <a3431eaf-053a-4e1c-b082-e87a3aaefbf3@linaro.org>
-Date:   Thu, 17 Aug 2023 17:01:19 +0200
+        d=1e100.net; s=20221208; t=1692284906; x=1692889706;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZQOKLFSRw5whge5pt965xQ0um1rH9VrSs87wuRePlok=;
+        b=Lk+Lc+ljlJZC3W6NHdb2fPwMg6z/sX2qPlGG9VE6alyWL+otQfX597wJua6BC3eXMj
+         XSDMMbl0dGX1961TzPLVWK10BHGqRCSVf+k7jIZuuOZ/ou1czF47ebtQLv3fCqxXvrSV
+         nI/OqwVX766BgxVoOHRX5rp7wbpLs4abladyg5Y+F7yodRBHpBQJ8Jjjr6O/pABwHjnB
+         hqfl1YiTnAZ4LF3P4nTuV1edRWTHcyCffYmAC1eWOeCpmkY8MV+HSGZfeeQwSwLpUEn2
+         3eyhk0PiSJUp63ofalBuy4qlsvYYxN4JM5zRXz+pkyKz+7mXVlJHNlkKNrxRR8OiYNOb
+         RNHw==
+X-Gm-Message-State: AOJu0YxFvkYHNUx//rwPTCPiZMtHLIPQe0/KJXM6kLd3uq0IkbvkQ/O5
+        +rBsvBXnA7OexsigNgu38zN6Lg==
+X-Google-Smtp-Source: AGHT+IGNqy/GmFcXkzErjwbjqgy+8GRT4/DtzlNV8TFPf8yaPghQ87/shTD6zsYd7YczRUdkwQ2rSg==
+X-Received: by 2002:a05:651c:d6:b0:2b6:e958:5700 with SMTP id 22-20020a05651c00d600b002b6e9585700mr3949207ljr.4.1692284906396;
+        Thu, 17 Aug 2023 08:08:26 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id u8-20020a2e9b08000000b002b6ef2fca66sm4111413lji.41.2023.08.17.08.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Aug 2023 08:08:25 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/2] usb: typec: qcom-pmic-typec: enable DP support
+Date:   Thu, 17 Aug 2023 18:08:22 +0300
+Message-Id: <20230817150824.14371-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pinctrl: qcom-pmic-gpio: silence -EPROBE_DEFER message on
- probe
-Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
-        linus.walleij@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230817145941.1091418-1-bmasney@redhat.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230817145941.1091418-1-bmasney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.08.2023 16:59, Brian Masney wrote:
-> The following message shows up one or more times when booting a Qualcomm
-> SA8775 Development board:
-> 
->     qcom-spmi-gpio c440000.spmi:pmic@2:gpio@8800: can't add gpio chip
-> 
-> Convert this over to use dev_err_probe() to silence this message.
-> 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> ---
-That looks odd, why would it ever defer?
+To enable DisplayPort on the platforms supported by qcom-pmic-typec
+driver, we need to register a corresponding drm_bridge for this device
+and also be able to send the OOB hotplug event to the corresponding DRM
+connector. All this is implemented by [1], but there is no direct
+dependency on that patchset.
 
-SPMI should be up by the time it gets a chance to probe.
+[1] https://patchwork.freedesktop.org/series/120393/
 
-Konrad
+Changes since v4:
+- Put of_node field access under CONFIG_OF (LKP)
+- Changed ifdef CONFIG_DRM to IS_ENABLED(CONFIG_DRM) (Guenter)
+
+Changes since v3:
+- Fixed changelog for v1 (Guenter)
+- After discussion on IRC, change connector type to
+  DRM_MODE_CONNECTOR_DisplayPort to follow i915 and amdgpu example.
+  The fact that this is a DP wrapped in the USB connector will be
+  handled separately via the subconnector property (Simon Ser, Janne
+  Grunau)
+
+Changes since v2:
+- Reworded commit message for the first patch to explicitly mention that
+  the "displayport" OF property was rejected (Bjorn)
+- Removed several #ifdefs from the qcom-pmic-typec patch (Bryan, Konrad,
+  Greg K-H)
+
+Changes since v1:
+- Properly handle CONFIG_DRM dependency. Disallow building
+  qcom-pmic-typec into the kernel if DRM is built as module (Bryan).
+
+Dmitry Baryshkov (2):
+  usb: typec: altmodes/displayport: add support for embedded DP cases
+  usb: typec: qcom-pmic-typec: register drm_bridge
+
+ drivers/usb/typec/altmodes/displayport.c      |  5 ++-
+ drivers/usb/typec/tcpm/Kconfig                |  1 +
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 37 +++++++++++++++++++
+ 3 files changed, 42 insertions(+), 1 deletion(-)
+
+-- 
+2.39.2
+
