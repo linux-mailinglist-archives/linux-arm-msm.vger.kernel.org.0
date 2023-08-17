@@ -2,158 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5303277FC80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 19:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED58077FCE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Aug 2023 19:21:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352730AbjHQRHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 13:07:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58024 "EHLO
+        id S1353804AbjHQRUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 13:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353822AbjHQRHL (ORCPT
+        with ESMTP id S1354044AbjHQRUg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 13:07:11 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B5A30D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 10:07:08 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-99c136ee106so1052606466b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 10:07:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692292027; x=1692896827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A+SXi8NxNvzClt206ZYu7BQotGewF/k7fWXbsVFMs0g=;
-        b=MD3wZSf6KPnikBXVO7cWOAPTpV4s8nTFPFX1YpgpF6YAddXF4riEdJSbkxZ2d9sz5V
-         Dsna/rKX9OgnOf2A/POCxcOd9ygNG/RDWmugUAZQlIRs0L0LtNI/xURGUVwuZGIHetnT
-         PYd/593qRgzRFx3aQZ2MXhsu2EINCI2gBXV/ysouOEh25BF6fU2Rmxp/bsD+cRPbTtfW
-         9tROMtyrA7TrJHAE9aGZidkT/WsgGwFqdywqbWAI8FOrJxgXEEKInzeNODEAz9uvBA9+
-         d0DhYiLMCw/0QX/sc9SzCu8WVrrVXhtNP+8ZzG82vv3cKwQmzZDXDzcIXHHasleuWWdH
-         /Alg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692292027; x=1692896827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A+SXi8NxNvzClt206ZYu7BQotGewF/k7fWXbsVFMs0g=;
-        b=QYuHY3b2FeL4tPKQuRFYhR3av1aENlBEf6AqdqjtOaDt4V+7S0fQDa+sAvkNBYtsef
-         Tz/5tnu+wffbFsEJZoXNqVY8kgu4udL+H1sftfxQWKuFnd8iUMl6K+sV5E3Pnqr/1PiT
-         fle81ongfaaZ61w0TSyWc5MqyCzSWK7Pam40B0Qazfw7RbAUb062E7V8B/yUHeM/tPK6
-         x+Q88YShzMWYPHAZIPgSTb/YvOBgScpv4dSErLQ3Vg0f8VGCDTbuZHQBoXa3HP5beTwj
-         DzJjYjeSkzajiq0/Bd8Xi7p7e44ASpB2r7WYLFCXDu0H1KvkwBz+MgjFSIFgJj2uGeN8
-         3b2Q==
-X-Gm-Message-State: AOJu0Yxg8epzzzLqmvfE1UpC63I6EPs6PUBizdnLndKVrFUgeVV4X+KT
-        hsQwNALqpBY4i9Zy4JfAIHdYgQ==
-X-Google-Smtp-Source: AGHT+IGR6FHDHLEB7JT4lPOySOl0W5l8tLy4Ib1OMiQcJHZZ+sD6GWAjdH84ie6V1awGmErBWSvPtg==
-X-Received: by 2002:a17:906:59:b0:99d:f3ae:9a3e with SMTP id 25-20020a170906005900b0099df3ae9a3emr49117ejg.38.1692292027065;
-        Thu, 17 Aug 2023 10:07:07 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id kk3-20020a170907766300b0098e2eaec395sm10388443ejc.130.2023.08.17.10.07.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Aug 2023 10:07:06 -0700 (PDT)
-Message-ID: <f1b89b4c-bf6c-42c9-8a62-acc41747cb1e@linaro.org>
-Date:   Thu, 17 Aug 2023 20:07:04 +0300
+        Thu, 17 Aug 2023 13:20:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50131BF;
+        Thu, 17 Aug 2023 10:20:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D219666B1E;
+        Thu, 17 Aug 2023 17:20:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD8EC433C9;
+        Thu, 17 Aug 2023 17:20:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692292834;
+        bh=Q0i/OGnnC5qzI/zu5hKUHPWm4HJuIBakje62Vw6t7tQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=gAVPj1QNcjaAYrk8JtXjNEy1ferCbuGcIgW/6EdRA3PvgIkL9UyZHDigCwYVooYPw
+         uaq2kV9b90/XE28ydMVg7nzdAmYYePYTQclebga5Lrq8fj2HEBKOzNh/qz9DVVc8em
+         l+TvVpEdFhkztSfTLM/4itCGHSX90oIWJvdh0Ewm2NtduGpGK45hPNROT6ct1IKf0q
+         FJhnjrJ+zXUmlMRKGMK8wrGBHUGQUHgE8yj7o+22Zb4clo8OWiA8yt9DUkQgAti/oE
+         kMUvKzF/RgKFUHmupB/l1Z4UiRjECYB4VLfFQs1kkr66wgacKuou4K1mWR0CHngkqt
+         /TkGvotXoIRdw==
+Date:   Thu, 17 Aug 2023 12:20:32 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v1] PCI: qcom: Add sysfs entry to change link speed
+ dynamically
+Message-ID: <20230817172032.GA321136@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] drm/msm/dpu: Enable widebus for DSI INTF
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230802-add-widebus-support-v3-0-2661706be001@quicinc.com>
- <20230802-add-widebus-support-v3-2-2661706be001@quicinc.com>
- <CAA8EJpoPd_T+vLVrJ6RpCrYY6H1xLF4eFYVGV4N-wS3g+5cR-w@mail.gmail.com>
- <34598a37-7431-4f7e-7809-928bce65d237@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <34598a37-7431-4f7e-7809-928bce65d237@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1692239684-12697-1-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/08/2023 00:40, Jessica Zhang wrote:
+On Thu, Aug 17, 2023 at 08:04:43AM +0530, Krishna chaitanya chundru wrote:
+> PCIe can operate on lower GEN speed if client decided based upon
+> the bandwidth & latency requirements. To support dynamic GEN speed
+> switch adding this sysfs support.
+
+Who does "client" refer to?  I assume it's the system administrator,
+but of course the endpoint is involved in the hardware speed
+negotiation, so one could think of the endpoint as a "client" with its
+own speed capabilities and requirements.
+
+> To change the GEN speed the link should be in L0, so first disable
+> L0s & L1.
 > 
+> L0s needs to be disabled at both RC & EP because L0s entry is
+> independent. For enabling L0s both ends of the link needs to support
+> it, so first check if L0s is supported on both ends and then enable
+> L0s.
+
+Is there a place to document this sysfs knob?  Why should it be
+qcom-specific?  This sounds like generic PCIe functionality.
+
+The ASPM stuff looks like it should be done by aspm.c, not done behind
+its back.
+
+Everything here looks generic (not qcom-specific) except the
+qcom_pcie_icc_update() and qcom_pcie_opp_update().  Maybe we need some
+core infrastructure around this.
+
+> This patch is dependent on "PCI: qcom: Add support for OPP"
+> https://lore.kernel.org/linux-arm-msm/1692192264-18515-1-git-send-email-quic_krichai@quicinc.com/T/#t
 > 
-> On 8/2/2023 11:20 AM, Dmitry Baryshkov wrote:
->> On Wed, 2 Aug 2023 at 21:09, Jessica Zhang <quic_jesszhan@quicinc.com> 
->> wrote:
-
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> index df88358e7037..dace6168be2d 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> @@ -69,8 +69,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->>>                                  phys_enc->hw_intf,
->>>                                  phys_enc->hw_pp->idx);
->>>
->>> -       if (intf_cfg.dsc != 0)
->>> +       if (intf_cfg.dsc != 0) {
->>>                  cmd_mode_cfg.data_compress = true;
->>> +               cmd_mode_cfg.wide_bus_en = 
->>> dpu_encoder_is_widebus_enabled(phys_enc->parent);
->>> +       }
->>
->> This embeds the knowledge that a wide bus can only be enabled when DSC
->> is in use. Please move the wide_bus_en assignment out of conditional
->> code.
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 141 +++++++++++++++++++++++++++++++++
+>  1 file changed, 141 insertions(+)
 > 
-> Wide bus for DSI will only be enabled if DSC is enabled, so this is 
-> technically not wrong, as DP will use the video mode path.
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 831d158..ad67d17 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -241,10 +241,150 @@ struct qcom_pcie {
+>  	const struct qcom_pcie_cfg *cfg;
+>  	struct dentry *debugfs;
+>  	bool suspended;
+> +	bool l0s_supported;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+>  
+> +static void qcom_pcie_icc_update(struct qcom_pcie *pcie);
+> +static void qcom_pcie_opp_update(struct qcom_pcie *pcie);
+> +
+> +static int qcom_pcie_disable_l0s(struct pci_dev *pdev, void *userdata)
+> +{
+> +	int lnkctl;
+> +
+> +	pci_read_config_dword(pdev, pci_pcie_cap(pdev) + PCI_EXP_LNKCTL, &lnkctl);
+> +	lnkctl &= ~(PCI_EXP_LNKCTL_ASPM_L0S);
+> +	pci_write_config_word(pdev, pci_pcie_cap(pdev) + PCI_EXP_LNKCTL, lnkctl);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_pcie_check_l0s_support(struct pci_dev *pdev, void *userdata)
+> +{
+> +	struct pci_dev *parent = pdev->bus->self;
+> +	struct qcom_pcie *pcie = userdata;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	int lnkcap;
+> +
+> +	 /* check parent supports L0s */
+> +	if (parent) {
+> +		dev_err(pci->dev, "parent\n");
+> +		pci_read_config_dword(parent, pci_pcie_cap(parent) + PCI_EXP_LNKCAP,
+> +				  &lnkcap);
+> +		if (!(lnkcap & PCI_EXP_LNKCAP_ASPM_L0S)) {
+> +			dev_info(pci->dev, "Parent does not support L0s\n");
+> +			pcie->l0s_supported = false;
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	pci_read_config_dword(pdev, pci_pcie_cap(pdev) + PCI_EXP_LNKCAP,
+> +			  &lnkcap);
+> +	dev_err(pci->dev, "child %x\n", lnkcap);
+> +	if (!(lnkcap & PCI_EXP_LNKCAP_ASPM_L0S)) {
+> +		dev_info(pci->dev, "Device does not support L0s\n");
+> +		pcie->l0s_supported = false;
+> +		return 0;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_pcie_enable_l0s(struct pci_dev *pdev, void *userdata)
+> +{
+> +	int lnkctl;
+> +
+> +	pci_read_config_dword(pdev, pci_pcie_cap(pdev) + PCI_EXP_LNKCTL, &lnkctl);
+> +	lnkctl |= (PCI_EXP_LNKCTL_ASPM_L0S);
+> +	pci_write_config_word(pdev, pci_pcie_cap(pdev) + PCI_EXP_LNKCTL, lnkctl);
+> +
+> +	return 0;
+> +}
+> +
+> +static ssize_t qcom_pcie_speed_change_store(struct device *dev,
+> +			       struct device_attribute *attr,
+> +			       const char *buf,
+> +			       size_t count)
+> +{
+> +	unsigned int current_speed, target_speed, max_speed;
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	struct pci_bus *child, *root_bus = NULL;
+> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct pci_dev *pdev;
+> +	u16 offset;
+> +	u32 val;
+> +	int ret;
+> +
+> +	list_for_each_entry(child, &pp->bridge->bus->children, node) {
+> +		if (child->parent == pp->bridge->bus) {
+> +			root_bus = child;
+> +			break;
+> +		}
+> +	}
+> +
+> +	pdev = root_bus->self;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +
+> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +	max_speed = FIELD_GET(PCI_EXP_LNKCAP_SLS, val);
+> +
+> +	val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +	current_speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, val);
+> +
+> +	ret = kstrtouint(buf, 10, &target_speed);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (target_speed > max_speed)
+> +		return -EINVAL;
+> +
+> +	if (current_speed == target_speed)
+> +		return count;
+> +
+> +	pci_walk_bus(pp->bridge->bus, qcom_pcie_disable_l0s, pcie);
+> +
+> +	/* Disable L1 */
+> +	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL);
+> +	val &= ~(PCI_EXP_LNKCTL_ASPM_L1);
+> +	dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL, val);
+> +
+> +	/* Set target GEN speed */
+> +	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL2);
+> +	val &= ~PCI_EXP_LNKCTL2_TLS;
+> +	dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL2, val | target_speed);
+> +
+> +	ret = pcie_retrain_link(pdev, true);
+> +	if (ret)
+> +		dev_err(dev, "Link retrain failed %d\n", ret);
+> +
+> +	/* Enable L1 */
+> +	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL);
+> +	val |= (PCI_EXP_LNKCTL_ASPM_L1);
+> +	dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL, val);
+> +
+> +	pcie->l0s_supported = true;
+> +	pci_walk_bus(pp->bridge->bus, qcom_pcie_check_l0s_support, pcie);
+> +
+> +	if (pcie->l0s_supported)
+> +		pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_l0s, pcie);
+> +
+> +	qcom_pcie_icc_update(pcie);
+> +
+> +	qcom_pcie_opp_update(pcie);
+> +
+> +	return count;
+> +}
+> +static DEVICE_ATTR_WO(qcom_pcie_speed_change);
+> +
+> +static struct attribute *qcom_pcie_attrs[] = {
+> +	&dev_attr_qcom_pcie_speed_change.attr,
+> +	NULL,
+> +};
+> +ATTRIBUTE_GROUPS(qcom_pcie);
+> +
+>  static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
+>  {
+>  	gpiod_set_value_cansleep(pcie->reset, 1);
+> @@ -1716,6 +1856,7 @@ static struct platform_driver qcom_pcie_driver = {
+>  		.of_match_table = qcom_pcie_match,
+>  		.pm = &qcom_pcie_pm_ops,
+>  		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+> +		.dev_groups = qcom_pcie_groups,
+>  	},
+>  };
+>  builtin_platform_driver(qcom_pcie_driver);
+> -- 
+> 2.7.4
 > 
->>
->>>
->>>          if (phys_enc->hw_intf->ops.program_intf_cmd_cfg)
->>>                  
->>> phys_enc->hw_intf->ops.program_intf_cmd_cfg(phys_enc->hw_intf, 
->>> &cmd_mode_cfg);
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> index 8ec6505d9e78..dc6f3febb574 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> @@ -521,6 +521,9 @@ static void 
->>> dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *ctx,
->>
->> This function is only enabled for DPU >= 7.0, while IIRC wide bus can
->> be enabled even for some of the earlier chipsets.
-> 
-> The command mode path is only called for DSI, which only supports wide 
-> bus for DPU 7.0+.
-
-After second consideration, let's ignore this part, as wide bus will 
-only be enabled for DSI / CMD after 7.0. If we ever have SoC that has 
-CMD + wide_bus earlier than 5.0, we can reconsider this code pice.
-
-Can you please add a comment that the register itself is present earlier 
-(5.0), but it doesn't have to be programmed since the flags will not be 
-set anyway.
-
-> 
->>
->>>          if (cmd_mode_cfg->data_compress)
->>>                  intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
->>>
->>> +       if (cmd_mode_cfg->wide_bus_en)
->>> +               intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
->>> +
->>>          DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
->>>   }
->>>
-
-
-
--- 
-With best wishes
-Dmitry
-
