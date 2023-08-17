@@ -2,130 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49B7D780172
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 01:04:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D374780228
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 02:00:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355947AbjHQXDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Aug 2023 19:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45882 "EHLO
+        id S1356415AbjHQX7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Aug 2023 19:59:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355982AbjHQXDP (ORCPT
+        with ESMTP id S1356346AbjHQX7G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Aug 2023 19:03:15 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16A735A4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 16:03:11 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe3b86cec1so379610e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 16:03:11 -0700 (PDT)
+        Thu, 17 Aug 2023 19:59:06 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E71B730DC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 16:59:03 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id 98e67ed59e1d1-26b5e737191so266237a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Aug 2023 16:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692313390; x=1692918190;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KohSaVbVTZzw51hU080rc6/yBBZBjNRiH2rTqSdtLwA=;
-        b=Fof3Acoia7VG4nhAUoI/nfrGuonJnuAOuLTuxr4ifWkBep3jTwsZKCvWMSh4AvndpG
-         trV6p3y5uWJ0aEKg9s8EiJORJ/EP4s69g424Jk97fDuHlZqb2n45XmAfy9vurcT0weSh
-         G5lrDhwTny3/mdaReAoSN8pWdxsEFbm9/lWAx6F8CmYOatCY8DzUODWaCHADNiNRblNJ
-         RxPAVA8I8QwkTdzrQvhhHOWp9RSjkC9SUVJCFaDo5rfzgiSzWYdoulQkQPfhUwKqwGeX
-         fe5jNLQUkCBMNIMlJ1IFYlS8vlIZf+zofWZMXZHsR/9e1KPOPcJwbiuu3wJicckDIN8U
-         889Q==
+        d=chromium.org; s=google; t=1692316743; x=1692921543;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gLiCnBbyPzaic/GZ7z4G3P0cbvM2XGBwdo50oYhUApk=;
+        b=P5Pp0wwT5nzP3n43DVWzU0GTRLBYDoDSQDfCmbHmbAyHke8vM3wJwLlQCndFTYZ7KE
+         ZVi1VZoSjZdpJ+Cv7UQqBsqf+jX/87/JGb0fruxGutn29PXRZMDB9jPSZIrj3VxbaicZ
+         bNJeGzg/zR8SLlYCw17rI+RJwBXQBpyTYDPlo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692313390; x=1692918190;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KohSaVbVTZzw51hU080rc6/yBBZBjNRiH2rTqSdtLwA=;
-        b=BrRgZXW7P+JTTk7L3qiJLlJiOq8MbcmKmEgC8jxy2WFssYGOWyo+sC3Sk8YrbWxH2K
-         zB5/l0rk7akTS7NtZlcbJ6wVa9qOTHpHML3mTUrgP4Q2eiYMKnlUd8M22rBsjezSIuxY
-         Ens6/GKT+sM/KU2XiwI3nVfhMw334JUXzT4+raJ+5rf48UPT9aI+06oEwC94wu8SXEii
-         agaK1d9w+M7+zHF/F53eH192hnGAf4iAqTsl31muulDweq4K0evfBfPnQH3FBJT1jTNR
-         QhhQTsnpzzr6IkA9lMn21K+RkdlEQwErMko5+juNDRxa8zqBa30anRnlprzA6PPIW7sI
-         tQTg==
-X-Gm-Message-State: AOJu0YzE3xXGK9z5sfjGYuD3zCdLqc+B4+nHy8b/yFcN4DlzgJVFzjsb
-        eRcOCE54SsBckNiJJW9U5s1Rgw==
-X-Google-Smtp-Source: AGHT+IEsPKiYiAI9yScvyF/DuR+/ExSEEAU+QEx8uhb/3wDAjFfUrvIb5f02SKlt45rVQZXgly+RRg==
-X-Received: by 2002:a05:6512:324d:b0:4ff:9aaa:6e3e with SMTP id c13-20020a056512324d00b004ff9aaa6e3emr441535lfr.41.1692313390043;
-        Thu, 17 Aug 2023 16:03:10 -0700 (PDT)
-Received: from [192.168.1.101] (abxh52.neoplus.adsl.tpnet.pl. [83.9.1.52])
-        by smtp.gmail.com with ESMTPSA id n26-20020ac2491a000000b004fa52552c7csm84540lfi.151.2023.08.17.16.03.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Aug 2023 16:03:09 -0700 (PDT)
-Message-ID: <662c9de8-6298-4eb0-ae84-d0cb4ea34a17@linaro.org>
-Date:   Fri, 18 Aug 2023 01:03:09 +0200
+        d=1e100.net; s=20221208; t=1692316743; x=1692921543;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gLiCnBbyPzaic/GZ7z4G3P0cbvM2XGBwdo50oYhUApk=;
+        b=FiSEbaMkiV0ELoy6R6we9PFKZ0Jp+E3M3gBhvebeVF5OHVo6ZKvuCdlMdbMmnbwuIp
+         MEN6pNwNNLN0/9rz2VwnZgZwXnweldpOoH9aDhTSBQNQcrSISoPpv7B+OZZlto3QDfNy
+         WJbhVNRXEBuheY+GWUG8S2mOB9Hcr5UtUSlAUuYrwx3a7BHJGJadOZHWiv78SL6pfZvh
+         fgK+RYWftBmcxEdTwjoM0P7p1GQ0c/xcAZpL3IY7vLgQC/USx9mk8+N1+ocfMXfQzLJx
+         MgbTJJaXnti4gQqIZseVJDLB8btoofQiou2r5vPe90qtYezg+xCS3d/eDQy9fBWX1hqj
+         GWGg==
+X-Gm-Message-State: AOJu0Yyb47+l+0hqD/QS1ermn7LWeyVifShUsz5zXmB4AYjhkN5jCPQM
+        rOXkBDo9Wfoo96OKYamNIbwKVg==
+X-Google-Smtp-Source: AGHT+IG7Ur7jvG1Cor78dTTxi94xoQ0HyBPagkNa35jw/ciTiPyRGRuVsIer724v3p+TKZGgt/zcZQ==
+X-Received: by 2002:a17:90a:7564:b0:262:d7db:2520 with SMTP id q91-20020a17090a756400b00262d7db2520mr994346pjk.26.1692316743403;
+        Thu, 17 Aug 2023 16:59:03 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id s10-20020a17090a948a00b00263cca08d95sm2101254pjo.55.2023.08.17.16.58.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Aug 2023 16:59:00 -0700 (PDT)
+From:   Kees Cook <keescook@chromium.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Kees Cook <keescook@chromium.org>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        Jie Hai <haijie1@huawei.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Green Wan <green.wan@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Yu Kuai <yukuai3@huawei.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jordy Zomer <jordy@pwning.systems>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
+        linux-hardening@vger.kernel.org
+Subject: [PATCH 00/21] dmaengine: Annotate with __counted_by
+Date:   Thu, 17 Aug 2023 16:58:37 -0700
+Message-Id: <20230817235428.never.111-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p-ride: Describe sgmii_phy1
- irq
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>, andersson@kernel.org
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, brgl@bgdev.pl
-References: <20230817213815.638189-1-ahalaney@redhat.com>
- <20230817213815.638189-3-ahalaney@redhat.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230817213815.638189-3-ahalaney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2707; i=keescook@chromium.org;
+ h=from:subject:message-id; bh=X+13aptrkzlZofkuldd+d07374jzvU5KMGSMFeBiQiA=;
+ b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBk3rQ/Y/4ffzo1IbZvWMUH7ld52PtnkCTORxyHK
+ CIS35jFSfGJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZN60PwAKCRCJcvTf3G3A
+ Jmk6D/91xaM88OIg15Z+90cr21kEhBomkBw2kzWyeOFGSeWZfWBT9v5HW3rrVN64Q7kDB9XAJal
+ nI4M0KHJ8cUO6Y8Oww5+x4tmVhFS+/yiSYyxDNbGtiEP8zwAJazWBFG/VAIXoqJgr65f9N5MrMB
+ tpMNT5QDBa+NOdvwfEWIqptgdiUfftpp3/JCQpoUJZ4170WFUNdylNkOKOPlZWzpB/Z7GOnXskj
+ Y1F1IK0F8spqaHu/QGQTnrZa1o6gGjKYuxFrbZ4zlMZRP6cXwRZ0m6mDTeTaaItw3X13J97fgUo
+ +KCUF1tsNSs50HZwRVPdXjSJj7iidcnHdBsGgUJixBqnHI+eUuwI/fXIEDWrZi5f6nl8i+4okPg
+ VnbPoCI4gD1g9nfDtXklxQcCpgY6Jz519HM0b2UWNjQi8Nwc4DAovAEsCwLNvgdZtD+p832lPfn
+ YSpjXkaDWrfN2tgUC/YmPkkuGyybh/vqVuNhp78qD1aXxmydmnU5+5WL2AyRzmP6Y/xlHa5wO4g
+ b/PSScMBx7nKATYBufXnhc8uQfrucLW4+GkmubGiNp03RUxPh5cKo2hoJtIZWTZCsuMKQhS8gdD
+ YLlNjS9qafx1FicrUpVmxB5pFplJDCN/02onKYItefjjDduHSTMCC4tIJ//0yRQN+DfP5lzceR4
+ h6gsvBD jioTUffw==
+X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.08.2023 23:37, Andrew Halaney wrote:
-> There's an irq hooked up, so let's describe it.
-> 
-> Prior to commit 9757300d2750
-> ("pinctrl: qcom: Add intr_target_width field to support increased number of interrupt targets")
-> one would not see the IRQ fire, despite some (invasive) debugging
-> showing that the GPIO was in fact asserted, resulting in the interface
-> staying down.
-> 
-> Now that the IRQ is properly routed we can describe it.
-> 
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hi,
 
-Konrad
+This annotates several structures with the coming __counted_by attribute
+for bounds checking of flexible arrays at run-time. For more details, see
+commit dd06e72e68bc ("Compiler Attributes: Add __counted_by macro").
+
+Thanks!
+
+-Kees
+
+Kees Cook (21):
+  dmaengine: apple-admac: Annotate struct admac_data with __counted_by
+  dmaengine: at_hdmac: Annotate struct at_desc with __counted_by
+  dmaengine: axi-dmac: Annotate struct axi_dmac_desc with __counted_by
+  dmaengine: fsl-edma: Annotate struct fsl_edma_desc with __counted_by
+  dmaengine: hisilicon: Annotate struct hisi_dma_dev with __counted_by
+  dmaengine: moxart-dma: Annotate struct moxart_desc with __counted_by
+  dmaengine: qcom: bam_dma: Annotate struct bam_async_desc with
+    __counted_by
+  dmaengine: sa11x0: Annotate struct sa11x0_dma_desc with __counted_by
+  dmaengine: sf-pdma: Annotate struct sf_pdma with __counted_by
+  dmaengine: sprd: Annotate struct sprd_dma_dev with __counted_by
+  dmaengine: st_fdma: Annotate struct st_fdma_desc with __counted_by
+  dmaengine: stm32-dma: Annotate struct stm32_dma_desc with __counted_by
+  dmaengine: stm32-mdma: Annotate struct stm32_mdma_desc with
+    __counted_by
+  dmaengine: stm32-mdma: Annotate struct stm32_mdma_device with
+    __counted_by
+  dmaengine: tegra: Annotate struct tegra_dma_desc with __counted_by
+  dmaengine: tegra210-adma: Annotate struct tegra_adma with __counted_by
+  dmaengine: ti: edma: Annotate struct edma_desc with __counted_by
+  dmaengine: ti: omap-dma: Annotate struct omap_desc with __counted_by
+  dmaengine: uniphier-xdmac: Annotate struct uniphier_xdmac_desc with
+    __counted_by
+  dmaengine: uniphier-xdmac: Annotate struct uniphier_xdmac_device with
+    __counted_by
+  dmaengine: usb-dmac: Annotate struct usb_dmac_desc with __counted_by
+
+ drivers/dma/apple-admac.c      |  2 +-
+ drivers/dma/at_hdmac.c         |  2 +-
+ drivers/dma/dma-axi-dmac.c     |  5 ++---
+ drivers/dma/fsl-edma-common.h  |  2 +-
+ drivers/dma/hisi_dma.c         |  2 +-
+ drivers/dma/moxart-dma.c       |  5 ++---
+ drivers/dma/qcom/bam_dma.c     |  2 +-
+ drivers/dma/sa11x0-dma.c       |  6 +++---
+ drivers/dma/sf-pdma/sf-pdma.h  |  2 +-
+ drivers/dma/sh/usb-dmac.c      |  2 +-
+ drivers/dma/sprd-dma.c         |  2 +-
+ drivers/dma/st_fdma.h          |  2 +-
+ drivers/dma/stm32-dma.c        | 11 ++++-------
+ drivers/dma/stm32-mdma.c       |  9 ++++-----
+ drivers/dma/tegra186-gpc-dma.c |  2 +-
+ drivers/dma/tegra210-adma.c    |  2 +-
+ drivers/dma/ti/edma.c          |  2 +-
+ drivers/dma/ti/omap-dma.c      |  5 ++---
+ drivers/dma/uniphier-xdmac.c   |  8 ++++----
+ 19 files changed, 33 insertions(+), 40 deletions(-)
+
+-- 
+2.34.1
+
