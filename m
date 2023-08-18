@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E48F1780BB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 14:23:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44E0A780BB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 14:24:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376840AbjHRMWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 08:22:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36752 "EHLO
+        id S1376849AbjHRMXt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 08:23:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244557AbjHRMWN (ORCPT
+        with ESMTP id S1376823AbjHRMXT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 08:22:13 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4E0E7C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:22:11 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so13089381fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:22:11 -0700 (PDT)
+        Fri, 18 Aug 2023 08:23:19 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C92B103
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:23:02 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe8c16c1b4so1227751e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692361329; x=1692966129;
+        d=linaro.org; s=google; t=1692361380; x=1692966180;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Anar2tjwy/nKg+s1vkJ6uTXJO/Hb9Dx22ZtKE9tT+8c=;
-        b=ile5Q6cIlfvtubyp6Z7BHRCPZmE0+l0/R3Rv3Dl8elnIfdoWvxy2WQdmwAbPVlkUfR
-         ILPreCdJjiuZaAfhexuCLKaLkrGLNLtCo1Hp4qJGLEa/YmgQGDge6NmjIkA8JKEH3cCO
-         5wlFEpCMC6FSRmJGTkOg02LGSLfgdEQL9Eow5/ezpu430MN8RkQpj3rGt0Im9bCITftu
-         DDtJx9DUaQd3Urq3Iu6wj07aUVbJ/Nc7EQLvVFDv3WQXQS/Is57aDEmqBRabuQxfQnam
-         nxArZylYyJdd/sexNzoNXJ5VK8LknSgMRlye7PX0CDlz1gXfFkj4yeK3wpjqErgm6C7J
-         DaZw==
+        bh=qUAcyj8YmOHhUIy6u87+YjyKyatomdHdcC2xOaS4ZvI=;
+        b=QaEggVWAjUXIbxPj4zwGyjn22HmYkaT3E8VMFhypav50o2yW0RMkAP4oUwuoyY0q0I
+         ui+2NaXv9U++tG6fz0NYC6sgOG9sz20Bcc4lEahyoUgSZU1NFo9yTdMNNvcMBmIRHDmm
+         zct1hH4FRQ3R0txlepypMudcGQzdF+ccT6y682dYt0jnkoiaTJxtM3iXz/kMM4zTIEzW
+         z9MjqfEWsOHwqiA+EWcRgWMRCiXSj01XJeEMFl6Tc+dsCMXC5beCT2vqxiuiWtlW8VlS
+         Lyr6ole9cq1tk9DpCfRpyCcA1e6OfyzkN9ejQEIBJb0ZBOQDBD0fQRaLSWpcJZ/vdhp8
+         AUJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692361329; x=1692966129;
+        d=1e100.net; s=20221208; t=1692361380; x=1692966180;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Anar2tjwy/nKg+s1vkJ6uTXJO/Hb9Dx22ZtKE9tT+8c=;
-        b=dhzx6J+8TPAj6LbKfK8VNb6/KalP425eQGRTQmaBlO8NxrjMKGcKx0UamVS8UznwKG
-         Z3ybPFhAk782FA5bd9QajV85bzxeaV+f8zbWFawhtT88jg4+V7Y5b2vlED1UEqZqK+NO
-         yYha1gpYmYfMG+mMnyo5kDd/jl7pT+c+Mwktt40r//Xg6CTnTzNIDpCkdq537wbFBRp5
-         8gbuzWsWeWoz+RnyVp9msP+kEsVbWDZ2G/6EWBOeJs72sDt9v5NBnIGSImiflGPHFp2v
-         K1EB/G1Wxw/Ssv0nEPgfX7kb4mga7drUXnnBG/wSKxtWgKLwTWIwC7Zu5WK5dCXlOJgY
-         GsCw==
-X-Gm-Message-State: AOJu0Yxe03jLgyDZpFOt3/Mo4+6M5JFuHo7Ah5pn00WHej9vevohz3RQ
-        0rq4JcxCv52S64qJnXHiNfFBFA==
-X-Google-Smtp-Source: AGHT+IEEf2Bcd73pO4OiJcwoKu5dGzgSJ+M4jI+DqDHBxOF4FOBYxsGC7UiYBYPAaCiPLE/5q/VJSQ==
-X-Received: by 2002:a05:6512:3a89:b0:4f8:56cd:da8c with SMTP id q9-20020a0565123a8900b004f856cdda8cmr1558312lfu.34.1692361329572;
-        Fri, 18 Aug 2023 05:22:09 -0700 (PDT)
+        bh=qUAcyj8YmOHhUIy6u87+YjyKyatomdHdcC2xOaS4ZvI=;
+        b=I8F11R2lDrzwDpUaWT1scSzBF5/MC95CJN/ZdVRw4TFN+N5TA9sfjXxhKKoLfD2epN
+         ct7Vgmba/2+CLm/1SnTsQ7txnDprxHZd+q7xkfJ698pa0QKERqf1rgcJMgXUF7Qyo/WC
+         0vCssgwquzTUSYmMcF0MwV3ZMtvUFWzWhO869K+lCUwLI7UxWvR3PWMyshVhRd4Or85Y
+         GI+HVqiP8Ny+CAWkDBJd2bRX111qkE5iO1clft4V3y4eSQTsn6TfHcBMN4BVM9SWxBTd
+         7xpjIRIWNeHLYJt4OX0egrxPX8i5hWmg0bCetxQ197Y2y0dUlbtkBuUD6dSan3Qv0buk
+         JGCw==
+X-Gm-Message-State: AOJu0Yy8pMbIy7/XOInQBYTzX33uLvckzudr/M5uFKi5f8Oh5YWlSeyc
+        loOVKUDixjv4Bp1x6nEFztaebQ==
+X-Google-Smtp-Source: AGHT+IGEO8f/JdsGMF9nO6VCORVyHAB3PU4kn8v1iNl10mJaEIxYPNxiXFxkQlbVUyJcX3OYua4oyQ==
+X-Received: by 2002:a05:6512:2117:b0:4ff:9a75:2106 with SMTP id q23-20020a056512211700b004ff9a752106mr1553838lfr.39.1692361380615;
+        Fri, 18 Aug 2023 05:23:00 -0700 (PDT)
 Received: from [192.168.1.101] (abxh52.neoplus.adsl.tpnet.pl. [83.9.1.52])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac2511b000000b004ffa0350851sm329171lfb.78.2023.08.18.05.22.08
+        by smtp.gmail.com with ESMTPSA id q27-20020ac2511b000000b004ffa0350851sm329171lfb.78.2023.08.18.05.22.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 05:22:09 -0700 (PDT)
-Message-ID: <b2bd8494-44eb-4185-9040-d50068112063@linaro.org>
-Date:   Fri, 18 Aug 2023 14:22:05 +0200
+        Fri, 18 Aug 2023 05:23:00 -0700 (PDT)
+Message-ID: <f76dad04-152e-4bdf-83d1-1b8af9e3df62@linaro.org>
+Date:   Fri, 18 Aug 2023 14:22:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/13] media: qcom: camss: Start to move to module
- compat matched resources
+Subject: Re: [PATCH v2 03/13] media: qcom: camss: Pass icc bandwidth table as
+ a platform parameter
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
@@ -65,7 +65,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230817143812.677554-1-bryan.odonoghue@linaro.org>
- <20230817143812.677554-3-bryan.odonoghue@linaro.org>
+ <20230817143812.677554-4-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230817143812.677554-3-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230817143812.677554-4-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,21 +116,8 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17.08.2023 16:38, Bryan O'Donoghue wrote:
-> There is a lot of unnecessary if/elsing in this code that arguably
-> should never have made it upstream when adding a second let alone
-> subsequent SoC.
-> 
-> I'm guilty of not fixing the mess myself when adding in the sm8250.
-> Before adding in any new SoCs or resources lets take the time to cleanup
-> the resource passing.
-> 
-> First step is to pass the generic struct camss_resources as a parameter
-> per the compatible list.
-> 
-> Subsequent patches will address the other somewhat dispirate strutures
-> which we are also doing if/else on and assigning statically.
-> 
-> Squashed down a commit to drop useless NULL assignment for ispif resources.
+> Pass the bandwidth table as a platform parameter not if/else derived
+> pointer to the static table.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
