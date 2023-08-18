@@ -2,102 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 479F6781401
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 22:00:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1A2781408
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 22:03:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377351AbjHRT7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 15:59:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33092 "EHLO
+        id S1379848AbjHRUDA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 16:03:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379856AbjHRT7Q (ORCPT
+        with ESMTP id S1379850AbjHRUCi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 15:59:16 -0400
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::223])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10C7C35AD;
-        Fri, 18 Aug 2023 12:59:13 -0700 (PDT)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 7C8FD60002;
-        Fri, 18 Aug 2023 19:59:10 +0000 (UTC)
+        Fri, 18 Aug 2023 16:02:38 -0400
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::228])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51BA1706;
+        Fri, 18 Aug 2023 13:02:36 -0700 (PDT)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 279FE1BF204;
+        Fri, 18 Aug 2023 20:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1692388752;
+        t=1692388955;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=q9WQ4s+hROk+ahs4ROvh5ESGeMbt5mmR8H5xOLugL5s=;
-        b=ZiAXgzeTTaj5OwCo1sItpPbJtBXQctG9Gstnj8B/OYpBy8tcmSbPkitg18sxNxqPcR3CDX
-        GaGh0SUiVO1ccAEwAtBgUcjoXfyOj40NAntN7HJV+PWGNB0Ce8kSBLFBtt3GyR6slsYMqI
-        oajWAa6r8Sk4837o5n3pZy1aBp62ALz2ourz89jL7J6Gqzo15SRc/G0Q0XcH/IZG8Uq76V
-        dzpgJxtVpWWCWoSr1OAR7yg0zEyOc8xSH/qFOzh1vHijQJMLHOziJJYPXDqFlqDDhQ/QMI
-        QuyOT4WIEw5m97H10IBSZ6HqxegL2sC4sUF7J9dVmFW7B9dGVCy0HaSp1pmGmg==
-Date:   Fri, 18 Aug 2023 21:59:08 +0200
+        bh=iBuafLkRO12L2VXNLAEirbbppACezhDPBaIxB+yiYEU=;
+        b=Iz4YoMrKD4JwW+Zqar+V3hnOvC02vxCUQjGjrLCiHD/2Jw+HZZE2Bu9Th+sZ/TuAX5LtdS
+        irBAAiXipFLFPwREVmTvdVaEGCQZe6FO4ikDYw7Llz69hJI/1n01XTzpvasgGAnhknfF12
+        ex38pT+uelRgNSdG+MmN9wkDTmW9rLN7zKeptMTtGkZvstFml7SNx6fNC1p0GeR4ShA33K
+        2WCd+Cm2DULg/vpP8zNa+HojEdZYUZrEjx4OCLVUZifrkPyHMTNdaQiG1R8TkzgZqvZckC
+        S26JTJmXEMn3lm2qxJsrgfSjP5SRBSqqQCrPSiryllQ2b7t/0jZEXdfd8QV9sA==
 From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>, mani@kernel.org,
+        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
         linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH 1/3] mtd: rawnand: qcom: Update read_loc size to 512
-Message-ID: <20230818215908.0e60b00b@xps-13>
-In-Reply-To: <20230818145101.23825-2-quic_mdalam@quicinc.com>
-References: <20230818145101.23825-1-quic_mdalam@quicinc.com>
-        <20230818145101.23825-2-quic_mdalam@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com
+Subject: Re: [PATCH 3/3] mtd: rawnand: qcom: Add read/read_start ops in exec_op path
+Date:   Fri, 18 Aug 2023 22:02:32 +0200
+Message-Id: <20230818200232.149295-1-miquel.raynal@bootlin.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230818145101.23825-4-quic_mdalam@quicinc.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+X-linux-mtd-patch-notification: thanks
+X-linux-mtd-patch-commit: b'5a7688a3e2e6293b6b405322b8fbdbb2a0508511'
+Content-Transfer-Encoding: 8bit
 X-GND-Sasl: miquel.raynal@bootlin.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Md,
-
-quic_mdalam@quicinc.com wrote on Fri, 18 Aug 2023 20:20:59 +0530:
-
-> For parameter page read upper layer is passing len
-> as 256 bytes and if we try to configure 256 bytes
-> size in read loaction register then subsequent bam
-> transaction is getting timed out for 4K nand devices.
-> So update this length as one step size if its
-> less than NANDC_STEP_SIZE.
->=20
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On Fri, 2023-08-18 at 14:51:01 UTC, Md Sadre Alam wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> 
+> READ/READ_START opcodes are not set in exec_op path.
+> Fixing that here.
+> 
+> While there, Steps to program the controller is common for
+> erase/reset/read/program page. So use a common pattern and
+> pull them under one function.
+> 
 > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-I'm fine with patches 2 and 3 and will take them. But this one does not
-seem legitimate. I don't like it. Are you sure the ECC engine was not
-enabled when it timed out? Default should be having the ECC disabled
-and it should just get enabled when you need it. There is no reason
-why, specifically on NAND devices, it would not be possible to read 256
-bytes.
+Applied to https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next, thanks.
 
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 3 +++
->  1 file changed, 3 insertions(+)
->=20
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
-m_nandc.c
-> index d4ba0d04c970..413e214c8e87 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -2885,6 +2885,9 @@ static int qcom_param_page_type_exec(struct nand_ch=
-ip *chip,  const struct nand_
->  	op_id =3D q_op.data_instr_idx;
->  	len =3D nand_subop_get_data_len(subop, op_id);
-> =20
-> +	if (len < NANDC_STEP_SIZE)
-> +		len =3D NANDC_STEP_SIZE;
-> +
->  	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
-> =20
->  	if (!nandc->props->qpic_v2) {
-
-
-Thanks,
-Miqu=C3=A8l
+Miquel
