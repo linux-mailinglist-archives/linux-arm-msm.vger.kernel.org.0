@@ -2,78 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07E5C7809FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 12:28:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4BBF780A62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 12:43:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359336AbjHRK1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 06:27:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52300 "EHLO
+        id S239292AbjHRKnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 06:43:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359801AbjHRK05 (ORCPT
+        with ESMTP id S1376380AbjHRKnE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 06:26:57 -0400
-Received: from 167-179-156-38.a7b39c.syd.nbn.aussiebb.net (167-179-156-38.a7b39c.syd.nbn.aussiebb.net [167.179.156.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987814221;
-        Fri, 18 Aug 2023 03:26:55 -0700 (PDT)
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-        by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
-        id 1qWwgh-005Gkf-AK; Fri, 18 Aug 2023 18:26:40 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 18 Aug 2023 18:26:39 +0800
-Date:   Fri, 18 Aug 2023 18:26:39 +0800
-From:   Herbert Xu <herbert@gondor.apana.org.au>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] Introduce PRNG on SM8450
-Message-ID: <ZN9HX3ce01Zwdu3k@gondor.apana.org.au>
-References: <20230811-topic-8450_prng-v1-0-01becceeb1ee@linaro.org>
+        Fri, 18 Aug 2023 06:43:04 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF6F849C6;
+        Fri, 18 Aug 2023 03:35:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6D807676C1;
+        Fri, 18 Aug 2023 10:35:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AAF3C433C7;
+        Fri, 18 Aug 2023 10:34:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692354899;
+        bh=5gYnBS8TenuhKeOT2Up5sY1thHDey3X5OUrwVSR/vKo=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=XC+DmqGY9ePxMX4QdkY9ykzdkVy3H2eSqZKzdC/rb3zjAvpAA5qB8lNi3oAIQUpk9
+         jQ6hwyP9K6ZvUMYmYwnyZp4OGHkhLs+RlaFVvlluohm181Rtll4JJ8uVHQLSneHb7L
+         osBlQhswRBxJgAqaiGx1EEL2hzFuNRDQJ9A4dLcsWJx3xI9BovJun8xfuyRfayFhSr
+         CSypkv4UHsBmHRxxM2xPdFg2860dQSl/Tu+6++kGK4xoswi8wQxXS3tF7eAJDs4SFb
+         YjvLPDJqW43iH/8nAqqT6ox8W67txKP2lFywntBh215YWV/AoiV+iz5N3m+8gIk3qG
+         8Mym/Fu95+XVQ==
+Message-ID: <82252735-f75f-8f09-0088-46f216ff1720@kernel.org>
+Date:   Fri, 18 Aug 2023 12:34:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230811-topic-8450_prng-v1-0-01becceeb1ee@linaro.org>
-X-Spam-Status: No, score=2.7 required=5.0 tests=BAYES_00,HELO_DYNAMIC_IPADDR2,
-        PDS_RDNS_DYNAMIC_FP,RCVD_IN_DNSWL_BLOCKED,RDNS_DYNAMIC,SPF_HELO_NONE,
-        SPF_PASS,TVD_RCVD_IP,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: **
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH V1 1/2] dt-bindings: phy: Add QMP UFS PHY comptible for
+ SC7280
+Content-Language: en-US
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, andersson@kernel.org,
+        konrad.dybcio@linaro.org, vkoul@kernel.org, agross@kernel.org,
+        kishon@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20230816154841.2183-1-quic_nitirawa@quicinc.com>
+ <20230816154841.2183-2-quic_nitirawa@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20230816154841.2183-2-quic_nitirawa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 11, 2023 at 10:50:55PM +0200, Konrad Dybcio wrote:
-> SM8450's PRNG seems to be the same good ol' IP, except without a core
-> clock.
+On 16/08/2023 17:48, Nitin Rawat wrote:
+> Document the QMP UFS PHY compatible for SC7280.
 > 
-> For a lack of a better idea on how to test it, /proc/crypto reports that
-> the selftest has gone through..
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
-> Konrad Dybcio (3):
->       dt-bindings: crypto: qcom,prng: Add SM8450
->       crypto: qcom-rng: Make the core clock optional regardless of ACPI presence
->       arm64: dts: qcom: sm8450: Add PRNG
-> 
->  .../devicetree/bindings/crypto/qcom,prng.yaml      | 24 +++++++++++++++++-----
->  arch/arm64/boot/dts/qcom/sm8450.dtsi               |  5 +++++
->  drivers/crypto/qcom-rng.c                          | 10 +++------
->  3 files changed, 27 insertions(+), 12 deletions(-)
-> ---
-> base-commit: 21ef7b1e17d039053edaeaf41142423810572741
-> change-id: 20230811-topic-8450_prng-6af00873db4d
 
-Patches 1-2 applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC. It might happen, that command when run on an older
+kernel, gives you outdated entries. Therefore please be sure you base
+your patches on recent Linux kernel.
+
+You missed at least DT list (maybe more), so this won't be tested by
+automated tooling. Performing review on untested code might be a waste
+of time, thus I will skip this patch entirely till you follow the
+process allowing the patch to be tested.
+
+Please kindly resend and include all necessary To/Cc entries.
+
+Best regards,
+Krzysztof
+
