@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3904780AAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 13:04:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02766780AB9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 13:05:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355029AbjHRLDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 07:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45636 "EHLO
+        id S243722AbjHRLFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 07:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359860AbjHRLDV (ORCPT
+        with ESMTP id S1376565AbjHRLEe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 07:03:21 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8061C30C5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:03:18 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so12536301fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:03:18 -0700 (PDT)
+        Fri, 18 Aug 2023 07:04:34 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4536D44A1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:04:19 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2bba74ddf1bso10702531fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692356597; x=1692961397;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1692356657; x=1692961457;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0Jh7ItFYHU5zNIGLCstW/Pzdq1xmgVbG9y2RMD0DjmE=;
-        b=ImO4DuA79mgCfrF590YuamU/xZhUWnoTy+yVYcQtO1frAroKqxut6QZJI+LacYKq5F
-         qHkJ6IdzqcPmHHD3s/d4XzYPkE6/pDOQD0CETUl/wXsQRGndehiVvEVj/z29vm3/Wm5+
-         SndiY9n2iID5YlSCpzB2a/a5Ygvsg7c7bEG9ulm6lJR6sQdlU8bZkBy7i6oJG6AT3qUq
-         jwGBqUlGvg9BolzBQ6Ptf/70OZajMpFQZtgXr/uM2pDCAfzQ1vzuwXcEgZBwFtyH8lbw
-         uTrihK8I2mrAPyq4WSG4f28n3WHIctIqcaDlXa/5PiTOJgM/5J0+4CuRwE6Ak63iDjjw
-         dI6A==
+        bh=KmFWOPe1M/M0skePNYAwqrAwIEY42PVhQlE891nG6o8=;
+        b=dwO+bth3b1+Nk8+6IivmbRPVP+KaMT1vBw0O3sLeIv7oR1pX0WJcOdPdj1dSu7wdXM
+         ito/Mu50T2ls1VMQ2qlTuEWDdRDwxKECxeBHFEpzCo3Gt1ixycbD6DkEGXvn2BRjNflU
+         o+m0tIp5/bVK+nA8vQofigeJ4ucMCEpPAibF1m3ptFKWj9pxmA59hYkUiwQ4+qA2X7FC
+         i8VgvRCcwzwp+LI/bQ1RXZfrMPooMSQdQDnkGY/TY0cFCffSuVh7Gc1Ps4WizpGS0Eo0
+         J/MaL/+Q7GnnQM39Z1g7xRRtm6YAo8MFXFBRvQ+1UukcRI/xD0Ks9SiremxNaiw8MAAr
+         H6Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692356597; x=1692961397;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1692356657; x=1692961457;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Jh7ItFYHU5zNIGLCstW/Pzdq1xmgVbG9y2RMD0DjmE=;
-        b=C6vCl1+9CgFaV23j4B3uXsrR2ccP6zDCpuhf7/plvXMr9/pIkZ5ZUoVcDodJtxQUqD
-         sxmuwOmnwE/19ckIj57jfOshQ5BSlAGdDYprKPog2+TpQ+NZSSCsmHOlkDlzjp4NK/HL
-         bdZYCxQB1s+cIu2UI9CPxXwHOPVfyWjKeCudCkqjHe4XK5wydtX4oLSv5V8cfsP12po9
-         rugIg0Qbq87JVM0TaweNFAntWESoQh4nxnCZWJF0o2AjeB+psRxGVngOVOysovN8kYfr
-         iqd0Hdmow6QUqn28+szlgypFr7w0mDCzuPsxFdoGc9ky5hjJ34uHNqI+1rGibZ6cefwH
-         5nKg==
-X-Gm-Message-State: AOJu0Ywj7ycht1XPjJn8RJjvUmCnvgmYiQrc+FhnnL/L+APHNajtFqbx
-        B6++7Bff8GALJECm2eXj9oVcAg==
-X-Google-Smtp-Source: AGHT+IHyLaj7lSH6UWei+LJ0Jvr8+Gydj89mLdky8jn0+n2TFP3T21x4hd6OTXGGBdOQVsHAwnNEsw==
-X-Received: by 2002:a2e:9914:0:b0:2b9:bbf5:7c6 with SMTP id v20-20020a2e9914000000b002b9bbf507c6mr1623479lji.43.1692356596092;
-        Fri, 18 Aug 2023 04:03:16 -0700 (PDT)
+        bh=KmFWOPe1M/M0skePNYAwqrAwIEY42PVhQlE891nG6o8=;
+        b=cB+CVB8Z4z4kmnqLzEN3V3hWF/6MsRgW8Q0GMb0ctqFdBgWnTTV18x4sdJRXBJiZKQ
+         k0p0xXfPvg6vwTvD8ERUIMYwRGsby8+h5X+PPW/O36YLNUFoicxXwkcPKlR77kXKpYc+
+         kcrADEyup2c2fB4NiMooZHlhJ1U1LAqUJfFvh81BTx80X1ZMQXCd3udoLT4gDzNarSsQ
+         PTWLGVVrdpn6Xf02r8N3GFGrneAH6CasTnYRP34WTUNOyFYyyBXDpWRHh/6p9CPcMDVq
+         A8pMKjwsOpvX59XM5wJ5OPx9FUFCtPKg0i71R8vTu8C8FT+JcrC7vb/1tEwpTUMRbqFM
+         652Q==
+X-Gm-Message-State: AOJu0Yy9RaD55uD/I1G3e220VnZ9fQ4MvSZuQNfstZPqOmSRHSFJTFOl
+        faLXrhpP50tUOU6ss53tTw5n5A==
+X-Google-Smtp-Source: AGHT+IEwp06ZxicpGI+vVruEAtpln6CTuqu8D1mDmasY+MnhAF9dVfEJTUjv9IOpM7Vu0vEXSAFF5Q==
+X-Received: by 2002:a2e:b791:0:b0:2b7:3b6c:a5e4 with SMTP id n17-20020a2eb791000000b002b73b6ca5e4mr1525911ljo.38.1692356657511;
+        Fri, 18 Aug 2023 04:04:17 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y7-20020a2e9d47000000b002b9899d0f0bsm363898ljj.83.2023.08.18.04.03.15
+        by smtp.gmail.com with ESMTPSA id y7-20020a2e9d47000000b002b9899d0f0bsm363898ljj.83.2023.08.18.04.04.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 04:03:15 -0700 (PDT)
-Message-ID: <c4b7e9eb-fb5d-4b2f-8358-f41598d7d983@linaro.org>
-Date:   Fri, 18 Aug 2023 14:03:14 +0300
+        Fri, 18 Aug 2023 04:04:17 -0700 (PDT)
+Message-ID: <c667d98d-c8fc-4c28-982d-67dec00570e4@linaro.org>
+Date:   Fri, 18 Aug 2023 14:04:16 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v5 02/10] drm: Introduce solid fill DRM plane property
+Subject: Re: [PATCH -next] drm/msm/adreno: adreno_gpu: Switch to
+ memdup_user_nul() helper
 Content-Language: en-GB
-To:     Pekka Paalanen <ppaalanen@gmail.com>
-Cc:     Sebastian Wick <sebastian.wick@redhat.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+To:     Ruan Jinjie <ruanjinjie@huawei.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        quic_abhinavk@quicinc.com, contact@emersion.fr,
-        laurent.pinchart@ideasonboard.com, ville.syrjala@linux.intel.com,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        wayland-devel@lists.freedesktop.org
-References: <20230728-solid-fill-v5-0-053dbefa909c@quicinc.com>
- <20230728-solid-fill-v5-2-053dbefa909c@quicinc.com>
- <CAA8EJpq=pbDoYc9wqKKrX+RahXp8zWTPFqVqA=S-0TkWXXJUjQ@mail.gmail.com>
- <CA+hFU4y38MTTUsbri1jy=n4Vyp7xx2CosD9Nmk97z_au6NHCdQ@mail.gmail.com>
- <CAA8EJpoFpUcQL_7pb0toDoLFsK=9GdBLQH+h_MMffrp9k7eCyw@mail.gmail.com>
- <20230818135133.3fdeddba@eldfell>
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+References: <20230810120424.2108348-1-ruanjinjie@huawei.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230818135133.3fdeddba@eldfell>
+In-Reply-To: <20230810120424.2108348-1-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -91,107 +80,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/08/2023 13:51, Pekka Paalanen wrote:
-> On Fri, 4 Aug 2023 16:59:00 +0300
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+On 10/08/2023 15:04, Ruan Jinjie wrote:
+> Use memdup_user_nul() helper instead of open-coding to simplify the code.
 > 
->> On Fri, 4 Aug 2023 at 16:44, Sebastian Wick <sebastian.wick@redhat.com> wrote:
->>>
->>> On Fri, Aug 4, 2023 at 3:27 PM Dmitry Baryshkov
->>> <dmitry.baryshkov@linaro.org> wrote:
->>>>
->>>> On Fri, 28 Jul 2023 at 20:03, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>>>>
->>>>> Document and add support for solid_fill property to drm_plane. In
->>>>> addition, add support for setting and getting the values for solid_fill.
->>>>>
->>>>> To enable solid fill planes, userspace must assign a property blob to
->>>>> the "solid_fill" plane property containing the following information:
->>>>>
->>>>> struct drm_mode_solid_fill {
->>>>>          u32 version;
->>>>>          u32 r, g, b;
->>>>> };
->>>>>
->>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>> ---
->>>>>   drivers/gpu/drm/drm_atomic_state_helper.c |  9 +++++
->>>>>   drivers/gpu/drm/drm_atomic_uapi.c         | 55 +++++++++++++++++++++++++++++++
->>>>>   drivers/gpu/drm/drm_blend.c               | 30 +++++++++++++++++
->>>>>   include/drm/drm_blend.h                   |  1 +
->>>>>   include/drm/drm_plane.h                   | 35 ++++++++++++++++++++
->>>>>   include/uapi/drm/drm_mode.h               | 24 ++++++++++++++
->>>>>   6 files changed, 154 insertions(+)
->>>>>   
->>>>
->>>> [skipped most of the patch]
->>>>   
->>>>> diff --git a/include/uapi/drm/drm_mode.h b/include/uapi/drm/drm_mode.h
->>>>> index 43691058d28f..53c8efa5ad7f 100644
->>>>> --- a/include/uapi/drm/drm_mode.h
->>>>> +++ b/include/uapi/drm/drm_mode.h
->>>>> @@ -259,6 +259,30 @@ struct drm_mode_modeinfo {
->>>>>          char name[DRM_DISPLAY_MODE_LEN];
->>>>>   };
->>>>>
->>>>> +/**
->>>>> + * struct drm_mode_solid_fill - User info for solid fill planes
->>>>> + *
->>>>> + * This is the userspace API solid fill information structure.
->>>>> + *
->>>>> + * Userspace can enable solid fill planes by assigning the plane "solid_fill"
->>>>> + * property to a blob containing a single drm_mode_solid_fill struct populated with an RGB323232
->>>>> + * color and setting the pixel source to "SOLID_FILL".
->>>>> + *
->>>>> + * For information on the plane property, see drm_plane_create_solid_fill_property()
->>>>> + *
->>>>> + * @version: Version of the blob. Currently, there is only support for version == 1
->>>>> + * @r: Red color value of single pixel
->>>>> + * @g: Green color value of single pixel
->>>>> + * @b: Blue color value of single pixel
->>>>> + */
->>>>> +struct drm_mode_solid_fill {
->>>>> +       __u32 version;
->>>>> +       __u32 r;
->>>>> +       __u32 g;
->>>>> +       __u32 b;
->>>>
->>>> Another thought about the drm_mode_solid_fill uABI. I still think we
->>>> should add alpha here. The reason is the following:
->>>>
->>>> It is true that we have  drm_plane_state::alpha and the plane's
->>>> "alpha" property. However it is documented as "the plane-wide opacity
->>>> [...] It can be combined with pixel alpha. The pixel values in the
->>>> framebuffers are expected to not be pre-multiplied by the global alpha
->>>> associated to the plane.".
->>>>
->>>> I can imagine a use case, when a user might want to enable plane-wide
->>>> opacity, set "pixel blend mode" to "Coverage" and then switch between
->>>> partially opaque framebuffer and partially opaque solid-fill without
->>>> touching the plane's alpha value.
->>>
->>> The only reason I see against this is that there might be some
->>> hardware which supports only RGB but not alpha on planes and they
->>> could then not use this property.
->>
->> Fair enough.
->>
->>> Maybe another COLOR_FILL enum value
->>> with alpha might be better? Maybe just doing the alpha via the alpha
->>> property is good enough.
->>
->> One of our customers has a use case for setting the opaque solid fill,
->> while keeping the plane's alpha intact.
-> 
-> Could you explain more about why they must keep plane alpha intact
-> instead of reprogramming everything with atomic? Is there some
-> combination that just cannot reach the same end result via userspace
-> manipulation of the solid fill values with plane alpha?
-> 
-> Or is it a matter of userspace architecture where you have independent
-> components responsible for different KMS property values?
-The latter one. The goal is to be able to switch between pixel sources 
-without touching any additional properties (including plane's alpha value).
+> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+> ---
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 14 +++-----------
+>   1 file changed, 3 insertions(+), 11 deletions(-)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
