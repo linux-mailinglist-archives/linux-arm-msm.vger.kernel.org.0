@@ -2,181 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6B777809AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 12:09:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07E5C7809FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 12:28:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359785AbjHRKIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 06:08:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
+        id S1359336AbjHRK1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 06:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376327AbjHRKHw (ORCPT
+        with ESMTP id S1359801AbjHRK05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 06:07:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1893A4200;
-        Fri, 18 Aug 2023 03:07:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CDEA467A7A;
-        Fri, 18 Aug 2023 10:06:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343CDC433C7;
-        Fri, 18 Aug 2023 10:06:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692353165;
-        bh=Sk8448M+cFRW8iS+/8IE71HSsgEjv+78Z0JrCd8+1l4=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=puZK4MXbVoBW0rP82R5fWoGDIsQ67wY5+gVIuWiVRRHQpl5IhhRbX6bntVWUxxUEs
-         sZObfeFpA4GG84pIyjZMYb6zi5wUvSjX+stNXScet+xO54WRKneAvLhqdDGJx9QImH
-         A9qVAbY6Rn0dR/jCYW3b9GvRhFY/ECnfqYVP4cij5KWuH6xJ4wl6FjmZOjUaxqdM4F
-         HnLXGkl0lCnfSksKVuWa19m+/0QT0QJMx0JhvH8NCA9MS4T1NNTOTJpASDGHEWaOA+
-         yQUpL++fJSGcht+sDz3Ax0aFvfIZ+XPMwrwyi/17xnKB80f22hvh9R5bQz8B5Xhl0o
-         u1DpwGDxjJ+/Q==
-Message-ID: <44a63cb2-1ae5-f52b-19d2-fe03d48fd44d@kernel.org>
-Date:   Fri, 18 Aug 2023 13:05:57 +0300
+        Fri, 18 Aug 2023 06:26:57 -0400
+Received: from 167-179-156-38.a7b39c.syd.nbn.aussiebb.net (167-179-156-38.a7b39c.syd.nbn.aussiebb.net [167.179.156.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987814221;
+        Fri, 18 Aug 2023 03:26:55 -0700 (PDT)
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+        by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
+        id 1qWwgh-005Gkf-AK; Fri, 18 Aug 2023 18:26:40 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 18 Aug 2023 18:26:39 +0800
+Date:   Fri, 18 Aug 2023 18:26:39 +0800
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] Introduce PRNG on SM8450
+Message-ID: <ZN9HX3ce01Zwdu3k@gondor.apana.org.au>
+References: <20230811-topic-8450_prng-v1-0-01becceeb1ee@linaro.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 1/3] debugfs: Add write support to debugfs_create_str()
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Cc:     rafael@kernel.org, corbet@lwn.net, linux-pm@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_okukatla@quicinc.com,
-        quic_viveka@quicinc.com, peterz@infradead.org,
-        quic_pkondeti@quicinc.com
-References: <20230807142914.12480-1-quic_mdtipton@quicinc.com>
- <20230807142914.12480-2-quic_mdtipton@quicinc.com>
- <2023081203-happier-mutable-e4f0@gregkh>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <2023081203-happier-mutable-e4f0@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230811-topic-8450_prng-v1-0-01becceeb1ee@linaro.org>
+X-Spam-Status: No, score=2.7 required=5.0 tests=BAYES_00,HELO_DYNAMIC_IPADDR2,
+        PDS_RDNS_DYNAMIC_FP,RCVD_IN_DNSWL_BLOCKED,RDNS_DYNAMIC,SPF_HELO_NONE,
+        SPF_PASS,TVD_RCVD_IP,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
-
-On 12.08.23 13:40, Greg KH wrote:
-> On Mon, Aug 07, 2023 at 07:29:12AM -0700, Mike Tipton wrote:
->> Currently, debugfs_create_str() only supports reading strings from
->> debugfs. Add support for writing them as well.
->>
->> Based on original implementation by Peter Zijlstra [0]. Write support
->> was present in the initial patch version, but dropped in v2 due to lack
->> of users. We have a user now, so reintroduce it.
->>
->> [0] https://lore.kernel.org/all/YF3Hv5zXb%2F6lauzs@hirez.programming.kicks-ass.net/
->>
->> Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
->> ---
->>   fs/debugfs/file.c | 48 +++++++++++++++++++++++++++++++++++++++++++++--
->>   1 file changed, 46 insertions(+), 2 deletions(-)
->>
->> diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
->> index b7711888dd17..87b3753aa4b1 100644
->> --- a/fs/debugfs/file.c
->> +++ b/fs/debugfs/file.c
->> @@ -904,8 +904,52 @@ EXPORT_SYMBOL_GPL(debugfs_create_str);
->>   static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
->>   				      size_t count, loff_t *ppos)
->>   {
->> -	/* This is really only for read-only strings */
->> -	return -EINVAL;
->> +	struct dentry *dentry = F_DENTRY(file);
->> +	char *old, *new = NULL;
->> +	int pos = *ppos;
->> +	int r;
->> +
->> +	r = debugfs_file_get(dentry);
->> +	if (unlikely(r))
->> +		return r;
->> +
->> +	old = *(char **)file->private_data;
->> +
->> +	/* only allow strict concatenation */
->> +	r = -EINVAL;
->> +	if (pos && pos != strlen(old))
->> +		goto error;
->> +
->> +	r = -E2BIG;
->> +	if (pos + count + 1 > PAGE_SIZE)
->> +		goto error;
->> +
->> +	r = -ENOMEM;
->> +	new = kmalloc(pos + count + 1, GFP_KERNEL);
->> +	if (!new)
->> +		goto error;
->> +
->> +	if (pos)
->> +		memcpy(new, old, pos);
->> +
->> +	r = -EFAULT;
->> +	if (copy_from_user(new + pos, user_buf, count))
->> +		goto error;
->> +
->> +	new[pos + count] = '\0';
->> +	strim(new);
->> +
->> +	rcu_assign_pointer(*(char **)file->private_data, new);
->> +	synchronize_rcu();
->> +	kfree(old);
->> +
->> +	debugfs_file_put(dentry);
->> +	return count;
->> +
->> +error:
->> +	kfree(new);
->> +	debugfs_file_put(dentry);
->> +	return r;
->>   }
+On Fri, Aug 11, 2023 at 10:50:55PM +0200, Konrad Dybcio wrote:
+> SM8450's PRNG seems to be the same good ol' IP, except without a core
+> clock.
 > 
-> So you just added write support for ALL debugfs files that use the
-> string interface, what did you just allow to break?
-
-Not true. Write support is added only for debugfs string files that are
-created with +w permissions. All existing files are created as read-only
-and use the fops_str_ro ops.
-
-> I recommend just using your own debugfs file function instead, as this
-> could cause bad problems, right?  Are you sure that all string calls can
-> handle the variable be freed underneath it like this call will allow to
-> happen?
+> For a lack of a better idea on how to test it, /proc/crypto reports that
+> the selftest has gone through..
 > 
-> So I wouldn't recommend doing this, sorry.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (3):
+>       dt-bindings: crypto: qcom,prng: Add SM8450
+>       crypto: qcom-rng: Make the core clock optional regardless of ACPI presence
+>       arm64: dts: qcom: sm8450: Add PRNG
 > 
+>  .../devicetree/bindings/crypto/qcom,prng.yaml      | 24 +++++++++++++++++-----
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi               |  5 +++++
+>  drivers/crypto/qcom-rng.c                          | 10 +++------
+>  3 files changed, 27 insertions(+), 12 deletions(-)
+> ---
+> base-commit: 21ef7b1e17d039053edaeaf41142423810572741
+> change-id: 20230811-topic-8450_prng-6af00873db4d
 
-Maybe you missed the fact that the different file ops are already there
-and are selected based on permissions:
-
-> static const struct file_operations fops_str = {
->         .read =         debugfs_read_file_str,
->         .write =        debugfs_write_file_str,
->         .open =         simple_open,
->         .llseek =       default_llseek,
-> };
-> 
-> static const struct file_operations fops_str_ro = {
->         .read =         debugfs_read_file_str,
->         .open =         simple_open,
->         .llseek =       default_llseek,
-> };
-> 
-> static const struct file_operations fops_str_wo = {
->         .write =        debugfs_write_file_str,
->         .open =         simple_open,
->         .llseek =       default_llseek,
-> };
-
-...so this patch is doing exactly what you suggested? If you agree,
-could you ack it again please?
-
-Thanks,
-Georgi
+Patches 1-2 applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
