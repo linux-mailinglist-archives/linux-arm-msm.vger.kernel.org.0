@@ -2,166 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32EA6780703
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 10:21:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92776780737
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 10:34:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358527AbjHRIVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 04:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39828 "EHLO
+        id S1358623AbjHRIdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 04:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358526AbjHRIU4 (ORCPT
+        with ESMTP id S1358619AbjHRIdM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 04:20:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93919E55;
-        Fri, 18 Aug 2023 01:20:55 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37I56bhE023261;
-        Fri, 18 Aug 2023 08:20:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0OJB9bimMmDXvfLY8yQNGFq9Rj+mqR3wqinojg+U3To=;
- b=YWxUZBvVJoBTBGVChDYzOfKQwW6vz0xIcdHjUxk6IrrNUuKY/5SSxFQZrCLvYkvw5k8h
- +ydCUhAX5ltisqBosQ78mzh8mYIvIF7YPXq/Cy+MTUA+Mc0Zs6LFn08ZaT7kDnDCysYR
- brHYCB0MPxilE4Fc+Sk3polacfjc9Mg/duyXJzvds7rl8/BnxM2A0OidI4yWQ5zYzl5z
- JOIFHifGTtws9t7fpfFSJhCSF+YDp2AjCVv+ejegJHiKXH6kDBmSG5ZIDqwiJlO+THvk
- MQfgiDiHTvrmzqWAhUoJQnLjpU3BxrxDHyQOnwYJg+0T3vxB0CrNXJ5MSMcBscaxlQTx Ng== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sht44936h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Aug 2023 08:20:40 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37I8KdTa002650
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Aug 2023 08:20:39 GMT
-Received: from [10.253.34.149] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 18 Aug
- 2023 01:20:36 -0700
-Message-ID: <23b1ff70-21c0-f4e2-c377-55317f69357c@quicinc.com>
-Date:   Fri, 18 Aug 2023 16:20:33 +0800
+        Fri, 18 Aug 2023 04:33:12 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39AB13A96
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 01:33:09 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-317798b359aso591195f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 01:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692347588; x=1692952388;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+         :references:cc:to:content-language:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aAz6pPcjIbO7M4ErEDvnkCbBFuK+dTm4MKz0WfT12Qs=;
+        b=amB46zDznbpEv1hhlz48yf5hFt7WQdjgYkARDnoetEA99O9D9QPGbvMN7+vEKaGNTO
+         +WugWo4I9yj93YW58+z4AqnXJo17cKs0Xsz03PDNNtkIAYPi1yIt5xcrGNVQgsWC5VVH
+         uKO2HvxVIXIOQZ1PrA8/bnYIP5nojUHHoxVj2xzk9jTQE+Qo5EGvOLGG/UW7j+4FRXpk
+         mKDk3tS2UlDbwzsu/aLQJ2zfcaGWHieo7sjiVjkVKtqqAb0IBOxrCtLv8XVclsL+JnJN
+         LhPXD9WpHLCg1S24nGSF9/abRYIj3ugGRHp4KuKguIw0+SRLaBDueWSjmqkHp4rZE23g
+         Tv+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692347588; x=1692952388;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+         :references:cc:to:content-language:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=aAz6pPcjIbO7M4ErEDvnkCbBFuK+dTm4MKz0WfT12Qs=;
+        b=fgHEfCuAdtF7S918dkwMb9K9wnhnj0udtLmy8BtEhAZGulQ9Ph2ttToLAr3PX+WiID
+         y7XabsRuvd5Q0PHC8mLr9lQ11elh5SAppGrDES60Otsem5l6RVCytBXuJ56o0bZ/HFsj
+         Jx+puf4Bii9gbpy4AcVvb7AG5b1BqpcLtG01hx+ZpAVWApZI9oVQPOCv9BaqtTFld9tt
+         mjwp58MStIF/NGGjR4kfiX1/yJlv2fWHr5aK8/LP74GXGFRjDFlk6SWHAIf4zj2Wj38J
+         JFMG8JFHZiQj0GIjzxS8gSdveO6hsQny6+0Rzvb8jL5rKozydrRWpsFHKJF+qMGWAYVi
+         MuyQ==
+X-Gm-Message-State: AOJu0YwgRZFIChtPwcs61ZvbdvTmHgyeh6B7aGRyBnMqipZie0UY2bsQ
+        eaTWHx6P/5UgX81qjyR0N03Njw==
+X-Google-Smtp-Source: AGHT+IEiysdNKHU6e1jOHJwdYmSc6cMKD0VVl3kI/OX+UGpo9rGHWR5q03uk569XonrYyZgxg48H3w==
+X-Received: by 2002:a05:6000:18d:b0:314:1f1e:3a85 with SMTP id p13-20020a056000018d00b003141f1e3a85mr1475664wrx.61.1692347587538;
+        Fri, 18 Aug 2023 01:33:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b9f6:39b9:fff4:e741? ([2a01:e0a:982:cbb0:b9f6:39b9:fff4:e741])
+        by smtp.gmail.com with ESMTPSA id o15-20020adfeacf000000b003197e3520ddsm1959033wrn.109.2023.08.18.01.33.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Aug 2023 01:33:06 -0700 (PDT)
+Message-ID: <077c330d-5b86-4797-b69d-0ad02f49978f@linaro.org>
+Date:   Fri, 18 Aug 2023 10:33:03 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v4 1/4] clk: qcom: branch: Add clk_branch2_mdio_ops
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>
-References: <20230815085205.9868-1-quic_luoj@quicinc.com>
- <20230815085205.9868-2-quic_luoj@quicinc.com>
- <p7m4fi53nc75rjnmxdrukaitaddvq4vgvpydiyjmem4g2leyih@uohiocu35w2u>
-From:   Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <p7m4fi53nc75rjnmxdrukaitaddvq4vgvpydiyjmem4g2leyih@uohiocu35w2u>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
+Content-Language: en-US, fr
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+References: <cover.1691049436.git.quic_gurus@quicinc.com>
+ <20230810185526.GC31860@quicinc.com>
+ <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
+ <20230816171538.GB26279@quicinc.com>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20230816171538.GB26279@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wjBlevrSvqOdmcqk8PJVEuNga-l1WrAT
-X-Proofpoint-ORIG-GUID: wjBlevrSvqOdmcqk8PJVEuNga-l1WrAT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-18_09,2023-08-17_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 mlxlogscore=999 adultscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308180077
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/18/2023 11:29 AM, Bjorn Andersson wrote:
-> On Tue, Aug 15, 2023 at 04:52:02PM +0800, Luo Jie wrote:
->> Add the clk_branch2_mdio_ops for supporting clock controller
->> where the hardware register is accessed by MDIO bus, and the
->> spin clock can't be used because of sleep during the MDIO
+On 16/08/2023 19:15, Guru Das Srinagesh wrote:
+> Thanks for the comments, Krzysztof.
 > 
-> spin clock?
-> 
-> I believe you're trying to say that the underlying access to the MDIO
-> bus can not be done in non-sleepable context and we can therefor not use
-> enable/disable to operate it?
-
-Hi Bjorn,
-Thanks for the review comments.
-yes, the MDIO operation can't be done in non-sleepable context, and 
-enable/disable clock is using spin lock, so i enable the clock in 
-.prepare ops.
-
-will fix this typo"spin clock" to "spin lock"
-
-> 
->> operation.
+> On Aug 15 2023 23:06, Krzysztof Kozlowski wrote:
+>> On 10/08/2023 20:55, Guru Das Srinagesh wrote:
+>>> On Aug 03 2023 01:23, Guru Das Srinagesh wrote:
+>>>> When pushing patches to upstream, the `get_maintainer.pl` script is used to
+>>>> determine whom to send the patches to. Instead of having to manually process
+>>>> the output of the script, add a wrapper script to do that for you.
+>>>>
+>>>> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
+>>>> editing it in-place.
+>>>
+>>> Could I request reviews from the other maintainers as well, please? Just to see
+>>> if I should continue working on this script or if the `b4` tool obviates the
+>>> need for such a script.
 >>
->> The clock is enabled by the .prepare instead of .enable when
->> the clk_branch2_mdio_ops is used.
->>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->> ---
->>   drivers/clk/qcom/clk-branch.c | 7 +++++++
->>   drivers/clk/qcom/clk-branch.h | 1 +
->>   2 files changed, 8 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
->> index fc4735f74f0f..5e08c026ca4a 100644
->> --- a/drivers/clk/qcom/clk-branch.c
->> +++ b/drivers/clk/qcom/clk-branch.c
->> @@ -153,3 +153,10 @@ const struct clk_ops clk_branch_simple_ops = {
->>   	.is_enabled = clk_is_enabled_regmap,
->>   };
->>   EXPORT_SYMBOL_GPL(clk_branch_simple_ops);
->> +
->> +const struct clk_ops clk_branch2_mdio_ops = {
->> +	.prepare = clk_branch2_enable,
->> +	.unprepare = clk_branch2_disable,
+>> I send a bit of patches but I use very simple workflow. It is really
+>> simple, so simple, that I was always surprised how people can make their
+>> life difficult with some complicated process to send patches... and then
+>> obviously skip some maintainers, because of that process.
 > 
-> I see none of the clocks specify halt_check, which would imply that
-> these two calls just turns into clk_enable_regmap() and
-> clk_disable_regmap().
+> Exactly - this script aims to solve precisely that problem. It fills the gap
+> between running `get_maintainers.pl` and having to manually edit its output to
+> add "To: " and "Cc: " and somehow incorporate it in the body of the patch(es).
 > 
-> So, isn't this then equivalent to clk_branch_simple_ops?
+> With this script, the workflow would be as simple as:
 > 
-> Regards,
-> Bjorn
+>    1. Generate patches using `git format-patch`
+>    2. Run `add-maintainer.py` on the above patches
+>    3. `git send-email` the patches.
 > 
+> That's it - no need to manually work with email addresses.
+>    
+>> I almost always feed git send-email with addresses from
+>> scripts/get_maintainers.pl. This tool would not bring any benefits to my
+>> simple workflow.
+> 
+> In the light of the 3-step workflow I've envisioned above, could you please
+> elaborate why not? If anything, it will only save a developer's time.
+> 
+>> For newcomers, OTOH, I would either recommend simple workflow or just
+>> use b4. Why? Because if you cannot use git-send-email, then it means
+>> your email setup will make your life difficult and adding maintainers to
+>> existing patch won't help you.
+> 
+> You've mentioned a "simple workflow" many times - could you please share more
+> details on the steps you follow in your workflow for sending patches?
+> 
+>> This tool depends on the command line and shell interface of
+>> scripts/get_maintainers.pl which is another reason why it might not be a
+>> good idea.
+> 
+> Could you please elaborate on why depending on the output of
+> `get_maintainer.pl` is a bad idea? It's what everyone uses, no?
 
-Thanks Bjorn for pointing this, i will add the the halt_check in the 
-next patch set, halt_check is applicable.
+My opinion is that it would be a better idea to add a new output mode
+to scripts/get_maintainer.pl than adding another script on top of it.
 
->> +	.is_prepared = clk_is_enabled_regmap,
->> +};
->> +EXPORT_SYMBOL_GPL(clk_branch2_mdio_ops);
->> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
->> index 0cf800b9d08d..4b006e8eec5e 100644
->> --- a/drivers/clk/qcom/clk-branch.h
->> +++ b/drivers/clk/qcom/clk-branch.h
->> @@ -85,6 +85,7 @@ extern const struct clk_ops clk_branch_ops;
->>   extern const struct clk_ops clk_branch2_ops;
->>   extern const struct clk_ops clk_branch_simple_ops;
->>   extern const struct clk_ops clk_branch2_aon_ops;
->> +extern const struct clk_ops clk_branch2_mdio_ops;
->>   
->>   #define to_clk_branch(_hw) \
->>   	container_of(to_clk_regmap(_hw), struct clk_branch, clkr)
->> -- 
->> 2.17.1
->>
+Or document somewhere how to use get_maintainer.pl with git-format-patch
+without any additional scripts.
+
+Neil
+
+> 
+> Thank you.
+> 
+> Guru Das.
+
