@@ -2,63 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C2AE780BD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 14:30:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94C96780BDA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 14:32:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376915AbjHRM3t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 08:29:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41088 "EHLO
+        id S242854AbjHRMb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 08:31:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376869AbjHRM3Y (ORCPT
+        with ESMTP id S1376965AbjHRMbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 08:29:24 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81062103
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:29:22 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4ffa4f4769fso770987e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:29:22 -0700 (PDT)
+        Fri, 18 Aug 2023 08:31:37 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C301D4499
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:31:08 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe48d0ab0fso1183111e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:31:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692361761; x=1692966561;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=j4GDMSuzBUkJN6vb3YDloQ10Pm7mdblojzb+ZXz5JBk=;
-        b=X1Y/kmc5+4lIINHmlD0KLxCNbWt5DwPNv7EEXkyIjnS2Ovxvrtzwr3JXIvMBBo6k7R
-         /RozwlP+KROydUGTMfWwW8CrtxQ8k3hwntO8oKgQTJWW+HBB66TkE2XYt+Ze16HRZxbF
-         1AGt3isnN7h0K3/VYXWFKoQSnJZUewQp32ObBW6U9uvDAwvPvVH6w/jv31kcg6kakvEC
-         i2NVBn+rmrxTaflJj03xLpKAwMiHBvTCG3N3jvdbRQ1CfsAHXUixl69vKCZwCsEzbkjH
-         7f+Hg4EuI7/2Fwp1nMIUNuTrfPC92zUTWdiplnulG8V86GpiWAstsiTdhx2+LhWzXNSp
-         /cTA==
+        d=linaro.org; s=google; t=1692361850; x=1692966650;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YvQsNhdnQdk+Cgt+uGhh5HJ7Lu5cvb/ImQpHeSvKfro=;
+        b=ZF5qVaIa2pNn5BjqqDCia7SaQ9fEAi8GDVFvgoz68fXfhjxd3Wxel4pNCyDP3Dj3cd
+         N1dEwf1ITb9kYljPAbE/J6yCqrtN1cRFQkOAUGEthp5GXnQJOpgBN/JTezUnEiyYCrf9
+         1ux7ig9wJFNZNB7tStVhRTJGrSQhOmWMLm9h65GcMHatdjc7T1b38g3A8HAz72UVQvnD
+         2EHjwWKFHsJm3jyKTAiRNmhUH40qBOn8r0EKJJVY/DwIhsRKLVtZUjxv1SdHIHDgiBN5
+         HKgz8bzQ51B5joxYvFzHVttvrc8tB4lt5jgydJCAkbGEiVf1OCbYq1Lueg8fSAeqdNE6
+         hhbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692361761; x=1692966561;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j4GDMSuzBUkJN6vb3YDloQ10Pm7mdblojzb+ZXz5JBk=;
-        b=i6EgIoCb/Pv8RdW7+b/NDdFIFvF00mUpvcNQcz11YrObUipivInmwrsenp4sRIx43K
-         0Yp3CN80/5FI1HCpPuXkTezJ3ZXmJO8UFC/rhbmQDRPRokFKXqndEsrHVt2BLAzsfWmH
-         Sz17aMEghT6MWJLRRyKTGF2g6XKttdVuu2CallwyHXMax5X8905vti/ey06pZ0tiXzjo
-         N33T0PNbsSlb2swfYy7OqZEvtE0BjEXe7QgK7WHx9Z/exAudCzNRUz5eqXCCaRtDboz2
-         /j66G+b9jB/rn7sbUkp9m0+VUmhBN+0K6twG6er+MLpZuQArrEGCKlHKLs+aD7LQm6Gn
-         +hnA==
-X-Gm-Message-State: AOJu0YzakBNeqK8JKuMHL5bVGC8NB/NmE3mrtAwDXgIXHz1ClOx4GSe5
-        35uN6WgrSVpJ2tHZyyOmC6Ulxg==
-X-Google-Smtp-Source: AGHT+IG69HWQtnYs+CSy9vMa3/6SjDlDWFcvjF3pYlNyzKb5yEjKVA/zaTO6w5pTNdbSubYZGIi2mA==
-X-Received: by 2002:a19:4f5e:0:b0:4fe:5860:7abe with SMTP id a30-20020a194f5e000000b004fe58607abemr1533689lfk.7.1692361760811;
-        Fri, 18 Aug 2023 05:29:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692361850; x=1692966650;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YvQsNhdnQdk+Cgt+uGhh5HJ7Lu5cvb/ImQpHeSvKfro=;
+        b=SgXSqOXfbVrL2D+G3HvX7icAbhLs3/NEpqy5P4LUfsgOM59JPorLMk4L7yRx9wsVfR
+         tcBCf+Vc/kxG8MYhAslqqOi2CzHesF3a5MLEjnpkEZNnDjxncDqBVpbdhGb9xHw75TDX
+         XTpUWni6SoHWUi1lbtmocXTrffLqcY0EiaxpOqfYE6cx5RyoB0kxSdSO7vecTXp8QLUr
+         QyajglxT7C4n99bQXt1qyrsEQ1n5eFZHXzqnYIFPi0ASe87RkcsQhBtjw6aVkEtKc+GH
+         1uPDG3RuQTjaMvDm16OnFnmJm1eK4GCcqT+j/JS5mudLhN/FcYIxsrh+4Oa5pRgbEBJr
+         4njA==
+X-Gm-Message-State: AOJu0YxPNtRyLCiAFX5JNh3Jy5SD4JXGjUhYdEoVvtmMDqGOqrb8orw0
+        bWstxfeWAGuJeFFerSk5GkWjYw==
+X-Google-Smtp-Source: AGHT+IH8nBFHg59BkBC4bYAOSHIekLi+vle9aM3jmzC+YkFHoCtq6kRlwJwzFOB/2xoFvwjs9ccbUA==
+X-Received: by 2002:a19:6447:0:b0:4ff:9fa5:9a20 with SMTP id b7-20020a196447000000b004ff9fa59a20mr1315108lfj.60.1692361850264;
+        Fri, 18 Aug 2023 05:30:50 -0700 (PDT)
 Received: from [192.168.1.101] (abxh52.neoplus.adsl.tpnet.pl. [83.9.1.52])
-        by smtp.gmail.com with ESMTPSA id q4-20020ac25284000000b004fbf5242e8bsm326070lfm.231.2023.08.18.05.29.19
+        by smtp.gmail.com with ESMTPSA id q4-20020ac25284000000b004fbf5242e8bsm326070lfm.231.2023.08.18.05.30.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 05:29:20 -0700 (PDT)
-Message-ID: <4d14de78-16a9-4720-9422-b684f261df01@linaro.org>
-Date:   Fri, 18 Aug 2023 14:29:19 +0200
+        Fri, 18 Aug 2023 05:30:49 -0700 (PDT)
+Message-ID: <f0f55093-585f-4270-8ced-2c92a4808c9b@linaro.org>
+Date:   Fri, 18 Aug 2023 14:30:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/13] media: qcom: camss: Use >= CAMSS_SDM845 for
- vfe_get/vfe_put
+Subject: Re: [PATCH v2 10/13] media: qcom: camss: Allow clocks vfeN vfe_liteN
+ or vfe_lite
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
         mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
@@ -67,8 +65,8 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230817143812.677554-1-bryan.odonoghue@linaro.org>
- <20230817143812.677554-8-bryan.odonoghue@linaro.org>
- <f1a8e7db-ce26-4bdc-beb6-00ae4f0baa78@linaro.org>
+ <20230817143812.677554-11-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -104,41 +102,58 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <f1a8e7db-ce26-4bdc-beb6-00ae4f0baa78@linaro.org>
+In-Reply-To: <20230817143812.677554-11-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18.08.2023 14:28, Konrad Dybcio wrote:
-> On 17.08.2023 16:38, Bryan O'Donoghue wrote:
->> From sdm845 onwards we need to ensure the VFE is powered on prior to
->> switching on the CSID.
->>
->> Alternatively we could model up the GDSCs and clocks the CSID needs
->> without the VFE but, there's a real question of the legitimacy of such a
->> use-case.
->>
->> For now drawing a line at sdm845 and switching on the associated VFEs is
->> a perfectly valid thing to do.
->>
->> Rather than continually extend out this clause for at least two new SoCs
->> with this same model - making the vfe_get/vfe_put path start to look
->> like spaghetti we can simply test for >= sdm845 here.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> Using >= here is veeery arbitrary and depends on the next person
-> adding a SoC in chronological, or used-tech-chronological order
-> correctly.. Not a fan!
+On 17.08.2023 16:38, Bryan O'Donoghue wrote:
+> The number of Video Front End - VFE or Image Front End - IFE supported
+> with new SoCs can vary both for the full and lite cases.
+> 
+> For example sdm845 has one vfe_lite and two vfe interfaces with the vfe
+> clock called simply "vfe_lite" with no integer postfix. sc8280xp has four
+> vfe and four vfe lite blocks.
+> 
+> We need to support the following clock name formats
+> 
+> - vfeN
+> - vfe_liteN
+> - vfe_lite
+> 
+> with N being any reasonably sized integer.
+> 
+> There are two sites in this code which need to do the same thing,
+> constructing and matching strings with the pattern above, so encapsulate
+> the logic in one function.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 22 ++++++++++++++-----
+>  1 file changed, 16 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 8f48401e31cd3..73380e75dbb22 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -437,6 +437,20 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+>  	complete(&vfe->reset_complete);
+>  }
+>  
+> +static int vfe_match_clock_names(struct vfe_device *vfe,
+> +				 struct camss_clock *clock)
+> +{
+> +	char vfe_name[CAMSS_RES_MAX];
+VFE_MAX?
 
-Perhaps some sort of a compatible-bound flag would be better suited
+the current value of 17 would be very excessive for VFEs!
 
 Konrad
