@@ -2,118 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50AAB780ABE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 13:07:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABDDA780AF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 13:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353576AbjHRLGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 07:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49528 "EHLO
+        id S1351100AbjHRLTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 07:19:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238043AbjHRLGQ (ORCPT
+        with ESMTP id S1376582AbjHRLTY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 07:06:16 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC29B2722
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:06:14 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe1b00fce2so1057245e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:06:14 -0700 (PDT)
+        Fri, 18 Aug 2023 07:19:24 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB50A3ABB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:19:22 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ff8f2630e3so1204540e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692356773; x=1692961573;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UMIktzBcgCZ2Vl0uMoPdLyMfuXFnj8LQIJonADyTrTE=;
-        b=hc7DAw1jAzejV41R4/oXFzjTTyJcG4TEUTMq2mRDdLba4GbIlI6HIu45uZ55hhxcK5
-         Hk1jHJkCz3PT4fZQh1pWDeERortudXYMit4GMFztCX8fpiiJWh/Se4OOB+bGSysIvy+D
-         Q03npqSi7pZucFaqytpwos/Gs1lJZvhCPMX78z+z3BFIPj6MK89IbZkngBqcxM7t28Na
-         4TncwsUIeSJlYeXpBeH98lgJrS57JRHmexw0C2s8odiyZY1hBO4u16fQ616TmRIDvtqM
-         8K5P2SUH+Qt7SWMzeYaMG4fWi/D98DKiBJChjwxhTajd4x+p19nRAqMkW03bI3yTs54D
-         OHqg==
+        d=linaro.org; s=google; t=1692357561; x=1692962361;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8J+2LJ6gMgX1TcmKQ5rJGED44/gqlNHcs0SShniQNG0=;
+        b=hYlYFHdArVhsfczEk8icQ9TW5MFfxfJodfUmfmJnb9KDVW10yuCFY4OH7LF/CUCGHm
+         hhG84zOTY4zFApCUMeV9UQUVzcFFOeC7TbwNMBjtgCVqaiD9YfaYOpu+JjPT8kF9vQh/
+         A/WvROQN/bUqj2F4tBrM601wmljc7A1XOxCkca0usODFEL5tRpwh6eU2izhUtykqYgKx
+         uORdlyWicz513oxqu9P4jLduLoSlSUV5He5T7xnG1SaajSZ0cBzZ05DHORJupaCYQ/LC
+         8G4am6CR9GgwWelSAZkdkznOwdzGYm57jfl+cKcWllqq1XDdc6Qk6X888T7FkTwLtRTa
+         Bz0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692356773; x=1692961573;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UMIktzBcgCZ2Vl0uMoPdLyMfuXFnj8LQIJonADyTrTE=;
-        b=X1jUANCiZR60kNMsdhvwS4MxDqn1s73urEHDnAuuZ/vR6bvN4RpqoBg8SmT3J1dp6q
-         FwAkUA47uNkLMwT4LphnNGgEiPUj1mPCvnXFapQLxIV8Cs7pgornKLMSOl7EXQV615ae
-         IoK5wvvcVhajC6Hn62FCJD8fuE8wMXwAMEKS+l5T3TP3yHlXcerXFzlNC5jN04x1S6FD
-         Ol+deV3CcbXl0Bka/V2y/jkBCshxJwY29MIvhk7RWHG+42glFPRSxkTZPcrsvJpIHHIJ
-         vE8NoA1xgLpUk1hc5Ys+vSLJGSsIOlSH2me0UQEYsWny8qyQ2+b+lyl/DSyWFSbJwu9B
-         Yg2Q==
-X-Gm-Message-State: AOJu0Yx9OT0KAYPTDB5CWSV9f81WBPI+FcNucDTUl7Ti0/WcWnGR4HmJ
-        LnFo2kexby9LNIhBi2wuhBY1Lg==
-X-Google-Smtp-Source: AGHT+IH0IRqcnpfQ1DcMW1gOJYtBbBbQUGhUUhchG+P2KKAZ3KQNIExD06f+xoIePJauUtb49QueuQ==
-X-Received: by 2002:a05:6512:2342:b0:4f9:56a9:b98e with SMTP id p2-20020a056512234200b004f956a9b98emr1801620lfu.58.1692356772869;
-        Fri, 18 Aug 2023 04:06:12 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id k19-20020ac257d3000000b004ff91a94156sm290851lfo.121.2023.08.18.04.06.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 04:06:12 -0700 (PDT)
-Message-ID: <e87b35f9-f585-4a3f-bd31-9ebeba52f66b@linaro.org>
-Date:   Fri, 18 Aug 2023 14:06:11 +0300
+        d=1e100.net; s=20221208; t=1692357561; x=1692962361;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8J+2LJ6gMgX1TcmKQ5rJGED44/gqlNHcs0SShniQNG0=;
+        b=gr+F+NFS2SPi5ce42oyfEoeiQ1jipv7VqpY5Bxqg+UafFl9eUgc/a09Df5jl3eOzOe
+         9l+wXgbpL3A6EJS4WLl4rRzdZTaQE8iYpWLEtsJI5Cs8lvH5PqF3WKogXqrsawcUEIqu
+         SWI0WTmEW5BPYWB6zfd7AV7Rj3mm7ilD/1OmoGVOM5mjmPzFzkr9N81H+Lh7ahgFP7BO
+         CIgsIX8vKH3fRuXUOLTjyXxYCr0vWOP/bKbrHmdY2PVavyz+7KU/Frloey4UwllgemHq
+         lfzt1xZNQo+eQiAmIvMQnHifnFzX1fpAn4c+k3UvlqNzsQJjhr3mZvId+IdOPEXwPaC1
+         izfw==
+X-Gm-Message-State: AOJu0YxfSPa8qCvWPKWNa/lHYnTzkF52FJbAatCXm2Tz8BciVx0uIBS6
+        40iZTbxJj+KhZ7VEOktRXZmP5C3ev2raa0sWHN0=
+X-Google-Smtp-Source: AGHT+IFJXUAn0p9DErBUyxxlLzFewEeyQfkiHIltQPEyKvMO4VEidblp4mI544OdZsxQuQNSQ0Bf4g==
+X-Received: by 2002:a05:6512:2520:b0:4fb:889c:c53d with SMTP id be32-20020a056512252000b004fb889cc53dmr1521339lfb.10.1692357560654;
+        Fri, 18 Aug 2023 04:19:20 -0700 (PDT)
+Received: from [192.168.1.101] (abxh52.neoplus.adsl.tpnet.pl. [83.9.1.52])
+        by smtp.gmail.com with ESMTPSA id i8-20020ac25228000000b004ffa28ef3a4sm304679lfl.100.2023.08.18.04.19.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Aug 2023 04:19:20 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Fri, 18 Aug 2023 13:19:09 +0200
+Subject: [PATCH] arm64: dts: qcom: sdm670: Fix pdc mapping
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] i2c: qcom-cci: Use dev_err_probe in probe function
-Content-Language: en-GB
-To:     Liao Chang <liaochang1@huawei.com>, andi.shyti@kernel.org,
-        florian.fainelli@broadcom.com, rjui@broadcom.com,
-        sbranden@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
-        yangyicong@hisilicon.com, aisheng.dong@nxp.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, kblaiech@nvidia.com,
-        asmaa@nvidia.com, loic.poulain@linaro.org, rfoss@kernel.org,
-        ardb@kernel.org, gcherian@marvell.com
-Cc:     linux-i2c@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20230728013148.1720978-1-liaochang1@huawei.com>
- <20230728013148.1720978-6-liaochang1@huawei.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230728013148.1720978-6-liaochang1@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20230818-topic-670_pdc_fix-v1-1-1ba025041de7@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAKxT32QC/x2NUQqDMBAFryL73YXElsb2KqVIkt3UBYkhsUUQ7
+ +7Szxne8HZoXIUbPLsdKv+kyZIV7KWDOPn8YRRSht70VzPYAdelSMS7M2OhOCbZkIxLgdKNrHu
+ AdsE3xlB9jpOW+TvPKktl3f6PXu/jOAH3nfMueAAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692357559; l=1169;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=pCfQcaauHLSUCltfnHoDTljoC0JWqXFHbNjpyiiD0Lc=;
+ b=rhfvECauXBJe2d6lXCOnthc3+VZjyv9qhYOgBlTdTZrKQfjrCMSMqd509UYcyrUrJqXsYl7YF
+ hIjG369883ADaZ5qVd39I10TUaNcTLgBpGtfvsrixdtlv4RK4VUwOmU
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/07/2023 04:31, Liao Chang wrote:
-> Use the dev_err_probe function instead of dev_err in the probe function
-> so that the printed messge includes the return value and also handles
-> -EPROBE_DEFER nicely.
-> 
-> Signed-off-by: Liao Chang <liaochang1@huawei.com>
-> ---
->   drivers/i2c/busses/i2c-qcom-cci.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+As pointed out by Richard, I missed a non-continuity in one of the ranges.
+Fix it.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reported-by: Richard Acayan <mailingradian@gmail.com>
+Fixes: b51ee205dc4f ("arm64: dts: qcom: sdm670: Add PDC")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-> index 622dc14add9d..cf13abec05f1 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -588,10 +588,8 @@ static int cci_probe(struct platform_device *pdev)
->   	/* Clocks */
->   
->   	ret = devm_clk_bulk_get_all(dev, &cci->clocks);
-> -	if (ret < 1) {
-> -		dev_err(dev, "failed to get clocks %d\n", ret);
-> -		return ret;
-> -	}
-> +	if (ret < 1)
-> +		return dev_err_probe(dev, ret, "failed to get clocks\n");
->   	cci->nclocks = ret;
->   
->   	/* Retrieve CCI clock rate */
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index 84cd2e39266f..ba2043d67370 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -1328,7 +1328,8 @@ pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sdm670-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
+ 			qcom,pdc-ranges = <0 480 40>, <41 521 7>, <49 529 4>,
+-					  <54 534 24>, <79 559 30>, <115 630 7>;
++					  <54 534 24>, <79 559 15>, <94 609 15>,
++					  <115 630 7>;
+ 			#interrupt-cells = <2>;
+ 			interrupt-parent = <&intc>;
+ 			interrupt-controller;
 
+---
+base-commit: 7271b2a530428b879443b274c191b34536a4ea11
+change-id: 20230818-topic-670_pdc_fix-d07fbdf4d179
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
