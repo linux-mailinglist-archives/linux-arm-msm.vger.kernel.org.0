@@ -2,75 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 531AC780AFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 13:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E48F1780BB4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 14:23:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376590AbjHRLUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 07:20:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58384 "EHLO
+        id S1376840AbjHRMWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 08:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376587AbjHRLT6 (ORCPT
+        with ESMTP id S244557AbjHRMWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 07:19:58 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DDC23AB4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:19:57 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4ffa462d98fso812753e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 04:19:57 -0700 (PDT)
+        Fri, 18 Aug 2023 08:22:13 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4E0E7C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:22:11 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so13089381fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 05:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692357595; x=1692962395;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1692361329; x=1692966129;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SaIs9GGrpjFzjZfb2NWudCvbN+x4Yej8aSp+fbPHe+M=;
-        b=ZAGkP0aOweHjugDV/CFSpDRXA0cFcMnKGGcdV1zSUOW+D5ziDWhEsVMb1gkviEMM8h
-         r3CZ+7+j4eMV4pr39qVxSnjQwaU1frmO59/WznXyCtA/z8F+y6bd9yK4qNfLBJmjFS4q
-         80EJdpzcXWfg2NzFEnUA0EsYaxtykE4phD7lLI1LLlOPmlmWyAT8Z+zG/DLsVHB2Wtdc
-         kyvPx46yNGv1h/8QgRSI+TUgiJmPoapNBG3GWzukJhD0tl5athWl8vvZhNVuh4g/honj
-         QtbTg5i7a4NLl2LQqiu1U5hLXMXaDRnB3yPDrw3vZl7nWASrhlnsbG8oc97op6i1qJQp
-         OwHQ==
+        bh=Anar2tjwy/nKg+s1vkJ6uTXJO/Hb9Dx22ZtKE9tT+8c=;
+        b=ile5Q6cIlfvtubyp6Z7BHRCPZmE0+l0/R3Rv3Dl8elnIfdoWvxy2WQdmwAbPVlkUfR
+         ILPreCdJjiuZaAfhexuCLKaLkrGLNLtCo1Hp4qJGLEa/YmgQGDge6NmjIkA8JKEH3cCO
+         5wlFEpCMC6FSRmJGTkOg02LGSLfgdEQL9Eow5/ezpu430MN8RkQpj3rGt0Im9bCITftu
+         DDtJx9DUaQd3Urq3Iu6wj07aUVbJ/Nc7EQLvVFDv3WQXQS/Is57aDEmqBRabuQxfQnam
+         nxArZylYyJdd/sexNzoNXJ5VK8LknSgMRlye7PX0CDlz1gXfFkj4yeK3wpjqErgm6C7J
+         DaZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692357595; x=1692962395;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1692361329; x=1692966129;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SaIs9GGrpjFzjZfb2NWudCvbN+x4Yej8aSp+fbPHe+M=;
-        b=JBAkQnhwuMbPcZQt3m/pXiO5svU29M2k6rld7Drad92ZmYQOeneeKjqrgqA1N/H3rR
-         36VW72xbBmV2qX1XgxswdI1Uw/pwvdehJd//J2qD3ew1DU7zlHiFOwoYyW2EJ0y7imgS
-         s1VN091Q68cLlHD2KnaGo2ZKoHASB7rjPX9TE3lM6fPE8cqbyG3z+GRk3u966noJ3p3o
-         D3L//7uMy32QCYXU2gQD/f0uDwYd88z7VTeY+4LrgmuMWsapn681GUQ4BkMcZgNY2Rfx
-         EnueHtTiS3R/R5gig/kKlMFN7w/lqhYjH/B40y3VuFp0nXmAcET3ziL+SZmWkiR6+I9R
-         jOZQ==
-X-Gm-Message-State: AOJu0YxJoUQ1YPdQIYpNiCMOhl0BfMdKNzhwZcKCRpi8jUDIL190+JKH
-        +evHSEdTXIvdH6Q/LBZAkHmtig==
-X-Google-Smtp-Source: AGHT+IH1QGgkT8qy11B4aXrdBcnwp+WPkwmqVLMOnNIs58v84jsbXM1TUxbUTVOWItOKMsN8PYobbw==
-X-Received: by 2002:a05:6512:3da9:b0:4f9:54f0:b6db with SMTP id k41-20020a0565123da900b004f954f0b6dbmr1856235lfv.13.1692357595427;
-        Fri, 18 Aug 2023 04:19:55 -0700 (PDT)
+        bh=Anar2tjwy/nKg+s1vkJ6uTXJO/Hb9Dx22ZtKE9tT+8c=;
+        b=dhzx6J+8TPAj6LbKfK8VNb6/KalP425eQGRTQmaBlO8NxrjMKGcKx0UamVS8UznwKG
+         Z3ybPFhAk782FA5bd9QajV85bzxeaV+f8zbWFawhtT88jg4+V7Y5b2vlED1UEqZqK+NO
+         yYha1gpYmYfMG+mMnyo5kDd/jl7pT+c+Mwktt40r//Xg6CTnTzNIDpCkdq537wbFBRp5
+         8gbuzWsWeWoz+RnyVp9msP+kEsVbWDZ2G/6EWBOeJs72sDt9v5NBnIGSImiflGPHFp2v
+         K1EB/G1Wxw/Ssv0nEPgfX7kb4mga7drUXnnBG/wSKxtWgKLwTWIwC7Zu5WK5dCXlOJgY
+         GsCw==
+X-Gm-Message-State: AOJu0Yxe03jLgyDZpFOt3/Mo4+6M5JFuHo7Ah5pn00WHej9vevohz3RQ
+        0rq4JcxCv52S64qJnXHiNfFBFA==
+X-Google-Smtp-Source: AGHT+IEEf2Bcd73pO4OiJcwoKu5dGzgSJ+M4jI+DqDHBxOF4FOBYxsGC7UiYBYPAaCiPLE/5q/VJSQ==
+X-Received: by 2002:a05:6512:3a89:b0:4f8:56cd:da8c with SMTP id q9-20020a0565123a8900b004f856cdda8cmr1558312lfu.34.1692361329572;
+        Fri, 18 Aug 2023 05:22:09 -0700 (PDT)
 Received: from [192.168.1.101] (abxh52.neoplus.adsl.tpnet.pl. [83.9.1.52])
-        by smtp.gmail.com with ESMTPSA id x14-20020ac2488e000000b004fe461aab36sm298269lfc.129.2023.08.18.04.19.53
+        by smtp.gmail.com with ESMTPSA id q27-20020ac2511b000000b004ffa0350851sm329171lfb.78.2023.08.18.05.22.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 04:19:55 -0700 (PDT)
-Message-ID: <4ddfd53a-8fa5-4ad7-8768-59876586ccbc@linaro.org>
-Date:   Fri, 18 Aug 2023 13:19:53 +0200
+        Fri, 18 Aug 2023 05:22:09 -0700 (PDT)
+Message-ID: <b2bd8494-44eb-4185-9040-d50068112063@linaro.org>
+Date:   Fri, 18 Aug 2023 14:22:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm670: add specific cpufreq
- compatible
+Subject: Re: [PATCH v2 02/13] media: qcom: camss: Start to move to module
+ compat matched resources
 Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230816230412.76862-6-mailingradian@gmail.com>
- <20230816230412.76862-9-mailingradian@gmail.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230817143812.677554-1-bryan.odonoghue@linaro.org>
+ <20230817143812.677554-3-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230816230412.76862-9-mailingradian@gmail.com>
+In-Reply-To: <20230817143812.677554-3-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -120,13 +115,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.08.2023 01:04, Richard Acayan wrote:
-> The bindings for the CPU frequency scaling driver require a specific
-> compatible for the SoC. Add the compatible.
+On 17.08.2023 16:38, Bryan O'Donoghue wrote:
+> There is a lot of unnecessary if/elsing in this code that arguably
+> should never have made it upstream when adding a second let alone
+> subsequent SoC.
 > 
-> Fixes: 0c665213d126 ("arm64: dts: qcom: sdm670: add cpu frequency scaling")
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> I'm guilty of not fixing the mess myself when adding in the sm8250.
+> Before adding in any new SoCs or resources lets take the time to cleanup
+> the resource passing.
+> 
+> First step is to pass the generic struct camss_resources as a parameter
+> per the compatible list.
+> 
+> Subsequent patches will address the other somewhat dispirate strutures
+> which we are also doing if/else on and assigning statically.
+> 
+> Squashed down a commit to drop useless NULL assignment for ispif resources.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
