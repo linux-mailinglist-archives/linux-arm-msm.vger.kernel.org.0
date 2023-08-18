@@ -2,92 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1B867808CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 11:40:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 057A47808D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 11:41:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239556AbjHRJjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 05:39:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55244 "EHLO
+        id S1359393AbjHRJlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 05:41:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359366AbjHRJjZ (ORCPT
+        with ESMTP id S1359332AbjHRJkt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 05:39:25 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB42F3A82
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 02:38:59 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99bed101b70so83652466b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 02:38:59 -0700 (PDT)
+        Fri, 18 Aug 2023 05:40:49 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 189DC30D6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 02:40:45 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso1005551e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 02:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692351538; x=1692956338;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1692351643; x=1692956443;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nqZ6MWOxrmCXsW/1kQTa72MKrzFFrYHg0blm9NC3dMI=;
-        b=FNHUYJDSoulIb7iBs9FTgQW++CfGhDKiloUS7Ei7239N+/KHeex3fNWNdYCiHHWdIS
-         GgY/EyKIKD0lANvQD7eyF7k/vvIWL0G/e0Gyf0lLcQJOQjRPCxOnwWzWIhLpfXrJKTL5
-         z82c3H2rkwg2iXI5NBI3G/3310GYiZ8lGvE7FQ3Fgd7KNNr1W5Y5SqhykMCAp6DXCCU7
-         HYKgnikcSRFk45zJ6ausrUk523XHNPRYXS+h/JUJG1a3oLZ/Gssj7QezNNWrWsYUypFt
-         +CxIdItsvSYvDKqrGsM+YJeccaHUklQ4NbfPaw3GBiiwrMpf3v1VGsCvhgqpqhoEyPRB
-         zGUw==
+        bh=kr50GcAKm2aJwhKCS62LKftx0ItaoNANdBm3FHGUdv8=;
+        b=OkCG2fh5IVrVZlI5WVmkxFkfVT/zTmQUg/N8Hpi5VWnPibTSpXEyHhskzdGVv3dOnA
+         sceOYUgkvK1rDrpkWiUFg+l4SslbKLAuwud99ssU7hF5RotT1jHCUMz3ci6gK9ADmdk+
+         xUrNl5iWksSm+vVNmlJKtYOjgJa+0l34MN+23xjCShOdVMJswUJMJycEAh8YMt/W1faP
+         3L/qYjhiLLLIMFFAD3qx5sr3byUzOhwv8B1MGCeFhkLtBWERrwbaTxXievjVB7xfLZTT
+         ZIdrPoayGkAS+zLb2SU57GpGNyN0fIaJzSy+XZYRsaQ8nlFX/pY9I3IcMY85pXwHnQPK
+         gufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692351538; x=1692956338;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1692351643; x=1692956443;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nqZ6MWOxrmCXsW/1kQTa72MKrzFFrYHg0blm9NC3dMI=;
-        b=cWM8eNc2fgVz1ON684F8ibIf6HiOC2NeKVLdDA0CyIoN2eOWks4gGH6COwhu2o4CzN
-         FcExMwFQIvebicbNWQvpEkEfOhNaOkm/0eabFRQS49+DlYczd8wdq+t1TimEtUTP2oCC
-         oaHjp/V7bCNEuqCWzUnvbUorrlKH4IyOlhuwh/g56NSz7eL3CWdevc2VVTCACJr1ldMf
-         PQDPZpbLXFCe5e30t2h5r2ZEBnfVYjsZG4WMBlyj4WKvQ+mWfwND71HlnYGpqEj/CvyL
-         7qR50EoeBa/k6/ZWu8f7Ri+weB7pVphabFm6bX2MUntu0zIyJ18RK3NQQ0Fw/qWiVHht
-         +8ew==
-X-Gm-Message-State: AOJu0YxFNTAoqQZLnUlHe5d0bd1JxT3OlcTTj70osv1RjjM0B7n0I3zg
-        Wh68PcUjEmG3St2bi2nDmBTj9w==
-X-Google-Smtp-Source: AGHT+IEK5isAGbMqbI3eLOVuD1pqDu9watKUUal3vatHRjDp8dA8ntj8RXcltrZlxugpJdSKvlFLug==
-X-Received: by 2002:a17:907:6e20:b0:99b:5689:1331 with SMTP id sd32-20020a1709076e2000b0099b56891331mr1886009ejc.59.1692351538183;
-        Fri, 18 Aug 2023 02:38:58 -0700 (PDT)
+        bh=kr50GcAKm2aJwhKCS62LKftx0ItaoNANdBm3FHGUdv8=;
+        b=WSixPkyY6LUF2RzrQWEwKT8Hd3t/q9AWeVQlqf0ZsWUG96RR8Jo82ski6FdNmF/QFj
+         7E6mHU9Dz4fQfNgDdItKYysx6c7cwpzOHE+pdHUdv2P5qcqCl6GMlhByMkMGssLGZZlC
+         jkxmHrvxuL1P3CY0YgebBaWfOZEUM6z6ukVFUT2yafS1WlpPW5rNQjBGDRoH0qff9slp
+         7s3sxOsqJC9qNWckPg8WlGIJZzlt4yQjy7y/WhGr+UkFdoVxtZ/rk+cXjQgbh8zq8fzt
+         E8qiNnztdI8/F/pHgNTjczG8rOgOqk5tXgAY5GKFqq1+l1YBMljoMAYzu+pooy6PcOFY
+         QP+w==
+X-Gm-Message-State: AOJu0YyN8L/b7T9TbMrs8zCXjF4ryP5EM1Loe8mt2NAUR4shfgsIBuRg
+        3x+6edzPlkiklGHC2GFe3oARyw==
+X-Google-Smtp-Source: AGHT+IEN+Nr8hsbijZjf0KtwcLHjgvGL7uY++tgh1sm+MN0PUZe+8JQ4CXRLAN6xNxItm7lBZDZONg==
+X-Received: by 2002:ac2:5475:0:b0:4fd:cc8c:54e5 with SMTP id e21-20020ac25475000000b004fdcc8c54e5mr1302639lfn.41.1692351642925;
+        Fri, 18 Aug 2023 02:40:42 -0700 (PDT)
 Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id o26-20020a17090608da00b009a1082f423esm454543eje.88.2023.08.18.02.38.57
+        by smtp.gmail.com with ESMTPSA id k6-20020a1709062a4600b0099bcbaa242asm967546eje.9.2023.08.18.02.40.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 02:38:57 -0700 (PDT)
-Message-ID: <6dda7952-9622-0fe9-3daf-52816f399d2c@linaro.org>
-Date:   Fri, 18 Aug 2023 11:38:56 +0200
+        Fri, 18 Aug 2023 02:40:42 -0700 (PDT)
+Message-ID: <cc428a34-7c06-964c-2cec-123e99c92c4e@linaro.org>
+Date:   Fri, 18 Aug 2023 11:40:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sm8550-qrd: add bluetooth
- support
+Subject: Re: [PATCH v2 2/3] dt-bindings: cpufreq: cpufreq-qcom-hw: add SDM670
+ compatible
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
+To:     Richard Acayan <mailingradian@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230817-topic-sm8550-upstream-bt-v3-0-33f386e7b461@linaro.org>
- <20230817-topic-sm8550-upstream-bt-v3-2-33f386e7b461@linaro.org>
+        Georgi Djakov <djakov@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230816230412.76862-6-mailingradian@gmail.com>
+ <20230816230412.76862-8-mailingradian@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230817-topic-sm8550-upstream-bt-v3-2-33f386e7b461@linaro.org>
+In-Reply-To: <20230816230412.76862-8-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/08/2023 10:47, Neil Armstrong wrote:
-> Enable the WCN7850 bluetooth over the UART14 link.
+On 17/08/2023 01:04, Richard Acayan wrote:
+> The bindings for Qualcomm CPU frequency have a compatible for each SoC.
+> Add the compatible for SDM670.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Fixes: 0c665213d126 ("arm64: dts: qcom: sdm670: add cpu frequency scaling")
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
