@@ -2,234 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D307810C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 18:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 374447810F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 18:52:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378721AbjHRQpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 12:45:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59736 "EHLO
+        id S1378779AbjHRQvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 12:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378803AbjHRQop (ORCPT
+        with ESMTP id S1378774AbjHRQvG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 12:44:45 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E154226
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 09:44:26 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-565ea1088fbso912895a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 09:44:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692377065; x=1692981865;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bm/E+SJzoVJQyupcZ9vb90tLKWS4dMFOwnurf1FkF50=;
-        b=ZG3jplTuy/rotaOt/pEXoYex4UmWntqtoYK8z0IlNuWxWREpzkV1WsmcQZA1jW5WB0
-         qqQkYQc6BfL8oAmNNub4tAeaQvAmpy1ozNgNHX/ug6DcM7PQXnv4XzIYIRSt2gAmhNsO
-         6rinLa88aWs8KtKgJ+Z5MrGvDWPLWoIkCZf0CQOMfj2YPEe/PeTNmm0Mad0VgmRCJJ5C
-         aqtouJAqbpvcxU6WMyNnOQo2TMq1wnPIFRcEYSEgwQXOmcBHg+dbhkMPxNlqxJYxFtx7
-         dNLb3WsQyDvtwWpEFFA3g6yr+6AJ7oS5BiwXk9OoQiqrpWRdXhYgPDG98cP1tR2n2uWp
-         ZSEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692377065; x=1692981865;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bm/E+SJzoVJQyupcZ9vb90tLKWS4dMFOwnurf1FkF50=;
-        b=a9PBcicTGoABLJf+5Qu94HYKvxzHXLY2owT1gZ2OmXyDa+SABAdky/0gSJOlIKFDsc
-         82bY6nBohDySJhtgAHcIyRqQax3QwXbJCyvn2ZtxVo6ZVxAaeDVSJWyGTqEnu+kOPLjo
-         Ioh8KzZr6IKRr75liv6zkcks1F+DogmRBrH3jn2XUj8IyNg9GnL5LcEHoX6GWjsbfMoD
-         3aEG9vO+D4Aez4SWQol51kBKbqeoOGNMktMIFHivCDUkwdgoPpZB1L2UDZquIjY4gWRx
-         rpW2OIFEfEP2pYY2Nwqteit+B7L6+JEDq1vTW16kD3Fj9HhPxijf4DftJHGT298qc6ly
-         Smbg==
-X-Gm-Message-State: AOJu0YzYL/0Dfj0P6CrY4BOQF2ia7K5J4ZqaGrmdw+pz5FihYYYOH4XG
-        gii13gO0R/8ITnzevrVIs6Cy0dYcpRgBxZ4GgQ==
-X-Google-Smtp-Source: AGHT+IHQjMTLxK8JUaDRU7YS94Zyf9+WY8/kpAekeB9JNTb4rkThqh3LfaTLb/+TQKbLHSZnTovjrA==
-X-Received: by 2002:a17:90a:4ec2:b0:268:34b1:a5a9 with SMTP id v2-20020a17090a4ec200b0026834b1a5a9mr3180699pjl.8.1692377065482;
-        Fri, 18 Aug 2023 09:44:25 -0700 (PDT)
-Received: from thinkpad ([117.206.119.32])
-        by smtp.gmail.com with ESMTPSA id 1-20020a17090a19c100b00267ae12b80bsm3736116pjj.34.2023.08.18.09.44.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Aug 2023 09:44:24 -0700 (PDT)
-Date:   Fri, 18 Aug 2023 22:14:18 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Radu Rendec <rrendec@redhat.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: sa8540p-ride crash when all PCI buses are disabled
-Message-ID: <20230818164418.GA81989@thinkpad>
-References: <92de74746a624c2ece615a6286301db7647b5590.camel@redhat.com>
- <80b73fa9-cebe-e058-6ef8-f039064cdd34@linaro.org>
- <3e0de46efe32e2e4c75fa3af9dabd0477e144823.camel@redhat.com>
- <20230816171601.GB23057@thinkpad>
- <liyxirdfxcxrnji2o6p63cocgl7qllyih7q47zdft7tc5jni2j@h6akjddfu6o3>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        Fri, 18 Aug 2023 12:51:06 -0400
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2047.outbound.protection.outlook.com [40.107.220.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5456C2D64;
+        Fri, 18 Aug 2023 09:51:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jfH/otTwOilZnJaFdt8oWojczcV3uJ4gWBhzCJB831SHNmFDGGS3E+WLgv+l79oB2Wr0yV0Zz/DAaLUYoSvRkYR+yAiEBgydhHKWnX9gyDo+XHwXOQphu59WFwDQffvqJ+f+EKT2QMn4E2KXkhlVmu8cTsatX0I81agIsbve28kpmfn3xbwBCKrYUCBgd7GSlZp5DRCOQn4P/wXdEaXlkjX1nYPZzN7Vq1FTw/wGKfTe5W2N1LnPqv9ZeE5wu9UEgYNhsqdfYHmNpr2W1OlmKrtSiY21JYJW3S2/oiBv3+/x5NdQwRTJUgYOjHvOm1s/c1EaIOXaGCOGSXI1x5nfhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CWy3MqAmy3A1zOkrWt3gqIcP8Zk3sUZ5dFlzQEHYoEE=;
+ b=oXx4byN3eOAJ5ryNXaH7R6PLZ8huSQSIgbCajZC9zu35ojgsH9H604EmN7vwxLli6Neaz9fIWAefxFM7ERkFuETBmj1/or9jvZeVxukJ4qYQu6TPlgZ4dAl8ZBdjRTDUNIXMSVKN3+YU1ZGVVteN0f447kBxnpu31O3FH1o2XE8X8zx+GIX/HYDjJKxUrkb1uNCSit+mcZF5566Opfv5JG459+Dv/JDyKSXxFOGDyKM9pUqAYvtG1hje+PV5blqlUxr8picr1+aAMEp9Q769lHtgpg8ZRqp+25BZgphZe4VtQORjb3K6D6nhnhVydnnDwnX1jB/xi60LUNBO31ccBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CWy3MqAmy3A1zOkrWt3gqIcP8Zk3sUZ5dFlzQEHYoEE=;
+ b=HGYM4zA9aWurWxXyMxuIHYPadKly2ei1NNDQVg4Hl8jL6K9bN+K3BLRB53u7p+9YcZU4YJG/pP2LaLRq4vBW+z4XL1vGBiWh/+qgLYoJtQuW/uUAzxZv8dIOf9AeaJaPqDCujeSBG+gj0S+kaxwlxY7CkowOu30FyVoTUvtenI+4mnwZjvxQgPtKJblD/06pK2+FwX3n9kUO20GCGvXHCdQPW4itsSTGLkoNfnpcXkGRxh98DJcrRruFPodfZMyPRGqrOAxi2STGPXc6zjbebAfH91whPSkFpFDgMIHyVn9Z8tp0F/ktqyQdxsH4x++7cnVFAY/f0j5bokxntvRA+g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by DS7PR12MB5863.namprd12.prod.outlook.com (2603:10b6:8:7a::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.31; Fri, 18 Aug
+ 2023 16:51:02 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::5111:16e8:5afe:1da1]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::5111:16e8:5afe:1da1%6]) with mapi id 15.20.6678.031; Fri, 18 Aug 2023
+ 16:51:02 +0000
+Date:   Fri, 18 Aug 2023 13:51:01 -0300
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Niklas Schnelle <schnelle@linux.ibm.com>
+Cc:     Joerg Roedel <joro@8bytes.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v11 0/6] iommu/dma: s390 DMA API conversion and optimized
+ IOTLB flushing
+Message-ID: <ZN+hdYiubQkjviwI@ziepe.ca>
+References: <20230717-dma_iommu-v11-0-a7a0b83c355c@linux.ibm.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <liyxirdfxcxrnji2o6p63cocgl7qllyih7q47zdft7tc5jni2j@h6akjddfu6o3>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230717-dma_iommu-v11-0-a7a0b83c355c@linux.ibm.com>
+X-ClientProxiedBy: BL0PR02CA0066.namprd02.prod.outlook.com
+ (2603:10b6:207:3d::43) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DS7PR12MB5863:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9400bdb7-fbfc-4cc5-0767-08dba00b4e7f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 6MckZO9GX2200qK8cRFCq8uetipJd1Vs+VUVove04fqaEb80OBnonA2IH7cS/WL9xkEmhACinpIpv+hnQ4HbLQ18jqoZeo5xKISgRgmE2xlkxQ+xog9IILutsW6vNjnZ0JlBI+jwxSpETNdWF3u6+mopYjhGyRjBR3cpnvtR4u7NLfFIo/2Xnk4U/b+E1TeqfWH7QgLHuRU8GuNQSiZX2Hse1n74mt8InUpJEkzCPsJ7O4AL50fj2P70PUvlJPDmAsgEjTHQVP35Jla0Zvw+SWjr0gQd4c+oVHI+MF4AZ7jfcIHIkM47N3XUfXjWz2ALCa29H17w32PJ3idLJC6nU5nq5AWsATS/SZy6mkDnMTDMjA/7oF+eOV5TQb4azWcQx3sMMEGTMokv6MWrQjjSmGT8oMk3xBG4Bu7Nj+Xa2hOKd0zqVuvr+SjKzqNCuoErOG65tsnJnmcmKKjUpM9JXlZDvgesHPK08csMe4irfINuiZx5CmVoBh0zF02JXJ3nbDZnPxle9uH9QZahbxexEHFaczmXrVrdR8KVIHVNouKo31Vw+3dLu88dxMR/PHIeh+IoPFgoWnPT0heszdd4bbZvhixsD5yFt10TYCSOoqE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(376002)(39860400002)(346002)(136003)(396003)(1800799009)(186009)(451199024)(66899024)(4744005)(7416002)(7406005)(2906002)(478600001)(6486002)(66946007)(66476007)(6506007)(54906003)(316002)(6916009)(66556008)(5660300002)(6512007)(4326008)(9686003)(8936002)(41300700001)(8676002)(26005)(86362001)(36756003)(38100700002)(67856001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?GMc4OuAGNQzbLAYQY2PIzWAX7tHhgXnmzqVyAuv+cE0Wkas0ApV+cTxqTp7G?=
+ =?us-ascii?Q?7RNunQdYfONLsFACN01YkGsVRXVd5PjX5mQwqVRtttYPSE9TSDXz7vq+dh0k?=
+ =?us-ascii?Q?TZMhBaVLCAkNgHjaS4GTdxZbXGJuvqE2WwhzehAUV+WkQI+edlP6yJ2RoJ9M?=
+ =?us-ascii?Q?hDSGDiz9v1GQs5XLpuHVBMnsztmigQX3ZF0y8JqbV2fsHK7Ov9gaSmk2TwvO?=
+ =?us-ascii?Q?zB3S2C8CMvVsnAPlTEcAxXL1LL4rPQujd8YH/9+BVZQE4KFcHrHoERKpiSk2?=
+ =?us-ascii?Q?b8wDSqyvq/zAaPU+2V3GSd4aZziduUi9NXzpLksZGGDggfppYvexzzcYSN9C?=
+ =?us-ascii?Q?PJog2RXWUdBv5/xj7yGVuohnpPewtMNXh17ZawJLT9JB4b7lMWOLRy/fRLxX?=
+ =?us-ascii?Q?6M1VO664C2kyJCEsKncEoLU8mq4JrpkmIkCj3X4kHGKLOh+6RH8JVGRHC3js?=
+ =?us-ascii?Q?ZR9BhAtrpkUngirgRvL4j82idBav/ekqf78dZj3lCnHQGoxh6vRgbfaBPQRQ?=
+ =?us-ascii?Q?nF6rBzYn0x7LD/zeJEEqA+3dd1qwdWhSdj5XibdyosiOtc7iNgef6KWHXgmJ?=
+ =?us-ascii?Q?8ryINA608j28n+s8q0/GNohw8lNAMk5t8t08GWrjRx8FM6gi8QZBNp9jmNfh?=
+ =?us-ascii?Q?Ncu/DVFVEFgJsqAISjAWxiRDcva/5Fwd5vgN/0zcGWpjKW7k8CMNDlst9F4z?=
+ =?us-ascii?Q?k4BcSyhTidwJWuYKHq7KH1StQz0UbFzEh9C++sRGLRB3Pzx1BSjKClbPheFV?=
+ =?us-ascii?Q?+DmCjiUjcup/mVvTkjM5Goyh/6WEdX4ta9vPNu9yyAGXFCtjDGK3W11s2tMP?=
+ =?us-ascii?Q?BUxl/Tpqlm71pRabRvZnisa3e1kMs0oZ/Mt6OGU78YpUMn4M2jMkIOLnGmZO?=
+ =?us-ascii?Q?AgQs7Xs90ktycSwkya5HZjHfXBW6O+S0FNayg0LBmPZyQVA6i9rAt4UbSBjn?=
+ =?us-ascii?Q?BRS9l59KsyeLj/kMJ09Wgu07MK6m0WiFycm7V7ywtMsYnzpCDXxpBO5Vb/Fe?=
+ =?us-ascii?Q?1QwHgV/867/rb1TYm3Lqq60Cg1tHYKx4FxxH8WvpnPnEV3kbSvxaI/Krr9j/?=
+ =?us-ascii?Q?t64H10pV+jrYCuK83O+b9In36K+XA1W0VzUSOM8I73P5nylEnXC9lD5dMhe8?=
+ =?us-ascii?Q?7MF3YpdDG34VdVwHtKe7Y7gSNpmpvRafY8hXtOjqGi7pWelOllbeEH8G4QH/?=
+ =?us-ascii?Q?AuBK2Vmhglx99crs1WQWDcwagUH7Y8EJ1TyXc07Xnf13bOhmLziYZKtmNYVo?=
+ =?us-ascii?Q?aoE8JD9ZVYfoCrcOQT3Di2y84ZPtCeLwodnXWgg++ECg8ot3en6RVpc08Mpy?=
+ =?us-ascii?Q?UAgN+x1Z1jmWNfaj2C6l/SwMJT0YLLL1JMecTygZcUF5M+OzadMRl5SFiilD?=
+ =?us-ascii?Q?wGnW8UkaC6U+3Q81qw6NFLyV1LJhpzR9Vr4czx+fhZ1Xho+syZOpwgUNa76K?=
+ =?us-ascii?Q?fF0lm/St9MFVm1pwNxZ/+GlCyZam8bj+jJyhBc/FWKdMVqK2bwLsnuG8scbr?=
+ =?us-ascii?Q?f1uiwseTZFYEtPVQiFjFrOGcEMppzBgRf2L6pgrbFpUhheZbnLZyaAMt8Eek?=
+ =?us-ascii?Q?TJOYbL9oKCj5myPgNKRjWaZBi1rghXlBrlFUrSMb?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9400bdb7-fbfc-4cc5-0767-08dba00b4e7f
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2023 16:51:02.7147
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: P6z3FWapc2cHzyAuAVFEYAxWmtTwa7HqsfQbPwYMnsi7jS8PNn8soMMN61k1O8JM
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5863
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 16, 2023 at 12:56:58PM -0500, Andrew Halaney wrote:
-> On Wed, Aug 16, 2023 at 10:46:01PM +0530, Manivannan Sadhasivam wrote:
-> > On Wed, Aug 16, 2023 at 12:25:50PM -0400, Radu Rendec wrote:
-> > > On Tue, 2023-08-15 at 11:54 +0100, Bryan O'Donoghue wrote:
-> > > > On 14/08/2023 23:36, Radu Rendec wrote:
-> > > > > I'm consistently getting a system crash followed by a ramdump on
-> > > > > sa8540p-ride (sc8280xp) when icc_sync_state() goes all the way through
-> > > > > (count == providers_count).
-> > > > > 
-> > > > > Context: all PCIe buses are disabled due to [1]. Previously, due to
-> > > > > some local kernel misconfiguration, icc_sync_state() never really did
-> > > > > anything (because count was always less than providers_count).
-> > > > > 
-> > > > > I was able to isolate the problem to the qns_pcie_gem_noc icc node.
-> > > > > What happens is that both avg_bw and peak_bw for this node end up as 0
-> > > > > after aggregate_requests() gets called. The request list associated
-> > > > > with the node is empty.
-> > > > 
-> > > > If all PCIe buses are disabled, then of course the bandwidth requests
-> > > > should say zero, the clocks should be disabled and any associated 
-> > > > regulators should be off.
-> > > > 
-> > > > > For testing purposes, I modified icc_sync_state() to skip calling
-> > > > > aggregate_requests() and subsequently p->set(n, n) for that particular
-> > > > > node only. With that change in place, the system no longer crashes.
-> > > > 
-> > > > So what's happening is that a bus master in the system - perhaps not the 
-> > > > application processor is issuing a transaction to a register most likely 
-> > > > that is not clocked/powered.
-> > > 
-> > > Yes, that was my assumption as well. But I didn't think it could be
-> > > something other than the AP. That is an interesting perspective.
-> > > 
-> > > My first thought was to analyze the ramdump and hopefully find some
-> > > clues there. But unfortunately that doesn't seem to be an option with
-> > > the tools that I have.
-> > > 
-> > > > Have you considered that one of the downstream devices might be causing 
-> > > > a PCIe bus transaction ?
-> > > 
-> > > No, I haven't considered that. If that's the case, it will probably be
-> > > even harder to debug.
-> > > 
-> > 
-> > If the PCIe controller node is disabled in devicetree, then none of the devices
-> > would be enumerated. In that case, they cannot initiate any transactions on
-> > their own.
-> > 
-> > Qcom observed a similar crash with PCIe SMMU when the PCIe controllers were not
-> > enabled in devicetree [1]. Since Qcom was going to enable PCIe controllers
-> > eventually, I concluded that the issue will be gone once they do it.
-> > 
-> > But looking at your issue, I think the transaction is triggered by PCIe SMMU as
-> > observed earlier. Since there are no active votes on the path after
-> > icc_sync_state(), it ends up in a crash.
-> > 
-> > But did you disable all PCIe instances or just pcie2a? The revert patch you
-> > pointed only applies to pcie2a. But if you are disabling all PCIe instances,
-> > then I do not see a point in enabling PCIe SMMU as well. Could you try disabling
-> > the pcie_smmu node and check?
+On Mon, Jul 17, 2023 at 01:00:00PM +0200, Niklas Schnelle wrote:
+> Hi All,
 > 
-> I think this is a good hunch, but do note that this is discussing
-> sa8540p-ride, not sa8775p-ride. The former has no PCIe SMMU described
-> (although I believe there maybe one on the sc8280xp family, just in
-> "bypass mode" (excuse my SMMU ignorance!) by firmware, and not described
-> to Linux for any variant of that platform).
-> 
+> This patch series converts s390's PCI support from its platform specific DMA
+> API implementation in arch/s390/pci/pci_dma.c to the common DMA IOMMU layer.
+> The conversion itself is done in patches 3-4 with patch 2 providing the final
+> necessary IOMMU driver improvement to handle s390's special IOTLB flush
+> out-of-resource indication in virtualized environments. Patches 1-2 may be
+> applied independently. The conversion itself only touches the s390 IOMMU driver
+> and s390 arch code moving over remaining functions from the s390 DMA API
+> implementation. No changes to common code are necessary.
 
-Ah... I was answering from sa8775p-ride perspective, sorry! Yes, on
-sa8540p-ride, PCIe SMMU is configured in bypass mode by bootloader.
+It has been another month with no comments, what is needed to get this
+merged?
 
-In that case I think you need to parse the ramdump to see who is causing the
-crash. Qcom folks should be able to help you with that.
+Getting the arches converted to the standard dma ops is a big deal,
+can we please conclude this?
 
-- Mani
-
-> > 
-> > - Mani
-> > 
-> > [1] https://lore.kernel.org/linux-arm-msm/20230609054141.18938-3-quic_ppareek@quicinc.com/
-> > 
-> > > > If you physically remove - can you physically remove - devices from the 
-> > > > PCIe bus does this error still occur ?
-> > > 
-> > > This is a standard QDrive 3 reference board, so I think this is not an
-> > > option. Taking those things apart is very difficult, and I think all
-> > > peripherals are soldered onto the board anyway.
-> > > 
-> > > > > Surprisingly, none of the icc nodes that link to qns_pcie_gem_noc (e.g.
-> > > > > xm_pcie3_0, xm_pcie3_1, etc.) has any associated request and so they
-> > > > > all have 0 bandwidth after aggregate_requests() gets called, but that
-> > > > > doesn't seem to be a problem and the system is stable. This makes me
-> > > > > think there is a missing link somewhere, and something doesn't claim
-> > > > > any bandwidth on qns_pcie_gem_noc when it should. And it's probably
-> > > > > none of the xm_pcie3_* nodes, since setting their bandwidth to 0 seems
-> > > > > to be fine.
-> > > > 
-> > > > Yes so if you assume that the AP/kernel side has the right references, 
-> > > > counts, votes then consider another bus master - a thing that can 
-> > > > initiate a read or a write might be misbehaving.
-> > > 
-> > > There is one thing I wasn't aware of when I wrote the previous email.
-> > > As it turns out, bandwidth/clock control is done at the bcm level, not
-> > > at the icc node level. It looks like there is a single bcm called PCI0,
-> > > and it's linked to the qns_pcie_gem_noc node. The xm_pcie3_* icc nodes
-> > > are not linked to any bcm.
-> > > 
-> > > This means that *all* PCIe buses are shut down when qns_pcie_gem_noc is
-> > > disabled due to zero bandwidth. I was under the (wrong) impression
-> > > that, since all xm_pcie3_* nodes had no requests, each corresponding
-> > > PCIe bus would be shut down separately, leaving only qns_pcie_gem_noc
-> > > active (with my test change in place).
-> > > 
-> > > > Assuming there is no misbehaving arm core - say a cDSP or aDSP piece of 
-> > > > code that wants to do something on the PCIe bus, might the culprit be
-> > > > whatever you have connected to the bus ?
-> > > > 
-> > > > Could something be driving the #WAKE signal and then transacting ?
-> > > > 
-> > > > But also keep in mind depending on what you are doing with this system 
-> > > > if you have a bit of firmware in one of the DSP cores - does that 
-> > > > firmware have scope to talk to any devices on the PCIe bus ?
-> > > 
-> > > As I mentioned above, this is a standard QDrive 3 reference board.
-> > > Furthermore, I don't explicitly do anything with the DSPs. I just boot
-> > > a fairly recent upstream kernel (6.5-rc1) with a standard rootfs. The
-> > > boot firmware is whatever Qualcomm provides by default for these
-> > > systems. So, unless the boot firmware loads anything into the DSPs
-> > > behind my back (which I doubt), the DSPs should not even be running.
-> > > 
-> > > What is more likely though is that the boot firmware initializes a
-> > > bunch of PCIe devices and leaves them on.
-> > > 
-> > > > I'd guess another firmware is unlikely but, a downstream device doing a 
-> > > > #WAKE when you have the PCIe nodes disabled would presumably be bad..
-> > > > 
-> > > > Try looking for an upstream transaction from a device..
-> > > 
-> > > Yes, that makes sense. Do you have any suggestion on how to do that
-> > > without using any specialized hardware (such as JTAG pod or PCIe bus
-> > > analyzer)?
-> > > 
-> > > Thanks for all the input and suggestions!
-> > > 
-> > > --
-> > > Radu
-> > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
-> > 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Jason
