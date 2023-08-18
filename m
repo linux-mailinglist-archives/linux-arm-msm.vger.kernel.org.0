@@ -2,175 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB894780740
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 10:37:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A53C78075C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 10:44:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352807AbjHRIgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 04:36:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46740 "EHLO
+        id S1358514AbjHRIoA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 04:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230294AbjHRIgW (ORCPT
+        with ESMTP id S1358718AbjHRInl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 04:36:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 781373A94;
-        Fri, 18 Aug 2023 01:36:21 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37I5aDHQ024491;
-        Fri, 18 Aug 2023 08:36:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=v/kACXt63NJxIGkn0xwWK1EDATP14TEgK+yK4c43CoE=;
- b=L/0OWBDFD0MhMyee/l0TRAqoyuVVRaEMz5bW37kEkGnTMJWUgkHyYSpwkRB9Vt6MyBVc
- aVFIFNzQ/F9g58yl4GcwalpDTrecnlkYM/N8E1XXJXQPrinsVXpU+npoxgnIVG0lwqhR
- 8CTM4b52aEkFt56FGWp/bK2Lqath0PVZckos8XIGgbKx0F/OW1S975QWYgbTtas1lAE1
- WJxCkQJhUAe9gz2AD4IFIu9uzB0f3f6kxGJF9flfh0O73Evi9jXJ0+a8byGE5aJ7STvz
- KVTpG/smS61amORUji638B7oC1uUPrvMWc8uqpAvZu2jEGxzg+RjSu8PVzX9AXNx7aLV Jg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3she6ptyrt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Aug 2023 08:36:00 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37I8ZxX3015377
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Aug 2023 08:35:59 GMT
-Received: from [10.253.34.149] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 18 Aug
- 2023 01:35:55 -0700
-Message-ID: <6ee2129b-04c6-4978-03d6-835e3a10e665@quicinc.com>
-Date:   Fri, 18 Aug 2023 16:35:52 +0800
+        Fri, 18 Aug 2023 04:43:41 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F2453ABE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 01:43:36 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe21e7f3d1so943385e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Aug 2023 01:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692348214; x=1692953014;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pZRVjP108x+rTr243Ys5IG0z60fpovntpqPusD6Tea0=;
+        b=f9gpAHr79wue2A4A8FhUN39Eld/pbkXaaRmdUOUc58dSFwm0nMrkzkD9iHka0adjkx
+         q2X0aJj9Gj/V8jATscJRSCj+kZKzdoo7udXW82xn+DpzCCnocR9KmRXl2T1g1ZmxSA1B
+         Ix7Dd3I48Jk9BYyqo6FmUM0whM7AaQCvb28MRn74OdzNkOFKRnPrXtoZHPZ1T5egPtkl
+         jReyFGRcobmfK7JzGyqs3q1t24asVXM0KPtHTv4m9V9TjcegWoJFF34syO3oIiwhFxm6
+         CY+xtuzltxJCvRatj6KOyqXq0+NgWsRvpHaQucgj8FvcHEQlA1jTkWzk0QJBMeOmcE2K
+         d46A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692348214; x=1692953014;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pZRVjP108x+rTr243Ys5IG0z60fpovntpqPusD6Tea0=;
+        b=WIipzx0fpWKBB9WvFMeMkcA8L51dWGTMS732jQXuwjKvodyz0Oy7vcNcdTPhWOiq/H
+         uUV7DIjhIt8X2LncABcB+BFyWgoQ8UFca+BcJ0WPhb+Z7IXSvNePZ1kWZlV+tYzQxHSO
+         y95hZC1SmwckSGhCdaA4q31BVel5eh6QOK/JdcKIav33InT6BMJuAyF5n4vN1JS9NrLo
+         OlLbIlVLORdzqcDOGJMkdiOIzVXUrJQd2+e++4Q0H9Unp7lyaKOZM5rc3y+fm+rBuTCj
+         o9uEzVkwECyAswZq9M/CVAWC7FYCHyd+u4YV3f+/ZpoFG5Y+PNMEqZmZKJWnI5x5u5Gn
+         T7Dg==
+X-Gm-Message-State: AOJu0YyrmidKUTv9yBfqhXZhbzX8od+eXxuDr36RUC6sS6HCQt95UmFz
+        irugXAsDHNJhxqxPV6CDP31dcQ==
+X-Google-Smtp-Source: AGHT+IF6ntKUJ2GHg1KNpDfnUqxnYmyCYICvCAZzypBZYOp69VCs6hqmt5KRSPpLD/BKeoB3vX8w8w==
+X-Received: by 2002:a05:6512:31c6:b0:4fb:9105:58b0 with SMTP id j6-20020a05651231c600b004fb910558b0mr1480301lfe.20.1692348214162;
+        Fri, 18 Aug 2023 01:43:34 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id g25-20020aa7d1d9000000b0052996528b81sm104966edp.45.2023.08.18.01.43.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Aug 2023 01:43:33 -0700 (PDT)
+Message-ID: <6fb1176f-90f1-7a65-3ab5-f6447418c51e@linaro.org>
+Date:   Fri, 18 Aug 2023 10:43:31 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v4 3/4] clk: qcom: common: add _qcom_cc_really_probe
+Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+References: <cover.1691049436.git.quic_gurus@quicinc.com>
+ <20230810185526.GC31860@quicinc.com>
+ <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
+ <20230816171538.GB26279@quicinc.com>
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>
-References: <20230815085205.9868-1-quic_luoj@quicinc.com>
- <20230815085205.9868-4-quic_luoj@quicinc.com>
- <2dcu7jjwd2bhjbzxrxbfif566nupznb5n4oadnqha4h45w2n2g@4uy2pxkj5bvj>
-From:   Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <2dcu7jjwd2bhjbzxrxbfif566nupznb5n4oadnqha4h45w2n2g@4uy2pxkj5bvj>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230816171538.GB26279@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: U4o7DFOgkh6_T-S-KHKiGnRlRMNjstDc
-X-Proofpoint-ORIG-GUID: U4o7DFOgkh6_T-S-KHKiGnRlRMNjstDc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-18_10,2023-08-17_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 clxscore=1015 spamscore=0 suspectscore=0 bulkscore=0
- adultscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308180080
 X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/18/2023 11:14 AM, Bjorn Andersson wrote:
-> On Tue, Aug 15, 2023 at 04:52:04PM +0800, Luo Jie wrote:
->> Add the common function _qcom_cc_really_probe, which takes
->> struct device as parameter.
+On 16/08/2023 19:15, Guru Das Srinagesh wrote:
+> Thanks for the comments, Krzysztof.
 > 
-> This commit message completely fails to describe the problem/issue the
-> change is solving. So when we look back in the git history, there will
-> be no indication of why things looks like they do.
-> 
-Thanks for the comments, i will update the commit message in detail on 
-the issue resolved in the next patch set.
-
+> On Aug 15 2023 23:06, Krzysztof Kozlowski wrote:
+>> On 10/08/2023 20:55, Guru Das Srinagesh wrote:
+>>> On Aug 03 2023 01:23, Guru Das Srinagesh wrote:
+>>>> When pushing patches to upstream, the `get_maintainer.pl` script is used to
+>>>> determine whom to send the patches to. Instead of having to manually process
+>>>> the output of the script, add a wrapper script to do that for you.
+>>>>
+>>>> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
+>>>> editing it in-place.
+>>>
+>>> Could I request reviews from the other maintainers as well, please? Just to see
+>>> if I should continue working on this script or if the `b4` tool obviates the
+>>> need for such a script.
 >>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->> ---
->>   drivers/clk/qcom/common.c | 10 ++++++++--
->>   drivers/clk/qcom/common.h |  2 ++
->>   2 files changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
->> index 75f09e6e057e..4cbdbfb65606 100644
->> --- a/drivers/clk/qcom/common.c
->> +++ b/drivers/clk/qcom/common.c
->> @@ -234,11 +234,10 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
->>   	return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
->>   }
->>   
->> -int qcom_cc_really_probe(struct platform_device *pdev,
->> +int _qcom_cc_really_probe(struct device *dev,
->>   			 const struct qcom_cc_desc *desc, struct regmap *regmap)
->>   {
->>   	int i, ret;
->> -	struct device *dev = &pdev->dev;
->>   	struct qcom_reset_controller *reset;
->>   	struct qcom_cc *cc;
->>   	struct gdsc_desc *scd;
->> @@ -305,6 +304,13 @@ int qcom_cc_really_probe(struct platform_device *pdev,
->>   
->>   	return 0;
->>   }
->> +EXPORT_SYMBOL_GPL(_qcom_cc_really_probe);
->> +
->> +int qcom_cc_really_probe(struct platform_device *pdev,
->> +			 const struct qcom_cc_desc *desc, struct regmap *regmap)
+>> I send a bit of patches but I use very simple workflow. It is really
+>> simple, so simple, that I was always surprised how people can make their
+>> life difficult with some complicated process to send patches... and then
+>> obviously skip some maintainers, because of that process.
 > 
-> Why do we want to keep this wrapper around?
-> 
-There are many existed clock controller drivers using this wrapper 
-qcom_cc_really_probe, so i still keep this wrapper.
+> Exactly - this script aims to solve precisely that problem. It fills the gap
+> between running `get_maintainers.pl` and having to manually edit its output to
+> add "To: " and "Cc: " and somehow incorporate it in the body of the patch(es).
 
-do we need to remove this wrapper and update the existed drivers to use 
-_qcom_cc_really_probe?
-> 
-> PS. Please give some time before posting v5, I would like to understand
-> the MDIO regmap operations in patch 4 better before commenting on it.
-> 
-> Regards,
-> Bjorn
-> 
-Sure, the MDIO read/write operations need to check whether the MDIO bus 
-is in busy state, the poll and sleep are taken to check.
+Why would anyone need to manually update it? Just some simple bash
+function or git send-email identity.
 
-Thanks Bjorn for your time and review comments.
->> +{
->> +	return _qcom_cc_really_probe(&pdev->dev, desc, regmap);
->> +}
->>   EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
->>   
->>   int qcom_cc_probe(struct platform_device *pdev, const struct qcom_cc_desc *desc)
->> diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
->> index 9c8f7b798d9f..9710ade9bf15 100644
->> --- a/drivers/clk/qcom/common.h
->> +++ b/drivers/clk/qcom/common.h
->> @@ -58,6 +58,8 @@ extern int qcom_cc_register_sleep_clk(struct device *dev);
->>   
->>   extern struct regmap *qcom_cc_map(struct platform_device *pdev,
->>   				  const struct qcom_cc_desc *desc);
->> +extern int _qcom_cc_really_probe(struct device *dev,
->> +			 const struct qcom_cc_desc *desc, struct regmap *regmap);
->>   extern int qcom_cc_really_probe(struct platform_device *pdev,
->>   				const struct qcom_cc_desc *desc,
->>   				struct regmap *regmap);
->> -- 
->> 2.17.1
->>
+> 
+> With this script, the workflow would be as simple as:
+> 
+>   1. Generate patches using `git format-patch`
+>   2. Run `add-maintainer.py` on the above patches
+>   3. `git send-email` the patches.
+
+So one more unnecessary step (2). I don't think it is easier than my
+workflow.
+
+I just do only 1 and 3 and that's it. The simplest way ever.
+
+> 
+> That's it - no need to manually work with email addresses.
+
+No one suggested it...
+
+>   
+>> I almost always feed git send-email with addresses from
+>> scripts/get_maintainers.pl. This tool would not bring any benefits to my
+>> simple workflow.
+> 
+> In the light of the 3-step workflow I've envisioned above, could you please
+> elaborate why not? If anything, it will only save a developer's time.
+
+Because of unnecessary step 2? One more tool to remember to run?
+
+> 
+>> For newcomers, OTOH, I would either recommend simple workflow or just
+>> use b4. Why? Because if you cannot use git-send-email, then it means
+>> your email setup will make your life difficult and adding maintainers to
+>> existing patch won't help you.
+> 
+> You've mentioned a "simple workflow" many times - could you please share more
+> details on the steps you follow in your workflow for sending patches?
+
+I shared it on LKML few times already (and Rob's git send-email identity
+is also on LKML), so one more time:
+
+https://github.com/krzk/tools/blob/master/linux/.bash_aliases_linux#L91
+
+
+> 
+>> This tool depends on the command line and shell interface of
+>> scripts/get_maintainers.pl which is another reason why it might not be a
+>> good idea.
+> 
+> Could you please elaborate on why depending on the output of
+> `get_maintainer.pl` is a bad idea? It's what everyone uses, no?
+
+No, because if interface changes you need to update two tools.
+
+Best regards,
+Krzysztof
+
