@@ -2,169 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 308807813E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 21:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 479F6781401
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Aug 2023 22:00:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242879AbjHRTvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Aug 2023 15:51:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
+        id S1377351AbjHRT7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Aug 2023 15:59:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379900AbjHRTv1 (ORCPT
+        with ESMTP id S1379856AbjHRT7Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Aug 2023 15:51:27 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ED23421D;
-        Fri, 18 Aug 2023 12:51:04 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37IJNs00010954;
-        Fri, 18 Aug 2023 19:46:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=t60leTcbjDGFV5UGb9QQpQ6GA3RU4VKVhGgVXZsRhZY=;
- b=EK8aDUEHyH49B0LIfbqaril+2/lLNc6JrnUHaAALIPPeitLwvGFG81WpyjqJ7xUKvlGg
- OeUIqzkMQk+FuDlTTabK17wRhVIlNyifgyU9BqmkiGHFETSDsTjE1WLyBx0OaoDroTzK
- VrBKi28bamg0YduJkM8ovo/aBzOOjvt7U9Fhj0Bth4mvfIbQ7tWigSpPwNcmDCJWic2E
- D68ZkgzbPEKq/10dvuN3uv8YiFQvpsmGbGsAcsNyyyy8+lzJB5B7RolC9xqYe69X8seJ
- QygZEjIjvaQKFqd3vdrSPlUI5GyBEBBxRv1p1MHoCkfRgcwK7FywbDD6wnFsea6bEucb 4w== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sj1xdhmev-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Aug 2023 19:46:12 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37IJkBk1001093
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Aug 2023 19:46:11 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Fri, 18 Aug 2023 12:46:10 -0700
-Date:   Fri, 18 Aug 2023 12:46:09 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Andrew Morton" <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        "Kees Cook" <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <quic_pkondeti@quicinc.com>, <u.kleine-koenig@pengutronix.de>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v2 0/1] Add add-maintainer.py script
-Message-ID: <20230818194609.GA1428172@hu-bjorande-lv.qualcomm.com>
-References: <cover.1691049436.git.quic_gurus@quicinc.com>
- <20230810185526.GC31860@quicinc.com>
- <4d94d0fd-72d4-0196-3a30-3e1efb9f5aca@linaro.org>
- <20230816171538.GB26279@quicinc.com>
- <6fb1176f-90f1-7a65-3ab5-f6447418c51e@linaro.org>
+        Fri, 18 Aug 2023 15:59:16 -0400
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::223])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10C7C35AD;
+        Fri, 18 Aug 2023 12:59:13 -0700 (PDT)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 7C8FD60002;
+        Fri, 18 Aug 2023 19:59:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1692388752;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=q9WQ4s+hROk+ahs4ROvh5ESGeMbt5mmR8H5xOLugL5s=;
+        b=ZiAXgzeTTaj5OwCo1sItpPbJtBXQctG9Gstnj8B/OYpBy8tcmSbPkitg18sxNxqPcR3CDX
+        GaGh0SUiVO1ccAEwAtBgUcjoXfyOj40NAntN7HJV+PWGNB0Ce8kSBLFBtt3GyR6slsYMqI
+        oajWAa6r8Sk4837o5n3pZy1aBp62ALz2ourz89jL7J6Gqzo15SRc/G0Q0XcH/IZG8Uq76V
+        dzpgJxtVpWWCWoSr1OAR7yg0zEyOc8xSH/qFOzh1vHijQJMLHOziJJYPXDqFlqDDhQ/QMI
+        QuyOT4WIEw5m97H10IBSZ6HqxegL2sC4sUF7J9dVmFW7B9dGVCy0HaSp1pmGmg==
+Date:   Fri, 18 Aug 2023 21:59:08 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH 1/3] mtd: rawnand: qcom: Update read_loc size to 512
+Message-ID: <20230818215908.0e60b00b@xps-13>
+In-Reply-To: <20230818145101.23825-2-quic_mdalam@quicinc.com>
+References: <20230818145101.23825-1-quic_mdalam@quicinc.com>
+        <20230818145101.23825-2-quic_mdalam@quicinc.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <6fb1176f-90f1-7a65-3ab5-f6447418c51e@linaro.org>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mCKM9W240SK9_B3lu8J6AiY1G4FmbXx8
-X-Proofpoint-ORIG-GUID: mCKM9W240SK9_B3lu8J6AiY1G4FmbXx8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-18_24,2023-08-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 clxscore=1011 priorityscore=1501 spamscore=0 malwarescore=0
- mlxscore=0 suspectscore=0 impostorscore=0 phishscore=0 mlxlogscore=529
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308180178
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 18, 2023 at 10:43:31AM +0200, Krzysztof Kozlowski wrote:
-> On 16/08/2023 19:15, Guru Das Srinagesh wrote:
-> > Thanks for the comments, Krzysztof.
-> > 
-> > On Aug 15 2023 23:06, Krzysztof Kozlowski wrote:
-> >> On 10/08/2023 20:55, Guru Das Srinagesh wrote:
-> >>> On Aug 03 2023 01:23, Guru Das Srinagesh wrote:
-> >>>> When pushing patches to upstream, the `get_maintainer.pl` script is used to
-> >>>> determine whom to send the patches to. Instead of having to manually process
-> >>>> the output of the script, add a wrapper script to do that for you.
-> >>>>
-> >>>> The add-maintainer.py script adds maintainers (and mailing lists) to a patch,
-> >>>> editing it in-place.
-> >>>
-> >>> Could I request reviews from the other maintainers as well, please? Just to see
-> >>> if I should continue working on this script or if the `b4` tool obviates the
-> >>> need for such a script.
-> >>
-> >> I send a bit of patches but I use very simple workflow. It is really
-> >> simple, so simple, that I was always surprised how people can make their
-> >> life difficult with some complicated process to send patches... and then
-> >> obviously skip some maintainers, because of that process.
-> > 
-> > Exactly - this script aims to solve precisely that problem. It fills the gap
-> > between running `get_maintainers.pl` and having to manually edit its output to
-> > add "To: " and "Cc: " and somehow incorporate it in the body of the patch(es).
-> 
-> Why would anyone need to manually update it? Just some simple bash
-> function or git send-email identity.
-> 
+Hi Md,
 
-I do this all the time, either to add additional, or remove unnecessary,
-recipients from what's provided by get_maintainers.pl.
+quic_mdalam@quicinc.com wrote on Fri, 18 Aug 2023 20:20:59 +0530:
 
-> > 
-> > With this script, the workflow would be as simple as:
-> > 
-> >   1. Generate patches using `git format-patch`
-> >   2. Run `add-maintainer.py` on the above patches
-> >   3. `git send-email` the patches.
-> 
-> So one more unnecessary step (2). I don't think it is easier than my
-> workflow.
-> 
-> I just do only 1 and 3 and that's it. The simplest way ever.
-> 
+> For parameter page read upper layer is passing len
+> as 256 bytes and if we try to configure 256 bytes
+> size in read loaction register then subsequent bam
+> transaction is getting timed out for 4K nand devices.
+> So update this length as one step size if its
+> less than NANDC_STEP_SIZE.
+>=20
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 
-There's no get_maintainer.pl in either 1, or 3, so obviously this isn't
-the only thing you do.
+I'm fine with patches 2 and 3 and will take them. But this one does not
+seem legitimate. I don't like it. Are you sure the ECC engine was not
+enabled when it timed out? Default should be having the ECC disabled
+and it should just get enabled when you need it. There is no reason
+why, specifically on NAND devices, it would not be possible to read 256
+bytes.
 
-Thanks for the link to your alias below, it's now clear that you don't
-need an extra step in the procedure, if you only have your extra wrapper
-around step 3.
+> ---
+>  drivers/mtd/nand/raw/qcom_nandc.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>=20
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
+m_nandc.c
+> index d4ba0d04c970..413e214c8e87 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -2885,6 +2885,9 @@ static int qcom_param_page_type_exec(struct nand_ch=
+ip *chip,  const struct nand_
+>  	op_id =3D q_op.data_instr_idx;
+>  	len =3D nand_subop_get_data_len(subop, op_id);
+> =20
+> +	if (len < NANDC_STEP_SIZE)
+> +		len =3D NANDC_STEP_SIZE;
+> +
+>  	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
+> =20
+>  	if (!nandc->props->qpic_v2) {
 
 
-I now also understand why you never ever have a cover-letter, something
-Guru's proposed flow handles quite nicely.
-
-
-That said, b4 prep and b4 send seems like a better suggestion to those
-who doesn't already have a workflow in place.
-
-[..]
-> > 
-> >> This tool depends on the command line and shell interface of
-> >> scripts/get_maintainers.pl which is another reason why it might not be a
-> >> good idea.
-> > 
-> > Could you please elaborate on why depending on the output of
-> > `get_maintainer.pl` is a bad idea? It's what everyone uses, no?
-> 
-> No, because if interface changes you need to update two tools.
-> 
-
-This is a valid objection, but I've heard that "the simplest way ever"
-also depends on exactly this output...
-
-Regards,
-Bjorn
+Thanks,
+Miqu=C3=A8l
