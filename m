@@ -2,116 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D53447817A5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Aug 2023 08:22:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBCE07817C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Aug 2023 09:03:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245672AbjHSGWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Aug 2023 02:22:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54744 "EHLO
+        id S1343832AbjHSHDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Aug 2023 03:03:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245698AbjHSGWC (ORCPT
+        with ESMTP id S245508AbjHSHC6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Aug 2023 02:22:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CC93AB6;
-        Fri, 18 Aug 2023 23:22:01 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37J6Ljq1008858;
-        Sat, 19 Aug 2023 06:21:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=5pltigGTmCAd54+DBKzSWvMYWGt8jHWwbv3v95uSi3Y=;
- b=BzZXw8TDJNO5FyFPWKSZ6fKNTU9v/VWY5gQigmYkCtcSLUyWlfxu/fKh5R4x9PGW9rhm
- 5jxL+XUvZIt1AJ6Ct/mFyhNvtzeFL619VPEyw3TH6guv+ETrFxqSChyoMmvAnoLWVTy2
- SbNF1QAdLV0i7x9aNlZUaD9H9Uxg9Es3CT+nph1oN9HBJHKNoCd4CH6Aq0vpmu8iIWgl
- 75atVSF2oDaXdKPom/vtH6ngmNpmPBeQ5SfCOhNCVQfdTL46xFrjDFsGQa1c0KvT9uvx
- 8/hx2C8TqZC6Wv7wXcUMnluOhQcTom1boSxzqLJ11d0hsaJ/v1vb5ZDoYA4oyV/2rTCA sw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sjq1f02hw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 19 Aug 2023 06:21:45 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37J6Ljiv025217
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 19 Aug 2023 06:21:45 GMT
-Received: from [10.253.35.175] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 18 Aug
- 2023 23:21:40 -0700
-Message-ID: <38627095-a92d-ea8b-56b6-7a4440fb6635@quicinc.com>
-Date:   Sat, 19 Aug 2023 14:21:37 +0800
+        Sat, 19 Aug 2023 03:02:58 -0400
+Received: from mail-yw1-x1144.google.com (mail-yw1-x1144.google.com [IPv6:2607:f8b0:4864:20::1144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB43426A4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 00:02:56 -0700 (PDT)
+Received: by mail-yw1-x1144.google.com with SMTP id 00721157ae682-579de633419so18018867b3.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 00:02:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692428576; x=1693033376;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9kydyMnwD//o0quRqImkimRYfrWW9k+FT8t/oHoxyE8=;
+        b=MUn6TsJ49QsJA4igR3yMrdu/XsOuj8hKh7h6eVdj/4Q6ak4DnVptLCIKMxoaE1lx82
+         BxwzjkQUKGArD5gK4285su7I1sDB3qAK0HSAdokXHiNeRenFsT5dKLZZVD83rG1rnoeS
+         VdXWoxIFxTFlZ65TKthmVXAt9fOId6PSQJki87wVoyeAFbKQrlj5j4smx8DIxP/w0ZWJ
+         TRln+T7V97cC+Lha+e87zGu5qdfzMw4YK01R7iyxmdvnMREZiOau3xyPwKBLzOkfFV8d
+         16kMFJpKMWwV0JdyrqeYRq0aUvKFPGskV1RZVJY1R5FX4jJ5AOT83v5lCI7JlEhO9IN8
+         hMmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692428576; x=1693033376;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9kydyMnwD//o0quRqImkimRYfrWW9k+FT8t/oHoxyE8=;
+        b=Y2DNnRHo/O0LRK+5R7vfMDw/Kg6DgpNXN85WqSl40sLuiDV9f3X45y+GcfKWsrGCXa
+         5KLiJHVzdDPNjqzEAhZHBi37Qz+T4arhLynp6GMUgllq2V5eonm1SOc5/uj1AAcb4SSv
+         OnNKW77CIu5E5AbY13Zhov2FdIc+HiRfcJpO/5ltiSzbPv0XZGvPL5e5TZHzMtveEOf4
+         Os9p0DcjYxsRCw7z4TazDOl6lbCA+Vwv3BvGNSyalwWUCF4jEga2AeVrit4dFbEs7HIl
+         UDiXf4QLCWoIElBSmXc/rgqVBAVZmoM3Ndk4LnTcPyA623p1gKCV1CrdF/OoraW5dnyS
+         wDyw==
+X-Gm-Message-State: AOJu0Yy+/NF5xUBtlqZ7ivRL0qN84VTKNMm8TPyMwSTGtpgxk6iTmVi3
+        Xz9b0Tv7OLJ/4OFhQ4/a/vIB9GYel/GRn4DhRD4=
+X-Google-Smtp-Source: AGHT+IHBFHux9W7amy752XAKQ4G+pXj9K8KLABgekYkKVjTaNiUovhqWPJjy5q7mdLIzANUAVG24gzrYlmHT6Kjn7Kk=
+X-Received: by 2002:a81:8782:0:b0:589:a9fc:ffcd with SMTP id
+ x124-20020a818782000000b00589a9fcffcdmr1407212ywf.20.1692428576106; Sat, 19
+ Aug 2023 00:02:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v4 3/4] clk: qcom: common: add _qcom_cc_really_probe
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>
-References: <20230815085205.9868-1-quic_luoj@quicinc.com>
- <20230815085205.9868-4-quic_luoj@quicinc.com>
- <2dcu7jjwd2bhjbzxrxbfif566nupznb5n4oadnqha4h45w2n2g@4uy2pxkj5bvj>
- <6ee2129b-04c6-4978-03d6-835e3a10e665@quicinc.com>
- <4n3vqstyhknanmzx4swwjg4ueaqq2tbrxadnyrx3bchffyf7qr@yh4bik4rfsgm>
-Content-Language: en-US
-From:   Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <4n3vqstyhknanmzx4swwjg4ueaqq2tbrxadnyrx3bchffyf7qr@yh4bik4rfsgm>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IeW0Q28AeRBq6m9ZbrrPWqdojJg5Jpnn
-X-Proofpoint-ORIG-GUID: IeW0Q28AeRBq6m9ZbrrPWqdojJg5Jpnn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-19_04,2023-08-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- adultscore=0 impostorscore=0 mlxlogscore=871 lowpriorityscore=0
- suspectscore=0 mlxscore=0 phishscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308190058
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Reply-To: razumkoykhailo@gmail.com
+Sender: mrtombaba@gmail.com
+Received: by 2002:a05:7000:5395:b0:4f4:2174:eed4 with HTTP; Sat, 19 Aug 2023
+ 00:02:55 -0700 (PDT)
+From:   "Mr.Razum Khailo" <razumkoykhailo@gmail.com>
+Date:   Sat, 19 Aug 2023 00:02:55 -0700
+X-Google-Sender-Auth: TD1SbUwALQWUaG93zNo0ky4SaO8
+Message-ID: <CADXgghn2t3mU_VvtZDjHwnbadg2QnVcJ30yFd0kN8SL6NDhY1g@mail.gmail.com>
+Subject: Greetings from Ukraine,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,LOTS_OF_MONEY,
+        MILLION_USD,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:1144 listed in]
+        [list.dnswl.org]
+        * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
+        *      [score: 0.0000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [razumkoykhailo[at]gmail.com]
+        *  2.0 MILLION_USD BODY: Talks about millions of dollars
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  2.4 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  2.8 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/19/2023 10:54 AM, Bjorn Andersson wrote:
-> On Fri, Aug 18, 2023 at 04:35:52PM +0800, Jie Luo wrote:
->> On 8/18/2023 11:14 AM, Bjorn Andersson wrote:
->>> On Tue, Aug 15, 2023 at 04:52:04PM +0800, Luo Jie wrote:
-> [..]
->>>> +int qcom_cc_really_probe(struct platform_device *pdev,
->>>> +			 const struct qcom_cc_desc *desc, struct regmap *regmap)
->>>
->>> Why do we want to keep this wrapper around?
->>>
->> There are many existed clock controller drivers using this wrapper
->> qcom_cc_really_probe, so i still keep this wrapper.
->>
->> do we need to remove this wrapper and update the existed drivers to use
->> _qcom_cc_really_probe?
-> 
-> Yes please. The additional API does not add value, but can be confusing,
-> so let's invest the extra time in fixing up all the drivers to keep the
-> interface clean.
-> 
-> Regards,
-> Bjorn
-
-Thanks Bjorn for the suggestion, will update this patch in the next version.
+R3JlZXRpbmdzwqBmcm9twqBVa3JhaW5lLA0KDQpNci7CoFJhenVta292wqBNeWtoYWlsbyzCoGFu
+wqBlbnRyZXByZW5ldXLCoGJ1c2luZXNzbWFuwqBmcm9twqBPZGVzc2ENClVrcmFpbmUuwqBXaXRo
+aW7CoGHCoHllYXLCoHBsdXPCoHNvbWXCoG1vbnRoc8Kgbm93LMKgbW9yZcKgdGhhbsKgOC4ywqBt
+aWxsaW9uDQpwZW9wbGXCoGFyb3VuZMKgdGhlwqBjaXRpZXPCoG9mwqBtecKgY291bnRyecKgVWty
+YWluZcKgaGF2ZcKgYmVlbsKgZXZhY3VhdGVkwqB0bw0KYcKgc2FmZcKgbG9jYXRpb27CoGFuZMKg
+b3V0wqBvZsKgdGhlwqBjb3VudHJ5LMKgbW9zdMKgZXNwZWNpYWxsecKgY2hpbGRyZW7CoHdpdGgN
+CnRoZWlywqBwYXJlbnRzLMKgbnVyc2luZ8KgbW90aGVyc8KgYW5kwqBwcmVnbmFudMKgd29tZW4s
+wqBhbmTCoHRob3NlwqB3aG/CoGhhdmUNCmJlZW7CoHNlcmlvdXNsecKgd291bmRlZMKgYW5kwqBu
+ZWVkwqB1cmdlbnTCoG1lZGljYWzCoGF0dGVudGlvbi7CoEnCoHdhc8KgYW1vbmcNCnRob3NlwqB0
+aGF0wqB3ZXJlwqBhYmxlwqB0b8KgZXZhY3VhdGXCoHRvwqBvdXLCoG5laWdoYm91cmluZ8KgY291
+bnRyaWVzwqBhbmTCoEnigJltDQpub3fCoGluwqB0aGXCoHJlZnVnZWXCoGNhbXDCoG9mwqBUZXLC
+oEFwZWzCoEdyb25pbmdlbsKgaW7CoHRoZcKgTmV0aGVybGFuZHMuDQoNCknCoG5lZWTCoGHCoGZv
+cmVpZ27CoHBhcnRuZXLCoHRvwqBlbmFibGXCoG1lwqB0b8KgdHJhbnNwb3J0wqBtecKgaW52ZXN0
+bWVudA0KY2FwaXRhbMKgYW5kwqB0aGVuwqByZWxvY2F0ZcKgd2l0aMKgbXnCoGZhbWlseSzCoGhv
+bmVzdGx5wqBpwqB3aXNowqBJwqB3aWxsDQpkaXNjdXNzwqBtb3JlwqBhbmTCoGdldMKgYWxvbmcu
+wqBJwqBuZWVkwqBhwqBwYXJ0bmVywqBiZWNhdXNlwqBtecKgaW52ZXN0bWVudA0KY2FwaXRhbMKg
+aXPCoGluwqBtecKgaW50ZXJuYXRpb25hbMKgYWNjb3VudC7CoEnigJltwqBpbnRlcmVzdGVkwqBp
+bsKgYnV5aW5nDQpwcm9wZXJ0aWVzLMKgaG91c2VzLMKgYnVpbGRpbmfCoHJlYWzCoGVzdGF0ZXMs
+wqBtecKgY2FwaXRhbMKgZm9ywqBpbnZlc3RtZW50DQppc8KgKCQzMMKgTWlsbGlvbsKgVVNEKcKg
+LsKgVGhlwqBmaW5hbmNpYWzCoGluc3RpdHV0aW9uc8KgaW7CoG15wqBjb3VudHJ5DQpVa3JhaW5l
+wqBhcmXCoGFsbMKgc2hvdMKgZG93bsKgZHVlwqB0b8KgdGhlwqBjcmlzaXPCoG9mwqB0aGlzwqB3
+YXLCoG9uwqBVa3JhaW5lDQpzb2lswqBiecKgdGhlwqBSdXNzaWFuwqBmb3JjZXMuwqBNZWFud2hp
+bGUswqBpZsKgdGhlcmXCoGlzwqBhbnnCoHByb2ZpdGFibGUNCmludmVzdG1lbnTCoHRoYXTCoHlv
+dcKgaGF2ZcKgc2/CoG11Y2jCoGV4cGVyaWVuY2XCoGluwqB5b3VywqBjb3VudHJ5LMKgdGhlbsKg
+d2UNCmNhbsKgam9pbsKgdG9nZXRoZXLCoGFzwqBwYXJ0bmVyc8Kgc2luY2XCoEnigJltwqBhwqBm
+b3JlaWduZXIuDQoNCknCoGNhbWXCoGFjcm9zc8KgeW91csKgZS1tYWlswqBjb250YWN0wqB0aHJv
+dWdowqBwcml2YXRlwqBzZWFyY2jCoHdoaWxlwqBpbsKgbmVlZA0Kb2bCoHlvdXLCoGFzc2lzdGFu
+Y2XCoGFuZMKgScKgZGVjaWRlZMKgdG/CoGNvbnRhY3TCoHlvdcKgZGlyZWN0bHnCoHRvwqBhc2vC
+oHlvdcKgaWYNCnlvdcKga25vd8KgYW55wqBsdWNyYXRpdmXCoGJ1c2luZXNzwqBpbnZlc3RtZW50
+wqBpbsKgeW91csKgY291bnRyecKgacKgY2FuDQppbnZlc3TCoG15wqBtb25lecKgc2luY2XCoG15
+wqBjb3VudHJ5wqBVa3JhaW5lwqBzZWN1cml0ecKgYW5kwqBlY29ub21pYw0KaW5kZXBlbmRlbnTC
+oGhhc8KgbG9zdMKgdG/CoHRoZcKgZ3JlYXRlc3TCoGxvd2VywqBsZXZlbCzCoGFuZMKgb3VywqBj
+dWx0dXJlwqBoYXMNCmxvc3TCoGluY2x1ZGluZ8Kgb3VywqBoYXBwaW5lc3PCoGhhc8KgYmVlbsKg
+dGFrZW7CoGF3YXnCoGZyb23CoHVzLsKgT3VywqBjb3VudHJ5DQpoYXPCoGJlZW7CoG9uwqBmaXJl
+wqBmb3LCoG1vcmXCoHRoYW7CoGHCoHllYXLCoG5vdy4NCg0KSWbCoHlvdcKgYXJlwqBjYXBhYmxl
+wqBvZsKgaGFuZGxpbmfCoHRoaXPCoGJ1c2luZXNzwqBwYXJ0bmVyc2hpcCzCoGNvbnRhY3TCoG1l
+DQpmb3LCoG1vcmXCoGRldGFpbHMswqBJwqB3aWxswqBhcHByZWNpYXRlwqBpdMKgaWbCoHlvdcKg
+Y2FuwqBjb250YWN0wqBtZQ0KaW1tZWRpYXRlbHkuwqBZb3XCoG1hecKgYXPCoHdlbGzCoHRlbGzC
+oG1lwqBhwqBsaXR0bGXCoG1vcmXCoGFib3V0wqB5b3Vyc2VsZi4NCkNvbnRhY3TCoG1lwqB1cmdl
+bnRsecKgdG/CoGVuYWJsZcKgdXPCoHRvwqBwcm9jZWVkwqB3aXRowqB0aGXCoGJ1c2luZXNzLsKg
+ScKgd2lsbA0KYmXCoHdhaXRpbmfCoGZvcsKgeW91csKgcmVzcG9uc2UuwqBNecKgc2luY2VyZcKg
+YXBvbG9naWVzwqBmb3LCoHRoZQ0KaW5jb252ZW5pZW5jZS4NCg0KDQpUaGFua8KgeW91IQ0KDQpN
+ci4gUmF6dW1rb3bCoE15a2hhaWxvLg0K
