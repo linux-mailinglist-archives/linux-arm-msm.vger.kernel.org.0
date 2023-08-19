@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E0977819F8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Aug 2023 16:22:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E20A781A37
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Aug 2023 16:49:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233207AbjHSOWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Aug 2023 10:22:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
+        id S233652AbjHSOtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Aug 2023 10:49:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233360AbjHSOWL (ORCPT
+        with ESMTP id S233645AbjHSOtG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Aug 2023 10:22:11 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 628E1106
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 07:22:00 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fe32016bc8so17209975e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 07:22:00 -0700 (PDT)
+        Sat, 19 Aug 2023 10:49:06 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D541E24C30
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 07:49:03 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fe1d462762so17911945e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 07:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692454919; x=1693059719;
+        d=linaro.org; s=google; t=1692456542; x=1693061342;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UAc6qOkjy0rFtaDwsZVWmbF6XPQ2JnI6jdGxzBgS0C0=;
-        b=Pl1a4O5dMHVgND2Zxh/FLx+LzcCFwOkjSVL0gC45HVqncybh72Ji6ywdb7C7sSywxh
-         tvoq1FKiznHOM29kb6D0YBvIq9MG3JmUapYuP3Ve1JQDHgjc1dgGjFfYVCNztuvZfoED
-         lZhtXthP/XKP2uNgi4ziRz5MaR35+xwjwmK2fQ0JA8rRW+wK8pMH7UC2Aaw2FhK50E4G
-         5ktm5Xn55gk+++lzeg28gkj0YFP/UfUf6/c/ODb0gQQzTqlsjYgetgJa5zfeZryCjEGs
-         EDYH6Yof3rb9XhkTKFHWdVUERY/d1q4mNCPhwoPopaOa7HA9KjqajCKmK2AvFrDFP9eb
-         /Y7Q==
+        bh=8Lai3lzaFQcOUlX6NwcBkA21aZzV1McYrSxoq4Xf4Is=;
+        b=rBA5slir7cZwcjlaP9ww09Q0nNEk9Z0XhnobTPrvB36uqFHtJ+LAexCZlRUT9jAL+b
+         vQIAa1Mt7zdsnL+hSZTQY8zWbwnvU5gfvbkcI88jNVSxg+8BsZB8K6Ru69gfT9RLCpMw
+         jo3wIncGMDEPCEaw9JQLGR2Dk91ThaxnMnMG+1Fe89wfi/pIHPP+mGOwrulAldq09/wK
+         G6kHLkpcwjGu2sp/kK+bLscifIPPCo+CcCAg9s9amureCazRiwzTEAqZY+EgKTGn1o70
+         FXOG5JlM1r+Y/gIeOBdocI2ihY4PKC8M5VOyANWF+NZ4uqzSONOBA5g3jM4myK6titGH
+         DJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692454919; x=1693059719;
+        d=1e100.net; s=20221208; t=1692456542; x=1693061342;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UAc6qOkjy0rFtaDwsZVWmbF6XPQ2JnI6jdGxzBgS0C0=;
-        b=dZ/Ny+JFSk7Vy09DsjMPkBkSgG7boBLbSsx/57LKD+U/koZ33OLjZmMr3leOty+5Vf
-         vKp6A5Uu339Wz2Zq5da4iPIM0n3HkoB6O434WGQHKga+Nqc/WCITBYxjXvFNbuaMdQPh
-         TFXDnB6+m8DCobNgJvvR7jlt78/Zg8AregXJb4KKXTjbwp2Hi2bKirN5JtGsc9ikLW9T
-         J5NWXO5iXjeqbgmwderIu9sWyUUHg21/hu4ccQm/82goLgpcCK0PJC36MJR8fU9IsfAb
-         BPC4jyRxm+Dfyj4Zil/eudKnraMgHYRjLtK8hhUMjXNniVqd/YOcqZ4kloeGkMMsMhyZ
-         98YA==
-X-Gm-Message-State: AOJu0YzMovOHtS1tarJEZlgXWY72cin4wzODqhA3Oj/cP5/ZSRPX54Al
-        AudZLC6fz5nomy1d/jx4gLP0Wk8rwzaCXPiugkc=
-X-Google-Smtp-Source: AGHT+IHh30rvDXYKhYF93M7r7DS9miQDSTeGLQ293BUQP20NDDVnbhx3Nu3zvHyBroD9wVkQX+U4/g==
-X-Received: by 2002:a05:600c:c5:b0:3fe:dcd0:2e32 with SMTP id u5-20020a05600c00c500b003fedcd02e32mr1463788wmm.19.1692454918857;
-        Sat, 19 Aug 2023 07:21:58 -0700 (PDT)
+        bh=8Lai3lzaFQcOUlX6NwcBkA21aZzV1McYrSxoq4Xf4Is=;
+        b=GLqdoM7Eayo6A7Vvl9/pSoPGka5WdT+4wIoCW3/OSsYK+LxS+AvEJNEqLHencY/Wfm
+         hMf/gOuoOOxHGlOTyassU2CklA5JpHJ962fsSFKMY4/oM53hZnlMYhvzlJ/m8eNOFVqp
+         cjgVT7SYelk7tdk0WBaQFMVsioRzDJmCSmDmSYBy7ONPhX0ukDDRNo65PXkQPidO8iAB
+         tF4QhCjbZJeEdRA4d1RPvvvfDLwdXHFCWEbEfaBATUP/DdKA1wTg6hyOqYYgnSAmVum4
+         Yb+1aMfyOw7dGWf307CJ87SnkL7LOvXM/MzWXuZur0jZQw9YiNexcLACF1CRrkvQz0sn
+         XPTQ==
+X-Gm-Message-State: AOJu0YxtRba18WG7DXPse9NoBiZznmqQjVKpeDmBCnDSwT7HioBWL9Rn
+        rAgYjkVW7sBX6/gaclnreIrOsg==
+X-Google-Smtp-Source: AGHT+IHJzDhBNu7ctb++Jk4VjdxyvgJXY12TA1cbQ4ejANvmXaRByQ78dFXro7q5SEymjActnoFF4g==
+X-Received: by 2002:a7b:c3c2:0:b0:3fe:df1:5b95 with SMTP id t2-20020a7bc3c2000000b003fe0df15b95mr1601934wmj.19.1692456542262;
+        Sat, 19 Aug 2023 07:49:02 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id 16-20020a05600c231000b003fc00212c1esm6308313wmo.28.2023.08.19.07.21.57
+        by smtp.gmail.com with ESMTPSA id s14-20020a05600c044e00b003fa96fe2bd9sm9856581wmb.22.2023.08.19.07.49.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 19 Aug 2023 07:21:58 -0700 (PDT)
-Message-ID: <179d22c0-c20f-7190-0dce-f439669dc232@linaro.org>
-Date:   Sat, 19 Aug 2023 15:21:57 +0100
+        Sat, 19 Aug 2023 07:49:01 -0700 (PDT)
+Message-ID: <9e2c597b-171c-448a-b696-382da9834a4f@linaro.org>
+Date:   Sat, 19 Aug 2023 15:49:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v2 12/13] media: qcom: camss: Add support for setting
- CSIPHY clock name csiphyX
+Subject: Re: [PATCH v2 10/13] media: qcom: camss: Allow clocks vfeN vfe_liteN
+ or vfe_lite
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
@@ -66,58 +66,70 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230817143812.677554-1-bryan.odonoghue@linaro.org>
- <20230817143812.677554-13-bryan.odonoghue@linaro.org>
- <5ad949d3-1776-4345-9fdc-99b3dba10bd7@linaro.org>
+ <20230817143812.677554-11-bryan.odonoghue@linaro.org>
+ <f0f55093-585f-4270-8ced-2c92a4808c9b@linaro.org>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <5ad949d3-1776-4345-9fdc-99b3dba10bd7@linaro.org>
+In-Reply-To: <f0f55093-585f-4270-8ced-2c92a4808c9b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/08/2023 13:32, Konrad Dybcio wrote:
+On 18/08/2023 13:30, Konrad Dybcio wrote:
 > On 17.08.2023 16:38, Bryan O'Donoghue wrote:
->> Several of our upstream and soon-to-be upstream SoC CAMSS dtsi declare
->> csiphyX as opposed to the older clock name csiX_phy.
+>> The number of Video Front End - VFE or Image Front End - IFE supported
+>> with new SoCs can vary both for the full and lite cases.
 >>
->> For newer SoCs csiphyX turns out to be a clock you really need to set.
+>> For example sdm845 has one vfe_lite and two vfe interfaces with the vfe
+>> clock called simply "vfe_lite" with no integer postfix. sc8280xp has four
+>> vfe and four vfe lite blocks.
 >>
->> On sc8280xp for example we will encounter difficult to track down and
->> root-cause RX CRC errors without setting the csiX_phy clock. On sdm845 and
->> sm8250 we declare the csiXphy clock but seem to get away with not setting
->> it.
+>> We need to support the following clock name formats
 >>
->> The right approach here is to set the clock when it is declared. If a SoC
->> doesn't require or a SoC driver implementer doesn't think we need, then the
->> clock ought to simply be omitted from the clock list.
+>> - vfeN
+>> - vfe_liteN
+>> - vfe_lite
 >>
->> Include csiphyX in the set of permissible strings which will subsequently
->> lead to the csiphyX clock being set during csiphy_set_clock_rates() phase.
+>> with N being any reasonably sized integer.
+>>
+>> There are two sites in this code which need to do the same thing,
+>> constructing and matching strings with the pattern above, so encapsulate
+>> the logic in one function.
 >>
 >> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 >> ---
-> So.. is this just a namechange? Is it really necessary?
+>>   drivers/media/platform/qcom/camss/camss-vfe.c | 22 ++++++++++++++-----
+>>   1 file changed, 16 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+>> index 8f48401e31cd3..73380e75dbb22 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+>> @@ -437,6 +437,20 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+>>   	complete(&vfe->reset_complete);
+>>   }
+>>   
+>> +static int vfe_match_clock_names(struct vfe_device *vfe,
+>> +				 struct camss_clock *clock)
+>> +{
+>> +	char vfe_name[CAMSS_RES_MAX];
+> VFE_MAX?
+> 
+> the current value of 17 would be very excessive for VFEs!
 > 
 > Konrad
 
-Not at all no.
+Solving these generic and large struct resource strings is something I 
+plan for another series.
 
-We currently don't set csiphyX clocks. That's "not a problem" on sdm845 
-and sm8250 "because" but on sc8280xp if you don't set that clock you'll 
-get all sorts of RX CRC errors.
-
-Obvs my extensive and detailed commit log transmits exactly no detail.
-
-Let me fix that in the next version.
-
-;)
+Good enough ?
 
 ---
 bod
