@@ -2,139 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBCE07817C3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Aug 2023 09:03:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63D82781818
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Aug 2023 09:46:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343832AbjHSHDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Aug 2023 03:03:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55032 "EHLO
+        id S1344364AbjHSHpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Aug 2023 03:45:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245508AbjHSHC6 (ORCPT
+        with ESMTP id S1344403AbjHSHpO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Aug 2023 03:02:58 -0400
-Received: from mail-yw1-x1144.google.com (mail-yw1-x1144.google.com [IPv6:2607:f8b0:4864:20::1144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB43426A4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 00:02:56 -0700 (PDT)
-Received: by mail-yw1-x1144.google.com with SMTP id 00721157ae682-579de633419so18018867b3.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 00:02:56 -0700 (PDT)
+        Sat, 19 Aug 2023 03:45:14 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86391713
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 00:45:12 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-99de884ad25so213585566b.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Aug 2023 00:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692428576; x=1693033376;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9kydyMnwD//o0quRqImkimRYfrWW9k+FT8t/oHoxyE8=;
-        b=MUn6TsJ49QsJA4igR3yMrdu/XsOuj8hKh7h6eVdj/4Q6ak4DnVptLCIKMxoaE1lx82
-         BxwzjkQUKGArD5gK4285su7I1sDB3qAK0HSAdokXHiNeRenFsT5dKLZZVD83rG1rnoeS
-         VdXWoxIFxTFlZ65TKthmVXAt9fOId6PSQJki87wVoyeAFbKQrlj5j4smx8DIxP/w0ZWJ
-         TRln+T7V97cC+Lha+e87zGu5qdfzMw4YK01R7iyxmdvnMREZiOau3xyPwKBLzOkfFV8d
-         16kMFJpKMWwV0JdyrqeYRq0aUvKFPGskV1RZVJY1R5FX4jJ5AOT83v5lCI7JlEhO9IN8
-         hMmA==
+        d=linaro.org; s=google; t=1692431111; x=1693035911;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QYxJHRkfz5+E7C/DgQtipVS7sPzq8usuIEMiG66wgWA=;
+        b=Z76wT0UlYmYwypK8d0yXNx14meVAJawQSYz0sz3zjQB77X2ELCAotD1bGWZ/gu71xY
+         FfEnulmEL9kNtN3lRB+JDAM3JLuc1ZQihAgFvLhe+MsafkjUQWkZD0+tGVRtFLV7/DG/
+         TDOdfLOb930E6EWwuSyiwc8CIzatjkybKfh0HCBMKbPgWbuau2arlKFk3ACtShubUwwz
+         4rugrL3N/BQM3H9aPIw0QEvbPWtBnWWLcaHS+q0w6osdIP2W1JSWOPnHT9fuomat536w
+         AT+fDm4DiVUuG+A2/ynIAsDh0acQjBCUkLarC8KCT6AuUzXXyPpSWgQIgp54qVFx+T7X
+         kAZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692428576; x=1693033376;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9kydyMnwD//o0quRqImkimRYfrWW9k+FT8t/oHoxyE8=;
-        b=Y2DNnRHo/O0LRK+5R7vfMDw/Kg6DgpNXN85WqSl40sLuiDV9f3X45y+GcfKWsrGCXa
-         5KLiJHVzdDPNjqzEAhZHBi37Qz+T4arhLynp6GMUgllq2V5eonm1SOc5/uj1AAcb4SSv
-         OnNKW77CIu5E5AbY13Zhov2FdIc+HiRfcJpO/5ltiSzbPv0XZGvPL5e5TZHzMtveEOf4
-         Os9p0DcjYxsRCw7z4TazDOl6lbCA+Vwv3BvGNSyalwWUCF4jEga2AeVrit4dFbEs7HIl
-         UDiXf4QLCWoIElBSmXc/rgqVBAVZmoM3Ndk4LnTcPyA623p1gKCV1CrdF/OoraW5dnyS
-         wDyw==
-X-Gm-Message-State: AOJu0Yy+/NF5xUBtlqZ7ivRL0qN84VTKNMm8TPyMwSTGtpgxk6iTmVi3
-        Xz9b0Tv7OLJ/4OFhQ4/a/vIB9GYel/GRn4DhRD4=
-X-Google-Smtp-Source: AGHT+IHBFHux9W7amy752XAKQ4G+pXj9K8KLABgekYkKVjTaNiUovhqWPJjy5q7mdLIzANUAVG24gzrYlmHT6Kjn7Kk=
-X-Received: by 2002:a81:8782:0:b0:589:a9fc:ffcd with SMTP id
- x124-20020a818782000000b00589a9fcffcdmr1407212ywf.20.1692428576106; Sat, 19
- Aug 2023 00:02:56 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692431111; x=1693035911;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QYxJHRkfz5+E7C/DgQtipVS7sPzq8usuIEMiG66wgWA=;
+        b=fHVAztP3zJgoh9ecCSniI8s5J3OhSG+Ul2AG0z1agt0DHBsrLWWtBlS5AGNCafDS3/
+         iHVUA7G1yWJwOtoCmGnRET7Gt7jc2bY3pO6w7fOOnX2ULgSr2DwoL7FJPvdBm8LfaAwd
+         LTdKp2di5vEuBZIBU1VPt36HaEmFQqTn+NaXKC9ysZhEZMpTfq5lXYdQkqbsms/PtCP7
+         mvULCi7M4uBgs3pH+w7CpRDdDu4q40bykqSYqJY6yuf6AdNZZkqgQiPUnq3suF1wnfNx
+         j+uaqPMgsUdLkuHfhZ/1lRL88YgydfeKo0Xd0FHyV2I5xD6fqenP1oTJzYW3wEqsnHmU
+         CBWQ==
+X-Gm-Message-State: AOJu0YyHFiZpdr7I7GG1K/vdI+PmQzh8VCStlh3NJBnLQNHxL3CyuPLo
+        oYsvPNXZbfvAxoHLksUAe6QVWQ==
+X-Google-Smtp-Source: AGHT+IFA0oacvhzZRaqDxr5uNcec9rVnKY7L81x5sqkIXHlHXR5tkc9/fjtKUDaKebMkt+7tmCa1Ew==
+X-Received: by 2002:a17:907:763b:b0:99b:66eb:2162 with SMTP id jy27-20020a170907763b00b0099b66eb2162mr1072866ejc.5.1692431111213;
+        Sat, 19 Aug 2023 00:45:11 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id k17-20020a1709062a5100b0099bc2d1429csm2261089eje.72.2023.08.19.00.45.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 19 Aug 2023 00:45:10 -0700 (PDT)
+Message-ID: <2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org>
+Date:   Sat, 19 Aug 2023 09:45:09 +0200
 MIME-Version: 1.0
-Reply-To: razumkoykhailo@gmail.com
-Sender: mrtombaba@gmail.com
-Received: by 2002:a05:7000:5395:b0:4f4:2174:eed4 with HTTP; Sat, 19 Aug 2023
- 00:02:55 -0700 (PDT)
-From:   "Mr.Razum Khailo" <razumkoykhailo@gmail.com>
-Date:   Sat, 19 Aug 2023 00:02:55 -0700
-X-Google-Sender-Auth: TD1SbUwALQWUaG93zNo0ky4SaO8
-Message-ID: <CADXgghn2t3mU_VvtZDjHwnbadg2QnVcJ30yFd0kN8SL6NDhY1g@mail.gmail.com>
-Subject: Greetings from Ukraine,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,LOTS_OF_MONEY,
-        MILLION_USD,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:1144 listed in]
-        [list.dnswl.org]
-        * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
-        *      [score: 0.0000]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [razumkoykhailo[at]gmail.com]
-        *  2.0 MILLION_USD BODY: Talks about millions of dollars
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  2.4 MONEY_FREEMAIL_REPTO Lots of money from someone using free
-        *      email?
-        *  2.8 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *****
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom,prng: Add SM8450
+Content-Language: en-US
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
+        konrad.dybcio@linaro.org
+Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        davem@davemloft.net, devicetree@vger.kernel.org,
+        herbert@gondor.apana.org.au, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        robh+dt@kernel.org, vkoul@kernel.org
+References: <20230811-topic-8450_prng-v1-1-01becceeb1ee@linaro.org>
+ <20230818161720.3644424-1-quic_omprsing@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230818161720.3644424-1-quic_omprsing@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-R3JlZXRpbmdzwqBmcm9twqBVa3JhaW5lLA0KDQpNci7CoFJhenVta292wqBNeWtoYWlsbyzCoGFu
-wqBlbnRyZXByZW5ldXLCoGJ1c2luZXNzbWFuwqBmcm9twqBPZGVzc2ENClVrcmFpbmUuwqBXaXRo
-aW7CoGHCoHllYXLCoHBsdXPCoHNvbWXCoG1vbnRoc8Kgbm93LMKgbW9yZcKgdGhhbsKgOC4ywqBt
-aWxsaW9uDQpwZW9wbGXCoGFyb3VuZMKgdGhlwqBjaXRpZXPCoG9mwqBtecKgY291bnRyecKgVWty
-YWluZcKgaGF2ZcKgYmVlbsKgZXZhY3VhdGVkwqB0bw0KYcKgc2FmZcKgbG9jYXRpb27CoGFuZMKg
-b3V0wqBvZsKgdGhlwqBjb3VudHJ5LMKgbW9zdMKgZXNwZWNpYWxsecKgY2hpbGRyZW7CoHdpdGgN
-CnRoZWlywqBwYXJlbnRzLMKgbnVyc2luZ8KgbW90aGVyc8KgYW5kwqBwcmVnbmFudMKgd29tZW4s
-wqBhbmTCoHRob3NlwqB3aG/CoGhhdmUNCmJlZW7CoHNlcmlvdXNsecKgd291bmRlZMKgYW5kwqBu
-ZWVkwqB1cmdlbnTCoG1lZGljYWzCoGF0dGVudGlvbi7CoEnCoHdhc8KgYW1vbmcNCnRob3NlwqB0
-aGF0wqB3ZXJlwqBhYmxlwqB0b8KgZXZhY3VhdGXCoHRvwqBvdXLCoG5laWdoYm91cmluZ8KgY291
-bnRyaWVzwqBhbmTCoEnigJltDQpub3fCoGluwqB0aGXCoHJlZnVnZWXCoGNhbXDCoG9mwqBUZXLC
-oEFwZWzCoEdyb25pbmdlbsKgaW7CoHRoZcKgTmV0aGVybGFuZHMuDQoNCknCoG5lZWTCoGHCoGZv
-cmVpZ27CoHBhcnRuZXLCoHRvwqBlbmFibGXCoG1lwqB0b8KgdHJhbnNwb3J0wqBtecKgaW52ZXN0
-bWVudA0KY2FwaXRhbMKgYW5kwqB0aGVuwqByZWxvY2F0ZcKgd2l0aMKgbXnCoGZhbWlseSzCoGhv
-bmVzdGx5wqBpwqB3aXNowqBJwqB3aWxsDQpkaXNjdXNzwqBtb3JlwqBhbmTCoGdldMKgYWxvbmcu
-wqBJwqBuZWVkwqBhwqBwYXJ0bmVywqBiZWNhdXNlwqBtecKgaW52ZXN0bWVudA0KY2FwaXRhbMKg
-aXPCoGluwqBtecKgaW50ZXJuYXRpb25hbMKgYWNjb3VudC7CoEnigJltwqBpbnRlcmVzdGVkwqBp
-bsKgYnV5aW5nDQpwcm9wZXJ0aWVzLMKgaG91c2VzLMKgYnVpbGRpbmfCoHJlYWzCoGVzdGF0ZXMs
-wqBtecKgY2FwaXRhbMKgZm9ywqBpbnZlc3RtZW50DQppc8KgKCQzMMKgTWlsbGlvbsKgVVNEKcKg
-LsKgVGhlwqBmaW5hbmNpYWzCoGluc3RpdHV0aW9uc8KgaW7CoG15wqBjb3VudHJ5DQpVa3JhaW5l
-wqBhcmXCoGFsbMKgc2hvdMKgZG93bsKgZHVlwqB0b8KgdGhlwqBjcmlzaXPCoG9mwqB0aGlzwqB3
-YXLCoG9uwqBVa3JhaW5lDQpzb2lswqBiecKgdGhlwqBSdXNzaWFuwqBmb3JjZXMuwqBNZWFud2hp
-bGUswqBpZsKgdGhlcmXCoGlzwqBhbnnCoHByb2ZpdGFibGUNCmludmVzdG1lbnTCoHRoYXTCoHlv
-dcKgaGF2ZcKgc2/CoG11Y2jCoGV4cGVyaWVuY2XCoGluwqB5b3VywqBjb3VudHJ5LMKgdGhlbsKg
-d2UNCmNhbsKgam9pbsKgdG9nZXRoZXLCoGFzwqBwYXJ0bmVyc8Kgc2luY2XCoEnigJltwqBhwqBm
-b3JlaWduZXIuDQoNCknCoGNhbWXCoGFjcm9zc8KgeW91csKgZS1tYWlswqBjb250YWN0wqB0aHJv
-dWdowqBwcml2YXRlwqBzZWFyY2jCoHdoaWxlwqBpbsKgbmVlZA0Kb2bCoHlvdXLCoGFzc2lzdGFu
-Y2XCoGFuZMKgScKgZGVjaWRlZMKgdG/CoGNvbnRhY3TCoHlvdcKgZGlyZWN0bHnCoHRvwqBhc2vC
-oHlvdcKgaWYNCnlvdcKga25vd8KgYW55wqBsdWNyYXRpdmXCoGJ1c2luZXNzwqBpbnZlc3RtZW50
-wqBpbsKgeW91csKgY291bnRyecKgacKgY2FuDQppbnZlc3TCoG15wqBtb25lecKgc2luY2XCoG15
-wqBjb3VudHJ5wqBVa3JhaW5lwqBzZWN1cml0ecKgYW5kwqBlY29ub21pYw0KaW5kZXBlbmRlbnTC
-oGhhc8KgbG9zdMKgdG/CoHRoZcKgZ3JlYXRlc3TCoGxvd2VywqBsZXZlbCzCoGFuZMKgb3VywqBj
-dWx0dXJlwqBoYXMNCmxvc3TCoGluY2x1ZGluZ8Kgb3VywqBoYXBwaW5lc3PCoGhhc8KgYmVlbsKg
-dGFrZW7CoGF3YXnCoGZyb23CoHVzLsKgT3VywqBjb3VudHJ5DQpoYXPCoGJlZW7CoG9uwqBmaXJl
-wqBmb3LCoG1vcmXCoHRoYW7CoGHCoHllYXLCoG5vdy4NCg0KSWbCoHlvdcKgYXJlwqBjYXBhYmxl
-wqBvZsKgaGFuZGxpbmfCoHRoaXPCoGJ1c2luZXNzwqBwYXJ0bmVyc2hpcCzCoGNvbnRhY3TCoG1l
-DQpmb3LCoG1vcmXCoGRldGFpbHMswqBJwqB3aWxswqBhcHByZWNpYXRlwqBpdMKgaWbCoHlvdcKg
-Y2FuwqBjb250YWN0wqBtZQ0KaW1tZWRpYXRlbHkuwqBZb3XCoG1hecKgYXPCoHdlbGzCoHRlbGzC
-oG1lwqBhwqBsaXR0bGXCoG1vcmXCoGFib3V0wqB5b3Vyc2VsZi4NCkNvbnRhY3TCoG1lwqB1cmdl
-bnRsecKgdG/CoGVuYWJsZcKgdXPCoHRvwqBwcm9jZWVkwqB3aXRowqB0aGXCoGJ1c2luZXNzLsKg
-ScKgd2lsbA0KYmXCoHdhaXRpbmfCoGZvcsKgeW91csKgcmVzcG9uc2UuwqBNecKgc2luY2VyZcKg
-YXBvbG9naWVzwqBmb3LCoHRoZQ0KaW5jb252ZW5pZW5jZS4NCg0KDQpUaGFua8KgeW91IQ0KDQpN
-ci4gUmF6dW1rb3bCoE15a2hhaWxvLg0K
+On 18/08/2023 18:17, Om Prakash Singh wrote:
+> Instead of having SoC name "qcom,sm8450-prng-ee" we could use "qcom,rng-ee" as
+> new IP core is not longer pseudo random number generator. so "prng" can be
+> changed to "rng". Clock configuration is not needed on sm8550 as well. So it is
+> better to use generic compatible string.
+
+I am not sure if I understand your point. You mean drop "p" in "prng" or
+drop specific compatible? The first depends in the block - if it is
+still pseudo. The second - why? That's contradictory to what is in the
+guidelines and what we have been pushing for very long time. Going
+against guidelines would require proper justification (and not some
+usual justification "I don't need it", because we talked about this many
+many times). One should not bring downstream poor practices to upstream,
+but the other way. You should fix downstream code.
+
+Best regards,
+Krzysztof
+
