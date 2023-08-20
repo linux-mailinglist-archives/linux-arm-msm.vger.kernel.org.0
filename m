@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE1CE781CD6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Aug 2023 10:00:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1C60781CDF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Aug 2023 10:10:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230045AbjHTIAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Aug 2023 04:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34646 "EHLO
+        id S230111AbjHTIKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Aug 2023 04:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229668AbjHTIAt (ORCPT
+        with ESMTP id S229676AbjHTIKq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Aug 2023 04:00:49 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4671510C0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 00:56:32 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99bc9e3cbf1so478593366b.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 00:56:32 -0700 (PDT)
+        Sun, 20 Aug 2023 04:10:46 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D67E9D2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 01:05:48 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4ff9b389677so3399476e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 01:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692518191; x=1693122991;
+        d=linaro.org; s=google; t=1692518747; x=1693123547;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=THMyvm0RCCKTyF90SJ5PjCj2N+mTHvivLPOzTnzUtHE=;
-        b=AEQ0uZMTDiIGTz38RCz2Yxu2LIhaUZ68DOvOl2b+zvEBNwShmUCnXpbMQlRaCHmuXR
-         E6c/MV31P/XPmSHg6ZkUdfJpvC3undr2hF2pgu8DdlfefRBgNQwf0x+eer4MZY3rI9WQ
-         HTdeb9ThvH2gLY6VfCTMj6dqvYUJpzEmp+uio1WtANyRaUr0y0T/D+e/SdYAmtec7jMR
-         xxwHekRa/mABqUZfgMu5/rMLCMsfqvDrPrylZahqhljdv9Qolv4SgxddsB6yWTTCfUL5
-         G+b6TXxXT0JHP7qV37MvtwspI2uJiPINKQjYOrw/0S8H8+tLYmRznzsURCYHafdBo8T/
-         EzXg==
+        bh=0FBq4YTR+0Eb6sKOYr6I2bt6IPGuv4RF8Oj9v7H5bKY=;
+        b=FHCJb70x6bgYq7af5DTY604C3eCpKukIc5sgg7haKJ4ua8rxdXJuvyocaw1yuQcugD
+         0gDj8xVX2Cobul2yuq5N9QJs86IDZgiiAEJAzhND9QIr4a/6N8QL3GxbEKR2md8A3kIG
+         8rEtxyNh7KNArT4z9Ec6c+B69BH+I7bYmKnFOjJ//SpYsWIwJnAkivpgv5vynzEy96KU
+         0WsmLZDrWzgvPsc72k4ZqgUVBorcvCGQrUbnctVv2zXznuodrTaIgXV0H63DUHu1JbkE
+         sabbZdDLBSVBv06/UJnd421Oi8mURK6cKtmhPpBcYpD1oIuI+ov/mdMCRbwDMXvYRsQR
+         Q8Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692518191; x=1693122991;
+        d=1e100.net; s=20221208; t=1692518747; x=1693123547;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=THMyvm0RCCKTyF90SJ5PjCj2N+mTHvivLPOzTnzUtHE=;
-        b=j2egyzrW3nG5FXD4OctLcoj3JvYPq/veXtJ7Zpw3RSTGeOnEcp4RXJL9NLKZaQvRmc
-         UjTBCVv3W3AlLj1w9ZpVMg/T+ekr7P2YMh8z5HrRMldQ362iI12uW6tj82xarGPAR56m
-         YQKQ7bOCDo1w9l3AWeCDgkoXLh++kKF1Fa4GSi1/R7eTJTabC7/zplSNVj8tHYoAkNCZ
-         xpVEAsy/uQ0wN6ywsKHB+fLIChVw35iKSAuTJktJIFTd4/0fgNiKLYNeAMWCQT2ze8Ma
-         LQpThiRRgiKrfkvrkAmo+CJJsZTZtu+6js1J2CwzzvTldxJiHbkBPnHurOUNXATqAzVY
-         xsDw==
-X-Gm-Message-State: AOJu0Yw508z7sXBK1Rn8/iL0Ui6PYp6MBfAbQlQwXK0XCcuwnXUczCZ6
-        FFvHdw63eAduBEpkGuaiGngZ5Q==
-X-Google-Smtp-Source: AGHT+IFZW4S+dNy+vC8uZLRJvghLgr2H6/VYYBwnotfLZOZuk4PewJZcZxUZxkFQqni9pE/WpdEYUA==
-X-Received: by 2002:a17:907:d26:b0:99b:fcd7:2d7a with SMTP id gn38-20020a1709070d2600b0099bfcd72d7amr4089970ejc.34.1692518190330;
-        Sun, 20 Aug 2023 00:56:30 -0700 (PDT)
+        bh=0FBq4YTR+0Eb6sKOYr6I2bt6IPGuv4RF8Oj9v7H5bKY=;
+        b=AKHexC5KBgh9VTkvDyTi6jpcxiHmxtG6J+ElzWwwnZdmhWD0p8BsnuZ79rqLTrhhuj
+         niEc08NrMrZL91GeavK5QlO46JSjYP52kRjMwJundj6n8mYeLDGR1EbsDBfMb/zqA3NG
+         KdzoIH5fLGkQ/r4wBlJJAxyNJiFl8FzCh9lv1vIHloy0Fs40eUQV+An2kutSRzPasdII
+         +VwlHtyBKdcl+i7ZmNTmXAIhKQWxCl3/rcNumYeZ+TfZfyi+yMShtAi3YH5jplh98EHA
+         0cL+DbJq8VJZwfszkkldgWaLIeILiI1erkOpgsJDj0XyEav6I1zyzBfRD7VCLNEp7V8w
+         d8sA==
+X-Gm-Message-State: AOJu0YwSZqdh5FjzEUdS292JfB5K3nkJXnTdftD0h7lgTKQMm+bOoG0t
+        iNonyYpLXwBgXzAweTVXN+W7ow==
+X-Google-Smtp-Source: AGHT+IHVSKGunxzyjKs8EiRSL/Ef32A4iymXe6Uj4pISjyjeo+J1tZB61PFmnIeT4X7LrodP9G30VQ==
+X-Received: by 2002:a05:6512:3196:b0:4f8:5d2f:902a with SMTP id i22-20020a056512319600b004f85d2f902amr3217400lfe.60.1692518747125;
+        Sun, 20 Aug 2023 01:05:47 -0700 (PDT)
 Received: from krzk-bin.. ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id xa13-20020a170907b9cd00b0099bd5d28dc4sm4197644ejc.195.2023.08.20.00.56.29
+        by smtp.gmail.com with ESMTPSA id b1-20020aa7df81000000b00528dc95ad4bsm3256338edy.95.2023.08.20.01.05.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Aug 2023 00:56:29 -0700 (PDT)
+        Sun, 20 Aug 2023 01:05:46 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH RFT v2] arm64: dts: qcom: sc7280: drop incorrect EUD port on SoC side
-Date:   Sun, 20 Aug 2023 09:56:26 +0200
-Message-Id: <20230820075626.22600-1-krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: display: msm/dp: restrict opp-table to objects
+Date:   Sun, 20 Aug 2023 10:05:43 +0200
+Message-Id: <20230820080543.25204-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -78,90 +81,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm Embedded USB Debugger (EUD) second port should point to Type-C
-USB connector.  Such connector was defined directly in root node of
-sc7280.dtsi which is clearly wrong.  SC7280 is a chip, so physically it
-does not have USB Type-C port.  The connector is usually accessible
-through some USB switch or controller.
+Simple 'opp-table:true' accepts a boolean property as opp-table, so
+restrict it to object to properly enforce real OPP table nodes.
 
-Doug Anderson said that he wasn't ever able to use EUD on Herobrine
-boards, probably because of invalid or missing DTS description - DTS is
-saying EUD is on usb_2 node, which is connected to a USB Hub, not to the
-Type-C port.
-
-Correct the EUD/USB connector topology by removing the top-level fake
-USB connector and EUD port pointing to it, and disabling the incomplete
-EUD device node.
-
-This fixes also dtbs_check warnings:
-
-  sc7280-herobrine-crd.dtb: connector: ports:port@0: 'reg' is a required property
-
-Link: https://lore.kernel.org/all/CAD=FV=Xt26=rBf99mzkAuwwtb2f-jnKtnHaEhXnthz0a5zke4Q@mail.gmail.com/
-Fixes: 9ee402ccfeb1 ("arm64: dts: qcom: sc7280: Fix EUD dt node syntax")
-Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
 ---
+ .../devicetree/bindings/display/msm/dp-controller.yaml         | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Not tested on hardware.
-
-Changes in v2:
-1. Disable the EUD node and do not add ports/connector in boards, as
-   discussed with Doug.
-
-v1: https://lore.kernel.org/all/CAD=FV=Xt26=rBf99mzkAuwwtb2f-jnKtnHaEhXnthz0a5zke4Q@mail.gmail.com/
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 4abe5fb8e6c3..233cfcbd0b4a 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -649,18 +649,6 @@ cpu7_opp_3014mhz: opp-3014400000 {
- 		};
- 	};
+diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+index a31ec9a4179f..f12558960cd8 100644
+--- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+@@ -80,7 +80,8 @@ properties:
  
--	eud_typec: connector {
--		compatible = "usb-c-connector";
--
--		ports {
--			port@0 {
--				con_eud: endpoint {
--					remote-endpoint = <&eud_con>;
--				};
--			};
--		};
--	};
--
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -3623,6 +3611,8 @@ eud: eud@88e0000 {
- 			      <0 0x88e2000 0 0x1000>;
- 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+   operating-points-v2: true
  
-+			status = "disabled";
-+
- 			ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -3633,13 +3623,6 @@ eud_ep: endpoint {
- 						remote-endpoint = <&usb2_role_switch>;
- 					};
- 				};
--
--				port@1 {
--					reg = <1>;
--					eud_con: endpoint {
--						remote-endpoint = <&con_eud>;
--					};
--				};
- 			};
- 		};
+-  opp-table: true
++  opp-table:
++    type: object
  
+   power-domains:
+     maxItems: 1
 -- 
 2.34.1
 
