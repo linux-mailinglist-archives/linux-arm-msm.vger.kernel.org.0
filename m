@@ -2,107 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1C60781CDF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Aug 2023 10:10:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CA9F781E1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Aug 2023 16:25:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230111AbjHTIKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Aug 2023 04:10:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57736 "EHLO
+        id S231187AbjHTOZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Aug 2023 10:25:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjHTIKq (ORCPT
+        with ESMTP id S230515AbjHTOZT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Aug 2023 04:10:46 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D67E9D2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 01:05:48 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4ff9b389677so3399476e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 01:05:48 -0700 (PDT)
+        Sun, 20 Aug 2023 10:25:19 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A6E2724
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 07:20:39 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b9a2033978so39800191fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 07:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692518747; x=1693123547;
+        d=linaro.org; s=google; t=1692541238; x=1693146038;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0FBq4YTR+0Eb6sKOYr6I2bt6IPGuv4RF8Oj9v7H5bKY=;
-        b=FHCJb70x6bgYq7af5DTY604C3eCpKukIc5sgg7haKJ4ua8rxdXJuvyocaw1yuQcugD
-         0gDj8xVX2Cobul2yuq5N9QJs86IDZgiiAEJAzhND9QIr4a/6N8QL3GxbEKR2md8A3kIG
-         8rEtxyNh7KNArT4z9Ec6c+B69BH+I7bYmKnFOjJ//SpYsWIwJnAkivpgv5vynzEy96KU
-         0WsmLZDrWzgvPsc72k4ZqgUVBorcvCGQrUbnctVv2zXznuodrTaIgXV0H63DUHu1JbkE
-         sabbZdDLBSVBv06/UJnd421Oi8mURK6cKtmhPpBcYpD1oIuI+ov/mdMCRbwDMXvYRsQR
-         Q8Xw==
+        bh=9ZErwlA4SFN8xfjVsMunxZG98CnjarXI1zZZ0seeqKw=;
+        b=OP1L0IY4u4/WD+sJmJ9BJ2SexgWSc5MU+6CEIbY2hCohje3zO5DwsCoMUi4rB00D8b
+         bMRLP2FvPJpbPFaOo8Eo/dYfs6Khz3zp97MPbRf9OLzVIUMeaxQYnrd/nzVxjfJD132g
+         2NvjP1dZIuLrTLpsLJtm1f965b60mkuOLokov5EOScPRNL6XLDv1jQPMg2CvYxd7JeFc
+         M/yqJdIeJ13Vu+v3/u0KttYPUHnnY5VOM5ciawSJRdcKh8mGesM/ef5EKIfGMgyHAYkt
+         TsvgQpjeDGvrefIBXWNQYd/giK3QPgvd9G1RBuyo82v/kx6S0BPe8HXGlzwruQ0TPNQy
+         jvMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692518747; x=1693123547;
+        d=1e100.net; s=20221208; t=1692541238; x=1693146038;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0FBq4YTR+0Eb6sKOYr6I2bt6IPGuv4RF8Oj9v7H5bKY=;
-        b=AKHexC5KBgh9VTkvDyTi6jpcxiHmxtG6J+ElzWwwnZdmhWD0p8BsnuZ79rqLTrhhuj
-         niEc08NrMrZL91GeavK5QlO46JSjYP52kRjMwJundj6n8mYeLDGR1EbsDBfMb/zqA3NG
-         KdzoIH5fLGkQ/r4wBlJJAxyNJiFl8FzCh9lv1vIHloy0Fs40eUQV+An2kutSRzPasdII
-         +VwlHtyBKdcl+i7ZmNTmXAIhKQWxCl3/rcNumYeZ+TfZfyi+yMShtAi3YH5jplh98EHA
-         0cL+DbJq8VJZwfszkkldgWaLIeILiI1erkOpgsJDj0XyEav6I1zyzBfRD7VCLNEp7V8w
-         d8sA==
-X-Gm-Message-State: AOJu0YwSZqdh5FjzEUdS292JfB5K3nkJXnTdftD0h7lgTKQMm+bOoG0t
-        iNonyYpLXwBgXzAweTVXN+W7ow==
-X-Google-Smtp-Source: AGHT+IHVSKGunxzyjKs8EiRSL/Ef32A4iymXe6Uj4pISjyjeo+J1tZB61PFmnIeT4X7LrodP9G30VQ==
-X-Received: by 2002:a05:6512:3196:b0:4f8:5d2f:902a with SMTP id i22-20020a056512319600b004f85d2f902amr3217400lfe.60.1692518747125;
-        Sun, 20 Aug 2023 01:05:47 -0700 (PDT)
-Received: from krzk-bin.. ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id b1-20020aa7df81000000b00528dc95ad4bsm3256338edy.95.2023.08.20.01.05.45
+        bh=9ZErwlA4SFN8xfjVsMunxZG98CnjarXI1zZZ0seeqKw=;
+        b=SsIKReQqAUS1/Y0q/3lAuQzNXbjqjqfBQbuXdrP1Vwk7KnQJp+JO4noDIlZA9OSMQU
+         zkXL4WabPm5JcZqLJS3Q90w/6SeGcCpjsgux4SQJUGO9Vne79IGsqF6AChZZM94YzAD9
+         D9pb7IjkuVJDfIOcMwy6fVXTMHFz+kTPagqVxqMuT+6hKh4RA9wc5p1Ws5qJ5yZnZmX3
+         /+9qlkZWU1U5IF/6aMZCOA7AgUoVkGaC6z7Yy2yhH8bfDJhGFAXFS/s929aTC86WnkQw
+         okNpeNZtw4Y45P6Eu+LBYtArUXFHOc+2LSJJ9WMMrNM+I9Hpla682ageAvswCTEsUmZa
+         Kn4w==
+X-Gm-Message-State: AOJu0YywujH2/LThOf4x82kYBSfdzEr++WJuDnw344S/41XUzx1oxsHP
+        RhY79E9EgmMrYlAyB9e+SoIZjg==
+X-Google-Smtp-Source: AGHT+IElG4nucCOvM5CCM85FbztFMgI5vXiqPZG+KdMHS7Y0CEAAzQvGn8ISivtd3uAGP7DWhCP9Wg==
+X-Received: by 2002:a2e:9dcd:0:b0:2b6:e105:6174 with SMTP id x13-20020a2e9dcd000000b002b6e1056174mr2971711ljj.47.1692541237207;
+        Sun, 20 Aug 2023 07:20:37 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id n9-20020a2e7209000000b002b9e501a6acsm1706222ljc.3.2023.08.20.07.20.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Aug 2023 01:05:46 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Sun, 20 Aug 2023 07:20:36 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: display: msm/dp: restrict opp-table to objects
-Date:   Sun, 20 Aug 2023 10:05:43 +0200
-Message-Id: <20230820080543.25204-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+Subject: [PATCH v3 00/18] phy: qcom-qmp-pcie: convert to newer style of bindings
+Date:   Sun, 20 Aug 2023 17:20:17 +0300
+Message-Id: <20230820142035.89903-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Simple 'opp-table:true' accepts a boolean property as opp-table, so
-restrict it to object to properly enforce real OPP table nodes.
+Reviewing several patchsets for newer platforms made it clear that
+having two styles of QMP PHY bindings causes confusion. Despite binding
+documents having notes telling that old bindings should be used for
+older platforms, it is too easy to attempt adding new platform with
+older QMP PHY binding. Thus let's have just a single documented style of
+bindings.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../devicetree/bindings/display/msm/dp-controller.yaml         | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Proposed merge strategy: immutable branch with binding and PHY patches,
+which can also be merged into Bjorn's dts-for-6.7
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-index a31ec9a4179f..f12558960cd8 100644
---- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -80,7 +80,8 @@ properties:
- 
-   operating-points-v2: true
- 
--  opp-table: true
-+  opp-table:
-+    type: object
- 
-   power-domains:
-     maxItems: 1
+Changes since v2:
+ - Split away patches for sm8150 PHYs. Add missing driver bits to enable
+   PCIe PHY support on sm8150 (were submitted by Bhupesh in May 2022,
+   only DT bits were merged)
+ - Fixed v5.20 offsets merged earlier. Fixed merge conflict due to their
+   addition
+ - Fixed clocks / clock-names alignment in ipq8074.dtsi / sc7280.dtsi
+   (Konrad)
+ - Fixed PHY DT names and resource address for sc8180x (Konrad)
+
+Changes since v1:
+ - Split large patchset into smaller parts
+ - Rebased on phy/next
+
+Dmitry Baryshkov (18):
+  dt-bindings: phy: migrate QMP PCIe PHY bindings to
+    qcom,sc8280xp-qmp-pcie-phy.yaml
+  dt-bindings: phy: qcom,qmp-pcie: describe SM8150 PCIe PHYs
+  phy: qcom-qmp-pcie: drop ln_shrd from v5_20 config
+  phy: qcom-qmp-pcie: keep offset tables sorted
+  phy: qcom-qmp-pcie: simplify clock handling
+  phy: qcom-qmp-pcie: populate offsets configuration
+  phy: qcom-qmp-pcie: support SM8150 PCIe QMP PHYs
+  arm64: dts: qcom: ipq6018: switch PCIe QMP PHY to new style of
+    bindings
+  arm64: dts: qcom: ipq8074: switch PCIe QMP PHY to new style of
+    bindings
+  arm64: dts: qcom: msm8998: switch PCIe QMP PHY to new style of
+    bindings
+  arm64: dts: qcom: sc7280: switch PCIe QMP PHY to new style of bindings
+  arm64: dts: qcom: sc8180x: switch PCIe QMP PHY to new style of
+    bindings
+  arm64: dts: qcom: sdm845: switch PCIe QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8150: add ref clock to PCIe PHYs
+  arm64: dts: qcom: sm8150: switch PCIe QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8250: switch PCIe QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8450: switch PCIe QMP PHY to new style of bindings
+  ARM: dts: qcom-sdx55: switch PCIe QMP PHY to new style of bindings
+
+ .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        | 278 +++---------------
+ .../phy/qcom,msm8998-qmp-pcie-phy.yaml        |  97 ++++++
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  36 ++-
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi        |  31 +-
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  32 +-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  67 ++---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  30 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  40 +--
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi         | 148 ++++------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  71 ++---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  70 ++---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 112 +++----
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  82 +++---
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 177 ++++++-----
+ 14 files changed, 537 insertions(+), 734 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-pcie-phy.yaml
+
 -- 
-2.34.1
+2.39.2
 
