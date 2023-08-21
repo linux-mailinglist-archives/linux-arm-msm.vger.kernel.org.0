@@ -2,74 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDB9F782335
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 07:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96F8D78236D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 08:07:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233180AbjHUFfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 01:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55604 "EHLO
+        id S233314AbjHUGHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 02:07:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbjHUFfl (ORCPT
+        with ESMTP id S233306AbjHUGHt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 01:35:41 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0743A3;
-        Sun, 20 Aug 2023 22:35:40 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37L500XT015608;
-        Mon, 21 Aug 2023 05:35:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=vZqBlmH2wGR+UOS/VlA3481JwpGSHATnLCf/CSV0MrY=;
- b=YyZiPZ/KhESrdVk0qjt8gG/bzdbaHkcA2VovSgES5OTKwmbm69pk1lGpINn0hu0UIy+c
- O6HhWEGsEAnLLF+eRP3S9H9Y7YW1rS5oPF2UIK0FVRYp+O0nw8F2ddQvb7vGaW1Xts3i
- I7sprQtqxR1VSRvSWertw5at/kYxS7KQpK+JK8TMFwvFmKT9nMH12FG2wfx+q67GJHzV
- 5CLn4brG1jsTyfe86jHXEjrOB1Lakh+RpsalTpbeCP+7sMOS/HXn3qHl6BfghiB+/Cxt
- TD5U2cP2XwyXkzanS0TU/xlD0KmF2M8pbyc0Z63DS6Gjs2r/OkeiVCj+mcIR2oDUdLR5 EQ== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sjnu12q0k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Aug 2023 05:35:21 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 37L5ZIVt019528;
-        Mon, 21 Aug 2023 05:35:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3sjptkewpd-1;
-        Mon, 21 Aug 2023 05:35:18 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37L5ZIVl019523;
-        Mon, 21 Aug 2023 05:35:18 GMT
-Received: from mdalam-linux.qualcomm.com (mdalam-linux.qualcomm.com [10.201.2.71])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 37L5ZHNO019521;
-        Mon, 21 Aug 2023 05:35:18 +0000
-Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
-        id E232A12010C6; Mon, 21 Aug 2023 11:05:16 +0530 (IST)
-From:   Md Sadre Alam <quic_mdalam@quicinc.com>
-To:     mani@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, linux-mtd@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_mdalam@quicinc.com, quic_srichara@quicinc.com
-Subject: [PATCH] mtd: rawnand: qcom: Fix build issue
-Date:   Mon, 21 Aug 2023 11:05:13 +0530
-Message-Id: <20230821053513.13728-1-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Tn_DHjJjhkmqpd2QvulhN1VearquCJa6
-X-Proofpoint-GUID: Tn_DHjJjhkmqpd2QvulhN1VearquCJa6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-20_15,2023-08-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- impostorscore=0 clxscore=1015 mlxlogscore=795 suspectscore=0
- malwarescore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2308210051
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
+        Mon, 21 Aug 2023 02:07:49 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3591A9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 23:07:46 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bba6fc4339so46388061fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 23:07:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692598065; x=1693202865;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=abC59mP6JAJMeQMLsAfe2u+ZdmRJRLE9AtCEXGBBljg=;
+        b=tlubH/Cjia7U7baDNzn/xFBRuZiX0j0OWI8OyOgzdmezw3ZIpFouzSFpC80kDVmRCX
+         2Kmhh9iWMa90EU0LO4bAqQOA5dkKy121HTQxOj6nj4WreA3YhYSapS9xQUX1iC4Ls5FW
+         kswd4DhEEd7x/jUgQB8cfSxRPiz7cG/ooKi55phUys+bFyNNBrGoVyRZW0SVPebHLYQ7
+         LvP+sD/Y7X6Qoyk5uOrjHEI9KEDKpmCBKzC7mXCuvLC02xnOP7BDKWX0sARRjpFJpj0b
+         Q060GleYwbeZW8jTC1/InS50SshmVTYXTtd3M2Dv5YXQbPQkdkmVbXvkSWTy3yul6HsR
+         wHlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692598065; x=1693202865;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=abC59mP6JAJMeQMLsAfe2u+ZdmRJRLE9AtCEXGBBljg=;
+        b=IhH2JEM/gnbD8HATVe4qpn9UXvbO/xseNDJprVUVvr+H8wpcr6KyFob6REA4UdYW/O
+         GnH3YlmAsrPTvKXjd7USaaBVn2X3gJrBuYuTHpzn+MF7TIpCP0lT8S6NzyBg05aK3XVh
+         x0uk5dDlT9uYcKP0q4tKsPQnpsHJ9lrS2xhkailiUC9fBDROTthWJsTa4lrGeBauye/4
+         qZhjf11u4JxgwzpmsvvYBWpWOEvHKrhW7i2iCiGcUwzkIojxLvPzANtZUk7DZphjFFHi
+         QQAoxyRA9ycvblR1APvtRmPG7dA7ndduyr7NemzPq+3IqB8IjYLXwFJqIHIVUp1z/6n4
+         3YSQ==
+X-Gm-Message-State: AOJu0YwBx+7G61ky1oYDUeNzHqVqJW8YS83pnTT8lMif/GzPnS967THp
+        QHbYLAlg2egbFIrxCXAWdt//w8aXHWjgGNlCJ3k=
+X-Google-Smtp-Source: AGHT+IH6wBrCMNqusfsbYd6KwloxQeMounCo4oof+2Y9bKUVLZ4QpwHUSVeeCcxpZFabgVsKqsP2Fw==
+X-Received: by 2002:a05:6512:2396:b0:4fd:fafd:1ed4 with SMTP id c22-20020a056512239600b004fdfafd1ed4mr4850733lfv.2.1692598064921;
+        Sun, 20 Aug 2023 23:07:44 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id lg5-20020a170906f88500b009937dbabbd5sm5861855ejb.220.2023.08.20.23.07.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 20 Aug 2023 23:07:44 -0700 (PDT)
+Message-ID: <1f492c4e-2125-73eb-8523-389e24727516@linaro.org>
+Date:   Mon, 21 Aug 2023 08:07:43 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom,prng: Add SM8450
+Content-Language: en-US
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
+        konrad.dybcio@linaro.org
+Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        davem@davemloft.net, devicetree@vger.kernel.org,
+        herbert@gondor.apana.org.au, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        robh+dt@kernel.org, vkoul@kernel.org
+References: <20230811-topic-8450_prng-v1-1-01becceeb1ee@linaro.org>
+ <20230818161720.3644424-1-quic_omprsing@quicinc.com>
+ <2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org>
+ <1cadb40e-b655-4b9b-9189-dfdb22a2c234@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1cadb40e-b655-4b9b-9189-dfdb22a2c234@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,28 +83,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the build issue, after removing unused variable nandc
-in qcom_parse_instructions() function.
+On 21/08/2023 02:52, Om Prakash Singh wrote:
+> I meant first one. using "qcom,rng-ee".
 
-Fixes: 0bb2bd18efe8 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
- drivers/mtd/nand/raw/qcom_nandc.c | 1 -
- 1 file changed, 1 deletion(-)
+Then please provide some reasons.
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 370a779610e2..6aff45f32260 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2593,7 +2593,6 @@ static int qcom_parse_instructions(struct nand_chip *chip,
- 				    const struct nand_subop *subop,
- 				    struct qcom_op *q_op)
- {
--	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
- 	const struct nand_op_instr *instr = NULL;
- 	unsigned int op_id;
- 	int i, ret;
--- 
-2.17.1
+> 
+> I am looking for generic compatible string for all SoCs for which core 
+> clock can be optional, same as we have "qcom,prng-ee".
+
+There is a generic compatible already... but anyway, is the clock really
+optional? Or just configured by firmware?
+
+> 
+> If we are using SoC name in compatible string, for each SoC support we 
+> need to update qcom,prng.yaml file.
+
+So you were talking about second case from my email? Still not sure what
+you want to propose, but just in case - please always follow DT bindings
+guidelines:
+
+https://elixir.bootlin.com/linux/v6.1-rc1/source/Documentation/devicetree/bindings/writing-bindings.rst#L42
+
+Best regards,
+Krzysztof
 
