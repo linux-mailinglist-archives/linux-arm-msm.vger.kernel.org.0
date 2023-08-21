@@ -2,97 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20CA17828B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:14:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB8087828FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:27:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234613AbjHUMOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 08:14:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50572 "EHLO
+        id S234879AbjHUM1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 08:27:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234570AbjHUMOq (ORCPT
+        with ESMTP id S230526AbjHUM1x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 08:14:46 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB663E4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:14:43 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-52683b68c2fso4015406a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692620082; x=1693224882;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dJ4A4PjuTlt+XMBWNzJPDmDOYWrTcGhNygKMgDnc2Q8=;
-        b=iz47zDBpw3Ibp9kl1kFtzFepKYW/YZlCZwdM5dghFSdUm/fFZS+Uq7svCIQA2PUGT7
-         OD7Wlu5kBJskZM//szi2rDV7LYwaKEc4+vlA6pOg9orqWAOxqpJCHzsr1fYbh97ryA9i
-         BoDR0Ekcsujpmojlv7w/5/kob8qL3PlThsz97PyDGN6dfGbpBQQYhUwle2UNBz16JP9e
-         3ckTQ47Z5VqVV/y2ODFgVSbFpX8CPLFOueagp9/Urr6uWng6o87r/zZqJHK+iXcwH4H8
-         qtkprEhub9+1Q+gQwHjfX4pTSP8kmGGPR288EdV2DWoDI2ppe8t6NMukGFbrrB1s5hYE
-         be9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692620082; x=1693224882;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dJ4A4PjuTlt+XMBWNzJPDmDOYWrTcGhNygKMgDnc2Q8=;
-        b=KAoMfcpD3JeQpDLKq9oeRkgXswwmkWZ0JNceYDP13aDiMno8M/dkg4LsEAOvibn0DJ
-         4iiv8fpxWcewEr8jRRroWvupQjWA2l+ZbA3hNol3PHTq7xvhJLklr5XWWfpkem7ptKjr
-         RR5FHVuXzRJjxx8uenYAlVe++RURZ6v64+xZ0W8eAPfslZz5S31Gdc0pHr5J+aTz4+uG
-         qgSDHnSzA6clbyPi0jm73kosUxqbBhsOpKdsIiY5GzYR61m1KTyj0lSdZ7YolnrEgiXO
-         EBILIvdkb1cbXrAURhkuxW8RWzNFGdncyj98/d0XzC0WyyKeWD4tI73Yh5BpzwAiM7jM
-         hoSA==
-X-Gm-Message-State: AOJu0YylUtwJN5Aj8ZCTl+1fg/eYqunNaX01WeBG/wkQWe08CqTEQ0yc
-        NP3FcyOj2WHr4bHpim95a2g2Cg==
-X-Google-Smtp-Source: AGHT+IHT1a6k5nRWS7uPl1+UfJiLHZIjEonHC2gVte7HgVai3ix/2YZ3UlymJWu5FXdusZH2IMz46A==
-X-Received: by 2002:aa7:d502:0:b0:521:7ab6:b95d with SMTP id y2-20020aa7d502000000b005217ab6b95dmr5303186edq.29.1692620082158;
-        Mon, 21 Aug 2023 05:14:42 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id z12-20020aa7cf8c000000b005256d4d58a6sm5920187edx.18.2023.08.21.05.14.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Aug 2023 05:14:41 -0700 (PDT)
-Message-ID: <c2f616a0-c24e-5061-7e1d-5be68ed3d706@linaro.org>
-Date:   Mon, 21 Aug 2023 14:14:40 +0200
+        Mon, 21 Aug 2023 08:27:53 -0400
+Received: from mail.8bytes.org (mail.8bytes.org [IPv6:2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 81CB6C2;
+        Mon, 21 Aug 2023 05:27:51 -0700 (PDT)
+Received: from 8bytes.org (pd9fe95be.dip0.t-ipconnect.de [217.254.149.190])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.8bytes.org (Postfix) with ESMTPSA id 14D6D28194F;
+        Mon, 21 Aug 2023 14:27:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+        s=default; t=1692620870;
+        bh=FixGPDbY1JGUzoXJGnGCpBH8LX7vfPyc85NTwmVIvZk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=1GNfM2qXUHu69LlGLcBH8KY7o7o7XmY+SCrGkW/UUIs2KGTpDHXZZbMpPGz6QSYZs
+         UPnFUxDcsVEY3pjS1DruthDw9f83ySojUQCSB+rWg+GUD0/AhHwU/y7CvGp4ChZNfv
+         PF0U1t4Yrw0S3cKVt3Z1VBJMi6C4Yubn+JBgQ0h8akaCgHt2/SoukE6zqp52PyQtal
+         mSBFlaAtIaUSfX6biqD/5UJPh1qGAUoCalqefQ1b2bqiPcVjHwugqG0e+YrG5Eef+K
+         UDBnBPokoAbTS28F+RA/gZgu4I/tGuWG+hC4PlSSGwOqv9iwEYEE1WLsVZflD78r+Z
+         CJt+ubMPFXzmw==
+Date:   Mon, 21 Aug 2023 14:27:47 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        David Airlie <airlied@gmail.com>, alsa-devel@alsa-project.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        ath10k@lists.infradead.org, ath11k@lists.infradead.org,
+        Mark Brown <broonie@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org,
+        dmaengine@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
+        etnaviv@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Frank Rowand <frowand.list@gmail.com>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-wireless@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Sinan Kaya <okaya@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Sean Paul <sean@poorly.run>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Takashi Iwai <tiwai@suse.com>, Vinod Koul <vkoul@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Joerg Roedel <jroedel@suse.de>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Chen-Yu Tsai <wenst@chromium.org>
+Subject: Re: [PATCH] iommu: Remove the device_lock_assert() from
+ __iommu_probe_device()
+Message-ID: <ZONYQyMSG17YMc_b@8bytes.org>
+References: <0-v1-98d20e768c66+7-of_dma_lock_jgg@nvidia.com>
+ <78114fd6-9b83-92ba-418f-6cc7bda9df9b@arm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH V1 1/2] scsi: ufs: qcom: dt-bindings: Add SC7280
- compatible string
-Content-Language: en-US
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>, mani@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        alim.akhtar@samsung.com, bvanassche@acm.org, robh+dt@kernel.org,
-        avri.altman@wdc.com, cros-qcom-dts-watchers@chromium.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230821094937.13059-1-quic_nitirawa@quicinc.com>
- <20230821094937.13059-2-quic_nitirawa@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230821094937.13059-2-quic_nitirawa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78114fd6-9b83-92ba-418f-6cc7bda9df9b@arm.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/08/2023 11:49, Nitin Rawat wrote:
-> Document the compatible string for the UFS found on SC7280.
-> 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+On Mon, Aug 21, 2023 at 12:06:40PM +0100, Robin Murphy wrote:
+> The solution is to drop those locking patches entirely and rethink the whole
+> thing.
 
+Agreed, that was exactly what I thought when looking at this patch.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I dropped the original 10 patches and the 4 fixes on-top from the IOMMU
+tree. This needs more investigation and adaption of the actual API users
+before it can be reconsidered.
 
-Best regards,
-Krzysztof
+Regards,
+
+	Joerg
 
