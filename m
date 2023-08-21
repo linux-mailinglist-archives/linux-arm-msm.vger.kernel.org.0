@@ -2,129 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAE9F78285F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 13:57:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E030782898
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:09:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234010AbjHUL5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 07:57:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
+        id S234360AbjHUMJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 08:09:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234039AbjHUL5D (ORCPT
+        with ESMTP id S234264AbjHUMJH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 07:57:03 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A83CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 04:57:01 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bcb89b4767so17425821fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 04:57:01 -0700 (PDT)
+        Mon, 21 Aug 2023 08:09:07 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0119FBE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:09:04 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fe4cdb727cso31419755e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692619020; x=1693223820;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fTe8WhjRtDtvKnWUy8DQUNNiHCly37L9aOxfVWfr51I=;
-        b=XF7BVjGw4rayXAII/RwNEc0RYR/qTaKbatZCOC8m1yillv73HuEt1VDgLR/3UvlgPM
-         trG01vienb53PUZ3OKewXqP6w6obD7RlvsPrx/X2K+UiLz6we42bhtsPnUeDSr6AOAxa
-         qNcN/xhSqekNVpy1OdUlBDsTvifbA3vbkogy03DFyiQSYFg7+Ip/r+PjtK2QM3eJ/pLR
-         IBoBPaUtKYjuJxLb/BtyMqeoWecUJFGdSlljPGNjL4aSc5nOYlY4BrJKNnw2gQHiyhYI
-         5cP0pSBlrAJE3ciqrxGcD7qIMm4ygGqvQf/hU/56SxBBO1Ih34LY/9csXllYY63AjDu2
-         7/gQ==
+        d=linaro.org; s=google; t=1692619743; x=1693224543;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9fiu4eUi85XjSGhZJzDNfopMsZkoWxY2L2AmUuj2oyI=;
+        b=BciD3LK0YQP8bBw4LYIWKL5EkycQscDDvAJyUyBiEUpBLEHhwKPKzl+KEs7xsm12jS
+         Cd1Kgm5GqNtS1WXYU/XkI5Hf5jepwUm+qj/0X+vBlaEcSaARR1frDFq2mZVGehKo8NWo
+         z+HvG6IDgEEzp3Z52O/lpQpldW07kKff7ksOzp22eQTQ6ursC3SLFfkqpoTEBXKBuBB6
+         t9F6TDJfHc1z5VKDQ/HV2ll8pO1f1ej1uIsyY5LT1Fnah6VvynTs0V/dnKcKtz32mwdO
+         V3W/5CzXc3MzPE6n6tTxfEp1eKm3mkNHGyLj0bbsDNZoSxE/o+JPIMK3Vx/cDdJvaM/o
+         TvDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692619020; x=1693223820;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fTe8WhjRtDtvKnWUy8DQUNNiHCly37L9aOxfVWfr51I=;
-        b=RHWSMwYTGEYtLBq/xo9sQJJB+axJIFDXepGuYZ/eW3o3baC+mHuEMWtI0A9n2g7KJB
-         EmOFA2xJRvoJvxWSS4OjyZvE+GBNmsW5GotDiXOTm3NM+RKSyOSAHVqbDIBVhAiMhITK
-         0I2CwmYsf1Sy3dFOx8djxLer/SZlkz3e16wIKaIsVpvG7rQ/1VDRy7U5vkaGbSTEozF3
-         g11oGHBBFx0xybH26LpGUVtxgfP8usTNbXNwTYbfnJaP1550jq7gTRjP9m+yUneZDR3y
-         RM2pME22H/16yTmbYpwaRoSBndsGQRYkll7KowfD0d0W0LjkGPMI1j7L136U5EHkGBu+
-         dqOA==
-X-Gm-Message-State: AOJu0YwQT+1pNgoDg4MAwag7QpWKcsdQ2p6xVz4fu6njvx87Nl6qNLVZ
-        R1ZXndKFLZYORNbNXhPHevP2Qw==
-X-Google-Smtp-Source: AGHT+IG0T2AjDHN5OsFOZSB3biLx14nIVjHc9Jc5o9uNqCi2+5w0B4twWxLtoP6QfozGZyP02ebPXA==
-X-Received: by 2002:a19:7111:0:b0:4f7:6775:2a66 with SMTP id m17-20020a197111000000b004f767752a66mr3729911lfc.53.1692619019522;
-        Mon, 21 Aug 2023 04:56:59 -0700 (PDT)
-Received: from [192.168.1.101] (abyk181.neoplus.adsl.tpnet.pl. [83.9.30.181])
-        by smtp.gmail.com with ESMTPSA id z7-20020a19f707000000b004fe1e0ded25sm1721276lfe.184.2023.08.21.04.56.58
+        d=1e100.net; s=20221208; t=1692619743; x=1693224543;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9fiu4eUi85XjSGhZJzDNfopMsZkoWxY2L2AmUuj2oyI=;
+        b=jH+ziM00aL8sAqOOtodiZbjCSyaop2hDATwn7Da1bl866ogJAdxGHu5U7YvjqlgimG
+         ja/zdnv+z/ZjQureG89GsyeMvJtWt/w3J/zG9kpOrckKd3tFjRWIXz4H3jv4Ghpc3gZu
+         M1EtFR0NwItgXJchwfG8p2asbqYOzgRkZMnrahXD5DE+2YzZvXuqS3Mga9s0CYayfg28
+         FdUdz/2CHVAxGhwzaBowhLn+IRp4L0K1/hD16jTJWOjW4ycV3EVLWIx1sx713JPppr2d
+         eg4/ayAoyc9+mPlg/ax6RmoB4a0rquTtA7FqMSItRsRyxuFFFpA/bGTO3YThMhNyr7uQ
+         aIwQ==
+X-Gm-Message-State: AOJu0Yz6OFcG3txvL1yQMRtV4p7arC5WYOVjxMrq3NFjpQ1XN/ZMKUvr
+        PnssjilGw1ZnTJ4fslE7u+izdw==
+X-Google-Smtp-Source: AGHT+IFe9ONzw7N8dNifv4nXi0CBGFI0hbQvfw5t+b4DKerI9OIIWKb07uGgQ+v6lr7ZeCW2nIQzcw==
+X-Received: by 2002:a05:600c:3486:b0:3fb:c9f4:1506 with SMTP id a6-20020a05600c348600b003fbc9f41506mr4924722wmq.1.1692619743455;
+        Mon, 21 Aug 2023 05:09:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:cad:2140:4b:459f:81d3:47f3? ([2a01:e0a:cad:2140:4b:459f:81d3:47f3])
+        by smtp.gmail.com with ESMTPSA id k9-20020adff289000000b003179d5aee67sm10634270wro.94.2023.08.21.05.09.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Aug 2023 04:56:58 -0700 (PDT)
-Message-ID: <1f7f00c4-e671-49a7-9cd6-b0cc25b6042c@linaro.org>
-Date:   Mon, 21 Aug 2023 13:56:57 +0200
+        Mon, 21 Aug 2023 05:09:02 -0700 (PDT)
+Message-ID: <024e4eb1-624d-485f-9abc-86497ecbc039@linaro.org>
+Date:   Mon, 21 Aug 2023 14:09:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v0 7/9] media: qcom: camss: Fix invalid clock enable bit
- disjunction
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20230814141007.3721197-1-bryan.odonoghue@linaro.org>
- <20230814141007.3721197-8-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230814141007.3721197-8-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] scsi: ufs: ufs-qcom: clear qunipro_g4_sel for HW major
+ version > 5
+Content-Language: en-US, fr
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org>
+ <20230821103851.GB36455@thinkpad>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20230821103851.GB36455@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.08.2023 16:10, Bryan O'Donoghue wrote:
-> define CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE BIT(7)
+On 21/08/2023 12:38, Manivannan Sadhasivam wrote:
+> On Mon, Aug 21, 2023 at 09:41:54AM +0200, Neil Armstrong wrote:
+>> The qunipro_g4_sel clear is also needed for new platforms with
+>> major version > 5, fix the version check to take this in account.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> disjunction for gen2 ? BIT(7) : is a nop we are setting the same bit
-> either way.
+> This is a fix, isn't it? With the fixes tag for 9c02aa24bf40,
+
+It could be considered as a fix yes, I'll resent a v2 with suc tag and Acks.
+
+Thanks,
+Neil
+
 > 
-> Fixes: 4abb21309fda ("media: camss: csiphy: Move to hardcode CSI Clock Lane number")
-> Cc: stable@vger.kernel.org
-"eeeh"
+> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> - Mani
+> 
+>> ---
+>>   drivers/ufs/host/ufs-qcom.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index f88febb23123..d1149b1c3ed5 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -365,7 +365,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+>>   		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+>>   		   REG_UFS_CFG1);
+>>   
+>> -	if (host->hw_ver.major == 0x05)
+>> +	if (host->hw_ver.major >= 0x05)
+>>   		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
+>>   
+>>   	/* make sure above configuration is applied before we return */
+>>
+>> ---
+>> base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
+>> change-id: 20230821-topic-sm8x50-upstream-ufs-major-5-plus-4eaad3f3d857
+>>
+>> Best regards,
+>> -- 
+>> Neil Armstrong <neil.armstrong@linaro.org>
+>>
+> 
 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
