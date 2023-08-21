@@ -2,130 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67DA4783459
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 23:05:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29A5E78345F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 23:05:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbjHUUkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 16:40:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39572 "EHLO
+        id S231517AbjHUU6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 16:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbjHUUkQ (ORCPT
+        with ESMTP id S229642AbjHUU6f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 16:40:16 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C2BCF8;
-        Mon, 21 Aug 2023 13:39:49 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-68a3daf4cf7so1063668b3a.3;
-        Mon, 21 Aug 2023 13:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692650389; x=1693255189;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6PfMPWJprUMeF8yP4267Fv+3PTsEN7ohaQVGNdsReww=;
-        b=F2uDiF6btZa//mCPLdBcxOezN6eOhYE+6rCZI2JQWkpc9J0lHanMnjHjChtyhL7ekB
-         I9p5RwaBn2udWUmcwTzm/HzpOwFb2/oQ8ybE6igG5DO4PZtOYF8FBSr5fYF91Fzou2uq
-         9mMTqSEPk3es4kiwOf6+/piKH6acaQLL3LhuaflXRpeKvfq/mwNBZr1AVsiuLwH0wsAg
-         Kwzma6HLLJVZCvfDaf/GhHoEjl+5TyeOd7A6U7jbvVOPPQH+MnOaaxCcABLgf8vdqerb
-         1VtfvXA4bj1SH8skWHvWT8qI2c2PYc7yOfCoxPwPjZcOdZzfHk6AG57x65BnBzA0tho2
-         oMAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692650389; x=1693255189;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6PfMPWJprUMeF8yP4267Fv+3PTsEN7ohaQVGNdsReww=;
-        b=Ug6SP0zsrJUo37cSIjvrkDWq5wvkKaKhiXMj0xLnFCDHm6gi9hHeOT78iNF/SMgSBW
-         WpBBMOt1bvtcJCx9qZf5FmOkXLKGaTEuNCd/s6CFu1yWwa4n/5JvU4QndBYoRWn6ikH8
-         zdx5cDf9N1hb4w0qo19en9rH37cegT+cMecYEWLmNWwCEmJmAu/V5YUO2PPlkHj43mFa
-         mdXoOVMLjPUh0cMUceuXnuN4E5S46brhCnJIZPR6bbuuZhQQHUAuHSEPRSfrmtmZp9aI
-         gU4DEV7Z/FIYx+0W9KCAqznFu2PXE6LzD0GV6rsAAZOprvBNFKvYLN+syTYc5qhvbatq
-         pPTA==
-X-Gm-Message-State: AOJu0YxvVji1Ix/WX69oAHYr4vvc0IoaxLY6+UsH+gnxCnsryR7BFdTl
-        MVdgYrMrjna8zvz8c0E1R8rfpQpH2QIgNRxVs94=
-X-Google-Smtp-Source: AGHT+IFJ6VWQoJxbLlcRzqZIquS45TqT59njPW+AujFPnvqV4Mw4QFxfQOxypL8pxzIdg85/A+5XPNeT6uJQc4R7Fcc=
-X-Received: by 2002:a05:6a21:78aa:b0:148:184c:d4e8 with SMTP id
- bf42-20020a056a2178aa00b00148184cd4e8mr7250873pzc.2.1692650388807; Mon, 21
- Aug 2023 13:39:48 -0700 (PDT)
+        Mon, 21 Aug 2023 16:58:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9FFBC;
+        Mon, 21 Aug 2023 13:58:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C31260BA1;
+        Mon, 21 Aug 2023 20:58:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB17C433C7;
+        Mon, 21 Aug 2023 20:58:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692651513;
+        bh=E5e9oQ4r7IOuMNrE+VP4h3263NYNYefbxPjf4m73jXU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Zs9GOt5s+WO796XKC96PZ0b6uaUyn4EzPPwXV7rsT3tdjcyuZs5KTznPdBPkg2Gwt
+         D6gQ0VWWVli+hjBfSSOOsuBa0BFu54Kf6XtqAST9k4qtU+WwizDzRg3WcN7QaWWlko
+         +d7r2e5+wkqwiiMo52zzVTtog9Rs7pCzIl8QwxbauTjBWKfqTH3p1thAccsssaE+Fd
+         zPTYhbPwYwr6w+qO7GUn41OVcpw5tjtCG8GxvKgjZOMQzejREz8JRGvNg9CXmCbU3a
+         KDDMc2TNY44isDvaeEoXmCnkiv9BR5K56lgoeboVw7t/s1GEZbGZeLNIs8dcDGb8+w
+         1B0/aIct7t8IQ==
+Received: (nullmailer pid 2281356 invoked by uid 1000);
+        Mon, 21 Aug 2023 20:58:31 -0000
+Date:   Mon, 21 Aug 2023 15:58:31 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH] dt-bindings: display: msm/dp: restrict opp-table to
+ objects
+Message-ID: <169265150949.2281277.7308307921965060658.robh@kernel.org>
+References: <20230820080543.25204-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-References: <20230815140030.1068590-1-robimarko@gmail.com> <83cc4b10-34bf-ea91-7756-f345c0071479@linaro.org>
- <20230821193152.GA2157670-robh@kernel.org> <CAOX2RU6be+eeTPT7HbC8_-C7d7oVhspsXWOmwtgg6s=QMe6QEg@mail.gmail.com>
- <CAN8TOE96PjH67+vmi7mksSvqeMdLNBd8MH3m=1Ft_h+TXbk4BA@mail.gmail.com>
-In-Reply-To: <CAN8TOE96PjH67+vmi7mksSvqeMdLNBd8MH3m=1Ft_h+TXbk4BA@mail.gmail.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 21 Aug 2023 22:39:37 +0200
-Message-ID: <CAOX2RU489vQZKNoJOUjZObF4oUFab_oZvuGMnPqAru=g08oz4Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] dt-bindings: firmware: qcom,scm: Document SDI disable
-To:     Brian Norris <computersforpeace@gmail.com>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230820080543.25204-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 21 Aug 2023 at 21:44, Brian Norris <computersforpeace@gmail.com> wr=
-ote:
->
-> On Mon, Aug 21, 2023 at 12:35=E2=80=AFPM Robert Marko <robimarko@gmail.co=
-m> wrote:
-> > On Mon, 21 Aug 2023 at 21:31, Rob Herring <robh@kernel.org> wrote:
-> > > Why can't you just disable SDI unconditionally when going into debug
-> > > mode? Is doing that when not enabled going to crash the system or
-> > > something?
->
-> I asked the same, to resounding silence:
->
-> https://lore.kernel.org/all/20200721080054.2803881-1-computersforpeace@gm=
-ail.com/
-> https://lore.kernel.org/all/ZNlhSdh0qDMieTAS@localhost/
->
-> > Because if not disabled you will enter the Secure Debug mode even on a
-> > regular reboot and then you have to pull the power in order to boot aga=
-in.
-> > Even according to QCA docs they intended for the Linux to disable SDI a=
-s
-> > TZ/QSEE will always enable it as part of booting.
->
-> NB: I've never read such docs. Presumably they're internal/private to
-> Qualcomm and/or its direct partners? I'd love to see them.
 
-Sadly they are all behind the NDA.
+On Sun, 20 Aug 2023 10:05:43 +0200, Krzysztof Kozlowski wrote:
+> Simple 'opp-table:true' accepts a boolean property as opp-table, so
+> restrict it to object to properly enforce real OPP table nodes.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/dp-controller.yaml         | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
 
->
-> But, I think you (robinmarko) are not really answering the same
-> question that Rob (robh) is asking. Rob is asking why you ever *don't*
-> want to disable SDI. You're answering why we ever need to disable it
-> at all. I don't think the latter question is controversial.
+Applied, thanks!
 
-I understood his question differently, hence my answer.
-
->
-> FWIW, your description of those docs sounds like we should
-> unconditionally *disable* SDI (like my first RFC above), which would
-> answer Rob's question, and would agree with my RFC above :) And as a
-> bonus, no Device Tree change would be required.
-
-Well, the thing is that I only have docs for some of the IPQ chips, and wit=
-h
-the insane variety of SoC-s that use SCM and TZ/QSEE but completely
-different FW base or version something would break for sure so I would
-prefer to opt-in if its really required as SDI was something that was until
-IPQ5018 came along, always disabled by default, except for the weird
-Google WiFI board.
-
-Regards,
-Robert
->
-> Brian
