@@ -2,117 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48CF77820FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 02:52:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8E9578232C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 07:31:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231827AbjHUAwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Aug 2023 20:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53668 "EHLO
+        id S233162AbjHUFbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 01:31:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231135AbjHUAwi (ORCPT
+        with ESMTP id S230196AbjHUFbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Aug 2023 20:52:38 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CFA7A3;
-        Sun, 20 Aug 2023 17:52:37 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37L0d0on018178;
-        Mon, 21 Aug 2023 00:52:18 GMT
+        Mon, 21 Aug 2023 01:31:20 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15977A3;
+        Sun, 20 Aug 2023 22:31:18 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37L54abN025014;
+        Mon, 21 Aug 2023 05:30:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0cAXe53tynITfz5RBKpIn/dZnQaVzOOKvHce/rdR030=;
- b=A5qEpc0Wk9lvh55XlCYAE9tJvNshWn1c7SnsRFGPqskC7EKQLCiM8AW1Uz128+ERBQPE
- Cg8Vj2nQUF1vo9Xl6zkYTg/nfp44U37+jy7bV2oya6hXqT2HXsD+L0KUFO/pSKPxwbP/
- vfSIcRBhbNgA0kV8uMLlWvyUhC/eJksawyvq5/katLQHhFI605mp+i6j8mE/WXTc3+Fs
- P1XFyWhvtN/VruIZd+xQ5Xb/gn8FuHt6IxKPR91trn1VSPuf4vuJF3TYqmuDTDMD6Srg
- 3v9KOWSKAMtraZFtWCVVS9m3LWKfxbSGyZUnz7ABjIiPAk5wcj9IIgzvQvXbW61GbDNZ KA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sjn2rac6d-1
+ bh=c8uUEEZWKdhdjMO4DdNXq1RHRVYBuI0mJCa8u5UnvD0=;
+ b=nXIV8CmzyHyecUi3DLWXPyDfB23Dj/xN9tf/48gvlOfVv489UPpOvEAOOd/w1bl8RoCv
+ A1vlYRy5lZGZ4YfuD4NxPpSjUhC6fwpYqKsFugWasbzXwAJnR4d90grvsrXl4qE7t5mn
+ eAjszgKrg846IFsAdrGQMGtkqgCJha65HNAJkHdRl4PVcKIdMhyUCShvWBma+AtMGDU4
+ 8rFTxvTMcmhX0mjLH4WAlyNu9n/4P8NIjIsqLUQRqh0kcs7p3I5DL1rT6/bwy+wira9h
+ eHySLtYaWeYLB/5TRmmjvqdWJpGzgHb8SDxIurrfvYZIHsf/w1vwFMrmmvIFEcYAYk0d tg== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sjmpxk0d6-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Aug 2023 00:52:18 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37L0qHwL013652
+        Mon, 21 Aug 2023 05:30:37 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37L5UavZ031646
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Aug 2023 00:52:17 GMT
-Received: from [10.216.58.121] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+        Mon, 21 Aug 2023 05:30:36 GMT
+Received: from [10.201.3.104] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 20 Aug
- 2023 17:52:12 -0700
-Message-ID: <1cadb40e-b655-4b9b-9189-dfdb22a2c234@quicinc.com>
-Date:   Mon, 21 Aug 2023 06:22:09 +0530
+ 2023 22:30:33 -0700
+Message-ID: <1ee5a95c-2fe4-2163-5ff2-0c01d05c30cf@quicinc.com>
+Date:   Mon, 21 Aug 2023 11:00:05 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom,prng: Add SM8450
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 1/3] mtd: rawnand: qcom: Update read_loc size to 512
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+CC:     <mani@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20230818145101.23825-1-quic_mdalam@quicinc.com>
+ <20230818145101.23825-2-quic_mdalam@quicinc.com>
+ <20230818215908.0e60b00b@xps-13>
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <konrad.dybcio@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
-        <davem@davemloft.net>, <devicetree@vger.kernel.org>,
-        <herbert@gondor.apana.org.au>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
-        <robh+dt@kernel.org>, <vkoul@kernel.org>
-References: <20230811-topic-8450_prng-v1-1-01becceeb1ee@linaro.org>
- <20230818161720.3644424-1-quic_omprsing@quicinc.com>
- <2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org>
-From:   Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org>
+From:   Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20230818215908.0e60b00b@xps-13>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8gTHG1kh6CWdCEErtRFgcVdUnY8bE_yt
-X-Proofpoint-ORIG-GUID: 8gTHG1kh6CWdCEErtRFgcVdUnY8bE_yt
+X-Proofpoint-GUID: nL12fBierDu-ThJenNzDjeTF1ZFvVonP
+X-Proofpoint-ORIG-GUID: nL12fBierDu-ThJenNzDjeTF1ZFvVonP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-20_15,2023-08-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
- phishscore=0 suspectscore=0 mlxscore=0 impostorscore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308210005
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
+ adultscore=0 spamscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308210051
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I meant first one. using "qcom,rng-ee".
 
-I am looking for generic compatible string for all SoCs for which core 
-clock can be optional, same as we have "qcom,prng-ee".
 
-If we are using SoC name in compatible string, for each SoC support we 
-need to update qcom,prng.yaml file.
-
-Please suggest approach that we can followed!
-
-Thanks,
-Om
-
-On 8/19/2023 1:15 PM, Krzysztof Kozlowski wrote:
-> On 18/08/2023 18:17, Om Prakash Singh wrote:
->> Instead of having SoC name "qcom,sm8450-prng-ee" we could use "qcom,rng-ee" as
->> new IP core is not longer pseudo random number generator. so "prng" can be
->> changed to "rng". Clock configuration is not needed on sm8550 as well. So it is
->> better to use generic compatible string.
+On 8/19/2023 1:29 AM, Miquel Raynal wrote:
+> Hi Md,
 > 
-> I am not sure if I understand your point. You mean drop "p" in "prng" or
-> drop specific compatible? The first depends in the block - if it is
-> still pseudo. The second - why? That's contradictory to what is in the
-> guidelines and what we have been pushing for very long time. Going
-> against guidelines would require proper justification (and not some
-> usual justification "I don't need it", because we talked about this many
-> many times). One should not bring downstream poor practices to upstream,
-> but the other way. You should fix downstream code.
+> quic_mdalam@quicinc.com wrote on Fri, 18 Aug 2023 20:20:59 +0530:
 > 
-> Best regards,
-> Krzysztof
+>> For parameter page read upper layer is passing len
+>> as 256 bytes and if we try to configure 256 bytes
+>> size in read loaction register then subsequent bam
+>> transaction is getting timed out for 4K nand devices.
+>> So update this length as one step size if its
+>> less than NANDC_STEP_SIZE.
+>>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 > 
+> I'm fine with patches 2 and 3 and will take them. But this one does not
+> seem legitimate. I don't like it. Are you sure the ECC engine was not
+> enabled when it timed out? Default should be having the ECC disabled
+> and it should just get enabled when you need it. There is no reason
+> why, specifically on NAND devices, it would not be possible to read 256
+> bytes.
+> 
+
+    Yes default ECC engine is disabled only. When length was 512 bytes for
+    parameter page read it was causing BAM timeout error on SDX65, but it
+    was working fine on IPQ807x.
+    We will drop this patch for now. Let me check on SDX65 and try to fix
+    all the error.
+
+>> ---
+>>   drivers/mtd/nand/raw/qcom_nandc.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+>> index d4ba0d04c970..413e214c8e87 100644
+>> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+>> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+>> @@ -2885,6 +2885,9 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+>>   	op_id = q_op.data_instr_idx;
+>>   	len = nand_subop_get_data_len(subop, op_id);
+>>   
+>> +	if (len < NANDC_STEP_SIZE)
+>> +		len = NANDC_STEP_SIZE;
+>> +
+>>   	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
+>>   
+>>   	if (!nandc->props->qpic_v2) {
+> 
+> 
+> Thanks,
+> Miquèl
