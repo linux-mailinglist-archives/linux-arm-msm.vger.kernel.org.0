@@ -2,111 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55BEC7826D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 12:14:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C55AA782736
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 12:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232449AbjHUKOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 06:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41864 "EHLO
+        id S234774AbjHUKjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 06:39:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232420AbjHUKOg (ORCPT
+        with ESMTP id S231324AbjHUKjG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 06:14:36 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 579CACA;
-        Mon, 21 Aug 2023 03:14:34 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-1bbdddd3c94so1972438fac.0;
-        Mon, 21 Aug 2023 03:14:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692612873; x=1693217673;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xix+bfwoZhUEybAXvXyM541ugcckuk0KY7O535Gb2DM=;
-        b=plrS0m6n9OfUCHYcoyhYk7u/Y1yLWvMclWRsGPxkgUFP9v9PVdlEmYILQPCPSbNLlg
-         y9fKe21iMRs1/nyC4JZWbKdmnnumU5RZmamfEiJssQiM+1aPuLHiq+BISok0mo4e8KFS
-         K6nyk//l4S2WXfephrzlE4Mr9xzTbDHG6vcdI390UDWAbmSvCW8h/DEGclAtonT+op9D
-         5PyHrNg/Uqw20kLr2tyxu0HD8YeWqWCsIBs71Gm5Y1RKE2oIQzHEVfqTXt2HIGQHRtnl
-         Ob6J/BoMPWZitfrF6dxk61GTtDHc3XBQ9NXouMRZKSyopzvPnID4I72wcwucadOWwuYm
-         rJIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692612873; x=1693217673;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xix+bfwoZhUEybAXvXyM541ugcckuk0KY7O535Gb2DM=;
-        b=TVqmc9V+lP5cP+cgRX7fFnxBnJFKrV6syelgQMWikWI650EsS3Qfrc3g8S2fXGR0X5
-         64qj2zj250TmNP+UZSSgV3fS6mHgY450VhgPZdUVmoYZA4DkNzngvYebfrvdLcCRvAXH
-         4mu6Y0K6p/5PfdUgm114/N9X+3lOhKvt54Bf5lrMWRdRHTJ05ytxjKY13Vnu4HK5zcT/
-         w2SQaYMKV5TQijL+7mUp90CBovmeWXdZc/tGDRheEP1sXCF23FWNco9GskjA6yhCs9VR
-         T1NT1XoX7+4HeubrsNtDQV9v6qhgODPT0kTeofC3mDviAbTghoXpcjROnMrORPubCGyX
-         fSxw==
-X-Gm-Message-State: AOJu0YygLXrReDobRCdHOVUcSh873g/MN/61AUAGAIdghWsITnUunn6Z
-        ijMHknF/Cfy+0PVHuG1vRuazqWycaucfo4a7XwQ=
-X-Google-Smtp-Source: AGHT+IHkf5UIFyWgI7XeEmpIKxSHHnOsD66h0oMJAD35s387UVY/ZAJOQy+7BT8gP97RKxNH6JUpMj6Ru2vsxEunO9Y=
-X-Received: by 2002:a05:6870:3307:b0:1ba:3ff0:493c with SMTP id
- x7-20020a056870330700b001ba3ff0493cmr8916032oae.19.1692612873439; Mon, 21 Aug
- 2023 03:14:33 -0700 (PDT)
+        Mon, 21 Aug 2023 06:39:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C1F2D9;
+        Mon, 21 Aug 2023 03:39:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1DE9863028;
+        Mon, 21 Aug 2023 10:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9CEC433C7;
+        Mon, 21 Aug 2023 10:39:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692614344;
+        bh=BgiNR9RpM2+q1vYXwkC4kkzk6YXihubC56QnYIv0X2Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kSd5GNK4joCrYftvsv8yoydMGSB0oJ/s6aKzkAL6fxqUW5uIsut+79d6rTstIikjv
+         dDsgad+u/a2KxK4Bt1zf0GTXTJ30ZoPstJJfaWpw5aduoX3GPgJAKYyNytz4SSx5p6
+         RVXKz87nBm/+5rgbAepEoKfvHoEicTNbT4cLGF9i3qinUb4HJYopdkI1Jomm6ZH3+O
+         HF0JDXCwecplXgS4YqHPZ+M1QbNbNKnPih4bSf9D43/Pv8fTe6wta6ya0UlVlB/m8e
+         fVut9ZTp3XmasgSgT1WFgVj4xnobz0nOVIZmeDSAf429JC1KzCw6nh0JfBzpTZVxm5
+         PuLHKNP4fNh8A==
+Date:   Mon, 21 Aug 2023 16:08:51 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: ufs-qcom: clear qunipro_g4_sel for HW major
+ version > 5
+Message-ID: <20230821103851.GB36455@thinkpad>
+References: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org>
 MIME-Version: 1.0
-References: <20230816164641.3371878-1-robimarko@gmail.com> <20230816164641.3371878-2-robimarko@gmail.com>
- <e89b4a5a-e634-45b5-a8dc-cf7d1a968ccc@linaro.org>
-In-Reply-To: <e89b4a5a-e634-45b5-a8dc-cf7d1a968ccc@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 21 Aug 2023 12:14:22 +0200
-Message-ID: <CAOX2RU7R2q1R5W1H1KekHy-QdRspcPx9fHGG1pzxXAbw_5tiww@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_mojha@quicinc.com, computersforpeace@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 16 Aug 2023 at 19:33, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 16.08.2023 18:45, Robert Marko wrote:
-> > IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
-> > means that WDT being asserted or just trying to reboot will hang the board
-> > in the debug mode and only pulling the power and repowering will help.
-> > Some IPQ4019 boards like Google WiFI have it enabled as well.
-> >
-> > Luckily, SDI can be disabled via an SCM call.
-> >
-> > So, lets use the boolean DT property to identify boards that have SDI
-> > enabled by default and use the SCM call to disable SDI during SCM probe.
-> > It is important to disable it as soon as possible as we might have a WDT
-> > assertion at any time which would then leave the board in debug mode,
-> > thus disabling it during SCM removal is not enough.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> [...]
->
->
-> > +     /*
-> > +      * Disable SDI if indicated by DT that it is enabled by default.
-> > +      */
-> > +     if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
-> > +             qcom_scm_disable_sdi();
-> Should we care about the return value?
+On Mon, Aug 21, 2023 at 09:41:54AM +0200, Neil Armstrong wrote:
+> The qunipro_g4_sel clear is also needed for new platforms with
+> major version > 5, fix the version check to take this in account.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-I dont really see a point, as we cant really do anything about it if it fails.
-Also, the SDI SCM call seems to have weird return codes, for example, it works
-but it returns 2.
+This is a fix, isn't it? With the fixes tag for 9c02aa24bf40,
 
-Maybe somebody from QCA can shine some light on that?
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
 
-Regards,
-Robert
->
-> Konrad
+- Mani
+
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index f88febb23123..d1149b1c3ed5 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -365,7 +365,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+>  		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+>  		   REG_UFS_CFG1);
+>  
+> -	if (host->hw_ver.major == 0x05)
+> +	if (host->hw_ver.major >= 0x05)
+>  		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
+>  
+>  	/* make sure above configuration is applied before we return */
+> 
+> ---
+> base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
+> change-id: 20230821-topic-sm8x50-upstream-ufs-major-5-plus-4eaad3f3d857
+> 
+> Best regards,
+> -- 
+> Neil Armstrong <neil.armstrong@linaro.org>
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
