@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A5227820CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 02:25:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EF787820CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 02:25:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232170AbjHUAZl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Aug 2023 20:25:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49740 "EHLO
+        id S232179AbjHUAZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Aug 2023 20:25:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232171AbjHUAZl (ORCPT
+        with ESMTP id S232174AbjHUAZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Aug 2023 20:25:41 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D442A1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 17:25:38 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b962535808so45207171fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 17:25:38 -0700 (PDT)
+        Sun, 20 Aug 2023 20:25:42 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40400A6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 17:25:39 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so44813621fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 17:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692577536; x=1693182336;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yEbvmaIurG+6Mij2R4BdBj5E2cSt8yX9PK0EjQaA8S4=;
-        b=ZRsSENn60CNjQo0Npc207j90WCFn8GIgKzKgxgWybWY4zmYMRwhpahGkQrHiR0v9eW
-         yscWP4SB2O2OU20PQFxs54SzDDbX8LeXsC6j0ltmO361QGv6Z22039T1j6aBNpTSSvns
-         JegkjKuHl3FF9r+RpGOx8Fu2kcu9dFq+xDAglJGxj9+KhLSCohY16Sz+hyqPOPqVSDpw
-         QboyUP/89ZNHVRurUghDSVpgXsWMOQVTIB7o2T45hV3Yyn1oT/3iGasFJuSdZL4CyN7x
-         f2VAKotjwsdyGwMGPZS8Bf7bqUKOgPHe+dS3PkS547dCfxOW3UZNOh43apLktsACbE4E
-         eliw==
+        d=linaro.org; s=google; t=1692577537; x=1693182337;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MlBywfivHvodh4mS9iHR7eqeZaq8nRLsVZ6tJbx6F8U=;
+        b=yOvrXe/BXmex45ui1OpIcp9vV+KWv5xrT8TogGr64SRQw0iBRRmxM73LahYaCwyO6i
+         fHzWbdKJFsDCriJLXtVezAJDT64zxgld5sLKc+R0N3DPLdfAQlpbbcDEFKbdRa1xkU/z
+         BMo7yjzpzbK+dDBIa8MJz+dhnwfC+gDSqFNKRNj+EpmRnDp+w0LbV24Lv86Pc0D64S+F
+         pi9AVm5I3AgRGC1jb2LgTcvcUJIDY4SS/M3781Q/kW9rLtmTjcNI4zL/xwJAYnRli3F0
+         DxGddMKHbz7V4yl2d1FAo3fuAozeCKJQwTTNfNq8VnwqYHNDfJktD1bT5yKaclmWAu1v
+         SUgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692577536; x=1693182336;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yEbvmaIurG+6Mij2R4BdBj5E2cSt8yX9PK0EjQaA8S4=;
-        b=FwmUG6OrYjqYscTBshcbLtPbHSF5xhrW6MpRTpf3dEMR+b8nqf7kY4x+gdlXXFccZO
-         ycq5PhUNDBXM1YRxbFqXykwVQXlJXd79fEbfhWbI7bT1oeEbuipEJ3v74Sn60+iL2gS5
-         HID6k3OqzLXfmJcaERgY2qlk/ZfT3LWa5m9wlrx+Vh8GK95buMtVvv1n8BoCWqdGfK4I
-         8Mv1MCNibsSzX4sxiXLIEQisawFq8/MlE/RxWYOEVnOOZLFwXRfN4es9ZGscCrtagUxX
-         YbpshX9VQmMZhEcZAiqv0eR1RqxzWVB3yD5yD6dvzpFEF+ILva9+i2q2Kg32guBM3DCW
-         t/ow==
-X-Gm-Message-State: AOJu0Yybt1cTdrHoWTYxJs40uYjckx3NGqAAkN9Lg0PalSDV7hqatPlt
-        c+pvLqyPEFxyhifUw4TjNW+CBQ==
-X-Google-Smtp-Source: AGHT+IH2TLA5eAwtc+QqDfSvcLBXW+oCUCt186ZZc0tI9aFuib9qxbba8DiMww84wen7n3z6/BM0tA==
-X-Received: by 2002:a2e:c42:0:b0:2b8:3a1e:eec9 with SMTP id o2-20020a2e0c42000000b002b83a1eeec9mr3206278ljd.36.1692577536557;
-        Sun, 20 Aug 2023 17:25:36 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692577537; x=1693182337;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MlBywfivHvodh4mS9iHR7eqeZaq8nRLsVZ6tJbx6F8U=;
+        b=WpW2Dw5cyIVpCORvkfflsgdpZZc/kx/oDZstt/P9fRga15u8LvhW8WV9mygc7b2yoe
+         hs/PEp/MPpEClINeSLrEZWo2tCOl0p4iNTCV3iIMn75mPhWhqq4uAf1lO2w9fW8RQodh
+         ecvA4xsoHBseKNluQ3bKdBQ+3taTldakavXpVp3YvbxuD1rVoPUpnfE4BpVL6lF6PExy
+         DR/kbwmO9FhXe1VOVWptuO/LsR7bwR7SOuiaIRCkqSF2kSL+BUZkxtvnc7rHs1fF+QFu
+         oawIoT4fsdGT85sLhgyCJ+yKxr4mSTrJkk1IXeaVC2VliR8DMY8QW9h4oOE3IUqgiHC9
+         zw5Q==
+X-Gm-Message-State: AOJu0Yw2Fq25Wa4VD4h6tTn1/4H7Vh01QjQQhbIbROGYNW4EBxqcNnXj
+        Mm4DvrCotILD+IGH+HXcdCbXGA==
+X-Google-Smtp-Source: AGHT+IGr1AAyiKDHgTaKoz9UMMvAW1C49VjMzx4u/4AVVSvMzRGKmNor00gDybXqhjAAaNkhA487rw==
+X-Received: by 2002:a2e:9a88:0:b0:2bb:bfb0:7b66 with SMTP id p8-20020a2e9a88000000b002bbbfb07b66mr3831718lji.1.1692577537388;
+        Sun, 20 Aug 2023 17:25:37 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id h27-20020a2eb0fb000000b002b6fe751b6esm1964923ljl.124.2023.08.20.17.25.35
+        by smtp.gmail.com with ESMTPSA id h27-20020a2eb0fb000000b002b6fe751b6esm1964923ljl.124.2023.08.20.17.25.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Aug 2023 17:25:35 -0700 (PDT)
+        Sun, 20 Aug 2023 17:25:36 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,75 +62,426 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 00/16] phy: qcom-qmp-usb: convert to newer style of bindings
-Date:   Mon, 21 Aug 2023 03:25:19 +0300
-Message-Id: <20230821002535.585660-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 01/16] dt-bindings: phy: migrate QMP USB PHY bindings to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+Date:   Mon, 21 Aug 2023 03:25:20 +0300
+Message-Id: <20230821002535.585660-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230821002535.585660-1-dmitry.baryshkov@linaro.org>
+References: <20230821002535.585660-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewing several patchsets for newer platforms made it clear that
-having two styles of QMP PHY bindings causes confusion. Despite binding
-documents having notes telling that old bindings should be used for
-older platforms, it is too easy to attempt adding new platform with
-older QMP PHY binding. Thus let's have just a single documented style of
-bindings.
+Migrate legacy bindings (described in qcom,msm8996-qmp-usb3-phy.yaml)
+to qcom,sc8280xp-qmp-usb3-uni-phy.yaml. This removes a need to declare
+the child PHY node or split resource regions.
 
-Proposed merge strategy: immutable branch with binding and PHY patches,
-which can also be merged into Bjorn's dts-for-6.7
-
-Changes since v1:
- - Split large patchset into smaller parts
- - Rebased on phy/next
- - Reworked bindings to follow the common standard rather than blindly
-   moving the PHY contents.
-
-Dmitry Baryshkov (16):
-  dt-bindings: phy: migrate QMP USB PHY bindings to
-    qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-  phy: qcom-qmp-usb: simplify clock handling
-  phy: qcom-qmp-usb: rework reset handling
-  phy: qcom-qmp-usb: make QPHY_PCS_MISC_CLAMP_ENABLE access conditional
-  phy: qcom-qmp: move PCS MISC V4 registers to separate header
-  phy: qcom-qmp-usb: populate offsets configuration
-  arm64: dts: qcom: ipq6018: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: ipq8074: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: msm8996: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: msm8998: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: sdm845: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: sm8150: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: sm8250: switch USB QMP PHY to new style of bindings
-  arm64: dts: qcom: sm8350: switch USB QMP PHY to new style of bindings
-  ARM: dts: qcom-sdx55: switch USB QMP PHY to new style of bindings
-  ARM: dts: qcom-sdx65: switch USB QMP PHY to new style of bindings
-
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
  .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 287 ------------------
  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |  53 +++-
- arch/arm/boot/dts/qcom/qcom-sdx55.dtsi        |  41 ++-
- arch/arm/boot/dts/qcom/qcom-sdx65.dtsi        |  35 +--
- arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  35 +--
- arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  76 ++---
- arch/arm64/boot/dts/qcom/msm8996.dtsi         |  40 ++-
- arch/arm64/boot/dts/qcom/msm8998.dtsi         |  39 +--
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |  39 ++-
- arch/arm64/boot/dts/qcom/sm8150.dtsi          |  39 +--
- arch/arm64/boot/dts/qcom/sm8250.dtsi          |  38 +--
- arch/arm64/boot/dts/qcom/sm8350.dtsi          |  39 +--
- .../phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h   |  17 ++
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 225 +++++++-------
- drivers/phy/qualcomm/phy-qcom-qmp.h           |   8 -
- 15 files changed, 352 insertions(+), 659 deletions(-)
+ 2 files changed, 51 insertions(+), 289 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h
 
+diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+deleted file mode 100644
+index 827109d37041..000000000000
+--- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
++++ /dev/null
+@@ -1,287 +0,0 @@
+-# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+-%YAML 1.2
+----
+-$id: http://devicetree.org/schemas/phy/qcom,msm8996-qmp-usb3-phy.yaml#
+-$schema: http://devicetree.org/meta-schemas/core.yaml#
+-
+-title: Qualcomm QMP PHY controller (USB, MSM8996)
+-
+-maintainers:
+-  - Vinod Koul <vkoul@kernel.org>
+-
+-description:
+-  QMP PHY controller supports physical layer functionality for a number of
+-  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
+-
+-  Note that these bindings are for SoCs up to SC8180X. For newer SoCs, see
+-  qcom,sc8280xp-qmp-usb3-uni-phy.yaml.
+-
+-properties:
+-  compatible:
+-    enum:
+-      - qcom,ipq6018-qmp-usb3-phy
+-      - qcom,ipq8074-qmp-usb3-phy
+-      - qcom,msm8996-qmp-usb3-phy
+-      - qcom,msm8998-qmp-usb3-phy
+-      - qcom,sdm845-qmp-usb3-uni-phy
+-      - qcom,sdx55-qmp-usb3-uni-phy
+-      - qcom,sdx65-qmp-usb3-uni-phy
+-      - qcom,sm8150-qmp-usb3-uni-phy
+-      - qcom,sm8250-qmp-usb3-uni-phy
+-      - qcom,sm8350-qmp-usb3-uni-phy
+-
+-  reg:
+-    items:
+-      - description: serdes
+-
+-  "#address-cells":
+-    enum: [ 1, 2 ]
+-
+-  "#size-cells":
+-    enum: [ 1, 2 ]
+-
+-  ranges: true
+-
+-  clocks:
+-    minItems: 3
+-    maxItems: 4
+-
+-  clock-names:
+-    minItems: 3
+-    maxItems: 4
+-
+-  power-domains:
+-    maxItems: 1
+-
+-  resets:
+-    maxItems: 2
+-
+-  reset-names:
+-    maxItems: 2
+-
+-  vdda-phy-supply: true
+-
+-  vdda-pll-supply: true
+-
+-  vddp-ref-clk-supply: true
+-
+-patternProperties:
+-  "^phy@[0-9a-f]+$":
+-    type: object
+-    description: single PHY-provider child node
+-    properties:
+-      reg:
+-        minItems: 3
+-        maxItems: 6
+-
+-      clocks:
+-        items:
+-          - description: PIPE clock
+-
+-      clock-names:
+-        deprecated: true
+-        items:
+-          - const: pipe0
+-
+-      "#clock-cells":
+-        const: 0
+-
+-      clock-output-names:
+-        maxItems: 1
+-
+-      "#phy-cells":
+-        const: 0
+-
+-    required:
+-      - reg
+-      - clocks
+-      - "#clock-cells"
+-      - clock-output-names
+-      - "#phy-cells"
+-
+-    additionalProperties: false
+-
+-required:
+-  - compatible
+-  - reg
+-  - "#address-cells"
+-  - "#size-cells"
+-  - ranges
+-  - clocks
+-  - clock-names
+-  - resets
+-  - reset-names
+-  - vdda-phy-supply
+-  - vdda-pll-supply
+-
+-additionalProperties: false
+-
+-allOf:
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sdm845-qmp-usb3-uni-phy
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 4
+-        clock-names:
+-          items:
+-            - const: aux
+-            - const: cfg_ahb
+-            - const: ref
+-            - const: com_aux
+-        resets:
+-          maxItems: 2
+-        reset-names:
+-          items:
+-            - const: phy
+-            - const: common
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,ipq8074-qmp-usb3-phy
+-              - qcom,msm8996-qmp-usb3-phy
+-              - qcom,msm8998-qmp-usb3-phy
+-              - qcom,sdx55-qmp-usb3-uni-phy
+-              - qcom,sdx65-qmp-usb3-uni-phy
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 3
+-        clock-names:
+-          items:
+-            - const: aux
+-            - const: cfg_ahb
+-            - const: ref
+-        resets:
+-          maxItems: 2
+-        reset-names:
+-          items:
+-            - const: phy
+-            - const: common
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sm8150-qmp-usb3-uni-phy
+-              - qcom,sm8250-qmp-usb3-uni-phy
+-              - qcom,sm8350-qmp-usb3-uni-phy
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 4
+-        clock-names:
+-          items:
+-            - const: aux
+-            - const: ref_clk_src
+-            - const: ref
+-            - const: com_aux
+-        resets:
+-          maxItems: 2
+-        reset-names:
+-          items:
+-            - const: phy
+-            - const: common
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,msm8998-qmp-usb3-phy
+-    then:
+-      patternProperties:
+-        "^phy@[0-9a-f]+$":
+-          properties:
+-            reg:
+-              items:
+-                - description: TX lane 1
+-                - description: RX lane 1
+-                - description: PCS
+-                - description: TX lane 2
+-                - description: RX lane 2
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,ipq6018-qmp-usb3-phy
+-              - qcom,ipq8074-qmp-usb3-phy
+-              - qcom,sdx55-qmp-usb3-uni-phy
+-              - qcom,sdx65-qmp-usb3-uni-phy
+-              - qcom,sm8150-qmp-usb3-uni-phy
+-    then:
+-      patternProperties:
+-        "^phy@[0-9a-f]+$":
+-          properties:
+-            reg:
+-              items:
+-                - description: TX
+-                - description: RX
+-                - description: PCS
+-                - description: PCS_MISC
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,msm8996-qmp-usb3-phy
+-              - qcom,sm8250-qmp-usb3-uni-phy
+-              - qcom,sm8350-qmp-usb3-uni-phy
+-    then:
+-      patternProperties:
+-        "^phy@[0-9a-f]+$":
+-          properties:
+-            reg:
+-              items:
+-                - description: TX
+-                - description: RX
+-                - description: PCS
+-
+-examples:
+-  - |
+-    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+-    usb_2_qmpphy: phy-wrapper@88eb000 {
+-        compatible = "qcom,sdm845-qmp-usb3-uni-phy";
+-        reg = <0x088eb000 0x18c>;
+-        #address-cells = <1>;
+-        #size-cells = <1>;
+-        ranges = <0x0 0x088eb000 0x2000>;
+-
+-        clocks = <&gcc GCC_USB3_SEC_PHY_AUX_CLK >,
+-                 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
+-                 <&gcc GCC_USB3_SEC_CLKREF_CLK>,
+-                 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>;
+-        clock-names = "aux", "cfg_ahb", "ref", "com_aux";
+-
+-        resets = <&gcc GCC_USB3PHY_PHY_SEC_BCR>,
+-                 <&gcc GCC_USB3_PHY_SEC_BCR>;
+-        reset-names = "phy", "common";
+-
+-        vdda-phy-supply = <&vdda_usb2_ss_1p2>;
+-        vdda-pll-supply = <&vdda_usb2_ss_core>;
+-
+-        usb_2_ssphy: phy@200 {
+-                reg = <0x200 0x128>,
+-                      <0x400 0x1fc>,
+-                      <0x800 0x218>,
+-                      <0x600 0x70>;
+-
+-                clocks = <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
+-
+-                #clock-cells = <0>;
+-                clock-output-names = "usb3_uni_phy_pipe_clk_src";
+-
+-                #phy-cells = <0>;
+-            };
+-        };
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+index f99fbbcd68fb..60cbcf3c19b3 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+@@ -16,20 +16,33 @@ description:
+ properties:
+   compatible:
+     enum:
++      - qcom,ipq6018-qmp-usb3-phy
++      - qcom,ipq8074-qmp-usb3-phy
+       - qcom,ipq9574-qmp-usb3-phy
++      - qcom,msm8996-qmp-usb3-phy
++      - qcom,msm8998-qmp-usb3-phy
+       - qcom,qcm2290-qmp-usb3-phy
+       - qcom,sa8775p-qmp-usb3-uni-phy
+       - qcom,sc8280xp-qmp-usb3-uni-phy
++      - qcom,sdm845-qmp-usb3-uni-phy
++      - qcom,sdx55-qmp-usb3-uni-phy
++      - qcom,sdx65-qmp-usb3-uni-phy
+       - qcom,sm6115-qmp-usb3-phy
++      - qcom,sm8150-qmp-usb3-uni-phy
++      - qcom,sm8250-qmp-usb3-uni-phy
++      - qcom,sm8350-qmp-usb3-uni-phy
++
+ 
+   reg:
+     maxItems: 1
+ 
+   clocks:
+-    maxItems: 4
++    minItems: 4
++    maxItems: 5
+ 
+   clock-names:
+-    maxItems: 4
++    minItems: 4
++    maxItems: 5
+ 
+   power-domains:
+     maxItems: 1
+@@ -74,7 +87,13 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,ipq6018-qmp-usb3-phy
++              - qcom,ipq8074-qmp-usb3-phy
+               - qcom,ipq9574-qmp-usb3-phy
++              - qcom,msm8996-qmp-usb3-phy
++              - qcom,msm8998-qmp-usb3-phy
++              - qcom,sdx55-qmp-usb3-uni-phy
++              - qcom,sdx65-qmp-usb3-uni-phy
+     then:
+       properties:
+         clock-names:
+@@ -109,6 +128,9 @@ allOf:
+             enum:
+               - qcom,sa8775p-qmp-usb3-uni-phy
+               - qcom,sc8280xp-qmp-usb3-uni-phy
++              - qcom,sm8150-qmp-usb3-uni-phy
++              - qcom,sm8250-qmp-usb3-uni-phy
++              - qcom,sm8350-qmp-usb3-uni-phy
+     then:
+       properties:
+         clocks:
+@@ -119,6 +141,33 @@ allOf:
+             - const: ref
+             - const: com_aux
+             - const: pipe
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sdm845-qmp-usb3-uni-phy
++    then:
++      properties:
++        clocks:
++          maxItems: 5
++        clock-names:
++          items:
++            - const: aux
++            - const: cfg_ahb
++            - const: ref
++            - const: com_aux
++            - const: pipe
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sa8775p-qmp-usb3-uni-phy
++              - qcom,sc8280xp-qmp-usb3-uni-phy
++    then:
+       required:
+         - power-domains
+ 
 -- 
 2.39.2
 
