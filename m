@@ -2,137 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BBA07828AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:11:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8297828B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:14:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234522AbjHUMLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 08:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40148 "EHLO
+        id S234348AbjHUMOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 08:14:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234555AbjHUMLd (ORCPT
+        with ESMTP id S230134AbjHUMOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 08:11:33 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3449EA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:11:28 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fef4b063a7so3101505e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:11:28 -0700 (PDT)
+        Mon, 21 Aug 2023 08:14:24 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B471CC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:14:22 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-31adc5c899fso3055848f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692619887; x=1693224687;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2gnJCWf/bRcO/fsb+MoLh5VvozMVWd5lNcZa1VfleQA=;
-        b=zivIEfz4ArFYxpmPCe2Ayh47Iez8SIzDYAvrScs7VxKat8WRxo4Xphg7x45xBBnIh7
-         zG9UQ2tU6LCi9rL6h6E5BcGO9h3HKS2uukCeoUJINc14sGJdmddJbHPAtelFD5A5fwcN
-         QQHvskEsgZthSsiGOOkCPEhuHCZY7Cr1xFj4kQekRTE0V51A8vnmd886exvfiYkuz1/H
-         4bBQb5OtG5yrnWJDBKWKAuOvHxjUs6xWoRMApDdFwq6weIU72GasUKYtRPenf1pv8p3i
-         ezYJPAfrprCmzbjN0udqRY9f5LXLD7S5noO4J+aHdztZoKyfiVTd0wg1kmJWZDijsZa6
-         DjLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692619887; x=1693224687;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1692620061; x=1693224861;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2gnJCWf/bRcO/fsb+MoLh5VvozMVWd5lNcZa1VfleQA=;
-        b=LgiasKSaCOF9HutJVc7WZKRyBXMmLC7MJVI1siVJbWaFMU4CMlytlc9KUe0RX47Ra5
-         g1kcIfpXbLwVrXCqzvByfJdlY7iiw/OAV3CceaPGO265g1rt6WKwi7tEwqFKu8R4+0Lx
-         Saijp2tznOdCJKk/vKLk+EVMsp4PTgnHzJMXSswnV45alMb8M3KRYJKNCmFN02Vuc18x
-         Axhe3aDnBDmBhPdSCZjphapUzWXTM1jlwCd7LMTsoflB5sdWfXcnBQnYOjFJioKaIhrZ
-         AsPKMCybbwpCZuRg400sVzl/gbpQBMZiBqIROEVwvwfB7e1zPIcqPyBpqbFK2r9Z/cNK
-         n/WA==
-X-Gm-Message-State: AOJu0Yw5NjfRlBEfWEVMC3+86ANP+dpR7KtYlT9iezJt5n1kWWoymUgk
-        X508go14e4BcyJJbUvZPVXV+Pw==
-X-Google-Smtp-Source: AGHT+IEKc+phXZOlYo7ZHIrJvhZ/u0ttOsD7g9xqqrnpo3w8enOn1Txm9Gz3hAt/khYmMBpRx4iLWw==
-X-Received: by 2002:adf:dd90:0:b0:315:9e1b:4ea6 with SMTP id x16-20020adfdd90000000b003159e1b4ea6mr4540162wrl.58.1692619887298;
-        Mon, 21 Aug 2023 05:11:27 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id u4-20020a5d5144000000b003176053506fsm12223822wrt.99.2023.08.21.05.11.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 05:11:26 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 21 Aug 2023 14:11:21 +0200
-Subject: [PATCH v2] scsi: ufs: ufs-qcom: clear qunipro_g4_sel for HW major
- version > 5
+        bh=+jZeDhZ6rG2eXOJmaq+YM/zeTECUDJRs4cIoio/GoLM=;
+        b=BQwHHl+fa5LX2NkPQJZvj4EIRN/nothMbgKkNK0mkrVnYYwi0NCuGTTc1cOwj0fc9N
+         CRn6LR1KJarxOLMRI91aHW0eOUximtNcj1VJXdTWSSQLMUCDn8rVzo7hJduZmIBrGhhw
+         bshqTPzUGCbNZqcocrnBJyBa9FTRKCM8Q2tPN+8e7bcIEvG44plZeCRPepCZGdHKTdM5
+         MPLQxtqz5bJve/ZUCPS7iGl7pmtfdfwu694DTESFPjDez+usx7Fp/t/iaAPkj2HTZUUY
+         8+o+Hv9izH/ZLFGLbG2u18i6R6LHkQYbr3BurE/+CxSDbKVF4QnqgsfrpOvgUE6YVhS1
+         ILPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692620061; x=1693224861;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+jZeDhZ6rG2eXOJmaq+YM/zeTECUDJRs4cIoio/GoLM=;
+        b=Lb75S2u+Trgw5oeBYSrLu6YVdUanImAgAdmjrg5piMkx4hopObV2AUSh+O5pS4Id/v
+         iibhlqMBx+D3zQt4wSJcZeUhEnzHISK90v/I61ckSLn2gFWyVSsRAXmIPo8jn+9nqC9Z
+         3abQpxNoAoCrcgPMuS9bJCd4kDLeDOOnUCSXavDAcruIdIeSsmQOUYNCpEsgzOLgr93c
+         PRP7P8r8o5ANPArqoHwtOWx1aQxuEMcpnxmhT0QHaaGiAahfIsyIUBe7wkX8n/qt5WVm
+         WyAgCTNVnZfRlxR8XCsNv4fji1IJATYq44H0FWm0knDONEIhyIHQDqKPwdlqFih4TUeb
+         smgQ==
+X-Gm-Message-State: AOJu0YxznHBSs9lPjt+vTx63zCBu34aRfZIp33obbfAaHSoAsyqPLto0
+        NxsoAvOCQ1u9j433oVYjEPLzyQ==
+X-Google-Smtp-Source: AGHT+IFyJbTW8jQSyNnceEplKrsLLXGXCTkIBMUWsT78Qef/JlWfpZa2nzs/5jSg+rrrH3mBy9Z1zw==
+X-Received: by 2002:a5d:5102:0:b0:315:a1d5:a3d5 with SMTP id s2-20020a5d5102000000b00315a1d5a3d5mr5414513wrt.22.1692620060278;
+        Mon, 21 Aug 2023 05:14:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:cad:2140:4b:459f:81d3:47f3? ([2a01:e0a:cad:2140:4b:459f:81d3:47f3])
+        by smtp.gmail.com with ESMTPSA id q16-20020a05600000d000b0031c56218984sm2464418wrx.104.2023.08.21.05.14.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Aug 2023 05:14:19 -0700 (PDT)
+Message-ID: <c58ed3f8-87bb-4a48-aae6-8d67f8f0b3ed@linaro.org>
+Date:   Mon, 21 Aug 2023 14:14:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v2-1-f42a4b712e58@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGhU42QC/5XNQQ6CMBCF4auQrh3TFojoynsYFk0ZYAzQZgYIh
- nB3Kzdw+b/F+3YlyISiHtmuGFcSClMKe8mU793UIVCTWlltc11ZA3OI5EHGais1LFFmRjfC0gq
- M7h0YSojDIlCgc03e5k1V3lQ6i4wtbSf0qlP3JHPgz+mu5rf+TawGDHhTeI9W31trngNNjsM1c
- Kfq4zi+OL7vtd0AAAA=
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] irqchip/qcom-pdc: add support for v3.2 HW
+Content-Language: en-US, fr
+To:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1449;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=L44jkzTqqSuRGogpCGvOFb+mcJf5dVzd0N97KsYF8pU=;
- b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBk41RtU29eL0lfv4wIVtTmWmcnEUHPz88ffWNkYiEZ
- PNIdNZmJAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZONUbQAKCRB33NvayMhJ0bGqD/
- Y4Vj61b+Kie1XMLl4dWf0uOCaTawTXTkGZF0/o325XmN+UwLAuXenKbnbQNFJmd/0XFejgMecbvapJ
- n4+ck6CvaBoTJci6cNEyICva9T1q9qGCusSMTYzssRYYp7r9HWOHcYe9VeVfZs/ZGe6PoxXHlN0E2A
- X9xlrMYTIVJlup2X9Yj7wWfTuhccLp4DwjOtckpNwMbEL6IPe9Vlf/Ph1MoHGGgiGmzUaXCYRwRH6d
- 5X7UJCF2i15ivfXwcVJJCqLQPWu1i9tDP6HNz3rT42vWaHi5IrnIQmwl0a4vY4rJSFWL5Th1ayLyY/
- 246njY+ki1hXnVbfzZZc/97X4JMWvZ3uKbpx4y/xX3nVRo00T8LtGVQbBQkHbG4STGRvglc5f1IsMl
- WEQAlg33DJ8xJ7mpW8Apo798AdLYa8Qu28p+9aiZwLiI9MMSjf8nSOVu+t3o+B6l9hm0btooKKPJJ4
- Y3A8Mnb/e3CNZh9KcmXqtEE9D8/GoF0c43yzvnuq/D3fU9MQcGot5c4WVQWoLt4iucspRGx7aUsMMk
- l2Ki8p/Nfknz/R9UBb3XAsPOCvqAcDEC/hdqmbcL/Jk8gTiBaH3TQsP++QsFj/BjTwM70tscjjfkcr
- EhyrWiMLf5QroFrwrHaHp8FY1lxQsvle+HQVVx0TQyfd0Zj86F2720wpxn
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230821-topic-sm8x50-upstream-pdc-ver-v1-1-6d7f4dd95719@linaro.org>
+ <0439125b-2952-229b-497f-c44592621410@quicinc.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <0439125b-2952-229b-497f-c44592621410@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qunipro_g4_sel clear is also needed for new platforms with
-major version > 5, fix the version check to take this in account.
+On 21/08/2023 10:41, Maulik Shah (mkshah) wrote:
+> Hi,
+> 
+> On 8/21/2023 1:00 PM, Neil Armstrong wrote:
+>> The PDC Hw version 3.2 and later doesn't have the enable registers
+>> anymore, get the HW version from registers and stop accessing those
+>> registers starting at this version.
+> 
+> Starting PDC v3.2, enable bit is moved from IRQ_ENABLE_BANK to the IRQ_i_CFG register.
+> we need to set enable bit to tell PDC HW whether IRQ is enabled / disabled in order to wake up from SoC sleep states.
+> 
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/irqchip/qcom-pdc.c | 64 ++++++++++++++++++++++++++++++++++++++--------
+>>   1 file changed, 53 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+>> index d96916cf6a41..620efb9fcc96 100644
+>> --- a/drivers/irqchip/qcom-pdc.c
+>> +++ b/drivers/irqchip/qcom-pdc.c
+>> @@ -26,6 +26,13 @@
+>>   #define IRQ_ENABLE_BANK        0x10
+>>   #define IRQ_i_CFG        0x110
+>> +#define PDC_VERSION        0x1000
+>> +
+>> +/* Notable PDC versions */
+>> +enum {
+>> +    PDC_VERSION_3_2    = 0x30200,
+>> +};
+>> +
+>>   struct pdc_pin_region {
+>>       u32 pin_base;
+>>       u32 parent_base;
+>> @@ -38,6 +45,7 @@ static DEFINE_RAW_SPINLOCK(pdc_lock);
+>>   static void __iomem *pdc_base;
+>>   static struct pdc_pin_region *pdc_region;
+>>   static int pdc_region_cnt;
+>> +static unsigned int pdc_version;
+>>   static void pdc_reg_write(int reg, u32 i, u32 val)
+>>   {
+>> @@ -183,6 +191,25 @@ static struct irq_chip qcom_pdc_gic_chip = {
+>>       .irq_set_affinity    = irq_chip_set_affinity_parent,
+>>   };
+>> +static struct irq_chip qcom_pdc_gic_chip_3_2 = {
+>> +    .name            = "PDC",
+>> +    .irq_eoi        = irq_chip_eoi_parent,
+>> +    .irq_mask        = irq_chip_mask_parent,
+>> +    .irq_unmask        = irq_chip_unmask_parent,
+>> +    .irq_disable        = irq_chip_disable_parent,
+>> +    .irq_enable        = irq_chip_enable_parent,
+>> +    .irq_get_irqchip_state    = irq_chip_get_parent_state,
+>> +    .irq_set_irqchip_state    = irq_chip_set_parent_state,
+>> +    .irq_retrigger        = irq_chip_retrigger_hierarchy,
+>> +    .irq_set_type        = qcom_pdc_gic_set_type,
+>> +    .flags            = IRQCHIP_MASK_ON_SUSPEND |
+>> +                  IRQCHIP_SET_TYPE_MASKED |
+>> +                  IRQCHIP_SKIP_SET_WAKE |
+>> +                  IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND,
+>> +    .irq_set_vcpu_affinity    = irq_chip_set_vcpu_affinity_parent,
+>> +    .irq_set_affinity    = irq_chip_set_affinity_parent,
+>> +};
+>> +
+> we should not need to have another irqchip defined for same as these remains same for old/new version.
+> 
+> Not sure if you have access to downstream change, or let me know i can post the same.
+> In downstream we do like...
+> 
+> The 3rd bit in IRQ_i_CFG in PDC v3.2 is for enable/disable,
+> The 0-2 bits are for the IRQ type in all PDC versions..
+> 
+>      #define IRQ_i_CFG_IRQ_ENABLE   BIT(3)
+>      #define IRQ_i_CFG_TYPE_MASK    0x7
+> 
+> and modify pdc_enable_intr()
+> 
+>         if (pdc_version < PDC_VERSION_3_2) {
+>                 index = pin_out / 32;
+>                 mask = pin_out % 32;
+>                 enable = pdc_reg_read(IRQ_ENABLE_BANK, index);
+>                 __assign_bit(mask, &enable, on);
+>                 pdc_reg_write(IRQ_ENABLE_BANK, index, enable);
+>         } else {
+>                 index = d->hwirq;
+>                 enable = pdc_reg_read(IRQ_i_CFG, index);
+>                 __assign_bit(IRQ_i_CFG_IRQ_ENABLE, &enable, on);
+>                 pdc_reg_write(IRQ_i_CFG, index, enable);
+>         }
+> 
+> and qcom_pdc_gic_set_type(), add line to only take 0-2 bits from old_pdc_type as they are for type.
+> 
+>          old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
+> +       pdc_type |= (old_pdc_type & ~IRQ_i_CFG_TYPE_MASK);
+>> +        if (pdc_version < PDC_VERSION_3_2)
+>> +            pdc_enable_region(n);
+>>       }
+> 
+> you will still need to clear enable bits in version 3.2.
 
-Fixes: 9c02aa24bf40 ("scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5")
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-Changes in v2:
-- Added Fixes tag as suggested by Mani
-- Added Acked-by and Reviewed-by tags
-- Link to v1: https://lore.kernel.org/r/20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org
----
- drivers/ufs/host/ufs-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ack, thx for the review, I'll fix all that for v2.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index f88febb23123..d1149b1c3ed5 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -365,7 +365,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
- 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
- 		   REG_UFS_CFG1);
- 
--	if (host->hw_ver.major == 0x05)
-+	if (host->hw_ver.major >= 0x05)
- 		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
- 
- 	/* make sure above configuration is applied before we return */
+Neil
 
----
-base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
-change-id: 20230821-topic-sm8x50-upstream-ufs-major-5-plus-4eaad3f3d857
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> Thanks,
+> Maulik
+> 
 
