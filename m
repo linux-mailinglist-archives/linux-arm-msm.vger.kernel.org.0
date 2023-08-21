@@ -2,103 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E030782898
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:09:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BBA07828AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 14:11:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234360AbjHUMJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 08:09:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
+        id S234522AbjHUMLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 08:11:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234264AbjHUMJH (ORCPT
+        with ESMTP id S234555AbjHUMLd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 08:09:07 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0119FBE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:09:04 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fe4cdb727cso31419755e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:09:04 -0700 (PDT)
+        Mon, 21 Aug 2023 08:11:33 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3449EA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:11:28 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fef4b063a7so3101505e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 05:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692619743; x=1693224543;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9fiu4eUi85XjSGhZJzDNfopMsZkoWxY2L2AmUuj2oyI=;
-        b=BciD3LK0YQP8bBw4LYIWKL5EkycQscDDvAJyUyBiEUpBLEHhwKPKzl+KEs7xsm12jS
-         Cd1Kgm5GqNtS1WXYU/XkI5Hf5jepwUm+qj/0X+vBlaEcSaARR1frDFq2mZVGehKo8NWo
-         z+HvG6IDgEEzp3Z52O/lpQpldW07kKff7ksOzp22eQTQ6ursC3SLFfkqpoTEBXKBuBB6
-         t9F6TDJfHc1z5VKDQ/HV2ll8pO1f1ej1uIsyY5LT1Fnah6VvynTs0V/dnKcKtz32mwdO
-         V3W/5CzXc3MzPE6n6tTxfEp1eKm3mkNHGyLj0bbsDNZoSxE/o+JPIMK3Vx/cDdJvaM/o
-         TvDg==
+        d=linaro.org; s=google; t=1692619887; x=1693224687;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2gnJCWf/bRcO/fsb+MoLh5VvozMVWd5lNcZa1VfleQA=;
+        b=zivIEfz4ArFYxpmPCe2Ayh47Iez8SIzDYAvrScs7VxKat8WRxo4Xphg7x45xBBnIh7
+         zG9UQ2tU6LCi9rL6h6E5BcGO9h3HKS2uukCeoUJINc14sGJdmddJbHPAtelFD5A5fwcN
+         QQHvskEsgZthSsiGOOkCPEhuHCZY7Cr1xFj4kQekRTE0V51A8vnmd886exvfiYkuz1/H
+         4bBQb5OtG5yrnWJDBKWKAuOvHxjUs6xWoRMApDdFwq6weIU72GasUKYtRPenf1pv8p3i
+         ezYJPAfrprCmzbjN0udqRY9f5LXLD7S5noO4J+aHdztZoKyfiVTd0wg1kmJWZDijsZa6
+         DjLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692619743; x=1693224543;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9fiu4eUi85XjSGhZJzDNfopMsZkoWxY2L2AmUuj2oyI=;
-        b=jH+ziM00aL8sAqOOtodiZbjCSyaop2hDATwn7Da1bl866ogJAdxGHu5U7YvjqlgimG
-         ja/zdnv+z/ZjQureG89GsyeMvJtWt/w3J/zG9kpOrckKd3tFjRWIXz4H3jv4Ghpc3gZu
-         M1EtFR0NwItgXJchwfG8p2asbqYOzgRkZMnrahXD5DE+2YzZvXuqS3Mga9s0CYayfg28
-         FdUdz/2CHVAxGhwzaBowhLn+IRp4L0K1/hD16jTJWOjW4ycV3EVLWIx1sx713JPppr2d
-         eg4/ayAoyc9+mPlg/ax6RmoB4a0rquTtA7FqMSItRsRyxuFFFpA/bGTO3YThMhNyr7uQ
-         aIwQ==
-X-Gm-Message-State: AOJu0Yz6OFcG3txvL1yQMRtV4p7arC5WYOVjxMrq3NFjpQ1XN/ZMKUvr
-        PnssjilGw1ZnTJ4fslE7u+izdw==
-X-Google-Smtp-Source: AGHT+IFe9ONzw7N8dNifv4nXi0CBGFI0hbQvfw5t+b4DKerI9OIIWKb07uGgQ+v6lr7ZeCW2nIQzcw==
-X-Received: by 2002:a05:600c:3486:b0:3fb:c9f4:1506 with SMTP id a6-20020a05600c348600b003fbc9f41506mr4924722wmq.1.1692619743455;
-        Mon, 21 Aug 2023 05:09:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:4b:459f:81d3:47f3? ([2a01:e0a:cad:2140:4b:459f:81d3:47f3])
-        by smtp.gmail.com with ESMTPSA id k9-20020adff289000000b003179d5aee67sm10634270wro.94.2023.08.21.05.09.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Aug 2023 05:09:02 -0700 (PDT)
-Message-ID: <024e4eb1-624d-485f-9abc-86497ecbc039@linaro.org>
-Date:   Mon, 21 Aug 2023 14:09:01 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+        d=1e100.net; s=20221208; t=1692619887; x=1693224687;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2gnJCWf/bRcO/fsb+MoLh5VvozMVWd5lNcZa1VfleQA=;
+        b=LgiasKSaCOF9HutJVc7WZKRyBXMmLC7MJVI1siVJbWaFMU4CMlytlc9KUe0RX47Ra5
+         g1kcIfpXbLwVrXCqzvByfJdlY7iiw/OAV3CceaPGO265g1rt6WKwi7tEwqFKu8R4+0Lx
+         Saijp2tznOdCJKk/vKLk+EVMsp4PTgnHzJMXSswnV45alMb8M3KRYJKNCmFN02Vuc18x
+         Axhe3aDnBDmBhPdSCZjphapUzWXTM1jlwCd7LMTsoflB5sdWfXcnBQnYOjFJioKaIhrZ
+         AsPKMCybbwpCZuRg400sVzl/gbpQBMZiBqIROEVwvwfB7e1zPIcqPyBpqbFK2r9Z/cNK
+         n/WA==
+X-Gm-Message-State: AOJu0Yw5NjfRlBEfWEVMC3+86ANP+dpR7KtYlT9iezJt5n1kWWoymUgk
+        X508go14e4BcyJJbUvZPVXV+Pw==
+X-Google-Smtp-Source: AGHT+IEKc+phXZOlYo7ZHIrJvhZ/u0ttOsD7g9xqqrnpo3w8enOn1Txm9Gz3hAt/khYmMBpRx4iLWw==
+X-Received: by 2002:adf:dd90:0:b0:315:9e1b:4ea6 with SMTP id x16-20020adfdd90000000b003159e1b4ea6mr4540162wrl.58.1692619887298;
+        Mon, 21 Aug 2023 05:11:27 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id u4-20020a5d5144000000b003176053506fsm12223822wrt.99.2023.08.21.05.11.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Aug 2023 05:11:26 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] scsi: ufs: ufs-qcom: clear qunipro_g4_sel for HW major
+Date:   Mon, 21 Aug 2023 14:11:21 +0200
+Subject: [PATCH v2] scsi: ufs: ufs-qcom: clear qunipro_g4_sel for HW major
  version > 5
-Content-Language: en-US, fr
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v2-1-f42a4b712e58@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGhU42QC/5XNQQ6CMBCF4auQrh3TFojoynsYFk0ZYAzQZgYIh
+ nB3Kzdw+b/F+3YlyISiHtmuGFcSClMKe8mU793UIVCTWlltc11ZA3OI5EHGais1LFFmRjfC0gq
+ M7h0YSojDIlCgc03e5k1V3lQ6i4wtbSf0qlP3JHPgz+mu5rf+TawGDHhTeI9W31trngNNjsM1c
+ Kfq4zi+OL7vtd0AAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org>
- <20230821103851.GB36455@thinkpad>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20230821103851.GB36455@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Nitin Rawat <quic_nitirawa@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1449;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=L44jkzTqqSuRGogpCGvOFb+mcJf5dVzd0N97KsYF8pU=;
+ b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBk41RtU29eL0lfv4wIVtTmWmcnEUHPz88ffWNkYiEZ
+ PNIdNZmJAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZONUbQAKCRB33NvayMhJ0bGqD/
+ Y4Vj61b+Kie1XMLl4dWf0uOCaTawTXTkGZF0/o325XmN+UwLAuXenKbnbQNFJmd/0XFejgMecbvapJ
+ n4+ck6CvaBoTJci6cNEyICva9T1q9qGCusSMTYzssRYYp7r9HWOHcYe9VeVfZs/ZGe6PoxXHlN0E2A
+ X9xlrMYTIVJlup2X9Yj7wWfTuhccLp4DwjOtckpNwMbEL6IPe9Vlf/Ph1MoHGGgiGmzUaXCYRwRH6d
+ 5X7UJCF2i15ivfXwcVJJCqLQPWu1i9tDP6HNz3rT42vWaHi5IrnIQmwl0a4vY4rJSFWL5Th1ayLyY/
+ 246njY+ki1hXnVbfzZZc/97X4JMWvZ3uKbpx4y/xX3nVRo00T8LtGVQbBQkHbG4STGRvglc5f1IsMl
+ WEQAlg33DJ8xJ7mpW8Apo798AdLYa8Qu28p+9aiZwLiI9MMSjf8nSOVu+t3o+B6l9hm0btooKKPJJ4
+ Y3A8Mnb/e3CNZh9KcmXqtEE9D8/GoF0c43yzvnuq/D3fU9MQcGot5c4WVQWoLt4iucspRGx7aUsMMk
+ l2Ki8p/Nfknz/R9UBb3XAsPOCvqAcDEC/hdqmbcL/Jk8gTiBaH3TQsP++QsFj/BjTwM70tscjjfkcr
+ EhyrWiMLf5QroFrwrHaHp8FY1lxQsvle+HQVVx0TQyfd0Zj86F2720wpxn
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -109,50 +98,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/08/2023 12:38, Manivannan Sadhasivam wrote:
-> On Mon, Aug 21, 2023 at 09:41:54AM +0200, Neil Armstrong wrote:
->> The qunipro_g4_sel clear is also needed for new platforms with
->> major version > 5, fix the version check to take this in account.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> This is a fix, isn't it? With the fixes tag for 9c02aa24bf40,
+The qunipro_g4_sel clear is also needed for new platforms with
+major version > 5, fix the version check to take this in account.
 
-It could be considered as a fix yes, I'll resent a v2 with suc tag and Acks.
+Fixes: 9c02aa24bf40 ("scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5")
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Added Fixes tag as suggested by Mani
+- Added Acked-by and Reviewed-by tags
+- Link to v1: https://lore.kernel.org/r/20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org
+---
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Neil
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index f88febb23123..d1149b1c3ed5 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -365,7 +365,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+ 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+ 		   REG_UFS_CFG1);
+ 
+-	if (host->hw_ver.major == 0x05)
++	if (host->hw_ver.major >= 0x05)
+ 		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
+ 
+ 	/* make sure above configuration is applied before we return */
 
-> 
-> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-> 
-> - Mani
-> 
->> ---
->>   drivers/ufs/host/ufs-qcom.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->> index f88febb23123..d1149b1c3ed5 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -365,7 +365,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
->>   		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
->>   		   REG_UFS_CFG1);
->>   
->> -	if (host->hw_ver.major == 0x05)
->> +	if (host->hw_ver.major >= 0x05)
->>   		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
->>   
->>   	/* make sure above configuration is applied before we return */
->>
->> ---
->> base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
->> change-id: 20230821-topic-sm8x50-upstream-ufs-major-5-plus-4eaad3f3d857
->>
->> Best regards,
->> -- 
->> Neil Armstrong <neil.armstrong@linaro.org>
->>
-> 
+---
+base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
+change-id: 20230821-topic-sm8x50-upstream-ufs-major-5-plus-4eaad3f3d857
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
