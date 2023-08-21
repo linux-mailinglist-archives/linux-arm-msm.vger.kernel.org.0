@@ -2,91 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D8D5782498
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 09:39:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0E307824BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 09:42:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233748AbjHUHj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 03:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34158 "EHLO
+        id S233810AbjHUHmd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 03:42:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233743AbjHUHjZ (ORCPT
+        with ESMTP id S233790AbjHUHmc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 03:39:25 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9492BC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 00:39:23 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31ae6bf91a9so2160761f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 00:39:23 -0700 (PDT)
+        Mon, 21 Aug 2023 03:42:32 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E307CA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 00:42:07 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-318015ade49so2728752f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 00:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692603562; x=1693208362;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EvvoCNPW+SPRcYYFwV9MJHrYmRpChy1Zulkziz81bAM=;
-        b=x2eWXFeTu5MHKU89TXv9JrRjOoc1CTwPTNzlOGzEZI3irDjcKFt7cutfQx9w03ONAs
-         AYVL2DIrZ4shaNnxYsqZoO4P601OSjmcg4vegiQNsQmt9aIzSRCDZJyY9Sa2YFLVXn0N
-         QgDl5jzbrHH6w8FHZZOwmWZ21yFYu4RneGufQPdA+nWOiDhIUmgNFjYsxm5jNbbVwLNZ
-         bvKGfUopbMBO3oUk/iMJ97fQ5KBpfBLkJH7KiEE22xOCeCus/FxfSBkzA4s2/WKZ5d1y
-         mQeJSV04jrVZlHqvqV3NStTTiNHkV85ZikWtyvOBveBCI5A0tuTrDZioQh5/pQPO8OST
-         dAtg==
+        d=linaro.org; s=google; t=1692603725; x=1693208525;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=w80cGmdma0SArN7690HwVB2oaiPgCC1gxMORwl/l+yM=;
+        b=cuwrig7BpIvey/SIEWwGCUHu5QkUux+Z16JciqfgeotQJyIcTnFfBH8TzLffymCqFt
+         0zLYTilEX6tIK5PQWXiLMra9A09QbH0HHe+YTqYRGwkaguQgFInXbdH1k8DiAZJxZVRl
+         uuS7UgBWEn4klOusphXOLRzzyyFCAhRpk20gpnOkoXYNjIC6H5TVyOiyuFhtSI7UGvaX
+         9uEKBnFDJbqsMVwfA/GGXaaV6+X9dXxcvfXVdBhj1KiamkPH6wmbnUOgPKyeM59mWS8C
+         4QJnl3HdK+TZbVoc/JvoizSpVKW0G4GKneszwd176VzJJF5EktOfR2qVFmFKuk1TC7Ie
+         1eCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692603562; x=1693208362;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EvvoCNPW+SPRcYYFwV9MJHrYmRpChy1Zulkziz81bAM=;
-        b=S3qsupRJ6GXRe8g5IHvVYH2u7K+gDkp+6+dmx8p4y6R1u9kR0ShY9QazwZsqedB444
-         YCRSaxx9K/Lh4F1zf1uS0bIySUb63taqeWrZFOPgToqylJtYxxVwyfg1QLaggDZNrm+c
-         czxZEyho3G8CyR0qm1cUydrjeeXCjGRHNnJGnhvzjjX3c2YS1CdjWun/VxbQig6NHabA
-         s65w58Sk+MhipjhgCJqe3pl+quzY1V0EW2j+zBYs49G5G6eBs920j5dGdRqpB97yjoS1
-         5EjAUwhg8/sEHzSClSbcu/FAEf5Eg4xO6b5dvwndGVEJtpPXCUCyMoelKc3nrjv/zBz2
-         aBUA==
-X-Gm-Message-State: AOJu0YxktwA1jRLYAqISWY4A1JRuCAc46yOyyNLveubuPDiUtWTIba5e
-        ufdurzZA7pQF7UtGsq4wzdogHQ==
-X-Google-Smtp-Source: AGHT+IF4j6QeqYufxtGbUEOkc/Nkhwz8mqyHPHwvtvP9BNxajJLbbNv3/UBHGyhuH3OdYq01+HRIPw==
-X-Received: by 2002:a5d:62c1:0:b0:317:3d36:b2cd with SMTP id o1-20020a5d62c1000000b003173d36b2cdmr3262181wrv.71.1692603562192;
-        Mon, 21 Aug 2023 00:39:22 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692603725; x=1693208525;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w80cGmdma0SArN7690HwVB2oaiPgCC1gxMORwl/l+yM=;
+        b=ISnEjj3luYmVgD5SuJmYj0BDz/runrn8BVzFKTqMS2WJZ9Cv0KFzA988zZxjL4tY5z
+         OExGk6h/OQ8c7WMTiX2DM4i2Fg6XNUQZ4GcXbS7WdeEmKfvr7dPJ+GIlxQYUVVgddY52
+         LmrlNWuaUspv1MZNH8g5wnuPACLSe4rwWTRBH/cGV4trS61bfZxkG5dvuennseBSyitR
+         YHH0eOJ0Q5sVUhHHRf7nF4X0bmWE80/uf91KLDksu3ZkuMTTTZRSStOvJq5Ej9JPcyhY
+         JmaM2saGAZSymwQ7Pq8Gk7ONz4EhiYGvVR4n/nQ21kkdy2ddjmHEW/aEo/hCviNdEwqV
+         hmoA==
+X-Gm-Message-State: AOJu0YxWvRvo4CvPrSgHqhKIjFLzAzAbIhuljoNAmsdnqgg5J0neysMx
+        uk81nKPuTeli33V/w8H2CVLjmw==
+X-Google-Smtp-Source: AGHT+IHBXc3eoMkCGq/zEswMlhcipZ0tI18JVR5M7hVcPjdU8BhR1fVCdVIbUtwBQ1PQs0Gn0mzYPw==
+X-Received: by 2002:adf:fc8a:0:b0:317:70da:abdd with SMTP id g10-20020adffc8a000000b0031770daabddmr3793677wrr.59.1692603725476;
+        Mon, 21 Aug 2023 00:42:05 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id l15-20020a5d674f000000b00317909f9985sm11389092wrw.113.2023.08.21.00.39.21
+        by smtp.gmail.com with ESMTPSA id o15-20020adfeacf000000b003197e3520ddsm11499155wrn.109.2023.08.21.00.42.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 00:39:21 -0700 (PDT)
+        Mon, 21 Aug 2023 00:42:05 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 21 Aug 2023 09:39:14 +0200
-Subject: [PATCH 2/2] cpufreq: qcom-cpufreq-hw: add support for 4 freq
- domains
+Date:   Mon, 21 Aug 2023 09:41:54 +0200
+Subject: [PATCH] scsi: ufs: ufs-qcom: clear qunipro_g4_sel for HW major
+ version > 5
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230821-topic-sm8x50-upstream-cpufreq-4-domains-v1-2-2d4d9fc828d8@linaro.org>
-References: <20230821-topic-sm8x50-upstream-cpufreq-4-domains-v1-0-2d4d9fc828d8@linaro.org>
-In-Reply-To: <20230821-topic-sm8x50-upstream-cpufreq-4-domains-v1-0-2d4d9fc828d8@linaro.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+Message-Id: <20230821-topic-sm8x50-upstream-ufs-major-5-plus-v1-1-c14cce209f21@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAEEV42QC/x3NQQrDIBBA0auEWXfAaKTSq5QuJI7tlBrFiSEQc
+ vdIl2/z/wFClUngMRxQaWPhvHSMtwHmj1/ehBy6QSttlNMjrrnwjJLcbhW2Imsln7BFweS/uaL
+ F8muCE3kfTDTB2Tv0WKkUef+Pnq/zvAAXLcEieAAAAA==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=624;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1036;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=+ViKGeswVL4o2Q9cF3Vy+0/WfvsqhuHVeAFaB7hburQ=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk4xSmJ/FPW3Sd/5m1YXYjUbVaegwRAzN5pk9mZYIj
- dI5sbOSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZOMUpgAKCRB33NvayMhJ0ViIEA
- Czrx3j39jJjBC4e3U2Y+AUtghL6IM7R8X1UcK5QmQe+JvnnXsfiT389xaqFSZWgip8hL8CCZbQmpW1
- qJOVyJ8JwjkM+XMdanrovLXerC61vqWbwbWd4pxo46tG5D5VbucNt4I5o7DjKMJrmksFASqHEsaIfi
- 7uHN5hh1zujEeUoYmv2n0u28hO7cN/dUY+VDguYcO3NYO5PSEY4qe++av4J+WEfi9j9Y+eh0z7nu1L
- ZgEXdxaFIjl0MyasgLGFf+u6o9dik0c0BnkaowhBUAyC3j/R5sLWX+rETpo7o4eXGX13FVuWl8DOgm
- lJ0/wuXUKIIOyS78d0CB+xp3nBnTLa00EfR/ayelrp3DUELuhRKevanpAXQvE3quzVEzGFOvh4NIYD
- mGxA5yk73tBo/c7pko498Dz91YXALFrCfNxwUsxqQ9LlKJUv6v7txcBo6PSMMat5KO0kO3jPuCv9pi
- HcDmHTeIpoIYrqy3rGXq09j9FVHz5yyhI0Pa6rfPzm+8zEEx9lkSFxM4bFQOhPr5tkzsOLAwwcOIHl
- SynEF2FiOoE4HHPLZacnUVXyC09AI2JcumX+WDPJ3yL8zZE6T+KHZy647kok7C0mPmXGt2rAxPQ+bt
- An8ac4VYKINXF4LymDTylQdBqIrhHY9OkmvX2DdfgCNtFQgdkNGWdy+uibNA==
+ bh=DzbUtFSi2ZBAofA9XGfdAYA15y6m4ehnsamRtSjaJsM=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk4xVMlpcGodbajHo7KDS+ZF3W1i73C/2bLeWu85K2
+ /keJkjKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZOMVTAAKCRB33NvayMhJ0dQ+D/
+ 0eyMqdXR1FkDe6JUBcjKt5+vur3Az8r5/3tjjKQnIDUa0X93cxT9C86dXWAjv3cnPXw0fPXxD0ligO
+ RhBvcqxEm5pv9JPRxKq4J7WN5ZBDO7x1IDO/mCpDJ5MzIp1Lhr0gz3QP5Ds+vqN/6NUoOhSNZiEa2u
+ Ez70ViWPm85zxD28jzjXrz1kxmmV3tbTaPEPe4wnc2lvP2T/hz4vECJ34nDloEXzSDVDLlJiYmlnSe
+ MTCwV83J3dy5RF63d0lhJBcnD/zMOQXFdKZs5H/mwWHDRmGpSQPYekyO65IqPYJp5K4gWghrADUzVp
+ iXAsekcfG27S9vPoIyni2uvTYK7YNhvp3iBvrVGu2kM3Ys9YDUCmj2Edqv2Y8xxwLU1fwW80tr9YA0
+ +xGgf3zH3HkDp77mseM5phALDx0HZ6dw9mtI2nVGCkJSXUNWtUOEQIfpRvwkRX/jkx9bEEovVY+Pkf
+ lP5K+4rqpbCnT/Sv+vgTE0InttHiZU0UyrzQuGk8CCxGYGfXayRrgFauJCD0ZbRTAId5rDZ4pCmhJ7
+ 8MtYFgsHZXgot0dWKxwMXbzTetDHuHXgjTpF2R0PyBTERCiODNf34ms0gCWIEsAPY7gXLHTwsa+RBA
+ RgyibehFtG+uSWbDjIoIrxCXwVPQUnr8YngoIsCICMdqedO6XyvRvryYIP+g==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -99,28 +96,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for up to 4 frequency domains as used on new
-platforms.
+The qunipro_g4_sel clear is also needed for new platforms with
+major version > 5, fix the version check to take this in account.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
+ drivers/ufs/host/ufs-qcom.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index f24cf2eddf1e..70b0f21968a0 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -28,7 +28,7 @@
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index f88febb23123..d1149b1c3ed5 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -365,7 +365,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+ 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+ 		   REG_UFS_CFG1);
  
- #define GT_IRQ_STATUS			BIT(2)
+-	if (host->hw_ver.major == 0x05)
++	if (host->hw_ver.major >= 0x05)
+ 		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
  
--#define MAX_FREQ_DOMAINS		3
-+#define MAX_FREQ_DOMAINS		4
- 
- struct qcom_cpufreq_soc_data {
- 	u32 reg_enable;
+ 	/* make sure above configuration is applied before we return */
 
+---
+base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
+change-id: 20230821-topic-sm8x50-upstream-ufs-major-5-plus-4eaad3f3d857
+
+Best regards,
 -- 
-2.34.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
