@@ -2,77 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4DC9783619
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 01:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98BBA783634
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 01:25:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231218AbjHUXIo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 19:08:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39874 "EHLO
+        id S231661AbjHUXZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 19:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbjHUXIn (ORCPT
+        with ESMTP id S229483AbjHUXZg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 19:08:43 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB9C130
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 16:08:42 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-c5ffb6cda23so3952507276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 16:08:42 -0700 (PDT)
+        Mon, 21 Aug 2023 19:25:36 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16BEE10E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 16:25:35 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5008d16cc36so124004e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 16:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692659321; x=1693264121;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KVFos1zKhpGyvr7mNgjAGyFaua6+jrz38A7r/8goRpk=;
-        b=aH4cKQboAlXJMgNHq8TsDZFsjvx3Prqjhn/T67tZoI081cIusVlzMv7l2Cz9TrqBQn
-         lF0ret7V+TX/9yGmtZdZyeIhPA/Lyq8u+7mmVmnsAuUrTNArq0P0Dcgku2CNI4K+65yd
-         1nQjgE41lZT/oa5LWZC7kRq6+XeRBmyTOpI6951UvNys3QA/MuYogMIdZ2zc2Ij5yZ7N
-         p/fZ1dbhrDgtQmaJG1b4uDMWCsMXMHpejdalPRdy8arL7Dfb7QAZx7Fiht2o+3/HgVkx
-         yfWsROCBu6E2ppxtIxEtH9Kwqe7/h3hLX4LmJ0AV7SxwqWwFaW4kDbXo8GUzIgO01eXo
-         qQtA==
+        d=linaro.org; s=google; t=1692660333; x=1693265133;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nbkG+4F3rqmkeQ3RjOKmJpD9paUCq+1HgpfgepEqZns=;
+        b=R/pW/4ELA3FOmAFqqaXb6kwILsnb7nRKdQleT2g7d6TEPpIiV/hUzMJkkkZjy2/EwM
+         RdFORkPgXLAqDlhwcHPYRxML3AwnuolsvB6RJVeMWK239alcdaPlhH30cE+f6A+hLQoT
+         CPWRrZHvnlxgEBq1Y+p2xxuWxwh9Y8NCpFMZrn2wzfLYcsTi9nTVeR1/tcPO4IB6Qjs0
+         ey77Gu2aTipfpe0j5hc/FvwvEOQ5rfgAXn4KAVMgpVS+5vrP8n7gu1LnhbAjvu9kXrkD
+         7tk8RYIniYojC1LKK4omOIxaVZtSo8wFRdAebRswoDhqgT/miX/fGbcTWtSblkcFG6mV
+         hhdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692659321; x=1693264121;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1692660333; x=1693265133;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KVFos1zKhpGyvr7mNgjAGyFaua6+jrz38A7r/8goRpk=;
-        b=BO2T4j05b5+rFZ2WVFX6dZq94ctPRluY04Ud6LPU6If5OJ9F6cl7rTRtNOv8iUdrm3
-         stREB1Z+8bsSnae9mO3TD0WNtr7fhuK7Kts27OHGPvKlvTanSZkE4juE68+iMvZSXzNk
-         LjFreYK3IVA1okf/gTXDDCCALXIChZrPV7MncgqtPkgUuRgVMLNXk9Mwke+4UW+M7cE/
-         2HZLUL8rWKjvqHVMAKNjXqdci4vepCE8kHE02uFgHfk37tDA0Ap00y8DivyHjKWIpN4A
-         UR1rtuFUhFKPx9irWlZG7Xpajbp6IlwrmCH5sn4G/6PSRndH4KvXNhtaH7QbOiJ3GU8B
-         pzKA==
-X-Gm-Message-State: AOJu0YxTpQ0k0RyCQXZU103mBzqyuj324fETR672wg32c82eLhNjAsMU
-        mFmyWo0ftvg9vqIMPhS6HFS9d1vAPNs8QTQy6FGYjg==
-X-Google-Smtp-Source: AGHT+IEqSKPaIKLJFwa7oPxfI3dlhhDDatR/k57t+eVMFLpLIhwZRGl5FVmu96YSOZH3lHdZWtQYRAdxPT3bm+k47lc=
-X-Received: by 2002:a25:ef4c:0:b0:d1f:6886:854a with SMTP id
- w12-20020a25ef4c000000b00d1f6886854amr7867170ybm.9.1692659321493; Mon, 21 Aug
- 2023 16:08:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230728013148.1720978-1-liaochang1@huawei.com>
- <20230728013148.1720978-6-liaochang1@huawei.com> <e87b35f9-f585-4a3f-bd31-9ebeba52f66b@linaro.org>
- <c23be2ce-052d-4320-220e-ed471769b09b@oracle.com>
-In-Reply-To: <c23be2ce-052d-4320-220e-ed471769b09b@oracle.com>
+        bh=nbkG+4F3rqmkeQ3RjOKmJpD9paUCq+1HgpfgepEqZns=;
+        b=hc7JjXfEO4ff+hALI1HzZqi9acZyP0CAEMhdVETBamajIG9PhnBGpOeYRXrozIDYEr
+         HAusOWvws1N13Pc8NNhWslouxIPqA4mYkcs/WDnIYVDmWDiIMYgbzeSWd/vJ+0KHPhnH
+         5MyBhhltr8OUprPVixdTqDHEp6hBmoWYdoMVH/bXGfpBVdDFyc+z8oKdS0IjFpse25A8
+         QaW35WfmNSj+hOqiVm/y+EgBTlRSrcnZcmfYNchxjjppEKB39tb+6fvCrnnzOJpuXaBd
+         fOn7pJMQ7RqIBouMmR3c+a1hid/8xDuJPZrlZJIm29KaH61NgqfHnMWII7GjYocWUv5E
+         uBfg==
+X-Gm-Message-State: AOJu0YyD6ubCuYbI6QTZzcbGh0V1Dz2GeYPD9rH60DwWTlQPTdgRx3NM
+        E5gdf+7spwnlkmryGlbX9RKR1mCzktChpw2psE4=
+X-Google-Smtp-Source: AGHT+IEKzNQqEM7QhoStdbjbAX2Rd8YVzEXkpwB2kD8xFAgHiT4dI3V5e190LHnmLNXHfly4x+CE1A==
+X-Received: by 2002:ac2:4f15:0:b0:4fb:911b:4e19 with SMTP id k21-20020ac24f15000000b004fb911b4e19mr6284102lfr.35.1692660333306;
+        Mon, 21 Aug 2023 16:25:33 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id t3-20020ac25483000000b004fcdf8b8ab4sm1957148lfk.23.2023.08.21.16.25.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Aug 2023 16:25:32 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 22 Aug 2023 02:08:30 +0300
-Message-ID: <CAA8EJprTOjbOy7N5+8NiJaNNhK+_btdUUFcpHKPkMuCZj5umMA@mail.gmail.com>
-Subject: Re: [PATCH 5/9] i2c: qcom-cci: Use dev_err_probe in probe function
-To:     Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc:     Liao Chang <liaochang1@huawei.com>, andi.shyti@kernel.org,
-        florian.fainelli@broadcom.com, rjui@broadcom.com,
-        sbranden@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
-        yangyicong@hisilicon.com, aisheng.dong@nxp.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, kblaiech@nvidia.com,
-        asmaa@nvidia.com, loic.poulain@linaro.org, rfoss@kernel.org,
-        ardb@kernel.org, gcherian@marvell.com, linux-i2c@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Dan Carpenter <dan.carpenter@linaro.org>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2] dt-bindings: mfd: qcom-spmi-pmic: add pm8450 entry
+Date:   Tue, 22 Aug 2023 02:25:32 +0300
+Message-Id: <20230821232532.3110607-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,91 +74,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 21 Aug 2023 at 23:39, Harshit Mogalapalli
-<harshit.m.mogalapalli@oracle.com> wrote:
->
-> Hi,
->
-> On 18/08/23 4:36 pm, Dmitry Baryshkov wrote:
-> > On 28/07/2023 04:31, Liao Chang wrote:
-> >> Use the dev_err_probe function instead of dev_err in the probe function
-> >> so that the printed messge includes the return value and also handles
-> >> -EPROBE_DEFER nicely.
-> >>
-> >> Signed-off-by: Liao Chang <liaochang1@huawei.com>
-> >> ---
-> >>   drivers/i2c/busses/i2c-qcom-cci.c | 6 ++----
-> >>   1 file changed, 2 insertions(+), 4 deletions(-)
-> >
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> >>
-> >> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c
-> >> b/drivers/i2c/busses/i2c-qcom-cci.c
-> >> index 622dc14add9d..cf13abec05f1 100644
-> >> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> >> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> >> @@ -588,10 +588,8 @@ static int cci_probe(struct platform_device *pdev)
-> >>       /* Clocks */
-> >>       ret = devm_clk_bulk_get_all(dev, &cci->clocks);
-> >> -    if (ret < 1) {
-> >> -        dev_err(dev, "failed to get clocks %d\n", ret);
-> >> -        return ret;
-> >> -    }
-> >> +    if (ret < 1)
-> >> +        return dev_err_probe(dev, ret, "failed to get clocks\n");
->
-> Description:
-> -----------
->   * devm_clk_bulk_get_all - managed get multiple clk consumers
->   * @dev: device for clock "consumer"
->   * @clks: pointer to the clk_bulk_data table of consumer
->   *
->   * Returns a positive value for the number of clocks obtained while the
->   * clock references are stored in the clk_bulk_data table in @clks field.
->   * Returns 0 if there're none and a negative value if something failed.
-> -----------
->
-> When ret = 0;
->
-> "zero" is passed to dev_err_probe and we are returning success(zero)
-> from probe function.
->
-> Based on other instances of devm_clk_bulk_get_all() API, can we fix it
-> by changing condition like this?
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c
-> b/drivers/i2c/busses/i2c-qcom-cci.c
-> index cf13abec05f1..cea6f70d2b8d 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -588,7 +588,7 @@ static int cci_probe(struct platform_device *pdev)
->          /* Clocks */
->
->          ret = devm_clk_bulk_get_all(dev, &cci->clocks);
-> -       if (ret < 1)
-> +       if (ret < 0)
->                  return dev_err_probe(dev, ret, "failed to get clocks\n");
+Add bindings for the PM8450 PMIC (qcom,pm8450). No driver changes are
+necessary, since the PMIC is handled by the generic qcom,spmi-pmic
+entry.
 
-Only if it succeeded with something like:
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
-if (!ret)
-    return dev_err_probe(dev, -EINVAL, "Not enough clocks in DT\n");
+Changes since v2:
+ - rebased on top of linux-next to resolve conflicts
 
-But it is a separate topic and should be a part of the separate patch.
+---
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
->          cci->nclocks = ret;
->
->
-> Thanks,
-> Harshit
->
-> >>       cci->nclocks = ret;
-> >>       /* Retrieve CCI clock rate */
-> >
-
-
-
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index 9f03436b1cdc..debed393fa8c 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -58,6 +58,7 @@ properties:
+           - qcom,pm8350
+           - qcom,pm8350b
+           - qcom,pm8350c
++          - qcom,pm8450
+           - qcom,pm8550
+           - qcom,pm8550b
+           - qcom,pm8550ve
 -- 
-With best wishes
-Dmitry
+2.39.2
+
