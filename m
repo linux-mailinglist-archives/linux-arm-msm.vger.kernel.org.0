@@ -2,132 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C592A782403
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 08:51:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4A85782472
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 09:29:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233209AbjHUGvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 02:51:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49772 "EHLO
+        id S231704AbjHUH33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 03:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjHUGvS (ORCPT
+        with ESMTP id S230070AbjHUH33 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 02:51:18 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28DCAB8;
-        Sun, 20 Aug 2023 23:51:12 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37L5wNdu009422;
-        Mon, 21 Aug 2023 06:51:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=di6Tt1gnzwfMZ8GCMunHUWzH+NvbvNGfF66QYbkwU3k=;
- b=U2BIRXPeAQ6Jz5AmjBuWYN6VGHSvYggkdveM4ogYAElgQi6n5bi6nOsm53nRynCz6/DV
- O8w+m3QqO/ocTnarNG53FYJ2hvbfL6TtOChvCQXDlCbD85COtUepwaMSBHG0HrAZb1I9
- EihAx7miYQczfVWeC4fm+l8FNu5qSEfmh3Z4wyvAKpV+XJ30LCr3QBlS7EgyCbH7kSq1
- toZGOG78m/e+avz8BOD3vOyVVBYqQ5uzmCYVeHuQwoy6wGWrpAFF92kg1F7a3+eIGW4w
- zBwFmR9NAZbpNHF15dSospiyIdY4JcJ4iZSVBeJ0p55RZJHcyJuwoXcNzpBYGHu16oAh eg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sjken36r3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Aug 2023 06:50:59 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37L6oxQJ011999
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Aug 2023 06:50:59 GMT
-Received: from hu-omprsing-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sun, 20 Aug 2023 23:50:56 -0700
-From:   Om Prakash Singh <quic_omprsing@quicinc.com>
-To:     <ebiggers@kernel.org>, <andersson@kernel.org>
-CC:     <linux-mmc@vger.kernel.org>, <satyaprateek2357@gmail.com>,
-        <ulf.hansson@linaro.org>, <agross@kernel.org>,
-        <adrian.hunter@intel.com>, <quic_omprsing@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH] mmc: core: crypto: Add MMC_CAP2_CRYPTO_RETAIN_KEY
-Date:   Mon, 21 Aug 2023 12:20:37 +0530
-Message-ID: <20230821065037.1146977-1-quic_omprsing@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Mon, 21 Aug 2023 03:29:29 -0400
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::225])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00AB8B5;
+        Mon, 21 Aug 2023 00:29:26 -0700 (PDT)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D063E1C0005;
+        Mon, 21 Aug 2023 07:29:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1692602964;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=VB0zz0K+Kec15Zr+s4clFuGZtwWuG8rXdL+bGDFcguA=;
+        b=aHkuW+sKsyf1aKqa6GIJT2MRUoDZ+MJUvnVTvgwtz74Cr+OXRvyD6L5F6lni5BksaRmE6x
+        enxAhCul+Co32CuTqnyt5oqEnL1JtDNWbYxpR52uB74RjxUtQ9mpYgZpwxXGU6hYivIVM2
+        Z+Va8W29a8jdJeq+L55tZuk5OvWrfp/sl2il1gYML1FC5SLyiF+52m3P6rXYeL+LeTiTe0
+        7XU9iWcfswS2GiXj45Ke6RwvpwJr0gwgnxDF6V4ajR6e/S6KfABOClQH/I7YboYau7A7EW
+        HmVhHCdJOYyKM6vyAZ8XU7qFIMBN4tHQY5lGysZ+JuK91MiGmt8F2E95vlVVGQ==
+Date:   Mon, 21 Aug 2023 09:29:23 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH] mtd: rawnand: qcom: Fix build issue
+Message-ID: <20230821092923.7043c90f@xps-13>
+In-Reply-To: <20230821053513.13728-1-quic_mdalam@quicinc.com>
+References: <20230821053513.13728-1-quic_mdalam@quicinc.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: elue6zeWhpREqPGcOEKelOtWL601IrKp
-X-Proofpoint-GUID: elue6zeWhpREqPGcOEKelOtWL601IrKp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-20_15,2023-08-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1011 spamscore=0 adultscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308210063
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new capability MMC_CAP2_CRYPTO_RETAIN_KEY for mmc host that
-support inline crypto key retention and doesn't need reinitialization
-of all keys after mmc host has reinitialized.
+Hello,
 
-Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
----
- drivers/mmc/core/crypto.c    | 3 ++-
- drivers/mmc/host/sdhci-msm.c | 1 +
- include/linux/mmc/host.h     | 2 ++
- 3 files changed, 5 insertions(+), 1 deletion(-)
+quic_mdalam@quicinc.com wrote on Mon, 21 Aug 2023 11:05:13 +0530:
 
-diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
-index fec4fbf16a5b..f8ce7c2295f6 100644
---- a/drivers/mmc/core/crypto.c
-+++ b/drivers/mmc/core/crypto.c
-@@ -15,7 +15,8 @@
- void mmc_crypto_set_initial_state(struct mmc_host *host)
- {
- 	/* Reset might clear all keys, so reprogram all the keys. */
--	if (host->caps2 & MMC_CAP2_CRYPTO)
-+	if ((host->caps2 & MMC_CAP2_CRYPTO) &&
-+	    !(host->caps2 & MMC_CAP2_CRYPTO_RETAIN_KEY))
- 		blk_crypto_reprogram_all_keys(&host->crypto_profile);
- }
- 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 1c935b5bafe1..cfc2328f90ed 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1828,6 +1828,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
- 
- 	msm_host->ice = ice;
- 	mmc->caps2 |= MMC_CAP2_CRYPTO;
-+	mmc->caps2 |= MMC_CAP2_CRYPTO_RETAIN_KEY;
- 
- 	return 0;
- }
-diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-index 461d1543893b..74c69415746d 100644
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -417,8 +417,10 @@ struct mmc_host {
- #define MMC_CAP2_MERGE_CAPABLE	(1 << 26)	/* Host can merge a segment over the segment size */
- #ifdef CONFIG_MMC_CRYPTO
- #define MMC_CAP2_CRYPTO		(1 << 27)	/* Host supports inline encryption */
-+#define MMC_CAP2_CRYPTO_RETAIN_KEY (1 << 28)	/* Host doesn't need inline encryption key reinitialization */
- #else
- #define MMC_CAP2_CRYPTO		0
-+#define MMC_CAP2_CRYPTO_RETAIN_KEY 0
- #endif
- #define MMC_CAP2_ALT_GPT_TEGRA	(1 << 28)	/* Host with eMMC that has GPT entry at a non-standard location */
- 
--- 
-2.25.1
+> Fix the build issue, after removing unused variable nandc
+> in qcom_parse_instructions() function.
+>=20
+> Fixes: 0bb2bd18efe8 ("mtd: rawnand: qcom: Add read/read_start ops in exec=
+_op path")
 
+I will squash this fix.
+
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+>  drivers/mtd/nand/raw/qcom_nandc.c | 1 -
+>  1 file changed, 1 deletion(-)
+>=20
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
+m_nandc.c
+> index 370a779610e2..6aff45f32260 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -2593,7 +2593,6 @@ static int qcom_parse_instructions(struct nand_chip=
+ *chip,
+>  				    const struct nand_subop *subop,
+>  				    struct qcom_op *q_op)
+>  {
+> -	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
+>  	const struct nand_op_instr *instr =3D NULL;
+>  	unsigned int op_id;
+>  	int i, ret;
+
+
+Thanks,
+Miqu=C3=A8l
