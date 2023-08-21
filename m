@@ -2,139 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 743C478237F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 08:16:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C592A782403
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Aug 2023 08:51:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233343AbjHUGQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 02:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56564 "EHLO
+        id S233209AbjHUGvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 02:51:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229746AbjHUGQz (ORCPT
+        with ESMTP id S229721AbjHUGvS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 02:16:55 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE929A7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 23:16:53 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-991c786369cso387787466b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Aug 2023 23:16:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692598612; x=1693203412;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v2DHyxVTCML6SgQFmf5PrsWXwq96mK2/2B8sy/Z+uk8=;
-        b=C2TLrPHZmARwktMNeniUL0KRM2S0lGuotVl5NAtWMyV2lPtA9ulYwCm28+Lxg6mW7t
-         tc6Xh4ksk/vbqObq6ch/Ati18gnFFMzH14RIALu5McnjYOL3qjUG7c47tp4baaNcT4BL
-         20Zd0s2s1Z93Dcc68qNYv4RppsTuk09AO95KsqlZlgE8tJlvaFZ7KXchNUznWT0Sr75F
-         eA2IuDL7SIfGtYAM3bcWEFF1h5jaN0f1667Dz9iZs6EabBS/DKe+aaLd/Z0BJgkmG4mY
-         g4s+pe9fn+iAwCU8Y0FEBxn2DvK6lYUMowp+k4luRedN2Kq9xhi+yCW2wpzI7K+GlMvG
-         w2dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692598612; x=1693203412;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v2DHyxVTCML6SgQFmf5PrsWXwq96mK2/2B8sy/Z+uk8=;
-        b=RoT+VsMJMvJv/lVwYjdh3Ormz31BljDKzcVS9EEwVA8CsIM/GJ9IEacC437ozDjpYb
-         jTpavQ7y/hx1BmyAvmRcOC13JX/B0pLh1C2Bv1OHa3vXgYflD6Park2+X/KJicQhWmBS
-         +yuP2q9bXmY4VxiUyedZq+aoFk0VxCTyN8nKVY/rc6yfeCfoanPN5o0xURuaaRdUpCKM
-         5jzDdL10W4S5TaxTfIPq+UL45I5RP9MEZLj320VlnomTBJWEl1wQQNQtDb93197Ef8q8
-         +fDsIBaywApFsQ0vJLO7CsL6GVOwDUSqXXbvl7ot9SbSMXHVon9IbDWhKACgYglIerLx
-         dQOQ==
-X-Gm-Message-State: AOJu0YxS8NRRh4MhR66hY/BWca/ztvkaLTbk97mO3p1+gqJ2I+yCZyTr
-        Wl4RmkQ524AEK09nCVSaPv0qfA==
-X-Google-Smtp-Source: AGHT+IEOgpV7Sr7hyl2V7Utgz/9q0+j+gDRYIgrp8qYMaflN3noIyg4RZtchBkGl08PCwFfZja/qyA==
-X-Received: by 2002:a17:906:3caa:b0:99d:f7f3:5218 with SMTP id b10-20020a1709063caa00b0099df7f35218mr4050827ejh.25.1692598612112;
-        Sun, 20 Aug 2023 23:16:52 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id um6-20020a170906cf8600b0098d2f703408sm5966631ejb.118.2023.08.20.23.16.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Aug 2023 23:16:51 -0700 (PDT)
-Message-ID: <09b4909d-686d-3e3d-f4c5-12e5cba3dd19@linaro.org>
-Date:   Mon, 21 Aug 2023 08:16:50 +0200
+        Mon, 21 Aug 2023 02:51:18 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28DCAB8;
+        Sun, 20 Aug 2023 23:51:12 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37L5wNdu009422;
+        Mon, 21 Aug 2023 06:51:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=di6Tt1gnzwfMZ8GCMunHUWzH+NvbvNGfF66QYbkwU3k=;
+ b=U2BIRXPeAQ6Jz5AmjBuWYN6VGHSvYggkdveM4ogYAElgQi6n5bi6nOsm53nRynCz6/DV
+ O8w+m3QqO/ocTnarNG53FYJ2hvbfL6TtOChvCQXDlCbD85COtUepwaMSBHG0HrAZb1I9
+ EihAx7miYQczfVWeC4fm+l8FNu5qSEfmh3Z4wyvAKpV+XJ30LCr3QBlS7EgyCbH7kSq1
+ toZGOG78m/e+avz8BOD3vOyVVBYqQ5uzmCYVeHuQwoy6wGWrpAFF92kg1F7a3+eIGW4w
+ zBwFmR9NAZbpNHF15dSospiyIdY4JcJ4iZSVBeJ0p55RZJHcyJuwoXcNzpBYGHu16oAh eg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sjken36r3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Aug 2023 06:50:59 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37L6oxQJ011999
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Aug 2023 06:50:59 GMT
+Received: from hu-omprsing-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Sun, 20 Aug 2023 23:50:56 -0700
+From:   Om Prakash Singh <quic_omprsing@quicinc.com>
+To:     <ebiggers@kernel.org>, <andersson@kernel.org>
+CC:     <linux-mmc@vger.kernel.org>, <satyaprateek2357@gmail.com>,
+        <ulf.hansson@linaro.org>, <agross@kernel.org>,
+        <adrian.hunter@intel.com>, <quic_omprsing@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH] mmc: core: crypto: Add MMC_CAP2_CRYPTO_RETAIN_KEY
+Date:   Mon, 21 Aug 2023 12:20:37 +0530
+Message-ID: <20230821065037.1146977-1-quic_omprsing@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v2 01/16] dt-bindings: phy: migrate QMP USB PHY bindings
- to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
-References: <20230821002535.585660-1-dmitry.baryshkov@linaro.org>
- <20230821002535.585660-2-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230821002535.585660-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: elue6zeWhpREqPGcOEKelOtWL601IrKp
+X-Proofpoint-GUID: elue6zeWhpREqPGcOEKelOtWL601IrKp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-20_15,2023-08-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1011 spamscore=0 adultscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308210063
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/08/2023 02:25, Dmitry Baryshkov wrote:
-> Migrate legacy bindings (described in qcom,msm8996-qmp-usb3-phy.yaml)
-> to qcom,sc8280xp-qmp-usb3-uni-phy.yaml. This removes a need to declare
-> the child PHY node or split resource regions.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Add new capability MMC_CAP2_CRYPTO_RETAIN_KEY for mmc host that
+support inline crypto key retention and doesn't need reinitialization
+of all keys after mmc host has reinitialized.
 
+Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+---
+ drivers/mmc/core/crypto.c    | 3 ++-
+ drivers/mmc/host/sdhci-msm.c | 1 +
+ include/linux/mmc/host.h     | 2 ++
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> index f99fbbcd68fb..60cbcf3c19b3 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> @@ -16,20 +16,33 @@ description:
->  properties:
->    compatible:
->      enum:
-> +      - qcom,ipq6018-qmp-usb3-phy
-> +      - qcom,ipq8074-qmp-usb3-phy
->        - qcom,ipq9574-qmp-usb3-phy
-> +      - qcom,msm8996-qmp-usb3-phy
-> +      - qcom,msm8998-qmp-usb3-phy
->        - qcom,qcm2290-qmp-usb3-phy
->        - qcom,sa8775p-qmp-usb3-uni-phy
->        - qcom,sc8280xp-qmp-usb3-uni-phy
-> +      - qcom,sdm845-qmp-usb3-uni-phy
-> +      - qcom,sdx55-qmp-usb3-uni-phy
-> +      - qcom,sdx65-qmp-usb3-uni-phy
->        - qcom,sm6115-qmp-usb3-phy
-> +      - qcom,sm8150-qmp-usb3-uni-phy
-> +      - qcom,sm8250-qmp-usb3-uni-phy
-> +      - qcom,sm8350-qmp-usb3-uni-phy
-> +
->  
-
-Just one blank line
-
->    reg:
->      maxItems: 1
->  
->    clocks:
-> -    maxItems: 4
-> +    minItems: 4
-> +    maxItems: 5
-
-The clocks become now variable, so you need to constrain the number in
-allOf:if:then per each variant. At least one if: cases lack such
-constrains (qcom,ipq9574-qmp-usb3-phy, if I am looking at correct revision)
-
-
-Best regards,
-Krzysztof
+diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
+index fec4fbf16a5b..f8ce7c2295f6 100644
+--- a/drivers/mmc/core/crypto.c
++++ b/drivers/mmc/core/crypto.c
+@@ -15,7 +15,8 @@
+ void mmc_crypto_set_initial_state(struct mmc_host *host)
+ {
+ 	/* Reset might clear all keys, so reprogram all the keys. */
+-	if (host->caps2 & MMC_CAP2_CRYPTO)
++	if ((host->caps2 & MMC_CAP2_CRYPTO) &&
++	    !(host->caps2 & MMC_CAP2_CRYPTO_RETAIN_KEY))
+ 		blk_crypto_reprogram_all_keys(&host->crypto_profile);
+ }
+ 
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 1c935b5bafe1..cfc2328f90ed 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1828,6 +1828,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+ 
+ 	msm_host->ice = ice;
+ 	mmc->caps2 |= MMC_CAP2_CRYPTO;
++	mmc->caps2 |= MMC_CAP2_CRYPTO_RETAIN_KEY;
+ 
+ 	return 0;
+ }
+diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+index 461d1543893b..74c69415746d 100644
+--- a/include/linux/mmc/host.h
++++ b/include/linux/mmc/host.h
+@@ -417,8 +417,10 @@ struct mmc_host {
+ #define MMC_CAP2_MERGE_CAPABLE	(1 << 26)	/* Host can merge a segment over the segment size */
+ #ifdef CONFIG_MMC_CRYPTO
+ #define MMC_CAP2_CRYPTO		(1 << 27)	/* Host supports inline encryption */
++#define MMC_CAP2_CRYPTO_RETAIN_KEY (1 << 28)	/* Host doesn't need inline encryption key reinitialization */
+ #else
+ #define MMC_CAP2_CRYPTO		0
++#define MMC_CAP2_CRYPTO_RETAIN_KEY 0
+ #endif
+ #define MMC_CAP2_ALT_GPT_TEGRA	(1 << 28)	/* Host with eMMC that has GPT entry at a non-standard location */
+ 
+-- 
+2.25.1
 
