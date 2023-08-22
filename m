@@ -2,149 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82F737843CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 16:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BC507843F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 16:24:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236060AbjHVOTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 10:19:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59868 "EHLO
+        id S235427AbjHVOYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 10:24:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235914AbjHVOTN (ORCPT
+        with ESMTP id S235224AbjHVOYg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 10:19:13 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757FFCCB;
-        Tue, 22 Aug 2023 07:19:11 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 0BA5F899;
-        Tue, 22 Aug 2023 16:17:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1692713873;
-        bh=eD+izc8bUwwz2t3KEjxTSgEH3H8sNfBmfB49EaZJhI4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fzQYYjCGwoZc5rrGoqlGmNRMO1N2fR8QKjJLZifbtjn/Tjz8gCxqRhldk7tChUqdK
-         4SDNbfxoAZruiTdT5EQ7KZJ1V4QFdRFjtGQRPBWrCFd9uRkaXEfjPohgb1+4xMEY+g
-         IfbEtUmVOcXl+anMb9m+znZpREosOtYcv2UnX55I=
-Date:   Tue, 22 Aug 2023 17:19:18 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Tue, 22 Aug 2023 10:24:36 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B59D71BE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 07:24:34 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ff8a1746e0so6960669e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 07:24:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692714273; x=1693319073;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2SIlnYFerITavvyBuBn7niOt47EHR9cCOd4x+UDBwnY=;
+        b=uDpjnrI4dlnFBUNK/zyDg4AUz3nM4E7mWfxyVpDDSu2rWU+tdXzReb7Z67xq3+G1NN
+         b4MSgmTSDz/hK+06j9mMu8Qqw7tiYFCxGHaM9HzmYWVwp9n4tgV+x04eVt+SFJMZpfjd
+         XbgT7FKNi7DQrIcXEmg3xTZn1Y1hiK/+8vB/Dfdtud7z6VW6FFM3A8Nq96zOgu5zZPzS
+         dVmdEiPoYdDrY89ejiA9bwWBtGjf7q2Wz4BhXffwKYXyKnWA50jyxFyyTExvtheB0ndE
+         n9OaLuM1vhe+0S4V30zMXrRz0K+98X8JGi0NBNSV64AaCboQokaJPcb8ANkah9QWfrcG
+         QzRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692714273; x=1693319073;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2SIlnYFerITavvyBuBn7niOt47EHR9cCOd4x+UDBwnY=;
+        b=OesLeBgVBejaVAQM5+XjlVJJvh7PN4V0HN76IcwP/ON5C3qum52kmFnjWah/1okkiN
+         65n5QzSqUpVqoMnhHzP+ClzxlKhsttQzEVGgnuPITD0ZkYJXXKYUZo5SbGYCuSMhFf/i
+         truEkf7NTq3sqEresG+8JiAOXAXgfXn9v2C4sZxfYF6MA6exQyKy7E/01+nVECpM5es7
+         ryasfP0M0QyigmJw5N8fu1nCpv8SH5bexCdsg8q54Pqkud67Y5KPZyVu0uGJ93yQfNab
+         L4s+rATCOtYsei7Wzp3Mo2T24RGiMI9lKGI+2Dm1NTPa+ZIzNQV9+j4ThClnV95IxFAm
+         eGwQ==
+X-Gm-Message-State: AOJu0Yz6cCWTO7brzUXnVMVIkQ6n3MsCrnK6jwafJz6ciYKNKzKKFVpK
+        lvMxMNX28zUlTg/E2/rJsC/fFA==
+X-Google-Smtp-Source: AGHT+IHBYGhadBk8YEwfcGL3lgMdmOMhR2OIBxXzTtKoCD5QgWXldjnpBnYG7zLOhBYIaiM9RX43qQ==
+X-Received: by 2002:a05:6512:2208:b0:4ff:74e2:4268 with SMTP id h8-20020a056512220800b004ff74e24268mr8638455lfu.56.1692714272798;
+        Tue, 22 Aug 2023 07:24:32 -0700 (PDT)
+Received: from [192.168.1.101] (abyk189.neoplus.adsl.tpnet.pl. [83.9.30.189])
+        by smtp.gmail.com with ESMTPSA id b11-20020ac247eb000000b004fddb0eb961sm2241255lfp.18.2023.08.22.07.24.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 07:24:32 -0700 (PDT)
+Message-ID: <fc805cf2-e07e-42e5-b872-ac19fafca3b8@linaro.org>
+Date:   Tue, 22 Aug 2023 16:24:31 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dt-bindings: regulator: qcom,rpmh-regulator: allow i,
+ j, l, m & n as RPMh resource name suffix
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 0/3] drm: simplify support for transparent DRM bridges
-Message-ID: <20230822141918.GB14396@pendragon.ideasonboard.com>
-References: <20230817145516.5924-1-dmitry.baryshkov@linaro.org>
- <20230822141735.GA14396@pendragon.ideasonboard.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230822141735.GA14396@pendragon.ideasonboard.com>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-v2-1-136b315085a4@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-v2-1-136b315085a4@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 22, 2023 at 05:17:37PM +0300, Laurent Pinchart wrote:
-> Hi Dmitry,
+On 22.08.2023 12:03, Neil Armstrong wrote:
+> Add "i", "j", "l", "m" and "n" to the allowed subffix list as they can be
+> used as RPMh resource name suffixes on new platforms.
 > 
-> Thank you for the patches.
-> 
-> On Thu, Aug 17, 2023 at 05:55:13PM +0300, Dmitry Baryshkov wrote:
-> > Supporting DP/USB-C can result in a chain of several transparent
-> > bridges (PHY, redrivers, mux, etc). This results in drivers having
-> > similar boilerplate code for such bridges.
-> 
-> What do you mean by transparent bridge here ? Bridges are a DRM concept,
-> and as far as I can tell, a PHY isn't a bridge. Why does it need to be
-> handled as one, especially if it's completely transparent ?
-> 
-> > Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
-> > bridge can either be probed from the bridge->attach callback, when it is
-> > too late to return -EPROBE_DEFER, or from the probe() callback, when the
-> > next bridge might not yet be available, because it depends on the
-> > resources provided by the probing device.
-> 
-> Can't device links help avoiding defer probing in those cases ?
-> 
-> > Last, but not least, this results in the the internal knowledge of DRM
-> > subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
-> 
-> Why so ? The PHY subsystem should provide a PHY, without considering
-> what subsystem it will be used by. This patch series seems to me to
-> actually create this DRM dependency in other subsystems,
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> Changes in v2:
+> - Add m & n as konriad reported, confirmed used on sm8550-qrd
+> - Also add l since it's also an used suffix on sm8550-qrd
+> - Link to v1: https://lore.kernel.org/r/20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-v1-1-23fda17f81f7@linaro.org
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-I was wrong on this one, there are indeed existing drm_bridge instances
-in drivers/usb/ and drivers/phy/. That's certainly not nice. Why do we
-even need drm_bridge there, why can't the PHYs be acquired by their
-consumers in DRM (and anywhere else) using the PHY API ?
-
-> which I don't
-> think is a very good idea. Resources should be registered in their own
-> subsystem with the appropriate API, not in a way that is tied to a
-> particular consumer.
-> 
-> > To solve all these issues, define a separate DRM helper, which creates
-> > separate aux device just for the bridge. During probe such aux device
-> > doesn't result in the EPROBE_DEFER loops. Instead it allows the device
-> > drivers to probe properly, according to the actual resource
-> > dependencies. The bridge auxdevs are then probed when the next bridge
-> > becomes available, sparing drivers from drm_bridge_attach() returning
-> > -EPROBE_DEFER.
-> 
-> I'm not thrilled :-( Let's discuss the questions above first.
-> 
-> > Proposed merge strategy: immutable branch with the drm commit, which is
-> > then merged into PHY and USB subsystems together with the corresponding
-> > patch.
-> > 
-> > Changes since v3:
-> >  - Moved bridge driver to gpu/drm/bridge (Neil Armstrong)
-> >  - Renamed it to aux-bridge (since there is already a simple_bridge driver)
-> >  - Made CONFIG_OF mandatory for this driver (Neil Armstrong)
-> >  - Added missing kfree and ida_free (Dan Carpenter)
-> > 
-> > Changes since v2:
-> >  - ifdef'ed bridge->of_node access (LKP)
-> > 
-> > Changes since v1:
-> >  - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
-> > 
-> > Dmitry Baryshkov (3):
-> >   drm/bridge: add transparent bridge helper
-> >   phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
-> >   usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
-> > 
-> >  drivers/gpu/drm/bridge/Kconfig            |   9 ++
-> >  drivers/gpu/drm/bridge/Makefile           |   1 +
-> >  drivers/gpu/drm/bridge/aux-bridge.c       | 132 ++++++++++++++++++++++
-> >  drivers/phy/qualcomm/Kconfig              |   2 +-
-> >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c |  44 +-------
-> >  drivers/usb/typec/mux/Kconfig             |   2 +-
-> >  drivers/usb/typec/mux/nb7vpq904m.c        |  44 +-------
-> >  include/drm/bridge/aux-bridge.h           |  19 ++++
-> >  8 files changed, 167 insertions(+), 86 deletions(-)
-> >  create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
-> >  create mode 100644 include/drm/bridge/aux-bridge.h
-
--- 
-Regards,
-
-Laurent Pinchart
+Konrad
