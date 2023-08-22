@@ -2,99 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BD2F784536
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:15:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C295D784587
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:29:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236690AbjHVPPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 11:15:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33198 "EHLO
+        id S237112AbjHVP30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 11:29:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235426AbjHVPPC (ORCPT
+        with ESMTP id S237117AbjHVP3Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 11:15:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 510C9CD1;
-        Tue, 22 Aug 2023 08:15:01 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MESt50032613;
-        Tue, 22 Aug 2023 15:14:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DCzL2rOf3ZWAieTvicXD/r/QjZ/UbYLZSUsJnEGj1nM=;
- b=i5ojJ0U9dTKhK3sIHeAzsOaOUxCxqb8LDIHBPgaVQgyNanFRBRBcx8K+9Ky9jLZAWXEb
- SjtHjIvWTQFckep3bI982nKCf6MNnD7n/do/5C791cjcQ248yL3dhkznVy8qUUgdjbYy
- WRT4hVr2J7QwvnDxcUgpEws08/RhUdKxx744fE0LwVbz7U/tShpAYv2mqh3MZCRWf/Pf
- AXnX+iOccciZSBWk39BNJOWZaEWXppwvijX/HbJcdIPS29BbNoBB0kr5GDtqVViZjbeH
- WlV1bXg8HX9vSmUG50cWJiKuG1XuqQRZ0A1HQLXQzh/fT8DSNMOoNxK58lvMnkjz0uTI Pw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sm6uuk9av-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 15:14:55 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MFEs2D004229
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 15:14:54 GMT
-Received: from [10.48.244.52] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 22 Aug
- 2023 08:14:53 -0700
-Message-ID: <c45b35cd-3906-442c-b99e-a6c06a0c5994@quicinc.com>
-Date:   Tue, 22 Aug 2023 08:14:51 -0700
+        Tue, 22 Aug 2023 11:29:25 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454EE10CE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 08:29:00 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-99c1f6f3884so601373566b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 08:29:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692718138; x=1693322938;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=riCUTte2KwgQTf0uug7M8nFjfmUWA0ZM7Rw0YBzTJ94=;
+        b=v4O8cGKSnt2n+DNt9sASR+Hx6cTgwCB36bVGmHRtK9MqxG15rhCxKFq/V7hWigYvrs
+         lKkTkSnetHB/St5a4CUQ9GQZS4XE6xZEgHXXBOBFmoXO+OZ/VWkrXxpzDeS7+BlP/Msc
+         tiBwdsbl4rtOHa3bPgJT/JNa/ydLkpuFoM/DUsX2FXr1xEknj701C4+iMt5Yx2TRjl/s
+         oXANLd3ywPqkwGeTjARhhHDCmII+t+cyu7ynkkkNqNrnrr/jCZUH76Sgl6uUlETOBkqF
+         A+ZbN7JamJlaCA8kV9huOa5r1d3bEMlLPZaA2LAyd2s/Tky5X1OMY4G1SXIr+twj9JcG
+         ILfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692718138; x=1693322938;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=riCUTte2KwgQTf0uug7M8nFjfmUWA0ZM7Rw0YBzTJ94=;
+        b=K4TtVow2EwYNLBeYrImj+MOYoEsq+QbNpSdq2EK2VyrJXu86199eEVIw5hj+lJ7uuM
+         1mE4GDo4pJc3d7HWkyD2SXIcl0XKrdAxXFWRjs76TqE75RPAlVesulY0DZCtW6oTjQkp
+         Zp8iBwNjad3QRSX0+o053dXIob6CEEqnJPiIAXffCeXUZsengWYALQ5d7d5wnToYgYxW
+         RLHfyiMah8z5mHNIjqAfdoUIzbu+QPf8plDSNF1aPGnJ/eFOVU7lgurz1XxzDeOou+8e
+         oXhs05O6U5/5mkiOcepo93gqZbhmHyocW3LIPdNX4q6fBtAfA6jKA5cKPp4t5SAFigCV
+         6kqw==
+X-Gm-Message-State: AOJu0YxNsBrHKYjmm8+2Pe3ROetprRgZW+lzoi3HqIiXZ8WZlJ32bevP
+        C2/HXOjnY2XE4TxsIimu6FmZKQ==
+X-Google-Smtp-Source: AGHT+IGu8FIe9AS50nTf9oIl5I4jY7m5Jzrz+yG59/b26Lg38Fc6IBWuOUcOD2aQyIFcCaiNvGZdcA==
+X-Received: by 2002:a17:907:770f:b0:9a1:8b23:3c88 with SMTP id kw15-20020a170907770f00b009a18b233c88mr5846641ejc.17.1692718138642;
+        Tue, 22 Aug 2023 08:28:58 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id h6-20020a1709063b4600b00992f2befcbcsm8391884ejf.180.2023.08.22.08.28.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 08:28:58 -0700 (PDT)
+Message-ID: <8f2d647b-9972-deb9-e96f-779d2564ceee@linaro.org>
+Date:   Tue, 22 Aug 2023 17:28:56 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/1] soc: qcom: Add driver to read secondary
- bootloader (XBL) log
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 1/2] dt-bindings: crypto: qcom,prng: document SM8550
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Ninad Naik <quic_ninanaik@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>
-CC:     <psodagud@quicinc.com>, <quic_ppareek@quicinc.com>,
-        <quic_kprasan@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>
-References: <20230822121512.8631-1-quic_ninanaik@quicinc.com>
- <20230822121512.8631-2-quic_ninanaik@quicinc.com>
- <39ce6d07-7692-7194-b153-e73ba7fb687c@linaro.org>
-From:   Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <39ce6d07-7692-7194-b153-e73ba7fb687c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230822-topic-sm8550-rng-v1-0-8e10055165d1@linaro.org>
+ <20230822-topic-sm8550-rng-v1-1-8e10055165d1@linaro.org>
+ <8479869b-9984-41e3-9812-c7f5727cfd2c@linaro.org>
+ <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zpEpkb6BQW6kFJyoWD3HR_XKeLLy1E-L
-X-Proofpoint-GUID: zpEpkb6BQW6kFJyoWD3HR_XKeLLy1E-L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_13,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- spamscore=0 clxscore=1011 malwarescore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 mlxscore=0 priorityscore=1501 phishscore=0 mlxlogscore=710
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2308220117
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/22/2023 5:43 AM, Bryan O'Donoghue wrote:
-> On 22/08/2023 13:15, Ninad Naik wrote:
-..snip..
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->> + */
+On 22/08/2023 16:54, Om Prakash Singh wrote:
+> PRNG Block on most of newer target from Qualcomm have some configuration 
+> where clock is configured by security firmware.
 > 
-> 2023
+> Adding separate compatible string for each platform is overhead.
 
-if this is derived work based upon existing downstream code then I 
-suspect the LF 2021 copyright is correct and should be maintained, and a 
-QuIC 2023 copyright should be added
+I don't think PRNG is here different than others and for all others we
+expect it. I understand that this is an overhead, like every work is
+overhead.
+
+> 
+> We need to introduce common compatible string that can be used for all 
+> platforms with same configuration.
+
+It is already introduced, isn't it?
+
+> 
+> I would suggest to use "qcom,rng-ee" for newer platform, dropping "p" 
+> also signifies it is not a Pseudo Random Number Generator.
+> 
+
+Best regards,
+Krzysztof
 
