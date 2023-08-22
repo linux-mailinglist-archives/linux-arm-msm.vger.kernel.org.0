@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 934B8784B0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 22:06:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAC0B784B0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 22:06:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230325AbjHVUGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 16:06:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40594 "EHLO
+        id S230393AbjHVUGq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 16:06:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbjHVUGi (ORCPT
+        with ESMTP id S230357AbjHVUGk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 16:06:38 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13044CE9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 13:06:36 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-31aeef88a55so2815158f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 13:06:35 -0700 (PDT)
+        Tue, 22 Aug 2023 16:06:40 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 315BDE45
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 13:06:37 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3179ed1dfbbso4486305f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 13:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692734794; x=1693339594;
+        d=linaro.org; s=google; t=1692734795; x=1693339595;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X48QdO7ZGmP4DgIzy4AepzJ0PTfhLqJqNGkl4UYymyI=;
-        b=BUJ1MI41qACsWQ/vLK7pgu/2HJjCWyekOC5Y8gXK+ebDGE4B0VUbu/J84uQoiYFAU+
-         NeK0t3bOziD8KiBUgmP5+TLQ2Yf7KH7bRGMVvqyPR2NUhYoCnwPBmSA0wFXoZ/j6euPd
-         7s5PZyZ5AlDxecHQxqtQ1+gPFbf6XUFTtSlokxi1gc+JYxC1ZLQnjNvI6MvV1iNKuf2W
-         qL8N6LQRVtkvTmc68WxNzEd7mqeibAY6OfUUD+DZMtlYLnDV4mjzohWSIkx6VdQVNBGf
-         sQLyPABmIgc+Lpl8TTYcPd1GhtA//l7picoSgpWeCDl4j4coUaI04lB//H5AgNgf0oaj
-         WSvA==
+        bh=iJ2VKKNJcWBxsnE8fA4GSZFE3NOH8fxJi08OtAhPrEw=;
+        b=mNvKMnHZpUgmIcopeD8Ka6HB1CjCaeg+3MBlLKAp1ZqKrBObHsIPnVrfx1b5hRhbpz
+         D0MLXlrdnZDOx84YsDHdM+cRxcAoxTEVLSbmwmxRoEr8MlSu00ZtwQhH0AD/zRxwli78
+         N/xMgAo4M4oyi7noM4hABWRVGDLATi4cVqsUW7TaLP1QtEk5OZHnUKlfR9o8VQ8d1k9O
+         xyZSbvX0lDcl4hKiOi609HrYUfYT8XsO08THJhYYdjC64yTA61eMjd9uX5FZNHgf9RsY
+         PHXoEWY31uvEo9KTd3WBnSwfZEmuC4trhFGqmudUwcDHfoLMXQZK6RhXphf9+tirGaph
+         VDdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692734794; x=1693339594;
+        d=1e100.net; s=20221208; t=1692734796; x=1693339596;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X48QdO7ZGmP4DgIzy4AepzJ0PTfhLqJqNGkl4UYymyI=;
-        b=XT4OSsqrmiBfbeIv7JPfFZAKv+HkqCuoXcLJyo9h/dpbhHX30nLjyr+Mibj8rvUbab
-         bfGRCDthZQ0AK0UYRQnDOGl+ic7e7iRcnRpEPykbCPTkCrPdNk6lr4sKtIWhR98/mgMg
-         9TwsPkRTTX46H31dptCCFYg1PxDCd21w26g/uU2MFI+LOSSKsDHR5SSfNu869KzKl3NT
-         H5LSlDZApnHbFox/H0Y+mRLIlR18YzaV5yCm7QOC0cKnwiehtpFYDHV3ULlzkIAKfsHU
-         lprTlQFYwzvYCbUeGvm9WT4UhTpk3TZzl/+GGIqJwaeJnbH2hCYdDgiQz+BCl33i6Chg
-         lDOw==
-X-Gm-Message-State: AOJu0YzBfO5DkHeX45ldOzg+qeKRO7UNa6WiuLwvjaYrEVv9+u4RtzgC
-        /BwcG+GklPToNYpFF2731ZhhgQ==
-X-Google-Smtp-Source: AGHT+IF+bofEoyb8KWplasp+JLd1ZKK7rGpWfmHgkQb/utt0re9fXPVXIBLEocPKvn55p+73ba8T1A==
-X-Received: by 2002:a5d:55c3:0:b0:319:7a9f:c63 with SMTP id i3-20020a5d55c3000000b003197a9f0c63mr7672656wrw.50.1692734794667;
-        Tue, 22 Aug 2023 13:06:34 -0700 (PDT)
+        bh=iJ2VKKNJcWBxsnE8fA4GSZFE3NOH8fxJi08OtAhPrEw=;
+        b=eokW9Do1XxBuw6yqPpBgyLMnqBr1+0IQRvWttXNIvKoTim9Ur5vAKw3Ud0cr7KbHDz
+         otQ8hOpdjmCG96uE+GJg2mpqTaGoEvpRf4sYIedbLGi/Dx+DjMoqHcGwRBpdca9i7dCp
+         Bg5VBIzAi9kPUmXJ+9l5h1yVvw/eqQpUuNj20KCwts4ak9ipB4cpMOMnetHdDqJSVOT1
+         +3ISmjRAkjowVhu865QNl21062I6bC9ekQxHsdE60fSeC5q3r/ETcFF0ROKM1IHeFhoc
+         baXvc8ryG6G/4AmCt5DfFVkYfj+snlYv+WR7hvoZx9vCmKT2Ln1HHJ+wGZjF9gGJykkG
+         lnPw==
+X-Gm-Message-State: AOJu0Yx8msN43r6/wD2B+l5G4d8T6rrMsgQje/Kq9hRV4x1qFRLa5uSC
+        Ies5hY7RX2BoZ3zsmMUiqtfQyg==
+X-Google-Smtp-Source: AGHT+IHqSqIZ1/zkCPCh2/tNtxOXi0IsYdOY9eaoZrSN7DLj6sqQC7PCqYRiWK35jeH26vmbqfBvNg==
+X-Received: by 2002:a5d:44d1:0:b0:31a:d2b2:f29d with SMTP id z17-20020a5d44d1000000b0031ad2b2f29dmr7643714wrr.8.1692734795807;
+        Tue, 22 Aug 2023 13:06:35 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id y12-20020adfee0c000000b0031aeca90e1fsm12873690wrn.70.2023.08.22.13.06.33
+        by smtp.gmail.com with ESMTPSA id y12-20020adfee0c000000b0031aeca90e1fsm12873690wrn.70.2023.08.22.13.06.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Aug 2023 13:06:34 -0700 (PDT)
+        Tue, 22 Aug 2023 13:06:35 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH v2 4/9] media: qcom: camss: Fix VFE-17x vfe_disable_output()
-Date:   Tue, 22 Aug 2023 21:06:21 +0100
-Message-ID: <20230822200626.1931129-5-bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 5/9] media: qcom: camss: Fix VFE-480 vfe_disable_output()
+Date:   Tue, 22 Aug 2023 21:06:22 +0100
+Message-ID: <20230822200626.1931129-6-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230822200626.1931129-1-bryan.odonoghue@linaro.org>
 References: <20230822200626.1931129-1-bryan.odonoghue@linaro.org>
@@ -76,42 +76,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are two problems with the current vfe_disable_output() routine.
+vfe-480 is copied from vfe-17x and has the same racy idle timeout bug as in
+17x.
 
-Firstly we rightly use a spinlock to protect output->gen2.active_num
-everywhere except for in the IDLE timeout path of vfe_disable_output().
-Even if that is not racy "in practice" somehow it is by happenstance not
-by design.
+Fix the vfe_disable_output() logic to no longer be racy and to conform
+to the 17x way of quiescing and then resetting the VFE.
 
-Secondly we do not get consistent behaviour from this routine. On
-sc8280xp 50% of the time I get "VFE idle timeout - resetting". In this
-case the subsequent capture will succeed. The other 50% of the time, we
-don't hit the idle timeout, never do the VFE reset and subsequent
-captures stall indefinitely.
-
-Rewrite the vfe_disable_output() routine to
-
-- Quiesce write masters with vfe_wm_stop()
-- Set active_num = 0
-
-remembering to hold the spinlock when we do so followed by
-
-- Reset the VFE
-
-Testing on sc8280xp and sdm845 shows this to be a valid fix.
-
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
+Fixes: 4edc8eae715c ("media: camss: Add initial support for VFE hardware version Titan 480")
 Cc: stable@vger.kernel.org
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- .../media/platform/qcom/camss/camss-vfe-170.c | 19 +++----------------
+ .../media/platform/qcom/camss/camss-vfe-480.c | 19 +++----------------
  1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index 02494c89da91c..ae9137633c301 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -500,28 +500,15 @@ static int vfe_disable_output(struct vfe_line *line)
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index f70aad2e8c237..a64d660abc538 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -334,28 +334,15 @@ static int vfe_disable_output(struct vfe_line *line)
  	struct vfe_output *output = &line->output;
  	unsigned long flags;
  	unsigned int i;
