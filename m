@@ -2,76 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BEA278467C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 18:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8798784689
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 18:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237478AbjHVQES (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 12:04:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
+        id S237488AbjHVQGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 12:06:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236438AbjHVQES (ORCPT
+        with ESMTP id S232354AbjHVQGl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 12:04:18 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A92ACDF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:04:12 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50079d148aeso4265898e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:04:12 -0700 (PDT)
+        Tue, 22 Aug 2023 12:06:41 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72F3910F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:06:39 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4ff8a1746e0so7147264e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692720250; x=1693325050;
+        d=linaro.org; s=google; t=1692720397; x=1693325197;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UWA94XnCPwc1Vc7JP385yq44AVNqbMwIkEe1X41KkFg=;
-        b=jDnBCB9jctd4R65jLQdKSjHgyuUUZ+scXR02YET0yz7EGdaLhAjLhdmhJojXkkYdlF
-         hgzFlpDk23ot359Rdpe2cGH+vbCRfm3SUOMzWnQaQvKdDVAT1e3uZyyYRlFWX2WnjhBc
-         dksGZsHkRzXDjV2mnJ8AT5XUHVG36vo0sUzB4WH9Cr3RB4WyNbAKLYegvRJvDx8EhJ2I
-         WiFt37NndNF/dbdaAs5E1pWM3ci46KMuLviI17Yt1HQYV7tfe26ZUDnLLbZwixsiKVNZ
-         z1p0LkDqQI+LmAV5Rl2GnIn8WH5eBM+mya2EQuSjbnsnEJ2bFQqb94ltk0VqR62Ke2xR
-         mBVw==
+        bh=PpBJCyJjwL1HKSi147CSvQWpQIM/xvoNSn2injxsavs=;
+        b=sTbLN7a++SCCUWYfOHNPKJogkH2wVKr121/fqqIqfK8l8vIkQwBFmOyyzdx0KxmeDS
+         LSIovN8eLBohxmA29jQ76shmM7rfrMnLVJOeQWr+47vQSMQzNSSLlMQ/1qaY7QwXlcIZ
+         s7M0lbMa6ZKQFYtiiy5englU5m+7WlzhdCCZD4g+q7YWi3NxWEBoMtyMBZ58rbOHTQg+
+         DYG6AI+vLT9BTMD7uQJPqGIUipK7plWFQQGFIAEg5WFd0nWS1/m6fsyEFaoeyMjrNLUh
+         SuySCeW0eJ/dqQTo6eWiV0MG03Swc6pU/Z5RB3p+mWH6oLZWjDXFHgce07340uC54IFi
+         AA8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692720250; x=1693325050;
+        d=1e100.net; s=20221208; t=1692720397; x=1693325197;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UWA94XnCPwc1Vc7JP385yq44AVNqbMwIkEe1X41KkFg=;
-        b=Oy7EZ3JCCG7iWZa8RYOT2d234o3knjLWyAsck/kWXHGd4Y4vFher72Gk22f5jO/v2w
-         D5gJOXGxCOJo2pAhvAbIiccDOqWx4RIhDr2VPr6yCl7bCqwfV2wEae585VD7Ls7ZwLUu
-         jStz6lK17iwUBCSwONWfNMrfpvTpCIGQ3eXTP5Vyk9+M13gi9fEfeZAHAa6cZNIgEUxh
-         xO+qbJNGQRriiHsqPO3AlNy2wNbcSSxWVS9vqUhRAFsOrIM1c9iLCHDP+HA3T/UlOwGl
-         hQrTNH2/fJ5x36KZbHkv8qXUZ9xEGXsVgInGU4jvAGWiVcmkyuO2HBqZxE/5bSyDrU9j
-         b0tg==
-X-Gm-Message-State: AOJu0YxaGDLOaKHWBhl/ywoyM0A4/IhnU0WQL8J0RQUo7FlWscETumAt
-        FgalkUGtalm25bjt17sDFuVcxQ==
-X-Google-Smtp-Source: AGHT+IFo3NOWmKcgkRqWofYrZBcZg+3Se1na5DdTg4+edqKFCv52fuhaOO1AZKATq9wxwjPr+R4ZtA==
-X-Received: by 2002:a05:6512:3e19:b0:4fb:8435:3efc with SMTP id i25-20020a0565123e1900b004fb84353efcmr9111611lfv.16.1692720250316;
-        Tue, 22 Aug 2023 09:04:10 -0700 (PDT)
+        bh=PpBJCyJjwL1HKSi147CSvQWpQIM/xvoNSn2injxsavs=;
+        b=Soglo4KOBSlu18oequsOyHcukdhE4WIlkXHpyCfp/1x2u8Ykr8CfZ8BRtm5WnnM7Mf
+         dor6WOYYxejn2LJPTsR+MON1Tvfx4PI8aD70yQ0bj7d0QMk3+ZGvX2Aeia1U//K+PiKT
+         yqt8PtO03xRSapphXWsDWVBnynsaiBTWp+zl5bhXOXCjBEg824C9JAsWYQrpmhmP7jWo
+         pHBRDhfzoaDPuZmPT+G36s9TxID9doXSFbtDZpWygwobWHnmpe6l7AE1GaL3Q8nG++q6
+         4nOg4D7tGBGqfzUACdt7DeUuQUNtP+sxcq/xFwX/+B7BBQKtkPsQwMyKuLEDnScJH9E1
+         opEw==
+X-Gm-Message-State: AOJu0Yw2zOIMM6hi3ppvgtI4X9dggHVTHT+HtyZOgkzjA7xAoMWo9Usm
+        BvZueScnOSR3wfIlqeQUbWUf+A==
+X-Google-Smtp-Source: AGHT+IEMiUmKMTDtG2l9Wy0OPnvFM+tCS4+I5U5ZfT82uZjhIGHrmHa21ZOC0v6UVQMc7gh+eDoXjg==
+X-Received: by 2002:a05:6512:45c:b0:4fa:6d62:9219 with SMTP id y28-20020a056512045c00b004fa6d629219mr6712194lfk.62.1692720397588;
+        Tue, 22 Aug 2023 09:06:37 -0700 (PDT)
 Received: from [192.168.1.101] (abyk189.neoplus.adsl.tpnet.pl. [83.9.30.189])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac2515b000000b005008c11ca6dsm402580lfd.184.2023.08.22.09.04.09
+        by smtp.gmail.com with ESMTPSA id r22-20020ac24d16000000b004fb745fd22fsm2245124lfi.32.2023.08.22.09.06.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Aug 2023 09:04:09 -0700 (PDT)
-Message-ID: <26bae022-c114-4871-8715-73d7e8aeaa52@linaro.org>
-Date:   Tue, 22 Aug 2023 18:04:08 +0200
+        Tue, 22 Aug 2023 09:06:37 -0700 (PDT)
+Message-ID: <0d99dab6-492e-4cd8-9a1d-ab084db304b5@linaro.org>
+Date:   Tue, 22 Aug 2023 18:06:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: crypto: qcom,prng: document SM8550
+Subject: Re: [PATCH v4 1/4] dt-bindings: pci: qcom: Add opp table
 Content-Language: en-US
-To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230822-topic-sm8550-rng-v1-0-8e10055165d1@linaro.org>
- <20230822-topic-sm8550-rng-v1-1-8e10055165d1@linaro.org>
- <8479869b-9984-41e3-9812-c7f5727cfd2c@linaro.org>
- <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1692717141-32743-1-git-send-email-quic_krichai@quicinc.com>
+ <1692717141-32743-2-git-send-email-quic_krichai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,40 +112,34 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
+In-Reply-To: <1692717141-32743-2-git-send-email-quic_krichai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22.08.2023 16:54, Om Prakash Singh wrote:
-> PRNG Block on most of newer target from Qualcomm have some configuration where clock is configured by security firmware.
+On 22.08.2023 17:12, Krishna chaitanya chundru wrote:
+> PCIe needs to choose the appropriate performance state of RPMH power
+> domain based upon the PCIe gen speed.
 > 
-> Adding separate compatible string for each platform is overhead.
+> Adding the Operating Performance Points table allows to adjust power domain
+> performance state, depending on the PCIe gen speed.
 > 
-> We need to introduce common compatible string that can be used for all platforms with same configuration.
-> 
-> I would suggest to use "qcom,rng-ee" for newer platform, dropping "p" also signifies it is not a Pseudo Random Number Generator.
-Please reply inline and don't top-post.
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+I only got patches 1, 2 and 4 of this series.
 
-
-Is this what you're trying to say?
-
-1. sort out the clock requirements for designs where Linux manages it
-   vs where the FW does so
-
-2. introduce a new compatible for SoCs implementing a TRNG
-
-3. for SoCs in 2., register the TRNG as a hwrng device
-
-
-?
+Please consider using the b4 tool [1], which takes care of
+all of the sending shenanigans for you.
 
 Konrad
+
+[1] https://b4.docs.kernel.org/en/latest/index.html
