@@ -2,87 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA7F7784894
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 19:43:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B28A27848A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 19:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbjHVRnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 13:43:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43342 "EHLO
+        id S229468AbjHVRqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 13:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjHVRnE (ORCPT
+        with ESMTP id S229459AbjHVRqt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 13:43:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEEF23A84;
-        Tue, 22 Aug 2023 10:43:02 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MEMJA6017712;
-        Tue, 22 Aug 2023 17:42:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=ANZ/5JO75v6RleqSRulh7VZmcQ9jzPREAfF247WfYYY=;
- b=eYc6xMZBqbdK6eyHH/1PR1LqmrygixSEIAbwc3kofYroTMNVT6NQ7XlOlH/v9ceJ2JcB
- YoPIMCWpytnk1GJTWrrvtrbI1p3SqqEpAzWg36OON5FMeaKxwShPFrNz5fJ4mUgTGori
- XsaZKe03XcZ0l0GmbsXtxjw21sFxbuNh4UJo+SJ20QGBqF58Gxz3aiiJVDzC6474LQt4
- 0rtchAT5TCqOb/HQBh0bqkOP9bsyBfUtQc0m6jgLG4nmzgl58VIA8TGsOlgyAEe7JViV
- UJkF5P78VkXrWoIlqq0712e354N9eOSeksQtsWUkOQuveB+5sGGx+0RHeHEzEMgseWkt 1w== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smreu1fu0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 17:42:47 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MHgkIC003050
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 17:42:46 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 22 Aug 2023 10:42:46 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-Date:   Tue, 22 Aug 2023 10:42:07 -0700
-Subject: [PATCH v4 4/4] drm/msm/dsi: Enable widebus for DSI
+        Tue, 22 Aug 2023 13:46:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC989213E;
+        Tue, 22 Aug 2023 10:46:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6820F6234E;
+        Tue, 22 Aug 2023 17:46:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA9CC433CA;
+        Tue, 22 Aug 2023 17:46:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1692726384;
+        bh=+AEJDgQND+MTKWXpZoLOxttSEcb4AQ/a1ssvaTQGP4M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HJtg7BRliVQUq3lHWyuW+tkwc73Eb8qIWb4ZhDElf0goLMWuSuH0/Pb63EJtmb2Zr
+         M8q5eh7a2Rs1nC9ACTvEUt2Et/eGlntqsRIwz51kUAqp5OeDoYICMStpoYuflhRN8Z
+         CwzEl8o/nQXt6OwXEaDDHnYatmVsAqv++nrZtLlw=
+Date:   Tue, 22 Aug 2023 19:46:21 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Mike Tipton <quic_mdtipton@quicinc.com>, rafael@kernel.org,
+        corbet@lwn.net, linux-pm@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_okukatla@quicinc.com,
+        quic_viveka@quicinc.com, peterz@infradead.org,
+        quic_pkondeti@quicinc.com
+Subject: Re: [PATCH v3 1/3] debugfs: Add write support to debugfs_create_str()
+Message-ID: <2023082242-udder-refinish-1f6e@gregkh>
+References: <20230807142914.12480-1-quic_mdtipton@quicinc.com>
+ <20230807142914.12480-2-quic_mdtipton@quicinc.com>
+ <2023081203-happier-mutable-e4f0@gregkh>
+ <44a63cb2-1ae5-f52b-19d2-fe03d48fd44d@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230822-add-widebus-support-v4-4-9dc86083d6ea@quicinc.com>
-References: <20230822-add-widebus-support-v4-0-9dc86083d6ea@quicinc.com>
-In-Reply-To: <20230822-add-widebus-support-v4-0-9dc86083d6ea@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>
-CC:     <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692726164; l=4272;
- i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=11wAmANhEabHWMY3IbrT61xx3EGxeAL5CSIYq61dff4=;
- b=MqXuhgHJlwSqQ6A4OiyL+zYz+jviT+552gbjpCCoEYS3QOAUd4iOpMMUdD51vlTfG/UtJ5Rci
- gfUAe1tEusFBfufi6TfpK728LPVIxCsUd/1m/JYJnD0yT67Hszep4Zy
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BBBekK5OGg8jWAFSyf8GDqIkrrz7W_R0
-X-Proofpoint-ORIG-GUID: BBBekK5OGg8jWAFSyf8GDqIkrrz7W_R0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_14,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=840
- impostorscore=0 malwarescore=0 spamscore=0 suspectscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308220140
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <44a63cb2-1ae5-f52b-19d2-fe03d48fd44d@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,115 +59,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DSI 6G v2.5.x+ supports a data-bus widen mode that allows DSI to send
-48 bits of compressed data instead of 24.
+On Fri, Aug 18, 2023 at 01:05:57PM +0300, Georgi Djakov wrote:
+> Hi Greg,
+> 
+> On 12.08.23 13:40, Greg KH wrote:
+> > On Mon, Aug 07, 2023 at 07:29:12AM -0700, Mike Tipton wrote:
+> > > Currently, debugfs_create_str() only supports reading strings from
+> > > debugfs. Add support for writing them as well.
+> > > 
+> > > Based on original implementation by Peter Zijlstra [0]. Write support
+> > > was present in the initial patch version, but dropped in v2 due to lack
+> > > of users. We have a user now, so reintroduce it.
+> > > 
+> > > [0] https://lore.kernel.org/all/YF3Hv5zXb%2F6lauzs@hirez.programming.kicks-ass.net/
+> > > 
+> > > Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> > > ---
+> > >   fs/debugfs/file.c | 48 +++++++++++++++++++++++++++++++++++++++++++++--
+> > >   1 file changed, 46 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
+> > > index b7711888dd17..87b3753aa4b1 100644
+> > > --- a/fs/debugfs/file.c
+> > > +++ b/fs/debugfs/file.c
+> > > @@ -904,8 +904,52 @@ EXPORT_SYMBOL_GPL(debugfs_create_str);
+> > >   static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
+> > >   				      size_t count, loff_t *ppos)
+> > >   {
+> > > -	/* This is really only for read-only strings */
+> > > -	return -EINVAL;
+> > > +	struct dentry *dentry = F_DENTRY(file);
+> > > +	char *old, *new = NULL;
+> > > +	int pos = *ppos;
+> > > +	int r;
+> > > +
+> > > +	r = debugfs_file_get(dentry);
+> > > +	if (unlikely(r))
+> > > +		return r;
+> > > +
+> > > +	old = *(char **)file->private_data;
+> > > +
+> > > +	/* only allow strict concatenation */
+> > > +	r = -EINVAL;
+> > > +	if (pos && pos != strlen(old))
+> > > +		goto error;
+> > > +
+> > > +	r = -E2BIG;
+> > > +	if (pos + count + 1 > PAGE_SIZE)
+> > > +		goto error;
+> > > +
+> > > +	r = -ENOMEM;
+> > > +	new = kmalloc(pos + count + 1, GFP_KERNEL);
+> > > +	if (!new)
+> > > +		goto error;
+> > > +
+> > > +	if (pos)
+> > > +		memcpy(new, old, pos);
+> > > +
+> > > +	r = -EFAULT;
+> > > +	if (copy_from_user(new + pos, user_buf, count))
+> > > +		goto error;
+> > > +
+> > > +	new[pos + count] = '\0';
+> > > +	strim(new);
+> > > +
+> > > +	rcu_assign_pointer(*(char **)file->private_data, new);
+> > > +	synchronize_rcu();
+> > > +	kfree(old);
+> > > +
+> > > +	debugfs_file_put(dentry);
+> > > +	return count;
+> > > +
+> > > +error:
+> > > +	kfree(new);
+> > > +	debugfs_file_put(dentry);
+> > > +	return r;
+> > >   }
+> > 
+> > So you just added write support for ALL debugfs files that use the
+> > string interface, what did you just allow to break?
+> 
+> Not true. Write support is added only for debugfs string files that are
+> created with +w permissions. All existing files are created as read-only
+> and use the fops_str_ro ops.
+> 
+> > I recommend just using your own debugfs file function instead, as this
+> > could cause bad problems, right?  Are you sure that all string calls can
+> > handle the variable be freed underneath it like this call will allow to
+> > happen?
+> > 
+> > So I wouldn't recommend doing this, sorry.
+> > 
+> 
+> Maybe you missed the fact that the different file ops are already there
+> and are selected based on permissions:
+> 
+> > static const struct file_operations fops_str = {
+> >         .read =         debugfs_read_file_str,
+> >         .write =        debugfs_write_file_str,
+> >         .open =         simple_open,
+> >         .llseek =       default_llseek,
+> > };
+> > 
+> > static const struct file_operations fops_str_ro = {
+> >         .read =         debugfs_read_file_str,
+> >         .open =         simple_open,
+> >         .llseek =       default_llseek,
+> > };
+> > 
+> > static const struct file_operations fops_str_wo = {
+> >         .write =        debugfs_write_file_str,
+> >         .open =         simple_open,
+> >         .llseek =       default_llseek,
+> > };
+> 
+> ...so this patch is doing exactly what you suggested? If you agree,
+> could you ack it again please?
 
-Enable this mode whenever DSC is enabled for supported chipsets.
+Yes, I did miss that, sorry, my appologies for dragging this out so
+long:
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/dsi/dsi.c      |  2 +-
- drivers/gpu/drm/msm/dsi/dsi.h      |  1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c | 31 +++++++++++++++++++++++++++----
- 3 files changed, 29 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index 4cf424b3509f..7327bfc06a84 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -19,7 +19,7 @@ struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
- 
- bool msm_dsi_wide_bus_enabled(struct msm_dsi *msm_dsi)
- {
--	return false;
-+	return msm_dsi_host_is_widebus_enabled(msm_dsi->host);
- }
- 
- static int dsi_get_phy(struct msm_dsi *msm_dsi)
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index bd3763a5d723..a557d2c1aaff 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -134,6 +134,7 @@ int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
- void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
- void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
- struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
-+bool msm_dsi_host_is_widebus_enabled(struct mipi_dsi_host *host);
- 
- /* dsi phy */
- struct msm_dsi_phy;
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 645927214871..267c7fda8854 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -710,6 +710,15 @@ static void dsi_ctrl_disable(struct msm_dsi_host *msm_host)
- 	dsi_write(msm_host, REG_DSI_CTRL, 0);
- }
- 
-+bool msm_dsi_host_is_widebus_enabled(struct mipi_dsi_host *host)
-+{
-+	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-+
-+	return msm_host->dsc &&
-+		(msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
-+		 msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0);
-+}
-+
- static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
- 			struct msm_dsi_phy_shared_timings *phy_shared_timings, struct msm_dsi_phy *phy)
- {
-@@ -753,10 +762,16 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
- 		data |= DSI_CMD_CFG1_INSERT_DCS_COMMAND;
- 		dsi_write(msm_host, REG_DSI_CMD_CFG1, data);
- 
--		if (msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
--		    msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3) {
-+		if (cfg_hnd->major == MSM_DSI_VER_MAJOR_6G) {
- 			data = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
--			data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
-+
-+			if (cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3)
-+				data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
-+
-+			/* TODO: Allow for video-mode support once tested/fixed */
-+			if (msm_dsi_host_is_widebus_enabled(&msm_host->base))
-+				data |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
-+
- 			dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, data);
- 		}
- 	}
-@@ -894,6 +909,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 	u32 hdisplay = mode->hdisplay;
- 	u32 wc;
- 	int ret;
-+	bool widebus_enabled = msm_dsi_host_is_widebus_enabled(&msm_host->base);
- 
- 	DBG("");
- 
-@@ -914,6 +930,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 
- 	if (msm_host->dsc) {
- 		struct drm_dsc_config *dsc = msm_host->dsc;
-+		u32 bytes_per_pclk;
- 
- 		/* update dsc params with timing params */
- 		if (!dsc || !mode->hdisplay || !mode->vdisplay) {
-@@ -937,7 +954,13 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		 * pulse width same
- 		 */
- 		h_total -= hdisplay;
--		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-+		if (widebus_enabled && !(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
-+			bytes_per_pclk = 6;
-+		else
-+			bytes_per_pclk = 3;
-+
-+		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), bytes_per_pclk);
-+
- 		h_total += hdisplay;
- 		ha_end = ha_start + hdisplay;
- 	}
-
--- 
-2.42.0
-
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
