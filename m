@@ -2,105 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98BBA783634
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 01:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0E8078369C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 02:14:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231661AbjHUXZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Aug 2023 19:25:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38378 "EHLO
+        id S231816AbjHVAOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Aug 2023 20:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjHUXZg (ORCPT
+        with ESMTP id S231695AbjHVANz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Aug 2023 19:25:36 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16BEE10E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 16:25:35 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5008d16cc36so124004e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 16:25:35 -0700 (PDT)
+        Mon, 21 Aug 2023 20:13:55 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F0A187
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 17:13:53 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50043cf2e29so3449552e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 17:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692660333; x=1693265133;
+        d=linaro.org; s=google; t=1692663231; x=1693268031;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nbkG+4F3rqmkeQ3RjOKmJpD9paUCq+1HgpfgepEqZns=;
-        b=R/pW/4ELA3FOmAFqqaXb6kwILsnb7nRKdQleT2g7d6TEPpIiV/hUzMJkkkZjy2/EwM
-         RdFORkPgXLAqDlhwcHPYRxML3AwnuolsvB6RJVeMWK239alcdaPlhH30cE+f6A+hLQoT
-         CPWRrZHvnlxgEBq1Y+p2xxuWxwh9Y8NCpFMZrn2wzfLYcsTi9nTVeR1/tcPO4IB6Qjs0
-         ey77Gu2aTipfpe0j5hc/FvwvEOQ5rfgAXn4KAVMgpVS+5vrP8n7gu1LnhbAjvu9kXrkD
-         7tk8RYIniYojC1LKK4omOIxaVZtSo8wFRdAebRswoDhqgT/miX/fGbcTWtSblkcFG6mV
-         hhdg==
+        bh=SALxZGoX3/9kIk4D8MzHrmKOI6Uww1oAjqSJVs71Tto=;
+        b=WmxnAp+c6j9cm61vk35qp1hqH9d5d86UnTeeoDw9wBKBZNb79O1px7ad4+GKk7SWBO
+         xNz1MyWZl6pd6yiwmSEy5P9kQKaLiqKZoG+HR1kDPkbTQsHwd8TEIWEwJA+ALtGY9vCM
+         uW0TdaPYCYq0wz2lfAxCkOyIt9kNLgSF+sg7eSvfLXJC75BHgb03777bkxLuWrqXYFz7
+         QWnhxDOCJ5BMKxL6zQpD0+RoNs+L9TXuh9puMV09fvBI9YGuCfH+0k+J7FCPvAzskxV/
+         VRjARoSUddOFL/bKlyYEvLL295RCYngYnNXsqA/D/F4OER94sj2Xh3iLS8KqetYTQg3u
+         3wGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692660333; x=1693265133;
+        d=1e100.net; s=20221208; t=1692663231; x=1693268031;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nbkG+4F3rqmkeQ3RjOKmJpD9paUCq+1HgpfgepEqZns=;
-        b=hc7JjXfEO4ff+hALI1HzZqi9acZyP0CAEMhdVETBamajIG9PhnBGpOeYRXrozIDYEr
-         HAusOWvws1N13Pc8NNhWslouxIPqA4mYkcs/WDnIYVDmWDiIMYgbzeSWd/vJ+0KHPhnH
-         5MyBhhltr8OUprPVixdTqDHEp6hBmoWYdoMVH/bXGfpBVdDFyc+z8oKdS0IjFpse25A8
-         QaW35WfmNSj+hOqiVm/y+EgBTlRSrcnZcmfYNchxjjppEKB39tb+6fvCrnnzOJpuXaBd
-         fOn7pJMQ7RqIBouMmR3c+a1hid/8xDuJPZrlZJIm29KaH61NgqfHnMWII7GjYocWUv5E
-         uBfg==
-X-Gm-Message-State: AOJu0YyD6ubCuYbI6QTZzcbGh0V1Dz2GeYPD9rH60DwWTlQPTdgRx3NM
-        E5gdf+7spwnlkmryGlbX9RKR1mCzktChpw2psE4=
-X-Google-Smtp-Source: AGHT+IEKzNQqEM7QhoStdbjbAX2Rd8YVzEXkpwB2kD8xFAgHiT4dI3V5e190LHnmLNXHfly4x+CE1A==
-X-Received: by 2002:ac2:4f15:0:b0:4fb:911b:4e19 with SMTP id k21-20020ac24f15000000b004fb911b4e19mr6284102lfr.35.1692660333306;
-        Mon, 21 Aug 2023 16:25:33 -0700 (PDT)
+        bh=SALxZGoX3/9kIk4D8MzHrmKOI6Uww1oAjqSJVs71Tto=;
+        b=Tg3QrxXB0g/MYwEPDR7juj6+5BuNW+8bCXpgjp8k3XDB/691SeJ+8++dFiAardX3dC
+         MsdGA95wrHilVA+PCnMQs4xaybTxDAI4NoZl+3gWeZuxLP84oi0cBRSiIxXyZI9j32/A
+         MMPM4vrEj/tx404hOmIBkIbRcKkDfmB0LgmtZRbPphuHOczPdUMKgnMf7fp8EGh2TGkr
+         M7DbetY6HFK+38F5Qyg6h7baGzCUDF0jyT6FrJMSFgUeR67D/e2qhazAi/3tJmBLUvqP
+         xe7XYHs4zIhvIAG7xa9XX5DzHg7cixKmFR2aERT8ksnGvVlf84TnFohNdO5XWbPNBxgg
+         ZqDw==
+X-Gm-Message-State: AOJu0Yxfk/B8HvPTMJomB98JTUugIfny3KMcdWi/U+hRVA/fpV/dlDzj
+        Xno9bk9hfGcIYjIgI2npj1vkdw==
+X-Google-Smtp-Source: AGHT+IGMQmI78sGZbaSMhINrIDvn2+4mx1hPeS+pBt5iU5epHUtf6gOPSFyOEswI1tc0wyaeUS4XYg==
+X-Received: by 2002:a05:6512:282c:b0:4ff:8f45:ab86 with SMTP id cf44-20020a056512282c00b004ff8f45ab86mr6775891lfb.25.1692663231155;
+        Mon, 21 Aug 2023 17:13:51 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t3-20020ac25483000000b004fcdf8b8ab4sm1957148lfk.23.2023.08.21.16.25.32
+        by smtp.gmail.com with ESMTPSA id er23-20020a05651248d700b004fe36e673b8sm912024lfb.178.2023.08.21.17.13.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 16:25:32 -0700 (PDT)
+        Mon, 21 Aug 2023 17:13:50 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] dt-bindings: mfd: qcom-spmi-pmic: add pm8450 entry
-Date:   Tue, 22 Aug 2023 02:25:32 +0300
-Message-Id: <20230821232532.3110607-1-dmitry.baryshkov@linaro.org>
+        linux-input@vger.kernel.org
+Subject: [PATCH v3 00/32] ARM: dts: qcom: cleanup PMIC usage
+Date:   Tue, 22 Aug 2023 03:13:17 +0300
+Message-Id: <20230822001349.899298-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for the PM8450 PMIC (qcom,pm8450). No driver changes are
-necessary, since the PMIC is handled by the generic qcom,spmi-pmic
-entry.
+While reviewing APQ8064 CPUFreq patchset, Konrad pointed out that PMICs
+are not a part of SoC and as such do not belong to the per-SoC files.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
+Cleanup the way 32-bit Qualcomm platforms treat PMICs:
+
+- Move SSBI PMICs to separate files (as a bonus merging two different
+  instances of PM8921, benefitting both platforms).
+
+- Include such PMIC files only from the board files, keeping SoC file
+  generic.
+
+- Move RPM regulator definitions to board files too. They do not belong
+  to the SoC dtsi files for the same reason.
+
+- Move PMIC-specific GPIOs and supply properties to individual board
+  files.
+
+Note, enabling DT schema triggers warnings for pmic:led@48 in
+qcom-apq8060-dragonboard.dts. This node uses custom ('cm3605') trigger
+to make the LED follow the state of the proximity / ALS device.
+Previously [1] Rob pointed out that this is not the best way and the
+device should be switched to `trigger-sources' instead. However as I do
+not have this device, I'm not brave enough to introduce these changes.
+
+Note2: DT binding changes are largely independent from the DTS changes,
+they can be applied separately.
+
+[1] https://lore.kernel.org/linux-arm-msm/20221205220709.GA2713165-robh@kernel.org
 
 Changes since v2:
- - rebased on top of linux-next to resolve conflicts
+- Rebased on top of linux-next to fix conflict
+- Picked up dt-bindings patches from old, not-fully merged series.
+- qcom,pm8921-keypad: droped the no-autorepeat property (Rob, Dmitry)
+- Moved qcom,ssbi to /bus/ (Krzysztof)
 
----
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Changes since v1:
+- To ease reviewing break cleanups from the  "split PMIC" patches
+  (Konrad).
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 9f03436b1cdc..debed393fa8c 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -58,6 +58,7 @@ properties:
-           - qcom,pm8350
-           - qcom,pm8350b
-           - qcom,pm8350c
-+          - qcom,pm8450
-           - qcom,pm8550
-           - qcom,pm8550b
-           - qcom,pm8550ve
+Dmitry Baryshkov (32):
+  dt-bindings: input: qcom,pm8921-keypad: convert to YAML format
+  dt-bindings: mfd: qcom-pm8xxx: add missing child nodes
+  dt-bindings: bus: convert qcom,ssbi schema to YAML format
+  ARM: dts: qcom: apq8064: correct XOADC register address
+  ARM: dts: qcom: msm8960: introduce label for PMIC keypad
+  ARM: dts: qcom: msm8660-surf: use keypad label directly
+  ARM: dts: qcom: apq8064-nexus7: move sdcc1 node to proper place
+  ARM: dts: qcom: mdm9615-wp8548-mangoh-green: group include clauses
+  ARM: dts: qcom: strip prefix from PMIC files
+  ARM: dts: qcom: apq8064: fix PMIC node labels
+  ARM: dts: qcom: mdm9615: fix PMIC node labels
+  ARM: dts: qcom: msm8660: fix PMIC node labels
+  ARM: dts: qcom: msm8960: fix PMIC node labels
+  ARM: dts: qcom: msm8960: split PMIC to separate dtsi files
+  ARM: dts: qcom: apq8064: split PMICs to separate dtsi files
+  ARM: dts: qcom: mdm9615: split PMIC to separate dtsi files
+  ARM: dts: qcom: msm8660: split PMIC to separate dtsi files
+  ARM: dts: qcom: pm8058: reorder nodes
+  ARM: dts: qcom: pm8921: reorder nodes
+  ARM: dts: qcom: pm8018: move reg property
+  ARM: dts: qcom: pm8921: move reg property
+  ARM: dts: qcom: pm8058: use defined IRQ flags
+  ARM: dts: qcom: pm8921: switch to interrupts-extended
+  ARM: dts: qcom: pm8018: switch to interrupts-extended
+  ARM: dts: qcom: pm8058: switch to interrupts-extended
+  ARM: dts: qcom: apq8064: move RPM regulators to board files
+  ARM: dts: qcom: mdm9615: move RPM regulators to board files
+  ARM: dts: qcom: msm8660: move RPM regulators to board files
+  ARM: dts: qcom: msm8960: drop useless rpm regulators node
+  ARM: dts: qcom: msm8974: move regulators to board files
+  ARM: dts: qcom: pm8921: Disable keypad by default
+  ARM: dts: qcom: apq8060-dragonboard: rename mpp ADC channels to
+    adc-channel
+
+ .../devicetree/bindings/arm/msm/ssbi.txt      |  18 --
+ .../devicetree/bindings/bus/qcom,ssbi.yaml    |  63 ++++++
+ .../bindings/input/qcom,pm8921-keypad.yaml    |  89 ++++++++
+ .../bindings/input/qcom,pm8xxx-keypad.txt     |  90 --------
+ .../devicetree/bindings/mfd/qcom-pm8xxx.yaml  |  26 ++-
+ arch/arm/boot/dts/qcom/pm8018.dtsi            |  55 +++++
+ arch/arm/boot/dts/qcom/pm8058.dtsi            | 159 +++++++++++++
+ .../qcom/{qcom-pm8226.dtsi => pm8226.dtsi}    |   0
+ arch/arm/boot/dts/qcom/pm8821.dtsi            |  22 ++
+ .../qcom/{qcom-pm8841.dtsi => pm8841.dtsi}    |   0
+ arch/arm/boot/dts/qcom/pm8921.dtsi            | 137 +++++++++++
+ .../qcom/{qcom-pm8941.dtsi => pm8941.dtsi}    |   0
+ .../qcom/{qcom-pma8084.dtsi => pma8084.dtsi}  |   0
+ .../dts/qcom/{qcom-pmx55.dtsi => pmx55.dtsi}  |   0
+ .../dts/qcom/{qcom-pmx65.dtsi => pmx65.dtsi}  |   0
+ .../dts/qcom/qcom-apq8026-asus-sparrow.dts    |   2 +-
+ .../dts/qcom/qcom-apq8026-huawei-sturgeon.dts |   2 +-
+ .../boot/dts/qcom/qcom-apq8026-lg-lenok.dts   |   2 +-
+ .../qcom-apq8026-samsung-matisse-wifi.dts     |   2 +-
+ .../dts/qcom/qcom-apq8060-dragonboard.dts     | 160 ++++++++-----
+ .../dts/qcom/qcom-apq8064-asus-nexus7-flo.dts |  69 +++---
+ .../boot/dts/qcom/qcom-apq8064-cm-qs600.dts   |  31 +--
+ .../boot/dts/qcom/qcom-apq8064-ifc6410.dts    |  38 ++--
+ .../qcom-apq8064-sony-xperia-lagan-yuga.dts   | 110 +++++----
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi      | 195 +---------------
+ .../dts/qcom/qcom-apq8074-dragonboard.dts     |  31 ++-
+ .../boot/dts/qcom/qcom-apq8084-ifc6540.dts    |   2 +-
+ arch/arm/boot/dts/qcom/qcom-apq8084-mtp.dts   |   2 +-
+ .../qcom/qcom-mdm9615-wp8548-mangoh-green.dts |   4 +-
+ .../boot/dts/qcom/qcom-mdm9615-wp8548.dtsi    | 139 +++++++++++-
+ arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi      | 181 +--------------
+ arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts  |  59 +++--
+ arch/arm/boot/dts/qcom/qcom-msm8660.dtsi      | 214 +-----------------
+ arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts   |  23 +-
+ .../qcom/qcom-msm8960-samsung-expressatt.dts  |   3 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi      |  42 +---
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    |  31 ++-
+ .../qcom/qcom-msm8974-sony-xperia-rhine.dtsi  |  31 ++-
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi      |  27 ---
+ .../qcom/qcom-msm8974pro-fairphone-fp2.dts    |  31 ++-
+ .../qcom/qcom-msm8974pro-oneplus-bacon.dts    |  31 ++-
+ .../dts/qcom/qcom-msm8974pro-samsung-klte.dts |  12 +-
+ ...-msm8974pro-sony-xperia-shinano-castor.dts |  31 ++-
+ arch/arm/boot/dts/qcom/qcom-sdx55-mtp.dts     |   2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx55-t55.dts     |   2 +-
+ .../dts/qcom/qcom-sdx55-telit-fn980-tlb.dts   |   2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts     |   2 +-
+ 47 files changed, 1185 insertions(+), 987 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/ssbi.txt
+ create mode 100644 Documentation/devicetree/bindings/bus/qcom,ssbi.yaml
+ create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8921-keypad.yaml
+ delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8xxx-keypad.txt
+ create mode 100644 arch/arm/boot/dts/qcom/pm8018.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom/pm8058.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8226.dtsi => pm8226.dtsi} (100%)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8821.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8841.dtsi => pm8841.dtsi} (100%)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8921.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8941.dtsi => pm8941.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pma8084.dtsi => pma8084.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pmx55.dtsi => pmx55.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pmx65.dtsi => pmx65.dtsi} (100%)
+
 -- 
 2.39.2
 
