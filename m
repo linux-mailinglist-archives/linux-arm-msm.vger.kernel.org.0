@@ -2,192 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1632378465B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:56:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BEA278467C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 18:04:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232949AbjHVP4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 11:56:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
+        id S237478AbjHVQES (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 12:04:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjHVP4A (ORCPT
+        with ESMTP id S236438AbjHVQES (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 11:56:00 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEFB910C1;
-        Tue, 22 Aug 2023 08:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1692719738; x=1724255738;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=40Mvzn1ll4ExpoBioTZRPiAzse/XM+Dhq7IZWLopB5I=;
-  b=QQ9ocMXeY4chliJkR7WCg0eB0GkBuStNH3dDNX5Hen7hZ2nGJEWHEa1N
-   zgw2plAm7tkxfBpXXFtwXzD/5BgrI6yfF8K7a78hAuJU1tN3Pq5kPdSOR
-   N7aI8mQZ/qfe2EE0elmZAMVTXEP6YFd4xsccfktPsjKDzizuG6H6GcZOr
-   B1uFNNGI8xAUlorIeQs3QDK8L1FjFPifRUE7uTfDoT28IlcuMe9VAP6M4
-   8dHwLIrhha8xybbc2FHWEI0enuBdQqlNmDU2XcTUjNjO8s94Hj0kVvKgk
-   StXhxLGbVOz6PVVZeRMxJjzRc30Gbr2dv5owe9kqG8j8+DSunrZzHDODb
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="358907056"
-X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
-   d="scan'208";a="358907056"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2023 08:55:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="729849565"
-X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
-   d="scan'208";a="729849565"
-Received: from lkp-server02.sh.intel.com (HELO daf8bb0a381d) ([10.239.97.151])
-  by orsmga007.jf.intel.com with ESMTP; 22 Aug 2023 08:55:33 -0700
-Received: from kbuild by daf8bb0a381d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qYTjA-0000JH-1l;
-        Tue, 22 Aug 2023 15:55:32 +0000
-Date:   Tue, 22 Aug 2023 23:54:32 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Tue, 22 Aug 2023 12:04:18 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A92ACDF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:04:12 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50079d148aeso4265898e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:04:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692720250; x=1693325050;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UWA94XnCPwc1Vc7JP385yq44AVNqbMwIkEe1X41KkFg=;
+        b=jDnBCB9jctd4R65jLQdKSjHgyuUUZ+scXR02YET0yz7EGdaLhAjLhdmhJojXkkYdlF
+         hgzFlpDk23ot359Rdpe2cGH+vbCRfm3SUOMzWnQaQvKdDVAT1e3uZyyYRlFWX2WnjhBc
+         dksGZsHkRzXDjV2mnJ8AT5XUHVG36vo0sUzB4WH9Cr3RB4WyNbAKLYegvRJvDx8EhJ2I
+         WiFt37NndNF/dbdaAs5E1pWM3ci46KMuLviI17Yt1HQYV7tfe26ZUDnLLbZwixsiKVNZ
+         z1p0LkDqQI+LmAV5Rl2GnIn8WH5eBM+mya2EQuSjbnsnEJ2bFQqb94ltk0VqR62Ke2xR
+         mBVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692720250; x=1693325050;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UWA94XnCPwc1Vc7JP385yq44AVNqbMwIkEe1X41KkFg=;
+        b=Oy7EZ3JCCG7iWZa8RYOT2d234o3knjLWyAsck/kWXHGd4Y4vFher72Gk22f5jO/v2w
+         D5gJOXGxCOJo2pAhvAbIiccDOqWx4RIhDr2VPr6yCl7bCqwfV2wEae585VD7Ls7ZwLUu
+         jStz6lK17iwUBCSwONWfNMrfpvTpCIGQ3eXTP5Vyk9+M13gi9fEfeZAHAa6cZNIgEUxh
+         xO+qbJNGQRriiHsqPO3AlNy2wNbcSSxWVS9vqUhRAFsOrIM1c9iLCHDP+HA3T/UlOwGl
+         hQrTNH2/fJ5x36KZbHkv8qXUZ9xEGXsVgInGU4jvAGWiVcmkyuO2HBqZxE/5bSyDrU9j
+         b0tg==
+X-Gm-Message-State: AOJu0YxaGDLOaKHWBhl/ywoyM0A4/IhnU0WQL8J0RQUo7FlWscETumAt
+        FgalkUGtalm25bjt17sDFuVcxQ==
+X-Google-Smtp-Source: AGHT+IFo3NOWmKcgkRqWofYrZBcZg+3Se1na5DdTg4+edqKFCv52fuhaOO1AZKATq9wxwjPr+R4ZtA==
+X-Received: by 2002:a05:6512:3e19:b0:4fb:8435:3efc with SMTP id i25-20020a0565123e1900b004fb84353efcmr9111611lfv.16.1692720250316;
+        Tue, 22 Aug 2023 09:04:10 -0700 (PDT)
+Received: from [192.168.1.101] (abyk189.neoplus.adsl.tpnet.pl. [83.9.30.189])
+        by smtp.gmail.com with ESMTPSA id q27-20020ac2515b000000b005008c11ca6dsm402580lfd.184.2023.08.22.09.04.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 09:04:09 -0700 (PDT)
+Message-ID: <26bae022-c114-4871-8715-73d7e8aeaa52@linaro.org>
+Date:   Tue, 22 Aug 2023 18:04:08 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: crypto: qcom,prng: document SM8550
+Content-Language: en-US
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v1] PCI: qcom: Add sysfs entry to change link speed
- dynamically
-Message-ID: <202308222302.9EPeENqh-lkp@intel.com>
-References: <1692239684-12697-1-git-send-email-quic_krichai@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1692239684-12697-1-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230822-topic-sm8550-rng-v1-0-8e10055165d1@linaro.org>
+ <20230822-topic-sm8550-rng-v1-1-8e10055165d1@linaro.org>
+ <8479869b-9984-41e3-9812-c7f5727cfd2c@linaro.org>
+ <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on pci/next]
-[also build test ERROR on pci/for-linus linus/master v6.5-rc7 next-20230822]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-qcom-Add-sysfs-entry-to-change-link-speed-dynamically/20230817-103734
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/1692239684-12697-1-git-send-email-quic_krichai%40quicinc.com
-patch subject: [PATCH v1] PCI: qcom: Add sysfs entry to change link speed dynamically
-config: loongarch-randconfig-r005-20230822 (https://download.01.org/0day-ci/archive/20230822/202308222302.9EPeENqh-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20230822/202308222302.9EPeENqh-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202308222302.9EPeENqh-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   loongarch64-linux-ld: drivers/pci/controller/dwc/pcie-qcom.o: in function `qcom_pcie_speed_change_store':
->> drivers/pci/controller/dwc/pcie-qcom.c:375:(.text+0xc14): undefined reference to `qcom_pcie_opp_update'
+On 22.08.2023 16:54, Om Prakash Singh wrote:
+> PRNG Block on most of newer target from Qualcomm have some configuration where clock is configured by security firmware.
+> 
+> Adding separate compatible string for each platform is overhead.
+> 
+> We need to introduce common compatible string that can be used for all platforms with same configuration.
+> 
+> I would suggest to use "qcom,rng-ee" for newer platform, dropping "p" also signifies it is not a Pseudo Random Number Generator.
+Please reply inline and don't top-post.
 
 
-vim +375 drivers/pci/controller/dwc/pcie-qcom.c
+Is this what you're trying to say?
 
-   303	
-   304	static ssize_t qcom_pcie_speed_change_store(struct device *dev,
-   305				       struct device_attribute *attr,
-   306				       const char *buf,
-   307				       size_t count)
-   308	{
-   309		unsigned int current_speed, target_speed, max_speed;
-   310		struct qcom_pcie *pcie = dev_get_drvdata(dev);
-   311		struct pci_bus *child, *root_bus = NULL;
-   312		struct dw_pcie_rp *pp = &pcie->pci->pp;
-   313		struct dw_pcie *pci = pcie->pci;
-   314		struct pci_dev *pdev;
-   315		u16 offset;
-   316		u32 val;
-   317		int ret;
-   318	
-   319		list_for_each_entry(child, &pp->bridge->bus->children, node) {
-   320			if (child->parent == pp->bridge->bus) {
-   321				root_bus = child;
-   322				break;
-   323			}
-   324		}
-   325	
-   326		pdev = root_bus->self;
-   327	
-   328		offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-   329	
-   330		val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-   331		max_speed = FIELD_GET(PCI_EXP_LNKCAP_SLS, val);
-   332	
-   333		val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-   334		current_speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, val);
-   335	
-   336		ret = kstrtouint(buf, 10, &target_speed);
-   337		if (ret)
-   338			return ret;
-   339	
-   340		if (target_speed > max_speed)
-   341			return -EINVAL;
-   342	
-   343		if (current_speed == target_speed)
-   344			return count;
-   345	
-   346		pci_walk_bus(pp->bridge->bus, qcom_pcie_disable_l0s, pcie);
-   347	
-   348		/* Disable L1 */
-   349		val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL);
-   350		val &= ~(PCI_EXP_LNKCTL_ASPM_L1);
-   351		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL, val);
-   352	
-   353		/* Set target GEN speed */
-   354		val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL2);
-   355		val &= ~PCI_EXP_LNKCTL2_TLS;
-   356		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL2, val | target_speed);
-   357	
-   358		ret = pcie_retrain_link(pdev, true);
-   359		if (ret)
-   360			dev_err(dev, "Link retrain failed %d\n", ret);
-   361	
-   362		/* Enable L1 */
-   363		val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL);
-   364		val |= (PCI_EXP_LNKCTL_ASPM_L1);
-   365		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL, val);
-   366	
-   367		pcie->l0s_supported = true;
-   368		pci_walk_bus(pp->bridge->bus, qcom_pcie_check_l0s_support, pcie);
-   369	
-   370		if (pcie->l0s_supported)
-   371			pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_l0s, pcie);
-   372	
-   373		qcom_pcie_icc_update(pcie);
-   374	
- > 375		qcom_pcie_opp_update(pcie);
-   376	
-   377		return count;
-   378	}
-   379	static DEVICE_ATTR_WO(qcom_pcie_speed_change);
-   380	
+1. sort out the clock requirements for designs where Linux manages it
+   vs where the FW does so
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2. introduce a new compatible for SoCs implementing a TRNG
+
+3. for SoCs in 2., register the TRNG as a hwrng device
+
+
+?
+
+Konrad
