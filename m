@@ -2,160 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7341783FC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 13:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24728783FF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 13:48:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235099AbjHVLnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 07:43:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56268 "EHLO
+        id S235352AbjHVLsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 07:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235102AbjHVLnA (ORCPT
+        with ESMTP id S235329AbjHVLso (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 07:43:00 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1469E4F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 04:42:34 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99c1f6f3884so569481666b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 04:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692704459; x=1693309259;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nBng5C2dnihMAm7NsUCEA4IxSsW7kmSlLCvvdXqyKNI=;
-        b=Q9/KNEeiK1MnW/VpATo99XcdowbhPp1AoE+rEsQfauE0G9EUxkPiRs/Z7io/aB2ZNs
-         APR80hjLD2cGmMtZq3xh0yB1DsXvXE3eHNJ0XF+6PaPBRlC3BmveI+7lXrc6m66spXFv
-         Ogt51Tu5IlZF47vZMKJKOyohUEx2LE98zqgksVPWIqowxjabI2Fz06lUbhHsGSqr9caz
-         4oPISz+3/dAhhRDwFGBQK7KeL0XmZMUoMAqu5go0bzeiLceH+NK0XIo9r2Sm8b6bUAvE
-         nOHlDE2m4qSX475Qz4mKaelnviavdnNjxQ2vnCGem6N1Nv1mPssJJGp/hbccyRgNTUP0
-         j5/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692704459; x=1693309259;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nBng5C2dnihMAm7NsUCEA4IxSsW7kmSlLCvvdXqyKNI=;
-        b=dprci1M1doHtMjcaJUfw2Zndb66IEAceF+sBYHc9IAdDOxskXCV57l9UB9iIgrMnIC
-         Fr9md6Yo3ejUkpCdf8t97TdKGHVo2/21+L8RJ21ulKd0d6O5ubwBOt+GLdaG6ZoeKgje
-         qTjbZppUSiA7ltwmCC158ZsyBIOho/5b+lYHHBpOnjIad7dCqibflkkBS+GeRHLLsYZd
-         Q7A1FWTKdSQH2szs79aSHD2rA6YdE0tOVnW6b/8wnY5ZmtU2lwK3DANjA+VD3hsV5RrZ
-         ZkH+idalQc9a5xhAd5/h+tMnBebztB+ChhmYYlbsy10bCW7EecoSo9WO0S+KuGBWrAaN
-         I42w==
-X-Gm-Message-State: AOJu0YxxEZEbxrrCJhQ+pIeUBRDVsu7kJLAjcMS2Dmtogajg3GEYKGyT
-        KAfi5hDriNUS8sUkDx5KJbVhRA==
-X-Google-Smtp-Source: AGHT+IFG3rO+15qihlKOOHB8w6sqz7+J7b3+hnWU015v6n8UbWpjoVH0nhN0Oq7y6bAU+O32z7s7Iw==
-X-Received: by 2002:a17:907:2722:b0:99e:16eb:32d2 with SMTP id d2-20020a170907272200b0099e16eb32d2mr6455999ejl.62.1692704459221;
-        Tue, 22 Aug 2023 04:40:59 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id jp23-20020a170906f75700b00989828a42e8sm7987229ejb.154.2023.08.22.04.40.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Aug 2023 04:40:58 -0700 (PDT)
-Message-ID: <8792cced-62bc-d887-8b14-05f967f7f4ed@linaro.org>
-Date:   Tue, 22 Aug 2023 13:40:57 +0200
+        Tue, 22 Aug 2023 07:48:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D264CD5;
+        Tue, 22 Aug 2023 04:48:20 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MB20kY004797;
+        Tue, 22 Aug 2023 11:47:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=V4vOZFtzK7Tj4Uf+tFK0ITfcORF2PwxYw6T0iO2VaPo=;
+ b=k5EaO5Nui/xazPYhtX6+0KqwBodTS5wMCiq+MmAmExrVS15WfhJBb4gQnGr0/F2VZKF4
+ l98Y1RHErvgB8Pmaqg2Zee6m3pahA9WJdZu2IlJRLmMQMnv7ZmCIOosMNV9kDDKlzSFk
+ Fh7h9Ya0A85sDUjZFIDPXWy9ZqvZQ6K6dvcygVJaeaxb+OvCMAXDj3R7FiD0HINnucxu
+ NqZRKqmU9Mb55RJuNW+BYG0N9XuwOg/4JW9TcE9YSu5vme9gsjKv7IjANuYNMoOX8LuI
+ 6cxVfdg+uaJIi3utZBCxMVZbOBkY4Rp7SKCx7Mvy77OrgN/p+hx9U7n/a366stKQS1sS 7Q== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smusbr2r7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 11:47:06 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MBl5Ux006587
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 11:47:05 GMT
+Received: from [10.216.34.168] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 22 Aug
+ 2023 04:47:00 -0700
+Message-ID: <bdb155fe-aed1-e29b-e1c5-560495ee3ef1@quicinc.com>
+Date:   Tue, 22 Aug 2023 17:16:57 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH v9 2/4] arm64: dts: qcom: ipq5332: Add USB related nodes
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: qdu1000: Add ECPRI clock controller
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, arnd@arndb.de, geert+renesas@glider.be,
-        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-phy@lists.infradead.org
-References: <cover.1692699472.git.quic_varada@quicinc.com>
- <556ee6c73a4235f52d071d98a344792daeadd228.1692699472.git.quic_varada@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <556ee6c73a4235f52d071d98a344792daeadd228.1692699472.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Taniya Das <quic_tdas@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20230808051407.647395-1-quic_imrashai@quicinc.com>
+ <20230808051407.647395-5-quic_imrashai@quicinc.com>
+ <28452f19-be57-46db-bfc8-4ba8573de1d0@linaro.org>
+From:   Imran Shaik <quic_imrashai@quicinc.com>
+In-Reply-To: <28452f19-be57-46db-bfc8-4ba8573de1d0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: c_OlHcvxv7Mbfwfyc09OnYbLCqAL-lWZ
+X-Proofpoint-GUID: c_OlHcvxv7Mbfwfyc09OnYbLCqAL-lWZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-22_10,2023-08-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ mlxlogscore=869 suspectscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308220089
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/08/2023 12:29, Varadarajan Narayanan wrote:
-> Add USB phy and controller nodes.
+
+
+On 8/10/2023 1:30 AM, Konrad Dybcio wrote:
+> On 8.08.2023 07:14, Imran Shaik wrote:
+>> Add device node for ECPRI clock controller on qcom QDU1000
+>> and QRU1000 SoCs.
+>>
+>> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qdu1000.dtsi | 14 ++++++++++++++
+>>   1 file changed, 14 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> index 1c0e5d271e91..63930f944b65 100644
+>> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> @@ -381,6 +381,20 @@ gcc: clock-controller@80000 {
+>>   			#power-domain-cells = <1>;
+>>   		};
+>>   
+>> +		ecpricc: clock-controller@280000 {
+>> +			compatible = "qcom,qdu1000-ecpricc";
+>> +			reg = <0x0 0x00280000 0x0 0x31c00>;
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+>> +				<&gcc GCC_ECPRI_CC_GPLL0_CLK_SRC>,
+>> +				<&gcc GCC_ECPRI_CC_GPLL1_EVEN_CLK_SRC>,
+>> +				<&gcc GCC_ECPRI_CC_GPLL2_EVEN_CLK_SRC>,
+>> +				<&gcc GCC_ECPRI_CC_GPLL3_CLK_SRC>,
+>> +				<&gcc GCC_ECPRI_CC_GPLL4_CLK_SRC>,
+>> +				<&gcc GCC_ECPRI_CC_GPLL5_EVEN_CLK_SRC>;
+> Please align the entries with the first < (probably missing a single
+> space in the front)
 > 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v9:
-> 	usb2@8a00000 -> usb@8a00000
-> 	"make ARCH=arm64 -j 16 CHECK_DTBS=y DT_SCHEMA_FILES=qcom,ipq5332-usb-hsphy.yaml dtbs_check" passed
+> Konrad
 
-I asked about W=1.
+Sure, will update and push next series.
 
-
-> v6:
-> 	Remove clock names
-> 	Move the nodes to address sorted location
-> v5:
-> 	Use generic phy instead of usb-phy
-> 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom dtbs_check' passed
-> 	'DT_CHECKER_FLAGS='-v -m' DT_SCHEMA_FILES=qcom dt_binding_check' passed
-> v4:
-> 	Change node name
-> 	Remove blank line
-> 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom qcom/ipq5332-rdp441.dtb' passed
-> v1:
-> 	Rename phy node
-> 	Change compatible from m31,ipq5332-usb-hsphy -> qcom,ipq5332-usb-hsphy
-> 	Remove 'qscratch' from phy node
-> 	Fix alignment and upper-case hex no.s
-> 	Add clock definition for the phy
-> 	Remove snps,ref-clock-period-ns as it is not used. dwc3_ref_clk_period()
-> 	in dwc3/core.c takes the frequency from ref clock and calculates fladj
-> 	as appropriate.
-> ---
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 55 +++++++++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index 8bfc2db..e6baf69 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -145,6 +145,19 @@
->  		#size-cells = <1>;
->  		ranges = <0 0 0 0xffffffff>;
->  
-> +		usbphy0: phy@7b000 {
-> +			compatible = "qcom,ipq5332-usb-hsphy";
-> +			reg = <0x0007b000 0x12c>;
-> +
-> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
-> +
-> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
-> +		};
-> +
->  		qfprom: efuse@a4000 {
->  			compatible = "qcom,ipq5332-qfprom", "qcom,qfprom";
->  			reg = <0x000a4000 0x721>;
-> @@ -290,6 +303,48 @@
->  			status = "disabled";
->  		};
->  
-> +		usb: usb@8a00000 {
-> +			compatible = "qcom,ipq5332-dwc3", "qcom,dwc3";
-> +			reg = <0x08af8800 0x400>;
-
-Still wrong address. I pointed it last time. Please fix it instead of
-just sending the same. If you do not agree, keep discussing. I could
-have make a mistake, but ignoring error and not responding is not the way.
-
-
-
-Best regards,
-Krzysztof
-
+Thanks,
+Imran
