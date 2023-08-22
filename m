@@ -2,76 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D8CC784593
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:31:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBC897845B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:38:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237117AbjHVPbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 11:31:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40012 "EHLO
+        id S232882AbjHVPi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 11:38:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237133AbjHVPbR (ORCPT
+        with ESMTP id S237188AbjHVPi2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 11:31:17 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3D90CD5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 08:31:12 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3159d5e409dso3607164f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 08:31:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692718271; x=1693323071;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8uosOUAxceoT7rDQGwT3620q675u/dmggpL1Oc/TVgg=;
-        b=GUZ7giCgdKP6AhmwT/JVkY64DYRgMauV+6U+N6onI7l1spNddyBseF8A0c0nnd7d5r
-         rmNkccfFrHpN938CryWtERXeAhsTEJa/YbLEvboiLbwhjl402/cO8drGYLBYPEfdmnXD
-         v/EwcGCf8pz4SD49sG6NCkRzJF1KuQqPisOZBha+wdaKY93+Sug/1wZH8D017QQbWLs1
-         my2JbQrOzgZOBQO+6PYtqCokDCayyeNIAFXNWf6zAcOaB25lEYXy04q4fhr0WSBZb63J
-         yH2xNF/ojnGSTs+rMvo9Ewk/edcExBuyDS0N3nTPQewBOXIthL4DTjODwODRzxnHv38Z
-         tcjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692718271; x=1693323071;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8uosOUAxceoT7rDQGwT3620q675u/dmggpL1Oc/TVgg=;
-        b=AL0zna0YpLfmfjEpYWoDJYFWE7hkmx2MtA5bof0yLOVI+ltoiqmNOHKVuCWXExho51
-         mCwtGHuan0YvWmJ8+uBUW6x17zlmALN6vs+w5QVePXyKt7cFEJoCFNYkga5KWQsjs/aS
-         JjEH8giy35oc99UtyqxuPUHJZWvYHCe9tAmBx9fC0SuNa6C4ggYJ3qntLrMRt2DMdz56
-         uxUlPtDn3el3uMZFNUnMGJLZvh3mpUqOK3XUySyTrpmaaJwQPcnpQbQn0GKHOtILjz/2
-         rHjODxlvSz0hI4yU9zSw/1aRDkJlZzILxAc7RUrSmfQengUV0MzmLmK1UFvC12h/4lnB
-         xsmQ==
-X-Gm-Message-State: AOJu0Yw8pcu5Skd7bWPYtohoubYyJ2fsGC2sAiIKqMV9OE4qb5QQzP18
-        dYfq7j0j6tHNwg+MPk8M12otuA==
-X-Google-Smtp-Source: AGHT+IEUU1gRdjdHzr8Sc3oXci7an4zcTuXwebjVN+K5jGfZ4/8TEKLXoA5qZBkoZfGRTGFx/BLqkg==
-X-Received: by 2002:a5d:44c8:0:b0:317:e9d7:9387 with SMTP id z8-20020a5d44c8000000b00317e9d79387mr9599604wrr.25.1692718271428;
-        Tue, 22 Aug 2023 08:31:11 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l15-20020a5d674f000000b00317909f9985sm16043357wrw.113.2023.08.22.08.31.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Aug 2023 08:31:10 -0700 (PDT)
-Message-ID: <2d989b98-8ab2-5204-d59a-ae7a8bd43906@linaro.org>
-Date:   Tue, 22 Aug 2023 16:31:09 +0100
+        Tue, 22 Aug 2023 11:38:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137B6CC1;
+        Tue, 22 Aug 2023 08:38:27 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MAxHRD012387;
+        Tue, 22 Aug 2023 15:38:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=uqPV0WC5qCv0Haem1x/KFGsbjyXb1C15zztq61dqCvo=;
+ b=fWP+tF5baOpiCbBSLrExyvraPZVy7mILkAFHQgMYX25LREzsBejOUT1Jw+Pnl3bC6bko
+ icbVBvcTACp1W8JqEkfA3FOLB3u7R0/mW7dp9tQojl6uJ+4gZgJTai4BY0gHrwjK5xoz
+ /3LqphStay0Rck9vy8h0MpefzUV3XNzo3vrfvI3AzkPxwbK05wT8YEEKREkvLcGdoPrZ
+ t6bLY+FGxN+j1qdXpqBtbpZ2TyTVfEYvz9lytiWIccU/p/b0mXflJ8hP9sRzJ2MBkRbb
+ 94eVbM+ZCVZ2pvKp9gl1x/ajBB5IF4lbiUVyjKiR3+s58RWYbWbaPB6GdotFWBAGLsbY jQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smf3qa2vs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 15:38:16 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MFcG92008357
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 15:38:16 GMT
+Received: from [10.216.24.163] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 22 Aug
+ 2023 08:38:12 -0700
+Message-ID: <ff9ec6f5-9c7c-546b-5814-159d7e2843a8@quicinc.com>
+Date:   Tue, 22 Aug 2023 21:07:59 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 2/2] usb: typec: qcom-pmic-typec: register drm_bridge
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
 Content-Language: en-US
-To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Guenter Roeck <linux@roeck-us.net>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230817150824.14371-1-dmitry.baryshkov@linaro.org>
- <20230817150824.14371-3-dmitry.baryshkov@linaro.org>
- <ZOS+GnLeV6JJgpp8@kuha.fi.intel.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ZOS+GnLeV6JJgpp8@kuha.fi.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <computersforpeace@gmail.com>
+References: <20230816164641.3371878-1-robimarko@gmail.com>
+ <20230816164641.3371878-2-robimarko@gmail.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230816164641.3371878-2-robimarko@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cCUnGAt8uEwqZbYTD48bdkKhdazqIuKF
+X-Proofpoint-ORIG-GUID: cCUnGAt8uEwqZbYTD48bdkKhdazqIuKF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-22_13,2023-08-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ bulkscore=0 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2308220120
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
@@ -82,49 +84,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/08/2023 14:54, Heikki Krogerus wrote:
-> On Thu, Aug 17, 2023 at 06:08:24PM +0300, Dmitry Baryshkov wrote:
->> The current approach to handling DP on bridge-enabled platforms requires
->> a chain of DP bridges up to the USB-C connector. Register a last DRM
->> bridge for such chain.
->>
->> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/usb/typec/tcpm/Kconfig                |  1 +
->>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 37 +++++++++++++++++++
->>   2 files changed, 38 insertions(+)
->>
->> diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
->> index 5d393f520fc2..0b2993fef564 100644
->> --- a/drivers/usb/typec/tcpm/Kconfig
->> +++ b/drivers/usb/typec/tcpm/Kconfig
->> @@ -79,6 +79,7 @@ config TYPEC_WCOVE
->>   config TYPEC_QCOM_PMIC
->>   	tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
->>   	depends on ARCH_QCOM || COMPILE_TEST
->> +	depends on DRM || DRM=n
->>   	help
->>   	  A Type-C port and Power Delivery driver which aggregates two
->>   	  discrete pieces of silicon in the PM8150b PMIC block: the
+
+
+On 8/16/2023 10:15 PM, Robert Marko wrote:
+> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
+> means that WDT being asserted or just trying to reboot will hang the board
+> in the debug mode and only pulling the power and repowering will help.
+> Some IPQ4019 boards like Google WiFI have it enabled as well.
 > 
-> Would it be an option to put the below in separate c file that you
-> just compile based on CONFIG_DRM?
+> Luckily, SDI can be disabled via an SCM call.
 > 
->          obj-$(CONFIG_TYPEC_QCOM_PMIC)           += qcom_pmic_tcpm.o
->          qcom_pmic_tcpm-y                        += qcom_pmic_typec.o \
->                                                     qcom_pmic_typec_port.o \
->                                                     qcom_pmic_typec_pdphy.o
->          ifneq ($(CONFIG_DRM),)
->                 qcom_pmic_tcpm-y                 += qcom_pmic_bridge_func.o
->          endif
+> So, lets use the boolean DT property to identify boards that have SDI
+> enabled by default and use the SCM call to disable SDI during SCM probe.
+> It is important to disable it as soon as possible as we might have a WDT
+> assertion at any time which would then leave the board in debug mode,
+> thus disabling it during SCM removal is not enough.
 > 
-> Thouse ifdefs in c file just look a bit rough to me.
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v3:
+> * Squashed ("firmware: qcom: scm: Add SDI disable support") and
+> ("firmware: qcom_scm: disable SDI if required")
+> ---
+>   drivers/firmware/qcom_scm.c | 29 +++++++++++++++++++++++++++++
+>   drivers/firmware/qcom_scm.h |  1 +
+>   2 files changed, 30 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 06fe8aca870d..de9d1a11d097 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -403,6 +403,29 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+>   }
+>   EXPORT_SYMBOL_GPL(qcom_scm_set_remote_state);
+>   
+> +static int qcom_scm_disable_sdi(void)
+> +{
+> +	int ret;
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_BOOT,
+> +		.cmd = QCOM_SCM_BOOT_SDI_CONFIG,
+> +		.args[0] = 1, /* Disable watchdog debug */
+> +		.args[1] = 0, /* Disable SDI */
+> +		.arginfo = QCOM_SCM_ARGS(2),
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +	struct qcom_scm_res res;
+> +
+> +	ret = qcom_scm_clk_enable();
+> +	if (ret)
+> +		return ret;
+> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
 
-+1 if that's possible.
+Would you not be wanting this call to be atomic ?
 
-Sounds nice.
+> +
+> +	qcom_scm_clk_disable();
+> +
+> +	return ret ? : res.result[0];
+> +}
+> +
+>   static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>   {
+>   	struct qcom_scm_desc desc = {
+> @@ -1468,6 +1491,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>   	if (download_mode)
+>   		qcom_scm_set_download_mode(true);
+>   
+> +	/*
+> +	 * Disable SDI if indicated by DT that it is enabled by default.
+> +	 */
+> +	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
+> +		qcom_scm_disable_sdi();
 
----
-bod
+Why don't we do this call in qcom_scm_shutdown()
+also does it not conflict with above download_mode
+we have enabled download mode but disabling SDI
+means (hard reset) and will not be collecting
+crash dump?
 
+-Mukesh
+
+> +
+>   	return 0;
+>   }
+>   
+> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> index e6e512bd57d1..7b68fa820495 100644
+> --- a/drivers/firmware/qcom_scm.h
+> +++ b/drivers/firmware/qcom_scm.h
+> @@ -80,6 +80,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>   #define QCOM_SCM_SVC_BOOT		0x01
+>   #define QCOM_SCM_BOOT_SET_ADDR		0x01
+>   #define QCOM_SCM_BOOT_TERMINATE_PC	0x02
+> +#define QCOM_SCM_BOOT_SDI_CONFIG	0x09
+>   #define QCOM_SCM_BOOT_SET_DLOAD_MODE	0x10
+>   #define QCOM_SCM_BOOT_SET_ADDR_MC	0x11
+>   #define QCOM_SCM_BOOT_SET_REMOTE_STATE	0x0a
