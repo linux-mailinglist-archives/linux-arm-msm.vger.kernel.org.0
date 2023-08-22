@@ -2,82 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B7A278442A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 16:29:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EF07784439
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 16:31:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236695AbjHVO3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 10:29:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32856 "EHLO
+        id S236735AbjHVObD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 10:31:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236694AbjHVO3V (ORCPT
+        with ESMTP id S236727AbjHVObD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 10:29:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61DBCC6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 07:29:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 545D565931
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 14:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B4BC433CA;
-        Tue, 22 Aug 2023 14:29:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692714556;
-        bh=/oRO8tGRBpVCWe3MdpLqdfhWpLbtOHmnqujYSWseS7A=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=LA60ROlNtx5Z7R+ttVGZux7+k+mjl5EYzYLEJ5QheAjsjIoI3/YlNIimB34t6qUlI
-         BNRk/2Z3M1aX4V8Slyr3zStPy52yuXXaIoHAla/x2wU+pFfhGReapKA03bMSZ2yS0J
-         AUeyIG1Nz4xWO69OAb7E/51Ose89o0LlIRjELDSfc7Sr1Lb3KeCUrYfAsWYo+RaMI2
-         1HC2PdtcZmhJpfh3R79Blac1GMSx9I0j2ZldaS+u4fvb3OBjCQJA+ofVNoeL04S75z
-         mwWyrLNDbixrh2necaa4Z9uaOJDvdf5r0sS8qaZJ6Nrln+9Xmh6xnzyKkrrZo2wdL9
-         XTE9H5K5oSPig==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-In-Reply-To: <20230820235813.562284-1-dmitry.baryshkov@linaro.org>
-References: <20230820235813.562284-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] phy: qcom-qmp-combo: fix clock probing
-Message-Id: <169271455366.280543.14057160725064934514.b4-ty@kernel.org>
-Date:   Tue, 22 Aug 2023 19:59:13 +0530
+        Tue, 22 Aug 2023 10:31:03 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8D21BE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 07:31:01 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bba6fc4339so70868501fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 07:31:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692714659; x=1693319459;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zQY2z/8DJ4gSKxxc4AdRVnHLxL4JC0hsev4G9wWb9yg=;
+        b=Z+7UN2nnUmH3YrNYi1IFf53GcDIguYVAqcZtc+V+ilcFJZ5uvZsAkRtYyJnbMpxchm
+         eAzBMVeocfS30BoOh+cWdMf6xm+Kp55zRnYnyUsN2VxgCaH8VT/s5st+5ABNAMOrjpIL
+         Mg23FIkgcrpN/a+i+0/bCaO6/LusC3cC3EbxUwRmDG84Gjbn4eOsAkdO5+OIg5yFXBHW
+         l4SaBtRZ5GpI7YZOKksx07V0G1p8EhrY6Wtm1cNhs9peFQ7E4Bu2ZGONTMzyysrpr88e
+         eqLYIJZEtyPbMKG/mkOjcuKBlE9YJiGlQ+RRwcf9hNNcevE45bCPSudgtb49k454Og0U
+         Xu0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692714659; x=1693319459;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zQY2z/8DJ4gSKxxc4AdRVnHLxL4JC0hsev4G9wWb9yg=;
+        b=hU6Lpob6aZxHufootoVyhuGtI6EHp2rjzG2X2f39wA+GqML0sJ9q6Dn+b+ynT/xtD8
+         +gYzJGQOvcOBnITHKbNfim8nINPoFjnsOL16gTCVfq1Qz2ybcYez8r2jIqXKdAUY53Fr
+         uQjTUcRL6wNhSVlnAJdh/nrOrxTRTbXAjTXlDeWniDLh72V7/SWyu/eI046OArFKQsPc
+         e3IK1Vj1PQpOsCFz7OF5cNOZaQ7Y/53mQfdX9VISG5Wmp0WFX+RzNV7ffxxKfM59d3rA
+         wKpc+0UysoM2KOAX1IKHF96oqL1hCPMMf9boEv7nS8DPn95uJ/DbHhopaXZ+FIT3eRQx
+         wzUQ==
+X-Gm-Message-State: AOJu0YwhDbxV8t+tCzHwXsRQa8XcLSmq/pFDgD6POaFGiDY8BALiVCp6
+        +F3h5HZYNijFJol/Nj36QTs9aLfGi5jrS1M0qRIfaw==
+X-Google-Smtp-Source: AGHT+IEw5+7JN79CpjhT9kb3aj0Npx4GLjYvggmS5CHZ/pP+4Z0QWKsneMBcobtAPr4tCk4UoeGcbg==
+X-Received: by 2002:a2e:b164:0:b0:2bb:bf81:70f8 with SMTP id a4-20020a2eb164000000b002bbbf8170f8mr6260950ljm.48.1692714659386;
+        Tue, 22 Aug 2023 07:30:59 -0700 (PDT)
+Received: from [192.168.1.101] (abyk189.neoplus.adsl.tpnet.pl. [83.9.30.189])
+        by smtp.gmail.com with ESMTPSA id j21-20020a2e8015000000b002b6d7682050sm2102013ljg.89.2023.08.22.07.30.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 07:30:59 -0700 (PDT)
+Message-ID: <c016d9ac-da33-4a0b-8684-ab7b4b50ebe3@linaro.org>
+Date:   Tue, 22 Aug 2023 16:30:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916/39-samsung-a2015: Add flash LED
+Content-Language: en-US
+To:     Raymond Hackley <raymondhackley@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230822140407.3316-1-raymondhackley@protonmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230822140407.3316-1-raymondhackley@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Mon, 21 Aug 2023 02:58:13 +0300, Dmitry Baryshkov wrote:
-> During rebase of qcom-qmp-combo series a call to devm_clk_bulk_get_all()
-> got moved by git from qmp_combo_parse_dt_legacy() to
-> phy_dp_clks_register(). This doesn't have any serious effect, since the
-> clocks will be set in both legacy and non-legacy paths. However let's
-> move it back to place anyway, to prevent the driver from fetching clocks
-> twice.
+On 22.08.2023 16:07, Raymond Hackley wrote:
+> The phones listed below have Richteck RT5033 LED, which has GPIO pin
+> configurations similar to SGM3140 Flash LED driver.
+> Add it to the device trees.
 > 
-> [...]
+> - Samsung Galaxy A3/A5/A7 2015
+> - Samsung Galaxy E5/E7
+> - Samsung Galaxy Grand Max
+> 
+> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+> ---
+What about the other subdevices registered with the RT5033 MFD?
 
-Applied, thanks!
-
-[1/1] phy: qcom-qmp-combo: fix clock probing
-      commit: b83eb8ba2ab9551217ed36320b8999db2f351e57
-
-Best regards,
--- 
-~Vinod
-
-
+Konrad
