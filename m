@@ -2,146 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F875784148
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 14:55:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06D8878423A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 15:39:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235857AbjHVMz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 08:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53912 "EHLO
+        id S234035AbjHVNjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 09:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235826AbjHVMz4 (ORCPT
+        with ESMTP id S232098AbjHVNju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 08:55:56 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77F3CCD0;
-        Tue, 22 Aug 2023 05:55:54 -0700 (PDT)
-Received: from [IPV6:2a01:e0a:120:3210:3563:6666:ae23:a4c4] (unknown [IPv6:2a01:e0a:120:3210:3563:6666:ae23:a4c4])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 4F1A2660720C;
-        Tue, 22 Aug 2023 13:55:52 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1692708952;
-        bh=zXRypGU5FsRfhkFlbeXKbtBhVbkG+5Y4xfAintMySxw=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=ARcDBLfBysC7onBBYtCrspJOHt8EjSFAYAgeuylL762rhXnUM4p5fvNTe7DvIRXPT
-         BSHTBxBQKj1T6VjIPUWTrKxwyTUoLQXcrL8j4Z5ocRtVmmuIpCUrT4P+lahDjflprW
-         LecaZRMcz4V9esjesDljvzQ/XJ+qtAnNsTL3b2ndkaKpdBbtE/zTpCaphUPYhpo9T1
-         gw/LfuDvfdNI6znMPbQze6xvhJPs8I9GTN1hah3HQIOFL7eJ1s4gabuu8aSLCBqV89
-         b+hiQVys4wFCRGeKoYYZab+W1908q6RRSKmhV9D5SqPRbghXNrdpw4/PB5Ap7Irp00
-         khZZl03hn60LA==
-Message-ID: <37dec78e-462c-b7a4-1acb-253520e47c1e@collabora.com>
-Date:   Tue, 22 Aug 2023 14:55:49 +0200
+        Tue, 22 Aug 2023 09:39:50 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1311018B;
+        Tue, 22 Aug 2023 06:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1692711589; x=1724247589;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=y1OTxgbGeAr+sq4oKE3VCclLzYN1bhwn+vqbXNQvBR8=;
+  b=gWpBsd0iORaWIbpxLtMrxQEsRwjJXXUYi/Tb7qLUDMFLoKRyVOl4RsgU
+   tAzgpYCk5uZmt82Ftjn68iq8kacD3XHdOGD/XbfroXlojHZlAJmPibnab
+   De0yxrk7mIi+sjleA4v4poV+UU6tVTZxWPWxKSxNRQyhVQRgCKFXq42Hp
+   esU7eJIvzlPLZiYUOXb6i01FRJKzX3mmwoXWc98Qo+kzEo6W1WQ542q0o
+   xPWXZnSQxp4p00fdomVoJmC5tAYPY1pFpPdDlBoBRuH4PFyzy0/i79BYf
+   wv4hkLM03K5vu4xG9IURFdiz80Ld2QlS1Ns7UudCb37AAUKlJexafaUpv
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="440245483"
+X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
+   d="scan'208";a="440245483"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2023 06:39:48 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.01,202,1684825200"; 
+   d="scan'208";a="879957267"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 22 Aug 2023 06:39:49 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 22 Aug 2023 16:39:43 +0300
+Date:   Tue, 22 Aug 2023 16:39:43 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 1/2] usb: typec: altmodes/displayport: add support for
+ embedded DP cases
+Message-ID: <ZOS6n0PFkXgsfYly@kuha.fi.intel.com>
+References: <20230817150824.14371-1-dmitry.baryshkov@linaro.org>
+ <20230817150824.14371-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 05/10] media: verisilicon: Store chroma and motion
- vectors offset
-Content-Language: en-US
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, mchehab@kernel.org,
-        tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230705121056.37017-1-benjamin.gaignard@collabora.com>
- <20230705121056.37017-6-benjamin.gaignard@collabora.com>
- <1b87f062-9d5e-fa8e-3d3b-e766362c6e3b@xs4all.nl>
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-In-Reply-To: <1b87f062-9d5e-fa8e-3d3b-e766362c6e3b@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230817150824.14371-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Aug 17, 2023 at 06:08:23PM +0300, Dmitry Baryshkov wrote:
+> In the embedded cases, the DisplayPort connector is handled by the TCPM
+> itself. It was proposed to add the "displayport" OF property to the DT
+> bindings, but it  was rejected in favour of properly describing the
+> electrical signal path using of_graph.
+> 
+> Fallback to the controller fwnode for HPD notifications to
+> support such usecases without requiring additional DT properties.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Le 21/08/2023 à 16:41, Hans Verkuil a écrit :
-> On 05/07/2023 14:10, Benjamin Gaignard wrote:
->> Store computed values of chroma and motion vectors offset because
->> they depends on width and height values which change if the resolution
->> change.
-> Is this a bug fix? Does this patch belong in this series?
->
-> Same actually for the next few verisilicon patches. Shouldn't they be
-> part of a separate 'fixes' patch series? It's confusing to see them
-> in this series.
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-They fix bugs that happens only when VP9 resolution change without doing stream off/on
-that why they are in this series.
+> ---
+>  drivers/usb/typec/altmodes/displayport.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+> index bc4af130940d..a4cf1045b535 100644
+> --- a/drivers/usb/typec/altmodes/displayport.c
+> +++ b/drivers/usb/typec/altmodes/displayport.c
+> @@ -594,7 +594,10 @@ int dp_altmode_probe(struct typec_altmode *alt)
+>  	alt->ops = &dp_altmode_ops;
+>  
+>  	fwnode = dev_fwnode(alt->dev.parent->parent); /* typec_port fwnode */
+> -	dp->connector_fwnode = fwnode_find_reference(fwnode, "displayport", 0);
+> +	if (fwnode_property_present(fwnode, "displayport"))
+> +		dp->connector_fwnode = fwnode_find_reference(fwnode, "displayport", 0);
+> +	else
+> +		dp->connector_fwnode = fwnode_handle_get(fwnode); /* embedded DP */
+>  	if (IS_ERR(dp->connector_fwnode))
+>  		dp->connector_fwnode = NULL;
+>  
+> -- 
+> 2.39.2
 
-This one, for example, is useless if the resolution change on a keyframe because the
-frame will have the same resolution than the current one but is need to store resolution
-of each frames if the resize happens between keyframes.
-
-Benjamin
-
->
-> Regards,
->
-> 	Hans
->
->> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->> ---
->>   drivers/media/platform/verisilicon/hantro.h            | 2 ++
->>   drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c | 6 ++++--
->>   2 files changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
->> index c8a3cf10cc64..53be00142473 100644
->> --- a/drivers/media/platform/verisilicon/hantro.h
->> +++ b/drivers/media/platform/verisilicon/hantro.h
->> @@ -320,6 +320,8 @@ struct hantro_vp9_decoded_buffer_info {
->>   	/* Info needed when the decoded frame serves as a reference frame. */
->>   	unsigned short width;
->>   	unsigned short height;
->> +	size_t chroma_offset;
->> +	size_t mv_offset;
->>   	u32 bit_depth : 4;
->>   };
->>   
->> diff --git a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
->> index 6fc4b555517f..6db1c32fce4d 100644
->> --- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
->> +++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
->> @@ -158,9 +158,11 @@ static void config_output(struct hantro_ctx *ctx,
->>   
->>   	chroma_addr = luma_addr + chroma_offset(ctx, dec_params);
->>   	hantro_write_addr(ctx->dev, G2_OUT_CHROMA_ADDR, chroma_addr);
->> +	dst->vp9.chroma_offset = chroma_offset(ctx, dec_params);
->>   
->>   	mv_addr = luma_addr + mv_offset(ctx, dec_params);
->>   	hantro_write_addr(ctx->dev, G2_OUT_MV_ADDR, mv_addr);
->> +	dst->vp9.mv_offset = mv_offset(ctx, dec_params);
->>   }
->>   
->>   struct hantro_vp9_ref_reg {
->> @@ -195,7 +197,7 @@ static void config_ref(struct hantro_ctx *ctx,
->>   	luma_addr = hantro_get_dec_buf_addr(ctx, &buf->base.vb.vb2_buf);
->>   	hantro_write_addr(ctx->dev, ref_reg->y_base, luma_addr);
->>   
->> -	chroma_addr = luma_addr + chroma_offset(ctx, dec_params);
->> +	chroma_addr = luma_addr + buf->vp9.chroma_offset;
->>   	hantro_write_addr(ctx->dev, ref_reg->c_base, chroma_addr);
->>   }
->>   
->> @@ -238,7 +240,7 @@ static void config_ref_registers(struct hantro_ctx *ctx,
->>   	config_ref(ctx, dst, &ref_regs[2], dec_params, dec_params->alt_frame_ts);
->>   
->>   	mv_addr = hantro_get_dec_buf_addr(ctx, &mv_ref->base.vb.vb2_buf) +
->> -		  mv_offset(ctx, dec_params);
->> +		  mv_ref->vp9.mv_offset;
->>   	hantro_write_addr(ctx->dev, G2_REF_MV_ADDR(0), mv_addr);
->>   
->>   	hantro_reg_write(ctx->dev, &vp9_last_sign_bias,
+-- 
+heikki
