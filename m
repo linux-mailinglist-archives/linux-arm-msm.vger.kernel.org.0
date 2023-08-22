@@ -2,85 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52B5F7840F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 14:39:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C909E784115
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 14:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229525AbjHVMjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 08:39:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59372 "EHLO
+        id S233519AbjHVMoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 08:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235038AbjHVMjr (ORCPT
+        with ESMTP id S235771AbjHVMoC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 08:39:47 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91231BD;
-        Tue, 22 Aug 2023 05:39:45 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MBQbx0023635;
-        Tue, 22 Aug 2023 12:39:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=ShQtI3Qulu5M7ZDAEBurAe4TC7mDadyAhyOEXcxg10o=;
- b=o6IKlo5vlwleMKMRQlemEPSsm7BXKPCgheGYvW7eFKCOVfoeURR0FmcZfoE1SjxA2OUY
- cbCAe99cLqM4jmZxW9dKpFJP2WMl6OeIPXOTf0ckI5coS4hLmYjKR5pm8y0iW2TXtb7I
- YGsU9mzlAqPq/au1pm/fw6rEDcNJSBISQu1AngBRLTeg5t6XQ3VmcE0XXgH/ysl5YQ14
- 4MWmx4wAVb0/A8wtuUsXYA4RpLuCqTlp1OtgebxI74m/bcRoU/Oyjmubj11MPwT48XFb
- inlLurfY41ieIs4kZSOsmZUSUwZf9/2qiIksMwyBOf63HEIVp8uG6/jo/w6VCN1d1TQP uA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smgeq19sr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 12:39:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MCdep2032516
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 12:39:40 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 22 Aug 2023 05:39:36 -0700
-Date:   Tue, 22 Aug 2023 18:09:33 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Ninad Naik <quic_ninanaik@quicinc.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <psodagud@quicinc.com>,
-        <quic_ppareek@quicinc.com>, <quic_kprasan@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>
+        Tue, 22 Aug 2023 08:44:02 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C08A6CC6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 05:43:58 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fee51329feso18453045e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 05:43:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692708237; x=1693313037;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=asFXeio4Q7KxDvORZNcBvXQNYxRi5kCfy3GURsBj434=;
+        b=qZSqwF8UDYflQPjyMPj/86MOxnvyuiNlANd1ZVjXDb1iUhAB6vCuHB8nBsD6TqLK2w
+         Lf/fU48Kp2KtllPq0VPDzDzYsGeODQ12C9IkbbiFgvdYTMhC4Qz9W8UCHoXOh/wxkjkR
+         sGCgkNXEvQPiEH88b58c35MxkJKonu75v8kX1grteF4ZG1MlTPPoHfkDKSQidavpkzRH
+         B1cbvx0IITIsnfThPWNUi5TPghF+DbAvjbsCq/E/mHGaCAqD/EnTYaNMijrQKZ5FnFGs
+         1OfNaeIJ4p9PXIKiiDjECrcEaPKlX0R4CKUpIUrsrgJxm+ZuLagsZGegrhEeIk2reuWJ
+         cciw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692708237; x=1693313037;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=asFXeio4Q7KxDvORZNcBvXQNYxRi5kCfy3GURsBj434=;
+        b=abSCa86uYio4MY0S0fQnWWILQFB1BF4SX0L83Zsmi/TrE1XPn4QSAMojTT4qN7ADQQ
+         20nDItBaeoARgH2uFnfGuNsN2wO1wstk1aimzIjDugUSEY1sk4PfR9UDhNMar8arozwo
+         uZ9nNhthMPkDvfOTLmbBgylfDgDWN6as/Bhhsbl+gDNbGmWQ/TxgQQLeM155VUHxEwjL
+         FqNW9rvy+D4cxtgHKU9tfLWawkCOVtBK8AIXq1gdlZXF0pQ2Lbj9RTLSXj2vxV6KYQEf
+         9KXHcC2SoKZE1vvZkoFYJ/6BdjRkt1E3C4Qf6bpSkL4zL/e6v8TUFcygayu4nZDPDvGS
+         ZQlA==
+X-Gm-Message-State: AOJu0YxvYWkmjCkkxB9LMe+/hjaS3gRJzzJN5KkYY3ReU7PSa0m+yFgF
+        2ZOX07qeq59099lGwYSnat+gYtgVmhYEokYXFXw=
+X-Google-Smtp-Source: AGHT+IF2A5ERxA2sXhFxPHH9CwfQrFW7ECH+rY2XCvEYA3zuAKW3D7enF19H4chNned813IzMHcbqA==
+X-Received: by 2002:a7b:c459:0:b0:3fa:aeac:e978 with SMTP id l25-20020a7bc459000000b003faaeace978mr7330365wmi.0.1692708237172;
+        Tue, 22 Aug 2023 05:43:57 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id c1-20020a7bc001000000b003fee567235bsm11643004wmb.1.2023.08.22.05.43.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 05:43:56 -0700 (PDT)
+Message-ID: <39ce6d07-7692-7194-b153-e73ba7fb687c@linaro.org>
+Date:   Tue, 22 Aug 2023 13:43:55 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
 Subject: Re: [RFC PATCH 1/1] soc: qcom: Add driver to read secondary
  bootloader (XBL) log
-Message-ID: <d0f663e7-cee4-451e-9b28-99ba7e6f674a@quicinc.com>
+Content-Language: en-US
+To:     Ninad Naik <quic_ninanaik@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org
+Cc:     psodagud@quicinc.com, quic_ppareek@quicinc.com,
+        quic_kprasan@quicinc.com, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel@quicinc.com
 References: <20230822121512.8631-1-quic_ninanaik@quicinc.com>
  <20230822121512.8631-2-quic_ninanaik@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 In-Reply-To: <20230822121512.8631-2-quic_ninanaik@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9jsfzIm52FOzxHnwb7NhOapuUXg_PkiX
-X-Proofpoint-ORIG-GUID: 9jsfzIm52FOzxHnwb7NhOapuUXg_PkiX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_11,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308220095
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 22, 2023 at 05:45:12PM +0530, Ninad Naik wrote:
+On 22/08/2023 13:15, Ninad Naik wrote:
 > Qualcomm secondary bootloader (XBL) boot log holds information to
 > identify various firmware configuration currently set on the SoC.
 > The XBL log is stored in a predefined reserved memory region.
@@ -91,24 +90,81 @@ On Tue, Aug 22, 2023 at 05:45:12PM +0530, Ninad Naik wrote:
 > and print the XBL logs to console.
 > 
 > User can use the below command to print XBL log to console:
->         cat /sys/kernel/debug/xbl_log
+>          cat /sys/kernel/debug/xbl_log
 > 
 > Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
 > ---
-
-For a single patch, cover letter may not be needed. The under cut
-portion (this area) of the patch can be used to present the additional
-details.
-
->  drivers/soc/qcom/Kconfig        |  13 +++
->  drivers/soc/qcom/Makefile       |   1 +
->  drivers/soc/qcom/dump_xbl_log.c | 139 ++++++++++++++++++++++++++++++++
->  3 files changed, 153 insertions(+)
->  create mode 100644 drivers/soc/qcom/dump_xbl_log.c
+>   drivers/soc/qcom/Kconfig        |  13 +++
+>   drivers/soc/qcom/Makefile       |   1 +
+>   drivers/soc/qcom/dump_xbl_log.c | 139 ++++++++++++++++++++++++++++++++
+>   3 files changed, 153 insertions(+)
+>   create mode 100644 drivers/soc/qcom/dump_xbl_log.c
 > 
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 715348869d04..4489d37e924d 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -291,4 +291,17 @@ config QCOM_INLINE_CRYPTO_ENGINE
+>   	tristate
+>   	select QCOM_SCM
+>   
+> +config QCOM_DUMP_XBL_LOG
+> +	tristate "Qualcomm driver to print XBL logs on console from debugfs"
+> +	help
+> +	  This driver is used to capture secondary bootloader (xbl) log
+> +	  from a reserved memory region and provide a debugfs entry to read
+> +	  logs captured from this memory region and print them on console.
+> +	  User can use below command to print the xbl log on console:
+> +
+> +                cat /sys/kernel/debug/xbl_log
+> +
+> +	  These logs help to identify firmware configuration information on
+> +	  the SoC. The name of the built module will be dump_xbl_log
+> +
+>   endmenu
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index bbca2e1e55bb..aac088a1a0b6 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -32,3 +32,4 @@ obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+>   obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+>   qcom_ice-objs			+= ice.o
+>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+> +obj-$(CONFIG_QCOM_DUMP_XBL_LOG)	+= dump_xbl_log.o
+> diff --git a/drivers/soc/qcom/dump_xbl_log.c b/drivers/soc/qcom/dump_xbl_log.c
+> new file mode 100644
+> index 000000000000..ea335a5e660b
+> --- /dev/null
+> +++ b/drivers/soc/qcom/dump_xbl_log.c
+> @@ -0,0 +1,139 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + */
 
-[...]
+2023
 
+> +
+> +#include <linux/init.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/memblock.h>
+> +#include <linux/of_address.h>
+> +#include <linux/err.h>
+> +#include <linux/debugfs.h>
+
+It would be nice to alphetise this include list.
+
+> +struct xbl_log_data {
+> +	struct device *dev;
+> +	size_t buf_size;
+> +	void __iomem *xbl_buf;
+> +	struct dentry *dbg_file;
+> +	struct debugfs_blob_wrapper dbg_data;
+> +};
+> +
 > +static int map_addr_range(struct device_node **parent, const char *name,
 > +			  struct xbl_log_data *xbl_data)
 > +{
@@ -163,11 +219,6 @@ details.
 > +		return -ENODEV;
 > +	}
 > +
-
-You would need to present the Device Tree binding document for this. For
-ex: pls see 
-Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml 
-
 > +	ret = map_addr_range(&parent, "uefi-log", xbl_data);
 > +	if (ret)
 > +		goto put_node;
@@ -200,6 +251,8 @@ Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
 > +	.driver = {
 > +		   .name = "xbl-log",
 > +		   },
+Is that indentation correct ?
+
 > +};
 > +
 > +static struct platform_device xbl_log_device = {
@@ -219,12 +272,6 @@ Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
 > +	return ret;
 > +}
 > +
-
-The platform device registration, the resource parsing can be completely
-avoided by adding your compatible entry to reserved_mem_matches
-structure defined in drivers/of/platform.c . There are some Qualcomm SoC
-devices also present in that list.
-
 > +static void __exit xbl_log_exit(void)
 > +{
 > +	platform_device_unregister(&xbl_log_device);
@@ -236,6 +283,6 @@ devices also present in that list.
 > +
 > +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) XBL log driver");
 > +MODULE_LICENSE("GPL");
-> -- 
-> 2.41.0
-> 
+
+---
+bod
