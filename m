@@ -2,89 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89FFF7838F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 06:54:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6B40783943
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 07:27:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231899AbjHVEyc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 00:54:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58912 "EHLO
+        id S232587AbjHVF1d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 01:27:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjHVEyc (ORCPT
+        with ESMTP id S232747AbjHVF13 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 00:54:32 -0400
+        Tue, 22 Aug 2023 01:27:29 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8111B11C;
-        Mon, 21 Aug 2023 21:54:30 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37M4nRcQ024823;
-        Tue, 22 Aug 2023 04:54:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=SAs9CDXh/Luh+5xE/9okTidiVvDMJtvJVDgPqA5oHuQ=;
- b=YcIBcccW86J5fKzOREGtMemu+Tjsf5CWTzYMBC3KoPYVch+0FRYFn9AjdXs7souHMv2b
- QPqhXEtiee0ZG7NRdly+9Tq5Vn2lbm6wIJ4Gc5Dx8knVsgeCpzx4vfTH68UlBzUQHu9I
- 321JrsW/00/xReybIBy4946HLgvcDaczUefMcJwHKWm3YQtpGhaX2qGud3Y6ucRsD7wF
- afPCv3lrsJr92jd3dS8dt/dmCjnMpJFCfaGDKWe5jPeDppeJyDrtP4xua8lLtqomQAM5
- ZEBp/eBgA4TkgiNrhK0TKeHC+xKbFTX1iwumjMbtYXF/ktD+/1ZVftIHvkqH66KzE2MI 3A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smf3q8qeb-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675BA1A7;
+        Mon, 21 Aug 2023 22:27:25 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37M5I7mU001620;
+        Tue, 22 Aug 2023 05:26:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=KzAhMU/uDeqHg1RHvYfL7RoorWLuRptS//qkKXlKt1I=;
+ b=NEUvcf20p7Mx41xygYdeKI7jesJNwaBHHxLy825ziI9MKRVh4s9CF0KcdDrgCnEOYlXF
+ KQfcC8IIITknhi2LaYJcxBx/t37fYbsmvA+L0imaPX4kZRNQF692s6BmhnnxtVhGmIm3
+ rAhkt5KAoqE5bV6ob6CWJX1YOQczNYGxFmdD4ng1cS7sisJDEazyvibZQJx/aPkEkBcy
+ fTN0ih/sq9YT9mb7UsgdRZFxrzrNBVvTGDXkY0iL1oksSoThv/cLj0p/Rg72Pr5t7jZm
+ BrsHYRNSz5s+FUOP6UoCK4Uzyn7p0nAEqx9sRVPdtIYdM3XXbMBrrFdnN+YAGtubW1dm UQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sm5mct666-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 04:54:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37M4rwqo032361
+        Tue, 22 Aug 2023 05:26:39 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37M5QcY9006980
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 04:53:59 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+        Tue, 22 Aug 2023 05:26:38 GMT
+Received: from taozha-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Mon, 21 Aug 2023 21:53:51 -0700
-Date:   Tue, 22 Aug 2023 10:23:48 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        <manivannan.sadhasivam@linaro.org>, <helgaas@kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>,
-        <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v3 3/3] PCI: qcom: Add OPP support for speed based
- performance state of RPMH
-Message-ID: <a0465222-6e03-4fef-a662-4a2c22240d91@quicinc.com>
-References: <1692627343-4380-1-git-send-email-quic_krichai@quicinc.com>
- <1692627343-4380-4-git-send-email-quic_krichai@quicinc.com>
- <95078a8b-857d-4900-8737-a495212db935@quicinc.com>
- <162b135d-7e27-bf3b-df8f-45e2a5e73897@quicinc.com>
+ 15.2.1118.30; Mon, 21 Aug 2023 22:26:34 -0700
+From:   Tao Zhang <quic_taozha@quicinc.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Tao Zhang <quic_taozha@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+Subject: [PATCH v8 00/13] Add support to configure TPDM DSB subunit
+Date:   Tue, 22 Aug 2023 13:26:00 +0800
+Message-ID: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <162b135d-7e27-bf3b-df8f-45e2a5e73897@quicinc.com>
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: C3fxsfgQuSMU2ac_LgQk342vUF_KY1EZ
-X-Proofpoint-ORIG-GUID: C3fxsfgQuSMU2ac_LgQk342vUF_KY1EZ
+X-Proofpoint-GUID: ScHXHRKJT1iTCnm3TL64W_5Ld86tDVo7
+X-Proofpoint-ORIG-GUID: ScHXHRKJT1iTCnm3TL64W_5Ld86tDVo7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_02,2023-08-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- lowpriorityscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- bulkscore=0 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2308220039
+ definitions=2023-08-22_03,2023-08-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
+ malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0 bulkscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308220043
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -95,123 +91,289 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+linux-pm and OPP maintainers
+Introduction of TPDM DSB subunit
+DSB subunit is responsible for creating a dataset element, and is also
+optionally responsible for packing it to fit multiple elements on a
+single ATB transfer if possible in the configuration. The TPDM Core
+Datapath requests timestamps be stored by the TPDA and then delivering
+ATB sized data (depending on ATB width and element size, this could
+be smaller or larger than a dataset element) to the ATB Mast FSM.
 
-On Tue, Aug 22, 2023 at 09:57:41AM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> On 8/22/2023 9:33 AM, Pavan Kondeti wrote:
-> > On Mon, Aug 21, 2023 at 07:45:43PM +0530, Krishna chaitanya chundru wrote:
-> > > Before link training vote for the maximum performance state of RPMH
-> > > and once link is up, vote for the performance state based upon the link
-> > > speed.
-> > > 
-> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > ---
-> > >   drivers/pci/controller/dwc/pcie-qcom.c | 47 ++++++++++++++++++++++++++++++++++
-> > >   1 file changed, 47 insertions(+)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index 7a87a47..c57ca1a 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -22,6 +22,7 @@
-> > >   #include <linux/of_device.h>
-> > >   #include <linux/of_gpio.h>
-> > >   #include <linux/pci.h>
-> > > +#include <linux/pm_opp.h>
-> > >   #include <linux/pm_runtime.h>
-> > >   #include <linux/platform_device.h>
-> > >   #include <linux/phy/pcie.h>
-> > > @@ -1357,6 +1358,32 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
-> > >   	return 0;
-> > >   }
-> > > +static void qcom_pcie_opp_update(struct qcom_pcie *pcie)
-> > > +{
-> > > +	struct dw_pcie *pci = pcie->pci;
-> > > +	struct dev_pm_opp *opp;
-> > > +	u32 offset, status;
-> > > +	int speed, ret = 0;
-> > > +
-> > > +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> > > +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-> > > +
-> > > +	/* Only update constraints if link is up. */
-> > > +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
-> > > +		return;
-> > > +
-> > What happens if link is not up during probe? We set max vote before
-> > this, should not we bring it down in suspend and vote it back again in
-> > resume?
-> 
-> ok, I will set to lower value in the suspend path if the link is not up.  If
-> the link is already up driver will not
-> 
-> do any modifications.
-> 
-> > 
-> > > +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
-> > > +
-> > > +	opp = dev_pm_opp_find_level_exact(pci->dev, speed);
-> > > +	if (!IS_ERR(opp)) {
-> > > +		ret = dev_pm_opp_set_opp(pci->dev, opp);
-> > > +		if (ret)
-> > > +			dev_err(pci->dev, "Failed to set opp: %d\n", ret);
-> > > +		dev_pm_opp_put(opp);
-> > > +	}
-> > Since you added an error message, make it more useful by printing the
-> > opp level also. dev_pm_opp_get_level().
-> Sure I will add this in next patch.
-> > 
-> > > +
-> > > +}
-> > > +
-> > >   static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
-> > >   {
-> > >   	struct dw_pcie *pci = pcie->pci;
-> > > @@ -1439,8 +1466,10 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
-> > >   static int qcom_pcie_probe(struct platform_device *pdev)
-> > >   {
-> > >   	const struct qcom_pcie_cfg *pcie_cfg;
-> > > +	unsigned long max_freq = INT_MAX;
-> > >   	struct device *dev = &pdev->dev;
-> > >   	struct qcom_pcie *pcie;
-> > > +	struct dev_pm_opp *opp;
-> > >   	struct dw_pcie_rp *pp;
-> > >   	struct resource *res;
-> > >   	struct dw_pcie *pci;
-> > > @@ -1511,6 +1540,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > >   	if (ret)
-> > >   		goto err_pm_runtime_put;
-> > > +	/* OPP table is optional */
-> > > +	ret = devm_pm_opp_of_add_table(dev);
-> > > +	if (ret && ret != -ENODEV) {
-> > > +		dev_err(dev, "Invalid OPP table in Device tree\n");
-> > > +		goto err_pm_runtime_put;
-> > > +	}
-> > > +
-> > > +	/* vote for max level in the opp table */
-> > > +	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
-> > > +	if (!IS_ERR(opp)) {
-> > > +		ret = dev_pm_opp_set_opp(dev, opp);
-> > > +		if (ret)
-> > > +			dev_err(pci->dev, "Failed to set opp: %d\n", ret);
-> > > +		dev_pm_opp_put(opp);
-> > > +	}
-> > > +
-> > This needs an update since you moved from frequency based voting to link
-> > speed based voting.
-> 
-> dev_pm_opp_find_freq_floor will give us the max the opp level opp we don't
-> have a similar API to get max opp-level
-> 
-> For that reason we are using this API.
-> 
+The DSB subunit must be configured prior to enablement. This series
+adds support for TPDM to configure the configure DSB subunit.
 
-Ok, thanks. I get that it is working. Would you be not knowing the exact
-level for the max speed supported? if that is unknown, I believe we have
-a use case for dev_pm_opp_find_level_floor() API. Adding the best people
-on this matter for thei valuable opinion/suggestions.
+Once this series patches are applied properly, the new tpdm nodes for
+should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
+which supports DSB subunit.
+e.g.
+root@qemuarm64:/sys/devices/platform/soc@0/6c08000.tpdm/tpdm1# ls -l
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 connections
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_edge
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_mode
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_msr
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_patt
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_patt_ts
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_patt_type
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_trig_patt
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_trig_ts
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_trig_type
+-rw-r--r--    1 root     root          4096 Jan  1 00:02 enable_source
+--w-------    1 root     root          4096 Jan  1 00:00 integration_test
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 power
+--w-------    1 root     root          4096 Jan  1 00:02 reset_dataset
+lrwxrwxrwx    1 root     root             0 Apr  5  2021 subsystem -> ../../../../../bus/coresight
+-rw-r--r--    1 root     root          4096 Apr  5  2021 uevent
+-r--r--r--    1 root     root          4096 Jan  1 00:00 waiting_for_supplier
 
-Thanks,
-Pavan
+We can use the commands are similar to the below to configure the
+TPDMs which support DSB subunit. Enable coresight sink first.
+echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+echo 1 > /sys/bus/coresight/devices/tpdm1/reset_dataset
+echo 0x3 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_idx
+echo 0x1 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_mask
+echo 0x0 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_val
+echo 1 > /sys/bus/coresight/devices/tpdm1/dsb_patt_ts
+echo 1 > /sys/bus/coresight/devices/tpdm1/dsb_patt_type
+echo 0 > /sys/bus/coresight/devices/tpdm1/dsb_trig_ts
+echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm1/dsb_patt/tpmr5
+echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm1/dsb_trig_patt/xpr2
+echo 1 > /sys/bus/coresight/devices/tpdm1/enable_source
+
+TPDM_DSB commit tree:
+https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/tpdm-dsb-v8
+https://git.codelinaro.org/clo/linux-kernel/coresight/-/commits/tpdm-dsb-v8
+
+Changes in V8:
+1. Refine the function "tpda_set_element_size" and rename it
+to "tpda_get_element_size" in the patch#4.
+-- Suzuki K Poulose
+2. Refine the functioin "tpda_enable_port" in the patch#4.
+-- Suzuki K Poulose
+3. Write a helper to check if the TPDM has DSB dataset in the
+patch#5.
+-- Suzuki K Poulose
+4. Move the function "tpdm_reset_datasets" to "datasets_setup"
+to call in the patch#5.
+-- Suzuki K Poulose
+5. Refine the comment of DSB in "tpdm_drvdata" in the patch#5.
+-- Suzuki K Poulose
+6. Refine the comments in the documents for this patch series.
+-- Suzuki K Poulose
+7. Adjust the code alignment in this patch series.
+-- Suzuki K Poulose
+8. Combine the mode related functions to one in the patch#8.
+-- Suzuki K Poulose
+9. Refine the R/W functions of "dsb_mode" in the patch#8.
+-- Suzuki K Poulose
+10. Adjust the macros of mode in the TPDM header file in the
+patch#8.
+-- Suzuki K Poulose
+11. Remove the unused code and fix the warnings in compiling
+for the patch#9.
+-- kernel test robot
+12. Use the following sysfs nodes to read/set edge control
+related value in the patch#9.
+dsb_edge/
+	\- ctrl_idx		-> Set the index number
+	\- ctrl_val		-> Set the edge control value
+	\- ctrl_mask	-> Set the edge control mask
+	\- edcr0 ... edcr15		-> Read the edge control value
+	\- edcmr0 ... edcmr7	-> Read the edge control mask
+-- Suzuki K Poulose
+13. Use the following sysfs nodes to read/set DSB trigger
+pattern value and mask in the patch#10.
+dsb_trig_patt/
+	\- xpr0 ... xpr15		-> (RW) Set/Get the value
+	\- xpmr0 ... xpmr7		-> (RW) Set/Get the mask
+-- Suzuki K Poulose
+14. Use the following sysfs nodes to read/set DSB pattern
+value and mask in the patch#11.
+dsb_patt/
+	\- tpr0 ... tpr15		-> (RW) Set/Get the value
+	\- tpmr0 ... tpmr7		-> (RW) Set/Get the mask
+-- Suzuki K Poulose
+15. Add "Acked-by" tag to the patch#12.
+-- Rob Herring
+16. Use the following sysfs nodes to read/set DSB MSR in
+the patch#13.
+dsb_msr/
+	\- msr0 ... msr31		-> (RW) Set/Get the value
+-- Suzuki K Poulose
+17. Create the maximal number of DSB MSR sysfs nodes if the
+TPDM supports DSB MSR. Write the values set by user space to
+the DSB MSR according to the number of MSR supported by the
+TPDM.
+-- Suzuki K Poulose
+
+Changes in V7:
+1. Since the "One value" limitation on SysFs file usage, add
+the nodes to read/write the index number for configuring the
+DSB TPDM. The following index number nodes are added.
+"dsb_edge_ctrl_idx" in the patch #9
+"dsb_trig_patt_idx" in the patch #10
+"dsb_patt_idx" in the patch #11
+"dsb_msr_idx" in the patch #13
+-- Suzuki K Poulose
+
+Changes in V6:
+1. Align the code to fix the styling issue.
+-- Suzuki K Poulose
+
+Changes in V5:
+1. Correct data type for DSB element size in dt-bindings patch.
+2. Refine the recursive function "tpda_set_element_size".
+-- Suzuki K Poulose
+3. Get return value of the function "__tpda_enable" in
+"tpda_enable".
+-- Suzuki K Poulose
+4. Refine the comments on "dsb_esize".
+-- Suzuki K Poulose
+5. Split the chage that introduce the subtype
+"SUBTYPE_SOURCE_TPDM" to Coresight driver.
+-- Suzuki K Poulose
+6. Inline the trigger type setting to "tpdm_enable_dsb" simply.
+-- Suzuki K Poulose
+7. Split the change that remove the needless CS_{UN,}LOCK in
+the function "tpdm_datasets_setup".
+-- Suzuki K Poulose
+8. Remove the disablement step in the reset node.
+-- Suzuki K Poulose
+9. Update the kernel version to 6.5 in the sysfs document.
+-- Suzuki K Poulose
+10. Remove the needless check in "tpdm_dsb_is_visible".
+-- Suzuki K Poulose
+11. Change the macro to mask the mode of DSB TPDM.
+-- Suzuki K Poulose
+12. Add a check to make sure "sysfs_emit_at" calling will not
+cause overflow.
+-- Suzuki K Poulose
+13. Change the macro to get "edge_ctrl" value.
+-- Suzuki K Poulose
+14. Remove the needless comments in the sysfs document.
+-- Suzuki K Poulose
+15. Replace "TPDM_DSB_MAX_PATT" with "drvdata->dsb->msr_num" in
+"dsb_msr_show".
+-- Suzuki K Poulose
+16. Update the check of MSR number in "dsb_msr_store".
+-- Suzuki K Poulose
+17. Write data to the MSR registers in the DSB TPDM enablement
+function.
+-- Suzuki K Poulose
+
+Changes in V4:
+1. Change the range of the property "qcom,dsb-element-size", and
+change the type to enumeration.
+-- Suzuki K Poulose, Krzysztof Kozlowski
+2. Change dsb_esize from 32 bits to 8 bits.
+-- Suzuki K Poulose
+3. Update the function tpda_set_element_size since James has
+updated the dependency series. Meanwhile, it will send out a
+warning if it detects more than one TPDM from the same TPDA
+input port.
+-- Suzuki K Poulose
+4. Add a source_sub_type for TPDM to distinguish TPDM from
+the other coresight source.
+-- Suzuki K Poulose
+5. Return error if the element size is not configured on
+devicetree in TPDA enablement.
+-- Suzuki K Poulose
+6. Move memory allocation from "tpdm_init_datasets" to
+"tpdm_datasets_setup". Rename "tpdm_init_datasets" as
+"tpdm_reset_datasets".
+-- Suzuki K Poulose
+7. Replace "coresight_disable" with "coresight_disable_source"
+to disable the TPDM in resetting.
+-- Suzuki K Poulose
+8. Make sure "drvdata" is not NULL pointer before using it.
+-- Suzuki K Poulose
+9. Change "set_dsb_cycacc_mode" to "set_dsb_test_mode" since
+cycle accurate mode is not supported on the current targets.
+It is replaced by test mode.
+10. Document the value of "dsb_mode".
+-- Suzuki K Poulose
+11. Macros are used to replace the formulas on dsb edge control
+nodes.
+-- Suzuki K Poulose
+12. Document the values of "dsb_trig_patt_val" and
+"dsb_trig_patt_mask".
+-- Suzuki K Poulose
+13. Combine two pattern related loops to one. And move DSB TIER
+register configurations to the new function "set_dsb_tier".
+-- Suzuki K Poulose
+14. Rename the property "qcom,dsb_msr_num" to "qcom,dsb-msrs-num".
+-- Suzuki K Poulose, Krzysztof Kozlowski
+
+Changes in V3:
+1. Move the property "qcom,dsb-element-size" to TPDM
+devicetree and update the TPDM yaml file for this item.
+-- Suzuki K Poulose
+2. Add the error message when the DSB element size is not set to
+32-bit or 64-bit. -- Suzuki K Poulose
+3. Add more information to the comments of patch #3
+-- Suzuki K Poulose
+4. Combine the value updates to the TPDM_DSB_CR for TPDM.
+-- Suzuki K Poulose
+5. Remove the function "tpdm_datasets_alloc", and fold its code
+to a new function "tpdm_init_datasets". It will complete the
+initialization of TPDM.  -- Suzuki K Poulose
+6. Change the method of qualifying input values.
+-- Suzuki K Poulose
+7. Add the documentation of the new sysfs handles.
+-- Suzuki K Poulose
+8. Provide the separate handles for the "mode bits".
+-- Suzuki K Poulose
+
+Changes in V2:
+1. Change the name of the property "qcom,dsb-elem-size" to
+"qcom,dsb-element-size" -- Suzuki K Poulose
+2. Update the TPDA yaml file for the item "qcom,dsb-elem-size".
+-- Krzysztof Kozlowski
+3. Add the full name of DSB in the description of the item
+"qcom,dsb-elem-size". -- Rob Herring
+
+Changes in V1:
+1. Change the definition of the property "qcom,dsb-elem-size" from
+"uint32-array" to "uint32-matrix". -- Krzysztof Kozlowski
+2. Add the full name of DSB. -- Rob Herring
+3. Deal with 2 entries in an iteration in TPDA driver. -- Suzuki K Poulose
+4. Divide the function "tpdm_datasets_alloc" into two functions,
+"tpdm_datasets_setup" and "tpdm_datasets_alloc".
+5. Detecte the input string with the conventional semantics automatically,
+and constrain the size of the input value. -- Suzuki K Poulose
+6. Use the hook function "is_visible()" to hide the DSB related knobs if
+the data sets are missing. -- Suzuki K Poulose
+7. Use the macros "FIELD_GET" and "FIELD_PREP" to set the values.
+-- Suzuki K Poulose
+8. Update the definition of the macros in TPDM driver.
+9. Update the comments of the values for the nodes which are for DSB
+element creation and onfigure pattern match output. -- Suzuki K Poulose
+10. Use API "sysfs_emit" to "replace scnprintf". -- Suzuki K Poulose
+
+Tao Zhang (13):
+  coresight-tpdm: Remove the unnecessary lock
+  dt-bindings: arm: Add support for DSB element size
+  coresight-tpdm: Introduce TPDM subtype to TPDM driver
+  coresight-tpda: Add DSB dataset support
+  coresight-tpdm: Initialize DSB subunit configuration
+  coresight-tpdm: Add reset node to TPDM node
+  coresight-tpdm: Add nodes to set trigger timestamp and type
+  coresight-tpdm: Add node to set dsb programming mode
+  coresight-tpdm: Add nodes for dsb edge control
+  coresight-tpdm: Add nodes to configure pattern match output
+  coresight-tpdm: Add nodes for timestamp request
+  dt-bindings: arm: Add support for DSB MSR register
+  coresight-tpdm: Add nodes for dsb msr support
+
+ .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 159 +++++
+ .../bindings/arm/qcom,coresight-tpdm.yaml          |  20 +
+ drivers/hwtracing/coresight/coresight-core.c       |   3 +
+ drivers/hwtracing/coresight/coresight-tpda.c       | 126 +++-
+ drivers/hwtracing/coresight/coresight-tpda.h       |   2 +
+ drivers/hwtracing/coresight/coresight-tpdm.c       | 682 ++++++++++++++++++++-
+ drivers/hwtracing/coresight/coresight-tpdm.h       | 165 +++++
+ include/linux/coresight.h                          |   1 +
+ 8 files changed, 1136 insertions(+), 22 deletions(-)
+
+-- 
+2.7.4
 
