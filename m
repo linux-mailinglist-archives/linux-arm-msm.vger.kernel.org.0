@@ -2,73 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44D19784A9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 21:42:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF465784AFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 22:06:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbjHVTmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 15:42:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54724 "EHLO
+        id S230117AbjHVUGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 16:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjHVTmG (ORCPT
+        with ESMTP id S230196AbjHVUGd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 15:42:06 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 875B0128;
-        Tue, 22 Aug 2023 12:42:00 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2bb8a12e819so75826021fa.1;
-        Tue, 22 Aug 2023 12:42:00 -0700 (PDT)
+        Tue, 22 Aug 2023 16:06:33 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D6DCE6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 13:06:31 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-31781e15a0cso4363357f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 13:06:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692733319; x=1693338119;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ekT+KnPQapoSZb+HgQwJZbxXHHn2bhATol004PVLTDI=;
-        b=DYs/J02QqJnuy4HpJ9uOG/0WpAWt/D5SzHwToudSzMLyTc6gzeAn7gLgxWaK2RvTss
-         Tfkeu8QG/TglFKDccR94PGMiN9nkNKXSyjMp8A3CGfw3B+o2shbvzA7w+/e8gi+tbVCc
-         VxIXkBu7qsWUMm0vyzZRMLSTG7saoA6VpuPhG0Vz8YXXItTUbvrcmLdGOXavmBtR3QTb
-         4fJI8cEjgUQBtxc3Ph2VunHf8gePBpoE1R9yTqsIW1zd0Vi7KBrPDvnyuuBtv/7a//7l
-         b5F/2ckFlgtZVWFyzziXsLFGOiR0+FZYMVYaX9u37bJ+uEj7Lh2QGnGHmD5iw+WgJYQ/
-         qvrg==
+        d=linaro.org; s=google; t=1692734790; x=1693339590;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W5TKtFXf3MZKrzAMomkIUprhHnUtImmLl+og3MtZcOc=;
+        b=ENQvSHxelq973mRBGY7iBhX5HFAm8BxAI4VIPmyP3fXyxX491Czm+IPuYk+/RWz6Le
+         VV+xjOuA5u/tm6vjQIbc7p5Q90dB6qJNM+pfJh956FZ6dcV3bHG8yfiDwL3+U4wCc7y2
+         m1PsLlw2eJY1vBLp/75kZiUjRPKtIY0V3YUeNdgnMGp1U6kUXCOhqNaA8Xp+oTW1i8xr
+         6KhYPHhYdHNYlH+cyZd/NqA7CM45ihbkAJe3In596kY1hhpKiFMBcIKhZ2cgLswZ7LpD
+         FyF2pHyAzjCDMUuWvwxp6tZnx+sycASJeQPKtQc2oSLgw/16sA2akmInediJXtIvkgLV
+         uWVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692733319; x=1693338119;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ekT+KnPQapoSZb+HgQwJZbxXHHn2bhATol004PVLTDI=;
-        b=i9DeCOcyD+xMtaqSOdn/sYQ3PHMFtKTy04yrd1ldwr1Vv8nh46ryVwXU88TAAmmPYY
-         6bmROXZUYSlRmoeyC8FRsa/T5fbE5Hevoj/gSoQCSE1tPyDSktnw1OIvbQWWsfkIL+9q
-         d5fAwqXKkcfEfWIoKIXLDIFSyPJblF2wQw1tX1TVOUN7c1gNCKCzTEkHSDmfM1892XXJ
-         Ao+wzLcyPiEj448so58WcZZ8gV1j6YlgIie7zBMTloR/hrRqIwkbTBB3T/+7ZWr3HzKx
-         UubhE8szW/M+P6FLwED7crQ7SxbB1+USKEocNxGFB14dlHPc0Maa0ueakASROgt/f2AE
-         /CTQ==
-X-Gm-Message-State: AOJu0YxlEkK2jYWuaEMmR0bk5+oExC+gR+XzN1+VcLkBmBTPSSKHSxyN
-        XpZ/sHZyf71WN9ibzqyiA45dQysWDHqaE7JUbFo=
-X-Google-Smtp-Source: AGHT+IF5Y7sltnG9NEzSqnXnsm8UX23VUWOvyTRUcAKipH9CVnSqpI3VozQ/+PRLIhufU+M15K/F252K31BiYW8eJNU=
-X-Received: by 2002:a05:6512:a92:b0:4fe:c55:4861 with SMTP id
- m18-20020a0565120a9200b004fe0c554861mr9104480lfu.53.1692733318382; Tue, 22
- Aug 2023 12:41:58 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692734790; x=1693339590;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W5TKtFXf3MZKrzAMomkIUprhHnUtImmLl+og3MtZcOc=;
+        b=i5imbygtkpynDXQBBKTxhHNoRAwjQOV1kWZpyeSwxdLklQ7wx9gNSD4VwLpN7bds6o
+         acFLckUkLeY/Pu1SSXKNjG6QHiE74/uxtEqbur6j1+Msx8iYGOQmmnPgHNVv2l5P1/Xe
+         vHQrsAiThBKYqOxA3aox5dgtuforR2IKXS5gLUC3rqIM0dyZ9jhs+9qPcJO2jUywJyxn
+         QyF3xh3z58QHaZSIanSpoG7aQuPfs9aPTPNFJ1jnaezoi14h8muA5QR/bs4GAK5WXGwQ
+         +I600fH7sQH50Vi3TR2Q5niezeytAXD+tquTCYhOeK7H25+ZTHV/qeM8Bn1thG9ZE3zx
+         g0kQ==
+X-Gm-Message-State: AOJu0Ywp4uk51T+nHkRWHUPBQ4mNscH4hF7MaNjN57dlvreVPdyIYjBO
+        vsU4YP5LeZYcL+m5Va10E6mGIA==
+X-Google-Smtp-Source: AGHT+IFq0QIrECqyY2h104tU4JuuGQoxoofcMpvxGAzuT0kIyHScTg3Bf6XZcehUu8a/HNqHHVu2Hw==
+X-Received: by 2002:a5d:6811:0:b0:319:8a5a:ab5e with SMTP id w17-20020a5d6811000000b003198a5aab5emr7165067wru.38.1692734789654;
+        Tue, 22 Aug 2023 13:06:29 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id y12-20020adfee0c000000b0031aeca90e1fsm12873690wrn.70.2023.08.22.13.06.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Aug 2023 13:06:29 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/9] media: qcom: camss: Bugfix series
+Date:   Tue, 22 Aug 2023 21:06:17 +0100
+Message-ID: <20230822200626.1931129-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20230822180208.95556-1-robdclark@gmail.com> <20230822180208.95556-4-robdclark@gmail.com>
- <CAJZ5v0jLzhhMM58EtyKaFOa8c=bE+XU5=OafvCx0vTBQpNZ0gQ@mail.gmail.com>
-In-Reply-To: <CAJZ5v0jLzhhMM58EtyKaFOa8c=bE+XU5=OafvCx0vTBQpNZ0gQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 22 Aug 2023 12:41:46 -0700
-Message-ID: <CAF6AEGs_8Q7Z2x_CNqkx2cJQ8bo0KtUPk+xT1xHNRXwuQUMZaQ@mail.gmail.com>
-Subject: Re: [PATCH v5 03/11] PM / QoS: Fix constraints alloc vs reclaim locking
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "open list:HIBERNATION (aka Software Suspend, aka swsusp)" 
-        <linux-pm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,361 +73,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 22, 2023 at 11:48=E2=80=AFAM Rafael J. Wysocki <rafael@kernel.o=
-rg> wrote:
->
-> On Tue, Aug 22, 2023 at 8:02=E2=80=AFPM Rob Clark <robdclark@gmail.com> w=
-rote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > In the process of adding lockdep annotation for drm GPU scheduler's
-> > job_run() to detect potential deadlock against shrinker/reclaim, I hit
-> > this lockdep splat:
-> >
-> >    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
-> >    WARNING: possible circular locking dependency detected
-> >    6.2.0-rc8-debug+ #558 Tainted: G        W
-> >    ------------------------------------------------------
-> >    ring0/125 is trying to acquire lock:
-> >    ffffffd6d6ce0f28 (dev_pm_qos_mtx){+.+.}-{3:3}, at: dev_pm_qos_update=
-_request+0x38/0x68
-> >
-> >    but task is already holding lock:
-> >    ffffff8087239208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_submit=
-+0xec/0x178
-> >
-> >    which lock already depends on the new lock.
-> >
-> >    the existing dependency chain (in reverse order) is:
-> >
-> >    -> #4 (&gpu->active_lock){+.+.}-{3:3}:
-> >           __mutex_lock+0xcc/0x3c8
-> >           mutex_lock_nested+0x30/0x44
-> >           msm_gpu_submit+0xec/0x178
-> >           msm_job_run+0x78/0x150
-> >           drm_sched_main+0x290/0x370
-> >           kthread+0xf0/0x100
-> >           ret_from_fork+0x10/0x20
-> >
-> >    -> #3 (dma_fence_map){++++}-{0:0}:
-> >           __dma_fence_might_wait+0x74/0xc0
-> >           dma_resv_lockdep+0x1f4/0x2f4
-> >           do_one_initcall+0x104/0x2bc
-> >           kernel_init_freeable+0x344/0x34c
-> >           kernel_init+0x30/0x134
-> >           ret_from_fork+0x10/0x20
-> >
-> >    -> #2 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
-> >           fs_reclaim_acquire+0x80/0xa8
-> >           slab_pre_alloc_hook.constprop.0+0x40/0x25c
-> >           __kmem_cache_alloc_node+0x60/0x1cc
-> >           __kmalloc+0xd8/0x100
-> >           topology_parse_cpu_capacity+0x8c/0x178
-> >           get_cpu_for_node+0x88/0xc4
-> >           parse_cluster+0x1b0/0x28c
-> >           parse_cluster+0x8c/0x28c
-> >           init_cpu_topology+0x168/0x188
-> >           smp_prepare_cpus+0x24/0xf8
-> >           kernel_init_freeable+0x18c/0x34c
-> >           kernel_init+0x30/0x134
-> >           ret_from_fork+0x10/0x20
-> >
-> >    -> #1 (fs_reclaim){+.+.}-{0:0}:
-> >           __fs_reclaim_acquire+0x3c/0x48
-> >           fs_reclaim_acquire+0x54/0xa8
-> >           slab_pre_alloc_hook.constprop.0+0x40/0x25c
-> >           __kmem_cache_alloc_node+0x60/0x1cc
-> >           kmalloc_trace+0x50/0xa8
-> >           dev_pm_qos_constraints_allocate+0x38/0x100
-> >           __dev_pm_qos_add_request+0xb0/0x1e8
-> >           dev_pm_qos_add_request+0x58/0x80
-> >           dev_pm_qos_expose_latency_limit+0x60/0x13c
-> >           register_cpu+0x12c/0x130
-> >           topology_init+0xac/0xbc
-> >           do_one_initcall+0x104/0x2bc
-> >           kernel_init_freeable+0x344/0x34c
-> >           kernel_init+0x30/0x134
-> >           ret_from_fork+0x10/0x20
-> >
-> >    -> #0 (dev_pm_qos_mtx){+.+.}-{3:3}:
-> >           __lock_acquire+0xe00/0x1060
-> >           lock_acquire+0x1e0/0x2f8
-> >           __mutex_lock+0xcc/0x3c8
-> >           mutex_lock_nested+0x30/0x44
-> >           dev_pm_qos_update_request+0x38/0x68
-> >           msm_devfreq_boost+0x40/0x70
-> >           msm_devfreq_active+0xc0/0xf0
-> >           msm_gpu_submit+0x10c/0x178
-> >           msm_job_run+0x78/0x150
-> >           drm_sched_main+0x290/0x370
-> >           kthread+0xf0/0x100
-> >           ret_from_fork+0x10/0x20
-> >
-> >    other info that might help us debug this:
-> >
-> >    Chain exists of:
-> >      dev_pm_qos_mtx --> dma_fence_map --> &gpu->active_lock
-> >
-> >     Possible unsafe locking scenario:
-> >
-> >           CPU0                    CPU1
-> >           ----                    ----
-> >      lock(&gpu->active_lock);
-> >                                   lock(dma_fence_map);
-> >                                   lock(&gpu->active_lock);
-> >      lock(dev_pm_qos_mtx);
-> >
-> >     *** DEADLOCK ***
-> >
-> >    3 locks held by ring0/123:
-> >     #0: ffffff8087251170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x64=
-/0x150
-> >     #1: ffffffd00b0e57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0=
-x68/0x150
-> >     #2: ffffff8087251208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_s=
-ubmit+0xec/0x178
-> >
-> >    stack backtrace:
-> >    CPU: 6 PID: 123 Comm: ring0 Not tainted 6.2.0-rc8-debug+ #559
-> >    Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-> >    Call trace:
-> >     dump_backtrace.part.0+0xb4/0xf8
-> >     show_stack+0x20/0x38
-> >     dump_stack_lvl+0x9c/0xd0
-> >     dump_stack+0x18/0x34
-> >     print_circular_bug+0x1b4/0x1f0
-> >     check_noncircular+0x78/0xac
-> >     __lock_acquire+0xe00/0x1060
-> >     lock_acquire+0x1e0/0x2f8
-> >     __mutex_lock+0xcc/0x3c8
-> >     mutex_lock_nested+0x30/0x44
-> >     dev_pm_qos_update_request+0x38/0x68
-> >     msm_devfreq_boost+0x40/0x70
-> >     msm_devfreq_active+0xc0/0xf0
-> >     msm_gpu_submit+0x10c/0x178
-> >     msm_job_run+0x78/0x150
-> >     drm_sched_main+0x290/0x370
-> >     kthread+0xf0/0x100
-> >     ret_from_fork+0x10/0x20
-> >
-> > The issue is that dev_pm_qos_mtx is held in the runpm suspend/resume (o=
-r
-> > freq change) path, but it is also held across allocations that could
-> > recurse into shrinker.
-> >
-> > Solve this by changing dev_pm_qos_constraints_allocate() into a functio=
-n
-> > that can be called unconditionally before the device qos object is
-> > needed and before aquiring dev_pm_qos_mtx.  This way the allocations ca=
-n
->
-> acquiring
->
-> > be done without holding the mutex.  In the case that we raced with
-> > another thread to allocate the qos object, detect this *after* acquirin=
-g
-> > the dev_pm_qos_mtx and simply free the redundant allocations.
-> >
-> > Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
->
-> Please feel free to add
->
-> Acked-by: Rafael J. Wysocki <rafael@kernel.org>
->
-> to this patch and the next 2 PM QoS ones in this series.
->
+V2:
+- Amends commit log for TPG fix to cover dropping of fixed
+  VC when setting up a TPG - Konrad
 
-thanks
+- Leaves GENMASK etc out. I'm happy to do a "make it pretty"
+  series later on. - bod
 
-> Thanks!
->
-> > ---
-> >  drivers/base/power/qos.c | 76 +++++++++++++++++++++++++++++-----------
-> >  1 file changed, 56 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/drivers/base/power/qos.c b/drivers/base/power/qos.c
-> > index 8e93167f1783..7e95760d16dc 100644
-> > --- a/drivers/base/power/qos.c
-> > +++ b/drivers/base/power/qos.c
-> > @@ -185,27 +185,33 @@ static int apply_constraint(struct dev_pm_qos_req=
-uest *req,
-> >  }
-> >
-> >  /*
-> > - * dev_pm_qos_constraints_allocate
-> > + * dev_pm_qos_constraints_allocate: Allocate and initializes qos const=
-raints
-> >   * @dev: device to allocate data for
-> >   *
-> > - * Called at the first call to add_request, for constraint data alloca=
-tion
-> > - * Must be called with the dev_pm_qos_mtx mutex held
-> > + * Called to allocate constraints before dev_pm_qos_mtx mutex is held.=
-  Should
-> > + * be matched with a call to dev_pm_qos_constraints_set() once dev_pm_=
-qos_mtx
-> > + * is held.
-> >   */
-> > -static int dev_pm_qos_constraints_allocate(struct device *dev)
-> > +static struct dev_pm_qos *dev_pm_qos_constraints_allocate(struct devic=
-e *dev)
-> >  {
-> >         struct dev_pm_qos *qos;
-> >         struct pm_qos_constraints *c;
-> >         struct blocking_notifier_head *n;
-> >
-> > -       qos =3D kzalloc(sizeof(*qos), GFP_KERNEL);
-> > +       /*
-> > +        * If constraints are already allocated, we can skip speculativ=
-ely
-> > +        * allocating a new one, as we don't have to work about qos tra=
-nsitioning
-> > +        * from non-null to null.  The constraints are only freed on de=
-vice
-> > +        * removal.
-> > +        */
-> > +       if (dev->power.qos)
-> > +               return NULL;
-> > +
-> > +       qos =3D kzalloc(sizeof(*qos) + 3 * sizeof(*n), GFP_KERNEL);
-> >         if (!qos)
-> > -               return -ENOMEM;
-> > +               return NULL;
-> >
-> > -       n =3D kzalloc(3 * sizeof(*n), GFP_KERNEL);
-> > -       if (!n) {
-> > -               kfree(qos);
-> > -               return -ENOMEM;
-> > -       }
-> > +       n =3D (struct blocking_notifier_head *)(qos + 1);
-> >
-> >         c =3D &qos->resume_latency;
-> >         plist_head_init(&c->list);
-> > @@ -227,11 +233,29 @@ static int dev_pm_qos_constraints_allocate(struct=
- device *dev)
-> >
-> >         INIT_LIST_HEAD(&qos->flags.list);
-> >
-> > +       return qos;
-> > +}
-> > +
-> > +/*
-> > + * dev_pm_qos_constraints_set: Ensure dev->power.qos is set
-> > + *
-> > + * If dev->power.qos is already set, free the newly allocated qos cons=
-traints.
-> > + * Otherwise set dev->power.qos.  Must be called with dev_pm_qos_mtx h=
-eld.
-> > + *
-> > + * This split unsynchronized allocation and synchronized set moves all=
-ocation
-> > + * out from under dev_pm_qos_mtx, so that lockdep does does not get an=
-gry about
-> > + * drivers which use dev_pm_qos in paths related to shrinker/reclaim.
-> > + */
-> > +static void dev_pm_qos_constraints_set(struct device *dev, struct dev_=
-pm_qos *qos)
-> > +{
-> > +       if (dev->power.qos) {
-> > +               kfree(qos);
-> > +               return;
-> > +       }
-> > +
-> >         spin_lock_irq(&dev->power.lock);
-> >         dev->power.qos =3D qos;
-> >         spin_unlock_irq(&dev->power.lock);
-> > -
-> > -       return 0;
-> >  }
-> >
-> >  static void __dev_pm_qos_hide_latency_limit(struct device *dev);
-> > @@ -309,7 +333,6 @@ void dev_pm_qos_constraints_destroy(struct device *=
-dev)
-> >         dev->power.qos =3D ERR_PTR(-ENODEV);
-> >         spin_unlock_irq(&dev->power.lock);
-> >
-> > -       kfree(qos->resume_latency.notifiers);
-> >         kfree(qos);
-> >
-> >   out:
-> > @@ -341,7 +364,7 @@ static int __dev_pm_qos_add_request(struct device *=
-dev,
-> >         if (IS_ERR(dev->power.qos))
-> >                 ret =3D -ENODEV;
-> >         else if (!dev->power.qos)
-> > -               ret =3D dev_pm_qos_constraints_allocate(dev);
-> > +               ret =3D -ENOMEM;
-> >
-> >         trace_dev_pm_qos_add_request(dev_name(dev), type, value);
-> >         if (ret)
-> > @@ -388,9 +411,11 @@ static int __dev_pm_qos_add_request(struct device =
-*dev,
-> >  int dev_pm_qos_add_request(struct device *dev, struct dev_pm_qos_reque=
-st *req,
-> >                            enum dev_pm_qos_req_type type, s32 value)
-> >  {
-> > +       struct dev_pm_qos *qos =3D dev_pm_qos_constraints_allocate(dev)=
-;
-> >         int ret;
-> >
-> >         mutex_lock(&dev_pm_qos_mtx);
-> > +       dev_pm_qos_constraints_set(dev, qos);
-> >         ret =3D __dev_pm_qos_add_request(dev, req, type, value);
-> >         mutex_unlock(&dev_pm_qos_mtx);
-> >         return ret;
-> > @@ -535,14 +560,15 @@ EXPORT_SYMBOL_GPL(dev_pm_qos_remove_request);
-> >  int dev_pm_qos_add_notifier(struct device *dev, struct notifier_block =
-*notifier,
-> >                             enum dev_pm_qos_req_type type)
-> >  {
-> > +       struct dev_pm_qos *qos =3D dev_pm_qos_constraints_allocate(dev)=
-;
-> >         int ret =3D 0;
-> >
-> >         mutex_lock(&dev_pm_qos_mtx);
-> >
-> > +       dev_pm_qos_constraints_set(dev, qos);
-> > +
-> >         if (IS_ERR(dev->power.qos))
-> >                 ret =3D -ENODEV;
-> > -       else if (!dev->power.qos)
-> > -               ret =3D dev_pm_qos_constraints_allocate(dev);
-> >
-> >         if (ret)
-> >                 goto unlock;
-> > @@ -903,12 +929,22 @@ s32 dev_pm_qos_get_user_latency_tolerance(struct =
-device *dev)
-> >   */
-> >  int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 v=
-al)
-> >  {
-> > -       int ret;
-> > +       struct dev_pm_qos *qos =3D dev_pm_qos_constraints_allocate(dev)=
-;
-> > +       int ret =3D 0;
-> >
-> >         mutex_lock(&dev_pm_qos_mtx);
-> >
-> > -       if (IS_ERR_OR_NULL(dev->power.qos)
-> > -           || !dev->power.qos->latency_tolerance_req) {
-> > +       dev_pm_qos_constraints_set(dev, qos);
-> > +
-> > +       if (IS_ERR(dev->power.qos))
-> > +               ret =3D -ENODEV;
-> > +       else if (!dev->power.qos)
-> > +               ret =3D -ENOMEM;
-> > +
-> > +       if (ret)
-> > +               goto out;
-> > +
-> > +       if (!dev->power.qos->latency_tolerance_req) {
-> >                 struct dev_pm_qos_request *req;
-> >
-> >                 if (val < 0) {
-> > --
-> > 2.41.0
-> >
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/Bugfix-series-v2?ref_type=tags
+
+V1:
+- Drops dt_id = vc * 4 in favour of a patch in a later series - Hans
+  Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commit/d4c382c5d6ee153b410a01e172b3e811011d0b14
+- Adds Konrad's Acked-by as indicated
+
+V0:
+This series covers a number of Fixes: all of which are for application to
+stable as well as -next with the exception of the second patch which is a
+fix for a SHA that is still in -next.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts-v3
+
+This series is part of a larger set of fixes, improvements developed/found
+when adding a new SoC.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/lenovo-x13s-v6.5-rc4-x13s-camss-patches
+
+First pass on that larger series is to get all of the current Fixes: in the
+branch out.
+
+Andrey Konovalov (1):
+  media: qcom: camss: Fix csid-gen2 for test pattern generator
+
+Bryan O'Donoghue (8):
+  media: qcom: camss: Fix pm_domain_on sequence in probe
+  media: qcom: camss: Fix V4L2 async notifier error path
+  media: qcom: camss: Fix vfe_get() error jump
+  media: qcom: camss: Fix VFE-17x vfe_disable_output()
+  media: qcom: camss: Fix VFE-480 vfe_disable_output()
+  media: qcom: camss: Fix missing vfe_lite clocks check
+  media: qcom: camss: Fix invalid clock enable bit disjunction
+  media: qcom: camss: Fix set CSI2_RX_CFG1_VC_MODE when VC is greater
+    than 3
+
+ .../platform/qcom/camss/camss-csid-gen2.c     | 11 ++++----
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |  2 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c | 19 +++-----------
+ .../media/platform/qcom/camss/camss-vfe-480.c | 19 +++-----------
+ drivers/media/platform/qcom/camss/camss-vfe.c |  5 ++--
+ drivers/media/platform/qcom/camss/camss.c     | 26 +++++++++----------
+ 6 files changed, 28 insertions(+), 54 deletions(-)
+
+-- 
+2.41.0
+
