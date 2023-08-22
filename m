@@ -2,110 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DADA783DFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 12:31:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 356A3783E63
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 12:56:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234537AbjHVKbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 06:31:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33900 "EHLO
+        id S232422AbjHVK4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 06:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234320AbjHVKbM (ORCPT
+        with ESMTP id S233655AbjHVK4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 06:31:12 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D59DCE5;
-        Tue, 22 Aug 2023 03:30:40 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MA9bdG007562;
-        Tue, 22 Aug 2023 10:30:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=iu0SUzK0fLcsbZ+Si3bWb4NyUGGrimuOQK8o1JnMlmU=;
- b=N/sOL8cxtifje0x2jtYzIXuG0yIuae6qY4Vem0G1v3TxTkitxpg7h48bzyt74xTPfI+O
- YgMbO/fF0U6pXLWAFINFDMvTM17c/N7yapV7KCa6n8RlnrypWZtPZD0JAPIeZ+af8I03
- 0IJCfkqjzplFFeN9i19oMfRs+GUYqDFwxtZZJD1eNPYdYIl2Clf2UfY4c0saYEV9w17H
- VFgKVPNJGVwy/B937HBnCiXMJHeLHLSBTh40jtab9jR8AZJgkmvcio3bF1XKrT4uKku/
- vaX9F9rl5MkNwRFkUDPTh8XCOikaWjgKqgzHU0Uad26eGJNRXicybdg/MxNUp1E4paVH gA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smasmsr22-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 10:30:17 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MAUFEp011480
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 10:30:15 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 22 Aug 2023 03:30:09 -0700
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <arnd@arndb.de>, <geert+renesas@glider.be>,
-        <nfraprado@collabora.com>, <rafal@milecki.pl>, <peng.fan@nxp.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-phy@lists.infradead.org>
-CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: [PATCH v9 4/4] arm64: defconfig: Enable M31 USB phy driver
-Date:   Tue, 22 Aug 2023 15:59:15 +0530
-Message-ID: <84162d7d21d6bf45c4cf670000dae3f03b05ad93.1692699472.git.quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1692699472.git.quic_varada@quicinc.com>
-References: <cover.1692699472.git.quic_varada@quicinc.com>
+        Tue, 22 Aug 2023 06:56:12 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5659DCC8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 03:56:10 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-6b9c9944da8so3313855a34.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 03:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692701769; x=1693306569;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7gmbZKg8MO0Caap6tnCCUDBVYQhIxs2ct9dxwNPhfJ8=;
+        b=HFzZ/XXKeXpwjt82B0mHZZG9JKd6iIY4ybXgnQTjEt4HKwvapq/RCvE2f60dmd+BtX
+         qR7RQ5hyVVRD0Dd8h2DQsbfm66JefEkz44PWjkzcmV0xCYCYDr/7YZO5XNrdzNjEs5nD
+         0YxF0MXW452u/h7z/H0eO25m6+tHTijDgiYfLTmkCNYX7+XKKKmKmaBFvo/s71QTmhXH
+         G6hALlUeB01GA8vjdpiks5zjQIZhEEBbuxzLz9YliCJMdInzekL2/B7VNKKCGYO8DDm9
+         sfx9FgnPtqtIq6+ixjtyIXFzi1LY1VmNYGVVCa5pbwyk8QdTyCGoybPLRcoGlaOtSr7I
+         GWhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692701769; x=1693306569;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7gmbZKg8MO0Caap6tnCCUDBVYQhIxs2ct9dxwNPhfJ8=;
+        b=e9L052XigACfF7CjscbTlDnSusHWzUXCOBYjeAgAIm1bwXYDIXmyKj0a1iOe56k1wI
+         OCsbMDZMEqhtVw4VfqoXR7zwWiWKP4SjhFiAxjAvXFVJTjSH+ufukKuFVMCKXvU+MF8p
+         cZnun4FTP+BvMHJOkaOL1GhnihQOl8n2iKkgJC52oUaW/5SXVaVyQtUc7mlah8n4FiGV
+         zEPJm77vav8Tv74p/D8an3BbS/vRV//P2vj5KkPQNrmvSDV1xCrf7rEjuqYvbber4jSz
+         hS2/NyqmtUauWzX9rSemPW1P8eMhNooGyrk0WR98v1A1bAcqolZea3VhFiqRPbV8U78I
+         B7og==
+X-Gm-Message-State: AOJu0Ywlsc6hKkbfxo41pxb+WDzB4zvV4KQMeTB5s0ahzZA9AKb7x57v
+        v2bOWrnuDN7iJI0TtlnUEcW/2dezWvGS9rCp7bzOnw==
+X-Google-Smtp-Source: AGHT+IHRpjn+Tn5STuiluP/0dZcO+kQ0j7tCK8/nXpSRwA5NzJZfFnhty39Igkdoef8Hg8QvdY5b0Y2Ut+Iz5kCQ/U8=
+X-Received: by 2002:a05:6358:9889:b0:134:dee2:8c18 with SMTP id
+ q9-20020a056358988900b00134dee28c18mr8946835rwa.27.1692701769535; Tue, 22 Aug
+ 2023 03:56:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 22G__srgbXiGgRiOmO0n4JF8LLdy6ukO
-X-Proofpoint-GUID: 22G__srgbXiGgRiOmO0n4JF8LLdy6ukO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_10,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=588
- bulkscore=0 clxscore=1015 suspectscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308220079
+References: <cover.1692699472.git.quic_varada@quicinc.com> <6d1638daf9b0616816fdecb529df86a394db7942.1692699472.git.quic_varada@quicinc.com>
+In-Reply-To: <6d1638daf9b0616816fdecb529df86a394db7942.1692699472.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 22 Aug 2023 13:55:58 +0300
+Message-ID: <CAA8EJpryKOzGd42NjG470D9jGr1Huv5D-F-NqaTo-0EJeFUr+A@mail.gmail.com>
+Subject: Re: [PATCH v9 1/4] phy: qcom: m31: Fix indentation issues
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        vkoul@kernel.org, kishon@kernel.org, arnd@arndb.de,
+        geert+renesas@glider.be, nfraprado@collabora.com, rafal@milecki.pl,
+        peng.fan@nxp.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable M31 USB phy driver present in IPQ5332.
+On Tue, 22 Aug 2023 at 13:31, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> * Fix indentation
+> * Drop simple success messages
+>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v9:
+>         Fix line break alignment
+>         Remove register success print
+>         v8 version of the driver has been picked up for merge.
+>         (https://lore.kernel.org/linux-arm-msm/169226613917.81413.1200008047604336868.b4-ty@kernel.org/)
+> v8:
+>         Change commit subject and message per review comments
+>         Don't include of_platform.h
+>         Change struct init coding style
+>         GENMASK -> BIT for one define
+> v6:
+>         Kconfig:Add COMPILE_TEST and remove USB_GADGET from 'depends'
+>                 Change 'selects' USB_PHY -> GENERIC_PHY
+>         Driver: Use correct headers
+>                 const int -> unsigned int for 'nregs' in private data
+>                 Use generic names for clk, phy in m31 phy structure
+>                 Init register details directly instead of using macro
+>                 Use dev_err_probe in the error paths of driver probe
+> v5:
+>         Kconfig and Makefile:- place snippet according to sorted order
+>         Use generic phy instead of usb-phy
+>         Use ARRAY_SIZE for reg init instead of blank last entry
+>         Fix copyright year
+>
+> v4:
+>         Remove unused enum
+>         Error handling for devm_clk_get
+> v1:
+>         Combine driver, makefile and kconfig into 1 patch
+>         Remove 'qscratch' region and its usage. The controller driver takes care
+>         of those settings
+>         Use compatible/data to handle ipq5332 init
+>         Drop the default case
+>         Get resources by index instead of name as there is only one resource
+>         Add clock
+>         Fix review comments in the driver
+> ---
+>  drivers/phy/qualcomm/phy-qcom-m31.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
+> index ed08072..ea79c18 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-m31.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
+> @@ -242,7 +242,7 @@ static int m31usb_phy_probe(struct platform_device *pdev)
+>         qphy->clk = devm_clk_get(dev, NULL);
+>         if (IS_ERR(qphy->clk))
+>                 return dev_err_probe(dev, PTR_ERR(qphy->clk),
+> -                                               "failed to get clk\n");
+> +                                    "failed to get clk\n");
 
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-v2:
-	Add full stop to commit log.
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+But why are you trying to fix this? aligning next line to the opening
+bracket is perfectly fine (and is one of the endorsed styles).
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5315789..c1e2372 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1422,6 +1422,7 @@ CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2=m
- CONFIG_PHY_QCOM_USB_HS_28NM=m
- CONFIG_PHY_QCOM_USB_SS=m
- CONFIG_PHY_QCOM_SGMII_ETH=m
-+CONFIG_PHY_QCOM_M31_USB=m
- CONFIG_PHY_R8A779F0_ETHERNET_SERDES=y
- CONFIG_PHY_RCAR_GEN3_PCIE=y
- CONFIG_PHY_RCAR_GEN3_USB2=y
+>
+>         data = of_device_get_match_data(dev);
+>         qphy->regs              = data->regs;
+> @@ -252,18 +252,16 @@ static int m31usb_phy_probe(struct platform_device *pdev)
+>         qphy->phy = devm_phy_create(dev, NULL, &m31usb_phy_gen_ops);
+>         if (IS_ERR(qphy->phy))
+>                 return dev_err_probe(dev, PTR_ERR(qphy->phy),
+> -                                               "failed to create phy\n");
+> +                                    "failed to create phy\n");
+>
+>         qphy->vreg = devm_regulator_get(dev, "vdda-phy");
+>         if (IS_ERR(qphy->vreg))
+>                 return dev_err_probe(dev, PTR_ERR(qphy->phy),
+> -                                               "failed to get vreg\n");
+> +                                    "failed to get vreg\n");
+>
+>         phy_set_drvdata(qphy->phy, qphy);
+>
+>         phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+> -       if (!IS_ERR(phy_provider))
+> -               dev_info(dev, "Registered M31 USB phy\n");
+
+This is irrelevant to the indentation.
+
+>
+>         return PTR_ERR_OR_ZERO(phy_provider);
+>  }
+> --
+> 2.7.4
+>
+
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
