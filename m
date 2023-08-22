@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4172783D5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 11:52:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8271783D7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 12:03:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234514AbjHVJwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 05:52:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43028 "EHLO
+        id S234562AbjHVKDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 06:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234511AbjHVJwp (ORCPT
+        with ESMTP id S234557AbjHVKDt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 05:52:45 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A01611B2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 02:52:43 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fee51329feso17298335e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 02:52:43 -0700 (PDT)
+        Tue, 22 Aug 2023 06:03:49 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9DFACCA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 03:03:47 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31c5c06e8bbso1211123f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 03:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692697962; x=1693302762;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EjKHM/3nTdg/5cBvMx2i82IFUKKtAE2HhZHSgd2Fouc=;
-        b=ydIg0uRypgM1MGYRqZ+tWcf4A4xiFMcft91t6sRqWIRT5i8Q+97CBoDBx2w/uOPQnC
-         FMubL7Hh5acZF48SNAzLIsx4KX4whdEVTd+9ZxlzL4JUM5jZexcrgO0j+YunQsjAm2Zp
-         VgC3qM64xKXYnqv10FwBEi0PCNaINWLvisXHx5xlQYPwYvh06nJyQRzJmI8hoyBOrlta
-         CYsRtf5mSvL035wUwBhK+psKljTb5BYC0YeBJY+VXJMIdD4/DnZMZTCcd/+6m6aiY+cq
-         KVNBaNmdxMHoTiGRZ4IdpDROyRsU+NfE4fUY6GcCcdIO3LpcgQx9djdm9SA3WlpkwyOq
-         UcgA==
+        d=linaro.org; s=google; t=1692698626; x=1693303426;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=J9oWcWBxrLZ6QRQDomCUBwC94tz1/w32xrnxOpTFoa0=;
+        b=F3psM64G5WcmAmJGTd53InmPq+ZFOhviOs7P8nuzUSBjU5OEjLQb1XdDD7v+ACFibr
+         J199FR8+flJextfo67efIqr7j2P/q4My/kQHT63/GRUhNHqfC/0EgbC/Io1KyJTh6Z1D
+         QMMw2qRTRfDgPlr0VDYx6AehC+jJxtKngakHNOcErbiwUupzfRBP65nBXfS+qSyESQAw
+         MBrV48QKHBWjWNiqrlFdpXI4CCmfwTixCX4Lslb4DkElMUI6DiH1CDZir9bM+QOrPvUT
+         NAJw+T/0n6ibrck2e4sEIfFpOS9IKNEwYx2L8Hs49rG9r1MnGLpzstCYTXBBmtyUba2Z
+         rvXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692697962; x=1693302762;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EjKHM/3nTdg/5cBvMx2i82IFUKKtAE2HhZHSgd2Fouc=;
-        b=eR+zK9UPsYvOmm95VqgxR9tyYtWWON5AddtdcEI513G2l5O5BRlCBoyZpFrwnjMidQ
-         /VajMM6XX6uGi7hEaxcvVPcLYiPIzeWMkDMbuWXI5+huHb48Ldco1RZP3GWcwTCR+55t
-         5MaQjNz9sTFzAnzifBcfG2bZ0cA036Pf12zC6JaC34cmwl0Wkw2MeoOvJbWEfvglhavT
-         Wn/yFB/P+zeWP0tlHx5A3vXVCG/EgLD5qpakJ3UlLeo+MSxvbJe9SnSUaJXQFUHVS/TF
-         NxG9pdThL/4vUg85skLKItD/6NlNhAQCXclOHbpJ1cqXBq+//tAoL4heiR2YWyzvC8A3
-         cvwQ==
-X-Gm-Message-State: AOJu0Yx4dyP6kUY9tjFQn2QQBkVk5lWVQJkjJRiJIwhEwLBhFivTJ0ED
-        adIsRjYoYkgWkF1mUvibr6smDw==
-X-Google-Smtp-Source: AGHT+IFaNk+7kF4LVYKeFPLWbhi7rfUWZKJ8Ay7swTLvqMHnd69JpAB+C5tRUltLl8N7zV9JF4SAaQ==
-X-Received: by 2002:a05:600c:690e:b0:3fb:c257:9f48 with SMTP id fo14-20020a05600c690e00b003fbc2579f48mr6818240wmb.16.1692697962088;
-        Tue, 22 Aug 2023 02:52:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:8390:46ac:a6ce:2040? ([2a01:e0a:cad:2140:8390:46ac:a6ce:2040])
-        by smtp.gmail.com with ESMTPSA id x1-20020a05600c2a4100b003fe1630a8f0sm18771964wme.24.2023.08.22.02.52.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Aug 2023 02:52:41 -0700 (PDT)
-Message-ID: <35f3aac5-7b8b-4cc7-9572-adf3d93e7a67@linaro.org>
-Date:   Tue, 22 Aug 2023 11:52:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+        d=1e100.net; s=20221208; t=1692698626; x=1693303426;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J9oWcWBxrLZ6QRQDomCUBwC94tz1/w32xrnxOpTFoa0=;
+        b=VpWo1oDWiCot7kjwbdIkef8W/bP56d3KybpROJR8t/dO61Guf5pets1qV0UjW2JaoA
+         mOcEI+fe/Jujn1rzByQl5QmQiywDTrah5vNsT91UYPRkxJAEjxQhU7l6x+cVBmSYXXVa
+         joKFZZhiHyN/yXcsJf9vuORTEjVPGgi2lcFVK1Fk2wXUIRzutFeicBrNiMJyiRO6T0nD
+         ih7luLt72yH/ZuuQ5n5UDDqMZE+4eaxfbkyKYNjCtcOsU8dtHXKVjIc8Ild3HDxvO79s
+         POPf2hTz71DFivksLccYqxkf/sYSOzhQpC75MlcR7qVEirJvRElY+uhEFn5TrZyoi76i
+         vxKQ==
+X-Gm-Message-State: AOJu0Yx+642XKkywrcNIAnrZ0ypRUGcN9zsH9ZboH0tn/1bCytqNiqxz
+        ZF/b5WrN8x6fKcuffAKdaBl5CQ==
+X-Google-Smtp-Source: AGHT+IHZimcGq1dwshaSdwbG9u3MCjx8Kkwnl9v2EnHQYP71rOGbCVWTIl2A/r+h1Im9RaQAdYj77g==
+X-Received: by 2002:a05:6000:118c:b0:31a:d450:c513 with SMTP id g12-20020a056000118c00b0031ad450c513mr6580461wrx.26.1692698626123;
+        Tue, 22 Aug 2023 03:03:46 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id h1-20020adffa81000000b0031980294e9fsm15242250wrr.116.2023.08.22.03.03.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Aug 2023 03:03:45 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] dt-bindings: regulator: qcom,rpmh-regulator: allow i and
- j as RPMh resource name suffix
-Content-Language: en-US, fr
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Date:   Tue, 22 Aug 2023 12:03:43 +0200
+Subject: [PATCH v2] dt-bindings: regulator: qcom,rpmh-regulator: allow i,
+ j, l, m & n as RPMh resource name suffix
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-v2-1-136b315085a4@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAP6H5GQC/52NQQqDMBBFryJZd4oZEbWr3qO4SDXRATVhJopFv
+ HtTj9Dle3z+O5RYJivqkR2K7UZCfkmAt0x1o1kGC9QnVphjkdeIEH2gDmSu9zKHNUhka2bgMI/
+ AdlgnEz2DrM7RDtg4bBBd+S47lR4D26Sv2qtNPJKk9eeKb/pn/+tsGjRg4XqjK1drVz0nWgz7u
+ +dBted5fgE+09UC5wAAAA==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -71,69 +71,67 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-v1-1-23fda17f81f7@linaro.org>
- <6f324696-1648-461a-a3ac-20f0b76e41f0@linaro.org>
- <a322acf6-b1e9-4203-9cb4-fc2adea88f64@linaro.org>
- <af07578e-2d31-4b26-931d-aeb0833db267@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <af07578e-2d31-4b26-931d-aeb0833db267@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        devicetree@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1465;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=sHD0CoBdjOt8T7P0X9DuvTDVsWVRM3vbyLemEfe2fRo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk5IgAXacuuTfEmY8oyjuVZ4vAe0RbnRuFuKt4Fitb
+ LiJFAdiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZOSIAAAKCRB33NvayMhJ0TVhD/
+ oCHPHpyZHi90fgsVR3okCviCzF4fWfmM/M//htdHAoF55vjeo+ZukyHPSus519zXZgyddnkLLhiRNj
+ OB6VhwitRqH2NBNWjTe995YlAcfuJkxrBhEY7DPebVKKixxaOrfLqVRAh0HA1OB+MjmS4ON2xy96Ch
+ Nx5JG5ELx37M2l8OiZGvhOZxXy9R9sX4UWvbuzPxDUKVnlSNY2BekyXyTxrfWiKcO79cbq/JGro9o4
+ e5A784IPqmQOK+E+BSgxA7m4NBGIOq5vLC9gv2suavQGJwdhwdd3FNZKNApNTDfvCnt5DewvHEqfIX
+ fnB+jI8DFYvWqxoMaQtdPyxeP0zbm25uazmplGmonV4FuErIgHu7TpS2PUuCnbHM9Qy5v2tvxD5n75
+ gTWrg37p6knTbxW5+PAv8s+mNjaxgymwHCd63EL499sNM/Ckn8Q0fwjCPLMKdqzHN8uZZGw6Er7DMM
+ UDTDPitTGdREmpcnOCYmNbumq5oyMqHwMm2TQ3EaVweDdTalJmV9AYzgnKd+KFmZFNRWZ2xRYRQzoF
+ dZweP6lYudCcM31X1aopZmMuwbyZNNFIJQebbszIgpJMi7DlzFj/1dwzOrCQ7h+iD9w3DDweIfQLVJ
+ IcFEYKAKK3VRDv5AyqDxEDAzGx0YA9jHWZXzwx+BUg5cMgtUM1L2P7+FMTgg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add "i", "j", "l", "m" and "n" to the allowed subffix list as they can be
+used as RPMh resource name suffixes on new platforms.
 
-On 22/08/2023 11:42, Konrad Dybcio wrote:
-> On 22.08.2023 11:29, Konrad Dybcio wrote:
->> On 22.08.2023 11:28, Konrad Dybcio wrote:
->>> On 22.08.2023 11:27, Neil Armstrong wrote:
->>>> Add "i" and "j" to the allowed subffix list as they can be used as RPMh
->>>> resource name suffixes on new platforms.
->>>>
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> ---
->>> Also 'n' and 'm' for 8550
->> Correction, the PMICs are indexed 'n' and 'm' but looks
->> like there are no RPMh-managed regulators on there
-> Correction of the correction ;) there are some
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Add m & n as konriad reported, confirmed used on sm8550-qrd
+- Also add l since it's also an used suffix on sm8550-qrd
+- Link to v1: https://lore.kernel.org/r/20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-v1-1-23fda17f81f7@linaro.org
+---
+ Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Indeed, you're right, let's for for i, j, n & m then !
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+index e758093365bc..127a6f39b7f0 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+@@ -92,7 +92,7 @@ properties:
+         RPMh resource name suffix used for the regulators found
+         on this PMIC.
+     $ref: /schemas/types.yaml#/definitions/string
+-    enum: [a, b, c, d, e, f, g, h, k]
++    enum: [a, b, c, d, e, f, g, h, i, j, k, l, m, n]
+ 
+   qcom,always-wait-for-ack:
+     description: |
 
-Neil
+---
+base-commit: 28c736b0e92e11bfe2b9997688213dc43cb22182
+change-id: 20230822-topic-sm8x50-upstream-rpmh-regulator-suffix-29f2922f5b5c
 
-> 
-> Konrad
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
