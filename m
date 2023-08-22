@@ -2,288 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C26347845BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:39:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1632378465B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 17:56:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237233AbjHVPjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 11:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46260 "EHLO
+        id S232949AbjHVP4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 11:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237213AbjHVPjH (ORCPT
+        with ESMTP id S229830AbjHVP4A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 11:39:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91985CC1;
-        Tue, 22 Aug 2023 08:39:02 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MFU41Y019910;
-        Tue, 22 Aug 2023 15:38:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=IEgKJINjJyGJvSUsCgbv8WztEQ6o/Brf2UySwoWfgoE=;
- b=MAx//zqVXqkjw7NUesXC05BdC1wPWsG3Lal3Y31Yx9Z8Qnv2ccDJoXCR1OZtARhyaz4R
- hrc1U6WrbD3OR+LA+lH3nehoBR+SrlZslyErlX+2uATjZREVK/ALj1TnKhvvCph9sSnw
- 8jW1CAMUdHRrvrqBZ+MrjPrGvBjvwLfZFV37x+h+/iSOzKN6G1ZlECCEXxPOIQLCSbq6
- 4Qnikv0/TgHAuGUHTqZoR373W5k9+3Kt0b0TCZCc34+09/C/+3WGvkxVbT7Zbr+k0nur
- zyhrtF78yMSTxMskWSbZfsvKJs8yChjKKQSOgx/MGll0+Y0lri/5pdabUlTdE03k6hyK rw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sm6f9uf1a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 15:38:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MFcpkw023351
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 15:38:51 GMT
-Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 22 Aug
- 2023 08:38:47 -0700
-Message-ID: <b970ccf1-e4e2-0d79-aeb2-a1b612cc1b10@quicinc.com>
-Date:   Tue, 22 Aug 2023 21:08:44 +0530
+        Tue, 22 Aug 2023 11:56:00 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEFB910C1;
+        Tue, 22 Aug 2023 08:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1692719738; x=1724255738;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=40Mvzn1ll4ExpoBioTZRPiAzse/XM+Dhq7IZWLopB5I=;
+  b=QQ9ocMXeY4chliJkR7WCg0eB0GkBuStNH3dDNX5Hen7hZ2nGJEWHEa1N
+   zgw2plAm7tkxfBpXXFtwXzD/5BgrI6yfF8K7a78hAuJU1tN3Pq5kPdSOR
+   N7aI8mQZ/qfe2EE0elmZAMVTXEP6YFd4xsccfktPsjKDzizuG6H6GcZOr
+   B1uFNNGI8xAUlorIeQs3QDK8L1FjFPifRUE7uTfDoT28IlcuMe9VAP6M4
+   8dHwLIrhha8xybbc2FHWEI0enuBdQqlNmDU2XcTUjNjO8s94Hj0kVvKgk
+   StXhxLGbVOz6PVVZeRMxJjzRc30Gbr2dv5owe9kqG8j8+DSunrZzHDODb
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="358907056"
+X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
+   d="scan'208";a="358907056"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2023 08:55:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="729849565"
+X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
+   d="scan'208";a="729849565"
+Received: from lkp-server02.sh.intel.com (HELO daf8bb0a381d) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 22 Aug 2023 08:55:33 -0700
+Received: from kbuild by daf8bb0a381d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qYTjA-0000JH-1l;
+        Tue, 22 Aug 2023 15:55:32 +0000
+Date:   Tue, 22 Aug 2023 23:54:32 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v1] PCI: qcom: Add sysfs entry to change link speed
+ dynamically
+Message-ID: <202308222302.9EPeENqh-lkp@intel.com>
+References: <1692239684-12697-1-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH V2 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
- for SC7280
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <kishon@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Manish Pandey <quic_mapa@quicinc.com>
-References: <20230819115223.9479-1-quic_nitirawa@quicinc.com>
- <20230819115223.9479-3-quic_nitirawa@quicinc.com> <ZOTBYz34rVfYWouh@matsya>
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <ZOTBYz34rVfYWouh@matsya>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eT8mr8NxXusYL48X2VhbXlad0l3vpZ2K
-X-Proofpoint-ORIG-GUID: eT8mr8NxXusYL48X2VhbXlad0l3vpZ2K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_13,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
- priorityscore=1501 mlxlogscore=960 adultscore=0 bulkscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308220120
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1692239684-12697-1-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krishna,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on pci/next]
+[also build test ERROR on pci/for-linus linus/master v6.5-rc7 next-20230822]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-qcom-Add-sysfs-entry-to-change-link-speed-dynamically/20230817-103734
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/1692239684-12697-1-git-send-email-quic_krichai%40quicinc.com
+patch subject: [PATCH v1] PCI: qcom: Add sysfs entry to change link speed dynamically
+config: loongarch-randconfig-r005-20230822 (https://download.01.org/0day-ci/archive/20230822/202308222302.9EPeENqh-lkp@intel.com/config)
+compiler: loongarch64-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230822/202308222302.9EPeENqh-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308222302.9EPeENqh-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   loongarch64-linux-ld: drivers/pci/controller/dwc/pcie-qcom.o: in function `qcom_pcie_speed_change_store':
+>> drivers/pci/controller/dwc/pcie-qcom.c:375:(.text+0xc14): undefined reference to `qcom_pcie_opp_update'
 
 
-On 8/22/2023 7:38 PM, Vinod Koul wrote:
-> On 19-08-23, 17:22, Nitin Rawat wrote:
->> Add SC7280 specific register layout and table configs.
->>
->> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
->> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
->> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 142 ++++++++++++++++++++++++
->>   1 file changed, 142 insertions(+)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> index 3927eba8e468..b22198d09508 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> @@ -177,6 +177,111 @@ static const struct qmp_phy_init_tbl msm8996_ufsphy_rx[] = {
->>   	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0E),
->>   };
->>
->> +static const struct qmp_phy_init_tbl sc7280_ufsphy_tx[] = {
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_1_DIVIDER_BAND0_1, 0x06),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_2_DIVIDER_BAND0_1, 0x03),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_3_DIVIDER_BAND0_1, 0x01),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_PWM_GEAR_4_DIVIDER_BAND0_1, 0x00),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_LANE_MODE_1, 0x35),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_TX_TRAN_DRVR_EMP_EN, 0x0c),
->> +};
->> +
->> +static const struct qmp_phy_init_tbl sc7280_ufsphy_rx[] = {
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_LVL, 0x24),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_CNTRL, 0x0f),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_DEGLITCH_CNTRL, 0x1e),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_BAND, 0x18),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_FO_GAIN, 0x0a),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x5a),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CONTROLS, 0xf1),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_COUNT_LOW, 0x80),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CTRL2, 0x80),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FO_GAIN, 0x0e),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_GAIN, 0x04),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_TERM_BW, 0x1b),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL2, 0x06),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL3, 0x04),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL4, 0x1d),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x00),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_MEASURE_TIME, 0x10),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_LOW, 0xc0),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_HIGH, 0x00),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_LOW, 0x6d),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH, 0x6d),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH2, 0xed),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH3, 0x3b),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH4, 0x3c),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_LOW, 0xe0),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH, 0xc8),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH2, 0xc8),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH3, 0x3b),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH4, 0xb1),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_LOW, 0xe0),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH, 0xc8),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH2, 0xc8),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH3, 0x3b),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH4, 0xb1),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_DCC_CTRL1, 0x0c),
->> +};
->> +
->> +static const struct qmp_phy_init_tbl sc7280_ufsphy_pcs[] = {
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2, 0x6D),
-> 
-> Lower case please (here and few other places)
-> 
-Sure , I'll update this in my next patchset.
+vim +375 drivers/pci/controller/dwc/pcie-qcom.c
 
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0A),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL, 0x1F),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xFF),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_PLL_CNTL, 0x03),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB, 0x16),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB, 0xD8),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND, 0xAA),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND, 0x06),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x03),
->> +	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x03),
->> +};
->> +
->> +static const struct qmp_phy_init_tbl sc7280_ufsphy_hs_g4_rx[] = {
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_LVL, 0x24),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_CNTRL, 0x0f),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_SIGDET_DEGLITCH_CNTRL, 0x1e),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_BAND, 0x18),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_FO_GAIN, 0x0a),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x5a),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CONTROLS, 0xf1),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FASTLOCK_COUNT_LOW, 0x80),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_PI_CTRL2, 0x81),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_FO_GAIN, 0x0e),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_UCDR_SO_GAIN, 0x04),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_TERM_BW, 0x6f),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL1, 0x04),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL2, 0x00),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL3, 0x09),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQU_ADAPTOR_CNTRL4, 0x07),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x17),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x00),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_MEASURE_TIME, 0x20),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_LOW, 0x80),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_IDAC_TSETTLE_HIGH, 0x01),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_LOW, 0x3f),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH, 0xff),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH2, 0xff),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH3, 0x7f),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_00_HIGH4, 0x2c),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_LOW, 0x6d),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH, 0x6d),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH2, 0xed),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH3, 0x3b),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_01_HIGH4, 0x3c),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_LOW, 0xe0),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH, 0xc8),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH2, 0xc8),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH3, 0x3b),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH4, 0xb1),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_DCC_CTRL1, 0x0c),
->> +	QMP_PHY_INIT_CFG(QSERDES_V4_RX_GM_CAL, 0x0f),
->> +};
->> +
->>   static const struct qmp_phy_init_tbl sm6115_ufsphy_serdes[] = {
->>   	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
->>   	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x14),
->> @@ -888,6 +993,40 @@ static const struct qmp_phy_cfg sa8775p_ufsphy_cfg = {
->>   	.regs			= ufsphy_v5_regs_layout,
->>   };
->>
->> +static const struct qmp_phy_cfg sc7280_ufsphy_cfg = {
-> 
-> sorted alphabetically please
+   303	
+   304	static ssize_t qcom_pcie_speed_change_store(struct device *dev,
+   305				       struct device_attribute *attr,
+   306				       const char *buf,
+   307				       size_t count)
+   308	{
+   309		unsigned int current_speed, target_speed, max_speed;
+   310		struct qcom_pcie *pcie = dev_get_drvdata(dev);
+   311		struct pci_bus *child, *root_bus = NULL;
+   312		struct dw_pcie_rp *pp = &pcie->pci->pp;
+   313		struct dw_pcie *pci = pcie->pci;
+   314		struct pci_dev *pdev;
+   315		u16 offset;
+   316		u32 val;
+   317		int ret;
+   318	
+   319		list_for_each_entry(child, &pp->bridge->bus->children, node) {
+   320			if (child->parent == pp->bridge->bus) {
+   321				root_bus = child;
+   322				break;
+   323			}
+   324		}
+   325	
+   326		pdev = root_bus->self;
+   327	
+   328		offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+   329	
+   330		val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+   331		max_speed = FIELD_GET(PCI_EXP_LNKCAP_SLS, val);
+   332	
+   333		val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+   334		current_speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, val);
+   335	
+   336		ret = kstrtouint(buf, 10, &target_speed);
+   337		if (ret)
+   338			return ret;
+   339	
+   340		if (target_speed > max_speed)
+   341			return -EINVAL;
+   342	
+   343		if (current_speed == target_speed)
+   344			return count;
+   345	
+   346		pci_walk_bus(pp->bridge->bus, qcom_pcie_disable_l0s, pcie);
+   347	
+   348		/* Disable L1 */
+   349		val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL);
+   350		val &= ~(PCI_EXP_LNKCTL_ASPM_L1);
+   351		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL, val);
+   352	
+   353		/* Set target GEN speed */
+   354		val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL2);
+   355		val &= ~PCI_EXP_LNKCTL2_TLS;
+   356		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL2, val | target_speed);
+   357	
+   358		ret = pcie_retrain_link(pdev, true);
+   359		if (ret)
+   360			dev_err(dev, "Link retrain failed %d\n", ret);
+   361	
+   362		/* Enable L1 */
+   363		val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCTL);
+   364		val |= (PCI_EXP_LNKCTL_ASPM_L1);
+   365		dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCTL, val);
+   366	
+   367		pcie->l0s_supported = true;
+   368		pci_walk_bus(pp->bridge->bus, qcom_pcie_check_l0s_support, pcie);
+   369	
+   370		if (pcie->l0s_supported)
+   371			pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_l0s, pcie);
+   372	
+   373		qcom_pcie_icc_update(pcie);
+   374	
+ > 375		qcom_pcie_opp_update(pcie);
+   376	
+   377		return count;
+   378	}
+   379	static DEVICE_ATTR_WO(qcom_pcie_speed_change);
+   380	
 
-Sorry vinod. I didnt completely understood the comment.
-I see sc7280_ufsphy_cfg is after sa8775p_ufsphy_cfg and before
-sc8280xp_ufsphy_cfg , so it seems to be sorted.
-Am i missing anything here?
-
-Regards,
-Nitin
-
-
-
-> 
->> +	.lanes                  = 2,
->> +
->> +	.offsets                = &qmp_ufs_offsets,
->> +
->> +	.tbls = {
->> +		.serdes         = sm8150_ufsphy_serdes,
->> +		.serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
->> +		.tx             = sc7280_ufsphy_tx,
->> +		.tx_num         = ARRAY_SIZE(sc7280_ufsphy_tx),
->> +		.rx             = sc7280_ufsphy_rx,
->> +		.rx_num         = ARRAY_SIZE(sc7280_ufsphy_rx),
->> +		.pcs            = sc7280_ufsphy_pcs,
->> +		.pcs_num        = ARRAY_SIZE(sc7280_ufsphy_pcs),
->> +	},
->> +	.tbls_hs_b = {
->> +		.serdes         = sm8150_ufsphy_hs_b_serdes,
->> +		.serdes_num     = ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
->> +	},
->> +	.tbls_hs_g4 = {
->> +		.tx             = sm8250_ufsphy_hs_g4_tx,
->> +		.tx_num         = ARRAY_SIZE(sm8250_ufsphy_hs_g4_tx),
->> +		.rx             = sc7280_ufsphy_hs_g4_rx,
->> +		.rx_num         = ARRAY_SIZE(sc7280_ufsphy_hs_g4_rx),
->> +		.pcs            = sm8150_ufsphy_hs_g4_pcs,
->> +		.pcs_num        = ARRAY_SIZE(sm8150_ufsphy_hs_g4_pcs),
->> +	},
->> +	.clk_list               = sm8450_ufs_phy_clk_l,
->> +	.num_clks               = ARRAY_SIZE(sm8450_ufs_phy_clk_l),
->> +	.vreg_list              = qmp_phy_vreg_l,
->> +	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
->> +	.regs                   = ufsphy_v4_regs_layout,
->> +};
->> +
->>   static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
->>   	.lanes			= 2,
->>
->> @@ -1648,6 +1787,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
->>   	}, {
->>   		.compatible = "qcom,sa8775p-qmp-ufs-phy",
->>   		.data = &sa8775p_ufsphy_cfg,
->> +	}, {
->> +		.compatible = "qcom,sc7280-qmp-ufs-phy",
->> +		.data = &sc7280_ufsphy_cfg,
->>   	}, {
->>   		.compatible = "qcom,sc8180x-qmp-ufs-phy",
->>   		.data = &sm8150_ufsphy_cfg,
->> --
->> 2.17.1
-> 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
