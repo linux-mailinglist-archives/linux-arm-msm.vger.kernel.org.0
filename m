@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7355783D37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 11:44:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7857F783D3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 11:44:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234439AbjHVJoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 05:44:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52616 "EHLO
+        id S234452AbjHVJob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 05:44:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234427AbjHVJoX (ORCPT
+        with ESMTP id S234445AbjHVJob (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 05:44:23 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88C3E1A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 02:44:21 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-26d466705c9so479074a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 02:44:21 -0700 (PDT)
+        Tue, 22 Aug 2023 05:44:31 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E907B1A1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 02:44:28 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-2684e225a6cso383842a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 02:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20221208.gappssmtp.com; s=20221208; t=1692697461; x=1693302261;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uVlFH3kAFL/05tPu+4i34IHoYuCuVyTATmf88CsYYgI=;
-        b=BiisWe5tBXGe2sUwu/cNdgJJRH8tzfClw209m+rY9pb/ZT6Dv9pEq5Qh4t1TeWUznw
-         QUKgRgyQd1TLabahWA9C78Dwahi010UI2dKwE+SveLrN/qXXHO0HaY33KHV28e0Z17B6
-         1we5IWGHlmeBAGNDGvHxUsQaUYM54bWmflfimvsB5Ssyd1dPUP3LeTfpciOCfCnbnOsX
-         zj+lhzLBozP03Shjv328KUdUKGHA3nx70tyG90SFK2Pqqq/PDFHgw6fmLIL8jbfzsz8S
-         y+YL4r8DOhiQ/9AlREuEVyyA+vZa21+YSfPjEZp6I7EOAs5PcENzAqxzZHIGGGl1cGey
-         wL9g==
+        d=quanta-corp-partner-google-com.20221208.gappssmtp.com; s=20221208; t=1692697468; x=1693302268;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y0C05FVrXugMzpMLLN6rQ3DKyIstnViCGSG0P90hg2Y=;
+        b=De82AXiiBWWQo5TX7FH8lFyiQyoXAg9CPAl3SAN6L/Yhc1kx+wqsNbcuCzt+YeUzT6
+         fQjQlGDd7QtdjR0WW6n9AL3u4iKigDF4ReXOzybiIksoY5V6QRq6giTI1tuoYf48/pc5
+         61NzS5xh400lJR8rNJKF+/fTF3M6E1H9sNGu0Yr1crawCClsftRVwc9vdHcAZmv1alAU
+         a6MvxQxD8K/7IsUXP2Kck7Dn2qSAdxCmr736u4/Wu4UcQYCnbXii45VF4nWkZpbVdzM3
+         XVjtQVEytVDtqfR+55QUMkLRglx2nL+EzLluO6v8yLuxvdWJ004tfuHSeXUCt9z6I8ZG
+         jd9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692697461; x=1693302261;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uVlFH3kAFL/05tPu+4i34IHoYuCuVyTATmf88CsYYgI=;
-        b=QZDpVjD8t8HFjGzSSWw4+OHS0YRnf6U5hpxwiEQT9V4HbwJzPilLrSZF0gBxbcrcQJ
-         7BFvbGPzefRPD5bwESvN2xA4o2uprvnNelnplPEfctrDwG+mKrBAVi5QZ60ewtK6CINA
-         iA8aOU2X7QETaH+ZDe73zK1XDzpT9GAH2E2h2rSRkTpqnvMJAYXufqxWz8KWWRAEdsd6
-         AtQkLcfHlvn8sPSOOEgjQ6281UYEMvlQoejgzh+RdA72I+LC62xOPrs0xGeBW8kfDqxE
-         FFp8ZyIa4Yy0UfoB03wRYl/kqdmYP8y7tEHBA7dljE3PG6URoeBMP3GsmtkhxfFAWLkO
-         P7Yg==
-X-Gm-Message-State: AOJu0YxTInZED/wKiM0lWGiq4iqVYLj2S7FqyM0cRWkT17Qh4R8yg/yQ
-        vKC22vMUr4/1cuOkP10oZv0O1Q==
-X-Google-Smtp-Source: AGHT+IHSDwhuGqghjX65WCVUk2cymMj1QiKOxhCtgPPJam07sRBl3HLv52L/0z/VdePhDJUT7VPzjQ==
-X-Received: by 2002:a17:90a:17ec:b0:268:38a7:842e with SMTP id q99-20020a17090a17ec00b0026838a7842emr8160706pja.2.1692697461010;
-        Tue, 22 Aug 2023 02:44:21 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692697468; x=1693302268;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y0C05FVrXugMzpMLLN6rQ3DKyIstnViCGSG0P90hg2Y=;
+        b=hvgGSzelPtpfOXce1XqGaI8GWCyXYYG63tkwYZAZ/Tvk7LjLpGL/LQ9I1fY0yc72A6
+         +xCI499JrHD/8p+5ZhpwJEku/dexmqGdZ0kY/S+HWnXORYnvfXhgHkZcSm9U3RuuF8bQ
+         vu7XanoI1+T+p9UIIsdTMmCvqr8dh5nXKTrkk2SLH9F9pQp//DK/4YqCdLKJXvgMkTIc
+         gZCvSb9elBLpJy7W0u8LXCm5hI7y/puOxTZ6L0+cLkvTeo+ysm6/kxn5OUDNsVkJtkQ9
+         sYISPvq0jxkt+eNIRRMAOQjBLlNeZoQ8/x7uRJXiJ80/WMOO6zxAlobQb3gtXUguKWjf
+         /F5Q==
+X-Gm-Message-State: AOJu0YxrisvWnnYj8NrHKoG5cPJboqf7Dh1mMqNjD3jd5K0gaUXDo9YR
+        /rxPynEPvXmX452tfq0OHNse5A==
+X-Google-Smtp-Source: AGHT+IEmitXTVbbNazoqZB5Cnvk+Smq+OuRyQHxRvpBRt0NNYPguK5hiJA2oGS808+nNpuGAh1SDYQ==
+X-Received: by 2002:a17:90a:1348:b0:263:f36e:d610 with SMTP id y8-20020a17090a134800b00263f36ed610mr8456324pjf.0.1692697468340;
+        Tue, 22 Aug 2023 02:44:28 -0700 (PDT)
 Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id x33-20020a17090a6c2400b00267d9f4d340sm9976082pjj.44.2023.08.22.02.44.18
+        by smtp.gmail.com with ESMTPSA id x33-20020a17090a6c2400b00267d9f4d340sm9976082pjj.44.2023.08.22.02.44.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Aug 2023 02:44:20 -0700 (PDT)
+        Tue, 22 Aug 2023 02:44:28 -0700 (PDT)
 From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 To:     LKML <linux-kernel@vger.kernel.org>
 Cc:     dianders@chromium.org,
@@ -58,13 +59,14 @@ Cc:     dianders@chromium.org,
         Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 0/2] Add no-esim sku for sc7180-lazor family and new board version for audio codec ALC5682i-VS
-Date:   Tue, 22 Aug 2023 17:44:12 +0800
-Message-Id: <20230822094414.123162-1-sheng-liang.pan@quanta.corp-partner.google.com>
+Subject: [PATCH v4 1/2] dt-bindings: arm: qcom: add sc7180-lazor board bindings
+Date:   Tue, 22 Aug 2023 17:44:13 +0800
+Message-Id: <20230822174101.v4.1.I26e017b00a341e7a5a2e94a83596923713408817@changeid>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230822094414.123162-1-sheng-liang.pan@quanta.corp-partner.google.com>
+References: <20230822094414.123162-1-sheng-liang.pan@quanta.corp-partner.google.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,42 +78,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Introduce more sc7180-lazor sku and board version configuration,
+add no-eSIM SKU 10 for Lazor, no-eSIM SKU 15 and 18 for Limozeen,
+add new board version 10 for audio codec ALC5682i-VS.
 
-
-Changes in v4:
-- combine pathc2 and patch3
+Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+---
 
 Changes in v3:
 - correct corresponding of new board and new sku
-- sort out the node order alphabetically
 
 Changes in v2:
 - add new entry rev9 with Parade bridge chip
 - correct newly create dts files
 
-Sheng-Liang Pan (2):
-  dt-bindings: arm: qcom: add sc7180-lazor board bindings
-  arm64: dts: qcom: sc7180: Add sku_id and board id for lazor/limozeen
+ .../devicetree/bindings/arm/qcom.yaml         | 31 +++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
- .../devicetree/bindings/arm/qcom.yaml         | 31 ++++++++++
- arch/arm64/boot/dts/qcom/Makefile             |  5 ++
- ...sc7180-trogdor-lazor-limozeen-nots-r10.dts | 40 +++++++++++++
- .../sc7180-trogdor-lazor-limozeen-nots-r9.dts |  4 +-
- .../sc7180-trogdor-lazor-limozeen-r10.dts     | 56 +++++++++++++++++++
- .../qcom/sc7180-trogdor-lazor-limozeen-r9.dts |  4 +-
- .../dts/qcom/sc7180-trogdor-lazor-r10-kb.dts  | 34 +++++++++++
- .../dts/qcom/sc7180-trogdor-lazor-r10-lte.dts | 38 +++++++++++++
- .../dts/qcom/sc7180-trogdor-lazor-r10.dts     | 30 ++++++++++
- .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   |  4 +-
- .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  |  4 +-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts |  4 +-
- 12 files changed, 244 insertions(+), 10 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 450f616774e0..3da04223b03f 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -470,6 +470,11 @@ properties:
+           - const: google,lazor-rev8
+           - const: qcom,sc7180
+ 
++      - description: Acer Chromebook Spin 513 (rev9)
++        items:
++          - const: google,lazor-rev9
++          - const: qcom,sc7180
++
+       - description: Acer Chromebook Spin 513 (newest rev)
+         items:
+           - const: google,lazor
+@@ -491,6 +496,11 @@ properties:
+           - const: google,lazor-rev8-sku2
+           - const: qcom,sc7180
+ 
++      - description: Acer Chromebook Spin 513 with KB Backlight (rev9)
++        items:
++          - const: google,lazor-rev9-sku2
++          - const: qcom,sc7180
++
+       - description: Acer Chromebook Spin 513 with KB Backlight (newest rev)
+         items:
+           - const: google,lazor-sku2
+@@ -512,9 +522,16 @@ properties:
+           - const: google,lazor-rev8-sku0
+           - const: qcom,sc7180
+ 
++      - description: Acer Chromebook Spin 513 with LTE (rev9)
++        items:
++          - const: google,lazor-rev9-sku0
++          - const: google,lazor-rev9-sku10
++          - const: qcom,sc7180
++
+       - description: Acer Chromebook Spin 513 with LTE (newest rev)
+         items:
+           - const: google,lazor-sku0
++          - const: google,lazor-sku10
+           - const: qcom,sc7180
+ 
+       - description: Acer Chromebook 511 (rev4 - rev8)
+@@ -526,9 +543,16 @@ properties:
+           - const: google,lazor-rev8-sku4
+           - const: qcom,sc7180
+ 
++      - description: Acer Chromebook 511 (rev9)
++        items:
++          - const: google,lazor-rev9-sku4
++          - const: google,lazor-rev9-sku15
++          - const: qcom,sc7180
++
+       - description: Acer Chromebook 511 (newest rev)
+         items:
+           - const: google,lazor-sku4
++          - const: google,lazor-sku15
+           - const: qcom,sc7180
+ 
+       - description: Acer Chromebook 511 without Touchscreen (rev4)
+@@ -545,9 +569,16 @@ properties:
+           - const: google,lazor-rev8-sku6
+           - const: qcom,sc7180
+ 
++      - description: Acer Chromebook 511 without Touchscreen (rev9)
++        items:
++          - const: google,lazor-rev9-sku6
++          - const: google,lazor-rev9-sku18
++          - const: qcom,sc7180
++
+       - description: Acer Chromebook 511 without Touchscreen (newest rev)
+         items:
+           - const: google,lazor-sku6
++          - const: google,lazor-sku18
+           - const: qcom,sc7180
+ 
+       - description: Google Mrbland with AUO panel (rev0)
 -- 
 2.34.1
 
