@@ -2,123 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 697C978400F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 13:50:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27561784012
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 13:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235447AbjHVLuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 07:50:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35408 "EHLO
+        id S233214AbjHVLvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 07:51:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235438AbjHVLup (ORCPT
+        with ESMTP id S232204AbjHVLvW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 07:50:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E388E54;
-        Tue, 22 Aug 2023 04:50:17 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MBmJxE018539;
-        Tue, 22 Aug 2023 11:49:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=GX9Dx4X238Po93JWCAFM59M9qdZqbmiNK78YWDcEq9E=;
- b=V43kB1SMRw6GlCjfjKE8tSaAsRXkCBLIpd6LkEpDabSkgU7jXkpRYTsOf2ebc40+iDd9
- a86ZqqD7aMgYLVvdDFoYpaBEAZq2NGJxH9phQs70HiWEm4M3Q2FiDmJcjkDzvA5iUILc
- o5wqdZhDQEDTqvLrJrLZuoEuY3yEfp/VpuqxpxHyPvjkb/hmKQ+sVLjI/ZTv1mg8MdHf
- ikozCdjbpYevi/Ty5X7SSASZ3HuS/jILsEzfMDGB4U+WENaKLFgJiXgzfT1pf71yYGyL
- U+Sk0+Jc7CqtdFofbz0lu7ny+ROW1donk/TCaPNVW8bM+azPBY7UjjllJcS1p0yXVfU4 mw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smdhwhfsy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 11:49:17 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MBnG2a000974
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Aug 2023 11:49:16 GMT
-Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 22 Aug 2023 04:49:13 -0700
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: qru1000-idp: add SDHCI for emmc
-Date:   Tue, 22 Aug 2023 17:18:50 +0530
-Message-ID: <20230822114850.3335-1-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.41.0
+        Tue, 22 Aug 2023 07:51:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8144CE9;
+        Tue, 22 Aug 2023 04:51:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1605F60EA7;
+        Tue, 22 Aug 2023 11:50:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B784EC433C7;
+        Tue, 22 Aug 2023 11:50:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692705037;
+        bh=K6qHsHNv+YaJ8gAyRbjPMOoeo0yAFJvWTILnD6NXzrE=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=BYLhxbdeFsyimUU8GJSdxRrKPCK6Gd07fV1royD5DhJEqaBUYAbh7bKX0+oGhxcy6
+         17M/uHiscpfnpBqHsRMxJyXlBxuz1idjNnUzaAJuWL63sBDrs81MavnaslSZ0695oe
+         12nDHMLoqoxANE9UsgMX/a/xJ7ANCprbT900470mZBoHiAo0XoyzoMO09P7vWboUv9
+         pdWz+TXROq7UDq55fpVk/1fdtVGFJ1NAv+lwVfyl4IfT04BYZkXJ8iBtTxP2EyQVsD
+         WvcC9PyM8/F0DS0ss7x0b7qZQshyB/G3twsl04XTcf49Mf17CE4rrLrGR8GGUEPH1q
+         OqtNtkRD2adYA==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     mani@kernel.org, quic_jhugo@quicinc.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_cang@quicinc.com, quic_mrana@quicinc.com
+Subject: Re: [PATCH v2] mhi: host: Add standard ELF header image download
+ functionality
+References: <1691395192-16090-1-git-send-email-quic_qianyu@quicinc.com>
+Date:   Tue, 22 Aug 2023 14:51:33 +0300
+In-Reply-To: <1691395192-16090-1-git-send-email-quic_qianyu@quicinc.com>
+        (Qiang Yu's message of "Mon, 7 Aug 2023 15:59:52 +0800")
+Message-ID: <87edjvwb0a.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: m9XpiVZyM0kbG7qeIdc8YLFbuORaSi6C
-X-Proofpoint-GUID: m9XpiVZyM0kbG7qeIdc8YLFbuORaSi6C
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-22_10,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- impostorscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=683 mlxscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308220089
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add sdhci node for emmc in qru1000-idp.
+Qiang Yu <quic_qianyu@quicinc.com> writes:
 
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qru1000-idp.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+> From: Mayank Rana <quic_mrana@quicinc.com>
+>
+> Some devices (e.g. WLAN chips) are unable to handle the non-standard ELF
+> format of the FBC image and thus need special handling of the FBC image.
+>
+> Add standard_elf_image flag which makes decision in terms of how FBC image
+> based AMSS image is being downloaded with connected endpoint.
+> FBC image is having two image combine: SBL image + AMSS image.
+> 1. FBC image download using legacy single ELF header image format:
+> - SBL image: 512KB of FBC image is downloaded using BHI.
+> - AMSS image: full FBC image is downloaded using BHIe.
+> 2. FBC image download using separate ELF header image format:
+> - SBL image: 512 KB of FBC image is downloaded using BHI.
+> - AMSS image: 512 KB onward FBC image is downloaded using BHIe.
+> There is no change for SBL image download. Although AMSS image start
+> address is end address of SBL image while using separate ELF header format.
+>
+> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
+> [quic_qianyu@quicinc.com: Update commit message, minor updates]
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-index 2a862c83309e..672e1946eba2 100644
---- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-@@ -460,6 +460,29 @@ tenx_sp_mem: tenx-sp-buffer@800000000 {
- 	};
- };
+I guess this is for an out-of-tree driver? I haven't heard any such
+requirements for ath11k or ath12k.
 
-+&sdhc {
-+	pinctrl-0 = <&sdc_on_state>;
-+	pinctrl-1 = <&sdc_off_state>;
-+	pinctrl-names = "default", "sleep";
-+
-+	cap-mmc-hw-reset;
-+	mmc-ddr-1_8v;
-+	mmc-hs200-1_8v;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+
-+	supports-cqe;
-+
-+	vmmc-supply = <&vreg_l10a_2p95>;
-+	vqmmc-supply = <&vreg_l7a_1p8>;
-+
-+	status = "okay";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <28 2>;
- };
---
-2.41.0
+> --- a/drivers/bus/mhi/host/boot.c
+> +++ b/drivers/bus/mhi/host/boot.c
+> @@ -495,6 +495,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	 * device transitioning into MHI READY state
+>  	 */
+>  	if (mhi_cntrl->fbc_download) {
+> +		dev_dbg(dev, "standard_elf_image: %s\n",
+> +				(mhi_cntrl->standard_elf_image ? "True" : "False"));
+> +		if (mhi_cntrl->standard_elf_image) {
+> +			fw_data = firmware->data + mhi_cntrl->sbl_size;
+> +			fw_sz = fw_sz - mhi_cntrl->sbl_size;
+> +		}
 
+So you are basically skipping the first sbl_size bytes of the firmware
+file? Why not just fix the firmware file in userspace? Or maybe you can
+use the recently added[1] mhi_cntrl->fw_data pointer and handle this in
+your driver instead?
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-next&id=efe47a18e43f59f063a82ccaa464a3b4844bb8a8
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
