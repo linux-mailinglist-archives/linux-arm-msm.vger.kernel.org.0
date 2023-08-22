@@ -2,99 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E40907839FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 08:31:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E4FC783A56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 09:09:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233006AbjHVGbJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 02:31:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
+        id S233172AbjHVHJA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 03:09:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233010AbjHVGbG (ORCPT
+        with ESMTP id S231804AbjHVHI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 02:31:06 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF83F1A1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 23:31:04 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-525597d891fso5193767a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 23:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692685863; x=1693290663;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qF3XsrvkCmdC2tWJHy9NJb8hDFmSm0IyZ1p8Hm+JGjE=;
-        b=BBFt8dXOP/k5IJhehsjI4KdqyFfTFNjWRtD8aepd+LTyOfbatkgonVPluLG0+inLp2
-         RLXs0y8YLguwmExPhwyx+Sx8uWrp5Tn6kayCObTh61StHQPAYFV5hSYtDZ1gUwc2ceBm
-         cJ1d9JFU6GxuDVEx/W0PFLjpD9cAnI8S+x1OfsP2UifM3iV2kVLCUKwz9hTmWo7+u0Sq
-         tC5KNe52h0RsRKXFu8TGl7Lq2Pp/o2xtPf+OJ0W378coWj+J8w4ME06VseisMqgQbXbg
-         3wHQ1Z/PjrwvfVbju7jhd/EokPXfLtbtiHOdLLo9BP5lxW4Im+94mFypaObr3m/em+mZ
-         Vpgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692685863; x=1693290663;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qF3XsrvkCmdC2tWJHy9NJb8hDFmSm0IyZ1p8Hm+JGjE=;
-        b=MXQedJylqBdyEWbYaVP4K8pgVFPJ/BdKo+vj59QleIvYWTOENVewMPqqIlm7CdWmWc
-         OGDW6fW1il05EQZxBHie6qa9AFwnkWtw7Ujo3n0c3LyLWE9SXxjSP/uvM7ns7a2PG6/z
-         ryRo9mzs29GsnpHxZOmOsHRUCag3GFX9b70sCwJEsSj3bsVZAEBBvAoIN7pViKRJE302
-         0ftiK7jokR62IRJ/QkknxGlXe9NmWExLYHJa4Xh8DnNIPK2EOSIOuh3EdbCHGkKO49XN
-         zLJ6fixAWs2mZzvsd/ChOvptGNbgdixb3AXtLymNVEtQMd2qF7EawcR/orXnybJZ6siC
-         yGsQ==
-X-Gm-Message-State: AOJu0YwE0BVvro3KsI0hoxeKss8Q4Od6IFupmH48Zk4pcs+ofVM+HnZg
-        eKnzfndQ3y33HuCCga6RmDDxpQ==
-X-Google-Smtp-Source: AGHT+IGMEHTyeoPeIgNE/HIIUoDPkzLTgoK6YfDxPVTz+PmAaoHcG16QaEXJEgcRviWpASYwsdoRZQ==
-X-Received: by 2002:a17:906:14:b0:96f:1f79:c0a6 with SMTP id 20-20020a170906001400b0096f1f79c0a6mr6367813eja.70.1692685863290;
-        Mon, 21 Aug 2023 23:31:03 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id c8-20020a170906528800b009887f4e0291sm7667934ejm.27.2023.08.21.23.31.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Aug 2023 23:31:02 -0700 (PDT)
-Message-ID: <74291298-6ca4-99d7-bf7c-741b8220c066@linaro.org>
-Date:   Tue, 22 Aug 2023 08:31:02 +0200
+        Tue, 22 Aug 2023 03:08:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47200130;
+        Tue, 22 Aug 2023 00:08:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CACC3649D9;
+        Tue, 22 Aug 2023 07:08:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163FBC433C7;
+        Tue, 22 Aug 2023 07:08:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692688137;
+        bh=5hSodPEEf8w2mXzyybmlDZ2gdf+T/pqZKs15hGJ2vzQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cI6ZxRwJ4FRgxQg4afnEpd417/qgNVYmsbAcZfmEvwA9d/S4iKW4+OjK2DGyEQYkF
+         9tnMLTa7hMAZpUZi77tnGzPV+ACDM2iaesmkbxIA1gxhhdLiTLquv7MDB22+OQ3u1W
+         +MC/jjikMYdyMncp0XxCU7Lq8K8CWH3BkbfGaGKrAIGrcqkwtNI95FEA1FSegKxYWa
+         RezDJPa+iO0DsxCjhJUPzBCqqZokjrF8au5ihyr/BbMzWvc1cN+UubZ/klBxNiN4MC
+         MPuIVx9QqeAzISY7gX1J/bkLfnrxCiW+Z30gir7Id0Z3tfmq6Wi/liAtw6qzT5gOcy
+         7+arXCY1ulWhg==
+Date:   Tue, 22 Aug 2023 12:38:41 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     mani@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, alim.akhtar@samsung.com,
+        bvanassche@acm.org, robh+dt@kernel.org, avri.altman@wdc.com,
+        cros-qcom-dts-watchers@chromium.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH V1 2/2] arm64: dts: qcom: sc7280: Add UFS host controller
+ and phy nodes
+Message-ID: <20230822070841.GA24753@thinkpad>
+References: <20230821094937.13059-1-quic_nitirawa@quicinc.com>
+ <20230821094937.13059-3-quic_nitirawa@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 04/32] ARM: dts: qcom: apq8064: correct XOADC register
- address
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org
-References: <20230822001349.899298-1-dmitry.baryshkov@linaro.org>
- <20230822001349.899298-5-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230822001349.899298-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230821094937.13059-3-quic_nitirawa@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/08/2023 02:13, Dmitry Baryshkov wrote:
-> The XOADC is present at the address 0x197 rather than just 197. It
-> doesn't change a lot (since the driver hardcodes all register
-> addresses), but the DT should present correct address anyway.
+On Mon, Aug 21, 2023 at 03:19:37PM +0530, Nitin Rawat wrote:
+> Add UFS host controller and PHY nodes for sc7280.
 > 
-> Fixes: c4b70883ee33 ("ARM: dts: add XOADC and IIO HWMON to APQ8064")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+You should split this patch into 2. One for SoC and another for board.
+
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
->  arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 64 ++++++++++++++++++++++++
+>  2 files changed, 83 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index 2ff549f4dc7a..c60cdd511222 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -451,6 +451,25 @@
+>  	status = "okay";
+>  };
+> 
+> +&ufs_mem_hc {
+> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> +	vcc-supply = <&vreg_l7b_2p9>;
+> +	vcc-max-microamp = <800000>;
+> +	vccq-supply = <&vreg_l9b_1p2>;
+> +	vccq-max-microamp = <900000>;
+> +	vccq2-supply = <&vreg_l9b_1p2>;
+> +	vccq2-max-microamp = <900000>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +	vdda-phy-supply = <&vreg_l10c_0p8>;
+> +	vdda-pll-supply = <&vreg_l6b_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &sdhc_1 {
+>  	status = "okay";
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 925428a5f6ae..d4a15d56b384 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -908,6 +908,70 @@
+>  			};
+>  		};
+> 
+> +		ufs_mem_phy: phy@1d87000 {
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Please sort the nodes in ascending order.
 
-Best regards,
-Krzysztof
+> +			compatible = "qcom,sc7280-qmp-ufs-phy";
+> +			reg = <0x0 0x01d87000 0x0 0xe00>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+> +				 <&gcc GCC_UFS_1_CLKREF_EN>;
+> +			clock-names = "ref", "ref_aux", "qref";
+> +
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
+> +
+> +			#clock-cells = <1>;
+> +			#phy-cells = <0>;
+> +
+> +			status = "disabled";
+> +
+> +		};
+> +
+> +		ufs_mem_hc: ufs@1d84000 {
+> +			compatible = "qcom,sc7280-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0x0 0x01d84000 0x0 0x3000>;
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <2>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +			required-opps = <&rpmhpd_opp_nom>;
+> +
+> +			iommus = <&apps_smmu 0x80 0x0>;
+> +			dma-coherent;
+> +
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
 
+"clocks" property should come first.
+
+- Mani
+
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +			freq-table-hz =
+> +				<75000000 300000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<75000000 300000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>;
+> +			status = "disabled";
+> +		};
+> +
+>  		sdhc_1: mmc@7c4000 {
+>  			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
+>  			pinctrl-names = "default", "sleep";
+> --
+> 2.17.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
