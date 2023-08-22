@@ -2,111 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4F6C7847D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 18:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C61DD784810
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 18:55:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236629AbjHVQjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 12:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
+        id S237941AbjHVQzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 12:55:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235349AbjHVQjC (ORCPT
+        with ESMTP id S234012AbjHVQzm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 12:39:02 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0282B1B9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:39:01 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bcb89b476bso42331781fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 09:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692722339; x=1693327139;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=izzWQotNuWERu2kCmy60wMqkKBlZUek9ZxEVm/QBaQM=;
-        b=U0SI/QX39Tai7Eei2DZTOrCx+eT9YxW9/U7+9nE3daz1jr/7azthT4qvL7p7EI1D3W
-         h+YtleiHXkLeEz8sHCGVefieNfIkX2598ox9kbgSOsClQaZrEhcCRk77jiAwh/+jj1Fb
-         6R9DFvop3Vktqkoeb94PT8pfKfosBH+hkckCrLFv4G3qlTEKHjUBwu1gi4tzhv0LDovd
-         gssxb1/9Fr4z3Si7o9qJtf5A4Tz2n/ZHFLJWEM/3IxL2e7vPmedxkGovyYN/rPXIVrJm
-         vUcQr+0b3cSfwvtTmM3qPY73Zbx4IJSwuJkHaQbyR/9LJTa/exCU7DyTnsvLDmp+RjiZ
-         rQKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692722339; x=1693327139;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=izzWQotNuWERu2kCmy60wMqkKBlZUek9ZxEVm/QBaQM=;
-        b=Isld09yttZ4hkuMw1wTcmdPdOldAnWERVFe5Y/STIz9RaCZeQYS3CuKq4+J4dgWcf1
-         BUFgeujaw91bGUjuY4PP0Y93437VXR0qHMtvRdEF5Aa9COR8dxDoiCkQWikOG4C+fgit
-         tIUzAYRAyHlzOMTwadizG/Hh0F3U3PKqFXtAydOEcXpe7SIwLG2U6rZ9QTNPkj1FSX8M
-         gX8iYzlw9mLbVaB36SmTdbJpOIx7e9bb6aDeMRIHe/uutZxhPVQ6Jt4FVXfXWzAl632i
-         plxuO3pdPTmVR8vs96QLoBDKS3tKAGIEXKJ2T0M3axiPxTRvl5uR+zH26yG6vq3/YpSC
-         KkJw==
-X-Gm-Message-State: AOJu0YyCKRRzJY7uHCCr2IRHQwErbupl8Jrb6z3SMbT3enS8zOyFZgzs
-        yI1c75GVb04900sfTmWa98a5eQ==
-X-Google-Smtp-Source: AGHT+IH58tJZemUBp7ONy/368G7Z6JZPNy1XTx3ukBs5DsMO8tWqj9bjyYYh19jQpZTi+2yen8u7Pw==
-X-Received: by 2002:a2e:9e09:0:b0:2b6:dac0:affe with SMTP id e9-20020a2e9e09000000b002b6dac0affemr7682995ljk.31.1692722339192;
-        Tue, 22 Aug 2023 09:38:59 -0700 (PDT)
-Received: from [192.168.1.101] (abyk189.neoplus.adsl.tpnet.pl. [83.9.30.189])
-        by smtp.gmail.com with ESMTPSA id k4-20020a2e8884000000b002b6d68b520esm2746125lji.65.2023.08.22.09.38.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Aug 2023 09:38:58 -0700 (PDT)
-Message-ID: <4f271226-c45a-42a8-95ff-8ec008ce7e72@linaro.org>
-Date:   Tue, 22 Aug 2023 18:38:57 +0200
+        Tue, 22 Aug 2023 12:55:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98BBC1B0;
+        Tue, 22 Aug 2023 09:55:40 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37MGooOa015109;
+        Tue, 22 Aug 2023 16:55:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nlCgUc97OahRC0pXUl3qCZzkBvzU7IqDFI7L4OEsJDI=;
+ b=bNj8hRPlszpM+hivuATis6N/vcBJKG9VVxL3ZTUjA8OQVcZN80RE1oluF0DpKFN/4gK7
+ MJmbsW1FFqfTavOPIW4gEoVl7I2vnie8GMp8DbckybedsB5sGPdBf9HS1m7sy85pWLJ2
+ i4teaFwpfMXGByn0CtoZ6vDMlN5lmKJbaz7tNPdsWtbdtP0Nv6yjCwaNuti86AEOU4ae
+ Ip/YWNoruRbFg2pbZFWJAUy+hy337Ibn3gu2hmXBOSrapVnjDx0bJ+rbTdDsMAg1BtyE
+ NQOAzvE+/C9EDtTX60lsCbIkk6TkSTr8KldMZAh0Eyy5KSMxhgAI9WVlSPr62fxpj6xm Hg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smusbrwbx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 16:55:28 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37MGtSwF009627
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 16:55:28 GMT
+Received: from [10.216.24.163] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 22 Aug
+ 2023 09:55:24 -0700
+Message-ID: <659e5362-814a-a01d-bb5b-d960a63dabeb@quicinc.com>
+Date:   Tue, 22 Aug 2023 22:25:20 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 9/9] media: qcom: camss: Fix csid-gen2 for test pattern
- generator
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 1/4] dt-bindings: firmware: qcom,scm: support
+ indicating SDI default state
+To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <computersforpeace@gmail.com>
+References: <20230816164641.3371878-1-robimarko@gmail.com>
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20230822161620.1915110-1-bryan.odonoghue@linaro.org>
- <20230822161620.1915110-10-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230822161620.1915110-10-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230816164641.3371878-1-robimarko@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: s-uOyspWs5rwsmGqGEuKHFZyXciFghyH
+X-Proofpoint-GUID: s-uOyspWs5rwsmGqGEuKHFZyXciFghyH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-22_13,2023-08-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2308220133
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -115,72 +84,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22.08.2023 18:16, Bryan O'Donoghue wrote:
-> From: Andrey Konovalov <andrey.konovalov@linaro.org>
+
+
+On 8/16/2023 10:15 PM, Robert Marko wrote:
+> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
+> means that WDT being asserted or just trying to reboot will hang the board
+> in the debug mode and only pulling the power and repowering will help.
+> Some IPQ4019 boards like Google WiFI have it enabled as well.
 > 
-> In the current driver csid Test Pattern Generator (TPG) doesn't work.
-> This change:
-> - fixes writing frame width and height values into CSID_TPG_DT_n_CFG_0
-> - fixes the shift by one between test_pattern control value and the
->   actual pattern.
-> So that TPG starts working, but with the below limitations:
-> - only test_pattern=9 works as it should
-> - test_pattern=8 and test_pattern=7 produce black frame (all zeroes)
-> - the rest of test_pattern's don't work (yavta doesn't get the data)
-> - regardless of the CFA pattern set by 'media-ctl -V' the actual pixel
->   order is always the same (RGGB for any RAW8 or RAW10P format in
->   4608x2592 resolution).
+> So, lets add a boolean property to indicate that SDI is enabled by default
+> and thus needs to be disabled by the kernel.
 > 
-> Tested with:
-> 
-> RAW10P format, VC0:
->  media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
->  media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
->  media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->  v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=9
->  yavta -B capture-mplane --capture=3 -n 3 -f SRGGB10P -s 4608x2592 /dev/video0
-> 
-> RAW10P format, VC1:
->  media-ctl -V '"msm_csid0":2[fmt:SRGGB10/4608x2592 field:none]'
->  media-ctl -V '"msm_vfe0_rdi1":0[fmt:SRGGB10/4608x2592 field:none]'
->  media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
->  v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=9
->  yavta -B capture-mplane --capture=3 -n 3 -f SRGGB10P -s 4608x2592 /dev/video1
-> 
-> RAW8 format, VC0:
->  media-ctl --reset
->  media-ctl -V '"msm_csid0":0[fmt:SRGGB8/4608x2592 field:none]'
->  media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB8/4608x2592 field:none]'
->  media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->  yavta -B capture-mplane --capture=3 -n 3 -f SRGGB8 -s 4608x2592 /dev/video0
-> 
-> Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware version Titan 170")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+
+Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+-Mukesh
+
 > ---
-That's a whole lot to unroll..
-
-[...]
->  		if (tg->enabled) {
-> -			/* Config Test Generator */
-> -			vc = 0xa;
-> -
-Which part does this hunk correlate to?
-
->  			/* configure one DT, infinite frames */
->  			val = vc << TPG_VC_CFG0_VC_NUM;
->  			val |= INTELEAVING_MODE_ONE_SHOT << TPG_VC_CFG0_LINE_INTERLEAVING_MODE;
-> @@ -370,14 +367,14 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
->  
->  			writel_relaxed(0x12345678, csid->base + CSID_TPG_LFSR_SEED);
->  
-> -			val = input_format->height & 0x1fff << TPG_DT_n_CFG_0_FRAME_HEIGHT;
-> -			val |= input_format->width & 0x1fff << TPG_DT_n_CFG_0_FRAME_WIDTH;
-> +			val = (input_format->height & 0x1fff) << TPG_DT_n_CFG_0_FRAME_HEIGHT;
-> +			val |= (input_format->width & 0x1fff) << TPG_DT_n_CFG_0_FRAME_WIDTH;
->  			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
-This screams necessity for FIELD_PREP/GET! Could you please convert
-it in another series if you have time for it?
-
-Konrad
+> Changes in v3:
+> * Change the property so it indicates that SDI has been enabled by default
+> ---
+>   Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> index 4233ea839bfc..590bbbd61de5 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> @@ -89,6 +89,14 @@ properties:
+>         protocol to handle sleeping SCM calls.
+>       maxItems: 1
+>   
+> +  qcom,sdi-enabled:
+> +    description:
+> +      Indicates that the SDI (Secure Debug Image) has been enabled by TZ
+> +      by default and it needs to be disabled.
+> +      If not disabled WDT assertion or reboot will cause the board to hang
+> +      in the debug mode.
+> +    type: boolean
+> +
+>     qcom,dload-mode:
+>       $ref: /schemas/types.yaml#/definitions/phandle-array
+>       items:
