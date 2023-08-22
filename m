@@ -2,300 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39BAF7839B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 08:04:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBD707839E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Aug 2023 08:27:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232590AbjHVGEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 02:04:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39064 "EHLO
+        id S232728AbjHVG1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 02:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232553AbjHVGEo (ORCPT
+        with ESMTP id S231406AbjHVG1l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 02:04:44 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41435185
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 23:04:41 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99cce6f7de2so551555066b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Aug 2023 23:04:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692684280; x=1693289080;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C3aWA1jtQ3ekjqLkSXHoeqbDYDQZG5PYeCTI0ujmipE=;
-        b=y4C2X+SsvjepV4ge15y35NSFMDWBeSiNTt0+AHmsPCzXgF04nCuWhoBdcJGUOAuSHb
-         +1GQ3uVuRXIjN7BhDK+HXCbbnG4Husp/jlTg9DFI3pJSW0tiKacU79idb8InnmbUv8XV
-         dYdFgdkn27EHnllI+Tm8B0YprU8Zy9/2lnUMoTV9HvspLQ97yDuNwtj6zM5B5eIUBEs3
-         GZ7aTdBiT2F1vW2Tw7SjZ+DMMFygPuzm84GacIsuJSEAQv6uMUtY3Awt79Zo2bC4z9fG
-         BQ67xeAKHd/0reQp2r/4L6KSt4DuY9CDhXFIRBkPerubVixgwbb/kzXxlqWUf/V7fDNh
-         YC6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692684280; x=1693289080;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C3aWA1jtQ3ekjqLkSXHoeqbDYDQZG5PYeCTI0ujmipE=;
-        b=VXZlQvA0vrBw1PWUrNOUvB8K+X/B0B6nEV05ujcvqKRNY0kSONsCE1Z9H1cLsqx3Cl
-         JCEwH4VeV43K+ntQjzz88VTTRx9oodUdir8pmncWrJd5dZlm+L8+V+RcI0AgoIL59zr0
-         +OgiG7ecnq+yS7rEQsWuJKhia+DJnc34F4K6Owxk+yL/mKmQNUQLqel/Y6dcoNojBm7D
-         ObBvKnAzRB+dGkr7D1HnuebJZy1azQQeWgOWIshUe4wKGAiQFv0DQTD9GJ3ZqiYpD3Zi
-         s8Phb/Fxn/QVo8UsWpAUTDjAca5nsLIMjZgucZrqOWMb4QoKYPLemUFkD8OYA2XYHZgo
-         /llg==
-X-Gm-Message-State: AOJu0YyBQAsVFQr2XGq3MRpY4w9e86TxvCwsPQ/xbx1ZHpedNqy9M2Hh
-        ASKwp8LsaOc56o/Yd+eNb8HcPQ==
-X-Google-Smtp-Source: AGHT+IGwTAFZN57WbIIvRgAX4lgW31qSiyruvaXkXryqzj8k10mR/AG4zrjU24SlgJ3PO2XtYltQpw==
-X-Received: by 2002:a17:906:3287:b0:992:a836:a194 with SMTP id 7-20020a170906328700b00992a836a194mr6405065ejw.59.1692684279572;
-        Mon, 21 Aug 2023 23:04:39 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id lo8-20020a170906fa0800b009929ab17bdfsm7558296ejb.168.2023.08.21.23.04.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Aug 2023 23:04:39 -0700 (PDT)
-Message-ID: <e2a0c77d-cb48-9348-672a-6adaae38df3c@linaro.org>
-Date:   Tue, 22 Aug 2023 08:04:37 +0200
+        Tue, 22 Aug 2023 02:27:41 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C530B198;
+        Mon, 21 Aug 2023 23:27:39 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37M4lNcX003340;
+        Tue, 22 Aug 2023 06:27:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=IoSf8cbXFwS5Xr7IDNZ1rK6UZA1a0iDNuvCxeYTH86I=;
+ b=oQCBJmBeYQO7Nb72q38drZvAl0g/TRwLyn8kPluwJcLDmmFFoMzd3wI8Hg+CEuOPh1Xh
+ jxK0Dcnt3VaFbCqXrK3gWMvOp9sddUUv3ja+YvY3TD158uDcvGqMQJ5HoR7bTiPZLoFr
+ ceo7sgEqTj7j5U/idmNe5eFM8UW146eORxQk5xiGPX6J6Zy+edCILWSTGqoe5GvQ1W19
+ Lp01j7gXiEnUf2vIoQdYBkWhhGNZmAW4ZQLS06anlFrh8/j426QQfFGANbkqrDmfsb6j
+ n/sLkEXu6V2WjOiwe/i4nLJEndmm0hUeVXjD3O8Vcqo43FyaUFfIkDeQrtlNai6gUv9G tA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3smfjs8rjp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 06:27:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37M6RYm1024435
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Aug 2023 06:27:34 GMT
+Received: from [10.214.27.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 21 Aug
+ 2023 23:27:31 -0700
+Message-ID: <e8bd304b-2ec9-cbdd-b5ad-f8a0ff552c77@quicinc.com>
+Date:   Tue, 22 Aug 2023 11:57:28 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v2 2/3] dt-bindings: arm: Adds CoreSight CSR hardware
- definitions
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 2/4] arm: dts: qcom: Add the rpmhpd header
 Content-Language: en-US
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20230813151253.38128-1-quic_jinlmao@quicinc.com>
- <20230813151253.38128-3-quic_jinlmao@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230813151253.38128-3-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Rob Herring <robh@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1690781104-2290-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1690781104-2290-3-git-send-email-quic_rohiagar@quicinc.com>
+ <20230821151430.GA1643924-robh@kernel.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <20230821151430.GA1643924-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6cVA2CJ48zPD-n3YHA35m_IKUqYMpAXO
+X-Proofpoint-GUID: 6cVA2CJ48zPD-n3YHA35m_IKUqYMpAXO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-22_04,2023-08-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=371
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308220050
 X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/08/2023 17:12, Mao Jinlong wrote:
-> Adds new coresight-csr.yaml file describing the bindings required
-> to define csr in the device trees.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../bindings/arm/qcom,coresight-csr.yaml      | 130 ++++++++++++++++++
->  MAINTAINERS                                   |   2 +-
->  include/dt-bindings/arm/coresight-csr-dt.h    |  12 ++
->  3 files changed, 143 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
->  create mode 100644 include/dt-bindings/arm/coresight-csr-dt.h
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
-> new file mode 100644
-> index 000000000000..de4baa335fdb
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
-> @@ -0,0 +1,130 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/qcom,coresight-csr.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: CoreSight Slave Register - CSR
-> +
-> +description: |
-> +  CoreSight Slave Register block hosts miscellaneous configuration registers.
-> +  Those configuration registers can be used to control, various coresight
-> +  configurations.
-> +
-> +maintainers:
-> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> +  - Hao Zhang <quic_hazha@quicinc.com>
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^csr(@[0-9a-f]+)$"
 
-Blank line. Or even drop the nodename, we do not enforce names in the
-individual bindings and I do not get why "csr" should be a recommended
-name. It's not really generic, but specific.
+On 8/21/2023 8:44 PM, Rob Herring wrote:
+> On Mon, Jul 31, 2023 at 10:55:02AM +0530, Rohit Agarwal wrote:
+>> Add the rpmhpd header having the definition of the regulator levels
+>> for Qualcomm SoCs.
+>>
+>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> ---
+>>   arch/arm/boot/dts/qcom/qcom-sdx55.dtsi | 1 +
+>>   arch/arm/boot/dts/qcom/qcom-sdx65.dtsi | 1 +
+>>   2 files changed, 2 insertions(+)
+>>
+>> diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+>> index df3cd9c..8ffb2a0 100644
+>> --- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+>> +++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+>> @@ -12,6 +12,7 @@
+>>   #include <dt-bindings/interconnect/qcom,sdx55.h>
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   #include <dt-bindings/power/qcom-rpmpd.h>
+>> +#include <dt-bindings/power/qcom,rpmhpd.h>
+> If patch 4 isn't applied, aren't you going to get warnings about
+> redefining the defines since you have them twice?
+Isnt that just a macro so redefining wont give any warning. Please 
+correct me if I am wrong.
+But, I dont see any warnings while compiling without the 4th patch.
 
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-csr
-> +
-> +  reg:
-> +    minItems: 1
-> +    maxItems: 2
-
-Why is this flexible? One device has only one register layout... or you
-want to say that compatible is not specific but generic?
-
-Anyway, items needs to be described.
-
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: apb_pclk
-> +
-> +  # size cells and address cells required if assoc_device node present.
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +patternProperties:
-> +  '^assoc_device@([0-9]+)$':
-
-No underscores.
-
-Aren't you now creating duplicated nodes for devices? ETRs for example
-have their device nodes, right? So here you would be creating second
-one? If that's the case, then it looks wrong.
-
-> +    type: object
-> +    description:
-> +      A assocated device child node which describes the required configs
-> +      between this CSR and another hardware device. This device may be ETR or
-> +      TPDM device.
-> +
-> +    properties:
-> +      reg:
-> +        maxItems: 1
-> +
-> +      arm,cs-dev-assoc:
-> +        $ref: /schemas/types.yaml#/definitions/phandle
-> +        description:
-> +          defines a phandle reference to an associated CoreSight trace device.
-> +          When the associated trace device is enabled, then the respective CSR
-> +          will be enabled. If the associated device has not been registered
-> +          then the node name will be stored as the assocated name for later
-> +          resolution.
-> +
-> +      qcom,cs-dev-type:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          Device type of the Assocated device. Types are in coresight-csr-dt.h.
-> +
-> +      qcom,csr-bytecntr-offset:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          The ETR irqctrl register offset. If the assocated device is ETR
-> +          device and there are more than one ETR devices, this property need
-> +          to be added.
-> +
-> +      interrupts:
-> +        minItems: 1
-> +
-> +      interrupt-names:
-> +        minItems: 1
-> +
-> +    required:
-> +      - reg
-> +      - qcom,cs-dev-type
-> +      - qcom,cs-dev-assoc
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # minimum CSR definition.
-> +  - |
-> +    csr@10001000 {
-> +      compatible = "qcom,coresight-csr";
-> +      reg = <0 0x10001000 0 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +    };
-> +  # Assocated with ETR device
-> +  - |
-> +    #include <dt-bindings/arm/coresight-csr-dt.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    csr@10001000 {
-> +      compatible = "qcom,coresight-csr";
-> +      reg = <0 0x10001000 0 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      assoc_device@0 {
-> +        reg = <0>;
-> +        qcom,cs-dev-type = <CSR_ASSOC_DEV_ETR>;
-> +        qcom,cs-dev-assoc = <&tmc_etr>;
-> +        qcom,csr-bytecntr-offset = <0x6c>;
-> +        interrupts = <GIC_SPI 270 IRQ_TYPE_EDGE_RISING>;
-> +        interrupt-names = "byte-cntr-irq";
-> +      };
-> +    };
-> +...
-> +
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index d516295978a4..3ed81a8fd1d0 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2042,7 +2042,7 @@ F:	Documentation/devicetree/bindings/arm/arm,trace-buffer-extension.yaml
->  F:	Documentation/devicetree/bindings/arm/qcom,coresight-*.yaml
->  F:	Documentation/trace/coresight/*
->  F:	drivers/hwtracing/coresight/*
-> -F:	include/dt-bindings/arm/coresight-cti-dt.h
-> +F:	include/dt-bindings/arm/coresight-*.h
->  F:	include/linux/coresight*
->  F:	samples/coresight/*
->  F:	tools/perf/arch/arm/util/auxtrace.c
-> diff --git a/include/dt-bindings/arm/coresight-csr-dt.h b/include/dt-bindings/arm/coresight-csr-dt.h
-> new file mode 100644
-> index 000000000000..804b9bbeb2bd
-> --- /dev/null
-> +++ b/include/dt-bindings/arm/coresight-csr-dt.h
-
-Use the same naming pattern as for bindings, so qcom,coresight-csr if it
-is qcom, or arm,coresight-csr if it is ARM. DT is for sure redundant.
-
-> @@ -0,0 +1,12 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause */
-> +/*
-> + * This header provides constants for the defined device
-> + * types on CoreSight CSR.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_ARM_CORESIGHT_CSR_DT_H
-> +#define _DT_BINDINGS_ARM_CORESIGHT_CSR_DT_H
-> +
-> +#define CSR_ASSOC_DEV_ETR	1
-> +
-> +#endif /*_DT_BINDINGS_ARM_CORESIGHT_CSR_DT_H */
-
-Best regards,
-Krzysztof
-
+Thanks,
+Rohit.
+>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>   
+>>   / {
+>> diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+>> index 1a35830..f990f5d 100644
+>> --- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+>> +++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+>> @@ -11,6 +11,7 @@
+>>   #include <dt-bindings/gpio/gpio.h>
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   #include <dt-bindings/power/qcom-rpmpd.h>
+>> +#include <dt-bindings/power/qcom,rpmhpd.h>
+>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>   #include <dt-bindings/interconnect/qcom,sdx65.h>
+>>   
+>> -- 
+>> 2.7.4
+>>
