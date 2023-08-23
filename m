@@ -2,114 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3FCB785245
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 10:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F38E785249
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 10:08:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233587AbjHWIHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 04:07:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42254 "EHLO
+        id S233539AbjHWIIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 04:08:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233794AbjHWIHK (ORCPT
+        with ESMTP id S233843AbjHWIHj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 04:07:10 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68384E77
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 01:07:05 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6bcca6485f6so887537a34.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 01:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20221208.gappssmtp.com; s=20221208; t=1692778024; x=1693382824;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=udpAZNqDTSyINb9TBsLNyewxRVEKqyjjLvl2Adk+gII=;
-        b=eHWfvgUyaWQHENf7ruUY8h/qV0sTOrPODhu6a+M+gXyqeqX9kpKQk/lqXt9wun6nFQ
-         UbSq+dBO/GuC4p5WdKaMA+cLNj/FznRjqplZtlkTqxK2zAdTdn3DLOIXZRr1YiFVOOs3
-         ocOPv1YIvUh3PYyo7bSvj4UdNkqXK8dSXC322OvIN73VuUo+CeJPsQWfUL4o8EWLPbxA
-         eY1SChu8rcepqJrBeLVqhY708SYQ2Aj0Je3N5wOAu0bbttRw4vJsFMRmvZnW+9QrCCpB
-         b7tBVzJ0VbQ0qdjPv/8J5tfCoBzV2RczIF9opnelAUD8uwgwSVi4/JfvyK+49HruTqkY
-         wXFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692778024; x=1693382824;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=udpAZNqDTSyINb9TBsLNyewxRVEKqyjjLvl2Adk+gII=;
-        b=lVvSemdcM+GYpC6fGSz5BiMY4ouaGeNgmD723USwjjTbjnOAcaV4KvicWepIeDDc6v
-         4fZEtVhwDb/W6b/PXC91pPMY6Hv/IvkM76VdAvjQq7B5CTYB7DuBpE4nlHQGXxCw7dyQ
-         D4MOc/Wj1ZoCjdKO6VzJg/o5RPGyuxtNL8R+MZXzVQagpOJUEnGrw5k5sCQCuwj026RX
-         SFa+2lS7jEZ0cWI+DYSfiloj0OLtyUSAkrEiGu9QI2n+gxvDHhqQ/3QMl4C1xxh3R4sA
-         dBwPUgtygXHsXvMB7QSOYPiGSvX/8sBk2D0LO7TDYaRP+60oCT5AL0uDUdGaNn0/4jy8
-         jwGQ==
-X-Gm-Message-State: AOJu0YxRRanhYXlneRAGhXBwAEhm0oscCDY/AMjPW7Lvi2u0EP9A9ujR
-        KXqlmB4bVsVYdHT4YQi4NEm7vA==
-X-Google-Smtp-Source: AGHT+IF/bCJHe0mFXzvnobOlgC6LNCqnDwzYhq1+EjbZb9/24cpAjR1pxPpt911j4NIdvj+OmGtTtg==
-X-Received: by 2002:a05:6871:520b:b0:1c0:d0e8:8ff5 with SMTP id ht11-20020a056871520b00b001c0d0e88ff5mr14398796oac.1.1692778024653;
-        Wed, 23 Aug 2023 01:07:04 -0700 (PDT)
-Received: from [192.168.0.224] (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id mv22-20020a17090b199600b00263987a50fcsm10814105pjb.22.2023.08.23.01.07.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Aug 2023 01:07:04 -0700 (PDT)
-Message-ID: <d05e2966-8f07-f2b0-0f95-f069a6376635@quanta.corp-partner.google.com>
-Date:   Wed, 23 Aug 2023 16:07:00 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sc7180: Add sku_id and board id
- for lazor/limozeen
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wed, 23 Aug 2023 04:07:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFECFCD0;
+        Wed, 23 Aug 2023 01:07:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 614606169A;
+        Wed, 23 Aug 2023 08:07:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40C4C433C9;
+        Wed, 23 Aug 2023 08:07:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692778055;
+        bh=DKUQM41foKKTMLclFZMHgMlMQ0+CfODASqrhcrxiLiI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BUi5xHQMkD9wnMF3HYgny1D6ePPp0QYGCYJUAY0oBlMh6TOilSPip8ly62ehruXSZ
+         4JVR/5iqGCK4epW9hY/kWoQYPr7fS4cai8T7I92LHPIvm6I0tX1zcMAF8OEogT0mjQ
+         usVMxItxedLpST1dG7KNLATFlGNNiwThsYd9EVxtMpKWB1TMXw5k0RFgO6Y/oMgJfB
+         ZFqkGShwGhKi0KIlfys9Iyt94+dEdPuuhCgPqX2QuZ/h4vYItGFLeG98XCIZKPIITm
+         6NmE6ZJJ3nnXx/4rZ+ZMyEaqfOrkD3VLIYh0GQfnUXFzTAnYEyy+8Vc6tMj7i/DMZT
+         /W6HgPrSclgTQ==
+Date:   Wed, 23 Aug 2023 13:37:18 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230822100359.124282-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230822180054.v5.2.I8f20fdfe34a2e8a38373bbd65587754b324f3dcb@changeid>
- <3021b5bb-a88b-4427-b6ee-3dde216fc6b3@linaro.org>
-Content-Language: en-US
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-In-Reply-To: <3021b5bb-a88b-4427-b6ee-3dde216fc6b3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: cpufreq: qcom-hw: add a 4th frequency
+ domain
+Message-ID: <20230823080718.GJ3737@thinkpad>
+References: <20230821-topic-sm8x50-upstream-cpufreq-4-domains-v1-0-2d4d9fc828d8@linaro.org>
+ <20230821-topic-sm8x50-upstream-cpufreq-4-domains-v1-1-2d4d9fc828d8@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230821-topic-sm8x50-upstream-cpufreq-4-domains-v1-1-2d4d9fc828d8@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On Mon, Aug 21, 2023 at 09:39:13AM +0200, Neil Armstrong wrote:
+> On new platforms, a 4th frequency domain is used, document it.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-> On 22.08.2023 12:03, Sheng-Liang Pan wrote:
->> SKU ID 10: Lazor LTE+Wifi, no-esim (Strapped 0 X 0)
->> SKU ID 15: Limozeen LTE+Wifi, TS, no esim (Strapped 1 X 0)
->> SKU ID 18: Limozeen LTE+Wifi, no TS, no esim (Strapped X 0 0)
->>
->> Even though the "no esim" boards are strapped differently than
->> ones that have an esim, the esim isn't represented in the
->> device tree so the same device tree can be used for LTE w/ esim
->> and LTE w/out esim.
->>
->> add BRD_ID(0, Z, 0) = 10 for new board with ALC5682i-VS
->>
->> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
->> ---
-> Minor style nits since Doug already suggested a v6:
->
-> - please add a space between /delete-node/ and the &reference after it
-> - keep properties (e.g. pinctrl-) like this:
->      property-n
->      property-names
->
-> Konrad
->
-Patch v6 [1] fix it.
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
 
-[1] 
-https://lore.kernel.org/all/20230823151005.v6.2.I8f20fdfe34a2e8a38373bbd65587754b324f3dcb@changeid/
+- Mani
 
+> ---
+>  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> index a6b3bb8fdf33..c1d225fcf2d5 100644
+> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> @@ -49,6 +49,7 @@ properties:
+>        - description: Frequency domain 0 register region
+>        - description: Frequency domain 1 register region
+>        - description: Frequency domain 2 register region
+> +      - description: Frequency domain 3 register region
+>  
+>    reg-names:
+>      minItems: 1
+> @@ -56,6 +57,7 @@ properties:
+>        - const: freq-domain0
+>        - const: freq-domain1
+>        - const: freq-domain2
+> +      - const: freq-domain3
+>  
+>    clocks:
+>      items:
+> @@ -69,7 +71,7 @@ properties:
+>  
+>    interrupts:
+>      minItems: 1
+> -    maxItems: 3
+> +    maxItems: 4
+>  
+>    interrupt-names:
+>      minItems: 1
+> @@ -77,6 +79,7 @@ properties:
+>        - const: dcvsh-irq-0
+>        - const: dcvsh-irq-1
+>        - const: dcvsh-irq-2
+> +      - const: dcvsh-irq-3
+>  
+>    '#freq-domain-cells':
+>      const: 1
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
