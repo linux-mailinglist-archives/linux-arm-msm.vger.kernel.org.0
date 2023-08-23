@@ -2,145 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1CE9785D26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 18:23:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ACD3785D34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 18:26:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237519AbjHWQXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 12:23:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40578 "EHLO
+        id S233071AbjHWQ0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 12:26:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235575AbjHWQXe (ORCPT
+        with ESMTP id S237554AbjHWQ0y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 12:23:34 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBC63E77
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 09:23:32 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d690c9fbda3so5443259276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 09:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692807812; x=1693412612;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IgMNT86Z22z96gO4xCO8LycBD/jTwX067iwUZoTggXM=;
-        b=BWtiyn5gO067QLvIGZTse69sez5QCtvbR0aydCcDJWL8Uwqv5tHx95JR2FdQbyvUe/
-         xt4J8A3RJr60cDXCZLvr4jeocqgXlbYDqCpT1R4cAeEBq8P/fOeCPe/6RmupyHdHvEMe
-         bmett1gsb+p/ydy+Da1M+DBF/yLFgjGHO18KZyJ7tY4snmPXt0C8BFXBHalX86Rig/S4
-         ueyvvJ2rnAI3u/DidTaW830939C1WCKvB2BtcoY7Vk/LJGkNagFLXUhEIwZfHbPMHMIK
-         wPqssjcD9OkupMyqcl4UajRD6SK2eaHuHhIveBGVyWGLGUy8Wuh4Fjr7uke1Rb8gnnRr
-         6ooA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692807812; x=1693412612;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IgMNT86Z22z96gO4xCO8LycBD/jTwX067iwUZoTggXM=;
-        b=Mt8CaPzIpFGX2dhducmsrU7hi7onPxngJjI0NExz6ksFkRdAHitorI6yoDCL8XwH4s
-         BWICnVPZhrNpW+BvY+94ZjXhv1tBREoWi+JdF7CqtbRxTjvNXz8yoSTJQKpK+PtSer+3
-         8UAffi4xRcjJBhB+O80ziF1huaxfWaQFPNCJPQcaaKq9TpB2NMBAnfOQ60yubzmwcHYv
-         bivimHJ5hX/65tHHxXT1YnmI8diCidQmRnlaAonii12vFKvd635k5ID1QDelk3zBZRti
-         roClOnngQAuAFyEMUNsx+Nf262vQauoEBxGlDxxx3MtjRlYclnxs2y4H6Tg4pENVRN5s
-         O+tA==
-X-Gm-Message-State: AOJu0YwZIYTGtBCuOAiWw4sVoYm68isYhRLmE0kwwBsw47B7phupb1U5
-        MSyiTHFpSyfbdquLlGUxmEvXBiw+aoF6BfCCyKx3uQ==
-X-Google-Smtp-Source: AGHT+IHrwdAEA9WB5CPmo1YyH9mp4YcDQYwNVRCOBHYhovobWQ9KoftGQ4a4Zbj5o9UxCsssXYzfoBS2rjusfEq3JcI=
-X-Received: by 2002:a25:34d5:0:b0:d4c:6b49:fed7 with SMTP id
- b204-20020a2534d5000000b00d4c6b49fed7mr12564508yba.45.1692807812039; Wed, 23
- Aug 2023 09:23:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230823114528.3677667-1-abel.vesa@linaro.org> <20230823114528.3677667-3-abel.vesa@linaro.org>
-In-Reply-To: <20230823114528.3677667-3-abel.vesa@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 23 Aug 2023 18:22:55 +0200
-Message-ID: <CAPDyKFreStawBf-2txj=ZL0jA0N-Cd22J1Y6u-3H0nJttzKw8Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] PM: domains: Add the domain HW-managed mode to the summary
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wed, 23 Aug 2023 12:26:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C933B10CB;
+        Wed, 23 Aug 2023 09:26:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5903565B5F;
+        Wed, 23 Aug 2023 16:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9647C433C9;
+        Wed, 23 Aug 2023 16:26:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692807995;
+        bh=Al2E1druB0P3ejb2/nbyyV1nrydyUGxUz/KKinqoeXw=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=Wnav+mQ7zbUlOMYQy6oS6fixkqGNt2FlLDc2v8vrglE5YyJQ1a7GiUs7OjmqDvMvw
+         DDsNUIHB59d38kmDd/eNN0329fmotS9z4R3p15rnukg5qco5x2ptral36+D1mtKR5e
+         rxM4XGvYEzzvMHp3qaJCU8PM5UUZkshIWQ5WhrqQyVr6IaL2B1126H+3f7Gfh5CPzi
+         k6r2szuFPGlrQwoioGiJW2SvIzdZsrezVjzWZnypry1U2Blw4N53XGEQ/KE3lARmqu
+         /SHFtjpVIi83YKv68phgAGTj2+0sB8xr2c9tI+1qswmnitl6lkFEyHszkozr17ElRu
+         fcf4MqhhApPfw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+In-Reply-To: <20230801095702.2891127-1-abel.vesa@linaro.org>
+References: <20230801095702.2891127-1-abel.vesa@linaro.org>
+Subject: Re: [PATCH] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
+Message-Id: <169280799363.53966.9265296180737310826.b4-ty@kernel.org>
+Date:   Wed, 23 Aug 2023 17:26:33 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-034f2
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Aug 2023 at 13:45, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> Now that genpd supports dynamically switching the control for an
-> attached device between hardware- and software-mode,  let's add this
-> information to the genpd summary in debugfs.
->
-> Suggested-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On Tue, 01 Aug 2023 12:57:02 +0300, Abel Vesa wrote:
+> The LDO 12 is NLDO 515 low voltage type, so fix accordingly.
+> 
+> 
 
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Applied to
 
-Kind regards
-Uffe
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-> ---
->
-> Changes since v2:
->  * Reworded the commit according to Ulf's suggestion
->  * Dropped the _mode suffix from the status
->  * Replaced "mode" with "managed by" in summary show function
->
->  drivers/base/power/domain.c | 15 +++++++++++++--
->  1 file changed, 13 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index dfb4f1de540d..93350e67b0e8 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -3171,6 +3171,15 @@ static void rtpm_status_str(struct seq_file *s, struct device *dev)
->         seq_printf(s, "%-25s  ", p);
->  }
->
-> +static void mode_status_str(struct seq_file *s, struct device *dev)
-> +{
-> +       struct generic_pm_domain_data *gpd_data;
-> +
-> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
-> +
-> +       seq_printf(s, "%20s", gpd_data->hw_mode ? "HW" : "SW");
-> +}
-> +
->  static void perf_status_str(struct seq_file *s, struct device *dev)
->  {
->         struct generic_pm_domain_data *gpd_data;
-> @@ -3229,6 +3238,7 @@ static int genpd_summary_one(struct seq_file *s,
->                 seq_printf(s, "\n    %-50s  ", kobj_path);
->                 rtpm_status_str(s, pm_data->dev);
->                 perf_status_str(s, pm_data->dev);
-> +               mode_status_str(s, pm_data->dev);
->                 kfree(kobj_path);
->         }
->
-> @@ -3245,8 +3255,9 @@ static int summary_show(struct seq_file *s, void *data)
->         int ret = 0;
->
->         seq_puts(s, "domain                          status          children                           performance\n");
-> -       seq_puts(s, "    /device                                             runtime status\n");
-> -       seq_puts(s, "----------------------------------------------------------------------------------------------\n");
-> +       seq_puts(s, "    /device                                             runtime status                           managed by\n");
-> +       seq_puts(s, "------------------------------------------------------------------------------------------------------------\n");
-> +
->
->         ret = mutex_lock_interruptible(&gpd_list_lock);
->         if (ret)
-> --
-> 2.34.1
->
+Thanks!
+
+[1/1] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
+      commit: fb0db7f2d010e41fceffe801b2fb254e83785165
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
