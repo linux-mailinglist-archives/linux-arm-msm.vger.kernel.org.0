@@ -2,142 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8AB67857E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 14:32:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76866785833
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 14:56:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234029AbjHWMcE convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 08:32:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
+        id S235291AbjHWM4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 08:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231228AbjHWMcD (ORCPT
+        with ESMTP id S235230AbjHWM4G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 08:32:03 -0400
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA373E9;
-        Wed, 23 Aug 2023 05:31:57 -0700 (PDT)
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-56cae50792fso556699eaf.1;
-        Wed, 23 Aug 2023 05:31:57 -0700 (PDT)
+        Wed, 23 Aug 2023 08:56:06 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870CCE50
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 05:56:02 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2bcbfb3705dso46677051fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 05:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692795361; x=1693400161;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oqJeHpeX/4m5NxynYAumdAwjnVZQoGDC/Sl39nPHglI=;
+        b=ZCMHLOIX2pQY8hVPp//5SGcXKK7dF2GxOtqphy8JJbl9yjsoZzNYw+NPKtVgLILYes
+         T5ALtgTL70OH0DekGKVkfoN0A/pWI9sgdgjD+E5cpVjK0+aqsrI4wCZoz8PUm0MyfQqf
+         7j29v1GHHiKjkDJtsDx0XSDwxvbEqI8hAwMH5EZG9XyOZTg434ZtBNlW23iKZmOL+K4a
+         Ispr/DeN18IMerhn2kuJpeOIEJmhG3RmO0TqqYqUF/d9WVmaQ1zRoBTJkaZ1lqGxSDJM
+         qKHoZ82wxU7uk6yujcWMUI3Xy9UtA2by4oSbXUUO36Qo6U7wz9vglJrdYVktNo1iyyDR
+         3CMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692793917; x=1693398717;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3ApOaAU2C11Pn2qOxjg2kIqTJJ7VnWEqUmde/1TenZQ=;
-        b=HbLSFAH43YyJbbYXXS/ISjhnvojwIyX6slvWg94dQSOAa3rH2uS42FdLcTSKlixrCM
-         RPkgnQlrnSIPwScAwHM51Z4j0g7DFoC2aILVZ7wR/PVLWb+djoPBmubnaWLhmXg15x9l
-         hZOeR08y2O9oNGvml0MEwRwCWA/S64cPy6g8CeFAPzInJj2OBm0Wjzpo4i26KRCqdmOa
-         u3LciQ2WrvThH19spCzdu0NI93iWLR6XTZ+Wi59l0dOQh/vrJSK9lYjKDiC1eRoM/ngl
-         LXaulvMIFuxxa4pCp4QQ0el2fNEJ6SwNR1Wf18o65artX3cCCWEjk1T6jX4YB1QboqBH
-         eG6w==
-X-Gm-Message-State: AOJu0Yy9Hfaj7zk3hn9obuwFZZjSFDCdADn+WayGedmU6K3dUlOls0iw
-        b4FX+u/TRJojWLCprfyp/BKfQ2p7nT7C2ORDHq4=
-X-Google-Smtp-Source: AGHT+IHhMwKmKIBwwvi/YmGkSAgu5efCUMytt4QejM22SViosU4j5VAi4fORzp0+24y420UMM8bLIkI7yh9A1hX+wbo=
-X-Received: by 2002:a4a:e741:0:b0:56e:94ed:c098 with SMTP id
- n1-20020a4ae741000000b0056e94edc098mr12003584oov.0.1692793917062; Wed, 23 Aug
- 2023 05:31:57 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692795361; x=1693400161;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oqJeHpeX/4m5NxynYAumdAwjnVZQoGDC/Sl39nPHglI=;
+        b=QxKjk4sqXok6SqAhzUz74T7nEwQldz9SkiXlczXDTquFwXlOrIQSgamecd/xTvDDch
+         mhz+aUo1PacSLj6yJCDdhvCh23YSQ2Hr+FEcW+GL/lygR9THi6WCtmwpUjhf6NL1waop
+         XN29B9HC0DdYj+GH9FmdOo2J7MXwbUB9NZ77A9gOOe4x3UrVAcAYGb7LrAKPuNUqOGF2
+         VGDuFBuYP+tHAo/h4f/ZB6o8CHnAd30QNW7UZJpMq4wl0ufUo1f1ynjcuOCEn9ogRHbI
+         LwJFET+B4JPPCtpVsKmVXoTUPKmakuYXzZgWTekEOZb8nLqhan4z/qPymzovnMGUOqCv
+         g5UA==
+X-Gm-Message-State: AOJu0Yx/I4RKhYfTk22p5wjuX29xSlTwhsBN8yCMjx145xqdcu14SywB
+        Hn8R2ciASVxio81tJaMtc36Pew==
+X-Google-Smtp-Source: AGHT+IHwNrUI3VbaCReiY6q33DuTK2TQeY+Uz2VFt8Z8kRQ5HOimymlhi+B/px2Ye6SkjwnqEXHmvQ==
+X-Received: by 2002:a2e:3503:0:b0:2bc:b75e:b88 with SMTP id z3-20020a2e3503000000b002bcb75e0b88mr8075729ljz.18.1692795360226;
+        Wed, 23 Aug 2023 05:56:00 -0700 (PDT)
+Received: from [192.168.1.101] (abyj76.neoplus.adsl.tpnet.pl. [83.9.29.76])
+        by smtp.gmail.com with ESMTPSA id a18-20020a05651c011200b002b6db0ed72fsm3220256ljb.48.2023.08.23.05.55.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Aug 2023 05:55:59 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 00/10] A7xx support
+Date:   Wed, 23 Aug 2023 14:55:53 +0200
+Message-Id: <20230628-topic-a7xx_drmmsm-v3-0-4ee67ccbaf9d@linaro.org>
 MIME-Version: 1.0
-References: <20230714175008.4064592-1-robh@kernel.org> <CAJZ5v0i-OByOSjpxrj5d9S9QHRySK-MEUo+bK_J_4ihsCBmnSg@mail.gmail.com>
- <CAL_JsqLy22S5bTFu-ZKXhSMtMPPq9z1Gdb5kJMVmhui55miDsQ@mail.gmail.com>
- <CAJZ5v0hM63nVphwkYK1bL4uf_dXSew2+LBuG9kuhvvLdrhLxAw@mail.gmail.com> <CAL_JsqJGoDPLKgu8awJfuWpqzg8HOuruDa1z4s-Swb7Cm5OaJw@mail.gmail.com>
-In-Reply-To: <CAL_JsqJGoDPLKgu8awJfuWpqzg8HOuruDa1z4s-Swb7Cm5OaJw@mail.gmail.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Wed, 23 Aug 2023 14:31:44 +0200
-Message-ID: <CAJZ5v0j2psZUYF1gYTK3G=+MdrLOg1QhOxENhSvWbvGcjzLizg@mail.gmail.com>
-Subject: Re: [PATCH] thermal: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Markus Mayer <mmayer@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANkB5mQC/32NWwqDMBAAr1Ly3ZQ8RNt+9R5FSowbXdBENlYs4
+ t279QD9nIFhNpGBELK4nzZBsGDGFBns+SR872IHEltmYZSxqjRXOacJvXTVur5aGsc8Sm1ssKq
+ tSh8qwV3jMsiGXPQ9l/E9DCwngoDrMXrWzD3mOdHn+C76Z/8tFi0Vi1AUtxKU1+YxYHSULok6U
+ e/7/gWjU6wRyAAAAA==
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692795358; l=4076;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=1C4mbkYEO8JAVDJ8cizgufp3TfvEPNQ4yZ8RIY8Lh1o=;
+ b=M16HvvoVRE7y0ktf2CwMlRTO8Y99aYa9zyrtbWT0qgSvGyCUlsrGe+fP7cnfmh0r5Lq/gB1Bb
+ bS0Y1JJ08IfD4HSxbd7N/sZ3Y1CmEtFgC8jzK34qS9atf5cUc2CFNyK
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 12:38 AM Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, Jul 20, 2023 at 1:50 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
-> >
-> > On Fri, Jul 14, 2023 at 9:53 PM Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > On Fri, Jul 14, 2023 at 12:54 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
-> > > >
-> > > > On Fri, Jul 14, 2023 at 7:51 PM Rob Herring <robh@kernel.org> wrote:
-> > > > >
-> > > > > The DT of_device.h and of_platform.h date back to the separate
-> > > > > of_platform_bus_type before it as merged into the regular platform bus.
-> > > > > As part of that merge prepping Arm DT support 13 years ago, they
-> > > > > "temporarily" include each other. They also include platform_device.h
-> > > > > and of.h. As a result, there's a pretty much random mix of those include
-> > > > > files used throughout the tree. In order to detangle these headers and
-> > > > > replace the implicit includes with struct declarations, users need to
-> > > > > explicitly include the correct includes.
-> > > > >
-> > > > > Signed-off-by: Rob Herring <robh@kernel.org>
-> > > >
-> > > > Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-> > > >
-> > > > or please let me know if you want me to pick this up.
-> > >
-> > > Single patch in your subsystem with no dependencies. Please pick it up.
-> >
-> > Done, thanks!
->
-> I'm not seeing this in linux-next.
+This series attempts to introduce Adreno 700 support (with A730 and A740
+found on SM8450 and SM8550 respectively), reusing much of the existing
+A6xx code. This submission largely lays the groundwork for expansion and
+more or less gives us feature parity (on the kernel side, that is) with
+existing A6xx parts.
 
-f6a756e8fb12 thermal: Explicitly include correct DT includes
+On top of introducing a very messy set of three (!) separate and
+obfuscated deivce identifiers for each 7xx part, this generation
+introduces very sophisticated hardware multi-threading and (on some SKUs)
+hardware ray-tracing (not supported yet).
 
-It's there in my linux-next branch (and in my thermal branch) and it
-should be there in linux-next too.
+After this series, a long-overdue cleanup of drm/msm/adreno is planned
+in preparation for adding more features and removing some hardcoding.
+
+The last patch is a hack that may or may not be necessary depending
+on your board's humour.. eh.. :/
+
+Developed atop (and hence depends on) [1]
+
+The corresponding devicetree patches are initially available at [2] and
+will be posted after this series gets merged. To test it, you'll also need
+firmware that you need to obtain from your board (there's none with a
+redistributable license, sorry..). Most likely it will be in one of
+these directories on your stock android installation:
+
+* /vendor/firmware
+* /vendor/firmware_mnt
+* /system
+
+..but some vendors make it hard and you have to do some grepping ;)
+
+Requires [3] to work on the userspace side. You'll almost cerainly want
+to test it alongside Zink with a lot of debug flags (early impl), like:
+
+TU_DEBUG=sysmem,nolrz,flushall,noubwc MESA_LOADER_DRIVER_OVERRIDE=zink kmscube
+
+[1] https://lore.kernel.org/linux-arm-msm/20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org/
+[2] https://github.com/SoMainline/linux/commits/topic/a7xx_dt
+[3] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/23217
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v3:
+- Pick up tags
+- Drop "increase HFI timeout", will revisit another day
+- Use family identifiers in "add skeleton a7xx support"
+- Drop patches that Rob already picked up
+- Retest on A730, didn't explode
+- Link to v2: https://lore.kernel.org/linux-arm-msm/20230628-topic-a7xx_drmmsm-v2-0-1439e1b2343f@linaro.org/#t
+
+Changes in v2:
+- Rebase on chipid changes
+- Reuse existing description for qcom,aoss in patch 2
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org
+
+---
+Konrad Dybcio (10):
+      dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
+      dt-bindings: display/msm/gmu: Allow passing QMP handle
+      dt-bindings: display/msm/gpu: Allow A7xx SKUs
+      drm/msm/a6xx: Add missing regs for A7XX
+      drm/msm/a6xx: Add skeleton A7xx support
+      drm/msm/a6xx: Send ACD state to QMP at GMU resume
+      drm/msm/a6xx: Mostly implement A7xx gpu_state
+      drm/msm/a6xx: Add A730 support
+      drm/msm/a6xx: Add A740 support
+      drm/msm/a6xx: Poll for GBIF unhalt status in hw_init
+
+ .../devicetree/bindings/display/msm/gmu.yaml       |  47 +-
+ .../devicetree/bindings/display/msm/gpu.yaml       |   4 +-
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   9 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 204 +++++--
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   8 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 653 +++++++++++++++++++--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  61 +-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  88 +++
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |  30 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   7 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  32 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h               |   2 +
+ 14 files changed, 1078 insertions(+), 122 deletions(-)
+---
+base-commit: c26a0f88bc21bf52303b5a5fbf8edb0cc7723037
+change-id: 20230628-topic-a7xx_drmmsm-123f30d76cf7
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
