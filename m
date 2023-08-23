@@ -2,95 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ACD3785D34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 18:26:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 766D3785D48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 18:30:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233071AbjHWQ0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 12:26:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44804 "EHLO
+        id S237592AbjHWQaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 12:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237554AbjHWQ0y (ORCPT
+        with ESMTP id S237589AbjHWQah (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 12:26:54 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C933B10CB;
-        Wed, 23 Aug 2023 09:26:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5903565B5F;
-        Wed, 23 Aug 2023 16:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9647C433C9;
-        Wed, 23 Aug 2023 16:26:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692807995;
-        bh=Al2E1druB0P3ejb2/nbyyV1nrydyUGxUz/KKinqoeXw=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=Wnav+mQ7zbUlOMYQy6oS6fixkqGNt2FlLDc2v8vrglE5YyJQ1a7GiUs7OjmqDvMvw
-         DDsNUIHB59d38kmDd/eNN0329fmotS9z4R3p15rnukg5qco5x2ptral36+D1mtKR5e
-         rxM4XGvYEzzvMHp3qaJCU8PM5UUZkshIWQ5WhrqQyVr6IaL2B1126H+3f7Gfh5CPzi
-         k6r2szuFPGlrQwoioGiJW2SvIzdZsrezVjzWZnypry1U2Blw4N53XGEQ/KE3lARmqu
-         /SHFtjpVIi83YKv68phgAGTj2+0sB8xr2c9tI+1qswmnitl6lkFEyHszkozr17ElRu
-         fcf4MqhhApPfw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-In-Reply-To: <20230801095702.2891127-1-abel.vesa@linaro.org>
-References: <20230801095702.2891127-1-abel.vesa@linaro.org>
-Subject: Re: [PATCH] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
-Message-Id: <169280799363.53966.9265296180737310826.b4-ty@kernel.org>
-Date:   Wed, 23 Aug 2023 17:26:33 +0100
+        Wed, 23 Aug 2023 12:30:37 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D08DA10DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 09:30:31 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-58dce1f42d6so377407b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 09:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692808231; x=1693413031;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4WIeojozpIxmSsF2RUkSADK15h44qyPJk1IVXM4MnWY=;
+        b=Pu5Erh9xwx/lQn4Yx0iCKh67FrGE57frhfQDch/1OFADRsQOGh5Tb2CyOl2JR7cl6I
+         DHnbwWAtv+5rE3tyPfD64HFtCJt0uAsdDzpsNqDf97AQNSrpL3Ea06uvIoiSV+71t8ZN
+         gRwio5PvFC5Is9BiwKqEWbuXnqSS6wmi1C1ZHs9quxWKdLlhGq75dVk9RqRBUeocUMxT
+         iOe27RGnMxWOSJJImCnYeXGRVPHcWA00X1BMXcQ0j9KsDFhhkJI1v5/43zvbgwVLODbS
+         9LK0fhv8lMh0KKXtWt61f9G/LVF9cjAVqaWOtjAgSb/VdQDEiuvcGLdyckOPugpnS5Y6
+         8nGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692808231; x=1693413031;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4WIeojozpIxmSsF2RUkSADK15h44qyPJk1IVXM4MnWY=;
+        b=CyoFZyeLDX3Lrw3eRByY7ltYxm3SIRzgDtAJ6TRWGPZEeusm4PJ482oSUGD+NNTpjb
+         Pgcw5cwmPRgAuGn5V2C/JZ/6s+/zuz0Ucd84CEeXpD2pRitDVTiut/wg7fjSF6SIHDcH
+         oRJ32UXfjhXQkMM6XZZjdAnj9b/Pg70lOSyq6fuIzBcSoHUn1+YREjL6KRJpMMM8+lm2
+         nE9gm0ZvBj1krdgTdcZJ+JGzkK0+nJekd6MIvwowNfBVt3KElEnz64dRRGWs0LfsPRLQ
+         M6Kc/Y7Ke1GGJFZmufynFYGCbdxbcf7Cn6e7jpBuDM2b+MEN2l17wAeEeeJWu1Opdhvx
+         ns1A==
+X-Gm-Message-State: AOJu0YzGNWm7YKEDJbRqcu4agrZ2kvJos8dqysUdvI8JikTLpvLJ7nba
+        2xlnno7GFcBstmVH1GjgbvGWjkRM4CJJGmNWSn5DiA==
+X-Google-Smtp-Source: AGHT+IEFMaChi60GbWv1LIlg+iMC6f7cYJT9GtZocEwDYoF2oFcl6/SrVGhJNWWR0qft+CZ3NygJYygRyr91mW2mtWA=
+X-Received: by 2002:a81:4f49:0:b0:56c:f0c7:7d72 with SMTP id
+ d70-20020a814f49000000b0056cf0c77d72mr10962983ywb.4.1692808231002; Wed, 23
+ Aug 2023 09:30:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-034f2
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230823114528.3677667-1-abel.vesa@linaro.org>
+In-Reply-To: <20230823114528.3677667-1-abel.vesa@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 23 Aug 2023 18:29:55 +0200
+Message-ID: <CAPDyKFqjN9aJsvbcmp=iUSvMAqnkpFZ50aueDrs-xtsGt1BwwA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] PM: domains: Add control for switching back and
+ forth to HW control
+To:     Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 01 Aug 2023 12:57:02 +0300, Abel Vesa wrote:
-> The LDO 12 is NLDO 515 low voltage type, so fix accordingly.
-> 
-> 
+On Wed, 23 Aug 2023 at 13:45, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> The v2 can be found here:
+> https://lore.kernel.org/lkml/20230816145741.1472721-1-abel.vesa@linaro.org/
+>
+> Changes since v2:
+>  * 5th patch has been squashed in the 4th one
+>
+> Further details about other changes are found in each patch.
+>
+> Abel Vesa (1):
+>   PM: domains: Add the domain HW-managed mode to the summary
+>
+> Jagadeesh Kona (3):
+>   clk: qcom: gdsc: Add set and get hwmode callbacks to switch GDSC mode
+>   clk: qcom: Use HW_CTRL_TRIGGER flag to switch video GDSC to HW mode
+>   venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode
+>
+> Ulf Hansson (1):
+>   PM: domains: Allow devices attached to genpd to be managed by HW
+>
+>  drivers/base/power/domain.c                   | 84 ++++++++++++++++++-
+>  drivers/clk/qcom/gdsc.c                       | 32 +++++++
+>  drivers/clk/qcom/gdsc.h                       |  1 +
+>  drivers/clk/qcom/videocc-sc7180.c             |  2 +-
+>  drivers/clk/qcom/videocc-sc7280.c             |  2 +-
+>  drivers/clk/qcom/videocc-sdm845.c             |  4 +-
+>  drivers/clk/qcom/videocc-sm8250.c             |  4 +-
+>  drivers/clk/qcom/videocc-sm8550.c             |  4 +-
+>  drivers/media/platform/qcom/venus/core.c      |  4 +
+>  drivers/media/platform/qcom/venus/core.h      |  1 +
+>  .../media/platform/qcom/venus/pm_helpers.c    | 47 +++++------
+>  include/linux/pm_domain.h                     | 17 ++++
+>  12 files changed, 165 insertions(+), 37 deletions(-)
+>
 
-Applied to
+I guess this series is best funneled via the clk tree? Stephen, I am
+fine with patch 1 and patch2, but I guess you may need an ack for the
+others too.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/1] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
-      commit: fb0db7f2d010e41fceffe801b2fb254e83785165
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Kind regards
+Uffe
