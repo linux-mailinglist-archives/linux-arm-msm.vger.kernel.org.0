@@ -2,163 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F2E3785692
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 13:15:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C63F7856A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 13:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234388AbjHWLPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 07:15:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44818 "EHLO
+        id S234410AbjHWLQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 07:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234385AbjHWLPm (ORCPT
+        with ESMTP id S234411AbjHWLQk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 07:15:42 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CEB4E5D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 04:15:37 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bcb54226e7so40821391fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 04:15:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692789336; x=1693394136;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JNv+5xba7bQvgA4+gEPjq5lTLo/u23dfY/H3jr3xdrI=;
-        b=xUzJki82mPaUSdzILbTtZrc1drg0uKB2Bx0NRh4kQWyDhaCyv234ZLtxWntJhf9YSv
-         ZJuNB/pht9eGn3JSq5tVspJEqlPoSgoDn3+hFNvqqtQ79o3vwz4leJqinbxhtaPi2L3U
-         rRxy/X7FfbV+soEXiN1/wVI4u74I7SUrmQn0XtQZk+VEnuhpPgFjjpDi8WEjfkZHGqRM
-         SdzflCv8H7wimEu2fxicM6EC+CDlpaVP0JHxzYrcuCd8X+neVTlBBabUimV+DKnMuP3r
-         mYzAxX7UNO9VC2kBPKylDJdJQoUcQNFGfIjZM6rIuRQmOIlnZugvZZ08iL2iUrBLaj9Z
-         oXAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692789336; x=1693394136;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JNv+5xba7bQvgA4+gEPjq5lTLo/u23dfY/H3jr3xdrI=;
-        b=dx9QEnkQcVt/xLZhnO+stLSdwr8S7JeJDaoT65dZKWA/zyjin/2lg5nxtw6U+DpC7z
-         fDE0SzBfkc6sl7Z1zv/BeEMs/FRh5sdjyshD2Mouv4aPt/ZM8eiMp64DHPzmKmfyrXvd
-         MopYtzyCvve21rDiW1YMVG3C8shCrmCvJSFkyisKlCqTeRO1ohzILKtuteGz7LZxoFxp
-         KM3PbeFAw0/n1ryhrHROltSorW/YVHHHUcUXJcnDzbO6P+OavLDh0/ujwVEmT/U/wpXf
-         8lRgrR9qn3VfGpzthAQE3YBJUkh6bYcBVKzp1R8TASzXYetd5QmpPqiBEcBVzI34Gy6r
-         xSMg==
-X-Gm-Message-State: AOJu0YwFxpx6xzEMwsnRXCnynYpi3XywnXEAXiwnTc8YZbiGOl6PDDGa
-        8ck2cU/aWtmual1vS8DFOeP7OA==
-X-Google-Smtp-Source: AGHT+IG8lAbMM5ohYZn6mk9W6ZRXhs/cpY9GnJH3geEZYdfhndratqyX1N8s03nbbvhNV5eoaHZcjw==
-X-Received: by 2002:a2e:888f:0:b0:2b6:b7c3:bb89 with SMTP id k15-20020a2e888f000000b002b6b7c3bb89mr4648791lji.18.1692789335879;
-        Wed, 23 Aug 2023 04:15:35 -0700 (PDT)
-Received: from [192.168.1.101] (abyj76.neoplus.adsl.tpnet.pl. [83.9.29.76])
-        by smtp.gmail.com with ESMTPSA id r16-20020a2e80d0000000b002b6ffa50896sm3148981ljg.128.2023.08.23.04.15.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 04:15:35 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 23 Aug 2023 13:15:32 +0200
-Subject: [PATCH v5 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
- SRAM as reg space
+        Wed, 23 Aug 2023 07:16:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A64E8E5F;
+        Wed, 23 Aug 2023 04:16:25 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37NAjL6U027108;
+        Wed, 23 Aug 2023 11:16:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=khxHDMB0ldR4is1VeKKCEC+i4ITEhcHzrguY8swCQyY=;
+ b=EcYdYAJQTi8Ww6RwYNhtwjyMXozy04RcqLUx1W8LJGdiu4eX+mQWcT0U+9yyYaAEbiVU
+ IDGXFO+98ebPdNKW6dyNtRRfoL9A9sTn8r649E2A5H2EkzDneUSK8C+mbm4J3c0WXsYU
+ V5E/XsOvtVTCgTHs2k/W3OJbHppPZKKJKvFEPVTu0vWWIuKu4rCylir/ZLIga/mm/7lV
+ NfT5svRvBlXqF5lC/uJt+0q0MLIHSJw/T7+C4gvjAUbqKQzhbbxN389DQAsi0Fs6AUv3
+ hvvNfbrp2pmSyqGw9GkKYmHyZ45HPmWBMzWRqQfT5TRz5Pi8uopXxdiJjzbpZWKoRYvP aQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sn24j1vns-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Aug 2023 11:16:19 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37NBGITV026174
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Aug 2023 11:16:18 GMT
+Received: from [10.50.32.23] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 23 Aug
+ 2023 04:16:13 -0700
+Message-ID: <08803101-5c26-449e-a142-927ec5304be2@quicinc.com>
+Date:   Wed, 23 Aug 2023 16:46:10 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230328-topic-msgram_mpm-v5-2-6e06278896b5@linaro.org>
-References: <20230328-topic-msgram_mpm-v5-0-6e06278896b5@linaro.org>
-In-Reply-To: <20230328-topic-msgram_mpm-v5-0-6e06278896b5@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692789331; l=2753;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=N8kAAyqrJhi9Gyt3LBw8oYypb/cOn3Xx6lhFuH23rnM=;
- b=wTjEsfdqz/9ijpfPCzPdt03nXz+NrBq8sKaqU2cL0jOzaAtjXdG6WzdyZTAMrXjDFpX4M1ZdD
- vCFLQ8nj+wlAMAc9L0KVOjxEoNZito1tYxLO+6Qr179t9gRIPlaK0vu
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/1] soc: qcom: Add driver to read secondary
+ bootloader (XBL) log
+Content-Language: en-US
+To:     Trilok Soni <quic_tsoni@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>
+CC:     <psodagud@quicinc.com>, <quic_ppareek@quicinc.com>,
+        <quic_kprasan@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>
+References: <20230822121512.8631-1-quic_ninanaik@quicinc.com>
+ <20230822121512.8631-2-quic_ninanaik@quicinc.com>
+ <06cb9718-ed64-8604-0bde-fff6d56ef3dd@quicinc.com>
+From:   Ninad Naik <quic_ninanaik@quicinc.com>
+In-Reply-To: <06cb9718-ed64-8604-0bde-fff6d56ef3dd@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WquoE8DU3M3Rpn_v_tkF0tRpuo17zyOS
+X-Proofpoint-GUID: WquoE8DU3M3Rpn_v_tkF0tRpuo17zyOS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-23_06,2023-08-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=999 adultscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 clxscore=1015 mlxscore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308230103
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MPM hardware is accessible to us from the ARM CPUs through a shared
-memory region (RPM MSG RAM) that's also concurrently accessed by other
-kinds of cores on the system (like modem, ADSP etc.). Modeling this
-relation in a (somewhat) sane manner in the device tree basically
-requires us to either present the MPM as a child of said memory region
-(which makes little sense, as a mapped memory carveout is not a bus),
-define nodes which bleed their register spaces into one another, or
-passing their slice of the MSG RAM through some kind of a property.
+Hi Trilok,
 
-Go with the third option and add a way to map a region passed through
-the "qcom,rpm-msg-ram" property as our register space.
+On 8/22/2023 9:38 PM, Trilok Soni wrote:
+> On 8/22/2023 5:15 AM, Ninad Naik wrote:
+>> Qualcomm secondary bootloader (XBL) boot log holds information to
+>> identify various firmware configuration currently set on the SoC.
+>> The XBL log is stored in a predefined reserved memory region.
+> 
+> What does "X" stands for here? From what you have described above it 
+> looks like SBL and not XBL.
+>
+Ack. I will change the commit text from "Secondary" to "eXtensible". 
+Thank you.
+>>
+>> This drivers provides a way to print XBL logs on the console. To
+>> do so, it provides a debugfs entry which captures the logs stored
+>> in this reserved memory region. This entry can now be used to read
+>> and print the XBL logs to console.
+>>
+>> User can use the below command to print XBL log to console:
+>>          cat /sys/kernel/debug/xbl_log
+> 
+> 
+> It is not clear to me why these patches are posted as RFC. Please 
+> clarify. Are they not tested properly or just seeking some feedback and 
+> driver is not ready w/ all the features?
+>
+Hi Trilok, the driver is tested on sa8775 platform.The reason for 
+posting as RFC is to seek feedback on possible improvements. One was 
+primarily on the probing mechanism which I have pointers now from Pavan 
+and Srini's suggestions.
+>>
+>> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/Kconfig        |  13 +++
+>>   drivers/soc/qcom/Makefile       |   1 +
+>>   drivers/soc/qcom/dump_xbl_log.c | 139 ++++++++++++++++++++++++++++++++
+>>   3 files changed, 153 insertions(+)
+>>   create mode 100644 drivers/soc/qcom/dump_xbl_log.c
+>>
+>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>> index 715348869d04..4489d37e924d 100644
+>> --- a/drivers/soc/qcom/Kconfig
+>> +++ b/drivers/soc/qcom/Kconfig
+>> @@ -291,4 +291,17 @@ config QCOM_INLINE_CRYPTO_ENGINE
+>>       tristate
+>>       select QCOM_SCM
+>> +config QCOM_DUMP_XBL_LOG
+>> +    tristate "Qualcomm driver to print XBL logs on console from debugfs"
+> 
+> Why you want to print these logs from the debugfs? What is the format of 
+> the logs? Can you post an example log?
+> 
+This log is printed in plain ascii format and are accessed post boot up, 
+so chose to access them through debugfs. I have uploaded the full logs 
+at [1]
 
-The current way of using 'reg' is preserved for ABI reasons.
+[1] https://gist.github.com/ninadnaik-quic/914e86f6a0acadade632dc45b727d87b
+>> +    help
+>> +      This driver is used to capture secondary bootloader (xbl) log
+>> +      from a reserved memory region and provide a debugfs entry to read
+>> +      logs captured from this memory region and print them on console.
+>> +      User can use below command to print the xbl log on console:
+>> +
+>> +                cat /sys/kernel/debug/xbl_log
+>> +
+>> +      These logs help to identify firmware configuration information on
+>> +      the SoC. The name of the built module will be dump_xbl_log
+>> +
+>>   endmenu
+>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>> index bbca2e1e55bb..aac088a1a0b6 100644
+>> --- a/drivers/soc/qcom/Makefile
+>> +++ b/drivers/soc/qcom/Makefile
+>> @@ -32,3 +32,4 @@ obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=    
+>> kryo-l2-accessors.o
+>>   obj-$(CONFIG_QCOM_ICC_BWMON)    += icc-bwmon.o
+>>   qcom_ice-objs            += ice.o
+>>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)    += qcom_ice.o
+>> +obj-$(CONFIG_QCOM_DUMP_XBL_LOG)    += dump_xbl_log.o
+>> diff --git a/drivers/soc/qcom/dump_xbl_log.c 
+>> b/drivers/soc/qcom/dump_xbl_log.c
+>> new file mode 100644
+>> index 000000000000..ea335a5e660b
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/dump_xbl_log.c
+>> @@ -0,0 +1,139 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/init.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/memblock.h>
+>> +#include <linux/of_address.h>
+>> +#include <linux/err.h>
+>> +#include <linux/debugfs.h>
+>> +
+>> +struct xbl_log_data {
+>> +    struct device *dev;
+>> +    size_t buf_size;
+>> +    void __iomem *xbl_buf;
+>> +    struct dentry *dbg_file;
+>> +    struct debugfs_blob_wrapper dbg_data;
+>> +};
+>> +
+>> +static int map_addr_range(struct device_node **parent, const char *name,
+>> +              struct xbl_log_data *xbl_data)
+>> +{
+>> +    struct device_node *node;
+>> +    struct resource res;
+>> +    int ret;
+>> +
+>> +    node = of_find_node_by_name(*parent, name);
+>> +    if (!node)
+>> +        return -ENODEV;
+>> +
+>> +    ret = of_address_to_resource(node, 0, &res);
+>> +    if (ret) {
+>> +        dev_err(xbl_data->dev, "Failed to parse memory region\n");
+>> +        return ret;
+>> +    }
+>> +    of_node_put(node);
+>> +
+>> +    if (!resource_size(&res)) {
+>> +        dev_err(xbl_data->dev, "Failed to parse memory region size\n");
+>> +        return -ENODEV;
+>> +    }
+>> +
+>> +    xbl_data->buf_size = resource_size(&res) - 1;
+>> +    xbl_data->xbl_buf = devm_memremap(xbl_data->dev, res.start,
+>> +                      xbl_data->buf_size, MEMREMAP_WB);
+>> +    if (!xbl_data->xbl_buf) {
+>> +        dev_err(xbl_data->dev, "%s: memory remap failed\n", name);
+>> +        return -ENOMEM;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int xbl_log_probe(struct platform_device *pdev)
+>> +{
+>> +    struct device *dev = &pdev->dev;
+>> +    struct xbl_log_data *xbl_data;
+>> +    struct device_node *parent;
+>> +    int ret;
+>> +
+>> +    xbl_data = devm_kzalloc(dev, sizeof(*xbl_data), GFP_KERNEL);
+>> +    if (!xbl_data)
+>> +        return -ENOMEM;
+>> +
+>> +    xbl_data->dev = &pdev->dev;
+>> +    platform_set_drvdata(pdev, xbl_data);
+>> +
+>> +    parent = of_find_node_by_path("/reserved-memory");
+>> +    if (!parent) {
+>> +        dev_err(xbl_data->dev, "reserved-memory node missing\n");
+>> +        return -ENODEV;
+>> +    }
+>> +
+>> +    ret = map_addr_range(&parent, "uefi-log", xbl_data);
+> 
+> Here you are calling it as uefi-log. Is it xbl-log or uefi-log? Please 
+> decide first.
+> 
+> 
+The reason for using "uefi-log" here is because this node name is in 
+accordance to the sa8775p.dtsi as seen in [2]
 
-Acked-by: Shawn Guo <shawn.guo@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/irqchip/irq-qcom-mpm.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+[2] 
+https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sa8775p.dtsi#L354
 
-diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
-index 7124565234a5..7115e3056aa5 100644
---- a/drivers/irqchip/irq-qcom-mpm.c
-+++ b/drivers/irqchip/irq-qcom-mpm.c
-@@ -14,6 +14,7 @@
- #include <linux/mailbox_client.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
-@@ -322,8 +323,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
- 	struct device *dev = &pdev->dev;
- 	struct irq_domain *parent_domain;
- 	struct generic_pm_domain *genpd;
-+	struct device_node *msgram_np;
- 	struct qcom_mpm_priv *priv;
- 	unsigned int pin_cnt;
-+	struct resource res;
- 	int i, irq;
- 	int ret;
- 
-@@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
- 
- 	raw_spin_lock_init(&priv->lock);
- 
--	priv->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(priv->base))
--		return PTR_ERR(priv->base);
-+	/* If we have a handle to an RPM message ram partition, use it. */
-+	msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
-+	if (msgram_np) {
-+		ret = of_address_to_resource(msgram_np, 0, &res);
-+		/* Don't use devm_ioremap_resource, as we're accessing a shared region. */
-+		priv->base = devm_ioremap(dev, res.start, resource_size(&res));
-+		of_node_put(msgram_np);
-+		if (IS_ERR(priv->base))
-+			return PTR_ERR(priv->base);
-+	} else {
-+		/* Otherwise, fall back to simple MMIO. */
-+		priv->base = devm_platform_ioremap_resource(pdev, 0);
-+		if (IS_ERR(priv->base))
-+			return PTR_ERR(priv->base);
-+	}
- 
- 	for (i = 0; i < priv->reg_stride; i++) {
- 		qcom_mpm_write(priv, MPM_REG_ENABLE, i, 0);
+So, in the next revision while adding the device tree bindings and 
+corresponding compatible string, should this node name be changed as well?
+>> +    if (ret)
+>> +        goto put_node;
+>> +
+>> +    xbl_data->dbg_data.data = xbl_data->xbl_buf;
+>> +    xbl_data->dbg_data.size = xbl_data->buf_size;
+>> +    xbl_data->dbg_file = debugfs_create_blob("xbl_log", 0400, NULL,
+>> +                         &xbl_data->dbg_data);
+>> +    if (IS_ERR(xbl_data->dbg_file)) {
+>> +        dev_err(xbl_data->dev, "failed to create debugfs entry\n");
+>> +        ret = PTR_ERR(xbl_data->dbg_file);
+>> +    }
+>> +
+>> +put_node:
+>> +    of_node_put(parent);
+>> +    return ret;
+>> +}
+>> +
+>> +static int xbl_log_remove(struct platform_device *pdev)
+>> +{
+>> +    struct xbl_log_data *xbl_data = platform_get_drvdata(pdev);
+>> +
+>> +    debugfs_remove_recursive(xbl_data->dbg_file);
+>> +    return 0;
+>> +}
+>> +
+>> +static struct platform_driver xbl_log_driver = {
+>> +    .probe = xbl_log_probe,
+>> +    .remove = xbl_log_remove,
+>> +    .driver = {
+>> +           .name = "xbl-log",
+>> +           },
+>> +};
+>> +
+>> +static struct platform_device xbl_log_device = {
+>> +    .name = "xbl-log",
+>> +};
+>> +
+>> +static int __init xbl_log_init(void)
+>> +{
+>> +    int ret = 0;
+>> +
+>> +    ret = platform_driver_register(&xbl_log_driver);
+>> +    if (!ret) {
+>> +        ret = platform_device_register(&xbl_log_device);
+> 
+> I am puzzled here. Why?
+>
+Ack. I was registering a platform device to get the driver probed when 
+built as module. I'll correct this according to comments from Srinivas 
+and Pavan.
 
--- 
-2.42.0
+>> +        if (ret)
+>> +            platform_driver_unregister(&xbl_log_driver);
+>> +    }
+>> +    return ret;
+>> +}
+>> +
+>> +static void __exit xbl_log_exit(void)
+>> +{
+>> +    platform_device_unregister(&xbl_log_device);
+>> +    platform_driver_unregister(&xbl_log_driver);
+>> +}
+>> +
+>> +module_init(xbl_log_init);
+>> +module_exit(xbl_log_exit);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) XBL log driver");
+>> +MODULE_LICENSE("GPL");
 
+Thanks,
+Ninad
