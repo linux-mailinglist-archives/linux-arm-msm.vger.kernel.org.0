@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D19F785691
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 13:15:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8AF6785693
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 13:15:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233077AbjHWLPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 07:15:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46220 "EHLO
+        id S234387AbjHWLPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 07:15:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232113AbjHWLPk (ORCPT
+        with ESMTP id S234377AbjHWLPl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 07:15:40 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937E1184
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 04:15:34 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2bba6fc4339so84718281fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 04:15:34 -0700 (PDT)
+        Wed, 23 Aug 2023 07:15:41 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B06EE54
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 04:15:36 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so91370441fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 04:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692789333; x=1693394133;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZIWNuXwrah0vcwp9FxjAO4eUOL/OFiR6pFNP4rHU2KI=;
-        b=sleSWxodh86b/ReU6wy0MjmWI9qXzTon3daX+xyZIJmBBgY8BTGdHv2mfJMdSf3fSU
-         vPRMJfu/yy1DXmFKm9GTHV8NzsoSqYd+QlS14qd/WiFX3XsHk9Sa+esfU/QwNoEbFEl/
-         FQG4+k70aQpGYd2A7DB1mW8C2WG9PhB8jSdkDksn4AKLaVxgLuf+lvwa4UcBAAZYXRE5
-         GFacKna8uY/qbmTtGL+djfBPnY1ojcJreXdfyH6lkX5ZsfWEPO+hEftlgjlWuxg5G/TC
-         d2zvCUgrl/Yt0s6O5Lt3uCwRXpAdbKr7zF8ZvxdlIYwwNZVEgQznKRqtU7/j0D/jJxSi
-         5hqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692789333; x=1693394133;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1692789334; x=1693394134;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZIWNuXwrah0vcwp9FxjAO4eUOL/OFiR6pFNP4rHU2KI=;
-        b=RPxIwbTrvZFlEwhLuo6exCG65iAPyB1SP44ECWF2yUjRwEBFMEENPFDhtwc/XNABuf
-         CmR51CUv353UAu+S4OMAn+bQA5xVFCD3IT/g/f21Dz4SR1N+WhrTx+XVjFhSpVLwAzZN
-         MPqgJQ49XXoFbRTbApJPOPNgKNAe4399NBvSctQCclmzk2YPRymZk+wK6AirloxXLdDC
-         A8AGjUCNaM/+0H4iKLwIV9NNh3KIZDFZjda/svy9hpAnk3pdAINY9Noz+jYS+ymQfiYh
-         ehYlrGmjh3lbNhuA/KRB05Fkw6qGQ3PqlHy9wVsNuqRjH11HJXyjuvKPwyJxWMx/az8R
-         UMeQ==
-X-Gm-Message-State: AOJu0Yws28gxrkQoziQPL2ylkz5K3lBqPc/ts8ekZF0/9Jz3+xOEmEMY
-        Q6x90YADp4oIE7FyrO01EEpsgg==
-X-Google-Smtp-Source: AGHT+IFnizC3nIy1Mf55Mys8hZrehr4el9mffeLcVjutikYgFAx2De2coxMSTUFARJWt1szfXJ3tDg==
-X-Received: by 2002:a2e:9894:0:b0:2bc:d8cb:5a13 with SMTP id b20-20020a2e9894000000b002bcd8cb5a13mr2188323ljj.42.1692789332818;
-        Wed, 23 Aug 2023 04:15:32 -0700 (PDT)
+        bh=6jKJ9K8AESLKQZ+HE5HtynW9aPvpkrDN9h2vHMA4KaM=;
+        b=TRF/DSn+3kfBHUd+H6144IL3A/Usj38y4AMqzr1lEHnlB6j4WAz2Slq6fQY63MkaB5
+         zaYVQGjsfPlgC0RmUXrhX38srlMt5mPWG6RypFk64MCxvB+P5nAYrfjlVv/eVYtBfGo8
+         iHs7mzYFAgtT/Y0Jva0pNwEHxBWdOo7GL3NZHX87/vr+0vFSmshV/dXJHPuqAgCvtK2z
+         xfLhRgReYd2TfzWUeAQNfxQqdKITgta5+0NJ9ztTw5Yghqz2msCWH0+SrJUWWJdbYWC+
+         ikxWScIr8K5hUOcr0ksUGBNTrjFCU5P71d6xeJn6mLdezsUdEQavSGBwYMrtd/MipwRj
+         USEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692789334; x=1693394134;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6jKJ9K8AESLKQZ+HE5HtynW9aPvpkrDN9h2vHMA4KaM=;
+        b=OtxbyLPnaYOcKxBhZXRh+To1BOP8sSMURtKNnPDI4N+YiWEYpizHLOvQG8T5IRoekA
+         H6R8q+r35HCXRFksUvRRC2z4ONnIlDYRy5HcghhrCPwir+Tjynf1zQawMhEGEw08ajWS
+         yI/cJi7ZhJTbobxi3W4v7yo7PqCJsT9oSHoRMjdliImVvFABh7yE339fjFQJrirg+US+
+         +T/vnQrb3TWSQCfb4BtWh+2UFc/LAtz5aG+LqE6rGzT76I+jqN4AJNZ/bIJsDE9dK7bl
+         aqF/JPYzj+DICjDEzgTuDHuDAhVTgHSVXG/N4fch8rROQxY9w/Is2lxcB6yW7CS5A07Q
+         tPjg==
+X-Gm-Message-State: AOJu0Yz6O8hqfkbkgbVnDyvnV7LssHxjLckwLufkvWbtsannr/HtvXI0
+        zDw9o9gUgruBiZNg/LAVvIeOUVrb+XiCbLis27lpGw==
+X-Google-Smtp-Source: AGHT+IHvIgWzyNGDBNZE9SU75RNUPt3W4F5eihUdjUz0iWSRB7x2+YYoa9SCs9v50tbbSREroE9/ow==
+X-Received: by 2002:a2e:8957:0:b0:2b6:e2c1:6cdb with SMTP id b23-20020a2e8957000000b002b6e2c16cdbmr10018545ljk.51.1692789334347;
+        Wed, 23 Aug 2023 04:15:34 -0700 (PDT)
 Received: from [192.168.1.101] (abyj76.neoplus.adsl.tpnet.pl. [83.9.29.76])
-        by smtp.gmail.com with ESMTPSA id r16-20020a2e80d0000000b002b6ffa50896sm3148981ljg.128.2023.08.23.04.15.31
+        by smtp.gmail.com with ESMTPSA id r16-20020a2e80d0000000b002b6ffa50896sm3148981ljg.128.2023.08.23.04.15.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 04:15:32 -0700 (PDT)
+        Wed, 23 Aug 2023 04:15:34 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v5 0/2] Resolve MPM register space situation
-Date:   Wed, 23 Aug 2023 13:15:30 +0200
-Message-Id: <20230328-topic-msgram_mpm-v5-0-6e06278896b5@linaro.org>
+Date:   Wed, 23 Aug 2023 13:15:31 +0200
+Subject: [PATCH v5 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFLq5WQC/4XNwYrDIBQF0F8prsfBPE21XfU/SilP80yERIO2Y
- YaSf6/tbihMlvfCPffBCuVAhR13D5ZpCSWkWEP7tWNuwNgTD13NDARIIcHwW5qD41PpM07XaZ6
- 42xtjSVoHB8XqzGIhbjNGN9RhvI9jLedMPvy8f86XmodQbin/vm+X5tX+87A0XPDGamOw9S1Ke
- RpDxJy+U+7ZS1tgS4AqEChUhlrtRfchyC1BVgGcBg/aKi32H4LaElQVLJI00DnhD/BHWNf1Cey
- qbeOMAQAA
+Message-Id: <20230328-topic-msgram_mpm-v5-1-6e06278896b5@linaro.org>
+References: <20230328-topic-msgram_mpm-v5-0-6e06278896b5@linaro.org>
+In-Reply-To: <20230328-topic-msgram_mpm-v5-0-6e06278896b5@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>,
@@ -75,15 +74,15 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692789331; l=2434;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692789331; l=3285;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=qH9sx+/ai5EovCviiqBDDheKAiLyZYj17Dvw7FbBpGw=;
- b=uesa5yLp23EsX+AUQIrOlqfBij2mc7w67AvZxB4MpvduNYEHoQh3u6xxE6bwRAqkygj5ZMIT5
- Nqv4Ey8unZICA9UVcV3Cd9tNRf1hA1iRwZj2QKxD9KuiQt6/s3mxq8Z
+ bh=cKEWZHOdaJ0wddQhFxCKdERpAsyn+1yKkVogcTKhfXI=;
+ b=iI2hCEU50BlnJX8oKl2wrCEysvxSGrPrns2J0qqmvRJn+hy7uq4TkYQL4Rl5Rz65AzFJ5nbWf
+ Pzr/TYspFt2BPu1fZxzm8pibg2UEuwMMuo+cgxnmBE6Yd6QEy3MAAdS
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,66 +91,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v4 -> v5:
-- Pick up tags
-- Rebase on Rob's of_ header untanglement
+Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
+use 'reg' to point to the MPM's slice of Message RAM without cutting into
+an already-defined RPM MSG RAM node used for GLINK and SMEM.
 
-Link to v4: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v4-0-bae382dc0f92@linaro.org
+Document passing the register space as a slice of SRAM through the
+qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
 
-v3 -> v4:
-- Fix up indentation in the bindings patch
-- Add an example glink-edge subnode to remoteproc-rpm (its bindings
-  require that..)
-
-Link to v3: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v3-0-2c72f27b4706@linaro.org
-
-v2 -> v3:
-- Fix the example
-- Pick up tags
-- remove the outdated example from the cover letter, check bindings
-  should you want to see one
-
-The bindings for the wrapper node used in the yaml example are merged
-in qcom/for-next
-
-Link to v2: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org
-
-v1 -> v2:
-- deprecate 'reg', make qcom,rpm-msg-ram required [1/2]
-- Use devm_ioremap() [2/2]
-
-Link to v1: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org
-
-Depends on resolution of https://github.com/devicetree-org/dt-schema/issues/104
-
-The MPM (and some other things, irrelevant to this patchset) resides
-(as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
-that's a portion of the RPM (low-power management core)'s RAM, known
-as the RPM Message RAM. Representing this relation in the Device Tree
-creates some challenges, as one would either have to treat a memory
-region as a bus, map nodes in a way such that their reg-s would be
-overlapping, or supply the nodes with a slice of that region.
-
-This series implements the third option, by adding a qcom,rpm-msg-ram
-property, which has been used for some drivers poking into this region
-before. Bindings ABI compatibility is preserved through keeping the
-"normal" (a.k.a read the reg property and map that region) way of
-passing the register space.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (2):
-      dt-bindings: interrupt-controller: mpm: Pass MSG RAM slice through phandle
-      irqchip: irq-qcom-mpm: Support passing a slice of SRAM as reg space
-
  .../bindings/interrupt-controller/qcom,mpm.yaml    | 52 +++++++++++++++-------
- drivers/irqchip/irq-qcom-mpm.c                     | 21 +++++++--
- 2 files changed, 53 insertions(+), 20 deletions(-)
----
-base-commit: e3f80d3eae76c3557b3c9b5938ad01c0e6cf25ec
-change-id: 20230328-topic-msgram_mpm-c688be3bc294
+ 1 file changed, 35 insertions(+), 17 deletions(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+index 509d20c091af..4ce7912d8047 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+@@ -29,6 +29,12 @@ properties:
+     maxItems: 1
+     description:
+       Specifies the base address and size of vMPM registers in RPM MSG RAM.
++    deprecated: true
++
++  qcom,rpm-msg-ram:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description:
++      Phandle to the APSS MPM slice of the RPM Message RAM
+ 
+   interrupts:
+     maxItems: 1
+@@ -64,33 +70,45 @@ properties:
+ 
+ required:
+   - compatible
+-  - reg
+   - interrupts
+   - mboxes
+   - interrupt-controller
+   - '#interrupt-cells'
+   - qcom,mpm-pin-count
+   - qcom,mpm-pin-map
++  - qcom,rpm-msg-ram
+ 
+ additionalProperties: false
+ 
+ examples:
+   - |
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
+-    mpm: interrupt-controller@45f01b8 {
+-        compatible = "qcom,mpm";
+-        interrupts = <GIC_SPI 197 IRQ_TYPE_EDGE_RISING>;
+-        reg = <0x45f01b8 0x1000>;
+-        mboxes = <&apcs_glb 1>;
+-        interrupt-controller;
+-        #interrupt-cells = <2>;
+-        interrupt-parent = <&intc>;
+-        qcom,mpm-pin-count = <96>;
+-        qcom,mpm-pin-map = <2 275>,
+-                           <5 296>,
+-                           <12 422>,
+-                           <24 79>,
+-                           <86 183>,
+-                           <90 260>,
+-                           <91 260>;
++
++    remoteproc-rpm {
++        compatible = "qcom,msm8998-rpm-proc", "qcom,rpm-proc";
++
++        glink-edge {
++            compatible = "qcom,glink-rpm";
++
++            interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
++            qcom,rpm-msg-ram = <&rpm_msg_ram>;
++            mboxes = <&apcs_glb 0>;
++        };
++
++        mpm: interrupt-controller {
++            compatible = "qcom,mpm";
++            qcom,rpm-msg-ram = <&apss_mpm>;
++            interrupts = <GIC_SPI 197 IRQ_TYPE_EDGE_RISING>;
++            mboxes = <&apcs_glb 1>;
++            interrupt-controller;
++            #interrupt-cells = <2>;
++            interrupt-parent = <&intc>;
++            qcom,mpm-pin-count = <96>;
++            qcom,mpm-pin-map = <2 275>,
++                               <5 296>,
++                               <12 422>,
++                               <24 79>,
++                               <86 183>,
++                               <91 260>;
++        };
+     };
+
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.42.0
 
