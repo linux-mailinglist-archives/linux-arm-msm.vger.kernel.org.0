@@ -2,88 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3681785014
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 07:50:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F293A785089
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 08:19:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232735AbjHWFuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 01:50:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49160 "EHLO
+        id S232905AbjHWGTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 02:19:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231815AbjHWFue (ORCPT
+        with ESMTP id S231163AbjHWGTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 01:50:34 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4096E57;
-        Tue, 22 Aug 2023 22:50:32 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37N5V4qO000308;
-        Wed, 23 Aug 2023 05:50:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cbEULeFlYu45Guxxob7axT5sbHmGemufvkzvuYW7UIA=;
- b=OdkOWwhc2BxfXC6WRTBfPGMhGlSuo53uJqsp/xvtqeOGw5IG4kK1Ppw2zNThKE2MFKlw
- 81Vsn6WVIPYOIHM0y2SigxRxWwz6AHaaVwbJv32qlz9u7TtfbWLICzIZLuCjskNUyVOb
- aocWFsl0jpQnEYNbnvFY39RAzz388r0v3/Fjtydxrph3TnMM7drBZ/lUhMQwToE8OuD5
- ehFNULUTCxPqXISURhqwM0oIh7uj97JGFAW7inOSXS6aRaQtGfNrcEFqhUhBcrM0KIjW
- nSM2x3UShIsttp0Kx8c0gkotmHgnHiU0oUMs8xN/zX9g6IpJ9Z+qArnHVNdkDQa2Ki8d Dg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sn2cm145f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 23 Aug 2023 05:50:17 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37N5oGlM001542
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 23 Aug 2023 05:50:16 GMT
-Received: from [10.253.13.101] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 22 Aug
- 2023 22:50:12 -0700
-Message-ID: <de210a27-882b-da4e-7a86-288c2caf5c7f@quicinc.com>
-Date:   Wed, 23 Aug 2023 13:50:09 +0800
+        Wed, 23 Aug 2023 02:19:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E95E7E;
+        Tue, 22 Aug 2023 23:19:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C44D861351;
+        Wed, 23 Aug 2023 06:19:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938C3C433C7;
+        Wed, 23 Aug 2023 06:19:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692771561;
+        bh=hRs5dH0ZEPcb6II3vz8akVjaVIarEG42/y1v3tkpUzg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UbMFTgwT5DIncy9OyNxvxDcjJUmUgPFw7S5x606CbXJpl2Ajsbj6TiDFa/YQ78dFo
+         1+xteboubD3G3s2MMuyXy7QqqaOpnoMuXlTFuZs1E0QwQR/S7H4ciOpbbZTs8BD8T0
+         8l8KYh2C/htx1VRg17/k91/sHkNTodHdEZ4IORwl7MM3q0gbMowADeU8FOT74pFuEG
+         jb6nHdr6AO1SubsNLRkHgMqKZliGUYRAHjHivlSBs95f500FCOHFu984DexcWtjTVw
+         sRvufy3n7QSLO17xEiOpa46LpK20gEYM9LCIxNrJUyUZht9U30Ml8YPOhPJ+lqxC6Z
+         x9ciOHFMWXwig==
+Date:   Wed, 23 Aug 2023 11:49:04 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     kernel test robot <lkp@intel.com>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org, oe-kbuild-all@lists.linux.dev,
+        helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
+Message-ID: <20230823061904.GC3737@thinkpad>
+References: <1690948281-2143-2-git-send-email-quic_krichai@quicinc.com>
+ <202308021312.obgu7FWM-lkp@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 3/3] clk: qcom: add clock controller driver for
- qca8386/qca8084
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <catalin.marinas@arm.com>,
-        <conor+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <mturquette@baylibre.com>, <p.zabel@pengutronix.de>,
-        <robh+dt@kernel.org>, <will@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>
-References: <20230810115419.25539-1-quic_luoj@quicinc.com>
- <20230810115419.25539-4-quic_luoj@quicinc.com>
- <9dec09fa-a5a3-416c-9b4d-4b4c4e10320b@linaro.org>
- <9a55016f-0049-f185-f2be-d138fe33384b@quicinc.com>
- <631d5a82-7d24-49cd-9868-74c7b3c08bcd@linaro.org>
- <6ebdcbdc-409c-0c08-1e5d-f9aa0b92c3b2@quicinc.com>
- <6e781c2d21e346cdd7f84c3b7a57dafc.sboyd@kernel.org>
-Content-Language: en-US
-From:   Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <6e781c2d21e346cdd7f84c3b7a57dafc.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _041J-ipfqwT3Y6d5iq8MMQeXuOdcKsh
-X-Proofpoint-GUID: _041J-ipfqwT3Y6d5iq8MMQeXuOdcKsh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-23_03,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
- clxscore=1015 mlxlogscore=868 adultscore=0 priorityscore=1501 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308230052
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <202308021312.obgu7FWM-lkp@intel.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,24 +66,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/23/2023 3:10 AM, Stephen Boyd wrote:
-> Quoting Jie Luo (2023-08-14 03:58:26)
->>
->>
->> On 8/12/2023 6:56 PM, Konrad Dybcio wrote:
->>> My main point is, why can't you use qcom_cc_really_probe?
->>>
->>
->> Hi Konrad,
->> qcom_cc_really_probe is taking the platform_device as the input
->> parameter, but the nss_cc_qca8k_probe takes the mdio_device as the probe
->> parameter.
+On Wed, Aug 02, 2023 at 01:14:44PM +0800, kernel test robot wrote:
+> Hi Krishna,
 > 
-> There's no real reason why it takes a platform device instead of a plain
-> struct device. You can have an earlier patch change that function to
-> take a struct device instead.
+> kernel test robot noticed the following build warnings:
+> 
+> [auto build test WARNING on pci/next]
+> [also build test WARNING on pci/for-linus linus/master v6.5-rc4 next-20230801]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-endpoint-Add-D-state-change-notifier-support/20230802-115309
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+> patch link:    https://lore.kernel.org/r/1690948281-2143-2-git-send-email-quic_krichai%40quicinc.com
+> patch subject: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
+> config: loongarch-allyesconfig (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/config)
+> compiler: loongarch64-linux-gcc (GCC) 12.3.0
+> reproduce: (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202308021312.obgu7FWM-lkp@intel.com/
+> 
+> All warnings (new ones prefixed by >>):
+> 
+> >> drivers/pci/endpoint/pci-epc-core.c:795:6: warning: no previous prototype for 'pci_epc_dstate_notity' [-Wmissing-prototypes]
+>      795 | void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
 
-Okay, thanks Stephen for the comments, i will update it to use "struct 
-device" in the next version.
+This tells that you haven't build tested the series before sending. Please
+always do both build and functionality testing before sending each iteration.
+
+- Mani
+
+>          |      ^~~~~~~~~~~~~~~~~~~~~
+> 
+> 
+> vim +/pci_epc_dstate_notity +795 drivers/pci/endpoint/pci-epc-core.c
+> 
+>    785	
+>    786	/**
+>    787	 * pci_epc_dstate_notity() - Notify the EPF driver that EPC device D-state
+>    788	 *			has changed
+>    789	 * @epc: the EPC device which has change in D-state
+>    790	 * @state: the changed D-state
+>    791	 *
+>    792	 * Invoke to Notify the EPF device that the EPC device has D-state has
+>    793	 * changed.
+>    794	 */
+>  > 795	void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
+>    796	{
+>    797		struct pci_epf *epf;
+>    798	
+>    799		if (!epc || IS_ERR(epc))
+>    800			return;
+>    801	
+>    802		mutex_lock(&epc->list_lock);
+>    803		list_for_each_entry(epf, &epc->pci_epf, list) {
+>    804			mutex_lock(&epf->lock);
+>    805			if (epf->event_ops && epf->event_ops->dstate_notify)
+>    806				epf->event_ops->dstate_notify(epf, state);
+>    807			mutex_unlock(&epf->lock);
+>    808		}
+>    809		mutex_unlock(&epc->list_lock);
+>    810	}
+>    811	EXPORT_SYMBOL_GPL(pci_epc_dstate_notity);
+>    812	
+> 
+> -- 
+> 0-DAY CI Kernel Test Service
+> https://github.com/intel/lkp-tests/wiki
+
+-- 
+மணிவண்ணன் சதாசிவம்
