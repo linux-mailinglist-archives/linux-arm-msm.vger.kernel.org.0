@@ -2,166 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5050C785E56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 19:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A93E5785E65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 19:17:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237755AbjHWRNd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 13:13:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40260 "EHLO
+        id S237782AbjHWRRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 13:17:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231433AbjHWRNd (ORCPT
+        with ESMTP id S237475AbjHWRRf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 13:13:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162CAE6A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 10:12:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1692810769;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=6LDqnjupdSmL9k9YHJrhlv07uaJlqH7GpMG15CT+bhs=;
-        b=YcBJi+Rvcnby4uvX3ztwijkXAs5imc0iGRJvTNnMK+hB6rHdnlBf+ou8uG8iV7e9TwyIyj
-        yPUXJ0UQalx9EDNAAA4Ln5spbjc3GjzeXYkrcfW1Ics08z/qWOAXSDNDyYOaAaoOz+QlG7
-        btqITRhViQST1EyU2N4lL2IsagYuKGY=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-UYJT3oMVM1mO9nfYwmF4xw-1; Wed, 23 Aug 2023 13:12:48 -0400
-X-MC-Unique: UYJT3oMVM1mO9nfYwmF4xw-1
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-76d882c4906so748266385a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 10:12:47 -0700 (PDT)
+        Wed, 23 Aug 2023 13:17:35 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC2E1E6A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 10:17:33 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99c1d03e124so743164966b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 10:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1692811050; x=1693415850;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MS+TPc34qbEYEOTCakdAp1dhbKIZynKL3y59Y3CigWo=;
+        b=WueiVPoMozMdknbeqgWLH3xZEo28P5yxES/Aa+dDp0TXnz4IGZOWdvLXalQ88prxKU
+         nehXO+OC4lDaefVkhLN5B6EMiikX4J9wTiJnxGTPF+i0oGnghn/Ypu65emvtvV1Sab0g
+         Z+HwzqUiVRE25vIiyjE2QzoKtw8m2r0XVOMCY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692810767; x=1693415567;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1692811050; x=1693415850;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6LDqnjupdSmL9k9YHJrhlv07uaJlqH7GpMG15CT+bhs=;
-        b=ear7LpLfjRPpq/RMHqfJqXPd/Qp9T+7L2F6FSOu9UNNwp16lfoP0yJgaa8/u+kQRsS
-         0EBi5Kn3sPYzd6kyEJOdibNJdrlaLJsLPlEbmKOADBE2zkGd7ha9zIQ6EZZPuEACez9o
-         AATvs50VWkh4U9zq46FGZJmD2MFh4xTfo8GJsfItvmqV0tP2ZgWtHuJnaUb1HYIrWehh
-         k2j/RpiXvFVqG3Ju1yyEc8diKEvZlBjUN2s/PZEVY0F+H+qgK6yvhcabQjZLt8k5QKr5
-         GqmhiaUyrRPEUDoUxlr4cf+wOKM5PB3omJu+uzZFFbFCKFkrSXhlbepNZHX3rv9ky3d3
-         q8dw==
-X-Gm-Message-State: AOJu0YxdOC8XRd+0x5/E2MUuzXedZJ1rFbx0VBjvVqZH/jbBC3WJOBAz
-        VhHfYTr4Fd+pjFV9XPdeNG5vGQbzJVGk/XbwhAuEruwQg3a3nfzURfy8WKNQgli2arVZCgGF9ii
-        NT4Fprj657JTla5tY2MRYU2f28w==
-X-Received: by 2002:a05:620a:248d:b0:76d:966d:b30e with SMTP id i13-20020a05620a248d00b0076d966db30emr19079966qkn.6.1692810767554;
-        Wed, 23 Aug 2023 10:12:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGITbTZgj/QdmC+MzL1ZvWT2VW6zR43X5aoHcFP2MOnAHhyFKzG61G3sIFIkZ0sbhWznHuGPQ==
-X-Received: by 2002:a05:620a:248d:b0:76d:966d:b30e with SMTP id i13-20020a05620a248d00b0076d966db30emr19079942qkn.6.1692810767343;
-        Wed, 23 Aug 2023 10:12:47 -0700 (PDT)
-Received: from fedora.redhat.com ([107.171.218.122])
-        by smtp.gmail.com with ESMTPSA id x26-20020ae9f81a000000b0076ca9f79e1fsm4056361qkh.46.2023.08.23.10.12.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 10:12:46 -0700 (PDT)
-From:   Adrien Thierry <athierry@redhat.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     Adrien Thierry <athierry@redhat.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH 2/2] phy: qcom-qmp-usb: split PCS_USB init table for sc8280xp and sa8775p
-Date:   Wed, 23 Aug 2023 13:12:05 -0400
-Message-ID: <20230823171208.18382-3-athierry@redhat.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230823171208.18382-1-athierry@redhat.com>
-References: <20230823171208.18382-1-athierry@redhat.com>
+        bh=MS+TPc34qbEYEOTCakdAp1dhbKIZynKL3y59Y3CigWo=;
+        b=jB3NWKUWDwj7ngchxYGtaRgXtAehFM/RTPgap2JtGddxz/Hd3ZPeE4z3btMINdW/fj
+         ZYotPOW+9h95/vOBbPk9T0uOfU8Z+GDHhOmNmGa0F714gYTiI8P61LBcvkjVWrqJ6F1v
+         Vo8nDZ2pwPBE0cBu62PP3eIb0zMvk/dHAiUBCcPTjYrtjMxH0GHMKWS3yBnSn4ut+RIN
+         5m54qkwI/avdPsY1a7CJmnpDChzqjBl2txZvl0nifQqcVCfT7FzWL/0rvVNQJ/h6H36c
+         lMfhVmPTO7+eNG6tBu4EOOf5WcleQ/KBiMDaMYFuWd4s/J6+4A0utcQtcnPvoH/xNvge
+         WVzg==
+X-Gm-Message-State: AOJu0YxJEDUQZZ+95NmmF2EdcMQgEWDHyYO5khMRy2QsNyFI5GRL2k2n
+        N7R+C0ePkeDhnQZEJWULe2qGtuTRGq1HozMDVkaGjoLZ
+X-Google-Smtp-Source: AGHT+IFy6royrkDdeJygLfUO7jcWaiiItXah3Sp0VG2Ke6gYjskUkGjneAPcWWul7qjjb+7ZZsT+mg==
+X-Received: by 2002:a17:907:2bcf:b0:99e:6cc:798 with SMTP id gv15-20020a1709072bcf00b0099e06cc0798mr9875014ejc.64.1692811050188;
+        Wed, 23 Aug 2023 10:17:30 -0700 (PDT)
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com. [209.85.208.50])
+        by smtp.gmail.com with ESMTPSA id kf18-20020a17090776d200b0098748422178sm9907624ejc.56.2023.08.23.10.17.29
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Aug 2023 10:17:29 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-529fa243739so978a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 10:17:29 -0700 (PDT)
+X-Received: by 2002:a50:9f4e:0:b0:523:b133:57fe with SMTP id
+ b72-20020a509f4e000000b00523b13357femr275913edf.1.1692811048986; Wed, 23 Aug
+ 2023 10:17:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230822094414.123162-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20230822174101.v4.1.I26e017b00a341e7a5a2e94a83596923713408817@changeid> <20230823-raving-either-fb7bdb98b846@spud>
+In-Reply-To: <20230823-raving-either-fb7bdb98b846@spud>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 23 Aug 2023 10:17:17 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U2kHPu2coSniUXfDJH8gYMV6115NKkyS7Rt4mEx4fzew@mail.gmail.com>
+Message-ID: <CAD=FV=U2kHPu2coSniUXfDJH8gYMV6115NKkyS7Rt4mEx4fzew@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: add sc7180-lazor board bindings
+To:     Conor Dooley <conor@kernel.org>
+Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For sc8280xp and sa8775p, PCS and PCS_USB initialization data is
-described in the same table, thus the pcs_usb offset is not being
-applied during initialization of PCS_USB registers. Fix this by adding
-the appropriate pcs_usb_tbl tables.
+Hi,
 
-Fixes: 8bd2d6e11c99 ("phy: qcom-qmp: Add SA8775P USB3 UNI phy")
-Fixes: c0c7769cdae2 ("phy: qcom-qmp: Add SC8280XP USB3 UNI phy")
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+On Wed, Aug 23, 2023 at 8:11=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
+te:
+>
+> On Tue, Aug 22, 2023 at 05:44:13PM +0800, Sheng-Liang Pan wrote:
+> > Introduce more sc7180-lazor sku and board version configuration,
+> > add no-eSIM SKU 10 for Lazor, no-eSIM SKU 15 and 18 for Limozeen,
+> > add new board version 10 for audio codec ALC5682i-VS.
+> >
+> > Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.goo=
+gle.com>
+> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index ccbe64f7897e..22bcf11494d5 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1480,8 +1480,6 @@ static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0xaa),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCS_TX_RX_CONFIG, 0x0c),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_CDR_RESET_TIME, 0x0a),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG1, 0x88),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG2, 0x13),
-@@ -1490,6 +1488,11 @@ static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x21),
- };
- 
-+static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_usb_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
-+};
-+
- static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_LOCK_DETECT_CONFIG1, 0xc4),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_LOCK_DETECT_CONFIG2, 0x89),
-@@ -1499,9 +1502,6 @@ static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0xaa),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCS_TX_RX_CONFIG, 0x0c),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_POWER_STATE_CONFIG1, 0x6f),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_CDR_RESET_TIME, 0x0a),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG1, 0x88),
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG2, 0x13),
-@@ -1510,6 +1510,12 @@ static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x21),
- };
- 
-+static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_usb_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_POWER_STATE_CONFIG1, 0x6f),
-+};
-+
- struct qmp_usb_offsets {
- 	u16 serdes;
- 	u16 pcs;
-@@ -1788,6 +1794,8 @@ static const struct qmp_phy_cfg sa8775p_usb3_uniphy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_rx_tbl),
- 	.pcs_tbl		= sa8775p_usb3_uniphy_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(sa8775p_usb3_uniphy_pcs_tbl),
-+	.pcs_usb_tbl		= sa8775p_usb3_uniphy_pcs_usb_tbl,
-+	.pcs_usb_tbl_num	= ARRAY_SIZE(sa8775p_usb3_uniphy_pcs_usb_tbl),
- 	.clk_list		= qmp_v4_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
- 	.reset_list		= qcm2290_usb3phy_reset_l,
-@@ -1833,6 +1841,8 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_rx_tbl),
- 	.pcs_tbl		= sc8280xp_usb3_uniphy_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_pcs_tbl),
-+	.pcs_usb_tbl		= sc8280xp_usb3_uniphy_pcs_usb_tbl,
-+	.pcs_usb_tbl_num	= ARRAY_SIZE(sc8280xp_usb3_uniphy_pcs_usb_tbl),
- 	.clk_list		= qmp_v4_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
- 	.reset_list		= qcm2290_usb3phy_reset_l,
--- 
-2.41.0
+Conor: any chance you could reply to v6 (instead of v4) and add your Ack?
 
+https://lore.kernel.org/all/20230823151005.v6.1.I26e017b00a341e7a5a2e94a835=
+96923713408817@changeid/
+
+I _think_ the v6 patch series is in good shape so I don't expect
+Sheng-Liang to have to send a v7. I'm worried that your Ack will be
+lost if it's not sent in response to the v6 patch.
+
+Thanks!
+
+-Doug
