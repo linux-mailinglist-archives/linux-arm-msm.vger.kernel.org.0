@@ -2,229 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A350E78511F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 09:07:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FF5C785136
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 09:13:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233141AbjHWHHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 03:07:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41280 "EHLO
+        id S233180AbjHWHNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 03:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233134AbjHWHHR (ORCPT
+        with ESMTP id S233176AbjHWHNp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 03:07:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEC51E62;
-        Wed, 23 Aug 2023 00:07:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 57CBE646E6;
-        Wed, 23 Aug 2023 07:07:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E98C433C7;
-        Wed, 23 Aug 2023 07:07:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692774432;
-        bh=9lAErBwNVSX9i0L/x3hQKTCaogOpT3lhljOUK8I9jXk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JIuXPG6QtLR0bvZoo2ngJlyQk+7LsJVFPTU1jGmH8csY7KgRMPv7OIjKQfJRSS56S
-         hT2LC0olMAeg4cHgTuJ5fGsUVUobfL971GvZiTGQwv07nTMs8/uFHbO7YP+6FtT1r+
-         3HGMWCAWGS1J1kWE2hKABP50XiwBUGRREIFET2UHv7jz5B7SU7R8EfKep24UH5VF5Q
-         OO+8NQKLQD30IzmdEJSdMSh2kN+Hzd9rkpUw0vp8XKaxjxTHSZB9Y1D2ExWkDKkuMe
-         7Tl9Ht5vIbDNONrhmVS9C5FGhN2dOxYW63PvYPRvKOaCU+DVS9zQQef7ihvcFkHrqD
-         XUWD9z6URI1Pw==
-Date:   Wed, 23 Aug 2023 12:36:52 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
-        krzysztof.kozlowski@linaro.org, Andy Gross <agross@kernel.org>,
+        Wed, 23 Aug 2023 03:13:45 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6D6E51
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 00:13:36 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-68a56ed12c0so542444b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 00:13:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quanta-corp-partner-google-com.20221208.gappssmtp.com; s=20221208; t=1692774816; x=1693379616;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PO+Ey3j2yYoRS6DyVlW+DY8b4TN0ziEpE6uBDlFJlcg=;
+        b=sSTF4Bzwds7FF7UhrCSf8Fj3jWGfVtl/45AXKdqP34lJDDSfDMdnbzU0afGXqWvr+Z
+         YxMXH3royQifT3Do4gu4d9xVZRXqQeQjzFXM44UXAvXPMsFqDtR/NT9gJJu49Fr9h4PQ
+         LVh8hlG2Qw5xuISva4D1A5FvhLPzL6DcCpxI5p/9b5xiqsMo9LpuFtLw+kcVwxrg4rkY
+         VpmTnx6gHh+G3mR+B1wheOXLkmmMI8kGZiEQg039d2eBbMeznq4xR+SDOOd7/Jf+d0Bd
+         qYVgAIoA6BBAvHPTsf9PLx8SCpShRMQm/HX1M3wy3+jPmq5VkNOF7/UO2Jfy7VJHqZWQ
+         eFLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692774816; x=1693379616;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PO+Ey3j2yYoRS6DyVlW+DY8b4TN0ziEpE6uBDlFJlcg=;
+        b=dSW1V+b7vDeyN+up0JAYCmVbqPGDu9kb3bB0CpWaBDt3mBzoCbUtnU+1BD3GsW/IX6
+         HUuWUfmG9rGjvRwL2rKDkbicZqmnCik23v3hVz0Pr9lyZGKkH6NremEo7sN0L0Q2qK7T
+         S2jYYxatUWfrKzQtZuqA6U/Q0JsUy4WOv2y1Xe1fZmUwfpMsRJ2qs9LyapAggr6Y8puJ
+         a7MqYsUKrO3lsv4mgSAwUboMTLqiLSD+Ge92fDYpxL3u9IRmJD04UR+uyGYLHCltVh0O
+         jfqSnWTHQgKVROZZg/ckKYcXUgeKVM2j7I+vmh+sds83YRj9fIKbtwNpg9RRfztlyqk9
+         naYw==
+X-Gm-Message-State: AOJu0YwOJOsm/flK6oFRzjqaASxwMfONHxa14u1HgBmsJUp0w2m2KIGA
+        3Wkep1hxNPYAigcsyzFnoJQKJA==
+X-Google-Smtp-Source: AGHT+IEYGzEh3Vjas2kgJKE67lSNZMqbq+eJ7/gl+/IdNMtaC+7NqH7H0+zbesvyh727jTc4YGcNrQ==
+X-Received: by 2002:a05:6a21:78aa:b0:133:7a67:b477 with SMTP id bf42-20020a056a2178aa00b001337a67b477mr15729732pzc.1.1692774815951;
+        Wed, 23 Aug 2023 00:13:35 -0700 (PDT)
+Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
+        by smtp.gmail.com with ESMTPSA id g16-20020aa78750000000b0068a690b44basm2520860pfo.31.2023.08.23.00.13.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Aug 2023 00:13:34 -0700 (PDT)
+From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v4 4/4] PCI: qcom: Add OPP support for speed based
- performance state of RPMH
-Message-ID: <20230823070652.GE3737@thinkpad>
-References: <1692717141-32743-1-git-send-email-quic_krichai@quicinc.com>
- <1692717141-32743-5-git-send-email-quic_krichai@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v6 0/2] Add no-esim sku for sc7180-lazor family and new board version for audio codec ALC5682i-VS
+Date:   Wed, 23 Aug 2023 15:13:04 +0800
+Message-Id: <20230823071306.131373-1-sheng-liang.pan@quanta.corp-partner.google.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1692717141-32743-5-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Subject should be, "PCI: qcom: Add OPP support to scale performance state of
-power domain"
 
-On Tue, Aug 22, 2023 at 08:42:21PM +0530, Krishna chaitanya chundru wrote:
-> Before link training vote for the maximum performance state of RPMH
-> and once link is up, vote for the performance state based upon the link
-> speed.
-> 
 
-Commit message should have the justification on why OPP support should be
-addded, not just how you add it. The reasoning should be, "While scaling the
-interconnect clocks based on PCIe link speed, it is also mandatory to scale the
-power domain performance state so that the SoC can run under optimum power
-conditions."
+Changes in v6:
+- commit update, add dependent patch link
+- remove unnecessary symbol
+- sort out the order of properties
 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 52 ++++++++++++++++++++++++++++++++++
->  1 file changed, 52 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 7a87a47..161fdad 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -22,6 +22,7 @@
->  #include <linux/of_device.h>
->  #include <linux/of_gpio.h>
->  #include <linux/pci.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/platform_device.h>
->  #include <linux/phy/pcie.h>
-> @@ -1357,6 +1358,33 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
->  	return 0;
->  }
->  
-> +static void qcom_pcie_opp_update(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie *pci = pcie->pci;
-> +	struct dev_pm_opp *opp;
-> +	u32 offset, status;
-> +	int speed, ret = 0;
-> +
-> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-> +
-> +	/* Only update constraints if link is up. */
-> +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
-> +		return;
-> +
-> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
-> +
+Changes in v5:
+- rebased on patch moving rt5682s to a fragment
 
-Since icc_update() also queries link status register, this could be moved inside
-icc_update() to avoid code duplication and probably the function con be renamed
-to "qcom_pcie_icc_opp_update()".
+Changes in v4:
+- combine pathc2 and patch3
 
-> +	opp = dev_pm_opp_find_level_exact(pci->dev, speed);
-> +	if (!IS_ERR(opp)) {
+Changes in v3:
+- correct corresponding of new board and new sku
+- sort out the node order alphabetically
 
-As we decided for pcie-qcom-ep, let's return error from _update() function if
-icc paths/opp support were specified in DT.
+Changes in v2:
+- add new entry rev9 with Parade bridge chip
+- correct newly create dts files
 
-Use a separate patch for returning error from existing qcom_pcie_icc_update()
-function and add opp support on top.
+Sheng-Liang Pan (2):
+  dt-bindings: arm: qcom: add sc7180-lazor board bindings
+  arm64: dts: qcom: sc7180: Add sku_id and board id for lazor/limozeen
 
-> +		ret = dev_pm_opp_set_opp(pci->dev, opp);
-> +		if (ret)
-> +			dev_err(pci->dev, "Failed to set opp: level %d ret %d\n",
-> +						dev_pm_opp_get_level(opp), ret);
-> +		dev_pm_opp_put(opp);
-> +	}
-> +
-> +}
-> +
->  static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
->  {
->  	struct dw_pcie *pci = pcie->pci;
-> @@ -1439,8 +1467,10 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
->  static int qcom_pcie_probe(struct platform_device *pdev)
->  {
->  	const struct qcom_pcie_cfg *pcie_cfg;
-> +	unsigned long max_level = INT_MAX;
->  	struct device *dev = &pdev->dev;
->  	struct qcom_pcie *pcie;
-> +	struct dev_pm_opp *opp;
->  	struct dw_pcie_rp *pp;
->  	struct resource *res;
->  	struct dw_pcie *pci;
-> @@ -1511,6 +1541,23 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto err_pm_runtime_put;
->  
-> +	/* OPP table is optional */
-> +	ret = devm_pm_opp_of_add_table(dev);
-> +	if (ret && ret != -ENODEV) {
-> +		dev_err(dev, "Invalid OPP table in Device tree\n");
-
-"Failed to add OPP table"
-
-Also, use dev_err_probe() here and below.
-
-> +		goto err_pm_runtime_put;
-> +	}
-> +
-> +	/* vote for max level in the opp table */
-> +	opp = dev_pm_opp_find_level_floor(dev, &max_level);
-
-Use a bool flag to check whether opp support is present or not and use that to
-decide calling these APIs.
-
-> +	if (!IS_ERR(opp)) {
-> +		ret = dev_pm_opp_set_opp(dev, opp);
-> +		if (ret)
-> +			dev_err(pci->dev, "Failed to set opp: level %d ret %d\n",
-> +						dev_pm_opp_get_level(opp), ret);
-> +		dev_pm_opp_put(opp);
-> +	}
-> +
->  	ret = pcie->cfg->ops->get_resources(pcie);
->  	if (ret)
->  		goto err_pm_runtime_put;
-> @@ -1531,6 +1578,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  
->  	qcom_pcie_icc_update(pcie);
->  
-> +	qcom_pcie_opp_update(pcie);
-> +
->  	if (pcie->mhi)
->  		qcom_pcie_init_debugfs(pcie);
->  
-> @@ -1577,6 +1626,7 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->  	 */
->  	if (!dw_pcie_link_up(pcie->pci)) {
->  		qcom_pcie_host_deinit(&pcie->pci->pp);
-> +		dev_pm_opp_set_opp(dev, NULL);
-
-This will print error when OPP table was not specified in DT. So use the flag as
-I suggested above.
-
-- Mani
-
->  		pcie->suspended = true;
->  	}
->  
-> @@ -1593,6 +1643,8 @@ static int qcom_pcie_resume_noirq(struct device *dev)
->  		if (ret)
->  			return ret;
->  
-> +		qcom_pcie_opp_update(pcie);
-> +
->  		pcie->suspended = false;
->  	}
->  
-> -- 
-> 2.7.4
-> 
+ .../devicetree/bindings/arm/qcom.yaml         | 31 +++++++++++++
+ arch/arm64/boot/dts/qcom/Makefile             |  5 +++
+ ...sc7180-trogdor-lazor-limozeen-nots-r10.dts | 29 ++++++++++++
+ .../sc7180-trogdor-lazor-limozeen-nots-r9.dts |  6 +--
+ .../sc7180-trogdor-lazor-limozeen-r10.dts     | 45 +++++++++++++++++++
+ .../qcom/sc7180-trogdor-lazor-limozeen-r9.dts | 10 ++---
+ .../dts/qcom/sc7180-trogdor-lazor-r10-kb.dts  | 23 ++++++++++
+ .../dts/qcom/sc7180-trogdor-lazor-r10-lte.dts | 27 +++++++++++
+ .../dts/qcom/sc7180-trogdor-lazor-r10.dts     | 19 ++++++++
+ .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   |  4 +-
+ .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  |  4 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts |  4 +-
+ 12 files changed, 193 insertions(+), 14 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
