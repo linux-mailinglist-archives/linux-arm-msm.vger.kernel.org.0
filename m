@@ -2,151 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E842B784E43
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 03:36:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30ACB784F00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 05:00:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232040AbjHWBg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Aug 2023 21:36:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
+        id S232386AbjHWDAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Aug 2023 23:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbjHWBgZ (ORCPT
+        with ESMTP id S232373AbjHWDAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Aug 2023 21:36:25 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 997BCE45;
-        Tue, 22 Aug 2023 18:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1692754582; x=1724290582;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3VidKf/oV/xeJfywrfMmJnZGabtP4bZ552VU4txec74=;
-  b=QpkFfBwyrkDVTZCROyl5xpQwULZW3yZ9+yDD6FUGu1CGxli+mgpYBomU
-   H1umy4ZGFdiUJzF91tir5l2BuSTf5EIjhqAXsHZFbbdLP5GazdWabuQpJ
-   Z5asIb3s/Om8ezJUBTzFIMcXOYLh4jXeeRUM145GDDHuR0JPAtIZp/nzA
-   oWwScKBJ/qd68ZLfHcclRjMUN/pHMHwx9UcZhiiZPnBkhl/SGkdyyHvNq
-   6Gv25P256RdDOAOBeLpL1k9BOnEeziT5Bvhp9W5JFAxjfs+EkSyA5chNh
-   0SLs9OnXzVldj6kOUIM02BUIOomlPYCBJgdch98fdv8iKPnwq4iB/ypJL
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10810"; a="364218626"
-X-IronPort-AV: E=Sophos;i="6.01,194,1684825200"; 
-   d="scan'208";a="364218626"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2023 18:36:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10810"; a="806496697"
-X-IronPort-AV: E=Sophos;i="6.01,194,1684825200"; 
-   d="scan'208";a="806496697"
-Received: from lkp-server02.sh.intel.com (HELO daf8bb0a381d) ([10.239.97.151])
-  by fmsmga004.fm.intel.com with ESMTP; 22 Aug 2023 18:36:16 -0700
-Received: from kbuild by daf8bb0a381d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qYcn9-0000iP-1O;
-        Wed, 23 Aug 2023 01:36:15 +0000
-Date:   Wed, 23 Aug 2023 09:35:50 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-Subject: Re: [PATCH v8 04/13] coresight-tpda: Add DSB dataset support
-Message-ID: <202308230927.JBX1uKOE-lkp@intel.com>
-References: <1692681973-20764-5-git-send-email-quic_taozha@quicinc.com>
+        Tue, 22 Aug 2023 23:00:16 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFAB3E47
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 19:59:48 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b89b0c73d7so9079145ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Aug 2023 19:59:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1692759588; x=1693364388;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bhgEqLuvf9ApSnTvUwn1L76c2o2W1Ei/QD6yE6yt7Vo=;
+        b=RzbIwpF/0rWWCHIbil/kmvbYsiH+zzV8cteo0NeX4iqS5Th3aMObOrBBZ5QIYYiYNO
+         EzLvxXnwaU3C6HJ66DVx0SYeH6DBUUXE/parOT0tZRTGaLZHY6BYCVv0BWvKsae2+Z4V
+         HEkSBtQA++hJt6hjIX8coUzQJXYdSMU0EhPZnC3wJk9rsU5aMcdQM2J2gdrxRnnAl7ZG
+         8NIlks8SUC7HZyd+TSNVs6GUNYerNVLSzTLDuAq02G7Vh6n7NQtQV5W2S/tTxnIxqdnK
+         Yk0AUrfOj+V8sxulrYV9L4sfBNDgKCkzUecP9KTfiIS3EGmzpdtRXoZ4mpHHvApm3vtv
+         04iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692759588; x=1693364388;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bhgEqLuvf9ApSnTvUwn1L76c2o2W1Ei/QD6yE6yt7Vo=;
+        b=BqXGoIx25eP5zVTLJu77LcILB4Xa/KGJ2KX0c7axPg+JNXWYjmn/Fq3lrCu+/+nuaU
+         rEpkTflUIDJ1ibkTttT6mbXKe4pFaxeUMKyaORNvgIFejHWWjniA8VVi5odfygEpt9qd
+         fUNgArQqEWTJEJVLt8GPwddHzXkSH+us6ipEd35AyTJbdwN0dihrabRGGSVkHnl852G5
+         juWTCcxCrkQA2Y5mrOHgQqP8PEaFuqbF/g9ZOV0gab8JfT3kj0Kg7TVbMFLSIrHmShtL
+         rHU6sTfkeN7bTj1mMIVjdDOZcq5urbKwsojlAhpdRV+kCZTdk6JsykHrMXFUvV9Pqxgq
+         bXQg==
+X-Gm-Message-State: AOJu0Yw72X0gh560AMTFdS72+WktpxJOT2RK+OW+nJS5hJhPNlJhWda7
+        JbusBzDMe3Q8epJovvSKpFBoBQ==
+X-Google-Smtp-Source: AGHT+IEfrTZGJtg+pRH2EfLUkWhGiT4SJbELosEEcEbXeeoUMWHqtsVXqJsCto+j1ri8qfTaL4v/sQ==
+X-Received: by 2002:a17:90a:2f41:b0:26d:4ade:fcf0 with SMTP id s59-20020a17090a2f4100b0026d4adefcf0mr10521410pjd.4.1692759588304;
+        Tue, 22 Aug 2023 19:59:48 -0700 (PDT)
+Received: from ?IPV6:fdbd:ff1:ce00:1c25:884:3ed:e1db:b610? ([2408:8000:b001:1:1f:58ff:f102:103])
+        by smtp.gmail.com with ESMTPSA id z2-20020a17090a1fc200b00262ca945cecsm11045048pjz.54.2023.08.22.19.59.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 19:59:47 -0700 (PDT)
+Message-ID: <63dc1d86-2a15-6b7e-f63a-63fccb25eae2@bytedance.com>
+Date:   Wed, 23 Aug 2023 10:59:34 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1692681973-20764-5-git-send-email-quic_taozha@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [PATCH v4 43/48] drm/ttm: introduce pool_shrink_rwsem
+Content-Language: en-US
+To:     daniel@ffwll.ch
+References: <20230807110936.21819-1-zhengqi.arch@bytedance.com>
+ <20230807110936.21819-44-zhengqi.arch@bytedance.com>
+ <ZOS+g51Yx9PsYkGU@phenom.ffwll.local>
+From:   Qi Zheng <zhengqi.arch@bytedance.com>
+Cc:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
+        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
+        yujie.liu@intel.com, gregkh@linuxfoundation.org,
+        muchun.song@linux.dev, simon.horman@corigine.com,
+        dlemoal@kernel.org, kvm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        dm-devel@redhat.com, linux-mtd@lists.infradead.org, x86@kernel.org,
+        cluster-devel@redhat.com, xen-devel@lists.xenproject.org,
+        linux-ext4@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        rcu@vger.kernel.org, linux-bcache@vger.kernel.org,
+        Muchun Song <songmuchun@bytedance.com>,
+        linux-raid@vger.kernel.org, linux-nfs@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-f2fs-devel@lists.sourceforge.net, linux-xfs@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-erofs@lists.ozlabs.org,
+        linux-btrfs@vger.kernel.org, daniel.vetter@ffwll.ch
+In-Reply-To: <ZOS+g51Yx9PsYkGU@phenom.ffwll.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tao,
+Hi Daniel,
 
-kernel test robot noticed the following build warnings:
+On 2023/8/22 21:56, Daniel Vetter wrote:
+> On Mon, Aug 07, 2023 at 07:09:31PM +0800, Qi Zheng wrote:
+>> Currently, the synchronize_shrinkers() is only used by TTM pool. It only
+>> requires that no shrinkers run in parallel.
+>>
+>> After we use RCU+refcount method to implement the lockless slab shrink,
+>> we can not use shrinker_rwsem or synchronize_rcu() to guarantee that all
+>> shrinker invocations have seen an update before freeing memory.
+>>
+>> So we introduce a new pool_shrink_rwsem to implement a private
+>> synchronize_shrinkers(), so as to achieve the same purpose.
+>>
+>> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+>> Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+> 
+> On the 5 drm patches (I counted 2 ttm and 3 drivers) for merging through
+> some other tree (since I'm assuming that's how this will land):
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.5-rc7 next-20230822]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Yeah, there are 5 drm patches: PATCH v4 07/48 23/48 24/48 25/48 43/48.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Tao-Zhang/coresight-tpdm-Remove-the-unnecessary-lock/20230822-132946
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/1692681973-20764-5-git-send-email-quic_taozha%40quicinc.com
-patch subject: [PATCH v8 04/13] coresight-tpda: Add DSB dataset support
-config: arm64-randconfig-r031-20230823 (https://download.01.org/0day-ci/archive/20230823/202308230927.JBX1uKOE-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce: (https://download.01.org/0day-ci/archive/20230823/202308230927.JBX1uKOE-lkp@intel.com/reproduce)
+> 
+> Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202308230927.JBX1uKOE-lkp@intel.com/
+Thanks for your review!
 
-All warnings (new ones prefixed by >>):
+Qi
 
->> drivers/hwtracing/coresight/coresight-tpda.c:168:6: warning: variable 'ret' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
-           if (atomic_read(&in->dest_refcnt) == 0) {
-               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/hwtracing/coresight/coresight-tpda.c:177:9: note: uninitialized use occurs here
-           return ret;
-                  ^~~
-   drivers/hwtracing/coresight/coresight-tpda.c:168:2: note: remove the 'if' if its condition is always true
-           if (atomic_read(&in->dest_refcnt) == 0) {
-           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/hwtracing/coresight/coresight-tpda.c:165:9: note: initialize the variable 'ret' to silence this warning
-           int ret;
-                  ^
-                   = 0
-   1 warning generated.
-
-
-vim +168 drivers/hwtracing/coresight/coresight-tpda.c
-
-   159	
-   160	static int tpda_enable(struct coresight_device *csdev,
-   161			       struct coresight_connection *in,
-   162			       struct coresight_connection *out)
-   163	{
-   164		struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-   165		int ret;
-   166	
-   167		spin_lock(&drvdata->spinlock);
- > 168		if (atomic_read(&in->dest_refcnt) == 0) {
-   169			ret = __tpda_enable(drvdata, in->dest_port);
-   170			if (!ret) {
-   171				atomic_inc(&in->dest_refcnt);
-   172				dev_dbg(drvdata->dev, "TPDA inport %d enabled.\n", in->dest_port);
-   173			}
-   174		}
-   175	
-   176		spin_unlock(&drvdata->spinlock);
-   177		return ret;
-   178	}
-   179	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> 
+>> ---
+>>   drivers/gpu/drm/ttm/ttm_pool.c | 15 +++++++++++++++
+>>   include/linux/shrinker.h       |  2 --
+>>   mm/shrinker.c                  | 15 ---------------
+>>   3 files changed, 15 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+>> index c9c9618c0dce..38b4c280725c 100644
+>> --- a/drivers/gpu/drm/ttm/ttm_pool.c
+>> +++ b/drivers/gpu/drm/ttm/ttm_pool.c
+>> @@ -74,6 +74,7 @@ static struct ttm_pool_type global_dma32_uncached[MAX_ORDER + 1];
+>>   static spinlock_t shrinker_lock;
+>>   static struct list_head shrinker_list;
+>>   static struct shrinker *mm_shrinker;
+>> +static DECLARE_RWSEM(pool_shrink_rwsem);
+>>   
+>>   /* Allocate pages of size 1 << order with the given gfp_flags */
+>>   static struct page *ttm_pool_alloc_page(struct ttm_pool *pool, gfp_t gfp_flags,
+>> @@ -317,6 +318,7 @@ static unsigned int ttm_pool_shrink(void)
+>>   	unsigned int num_pages;
+>>   	struct page *p;
+>>   
+>> +	down_read(&pool_shrink_rwsem);
+>>   	spin_lock(&shrinker_lock);
+>>   	pt = list_first_entry(&shrinker_list, typeof(*pt), shrinker_list);
+>>   	list_move_tail(&pt->shrinker_list, &shrinker_list);
+>> @@ -329,6 +331,7 @@ static unsigned int ttm_pool_shrink(void)
+>>   	} else {
+>>   		num_pages = 0;
+>>   	}
+>> +	up_read(&pool_shrink_rwsem);
+>>   
+>>   	return num_pages;
+>>   }
+>> @@ -572,6 +575,18 @@ void ttm_pool_init(struct ttm_pool *pool, struct device *dev,
+>>   }
+>>   EXPORT_SYMBOL(ttm_pool_init);
+>>   
+>> +/**
+>> + * synchronize_shrinkers - Wait for all running shrinkers to complete.
+>> + *
+>> + * This is useful to guarantee that all shrinker invocations have seen an
+>> + * update, before freeing memory, similar to rcu.
+>> + */
+>> +static void synchronize_shrinkers(void)
+>> +{
+>> +	down_write(&pool_shrink_rwsem);
+>> +	up_write(&pool_shrink_rwsem);
+>> +}
+>> +
+>>   /**
+>>    * ttm_pool_fini - Cleanup a pool
+>>    *
+>> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
+>> index c55c07c3f0cb..025c8070dd86 100644
+>> --- a/include/linux/shrinker.h
+>> +++ b/include/linux/shrinker.h
+>> @@ -103,8 +103,6 @@ struct shrinker *shrinker_alloc(unsigned int flags, const char *fmt, ...);
+>>   void shrinker_register(struct shrinker *shrinker);
+>>   void shrinker_free(struct shrinker *shrinker);
+>>   
+>> -extern void synchronize_shrinkers(void);
+>> -
+>>   #ifdef CONFIG_SHRINKER_DEBUG
+>>   extern int __printf(2, 3) shrinker_debugfs_rename(struct shrinker *shrinker,
+>>   						  const char *fmt, ...);
+>> diff --git a/mm/shrinker.c b/mm/shrinker.c
+>> index 3ab301ff122d..a27779ed3798 100644
+>> --- a/mm/shrinker.c
+>> +++ b/mm/shrinker.c
+>> @@ -650,18 +650,3 @@ void shrinker_free(struct shrinker *shrinker)
+>>   	kfree(shrinker);
+>>   }
+>>   EXPORT_SYMBOL_GPL(shrinker_free);
+>> -
+>> -/**
+>> - * synchronize_shrinkers - Wait for all running shrinkers to complete.
+>> - *
+>> - * This is equivalent to calling unregister_shrink() and register_shrinker(),
+>> - * but atomically and with less overhead. This is useful to guarantee that all
+>> - * shrinker invocations have seen an update, before freeing memory, similar to
+>> - * rcu.
+>> - */
+>> -void synchronize_shrinkers(void)
+>> -{
+>> -	down_write(&shrinker_rwsem);
+>> -	up_write(&shrinker_rwsem);
+>> -}
+>> -EXPORT_SYMBOL(synchronize_shrinkers);
+>> -- 
+>> 2.30.2
+>>
+> 
