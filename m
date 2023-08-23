@@ -2,123 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFA18785FB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 20:32:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01BE57860A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 21:33:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238152AbjHWScS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 14:32:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49142 "EHLO
+        id S237753AbjHWTca (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 15:32:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236748AbjHWScS (ORCPT
+        with ESMTP id S238276AbjHWTcR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 14:32:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1A431A5;
-        Wed, 23 Aug 2023 11:32:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4659A64451;
-        Wed, 23 Aug 2023 18:32:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B732C433C7;
-        Wed, 23 Aug 2023 18:32:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692815535;
-        bh=0HciKpHlZdcEls9dwEmiX8R3O/Qz43F/7YetXm6Ud+U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hn7VJd7DbJNKsOH2mQAyRhbqxgq67b9B/p57jy10h3L3I9/uas8P+eVDtDH+DDsRg
-         NpBOOlQ7Lf2YMphhCQ7yq2SKuuG356vI8xNzfdUZllNczZluj6rLezBRqI5J51R6PK
-         ckImsNF8haWZlTintYXlsEPd8hsx2PKwd7mdHgnSF81cgsFLOv1QqkEfM4rHPe79g9
-         fMNVj7OVgX2w7WKQuFqjjmUWfAmA4x+91tvq4pww8TXQCiGjTEkYMJWRxnAjFzlt3X
-         cYXLFLpjDDqDjk5gYxPr/Ay8vM74sIhX8NwKDUGOTdTj0noQQ25vbPa5J7KI12noya
-         dtMzpAE7Aw+tA==
-Date:   Wed, 23 Aug 2023 19:32:10 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: add sc7180-lazor board
- bindings
-Message-ID: <20230823-obnoxious-subtext-722c5a692aaa@spud>
-References: <20230822094414.123162-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20230822174101.v4.1.I26e017b00a341e7a5a2e94a83596923713408817@changeid>
- <20230823-raving-either-fb7bdb98b846@spud>
- <CAD=FV=U2kHPu2coSniUXfDJH8gYMV6115NKkyS7Rt4mEx4fzew@mail.gmail.com>
- <20230823-panoramic-frying-e31a5a10f764@spud>
+        Wed, 23 Aug 2023 15:32:17 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2457E6E;
+        Wed, 23 Aug 2023 12:32:15 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37NILVIM009687;
+        Wed, 23 Aug 2023 19:32:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=suEvO7+ABHAjuQwapVJ52LY01lBYq7RJdxxWaP+OpSw=;
+ b=PvjogdxCSzSb9xmzso4fsYxIQPRb2GjfvPY0OXDlMTHSaVtT/deaouAjbn5D+GvwD+WQ
+ E2NEz1UU3lrUcQZ75gbpEOT5B1wjdR1yTZEmpcyFl3g8nBW1CI1moqBSPyBheQvVAb13
+ Xr8W6n6jYMttsct3m01S7RmNyzQFyPuvmk8R1t1u4SSP5KFY+GBpuitfT6OisgNeQEEJ
+ DoMmbzsnj3ABid1sL4Hf0FMgYIrp440J+TGYEL1uP3+3wDivNJBfzHTdMqpvtyEEa6sx
+ ieXNuy5tt5cFGfdqfVJClHNt5+BTDfKU93+6uUT6g0arJrJ+L8FjS3yx3dqpyiF9RAVO qg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sn2extt3t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Aug 2023 19:32:12 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37NJWBf8001196
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Aug 2023 19:32:11 GMT
+Received: from [10.110.124.126] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 23 Aug
+ 2023 12:32:07 -0700
+Message-ID: <272adfa0-c053-f737-5714-cbeac706dc76@quicinc.com>
+Date:   Wed, 23 Aug 2023 12:32:06 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="RXzpR42FBKGFoejL"
-Content-Disposition: inline
-In-Reply-To: <20230823-panoramic-frying-e31a5a10f764@spud>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [RFC PATCH 1/1] soc: qcom: Add driver to read secondary
+ bootloader (XBL) log
+Content-Language: en-US
+To:     Ninad Naik <quic_ninanaik@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>
+CC:     <psodagud@quicinc.com>, <quic_ppareek@quicinc.com>,
+        <quic_kprasan@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>
+References: <20230822121512.8631-1-quic_ninanaik@quicinc.com>
+ <20230822121512.8631-2-quic_ninanaik@quicinc.com>
+ <06cb9718-ed64-8604-0bde-fff6d56ef3dd@quicinc.com>
+ <08803101-5c26-449e-a142-927ec5304be2@quicinc.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <08803101-5c26-449e-a142-927ec5304be2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ek31lOTpxagQwH8-g_0u75PzkU6JSkKv
+X-Proofpoint-ORIG-GUID: ek31lOTpxagQwH8-g_0u75PzkU6JSkKv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-23_13,2023-08-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=719
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 phishscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308230176
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 8/23/2023 4:16 AM, Ninad Naik wrote:
+>>>   ret = map_addr_range(&parent, "uefi-log", xbl_data);
+>>
+>> Here you are calling it as uefi-log. Is it xbl-log or uefi-log? Please 
+>> decide first.
+>>
+>>
+> The reason for using "uefi-log" here is because this node name is in 
+> accordance to the sa8775p.dtsi as seen in [2]
+> 
+> [2] 
+> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sa8775p.dtsi#L354
+> 
+> So, in the next revision while adding the device tree bindings and 
+> corresponding compatible string, should this node name be changed as well?
 
---RXzpR42FBKGFoejL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, please keep it consistent.
 
-On Wed, Aug 23, 2023 at 07:29:33PM +0100, Conor Dooley wrote:
-> On Wed, Aug 23, 2023 at 10:17:17AM -0700, Doug Anderson wrote:
-> > Hi,
-> >=20
-> > On Wed, Aug 23, 2023 at 8:11=E2=80=AFAM Conor Dooley <conor@kernel.org>=
- wrote:
-> > >
-> > > On Tue, Aug 22, 2023 at 05:44:13PM +0800, Sheng-Liang Pan wrote:
-> > > > Introduce more sc7180-lazor sku and board version configuration,
-> > > > add no-eSIM SKU 10 for Lazor, no-eSIM SKU 15 and 18 for Limozeen,
-> > > > add new board version 10 for audio codec ALC5682i-VS.
-> > > >
-> > > > Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner=
-=2Egoogle.com>
-> > > > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > >
-> > > Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> >=20
-> > Conor: any chance you could reply to v6 (instead of v4) and add your Ac=
-k?
->=20
-> People need to relax! This seems only to have been sent yesterday?!?
->=20
-> > https://lore.kernel.org/all/20230823151005.v6.1.I26e017b00a341e7a5a2e94=
-a83596923713408817@changeid/
-> >=20
-> > I _think_ the v6 patch series is in good shape so I don't expect
-> > Sheng-Liang to have to send a v7. I'm worried that your Ack will be
-> > lost if it's not sent in response to the v6 patch.
+-- 
+---Trilok Soni
 
-And I must have deleted the v6 w/o reading even really reading it as it
-has an R-b from Krzysztof. My ack is therefore not needed anyway, so who
-cares if it gets lost :)
-
-
-
---RXzpR42FBKGFoejL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZOZQqgAKCRB4tDGHoIJi
-0jbtAQDfUNR8wN3amM6Ch0WKkxzG3tjYvjG/oDlrTaAMZitFDQEAliNeMM6hj9q6
-UBmS3jwFOdRDRIpXbqPXYnNfBMZ69g8=
-=KeCv
------END PGP SIGNATURE-----
-
---RXzpR42FBKGFoejL--
