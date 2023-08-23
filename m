@@ -2,172 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13D20785363
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 11:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36562785443
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 11:33:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235004AbjHWJBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 05:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
+        id S234893AbjHWJdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 05:33:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235072AbjHWIxl (ORCPT
+        with ESMTP id S235506AbjHWJ2X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 04:53:41 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D0851BF9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 01:51:14 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40097f233fdso195165e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 01:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692780673; x=1693385473;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+p+WwXY5fLDp3fht9OF1MgWbHUlJ7rQelzIQB6wxQo4=;
-        b=jmaJJM6rTYPDh6x5ktPBPUAOM1FqgaVhDyFv2dyoWBGAg0A6oOXECx5x2ktQ+wwlcw
-         IqSdnfGlrIboIUAGiKoMKt43mRkpkFt1Q0sevLZJpuQMyydWLcwkcUiecKJb/mRd8UQB
-         bz//4cr1ugCglSAIOul3txYo/ZvnHaUmucNA9cWHp/cUKxYijQwkTI0eU3uN+FxROwx7
-         34ZxbmLuvVa3hPkrmawqFqQlsHiI5/hXi58ccEHgxoiBi5N+3jCUtRGLrI2mOXahkECi
-         lUB31sd3cxOn0oTHonrWGYt5jx9LMQ58xK1WBW+r8JwXDR3Y434Agpn1qKlo2fQuBAvI
-         Fp0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692780673; x=1693385473;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+p+WwXY5fLDp3fht9OF1MgWbHUlJ7rQelzIQB6wxQo4=;
-        b=BKQPK8C1+PFwhl6kHU7MY82LJtvNiZfVZ42L+iLaZu3a5B91P80wA5u8lphA5ob42W
-         I5qfsXiVVdVOb5rL0QKn6/bSh41zjAnMXWYf1AHA7uMqLts07aAz483FN9ThkdWacbSf
-         zV5UOR3TGrwKK1pGj9BKeec58Mz2yScNM0dxAd6p1poGj0dDH/915kY4/yW1mPyXKfuQ
-         ObEVYiVDZcb3yvOFq373tHO7cRvIST8ve2Vmm95HZCkrsPf0ShKYQ53PzSAuN42Suisw
-         NuipJOihhjKqNUt7n5BSk2EeK6kAEBc6agFX4l8OixGWse0lqBQXIblj0EYG2j0dTrvV
-         ZLxA==
-X-Gm-Message-State: AOJu0YwhjfdAM0CnmCfNWTTsZsy//px2VMdSqMQn0azxkLmquun2fK4N
-        Q3Nz97OzAMvhskRnB3C88tXFAQ==
-X-Google-Smtp-Source: AGHT+IF4QlscfYxhjPYYFvGoBHf+62irUrTldgRGLaddwbU27iffdv2Ytk7Img2MwJm0mbmHQ7/P+Q==
-X-Received: by 2002:a05:600c:2b57:b0:3fe:21f1:aba8 with SMTP id e23-20020a05600c2b5700b003fe21f1aba8mr9128014wmf.12.1692780673283;
-        Wed, 23 Aug 2023 01:51:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:c457:5132:4849:b9d9? ([2a01:e0a:cad:2140:c457:5132:4849:b9d9])
-        by smtp.gmail.com with ESMTPSA id z10-20020a1c4c0a000000b003fef5402d2dsm6217640wmf.8.2023.08.23.01.51.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Aug 2023 01:51:12 -0700 (PDT)
-Message-ID: <ac1026c7-f446-482a-8abe-ac34786462a6@linaro.org>
-Date:   Wed, 23 Aug 2023 10:51:11 +0200
+        Wed, 23 Aug 2023 05:28:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD5A4EC2;
+        Wed, 23 Aug 2023 02:15:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BC20861FCE;
+        Wed, 23 Aug 2023 09:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EB187C433C7;
+        Wed, 23 Aug 2023 09:15:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692782158;
+        bh=be/C8m+z+Od5rOnUlwnva1yDeuaE30t+Hcjy24kPcJk=;
+        h=From:Date:Subject:To:Cc:Reply-To:From;
+        b=NlPnwTz2fJqAG2DoYUFrG2gnnxjeqRhJsMevsyaoQQHDYnQRZoq36ibcFW34fWsUa
+         W5H3U6OnZ4xmgpYl8MEJOfV+e0y90T2jUJdSJV75erSHrt5c82ECabaWXr/U+miwh+
+         roqm1eUL29Kwm1XX+8EKeO3msL2Df2AsULwVcJkJxkN4IyFi05W6tbc8G+VBI1mKc/
+         j/Z/y4k/n+Pn5qGM0hs5SJLkC0nYOWMlsu/jcHMXZIMcDTlwn5zbTgZpZ3AOgFHyy9
+         80ZYDG080Fl8sLIaBGFfrjvkIYtTXe0gpws7BdMG4+EbrE2roX6yPoUZEWmBfEae6G
+         zdcOuEmnkuLFQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.lore.kernel.org (Postfix) with ESMTP id CC171EE4993;
+        Wed, 23 Aug 2023 09:15:57 +0000 (UTC)
+From:   Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date:   Wed, 23 Aug 2023 17:15:53 +0800
+Subject: [PATCH] usb: typec: qcom: check regulator enable status before
+ disabling it
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] irqchip/qcom-pdc: add support for v3.2 HW
-Content-Language: en-US, fr
-To:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230823-qcom-tcpc-v1-1-fa81a09ca056@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAEnO5WQC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2MDCyMj3cLk/FzdkuSCZN0UE0NLU5PEZDPTtEQloPqCotS0zAqwWdGxtbU
+ AqbU6oVsAAAA=
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230822-topic-sm8x50-upstream-pdc-ver-v2-1-3035b8d388f7@linaro.org>
- <5d5ad774-3269-232a-db15-751726742460@quicinc.com>
- <543b1f3d-60b6-44fd-bddf-eb35cc163e10@linaro.org>
- <dcf0cddc-2a35-2ddb-1912-465e29413b9c@quicinc.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <dcf0cddc-2a35-2ddb-1912-465e29413b9c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
+        subbaram@quicinc.com, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692782156; l=1109;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=Eq7q1VhxzBMiiLW046ihxgswENpgBh2pfv7VGXtEKDE=;
+ b=7tSyma7eOKcwSWhtFR3YWbPboVUNtB1aFtgl+IJz8Z5x79QAvbVQgQRdLLt4yr2C5EQp28ApZ
+ +uFnUcgg7SYADBTV3R07hBfaXnBJsVtbi3JZo7lHwWYqkzHNvz5R+5u
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received: by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/08/2023 10:25, Maulik Shah (mkshah) wrote:
-> Hi,
-> 
-> On 8/23/2023 1:16 PM, Neil Armstrong wrote:
->> Hi,
->>
->> On 23/08/2023 07:35, Maulik Shah (mkshah) wrote:
->>> Hi Neil,
->>>
->>> @@ -142,8 +163,17 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
->>>>           return -EINVAL;
->>>>       }
->>>> -    old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
->>>> -    pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
->>>> +    if (pdc_version < PDC_VERSION_3_2) {
->>>> +        old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
->>>> +        pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
->>>> +    } else {
->>>> +        u32 val;
->>>> +
->>>> +        val = pdc_reg_read(IRQ_i_CFG, d->hwirq);
->>>> +        old_pdc_type = val & IRQ_i_CFG_TYPE_MASK;
->>>> +        pdc_reg_write(IRQ_i_CFG, d->hwirq,
->>>> +                  pdc_type | (val & IRQ_i_CFG_IRQ_ENABLE));
->>>> +    }
->>> While above is correct, i don't think we need version check in qcom_pdc_gic_set_type() as bits 0-2 are always for the type in old/new version as mentioned in v1.
->>>
->>> Adding one line after reading old_pdc_type should be good enough.
->>
->> Yes I understood, but while looking at the IRQ_i_CFG bits, I wanted to keep the original
->> driver behavior intact by setting remaining bits to 0.
->>
->> Adding this single line changes that behavior and keeps bits 3-31
->> to the default register value, which may have some consequences.
->>
->> If you consider it's an ok change, then I'll reduce it to this single line.
-> Yes this ok change to have single line and should not have  any consequences.
+From: Hui Liu <quic_huliu@quicinc.com>
 
-I also remember why, it's about the final check:
+Check regulator enable status before disabling it to avoid
+unbalanced regulator disable warnings.
 
-184         if (old_pdc_type != pdc_type)
-185                 irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, false);
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-We need to strip out remaining bits of old_pdc_type of this won't work as
-expected, so I'll change it to :
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+index bb0b8479d80f..ca616b17b5b6 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+@@ -422,7 +422,8 @@ static int qcom_pmic_typec_pdphy_disable(struct pmic_typec_pdphy *pmic_typec_pdp
+ 	ret = regmap_write(pmic_typec_pdphy->regmap,
+ 			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
+ 
+-	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
++	if (regulator_is_enabled(pmic_typec_pdphy->vdd_pdphy))
++		regulator_disable(pmic_typec_pdphy->vdd_pdphy);
+ 
+ 	return ret;
+ }
 
-+       old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
-+       pdc_type |= (old_pdc_type & ~IRQ_i_CFG_TYPE_MASK);
-+       old_pdc_type &= IRQ_i_CFG_TYPE_MASK;
-+       pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
+---
+base-commit: bbb9e06d2c6435af9c62074ad7048910eeb2e7bc
+change-id: 20230822-qcom-tcpc-d41954ac65fa
 
-Is it ok for you ?
-
-Thanks,
-Neil
-
-
-> 
-> Thanks,
-> Maulik
-> 
+Best regards,
+-- 
+Hui Liu <quic_huliu@quicinc.com>
 
