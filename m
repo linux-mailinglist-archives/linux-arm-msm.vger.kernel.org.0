@@ -2,104 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDC28785C6A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 17:46:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1CE9785D26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Aug 2023 18:23:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237149AbjHWPqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 11:46:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59118 "EHLO
+        id S237519AbjHWQXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 12:23:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236949AbjHWPqN (ORCPT
+        with ESMTP id S235575AbjHWQXe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 11:46:13 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90C571717;
-        Wed, 23 Aug 2023 08:45:33 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1bf55a81eeaso26878265ad.0;
-        Wed, 23 Aug 2023 08:45:33 -0700 (PDT)
+        Wed, 23 Aug 2023 12:23:34 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBC63E77
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 09:23:32 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d690c9fbda3so5443259276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 09:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692805522; x=1693410322;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rgyeGdbslhNv497sxSi9T9F8ibgrZruUJHbypuA4l6Y=;
-        b=jixuxBy6dLyqzAugK26aoYw0LHQTx9DCcGP9ZOAzYpSmA3crvbg6NPiyoC4P6lFTgU
-         R1w8rNe43s2U/PV3ehvtlmAeDWIE93dhMXJNiyRUmM8K6B7jp71JoTE3AMMXa/EojZr+
-         vGR3WY2zfn6q1ZOZVMfixe6WWpWpf6Pl+c+EFBx0GILy52cD4x3zaQUOQvwNs0nrhBbe
-         oku0F6PnEUZbaI8P3rhWH6XeZJ9FUhB+B7AidlpWhG0gpd1fNu3nhZZQgPaHgBG6u/jG
-         JLPeiKY3z7GfzEfSd4UKGr0AIsHoxbd1l9vX1V8It7YLtECvMoxBfUqu5oTCFp9YGfaB
-         TK6A==
+        d=linaro.org; s=google; t=1692807812; x=1693412612;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IgMNT86Z22z96gO4xCO8LycBD/jTwX067iwUZoTggXM=;
+        b=BWtiyn5gO067QLvIGZTse69sez5QCtvbR0aydCcDJWL8Uwqv5tHx95JR2FdQbyvUe/
+         xt4J8A3RJr60cDXCZLvr4jeocqgXlbYDqCpT1R4cAeEBq8P/fOeCPe/6RmupyHdHvEMe
+         bmett1gsb+p/ydy+Da1M+DBF/yLFgjGHO18KZyJ7tY4snmPXt0C8BFXBHalX86Rig/S4
+         ueyvvJ2rnAI3u/DidTaW830939C1WCKvB2BtcoY7Vk/LJGkNagFLXUhEIwZfHbPMHMIK
+         wPqssjcD9OkupMyqcl4UajRD6SK2eaHuHhIveBGVyWGLGUy8Wuh4Fjr7uke1Rb8gnnRr
+         6ooA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692805522; x=1693410322;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rgyeGdbslhNv497sxSi9T9F8ibgrZruUJHbypuA4l6Y=;
-        b=LRVLsp6B7C/wRunb6NvQNioIWAEQ1rplyQhzlC6P9iWxMPxYVyFtNplBi4NU8VrxZU
-         4bnHUACq05gjoz/lqZZN5IgiHtGsPLQAyE2Wpb8RcKROu3iT84fwKlAhdu2gYJLtP+gD
-         zmh12XsHHqyq/h7RWp8n3dm4TkX69Di58uevfTSywMvH17eppHgSd58GWXT66MR+/M5B
-         ea0BNW0lKBGvC39Ev6tY36H9sDxbQeeCvKANze1TZSkRSjYy+nBrUBUIrd+uXPDZq9nk
-         DuhuT+k02jGWAaE/PJNSv8p62uZx7l6OFxeKDd/8pS5ofWnIGHgrfbiVM27UwAIhbGDa
-         hu9g==
-X-Gm-Message-State: AOJu0YynSDDiYIhWkDKhJMnnnx9lpFXXHXNfL21n9Kkaxmpug9quAy99
-        avrC3oQ/kJXz5nIYAZ/W5/8=
-X-Google-Smtp-Source: AGHT+IHoxUe6KTbUqRFXtM8YgfcSwLH7IdrqQeJIEYuWOh354lKGc750/NspA/0hl92k8FhJo7DrrQ==
-X-Received: by 2002:a17:902:b617:b0:1be:f76e:7664 with SMTP id b23-20020a170902b61700b001bef76e7664mr9480732pls.29.1692805522050;
-        Wed, 23 Aug 2023 08:45:22 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id e5-20020a170902744500b001bdc5023783sm11131773plt.179.2023.08.23.08.45.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 08:45:21 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date:   Wed, 23 Aug 2023 08:45:20 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        wim@linux-watchdog.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_saipraka@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: watchdog: qcom-wdt: document IPQ5018
-Message-ID: <79414186-3c5f-4166-a81a-6b346e544253@roeck-us.net>
-References: <20230816161455.3310629-1-robimarko@gmail.com>
+        d=1e100.net; s=20221208; t=1692807812; x=1693412612;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IgMNT86Z22z96gO4xCO8LycBD/jTwX067iwUZoTggXM=;
+        b=Mt8CaPzIpFGX2dhducmsrU7hi7onPxngJjI0NExz6ksFkRdAHitorI6yoDCL8XwH4s
+         BWICnVPZhrNpW+BvY+94ZjXhv1tBREoWi+JdF7CqtbRxTjvNXz8yoSTJQKpK+PtSer+3
+         8UAffi4xRcjJBhB+O80ziF1huaxfWaQFPNCJPQcaaKq9TpB2NMBAnfOQ60yubzmwcHYv
+         bivimHJ5hX/65tHHxXT1YnmI8diCidQmRnlaAonii12vFKvd635k5ID1QDelk3zBZRti
+         roClOnngQAuAFyEMUNsx+Nf262vQauoEBxGlDxxx3MtjRlYclnxs2y4H6Tg4pENVRN5s
+         O+tA==
+X-Gm-Message-State: AOJu0YwZIYTGtBCuOAiWw4sVoYm68isYhRLmE0kwwBsw47B7phupb1U5
+        MSyiTHFpSyfbdquLlGUxmEvXBiw+aoF6BfCCyKx3uQ==
+X-Google-Smtp-Source: AGHT+IHrwdAEA9WB5CPmo1YyH9mp4YcDQYwNVRCOBHYhovobWQ9KoftGQ4a4Zbj5o9UxCsssXYzfoBS2rjusfEq3JcI=
+X-Received: by 2002:a25:34d5:0:b0:d4c:6b49:fed7 with SMTP id
+ b204-20020a2534d5000000b00d4c6b49fed7mr12564508yba.45.1692807812039; Wed, 23
+ Aug 2023 09:23:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230816161455.3310629-1-robimarko@gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20230823114528.3677667-1-abel.vesa@linaro.org> <20230823114528.3677667-3-abel.vesa@linaro.org>
+In-Reply-To: <20230823114528.3677667-3-abel.vesa@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 23 Aug 2023 18:22:55 +0200
+Message-ID: <CAPDyKFreStawBf-2txj=ZL0jA0N-Cd22J1Y6u-3H0nJttzKw8Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] PM: domains: Add the domain HW-managed mode to the summary
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 16, 2023 at 06:13:59PM +0200, Robert Marko wrote:
-> Document the IPQ5018 watchdog compatible.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+On Wed, 23 Aug 2023 at 13:45, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> Now that genpd supports dynamically switching the control for an
+> attached device between hardware- and software-mode,  let's add this
+> information to the genpd summary in debugfs.
+>
+> Suggested-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Kind regards
+Uffe
 
 > ---
->  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> index 6d0fe6abd06a..5046dfa55f13 100644
-> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> @@ -18,6 +18,7 @@ properties:
->        - items:
->            - enum:
->                - qcom,kpss-wdt-ipq4019
-> +              - qcom,apss-wdt-ipq5018
->                - qcom,apss-wdt-ipq5332
->                - qcom,apss-wdt-ipq9574
->                - qcom,apss-wdt-msm8994
+>
+> Changes since v2:
+>  * Reworded the commit according to Ulf's suggestion
+>  * Dropped the _mode suffix from the status
+>  * Replaced "mode" with "managed by" in summary show function
+>
+>  drivers/base/power/domain.c | 15 +++++++++++++--
+>  1 file changed, 13 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index dfb4f1de540d..93350e67b0e8 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -3171,6 +3171,15 @@ static void rtpm_status_str(struct seq_file *s, struct device *dev)
+>         seq_printf(s, "%-25s  ", p);
+>  }
+>
+> +static void mode_status_str(struct seq_file *s, struct device *dev)
+> +{
+> +       struct generic_pm_domain_data *gpd_data;
+> +
+> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> +
+> +       seq_printf(s, "%20s", gpd_data->hw_mode ? "HW" : "SW");
+> +}
+> +
+>  static void perf_status_str(struct seq_file *s, struct device *dev)
+>  {
+>         struct generic_pm_domain_data *gpd_data;
+> @@ -3229,6 +3238,7 @@ static int genpd_summary_one(struct seq_file *s,
+>                 seq_printf(s, "\n    %-50s  ", kobj_path);
+>                 rtpm_status_str(s, pm_data->dev);
+>                 perf_status_str(s, pm_data->dev);
+> +               mode_status_str(s, pm_data->dev);
+>                 kfree(kobj_path);
+>         }
+>
+> @@ -3245,8 +3255,9 @@ static int summary_show(struct seq_file *s, void *data)
+>         int ret = 0;
+>
+>         seq_puts(s, "domain                          status          children                           performance\n");
+> -       seq_puts(s, "    /device                                             runtime status\n");
+> -       seq_puts(s, "----------------------------------------------------------------------------------------------\n");
+> +       seq_puts(s, "    /device                                             runtime status                           managed by\n");
+> +       seq_puts(s, "------------------------------------------------------------------------------------------------------------\n");
+> +
+>
+>         ret = mutex_lock_interruptible(&gpd_list_lock);
+>         if (ret)
+> --
+> 2.34.1
+>
