@@ -2,77 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22BD37874F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 18:11:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75274787669
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 19:12:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242391AbjHXQLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 12:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
+        id S241347AbjHXRL3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 13:11:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242475AbjHXQLK (ORCPT
+        with ESMTP id S230385AbjHXRK6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 12:11:10 -0400
+        Thu, 24 Aug 2023 13:10:58 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 446041995;
-        Thu, 24 Aug 2023 09:11:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC797199D;
+        Thu, 24 Aug 2023 10:10:56 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B8CB864542;
-        Thu, 24 Aug 2023 16:11:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1453EC433C7;
-        Thu, 24 Aug 2023 16:11:06 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 70EDC632D2;
+        Thu, 24 Aug 2023 17:10:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F54CC433C7;
+        Thu, 24 Aug 2023 17:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692893468;
-        bh=tZDgZ4F2s45swKCSwkXA7XjLqukt6/fIKBodiXl4Vu8=;
+        s=k20201202; t=1692897055;
+        bh=3MUBjtSfXVqcpiARHA23t0wkZwet4S8Qo1HUSXv+dLw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=huZej8CxQo/Q64nMHPiNi/0UkHmbHd2Jss/51fVdPPMJpOGLjyke62WGpMydGA8B8
-         TCwX0mzkqqXeWXqyLNMJGUNjJlgQOZtIi9OGDFHH9LWIh1jc11AcKzUr9VSpBu/g+n
-         essoU7utuuqkbFsnkgi17Q3vmu5LQE8GOo90kpFFRFMsWomLeZ//EF9WvP5L9X0e5U
-         jw7qi1iclij4UzY/lgm7bzTYc62V7fVy8yAtnRh05OIUM6MNSs6G0y744SppVxWTD6
-         wQPXXZ7ux+yvH8vSArujsLlv1oWZZRTmAaJkc7rzcAvctmfG78QE2l15M09zbMAFJz
-         7L3i8Ocou9Zhg==
-Date:   Thu, 24 Aug 2023 18:11:02 +0200
-From:   Andi Shyti <andi.shyti@kernel.org>
-To:     Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc:     dmitry.baryshkov@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Liao Chang <liaochang1@huawei.com>,
-        Todor Tomov <todor.too@gmail.com>,
+        b=J1ANo/ABTwMz16yeMQJCeo+LiDN4EkwDchvmdXQnwIlgBWS4QG1igD1xKD3jduqzQ
+         hHZ6XV1D1ECNCW4nFsX5XXww1ZLlRlcNUA8XjxQ+3AW7DwNXNFzMWHwNqbp0aPEwUX
+         J0eZe3G7EXZpv5LAbVDk6makQuKsEBAZnxStwtwknsOFpCPTrrd0m7OH01L7b+qGr2
+         bdoyTz+a12JKOr+vnaSluTXQhYg7dmwRZrOaxqLbHjHhGdw8uEY3hniLqMzSN413Dt
+         sapgArOv+LCgRFhfHKSokZb4svCzEIHy1dMpASY62OvKxheGFG1qOHZ11miUKiw58k
+         KY+C1QJInLFrQ==
+Received: (nullmailer pid 1048461 invoked by uid 1000);
+        Thu, 24 Aug 2023 17:10:52 -0000
+Date:   Thu, 24 Aug 2023 12:10:52 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Wolfram Sang <wsa@kernel.org>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dan.carpenter@linaro.org,
-        kernel-janitors@vger.kernel.org, error27@gmail.com,
-        vegard.nossum@oracle.com
-Subject: Re: [PATCH next] i2c: qcom-cci: Fix error checking in cci_probe()
-Message-ID: <20230824161102.vdzs25lqcmadlnkr@intel.intel>
-References: <20230823194202.2280957-1-harshit.m.mogalapalli@oracle.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Iskren Chernev <me@iskren.info>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-crypto@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Eric Biggers <ebiggers@google.com>
+Subject: Re: [PATCH v6 0/4] Fix some issues in QCOM UFS bindings
+Message-ID: <20230824171052.GA1037612-robh@kernel.org>
+References: <20230814-dt-binding-ufs-v6-0-fd94845adeda@fairphone.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230823194202.2280957-1-harshit.m.mogalapalli@oracle.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230814-dt-binding-ufs-v6-0-fd94845adeda@fairphone.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Harshit,
-
-On Wed, Aug 23, 2023 at 12:42:02PM -0700, Harshit Mogalapalli wrote:
-> devm_clk_bulk_get_all() can return zero when no clocks are obtained.
-> Passing zero to dev_err_probe() is a success which is incorrect.
+On Mon, Aug 14, 2023 at 12:14:12PM +0200, Luca Weiss wrote:
+> This series aims to solve the dtbs_check errors from the qcom ufs
+> bindings. It has changed in scope a bit since v1, so it may be a bit all
+> over the place.
 > 
-> Fixes: 605efbf43813 ("i2c: qcom-cci: Use dev_err_probe in probe function")
-> Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Changes in v6:
+> - Rebase on linux-next
+> - Drop applied dts patch
+> - Pick up tags
+> - Link to v5: https://lore.kernel.org/r/20221209-dt-binding-ufs-v5-0-c9a58c0a53f5@fairphone.com
+> 
+> Changes in v5:
+> - Convert sm8450.dtsi to use qcom,ice property, so stop modifying schema
+>   for sm8450 and only add qcom,ice property.
+> - Move reg-names names to top-level with only minItems/maxItems in the
+>   'if'
+> - Link to v4: https://lore.kernel.org/r/20221209-dt-binding-ufs-v4-0-14ced60f3d1b@fairphone.com
+> 
+> Changes in v4:
+> - Pick up tags
+> - Rebase on linux-next (again)
+> - Link to v3: https://lore.kernel.org/r/20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com
+> 
+> Changes in v3:
+> - Drop applied patch
+> - Pick up sm6115 patch from v5 https://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/
+> - Rebase on linux-next
+> - Link to v2: https://lore.kernel.org/r/20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com
+> 
+> Changes in v2:
+> - Add new patch adding reg-names to sm6115 & rebase series on top of sm6115
+>   addition
+> - Fix binding example after sm8450 move, split this patch from original patch
+>   since it became too big
+> - Move reg-names definition to top-level
+> - Link to v1: https://lore.kernel.org/r/20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com
+> 
+> ---
+> Iskren Chernev (1):
+>       dt-bindings: ufs: qcom: Add sm6115 binding
+> 
+> Luca Weiss (3):
+>       dt-bindings: ufs: qcom: Add reg-names property for ICE
+>       dt-bindings: ufs: qcom: Add ICE to sm8450 example
+>       dt-bindings: crypto: ice: Document sm8450 inline crypto engine
+> 
+>  .../bindings/crypto/qcom,inline-crypto-engine.yaml |  1 +
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml          | 44 ++++++++++++++++++++++
+>  2 files changed, 45 insertions(+)
 
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org> 
+I guess the subsystem maintainers aren't going to pick this up, so I've 
+applied it.
 
-Andi
+Rob
