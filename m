@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 332EE787AAB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 23:51:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C66DD787AAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 23:53:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231842AbjHXVui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 17:50:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35664 "EHLO
+        id S243775AbjHXVwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 17:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243768AbjHXVuS (ORCPT
+        with ESMTP id S243768AbjHXVwY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 17:50:18 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 293B3E6D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:50:16 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d35a9d7a5bdso316467276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:50:16 -0700 (PDT)
+        Thu, 24 Aug 2023 17:52:24 -0400
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E91FDE7D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:52:22 -0700 (PDT)
+Received: by mail-vs1-xe2a.google.com with SMTP id ada2fe7eead31-44e84fbaab9so149277137.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:52:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692913815; x=1693518615;
+        d=linaro.org; s=google; t=1692913942; x=1693518742;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=8wqPr7Xguv9V/ZU1P/uDywjMTZVKNE2lCD5R1FtVax0=;
-        b=xaTvpSn3l8ptVoINXYEvurkpeqIR+Qz0H/E73btSDliDqZpQUjX4bILeG/tX4EdNYf
-         olk3f+qux1Hz8ZPyuZFgxJM42X0UqqQIdmfuDKiqpsJLpHTiYrw6yw8WiOmchUd4k0sd
-         hiS9KjNeDlV5Ba/FFicv/9K4iqYyKB5tuyZYtDqetYu5PF5OoCnP/1YO9msRbK45dbG2
-         MnwkHdq4Fu2Ht6gGyKjtMYwfmoEw/9xYE3ueARV1dALafa6T7ZUjvLELktw0HL5Y13vS
-         d2UXI8BDUKgOc7VKgLQ8Qbv+0oCR2id1CPo/sNFr/N743UkpJFlTSSsXYirFb50afhPl
-         6uVQ==
+        bh=wwgS6i1ijEJaACslsQ5LzF+NoqyFSWPDyKef9qqj2c4=;
+        b=GrmOx9VM8CIo6FYLX0uR57uteHxIjrGgfnwPVGbZ+Sf+SLjhCx3bgLROiMbpqvGnyl
+         m9rK9dBgH2QviMLbXDlsqBxlblpoYbNfYHS3BD82YzEZay7R9mgLNB0gsf8hy/Ai0iNq
+         HOonPTKCJ1+r3QKNKTnJvu3panVDG21be4vWJz+TWzx/GtzETObtIi7bApDt/0x8AEgB
+         N+2XV1Q/3qjhBUJYMkyCYZd7uKRcI9zb0PmFMvkA2iYo3JKsHru2can/HtpbVecjSo9v
+         kvbRyZDuGaauEQfTJiAASh0P4GGtoCDHWA6hH6b9fe/KErgJMx5gvQ5MpWWdfCUE8gQ0
+         F0/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692913815; x=1693518615;
+        d=1e100.net; s=20221208; t=1692913942; x=1693518742;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8wqPr7Xguv9V/ZU1P/uDywjMTZVKNE2lCD5R1FtVax0=;
-        b=Ts1u2Fwh20Z7Jpei1x0wnO4lEc3mvydH6sMr0vCK9imWypsGhbEUgjK+FFyLbv4QAb
-         vVILk1zu95AlYjltZw5MUqUtQ9B9zTcTrbirI4Hht+wbthyeJxE1jqlSwsgJQYAqF2Hn
-         RNp4n4coAPa89osSGeActWYRId6skI5Ggvn6li1d3/JKd0tLGY0PDnCKzyM7qAVTvJvB
-         wDGMsrHtO72SxO2BRji643LszFPbJ67jdsOzrfgwln3DNeEqj991xJPst6KMwZHJaRXW
-         OlnAIYZl4Us4SFPY6S6OW2Ns6q1Grn+le/MBuzIFVPyF7376wqMiaBbpWroob5sBGErA
-         ptzw==
-X-Gm-Message-State: AOJu0YyYIXvDVGGDYKXdYOIZ7nSrIslwoZ9Rc5Wjs+AyRfd54rW3KVhh
-        8IC7DYYWCN1ApEEoJWCYksXH76rfkeSX3m7Zx27p3nfwxXUKxzdRLhc=
-X-Google-Smtp-Source: AGHT+IEhEzBfm7Dkv42e8YEx9gYqr9HTu3BqVmoeuwaCXTDgXpX35zXzsWiQGLlkICS36eezMyPTEy4OxDNIBlGBBkw=
-X-Received: by 2002:a25:d090:0:b0:d42:d029:ff99 with SMTP id
- h138-20020a25d090000000b00d42d029ff99mr18202107ybg.55.1692913815261; Thu, 24
- Aug 2023 14:50:15 -0700 (PDT)
+        bh=wwgS6i1ijEJaACslsQ5LzF+NoqyFSWPDyKef9qqj2c4=;
+        b=g0hvsTprH2/YTEs52cGqM6E/ejsRYEeQp5MFrQ0kU49qSBYQPTrlXxO9aSx6c2nKLB
+         SvbQiI3uuxibAWTbNZNEVgTVI9ZooKcnyigWg4iBD7wfDDIgM0Mefgg2x6TTwaof+rse
+         HLlPPAnMMROgWrIdidM2hfE7FuV03g2t6kB2cb8ErJAjg5jwPbR7Rf4MxXXtzT7z3PL8
+         Hg4dVPF01e12cTttZgkiErPoGVPKxo1Bhp5cRaFciVzwRlL6ausPb7k71QCKWEhWl5Uu
+         FpZ7j0LLzsQtihCSJvpLyy2IGD1Q8mlAKHeJ8AMK/XKRVkyc6+81eC/Sb0VIa3OCya96
+         e4dQ==
+X-Gm-Message-State: AOJu0YwqVGYsMH5yaobxpZFDh3ar+L0jVZd/EmUzxt+pQady2OuQOiaY
+        Zg9hAWIwcckprGd9eQxJRax6r1iy4i03s6jlxCZxBQg/eqcMJDVFsHY=
+X-Google-Smtp-Source: AGHT+IGIDYnda9WUzTIeGXrt0f+nCzxLoPqICQvbvc8mRELUai4kGkKpRIketZCc69FaiMwhfNZ5C7HYI7wrmHvvM8Q=
+X-Received: by 2002:a67:ed4b:0:b0:447:6bdc:654c with SMTP id
+ m11-20020a67ed4b000000b004476bdc654cmr13670213vsp.31.1692913941927; Thu, 24
+ Aug 2023 14:52:21 -0700 (PDT)
 MIME-Version: 1.0
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 25 Aug 2023 00:50:03 +0300
-Message-ID: <CAA8EJpoMoLTLz9UOFt4gwHcnyLVzBoUhAeRSs_Tkz=d3zzq_HA@mail.gmail.com>
+Date:   Fri, 25 Aug 2023 00:52:10 +0300
+Message-ID: <CAA8EJprLZVdxfWGZhQGHN_CejD8GsRZE8i1-MFa7froWTvs5ew@mail.gmail.com>
 Subject: ath10k-firmware: WCN3990: Add board file for the Qualcomm Robotics
- RB1 platform
+ RB2 platform
 To:     ath10k@lists.infradead.org,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <linux-arm-msm@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="00000000000098848f0603b236ed"
+Content-Type: multipart/mixed; boundary="0000000000002560470603b23e5d"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,23 +64,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---00000000000098848f0603b236ed
+--0000000000002560470603b23e5d
 Content-Type: text/plain; charset="UTF-8"
 
 Hello Kalle,
 
 We'd like to ask for inclusion of the board file for the Qualcomm
-Robotics RB1 platform. It is
-an IOT platform manufactured by Thundercomm, using the Snapdragon QRB2210 SoC.
+Robotics RB2 platform. It is
+an IOT platform manufactured by Thundercomm, using the Snapdragon QRB4210 SoC.
 
 Following the questions from the ath10k wiki page:
 
 * description for what hardware this is
-- It is an QRB2210-based platform (QRB2210)
+- It is an QRB4210-based platform (QRB4210)
 - It uses wcn3990 chip as a WiFi and BT radio
 - For the reference:
 
-ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_family 0x4007
+ath10k_snoc c800000.wifi: qmi chip_id 0x150 chip_family 0x4002
 board_id 0xff soc_id 0x40670000
 ath10k_snoc c800000.wifi: qmi fw_version 0x337302d3 fw_build_timestamp
 2023-01-06 01:50 fw_build_id
@@ -99,7 +99,7 @@ redistribution.
 
 * ids to be used with the board file
 
-bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1
+bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2
 
 Note, the device comes with the board_id not changed from 0xff.
 Following the example of existing boards we are adding the
@@ -109,24 +109,25 @@ calibration variant.
 
 $ md5sum *
 5003239259d8cb68097a941dde86dcc7
-bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1.bin
+bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2.bin
 
 $ sha256sum *
 0eeffb43040b216b0f3210b8db69e4558844dd9df52caf9c25f56a79401f442c
-bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1.bin
+bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2.bin
+
 
 -- 
 With best wishes
 Dmitry
 
---00000000000098848f0603b236ed
+--0000000000002560470603b23e5d
 Content-Type: application/octet-stream; 
-	name="bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1.bin"
+	name="bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2.bin"
 Content-Disposition: attachment; 
-	filename="bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1.bin"
+	filename="bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2.bin"
 Content-Transfer-Encoding: base64
-Content-ID: <f_llpp3lnx0>
-X-Attachment-Id: f_llpp3lnx0
+Content-ID: <f_llpp8p700>
+X-Attachment-Id: f_llpp8p700
 
 AQAEBAAAAADYZh3yJQEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAACQAQAAAgEA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -590,4 +591,4 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
---00000000000098848f0603b236ed--
+--0000000000002560470603b23e5d--
