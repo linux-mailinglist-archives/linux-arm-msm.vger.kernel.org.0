@@ -2,117 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A154786BE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 11:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 353DF786C57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 11:54:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240430AbjHXJa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 05:30:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
+        id S234773AbjHXJxs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 05:53:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239433AbjHXJ34 (ORCPT
+        with ESMTP id S240753AbjHXJxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 05:29:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A8CC10F;
-        Thu, 24 Aug 2023 02:29:54 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37O9SWaj017447;
-        Thu, 24 Aug 2023 09:29:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6bZ620qEvkbrHV7D/BfIRZQUDwzV6fiMdsV1nBDq/NE=;
- b=e2aBXhzpD9f/K/BDbmwUeqAuRLHTsKQtaAFBk2o+B4RpWAP8WwIOoOeZV9FHBJY20IJa
- bmnfFQHZxj8K1tPA5adIzsmzB2eDbdlLxZcn/cH3wbwQF54Ps2T468j3DhlGqU3h0wB0
- 2nuJeWJPlL9CJBOVYg7TEfJkDgL0UyF5m+3gpW7X2pNopfGA1y6lTfJxOkziSp7AuqZa
- EmLkVWJB1x+Dupux0M2UcpP0P4JddZ8bp5Rlxl9lMruAQk38kGpFb34Se+JAz8WHcXEE
- MtkcH29JHstaJLkG80EUnJKbCtaxu5SmwCvI+wdKUzGvHdIeorv1jINVnzq8f/iHJIW+ Jw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3snkumsyek-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 24 Aug 2023 09:29:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37O9Tegd003868
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 24 Aug 2023 09:29:40 GMT
-Received: from [10.216.60.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 24 Aug
- 2023 02:29:34 -0700
-Message-ID: <6df0d730-7fa0-f0f3-ceb8-b011feaff824@quicinc.com>
-Date:   Thu, 24 Aug 2023 14:59:21 +0530
+        Thu, 24 Aug 2023 05:53:22 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013BC198A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 02:53:20 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ffae5bdc9aso8001491e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 02:53:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692870798; x=1693475598;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g60VBMn/aljS3vqGvUqOg19aGKd4uLJiany69UQcE6M=;
+        b=OkHLvcxdBfs7T4d+Uro473dnXIgA8ARjvI82Wy2cADHSOBNa1ejmN/SgnoZ4xcEvry
+         6jPrJljcG6ZDSu/Z0vbbrmnMe/pk2k/vfk8Ou9Rdohu92g6M85hfHSpq6rQvKlnG9OQa
+         sN+VTgroGmPuMXqX39evvjw/EwWvM2DteFFmioq6wWtChpbm0bb4kjSsdG7J2N7q0m6T
+         crLVFOk0a/QpZRSyj+2Y3lOU3P1N8LPCGPe4fBmitBPNzfGfGpwNeDHrZIgT5m3CaG8h
+         hMeup0BXIvLV/3zDSv7HMQb2/oBO6jZ5E5h9OgGqDddv79nZf23n+uxTx9sgLdSzg/hp
+         Epsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692870798; x=1693475598;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g60VBMn/aljS3vqGvUqOg19aGKd4uLJiany69UQcE6M=;
+        b=gXXNx5t6kaXFx69WRu0Sf7Y1xAEaFC703uxEjNoBkbnYpwID8szhqulz0hSg970kwi
+         nKds17aDlP/kEZ4ZD1FwhOW93bH9N+ogNQLjaRM3U0jQTTukUbt9iWVAs+vFE2Kmh8HB
+         XYbUUXIOac89OS36WgArjyFunQ98v6iv+ZSoeC8xRQyY35e9dCJNZWlqPfsU0rqVAAUq
+         ju+kDj7wR26oUHmsZxa9/I0tKGDjco9bf0Hn+aQ23QFY3fW5jJ4ojjNWsJeDp60Jf5sE
+         mlWnTtMSNVvM+BfSd1cnLE5vY3swZHcl9zcPwQPYYh1wM3YnTqeG3oyTPatT7ruvJ4Mq
+         1L5Q==
+X-Gm-Message-State: AOJu0YySJ7xwyG8tIliz5E1cBt/DeTFLbrB5sMRavAqZwBYhum77hA3o
+        AflTakEZdcPAQK4VzOmTGg9m/Q==
+X-Google-Smtp-Source: AGHT+IFg+NGq6lHT5zvQa04TKD/1OTuEpj2KqEJnnm7Vypb5tB5uKla7biRyFVuNT0E5pCS8yzUtLw==
+X-Received: by 2002:a19:5f50:0:b0:4fb:99c7:bb60 with SMTP id a16-20020a195f50000000b004fb99c7bb60mr8711656lfj.59.1692870798203;
+        Thu, 24 Aug 2023 02:53:18 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:4882:ba34:4490:938b:eab4:c5ef? ([2a00:f41:4882:ba34:4490:938b:eab4:c5ef])
+        by smtp.gmail.com with ESMTPSA id u6-20020ac243c6000000b0050097974ee0sm652660lfl.224.2023.08.24.02.53.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Aug 2023 02:53:17 -0700 (PDT)
+Message-ID: <9db02015-2c41-40d6-bf35-69ef277e9ce4@linaro.org>
+Date:   Thu, 24 Aug 2023 11:53:15 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 1/2] dt-bindings: thermal: tsens: Add sa8775p compatible
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/4] Add initial support for SM7125 and Xiaomi SM7125
+ platform
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     David Wronek <davidwronek@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_manafm@quicinc.com>
-References: <20230821112928.19284-1-quic_priyjain@quicinc.com>
- <20230821112928.19284-2-quic_priyjain@quicinc.com>
- <ea0a31ac-6860-4cd2-a2ec-25416d035278@linaro.org>
-From:   Priyansh Jain <quic_priyjain@quicinc.com>
-In-Reply-To: <ea0a31ac-6860-4cd2-a2ec-25416d035278@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        cros-qcom-dts-watchers@chromium.org
+References: <20230824091737.75813-1-davidwronek@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230824091737.75813-1-davidwronek@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0JRwRwWSu2AKDMI40Wu9PBF981uLJDgh
-X-Proofpoint-ORIG-GUID: 0JRwRwWSu2AKDMI40Wu9PBF981uLJDgh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-24_06,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- spamscore=0 suspectscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2308240076
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On 24.08.2023 11:15, David Wronek wrote:
+> This series introduces support for the Qualcomm SM7125 SoC and the
+> Xiaomi SM7125 platform.
+> 
+> Signed-off-by: David Wronek <davidwronek@gmail.com>
+> ---
+Would your device boot if you:
 
-On 8/21/2023 5:21 PM, Konrad Dybcio wrote:
-> On 21.08.2023 13:29, Priyansh Jain wrote:
->> Add compatibility string for the thermal sensors on sa8775p platform.
->>
->> Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->> index 27e9e16e6455..37d0c9150327 100644
->> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->> @@ -65,6 +65,7 @@ properties:
->>                 - qcom,sm8350-tsens
->>                 - qcom,sm8450-tsens
->>                 - qcom,sm8550-tsens
->> +              - qcom,sa8775p-tsens
->>             - const: qcom,tsens-v2
-> Please keep this sorted alphanumerically.
-Sure will update in next revision.
-> Konrad
+- removed qcom,board-id and qcom,msm-id
+- created the image like this:
+
+mkbootimg \
+--kernel arch/arm64/boot/Image.gz \
+--dtb arch/arm64/boot/dts/qcom/blahblah.dtb \
+--ramdisk blah.img \
+--pagesize 4096 \
+--base 0x0 \
+--kernel_offset 0x8000 \
+--ramdisk_offset 0x1000000 \
+--tags_offset 0x100 \
+--cmdline "foobarbaz" \
+--dtb_offset 0x1f00000 \
+--header_version 2 \
+-o boot.img
+
+?
+
+Konrad
