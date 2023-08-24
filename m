@@ -2,195 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 220637864AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 03:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF99578656C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 04:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239068AbjHXBgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Aug 2023 21:36:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34962 "EHLO
+        id S235684AbjHXCc4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Aug 2023 22:32:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239064AbjHXBg0 (ORCPT
+        with ESMTP id S239618AbjHXCcy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Aug 2023 21:36:26 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10846E6A;
-        Wed, 23 Aug 2023 18:36:23 -0700 (PDT)
-Received: from localhost.localdomain (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
+        Wed, 23 Aug 2023 22:32:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16D7170D;
+        Wed, 23 Aug 2023 19:32:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        (Authenticated sender: alarumbe)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 9677A66072F0;
-        Thu, 24 Aug 2023 02:36:20 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1692840980;
-        bh=yD9wfCKvqna1/wmDIoUeYBMCMGlTtWCx7RFZbYt6L/k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=H6QU8hEq4NObU93r9/Sv8bLtE0pFe80qIP0YaAdX9yK4T7vWEJPvWvWMvKZCUzIEw
-         Rc79fq7RWjJ+mWwSsdLcJhaZY2rNG8yK/5jupxjwZ6Ru1Yxvdp6u2ZIYIzAzJ7HIJi
-         fS7MgtlbeU17k4ORS7yKtXdjKllgX1UcFfy5FHnnNxBjAUxlwkHzzbRVr7uSmrJpXI
-         dmSI34LRoMyE91cYwsQJFErYdyugdTPc8M1xALXHQYiKE7bMXBrGjW2v+Za0VrEzk+
-         GYuWpywcmz8numCax/EJTnSe8WymYCcN0KKvebRejJPcyvf8Sge0hbtQmg0VVbTqca
-         IO/CA6SaooHcw==
-From:   =?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>
-To:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com
-Cc:     adrian.larumbe@collabora.com, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, healych@amazon.com,
-        kernel@collabora.com
-Subject: [PATCH v2 6/6] drm/drm-file: Allow size unit selection in drm_show_memory_stats
-Date:   Thu, 24 Aug 2023 02:34:49 +0100
-Message-ID: <20230824013604.466224-7-adrian.larumbe@collabora.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230824013604.466224-1-adrian.larumbe@collabora.com>
-References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8989D653E0;
+        Thu, 24 Aug 2023 02:32:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E99A4C433C7;
+        Thu, 24 Aug 2023 02:32:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692844342;
+        bh=S2hy4pS5Z/UZBGkbRPkomY+VtflG1CjDdzyvk1uK9OQ=;
+        h=From:Date:Subject:To:Cc:Reply-To:From;
+        b=MxuXB9Xkrd7llmsNmc6JDHijITWpLThHWmqewtDZUx13WzXx0P96HGZhAEQ8iKKaL
+         33TKpHDEMxN+2aiU7G/JQ6TfKB8tY8OnwXKa57aPxaz90wXMyB0x/MsQ2uuCN64x4J
+         uyx93Qm8fWJwCeseBnz4LuP70PaJyKpHrpn3xEZmfL8Y7nmit40AIGOXiZ0PzKP0XG
+         Xk5VwbeCDsJAS5GQhu0bgZq7t+yn4Z4mI1HeswaE0AX+FJzzzudy47Zh2AYxaVbdym
+         /9T6Eq9xWqhmlee3BUaiT+HtHGZ64nipIZ8IEWYFEAWyV8Tg1Tr5D4uCwEtog1uSYb
+         wTtDIFONhm5ew==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.lore.kernel.org (Postfix) with ESMTP id C8E5BC3DA6F;
+        Thu, 24 Aug 2023 02:32:21 +0000 (UTC)
+From:   Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date:   Thu, 24 Aug 2023 10:32:03 +0800
+Subject: [PATCH v2] usb: typec: qcom: check regulator enable status before
+ disabling it
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230824-qcom-tcpc-v2-1-3dd8c3424564@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIACTB5mQC/03MQQ6CMBCF4auQWVvTFkrAlfcwLCZDK7OwQIuNh
+ vTuVhITl//Ly7dDtIFthEu1Q7CJI8++hD5VQBP6uxU8lgYtdS07rcVK80NstJAYG9WbBqk1DqH
+ 8l2Advw7rNpSeOG5zeB90Ut/1p9R/SlJCCYedQtkTStNe1ycTezqXCww55w+PsU6OpAAAAA==
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
+        subbaram@quicinc.com, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692844340; l=1421;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=RCxBxOmCdTDGIzvmHMT7qgcrSyfaH/WPRHb6SCAOpuk=;
+ b=rPA/Tw4FDHy3n9OoyyeOWS1qi2tjEcPxU8Gs5vUKx3yx7nHtxv4tqcjwQXGAKuLMQRLlMnE/u
+ CTNkGOEVUYfCHdNp8w0JTsFJaTgEWMyw1+qt8KD362Y+Ch+JvN8n4rR
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received: by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The current implementation will try to pick the highest available
-unit. This is rather unflexible, and allowing drivers to display BO size
-statistics through fdinfo in units of their choice might be desirable.
+From: Hui Liu <quic_huliu@quicinc.com>
 
-The new argument to drm_show_memory_stats is to be interpreted as the
-integer multiplier of a 10-power of 2, so 1 would give us size in Kib and 2
-in Mib. If we want drm-file functions to pick the highest unit, then 0
-should be passed.
+Check regulator enable status before disabling it to avoid
+unbalanced regulator disable warnings.
 
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
 ---
- drivers/gpu/drm/drm_file.c              | 22 +++++++++++++---------
- drivers/gpu/drm/msm/msm_drv.c           |  2 +-
- drivers/gpu/drm/panfrost/panfrost_drv.c |  2 +-
- include/drm/drm_file.h                  |  5 +++--
- 4 files changed, 18 insertions(+), 13 deletions(-)
+Changes in v2:
+- Add Fixes tag
+- Link to v1: https://lore.kernel.org/r/20230823-qcom-tcpc-v1-1-fa81a09ca056@quicinc.com
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-index 762965e3d503..517e1fb8072a 100644
---- a/drivers/gpu/drm/drm_file.c
-+++ b/drivers/gpu/drm/drm_file.c
-@@ -873,7 +873,7 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
- EXPORT_SYMBOL(drm_send_event);
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+index bb0b8479d80f..ca616b17b5b6 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+@@ -422,7 +422,8 @@ static int qcom_pmic_typec_pdphy_disable(struct pmic_typec_pdphy *pmic_typec_pdp
+ 	ret = regmap_write(pmic_typec_pdphy->regmap,
+ 			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
  
- static void print_size(struct drm_printer *p, const char *stat,
--		       const char *region, u64 sz)
-+		       const char *region, u64 sz, unsigned int unit)
- {
- 	const char *units[] = {"", " KiB", " MiB"};
- 	unsigned u;
-@@ -881,6 +881,8 @@ static void print_size(struct drm_printer *p, const char *stat,
- 	for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
- 		if (sz < SZ_1K)
- 			break;
-+		if (unit > 0 && unit == u)
-+			break;
- 		sz = div_u64(sz, SZ_1K);
- 	}
+-	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
++	if (regulator_is_enabled(pmic_typec_pdphy->vdd_pdphy))
++		regulator_disable(pmic_typec_pdphy->vdd_pdphy);
  
-@@ -898,17 +900,18 @@ static void print_size(struct drm_printer *p, const char *stat,
- void drm_print_memory_stats(struct drm_printer *p,
- 			    const struct drm_memory_stats *stats,
- 			    enum drm_gem_object_status supported_status,
--			    const char *region)
-+			    const char *region,
-+			    unsigned int unit)
- {
--	print_size(p, "total", region, stats->private + stats->shared);
--	print_size(p, "shared", region, stats->shared);
--	print_size(p, "active", region, stats->active);
-+	print_size(p, "total", region, stats->private + stats->shared, unit);
-+	print_size(p, "shared", region, stats->shared, unit);
-+	print_size(p, "active", region, stats->active, unit);
- 
- 	if (supported_status & DRM_GEM_OBJECT_RESIDENT)
--		print_size(p, "resident", region, stats->resident);
-+		print_size(p, "resident", region, stats->resident, unit);
- 
- 	if (supported_status & DRM_GEM_OBJECT_PURGEABLE)
--		print_size(p, "purgeable", region, stats->purgeable);
-+		print_size(p, "purgeable", region, stats->purgeable, unit);
+ 	return ret;
  }
- EXPORT_SYMBOL(drm_print_memory_stats);
- 
-@@ -916,11 +919,12 @@ EXPORT_SYMBOL(drm_print_memory_stats);
-  * drm_show_memory_stats - Helper to collect and show standard fdinfo memory stats
-  * @p: the printer to print output to
-  * @file: the DRM file
-+ * @unit: multipliyer of power of two exponent of desired unit
-  *
-  * Helper to iterate over GEM objects with a handle allocated in the specified
-  * file.
-  */
--void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
-+void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file, unsigned int unit)
- {
- 	struct drm_gem_object *obj;
- 	struct drm_memory_stats status = {};
-@@ -967,7 +971,7 @@ void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
- 	}
- 	spin_unlock(&file->table_lock);
- 
--	drm_print_memory_stats(p, &status, supported_status, "memory");
-+	drm_print_memory_stats(p, &status, supported_status, "memory", unit);
- }
- EXPORT_SYMBOL(drm_show_memory_stats);
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 2a0e3529598b..cd1198151744 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1067,7 +1067,7 @@ static void msm_show_fdinfo(struct drm_printer *p, struct drm_file *file)
- 
- 	msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, p);
- 
--	drm_show_memory_stats(p, file);
-+	drm_show_memory_stats(p, file, 0);
- }
- 
- static const struct file_operations fops = {
-diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index 93d5f5538c0b..79c08cee3e9d 100644
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -563,7 +563,7 @@ static void panfrost_show_fdinfo(struct drm_printer *p, struct drm_file *file)
- 
- 	panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
- 
--	drm_show_memory_stats(p, file);
-+	drm_show_memory_stats(p, file, 1);
- }
- 
- static const struct file_operations panfrost_drm_driver_fops = {
-diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
-index 010239392adf..21a3b022dd63 100644
---- a/include/drm/drm_file.h
-+++ b/include/drm/drm_file.h
-@@ -466,9 +466,10 @@ enum drm_gem_object_status;
- void drm_print_memory_stats(struct drm_printer *p,
- 			    const struct drm_memory_stats *stats,
- 			    enum drm_gem_object_status supported_status,
--			    const char *region);
-+			    const char *region,
-+			    unsigned int unit);
- 
--void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file);
-+void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file, unsigned int unit);
- void drm_show_fdinfo(struct seq_file *m, struct file *f);
- 
- struct file *mock_drm_getfile(struct drm_minor *minor, unsigned int flags);
+
+---
+base-commit: bbb9e06d2c6435af9c62074ad7048910eeb2e7bc
+change-id: 20230822-qcom-tcpc-d41954ac65fa
+
+Best regards,
 -- 
-2.42.0
+Hui Liu <quic_huliu@quicinc.com>
 
