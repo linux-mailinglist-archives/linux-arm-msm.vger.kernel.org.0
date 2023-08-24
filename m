@@ -2,114 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 753FA786CE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 12:39:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67118786D87
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 13:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235136AbjHXKjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 06:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37526 "EHLO
+        id S234079AbjHXLPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 07:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240878AbjHXKjR (ORCPT
+        with ESMTP id S240991AbjHXLPJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 06:39:17 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E9F819B6;
-        Thu, 24 Aug 2023 03:38:59 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d6b1025fc7aso6040776276.3;
-        Thu, 24 Aug 2023 03:38:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692873538; x=1693478338;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ku30yGR4fsIAVCtmRwOtJYE7C4zQBYo4YJCwft/LQ/M=;
-        b=dimZI7NLJY2HQ1/qZ7BKTpu4u9yGwKhafQCY3K6zD1b0kbjvwFDzFnZpZtRLjGUVdI
-         XkXW+3jg+a/uJu0dPdpLXWge4OgH6yaly8/3thpU9gZeGGY/T0XhRi3jTov4EldI56i7
-         rSi9FyKFIqPw3d7ZcXzzzYJbTOCyW01eApO5Y5f+yaXjgYxJoNuG0bGW2PhmT9BCT7aQ
-         iwl/uOp7rgx96TZO+tsfjbjbqi9GhAbWLKnVtIBdMK65iVkmJFrYJWTgnV5XJ9DfRyz3
-         MHmABmClsz8qxb99GSgC3E1cpr9oP+AKghUlR+AvV5QbE8QidovT/aZYXwW7OKnkrZ7F
-         /vqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692873538; x=1693478338;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ku30yGR4fsIAVCtmRwOtJYE7C4zQBYo4YJCwft/LQ/M=;
-        b=hWb7KeHN4e1IBSrDlLxT8Q4vklyEfaE+OYamEYLVAr/0Bz7Bc64tEhxTu5UoujVZT8
-         8ArAA3RJVK1DPROOXkQz69nTf1yOeDgDw2PjJjtCobjsjaK0WUsJAgug12aPEEPbnrgB
-         f8UYwy8rNCWrCEWrONYgbPO2Ftoff6zj73yaPTaUlNMd/xBdMwxcGoR0jdWz+caE+Wd3
-         yk0RQqbKzqF5h1E06bq7gfzmpdfhMs9DJv1JnL1DyKKcGBsj9T8MKS60YHLia4DRACWH
-         bFC+B9/JbDR5xQPKmAh8P4wuYZRM4/MWy/EnZblF6BZ31A7/U2/oePJudeVbVLJvyPIL
-         /9gw==
-X-Gm-Message-State: AOJu0Yx2GG9wgn2ncJ1H0b5CS9IDwgVyURwnGl014J7WkUo7PjCDDaoU
-        mud/SU0w1bOJQXUEpeFSqDgP53ywTC3oG4c8ZaCNRxriHj+e2Szq
-X-Google-Smtp-Source: AGHT+IHy0ZBnflfuFgKSkYkYtritFVAMG3KoOaW8jzLLo68VUseS23HYJcxULEi6DpiFPJZhEVYWbkVINdPfVS8NUPM=
-X-Received: by 2002:a25:6412:0:b0:d77:a0a5:e1a3 with SMTP id
- y18-20020a256412000000b00d77a0a5e1a3mr5838002ybb.33.1692873538363; Thu, 24
- Aug 2023 03:38:58 -0700 (PDT)
+        Thu, 24 Aug 2023 07:15:09 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6622D19AE;
+        Thu, 24 Aug 2023 04:15:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1692875701; x=1724411701;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=CtK1R/zQ6fsYubBUoIg4emRPJbgoJXj1/hZIVxAHWHw=;
+  b=YV2t4b9GBw7eyuX+blxqXajmwmtTo5M2Rl7RAckpOS0/sJbgtylhmxBT
+   a5Euql5mGEiTs5rfQVOTfcPaQiCwC+3dSTwHo7fog4ClDmSTaO4Sn0p1L
+   BZr/7pJ6qfX8xUgjwAotyb/wewVf/Lt8je4mbOEIanLypEGs7Kfl+VoO6
+   94BiTfdP7zJeOMGKL0JucRAPP/pdw1SPIZSvOt+/ftcROnOOGV2/PwTge
+   66SLppA3u9kYnopxjJBnn/yhKyjU9etfBQnhHCCmrTjNUn1oDaCY1FqXB
+   fxQULUG2UU+PhfeGZvapI6BuaIWytLk0AX2a+/foe4v97i6EVKJcgqb8D
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10811"; a="378164703"
+X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
+   d="scan'208";a="378164703"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2023 04:15:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10811"; a="766502137"
+X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
+   d="scan'208";a="766502137"
+Received: from lkp-server02.sh.intel.com (HELO daf8bb0a381d) ([10.239.97.151])
+  by orsmga008.jf.intel.com with ESMTP; 24 Aug 2023 04:14:55 -0700
+Received: from kbuild by daf8bb0a381d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qZ8IX-0001ye-2N;
+        Thu, 24 Aug 2023 11:14:48 +0000
+Date:   Thu, 24 Aug 2023 19:13:48 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     =?iso-8859-1?Q?Adri=E1n?= Larumbe <adrian.larumbe@collabora.com>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        adrian.larumbe@collabora.com, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, healych@amazon.com,
+        kernel@collabora.com, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 5/6] drm/panfrost: Implement generic DRM object RSS
+ reporting function
+Message-ID: <202308241850.UjqyDaGz-lkp@intel.com>
+References: <20230824013604.466224-6-adrian.larumbe@collabora.com>
 MIME-Version: 1.0
-References: <20230824091737.75813-1-davidwronek@gmail.com> <9db02015-2c41-40d6-bf35-69ef277e9ce4@linaro.org>
-In-Reply-To: <9db02015-2c41-40d6-bf35-69ef277e9ce4@linaro.org>
-From:   David Wronek <davidwronek@gmail.com>
-Date:   Thu, 24 Aug 2023 12:38:47 +0200
-Message-ID: <CAEoe_eUJWAG71VcYCfLWC5KCamRBjUZ+V3j4ZrSjBunh35s6Rw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] Add initial support for SM7125 and Xiaomi SM7125 platform
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230824013604.466224-6-adrian.larumbe@collabora.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 24, 2023 at 11:53=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linar=
-o.org> wrote:
->
-> On 24.08.2023 11:15, David Wronek wrote:
-> > This series introduces support for the Qualcomm SM7125 SoC and the
-> > Xiaomi SM7125 platform.
-> >
-> > Signed-off-by: David Wronek <davidwronek@gmail.com>
-> > ---
-> Would your device boot if you:
->
-> - removed qcom,board-id and qcom,msm-id
-> - created the image like this:
->
-> mkbootimg \
-> --kernel arch/arm64/boot/Image.gz \
-> --dtb arch/arm64/boot/dts/qcom/blahblah.dtb \
-> --ramdisk blah.img \
-> --pagesize 4096 \
-> --base 0x0 \
-> --kernel_offset 0x8000 \
-> --ramdisk_offset 0x1000000 \
-> --tags_offset 0x100 \
-> --cmdline "foobarbaz" \
-> --dtb_offset 0x1f00000 \
-> --header_version 2 \
-> -o boot.img
->
-> ?
->
-> Konrad
+Hi Adrián,
 
-Seems like my device needs those properties, it does not boot without
-msm-id and board-id and the command you sent.
+kernel test robot noticed the following build warnings:
 
-Sincerely,
-David
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on linus/master v6.5-rc7 next-20230824]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Adri-n-Larumbe/drm-panfrost-Add-cycle-count-GPU-register-definitions/20230824-093848
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230824013604.466224-6-adrian.larumbe%40collabora.com
+patch subject: [PATCH v2 5/6] drm/panfrost: Implement generic DRM object RSS reporting function
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20230824/202308241850.UjqyDaGz-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230824/202308241850.UjqyDaGz-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308241850.UjqyDaGz-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/panfrost/panfrost_gem.c:210:8: warning: no previous prototype for 'panfrost_gem_rss' [-Wmissing-prototypes]
+     210 | size_t panfrost_gem_rss(struct drm_gem_object *obj)
+         |        ^~~~~~~~~~~~~~~~
+
+
+vim +/panfrost_gem_rss +210 drivers/gpu/drm/panfrost/panfrost_gem.c
+
+   209	
+ > 210	size_t panfrost_gem_rss(struct drm_gem_object *obj)
+   211	{
+   212		struct panfrost_gem_object *bo = to_panfrost_bo(obj);
+   213	
+   214		if (!bo->base.pages)
+   215			return 0;
+   216	
+   217		return bo->rss_size;
+   218	}
+   219	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
