@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49902787A2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 23:20:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D8DF787A29
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 23:20:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243550AbjHXVUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S243506AbjHXVUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 24 Aug 2023 17:20:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46848 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243506AbjHXVUB (ORCPT
+        with ESMTP id S243473AbjHXVUB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 24 Aug 2023 17:20:01 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AFFACF1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:19:58 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4ffa94a7a47so371259e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:19:58 -0700 (PDT)
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7B11BDF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:19:59 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4ffa01fc987so1592068e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:19:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1692911997; x=1693516797;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=U70UpewjmCnbT8KiMd545bdbi+bVcnHm968V6y9dNR4=;
-        b=Om2m8MpS7wK1gIYT6mVBoWKV8nHWxNnyVtt+2GHs8m/3qee3tDF8WgEI6nRHJlR8+D
-         cx8d6mXY1l9+eghcOaBrXvi5pVYJo+vAj4m8gwJs04BV1Y4fYqQ1aO9yvfq/htUfVbmD
-         Lj6fWBcEx0Zz3LdRVl2bws8i0SzPB+xdMgqVwqihORFqO4Megs3N5NlQNNlTkrCs7VbI
-         62gDCpcBc+8qQhPCGjNh/l6UfyMGrj/xcoXWjbzBZ/5S0DwntVnE/JgrkzxwE7kuNAzq
-         dxQ1T6pkC4Y9YMu419m0GU3lIl+o0wQ8aSLF26Stxb2p3F1NgF6wsxhFNkAvs+Udpch9
-         zboQ==
+        bh=R7mOGTx5+h4i0NdOspjuoR2EZoV3NOPl1+DrGOJBMv8=;
+        b=qLuIYON7kk1Wj2SPSg/jJy3l2vC3R0pj3A/nxqIjDIvoNBjyeH46lPVBsdRaDs4m/o
+         WrnX0/udPBqVMGxX8LGTyICQT1ejoj1+9efVjwlbYUP4use1NMLN8dZ8peNwPvn3G6Fx
+         dSX7UZZH486vUFCkca5YFgc7egAhYIm3k9svOP3H2xIyw51PLnM6l82i4Idm0oWln9sv
+         yIOv6Eov6RTfMINCHAGJtZ5uINh0s4DiTFgRmhn4eM9KpNgylu46g15vePC4+TyaGIFm
+         bX2Dc6w24o9cCAEt5TtwB0yA6Uh1ES9ojtP5GpAYUQoYLecJ8nEm7j97YfO6gcclA/54
+         EN+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1692911997; x=1693516797;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U70UpewjmCnbT8KiMd545bdbi+bVcnHm968V6y9dNR4=;
-        b=En5nerq17fOHE4CPe04Sxo9bvVm7xQXHT0kGR1omYBrT22XvltYfXCOmmO2t38hDNY
-         gF9P8cYNDTh6zn63+RgSkNlsF66ohcdz35Rz+2W6Hxq6Bc0c7Q30VjUBdpM+RYrFWZi3
-         hZaSz8DPwqz9Pq4PsK+Q3PyS0wXlDMlaOuXNiX8kI/6gfj9DOAm3lxhEsWnWpW7iDuDk
-         TuzzvA+G2FOUN6Nog++X8Ybc/BHy1fLwyKySzvvZE97lRahKvawv7swelUGUPf7SZuaN
-         rFJEwcKI11xzN4gl9XXCX/p9fms1Ni68ekIjUAu3PaEA6S2UOwdLp3qoWnA6iW1OzD8S
-         ik/w==
-X-Gm-Message-State: AOJu0YyHppyG93SmyAvkBFCiqB7PsYAWKB/zy9vULB/mddt8MDGMdZJf
-        IwW98L2NuZHy7Nl/QJJ4pjIUFg==
-X-Google-Smtp-Source: AGHT+IEpQ29oihcuQay8r/AKFPHgjuVL1GNvmXM4bl3oA8V3xEtzsnmjJw3L18xrJ7pgUYxRgE2E6g==
-X-Received: by 2002:a05:6512:2208:b0:4fd:fc3d:cce7 with SMTP id h8-20020a056512220800b004fdfc3dcce7mr15006124lfu.44.1692911996783;
-        Thu, 24 Aug 2023 14:19:56 -0700 (PDT)
+        bh=R7mOGTx5+h4i0NdOspjuoR2EZoV3NOPl1+DrGOJBMv8=;
+        b=PtnZ8jlcp+PWl5rrYog9Sf9w07ag6fleauOMvcGpQaNuTXeO+04HjdDCsL0JvAuBTr
+         PnsnV3swakNF6W4Vx5lt1UTgyqrAnptNdeZ/bUxmCDWjLJMOD/AJtA2d6RGpQXnPnjet
+         xasp4P59Z5x5WHjV9pGkmlL4h5+t29ueefw3paqhbfjVlkxKxWnSFrYs1n/LjGeWuJlw
+         U2UxvNXog/gJ6CusPSOiRRIsMq9+TMvKwVoQosR+URyTImjO23RzbpN6f4OTdnhnVwz1
+         avSGfgSzF6lJUkhugSN3ycC88BS78ZM9jRIyayFiQUwRG5Kie97XIE5IVYIalAOTw8+W
+         Tafg==
+X-Gm-Message-State: AOJu0YwOgNw2eyEIycQMzTujBwcANVVvgFCJb5sxvWGlgWLyuSReT0FV
+        ghKeJIm6W7qdQIZKkrwHNHDeOw==
+X-Google-Smtp-Source: AGHT+IFRuQrwJgRDifaO6K4IPZdHUqV/YZ4NaVNPEDSTQxpBSMkDUHFsqFap7AYt/6DQEPcRiWHYCA==
+X-Received: by 2002:a05:6512:1294:b0:4f9:6adf:3981 with SMTP id u20-20020a056512129400b004f96adf3981mr6904271lfs.33.1692911997635;
+        Thu, 24 Aug 2023 14:19:57 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id j29-20020a056512029d00b004fe4ab686b4sm17690lfp.167.2023.08.24.14.19.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Aug 2023 14:19:56 -0700 (PDT)
+        Thu, 24 Aug 2023 14:19:57 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org
-Subject: [PATCH v3 03/16] phy: qcom-qmp-usb: rework reset handling
-Date:   Fri, 25 Aug 2023 00:19:39 +0300
-Message-Id: <20230824211952.1397699-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 04/16] phy: qcom-qmp-usb: make QPHY_PCS_MISC_CLAMP_ENABLE access conditional
+Date:   Fri, 25 Aug 2023 00:19:40 +0300
+Message-Id: <20230824211952.1397699-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230824211952.1397699-1-dmitry.baryshkov@linaro.org>
 References: <20230824211952.1397699-1-dmitry.baryshkov@linaro.org>
@@ -72,277 +72,92 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All legacy bindings of USB PHYs use "phy", "common" resets, while newer
-style bindings use "phy", "phy_phy" resets. In preparation for
-converting existing legacy PHY bindings to use newer scheme, drop reset
-lists from configuration struture and reference reset lists directly.
+The register QPHY_V[34]_PCS_MISC_CLAMP_ENABLE is present only on some
+SoC families. Other platforms (qcm2290) can have PCS_MISC region, but do
+not have this register. Add it to the register layout table and check
+that it is defined before toggling CLAMP settings.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 71 +++++++++----------------
- 1 file changed, 26 insertions(+), 45 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 626cf4bf396b..8f43de20fb8c 100644
+index 8f43de20fb8c..411cf0ae148d 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1172,9 +1172,6 @@ struct qmp_phy_cfg {
- 	const struct qmp_phy_init_tbl *pcs_usb_tbl;
- 	int pcs_usb_tbl_num;
- 
--	/* resets to be requested */
--	const char * const *reset_list;
--	int num_resets;
- 	/* regulators to be requested */
- 	const char * const *vreg_list;
- 	int num_vregs;
-@@ -1206,6 +1203,7 @@ struct qmp_usb {
- 	struct clk *pipe_clk;
- 	struct clk_bulk_data *clks;
- 	int num_clks;
-+	int num_resets;
- 	struct reset_control_bulk_data *resets;
- 	struct regulator_bulk_data *vregs;
- 
-@@ -1246,11 +1244,11 @@ static const char * const qmp_usb_phy_clk_l[] = {
+@@ -94,6 +94,7 @@ enum qphy_reg_layout {
+ 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	QPHY_PCS_POWER_DOWN_CONTROL,
++	QPHY_PCS_MISC_CLAMP_ENABLE,
+ 	/* Keep last to ensure regs_layout arrays are properly initialized */
+ 	QPHY_LAYOUT_SIZE
+ };
+@@ -114,6 +115,16 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_POWER_DOWN_CONTROL,
++	[QPHY_PCS_MISC_CLAMP_ENABLE]	= QPHY_V3_PCS_MISC_CLAMP_ENABLE,
++};
++
++static const unsigned int qmp_v3_usb3phy_regs_layout_qcm2290[QPHY_LAYOUT_SIZE] = {
++	[QPHY_SW_RESET]			= QPHY_V3_PCS_SW_RESET,
++	[QPHY_START_CTRL]		= QPHY_V3_PCS_START_CONTROL,
++	[QPHY_PCS_STATUS]		= QPHY_V3_PCS_PCS_STATUS,
++	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
++	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_POWER_DOWN_CONTROL,
  };
  
- /* list of resets */
--static const char * const msm8996_usb3phy_reset_l[] = {
-+static const char * const usb3phy_legacy_reset_l[] = {
- 	"phy", "common",
+ static const unsigned int qmp_v4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+@@ -125,6 +136,7 @@ static const unsigned int qmp_v4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	/* In PCS_USB */
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V4_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V4_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
++	[QPHY_PCS_MISC_CLAMP_ENABLE]	= QPHY_V4_PCS_MISC_CLAMP_ENABLE,
  };
  
--static const char * const qcm2290_usb3phy_reset_l[] = {
-+static const char * const usb3phy_reset_l[] = {
- 	"phy_phy", "phy",
- };
- 
-@@ -1296,8 +1294,6 @@ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(ipq8074_usb3_rx_tbl),
- 	.pcs_tbl		= ipq8074_usb3_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_usb3_pcs_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v3_usb3phy_regs_layout,
-@@ -1316,8 +1312,6 @@ static const struct qmp_phy_cfg ipq9574_usb3phy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(ipq9574_usb3_rx_tbl),
- 	.pcs_tbl		= ipq9574_usb3_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(ipq9574_usb3_pcs_tbl),
--	.reset_list		= qcm2290_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(qcm2290_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v3_usb3phy_regs_layout,
-@@ -1334,8 +1328,6 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(msm8996_usb3_rx_tbl),
- 	.pcs_tbl		= msm8996_usb3_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(msm8996_usb3_pcs_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v2_usb3phy_regs_layout,
-@@ -1354,8 +1346,6 @@ static const struct qmp_phy_cfg sa8775p_usb3_uniphy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_rx_tbl),
- 	.pcs_tbl		= sa8775p_usb3_uniphy_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(sa8775p_usb3_uniphy_pcs_tbl),
--	.reset_list		= qcm2290_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(qcm2290_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v5_usb3phy_regs_layout,
-@@ -1374,8 +1364,6 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_rx_tbl),
- 	.pcs_tbl		= sc8280xp_usb3_uniphy_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_pcs_tbl),
--	.reset_list		= qcm2290_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(qcm2290_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v5_usb3phy_regs_layout,
-@@ -1392,8 +1380,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_uniphy_rx_tbl),
- 	.pcs_tbl		= qmp_v3_usb3_uniphy_pcs_tbl,
- 	.pcs_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_uniphy_pcs_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v3_usb3phy_regs_layout,
-@@ -1412,8 +1398,6 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
- 	.rx_tbl_num             = ARRAY_SIZE(msm8998_usb3_rx_tbl),
- 	.pcs_tbl                = msm8998_usb3_pcs_tbl,
- 	.pcs_tbl_num            = ARRAY_SIZE(msm8998_usb3_pcs_tbl),
--	.reset_list             = msm8996_usb3phy_reset_l,
--	.num_resets             = ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list              = qmp_phy_vreg_l,
- 	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs                   = qmp_v3_usb3phy_regs_layout,
-@@ -1432,8 +1416,6 @@ static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
- 	.pcs_tbl_num		= ARRAY_SIZE(sm8150_usb3_uniphy_pcs_tbl),
- 	.pcs_usb_tbl		= sm8150_usb3_uniphy_pcs_usb_tbl,
- 	.pcs_usb_tbl_num	= ARRAY_SIZE(sm8150_usb3_uniphy_pcs_usb_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v4_usb3phy_regs_layout,
-@@ -1455,8 +1437,6 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
- 	.pcs_tbl_num		= ARRAY_SIZE(sm8250_usb3_uniphy_pcs_tbl),
- 	.pcs_usb_tbl		= sm8250_usb3_uniphy_pcs_usb_tbl,
- 	.pcs_usb_tbl_num	= ARRAY_SIZE(sm8250_usb3_uniphy_pcs_usb_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v4_usb3phy_regs_layout,
-@@ -1478,8 +1458,6 @@ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
- 	.pcs_tbl_num		= ARRAY_SIZE(sm8250_usb3_uniphy_pcs_tbl),
- 	.pcs_usb_tbl		= sm8250_usb3_uniphy_pcs_usb_tbl,
- 	.pcs_usb_tbl_num	= ARRAY_SIZE(sm8250_usb3_uniphy_pcs_usb_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v4_usb3phy_regs_layout,
-@@ -1501,8 +1479,6 @@ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
- 	.pcs_tbl_num		= ARRAY_SIZE(sm8350_usb3_uniphy_pcs_tbl),
- 	.pcs_usb_tbl		= sm8350_usb3_uniphy_pcs_usb_tbl,
- 	.pcs_usb_tbl_num	= ARRAY_SIZE(sm8350_usb3_uniphy_pcs_usb_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v5_usb3phy_regs_layout,
-@@ -1524,8 +1500,6 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
- 	.pcs_tbl_num		= ARRAY_SIZE(sm8350_usb3_uniphy_pcs_tbl),
- 	.pcs_usb_tbl		= sm8350_usb3_uniphy_pcs_usb_tbl,
- 	.pcs_usb_tbl_num	= ARRAY_SIZE(sm8350_usb3_uniphy_pcs_usb_tbl),
--	.reset_list		= msm8996_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v5_usb3phy_regs_layout,
-@@ -1547,8 +1521,6 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
- 	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
- 	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+ static const unsigned int qmp_v5_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+@@ -1523,7 +1535,7 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
--	.reset_list		= qcm2290_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(qcm2290_usb3phy_reset_l),
  	.vreg_list		= qmp_phy_vreg_l,
  	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v3_usb3phy_regs_layout,
-@@ -1605,13 +1577,13 @@ static int qmp_usb_init(struct phy *phy)
- 		return ret;
- 	}
+-	.regs			= qmp_v3_usb3phy_regs_layout,
++	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+ };
  
--	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	ret = reset_control_bulk_assert(qmp->num_resets, qmp->resets);
- 	if (ret) {
- 		dev_err(qmp->dev, "reset assert failed\n");
- 		goto err_disable_regulators;
- 	}
+ static void qmp_usb_configure_lane(void __iomem *base,
+@@ -1761,8 +1773,8 @@ static void qmp_usb_enable_autonomous_mode(struct qmp_usb *qmp)
+ 	qphy_setbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL], intr_mask);
  
--	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
-+	ret = reset_control_bulk_deassert(qmp->num_resets, qmp->resets);
- 	if (ret) {
- 		dev_err(qmp->dev, "reset deassert failed\n");
- 		goto err_disable_regulators;
-@@ -1626,7 +1598,7 @@ static int qmp_usb_init(struct phy *phy)
- 	return 0;
- 
- err_assert_reset:
--	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	reset_control_bulk_assert(qmp->num_resets, qmp->resets);
- err_disable_regulators:
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
- 
-@@ -1638,7 +1610,7 @@ static int qmp_usb_exit(struct phy *phy)
- 	struct qmp_usb *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 
--	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	reset_control_bulk_assert(qmp->num_resets, qmp->resets);
- 
- 	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
- 
-@@ -1880,22 +1852,25 @@ static int qmp_usb_vreg_init(struct qmp_usb *qmp)
- 	return devm_regulator_bulk_get(dev, num, qmp->vregs);
+ 	/* Enable i/o clamp_n for autonomous mode */
+-	if (pcs_misc)
+-		qphy_clrbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
++	if (pcs_misc && cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE])
++		qphy_clrbits(pcs_misc, cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE], CLAMP_EN);
  }
  
--static int qmp_usb_reset_init(struct qmp_usb *qmp)
-+static int qmp_usb_reset_init(struct qmp_usb *qmp,
-+			      const char *const *reset_list,
-+			      int num_resets)
- {
--	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 	struct device *dev = qmp->dev;
- 	int i;
- 	int ret;
+ static void qmp_usb_disable_autonomous_mode(struct qmp_usb *qmp)
+@@ -1772,8 +1784,8 @@ static void qmp_usb_disable_autonomous_mode(struct qmp_usb *qmp)
+ 	void __iomem *pcs_misc = qmp->pcs_misc;
  
--	qmp->resets = devm_kcalloc(dev, cfg->num_resets,
-+	qmp->resets = devm_kcalloc(dev, num_resets,
- 				   sizeof(*qmp->resets), GFP_KERNEL);
- 	if (!qmp->resets)
- 		return -ENOMEM;
+ 	/* Disable i/o clamp_n on resume for normal mode */
+-	if (pcs_misc)
+-		qphy_setbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
++	if (pcs_misc && cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE])
++		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE], CLAMP_EN);
  
--	for (i = 0; i < cfg->num_resets; i++)
--		qmp->resets[i].id = cfg->reset_list[i];
-+	for (i = 0; i < num_resets; i++)
-+		qmp->resets[i].id = reset_list[i];
-+
-+	qmp->num_resets = num_resets;
- 
--	ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_resets, qmp->resets);
-+	ret = devm_reset_control_bulk_get_exclusive(dev, num_resets, qmp->resets);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to get resets\n");
- 
-@@ -2064,6 +2039,11 @@ static int qmp_usb_parse_dt_legacy(struct qmp_usb *qmp, struct device_node *np)
- 
- 	qmp->num_clks = ret;
- 
-+	ret = qmp_usb_reset_init(qmp, usb3phy_legacy_reset_l,
-+				 ARRAY_SIZE(usb3phy_legacy_reset_l));
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
-@@ -2105,6 +2085,11 @@ static int qmp_usb_parse_dt(struct qmp_usb *qmp)
- 				     "failed to get pipe clock\n");
- 	}
- 
-+	ret = qmp_usb_reset_init(qmp, usb3phy_reset_l,
-+				 ARRAY_SIZE(usb3phy_reset_l));
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
-@@ -2126,10 +2111,6 @@ static int qmp_usb_probe(struct platform_device *pdev)
- 	if (!qmp->cfg)
- 		return -EINVAL;
- 
--	ret = qmp_usb_reset_init(qmp);
--	if (ret)
--		return ret;
--
- 	ret = qmp_usb_vreg_init(qmp);
- 	if (ret)
- 		return ret;
+ 	qphy_clrbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL],
+ 		     ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL | ALFPS_DTCT_EN);
 -- 
 2.39.2
 
