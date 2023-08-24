@@ -2,118 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 441C4786AE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 10:59:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C9A0786B35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 11:11:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbjHXI7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 04:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49558 "EHLO
+        id S235417AbjHXJKb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 05:10:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236579AbjHXI6x (ORCPT
+        with ESMTP id S235144AbjHXJK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 04:58:53 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081F31727;
-        Thu, 24 Aug 2023 01:58:52 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37O63rFV025981;
-        Thu, 24 Aug 2023 08:58:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gHdyZeG87X895a3aglv9dRjjx9IUVgwM4dSRPE/fqZI=;
- b=HpeWWphI+o7GORFunklWxnV4Lpy4fo/Lk7S8dRYkYQW/7Y1aUxWvyB2L6Fq8LQ3m8V0r
- oqAsjYHd/Rrz0n4ZY/tDsIxXQo8tW3+69NTSz17XnEBa2WO8TFDjMby4FyjSf4sHRL5g
- eIDkTDRmvSnShipLZzAo12x3Bxtsae0fjQIdD4CUVSj9OEltdeluTjP/J1TuBNwfRte8
- 4IBf8TrCpsTbGEzlosTdyThsod4knFxFERor/Z9J8oViPYgy+GSQ01BR0EyynUcGyLO7
- tdgrjJH51LR3HSTbn5XJdDuJqLnFO46TTJyoBUyw0wJc617nX2/cDPM1AZkTc/wNgXB1 /g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sp1k9gau9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 24 Aug 2023 08:58:46 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37O8wjoV028782
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 24 Aug 2023 08:58:45 GMT
-Received: from [10.216.13.16] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 24 Aug
- 2023 01:58:40 -0700
-Message-ID: <3bdc4c6b-2fb9-bcdb-934c-350b7056a4e4@quicinc.com>
-Date:   Thu, 24 Aug 2023 14:28:35 +0530
+        Thu, 24 Aug 2023 05:10:26 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1BC10FA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 02:10:24 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3110ab7110aso5740953f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 02:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692868222; x=1693473022;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mKd6Vvyg5ivmrlFMRaOzprAQ+7LMDgFGorbXZwvtdBc=;
+        b=UtOf53zCWwvSmtWKwUsfXtI9nVcdRIpJQj3Q3GOTDLRh8jJ/HUIJJ5wAtouFJA3JSA
+         OgzYvO5ojI2ZIjJauqTkqFnNUJtA661EBWnihPUl8Wll4fw7prW0LQu5m6RZT39R2+/h
+         43JAGSrjfwdoAcyc0kfnj4/1F40XxcUb/FLRxDVAdKexQ+qxqJmBvXm0ZKXHjujlUzvX
+         gt9Zv+mhzYZ5nAEsq8IflloSygPrq2O13ARPNjPbvFVMU1lt3q8vY/z0lpPg3oRIfsTk
+         ENpeT24SFS3SeRHFpDRU5H3IpOk7/5i2cHPwz7pnZv5KkTyLfHeSlL8lKvIZurFj9Apd
+         F+zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692868222; x=1693473022;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mKd6Vvyg5ivmrlFMRaOzprAQ+7LMDgFGorbXZwvtdBc=;
+        b=Ajrh7ygtl54LEVzUFPP0AG3vnSkvXKzOYKCkebm1wqAyU7yJo2fxc7IJAoKK99fcF2
+         QiV3Me6VeOSlBm7FmCBp4gq92SS92FbTkPETf9d8Q39UmWxNVtTn/AxaZZGBlQeaWa56
+         d4zHktaIDXjWs2bSNOHedj2FN+Zpcfqv06DGrUZH5R5GB4C4KzjVbTT73nZ0asE50Hwg
+         hb1w0K6F6uX4/3GD2AtISDKcJkoJtiNNsP6YDNt6atdR0yaOLN96dMVf+1saUVuPCNDx
+         Fj+bxlK4f5esCNyITcNyYgqAPVXPlBAsJze9KWPHLY8igQL0nww1/xPhljMcQ0fi7JId
+         W0XA==
+X-Gm-Message-State: AOJu0YxW3WyvyaeJUFfPkyo5G9ncnxM5L1R8p/guaxUhfn6XjcmfcRIP
+        k6VqjcFKpDZR1PEqvUwr2CBoZw==
+X-Google-Smtp-Source: AGHT+IEFtIP2c9EMTFKuYT/daW8nU0vsF89E71wEi0EWILazOM7HDO+P+pVno5HHzC9MfGzx4+Zfxg==
+X-Received: by 2002:adf:d0c4:0:b0:319:785a:fce5 with SMTP id z4-20020adfd0c4000000b00319785afce5mr10365544wrh.38.1692868222588;
+        Thu, 24 Aug 2023 02:10:22 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id x9-20020a5d4909000000b0031c5e9c2ed7sm8765038wrq.92.2023.08.24.02.10.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Aug 2023 02:10:22 -0700 (PDT)
+Message-ID: <bacbdd5e-0547-213e-407e-eabf4e84141d@linaro.org>
+Date:   Thu, 24 Aug 2023 10:10:20 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 4/6] soc: qcom: Add LLCC support for multi channel DDR
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH next] i2c: qcom-cci: Fix error checking in cci_probe()
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <srinivas.kandagatla@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230810061140.15608-1-quic_kbajaj@quicinc.com>
- <20230810061140.15608-5-quic_kbajaj@quicinc.com>
- <a663ea2c-4724-20b3-628e-8831b6989655@linaro.org>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <a663ea2c-4724-20b3-628e-8831b6989655@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HvGRlmHebrBFzehXO1_LUm_RUAfKuPnl
-X-Proofpoint-ORIG-GUID: HvGRlmHebrBFzehXO1_LUm_RUAfKuPnl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-24_06,2023-08-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 spamscore=0 mlxlogscore=594
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2308240071
+To:     Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+        dmitry.baryshkov@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Liao Chang <liaochang1@huawei.com>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Wolfram Sang <wsa@kernel.org>,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     dan.carpenter@linaro.org, kernel-janitors@vger.kernel.org,
+        error27@gmail.com, vegard.nossum@oracle.com
+References: <20230823194202.2280957-1-harshit.m.mogalapalli@oracle.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230823194202.2280957-1-harshit.m.mogalapalli@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/10/2023 6:02 PM, Bryan O'Donoghue wrote:
-> On 10/08/2023 07:11, Komal Bajaj wrote:
->> +    ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
->> +    if (ret == -ENOENT || ret == -EOPNOTSUPP) {
->> +        if (num_config != DEF_NUM_CFG)
->> +            return -EINVAL;
->
-> In other words if multi-chan-ddr is not present in the dts and the 
-> num_config != 1 return -EINVAL
->
-> You can just as easily say if (num_config > 1) and drop the define 
-> from this code.
-
-Sure, will make the suggested changes.
-
->
->> +        *cfg_index = DEF_NUM_CFG - 1;
->> +        return 0;
->
-> *cfg_index = 0;
->
-> For example if #define DEF_NUM_CFG 0x20 then taking the last index of 
-> it would be 100% wrong.
->
-> Please kill that define.
-
-Will remove the macro.
-
->
+On 23/08/2023 20:42, Harshit Mogalapalli wrote:
+> devm_clk_bulk_get_all() can return zero when no clocks are obtained.
+> Passing zero to dev_err_probe() is a success which is incorrect.
+> 
+> Fixes: 605efbf43813 ("i2c: qcom-cci: Use dev_err_probe in probe function")
+> Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 > ---
-> bod
-
+> Only compile tested, found by static analysis with smatch.
+> 
+> https://lore.kernel.org/all/CAA8EJprTOjbOy7N5+8NiJaNNhK+_btdUUFcpHKPkMuCZj5umMA@mail.gmail.com/
+> ^^ I reported initially here, Dmitry suggested we need to fix it in a
+> different patch.
+> 
+> the Fixes commit used above pointed this bug, but the real fixes tag is this:
+> Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+> ---
+>   drivers/i2c/busses/i2c-qcom-cci.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+> index cf13abec05f1..414882c57d7f 100644
+> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> @@ -588,8 +588,10 @@ static int cci_probe(struct platform_device *pdev)
+>   	/* Clocks */
+>   
+>   	ret = devm_clk_bulk_get_all(dev, &cci->clocks);
+> -	if (ret < 1)
+> +	if (ret < 0)
+>   		return dev_err_probe(dev, ret, "failed to get clocks\n");
+> +	else if (!ret)
+> +		return dev_err_probe(dev, -EINVAL, "not enough clocks in DT\n");
+>   	cci->nclocks = ret;
+>   
+>   	/* Retrieve CCI clock rate */
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
