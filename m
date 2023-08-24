@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74B4C786DF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 13:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C70C786DFF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 13:34:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241032AbjHXLd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 07:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
+        id S241039AbjHXLeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 07:34:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241044AbjHXLdl (ORCPT
+        with ESMTP id S241048AbjHXLdm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 07:33:41 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0156919B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 04:33:39 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fee8b78097so44397815e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 04:33:38 -0700 (PDT)
+        Thu, 24 Aug 2023 07:33:42 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235FC1988
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 04:33:40 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31c5a2e8501so3363096f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 04:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692876817; x=1693481617;
+        d=linaro.org; s=google; t=1692876818; x=1693481618;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8WpELkDIoFcOBpglC5P3ZWupm38vhsMwP331NwzHDCg=;
-        b=sY8ALyLRjJDrsOn1XznUGHJfPgIfmyT3Tg0xOOF4HO37o86q3EqwE1RRaAZyepNNII
-         6AVjt45Xjf2TnmyXWQdGCPVs8dzdJFz/zerBQTxHAEaovgUyeqmeZN/vfUKxxPb4JCNp
-         RhgB8go+MX3G1C1cqAI0hPW3NoyQj/Y+FAVWNOpic6XpZiHkP4qwgil+v5/SoAgrMT/S
-         TRn7F29XL2SahYx6ddzq9G2pHXkH/B8ONHQtZxCvQ8PTjSoey7zo4Qyu1WwujMygbOSk
-         ar3dOvEz0nYYEEjYhgoVm/ZbkEF0ShfHWjemNl0Cj6soF7nRtca3qfwfPBCA2Sfax48P
-         eiSA==
+        bh=u1+VydXzfxLqbKymTpC2ek/0uqcSPu9zE4cPEud2i4c=;
+        b=zpVSJoV2OKTnEF/1zVaCh/yqQ080b9x0nwt7F01EzBGNMfogfM7g611Q97JS3isnRD
+         rtA/CYfT3MTKMPTz3MxC8KkH79z95zeXAv9eSBswKW51hEFYWq1cRe6/GCSnnMxz6vAg
+         1hbdk7KtCMyCLu+YKw4fBLJEMyet90sispYC6y2sj6zrbyHVpCRRkjseFHQXFWy/Jq3I
+         LyfdJ6mUE6jCwn0uoL5snWQIYQZr0PtQtrGnn8KjUI5shgA6vJpt0MGLQeN1NKAPZePF
+         eEGxscTy6RIDuLv6iUAQCvRdM1QV7QGvO5o9vuckk81IzF6H8EhDRSW2drP4BLTMjrwF
+         LAwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692876817; x=1693481617;
+        d=1e100.net; s=20221208; t=1692876818; x=1693481618;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8WpELkDIoFcOBpglC5P3ZWupm38vhsMwP331NwzHDCg=;
-        b=VwyCgZqMKDIyaazAXxJ32IKnfDy0jJz4uiRQaNX7rFpUdkPs+iaKIN5Uw39W3PlIYk
-         GGjZlgfFABoBy8oH2683SldjQ7LmNc3tQJTRbyt1WDulRE+B1NyHmSnvVYrHRTOhxfkw
-         vEJpvf82gVdrx+Soppu9Np1PGY1okpNDbz35a5QY0LqDLxZEGOXyJMKAdKAeQgsveCiQ
-         OZdiXmsIPtTCg6BnM3Hsm+uuTc3IqoW3l4EXRfu5Q8fnCa173D5huGJDAszXNnKH1bSp
-         cZV5c4jAoTYWYy0rrD+c1Pz0av/cyTGcQ7a3RMPl/TpMrHbTG7LAyGMQBf50erePh/TN
-         gXUg==
-X-Gm-Message-State: AOJu0YwO+GoUtTJzeeeNJxMuj4JOgoBTzUZC74w/NwhhbaP2jqh999SE
-        dc7JP4XINHIrqaC3cXtLjcENCA==
-X-Google-Smtp-Source: AGHT+IGjbctPhhJokdl8EmJDPZ3i+yvO6pNALDMAAqAje9IL5RVindngBZP8hJQWzMaLq33xiHrP+g==
-X-Received: by 2002:adf:f184:0:b0:314:35e2:e28d with SMTP id h4-20020adff184000000b0031435e2e28dmr12110907wro.13.1692876817511;
-        Thu, 24 Aug 2023 04:33:37 -0700 (PDT)
+        bh=u1+VydXzfxLqbKymTpC2ek/0uqcSPu9zE4cPEud2i4c=;
+        b=WVHB6ihGaI+CFah0VU/mRTkKRX+9N6O+agUmJKSxN+N+fQShm45K30NXC2L4jsf/yy
+         IiI6NourrN0Qrt2Kni4waLl2dtNqgYjIw3p0CsvhlGyZs/v7U+q6aFo6j07Kil/oSkA0
+         DsRUQSHzCnAtMD2ivD9iUUG8v76PwQonzYl0+yenhcXo3T38lo+FSWG94cfcrdqovUnZ
+         PCk0D98J8VFiwwySFyc/g6Y+ZZQqGksSNoxfDeNYQphEnY7rAg5SUWNVdg257PnqwlXS
+         /HFvHwkajdDAQ8et/oCVaJv3mc/bm9kx6KXeUDcz0mWCsDMslYtALmH02tYdbGxaV40B
+         U3uQ==
+X-Gm-Message-State: AOJu0YxWxRpQeo967RAaxAZ0xRkMoggqC5Op0iPwc2YpNwqIf8VytkLN
+        WWdhEZyXF8XF5+87TbfrN02YFQ==
+X-Google-Smtp-Source: AGHT+IH23BZ6wC+UHlfW7T/eaLxJ7f8JWRo2I+hbpN4B3h1hcfk9Qtaidv401lbLT2VCxb4+z9q1wQ==
+X-Received: by 2002:adf:e40c:0:b0:31a:d551:c2c0 with SMTP id g12-20020adfe40c000000b0031ad551c2c0mr12824744wrm.57.1692876818535;
+        Thu, 24 Aug 2023 04:33:38 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id e11-20020a5d65cb000000b003179d7ed4f3sm22063938wrw.12.2023.08.24.04.33.36
+        by smtp.gmail.com with ESMTPSA id e11-20020a5d65cb000000b003179d7ed4f3sm22063938wrw.12.2023.08.24.04.33.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Aug 2023 04:33:37 -0700 (PDT)
+        Thu, 24 Aug 2023 04:33:38 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 24 Aug 2023 13:33:25 +0200
-Subject: [PATCH v2 6/7] arm64: dts: qcom: sm8550: add TRNG node
+Date:   Thu, 24 Aug 2023 13:33:26 +0200
+Subject: [PATCH v2 7/7] arm64: dts: qcom: sm8450: add TRNG node
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230824-topic-sm8550-rng-v2-6-dfcafbb16a3e@linaro.org>
+Message-Id: <20230824-topic-sm8550-rng-v2-7-dfcafbb16a3e@linaro.org>
 References: <20230824-topic-sm8550-rng-v2-0-dfcafbb16a3e@linaro.org>
 In-Reply-To: <20230824-topic-sm8550-rng-v2-0-dfcafbb16a3e@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -72,20 +72,20 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=756;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=771;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=LCwZ4KC8gvTuRA6IYwBPb6uZ7MJ47erCdg3FgSczjSk=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk50AI/PPcJ1kGTnjICAPRr2U3fYANpHfpQIvkgI/s
- F+2GPeaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZOdACAAKCRB33NvayMhJ0cgUD/
- 9O/sp8RbQsdhI90sMdLRCcuPxF0rghLROCL/uMxN5I/TvrJ3axijUfEQjNjnaeOgqahQlNbI9hKXls
- 57RUBMw+cPaZ7mmJGEjxYNBvmBw92hOTor4Dx+q1+2jWXI7Go0j0U+iziubp3fvc1oHiTHeGpLvejI
- ZRS1jntKG1fJDSCZzb7WMTRystUhvOXizM+o7UkdvvCtiEXxbBsWzKmMv+YVcKYf+GZbk8MwPmjY7r
- KUVMezBYzyRDcxs92cNdVB18OUzPyJlt3L7jHADYf5V7qdcUWE6nLZwpCwUpEISuPSWbVrJdV04ytR
- IEbL0jikGHc15Wz955ySCMN4oQInrxga3CSeYGNa1no2rVkD1ZYR7nWV7SSN23AE/JVxKS8wiq1NIE
- DlBHIqpwnawBbVDvOAOiAHewPyHF0Sq497lFoFHWFczalJBfkD+L6HIQqb1YnKD18Pdzl0XG/DkexN
- r92QJK48RsicPiZNt+D6rFQuQv4xEw75ElKbmR//2nj0OveBZDLM3ZobPGuBUu4iu8ocZ+NI57n11A
- dVfvmZWNEU1cK5ffb7GqGt8hAVHEXSud65tfu6/Tx1C2MC4ybqNu6cKhJ7vUxv9/lMp5cP63yEy+Vi
- GulunAvRr7ppT5HfloBWBV8MsCrnmPnCKiZ4yj+4Rb1BUj/rNt59ltLNYWKg==
+ bh=m7/7ECgc0fg/dhJmabho4FQvGRAnMOFTyf9xpw4qgS0=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk50AJMPuB4Ma/4wWIQ6Uc5MaTwp6I1znHAJiVW4s9
+ 1hJuwEeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZOdACQAKCRB33NvayMhJ0ZwED/
+ 45gkp84ObxZzVGYOsHOcWnrEMnMXLTVDgi5lNRBTcN72PJd9lyMGRwMvMkm+k9Uno6DhbZbSazrCRk
+ CjaYhP7t0jp7EUFw+C/XU9iCqY8rtaIRZUFJ9iMKzhSt+CM9+ynB75eXrcZw84kdYokNEozSN5yD3j
+ Cy3LEd2ad7LT0rsV3VIa6eVF8Pb1hr6PlR2eQaCybugzfn7tCxC8+CyhbVcIxA4Iusr253aWLi/UhU
+ gz4kcwxylNSlm1beOOlP657cco8eFfIcmv1DApAGlYQrFAy39LDxmsXQufiHxuFVIo5DqKxNLKS545
+ 0mcAzP4Ugol5IYYlDwKSOeQ2wGttaGLNvJTnGmo7jATfyi9BxVk+l07WoGduFOTaAN4jpJgOPL2X63
+ IJ1Z36rD5YbUA4k0x3IH7KldQrN3WLU/NWGEWz+tRpPy3Ze3IvGdvyktECLvpIhWJ5xjG1YIQgnHl4
+ oCZ8Tn7gQNPyiss8lTrrTlEXs3QmawysaaeM65usNzgjRswUEkucRVUG03sWWMllXTAXdrpL5oJrsX
+ BJIUM0aG6Vl7Sw3+4kT1g0wW0LB6Fw8SDK+9i34UpKBx0sngDjU2IAiYrwI08ScCk6tYFWcsCMkce2
+ K21iK5QaR/qQoDZWX6AaDwa2qiZpct/clKPdXJ7ACnmIe2KihCZ2KdW1QH3A==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,29 +98,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the Qualcomm True Random Number Generator node.
+The SM8450 SoC has a True Random Number Generator, add the node with
+the correct compatible set.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 5 +++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index d115960bdeec..c42c5bd03a37 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1661,6 +1661,11 @@ mmss_noc: interconnect@1780000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 6ae64059cea5..e267c6286b1a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1738,6 +1738,11 @@ spi14: spi@a98000 {
+ 			};
  		};
  
 +		rng: rng@10c3000 {
-+			compatible = "qcom,sm8550-trng", "qcom,trng";
++			compatible = "qcom,sm8450-trng", "qcom,trng";
 +			reg = <0 0x010c3000 0 0x1000>;
 +		};
 +
  		pcie0: pci@1c00000 {
- 			device_type = "pci";
- 			compatible = "qcom,pcie-sm8550";
+ 			compatible = "qcom,pcie-sm8450-pcie0";
+ 			reg = <0 0x01c00000 0 0x3000>,
 
 -- 
 2.34.1
