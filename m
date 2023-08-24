@@ -2,148 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3EF9786792
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 08:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68DD77867C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 08:51:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240092AbjHXGiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 02:38:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
+        id S240162AbjHXGu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 02:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240153AbjHXGhq (ORCPT
+        with ESMTP id S240365AbjHXGu1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 02:37:46 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4392910FA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 23:37:43 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99c3c8adb27so829478066b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Aug 2023 23:37:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692859061; x=1693463861;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A5fZt6Ihkc3G2cDG6LVOei+M0bpuMD5Ug5ycUdw4MKc=;
-        b=wx45oOvnvkIna3h2LmYOLydvEnXg4o46Qs99Rkl3mS6KUN/wwOirMjfMi1lppx+HS2
-         OAufrP5OD4sc1QbIxkXhFfAJxxsdTiKrcDeduQ3yXzO+7LCc9m4Gi2t/wOwBb325g1Bu
-         QksGYMpB5QpFBjtyk8n7f8832dbhzPKbb9liqtMxod7Xdi7IQIOeRDo8sHYeRNumD7tm
-         YCQ90uZ9IUVHQIzxSS3UbkhSaujbed52S2Sfdh9szzbYCmls7Eq6mYKFc+wSCb/M5pjV
-         iGmmLof3Wf3Le3rabIyaTScmSAhXoFtI9n+IDiiuPB6MONRQHc23/u7HBwX4mj42CrrI
-         yQ3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692859061; x=1693463861;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A5fZt6Ihkc3G2cDG6LVOei+M0bpuMD5Ug5ycUdw4MKc=;
-        b=YbC1Q9COhr/FSRqQ4QcEGyvg7PIOxO2mgUcXtyD1vx5YMwmIEFAV4Zxa3V3FVR+/B9
-         re3t1Xw7sEauXZCZHLkT64UR5eFTmCitQCOp2bvyoeEAeZL6jZ4SGiLeKhWT8HACeeMt
-         w8TSanBVRBNrrUrqm5SLPaTqJlFkP1YsWrI/cccnALMrpRc/2XO5dPaqgWz/IRjQ38hx
-         sE2Nc2KrPuGRlvdnhOyyZKYl33cEd0RnZ2AFP3lTzPOAdDh6+aVXIv2VJ/FG1ukaTsJ7
-         1h+Fox5bslzu9FkZpzICto8Ht9kuKD2TAFwNJTql6JIr8pyyxv/TaSEjitZVlm4vuJgm
-         hqAg==
-X-Gm-Message-State: AOJu0YzNRznY2FIN4YpBm9eLaAHYabW3XGl4jLydPSJQuXX/I4CcWYsu
-        ovQUbI0ehxfJOBKGuA2aXztT8g==
-X-Google-Smtp-Source: AGHT+IGoDmzSJBNnU9nBS0McctkvqxjQkn8ai4uzfqjiY8PRizioW/1k/iggqzE+u4Fi0nsu6nS7+w==
-X-Received: by 2002:a17:906:5347:b0:9a1:ec69:23ec with SMTP id j7-20020a170906534700b009a1ec6923ecmr2562516ejo.17.1692859061599;
-        Wed, 23 Aug 2023 23:37:41 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id t16-20020a1709064f1000b0099297c99314sm9616794eju.113.2023.08.23.23.37.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Aug 2023 23:37:41 -0700 (PDT)
-Message-ID: <6574894d-e7ba-e5cc-a03f-76f97d1403ad@linaro.org>
-Date:   Thu, 24 Aug 2023 08:37:39 +0200
+        Thu, 24 Aug 2023 02:50:27 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C91101;
+        Wed, 23 Aug 2023 23:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1692859825; x=1724395825;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=7c1u4LL4oLHnfK/HLKKjWnjJYUV11K5kwkL59BvWvZQ=;
+  b=lfRUAr/vpKBhF23uxrxiiKODvBBdwDLTybzk0XsyyZ9MBYV5FvTD2Muo
+   UeKjUjT/ZTYnePPcLE6wugw/KgWThuzVJapHukm2q30dnmX6ChBkEYLMz
+   CNMKU90xgvu1j5GEnDo19fdER6+7uMg1c0wS20WBEP9xYZeFMqCRtNTmH
+   RPYefKTB1m+O7DUAn3y94T6g84jNhP5YCrg1DcHsxCmG2BT5ZWl/L31OS
+   nwzA2iVcMgngnXsuTkQlEhHCTP65lre7GAWVk0Mkq/yJOgByDR4d8ivZA
+   gTYFduUaNAa1serZa2/0vqrUUaJA4gmtmb7BHyhCitCm7sgQ7YAosnWx1
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10811"; a="378114827"
+X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
+   d="scan'208";a="378114827"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Aug 2023 23:50:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10811"; a="910789373"
+X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
+   d="scan'208";a="910789373"
+Received: from lkp-server02.sh.intel.com (HELO daf8bb0a381d) ([10.239.97.151])
+  by orsmga005.jf.intel.com with ESMTP; 23 Aug 2023 23:50:19 -0700
+Received: from kbuild by daf8bb0a381d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qZ4Ac-0001oG-27;
+        Thu, 24 Aug 2023 06:50:18 +0000
+Date:   Thu, 24 Aug 2023 14:49:52 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     =?iso-8859-1?Q?Adri=E1n?= Larumbe <adrian.larumbe@collabora.com>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        adrian.larumbe@collabora.com, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, healych@amazon.com,
+        kernel@collabora.com, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 6/6] drm/drm-file: Allow size unit selection in
+ drm_show_memory_stats
+Message-ID: <202308241401.Hr6gvevs-lkp@intel.com>
+References: <20230824013604.466224-7-adrian.larumbe@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 1/2] dt-bindings: crypto: qcom,prng: document SM8550
-Content-Language: en-US
-To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
-        neil.armstrong@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230822-topic-sm8550-rng-v1-0-8e10055165d1@linaro.org>
- <20230822-topic-sm8550-rng-v1-1-8e10055165d1@linaro.org>
- <8479869b-9984-41e3-9812-c7f5727cfd2c@linaro.org>
- <b73106c5-74e4-479d-8733-b99454768c15@quicinc.com>
- <26bae022-c114-4871-8715-73d7e8aeaa52@linaro.org>
- <f61ef601-1561-45d7-8f4a-947458472668@quicinc.com>
- <dd3d28f1-ff5e-49e6-a9f7-0ec9265017cc@linaro.org>
- <d44be821-228b-4035-aa1e-c4f58db90422@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <d44be821-228b-4035-aa1e-c4f58db90422@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230824013604.466224-7-adrian.larumbe@collabora.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/08/2023 01:32, Om Prakash Singh wrote:
-> 
-> 
-> On 8/23/2023 1:25 PM, Neil Armstrong wrote:
->> Hi,
->>
->> On 23/08/2023 02:10, Om Prakash Singh wrote:
->>>
->>>
->>> On 8/22/2023 9:34 PM, Konrad Dybcio wrote:
->>>> On 22.08.2023 16:54, Om Prakash Singh wrote:
->>>>> PRNG Block on most of newer target from Qualcomm have some 
->>>>> configuration where clock is configured by security firmware.
->>>>>
->>>>> Adding separate compatible string for each platform is overhead.
->>>>>
->>>>> We need to introduce common compatible string that can be used for 
->>>>> all platforms with same configuration.
->>>>>
->>>>> I would suggest to use "qcom,rng-ee" for newer platform, dropping 
->>>>> "p" also signifies it is not a Pseudo Random Number Generator.
->>>> Please reply inline and don't top-post.
->>>>
->>>>
->>>> Is this what you're trying to say?
->>>>
->>>> 1. sort out the clock requirements for designs where Linux manages it
->>>> Â Â Â  vs where the FW does so >
->>>> 2. introduce a new compatible for SoCs implementing a TRNG
->>>>
->>>> 3. for SoCs in 2., register the TRNG as a hwrng device
->>>
->>> Yes to all
->>
->> I can send a proposal, but that means writing a new driver for this 
->> compatible in drivers/char/hw_random/ right ?
-> 
-> We can add hwrng support in same driver like 
-> drivers/crypto/hisilicon/trng/trng.c
-> 
-> As Krzysztof is suggesting we need to have platform specific compatible 
+Hi Adrián,
 
-That's independent question
+kernel test robot noticed the following build warnings:
 
-> string, we can go with your change. for hwrng support I will send 
-> separate patches.
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on linus/master v6.5-rc7 next-20230823]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Any bindings decision should be made now. We don't produce knowingly
-incomplete bindings just to change them later. Therefore now you need to
-decide whether you call it prng-ee or something else.
+url:    https://github.com/intel-lab-lkp/linux/commits/Adri-n-Larumbe/drm-panfrost-Add-cycle-count-GPU-register-definitions/20230824-093848
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230824013604.466224-7-adrian.larumbe%40collabora.com
+patch subject: [PATCH v2 6/6] drm/drm-file: Allow size unit selection in drm_show_memory_stats
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230824/202308241401.Hr6gvevs-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230824/202308241401.Hr6gvevs-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308241401.Hr6gvevs-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/drm_file.c:905: warning: Function parameter or member 'unit' not described in 'drm_print_memory_stats'
 
 
-Best regards,
-Krzysztof
+vim +905 drivers/gpu/drm/drm_file.c
 
+686b21b5f6ca2f Rob Clark      2023-05-24  891  
+686b21b5f6ca2f Rob Clark      2023-05-24  892  /**
+686b21b5f6ca2f Rob Clark      2023-05-24  893   * drm_print_memory_stats - A helper to print memory stats
+686b21b5f6ca2f Rob Clark      2023-05-24  894   * @p: The printer to print output to
+686b21b5f6ca2f Rob Clark      2023-05-24  895   * @stats: The collected memory stats
+686b21b5f6ca2f Rob Clark      2023-05-24  896   * @supported_status: Bitmask of optional stats which are available
+686b21b5f6ca2f Rob Clark      2023-05-24  897   * @region: The memory region
+686b21b5f6ca2f Rob Clark      2023-05-24  898   *
+686b21b5f6ca2f Rob Clark      2023-05-24  899   */
+686b21b5f6ca2f Rob Clark      2023-05-24  900  void drm_print_memory_stats(struct drm_printer *p,
+686b21b5f6ca2f Rob Clark      2023-05-24  901  			    const struct drm_memory_stats *stats,
+686b21b5f6ca2f Rob Clark      2023-05-24  902  			    enum drm_gem_object_status supported_status,
+cccad8cb432637 Adrián Larumbe 2023-08-24  903  			    const char *region,
+cccad8cb432637 Adrián Larumbe 2023-08-24  904  			    unsigned int unit)
+686b21b5f6ca2f Rob Clark      2023-05-24 @905  {
+cccad8cb432637 Adrián Larumbe 2023-08-24  906  	print_size(p, "total", region, stats->private + stats->shared, unit);
+cccad8cb432637 Adrián Larumbe 2023-08-24  907  	print_size(p, "shared", region, stats->shared, unit);
+cccad8cb432637 Adrián Larumbe 2023-08-24  908  	print_size(p, "active", region, stats->active, unit);
+686b21b5f6ca2f Rob Clark      2023-05-24  909  
+686b21b5f6ca2f Rob Clark      2023-05-24  910  	if (supported_status & DRM_GEM_OBJECT_RESIDENT)
+cccad8cb432637 Adrián Larumbe 2023-08-24  911  		print_size(p, "resident", region, stats->resident, unit);
+686b21b5f6ca2f Rob Clark      2023-05-24  912  
+686b21b5f6ca2f Rob Clark      2023-05-24  913  	if (supported_status & DRM_GEM_OBJECT_PURGEABLE)
+cccad8cb432637 Adrián Larumbe 2023-08-24  914  		print_size(p, "purgeable", region, stats->purgeable, unit);
+686b21b5f6ca2f Rob Clark      2023-05-24  915  }
+686b21b5f6ca2f Rob Clark      2023-05-24  916  EXPORT_SYMBOL(drm_print_memory_stats);
+686b21b5f6ca2f Rob Clark      2023-05-24  917  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
