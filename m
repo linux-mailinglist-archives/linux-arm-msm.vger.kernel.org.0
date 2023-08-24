@@ -2,188 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBD37786C71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 11:59:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA45E786CC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 12:28:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240681AbjHXJ7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 05:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58858 "EHLO
+        id S234556AbjHXK1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 06:27:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240780AbjHXJ7E (ORCPT
+        with ESMTP id S240409AbjHXK1c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 05:59:04 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BC219A1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 02:59:02 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5009969be25so2228871e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 02:59:01 -0700 (PDT)
+        Thu, 24 Aug 2023 06:27:32 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C72319B4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 03:27:28 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b962c226ceso101940281fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 03:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692871140; x=1693475940;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YJpfYRgKZJ1m6qXhMS4xJKuQv/3eN0I4OwvdILv7FHk=;
-        b=VCsy1QOn/X9qGaCEKD5ovkYRhdHK/vjK9rDcbVqFhwkjvB7eyRm6FcmGC3cQoMYZRm
-         tN74nu0BztFi00Em0qEJIIHwX3K4XQK0W+Diog+yw1zpgeRD1EuTMzS6hA6lqAYCs4yG
-         pqo5BHt3Fg1Y3T7XCNOYQ5s2Rx1526z3B8qsDOnw086Gnmp0rZOeEza4A5oniwws4/ro
-         1REtVtkol8QyGppbLep94xdrtds9rFDmb22Bo3nznyRFFGoyJ3Le4L35KxnKWwb6zuC0
-         N7oMbdaKRCdf5DvpgNFuvzL6e9CQCzS9PLroAO7NSIbfuhh7xb+lPOdp8TovBVIDgDoi
-         ywBA==
+        d=linaro.org; s=google; t=1692872846; x=1693477646;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Ob/Mpz+t6vu5eWAFyajBgLSNxG2TBv1MxUudZj1Pd8=;
+        b=gspdKjHItrfP42lktMfQTgPFF8AAwRm2N5qPVxiEO363WXxT1nM9PTyo7rWcPxWl3+
+         QWPpCJ6Bap7aKFBR/lG05kUQXKU3/af7sEWtFlJn0unU0Y+GdVo0MEI2zed4NHwMAm/o
+         ASFU8kMrMZnXlQ87Za0fy5T4hZ9aNPy9W98uZwNq3wbqt2a1teY9TRKW5V2g+0R8m2pw
+         t9+XNeBjUrtoV2BS2VRuow2ZIto7x/PofKZzAKQndT3qnaG7nbta8RMlgBkDuZDsPInl
+         jVq7G2qn3fxOZ9uoB9xVURi7oXhRmAmI+9XurvQR8A1z0e0W82Rj3tL4NTzTcW6LcZt0
+         Vgeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692871140; x=1693475940;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YJpfYRgKZJ1m6qXhMS4xJKuQv/3eN0I4OwvdILv7FHk=;
-        b=PE2DCI2XnonTOz3tHJIxoQ+9i2ujPXXpiyFre3ePBh4Qnydphkl8rYICuqyTe5T+Sm
-         hIBNT/pcoCjCa/XKt8Wgja0yIuN/6Am8jb2vlKXxF42OhoBJuPUSS9wChgnX92b+XuJz
-         VSFHlnwN6lrVSg3YddiZ/bqmlt7zdTuBXAITgd1TiEhiFyoB45nF9qDk9Ds/Yd7sH4rp
-         o3WcQV8PLHxE2Oezkbv1APayKz5DIC+BkPCUP3cztgJXmpJOD3Duicy88Angc084vbrP
-         lJjbs8hhRBIBbyFvA2TmEhAMsYf35M4BE9GDjCLtK7dNse7u4fWyoLJdt89CRDOivkEO
-         nXqw==
-X-Gm-Message-State: AOJu0YyqeyyCQPLhrKaOXOvBNpDqPX2HTigx7w5pdLsDHfokUEna0g3H
-        9Bd8Se4qaC+XOp28vBkgS2ltaQ==
-X-Google-Smtp-Source: AGHT+IFAHH7AuS9bTrFHe4m8PM8Ol77p2373uTrhYZxrCBXmWSlIb+Hjylqxt2CaYaKNdkO/5dBByw==
-X-Received: by 2002:a05:6512:1594:b0:500:9b26:9760 with SMTP id bp20-20020a056512159400b005009b269760mr2783160lfb.13.1692871140446;
-        Thu, 24 Aug 2023 02:59:00 -0700 (PDT)
-Received: from [10.167.154.1] ([2a00:f41:4882:ba34:4490:938b:eab4:c5ef])
-        by smtp.gmail.com with ESMTPSA id y2-20020a197502000000b0050096712dc8sm712301lfe.277.2023.08.24.02.58.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Aug 2023 02:59:00 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 24 Aug 2023 11:58:54 +0200
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm845-tama: Add camera GPIO
- regulators
+        d=1e100.net; s=20221208; t=1692872846; x=1693477646;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+Ob/Mpz+t6vu5eWAFyajBgLSNxG2TBv1MxUudZj1Pd8=;
+        b=b4C4P01HunPCwZHO9oEPA2vnBfLhJ27BEtEwzXHpLTpwP6qAG4C918Qzco2fCLoBdN
+         ORDwuw7TNZYnYBmqJWc7qFB5cAWb3UoQ7Bn9PRi09USKeYTIrLjwctTYmAj/g7FwGNFs
+         mwSzW6TXThpOZZnjzrsfnGwD666k7rOCIW2A5p6Y1eqMMCdJgWQ4rKNRM5Lc2HP5p+Ud
+         jFEkmaoYaaXKc2gMJsaVX73iXg+7bH9maZUTcgt8834uO78l0yG7hb/fQuzp4nEyOp36
+         YxjFBaPsqpQkDO4KaRCCiSof1MV0ngak2h4zjigBwNpyi5UTG/9ktqS5NWtHT13nkwqY
+         NDHw==
+X-Gm-Message-State: AOJu0YyEu5Fs8e5duOpA9/ngiuZeyAff/jAnYA0YEoQba3ysBPXBLvjl
+        jiQE+f3yMiA6IKZ2XxyjJCORSA==
+X-Google-Smtp-Source: AGHT+IHaGANEzfvksntjsu132drw24mtmAag3H/CAM2o6dcFFliKCC2WGjxueezZdm4f47ZX32FGEA==
+X-Received: by 2002:a2e:9bcc:0:b0:2bc:bc70:263f with SMTP id w12-20020a2e9bcc000000b002bcbc70263fmr8339441ljj.0.1692872846643;
+        Thu, 24 Aug 2023 03:27:26 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:4882:ba34:4490:938b:eab4:c5ef? ([2a00:f41:4882:ba34:4490:938b:eab4:c5ef])
+        by smtp.gmail.com with ESMTPSA id y7-20020a2e95c7000000b002b9358f5088sm3711533ljh.53.2023.08.24.03.27.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Aug 2023 03:27:26 -0700 (PDT)
+Message-ID: <e86e9efe-b377-4cbc-8603-f308ea65d2b9@linaro.org>
+Date:   Thu, 24 Aug 2023 12:27:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-msm8996: Use read-only RCG ops for RPM
+ bus clocks
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+References: <20230612-topic-rcg2_ro-v1-0-e7d824aeb628@linaro.org>
+ <20230612-topic-rcg2_ro-v1-2-e7d824aeb628@linaro.org>
+ <20230613175626.aesimqz2alcqjtok@ripper>
+ <e3f69e9d-7c23-d5cd-e203-f1e435ba063a@linaro.org>
+ <0ca1922a-5d21-2c00-7514-6f90a9d2cb03@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <0ca1922a-5d21-2c00-7514-6f90a9d2cb03@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230824-topic-tama_gpio-v1-3-014e9d198dce@linaro.org>
-References: <20230824-topic-tama_gpio-v1-0-014e9d198dce@linaro.org>
-In-Reply-To: <20230824-topic-tama_gpio-v1-0-014e9d198dce@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692871134; l=2596;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=9Sh6/BNCkUcyih+fbYMiKEBA1FoWVsTp80dXXNG2QJE=;
- b=eLCmC+l0hzDNKNnZLdRG0XX1gLOa78hP/vqNv3YVjzBJyaGBk0LRPFLljG7oQ1dGuGmMJf9Ud
- sVwXlEiRtCbAqiOGlyhj/yimF5MjFac3GH0ZNa7Lu0x8VljxSDg5yy3
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Like on many other platforms, Tama devices utilize lots of GPIO-
-enabled regulators for the camera sensors. Define them in the DT.
+On 31.07.2023 13:01, Konrad Dybcio wrote:
+> On 13.06.2023 19:54, Konrad Dybcio wrote:
+>>
+>>
+>> On 13.06.2023 19:56, Bjorn Andersson wrote:
+>>> On Mon, Jun 12, 2023 at 11:22:48AM +0200, Konrad Dybcio wrote:
+>>>> The config/periph/system NoC clocks are wholly controlled by the
+>>>> RPM firmware and Linux should never ever alter their configuration.
+>>>>
+>>>
+>>> Does Linux need to know about them?
+>> Not really, but it allows us to get rates of their children.
+>>
+>> We can get rid of them if one can argue debugcc is enough. Unless
+>> we need clk_get_rate for some reason.
+>>
+> Any opinions?
+So, do we drop them?
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/sdm845-sony-xperia-tama.dtsi     | 57 ++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-index 430857233967..b02a1dc5fecd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-@@ -67,6 +67,36 @@ key-volume-up {
- 		};
- 	};
- 
-+	cam_vana_front_vreg: cam-vana-front-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "cam_vana_front_vreg";
-+		gpio = <&tlmm 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&chat_cam_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam_vana_rear_vreg: cam-vana-rear-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "cam_vana_rear_vreg";
-+		gpio = <&tlmm 27 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&main_cam_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam_vio_vreg: cam-vio-reagulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "cam_vio_vreg";
-+		gpio = <&pmi8998_gpios 12 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&cam_io_en>;
-+		pinctrl-names = "default";
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -592,6 +622,17 @@ snapshot_n: snapshot-n-state {
- 	};
- };
- 
-+&pmi8998_gpios {
-+	cam_io_en: cam-io-en-state {
-+		pins = "gpio12";
-+		function = "normal";
-+		qcom,drive-strength = <3>;
-+		power-source = <0>;
-+		drive-push-pull;
-+		output-low;
-+	};
-+};
-+
- &pmi8998_wled {
- 	default-brightness = <800>;
- 	qcom,switching-freq = <800>;
-@@ -660,6 +701,14 @@ sde_dsi_sleep: sde-dsi-sleep-state {
- 		bias-pull-down;
- 	};
- 
-+	chat_cam_pwr_en: chat-cam-pwr-en-state {
-+		pins = "gpio8";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	sde_te_active_sleep: sde-te-active-sleep-state {
- 		pins = "gpio10";
- 		function = "mdp_vsync";
-@@ -667,6 +716,14 @@ sde_te_active_sleep: sde-te-active-sleep-state {
- 		bias-pull-down;
- 	};
- 
-+	main_cam_pwr_en: main-cam-pwr-en-state {
-+		pins = "gpio27";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	ts_default: ts-default-state {
- 		reset-pins {
- 			pins = "gpio99";
-
--- 
-2.42.0
-
+Konrad
