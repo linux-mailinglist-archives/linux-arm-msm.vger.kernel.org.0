@@ -2,67 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAA767879C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 22:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAE2C7879DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Aug 2023 23:05:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243583AbjHXU6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 16:58:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46146 "EHLO
+        id S233033AbjHXVFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 17:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243634AbjHXU6R (ORCPT
+        with ESMTP id S243643AbjHXVEu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 16:58:17 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFFF19BF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 13:58:15 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d77c5414433so280910276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 13:58:15 -0700 (PDT)
+        Thu, 24 Aug 2023 17:04:50 -0400
+Received: from mail-vk1-xa34.google.com (mail-vk1-xa34.google.com [IPv6:2607:f8b0:4864:20::a34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E132106
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:04:26 -0700 (PDT)
+Received: by mail-vk1-xa34.google.com with SMTP id 71dfb90a1353d-48d0eb04c8cso132641e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 14:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692910695; x=1693515495;
+        d=linaro.org; s=google; t=1692911065; x=1693515865;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6SC9PrQbNiMYcNG0IokF3Oc/20YLCYRWG7NXvHzRdgs=;
-        b=ZlQoQ0BjePNgc6ILIOalIuRlNp+7cJzgMB3+P9lKEA1rzkZQLK/b4+w4dHpXKvUkoi
-         uV2wy+225oxECbKcnIbbvTegxDiJNs6DhfiMlE6xzaPCILTtvi7A+MjsGwV/8tg5FND1
-         NtUmu3H+aGKwaMJnLh0ZyI9+p3JgX8kG1QNCfZA1CDk0MrNompso9S2N3lYKs22ycNwn
-         rFzjaEg6UxAbpG2qYQukSdwMZZo0Z5ew7g/8TD+k1jvNasfh2PPUmX3it3GGDj1k9ZTd
-         XddfjnLXh7qnvC05tVrI5y9x35YW2GcvzfLWQCyXunw05fd2YWFJujPdvZ7bkHclfp+s
-         NzBw==
+        bh=WkoUCmzk6kpY7dtKJHiHxStqN+h+r9LgpuChyH7uCV8=;
+        b=Hm2mieTK64nboBW6aRDOHQOMRRpXIfJjIGW3+Nv9NG8xf5mb8heB4vdn2340LFcpgR
+         o1i49N8Tm7UgFcncyiLVWoSz+64AuBzDoMFOJFJNXpItMuCzYTts+L3F+xwNmqRoOaHr
+         FBeRTvDfOQoGomZIXHrEwHdqQMowdho66xvGMvF2AdGC+dUnTag6Vr9FzD4clIJFDaIf
+         4vr+e8Jhh97YA7U+Qe1mGtbqzd78RWaS1a/ao6aWz0HEZfOLQidTlF3Oxod6AWCmUTrN
+         HC32zsfCq9IycW6DFH+P4edvqOCHamN1NYOJDf2QnMZBC1cAFobUuZ3wgvydSTzu99Et
+         WDPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692910695; x=1693515495;
+        d=1e100.net; s=20221208; t=1692911065; x=1693515865;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6SC9PrQbNiMYcNG0IokF3Oc/20YLCYRWG7NXvHzRdgs=;
-        b=XegHoctLj6fiXiVLOIrkepLHuQ7dq96eREcDUdg1Vmeoa+JCu9XwYwlPZJjzuIPui6
-         JQ/6enQk5ROt+Ph0VQUrD4GgqkEe55EQfadWdv+1vpv/OCVPQiAVn7eznkkzPn8JjIA6
-         zev4FWfFaO9I3JVmQmHfEZIjNlXlAbmHYPjmQEfaKyQgOVD1OrK5bVOjEufOcPi4mOx+
-         ydAtqNF/xOiGxot+ZNmY7WpnUjiBxdpUdEJzWK1FAzddIKdOxBIxjhVWzzcp69O8+I7Y
-         ZKYc8SgpFRCkZd4mzx22uSaTbNY7704d9QYRmdMLfqdokr6X+VN3J+GT1TgvsRqgyVFt
-         Ulkw==
-X-Gm-Message-State: AOJu0YxaAnO2zX1IffBmfGTzhNC0aZ4EqiqDSC0nKMwhP387chlntsXA
-        fOaYggfSkTzp+b39ua+/22Fdqnl+OS+QgvP+cgTA8w==
-X-Google-Smtp-Source: AGHT+IEcKfE0x5VK/frMlxUrqmOPqsTO740MkftKBxAGMP5PXuXXJRpSYhg0Izfj2F6SJXCCyXTbpRUEZTUkpGZ30XY=
-X-Received: by 2002:a25:dfcf:0:b0:d78:133e:9ab4 with SMTP id
- w198-20020a25dfcf000000b00d78133e9ab4mr2194039ybg.58.1692910694878; Thu, 24
- Aug 2023 13:58:14 -0700 (PDT)
+        bh=WkoUCmzk6kpY7dtKJHiHxStqN+h+r9LgpuChyH7uCV8=;
+        b=jXCww0YQSL4hM+ZBzdgSHZhPUVr07UOVmvgoHL58t5JdZ35dQHTQDP+Yr9wiFiI/99
+         DNrV6ekiDfi6wJ0LHJPHyO/1P8cpvlvGvmlRstY3hguq1qj6nQ/q3TPn4R0dO3WTo42i
+         CLZlGFuqjLNpNcwIkgEtTLPPcP6cJfr5VAAgezkg+9dFvB4421wBzNMwlTqPPp+1S3W+
+         PTzTmzkXa5UDGneGHU4rX2RL9EoAMXavhGShh7PLorkd4eMH6a6gYz+OqTTpiBXYG9YF
+         Ukyd6vMu4EOzr/6szGsP3J9nrVU/r0ywROW/nM+e9rO9iDRBrOnylkGkwpdPYbQ6vEub
+         L8PA==
+X-Gm-Message-State: AOJu0Yy3Do6tB6OIU9aWS28kp3WgtGR9p9zj18hcRMyZEqSH/v2wXYT+
+        DLQ/dplO4MXg0uNcRXYAvnKK1asc46IE3O8AV+BhJQ==
+X-Google-Smtp-Source: AGHT+IGeJ7/r6a9gBrmT0pw+udF19ySh/nVFMaDVPBWMqeCt+B+Sx87zxPTnpBNBUFQEk0Z3KZmLmA0nHnEvVUN9N88=
+X-Received: by 2002:a1f:e643:0:b0:48d:1cf0:f3c3 with SMTP id
+ d64-20020a1fe643000000b0048d1cf0f3c3mr10466825vkh.14.1692911065190; Thu, 24
+ Aug 2023 14:04:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230823171208.18382-1-athierry@redhat.com> <20230823171208.18382-2-athierry@redhat.com>
-In-Reply-To: <20230823171208.18382-2-athierry@redhat.com>
+References: <20230824173410.550126-1-quic_ajipan@quicinc.com> <20230824173410.550126-5-quic_ajipan@quicinc.com>
+In-Reply-To: <20230824173410.550126-5-quic_ajipan@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 24 Aug 2023 23:58:03 +0300
-Message-ID: <CAA8EJpp0YTREszG_VdEQouvn+_qYLFX8ZmUbC1xya9Snmcji0w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] phy: qcom-qmp-usb: initialize PCS_USB registers
-To:     Adrien Thierry <athierry@redhat.com>
+Date:   Fri, 25 Aug 2023 00:04:13 +0300
+Message-ID: <CAA8EJpo=ZDmoMDyfHEZV9Ng6yM=Z2SdTyPSG246AmLKVR0-vwQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] clk: qcom: Add GCC driver support for SM4450
+To:     Ajit Pandey <quic_ajipan@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,47 +77,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Aug 2023 at 20:12, Adrien Thierry <athierry@redhat.com> wrote:
+On Thu, 24 Aug 2023 at 20:36, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
 >
-> Currently, PCS_USB registers that have their initialization data in a
-> pcs_usb_tbl table are never initialized. Fix that.
+> Add Global Clock Controller (GCC) support for SM4450 platform.
 >
-> Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
-> Signed-off-by: Adrien Thierry <athierry@redhat.com>
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> index 466f0a56c82e..ccbe64f7897e 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> @@ -2233,6 +2233,7 @@ static int qmp_usb_power_on(struct phy *phy)
->         void __iomem *tx = qmp->tx;
->         void __iomem *rx = qmp->rx;
->         void __iomem *pcs = qmp->pcs;
-> +       void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
->         void __iomem *status;
->         unsigned int val;
->         int ret;
-> @@ -2255,6 +2256,7 @@ static int qmp_usb_power_on(struct phy *phy)
->         }
->
->         qmp_usb_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
-> +       qmp_usb_configure(pcs_usb, cfg->pcs_usb_tbl, cfg->pcs_usb_tbl_num);
+>  drivers/clk/qcom/Kconfig      |    9 +
+>  drivers/clk/qcom/Makefile     |    1 +
+>  drivers/clk/qcom/gcc-sm4450.c | 2898 +++++++++++++++++++++++++++++++++
+>  3 files changed, 2908 insertions(+)
+>  create mode 100644 drivers/clk/qcom/gcc-sm4450.c
 
-I think we don't need to fallback to pcs here: if there is a separate
-pcs_usb_tbl, we need a separate pcs_usb region. Just pass qmp->pcs_usb
-here.
-
->
->         if (cfg->has_pwrdn_delay)
->                 usleep_range(10, 20);
-> --
-> 2.41.0
->
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
--- 
+--
 With best wishes
 Dmitry
