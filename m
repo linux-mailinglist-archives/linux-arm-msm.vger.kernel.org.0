@@ -2,57 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BDF4789022
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:08:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BF3A789036
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:12:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231482AbjHYVIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 17:08:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43532 "EHLO
+        id S230317AbjHYVLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 17:11:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231344AbjHYVHc (ORCPT
+        with ESMTP id S231466AbjHYVLc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 17:07:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8810E210D;
-        Fri, 25 Aug 2023 14:07:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C8A2623E9;
-        Fri, 25 Aug 2023 21:07:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFC4C433C8;
-        Fri, 25 Aug 2023 21:07:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692997649;
-        bh=3LZslYY/Z/fNex0qpgIIxBGEpf6J7Qp2wNTLVeCxNak=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LR9LYHTCSNbzSLc+a2zNZ2I+W25v/mVPTtA0dzLRVhwjv9G0VM6C/01wxbPexNJtO
-         IN/lLLs1iPoI+nWUt3VCKz1XqUmuLxiAnZjft463YjEooqf2k74YRuhYY2sgojQpww
-         2w6ScwoHoYzScThIWRmnw+vI3kWLkM5Kn4Gr3VHZEEhTDd0X0IHsQdeL4SY870EbV1
-         DkkSIsiiqW2O7RsRITyHVZmniYFOgVbiQ4NOQEFj7zNv0s596W/h8p9WYVIpNkRuyD
-         Aqk/94KqUdul3h4G3phhhwwYh3HQYqt1WnZlAZhqehRfSHC2yVWQ00I693urTikF50
-         80QLqKOqr3tEg==
-Date:   Fri, 25 Aug 2023 14:07:27 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
-        quic_psodagud@quicinc.com, avmenon@quicinc.com,
-        abel.vesa@linaro.org, quic_spuppala@quicinc.com
-Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
- ufs
-Message-ID: <20230825210727.GA1366@sol.localdomain>
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
+        Fri, 25 Aug 2023 17:11:32 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 706E226BC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:11:23 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4ffae5bdc9aso2099523e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692997881; x=1693602681;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kya4VCOyGVlh2JiHxWE9QAp8dwJuU5ZWnBug4TSNcmc=;
+        b=rUshhZIsDiBo7WCfwqNHWQsr1qW1f+nm7pBGYXNACMHqnRCANX6kz9d/0PDcrGwBBh
+         HaTa+xgMW0xEMMcNCcly+PlLMX/GUkfDn+dQ4+NIclI765ieTygGxQDoN9vwNeaay8sT
+         g8ZC5Dh4C7YHMv8AwjM31Viq4x0dnu2ICZkvvIljkteBcJwlHGdrNW31R7vC9dLVEeW5
+         2EMxPASS96KLCda+WjGTkSIxaGR1RjjMG4XpL0g6ZG0qObCKr7vfJRH5ON+zPSOQBNoC
+         4vVWcpWflHap26Nw8FIR5FOzfYLHdA7Bru+HpZINh4xTPWKuwadBZPhgJpZtIfz1P4e+
+         M2DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692997881; x=1693602681;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kya4VCOyGVlh2JiHxWE9QAp8dwJuU5ZWnBug4TSNcmc=;
+        b=YkIcoTZtiMBZg+O44Nuq0M3uVilePYzCtRHWofeGzgjPEdO3AhCGKlSRZWbhAOlH0z
+         Vz4T0puukpC7NO9j7UcYG+6lTy7e/axEBSP6zdX4mYLqTs7gxlUrWXsd/3LNkirzwr7Y
+         fn0Xx7F0oc6l5evDhZiguvsusi5PObX6qehlz0+miletFNSYdqRENrxf1rt1Li/WCQd7
+         mGdxDgGzLf9qxJEA4VHV1sKC1cWpqEP6j0RxFuoH0zUkhIwLKADvq3Z3OCFjjAvRiJ/e
+         BxDaGZdL+UuWLAcce5zJOomteUC0X8J8imAgF8u0A+IwRdJkcFjW3GNg4SJg6ZS+QDAD
+         9OYg==
+X-Gm-Message-State: AOJu0YzEIjlUjEkXQwPqyoXB02QSPl4iGuiHHjZGUKsdj4NR84cQ3xk8
+        TgTWR9ZkDnDgyA2VVncBDNVKXQ==
+X-Google-Smtp-Source: AGHT+IFCHIc2JcxoyfDle7JrH6QpkCqTl6D+tQn/CBxZH9wBJ8SwrNvY6pRv0pSZWS3KOnX9Yjq7lg==
+X-Received: by 2002:a05:6512:2395:b0:4fb:73ce:8e7d with SMTP id c21-20020a056512239500b004fb73ce8e7dmr18072250lfv.15.1692997881664;
+        Fri, 25 Aug 2023 14:11:21 -0700 (PDT)
+Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
+        by smtp.gmail.com with ESMTPSA id a9-20020ac25209000000b004fba077e654sm419947lfl.194.2023.08.25.14.11.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Aug 2023 14:11:21 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Fri, 25 Aug 2023 23:11:19 +0200
+Subject: [PATCH] drm/msm/adreno: Fix SM6375 GPU ID
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230825-topic-6375_gpu_id-v1-1-e24f46d7f139@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPYY6WQC/x2NQQqDMBAAvyJ7dsFEo61fKUWSuOqCxJDUIoh/d
+ /E4A8OckCkxZeiLExL9OfMWBFRZgF9smAl5FAZd6bp6aYO/LbLHtu7MMMd94BH9pMy7Je1U04F
+ 0zmZCl2zwi5RhX1eRMdHExzP6fK/rBtiaTD54AAAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692997880; l=998;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=a6ePufxP5h1WTj5TbQcKiSyADMI68Z8zNnOB43e2WE0=;
+ b=dwUoiS3miQJ8RFJu8BQ2LZjqZuPBTyXEv3x93TNYv38hpwzXFKGCWybgzrkRoG11fbheSogbw
+ c23YzyPOeqsBUEECLSnh3lRscEBvWd0Yhh9fjcapUO0IcoJNkEaIQuO
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,78 +86,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivas,
+SM6375 comes with a patchlevel=1. Fix the chipid up to reflect that.
 
-On Fri, Aug 25, 2023 at 11:19:41AM +0100, Srinivas Kandagatla wrote:
-> 
-> On 19/07/2023 18:04, Gaurav Kashyap wrote:
-> > These patches add support to Qualcomm ICE (Inline Crypto Enginr) for hardware
-> > wrapped keys using Qualcomm Hardware Key Manager (HWKM) and are made on top
-> > of a rebased version  Eric Bigger's set of changes to support wrapped keys in
-> > fscrypt and block below:
-> > https://git.kernel.org/pub/scm/fs/fscrypt/linux.git/log/?h=wrapped-keys-v7
-> > (The rebased patches are not uploaded here)
-> > 
-> > Ref v1 here:
-> > https://lore.kernel.org/linux-scsi/20211206225725.77512-1-quic_gaurkash@quicinc.com/
-> > 
-> > Explanation and use of hardware-wrapped-keys can be found here:
-> > Documentation/block/inline-encryption.rst
-> > 
-> > This patch is organized as follows:
-> > 
-> > Patch 1 - Prepares ICE and storage layers (UFS and EMMC) to pass around wrapped keys.
-> > Patch 2 - Adds a new SCM api to support deriving software secret when wrapped keys are used
-> > Patch 3-4 - Adds support for wrapped keys in the ICE driver. This includes adding HWKM support
-> > Patch 5-6 - Adds support for wrapped keys in UFS
-> > Patch 7-10 - Supports generate, prepare and import functionality in ICE and UFS
-> > 
-> > NOTE: MMC will have similar changes to UFS and will be uploaded in a different patchset
-> >        Patch 3, 4, 8, 10 will have MMC equivalents.
-> > 
-> > Testing:
-> > Test platform: SM8550 MTP
-> > Engineering trustzone image is required to test this feature only
-> > for SM8550. For SM8650 onwards, all trustzone changes to support this
-> > will be part of the released images.
-> 
-> AFAIU, Prior to these proposed changes in scm, HWKM was done with help of
-> TA(Trusted Application) for generate, import, unwrap ... functionality.
-> 
-> 1. What is the reason for moving this from TA to new smc calls?
-> 
-> Is this because of missing smckinvoke support in upstream?
-> 
-> How scalable is this approach? Are we going to add new sec sys calls to
-> every interface to TA?
-> 
-> 2. How are the older SoCs going to deal with this, given that you are
-> changing drivers that are common across these?
-> 
-> Have you tested these patches on any older platforms?
-> 
-> What happens if someone want to add support to wrapped keys to this
-> platforms in upstream, How is that going to be handled?
-> 
-> As I understand with this, we will endup with two possible solutions over
-> time in upstream.
+Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying GPU")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It's true that Qualcomm based Android devices already use HW-wrapped keys on
-SoCs earlier than SM8650.  The problem is that the key generation, import, and
-conversion were added to Android's KeyMint HAL, as a quick way to get the
-feature out the door when it was needed (so to speak).  Unfortunately this
-coupled this feature unnecessarily to the Android KeyMint and the corresponding
-(closed source) userspace HAL provided by Qualcomm, which it's not actually
-related to.  I'd guess that Qualcomm's closed source userspace HAL makes SMC
-calls into Qualcomm's KeyMint TA, but I have no insight into those details.
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 575e7c56219f..f2d9d34ed50f 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -331,7 +331,7 @@ static const struct adreno_info gpulist[] = {
+ 		),
+ 	}, {
+ 		.machine = "qcom,sm6375",
+-		.chip_ids = ADRENO_CHIP_IDS(0x06010900),
++		.chip_ids = ADRENO_CHIP_IDS(0x06010901),
+ 		.family = ADRENO_6XX_GEN1,
+ 		.revn = 619,
+ 		.fw = {
 
-The new SMC calls eliminate the dependency on the Android-specific KeyMint.
-They're also being documented by Qualcomm.  So, as this patchset does, they can
-be used by Linux in the implementation of new ioctls which provide a vendor
-independent interface to HW-wrapped key generation, import, and conversion.
+---
+base-commit: 6269320850097903b30be8f07a5c61d9f7592393
+change-id: 20230825-topic-6375_gpu_id-cf1596e2b147
 
-I think the new approach is the only one that is viable outside the Android
-context.  As such, I don't think anyone has any plan to upstream support for
-HW-wrapped keys for older Qualcomm SoCs that lack the new interface.
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-- Eric
