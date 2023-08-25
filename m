@@ -2,171 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9BAA7884AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 12:21:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C5BA7884F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 12:31:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234714AbjHYKUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 06:20:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35014 "EHLO
+        id S236443AbjHYKbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 06:31:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244389AbjHYKUH (ORCPT
+        with ESMTP id S240997AbjHYKbG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 06:20:07 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6736D2691
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 03:19:44 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52a250aa012so1127304a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 03:19:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692958783; x=1693563583;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8hmeN79sYGm2yupcg1U1ZPEVlv8mSwCgTnsR3HDlFcg=;
-        b=P1oUEbW6Avm1OcDDYWJCLmKiBo8QGj9EuaqkPpWDnihUz9zA78OWflrSORwwLycFFe
-         +hzuHp1q1lpm/Pt43kAvQvoVhHQd1Gt9IoNLMVAqkfa9inOi3g451+u9nKAOF4uvzfM7
-         w6YBMQZd0bdA8CokkDkOVw00zhPitOpLevFM8O5KTeV6qmF5XPxe6nPc/ctTqrZGH2Im
-         dUaI6+kpgRMaxoEgUk0xHP5G8TpB6idTW8qsN4VxK4X9T5SiGZGAasGtb6tyGtMN0uDd
-         za9gsaGZRzZ3LVzjqYEg0ljOelY8Ix3GmiMTbyi5RgQi4zAGzF66kk/HzC0k+uw1WZTC
-         NYRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692958783; x=1693563583;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8hmeN79sYGm2yupcg1U1ZPEVlv8mSwCgTnsR3HDlFcg=;
-        b=RPeAHxlJBOmmBgQ47A12BvwL7ApOQpLGcaEBRXjWwO/gIRO9SQiyLQziTNbDgidVCw
-         TiHKDwQ6UT6OulzhiouiHJGxlT3kUdNxN8n6GSC25enxxPCAvxqTYpnjrSXB0VorPEGd
-         MCd07LrzeCTu9OSy4Q4Yk7ERqJaYBvja1jgJA5HzPxxUeQLgS1iD43fA25fM1eHc+OMn
-         bMXtZIHAN1/5Efbo54+Fz0otlosPXm/VYTM4dsgiEv9oTJ9KnB1J0kAaTL+GXftc+7+/
-         fbH14sbNBlsxDc++0nd8YdLKOf5YOc+s7nBScM/GtdP7nZYNqYI5Jgv+ulyYzoLk1vQ1
-         31xg==
-X-Gm-Message-State: AOJu0YxgzxFd76yXaJ0DC0BL3MOJjOVmoSpU9cjUufbXkuMxhpiwfSwv
-        LJ0t/1dRAaLBR/sJc7BMnEkONQ==
-X-Google-Smtp-Source: AGHT+IFLSi2VQHJDpvE/O9nRgSIMhEaB16ib6oXZqIwxs7UTphQws++T+eBZGRZa8TvD2hXubHxxqw==
-X-Received: by 2002:a17:906:220f:b0:9a3:faf:7aa8 with SMTP id s15-20020a170906220f00b009a30faf7aa8mr2104632ejs.10.1692958782813;
-        Fri, 25 Aug 2023 03:19:42 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id z7-20020a17090655c700b00992f309cfe8sm810217ejp.178.2023.08.25.03.19.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 03:19:42 -0700 (PDT)
-Message-ID: <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
-Date:   Fri, 25 Aug 2023 11:19:41 +0100
+        Fri, 25 Aug 2023 06:31:06 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2845A9E;
+        Fri, 25 Aug 2023 03:31:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1692959464; x=1724495464;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wVJ88ABD5p0H2+9hwW3zAACiH9v23ThhILL1RUf5G20=;
+  b=ON4UjiYvi6rEoGKjzkMsr/RF1ShOWhtCJnhFdtkdKCW6JsCgQzWbIURf
+   rv8zT6SgEDdMXWD8xZfYUp7h1uO6bkfIrNs3OKfHE3iCDifNFzZ60Femj
+   eVkSNe53eD802I/yyAeKEVGBgTKZjtCHHHiOLsIN5aJqZfsKeO/w9ziDd
+   lBjzUMMjw0EludFu9z4C5APoalQXWmVKtRQhz5eunWTa9kg4Y5CEdoOj4
+   f9RoJ7SSvraQJlxTOVBHpvGbLDF3y/VU5o4VG+Cfk55ySh7u2j1vMN1hX
+   gcIrGUCFtTc/KNK0Tu2ric2KJ1cMMmEtEC0RRuSxlchmIOdkZMXIy5Wg2
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10812"; a="373554767"
+X-IronPort-AV: E=Sophos;i="6.02,195,1688454000"; 
+   d="scan'208";a="373554767"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2023 03:31:03 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10812"; a="687259081"
+X-IronPort-AV: E=Sophos;i="6.02,195,1688454000"; 
+   d="scan'208";a="687259081"
+Received: from lkp-server02.sh.intel.com (HELO daf8bb0a381d) ([10.239.97.151])
+  by orsmga003.jf.intel.com with ESMTP; 25 Aug 2023 03:30:50 -0700
+Received: from kbuild by daf8bb0a381d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qZU5Y-0003Rw-15;
+        Fri, 25 Aug 2023 10:30:48 +0000
+Date:   Fri, 25 Aug 2023 18:29:54 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: Re: [PATCH v5 10/10] media: v4l2: Add mem2mem helpers for
+ DELETE_BUFS ioctl
+Message-ID: <202308251828.fSyIXACx-lkp@intel.com>
+References: <20230824092133.39510-11-benjamin.gaignard@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
- ufs
-Content-Language: en-US
-To:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ebiggers@google.com
-Cc:     linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
-        quic_psodagud@quicinc.com, avmenon@quicinc.com,
-        abel.vesa@linaro.org, quic_spuppala@quicinc.com
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230824092133.39510-11-benjamin.gaignard@collabora.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Benjamin,
 
-On 19/07/2023 18:04, Gaurav Kashyap wrote:
-> These patches add support to Qualcomm ICE (Inline Crypto Enginr) for hardware
-> wrapped keys using Qualcomm Hardware Key Manager (HWKM) and are made on top
-> of a rebased version  Eric Bigger's set of changes to support wrapped keys in
-> fscrypt and block below:
-> https://git.kernel.org/pub/scm/fs/fscrypt/linux.git/log/?h=wrapped-keys-v7
-> (The rebased patches are not uploaded here)
-> 
-> Ref v1 here:
-> https://lore.kernel.org/linux-scsi/20211206225725.77512-1-quic_gaurkash@quicinc.com/
-> 
-> Explanation and use of hardware-wrapped-keys can be found here:
-> Documentation/block/inline-encryption.rst
-> 
-> This patch is organized as follows:
-> 
-> Patch 1 - Prepares ICE and storage layers (UFS and EMMC) to pass around wrapped keys.
-> Patch 2 - Adds a new SCM api to support deriving software secret when wrapped keys are used
-> Patch 3-4 - Adds support for wrapped keys in the ICE driver. This includes adding HWKM support
-> Patch 5-6 - Adds support for wrapped keys in UFS
-> Patch 7-10 - Supports generate, prepare and import functionality in ICE and UFS
-> 
-> NOTE: MMC will have similar changes to UFS and will be uploaded in a different patchset
->        Patch 3, 4, 8, 10 will have MMC equivalents.
-> 
-> Testing:
-> Test platform: SM8550 MTP
-> Engineering trustzone image is required to test this feature only
-> for SM8550. For SM8650 onwards, all trustzone changes to support this
-> will be part of the released images.
+kernel test robot noticed the following build errors:
 
-AFAIU, Prior to these proposed changes in scm, HWKM was done with help 
-of TA(Trusted Application) for generate, import, unwrap ... functionality.
+[auto build test ERROR on next-20230824]
+[also build test ERROR on v6.5-rc7]
+[cannot apply to linus/master v6.5-rc7 v6.5-rc6 v6.5-rc5]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-1. What is the reason for moving this from TA to new smc calls?
+url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Rework-offset-cookie-encoding-pattern/20230824-172416
+base:   next-20230824
+patch link:    https://lore.kernel.org/r/20230824092133.39510-11-benjamin.gaignard%40collabora.com
+patch subject: [PATCH v5 10/10] media: v4l2: Add mem2mem helpers for DELETE_BUFS ioctl
+config: alpha-randconfig-r005-20230825 (https://download.01.org/0day-ci/archive/20230825/202308251828.fSyIXACx-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230825/202308251828.fSyIXACx-lkp@intel.com/reproduce)
 
-Is this because of missing smckinvoke support in upstream?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202308251828.fSyIXACx-lkp@intel.com/
 
-How scalable is this approach? Are we going to add new sec sys calls to 
-every interface to TA?
+All errors (new ones prefixed by >>):
 
-2. How are the older SoCs going to deal with this, given that you are 
-changing drivers that are common across these?
-
-Have you tested these patches on any older platforms?
-
-What happens if someone want to add support to wrapped keys to this 
-platforms in upstream, How is that going to be handled?
-
-As I understand with this, we will endup with two possible solutions 
-over time in upstream.
+>> drivers/media/test-drivers/vim2m.c:963:10: error: 'const struct v4l2_ioctl_ops' has no member named 'vidioc_delete_buf'; did you mean 'vidioc_delete_bufs'?
+     963 |         .vidioc_delete_buf      = v4l2_m2m_ioctl_delete_buf,
+         |          ^~~~~~~~~~~~~~~~~
+         |          vidioc_delete_bufs
+>> drivers/media/test-drivers/vim2m.c:963:35: error: 'v4l2_m2m_ioctl_delete_buf' undeclared here (not in a function); did you mean 'v4l2_m2m_ioctl_delete_bufs'?
+     963 |         .vidioc_delete_buf      = v4l2_m2m_ioctl_delete_buf,
+         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                   v4l2_m2m_ioctl_delete_bufs
 
 
-thanks,
---srini
+vim +963 drivers/media/test-drivers/vim2m.c
 
-> The engineering changes primarily contain hooks to generate, import and
-> prepare keys for HW wrapped disk encryption.
-> 
-> The changes were tested by mounting initramfs and running the fscryptctl
-> tool (Ref: https://github.com/ebiggers/fscryptctl/tree/wip-wrapped-keys) to
-> generate and prepare keys, as well as to set policies on folders, which
-> consequently invokes disk encryption flows through UFS.
-> 
-> Gaurav Kashyap (10):
->    ice, ufs, mmc: use blk_crypto_key for program_key
->    qcom_scm: scm call for deriving a software secret
->    soc: qcom: ice: add hwkm support in ice
->    soc: qcom: ice: support for hardware wrapped keys
->    ufs: core: support wrapped keys in ufs core
->    ufs: host: wrapped keys support in ufs qcom
->    qcom_scm: scm call for create, prepare and import keys
->    ufs: core: add support for generate, import and prepare keys
->    soc: qcom: support for generate, import and prepare key
->    ufs: host: support for generate, import and prepare key
-> 
->   drivers/firmware/qcom_scm.c            | 292 +++++++++++++++++++++++
->   drivers/firmware/qcom_scm.h            |   4 +
->   drivers/mmc/host/cqhci-crypto.c        |   7 +-
->   drivers/mmc/host/cqhci.h               |   2 +
->   drivers/mmc/host/sdhci-msm.c           |   6 +-
->   drivers/soc/qcom/ice.c                 | 309 +++++++++++++++++++++++--
->   drivers/ufs/core/ufshcd-crypto.c       |  92 +++++++-
->   drivers/ufs/host/ufs-qcom.c            |  63 ++++-
->   include/linux/firmware/qcom/qcom_scm.h |  13 ++
->   include/soc/qcom/ice.h                 |  18 +-
->   include/ufs/ufshcd.h                   |  25 ++
->   11 files changed, 797 insertions(+), 34 deletions(-)
-> 
+   942	
+   943	static const struct v4l2_ioctl_ops vim2m_ioctl_ops = {
+   944		.vidioc_querycap	= vidioc_querycap,
+   945	
+   946		.vidioc_enum_fmt_vid_cap = vidioc_enum_fmt_vid_cap,
+   947		.vidioc_enum_framesizes = vidioc_enum_framesizes,
+   948		.vidioc_g_fmt_vid_cap	= vidioc_g_fmt_vid_cap,
+   949		.vidioc_try_fmt_vid_cap	= vidioc_try_fmt_vid_cap,
+   950		.vidioc_s_fmt_vid_cap	= vidioc_s_fmt_vid_cap,
+   951	
+   952		.vidioc_enum_fmt_vid_out = vidioc_enum_fmt_vid_out,
+   953		.vidioc_g_fmt_vid_out	= vidioc_g_fmt_vid_out,
+   954		.vidioc_try_fmt_vid_out	= vidioc_try_fmt_vid_out,
+   955		.vidioc_s_fmt_vid_out	= vidioc_s_fmt_vid_out,
+   956	
+   957		.vidioc_reqbufs		= v4l2_m2m_ioctl_reqbufs,
+   958		.vidioc_querybuf	= v4l2_m2m_ioctl_querybuf,
+   959		.vidioc_qbuf		= v4l2_m2m_ioctl_qbuf,
+   960		.vidioc_dqbuf		= v4l2_m2m_ioctl_dqbuf,
+   961		.vidioc_prepare_buf	= v4l2_m2m_ioctl_prepare_buf,
+   962		.vidioc_create_bufs	= v4l2_m2m_ioctl_create_bufs,
+ > 963		.vidioc_delete_buf	= v4l2_m2m_ioctl_delete_buf,
+   964		.vidioc_expbuf		= v4l2_m2m_ioctl_expbuf,
+   965	
+   966		.vidioc_streamon	= v4l2_m2m_ioctl_streamon,
+   967		.vidioc_streamoff	= v4l2_m2m_ioctl_streamoff,
+   968	
+   969		.vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
+   970		.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+   971	};
+   972	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
