@@ -2,79 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC66178834E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 11:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D784A7883D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 11:37:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244122AbjHYJOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 05:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48710 "EHLO
+        id S229781AbjHYJg1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 05:36:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244204AbjHYJOQ (ORCPT
+        with ESMTP id S244405AbjHYJgQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 05:14:16 -0400
+        Fri, 25 Aug 2023 05:36:16 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B07A1FC4;
-        Fri, 25 Aug 2023 02:14:13 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37P8SFHK006449;
-        Fri, 25 Aug 2023 09:13:48 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 327AE1FEC;
+        Fri, 25 Aug 2023 02:36:13 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37P5nXB8007988;
+        Fri, 25 Aug 2023 09:35:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=YAJKLOsaabW5kcpq5RYHImstw1IHiRUm+nOWUteEFWU=;
- b=oV1PCANjq2TCFJ18JZ4oMReG4OCviFrD408nN2llEKyD5qi79gcSTFNqGMIUeri4xoVa
- ioq6mZ4V2+VlSIsOzJB1VtSDmEh3zFKTYMe6SGoBSbqI/20DvrxMGwvjGjA+ZVCwcvlF
- Qv/+Ywzl8KQ1M8X2+UHw4vuvQAHGulzr4XzqdhcHNSrd1kLIxQ+dvzHwVpIJMGmSG/ag
- PRP2eZC8F3rLhA8CsD8a5GZP0OoZTS9czbkuXpqVd16wwWDrGu0A+oUB+0mvVSunV4H+
- eUe4b1q6m1l1vJkl4rui6CO5t5pAsE10ztW4OM7HX5voiFjhQXMTjeoazUBYWKmoTaf+ UA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmny0j1c-1
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=nT86no/d9+8D4gWYVInaOyKap/Q6m4xCcwXiZPiBIm4=;
+ b=ny2rcvtY6lOzi0e4oglvT0R7dsS2AbYBS/Rvd34gwMH4NpmhWKIeZ0MIvEf1BFyLdjFC
+ K5UJZOlfm3RcIZTzf6ajwR/IEL2DKxGrmDbX0ayNNZB3JMsOZXE5s6AhWxlccHNGp8Q9
+ v9SKAmnoxjXs/EHhOryh18dek7MmXoZtMXj6KSpM7/dhlIUQY+L9KMudfVltdh5X+Wzx
+ Atot40gWeceMX+mnsUnrncNpJL4fL/IFbGZ4PifhJFNT9WmopMx81AVcj/4kDk87Ufd1
+ V/Am2wFoQjdZBZjKwcjUbaqqoW7OKGE+Ze1ohbAy16f6Bo8wrPjCM/K5YBcMv75SbTyj yg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmpv0k3w-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 09:13:48 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37P9DlM7016025
+        Fri, 25 Aug 2023 09:35:59 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37P9Zvlx019689
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 09:13:47 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+        Fri, 25 Aug 2023 09:35:57 GMT
+Received: from nsekar-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 25 Aug 2023 02:13:40 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+ 15.2.1118.36; Fri, 25 Aug 2023 02:35:52 -0700
+From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <richardcochran@gmail.com>,
-        <arnd@arndb.de>, <geert+renesas@glider.be>,
-        <nfraprado@collabora.com>, <rafal@milecki.pl>, <peng.fan@nxp.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>, <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <netdev@vger.kernel.org>
-CC:     <quic_devipriy@quicinc.com>, <quic_saahtoma@quicinc.com>
-Subject: [PATCH V2 7/7] arm64: defconfig: Build NSS Clock Controller driver for IPQ9574
-Date:   Fri, 25 Aug 2023 14:42:34 +0530
-Message-ID: <20230825091234.32713-8-quic_devipriy@quicinc.com>
+        <linux-usb@vger.kernel.org>
+CC:     Nitheesh Sekar <quic_nsekar@quicinc.com>
+Subject: [PATCH 0/5] Enable IPQ5018 USB2 support
+Date:   Fri, 25 Aug 2023 15:05:26 +0530
+Message-ID: <20230825093531.7399-1-quic_nsekar@quicinc.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230825091234.32713-1-quic_devipriy@quicinc.com>
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: y1e0rThRuV1Wce8yboydpfLrhI9JS-I5
-X-Proofpoint-GUID: y1e0rThRuV1Wce8yboydpfLrhI9JS-I5
+X-Proofpoint-GUID: ZUS4u44MiVWJcJzA4qHwEcuZU33pZjvb
+X-Proofpoint-ORIG-GUID: ZUS4u44MiVWJcJzA4qHwEcuZU33pZjvb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-25_07,2023-08-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 mlxlogscore=818 impostorscore=0
- bulkscore=0 clxscore=1015 phishscore=0 suspectscore=0 malwarescore=0
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308250079
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 mlxscore=0 mlxlogscore=459 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2308250081
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -84,28 +79,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build Qualcomm IPQ9574 NSSCC driver.
+This patch series adds the relevant phy and controller
+DT configurations for enabling USB2 host mode support
+on IPQ5018.
 
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- Changes in V2:
-	- Build IPQ9574 NSSCC driver as a module
+Tested with a USB Mass storage device.
 
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Nitheesh Sekar (5):
+  dt-bindings: phy: qcom,m31: Add IPQ5018 compatible
+  dt-bindings: usb: dwc3: Add IPQ5018 compatible
+  phy: qcom-m31: Add compatible, phy init sequence for IPQ5018
+  arm64: dts: qcom: ipq5018: Add USB related nodes
+  arm64: dts: qcom: ipq5018: Enable USB
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5315789f4868..a6406eef43c8 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1211,6 +1211,7 @@ CONFIG_IPQ_GCC_5018=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
-+CONFIG_IPQ_NSSCC_9574=m
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_GCC_8996=y
+ .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml  |  4 +-
+ .../devicetree/bindings/usb/qcom,dwc3.yaml    |  3 +
+ .../arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 12 ++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 54 +++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-m31.c           | 60 +++++++++++++++++++
+ 5 files changed, 132 insertions(+), 1 deletion(-)
+
 -- 
-2.34.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
