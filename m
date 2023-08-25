@@ -2,153 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F74788ED4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:39:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF50788EE2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:44:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229441AbjHYSi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 14:38:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56590 "EHLO
+        id S229727AbjHYSoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 14:44:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbjHYSia (ORCPT
+        with ESMTP id S229995AbjHYSnu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 14:38:30 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE471997
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:38:27 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ff09632194so1873612e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:38:27 -0700 (PDT)
+        Fri, 25 Aug 2023 14:43:50 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BB20210A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:43:46 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-bcb6dbc477eso1234372276.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692988706; x=1693593506;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pVFvfHEoczn3+8y84rjR34d6BsLX8NOa3XN+/aN6FDk=;
-        b=XD+W6zc3h4/RiT09xm9X/IBwFX3Atmkv7WWhAA7fYGZgBwiQfboLxXs7ENSOx2hyLc
-         xXjuJPD/tRGUydmk7P7BZ/cesz+LVndI1zIcouaE+EJvSJ3OSPH0hVCQfE0x8+Za0qeS
-         TyAsi7gsZJPZhUykXgf43bt5CSHssuYgJHaf+9TGDMKc63RnBjSdYF40kdBdGzEyXlpZ
-         NEmiAieS8um7/IdWcqgbbWjSadsIjrIT2oLuDTCC19qG9M4rF4Bg57KsIh0SJsL9dv9q
-         4R80GW1jTbyFTSNgDlFWkOM3aGOjj2oc9kSSE+jLQb2Ci3+7R1/TAMNsUf9sxip47w0g
-         n9Qg==
+        d=linaro.org; s=google; t=1692989025; x=1693593825;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=o00pq7f1HXdPmJUSwqDHmd/YCYJRNFDvBasj0ZYO+1c=;
+        b=U1EswR/QAAT1Byufmcvon3Xbbtm4oYZqaaePoDcrYw8OE7RJs/tFnehL59cudckT0V
+         tF0M1EqO+QBgtwpU8FdhwgfqqwJSQQF3b4IT8KaxQDXgvqv6tv2DSA9HxOFrG2PGFbOJ
+         9Gfq8R3G3OQnob5jhftfHmrd/Xrs7UunC0L+aBsZ0VAQ4r10Ax5XZkxRcQRaLW4BfBFf
+         11XSPafWwdSu3pjTMEAulDG9wBWplnVlTy7Te79yN9WEN/KY5pLdNl3uhSpIiZsaGA7K
+         C1QmMweD4KwV1qVLUt37w11nn5zjwUECL4s9WTL5dJZgDE5l0nyU3iY7nZ3NiPkCbzkd
+         GglA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692988706; x=1693593506;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pVFvfHEoczn3+8y84rjR34d6BsLX8NOa3XN+/aN6FDk=;
-        b=CvxSnr0szoGz3+k2ejQRGGWG2Mrt37Vrq5SkaxX2TO1H42lP2+8TQeR9sK+EXDnhtY
-         pNQu59pz1efKK7uoa7eBEQytT5GgbdKm2BJrEIf5S0EMz1hX6nE6e98egVJz/hoMn3z+
-         2Uc69RcF9jUl+ddDj4jutYNTSwH3bJZk0XHkjBBgfg8uAIovbM6P8yl8IaxsUErsTycL
-         GSiF9gbd+l7GebrcZmb/2lOq5bHJBZLSk7BTLBR8NCR2OFUtXlP5F2/lR0cntnVm+ZpB
-         W/VT96XmJmOnsig16or4EzijvL05u4d4RiLmh94fVIcw/OCr98oI/fXlq4ZekzhD6Eqb
-         0U3Q==
-X-Gm-Message-State: AOJu0YwaCLINpOkfIjqM0SMzrIGAYjbHcZM2HFX3a25b6tk0Ajfw7U5y
-        5nJMBVsoHUqVkcYgstNDGvchUg==
-X-Google-Smtp-Source: AGHT+IF2hVCsDfiEKeBvplUJKMk1U4kClvGLKPvWrcdWem8MlJcg7lj0GCij46qeb1fWpCsxUymvDg==
-X-Received: by 2002:ac2:4db9:0:b0:500:8723:e457 with SMTP id h25-20020ac24db9000000b005008723e457mr9276253lfe.30.1692988705754;
-        Fri, 25 Aug 2023 11:38:25 -0700 (PDT)
-Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
-        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004fbd39b69adsm378647lfg.199.2023.08.25.11.38.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 11:38:25 -0700 (PDT)
-Message-ID: <070e8d48-1a51-42b3-9ccf-7532412b4864@linaro.org>
-Date:   Fri, 25 Aug 2023 20:38:23 +0200
+        d=1e100.net; s=20221208; t=1692989025; x=1693593825;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o00pq7f1HXdPmJUSwqDHmd/YCYJRNFDvBasj0ZYO+1c=;
+        b=PP17ZVz7uuN6bfXnhUrMZr71KFQAXCjkRQKLBuTTLGeHSRUdivkoKJzwOhY+ZJU2Da
+         iC7Hpzck7W6n9SErOP893T3MFt2jWnSmTgVXJX+gSrtgIDz3ekcrMNffWPRU/WNN3ozb
+         VL5DXomhYKSilctCwMMHjhhMKp8uQw1XriYQKisLjhG6H2MMeOLe7Vl5B7Txc6vXEez/
+         hIoyejxiQDnzduEz6KfwlU26yZXYIOgrytj0ZL25k3qklIa7kNvf+Sd0arher+EKKXmp
+         cJTueOVvi3BoKx6Q+oxKs1GEr71SwGz3T6ZrJG/xnESMbhRZ2Us+vVxUgfLdEQKd8yy6
+         A3sw==
+X-Gm-Message-State: AOJu0YzwS0GBi8dnPv82UpZBx/r1MfdDNlfy4CScpzeE4Ba7J00kEdYT
+        Hpl5+zMO5+NQdV25Vo8bh4h3+0f0XrRT5yg8oHQV/g4oeZtILjfq
+X-Google-Smtp-Source: AGHT+IHkG2JFPCv1RNiU6vNkvuOzi1cfYOcFfi3DgdYI/xAT+Hmd/jmE05nrF9a7gtNU5lNc7jcFEnftJTyx6ApjqB4=
+X-Received: by 2002:a25:fc17:0:b0:d77:d565:25c9 with SMTP id
+ v23-20020a25fc17000000b00d77d56525c9mr8349537ybd.20.1692989025544; Fri, 25
+ Aug 2023 11:43:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/33] iris: vidc: add helpers for memory management
-Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc:     stanimir.k.varbanov@gmail.com, agross@kernel.org,
-        andersson@kernel.org, mchehab@kernel.org, hans.verkuil@cisco.com,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
- <1690550624-14642-12-git-send-email-quic_vgarodia@quicinc.com>
- <20230728162817.GE1428172@hu-bjorande-lv.qualcomm.com>
- <9c6e098a-5d7f-4a1a-80d6-116a2c6b8867@linaro.org>
- <8efb0013-970d-ebe6-aedd-7b72f3366578@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <8efb0013-970d-ebe6-aedd-7b72f3366578@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230823-topic-sm8x50-upstream-pdc-ver-v3-1-aa7d9ab862e4@linaro.org>
+In-Reply-To: <20230823-topic-sm8x50-upstream-pdc-ver-v3-1-aa7d9ab862e4@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 25 Aug 2023 21:43:34 +0300
+Message-ID: <CAA8EJppSceyxynBbbRO09DqnGVwW46CfJqfkdadZi_kfF++FBw@mail.gmail.com>
+Subject: Re: [PATCH v3] irqchip/qcom-pdc: add support for v3.2 HW
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.08.2023 21:06, Dikshita Agarwal wrote:
-> 
-> 
-> On 7/28/2023 10:52 PM, Konrad Dybcio wrote:
->> On 28.07.2023 18:28, Bjorn Andersson wrote:
->>> On Fri, Jul 28, 2023 at 06:53:22PM +0530, Vikash Garodia wrote:
->>>> diff --git a/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c b/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c
->>> [..]
->>>> +static const struct msm_vidc_memory_ops msm_mem_ops = {
->>>> +	.dma_buf_get                    = msm_vidc_dma_buf_get,
->>>> +	.dma_buf_put                    = msm_vidc_dma_buf_put,
->>>> +	.dma_buf_put_completely         = msm_vidc_dma_buf_put_completely,
->>>> +	.dma_buf_attach                 = msm_vidc_dma_buf_attach,
->>>> +	.dma_buf_detach                 = msm_vidc_dma_buf_detach,
->>>> +	.dma_buf_map_attachment         = msm_vidc_dma_buf_map_attachment,
->>>> +	.dma_buf_unmap_attachment       = msm_vidc_dma_buf_unmap_attachment,
->>>> +	.memory_alloc_map               = msm_vidc_memory_alloc_map,
->>>> +	.memory_unmap_free              = msm_vidc_memory_unmap_free,
->>>> +	.buffer_region                  = msm_vidc_buffer_region,
->>>
->>> Will there ever be more than one implementation of the
->>> msm_vidc_memory_ops?
->>>
->>> Unless there's a really strong reason, just call the functions directly
->>> without the function pointers and call_mem_op(), this will be slightly
->>> faster, but more importantly it allows for much faster navigation of the
->>> code base.
->> Same for HFI ops
-> Hi Konrad,
-> There are no HFI ops in this driver, are you referring to anything else
-> here, could you please point me to it?
-Sorry, I had that in my brain cache after reading through the downstream
-driver..
+On Wed, 23 Aug 2023 at 12:49, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> Starting from HW version 3.2 the IRQ_ENABLE bit has moved to the
+> IRQ_i_CFG register and requires a change of the driver to avoid
+> writing into an undefined register address.
+>
+> Get the HW version from registers and set the IRQ_ENABLE bit to the
+> correct register depending on the HW version.
+>
+> Reviewed-by: Maulik Shah <quic_mkshah@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> Changes in v3:
+> - Simplify qcom_pdc_gic_set_type()
+> - Used __assign_bit in pdc_setup_pin_mapping()
+> - remove BIT() from IRQ_i_CFG_IRQ_ENABLE to be used with __assign_bit()
+> - Add Reviewed-by tag
+> - Link to v2: https://lore.kernel.org/r/20230822-topic-sm8x50-upstream-pdc-ver-v2-1-3035b8d388f7@linaro.org
+>
+> Changes in v2:
+> - Changed IRQ_ENABLE handling based on Maulik's comments
+> - Link to v1: https://lore.kernel.org/r/20230821-topic-sm8x50-upstream-pdc-ver-v1-1-6d7f4dd95719@linaro.org
+> ---
+>  drivers/irqchip/qcom-pdc.c | 61 ++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 48 insertions(+), 13 deletions(-)
 
-Konrad
+This patch in linux-next broke sm8150. On that platform the PDC region
+has size 0x400, so reading the version crashes the kernel.
+I'll send a patch fixing device tree, but we'd still need to handle
+this in a driver too.
+
+>
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index d96916cf6a41..5f60a23686c9 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -23,9 +23,22 @@
+>
+>  #define PDC_MAX_GPIO_IRQS      256
+>
+> +/* Valid only on HW version < 3.2 */
+>  #define IRQ_ENABLE_BANK                0x10
+>  #define IRQ_i_CFG              0x110
+>
+> +/* Valid only on HW version >= 3.2 */
+> +#define IRQ_i_CFG_IRQ_ENABLE   3
+> +
+> +#define IRQ_i_CFG_TYPE_MASK    GENMASK(2, 0)
+> +
+> +#define PDC_VERSION            0x1000
+> +
+> +/* Notable PDC versions */
+> +enum {
+> +       PDC_VERSION_3_2 = 0x30200,
+> +};
+> +
+>  struct pdc_pin_region {
+>         u32 pin_base;
+>         u32 parent_base;
+> @@ -38,6 +51,7 @@ static DEFINE_RAW_SPINLOCK(pdc_lock);
+>  static void __iomem *pdc_base;
+>  static struct pdc_pin_region *pdc_region;
+>  static int pdc_region_cnt;
+> +static unsigned int pdc_version;
+>
+>  static void pdc_reg_write(int reg, u32 i, u32 val)
+>  {
+> @@ -54,15 +68,22 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
+>         int pin_out = d->hwirq;
+>         unsigned long enable;
+>         unsigned long flags;
+> -       u32 index, mask;
+> -
+> -       index = pin_out / 32;
+> -       mask = pin_out % 32;
+>
+>         raw_spin_lock_irqsave(&pdc_lock, flags);
+> -       enable = pdc_reg_read(IRQ_ENABLE_BANK, index);
+> -       __assign_bit(mask, &enable, on);
+> -       pdc_reg_write(IRQ_ENABLE_BANK, index, enable);
+> +       if (pdc_version < PDC_VERSION_3_2) {
+> +               u32 index, mask;
+> +
+> +               index = pin_out / 32;
+> +               mask = pin_out % 32;
+> +
+> +               enable = pdc_reg_read(IRQ_ENABLE_BANK, index);
+> +               __assign_bit(mask, &enable, on);
+> +               pdc_reg_write(IRQ_ENABLE_BANK, index, enable);
+> +       } else {
+> +               enable = pdc_reg_read(IRQ_i_CFG, pin_out);
+> +               __assign_bit(IRQ_i_CFG_IRQ_ENABLE, &enable, on);
+> +               pdc_reg_write(IRQ_i_CFG, pin_out, enable);
+> +       }
+>         raw_spin_unlock_irqrestore(&pdc_lock, flags);
+>  }
+>
+> @@ -143,6 +164,7 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+>         }
+>
+>         old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
+> +       pdc_type |= (old_pdc_type & ~IRQ_i_CFG_TYPE_MASK);
+>         pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
+>
+>         ret = irq_chip_set_type_parent(d, type);
+> @@ -247,7 +269,7 @@ static const struct irq_domain_ops qcom_pdc_ops = {
+>  static int pdc_setup_pin_mapping(struct device_node *np)
+>  {
+>         int ret, n, i;
+> -       u32 irq_index, reg_index, val;
+> +       unsigned long val;
+>
+>         n = of_property_count_elems_of_size(np, "qcom,pdc-ranges", sizeof(u32));
+>         if (n <= 0 || n % 3)
+> @@ -278,11 +300,22 @@ static int pdc_setup_pin_mapping(struct device_node *np)
+>                         return ret;
+>
+>                 for (i = 0; i < pdc_region[n].cnt; i++) {
+> -                       reg_index = (i + pdc_region[n].pin_base) >> 5;
+> -                       irq_index = (i + pdc_region[n].pin_base) & 0x1f;
+> -                       val = pdc_reg_read(IRQ_ENABLE_BANK, reg_index);
+> -                       val &= ~BIT(irq_index);
+> -                       pdc_reg_write(IRQ_ENABLE_BANK, reg_index, val);
+> +                       if (pdc_version < PDC_VERSION_3_2) {
+> +                               u32 irq_index, reg_index;
+> +
+> +                               reg_index = (i + pdc_region[n].pin_base) >> 5;
+> +                               irq_index = (i + pdc_region[n].pin_base) & 0x1f;
+> +                               val = pdc_reg_read(IRQ_ENABLE_BANK, reg_index);
+> +                               __assign_bit(irq_index, &val, 0);
+> +                               pdc_reg_write(IRQ_ENABLE_BANK, reg_index, val);
+> +                       } else {
+> +                               u32 irq;
+> +
+> +                               irq = i + pdc_region[n].pin_base;
+> +                               val = pdc_reg_read(IRQ_i_CFG, irq);
+> +                               __assign_bit(IRQ_i_CFG_IRQ_ENABLE, &val,  0);
+> +                               pdc_reg_write(IRQ_i_CFG, irq, val);
+> +                       }
+>                 }
+>         }
+>
+> @@ -300,6 +333,8 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+>                 return -ENXIO;
+>         }
+>
+> +       pdc_version = pdc_reg_read(PDC_VERSION, 0);
+> +
+>         parent_domain = irq_find_host(parent);
+>         if (!parent_domain) {
+>                 pr_err("%pOF: unable to find PDC's parent domain\n", node);
+>
+> ---
+> base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
+> change-id: 20230821-topic-sm8x50-upstream-pdc-ver-114ceb45e1ee
+>
+> Best regards,
+> --
+> Neil Armstrong <neil.armstrong@linaro.org>
+>
+
+
+-- 
+With best wishes
+Dmitry
