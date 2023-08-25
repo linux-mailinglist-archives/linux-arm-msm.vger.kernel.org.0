@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32336788ECD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0F74788ED4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230218AbjHYSgo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 14:36:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35030 "EHLO
+        id S229441AbjHYSi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 14:38:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229646AbjHYSgN (ORCPT
+        with ESMTP id S229561AbjHYSia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 14:36:13 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D4BFCD2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:36:11 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b962535808so18737671fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:36:11 -0700 (PDT)
+        Fri, 25 Aug 2023 14:38:30 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE471997
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:38:27 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ff09632194so1873612e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692988570; x=1693593370;
+        d=linaro.org; s=google; t=1692988706; x=1693593506;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=oLEWMSPoyDheV9aTWoheYwMz3Vo4cd285Ih/pF7lT2I=;
-        b=pJQyhkVl8YcIipcJ9Pzn13f/51SIzHseZSrVHyxc/scyKp7w5fsxK3cIEPlHjeZrHt
-         7ZHxrE1tArirkg5nPVfBjrKajoBefPz9yQoQU7YmcMTMdctl+jxM9qQG1qE3w7JUzqpd
-         9C9oRpX6KCuD5AHYQOp1EkdHw28eBKFRSPcNNu/W4XikXdqZjC3Bucov4M9YlV7Jw6TS
-         gCMhOKiV8lYDps6chtAYxjD63Ef33wB6O93grYOZxwsEdgFcc/X6vLbxn56egIBLPoi+
-         fQfc2u4GWN8fSQieypYlVtMGYZwbmWbMEkdWfOkMOi1cg4fKsAa5t+VQIiPPuRE6AmlL
-         Zkjw==
+        bh=pVFvfHEoczn3+8y84rjR34d6BsLX8NOa3XN+/aN6FDk=;
+        b=XD+W6zc3h4/RiT09xm9X/IBwFX3Atmkv7WWhAA7fYGZgBwiQfboLxXs7ENSOx2hyLc
+         xXjuJPD/tRGUydmk7P7BZ/cesz+LVndI1zIcouaE+EJvSJ3OSPH0hVCQfE0x8+Za0qeS
+         TyAsi7gsZJPZhUykXgf43bt5CSHssuYgJHaf+9TGDMKc63RnBjSdYF40kdBdGzEyXlpZ
+         NEmiAieS8um7/IdWcqgbbWjSadsIjrIT2oLuDTCC19qG9M4rF4Bg57KsIh0SJsL9dv9q
+         4R80GW1jTbyFTSNgDlFWkOM3aGOjj2oc9kSSE+jLQb2Ci3+7R1/TAMNsUf9sxip47w0g
+         n9Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692988570; x=1693593370;
+        d=1e100.net; s=20221208; t=1692988706; x=1693593506;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oLEWMSPoyDheV9aTWoheYwMz3Vo4cd285Ih/pF7lT2I=;
-        b=lgQc/j2XvFmrb7WUF0saNxJsL0sTC58K6Pf2ZqA6sjWBeEp6UHN83zXv3VYaRRQ3Ls
-         /sy+i/Imc1js0vNkE+w5SZDzUXvnHSQzKhiOou/CCTCekwXwD/7dZSQ1i96i69btHMwH
-         TwhVVjeF+OnUyNBYYSVPQmcSQUTt3O1TM/I+t9cL0GVE1cZpkdyijZpIfjT3jjd4JKLi
-         yzafA+tHqyI444F1dELqGzE1QbS0e1QPCq3wKLLWNFyFeYEQ63YUQ0Lk9qHec04gpO1p
-         KcD72UHTcZ+OhmuZr4lE4aql7d0O69J80sgvR2oF/MYWzj/fUA33J3bymadbLtL5vyQB
-         Qd2w==
-X-Gm-Message-State: AOJu0Yx8gzzpJwBtJo03212ACUfghR+NXh6AFqtaF1vwO8CgaySb5+Sh
-        Rk8dnApEAApsHIfjvvjn0TZtjA==
-X-Google-Smtp-Source: AGHT+IHR8jriiddvsNutBDC/1xD3vmu1DzeYiRUzYUGOZrKMh2tFjAv8dxJQY+RNx+WKq9/5jF2DQw==
-X-Received: by 2002:a2e:3610:0:b0:2bc:dea8:ba75 with SMTP id d16-20020a2e3610000000b002bcdea8ba75mr6346933lja.26.1692988569683;
-        Fri, 25 Aug 2023 11:36:09 -0700 (PDT)
+        bh=pVFvfHEoczn3+8y84rjR34d6BsLX8NOa3XN+/aN6FDk=;
+        b=CvxSnr0szoGz3+k2ejQRGGWG2Mrt37Vrq5SkaxX2TO1H42lP2+8TQeR9sK+EXDnhtY
+         pNQu59pz1efKK7uoa7eBEQytT5GgbdKm2BJrEIf5S0EMz1hX6nE6e98egVJz/hoMn3z+
+         2Uc69RcF9jUl+ddDj4jutYNTSwH3bJZk0XHkjBBgfg8uAIovbM6P8yl8IaxsUErsTycL
+         GSiF9gbd+l7GebrcZmb/2lOq5bHJBZLSk7BTLBR8NCR2OFUtXlP5F2/lR0cntnVm+ZpB
+         W/VT96XmJmOnsig16or4EzijvL05u4d4RiLmh94fVIcw/OCr98oI/fXlq4ZekzhD6Eqb
+         0U3Q==
+X-Gm-Message-State: AOJu0YwaCLINpOkfIjqM0SMzrIGAYjbHcZM2HFX3a25b6tk0Ajfw7U5y
+        5nJMBVsoHUqVkcYgstNDGvchUg==
+X-Google-Smtp-Source: AGHT+IF2hVCsDfiEKeBvplUJKMk1U4kClvGLKPvWrcdWem8MlJcg7lj0GCij46qeb1fWpCsxUymvDg==
+X-Received: by 2002:ac2:4db9:0:b0:500:8723:e457 with SMTP id h25-20020ac24db9000000b005008723e457mr9276253lfe.30.1692988705754;
+        Fri, 25 Aug 2023 11:38:25 -0700 (PDT)
 Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
-        by smtp.gmail.com with ESMTPSA id n12-20020a2e878c000000b002b787442f03sm438279lji.88.2023.08.25.11.36.07
+        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004fbd39b69adsm378647lfg.199.2023.08.25.11.38.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 11:36:09 -0700 (PDT)
-Message-ID: <cec27271-fe3f-44d2-83e5-3f96f1e50178@linaro.org>
-Date:   Fri, 25 Aug 2023 20:36:07 +0200
+        Fri, 25 Aug 2023 11:38:25 -0700 (PDT)
+Message-ID: <070e8d48-1a51-42b3-9ccf-7532412b4864@linaro.org>
+Date:   Fri, 25 Aug 2023 20:38:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845: cheza doesn't support LMh
- node
+Subject: Re: [PATCH 11/33] iris: vidc: add helpers for memory management
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>,
-        David Heidelberg <david@ixit.cz>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230823222741.89584-1-david@ixit.cz>
- <20230823222741.89584-2-david@ixit.cz>
- <CAD=FV=WaW5jKwXDTvyXjy45PSWu8LoT0LxYKM_mZAH3LxZPwrQ@mail.gmail.com>
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc:     stanimir.k.varbanov@gmail.com, agross@kernel.org,
+        andersson@kernel.org, mchehab@kernel.org, hans.verkuil@cisco.com,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <1690550624-14642-1-git-send-email-quic_vgarodia@quicinc.com>
+ <1690550624-14642-12-git-send-email-quic_vgarodia@quicinc.com>
+ <20230728162817.GE1428172@hu-bjorande-lv.qualcomm.com>
+ <9c6e098a-5d7f-4a1a-80d6-116a2c6b8867@linaro.org>
+ <8efb0013-970d-ebe6-aedd-7b72f3366578@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,9 +104,9 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAD=FV=WaW5jKwXDTvyXjy45PSWu8LoT0LxYKM_mZAH3LxZPwrQ@mail.gmail.com>
+In-Reply-To: <8efb0013-970d-ebe6-aedd-7b72f3366578@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -121,66 +117,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.08.2023 20:24, Doug Anderson wrote:
-> Hi,
+On 14.08.2023 21:06, Dikshita Agarwal wrote:
 > 
-> On Wed, Aug 23, 2023 at 3:28 PM David Heidelberg <david@ixit.cz> wrote:
->>
->> Cheza firmware doesn't allow controlling LMh from the operating system.
->>
->> Fixes: 36c6581214c4 ("arm64: dts: qcom: sdm845: Add support for LMh node")
->> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
->> index d86b0d112110..8cc8fc290fd3 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
->> @@ -143,6 +143,10 @@ panel_in_edp: endpoint {
->>         };
->>  };
->>
->> +&cpufreq_hw {
->> +       /delete-property/ interrupts-extended; /* reference to lmh_cluster[01] */
->> +};
->> +
->>  &psci {
->>         /delete-node/ power-domain-cpu0;
->>         /delete-node/ power-domain-cpu1;
->> @@ -275,6 +279,14 @@ &BIG_CPU_SLEEP_1
->>                            &CLUSTER_SLEEP_0>;
->>  };
->>
->> +&lmh_cluster0 {
->> +       status = "disabled";
->> +};
->> +
->> +&lmh_cluster1 {
->> +       status = "disabled";
->> +};
 > 
-> It's not a huge deal to me, but as I understand it usually you'd put
-> the "disabled" in sdm845.dtsi and then it would be up to all the other
-> sdm845 boards to mark this as "okay".
-it's more of a status = "nonstandardfirmware" :/
+> On 7/28/2023 10:52 PM, Konrad Dybcio wrote:
+>> On 28.07.2023 18:28, Bjorn Andersson wrote:
+>>> On Fri, Jul 28, 2023 at 06:53:22PM +0530, Vikash Garodia wrote:
+>>>> diff --git a/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c b/drivers/media/platform/qcom/iris/vidc/src/msm_vidc_memory.c
+>>> [..]
+>>>> +static const struct msm_vidc_memory_ops msm_mem_ops = {
+>>>> +	.dma_buf_get                    = msm_vidc_dma_buf_get,
+>>>> +	.dma_buf_put                    = msm_vidc_dma_buf_put,
+>>>> +	.dma_buf_put_completely         = msm_vidc_dma_buf_put_completely,
+>>>> +	.dma_buf_attach                 = msm_vidc_dma_buf_attach,
+>>>> +	.dma_buf_detach                 = msm_vidc_dma_buf_detach,
+>>>> +	.dma_buf_map_attachment         = msm_vidc_dma_buf_map_attachment,
+>>>> +	.dma_buf_unmap_attachment       = msm_vidc_dma_buf_unmap_attachment,
+>>>> +	.memory_alloc_map               = msm_vidc_memory_alloc_map,
+>>>> +	.memory_unmap_free              = msm_vidc_memory_unmap_free,
+>>>> +	.buffer_region                  = msm_vidc_buffer_region,
+>>>
+>>> Will there ever be more than one implementation of the
+>>> msm_vidc_memory_ops?
+>>>
+>>> Unless there's a really strong reason, just call the functions directly
+>>> without the function pointers and call_mem_op(), this will be slightly
+>>> faster, but more importantly it allows for much faster navigation of the
+>>> code base.
+>> Same for HFI ops
+> Hi Konrad,
+> There are no HFI ops in this driver, are you referring to anything else
+> here, could you please point me to it?
+Sorry, I had that in my brain cache after reading through the downstream
+driver..
 
-> 
-> 
->>  /*
->>   * Reserved memory changes
->>   *
->> @@ -338,6 +350,8 @@ flash@0 {
->>
->>
->>  &apps_rsc {
->> +       /delete-property/ power-domains;
->> +
-> 
-> Is the deletion of the "power-domains" here related to LMh? That seems
-> like it was added to sdm845.dtsi in a separate commit that doesn't
-> talk about LMh at all...
-psci
-
+Konrad
