@@ -2,80 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BC14788EB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 734F3788EC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:36:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbjHYS3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 14:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
+        id S229973AbjHYSfj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 14:35:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231299AbjHYS2w (ORCPT
+        with ESMTP id S230321AbjHYSfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 14:28:52 -0400
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5577E210B;
-        Fri, 25 Aug 2023 11:28:49 -0700 (PDT)
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-68bec3a9bdbso957168b3a.3;
-        Fri, 25 Aug 2023 11:28:49 -0700 (PDT)
+        Fri, 25 Aug 2023 14:35:07 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC9E210D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:35:04 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bb8a12e819so18861291fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692988502; x=1693593302;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/kKeIh1fnY4wLEq91BBc7Y7LLlmzcPIU/eHvt9PxBpg=;
+        b=E+UEaJi3hDK5DktYNiGGuf4MhkUL0lOI76jURQNNn0Uwj7SuXELKPqlLgP7L8WvPk8
+         aoL1CeUCvID1Rz/wBuDkbh4ssi8EW4Cd6i4rvAqEg4TnZemMSYlP21nwid23TM+7yTsW
+         AnIbzuD402JIOKK65QOhioDL4B7hgiLa/jRkHrrUCSJhe5Ywn5LYNGLT67kiqAUUhyFt
+         lyMYx0idv8t5sHxX3laXlKEJh5PkEMecZHtqgpvbLK03dxLtVNmW5MBirmZeElEZ/B4h
+         ZbvSVAqUaqGpXuAnoNB0MgIlQa2i/V2ATQGV3Ov6Alcb4hDriLMO9rp7FH0yZI4ZkIP/
+         s26Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692988129; x=1693592929;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bVPjVbkeFQW+k+rS69O04AwUmTqmPJ8iKUK95i5fNeE=;
-        b=fF1w4QJ2VwB0G5XFpAfz7lf3QwohA/PJ0Z2+2/eYTlYO2TGgH0wLRD09dhp2GVs3JF
-         FzYVP/VQy7QiO1bUMoPLf7pb4hJW3UVO/G94F2rIq29R4CpTh72k2VZp2pAO6fc/O0Xd
-         9vqpE7SBhT4r2HXmNh00tjZjS7Jh2JHEtpNw5Yv8vsBWQ0RK38BW2vcKZFrupl0SADVH
-         pcpEvBthPGiPlSWhc9/zcu+gDdEknteOkmUIeEuOj7/ffzxK/v0qvMx76D7oTvwnuvo7
-         LaFX3A+5QnfJ8WhQwcz28UcvKD3gIOyzHMIofOH8YwFo5RXVSrMEWdz04YnKJuwpdDyh
-         RF1Q==
-X-Gm-Message-State: AOJu0YzB4mT0ZjyEUyuVFsX9hJfrzqkc4hOyMIdTXw6lIhmjTHzxBiHG
-        U9DQyNsvXp5YK4R9Ym5Vm2M=
-X-Google-Smtp-Source: AGHT+IGsoglscHwEIlTZ9oCa6M57NI5i3jg8ZDWq9H9QWb00TMRmROKwNFAFGhVqz2Xvhx08qVK2CA==
-X-Received: by 2002:a05:6a20:244f:b0:133:215e:7230 with SMTP id t15-20020a056a20244f00b00133215e7230mr18563461pzc.55.1692988128639;
-        Fri, 25 Aug 2023 11:28:48 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id bm2-20020a056a00320200b00682a61fa525sm1918298pfb.91.2023.08.25.11.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 11:28:48 -0700 (PDT)
-Date:   Sat, 26 Aug 2023 03:28:46 +0900
-From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] Improvements to Qcom PCIe EP and EPF MHI drivers
-Message-ID: <20230825182846.GC131548@rocinante>
-References: <20230717065459.14138-1-manivannan.sadhasivam@linaro.org>
+        d=1e100.net; s=20221208; t=1692988502; x=1693593302;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/kKeIh1fnY4wLEq91BBc7Y7LLlmzcPIU/eHvt9PxBpg=;
+        b=N2xrfegD/+3mgbpK+KT1tM+LbXDJRNpHS+DgoPO5p/2ePnLxih9HTLZ4GFWXY/nANq
+         22n3HNoq8cDgMkFBjDb9Cfn463z+Q9Hu1LGSISZSMwsXaJdRrrxsrJo5mRorHqkhlbSb
+         I4nUPC2OTMXrjl4JtCEo8ND3JznJU2MWMA76QaPvYVML1gqPHmdapgSZDe2iV1tpv7jp
+         TwcClRG28NWQnOQhLNhIOyQ/qWozBZJqnPzSfXIc5hiCZXu6nRvnpBoVhV1EXf94+1zo
+         UlLhGt9OAk0kQLSpMi7cckbRobzHkOqx+4dEvv66kFtjzCDkF7POYe7WFzq5mrLKwtwR
+         P+Nw==
+X-Gm-Message-State: AOJu0YwA/D1Ln9RHZjMaiE8iMAuELz0I/EjoU+FEi1I1asWraytBwkKU
+        wC02FwtGHVaJmzoYOF50POh4MA==
+X-Google-Smtp-Source: AGHT+IEWBwi4fHLkxIBiLDQeWxpyQjYHN1qXcSAdQ+hWJrmuW1d21BPJXr++Q29qk5EMvDJDmyuhYw==
+X-Received: by 2002:a2e:94ca:0:b0:2b5:7f93:b3b0 with SMTP id r10-20020a2e94ca000000b002b57f93b3b0mr13095587ljh.17.1692988502262;
+        Fri, 25 Aug 2023 11:35:02 -0700 (PDT)
+Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
+        by smtp.gmail.com with ESMTPSA id n12-20020a2e878c000000b002b787442f03sm438279lji.88.2023.08.25.11.35.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Aug 2023 11:35:01 -0700 (PDT)
+Message-ID: <284b4127-7bc6-459a-8861-743ab766d655@linaro.org>
+Date:   Fri, 25 Aug 2023 20:34:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230717065459.14138-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845: Fix PSCI power domain names
+Content-Language: en-US
+To:     David Heidelberg <david@ixit.cz>,
+        cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230823222741.89584-1-david@ixit.cz>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230823222741.89584-1-david@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
-
-> This series adds eDMA (embedded DMA) support to the Qcom PCIe EP and EPF 
-> MHI drivers for offloading the transfers between PCIe bus and the EP
-> memory. eDMA support makes use of the recently merged eDMA DMAEngine driver
-> and its integration with DWC PCIe EP core [1].
+On 24.08.2023 00:27, David Heidelberg wrote:
+> The original commit hasn't been updated according to
+> refactoring done in sdm845.dtsi.
 > 
-> This series also adds Qcom SM8450 SoC support to EPF MHI driver that has
-> the eDMA support built-in.
+> Fixes: a1ade6cac5a2 ("arm64: dts: qcom: sdm845: Switch PSCI cpu idle states from PC to OSI")
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+It's much less error-prone to do:
 
-Apologies, I accidentally responded to an older series:
+/delete-node/ &label
 
-  https://lore.kernel.org/linux-pci/20230825175729.GB131548@rocinante
-
-This series version was applied, of course.
-
-	Krzysztof
+Konrad
