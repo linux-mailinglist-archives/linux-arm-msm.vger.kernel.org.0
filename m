@@ -2,91 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED9B9788E21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 19:58:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B75D2788E4B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:14:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230367AbjHYR5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 13:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48974 "EHLO
+        id S229899AbjHYSOC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 14:14:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235889AbjHYR5d (ORCPT
+        with ESMTP id S231409AbjHYSN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 13:57:33 -0400
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A904128;
-        Fri, 25 Aug 2023 10:57:32 -0700 (PDT)
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-26f6b2c8e80so790260a91.1;
-        Fri, 25 Aug 2023 10:57:32 -0700 (PDT)
+        Fri, 25 Aug 2023 14:13:56 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B2BF270E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:13:20 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-500aed06ffcso270987e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:13:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692987197; x=1693591997;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QHxt8L509EiDrZI2+w6ifk3vGfhc6nbxSWQw2eBwLSE=;
+        b=v6kP1VAHwC+TwCN7cSb5AETiYe3E/uBxZxnC5xUfq03Ewe/BiYJpv0iTgdF9yuqhg1
+         LNfMZpL6xnl0aYHyRe0Mhv2O3QI/RhRTuBgACQ0kebhZ57M6mgov2ZEufuE2RxbBE5Uo
+         q++mwkQFjFyrPdAQmHwvDcVSI6308PVvV+iEXPJ5w7D+AyGcxDavUdFZgFjjwFp+iZPe
+         rVD3roxlrGH6jpdWgls+SLtz8s6dhaY5qLGJ7UUzZzDJEba7EGA8DEhHURhe6lC7HLy9
+         QrxNo6BK2U2tkuMdNHhBI1Oqvj19Yw0Vcpj2/z/IKEqq6zuYkvLJonjSLpF1G4zyFa+M
+         yHpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692986251; x=1693591051;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Br6kJJfxbLrAeYAoyaF8n8ch2SmPfAfalV3GMRZvTyE=;
-        b=bXj4wH7leWNe9LicpoIIYkOBYbBvvtG8TMegYE7ildru+s3V+IZjGyFMxDmnz1MnXY
-         CKm+PlSloLhMVaVA3VEU7L4Hl4SwtJ3a6Q/AJqmlzzA5+Npz94gA+io85r6JubcMuGe2
-         WF8yyXKNYKme7AfAUW2MDkqOtamGRpr+EosPjogpl9SJQ0n1Pmik8IutfT6sKBp1MK77
-         fxVT2JxVlH6knnEpNdLyu1a5g6/6oF5GHbi0QaTmLw0oVotxQ3YaU9XTF4F4TvGiUn9m
-         GdSMC9s5yYOcqv0MWuHvvAUKU/7AHi/bwLFyuUmYIjio9FMNEjMfU0EItq0pBBjZdlMZ
-         UBwQ==
-X-Gm-Message-State: AOJu0YxH07guVOexn/DG4RjMMwLmgSzgiSDdfdqC+K28fl4SEMXiCLxJ
-        L7BfdLEXTOFzvVj+193tdY30iplYCXs=
-X-Google-Smtp-Source: AGHT+IGlvEx6Sbm28XFJGL/dVcxNkNLmDnxcOZS7bw2GFhwadT8yB9Sl8WuTzs59URW8TP9H70V15A==
-X-Received: by 2002:a17:90b:4381:b0:263:4815:cb9a with SMTP id in1-20020a17090b438100b002634815cb9amr18209467pjb.41.1692986251528;
-        Fri, 25 Aug 2023 10:57:31 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id f6-20020a17090ab94600b0025bdc3454c6sm3811608pjw.8.2023.08.25.10.57.30
+        d=1e100.net; s=20221208; t=1692987197; x=1693591997;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QHxt8L509EiDrZI2+w6ifk3vGfhc6nbxSWQw2eBwLSE=;
+        b=QLWGtIHL2Qmlv2hq3NSIU04s0VjVOKoOHnls6zc5G7VvJaAZEfP9cWcfmO46D3XwDK
+         jAsJQeVnP9PNqgHTcSWF80nZG1wGxB1aPMmWSTz6bysuJeK+e63a9MPXF+oE5njQOmgi
+         eFCjhQgycklt/Q79f44tWl+OziHDgMU8WU/XrFbsISr3VxFucaG+PvRRm+Z2ZKHv9qGP
+         0ucNo4cM3RJFWb85N/p2MQ1D4AzYovsrKxcD0QRk1vYKOaq3NS8OQ48dLvOpJIPtzaCC
+         dBAZGVX0oNN5vry62wMRe30cUcYhu4tcMMirZg0v6GtmrZh2OKPxJrgzHlD/qj5N6rxt
+         Xa5Q==
+X-Gm-Message-State: AOJu0YxSS6nGCyqjv0w26Slsef2xDlgkEDYLAwgHkSYed2EwRsjCWOdj
+        +0YOZmq0sjCKSyKdb/SYChVymQ==
+X-Google-Smtp-Source: AGHT+IGYIanJ0Av2PWQRCoRxlcYDQT3sFvmZYoytEvvdIWf55/QpB+RK1uMhO4PDPMWO2zp3hHzyjw==
+X-Received: by 2002:a05:6512:3196:b0:4f8:5d2f:902a with SMTP id i22-20020a056512319600b004f85d2f902amr17825503lfe.60.1692987196734;
+        Fri, 25 Aug 2023 11:13:16 -0700 (PDT)
+Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
+        by smtp.gmail.com with ESMTPSA id b2-20020ac247e2000000b005009920b6afsm374522lfp.9.2023.08.25.11.13.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 10:57:30 -0700 (PDT)
-Date:   Sat, 26 Aug 2023 02:57:29 +0900
-From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/7] Improvements to Qcom PCIe EP and EPF MHI drivers
-Message-ID: <20230825175729.GB131548@rocinante>
-References: <20230606115814.53319-1-manivannan.sadhasivam@linaro.org>
+        Fri, 25 Aug 2023 11:13:16 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/3] SM6115 LPASSCC
+Date:   Fri, 25 Aug 2023 20:13:14 +0200
+Message-Id: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230606115814.53319-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADrv6GQC/x2N7QrCMAwAX2Xkt4W2s369yhDJsswFSlcaFWHs3
+ Q3+vIPjNlBuwgq3boPGH1FZi0E4dEALlic7mYwh+tj7S0zutVYhdwohPXJFVSLnIx7ndL72SBN
+ YOKKyGxsWWiwt75xN1sazfP+n4b7vPyi1yGR5AAAA
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692987195; l=1043;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=tTslou3f/YiJFwL09fCXA3PM8wqi/JiyF8jZ/rp7K00=;
+ b=CyNYNdZ7r/q0tRNcOBdQFXmthrVN5sfAGjy1i46wAsIVhsD6p0UFKBJ7jdHbNwdY/ri1/nTJU
+ 8xQK1EH+Im6BkfOt6jUghGzteT8qAmgAA9a9sh15BVXok2Uhv2tYn6W
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+This series brings support for the LPASS clock controllers on the SM6115
+and similar. It provides resets that need to be toggled as part of
+soundwire bringup routines.
 
-> This series adds eDMA (embedded DMA) support to the Qcom PCIe EP and EPF 
-> MHI drivers for offloading the transfers between PCIe bus and the EP
-> memory. eDMA support makes use of the recently merged eDMA DMAEngine driver
-> and its integration with DWC PCIe EP core [1].
-> 
-> This series also adds Qcom SM8450 SoC support to EPF MHI driver that has
-> the eDMA support built-in.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (3):
+      dt-bindings: clock: Add Qualcomm SM6115 LPASS clock controller
+      clk: qcom: reset: Increase max reset delay
+      clk: qcom: Add SM6115 LPASSCC
 
-Applied to controller/qcom-edma, thank you!
+ .../bindings/clock/qcom,sm6115-lpasscc.yaml        | 53 ++++++++++++++
+ drivers/clk/qcom/Kconfig                           |  9 +++
+ drivers/clk/qcom/Makefile                          |  1 +
+ drivers/clk/qcom/lpasscc-sm6115.c                  | 84 ++++++++++++++++++++++
+ drivers/clk/qcom/reset.h                           |  2 +-
+ include/dt-bindings/clock/qcom,sm6115-lpasscc.h    | 15 ++++
+ 6 files changed, 163 insertions(+), 1 deletion(-)
+---
+base-commit: 6269320850097903b30be8f07a5c61d9f7592393
+change-id: 20230825-topic-6115_lpasscc-02a4f5793acd
 
-[1/7] PCI: qcom-ep: Pass alignment restriction to the EPF core
-      https://git.kernel.org/pci/pci/c/8cd2b8ce48e5
-[2/7] PCI: epf-mhi: Make use of the alignment restriction from EPF core
-      https://git.kernel.org/pci/pci/c/e0ea11b2b094
-[3/7] PCI: qcom-ep: Add eDMA support
-      https://git.kernel.org/pci/pci/c/2337fff7c400
-[4/7] PCI: epf-mhi: Add eDMA support
-      https://git.kernel.org/pci/pci/c/827d42dbbe3b
-[5/7] PCI: epf-mhi: Add support for SM8450
-      https://git.kernel.org/pci/pci/c/a35318fa2d73
-[6/7] PCI: epf-mhi: Use iATU for small transfers
-      https://git.kernel.org/pci/pci/c/b65bdcaa7ac4
-[7/7] PCI: endpoint: Add kernel-doc for pci_epc_mem_init() API
-      https://git.kernel.org/pci/pci/c/bcf054a26edc
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-        Krzysztof
