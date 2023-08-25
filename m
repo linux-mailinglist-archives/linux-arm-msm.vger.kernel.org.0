@@ -2,65 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B29AA788489
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 12:16:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9BAA7884AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 12:21:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240274AbjHYKQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 06:16:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59340 "EHLO
+        id S234714AbjHYKUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 06:20:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244402AbjHYKPm (ORCPT
+        with ESMTP id S244389AbjHYKUH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 06:15:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D0D26BB;
-        Fri, 25 Aug 2023 03:14:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B4B7661659;
-        Fri, 25 Aug 2023 10:14:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E1CC433C8;
-        Fri, 25 Aug 2023 10:14:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692958490;
-        bh=F8oKNVTy6rC98/+pAVZNa2M+atmjLnnbW393Y6FNBxo=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=A8sw7xFVWcXBro5K9uPJOpgpgU7sA3zf9EWvvip2RG0ctsGSI70mxoQyHoBDNaVf/
-         NMTZlY8a3pXOfwJLZjwS6YO/Vhp9A1m5XG9tOSJnRpZbvovGknzdF8MvzalNXFKttE
-         G2TBUN7jNzf0UpoJxCWpTddFNy+ShUOkokH5Vv+cK/ad9fjrimWOtYzuH01UvqJTSM
-         9ZUqZG4fz+8luaaZ5tywnaNWMRdbXznrKlrSG4cpvysgMw4gaNDrsRftoN9iCLuQMi
-         qhkGjZc3UIf3oX8UkwuXG7tnB+/AYOOsW0j8kGmnic/eQKI2jwLvW84bWQYhpQ4Uxb
-         Lbn1BqYsXKFcg==
-Received: (nullmailer pid 2559857 invoked by uid 1000);
-        Fri, 25 Aug 2023 10:14:46 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Fri, 25 Aug 2023 06:20:07 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6736D2691
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 03:19:44 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52a250aa012so1127304a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 03:19:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692958783; x=1693563583;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8hmeN79sYGm2yupcg1U1ZPEVlv8mSwCgTnsR3HDlFcg=;
+        b=P1oUEbW6Avm1OcDDYWJCLmKiBo8QGj9EuaqkPpWDnihUz9zA78OWflrSORwwLycFFe
+         +hzuHp1q1lpm/Pt43kAvQvoVhHQd1Gt9IoNLMVAqkfa9inOi3g451+u9nKAOF4uvzfM7
+         w6YBMQZd0bdA8CokkDkOVw00zhPitOpLevFM8O5KTeV6qmF5XPxe6nPc/ctTqrZGH2Im
+         dUaI6+kpgRMaxoEgUk0xHP5G8TpB6idTW8qsN4VxK4X9T5SiGZGAasGtb6tyGtMN0uDd
+         za9gsaGZRzZ3LVzjqYEg0ljOelY8Ix3GmiMTbyi5RgQi4zAGzF66kk/HzC0k+uw1WZTC
+         NYRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692958783; x=1693563583;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8hmeN79sYGm2yupcg1U1ZPEVlv8mSwCgTnsR3HDlFcg=;
+        b=RPeAHxlJBOmmBgQ47A12BvwL7ApOQpLGcaEBRXjWwO/gIRO9SQiyLQziTNbDgidVCw
+         TiHKDwQ6UT6OulzhiouiHJGxlT3kUdNxN8n6GSC25enxxPCAvxqTYpnjrSXB0VorPEGd
+         MCd07LrzeCTu9OSy4Q4Yk7ERqJaYBvja1jgJA5HzPxxUeQLgS1iD43fA25fM1eHc+OMn
+         bMXtZIHAN1/5Efbo54+Fz0otlosPXm/VYTM4dsgiEv9oTJ9KnB1J0kAaTL+GXftc+7+/
+         fbH14sbNBlsxDc++0nd8YdLKOf5YOc+s7nBScM/GtdP7nZYNqYI5Jgv+ulyYzoLk1vQ1
+         31xg==
+X-Gm-Message-State: AOJu0YxgzxFd76yXaJ0DC0BL3MOJjOVmoSpU9cjUufbXkuMxhpiwfSwv
+        LJ0t/1dRAaLBR/sJc7BMnEkONQ==
+X-Google-Smtp-Source: AGHT+IFLSi2VQHJDpvE/O9nRgSIMhEaB16ib6oXZqIwxs7UTphQws++T+eBZGRZa8TvD2hXubHxxqw==
+X-Received: by 2002:a17:906:220f:b0:9a3:faf:7aa8 with SMTP id s15-20020a170906220f00b009a30faf7aa8mr2104632ejs.10.1692958782813;
+        Fri, 25 Aug 2023 03:19:42 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id z7-20020a17090655c700b00992f309cfe8sm810217ejp.178.2023.08.25.03.19.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Aug 2023 03:19:42 -0700 (PDT)
+Message-ID: <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
+Date:   Fri, 25 Aug 2023 11:19:41 +0100
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     rafal@milecki.pl, agross@kernel.org, linux-kernel@vger.kernel.org,
-        mturquette@baylibre.com, richardcochran@gmail.com,
-        p.zabel@pengutronix.de, catalin.marinas@arm.com, will@kernel.org,
-        conor+dt@kernel.org, nfraprado@collabora.com,
-        quic_saahtoma@quicinc.com, sboyd@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, linux-clk@vger.kernel.org, arnd@arndb.de,
-        andersson@kernel.org, linux-arm-kernel@lists.infradead.org,
-        peng.fan@nxp.com, netdev@vger.kernel.org, geert+renesas@glider.be
-In-Reply-To: <20230825091234.32713-5-quic_devipriy@quicinc.com>
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
- <20230825091234.32713-5-quic_devipriy@quicinc.com>
-Message-Id: <169295848663.2559800.3580053610150304724.robh@kernel.org>
-Subject: Re: [PATCH V2 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
- reset definitions
-Date:   Fri, 25 Aug 2023 05:14:46 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
+ ufs
+Content-Language: en-US
+To:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        ebiggers@google.com
+Cc:     linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
+        quic_psodagud@quicinc.com, avmenon@quicinc.com,
+        abel.vesa@linaro.org, quic_spuppala@quicinc.com
+References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -68,53 +81,92 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 25 Aug 2023 14:42:31 +0530, Devi Priya wrote:
-> Add NSSCC clock and reset definitions for ipq9574.
+On 19/07/2023 18:04, Gaurav Kashyap wrote:
+> These patches add support to Qualcomm ICE (Inline Crypto Enginr) for hardware
+> wrapped keys using Qualcomm Hardware Key Manager (HWKM) and are made on top
+> of a rebased version  Eric Bigger's set of changes to support wrapped keys in
+> fscrypt and block below:
+> https://git.kernel.org/pub/scm/fs/fscrypt/linux.git/log/?h=wrapped-keys-v7
+> (The rebased patches are not uploaded here)
 > 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  Changes in V2:
-> 	- Referenced gcc.yaml and dropped the duplicate properties from
-> 	  the binding
-> 	- Updated Uniphy clock names
-> 	- Added nssnoc clocks and clock-names
+> Ref v1 here:
+> https://lore.kernel.org/linux-scsi/20211206225725.77512-1-quic_gaurkash@quicinc.com/
 > 
->  .../bindings/clock/qcom,ipq9574-nsscc.yaml    | 107 ++++++++++++
->  .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
->  .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
->  3 files changed, 393 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
->  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+> Explanation and use of hardware-wrapped-keys can be found here:
+> Documentation/block/inline-encryption.rst
 > 
+> This patch is organized as follows:
+> 
+> Patch 1 - Prepares ICE and storage layers (UFS and EMMC) to pass around wrapped keys.
+> Patch 2 - Adds a new SCM api to support deriving software secret when wrapped keys are used
+> Patch 3-4 - Adds support for wrapped keys in the ICE driver. This includes adding HWKM support
+> Patch 5-6 - Adds support for wrapped keys in UFS
+> Patch 7-10 - Supports generate, prepare and import functionality in ICE and UFS
+> 
+> NOTE: MMC will have similar changes to UFS and will be uploaded in a different patchset
+>        Patch 3, 4, 8, 10 will have MMC equivalents.
+> 
+> Testing:
+> Test platform: SM8550 MTP
+> Engineering trustzone image is required to test this feature only
+> for SM8550. For SM8650 onwards, all trustzone changes to support this
+> will be part of the released images.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+AFAIU, Prior to these proposed changes in scm, HWKM was done with help 
+of TA(Trusted Application) for generate, import, unwrap ... functionality.
 
-yamllint warnings/errors:
+1. What is the reason for moving this from TA to new smc calls?
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:28.26-27 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
+Is this because of missing smckinvoke support in upstream?
 
-doc reference errors (make refcheckdocs):
+How scalable is this approach? Are we going to add new sec sys calls to 
+every interface to TA?
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230825091234.32713-5-quic_devipriy@quicinc.com
+2. How are the older SoCs going to deal with this, given that you are 
+changing drivers that are common across these?
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Have you tested these patches on any older platforms?
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+What happens if someone want to add support to wrapped keys to this 
+platforms in upstream, How is that going to be handled?
 
-pip3 install dtschema --upgrade
+As I understand with this, we will endup with two possible solutions 
+over time in upstream.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
 
+thanks,
+--srini
+
+> The engineering changes primarily contain hooks to generate, import and
+> prepare keys for HW wrapped disk encryption.
+> 
+> The changes were tested by mounting initramfs and running the fscryptctl
+> tool (Ref: https://github.com/ebiggers/fscryptctl/tree/wip-wrapped-keys) to
+> generate and prepare keys, as well as to set policies on folders, which
+> consequently invokes disk encryption flows through UFS.
+> 
+> Gaurav Kashyap (10):
+>    ice, ufs, mmc: use blk_crypto_key for program_key
+>    qcom_scm: scm call for deriving a software secret
+>    soc: qcom: ice: add hwkm support in ice
+>    soc: qcom: ice: support for hardware wrapped keys
+>    ufs: core: support wrapped keys in ufs core
+>    ufs: host: wrapped keys support in ufs qcom
+>    qcom_scm: scm call for create, prepare and import keys
+>    ufs: core: add support for generate, import and prepare keys
+>    soc: qcom: support for generate, import and prepare key
+>    ufs: host: support for generate, import and prepare key
+> 
+>   drivers/firmware/qcom_scm.c            | 292 +++++++++++++++++++++++
+>   drivers/firmware/qcom_scm.h            |   4 +
+>   drivers/mmc/host/cqhci-crypto.c        |   7 +-
+>   drivers/mmc/host/cqhci.h               |   2 +
+>   drivers/mmc/host/sdhci-msm.c           |   6 +-
+>   drivers/soc/qcom/ice.c                 | 309 +++++++++++++++++++++++--
+>   drivers/ufs/core/ufshcd-crypto.c       |  92 +++++++-
+>   drivers/ufs/host/ufs-qcom.c            |  63 ++++-
+>   include/linux/firmware/qcom/qcom_scm.h |  13 ++
+>   include/soc/qcom/ice.h                 |  18 +-
+>   include/ufs/ufshcd.h                   |  25 ++
+>   11 files changed, 797 insertions(+), 34 deletions(-)
+> 
