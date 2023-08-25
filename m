@@ -2,257 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C815787D57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 03:53:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00E86787D81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 04:05:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238688AbjHYBw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 21:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57052 "EHLO
+        id S232940AbjHYCFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Aug 2023 22:05:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239550AbjHYBwr (ORCPT
+        with ESMTP id S240499AbjHYCFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 21:52:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AACD21BD8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 18:51:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1692928312;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=DWLhpWKTuJ/+RpYHbnTOi50aZ6LnaGdh4R08Ifp1NrU=;
-        b=RqRT/ORQBbwwT6Ay4VCYEG5Un3Um36dcB7OOb44eagUoW8+Ba8Pwq5eVsRnzoYY7iotCYM
-        T+qsDQ5YmeGp9u4BF8TBxmedtSCOUejHPwaCphHuoOpqfS5soRw38UDLVTaWFLT9kSOrZ1
-        vDogYTMr4nMQkLN5fKoi20qULf2wQ5M=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-baAAdZX5MF-Y9vuLCs-TnQ-1; Thu, 24 Aug 2023 21:51:51 -0400
-X-MC-Unique: baAAdZX5MF-Y9vuLCs-TnQ-1
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-406afc93066so13863831cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 18:51:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692928310; x=1693533110;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DWLhpWKTuJ/+RpYHbnTOi50aZ6LnaGdh4R08Ifp1NrU=;
-        b=XSPFenqXoWYVBWRwqU1Bcgb3tnUVuaKDMeOdt//3WctF22oQore6P9Z5deZlQ3gNqj
-         RUrbizuGho70dSkWlN3YbXyInm/FSF/EwoCgw4DIxm/Bcl9B1858kvOE5/XFgpo2aRZd
-         9kuPwimVVJ5WFywtdFO1L5cK5RSBEgjjeAbKWrr+aaIgKqdWa0FLYm0DW9fwNRkx+OZi
-         VcRSNyBCGdTpy4ixpywVfevf2ZIgW2dqlIcSuqgGecpG92fnsjQTqMuoEnQvUUEInSkN
-         aznHoZZuVyT4MJh5XzwznsOmkTNsBzlbSt6kBPigPZPK42Rz8tVZrz8o9aQvT/JRmqqU
-         l5Yw==
-X-Gm-Message-State: AOJu0Yzxmyhpy4TU7EY3JQVdVDCmAPiq1Cqy9KrMVqpUSZqhmkT5JoB0
-        qX6pOC1tscHVb6rlCCT40DJkwvL/zXvafwfbxVXPGzr89XfTLFwYZQnCk6JOGrDOiroOGV27AyH
-        lKuxf4zhAiDuq7PBp6pUxGciMog==
-X-Received: by 2002:ac8:59d6:0:b0:400:8613:5378 with SMTP id f22-20020ac859d6000000b0040086135378mr20752370qtf.20.1692928310651;
-        Thu, 24 Aug 2023 18:51:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSb6TqK3YZra5FavtOfFBMuLIN1bj8qAZDBsTSTbyHb3Qk54OyKXOKpdirNK5+OZKcbYX2cg==
-X-Received: by 2002:ac8:59d6:0:b0:400:8613:5378 with SMTP id f22-20020ac859d6000000b0040086135378mr20752335qtf.20.1692928310369;
-        Thu, 24 Aug 2023 18:51:50 -0700 (PDT)
-Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id i17-20020ac860d1000000b00405447ee5e8sm224859qtm.55.2023.08.24.18.51.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Aug 2023 18:51:49 -0700 (PDT)
-Date:   Thu, 24 Aug 2023 18:51:48 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 02/24] iommu: Add IOMMU_DOMAIN_PLATFORM
-Message-ID: <hbmfqpq2oyjjz3loccfbslpalzhlsyr2w3bpx6qasq23kyrfso@e6kry74ifgnt>
-References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <2-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+        Thu, 24 Aug 2023 22:05:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329F71BD1;
+        Thu, 24 Aug 2023 19:04:10 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37P1UHE6031609;
+        Fri, 25 Aug 2023 02:03:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=72NcHc3TExHejWIwg+3LuxNxMSFBD3W1+j4RzHBoI0M=;
+ b=RgeNb07oUF1kkDbvLrQ7JeIsGoGwWK0OcgREaJkzaJwnMxhJ3h80r1Oi5ye979usQJfP
+ xWLkxj9Amk5uT47WEKi26oPYL1ClJvVRjo84pmOtl4KL3bwG9BCdrz2/miFEj1qK9njn
+ mVzukYIHeNRB+nI0cmCFMXD+qTC+V7Q/YAYu43j4MIKJTDv2IdI6Xw7pOAlKmGwDQ29/
+ 8JIFCCCHEO710oDfZDfB4XcdU6Zy62Bb93X2f8vz8SjEOKuf9jBEukpU8hRLl4Lnh+W2
+ 172SwicugBM1TSDUoIdVU7UHuKDkjK8Nz2RYI7Swao8o6niA3GVlOar174URsYBjIaJS 7g== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sp1r3tjj2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Aug 2023 02:03:57 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37P23sRG016781
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Aug 2023 02:03:54 GMT
+Received: from [10.253.13.154] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 24 Aug
+ 2023 19:03:52 -0700
+Message-ID: <086314e1-415f-1ec6-9087-5f54b988398e@quicinc.com>
+Date:   Fri, 25 Aug 2023 10:03:50 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+Subject: Re: [PATCH v2] mhi: host: Add standard ELF header image download
+ functionality
+To:     Kalle Valo <kvalo@kernel.org>
+CC:     <mani@kernel.org>, <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
+References: <1691395192-16090-1-git-send-email-quic_qianyu@quicinc.com>
+ <87edjvwb0a.fsf@kernel.org>
+Content-Language: en-US
+In-Reply-To: <87edjvwb0a.fsf@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9MEPGzvL-_Xmkp-5Y7scP0jV-Jm95CfY
+X-Proofpoint-GUID: 9MEPGzvL-_Xmkp-5Y7scP0jV-Jm95CfY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-25_01,2023-08-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 adultscore=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1011 spamscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308250016
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:16PM -0300, Jason Gunthorpe wrote:
-> This is used when the iommu driver is taking control of the dma_ops,
-> currently only on S390 and power spapr. It is designed to preserve the
-> original ops->detach_dev() semantic that these S390 was built around.
-> 
-> Provide an opaque domain type and a 'default_domain' ops value that allows
-> the driver to trivially force any single domain as the default domain.
-> 
-> Update iommufd selftest to use this instead of set_platform_dma_ops
-> 
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/iommu.c            | 13 +++++++++++++
->  drivers/iommu/iommufd/selftest.c | 14 +++++---------
->  include/linux/iommu.h            |  6 ++++++
->  3 files changed, 24 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 33bd1107090720..7cedb0640290c8 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -184,6 +184,8 @@ static const char *iommu_domain_type_str(unsigned int t)
->  	case IOMMU_DOMAIN_DMA:
->  	case IOMMU_DOMAIN_DMA_FQ:
->  		return "Translated";
-> +	case IOMMU_DOMAIN_PLATFORM:
-> +		return "Platform";
->  	default:
->  		return "Unknown";
->  	}
-> @@ -1752,6 +1754,17 @@ iommu_group_alloc_default_domain(struct iommu_group *group, int req_type)
->  
->  	lockdep_assert_held(&group->mutex);
->  
-> +	/*
-> +	 * Allow legacy drivers to specify the domain that will be the default
-> +	 * domain. This should always be either an IDENTITY or PLATFORM domain.
-> +	 * Do not use in new drivers.
-> +	 */
 
-Would it be worthwhile to mention this in iommu.h for the iommu_ops default_domain?
+On 8/22/2023 7:51 PM, Kalle Valo wrote:
+> Qiang Yu<quic_qianyu@quicinc.com>  writes:
+>
+>> From: Mayank Rana<quic_mrana@quicinc.com>
+>>
+>> Some devices (e.g. WLAN chips) are unable to handle the non-standard ELF
+>> format of the FBC image and thus need special handling of the FBC image.
+>>
+>> Add standard_elf_image flag which makes decision in terms of how FBC image
+>> based AMSS image is being downloaded with connected endpoint.
+>> FBC image is having two image combine: SBL image + AMSS image.
+>> 1. FBC image download using legacy single ELF header image format:
+>> - SBL image: 512KB of FBC image is downloaded using BHI.
+>> - AMSS image: full FBC image is downloaded using BHIe.
+>> 2. FBC image download using separate ELF header image format:
+>> - SBL image: 512 KB of FBC image is downloaded using BHI.
+>> - AMSS image: 512 KB onward FBC image is downloaded using BHIe.
+>> There is no change for SBL image download. Although AMSS image start
+>> address is end address of SBL image while using separate ELF header format.
+>>
+>> Signed-off-by: Mayank Rana<quic_mrana@quicinc.com>
+>> [quic_qianyu@quicinc.com: Update commit message, minor updates]
+>> Signed-off-by: Qiang Yu<quic_qianyu@quicinc.com>
+> I guess this is for an out-of-tree driver? I haven't heard any such
+> requirements for ath11k or ath12k.
+Yes, this is for next generation wlan chip. After confirming with WLAN 
+team, we will hold this patch until WLAN team upstream the driver for 
+next generation wlan chip.
+>> --- a/drivers/bus/mhi/host/boot.c
+>> +++ b/drivers/bus/mhi/host/boot.c
+>> @@ -495,6 +495,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>>   	 * device transitioning into MHI READY state
+>>   	 */
+>>   	if (mhi_cntrl->fbc_download) {
+>> +		dev_dbg(dev, "standard_elf_image: %s\n",
+>> +				(mhi_cntrl->standard_elf_image ? "True" : "False"));
+>> +		if (mhi_cntrl->standard_elf_image) {
+>> +			fw_data = firmware->data + mhi_cntrl->sbl_size;
+>> +			fw_sz = fw_sz - mhi_cntrl->sbl_size;
+>> +		}
+> So you are basically skipping the first sbl_size bytes of the firmware
+> file? Why not just fix the firmware file in userspace? Or maybe you can
+> use the recently added[1] mhi_cntrl->fw_data pointer and handle this in
+> your driver instead?
 
-> +	if (bus->iommu_ops->default_domain) {
-> +		if (req_type)
-> +			return ERR_PTR(-EINVAL);
-> +		return bus->iommu_ops->default_domain;
-> +	}
-> +
->  	if (req_type)
->  		return __iommu_group_alloc_default_domain(bus, group, req_type);
->  
-> diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-> index d48a202a7c3b81..fb981ba97c4e87 100644
-> --- a/drivers/iommu/iommufd/selftest.c
-> +++ b/drivers/iommu/iommufd/selftest.c
-> @@ -281,14 +281,6 @@ static bool mock_domain_capable(struct device *dev, enum iommu_cap cap)
->  	return cap == IOMMU_CAP_CACHE_COHERENCY;
->  }
->  
-> -static void mock_domain_set_plaform_dma_ops(struct device *dev)
-> -{
-> -	/*
-> -	 * mock doesn't setup default domains because we can't hook into the
-> -	 * normal probe path
-> -	 */
-> -}
-> -
->  static struct iommu_device mock_iommu_device = {
->  };
->  
-> @@ -298,12 +290,16 @@ static struct iommu_device *mock_probe_device(struct device *dev)
->  }
->  
->  static const struct iommu_ops mock_ops = {
-> +	/*
-> +	 * IOMMU_DOMAIN_BLOCKED cannot be returned from def_domain_type()
-> +	 * because it is zero.
-> +	 */
-> +	.default_domain = &mock_blocking_domain,
->  	.owner = THIS_MODULE,
->  	.pgsize_bitmap = MOCK_IO_PAGE_SIZE,
->  	.hw_info = mock_domain_hw_info,
->  	.domain_alloc = mock_domain_alloc,
->  	.capable = mock_domain_capable,
-> -	.set_platform_dma_ops = mock_domain_set_plaform_dma_ops,
->  	.device_group = generic_device_group,
->  	.probe_device = mock_probe_device,
->  	.default_domain_ops =
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index d0920b2a9f1c0e..48a18b6e07abff 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -64,6 +64,7 @@ struct iommu_domain_geometry {
->  #define __IOMMU_DOMAIN_DMA_FQ	(1U << 3)  /* DMA-API uses flush queue    */
->  
->  #define __IOMMU_DOMAIN_SVA	(1U << 4)  /* Shared process address space */
-> +#define __IOMMU_DOMAIN_PLATFORM	(1U << 5)
->  
->  #define IOMMU_DOMAIN_ALLOC_FLAGS ~__IOMMU_DOMAIN_DMA_FQ
->  /*
-> @@ -81,6 +82,8 @@ struct iommu_domain_geometry {
->   *				  invalidation.
->   *	IOMMU_DOMAIN_SVA	- DMA addresses are shared process addresses
->   *				  represented by mm_struct's.
-> + *	IOMMU_DOMAIN_PLATFORM	- Legacy domain for drivers that do their own
-> + *				  dma_api stuff. Do not use in new drivers.
->   */
->  #define IOMMU_DOMAIN_BLOCKED	(0U)
->  #define IOMMU_DOMAIN_IDENTITY	(__IOMMU_DOMAIN_PT)
-> @@ -91,6 +94,7 @@ struct iommu_domain_geometry {
->  				 __IOMMU_DOMAIN_DMA_API |	\
->  				 __IOMMU_DOMAIN_DMA_FQ)
->  #define IOMMU_DOMAIN_SVA	(__IOMMU_DOMAIN_SVA)
-> +#define IOMMU_DOMAIN_PLATFORM	(__IOMMU_DOMAIN_PLATFORM)
->  
->  struct iommu_domain {
->  	unsigned type;
-> @@ -262,6 +266,7 @@ struct iommu_iotlb_gather {
->   * @owner: Driver module providing these ops
->   * @identity_domain: An always available, always attachable identity
->   *                   translation.
-> + * @default_domain: If not NULL this will always be set as the default domain.
->   */
->  struct iommu_ops {
->  	bool (*capable)(struct device *dev, enum iommu_cap);
-> @@ -297,6 +302,7 @@ struct iommu_ops {
->  	unsigned long pgsize_bitmap;
->  	struct module *owner;
->  	struct iommu_domain *identity_domain;
-> +	struct iommu_domain *default_domain;
->  };
->  
->  /**
-> -- 
-> 2.41.0
-> 
+Thanks for your suggestions. As per Mayank, with current method, we are 
+able to accommodate new image request better way with less code change, 
+and satisfy processing of RDDM without any modification.
 
+Maybe we can revisit it when the driver for next gen wlan driver comes 
+in picture.
+
+> [1]https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-next&id=efe47a18e43f59f063a82ccaa464a3b4844bb8a8
+>
