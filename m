@@ -2,125 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AFFB788D87
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 19:01:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F17C788D97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 19:08:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344139AbjHYRBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 13:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33354 "EHLO
+        id S1344185AbjHYRIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 13:08:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbjHYRAj (ORCPT
+        with ESMTP id S1344210AbjHYRII (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 13:00:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5128B10C3;
-        Fri, 25 Aug 2023 10:00:37 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PECkBC007918;
-        Fri, 25 Aug 2023 17:00:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=7Ydgg4pJaP0kD/peIFkbYTaUPPhfK1TO7rA2tT1SOeY=;
- b=d45kYWA7bW6ja0UE41uWifh5k8ojFYavxroKfQZSXOMxftRbU9DqkWYLyzfNuQQytH9p
- V/D837m9AeWRQjmJQbFHBFoYR+/3LWrlYYcfYZEF+8tTTvQkv//1bYp8VVYO10Pp+sPC
- f9kO9AaXUALKMVyDVnN4kRo7TAFDTacqetTzkzNb2ua7mgjQ0ucJs0HeLC7g2t9tj88n
- D4sVcf/tA1/ydmI/FbuEym7sSxUOWe0YSNKi6jxCHCsRqop9q68loKljVagUjykaPmmh
- c18uDlGG9JcnJQIIv8mc9t7kOrCpNfPu48CI4mdLsim1PzKUMZXj1qs9/V/SDT8p8IwP mA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmm69h4t-1
+        Fri, 25 Aug 2023 13:08:08 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A34C2108;
+        Fri, 25 Aug 2023 10:08:06 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PFX7xM029576;
+        Fri, 25 Aug 2023 17:07:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=zrcOYqst1jA/BrPRmT0sjHMxf9tJX2mEdJjblw8uuts=;
+ b=gcldzpLNbWOpvM4e/mWznQ0B2Ga7tIUgVsIbs2Qy3fcmRdw9cBP4B75hP8tE1tq1MhSi
+ wkxn0qX0xaXFaI/Wtmz7TgQSPcpG2bIQGDm0jZ6HUMoGhT8+QIgyP+10p1AudKcItfSO
+ L3Lyh7kGONvgkH7Fh3+nTJo3q9wlxVpnpnkG/z4tlWxff3i0LYXoyY4F7RQ4poVXHHkg
+ 12ZWiuUAK7ebdF/Emr5TlVwdnXOAyXxyP5S+EctIa3mBugeOFtDWChlVDILlZHtLHO3f
+ qzqq8jPwdZnubbGJXiiIzPFDmQubEqlLA0/rFXfxD07EglP+3WanR6lsaq57QS1uBFgs gg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmtxsdt0-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 17:00:05 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37PH02Bv025880
+        Fri, 25 Aug 2023 17:07:53 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37PH7qGe023250
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 17:00:04 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+        Fri, 25 Aug 2023 17:07:52 GMT
+Received: from [10.110.11.89] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 25 Aug
- 2023 10:00:03 -0700
-Date:   Fri, 25 Aug 2023 10:00:01 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Nicolas Schier <nicolas@fjasle.eu>
-CC:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Kees Cook" <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <quic_pkondeti@quicinc.com>, <u.kleine-koenig@pengutronix.de>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [PATCH v2 1/1] scripts: Add add-maintainer.py
-Message-ID: <20230825170001.GB22659@quicinc.com>
-Mail-Followup-To: Nicolas Schier <nicolas@fjasle.eu>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-pm@vger.kernel.org
-References: <cover.1691049436.git.quic_gurus@quicinc.com>
- <829b08342568735095bbd3f8c44f435f44688018.1691049436.git.quic_gurus@quicinc.com>
- <ZOYicEP8D7kNGFin@fjasle.eu>
- <20230824214436.GA22659@quicinc.com>
- <ZOiUOcMOeYvMzq58@bergen.fjasle.eu>
+ 2023 10:07:52 -0700
+Message-ID: <362594bc-6315-0125-ff80-33894c8d9337@quicinc.com>
+Date:   Fri, 25 Aug 2023 10:07:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZOiUOcMOeYvMzq58@bergen.fjasle.eu>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH RFC DNM] perf: Add support for Qualcomm Last-Level Cache
+ Controller PMU
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230809-topic-llcc_pmu-v1-1-dd27bd1f44c9@linaro.org>
+ <f71bc35a-c45c-0429-1164-d047d61ef061@quicinc.com>
+ <b46d8e10-5f25-4350-b5b9-77bf5885780f@linaro.org>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <b46d8e10-5f25-4350-b5b9-77bf5885780f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fz34qtDuVkPWFCbAnbkWr5SxCT20PqW0
-X-Proofpoint-GUID: fz34qtDuVkPWFCbAnbkWr5SxCT20PqW0
+X-Proofpoint-ORIG-GUID: Xp4nCQYJfWKYuHKQjAoM3PwVHJIXX9M9
+X-Proofpoint-GUID: Xp4nCQYJfWKYuHKQjAoM3PwVHJIXX9M9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-25_15,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 phishscore=0
- clxscore=1015 mlxscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
- mlxlogscore=630 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308250152
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308250153
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Aug 25 2023 13:44, Nicolas Schier wrote:
-> On Thu 24 Aug 2023 14:44:36 GMT, Guru Das Srinagesh wrote:
-> > > While testing, I thought that adding addresses without filtering-out duplicates
-> > > was odd; but as git-send-email does the unique filtering, it doesn't matter.
-> > 
-> > Since I'm using `set()` in this script, the uniqueness is guaranteed here as
-> > well - there won't be any duplicates.
-> 
-> I thought about patch files that already have 'To/Cc' headers (e.g.  
-> 'git format-patch --to=... --cc=...' or by running add-maintainer.py 
-> multiple times for updating the lists of recipients.  The result is a 
-> patch file with possible duplicated lines; but as written: it does 
-> matter, effectively.
+On 8/25/2023 4:50 AM, Konrad Dybcio wrote:
+> On 24.08.2023 23:31, Trilok Soni wrote:
+>> On 8/9/2023 1:09 PM, Konrad Dybcio wrote:
+>>> Add support for the Qualcomm LLCC (Last-Level Cache Controller) PMU,
+>>> which provides a single event, expressing cache read misses.
+>>>
+>>> Based on the vendor driver found in the msm-5.10 downstream kernel.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>> Hi, I've been trying to get this driver going upstream by cleaning it
+>>> up and adding the necessary perf boilerplate (the original Qualcomm one
+>>> only pokes at the PMU from within the kernel itself) to use the
+>>> userspace tool.
+>>>
+>>> I can not however get it to cooperate.. in this iteration I get a PMU
+>>> event registered (though with only a "raw" name - no "x OR y" like with
+>>> other PMUs on the system) as:
+>>>
+>>> llcc_pmu/read_miss/                                [Kernel PMU event]
+>>>
+>>> but the .read callback is never called when I run:
+>>>
+>>> sudo perf stat -C 0 -a -e llcc_pmu/read_miss/ stress-ng -C 8 -c 8 -m 10
+>>>
+>>> which always returns 0
+>>>
+>>> if I add --always-kernel I get:
+>>> <not supported>      llcc_pmu/read_miss/
+>>
+>> Which SOC you are trying this on?
+> 8250
 
-Sorry, did you mean "does" or "does *not*"?
+Thanks. Let me see if my team can try this on latest SOCs and if it is 
+the same behavior. Did you tried reading the counter by "printk" in the 
+kernel and see the values are dumped from the register?
 
-I'll make sure to test v3 of this script out on patches that have To/Cc already
-included and also run it multiple times on the same patch (effectively the same
-thing).
 
-Thank you.
+-- 
+---Trilok Soni
 
-Guru Das.
