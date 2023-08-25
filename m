@@ -2,140 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7B4B788FCF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 22:26:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A58788FD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 22:27:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbjHYUZf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 16:25:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44594 "EHLO
+        id S231181AbjHYU0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 16:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231199AbjHYUZV (ORCPT
+        with ESMTP id S231200AbjHYU0R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 16:25:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1296E1BE6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 13:24:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1692995074;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=T9GaVO4jGruWR+C5Izp9D7v0Lmi9Kx5kTKgCOaeAvTc=;
-        b=NaFcTyN5fkzp392RI9XQScQEw8Z2+t8sQBntQK+r1+2bMVqgt31mtU71Bxzp2iJUKn06uV
-        eH2duvFbGAX7qfInz7tmbEK0OauFS4CEpOXgkPJ3BiAhCafrmWEyqiPpKaDJjvjg5DzQvs
-        o18R3PF0gOTHLBHk/pzzkxSBKcSZdRo=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-NnchVZ0-M76p9u4PMyJy7Q-1; Fri, 25 Aug 2023 16:24:28 -0400
-X-MC-Unique: NnchVZ0-M76p9u4PMyJy7Q-1
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-76e1a6a107eso135890885a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 13:24:28 -0700 (PDT)
+        Fri, 25 Aug 2023 16:26:17 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498FD1BF1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 13:26:15 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-5009d4a4897so1997995e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 13:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692995173; x=1693599973;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xaM+n+aR2UDKZm7iUT7Gwvf5Tkj3K+ENTupiFy9EIRM=;
+        b=d+6hXyfJgp8FYokh0gN/o+8H/Ee5pknYUTber0r6DT528COCq9eOW9kcWGXq+nzMhp
+         Ww/cKDdjj5io9Q+Y9ycxvOXRDW4tIOwHe5CzrKtvSJKhmiM5s7JDe4b1LU+UnnL/x0wf
+         7iRGGWJHUrE9aEQjBu+nivWQQH2UioGGvqlxFeyaYPtQXEg386jCSgOzz0FpgiXNeXu7
+         uLRF49iYzhYRPOZ9dAaWo/OulR7XPo+EoSHzzbeouFZi/wa1VGuD29WB3JyX/EitOaVU
+         20+XJ5R+/9p0874Wsao8RxXhCrBsF/rAaIeXtYoTl5zFGCB2vBntt1Frtml9Ai+Heqfh
+         k2GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692995068; x=1693599868;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T9GaVO4jGruWR+C5Izp9D7v0Lmi9Kx5kTKgCOaeAvTc=;
-        b=JeyL3fbmGegZix5tIEy8jLxKx3y80brYlIEUYDfIAlUOD6vblvgkwvnZobLQ/bUfOu
-         KwSB5scJNoValMjkYal/uASyNqv5Az57+HGgiVl5ljLFpA/81T/zCgUXyc23wxcp85UP
-         jCJkyR/e0nYyoGFhjuXNOWdsRA2Jv8HMt5qjOJw/nVik7fkgwYHsYuErxdF6N+bihOek
-         dunnPInpecV97ce6VCWuOFtZhA+7w8o+kPHJeNDRGm4clEUnhe15W3WjbyCiZQfm3XV7
-         AnyCykuZkzk3p7aMooBTKJc2HLG5T5mlqFYqVa80n3mjn7ym0QXFOlXwIVJqzqekQHCo
-         PXZw==
-X-Gm-Message-State: AOJu0Yzho1toc5MnjiTD1h9CAbWrtvmjNJ5qGxi4bAhuL02z+Qvmyi9i
-        qWJn6LNZdqMJ6l/k3+K+bjanf7L8WAf4BGkud/RTkwsClnB8NqfPJRukTbvMkOeOIsbdXcd0e87
-        n257XYGlI1A9FzRufsguyb/wa6w==
-X-Received: by 2002:a05:620a:4009:b0:76e:eeaa:a079 with SMTP id h9-20020a05620a400900b0076eeeaaa079mr7880694qko.10.1692995067922;
-        Fri, 25 Aug 2023 13:24:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLBKI1XGw7s6CbX7jhIzTvhmgnGyxca1Jm6YHCiJ3dxbM+m70gQmthLg44868T29Hr/JESWg==
-X-Received: by 2002:a05:620a:4009:b0:76e:eeaa:a079 with SMTP id h9-20020a05620a400900b0076eeeaaa079mr7880679qko.10.1692995067632;
-        Fri, 25 Aug 2023 13:24:27 -0700 (PDT)
-Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id g7-20020a37e207000000b0075cd80fde9esm741104qki.89.2023.08.25.13.24.26
+        d=1e100.net; s=20221208; t=1692995173; x=1693599973;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xaM+n+aR2UDKZm7iUT7Gwvf5Tkj3K+ENTupiFy9EIRM=;
+        b=KmmyyyFXH7TYkDPGX4+zGMDU6VyYjrccZQC63nFwpphWpQtsCKbYIZIsiGC+moEiGA
+         EU3UrbUE5WaC+vj4bfMxKgdFNMUtcYZlr4Sg0XMcL39viGBS2X4C+yMdTSL2tIv0xQ/k
+         a1TLmc7TYNFMjkC+SmBh03ruX6mCQxE7cQ0RUevSaQS2pllmsgIn7vVcweU+DVhFvp3N
+         m6drI4AdC6GgjDMGF/7MdKVet/r4OFNt1gu6O0XnQEmAeFYnKLY+KHRMR+EzUqtPvAj+
+         4ZwyCvhUONQ826I5IIjA5zw/YaQ2WPssJJ75XYx3WPY8pkCnAnX/3aesdzRK68gB4rBM
+         FmgQ==
+X-Gm-Message-State: AOJu0Yxck27IJ8S9dmTGiBZbdZdNX0QrEyPxm1vpza2TiYCfObXuOa4u
+        gAJOjRfKWDL9uMr9kNEIiguxSg==
+X-Google-Smtp-Source: AGHT+IHZWQsa/eM+b5ORUmm3jdem8a1l1zQoP4lM0kndRlNsDKQy0J1qYugkxq0XETuiLLIQcirrIw==
+X-Received: by 2002:a05:6512:10d6:b0:4fb:744e:17db with SMTP id k22-20020a05651210d600b004fb744e17dbmr16923065lfg.1.1692995172974;
+        Fri, 25 Aug 2023 13:26:12 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id eq8-20020a056512488800b004fe4aef5b18sm410359lfb.164.2023.08.25.13.26.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 13:24:27 -0700 (PDT)
-Date:   Fri, 25 Aug 2023 13:24:25 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 03/24] powerpc/iommu: Setup a default domain and
- remove set_platform_dma_ops
-Message-ID: <zbmf64fbpp5zsolyqd74px3hpgvvorc3xal6pvaxdw3uoccb6c@epcqhetd6n6l>
-References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <3-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+        Fri, 25 Aug 2023 13:26:11 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Kalle Valo <kvalo@kernel.org>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] wifi: ath10k: Default to board.bin for legacy board data file
+Date:   Fri, 25 Aug 2023 23:26:10 +0300
+Message-Id: <20230825202610.1580132-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:17PM -0300, Jason Gunthorpe wrote:
-> POWER is using the set_platform_dma_ops() callback to hook up its private
-> dma_ops, but this is buired under some indirection and is weirdly
-> happening for a BLOCKED domain as well.
-> 
-> For better documentation create a PLATFORM domain to manage the dma_ops,
-> since that is what it is for, and make the BLOCKED domain an alias for
-> it. BLOCKED is required for VFIO.
-> 
-> Also removes the leaky allocation of the BLOCKED domain by using a global
-> static.
-> 
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  arch/powerpc/kernel/iommu.c | 38 +++++++++++++++++--------------------
->  1 file changed, 17 insertions(+), 21 deletions(-)
-> 
+Default to 'board.bin' for the legacy board data file, in case the
+hw_params array doesn't list hw-specific board data file name (e.g. for
+WCN3990).
 
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/net/wireless/ath/ath10k/core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 6cdb225b7eac..806e5968e0ef 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -1271,11 +1271,6 @@ static int ath10k_core_fetch_board_data_api_1(struct ath10k *ar, int bd_ie_type)
+ 	char boardname[100];
+ 
+ 	if (bd_ie_type == ATH10K_BD_IE_BOARD) {
+-		if (!ar->hw_params.fw.board) {
+-			ath10k_err(ar, "failed to find board file fw entry\n");
+-			return -EINVAL;
+-		}
+-
+ 		scnprintf(boardname, sizeof(boardname), "board-%s-%s.bin",
+ 			  ath10k_bus_str(ar->hif.bus), dev_name(ar->dev));
+ 
+@@ -1285,7 +1280,8 @@ static int ath10k_core_fetch_board_data_api_1(struct ath10k *ar, int bd_ie_type)
+ 		if (IS_ERR(ar->normal_mode_fw.board)) {
+ 			fw = ath10k_fetch_fw_file(ar,
+ 						  ar->hw_params.fw.dir,
+-						  ar->hw_params.fw.board);
++						  ar->hw_params.fw.board ?:
++						  "board.bin");
+ 			ar->normal_mode_fw.board = fw;
+ 		}
+ 
+-- 
+2.39.2
 
