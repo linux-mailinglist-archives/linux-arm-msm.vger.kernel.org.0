@@ -2,105 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BC1F788771
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 14:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EDE97887A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 14:39:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243718AbjHYMb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 08:31:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43834 "EHLO
+        id S244884AbjHYMi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 08:38:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244895AbjHYMbU (ORCPT
+        with ESMTP id S244917AbjHYMi4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 08:31:20 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A732719
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 05:30:49 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-52683b68c2fso1337085a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 05:30:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692966635; x=1693571435;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RGJySe5oV5RvT65+50/oiO7t28jIHypCcuPr0UQ4mVk=;
-        b=k/Z9BLU7irljc9SAQdIelUeKfRH/uOdl8aETiOxsEWAbA5T24oJU07WmsnVswDTL7z
-         nList5SAGKekwMimaimJ0ME1YjWpYagnwtqfzzqpRSYRph6Rh9GXSpjpnZ9NHDf8+xBK
-         UkZc0BZU+1cMPWBJXbHQ3TYVcYKYmGkCdvs/1rmUSOknGl0XZ9Oh9fpXLAZDa/AJo9Uz
-         n2wyiH3fEuepD1UmsBREDkRfLO1p87PLi3gJUPIsGvTfYnYu8wuc5i8mwmlb3ePkHtvB
-         4pRAX8UvcqipeEtzsOTPKqhQSlE5RBpJuRN9OQz+EekNqhZR/oTU50WbyIjMrtih/9jC
-         atBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692966635; x=1693571435;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RGJySe5oV5RvT65+50/oiO7t28jIHypCcuPr0UQ4mVk=;
-        b=EwXvTVEeVx9ixg8pukBNdg2LIwld9jQUpMBMpbpMv1XY3Zeo6gwzU3K1CQGh7Paeqy
-         YxUu8UxhhI7Lh2dl8enIY5zSaxv1qTcTift/JJWZT1hilns0vTYFe1V2fBR5jk0DLUtQ
-         bjf808RpjlGxlerJBzhL12cMgzB4xdzAmDfJmlgxM3w0HMaVPV33zKZqwLcjC+l46Kub
-         PSiIRXxK+vYtl/jk2buReS09dA9MTgY4+rFsXMfyHnH+pLZU8YjAHRpEoOcjQ0/C7uou
-         FmJfsqxrO7lL9hPM3P26boT3QcP7rPBd8LlL1tKSzniCoB8Ri1TzJLB8tNgGDpTw6e5p
-         viqQ==
-X-Gm-Message-State: AOJu0YwvwHkT4YXu9CCm+vE8IXndFjlVZachfR1Rao7WVYlh16XKcePn
-        1ic8s9Ifa/bsqeEUNdlbPUfnkA==
-X-Google-Smtp-Source: AGHT+IFV8ktlaz42ycnW/eurNZSB0myL1XwQezOptOEffZJu52cScVPqfwDGT9wSU8UMOUd/x9czUA==
-X-Received: by 2002:aa7:c2cd:0:b0:526:9626:e37d with SMTP id m13-20020aa7c2cd000000b005269626e37dmr13254744edp.37.1692966635044;
-        Fri, 25 Aug 2023 05:30:35 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id p8-20020aa7d308000000b005288f0e547esm967693edq.55.2023.08.25.05.30.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 05:30:34 -0700 (PDT)
-Message-ID: <29a968e9-9c6f-034d-35fe-71c42b5d7cbb@linaro.org>
-Date:   Fri, 25 Aug 2023 14:30:32 +0200
+        Fri, 25 Aug 2023 08:38:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82341BE;
+        Fri, 25 Aug 2023 05:38:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E62A61701;
+        Fri, 25 Aug 2023 12:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C23C433C9;
+        Fri, 25 Aug 2023 12:38:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692967133;
+        bh=ESvZDqxMeDYukhpCcgd3OK4NJKlTKla20IUfykwwx8k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BkHuQBkoksEB2GA3A0V7C2xF+mgzrNQ5tNCLLIQ68fO0vrFIAnG1JDxmS0CT9JsRH
+         cX4pgbynbV73wLUSbQfS8m+00sI8voQkQf1gGM6qZ0N9Na0gQZoMzo2o4nFhkOfRz5
+         7Ml3CDjD7OBWVeLkJf5fu4BKyALjz8UVPMUTRRwqoBl4ShjqF8tLeR2bko92dfm6l0
+         7wO1jf2n0CT+6cfvXGFwy20emQEe21qTEmpmCdDgwjH3RfNO37klYNCLBtOGOqPxaX
+         cXx55SGTzsHhYRmGvIe0m9p2MZ6r53ppE7kra1xOz0wSeoD8GLL3K2A91yKZE1/SYG
+         4AL7yPab3AVKg==
+Date:   Fri, 25 Aug 2023 18:08:43 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Vidya Sagar <vidyas@nvidia.com>
+Cc:     jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
+        lpieralisi@kernel.org, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, Sergey.Semin@baikalelectronics.ru,
+        dmitry.baryshkov@linaro.org, linmq006@gmail.com,
+        ffclaire1224@gmail.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kthota@nvidia.com, mmaddireddy@nvidia.com, sagar.tv@gmail.com
+Subject: Re: [PATCH V5 0/3] PCI: designware-ep: Fix DBI access before core
+ init
+Message-ID: <20230825123843.GD6005@thinkpad>
+References: <20221013175712.7539-1-vidyas@nvidia.com>
+ <20230214130329.GC4981@thinkpad>
+ <ccc4b7fe-db07-cddb-2d0b-b6a89d7b1155@nvidia.com>
+ <20230307151839.GE5599@thinkpad>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH V2 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
- reset definitions
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        richardcochran@gmail.com, arnd@arndb.de, geert+renesas@glider.be,
-        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org
-Cc:     quic_saahtoma@quicinc.com
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
- <20230825091234.32713-5-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230825091234.32713-5-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230307151839.GE5599@thinkpad>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/08/2023 11:12, Devi Priya wrote:
-> Add NSSCC clock and reset definitions for ipq9574.
+On Tue, Mar 07, 2023 at 08:48:39PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Feb 14, 2023 at 07:27:54PM +0530, Vidya Sagar wrote:
+> > 
+> > 
+> > On 2/14/2023 6:33 PM, Manivannan Sadhasivam wrote:
+> > > External email: Use caution opening links or attachments
+> > > 
+> > > 
+> > > On Thu, Oct 13, 2022 at 11:27:09PM +0530, Vidya Sagar wrote:
+> > > > This series attempts to fix the issue with core register (Ex:- DBI) accesses
+> > > > causing system hang issues in platforms where there is a dependency on the
+> > > > availability of PCIe Reference clock from the host for their core
+> > > > initialization.
+> > > > This series is verified on Tegra194 & Tegra234 platforms.
+> > > > 
+> > > > Manivannan, could you please verify on qcom platforms?
+> > > > 
+> > > 
+> > > Vidya, any plan to respin this series? The EPC rework series is now merged for
+> > > v6.3.
+> > 
+> > Yes. I'll send an updated series soon.
+> > Currently, I'm observing some regression with linux-next on Tegra platform
+> > for endpoint mode. I'll post the patches as soon as that is resolved.
+> > 
 > 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  Changes in V2:
-> 	- Referenced gcc.yaml and dropped the duplicate properties from
-> 	  the binding
-> 	- Updated Uniphy clock names
-> 	- Added nssnoc clocks and clock-names
+> Ping!
+> 
 
+Vidya, are you planning to continue working on this series? If you do not have
+time, please let me know.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+- Mani
 
-Rob's bot report is a result of patch #2 failing to apply.
+> Thanks,
+> Mani
+> 
+> > Thanks,
+> > Vidya Sagar
+> > 
+> > > 
+> > > Thanks,
+> > > Mani
+> > > 
+> > > > V5:
+> > > > * Addressed review comments from Bjorn
+> > > > * Changed dw_pcie_ep_init_complete() to dw_pcie_ep_init_late()
+> > > > * Skipped memory allocation if done already. This is to avoid freeing and then
+> > > >    allocating again during PERST# toggles from the host.
+> > > > 
+> > > > V4:
+> > > > * Addressed review comments from Bjorn and Manivannan
+> > > > * Added .ep_init_late() ops
+> > > > * Added patches to refactor code in qcom and tegra platforms
+> > > > 
+> > > > Vidya Sagar (3):
+> > > >    PCI: designware-ep: Fix DBI access before core init
+> > > >    PCI: qcom-ep: Refactor EP initialization completion
+> > > >    PCI: tegra194: Refactor EP initialization completion
+> > > > 
+> > > >   .../pci/controller/dwc/pcie-designware-ep.c   | 125 +++++++++++-------
+> > > >   drivers/pci/controller/dwc/pcie-designware.h  |  10 +-
+> > > >   drivers/pci/controller/dwc/pcie-qcom-ep.c     |  27 ++--
+> > > >   drivers/pci/controller/dwc/pcie-tegra194.c    |   4 +-
+> > > >   4 files changed, 97 insertions(+), 69 deletions(-)
+> > > > 
+> > > > --
+> > > > 2.17.1
+> > > > 
+> > > 
+> > > --
+> > > மணிவண்ணன் சதாசிவம்
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
-Best regards,
-Krzysztof
-
+-- 
+மணிவண்ணன் சதாசிவம்
