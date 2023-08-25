@@ -2,161 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C132788FF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 22:45:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12B3C78900A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 22:59:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231256AbjHYUpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 16:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44940 "EHLO
+        id S231280AbjHYU6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 16:58:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231253AbjHYUpO (ORCPT
+        with ESMTP id S231287AbjHYU6x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 16:45:14 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD8A2135;
-        Fri, 25 Aug 2023 13:45:11 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PKIG0F028065;
-        Fri, 25 Aug 2023 20:44:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rCbT+9n5oZd2fu4/AHpTd1uvnXAylvuuPvz5cdeX7To=;
- b=Sx+a9DMnEXz7b5bgezSZt8ZwcQ2pGwkhaGTUlsDpoYdb/EElVNiJOJik0T2uRGGaDdGd
- kanEHiByoEw847vOsPJ4XNvPpPB8kUGTOfufVt9lQHt5s1mVbNd1kJhxbnXe5UlCf81t
- 6Tz1zdOZFR6oWWrSrUyqjmY7Q6yd8o8zvJDso1dcvagAHM3/SuGUj3BJlx6/aFOqAgl2
- 5MNGr4TEQE3weQRg4VjEIMroSd1hngx+3jU2rGBZnC4vVXLqEKTDa3n//UghLmd3IfYA
- Xpz1hpNt5L443G9QFLygiJQppYWuvKo3QYalKBbE86UWqMzzMBEPp5hUeoZB09qIK9FT Wg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmm69xxd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 20:44:49 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37PKimSG007359
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 20:44:48 GMT
-Received: from [10.110.6.4] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 25 Aug
- 2023 13:44:47 -0700
-Message-ID: <832a55a6-9914-a5f1-5bef-30421e47181d@quicinc.com>
-Date:   Fri, 25 Aug 2023 13:44:46 -0700
+        Fri, 25 Aug 2023 16:58:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6A742136;
+        Fri, 25 Aug 2023 13:58:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F584631B1;
+        Fri, 25 Aug 2023 20:58:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B458DC433C8;
+        Fri, 25 Aug 2023 20:58:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1692997130;
+        bh=g08hzV5OBUeJ7RWaVONAbcH3zygdvgpJ5wKolWeZ0zI=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=RIUQ/Ih2Tcz3f07wyn6v2xDJy5LgoJmrbrBsmyqX5s+3LmNUYXDADnKuZoCsnb3RQ
+         PmkzpIa55YuL/n8anpNjfBkp1vDjLPotofNfZpnBlPo68AWos1lkv4Os6S+B94wb+D
+         naDyKbgXmayZrBvWRuUOf08fo7t2KEuWoaxygXw8DU4HB7jTjFG6j0OL9ddJlwRFMA
+         hVSJOxYILvEOq8eq/hiqJTnPnIH3EmQuu/BKNuZMVgnQiLCOsNeaVj7E37jbF9UOx9
+         NgCeCo8MuLUwcJQrx6T49tIK+IJsrN2u83McU1s9HOaOgvTSTLzNTv8li9bDdFOG5/
+         9Rt7kF8GxjYMw==
+Message-ID: <4a00db79414dbc47a2b7792d849f7056.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1] drm/msm/dp: do not reinitialize phy unless retry
- during link training
-Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>, <marijn.suijten@somainline.org>
-CC:     <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1691533190-19335-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <1691533190-19335-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: NFxw4VKgL6xi8hVhddxdorYnjj4U6Uxg
-X-Proofpoint-GUID: NFxw4VKgL6xi8hVhddxdorYnjj4U6Uxg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-25_19,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 phishscore=0
- clxscore=1011 mlxscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308250185
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230825091234.32713-2-quic_devipriy@quicinc.com>
+References: <20230825091234.32713-1-quic_devipriy@quicinc.com> <20230825091234.32713-2-quic_devipriy@quicinc.com>
+Subject: Re: [PATCH V2 1/7] clk: qcom: clk-alpha-pll: Add NSS HUAYRA ALPHA PLL support for ipq9574
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     quic_devipriy@quicinc.com, quic_saahtoma@quicinc.com
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, arnd@arndb.de, catalin.marinas@arm.com,
+        conor+dt@kernel.org, devicetree@vger.kernel.org,
+        geert+renesas@glider.be, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        netdev@vger.kernel.org, nfraprado@collabora.com,
+        p.zabel@pengutronix.de, peng.fan@nxp.com, rafal@milecki.pl,
+        richardcochran@gmail.com, robh+dt@kernel.org, will@kernel.org
+Date:   Fri, 25 Aug 2023 13:58:48 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/8/2023 3:19 PM, Kuogee Hsieh wrote:
-> DP PHY re-initialization done using dp_ctrl_reinitialize_mainlink() will
-> cause PLL unlocked initially and then PLL gets locked at the end of
-> initialization. PLL_UNLOCKED interrupt will fire during this time if the
-> interrupt mask is enabled.
-
-There should be a line break here.
-
-> However currently DP driver link training implementation incorrectly
-> re-initializes PHY unconditionally during link training as the PHY was
-> already configured in dp_ctrl_enable_mainlink_clocks().
-> 
-> Fix this by re-initializing the PHY only if the previous link training
-> failed.
-> 
-> [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
-> 
-> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/30
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-
-I tested and confirm that without this patch, I see this spam atleast 
-once per reboot but after this patch, I have not seen this for 5 
-consecutive reboots.
-
-Hence,
-
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
-
-Looking at the code flow, the dp_ctrl_reinitialize_mainlink() certainly 
-looks redundant where it is, considering that the clks were enabled just 
-a couple of lines above in dp_ctrl_enable_mainlink_clocks().
-
-Hence with the minor fix in the commit,
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-> ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c | 13 ++++++-------
->   1 file changed, 6 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index a7a5c7e..77a8d93 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1774,13 +1774,6 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
->   		return rc;
->   
->   	while (--link_train_max_retries) {
-> -		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-> -		if (rc) {
-> -			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
-> -					rc);
-> -			break;
-> -		}
-> -
->   		training_step = DP_TRAINING_NONE;
->   		rc = dp_ctrl_setup_main_link(ctrl, &training_step);
->   		if (rc == 0) {
-> @@ -1832,6 +1825,12 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
->   			/* stop link training before start re training  */
->   			dp_ctrl_clear_training_pattern(ctrl);
->   		}
+Quoting Devi Priya (2023-08-25 02:12:28)
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
+a-pll.c
+> index e4ef645f65d1..1c2a72840cd2 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -228,6 +228,18 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] =3D {
+>                 [PLL_OFF_ALPHA_VAL] =3D 0x24,
+>                 [PLL_OFF_ALPHA_VAL_U] =3D 0x28,
+>         },
 > +
-> +		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-> +		if (rc) {
-> +			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n", rc);
-> +			break;
-> +		}
->   	}
->   
->   	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+
+Why the extra newline? All other types aren't this way.
+
+> +       [CLK_ALPHA_PLL_TYPE_NSS_HUAYRA] =3D  {
+> +               [PLL_OFF_L_VAL] =3D 0x04,
+> +               [PLL_OFF_ALPHA_VAL] =3D 0x08,
+> +               [PLL_OFF_TEST_CTL] =3D 0x0c,
+> +               [PLL_OFF_TEST_CTL_U] =3D 0x10,
+> +               [PLL_OFF_USER_CTL] =3D 0x14,
+> +               [PLL_OFF_CONFIG_CTL] =3D 0x18,
+> +               [PLL_OFF_CONFIG_CTL_U] =3D 0x1c,
+> +               [PLL_OFF_STATUS] =3D 0x20,
+> +       },
+> +
