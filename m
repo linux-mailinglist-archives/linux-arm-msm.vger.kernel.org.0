@@ -2,137 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88DAF78904D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:17:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2CD4789071
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:36:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231510AbjHYVRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 17:17:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40422 "EHLO
+        id S231281AbjHYVgI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 17:36:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231397AbjHYVQq (ORCPT
+        with ESMTP id S231455AbjHYVf6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 17:16:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B052125
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1692998156;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=RNGvpBuIiKL3Cl4QX+janawTefek15UWSwqXPvpbHmo=;
-        b=cwtllQin9aGNGDGC4sewr4XinJEewwlqvkNuo3F3po0QfRD+7ufjiyyhs5t2pFbyuDTzfW
-        BSM0y8P792D6u+QtMD2G2EL/WCvs0OBVjTDQ+nIbcbReqH8xfsLF+BPnWAXxs9YL9HFv5F
-        S7Wor7sjEvNi0oYW58c3JZ75a/EOQCg=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-RAuD8i3UM26f2Uc7p-QpOA-1; Fri, 25 Aug 2023 17:15:54 -0400
-X-MC-Unique: RAuD8i3UM26f2Uc7p-QpOA-1
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-41084c361aaso13962661cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:15:54 -0700 (PDT)
+        Fri, 25 Aug 2023 17:35:58 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7528610C7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:35:55 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-5007f3d3235so2079502e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692999354; x=1693604154;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tp7LgFPLpnIkw2JmjBzO/9511opzQR/ho3jSDUkitEI=;
+        b=WQzBx3wDBZP8lOmUkvk09NRwHzHkybbed0St4r0VsMFSTBNaXFRuqJnmJG2ve4fBaM
+         i7v8KgtCZfjOMfSn5VzRTx/g/dO1IvY6NcuEI9adeVnsYSlqTK2wOdbCJZe3sAxDZPuL
+         z12qzuZ+Wkak33cJKUPvW61kxALAGfd044oeOr8BuUT6/gJI/B43THKdbIncm+dIGWxw
+         YPmV7vzvPNiw0qExibgYK8yk+tOqzyNIza9HFrR50HbGz3iRYWdPxNl5BijUV9aRMG+k
+         /elYaOPEC/yAWIYwm21KnGXCRfDe9t1ETVqe2tpdgEyaSoCRh6yTdalKwy9PP7aALXeT
+         98dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692998154; x=1693602954;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RNGvpBuIiKL3Cl4QX+janawTefek15UWSwqXPvpbHmo=;
-        b=gpC3RvVZPqP+7bFswtBg7G4r/aj7LQnXB/1dEsi0aTnU390jEG0YI3FHq5h7iVFGw8
-         gucugkHGJlo8tRbr/YLPkkxOxr1gKz4OmxQ0NCb0JvStHQ4mJUXQ1eoOZzZrEnt/uUgV
-         II5wBj3a6jMJtS7eNAgmuUHqOkJyQdf5edb8F7jOdSYW2Byz3oNJHsfG8IrJtb2gfyYz
-         0iNPjcW4aj0CQrXYWUcEZnhAWfsMWPqjHkERS+/+uh/Hz2nz6/kSG1jCRrxbFZA/gUhp
-         ioxxJfblsSxGr2QsAHsVrlyd8KeGJ9/AZ5RTYjOEbG9eQrB+xbzlVK9fLuuArS8Ggz93
-         J2vw==
-X-Gm-Message-State: AOJu0Yy/BVQgx+sLibWdIewgscPmIipkOIQfZHJn2IU0Vw7l4dZa31dI
-        8a7WfzPOT5kKx/wH3/3Qd+cQ9gRp+tVab5BmKa1MpguCezO2Rz9VT+j6nQlAn3fxmTNZtS7cSIp
-        szdEx2vbU6RWX0U1ST0K6/Cl2Pg==
-X-Received: by 2002:a05:622a:138c:b0:411:fc77:5863 with SMTP id o12-20020a05622a138c00b00411fc775863mr9742843qtk.34.1692998153922;
-        Fri, 25 Aug 2023 14:15:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGkTdJ1PESb45xmKP1IyMr0VhacrVsFun4AHO5ghG+vkiiDrIbNOg/oEp2bfPugUDBb4fzHQ==
-X-Received: by 2002:a05:622a:138c:b0:411:fc77:5863 with SMTP id o12-20020a05622a138c00b00411fc775863mr9742803qtk.34.1692998153629;
-        Fri, 25 Aug 2023 14:15:53 -0700 (PDT)
-Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id i3-20020ae9ee03000000b0076745f352adsm759948qkg.59.2023.08.25.14.15.52
+        d=1e100.net; s=20221208; t=1692999354; x=1693604154;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tp7LgFPLpnIkw2JmjBzO/9511opzQR/ho3jSDUkitEI=;
+        b=Lef1xTQlGQooa+AlqbtLquWvh/hW1cs5O5YVT+baLHuNAKwHCzLSbF/3Rxpe0CjJFK
+         lLFVOEDj6aS5BGN5kyvvY+InO9nkW996cYZWlr6Fvv1DAB4HWXXEciXncMbaouBvzFA2
+         IR4uDiO8SkqQzlMRl9HyJicv82mGtTB38jwcrwEZqOGFTeOrCyTuSIw9NfexMgqkSGIc
+         Zr433kWl1znx4328FOzqreIenHQ0d2XYGroD1HyJRs9QYuKGYJFdLQqDVcwW4s90Krjh
+         vcHYa7sDH4eQpQIuTfxBy8Gxb1X8i6gQieltpBqgbkeYeKsU6xlFv8RteQL8Y3RVvTjq
+         YRKQ==
+X-Gm-Message-State: AOJu0YxKxGX7vmc31Ue4OquA6+lCleMWvy8EuQIWO8tceZq21gN3wBpE
+        sy27LJKosPFWjAv5Aa222Lsv6+4ZJ8qTpiFVg40=
+X-Google-Smtp-Source: AGHT+IHRhrWqUyLoNkeL82+BnNr9H5EuJ2/70xPuM2P3fuBxElC8Ed3FFrgvWr8P8/qR2fBbcIzOkg==
+X-Received: by 2002:a05:6512:b05:b0:500:9026:a290 with SMTP id w5-20020a0565120b0500b005009026a290mr9955891lfu.9.1692999353563;
+        Fri, 25 Aug 2023 14:35:53 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id b11-20020ac25e8b000000b004fe47879d93sm429947lfq.106.2023.08.25.14.35.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 14:15:53 -0700 (PDT)
-Date:   Fri, 25 Aug 2023 14:15:51 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        Fri, 25 Aug 2023 14:35:53 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 04/24] iommu: Add IOMMU_DOMAIN_PLATFORM for S390
-Message-ID: <qlgsyftnpb55wn6jcsdx27u3vnc66h5dmtcuelw4y5wgk3vorf@ctgykaa5wp7d>
-References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <4-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it is not available
+Date:   Sat, 26 Aug 2023 00:35:51 +0300
+Message-Id: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:18PM -0300, Jason Gunthorpe wrote:
-> The PLATFORM domain will be set as the default domain and attached as
-> normal during probe. The driver will ignore the initial attach from a NULL
-> domain to the PLATFORM domain.
-> 
-> After this, the PLATFORM domain's attach_dev will be called whenever we
-> detach from an UNMANAGED domain (eg for VFIO). This is the same time the
-> original design would have called op->detach_dev().
-> 
-> This is temporary until the S390 dma-iommu.c conversion is merged.
-> 
-> Tested-by: Heiko Stuebner <heiko@sntech.de>
-> Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On Qualcomm SM8150 the PDC resource has size 0x400. When PDC driver
+tries to read the version register (0x1000), it reads past the end of
+this resource, causing kernel crash.
 
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Check the size of PDC resource before reading the PDC_VERSION register.
+
+Fixes: bc82cc42644b ("irqchip/qcom-pdc: Add support for v3.2 HW")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/irqchip/qcom-pdc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+index 9bb6951257c2..431b213b5abb 100644
+--- a/drivers/irqchip/qcom-pdc.c
++++ b/drivers/irqchip/qcom-pdc.c
+@@ -324,6 +324,7 @@ static int pdc_setup_pin_mapping(struct device_node *np)
+ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+ {
+ 	struct irq_domain *parent_domain, *pdc_domain;
++	struct resource res;
+ 	int ret;
+ 
+ 	pdc_base = of_iomap(node, 0);
+@@ -332,7 +333,14 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+ 		return -ENXIO;
+ 	}
+ 
+-	pdc_version = pdc_reg_read(PDC_VERSION, 0);
++	if (of_address_to_resource(node, 0, &res))
++		return -EINVAL;
++
++	/* compat with old sm8150 DT which had very small region for PDC */
++	if (resource_size(&res) > PDC_VERSION)
++		pdc_version = pdc_reg_read(PDC_VERSION, 0);
++	else
++		pdc_version = 0;
+ 
+ 	parent_domain = irq_find_host(parent);
+ 	if (!parent_domain) {
+-- 
+2.39.2
 
