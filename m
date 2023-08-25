@@ -2,140 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1399A788CA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 17:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5386788D3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 18:37:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343893AbjHYPjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 11:39:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59546 "EHLO
+        id S238173AbjHYQgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 12:36:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343936AbjHYPit (ORCPT
+        with ESMTP id S1344014AbjHYQgS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 11:38:49 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D4926A8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 08:38:40 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fe61ae020bso1589519e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 08:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692977918; x=1693582718;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vJY9igvv29s/2ZAufEy7n6/wB5s/2TDnBd7ycBc9ECA=;
-        b=M1fIp6tUYMwcgIdgVQ/9NtMrqbPki3FKGT66kq83HlqNZT7yDF4qvM5W/auZgzwrJq
-         XMSw+k+eEny3oNGB53VUrp10iXIn8HqaNsRDrPlGM3mGiL/x92RRFQCQvf78MjuvIhOX
-         91tvzsuGTz+/oKe8gzs5PgGxWD+I6Sq29NZ+UIbTRObZwoOwHsoiQoa4D2GpkCwcZa3F
-         W28Lju+8mOPdHfMOMI0CXGxILOEhCjZ/EG0bCghoMv3bZvDUG8O0QlF0O0UXkRg6Dq2y
-         JrhkiWT0HGTFNkz0GINg80ppi2ME1p9B+Gi9Q8CEy1jilGfXHrGQroY6AkuwLY9MgTYc
-         QjDg==
+        Fri, 25 Aug 2023 12:36:18 -0400
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E3F2121;
+        Fri, 25 Aug 2023 09:36:16 -0700 (PDT)
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1bc8a2f71eeso8951605ad.0;
+        Fri, 25 Aug 2023 09:36:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692977918; x=1693582718;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vJY9igvv29s/2ZAufEy7n6/wB5s/2TDnBd7ycBc9ECA=;
-        b=PoX0W28kCSViw6YboHQwvAf05/cz44v2Nd6TFdaRNywvH7FuMNYJfuZeCF6zIZNUhT
-         FZv09q+XVtZV6cGU/tlb8WoXB8iumm8rE7xpjRFzCWi3DpACQQ2iTheToVUiq7M+4Vwg
-         1WdAp3zzXdlSAoDl538RzTPYYVEsMVTvKTXMQaEplsSbdV7wsmPz4GdOpIGiLghL0N6H
-         UmKp7toZfD92xymfFTz6X/XYhEKKgRO2Ug59PaaQOhNspwJuGmuegYgMOvqgkObghL5k
-         R4vYQ3z2Oe9gD5AMvSH9GuqQet6A/kdfdKffHsMhgtZyBlSjB9VRj7n/3o2hTxzPqgps
-         IZow==
-X-Gm-Message-State: AOJu0YyBHKQiNoMZRc2AokKwxzBBzoi5pmsjF3bINxcMN08osiKTw5AQ
-        0alJOhltDdfE3woIGvo5CYXPBg==
-X-Google-Smtp-Source: AGHT+IHWFphSWAlFFuMyw/5UzF7Se2TZEW85zEnhmjsNx4dreiQuZ9JdDWT7CKvB/misba8Rh2T0Kw==
-X-Received: by 2002:a05:6512:532:b0:4f8:ff52:93b7 with SMTP id o18-20020a056512053200b004f8ff5293b7mr13864840lfc.30.1692977918323;
-        Fri, 25 Aug 2023 08:38:38 -0700 (PDT)
-Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
-        by smtp.gmail.com with ESMTPSA id y17-20020a197511000000b004fe432108absm326002lfe.182.2023.08.25.08.38.37
+        d=1e100.net; s=20221208; t=1692981376; x=1693586176;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1q3zmNdeBYU0C+cn+U90T8zczbvHLoaw/bLJUP/2Bw4=;
+        b=Jp6jloXEtRQ/28mX6cuVPQYI89oSdWciLKfiqZ72Gpb5gXDbGfBzDRw6vpIRycZFsb
+         2zzjUj9BfSghHXxD+We7RVaZHmwD2+O6ctZwtITm63lgyKMukzBHQZxZVYbQ8Zg9fzBz
+         GPNlcGPVXYrT69v3MQmYmyvemm9EEVPFoaUgkDARthHJzsNggpeSFtgLL7AlJXhH2lu9
+         +gSQFLSKlP2JGNcbcQefV2BfttrFLJifyx0kxY66BBzIF1c2mvPmmEXEWxdQ4d0lD/Uf
+         EARzXmC+r6Na9QnnVXFzzbLFr2pYbMJ2bC1iJAbkXa1y0pedCBYT5fPoRprfKkTBCn9l
+         AUiw==
+X-Gm-Message-State: AOJu0YyQ0Utn4fCjklMwCJHeIqAtwpQNL8ahpEICyuzJ9vtj3Nv82g4P
+        b2hhHVKjAPkDpPCaJ1/X84U33AEd/rw=
+X-Google-Smtp-Source: AGHT+IGM7lz5+p3L2vXDg3lwlOlTvtkkYPz0TqMY3ox17rkD4g/9AyfWRh25CnVSbF0EDztjYgHNLA==
+X-Received: by 2002:a17:902:cec9:b0:1be:c879:6e71 with SMTP id d9-20020a170902cec900b001bec8796e71mr20123337plg.63.1692981376048;
+        Fri, 25 Aug 2023 09:36:16 -0700 (PDT)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id ik5-20020a170902ab0500b001bbfa86ca3bsm1970766plb.78.2023.08.25.09.36.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 08:38:38 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 25 Aug 2023 17:38:32 +0200
-Subject: [PATCH v4 10/10] clk: qcom: smd-rpm: Move CPUSS_GNoC clock to
- interconnect
+        Fri, 25 Aug 2023 09:36:15 -0700 (PDT)
+Date:   Sat, 26 Aug 2023 01:36:13 +0900
+From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom-ep: Treat unknown irq events as an error
+Message-ID: <20230825163613.GA131548@rocinante>
+References: <20230726152931.18134-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230726-topic-icc_coeff-v4-10-c04b60caa467@linaro.org>
-References: <20230726-topic-icc_coeff-v4-0-c04b60caa467@linaro.org>
-In-Reply-To: <20230726-topic-icc_coeff-v4-0-c04b60caa467@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692977905; l=1855;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=1hMkhZWxur5L+rhPpwUgnrX9/5Tg532/CoJi6zLeNH8=;
- b=MB0amdZ8IojDpftW0N18+PFf6RGXezelKkXI5Q5AX1tFcS/pZP5a10Kr/yyb3xJzwMECMk/NT
- VYSL59tDDYVApm86CxFYG76N36i9tt8xTTFgK7mSlLUyjPe6Vrtkwh2
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230726152931.18134-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As it turns out, it's yet another interconnect bus clock. Move it
-there. See [1] for reference.
+Hello,
 
-[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/02f8c342b23c20a5cf967df649814be37a08227c%5E%21/#F0
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/clk-smd-rpm.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+> Sometimes, the Qcom PCIe EP controller can receive some interrupts that are
+> not known to the driver like safety interrupts in newer SoCs. In those
+> cases, if the driver doesn't clear the interrupts, then it will end up in
+> interrupt storm. But the users won't have any idea about it due to the log
+> being treated as a debug message.
+> 
+> So let's treat the unknown event log as an error, so that it at least makes
+> the user aware, thereby getting fixed eventually.
 
-diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-index 0191fc0dd7da..8602c02047d0 100644
---- a/drivers/clk/qcom/clk-smd-rpm.c
-+++ b/drivers/clk/qcom/clk-smd-rpm.c
-@@ -574,6 +574,16 @@ static const struct clk_smd_rpm *sm_qnoc_icc_clks[] = {
- 	&clk_smd_rpm_bus_2_snoc_clk,
- };
- 
-+static const struct clk_smd_rpm *qcm2290_icc_clks[] = {
-+	&clk_smd_rpm_bimc_clk,
-+	&clk_smd_rpm_bus_1_cnoc_clk,
-+	&clk_smd_rpm_mmnrt_clk,
-+	&clk_smd_rpm_mmrt_clk,
-+	&clk_smd_rpm_qup_clk,
-+	&clk_smd_rpm_bus_2_snoc_clk,
-+	&clk_smd_rpm_cpuss_gnoc_clk,
-+};
-+
- static struct clk_smd_rpm *msm8909_clks[] = {
- 	[RPM_SMD_QPIC_CLK]		= &clk_smd_rpm_qpic_clk,
- 	[RPM_SMD_QPIC_CLK_A]		= &clk_smd_rpm_qpic_a_clk,
-@@ -1189,15 +1199,13 @@ static struct clk_smd_rpm *qcm2290_clks[] = {
- 	[RPM_SMD_PKA_A_CLK] = &clk_smd_rpm_pka_a_clk,
- 	[RPM_SMD_BIMC_GPU_CLK] = &clk_smd_rpm_bimc_gpu_clk,
- 	[RPM_SMD_BIMC_GPU_A_CLK] = &clk_smd_rpm_bimc_gpu_a_clk,
--	[RPM_SMD_CPUSS_GNOC_CLK] = &clk_smd_rpm_cpuss_gnoc_clk,
--	[RPM_SMD_CPUSS_GNOC_A_CLK] = &clk_smd_rpm_cpuss_gnoc_a_clk,
- };
- 
- static const struct rpm_smd_clk_desc rpm_clk_qcm2290 = {
- 	.clks = qcm2290_clks,
- 	.num_clks = ARRAY_SIZE(qcm2290_clks),
--	.icc_clks = sm_qnoc_icc_clks,
--	.num_icc_clks = ARRAY_SIZE(sm_qnoc_icc_clks)
-+	.icc_clks = qcm2290_icc_clks,
-+	.num_icc_clks = ARRAY_SIZE(qcm2290_icc_clks)
- };
- 
- static const struct of_device_id rpm_smd_clk_match_table[] = {
+Applied to controller/qcom-ep, thank you!
 
--- 
-2.42.0
+[1/1] PCI: qcom-ep: Treat unknown IRQ events as an error
+      https://git.kernel.org/pci/pci/c/4f4371b9617b
 
+	Krzysztof
