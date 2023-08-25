@@ -2,121 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C55A47890C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:51:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB8D878915C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 00:01:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbjHYVum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 17:50:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46620 "EHLO
+        id S229555AbjHYWA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 18:00:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbjHYVuc (ORCPT
+        with ESMTP id S231236AbjHYWAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 17:50:32 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD45026B8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:50:28 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso19673301fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:50:28 -0700 (PDT)
+        Fri, 25 Aug 2023 18:00:43 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69CB6C7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 15:00:41 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52a49a42353so2077316a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 15:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693000227; x=1693605027;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+Mz9+fpZx1tjNK+xOkOAndKZeMYceki5AhX4Yupxzi8=;
-        b=RtmpenEjfPw0S5egvuMHV18PfDNTJq5VtKvu6ML3PP9bpQREs3fQVLTojRajlZNYiW
-         M65JZGiLyd20PHYJ9rai2On87K3K7Eylxfb75dW/cbNggNv5YbCKMo+/HzObQBgCGDuj
-         7W/ScLW17Efx+J9Ws4AP2u5qA2gopQ0Vw5uoTRKj56VGq7ddg7+ulzJjw2OegLEfVjxJ
-         Y4eDfvqQt2lUEVfkyr6ac9mf3rsgvIxqrZy3XbIOhljDB1qui9H/R+KnT/PzsToXJd3x
-         94YzkB0eiQlNaFDnOSkfL1Oa1g2yZ2XsOPhIUZmYIBzCEuFP8rOhwnjVJ8O78RLHSmkJ
-         xD2w==
+        d=chromium.org; s=google; t=1693000839; x=1693605639;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yhpqi3RsiTeSycikChKIyWBlkmV4boq70Ok6Dhkoa6w=;
+        b=Hcex+n20KpYmrze4S7I3IT7jXAZjpWWeLKxyACv4IOBOi3lveq7d31L65l5xF4Gb/1
+         cyStIYnapfrMQNuTe8mDrQE3kJP5YrrpWIkNMX6pET89RctAttmhBx2caM3WE6dUz0ru
+         F+PiYnAkPQe4BNGjdpHLRuMmiE4ItC8i4LF9w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693000227; x=1693605027;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Mz9+fpZx1tjNK+xOkOAndKZeMYceki5AhX4Yupxzi8=;
-        b=EZ0mhb3+426DZcQP2bzijTjNMLp9FiJ54VwGmr+BrrIK8jVcVT0qmG2INitzlkAXrb
-         +1cT/x72Wf5G5pknCiMqibwEvpO/i8PevdeeAdC1lCVxpxJ1/urE/PDGuDJ2CYqzYsFo
-         0rx3F6V1gGwyKHOI0Tbnx6Qm6obEXkoeMakZqytDosVEhW5bZDvDey0CzcS6vht23EPN
-         KhzAS2epCeJkR7Hg2GT27zlD9X8+R9nH0xgc6ACJ3+joSA518aa0gvc5iyVpmz/5CgXf
-         Mxo6uxMSkGw6eGVYCDzyKk4KdsGLMA0IMqpYgkbkKrNtc6jCjSpHW4FWAFps4jlWLdb7
-         vuww==
-X-Gm-Message-State: AOJu0Yw9rhbevLe+Fy7rAUvtzIZHN70utibAEn3lGqnOVLpu30+S0aeM
-        PcTtu/MvF/btEc7cFwvDNgjZpA==
-X-Google-Smtp-Source: AGHT+IHMW76STZgZFzyBlduh4MYLa7jke3H9zQq1Bx/eCtVVlv7RkomldiiglMtTwQUkittNPbwprQ==
-X-Received: by 2002:a05:6512:104e:b0:4ff:990a:5d2e with SMTP id c14-20020a056512104e00b004ff990a5d2emr15928284lfb.20.1693000226984;
-        Fri, 25 Aug 2023 14:50:26 -0700 (PDT)
-Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
-        by smtp.gmail.com with ESMTPSA id a27-20020a056512021b00b004fe3512e26dsm436740lfo.291.2023.08.25.14.50.26
+        d=1e100.net; s=20221208; t=1693000839; x=1693605639;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yhpqi3RsiTeSycikChKIyWBlkmV4boq70Ok6Dhkoa6w=;
+        b=e8jHnnqy6zRJ/hODeDtuScF1tjR71z0EL39j52sjRBq6E7bE/kWkgHUZcdA+BZ9KfE
+         KOqeXKBW96dQ4EG68EVXgPZXj8OsWlXyTEigBVpSl4TR/o5cNo53BTmEZJWx2wPBq5zp
+         5IGU+wSp6xLIdXRmE1lIThdVmQ+099YE9NxGTNshrmvI8qy3bpLqffzKjoEUGrZqzpDs
+         NxZoCjHsYa/4+SXA/2TScGdOLehl2xQVIQ3KC2JR+SF4elbEcWoSwiS7iQ4yIwrH1zJB
+         f8cfry3hpCcQwMibiSR9JtYXM5r/2qFodKmOl8Kw0awpRZwkdTyJiNy/QWGJeymgwa4g
+         rERQ==
+X-Gm-Message-State: AOJu0YxqqA9zf7Lr1fbTRzDGMrDvYxPCQCPNwUsnwdlENIsGC3YSCaOw
+        Tx/DHB3gDij+DZotIpXp1809Cj/nTYlcWa0yFJiuPg==
+X-Google-Smtp-Source: AGHT+IGeVil9qMHxAo0qFWl6Z4vpLUwCzOgZTmORX+1utSdW2PfuQ3ziybueEi0Q23+DS0EK+Ghnbg==
+X-Received: by 2002:aa7:cf09:0:b0:52a:1d54:2533 with SMTP id a9-20020aa7cf09000000b0052a1d542533mr8881323edy.9.1693000839281;
+        Fri, 25 Aug 2023 15:00:39 -0700 (PDT)
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
+        by smtp.gmail.com with ESMTPSA id f15-20020aa7d84f000000b0052228721f84sm1418799eds.77.2023.08.25.15.00.38
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 14:50:26 -0700 (PDT)
-Message-ID: <3d1d8fa9-e883-46bd-95cd-a1bed881bf32@linaro.org>
-Date:   Fri, 25 Aug 2023 23:50:26 +0200
+        Fri, 25 Aug 2023 15:00:38 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-3fe2d620d17so29115e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 15:00:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c86:b0:3fe:e9ea:9653 with SMTP id
+ k6-20020a05600c1c8600b003fee9ea9653mr85660wms.4.1693000838168; Fri, 25 Aug
+ 2023 15:00:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8350-hdk: add missing PMICs
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+References: <20230811-topic-7280_lmhirq-v1-1-c262b6a25c8f@linaro.org>
+ <CAD=FV=XKeE7_ciuvfAic+24kyOF0yaFT7iCJWgN9NaW-zG+vKA@mail.gmail.com> <d413843f-5187-41ee-89aa-1f4dc0bc729d@linaro.org>
+In-Reply-To: <d413843f-5187-41ee-89aa-1f4dc0bc729d@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 25 Aug 2023 15:00:26 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wh1xSz8MOt-GY7w_ha3shNpAnGOwXdrqJE17oJB+cG4Q@mail.gmail.com>
+Message-ID: <CAD=FV=Wh1xSz8MOt-GY7w_ha3shNpAnGOwXdrqJE17oJB+cG4Q@mail.gmail.com>
+Subject: Re: [PATCH RFT] arm64: dts: qcom: sc7280: Add missing LMH interrupts
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     cros-qcom-dts-watchers@chromium.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230825214550.1650938-1-dmitry.baryshkov@linaro.org>
- <20230825214550.1650938-2-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230825214550.1650938-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.08.2023 23:45, Dmitry Baryshkov wrote:
-> Include configuration for several PMICs presend on the board.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hi,
 
-Konrad
+On Fri, Aug 25, 2023 at 2:07=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> > I put the same kernel on a trogdor device and that did normal Linux
+> > throttling OK. So something is definitely wonky with sc7280... I dug
+> > enough to find that if I used "step_wise" instead of "power_allocator"
+> > that it works OK, so I guess something is wonky about the config of
+> > power_allocator on sc7280. In any case, it's not affected by your
+> > patch and I've already probably spent too much time on it. :-P
+> Hm, perhaps it would be worth to try this patch on a non-chrome 7280
+> device.. Would you guys have standard android-y or windows-y firmware
+> that you could flash on these to try out, or should I try poking
+> somebody else?
+
+I don't have hardware that runs anything other than the standard
+ChromeOS bootloader, sorry!
+
+-Doug
