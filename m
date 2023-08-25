@@ -2,182 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31C2C7889F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 16:02:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA95A788B0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 16:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245504AbjHYOB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 10:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55334 "EHLO
+        id S234764AbjHYOJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 10:09:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242612AbjHYOBg (ORCPT
+        with ESMTP id S1343653AbjHYOJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 10:01:36 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45F126BE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 07:01:05 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-31c3df710bdso729007f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 07:01:05 -0700 (PDT)
+        Fri, 25 Aug 2023 10:09:20 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D73F92D62
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 07:08:12 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4fe1b00fce2so1485201e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 07:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692972063; x=1693576863;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Cz3wvihV4Khraq2quFRW1dbYxEl7BtIN5eOiHQDnTTs=;
-        b=xqn7boffTsoZ8n5yt2Eo1KHP14UWJYM9I/i9voNa5bLezX07HVpDau5+ZiB5aSmXYL
-         chspf245MiswOtYlVXA1o4e4OepqE/xiPUEU1H4wh9gzOYIycGbB5/CRz1UtZt177UnS
-         JSSObj+MANe14J/OT4eKGMavoBpcpxPPct93IW8kSnikV6JU9YCSRSF7No5e6WrZ51H4
-         Ur4ub9QrtS9Nt4YK61UN+o71lsoaDAqucKys1VFRDjsvsr8RViDYdwjlxWr8oSXhz3kT
-         Sr1X2gpYYhyp0JbdNdLhgJ0j/kYfEspMjM7ZNt5by36av1Uevdl3ZzhUcHPBL3OQIXQe
-         rwdw==
+        d=linaro.org; s=google; t=1692972478; x=1693577278;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nfoa2eIyG6OCVkrOgXRD75RXSYr33Q8gn5+S+fM4lN0=;
+        b=YYsAYhCLt0J4HdmV3NGAzu0Suz9oRLymoikUzr6HRM9O/ou5pu6EqjAYOeXzb1y/Kk
+         d42e7YMljBzB3OJNH1vzcFwqKzksRLKus0Rtrllz+l15ZrEclMvdfLjf3sbDftGjhApM
+         aVlkblWmorBcpBp6YVXlgSIn1LpH4PGEC5HaP4C6TYUPxgGs3y/pM4M6hLD7sUaseR+L
+         c3LndkoUTQdbT/rheCxlI0DYMepb+3esZ6wdStiW8lhLaKMS//Y2bgRQqUfTZ/eis02H
+         s3cLNf7nfQNu+lvAzIcnch9u1m2sO4liOjAmt0q9e6f/rFPd3IFvIPsiQIqk4rECJflQ
+         FS+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692972063; x=1693576863;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Cz3wvihV4Khraq2quFRW1dbYxEl7BtIN5eOiHQDnTTs=;
-        b=cBYCO5DKJhJsrnnno73lyjwZ7YoNDkURpJLdUcNdFu7VqNZy7QzmqPAwGFCOaxEaTb
-         7oG5DaM+55I3dACbsfLZ2eX0qCYNCfhY3MQzj2bO/TToIPLkPik5oQdNCH2CsyWBdxTe
-         ZYMakfNiIDnI9gCAsGjFSs3Tt0U4s7Nw4t12eQGmriX/BGGXhcJ/IthZ6yHHzZWovNTe
-         3nE70JW8m5yUC/MkKIm4BCtru6ZWFVMXwlX1XNjZkanIrTkcwpEth93uEQlY6ck32+ut
-         T8XqGgPDlqA8pZjSJbqjbfCKjIISuB5fnaZh0JSyRkUbRwlDiH/7wlnYCz8Cl64MVcYP
-         Q0xQ==
-X-Gm-Message-State: AOJu0YzZV0OsMDdBt2edqAEML5fOqYdycumGZ/pAeMwb88mYzQP5bsBy
-        aVsj9tDcY0qcmqFfaacgwstQFQ==
-X-Google-Smtp-Source: AGHT+IHo2T3zBE151rMfkaJbiyRPBn5jZOjs9VP+lw99pnBUBa+mBAh2rrRjlocfb2/8uaB+zkWHjg==
-X-Received: by 2002:a5d:61d0:0:b0:317:f537:748d with SMTP id q16-20020a5d61d0000000b00317f537748dmr13225547wrv.64.1692972062756;
-        Fri, 25 Aug 2023 07:01:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:4e1:71e1:b02b:811e? ([2a01:e0a:982:cbb0:4e1:71e1:b02b:811e])
-        by smtp.gmail.com with ESMTPSA id x16-20020a5d6510000000b003143c9beeaesm2322239wru.44.2023.08.25.07.01.01
+        d=1e100.net; s=20221208; t=1692972478; x=1693577278;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nfoa2eIyG6OCVkrOgXRD75RXSYr33Q8gn5+S+fM4lN0=;
+        b=TSQcw0066STkhz0S6wW6nZdNEW+2Hugu0cXQUKt7k5AgGIJNvzoLD/jBrcZsk3ZjR3
+         5pNG3OnPKDtnbtkop13aEaZAV0AImvcpHn/JY+vnaMKmW//0bP7ujorxOqT4CQqswk6t
+         GoFpLRcWz7rlemu95LUIrUvT5SdWKzGdRaxkTej95XYYE3mWqtunioAJOfSu6ZUhCS/v
+         rAgfzK6KwZGk9uveLt1SnbcUHcYPuseOaHboxf7DZHZLZFqKiesmCJhc2tjMLquFgy5/
+         z1IJQD4tUWns3+kThn0iiKQbGm/SVMBshYPuJRWjsORlILbTzl/eJ7CiLO/HehTZNQYE
+         ty9w==
+X-Gm-Message-State: AOJu0YwvAVqfI0osV7VfRbJTZHvqRViv/nKZWeFninLOd49vkynhvHXa
+        XoHfMcp48J7xu2l3hFHZeYwBBA==
+X-Google-Smtp-Source: AGHT+IHi8DfEL1iHFNmpgr0f7THIrkHI9QeDv6zPt2ocEHocdHs4PTrHnxA8aVrElaRCFq7YteTsBA==
+X-Received: by 2002:a05:6512:39d3:b0:4f9:56a9:b98e with SMTP id k19-20020a05651239d300b004f956a9b98emr15639293lfu.58.1692972478118;
+        Fri, 25 Aug 2023 07:07:58 -0700 (PDT)
+Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
+        by smtp.gmail.com with ESMTPSA id m27-20020a056512015b00b005009dcb4503sm303800lfo.249.2023.08.25.07.07.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 07:01:02 -0700 (PDT)
-Message-ID: <71d1d748-133a-470b-986c-ece79f743aa4@linaro.org>
-Date:   Fri, 25 Aug 2023 16:01:00 +0200
+        Fri, 25 Aug 2023 07:07:57 -0700 (PDT)
+Message-ID: <b41e09f4-7bcb-48e9-b97e-bc8682562a41@linaro.org>
+Date:   Fri, 25 Aug 2023 16:07:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/4] clk: qcom: rpmh: Add RPMH clocks support for SM4450
-Content-Language: en-US, fr
-To:     Ajit Pandey <quic_ajipan@quicinc.com>,
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: apq8064: drop label property from DSI
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230824173410.550126-1-quic_ajipan@quicinc.com>
- <20230824173410.550126-3-quic_ajipan@quicinc.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20230824173410.550126-3-quic_ajipan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230825135613.282505-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230825135613.282505-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 24/08/2023 19:34, Ajit Pandey wrote:
-> Add support for RPMH clocks for SM4450 platform.
+On 25.08.2023 15:56, Krzysztof Kozlowski wrote:
+> DSI node does not accept nor use "label" property:
 > 
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+>   qcom-apq8064-asus-nexus7-flo.dtb: dsi@4700000: Unevaluated properties are not allowed ('label' was unexpected)
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   drivers/clk/qcom/clk-rpmh.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index 4c5b552b47b6..5d853fd43294 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -350,6 +350,7 @@ DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _a2, "lnbclka3", 2);
->   
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk1, _a4, "lnbclka1", 4);
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk2, _a4, "lnbclka2", 4);
-> +DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _a4, "lnbclka3", 4);
->   
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk2, _g4, "lnbclkg2", 4);
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _g4, "lnbclkg3", 4);
-> @@ -717,6 +718,25 @@ static const struct clk_rpmh_desc clk_rpmh_sdx75 = {
->   	.num_clks = ARRAY_SIZE(sdx75_rpmh_clocks),
->   };
->   
-> +static struct clk_hw *sm4450_rpmh_clocks[] = {
-> +	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div4.hw,
-> +	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div4_ao.hw,
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Are you sure about div4 here ?
-
-Kailua uses div2 because the CXO input gets used divided by 2
-by PHYs and divided by 4 for GCC/DISPCC/...
-
-This is why we introduced a div2 clock in DT used to feed GCC/DISPCC/...
-
-Neil
-
-> +	[RPMH_LN_BB_CLK2]	= &clk_rpmh_ln_bb_clk2_a4.hw,
-> +	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_ln_bb_clk2_a4_ao.hw,
-> +	[RPMH_LN_BB_CLK3]       = &clk_rpmh_ln_bb_clk3_a4.hw,
-> +	[RPMH_LN_BB_CLK3_A]     = &clk_rpmh_ln_bb_clk3_a4_ao.hw,
-> +	[RPMH_RF_CLK1]		= &clk_rpmh_rf_clk1_a.hw,
-> +	[RPMH_RF_CLK1_A]	= &clk_rpmh_rf_clk1_a_ao.hw,
-> +	[RPMH_RF_CLK5]		= &clk_rpmh_rf_clk5_a.hw,
-> +	[RPMH_RF_CLK5_A]	= &clk_rpmh_rf_clk5_a_ao.hw,
-> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
-> +};
-> +
-> +static const struct clk_rpmh_desc clk_rpmh_sm4450 = {
-> +	.clks = sm4450_rpmh_clocks,
-> +	.num_clks = ARRAY_SIZE(sm4450_rpmh_clocks),
-> +};
-> +
->   static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
->   					 void *data)
->   {
-> @@ -810,6 +830,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
->   	{ .compatible = "qcom,sdx55-rpmh-clk",  .data = &clk_rpmh_sdx55},
->   	{ .compatible = "qcom,sdx65-rpmh-clk",  .data = &clk_rpmh_sdx65},
->   	{ .compatible = "qcom,sdx75-rpmh-clk",  .data = &clk_rpmh_sdx75},
-> +	{ .compatible = "qcom,sm4450-rpmh-clk", .data = &clk_rpmh_sm4450},
->   	{ .compatible = "qcom,sm6350-rpmh-clk", .data = &clk_rpmh_sm6350},
->   	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
->   	{ .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
-
+Konrad
