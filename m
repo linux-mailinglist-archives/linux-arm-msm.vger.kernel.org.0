@@ -2,72 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D997890AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:46:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2153F7890BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 23:51:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231543AbjHYVqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 17:46:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46058 "EHLO
+        id S231313AbjHYVun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 17:50:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231618AbjHYVqM (ORCPT
+        with ESMTP id S231527AbjHYVuh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 17:46:12 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B41E2720
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:45:55 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2bccda76fb1so20648551fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:45:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692999953; x=1693604753;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pHKlZ8/4vaMktrF5hqTmRR8yv61d2HdxgXhZLjedCzc=;
-        b=sjKPXzlfM2nvbwNPq0Bv5uXVuMAUSG11WG1WylCgUXINWrQmznp7Eq5PP1Zd3cg56b
-         4eUmsCeZiO29oxXPzXT3WB6kg8lR1M5FqgArLvhGbmjun1oqk4F1EO43N/xODw7xtP6Z
-         arZVw8Muj7GPiYbJGEfb8SSFWiL1euTchQZJTLdfHlqTo7BpZllhb3QBjHNsJaid7X7/
-         /45S84JnFBSyS/9R1TU0Jss7jL+UXTLCssRJaXRswrFzNqqPXpuUj6VD0S2edYeQESSy
-         9kHOiu9rqLQJhh4F15bHkfQIiDA2GK1nQ6i9LC3bFqXZvU3vUk69PTV/kXObIk+nqB1x
-         +cMw==
+        Fri, 25 Aug 2023 17:50:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE7F26B1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1693000189;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=jDIH1s5AgxOERqalZWlNYkaKtZibmqZdBdpJvN3/v8U=;
+        b=NaGrv5xDzRiKSyY4xaYCPr3Tue4R0zPn7TSaDR+PKYKYedRZ8K5Orw2QntNF2BwfUWNu/V
+        T/NIwXNiZj0D98fmOCpKqJ2StaZNjlQ0DBY9NRjrlD2EeThYSEPmvBCkmORFmLMznOfwWD
+        9mFdI3l+jNfi59Mte2ERLe9sbAJdux0=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-127-GO5ZvBH0OzqyqbFBJXvK9Q-1; Fri, 25 Aug 2023 17:49:47 -0400
+X-MC-Unique: GO5ZvBH0OzqyqbFBJXvK9Q-1
+Received: by mail-yb1-f197.google.com with SMTP id 3f1490d57ef6-d74c58a3dd7so1680828276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 14:49:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692999953; x=1693604753;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pHKlZ8/4vaMktrF5hqTmRR8yv61d2HdxgXhZLjedCzc=;
-        b=WCaUUNGei4eJsiNYjwVs3+3eRlDftYRbQtDpGAjdq04BQyA24J/VreX3Jzm40nJy0C
-         XQIcWU4zVFlmUcgoRggSfHzPRW+h/DlRS9/P8qkYYoz1PWAYBCRr+tBfOHnwOKl/WfBr
-         2AtpMUWiTUwja51anDXU7qNr3n6bakuBh5PxcdcxA6U2Q+9EsHWeac4wkI8gmHELdX3C
-         UmhfYMCwF7bJICf1qtCDVv1DSeT2f3sXzv42SJXMjIeLzsOD3ffLPj7humvmKsVuGBGV
-         zRiMPkX8okZJ6pffPyOkylx1Fye8LdXOuANXW9zEB+jNbu03HcsBcO7VxONjN7LyVo8N
-         PEsQ==
-X-Gm-Message-State: AOJu0Yw586Onz1k3QawVZL5nurELkudGW7OdGFcgDgeS5exJ1Jvnd0eh
-        fQcJCjqjSBDhzAZ/7LuuaExb0+HrTAkTKl/qDPI=
-X-Google-Smtp-Source: AGHT+IFGP147b15BsApx3z8nN+KUd5VqFrpAFFx+WqmwseVKgBMozVfi+jQFD+0P/EaZWolV35vS+g==
-X-Received: by 2002:a05:651c:cf:b0:2bc:bdbd:1542 with SMTP id 15-20020a05651c00cf00b002bcbdbd1542mr12191190ljr.11.1692999953418;
-        Fri, 25 Aug 2023 14:45:53 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f26-20020a2e6a1a000000b002b94327308asm486819ljc.133.2023.08.25.14.45.52
+        d=1e100.net; s=20221208; t=1693000187; x=1693604987;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jDIH1s5AgxOERqalZWlNYkaKtZibmqZdBdpJvN3/v8U=;
+        b=gmqfJKhuJLn4Pu8t6FtvrZR85m7bMknBOIO+kU13knQNcPKU+Yvl3HH4TDrVuUeowa
+         5E7t18JiIHwgkZZaZNeLg+QhG7weF0mL2kcvKQWzkeGqedtArGvVIzknXTS345nuw5Fm
+         BDJCRtxU2SPWo4nyiH68k4cfe9YezUj+FOfog3aW4qDXQ3ifdafuyURSWhBZWVIHS1Uv
+         muRhbQv+5DsSfwxSTsqWrHXe/kqgVGFI2tKwBOev9lw04463WRuApmw6ryVA/8rC0jCr
+         lqjWaZ1lNnHWjasydHGSuEmA2AYcvuzBrBS6bfXcUAahwFPM2n0GarlRuiqSbqSC0WUX
+         rg9Q==
+X-Gm-Message-State: AOJu0YyJrHqDhzTa4VJ1776btGwZTORvRdChnAtKwSTlyLqb0dUIovws
+        pFYEamaw5uEWKWFBgMsDYGI2XywWrP8bna1cO3esUI6OwbCgorkokMhNDC6mYHWMH9ekJ7n5MWm
+        HZtrEwFwcyTTIzIX6K7JUQfX1UQ==
+X-Received: by 2002:a25:d8d6:0:b0:d78:3047:62c6 with SMTP id p205-20020a25d8d6000000b00d78304762c6mr3495310ybg.21.1693000187279;
+        Fri, 25 Aug 2023 14:49:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgZnJ6x3Khmaw73UVVO8ipGtpfGFEkJnwrK/gjpvrarbZH5j/AtFZ9PMl7lOmV6YAsTBEFgw==
+X-Received: by 2002:a25:d8d6:0:b0:d78:3047:62c6 with SMTP id p205-20020a25d8d6000000b00d78304762c6mr3495280ybg.21.1693000186913;
+        Fri, 25 Aug 2023 14:49:46 -0700 (PDT)
+Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
+        by smtp.gmail.com with ESMTPSA id ki6-20020a05622a770600b0040ff0e520besm770523qtb.35.2023.08.25.14.49.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 14:45:52 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 25 Aug 2023 14:49:46 -0700 (PDT)
+Date:   Fri, 25 Aug 2023 14:49:07 -0700
+From:   Jerry Snitselaar <jsnitsel@redhat.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8350-hdk: add pmr735a regulators
-Date:   Sat, 26 Aug 2023 00:45:50 +0300
-Message-Id: <20230825214550.1650938-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230825214550.1650938-1-dmitry.baryshkov@linaro.org>
-References: <20230825214550.1650938-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v7 06/24] iommu/tegra-gart: Remove tegra-gart
+Message-ID: <stzz6hsyx25u5bbkgwftde2jdtjxgb5ghofwfymv2ny4vfbpch@nuli2d2mthaq>
+References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+ <6-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,101 +118,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SM8350 HDK uses pmr735a to supply some of the voltages (e.g. to
-WiFi/BT chip). Declare corresponding regulators together with voltage
-boundaries.
+On Wed, Aug 23, 2023 at 01:47:20PM -0300, Jason Gunthorpe wrote:
+> Thierry says this is not used anymore, and doesn't think it makes sense as
+> an iommu driver. The HW it supports is about 10 years old now and newer HW
+> uses different IOMMU drivers.
+> 
+> As this is the only driver with a GART approach, and it doesn't really
+> meet the driver expectations from the IOMMU core, let's just remove it
+> so we don't have to think about how to make it fit in.
+> 
+> It has a number of identified problems:
+>  - The assignment of iommu_groups doesn't match the HW behavior
+> 
+>  - It claims to have an UNMANAGED domain but it is really an IDENTITY
+>    domain with a translation aperture. This is inconsistent with the core
+>    expectation for security sensitive operations
+> 
+>  - It doesn't implement a SW page table under struct iommu_domain so
+>    * It can't accept a map until the domain is attached
+>    * It forgets about all maps after the domain is detached
+>    * It doesn't clear the HW of maps once the domain is detached
+>      (made worse by having the wrong groups)
+> 
+> Cc: Thierry Reding <treding@nvidia.com>
+> Cc: Dmitry Osipenko <digetx@gmail.com>
+> Acked-by: Thierry Reding <treding@nvidia.com>
+> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 75 +++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index 69870f69fe4f..30ff85250505 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -321,6 +321,81 @@ vreg_l10c_1p2: ldo10 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pmr735a-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+
-+		vdd-l1-l2-supply = <&vreg_s2e_0p85>;
-+		vdd-l3-supply = <&vreg_s1e_1p25>;
-+		vdd-l4-supply = <&vreg_s1c_1p86>;
-+		vdd-l5-l6-supply = <&vreg_s1c_1p86>;
-+		vdd-l7-bob-supply = <&vreg_bob>;
-+
-+		vreg_s1e_1p25: smps1 {
-+			regulator-name = "vreg_s1e_1p25";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1280000>;
-+		};
-+
-+		vreg_s2e_0p85: smps2 {
-+			regulator-name = "vreg_s2e_0p85";
-+			regulator-min-microvolt = <950000>;
-+			regulator-max-microvolt = <976000>;
-+		};
-+
-+		vreg_s3e_2p20: smps3 {
-+			regulator-name = "vreg_s3e_2p20";
-+			regulator-min-microvolt = <2200000>;
-+			regulator-max-microvolt = <2352000>;
-+		};
-+
-+		vreg_l1e_0p9: ldo1 {
-+			regulator-name = "vreg_l1e_0p9";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+		};
-+
-+		vreg_l2e_1p2: ldo2 {
-+			regulator-name = "vreg_l2e_0p8";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		vreg_l3e_1p2: ldo3 {
-+			regulator-name = "vreg_l3e_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		vreg_l4e_1p7: ldo4 {
-+			regulator-name = "vreg_l4e_1p7";
-+			regulator-min-microvolt = <1776000>;
-+			regulator-max-microvolt = <1872000>;
-+		};
-+
-+		vreg_l5e_0p8: ldo5 {
-+			regulator-name = "vreg_l5e_0p8";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+		};
-+
-+		vreg_l6e_0p8: ldo6 {
-+			regulator-name = "vreg_l6e_0p8";
-+			regulator-min-microvolt = <480000>;
-+			regulator-max-microvolt = <904000>;
-+		};
-+
-+		vreg_l7e_2p8: ldo7 {
-+			regulator-name = "vreg_l7e_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+	};
- };
- 
- &cdsp {
--- 
-2.39.2
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
