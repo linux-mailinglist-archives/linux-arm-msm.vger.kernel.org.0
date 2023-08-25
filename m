@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8A2C788655
+	by mail.lfdr.de (Postfix) with ESMTP id 8C1DE788654
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 13:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244181AbjHYLu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S244149AbjHYLu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 25 Aug 2023 07:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47472 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244047AbjHYLtz (ORCPT
+        with ESMTP id S244193AbjHYLuH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 07:49:55 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FC01FD7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:49:53 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso11971031fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:49:53 -0700 (PDT)
+        Fri, 25 Aug 2023 07:50:07 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A95EAE7F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:50:03 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bcde83ce9fso12084191fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692964191; x=1693568991;
+        d=linaro.org; s=google; t=1692964202; x=1693569002;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YgDXEewKnZJyvkeWwzQ/nFkUnal564YvoISnoWvZM58=;
-        b=W1I80TksMvaXK3XGRg+Yp2/EFS87ZTA58xcYg/GqBuIwScwu1g6LuDZHB+GVZAsgIG
-         uBr+AS+eietMvdQ3iGuC/IK1oHnXpEVuKhMAR+ZNW8q8QJqwdbKUZW7TRl2Bcf1iokC2
-         JEdKaLkllrI0RB3abb1YwK3DrWJUkEqpXQ8uLFO5zuKGzDwlGtWXi3dtb0+XroX3G7fE
-         VRfnEYXb0LHnD3u3BtXIo4Lj7QOuzD1wklBqwpUV3iGFPjq179wVlgUIaPRhYg0ei2zC
-         yG36uwutJauFiXJxVgyqkF5kTRN6oPHdpTLTEjVmwsm0cvdOaZ1GfvIB0y5Yp2OqC6MO
-         WSBg==
+        bh=MxvBycOD3m3+JRPg8JQcvqgFmakCth+Ze79t418up68=;
+        b=SICRR6DFS69jWZbgUMh4ueiIFZgBKWqXAltzd1QP2oEOxkgYhm0yM2VrmyzPqcHZXn
+         v2Y25HoloYtVkLeipUJrxPyWXTkYxPMvTyKCYg42Nbr+GYtRytcmMfRVdt3Q/1CY7RUn
+         NRjZqvqACVkjMtUeaQFLEEnxZNDA/qDeRnkl2AnVpc9StgIDFbvRi5pmHAnfBjy8UHmW
+         zhN7nB9GChDzsTO5CbW+gGqfzrRLaG8TdsUyTYC/rH/FLowei8KBrh4RKDEXJ6Aqej5n
+         eQf2+uQq8UXPIazMPnuEI7toLLQTjmbDF9rLPTPvybWc8h9AQ3PGKdK6pEUsiPzlZsll
+         fFJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692964191; x=1693568991;
+        d=1e100.net; s=20221208; t=1692964202; x=1693569002;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YgDXEewKnZJyvkeWwzQ/nFkUnal564YvoISnoWvZM58=;
-        b=CzxSSirmC8Q3CUdWufwsSH3uqRMkMIBrsF2VlldiTfMcDCmRAb15xIXifAG5azWF4j
-         WsTRIpkgqh5S4zdyS0sfn/iGxjOYxLf3wM7OPnQLOvjxz/dF8wbgIlLGha2/mD42p8Aa
-         UKkMtCAF2aq9iPdF8I+ddnSbldN1XK5jfgasQq1KOifPWJKk+RnQ5mqYj5myt05Ugmn9
-         GEj4Y3BU9yizTluWS5YK+vNSh6sIYoR2FAmjqjitYBGMHY7LtKmB0ne71I3UuLKHg8Ac
-         G/qqD0UeBssj0J/kQV1uiPJ/fgwk653Oa4h9aLLE1qmlKkrm9+KxPATXqGwU1RDlhgrH
-         etxQ==
-X-Gm-Message-State: AOJu0YzbQO8epyRalWMDcX3zNWlzFNTFdm6HTXaVft1RKOerN7bb8jDR
-        1WSb52j/L40qkbDjPApfzHoxhQ==
-X-Google-Smtp-Source: AGHT+IGH6UYaVANhQmgrEtvfzrfVhXpgvnPyvG3qZ2KrlxGqZt6Fl8gnjhH9QN2Cc0piigd01hrokg==
-X-Received: by 2002:a2e:9d10:0:b0:2bc:de8d:4ab1 with SMTP id t16-20020a2e9d10000000b002bcde8d4ab1mr5215384lji.6.1692964191586;
-        Fri, 25 Aug 2023 04:49:51 -0700 (PDT)
+        bh=MxvBycOD3m3+JRPg8JQcvqgFmakCth+Ze79t418up68=;
+        b=ZLsFidz/FW6l3Tuwf43dTx+NZjLwYrEMDMJ8yz5zBQ4YuLfRNDAcaU/L20yVchgb5L
+         lzPaBjnyyqlbomHItv8QYN387JAndOxvPWRGPgo0MBKa8udzxoTGJisY01tRVtqe0L4K
+         pDn5von6z18IEOlrYViywcAQJ10aIqNuereFt4bEKw70PZaIQ/uwQLjyftUxhs96bwhA
+         Ip0Pptda78dQEoOp179D3f7UoPadRDBBcXOBNK35Fi8Duwg5UCvX9vNk3CFIxooqy9An
+         D7NYLHo1EeWgHYu/+7rcFHB0SpU8zLeR9vOBUifbDzEv5AhYpnu3+IttFc+Dy3xFpMqb
+         ZUHg==
+X-Gm-Message-State: AOJu0YwojDAoGwDG/hbjasWhwuODq8wvf4jGs2OngfLTjsYisuXh+fpl
+        Zr5V7ytzEBqLSH6kfDNvv3uzIQ==
+X-Google-Smtp-Source: AGHT+IHhvxglhm3o7JtAPpmx1AD83QKJdd1rl8yyUn6dTJNNjHQb0RSablPobizwJZPVd6uvtpyIDA==
+X-Received: by 2002:a2e:8704:0:b0:2b6:cf64:7a8e with SMTP id m4-20020a2e8704000000b002b6cf647a8emr13477822lji.19.1692964201900;
+        Fri, 25 Aug 2023 04:50:01 -0700 (PDT)
 Received: from [192.168.1.101] (abyk232.neoplus.adsl.tpnet.pl. [83.9.30.232])
-        by smtp.gmail.com with ESMTPSA id q21-20020a2e8755000000b002ba045496d0sm296540ljj.125.2023.08.25.04.49.49
+        by smtp.gmail.com with ESMTPSA id q21-20020a2e8755000000b002ba045496d0sm296540ljj.125.2023.08.25.04.50.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 04:49:51 -0700 (PDT)
-Message-ID: <9d5d0002-e8bb-4b3f-a795-fba62a06fd96@linaro.org>
-Date:   Fri, 25 Aug 2023 13:49:49 +0200
+        Fri, 25 Aug 2023 04:50:01 -0700 (PDT)
+Message-ID: <b46d8e10-5f25-4350-b5b9-77bf5885780f@linaro.org>
+Date:   Fri, 25 Aug 2023 13:50:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] clk: qcom: Add GCC driver support for SM4450
+Subject: Re: [PATCH RFC DNM] perf: Add support for Qualcomm Last-Level Cache
+ Controller PMU
 Content-Language: en-US
-To:     Ajit Pandey <quic_ajipan@quicinc.com>,
+To:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230824173410.550126-1-quic_ajipan@quicinc.com>
- <20230824173410.550126-5-quic_ajipan@quicinc.com>
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230809-topic-llcc_pmu-v1-1-dd27bd1f44c9@linaro.org>
+ <f71bc35a-c45c-0429-1164-d047d61ef061@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,11 +103,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230824173410.550126-5-quic_ajipan@quicinc.com>
+In-Reply-To: <f71bc35a-c45c-0429-1164-d047d61ef061@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
         autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -120,16 +116,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.08.2023 19:34, Ajit Pandey wrote:
-> Add Global Clock Controller (GCC) support for SM4450 platform.
+On 24.08.2023 23:31, Trilok Soni wrote:
+> On 8/9/2023 1:09 PM, Konrad Dybcio wrote:
+>> Add support for the Qualcomm LLCC (Last-Level Cache Controller) PMU,
+>> which provides a single event, expressing cache read misses.
+>>
+>> Based on the vendor driver found in the msm-5.10 downstream kernel.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>> Hi, I've been trying to get this driver going upstream by cleaning it
+>> up and adding the necessary perf boilerplate (the original Qualcomm one
+>> only pokes at the PMU from within the kernel itself) to use the
+>> userspace tool.
+>>
+>> I can not however get it to cooperate.. in this iteration I get a PMU
+>> event registered (though with only a "raw" name - no "x OR y" like with
+>> other PMUs on the system) as:
+>>
+>> llcc_pmu/read_miss/                                [Kernel PMU event]
+>>
+>> but the .read callback is never called when I run:
+>>
+>> sudo perf stat -C 0 -a -e llcc_pmu/read_miss/ stress-ng -C 8 -c 8 -m 10
+>>
+>> which always returns 0
+>>
+>> if I add --always-kernel I get:
+>> <not supported>      llcc_pmu/read_miss/
 > 
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-> ---
-[...]
-
-> +
-> +	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
-> +	regmap_update_bits(regmap, gcc_ufs_phy_ice_core_clk.halt_reg, BIT(14), BIT(14));
-qcom_branch_set_force_mem_core() and remove the comment
+> Which SOC you are trying this on?
+8250
 
 Konrad
