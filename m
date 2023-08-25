@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B93A7788DCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 19:24:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DC49788DC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 19:24:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239647AbjHYRX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 13:23:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38516 "EHLO
+        id S240328AbjHYRX4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 13:23:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240597AbjHYRXY (ORCPT
+        with ESMTP id S238025AbjHYRXZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 13:23:24 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9CB42130
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 10:23:21 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bcc331f942so14651341fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 10:23:21 -0700 (PDT)
+        Fri, 25 Aug 2023 13:23:25 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C9EE1BF2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 10:23:23 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2bcb50e194dso17261731fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 10:23:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692984200; x=1693589000;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r+IbZPjvkKJyHb1t49FSi3dEugB3CnJDHGvd+okiiCs=;
-        b=L6Fqf83e7W5LtDR+x18E59//1P2tJRk15WBcSKAB9RqKpy0FI6/zxZK44xfcvY226t
-         3q0OgysfbKZMyiFhlfcAidNIk7MyJp0uNO1bk23xTDjvLum69uOT9ASPZKL3Ps28XMOZ
-         fD0IskR25QygVbt0lWRChtt2U6Ei3UbhIEqj0E5IEAQKczz1FK3ER5oNqugYYHBxQ6YZ
-         Hrj6Zi1RJ//A8LSZgK/P18Jix1acNjrNTVw4bK9ZChnm9TXeJqN0OxG+oy7P3PDHfq45
-         DDMBdVrQCI0+no9eDWdTuhUgfa+XyFpRnME4EALFI2SI1UTrz7w4U+iF5v6Jjjpc5X5g
-         DfGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692984200; x=1693589000;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1692984201; x=1693589001;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=r+IbZPjvkKJyHb1t49FSi3dEugB3CnJDHGvd+okiiCs=;
-        b=N5U95cVcPTg1fFSQYnVRqu6vo+hDyvonWrtLJ56EYDrGtDtinCnDvnRWpRvReh+Z+E
-         Bt/0O1bkYnDSO1E4rAQJw3TksNtz30VmWP1dEKa0U/6J/rvPYvR79IuSryR6tmUT1+n8
-         p2qUFu2eWMWcqe3b/WkgmeAB1YQf1ZGKsikUDlqm//bfis7Yuu+VUt2RocYqBzBXzL2S
-         8oxO1h5+GtZWGLOnuN42/Qf/C6Yw9H5jzjp9DJC8oyIP+o8gj2Tku0FnOjaWPw057F43
-         0B0YOOYXmq25dCE8j9u4DIPEakRxjNWdpujzR4XMNdLVRTYQwmisDdICfO3kTzmv5+ih
-         FBxQ==
-X-Gm-Message-State: AOJu0YwdyBlQf9EmnCoOK6vgYARRod4uVTwP/OMDxaeIH5klYDkZKAGj
-        +UW7E1oVu5z6lx5BV2pheGj4Uw==
-X-Google-Smtp-Source: AGHT+IFz74chb8GNV0TvbPeKiDYOfdvYxFbfaLudKM3TO2LC00g7saucA952LOvNyDlPCmD+YEaArQ==
-X-Received: by 2002:a2e:8e75:0:b0:2bc:d3b1:d6c1 with SMTP id t21-20020a2e8e75000000b002bcd3b1d6c1mr3922260ljk.9.1692984200023;
-        Fri, 25 Aug 2023 10:23:20 -0700 (PDT)
+        bh=mnl0nfGWFMmePo5XhhTAL9r/K3CVNL4Sy0w8+CLGMTs=;
+        b=ojBZNwS1tIBPfR9KCT7+DuZfHjQSi9gx057HfyL1bxEv/FVgb/xHtYFrUPPnG1m5/o
+         nQrCin0K2krR+onwHEF1xgPyttEFGjDjVQHfl31FNsaloNjL+Wj049jv7JjquX6WAWVe
+         xYwo7hpE+PviwbdHTkdnfdYl6dyIL0cieGDpGbxPbCAhreibBV7Crlf2wqvyqTB5wSF8
+         lcsUXG8GJ1Mc0mLaWCgEnVxdqX8BqkqCydhBK/WuG1M2L382YPV+53107TVVIpRrrAw8
+         S82/RFb6SczYfJA7MEDArYY43nWVvq4h1LIMnBjrAznIXJLcgHiyzdmzlWFpxtZrupLU
+         mJAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692984201; x=1693589001;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mnl0nfGWFMmePo5XhhTAL9r/K3CVNL4Sy0w8+CLGMTs=;
+        b=WnMWQTMkHQeLpLJOHjBF7j+LbSj4tPXsWI7krbAdRAsDMQpAe3mNBN2P/JCX9S7yXP
+         rkqhxa2eT55D/phruyM7AXq6Jje+DFcY0PwwQa82bXzp75lbMtzYD6mkr7cdE84b/Mcv
+         W/DYS2E5p4e8NAjAy7nbbY/JlR9Cpj8fuQ+MxLubcb7ktz/uXu31nuFhMcLHbEhox2og
+         PdslxfUN3+gtB6zue3TynEXXIQsKDM5HBeaB+xdWzrKG4Ji/ugIQWtXlqPWRIBXHMrKZ
+         lkmr4sbB3hbuyxdQIbxUKHDN8xTu2FzbAf7HWNgFOX80ut/BOFrD6epk/vbNKvRkzTDB
+         wnww==
+X-Gm-Message-State: AOJu0YyVKXCql4cWN6roQHXUlldThonTgzZWIPAgoGqgoVMpx/QPIv0X
+        GMRjElADsqVdxdUYeb7Wbf5u7g==
+X-Google-Smtp-Source: AGHT+IHGRJTTur6Oz9VmbkB/HpCjN3NrWbDfAwaZ4WLBV/xsf6YFnzAq58tMlYQQ98UExDKmW3zL4w==
+X-Received: by 2002:a2e:8091:0:b0:2b9:55c9:c228 with SMTP id i17-20020a2e8091000000b002b955c9c228mr14001217ljg.27.1692984201324;
+        Fri, 25 Aug 2023 10:23:21 -0700 (PDT)
 Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
-        by smtp.gmail.com with ESMTPSA id n11-20020a2e904b000000b002bcb1e1322asm407647ljg.63.2023.08.25.10.23.18
+        by smtp.gmail.com with ESMTPSA id n11-20020a2e904b000000b002bcb1e1322asm407647ljg.63.2023.08.25.10.23.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 10:23:19 -0700 (PDT)
+        Fri, 25 Aug 2023 10:23:21 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 0/2] SM6115 TX Macro
-Date:   Fri, 25 Aug 2023 19:23:11 +0200
-Message-Id: <20230825-topic-6115tx-v1-0-ebed201ad54b@linaro.org>
+Date:   Fri, 25 Aug 2023 19:23:12 +0200
+Subject: [PATCH 1/2] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM6115
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH/j6GQC/x2NQQqDMBAAvyJ7diHZEKl+RTwkca0LEiWxRRD/3
- qXHGRjmhspFuMLQ3FD4K1X2rGDbBtIa8ptRZmUgQ868yOO5H5Kws9afF0ZPLhgyfed60CSGyhh
- LyGnVKH+2TeVReJHr/xin5/kBQbU9P3MAAAA=
+Message-Id: <20230825-topic-6115tx-v1-1-ebed201ad54b@linaro.org>
+References: <20230825-topic-6115tx-v1-0-ebed201ad54b@linaro.org>
+In-Reply-To: <20230825-topic-6115tx-v1-0-ebed201ad54b@linaro.org>
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Banajit Goswami <bgoswami@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -74,42 +74,67 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692984198; l=733;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1692984198; l=1361;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=6lIAsjfzQ31TGPmRwzbj9mEehySlk7glxjS1fp/ikjk=;
- b=95YZjoDqhfV8cGN0KBrCUDtJnXEOnqGCQEDqlozHGrWV3GbSNhrb33HP9DBfPL4rahhYhRC1E
- ljV9+8EF/L5CUQ40uPHOJqDbueF3gRSLJ5JkXAgwEm/uv2EzWNBmKF7
+ bh=jgTjHUj7TFqcyTxVQWudplP084wTba8RuCtAcYnZkrQ=;
+ b=8UXxWoH+EUI9yNwtTdYkE66s1GCSUJ75tB7slZwxx0H+ZdSdJzBgStNWBOn9OWZKoCIUSmzHj
+ rWmKIH3X6UdDZPNm3LJNPzEr4K1EnBWlgjjKFbx0wKNDr3/e2s4DBNw
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Like most Qualcomm SoCs, SM6115 has a TX Macro.
-
-Only some minor changes were required.
+SM6115 has a TX Macro, requiring an NPL clock, but not DCODEC.
+Document it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (2):
-      ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM6115
-      ASoC: codecs: lpass-tx-macro: Add SM6115 support
+ .../devicetree/bindings/sound/qcom,lpass-tx-macro.yaml | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
- .../bindings/sound/qcom,lpass-tx-macro.yaml        | 18 ++++++++++++++++++
- sound/soc/codecs/lpass-macro-common.h              |  2 ++
- sound/soc/codecs/lpass-tx-macro.c                  | 22 +++++++++++++++-------
- 3 files changed, 35 insertions(+), 7 deletions(-)
----
-base-commit: 6269320850097903b30be8f07a5c61d9f7592393
-change-id: 20230825-topic-6115tx-b523a0209639
+diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
+index 4156981fe02b..962701e9eb42 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
+@@ -13,6 +13,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,sc7280-lpass-tx-macro
++      - qcom,sm6115-lpass-tx-macro
+       - qcom,sm8250-lpass-tx-macro
+       - qcom,sm8450-lpass-tx-macro
+       - qcom,sm8550-lpass-tx-macro
+@@ -97,6 +98,23 @@ allOf:
+             - const: dcodec
+             - const: fsgen
+ 
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,sm6115-lpass-tx-macro
++    then:
++      properties:
++        clocks:
++          minItems: 4
++          maxItems: 4
++        clock-names:
++          items:
++            - const: mclk
++            - const: npl
++            - const: dcodec
++            - const: fsgen
++
+   - if:
+       properties:
+         compatible:
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.42.0
 
