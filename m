@@ -2,227 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FCA8788E55
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B965788EA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:25:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231889AbjHYSOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 14:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34776 "EHLO
+        id S229786AbjHYSZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 14:25:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232671AbjHYSOI (ORCPT
+        with ESMTP id S231280AbjHYSY7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 14:14:08 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF7826A1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:13:37 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso1841935e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 11:13:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692987201; x=1693592001;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ELm30cfPyzIG/TZbjvqwagZo2Is2xhLq9tEiyh3zeHw=;
-        b=CIohHlyoA//+r+yPRb5x6+dip/wynsQH340QPVM2jrHwm6aPkuFaXPLBrgbgFnuw6z
-         6LxFl/ciI+dWmgyPVVI6YA8/tsZF3cTD7b9IqgxQDUDWOAWNqX0vDOiAnJ54uYmn3mFK
-         T0HcNJA7qfrLKyes9bIbwlL7x+NeWLDu3S7oV630LpSxJ/I83sOhBmkIWFYyFjsCZwgv
-         gS5oHLkLwXqpnJ3+Cn0W47wYIIOfu8KqXSh5mIuhCsk65ZzrWsTHGR7+ueiDRAYVHwed
-         JrC1hY+Dlpe+4jiHE37rLxy30IYhr3r20opR4hVTvDVKY6n/L+dStv1YgqF7UaxePgtP
-         roRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692987201; x=1693592001;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ELm30cfPyzIG/TZbjvqwagZo2Is2xhLq9tEiyh3zeHw=;
-        b=EEiRveqsT95vyEcRGzuGJZyRVqjXQfcpKbLwWT9HFVPtwgHuXljCOqfiZrr7oqNJGm
-         1bQbESUk+KRqKpvZLP+/v+TaRDbXExBGk+fTV/ubO2QVzgkYtolUDMtGKliXcteAkZ/Z
-         4lLQXNWvW6cFx/3T4CXdGgEH0uZ8guMI4Au4CGWAIxlZq9Pw38vpfS4kAVggcTGcW2uf
-         3aPrTxyvIB/jcYS3yn/dCDV5TGmHxfM9/nt1n1MO5AHw7iwpIviTxFXr/HQx0i/W4U7w
-         8ZAxV4Di7t/UoRzEJhN6aHETKi0REXClKIV3NAS19ShpLy6hQFhJEYpCan5q479nlN8c
-         uajw==
-X-Gm-Message-State: AOJu0YwTdDiK3/8hlBUZSG/z0fJXcZny8Pinq9fh8OsfRZX+IXuxS+x4
-        36FFoNbHSHKLmhSCrR4MVRAy/w==
-X-Google-Smtp-Source: AGHT+IGswc4aau/HBnxyrq5ztPWud8GOeyX3tZiERT+wyt9vpoi6Hl+FhshReKOqEMlUe75lwI3RIQ==
-X-Received: by 2002:ac2:4f08:0:b0:4ff:78c2:6d8b with SMTP id k8-20020ac24f08000000b004ff78c26d8bmr16036211lfr.67.1692987201000;
-        Fri, 25 Aug 2023 11:13:21 -0700 (PDT)
-Received: from [192.168.1.101] (abxh59.neoplus.adsl.tpnet.pl. [83.9.1.59])
-        by smtp.gmail.com with ESMTPSA id b2-20020ac247e2000000b005009920b6afsm374522lfp.9.2023.08.25.11.13.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 11:13:20 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 25 Aug 2023 20:13:17 +0200
-Subject: [PATCH 3/3] clk: qcom: Add SM6115 LPASSCC
+        Fri, 25 Aug 2023 14:24:59 -0400
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385DCE67;
+        Fri, 25 Aug 2023 11:24:57 -0700 (PDT)
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PI8p3R030752;
+        Fri, 25 Aug 2023 18:24:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=OtWo1IYxQ+yQcq0/+c4rIFn6MsGnI6m13i+nhycPBX4=;
+ b=WD322mVrSBH+SbaXK8+7enbsVvbKw7dwRRohE0rtUoOkvoNAKbF0ntrKC0q873vERWx0
+ sz5ij/xNlHyf2mBGxvkpTuWjF7N3T4J+nCKXbbYwSYLssut+p9UtZ7wzdlXpnpzYOOt0
+ M6tA+/mvzuLdmi87p/GlODS5hwNKh5hi7uMGLFK+qDSAov+TmvmQtYv4/ejQcx4o9hCf
+ cSm6j6KztJLRpgTrLRNQpSHLe+P0v0FdpnxRyNOwVOrSI6JHm0ZHexv7/A9uXjWHg7Hg
+ N81EFs4rBxkPtXY8xqnhRecOwj3OXAwup7orw8tNSqv1OqN4yQIra490xwzrGr5ddACe cQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sq0qg93sf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Aug 2023 18:24:07 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37PI9SN0032633;
+        Fri, 25 Aug 2023 18:24:06 GMT
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sq0qg93rx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Aug 2023 18:24:06 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+        by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 37PHhkO9010391;
+        Fri, 25 Aug 2023 18:24:05 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+        by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3sn21t9ndx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Aug 2023 18:24:05 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+        by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 37PIO48k65995188
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 25 Aug 2023 18:24:04 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 56ADD5804B;
+        Fri, 25 Aug 2023 18:24:04 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id BAD0B5805B;
+        Fri, 25 Aug 2023 18:23:59 +0000 (GMT)
+Received: from [9.61.160.138] (unknown [9.61.160.138])
+        by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+        Fri, 25 Aug 2023 18:23:59 +0000 (GMT)
+Message-ID: <8872cb91-2a9d-c145-614b-bcd45895d769@linux.ibm.com>
+Date:   Fri, 25 Aug 2023 14:23:59 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org>
-References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
-In-Reply-To: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v12 4/6] iommu/s390: Disable deferred flush for ISM
+ devices
+Content-Language: en-US
+To:     Niklas Schnelle <schnelle@linux.ibm.com>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>
+Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1692987195; l=4383;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=apOX3hdOGey1znwpGB5xLtFMz1hlV86nLVwgjBM0kcY=;
- b=wY/yNZgIiIkFzV93iclndiGDM7zP595ileVmaloPXed+8rHh/U3D5zG8z+Hp79io1oOn6GKbX
- AZ1HmMV808ZCP24m+B6NKVKCAPjiUnYJEyOxgAG1Z34ODxJDNOyZhVE
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
+ <20230825-dma_iommu-v12-4-4134455994a7@linux.ibm.com>
+From:   Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20230825-dma_iommu-v12-4-4134455994a7@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ferobBmEP6qSEiNVam69qatVrVPksXtv
+X-Proofpoint-GUID: p2X-CeuZ6DxfiqnLDGhiGEluJb7HjK0L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-25_16,2023-08-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 adultscore=0 spamscore=0 clxscore=1011 mlxlogscore=999
+ bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308250162
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H4,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM6115 (and its derivatives or similar SoCs) have a LPASS clock
-controller block which provides audio-related resets.
+On 8/25/23 6:11 AM, Niklas Schnelle wrote:
+> ISM devices are virtual PCI devices used for cross-LPAR communication.
+> Unlike real PCI devices ISM devices do not use the hardware IOMMU but
+> inspects IOMMU translation tables directly on IOTLB flush (s390 RPCIT
+> instruction).
+> 
+> ISM devices keep their DMA allocations static and only very rarely DMA
+> unmap at all. For each IOTLB flush that occurs after unmap the ISM
+> devices will however inspect the area of the IOVA space indicated by the
+> flush. This means that for the global IOTLB flushes used by the flush
+> queue mechanism the entire IOVA space would be inspected. In principle
+> this would be fine, albeit potentially unnecessarily slow, it turns out
+> however that ISM devices are sensitive to seeing IOVA addresses that are
+> currently in use in the IOVA range being flushed. Seeing such in-use
+> IOVA addresses will cause the ISM device to enter an error state and
+> become unusable.
+> 
+> Fix this by claiming IOMMU_CAP_DEFERRED_FLUSH only for non-ISM devices.
+> This makes sure IOTLB flushes only cover IOVAs that have been unmapped
+> and also restricts the range of the IOTLB flush potentially reducing
+> latency spikes.
+> 
+> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 
-Add the required code to support them.
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/Kconfig          |  9 +++++
- drivers/clk/qcom/Makefile         |  1 +
- drivers/clk/qcom/lpasscc-sm6115.c | 84 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 94 insertions(+)
-
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index bd9bfb11b328..df9cf112e4b6 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -1001,6 +1001,15 @@ config SM_GPUCC_8550
- 	  Say Y if you want to support graphics controller devices and
- 	  functionality such as 3D graphics.
- 
-+config SM_LPASSCC_6115
-+	tristate "SM6115 Low Power Audio Subsystem (LPASS) Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
-+	select SM_GCC_6115
-+	help
-+	  Support for the LPASS clock controller on SM6115 devices.
-+	  Say Y if you want to toggle LPASS-adjacent resets within
-+	  this clock controller to reset the LPASS subsystem.
-+
- config SM_TCSRCC_8550
- 	tristate "SM8550 TCSR Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 4790c8cca426..61e3c72fe954 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -128,6 +128,7 @@ obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
- obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
- obj-$(CONFIG_SM_GPUCC_8450) += gpucc-sm8450.o
- obj-$(CONFIG_SM_GPUCC_8550) += gpucc-sm8550.o
-+obj-$(CONFIG_SM_LPASSCC_6115) += lpasscc-sm6115.o
- obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
- obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
- obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
-diff --git a/drivers/clk/qcom/lpasscc-sm6115.c b/drivers/clk/qcom/lpasscc-sm6115.c
-new file mode 100644
-index 000000000000..6aa19e16c53b
---- /dev/null
-+++ b/drivers/clk/qcom/lpasscc-sm6115.c
-@@ -0,0 +1,84 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022, 2023 Linaro Limited
-+ */
-+
-+#include <linux/clk-provider.h>
-+#include <linux/err.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/regmap.h>
-+
-+#include <dt-bindings/clock/qcom,sm6115-lpasscc.h>
-+
-+#include "common.h"
-+#include "reset.h"
-+
-+static const struct qcom_reset_map lpass_audiocc_sm6115_resets[] = {
-+	[LPASS_AUDIO_SWR_RX_CGCR] =  { .reg = 0x98, .bit = 1, .udelay = 500 },
-+};
-+
-+static struct regmap_config lpass_audiocc_sm6115_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.name = "lpass-audio-csr",
-+	.max_register = 0x1000,
-+};
-+
-+static const struct qcom_cc_desc lpass_audiocc_sm6115_reset_desc = {
-+	.config = &lpass_audiocc_sm6115_regmap_config,
-+	.resets = lpass_audiocc_sm6115_resets,
-+	.num_resets = ARRAY_SIZE(lpass_audiocc_sm6115_resets),
-+};
-+
-+static const struct qcom_reset_map lpasscc_sm6115_resets[] = {
-+	[LPASS_SWR_TX_CONFIG_CGCR] = { .reg = 0x100, .bit = 1, .udelay = 500 },
-+};
-+
-+static struct regmap_config lpasscc_sm6115_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.name = "lpass-tcsr",
-+	.max_register = 0x1000,
-+};
-+
-+static const struct qcom_cc_desc lpasscc_sm6115_reset_desc = {
-+	.config = &lpasscc_sm6115_regmap_config,
-+	.resets = lpasscc_sm6115_resets,
-+	.num_resets = ARRAY_SIZE(lpasscc_sm6115_resets),
-+};
-+
-+static const struct of_device_id lpasscc_sm6115_match_table[] = {
-+	{
-+		.compatible = "qcom,sm6115-lpassaudiocc",
-+		.data = &lpass_audiocc_sm6115_reset_desc,
-+	}, {
-+		.compatible = "qcom,sm6115-lpasscc",
-+		.data = &lpasscc_sm6115_reset_desc,
-+	},
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
-+
-+static int lpasscc_sm6115_probe(struct platform_device *pdev)
-+{
-+	const struct qcom_cc_desc *desc = of_device_get_match_data(&pdev->dev);
-+
-+	return qcom_cc_probe_by_index(pdev, 0, desc);
-+}
-+
-+static struct platform_driver lpasscc_sm6115_driver = {
-+	.probe = lpasscc_sm6115_probe,
-+	.driver = {
-+		.name = "lpasscc-sm6115",
-+		.of_match_table = lpasscc_sm6115_match_table,
-+	},
-+};
-+
-+module_platform_driver(lpasscc_sm6115_driver);
-+
-+MODULE_DESCRIPTION("QTI LPASSCC SM6115 Driver");
-+MODULE_LICENSE("GPL");
-
--- 
-2.42.0
+> ---
+>  drivers/iommu/s390-iommu.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
+> index f6d6c60e5634..8310180a102c 100644
+> --- a/drivers/iommu/s390-iommu.c
+> +++ b/drivers/iommu/s390-iommu.c
+> @@ -315,11 +315,13 @@ static struct s390_domain *to_s390_domain(struct iommu_domain *dom)
+>  
+>  static bool s390_iommu_capable(struct device *dev, enum iommu_cap cap)
+>  {
+> +	struct zpci_dev *zdev = to_zpci_dev(dev);
+> +
+>  	switch (cap) {
+>  	case IOMMU_CAP_CACHE_COHERENCY:
+>  		return true;
+>  	case IOMMU_CAP_DEFERRED_FLUSH:
+> -		return true;
+> +		return zdev->pft != PCI_FUNC_TYPE_ISM;
+>  	default:
+>  		return false;
+>  	}
+> 
 
