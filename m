@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B965788EA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:25:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F8FC788EB0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 20:28:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbjHYSZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 14:25:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44084 "EHLO
+        id S229448AbjHYS2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 14:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231280AbjHYSY7 (ORCPT
+        with ESMTP id S229949AbjHYS1j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 14:24:59 -0400
+        Fri, 25 Aug 2023 14:27:39 -0400
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385DCE67;
-        Fri, 25 Aug 2023 11:24:57 -0700 (PDT)
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PI8p3R030752;
-        Fri, 25 Aug 2023 18:24:08 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D179CD2;
+        Fri, 25 Aug 2023 11:27:34 -0700 (PDT)
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PHuYWF017369;
+        Fri, 25 Aug 2023 18:27:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=OtWo1IYxQ+yQcq0/+c4rIFn6MsGnI6m13i+nhycPBX4=;
- b=WD322mVrSBH+SbaXK8+7enbsVvbKw7dwRRohE0rtUoOkvoNAKbF0ntrKC0q873vERWx0
- sz5ij/xNlHyf2mBGxvkpTuWjF7N3T4J+nCKXbbYwSYLssut+p9UtZ7wzdlXpnpzYOOt0
- M6tA+/mvzuLdmi87p/GlODS5hwNKh5hi7uMGLFK+qDSAov+TmvmQtYv4/ejQcx4o9hCf
- cSm6j6KztJLRpgTrLRNQpSHLe+P0v0FdpnxRyNOwVOrSI6JHm0ZHexv7/A9uXjWHg7Hg
- N81EFs4rBxkPtXY8xqnhRecOwj3OXAwup7orw8tNSqv1OqN4yQIra490xwzrGr5ddACe cQ== 
+ bh=QHQOxiPuUa0ebvOp4zeF41oQRZYAzTOs8FVVwIp9Ljk=;
+ b=fxnjY7pa/kjrEjYsAn3f830wFpCa/pqiFmmssVqUCVajBH7x0d3Z7b+szRJJK2n7EvvZ
+ m/0mxjm3m4ZSW2RFapYNT9kcRBym4ds2RoJ38RygPWd8SF/MZxnDjRmJCKmN9kzRSzEw
+ 8I0uPAFHRTbugceMPcELPp3L1tcI+r0cXo3Tm5EXkPkEsPkMeoHQFPXgaMMjkN5rg3K9
+ gk4W5GX/UGrgdsRsyFDViK6VOwAZzWQ1OQw0woGDuZZbm0id+qS0iYZLkDKatSGOwRIA
+ YkJ0RIkIGgKDYHEqIuUrsswDvpF84AMTKNM7lLuqDHUrKUlTiMHkSsY/doHiy1nCX/Ca qw== 
 Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sq0qg93sf-1
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sq1528vru-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 18:24:07 +0000
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37PI9SN0032633;
-        Fri, 25 Aug 2023 18:24:06 GMT
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sq0qg93rx-1
+        Fri, 25 Aug 2023 18:26:59 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37PIHT0S004200;
+        Fri, 25 Aug 2023 18:26:58 GMT
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sq1528vr8-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 18:24:06 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-        by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 37PHhkO9010391;
-        Fri, 25 Aug 2023 18:24:05 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-        by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3sn21t9ndx-1
+        Fri, 25 Aug 2023 18:26:58 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+        by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 37PI48X6016687;
+        Fri, 25 Aug 2023 18:26:57 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+        by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3sn2289ner-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 18:24:05 +0000
+        Fri, 25 Aug 2023 18:26:57 +0000
 Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
-        by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 37PIO48k65995188
+        by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 37PIQuda1770098
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 25 Aug 2023 18:24:04 GMT
+        Fri, 25 Aug 2023 18:26:56 GMT
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 56ADD5804B;
-        Fri, 25 Aug 2023 18:24:04 +0000 (GMT)
+        by IMSVA (Postfix) with ESMTP id 1B91258055;
+        Fri, 25 Aug 2023 18:26:56 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id BAD0B5805B;
-        Fri, 25 Aug 2023 18:23:59 +0000 (GMT)
+        by IMSVA (Postfix) with ESMTP id 7EBBD5804B;
+        Fri, 25 Aug 2023 18:26:51 +0000 (GMT)
 Received: from [9.61.160.138] (unknown [9.61.160.138])
         by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-        Fri, 25 Aug 2023 18:23:59 +0000 (GMT)
-Message-ID: <8872cb91-2a9d-c145-614b-bcd45895d769@linux.ibm.com>
-Date:   Fri, 25 Aug 2023 14:23:59 -0400
+        Fri, 25 Aug 2023 18:26:51 +0000 (GMT)
+Message-ID: <240c26d3-b821-8410-3142-62e9a8656146@linux.ibm.com>
+Date:   Fri, 25 Aug 2023 14:26:51 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v12 4/6] iommu/s390: Disable deferred flush for ISM
- devices
+Subject: Re: [PATCH v12 0/6] iommu/dma: s390 DMA API conversion and optimized
+ IOTLB flushing
 Content-Language: en-US
 To:     Niklas Schnelle <schnelle@linux.ibm.com>,
         Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
@@ -111,21 +111,20 @@ Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
         linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
         linux-doc@vger.kernel.org
 References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
- <20230825-dma_iommu-v12-4-4134455994a7@linux.ibm.com>
 From:   Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20230825-dma_iommu-v12-4-4134455994a7@linux.ibm.com>
+In-Reply-To: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ferobBmEP6qSEiNVam69qatVrVPksXtv
-X-Proofpoint-GUID: p2X-CeuZ6DxfiqnLDGhiGEluJb7HjK0L
+X-Proofpoint-GUID: gJVEk2wQaewkyrtQ9b__FpQB1m2yDbYi
+X-Proofpoint-ORIG-GUID: plJWB3elhf65jTBHYa7I2-RRr5Ln9Ish
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-25_16,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 adultscore=0 spamscore=0 clxscore=1011 mlxlogscore=999
- bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ malwarescore=0 mlxlogscore=758 lowpriorityscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 adultscore=0 mlxscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2308100000 definitions=main-2308250162
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H4,
@@ -138,53 +137,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 8/25/23 6:11 AM, Niklas Schnelle wrote:
-> ISM devices are virtual PCI devices used for cross-LPAR communication.
-> Unlike real PCI devices ISM devices do not use the hardware IOMMU but
-> inspects IOMMU translation tables directly on IOTLB flush (s390 RPCIT
-> instruction).
+> Hi All,
 > 
-> ISM devices keep their DMA allocations static and only very rarely DMA
-> unmap at all. For each IOTLB flush that occurs after unmap the ISM
-> devices will however inspect the area of the IOVA space indicated by the
-> flush. This means that for the global IOTLB flushes used by the flush
-> queue mechanism the entire IOVA space would be inspected. In principle
-> this would be fine, albeit potentially unnecessarily slow, it turns out
-> however that ISM devices are sensitive to seeing IOVA addresses that are
-> currently in use in the IOVA range being flushed. Seeing such in-use
-> IOVA addresses will cause the ISM device to enter an error state and
-> become unusable.
+> This patch series converts s390's PCI support from its platform specific DMA
+> API implementation in arch/s390/pci/pci_dma.c to the common DMA IOMMU layer.
+> The conversion itself is done in patches 3-4 with patch 2 providing the final
+> necessary IOMMU driver improvement to handle s390's special IOTLB flush
+> out-of-resource indication in virtualized environments. The conversion
+> itself only touches the s390 IOMMU driver and s390 arch code moving over
+> remaining functions from the s390 DMA API implementation. No changes to
+> common code are necessary.
 > 
-> Fix this by claiming IOMMU_CAP_DEFERRED_FLUSH only for non-ISM devices.
-> This makes sure IOTLB flushes only cover IOVAs that have been unmapped
-> and also restricts the range of the IOTLB flush potentially reducing
-> latency spikes.
-> 
-> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+I also picked up this latest version and ran various tests with ISM, mlx5 and some NVMe drives.  FWIW, I have been including versions of this series in my s390 dev environments for a number of months now and have also been building my s390 pci iommufd nested translation series on top of this, so it's seen quite a bit of testing from me at least.
 
-> ---
->  drivers/iommu/s390-iommu.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
-> index f6d6c60e5634..8310180a102c 100644
-> --- a/drivers/iommu/s390-iommu.c
-> +++ b/drivers/iommu/s390-iommu.c
-> @@ -315,11 +315,13 @@ static struct s390_domain *to_s390_domain(struct iommu_domain *dom)
->  
->  static bool s390_iommu_capable(struct device *dev, enum iommu_cap cap)
->  {
-> +	struct zpci_dev *zdev = to_zpci_dev(dev);
-> +
->  	switch (cap) {
->  	case IOMMU_CAP_CACHE_COHERENCY:
->  		return true;
->  	case IOMMU_CAP_DEFERRED_FLUSH:
-> -		return true;
-> +		return zdev->pft != PCI_FUNC_TYPE_ISM;
->  	default:
->  		return false;
->  	}
-> 
+So as far as I'm concerned anyway, this series is ready for -next (after the merge window). 
+
+Thanks,
+Matt
 
