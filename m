@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C1DE788654
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 13:50:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44AF078867A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 13:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244149AbjHYLu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 07:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42658 "EHLO
+        id S244526AbjHYL6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 07:58:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244193AbjHYLuH (ORCPT
+        with ESMTP id S244536AbjHYL5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 07:50:07 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A95EAE7F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:50:03 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bcde83ce9fso12084191fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:50:03 -0700 (PDT)
+        Fri, 25 Aug 2023 07:57:53 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E01210FF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:57:50 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-5007abb15e9so1267525e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692964202; x=1693569002;
+        d=linaro.org; s=google; t=1692964669; x=1693569469;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=MxvBycOD3m3+JRPg8JQcvqgFmakCth+Ze79t418up68=;
-        b=SICRR6DFS69jWZbgUMh4ueiIFZgBKWqXAltzd1QP2oEOxkgYhm0yM2VrmyzPqcHZXn
-         v2Y25HoloYtVkLeipUJrxPyWXTkYxPMvTyKCYg42Nbr+GYtRytcmMfRVdt3Q/1CY7RUn
-         NRjZqvqACVkjMtUeaQFLEEnxZNDA/qDeRnkl2AnVpc9StgIDFbvRi5pmHAnfBjy8UHmW
-         zhN7nB9GChDzsTO5CbW+gGqfzrRLaG8TdsUyTYC/rH/FLowei8KBrh4RKDEXJ6Aqej5n
-         eQf2+uQq8UXPIazMPnuEI7toLLQTjmbDF9rLPTPvybWc8h9AQ3PGKdK6pEUsiPzlZsll
-         fFJw==
+        bh=mI7LozyFnLw8X2nfK3M7EIsWWR+IuMlSQ82oLzCFyxQ=;
+        b=ANjRosRmqwfEkh2Bq99SkEV9Vgk1avFkNRtuIwM7yM/idaVfqIQqoa23ARNEbMWk4x
+         innLza2bIEkZwi+wjuYOix4GAlnribLsJiv05qD7RRv9qS2NLmtbiS84yD3ay9yjmVIX
+         8XiELTblkR04P5Z6Wv7dy9TfF9B0nPtLitQnmWFZfR/aXrwVcTY2EVA4sJcS8E+u5F75
+         A96Gj4CBIfHVTfjyj6TegWK3cmqHZl+t4qRxMuJhUGEgDhdDyDdXIzd03/Ngn0jQXm+w
+         hc7KX1nY3nnYCaMmnxa4Kqaa+pVgrDIqjgT9TR2ES1TFOURR5ooEi6qIluVG2CtD9+ei
+         tqaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692964202; x=1693569002;
+        d=1e100.net; s=20221208; t=1692964669; x=1693569469;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MxvBycOD3m3+JRPg8JQcvqgFmakCth+Ze79t418up68=;
-        b=ZLsFidz/FW6l3Tuwf43dTx+NZjLwYrEMDMJ8yz5zBQ4YuLfRNDAcaU/L20yVchgb5L
-         lzPaBjnyyqlbomHItv8QYN387JAndOxvPWRGPgo0MBKa8udzxoTGJisY01tRVtqe0L4K
-         pDn5von6z18IEOlrYViywcAQJ10aIqNuereFt4bEKw70PZaIQ/uwQLjyftUxhs96bwhA
-         Ip0Pptda78dQEoOp179D3f7UoPadRDBBcXOBNK35Fi8Duwg5UCvX9vNk3CFIxooqy9An
-         D7NYLHo1EeWgHYu/+7rcFHB0SpU8zLeR9vOBUifbDzEv5AhYpnu3+IttFc+Dy3xFpMqb
-         ZUHg==
-X-Gm-Message-State: AOJu0YwojDAoGwDG/hbjasWhwuODq8wvf4jGs2OngfLTjsYisuXh+fpl
-        Zr5V7ytzEBqLSH6kfDNvv3uzIQ==
-X-Google-Smtp-Source: AGHT+IHhvxglhm3o7JtAPpmx1AD83QKJdd1rl8yyUn6dTJNNjHQb0RSablPobizwJZPVd6uvtpyIDA==
-X-Received: by 2002:a2e:8704:0:b0:2b6:cf64:7a8e with SMTP id m4-20020a2e8704000000b002b6cf647a8emr13477822lji.19.1692964201900;
-        Fri, 25 Aug 2023 04:50:01 -0700 (PDT)
+        bh=mI7LozyFnLw8X2nfK3M7EIsWWR+IuMlSQ82oLzCFyxQ=;
+        b=bUU3cPgqkfQqpjtXm5NJ8+uQhcfflQye0ikxcqgoHlrUTsM9OXD1+y7LC145xIm2X9
+         5u1v8xMmVecdUJMwLd+aU97CUEB07hsmUKq4/LF+60pj9YnVvYcJU7JCLiP0TynYUBtn
+         oRWr5WdXEq6q1SpAVIF9mkyuppf70tzy/Elg74w9CtRqNd3YPVPL8rJzJsdT9eTo1t2a
+         0E1VsxATON2qYRwMiENHLa6yBgfYONooO6Crnn02BAsQy1mEJNYILoVQroQ7YSW7ev4H
+         BMsoBW6XtlI2GXswi4+qxku9rofVYUoJAMEKsoACbBIFFAWqp+osLy4keYpqo2rXHW4b
+         xB1w==
+X-Gm-Message-State: AOJu0YxRx5AYPJe6xbbJ+N6HHI03TKCwjmEmo/M/MXI1PuC467hL/nYD
+        EipBNNaqeWFvRzckOjFrTVsNxQ==
+X-Google-Smtp-Source: AGHT+IFWg1yOq0L4H8y4xkE4vY/TfiOIhcqqBSADkWR9pfsWJHmvSXKgeslKs+QfJr7PY2t2Q6gJFQ==
+X-Received: by 2002:a05:6512:3150:b0:500:9d4a:8a02 with SMTP id s16-20020a056512315000b005009d4a8a02mr3450258lfi.62.1692964668752;
+        Fri, 25 Aug 2023 04:57:48 -0700 (PDT)
 Received: from [192.168.1.101] (abyk232.neoplus.adsl.tpnet.pl. [83.9.30.232])
-        by smtp.gmail.com with ESMTPSA id q21-20020a2e8755000000b002ba045496d0sm296540ljj.125.2023.08.25.04.50.00
+        by smtp.gmail.com with ESMTPSA id v12-20020ac2560c000000b004f86d3e52c0sm264602lfd.4.2023.08.25.04.57.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Aug 2023 04:50:01 -0700 (PDT)
-Message-ID: <b46d8e10-5f25-4350-b5b9-77bf5885780f@linaro.org>
-Date:   Fri, 25 Aug 2023 13:50:00 +0200
+        Fri, 25 Aug 2023 04:57:48 -0700 (PDT)
+Message-ID: <bfacff27-e3b2-43e8-b50e-3da0f13feb5c@linaro.org>
+Date:   Fri, 25 Aug 2023 13:57:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC DNM] perf: Add support for Qualcomm Last-Level Cache
- Controller PMU
+Subject: Re: [PATCH] ARM: dts: qcom: apq8960: reflect that memory node starts
+ at offset 0
 Content-Language: en-US
-To:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230809-topic-llcc_pmu-v1-1-dd27bd1f44c9@linaro.org>
- <f71bc35a-c45c-0429-1164-d047d61ef061@quicinc.com>
+To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230812183218.374157-1-david@ixit.cz>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,9 +101,9 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <f71bc35a-c45c-0429-1164-d047d61ef061@quicinc.com>
+In-Reply-To: <20230812183218.374157-1-david@ixit.cz>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
@@ -116,36 +114,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.08.2023 23:31, Trilok Soni wrote:
-> On 8/9/2023 1:09 PM, Konrad Dybcio wrote:
->> Add support for the Qualcomm LLCC (Last-Level Cache Controller) PMU,
->> which provides a single event, expressing cache read misses.
->>
->> Based on the vendor driver found in the msm-5.10 downstream kernel.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->> Hi, I've been trying to get this driver going upstream by cleaning it
->> up and adding the necessary perf boilerplate (the original Qualcomm one
->> only pokes at the PMU from within the kernel itself) to use the
->> userspace tool.
->>
->> I can not however get it to cooperate.. in this iteration I get a PMU
->> event registered (though with only a "raw" name - no "x OR y" like with
->> other PMUs on the system) as:
->>
->> llcc_pmu/read_miss/                                [Kernel PMU event]
->>
->> but the .read callback is never called when I run:
->>
->> sudo perf stat -C 0 -a -e llcc_pmu/read_miss/ stress-ng -C 8 -c 8 -m 10
->>
->> which always returns 0
->>
->> if I add --always-kernel I get:
->> <not supported>      llcc_pmu/read_miss/
+On 12.08.2023 20:32, David Heidelberg wrote:
+> Fixes warning generated by `make qcom-msm8960-cdp.dtb`:
+> arch/arm/boot/dts/qcom-msm8960-cdp.dt.yaml: /: memory: False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
 > 
-> Which SOC you are trying this on?
-8250
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+But does it really?
+
+i.e., if you boot it on a device and xxd /sys/firmware/devicetree/base/memory
+or decompile /sys/firmware/fdt, is it updated to <0x0 0xsomesize>?
 
 Konrad
+>  arch/arm/boot/dts/qcom/qcom-msm8960.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+> index c10797f3793c..c20f16845a97 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+> @@ -47,7 +47,7 @@ L2: l2-cache {
+>  		};
+>  	};
+>  
+> -	memory {
+> +	memory@0 {
+>  		device_type = "memory";
+>  		reg = <0x0 0x0>;
+>  	};
