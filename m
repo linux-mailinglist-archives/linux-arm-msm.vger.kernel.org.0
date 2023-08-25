@@ -2,211 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A69578863F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 13:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8A2C788655
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 13:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243302AbjHYLqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 07:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35162 "EHLO
+        id S244181AbjHYLu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 07:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243379AbjHYLqR (ORCPT
+        with ESMTP id S244047AbjHYLtz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 07:46:17 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A81941FF7;
-        Fri, 25 Aug 2023 04:46:06 -0700 (PDT)
-Received: from leknes.fjasle.eu ([46.142.97.125]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MEVmm-1qTTv01F8M-00FzdC; Fri, 25 Aug 2023 13:45:04 +0200
-Received: from localhost.fjasle.eu (kirkenes.fjasle.eu [10.10.0.5])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (Client did not present a certificate)
-        by leknes.fjasle.eu (Postfix) with ESMTPS id BB75D3F91C;
-        Fri, 25 Aug 2023 13:45:00 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fjasle.eu; s=mail;
-        t=1692963901; bh=LUBlIR9uims4Ic+E1eg4RARNsFeFff9QgTvUJ80cX8g=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=v+at3+xXvzcMRK3YtjLTFxfGKHkgIN9SjSwtL3aCndUvJg6FCmjoGiEVo9mf1G3U1
-         ePV8ilS9qxuvp/qw+eXm+nTceavdn1MPTbqFiSF7g2EK8NEURszwY1z/HTmN4I0BZl
-         Nh9pTbPB6H6NXqIAzGQKC+AaZ+k6VI3XIO0enmFM=
-Received: by localhost.fjasle.eu (Postfix, from userid 1000)
-        id 3A28C3949; Fri, 25 Aug 2023 13:44:57 +0200 (CEST)
-Date:   Fri, 25 Aug 2023 13:44:57 +0200
-From:   Nicolas Schier <nicolas@fjasle.eu>
-To:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] scripts: Add add-maintainer.py
-Message-ID: <ZOiUOcMOeYvMzq58@bergen.fjasle.eu>
-References: <cover.1691049436.git.quic_gurus@quicinc.com>
- <829b08342568735095bbd3f8c44f435f44688018.1691049436.git.quic_gurus@quicinc.com>
- <ZOYicEP8D7kNGFin@fjasle.eu>
- <20230824214436.GA22659@quicinc.com>
+        Fri, 25 Aug 2023 07:49:55 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FC01FD7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:49:53 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso11971031fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Aug 2023 04:49:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692964191; x=1693568991;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YgDXEewKnZJyvkeWwzQ/nFkUnal564YvoISnoWvZM58=;
+        b=W1I80TksMvaXK3XGRg+Yp2/EFS87ZTA58xcYg/GqBuIwScwu1g6LuDZHB+GVZAsgIG
+         uBr+AS+eietMvdQ3iGuC/IK1oHnXpEVuKhMAR+ZNW8q8QJqwdbKUZW7TRl2Bcf1iokC2
+         JEdKaLkllrI0RB3abb1YwK3DrWJUkEqpXQ8uLFO5zuKGzDwlGtWXi3dtb0+XroX3G7fE
+         VRfnEYXb0LHnD3u3BtXIo4Lj7QOuzD1wklBqwpUV3iGFPjq179wVlgUIaPRhYg0ei2zC
+         yG36uwutJauFiXJxVgyqkF5kTRN6oPHdpTLTEjVmwsm0cvdOaZ1GfvIB0y5Yp2OqC6MO
+         WSBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692964191; x=1693568991;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YgDXEewKnZJyvkeWwzQ/nFkUnal564YvoISnoWvZM58=;
+        b=CzxSSirmC8Q3CUdWufwsSH3uqRMkMIBrsF2VlldiTfMcDCmRAb15xIXifAG5azWF4j
+         WsTRIpkgqh5S4zdyS0sfn/iGxjOYxLf3wM7OPnQLOvjxz/dF8wbgIlLGha2/mD42p8Aa
+         UKkMtCAF2aq9iPdF8I+ddnSbldN1XK5jfgasQq1KOifPWJKk+RnQ5mqYj5myt05Ugmn9
+         GEj4Y3BU9yizTluWS5YK+vNSh6sIYoR2FAmjqjitYBGMHY7LtKmB0ne71I3UuLKHg8Ac
+         G/qqD0UeBssj0J/kQV1uiPJ/fgwk653Oa4h9aLLE1qmlKkrm9+KxPATXqGwU1RDlhgrH
+         etxQ==
+X-Gm-Message-State: AOJu0YzbQO8epyRalWMDcX3zNWlzFNTFdm6HTXaVft1RKOerN7bb8jDR
+        1WSb52j/L40qkbDjPApfzHoxhQ==
+X-Google-Smtp-Source: AGHT+IGH6UYaVANhQmgrEtvfzrfVhXpgvnPyvG3qZ2KrlxGqZt6Fl8gnjhH9QN2Cc0piigd01hrokg==
+X-Received: by 2002:a2e:9d10:0:b0:2bc:de8d:4ab1 with SMTP id t16-20020a2e9d10000000b002bcde8d4ab1mr5215384lji.6.1692964191586;
+        Fri, 25 Aug 2023 04:49:51 -0700 (PDT)
+Received: from [192.168.1.101] (abyk232.neoplus.adsl.tpnet.pl. [83.9.30.232])
+        by smtp.gmail.com with ESMTPSA id q21-20020a2e8755000000b002ba045496d0sm296540ljj.125.2023.08.25.04.49.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Aug 2023 04:49:51 -0700 (PDT)
+Message-ID: <9d5d0002-e8bb-4b3f-a795-fba62a06fd96@linaro.org>
+Date:   Fri, 25 Aug 2023 13:49:49 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="jjpaJEitG6LbK2XV"
-Content-Disposition: inline
-In-Reply-To: <20230824214436.GA22659@quicinc.com>
-X-Operating-System: Debian GNU/Linux trixie/sid
-Jabber-ID: nicolas@jabber.no
-X-Provags-ID: V03:K1:OpjvI+EpoKm6ZYkk+K9aTJlDjF7uHsQ+qFvZk8KggGXWPyGKsrW
- 6pVfhXWPooQ/5gpWW6ITajiNCTK7ZIzjNtU0dnWsawLj+akjZfHGeerrS7e/Cmca6ev4vqY
- 7/cwNYlX5c+d4AODzpxUEVPSiiNUMSONN9Z3WLURXIu7OCrvJgiOV369DWvgP6xgPCT9o+i
- m1kjau66iS3apeNEvEwBA==
-UI-OutboundReport: notjunk:1;M01:P0:xRdCoaZs1A4=;zq/8sb2ZB3CAJJ3Yb3QlMyo2aNf
- /KqdfBUlF2LtwAb7FpfZMuzem3WzZUQ6WzrLIv0ndmQh/4dvFXyx//8fnAVjN9JEnEXzHHVHS
- H6X+moSHU8KWtcdVknmm5eeR3D0FmXoFprOapA4KIbwqhNBGeKoazaVOANDHctYERoaJheNDr
- i1mfjABNGWH23qu5YZCKEKYwQhoawv3P0YJxS9hKJMam+ELoxWv1EdYxNm0DL/oJeDXOat49L
- PiJREIa+XZ08EWEfuSkebBuRYmskr/sD374dFAvkBwfBKFzFtHaJ2Z046KWozu6TuRqreAry6
- TBARSy7XaR5mBGn/Po/VFHqsPvD/86vMd8xXwOZtBjVYivitbGSDM+P3uh6aas8rvrbvq6iyr
- rwC5c8qhM0tHwHi8FO5oc7Fpj0aZVKH6JRVsh7AgISM4g8Zjgyu9aMTXF9W0uCyzzRl2r8oII
- 2ZPajGUB7fshjz+aeBbDQpH+eeUMmu4+NTZthZGqP/ygK/S+YBv3GqCqNxmwYfLsbDuOdroDr
- ArSPdj6YXXbLit6bpQDMguQD+R4OiuY7x6wlNmfWC8h1e58qHTDkT9OZjKZJGySRIFfx0G6z5
- snzrfR3lsZyqoji79GO3eaPYAVGVo3YXdB/WttsV/eNUrRcHLCM4zQWrMutWwZIPKkAjMb1AG
- KprKsXNo92RTxfEXf82V4HgYMUXS6PXDAWJ0SpriBpJQhiRe4BbS0oSl+Ca+Q0zYSoRLbU+OE
- ozlxt8ARFGMkZ8Js3CR7nXthvFWTjusd5oDE+9C1pLpXawe88FAotjXxYblitZvTcyXUZ2zpB
- KfbCVkHjf5qrQVe9BacOCvRIbiUItB/DE2wwGNhaP+UvsLGw1ln238z8MeggruXL+o0k6kTVH
- 5GJqWZrUIUsVU3w==
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] clk: qcom: Add GCC driver support for SM4450
+Content-Language: en-US
+To:     Ajit Pandey <quic_ajipan@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230824173410.550126-1-quic_ajipan@quicinc.com>
+ <20230824173410.550126-5-quic_ajipan@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230824173410.550126-5-quic_ajipan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
---jjpaJEitG6LbK2XV
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu 24 Aug 2023 14:44:36 GMT, Guru Das Srinagesh wrote:
+On 24.08.2023 19:34, Ajit Pandey wrote:
+> Add Global Clock Controller (GCC) support for SM4450 platform.
+> 
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> ---
 [...]
-> > > The script is quiet by default (only prints errors) and its verbosity
-> > > can be adjusted via an optional parameter.
-> >=20
-> > IMO, it would be nice to see which addresses are effectively added, e.g.
-> > comparable to the output of git send-email.  Perhaps somehing like:
-> >=20
-> >   $ scripts/add-maintainer.py *.patch
-> >   0001-fixup-scripts-Add-add-maintainer.py.patch: Adding 'To: Guru Das =
-Srinagesh <quic_gurus@quicinc.com>' (maintainer)
-> >   0001-fixup-scripts-Add-add-maintainer.py.patch: Adding 'Cc: linux-ker=
-nel@vger.kernel.org' (list)
-> >=20
-> > Perhaps verbosity should then be configurable.
->=20
-> Yes, this is already implemented - you just need to pass "--verbosity deb=
-ug" to
-> the script. Example based on commit 8648aeb5d7b7 ("power: supply: add Qua=
-lcomm
-> PMI8998 SMB2 Charger driver") converted to a patch:
->=20
->     $ ./scripts/add-maintainer.py --verbosity debug $u/upstream/patches/t=
-est2/0001-power-supply-add-Qualcomm-PMI8998-SMB2-Charger-drive.patch
->     INFO: GET: Patch: 0001-power-supply-add-Qualcomm-PMI8998-SMB2-Charger=
--drive.patch
->     DEBUG:
->     Sebastian Reichel <sre@kernel.org> (maintainer:POWER SUPPLY CLASS/SUB=
-SYSTEM and DRIVERS)
->     Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
->     Bjorn Andersson <andersson@kernel.org> (maintainer:ARM/QUALCOMM SUPPO=
-RT)
->     Konrad Dybcio <konrad.dybcio@linaro.org> (maintainer:ARM/QUALCOMM SUP=
-PORT)
->     Nathan Chancellor <nathan@kernel.org> (supporter:CLANG/LLVM BUILD SUP=
-PORT)
->     Nick Desaulniers <ndesaulniers@google.com> (supporter:CLANG/LLVM BUIL=
-D SUPPORT)
->     Tom Rix <trix@redhat.com> (reviewer:CLANG/LLVM BUILD SUPPORT)
->     linux-kernel@vger.kernel.org (open list)
->     linux-pm@vger.kernel.org (open list:POWER SUPPLY CLASS/SUBSYSTEM and =
-DRIVERS)
->     linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
->     llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT)
->    =20
->     INFO: ADD: Patch: 0001-power-supply-add-Qualcomm-PMI8998-SMB2-Charger=
--drive.patch
->     DEBUG: Cc Lists:
->     Cc: linux-arm-msm@vger.kernel.org
->     Cc: llvm@lists.linux.dev
->     Cc: linux-pm@vger.kernel.org
->     Cc: linux-kernel@vger.kernel.org
->     DEBUG: Cc Others:
->     Cc: Tom Rix <trix@redhat.com>
->     Cc: Nick Desaulniers <ndesaulniers@google.com>
->     Cc: Nathan Chancellor <nathan@kernel.org>
->     DEBUG: Cc Maintainers:
->     None
->     DEBUG: To Maintainers:
->     To: Sebastian Reichel <sre@kernel.org>
->     To: Andy Gross <agross@kernel.org>
->     To: Bjorn Andersson <andersson@kernel.org>
->     To: Konrad Dybcio <konrad.dybcio@linaro.org>
->    =20
->     INFO: Maintainers added to all patch files successfully
->=20
-> The first "GET:" output prints the output of `get_maintainer.pl` verbatim=
-, and
-> the "ADD:" output shows what exactly is getting added to that patch. Hope=
- this
-> is what you were expecting. Please let me know if you'd prefer any other
-> modifications to this debug output.
 
-ups.  I tested with --verbosity=3Dinfo but not with =3Ddebug, therefore I=
-=20
-missed it.  Sorry for the noise.
+> +
+> +	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
+> +	regmap_update_bits(regmap, gcc_ufs_phy_ice_core_clk.halt_reg, BIT(14), BIT(14));
+qcom_branch_set_force_mem_core() and remove the comment
 
-
-[...]
-> > While testing, I thought that adding addresses without filtering-out du=
-plicates
-> > was odd; but as git-send-email does the unique filtering, it doesn't ma=
-tter.
->=20
-> Since I'm using `set()` in this script, the uniqueness is guaranteed here=
- as
-> well - there won't be any duplicates.
-
-I thought about patch files that already have 'To/Cc' headers (e.g. =20
-'git format-patch --to=3D... --cc=3D...' or by running add-maintainer.py=20
-multiple times for updating the lists of recipients.  The result is a=20
-patch file with possible duplicated lines; but as written: it does=20
-matter, effectively.
-
-Kind regards,
-Nicolas
-
---jjpaJEitG6LbK2XV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEh0E3p4c3JKeBvsLGB1IKcBYmEmkFAmTolDgACgkQB1IKcBYm
-EmkaMhAAkHXsFKcEogjsqkNaOcKrHgDBA9BLV6YXgTPR/BhMl7qgIbgDwKRdK5kG
-RZalx5oXxNTiGLTUxEZE+hBy/edkHXwuH9VQRRx+x7TuFijPP1vrU2UHQe/Cp3zP
-+8TueB4h+1m/4QryDXX8gKDMUA8gBym9r48A0K2Vow2/KbKbnEw9fngx04csW9oU
-Kv/SPio3lT1xq4YaaHgVsyLwlQFRQqKKdLwn08U4D0RTQVuNwlv3Ozu/QnMhAtSf
-SPFJO+xU2SbXoQxRnKBlno1rHwsfGM7MmMpbViOzOl/r0pXAr29KEVx3t/ZwBRzn
-g+J0hzJ6uh1TRO2m0wX2tg1SeW+kCAHzEXrnh8LM3Z80AOEFQvRV47LwAT+86X56
-CxdPq7ug6B5XTJvGUxJ3asP3AGURIX8SriWScRv+r+WE12xg7FhvcV/Oy7m6ZUhi
-4B54Nob7OmaDTO93ZBW0RxKItz4mgZ0OGNqDhcey7bpmROimFArZESZQ+kKB9fes
-z6oHsDY+3TpMCSkDIXd9neZXAkU9krOG/uihmYOiyz39WENXcAsOYkh1UZd+u2+b
-hRLyeKIl9Oy8+r4wg9It0hyj2wOXshtigbU9tXt/4X3IVFFv43MplR0hetiMt5wx
-xwuWnk+MohuUCK2XU5TplUY4lURbBqgGEPecu+w3Ac51Ejltb1Q=
-=Ofrj
------END PGP SIGNATURE-----
-
---jjpaJEitG6LbK2XV--
+Konrad
