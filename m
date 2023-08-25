@@ -2,137 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00E86787D81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 04:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C9B9788002
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Aug 2023 08:38:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232940AbjHYCFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Aug 2023 22:05:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
+        id S233422AbjHYGiE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 02:38:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240499AbjHYCFD (ORCPT
+        with ESMTP id S242252AbjHYGh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Aug 2023 22:05:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329F71BD1;
-        Thu, 24 Aug 2023 19:04:10 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37P1UHE6031609;
-        Fri, 25 Aug 2023 02:03:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=72NcHc3TExHejWIwg+3LuxNxMSFBD3W1+j4RzHBoI0M=;
- b=RgeNb07oUF1kkDbvLrQ7JeIsGoGwWK0OcgREaJkzaJwnMxhJ3h80r1Oi5ye979usQJfP
- xWLkxj9Amk5uT47WEKi26oPYL1ClJvVRjo84pmOtl4KL3bwG9BCdrz2/miFEj1qK9njn
- mVzukYIHeNRB+nI0cmCFMXD+qTC+V7Q/YAYu43j4MIKJTDv2IdI6Xw7pOAlKmGwDQ29/
- 8JIFCCCHEO710oDfZDfB4XcdU6Zy62Bb93X2f8vz8SjEOKuf9jBEukpU8hRLl4Lnh+W2
- 172SwicugBM1TSDUoIdVU7UHuKDkjK8Nz2RYI7Swao8o6niA3GVlOar174URsYBjIaJS 7g== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sp1r3tjj2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 02:03:57 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37P23sRG016781
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Aug 2023 02:03:54 GMT
-Received: from [10.253.13.154] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 24 Aug
- 2023 19:03:52 -0700
-Message-ID: <086314e1-415f-1ec6-9087-5f54b988398e@quicinc.com>
-Date:   Fri, 25 Aug 2023 10:03:50 +0800
+        Fri, 25 Aug 2023 02:37:59 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C951BDB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 23:37:57 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5280ef23593so852913a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Aug 2023 23:37:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692945475; x=1693550275;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5+0GSay6taxycoZO6OBj1m5ETfkXUUoJMPJ0/kOmu9w=;
+        b=fbgaqHCOPQ9G60i+iwMr9mzCZhZANvvhX/VAcVRVlYoK3HTFs7mIvgMHuse2DD3845
+         Zcyl7SmVY772U3pT02yQ/hAxenx1AyDgtmJqq/Zv0k6fQW49otImf8/mjyYplk+12Ghz
+         t5XDFLFFFoGuy8Xfp7lYhNEMinmswlEAVLjbEh2sF/Wo0moxzQfa69enb39ZfPbigQ2R
+         +bYmhNiJyIPWpXinmAGYyfVNvgFsz02/uI9ark2nQfrNAkVlj49HwLMKwbXzPtFxR1dS
+         aihIUh80NEzZNhohGcoigA2lumLB/4/5wHuvSVyFJKg0tzR3CNOOSg/kkTa/dvIRZEwt
+         CHaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692945475; x=1693550275;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5+0GSay6taxycoZO6OBj1m5ETfkXUUoJMPJ0/kOmu9w=;
+        b=ARQl4PNcfwbsNAXczuesUcsJJ2SC1Oz60oW/oBO5ef3OtPv/6Nqw8Dn5m/EuT2tRyv
+         OiFWCe6ohQstGDViYniHivm9wrm/4JwqHkpFOmcF5ZmtpsUli+P2dCuo76FrodbG14LW
+         dYu/+59ZEJu3LjNdFebQtqCVUOLKA021lkntFaIpLI5XQ7F9Zr9iT/zZQiqHT5xmLoEt
+         NlJUvryCG7y++xEXyYWq9za/r2yMUS++6w94kFUgRpr/xc7JMXAGC0jgYA2yZHGieWVt
+         FTpM6nLhJ7Va+eu6E28K+UXZ3OF26SY14D5D8YMbx788vg70aVD3eC/WeWFKNHdjztzx
+         aMmQ==
+X-Gm-Message-State: AOJu0YxoEqv/IfV0o3lqXgO6z2DTiucqeChUqOElVAhp7+B0rqfd7epH
+        1bLKj8otwI9VNiv5c9+22LfybA==
+X-Google-Smtp-Source: AGHT+IEypP8YwF3zoacWp0xHNurKmkvB3OGpiijSl3m27OY1zGiRUfgfDWioUJnwQYSII3jRGVN2mQ==
+X-Received: by 2002:a17:907:788d:b0:977:befe:d888 with SMTP id ku13-20020a170907788d00b00977befed888mr13159727ejc.13.1692945475666;
+        Thu, 24 Aug 2023 23:37:55 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id i9-20020a1709061cc900b0098e42bef736sm596537ejh.176.2023.08.24.23.37.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Aug 2023 23:37:55 -0700 (PDT)
+Message-ID: <18fbfb35-fc8f-5062-859c-152d3ef933d8@linaro.org>
+Date:   Fri, 25 Aug 2023 08:37:53 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-Subject: Re: [PATCH v2] mhi: host: Add standard ELF header image download
- functionality
-To:     Kalle Valo <kvalo@kernel.org>
-CC:     <mani@kernel.org>, <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
-References: <1691395192-16090-1-git-send-email-quic_qianyu@quicinc.com>
- <87edjvwb0a.fsf@kernel.org>
+Subject: Re: [PATCH v3 01/16] dt-bindings: phy: migrate QMP USB PHY bindings
+ to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+References: <20230824211952.1397699-1-dmitry.baryshkov@linaro.org>
+ <20230824211952.1397699-2-dmitry.baryshkov@linaro.org>
 Content-Language: en-US
-In-Reply-To: <87edjvwb0a.fsf@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230824211952.1397699-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9MEPGzvL-_Xmkp-5Y7scP0jV-Jm95CfY
-X-Proofpoint-GUID: 9MEPGzvL-_Xmkp-5Y7scP0jV-Jm95CfY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-25_01,2023-08-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- suspectscore=0 phishscore=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 clxscore=1011 spamscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308250016
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 24/08/2023 23:19, Dmitry Baryshkov wrote:
+> Migrate legacy bindings (described in qcom,msm8996-qmp-usb3-phy.yaml)
+> to qcom,sc8280xp-qmp-usb3-uni-phy.yaml. This removes a need to declare
+> the child PHY node or split resource regions.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-On 8/22/2023 7:51 PM, Kalle Valo wrote:
-> Qiang Yu<quic_qianyu@quicinc.com>  writes:
->
->> From: Mayank Rana<quic_mrana@quicinc.com>
->>
->> Some devices (e.g. WLAN chips) are unable to handle the non-standard ELF
->> format of the FBC image and thus need special handling of the FBC image.
->>
->> Add standard_elf_image flag which makes decision in terms of how FBC image
->> based AMSS image is being downloaded with connected endpoint.
->> FBC image is having two image combine: SBL image + AMSS image.
->> 1. FBC image download using legacy single ELF header image format:
->> - SBL image: 512KB of FBC image is downloaded using BHI.
->> - AMSS image: full FBC image is downloaded using BHIe.
->> 2. FBC image download using separate ELF header image format:
->> - SBL image: 512 KB of FBC image is downloaded using BHI.
->> - AMSS image: 512 KB onward FBC image is downloaded using BHIe.
->> There is no change for SBL image download. Although AMSS image start
->> address is end address of SBL image while using separate ELF header format.
->>
->> Signed-off-by: Mayank Rana<quic_mrana@quicinc.com>
->> [quic_qianyu@quicinc.com: Update commit message, minor updates]
->> Signed-off-by: Qiang Yu<quic_qianyu@quicinc.com>
-> I guess this is for an out-of-tree driver? I haven't heard any such
-> requirements for ath11k or ath12k.
-Yes, this is for next generation wlan chip. After confirming with WLAN 
-team, we will hold this patch until WLAN team upstream the driver for 
-next generation wlan chip.
->> --- a/drivers/bus/mhi/host/boot.c
->> +++ b/drivers/bus/mhi/host/boot.c
->> @@ -495,6 +495,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->>   	 * device transitioning into MHI READY state
->>   	 */
->>   	if (mhi_cntrl->fbc_download) {
->> +		dev_dbg(dev, "standard_elf_image: %s\n",
->> +				(mhi_cntrl->standard_elf_image ? "True" : "False"));
->> +		if (mhi_cntrl->standard_elf_image) {
->> +			fw_data = firmware->data + mhi_cntrl->sbl_size;
->> +			fw_sz = fw_sz - mhi_cntrl->sbl_size;
->> +		}
-> So you are basically skipping the first sbl_size bytes of the firmware
-> file? Why not just fix the firmware file in userspace? Or maybe you can
-> use the recently added[1] mhi_cntrl->fw_data pointer and handle this in
-> your driver instead?
 
-Thanks for your suggestions. As per Mayank, with current method, we are 
-able to accommodate new image request better way with less code change, 
-and satisfy processing of RDDM without any modification.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Maybe we can revisit it when the driver for next gen wlan driver comes 
-in picture.
+Best regards,
+Krzysztof
 
-> [1]https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-next&id=efe47a18e43f59f063a82ccaa464a3b4844bb8a8
->
