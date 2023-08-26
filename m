@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D7297895B9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:04:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70A307895BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:06:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbjHZKDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 06:03:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55218 "EHLO
+        id S230148AbjHZKFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 06:05:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231720AbjHZKDk (ORCPT
+        with ESMTP id S231830AbjHZKFo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 06:03:40 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5215C1BE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:03:35 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-5007c8308c3so2615172e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:03:35 -0700 (PDT)
+        Sat, 26 Aug 2023 06:05:44 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F31A1A6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:05:39 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4ffa94a7a47so2561354e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693044213; x=1693649013;
+        d=linaro.org; s=google; t=1693044338; x=1693649138;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HKmxaHf0ZCY9cdaR9lbNFhczw+xqCeEHcZPAPTRkxJU=;
-        b=MntcTVfDKQhzKDjGf7XzF22+QZupQemLWd6myQV7bIBQVHWxwmtYYySuH6Nr5vlpJO
-         1JdgQI/vKDCB1e0ilUitcwMCn4z5oyBQ0NiFaaqUaSbEUVRzIiCHvLk5/BzuwZTIbCay
-         bJwYJ5kPd+W8ICqC1R1SScpVj/riDRM8UmtNQqG1L3b8KgyqPHTJSAac0NmXOSs4dvCJ
-         pvhX0EFc382P6Hbg5NqrrY0yxtd7za9/TSuFncIZw/psBWhtT+DxfWmYOBoS2LJCCb5O
-         gcq1hZiP+SeEI91CqEoMkbudRTK8lXq7TD9Vkb4oRmFMmEu60dXTUTDxCKgM5Rb/V7VR
-         jm3w==
+        bh=0G/dpqWDghI3oHXa30VGdVcT1IA/M8Cr9JWpUsXms6Q=;
+        b=EhPhhE2GU22U9HlPBfmx4z8PsmvAZVXwagEhgVX+QLPN+1qsJXcb4/KvDjPZ7V9Dcr
+         it2XA7XqrfMYJWg/L+xuSOULJpyDADRVodMNqOYwHZvQKI+rHDe5FgNih8m5wTXXYKeF
+         PVrUg4luE6sLAIhHcOIbmXegUhw9a8rKgp+69iQY7OlUqAOAoFeIrLAUmLYXh2ojbNr8
+         cPsOvn3KOLGnfkL9FPGehAVnXxWGm2yGyw/sph3Zxbt7hglYH6ULAtMynoJqCyCjrpXg
+         v8PFD4KCIv0SIcE6it1OQIP8M9EDDMbkENbXYw5EwXDY7H5pvVu33Ul3tZQD33MJzxA+
+         3/bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693044213; x=1693649013;
+        d=1e100.net; s=20221208; t=1693044338; x=1693649138;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HKmxaHf0ZCY9cdaR9lbNFhczw+xqCeEHcZPAPTRkxJU=;
-        b=hpeKLZQlVcJERdNAc0UguwOIMrnUMshEB7QgJEjOzj+8rj3reAWUfTjqyMlMPmpOSH
-         5mV4AJaSla3XYoLCg2RgaG/qN38XpaqFXDxKveXBjqvhWzB0TOS1fupX66pe2zGBRNCo
-         7b/h+WBGpbXvIPFyDkb4QaKr+g9k7+nkjPRdqq1gxu7h3RPIEkIaTQzaJ2X61AlCRhOs
-         IIoLAZLhXNVCc9bDyoBSo+QOmzkhoiVPz15PDEoTFvGjUuAkzD4G7lIXv44Evk6lyVYd
-         UgjJKmoVux/SxmXPlV/dNa0Vnoz8zuMENJ+xzUesZGM7iBVIVWCIYI4cdOuSW9zHpPOk
-         yyVg==
-X-Gm-Message-State: AOJu0YyLpDdynwHhxuIgSgygsxBWTDCMUte+UnMxywVa2YO22eaM93BY
-        oDFX7B4byk8P2JIc3zxuPYtzcg==
-X-Google-Smtp-Source: AGHT+IEg5ZKSOeTLqyRaowNyumIm25qD6cbqmX1h/edkF3RVG5OmgFe4c3k0VZETj6mzdrUCh8uZdg==
-X-Received: by 2002:a19:6d1b:0:b0:4ff:9efd:8a9c with SMTP id i27-20020a196d1b000000b004ff9efd8a9cmr12987506lfc.5.1693044213601;
-        Sat, 26 Aug 2023 03:03:33 -0700 (PDT)
+        bh=0G/dpqWDghI3oHXa30VGdVcT1IA/M8Cr9JWpUsXms6Q=;
+        b=YofGLDUeaJzDXQUHCvw5ZdavHH6wnoBEF2RqVJcWvv5cphD65xS7tn0nnbqKWxY0qF
+         NZ5ieSGmNdErqbk9TCpCfKAHv8qQ50bpkleswBJxXbS34R0zQ7geh1t37OeYecReldWb
+         b5RFh95aXfiJAFg668wipFka0XVS55mZBVXGftQnXfkgohVuVING8JSVBVtJJyJDzCem
+         POClQzNw5vmLvB4JhsEDFX1fgw8UxqQJQS/no46Ln4xRt6hquw/kcfAmXmoKj/YjPQWJ
+         A8Riy6kY+B4kZRDcPe5J+7gWemd5SmzNn++ZiIO0qL0L242YuJrI6ehnQzSwTWSVD57D
+         jQ4Q==
+X-Gm-Message-State: AOJu0Ywcwg/dZkeSpwi7+pVPcIrvaBuPevYFxkEmvn7rvSo9dxS+CLog
+        x3JnSJJg+OuOtTIcUZ64CgoZbw==
+X-Google-Smtp-Source: AGHT+IGks0wiAGlIYGLARuga2Eskiq38giaiJqdVCFE9qKpMSEsIQAZ4OMtZ1K6GSmvN5qSuE58x9w==
+X-Received: by 2002:a19:6d1b:0:b0:4f9:5a87:1028 with SMTP id i27-20020a196d1b000000b004f95a871028mr12884804lfc.30.1693044337769;
+        Sat, 26 Aug 2023 03:05:37 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id y1-20020a197501000000b004fdbb36a677sm654770lfe.288.2023.08.26.03.03.32
+        by smtp.gmail.com with ESMTPSA id a6-20020ac25206000000b004fb74dbbd98sm664396lfl.246.2023.08.26.03.05.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 03:03:33 -0700 (PDT)
-Message-ID: <f80941f3-766f-4202-99eb-54ec20e3b861@linaro.org>
-Date:   Sat, 26 Aug 2023 12:03:32 +0200
+        Sat, 26 Aug 2023 03:05:37 -0700 (PDT)
+Message-ID: <92e864cd-b98f-45d1-a46e-e5bfc52b4b08@linaro.org>
+Date:   Sat, 26 Aug 2023 12:05:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/15] media: qcom: camss: Untangle if/else spaghetti
- in camss
+Subject: Re: [PATCH v3 09/15] media: qcom: camss: Improve error printout on
+ icc_get fail
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
@@ -65,7 +65,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-9-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-10-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230823104444.1954663-9-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230823104444.1954663-10-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,17 +116,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.08.2023 12:44, Bryan O'Donoghue wrote:
-> I refuse to add another SoC to this convoluted if/else structure. By the
-> time we added in a third SoC we ought to have transitioned these control
-> flow strutures to switches.
-> 
-> Adding in another Soc or two will make some of these if statements into
-> five clause behemoths.
-> 
-> Introduce switches in the obvious places to despaghetiify.
+> If icc_get() fails print the name of the failing path.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Aren't the return messages propagated from
+
+* of_icc_get()
+	|_ of_icc_get_by_index()
+
+enough here?
+
+Perhaps we should use dev_err_probe in camss too
 
 Konrad
