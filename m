@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70A307895BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF8877895C5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:09:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbjHZKFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 06:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53188 "EHLO
+        id S231847AbjHZKJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 06:09:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231830AbjHZKFo (ORCPT
+        with ESMTP id S231830AbjHZKIn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 06:05:44 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F31A1A6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:05:39 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4ffa94a7a47so2561354e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:05:39 -0700 (PDT)
+        Sat, 26 Aug 2023 06:08:43 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C0B1BE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:08:41 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-500b3f7f336so19069e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693044338; x=1693649138;
+        d=linaro.org; s=google; t=1693044519; x=1693649319;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0G/dpqWDghI3oHXa30VGdVcT1IA/M8Cr9JWpUsXms6Q=;
-        b=EhPhhE2GU22U9HlPBfmx4z8PsmvAZVXwagEhgVX+QLPN+1qsJXcb4/KvDjPZ7V9Dcr
-         it2XA7XqrfMYJWg/L+xuSOULJpyDADRVodMNqOYwHZvQKI+rHDe5FgNih8m5wTXXYKeF
-         PVrUg4luE6sLAIhHcOIbmXegUhw9a8rKgp+69iQY7OlUqAOAoFeIrLAUmLYXh2ojbNr8
-         cPsOvn3KOLGnfkL9FPGehAVnXxWGm2yGyw/sph3Zxbt7hglYH6ULAtMynoJqCyCjrpXg
-         v8PFD4KCIv0SIcE6it1OQIP8M9EDDMbkENbXYw5EwXDY7H5pvVu33Ul3tZQD33MJzxA+
-         3/bQ==
+        bh=HYcaz0xYhETp1bDNsUe+hJZ4pcpS4BSG1nZ7asMgKvQ=;
+        b=ZUZWVZ0DZcZuieBTX0mEQFgWAFx1g9cIVmCrVv7VJiAzn+D/7gr9OJHxycZH/GWS3a
+         7d53+RxuzBzzDmWjFNhNaEl3SWsaBqdi9p4muX6BCA6wZecBbf7BJ89V7LmVNPXUQZYD
+         d4P05LoWGMxqHyxZsfP1kis4xWH2hjtlNfH7K6qyNAXxg3/iW7hIJ9iaBZSSLo8hbvpj
+         ATJhtBYNMpV2jk9Kwh7nMuHxvvsEE8mKPmD75iJJ03p0nns5piI+cAH8IKfYElJyotMd
+         +TGWm9bE+2OcXJaw4rMBwiuImVdAKmoXrqZrnE2zcAqha35NdDpyuynwzZciFrkVsYyc
+         fcAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693044338; x=1693649138;
+        d=1e100.net; s=20221208; t=1693044519; x=1693649319;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0G/dpqWDghI3oHXa30VGdVcT1IA/M8Cr9JWpUsXms6Q=;
-        b=YofGLDUeaJzDXQUHCvw5ZdavHH6wnoBEF2RqVJcWvv5cphD65xS7tn0nnbqKWxY0qF
-         NZ5ieSGmNdErqbk9TCpCfKAHv8qQ50bpkleswBJxXbS34R0zQ7geh1t37OeYecReldWb
-         b5RFh95aXfiJAFg668wipFka0XVS55mZBVXGftQnXfkgohVuVING8JSVBVtJJyJDzCem
-         POClQzNw5vmLvB4JhsEDFX1fgw8UxqQJQS/no46Ln4xRt6hquw/kcfAmXmoKj/YjPQWJ
-         A8Riy6kY+B4kZRDcPe5J+7gWemd5SmzNn++ZiIO0qL0L242YuJrI6ehnQzSwTWSVD57D
-         jQ4Q==
-X-Gm-Message-State: AOJu0Ywcwg/dZkeSpwi7+pVPcIrvaBuPevYFxkEmvn7rvSo9dxS+CLog
-        x3JnSJJg+OuOtTIcUZ64CgoZbw==
-X-Google-Smtp-Source: AGHT+IGks0wiAGlIYGLARuga2Eskiq38giaiJqdVCFE9qKpMSEsIQAZ4OMtZ1K6GSmvN5qSuE58x9w==
-X-Received: by 2002:a19:6d1b:0:b0:4f9:5a87:1028 with SMTP id i27-20020a196d1b000000b004f95a871028mr12884804lfc.30.1693044337769;
-        Sat, 26 Aug 2023 03:05:37 -0700 (PDT)
+        bh=HYcaz0xYhETp1bDNsUe+hJZ4pcpS4BSG1nZ7asMgKvQ=;
+        b=G02HyeNz2abJDssG4bkyDioNRIT4vkXrYPqM04K5UmgYqKYFiZLrOFij0Iz5qEvl5L
+         Hd2nGuUIDZY27C0qDtyvvOJ+eFovfG7LMKyL0jDYiomGADFhu8yZCIeis3nqP5atGWJy
+         DeRS8zTfRI9C+Ta0rLxWnPV0MQ7YXhMft3pRqnlw4nHuwQjYTA9kFO5uTLWty0CvmtQ1
+         MKL5+8sAoYRJOQ/2CBvz6+7X7q8BSzynfEwZ0E/CzPuplKwp25sA2LPYjJo+HA27zMUK
+         qNqUx9EuKMP6SikJ+SIjg9MhiWJTuOas/Os832eUDv67p2SNntkgGKpeDIiGqkcPlsu1
+         utcw==
+X-Gm-Message-State: AOJu0YyG4EN4BGF/nKypEkKUOTljHYy0Rf5kXxF8fCCSO+TFfzIXAOZT
+        LzOgeKE5p+kpB0TLnrdYoyrBdQ==
+X-Google-Smtp-Source: AGHT+IEczVcaYsL9qGj64VJCo/2PNAR2InNrVHChI9ZzLFHYtNQWGuk33UH0n9OobPvcp5J6JOwrdg==
+X-Received: by 2002:a05:6512:ba0:b0:500:882b:e55a with SMTP id b32-20020a0565120ba000b00500882be55amr13584454lfv.45.1693044519382;
+        Sat, 26 Aug 2023 03:08:39 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id a6-20020ac25206000000b004fb74dbbd98sm664396lfl.246.2023.08.26.03.05.36
+        by smtp.gmail.com with ESMTPSA id er19-20020a05651248d300b005007824ad2esm658477lfb.30.2023.08.26.03.08.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 03:05:37 -0700 (PDT)
-Message-ID: <92e864cd-b98f-45d1-a46e-e5bfc52b4b08@linaro.org>
-Date:   Sat, 26 Aug 2023 12:05:35 +0200
+        Sat, 26 Aug 2023 03:08:38 -0700 (PDT)
+Message-ID: <076d958f-2cf3-4a52-99a2-52a6cdd5443c@linaro.org>
+Date:   Sat, 26 Aug 2023 12:08:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/15] media: qcom: camss: Improve error printout on
- icc_get fail
+Subject: Re: [PATCH v3 10/15] media: qcom: camss: Allow clocks vfeN vfe_liteN
+ or vfe_lite
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
@@ -65,7 +65,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-10-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-11-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230823104444.1954663-10-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230823104444.1954663-11-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,17 +116,52 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.08.2023 12:44, Bryan O'Donoghue wrote:
-> If icc_get() fails print the name of the failing path.
+> The number of Video Front End - VFE or Image Front End - IFE supported
+> with new SoCs can vary both for the full and lite cases.
+> 
+> For example sdm845 has one vfe_lite and two vfe interfaces with the vfe
+> clock called simply "vfe_lite" with no integer postfix. sc8280xp has four
+> vfe and four vfe lite blocks.
+> 
+> We need to support the following clock name formats
+> 
+> - vfeN
+> - vfe_liteN
+> - vfe_lite
+> 
+> with N being any reasonably sized integer.
+> 
+> There are two sites in this code which need to do the same thing,
+> constructing and matching strings with the pattern above, so encapsulate
+> the logic in one function.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-Aren't the return messages propagated from
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 22 ++++++++++++++-----
+>  1 file changed, 16 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 8f48401e31cd3..73380e75dbb22 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -437,6 +437,20 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+>  	complete(&vfe->reset_complete);
+>  }
+>  
+> +static int vfe_match_clock_names(struct vfe_device *vfe,
+> +				 struct camss_clock *clock)
+> +{
+> +	char vfe_name[CAMSS_RES_MAX];
+> +	char vfe_lite_name[CAMSS_RES_MAX];
+I don't think using the "number of resources" define to define
+the maximum length of a resource name is a good idea.
 
-* of_icc_get()
-	|_ of_icc_get_by_index()
+Perhaps we can do:
 
-enough here?
+char vfe_name[5]; /* "vfeX\0" */
+char vfe_lite_name[10]; /* "vfe_liteX\0" */
 
-Perhaps we should use dev_err_probe in camss too
+if index > 9
+   return INCREASE_THE_BUFFER
 
 Konrad
