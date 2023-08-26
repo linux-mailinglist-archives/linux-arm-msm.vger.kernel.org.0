@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF6267895E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:17:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 806417895E5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:19:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231745AbjHZKQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 06:16:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47600 "EHLO
+        id S231408AbjHZKS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 06:18:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232009AbjHZKQc (ORCPT
+        with ESMTP id S229489AbjHZKSd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 06:16:32 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D5D21FC7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:16:29 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-500760b296aso2060434e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:16:29 -0700 (PDT)
+        Sat, 26 Aug 2023 06:18:33 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AEAF1FC3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:18:30 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso24644791fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693044988; x=1693649788;
+        d=linaro.org; s=google; t=1693045109; x=1693649909;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4JjUBaYdPSxFwsO+4WnIkvUUmyhb29fFdO517V2zTpg=;
-        b=gTfYUL5JVbtspwhN/UePvR3q2PQJd+IuzY1JRC9g9GFZn8GeulpqfHPOCtCX7MgYFX
-         +27RaUPHJ+frWPlhLJ1sNYujHSSpHry2yk/KOMyT/9c5UEG0BjvwJuNfrPQrHNQeKLJj
-         bjFkAyNbTygXSuWM2mLbOzPrjJt+Ayj8N7dfYgHNYY2kdU024pDLaNDubP2XoeO3OrVb
-         wyli8Gro7axizoksTrGM4Jb8D3jONfvGFeRRn0dZBt8Bs9vxHu0bgMBzp4yYWkY1tFwn
-         4XKDq8xlXROcmpn9S5w1Bi3T0E+PODPXoZqdz6z57QlX/V4D7VIfOPH1v5CRflBQq+eo
-         NLSQ==
+        bh=PGiEVQaTK5hH8HErxp1WTRl58SjfEzq6XEE94mrt1pI=;
+        b=RKRHKqzxZA3OdL4aGsozw5yEjQcmXI6GBbiFhOVgzgguJ2FYtk4i7o1CV2iDOint7x
+         wAoe1UmUXqpcGT2TKuAd4PISvgZPhN1L5iEySb1Bjcx3/Qm13CqVWclcL7Rm4/daW30P
+         bJmWBfVF0+t75CycA6Yihp9B36TUZF7fC/K8gqism5BZrxKpSl+wci94QV6SfIsx5b36
+         yLImHpuEWQhldGxfY4CwtCJ8R0qZtYejdjZGbA/I9i8UYAgEeZJTolDw92hkkjJyHWFg
+         n513avlvykfFAE8rvjQJSf/Bl3/51ejjpeky3XsrGoyFBZt0nONRZUwcAVOEWxbqiVfR
+         bY6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693044988; x=1693649788;
+        d=1e100.net; s=20221208; t=1693045109; x=1693649909;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4JjUBaYdPSxFwsO+4WnIkvUUmyhb29fFdO517V2zTpg=;
-        b=d0xhyoINMxmDLkzh5HcOSJCpWjfFKY+qPEH2cUuf6Li7uor36sxpeUNG60btwAR43w
-         TlUBqs8OeYijr430hVSU9uGb4R/FMnBTd0JyVsrxl3lKC8KMN+HJvD6aoG5SdCNFESHN
-         +frthE30rR7VOxwiwK2PjO7m3CjNax/+WneNFEql8Z2qPVWpn9RbkpXMBFgr/UPrXyzj
-         mfpPhN7j5bmA56RARU/tAH4eYUXFg2IpdeAwa08GCJI8L9vq1BiUzCd2Gm4xvMvWsQpg
-         1ut0Ya2sJ8oDfX7Xb3MhWTLcOFaoj+kvrxW/jeTQv67HUiHXpUBnYNf9GI9ptxFF7T73
-         GUJg==
-X-Gm-Message-State: AOJu0Ywb7a+DsbNakxa09n4t6jqOaZUnvweEDnEoygWBSg/qWzE0EPoQ
-        4RFl0aiFpcPO6B6ixiRlzrJZHVD9vIDAxgylR2afGA==
-X-Google-Smtp-Source: AGHT+IGtRGMiExpTYje2siebBOhfYj4Z0a2s3NPoLgi6o/rDLWuwAlcGfIicvCPbKKfT6Ps+SfvJyA==
-X-Received: by 2002:a05:6512:2202:b0:500:96bc:be60 with SMTP id h2-20020a056512220200b0050096bcbe60mr3812461lfu.1.1693044987646;
-        Sat, 26 Aug 2023 03:16:27 -0700 (PDT)
+        bh=PGiEVQaTK5hH8HErxp1WTRl58SjfEzq6XEE94mrt1pI=;
+        b=lLoNWnKh7br+ogwvsxPqiyWNDkslgzA5hitM0/5NbqyEztWBq4Mo17oCETslJP9s3A
+         lwLW77ootvg2bEwaoWrOzWYX5HuaOnWkqTlbFpFk8qPK4SwbiW9e2qoSQcqnS9sopNy7
+         mFn9AknKX5NxDeQyQENcuKedkg50QkdpEwi1UHOLAjC7DCaSPhA0Ku45u1WHmR9vAFRo
+         kUZMZ4U7vujIjGBu2GiqCpmAG8Z9TGIrGr2bUDTanYB6yEL20WSSEdVXOFGxgVw7XEOS
+         ugxFT2+x9CLjcglfyKkK0/x7TnTmG43D8bJSGISdEQqvxMiWP7olAg++PTjBeOy0Mfup
+         /LMg==
+X-Gm-Message-State: AOJu0YwZj0NdAiYPGRkSZjJybL95SIv2yRxp1w3KgR6h681yc++jlqZE
+        0CGg2cHIIO6zBWWKN9e1iGFZsQ==
+X-Google-Smtp-Source: AGHT+IEvHjX3zBUK+TusXfTyCn7D32D5o4R5tItoZvVUcOVfrL7jhPnjMHEOgcYfZWBQ5blST6LN/Q==
+X-Received: by 2002:a05:6512:1145:b0:4fb:76a5:2325 with SMTP id m5-20020a056512114500b004fb76a52325mr12997493lfg.24.1693045108751;
+        Sat, 26 Aug 2023 03:18:28 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id i11-20020a056512006b00b004fbad682ffesm665461lfo.88.2023.08.26.03.16.26
+        by smtp.gmail.com with ESMTPSA id c23-20020a197617000000b004ff748f6f1fsm660930lff.69.2023.08.26.03.18.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 03:16:27 -0700 (PDT)
-Message-ID: <aaf9db49-54c4-4c27-8206-61e86ad560c2@linaro.org>
-Date:   Sat, 26 Aug 2023 12:16:25 +0200
+        Sat, 26 Aug 2023 03:18:28 -0700 (PDT)
+Message-ID: <4929aa72-a134-4eeb-850e-46d9255c011b@linaro.org>
+Date:   Sat, 26 Aug 2023 12:18:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/15] media: qcom: camss: Convert vfe_disable() from
- int to void
+Subject: Re: [PATCH v3 15/15] media: qcom: camss: Comment CSID dt_id field
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
@@ -65,7 +64,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-15-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-16-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,13 +101,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230823104444.1954663-15-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230823104444.1954663-16-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -116,14 +114,47 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.08.2023 12:44, Bryan O'Donoghue wrote:
-> No version of vfe_disable() currently returns nor has ever as near as I
-> can discern ever returned a meaningful error code.
+> Digging into the documentation we find that the DT_ID bitfield is used to
+> map the six bit DT to a two bit ID code. This value is concatenated to the
+> VC bitfield to create a CID value. DT_ID is the two least significant bits
+> of CID and VC the most significant bits.
 > 
-> Convert from the unused int return to void.
+> Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
 > 
-> Fixes: 633b388f85c5 ("media: camss: Refactor VFE HW version support")
+> commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
+> silently fixed the multiplication by four which would give a better
+> value for the generated CID without mentioning what was being done or why.
+> 
+> Next up I haplessly changed the value back to "dt_id = vc * 4" since there
+> didn't appear to be any logic behind it.
+> 
+> Hans asked what the change was for and I honestly couldn't remember the
+> provenance of it, so I dug in.
+> 
+> Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
+> 
+> Add a comment so the next hapless programmer doesn't make this same
+> mistake.
+> 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-Up the chain, vfe_reset can fail but the error isn't propagated
+>  drivers/media/platform/qcom/camss/camss-csid-gen2.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> index 6ba2b10326444..cee50fc87e9de 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> @@ -352,6 +352,11 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
+>  		phy_sel = csid->phy.csiphy_id;
+>  
+>  	if (enable) {
+> +		/*
+> +		 * A value caled 'CID' gets generated internal to CAMSS logic
+> +		 * which is a concatenation of [vc:6 | dt_id:2] hence we reuse
+> +		 * the least significant two bits of the VC to 'stuff' the CID value.
+> +		 */
+>  		u8 dt_id = vc;
+And where are you discarding the non-2-lsb?
 
 Konrad
