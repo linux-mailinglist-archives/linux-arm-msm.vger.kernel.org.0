@@ -2,119 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5372F789314
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 03:30:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6517E7893F8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 07:45:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231214AbjHZBaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 21:30:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52692 "EHLO
+        id S229814AbjHZFox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 01:44:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231329AbjHZBaE (ORCPT
+        with ESMTP id S229518AbjHZFoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 21:30:04 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8B21FD7;
-        Fri, 25 Aug 2023 18:30:01 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-525bd0b2b48so2014057a12.0;
-        Fri, 25 Aug 2023 18:30:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693013400; x=1693618200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S2D36dOoa06BWR5AgzTMO8lYHiZ+scFy120F5WcTjb4=;
-        b=FDM7incZcG0SAgE8+njJbysK0lJLfbZ5w5pqVsOhU0RVVKAbbu9S2DM/Ck1prs72Pq
-         I1r85m4ckvcMwSk1x9V/A6/mHix2474u+E+NzTZ4GWI3bHSDYt9JoYxCISI9J3MBWfQ7
-         g1CoUg3IzIojkWoDzheYx/OTFNTt1V/6tkwFQ2peXQWpAEhQxGcVNC70/9TV7NC3NfW8
-         1qLkYtq3W7SQg4Mgvc4a12z8gMdWJX+3B0OJlVtmliGYW/Qpm5PV/EYkpVeVqO+FiNyh
-         OPmriR2FLEwDSulrTmguaW/O2uxJ3T/ZR5TdkJL5lv9TmqjEHrUTVKdnmaV385nDHbxF
-         Xiuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693013400; x=1693618200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S2D36dOoa06BWR5AgzTMO8lYHiZ+scFy120F5WcTjb4=;
-        b=h8131xYGlNH73KWewRU28PEBeerSFZkJMACOsr32VHBzQU45ASacy6yGTLd97/As/l
-         eOGye3Vb6RLGsjpSTiQQVIW0Yc2xWloKvPfMLo+c41d30As7/fkFnhPnDCb/qmKw44TY
-         9zbGj1AqvQ6BR+f8F4dtTlc5jaSUPnzltxrmEI2isoW8/U1Q38yfmMhTPwblmSjGIrtB
-         JVPwmLQw99aTA3HfFa0AUXXdvflms0+fKrMOHnWY4nkGTdksw49Xv/umKZFUQGsAaehA
-         9GF9ZF76eKpxsuMVl4UXxYnGvv5yzsZG0IEx118tVv7uxcdHSh1PN95fwb2FidPKi2Ze
-         TzPQ==
-X-Gm-Message-State: AOJu0YwjoAyJQcFpV1xOjZYI239UroQCz3uwHdW+8VPjCN5xepfZ9TQc
-        pRkuTDJEYs+GMxxmCrEAQnH5Uf4uM6ePYEr9nSs=
-X-Google-Smtp-Source: AGHT+IEXsOl+EHSkkBQhRH9RjwYOfhOsIxG3m6cpaf528qm11nkEYjjL1pWzb1LveXcoEDTjgx812Dp7EL91FKYuxKo=
-X-Received: by 2002:a05:6402:34b:b0:525:69ec:e1c8 with SMTP id
- r11-20020a056402034b00b0052569ece1c8mr12651629edw.40.1693013399773; Fri, 25
- Aug 2023 18:29:59 -0700 (PDT)
+        Sat, 26 Aug 2023 01:44:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ABC026A5;
+        Fri, 25 Aug 2023 22:44:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 91ADA601B6;
+        Sat, 26 Aug 2023 05:44:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AFCC433C8;
+        Sat, 26 Aug 2023 05:44:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693028660;
+        bh=iiyTHPtsH0r2NOwXQ3GIfftBWZLfSVf49/SdaJ48fkc=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=RNDwK038a5Ls9IG2WkwXtN3l3/S5in1DeLWusyq54rshtrYON4ieLWm9xvdM1tBkD
+         nZypuJ/TWeho9EEd3bH/mw5OgerKEWtm7cvU68+5LjlZS69BGDRcjw4A4l8jV/Crak
+         VLOTrhLUPeFm1YDWH5AybsRyX5U6WCF779w04iotyhevEcEKKqp9aRNC3yI2XGbrV4
+         bnkZ/XJC+COIEfx/mQNf/ryk+5Un+jleybPB1FkdyQYIf0TbEFMPGXuMUTn6v4lnf5
+         Myxd+ZqHTe41TR2FtGtxJjivWv4G2B9pKaxz5aU0onVdtMByAp5nr9PNXkxdA80HrE
+         9adhCOz81zabg==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jeff Johnson <quic_jjohnson@quicinc.com>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] wifi: ath10k: Default to board.bin for legacy board
+ data file
+References: <20230825202610.1580132-1-dmitry.baryshkov@linaro.org>
+Date:   Sat, 26 Aug 2023 08:44:17 +0300
+In-Reply-To: <20230825202610.1580132-1-dmitry.baryshkov@linaro.org> (Dmitry
+        Baryshkov's message of "Fri, 25 Aug 2023 23:26:10 +0300")
+Message-ID: <87pm3afjda.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230825-topic-6375_gpu_id-v1-1-e24f46d7f139@linaro.org>
-In-Reply-To: <20230825-topic-6375_gpu_id-v1-1-e24f46d7f139@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 25 Aug 2023 18:29:48 -0700
-Message-ID: <CAF6AEGsNr+5zaXqKRhyeY6NV+iRD+Yz8ftqiX6Z08esoyh=DzQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/adreno: Fix SM6375 GPU ID
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 25, 2023 at 2:11=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> SM6375 comes with a patchlevel=3D1. Fix the chipid up to reflect that.
->
-> Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying G=
-PU")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm=
-/msm/adreno/adreno_device.c
-> index 575e7c56219f..f2d9d34ed50f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -331,7 +331,7 @@ static const struct adreno_info gpulist[] =3D {
->                 ),
->         }, {
->                 .machine =3D "qcom,sm6375",
-> -               .chip_ids =3D ADRENO_CHIP_IDS(0x06010900),
-> +               .chip_ids =3D ADRENO_CHIP_IDS(0x06010901),
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-r-b, but maybe we should list both to be safe?  But unsure if any
-patchlevel=3D0 things are out there in the wild... I guess we could add
-it back in later if needed
+> Default to 'board.bin' for the legacy board data file, in case the
+> hw_params array doesn't list hw-specific board data file name (e.g. for
+> WCN3990).
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-BR,
--
+Could you provide more background _why_ this is needed. What are you
+trying to fix?
 
->                 .family =3D ADRENO_6XX_GEN1,
->                 .revn =3D 619,
->                 .fw =3D {
->
-> ---
-> base-commit: 6269320850097903b30be8f07a5c61d9f7592393
-> change-id: 20230825-topic-6375_gpu_id-cf1596e2b147
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
->
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
