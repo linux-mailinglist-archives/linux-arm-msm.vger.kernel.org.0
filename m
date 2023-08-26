@@ -2,108 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DE0478967F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:08:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F7BE789684
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbjHZMIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 08:08:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50084 "EHLO
+        id S232686AbjHZMIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 08:08:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232753AbjHZMHl (ORCPT
+        with ESMTP id S232813AbjHZMI3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 08:07:41 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D77172D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:07:39 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31c6cd238e0so1783698f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:07:39 -0700 (PDT)
+        Sat, 26 Aug 2023 08:08:29 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D0032110
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:08:23 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2bcc187e0b5so26333901fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693051658; x=1693656458;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693051702; x=1693656502;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SgjOnn8759o52/0xR2SZGeU49du3p6c+06WsheGV4j4=;
-        b=cz3G1Tf2I0daNU/qdQZgGdJqb9+dvz2XPOebn9ezsblUs6GOyTLhX9VXpiWMqD3K9l
-         ifnVGcIOonu9oa8yDL1MEN8826vPI92uPLQvOd6myLac4XFyKKPpczuh1Y1RLmR/+EBE
-         tsbeifr5TDXiCns0I0b15gZJkwwr3gtN6Cbs1IkHSct8heuEWLsDBq20dcHftyXyqUVQ
-         RWgBdgIeOnwSKIkHYD4DkoHc1an6rjGC6+ZwXfevOSN1hbaRCqT6CCt3TvvnWp4vXGPA
-         xF4U/vW8uVT5oVfdatiG0qDzBj22g7PhBRaBdIWnLJ99bq9DA+MXfoG/Xtz2CJkmnXEQ
-         u6SQ==
+        bh=A/Nk20sjr3R6D6IHsR4WJ9+0MRrLI/D+ppaZpwqxZjc=;
+        b=pDJc6vbhnshShTafT+qB+tOfiRDyJzlnRz9pzl5YU+36FGGe6GVA6rn+dr4lqXwkoR
+         03IEYuNj2G6dthkTWpaN1kkC5AeJUkb4XBcUvh4TKZaOwotYqax37kth/7RLxnPUeZ12
+         nR3uwT3/Xk19Sam8BVC+QyJJzuR53CQ5VdqC1sCZ7XBfjKs7cFeZH6zJ2R8q8UVcsUNH
+         OJ8/HmRc3q0SkXbr7prTASSqd88FEnWzDUYOInlk7WYmSWPw2Obi8JULQ4g5NoobB60h
+         EqADpFjo/D7QY3vXYr9NzXMEdmCk6dWHdzrxkMogDj5ruvOCSvrtnmxGuVCWGXlLcM/t
+         s/nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693051658; x=1693656458;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693051702; x=1693656502;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SgjOnn8759o52/0xR2SZGeU49du3p6c+06WsheGV4j4=;
-        b=FhdEOTZ+q/aOFqES+CNumqdfy//n6TL7D5Yu5DQTuCmFNkdVScjUAmRsk6hYhoCuxc
-         wheZUgohMZ3v5wMlrqnkwajTuEAky41D7+LhWuCge7brPXg3DLg1BjUHtpL5KXj6/TkN
-         uf3Goi/nMc5iJSBTEABBTPHtR6gV5XfXhySHOXkxx7Q8hg/Yk46juassGrfjoTY0T7R0
-         H6404o8Yj0mBbvM2gnbFMAdRZwnRL3xufh5etrgwjUwoCg6SmJ8tjV1es+L+WmzMhVhP
-         OuLyulXR4fCpi7oxJSXbfd6ehlqHXruWmko0jcBZYBG1xwC1ZGyl15Qy2YVj5COcOabo
-         OtYg==
-X-Gm-Message-State: AOJu0Yz3vcu9IeOTPtaHntLxHVv659cTIO0S0kDod+ksgd93pqmaktGP
-        vu4vMGiOYS5r+tteul1C1jK0Vw==
-X-Google-Smtp-Source: AGHT+IHd4Exu5h9J0XmDWeeqi750ETU8bhPtCzxFplnhIiVlkhJpQeEw9xxbIIb6CYoihBXGSX+5ig==
-X-Received: by 2002:adf:ed51:0:b0:319:55d8:5d51 with SMTP id u17-20020adfed51000000b0031955d85d51mr17212507wro.30.1693051658113;
-        Sat, 26 Aug 2023 05:07:38 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id c12-20020a05600c0acc00b003fee6f027c7sm7972018wmr.19.2023.08.26.05.07.36
+        bh=A/Nk20sjr3R6D6IHsR4WJ9+0MRrLI/D+ppaZpwqxZjc=;
+        b=R3sNTRsxAUV0J2Ps9ECe0ZC6Xg1hT6Uxn9OsDp0z8n3nhGgPOWJvGdaSk5wPSLKfCT
+         6EEtEeZ+z9VXbba2+yGn9BqSuoCaOpKtagid8ZaEDzOA7NWoShRf3sx5QDNuxNVq0nLT
+         AlsdSk5xiBKp+1g2n2TPGlyWO5V8PTgRwuA/I3MkQdueoDxfOif5dq/E+drI64tPs/w6
+         waaEi/6dbiiJ5PpE0vaO/SYGHiaOrzHUjvN0eYvtrAT5hswqpFIiFL47MukhfnWGb4VP
+         sjJ+SySACg5RlmwW/r6ClHxVM0QSdOhqa8XsokR9308y8weZ/m09Wl78Sqp4yWqwXc/I
+         hphA==
+X-Gm-Message-State: AOJu0YwZshAGzT/j31LW9RW3CjV24fp08kWBMeYfxAT5MFvIHY9WtDE6
+        OmLWWuTXtY+jRzeoxBX7kyLgJQ==
+X-Google-Smtp-Source: AGHT+IERBRMAF//oWt0RBbQ8DSRX4neBTslS36nF/4KQfWiWX4ojRajeDSDBNLxaOn6OmBCPRjZYwg==
+X-Received: by 2002:a05:651c:1027:b0:2b6:bc30:7254 with SMTP id w7-20020a05651c102700b002b6bc307254mr15007030ljm.13.1693051701915;
+        Sat, 26 Aug 2023 05:08:21 -0700 (PDT)
+Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
+        by smtp.gmail.com with ESMTPSA id a8-20020a2e88c8000000b002b9f0b25ff6sm776135ljk.4.2023.08.26.05.08.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 05:07:37 -0700 (PDT)
-Message-ID: <1b15ca0d-0781-c3f8-4822-fce3a7fbb7e7@linaro.org>
-Date:   Sat, 26 Aug 2023 13:07:36 +0100
+        Sat, 26 Aug 2023 05:08:21 -0700 (PDT)
+Message-ID: <2dea943a-7a9e-4963-8ae5-6b126c750f80@linaro.org>
+Date:   Sat, 26 Aug 2023 14:08:20 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 11/15] media: qcom: camss: Functionally decompose
- CSIPHY clock lookups
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 16/32] ARM: dts: qcom: mdm9615: split PMIC to separate
+ dtsi files
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-12-bryan.odonoghue@linaro.org>
- <d8e54e0a-b176-49eb-9d8d-66324cdcd2e8@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <d8e54e0a-b176-49eb-9d8d-66324cdcd2e8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-input@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230822001349.899298-1-dmitry.baryshkov@linaro.org>
+ <20230822001349.899298-17-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230822001349.899298-17-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2023 11:12, Konrad Dybcio wrote:
->> -			csiphy->rate_set[i] = true;
->> +		for (k = 0; k < camss->res->csiphy_num; k++) {
->> +			csiphy->rate_set[i] = csiphy_match_clock_name(clock->name,
->> +								      "csiphy%d_timer", k);
-> This entire functions is like.. soooo over-engineered
+On 22.08.2023 02:13, Dmitry Baryshkov wrote:
+> The PMIC is not a part of the SoC, so move PMIC to a separate file and
+> include it from the board files.
+> 
+> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+[...]
 
-I'm going to accept your compliment there.
+> +			pmic {
+Are you leaving an empty subnode here?
 
-
-> adding something like csiphy_timer_clks and cisphy_clks and stuff
-> would make this string comparison mess unnecessary
-
-I don't understand your comment.
-
-Having a litany of static comparisons is definitely inferior to a 
-generic helper function.
-
-I'm not sure what you are asking/arguing for here.
-
----
-bod
-
-
-
+Konrad
