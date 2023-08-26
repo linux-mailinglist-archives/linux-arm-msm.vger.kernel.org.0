@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 854DE789662
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 13:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D814B78966A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232693AbjHZLzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 07:55:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48354 "EHLO
+        id S232545AbjHZMBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 08:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbjHZLzJ (ORCPT
+        with ESMTP id S230090AbjHZMBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 07:55:09 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC232123
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 04:55:06 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4ffa248263cso2785411e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 04:55:06 -0700 (PDT)
+        Sat, 26 Aug 2023 08:01:07 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26CFD2106
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:01:04 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bcde83ce9fso26042031fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693050905; x=1693655705;
+        d=linaro.org; s=google; t=1693051262; x=1693656062;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XUnM+dBlUdJJh8WhYBTQc60Ln0olkQXWPgBUoORE5b4=;
-        b=FvL6mwF0wR0DWjOnLY0Ob8BitE2cPrl3ScagWIOLePvJpN5yrsrzVnTQLiY/euA03c
-         GXqlHFxMqmBuA72NBfw8D1jiYdMb1nb9xR4I77uuvaJtr6Ppd1q+SU6h7oOclA6ZNitO
-         IlJ2JwxB0xoJkoyzSv5rEl4SBhvu0SD/GDaV3ug/21y+T8EP8KwpjTK7hZINn4bBC5sw
-         2VEs92q1YJ/jm5bJn9ub2Rimohh288/KM94xLyUGGrRdxh3/VNWlHjI90MR70RgbYjpo
-         9x67pvipfu9G7gmq996wpfnzBfYTayhEcaxvlVMssS43J9g2u3lR/pwzsFENTnCHEZnU
-         AdXQ==
+        bh=ZpIF/kspXEWP+ED7ApWYX9k2YRiDKFAj43hIwcfHRok=;
+        b=qQaV1KeAu7h1gr6FRZgszmE+WMMjqFyWH8UP6gn2gELe5mZFMQaEWcSkbu7z8V5j9+
+         +scs2/pa+Kv5HvnJdVtO57+PAzxKSnw7xl5wnWRvQlDMl2xqtOmIyiIehzlIQ5k75lDx
+         iy69mRjY4Y+RseRmLvazleu86VrLFMgyVcRTp55YzXugJze8c+MttJPlzKDnth6CGPDk
+         /0VM4WzFmQ7xf5gF1Jl1VcjtmD1IbjvrwIFOOnfqEeMB2SCb7CBD8v2dYhvAY+DXGrTr
+         zdVaa9a/5prnHgBLvCcs/2vSFwI4myk7CrZMaK45oSWvkVNRFw7idzhQTPQb5LXb2Twb
+         jS6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693050905; x=1693655705;
+        d=1e100.net; s=20221208; t=1693051262; x=1693656062;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XUnM+dBlUdJJh8WhYBTQc60Ln0olkQXWPgBUoORE5b4=;
-        b=H5Ir45WsRmqjTI65TxKuY/2kj7QSiM7hENG3zp3JBhbcLhDrbH65DeNoI5iCHGKEQb
-         mjvsAJLgm0mMp6PEDf0o6+jr++QZyRQPKqDosq6pF20koFCYYAk565BHkUKVqJlp0PKy
-         V/Eyi1JArRgDR1AC2BdjfAlfpwRYbzRsh30w6fBvYfmEAjARVGlYOcxoTo018pHR/TGu
-         wMfMkTaFAysp/5g121V6FWnCYAW4NYvZLDoVebTJ6qV4XkONk/S89QJim9kurHbvqbop
-         qHFabG2v7wnxIDflad8QOBhcMNzqUTDtjvS42r0QGDX04QWio8OrAk9dfaMDqprVIgTU
-         ah0g==
-X-Gm-Message-State: AOJu0YzpdgJyA4DU/4DJLJtqVC+Mg702wXq4BcNreoUeS+TaN9wpXdsQ
-        BlHhzcXd/FjY2kb3cYEfdBqJmA==
-X-Google-Smtp-Source: AGHT+IGd2kiEEDfG6P6HetBgbxGUvsXEK4negKERILqVL6GV5N4v6BAU0/FYlO/wVq0H9yEoOXbIpw==
-X-Received: by 2002:a05:6512:718:b0:500:9524:f734 with SMTP id b24-20020a056512071800b005009524f734mr7883421lfs.42.1693050904870;
-        Sat, 26 Aug 2023 04:55:04 -0700 (PDT)
+        bh=ZpIF/kspXEWP+ED7ApWYX9k2YRiDKFAj43hIwcfHRok=;
+        b=MGWTcp6V2FmI5Mlz6vFTXd0iACOyGbBDU4lVv1EvG0Hn+iBXVJ1qo5E9z+FgaDN0YQ
+         h//Kr4oLLLFjKoNa01K6QN/BKd3ASwEFB3F0yyuPkl7WvuGVIAYY2monv9JuKqFmI+v1
+         guosWxZ1pYwmH9IL1w64Dvvqzi/vWkdtac9JwCaU1gx5l7HXXQ8q1wsV4QTWm3S5ST7Q
+         9PpftqzkRL9vObz3NF4aNYD9IS8qzd40P6ZHAzCbgHarZPBwd9kmIaegZ3RSEQpMRWYR
+         x5j1mdU+lBD4XnGLRImnWoCro+mmeW2clKbKgKWG24pIgRDwQKoAFp+FLOLf5fVpPdRT
+         pcDw==
+X-Gm-Message-State: AOJu0Yw4W8EzcghSfvcR01JmNHPAb9Xlq9yszCl/3XV4rRxjY3WnJ6yE
+        PAFejBoLSivY7nAqD7unBJTeWQ==
+X-Google-Smtp-Source: AGHT+IFCi14v5086qfu/+ybqQJUOmmw9vk0plNASNf2tPl4Cuea1GMollTWLsk91NXxTTmtW4IJ1wA==
+X-Received: by 2002:a2e:9097:0:b0:2bc:f252:6cc4 with SMTP id l23-20020a2e9097000000b002bcf2526cc4mr3083690ljg.10.1693051262345;
+        Sat, 26 Aug 2023 05:01:02 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac2515b000000b005008c11ca6dsm678165lfd.184.2023.08.26.04.55.03
+        by smtp.gmail.com with ESMTPSA id 9-20020a05651c008900b002b9f41a1b9asm755355ljq.110.2023.08.26.05.01.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 04:55:04 -0700 (PDT)
-Message-ID: <3f8914af-d6f7-4ae0-abb9-287d34cbfbdd@linaro.org>
-Date:   Sat, 26 Aug 2023 13:55:03 +0200
+        Sat, 26 Aug 2023 05:01:02 -0700 (PDT)
+Message-ID: <724aa0d7-600f-48c9-8a5c-7f43823d0c49@linaro.org>
+Date:   Sat, 26 Aug 2023 14:01:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/11] arm64: dts: qcom: sdm630: Drop RPM bus clocks
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: msm8916-samsung-fortuna: Add
+ initial device trees
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230721-topic-rpm_clk_cleanup-v1-0-cf6cd5c621d5@linaro.org>
- <20230721-topic-rpm_clk_cleanup-v1-4-cf6cd5c621d5@linaro.org>
- <24ea1af2-2304-f4f9-e83e-7ae7101e7edd@linaro.org>
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Walter Broemeling <wallebroem@gmail.com>,
+        Joe Mason <buddyjojo06@outlook.com>,
+        Siddharth Manthan <siddharth.manthan@gmail.com>,
+        Gareth Peoples <mail@gpeopl.es>
+References: <20230801111745.4629-1-linmengbo0689@protonmail.com>
+ <20230801112123.4672-1-linmengbo0689@protonmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,7 +109,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <24ea1af2-2304-f4f9-e83e-7ae7101e7edd@linaro.org>
+In-Reply-To: <20230801112123.4672-1-linmengbo0689@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -119,23 +121,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.07.2023 16:08, Krzysztof Kozlowski wrote:
-> On 21/07/2023 17:36, Konrad Dybcio wrote:
->> These clocks are now handled from within the icc framework and are
->> no longer registered from within the CCF. Remove them.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 29 ++++-------------------------
->>  1 file changed, 4 insertions(+), 25 deletions(-)
->>
+On 1.08.2023 13:22, Lin, Meng-Bo wrote:
+> From: Walter Broemeling <wallebroem@gmail.com>
 > 
-> Are you sure you removed all of the instances? I think usb still has RPM
-> bus clocks.
-Yes, but Alexey submitted a patch [1] to remove that before I sent this
+> Samsung Galaxy Core Prime, Grand Prime and Ace 4 are phones based on
+> MSM8916. They are similar to the other Samsung devices based on MSM8916
+> with only a few minor differences.
+> 
+> This initial commit adds support for:
+>  - fortuna3g (SM-G530H)
+>  - fortunaltezt (SM-G530Y)
+>  - gprimeltecan (SM-G530W)
+>  - grandprimelte (SM-G530FZ)
+>  - heatqlte (SM-G357FZ)
+>  - rossa (SM-G360G)
+[...]
 
-Guess I should have mentioned it..
+
+> +&blsp_i2c1 {
+> +	/* SM5504 MUIC instead of SM5502 */
+> +	/delete-node/ extcon@25;
+use /delete-node/ &label instead
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
-[1] https://lore.kernel.org/linux-arm-msm/20230719073520.2644966-1-alexeymin@postmarketos.org/
