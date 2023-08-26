@@ -2,319 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E00977894B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 10:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EF1D7894F2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:00:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232091AbjHZIIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 04:08:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35392 "EHLO
+        id S229711AbjHZI7h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 04:59:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232081AbjHZIIW (ORCPT
+        with ESMTP id S232155AbjHZI7L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 04:08:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 562E41FF0;
-        Sat, 26 Aug 2023 01:08:19 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37Q81E2g002453;
-        Sat, 26 Aug 2023 08:07:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=toTSUxSzKHK82dJG3FdjsK0wlkEXyaoeC5l4iBCP/fY=;
- b=fizWYDkf09KXMVX5fgKhDjRJz+GZx5PqSGFin5xgbucjMstQun3n7XsUYtTrPliUSs5i
- H5bSlwFjVoLKXZGjkZ16tzOqPGmwE0LoRtdm0Z7vpYhbscwOU7Z5i3lAcibrX0Q+rsmb
- pXKcqri3/6AGCZY0s8iENO0moXpyiF1KXTDb1MaPDzAaQ2JQg00q5wgX8kVQJDYjhAIu
- kx+jnEQJN4AwScSABfoQZzTJqE4iiIVjsN5wiEMD6nqLspwiv4tEzU3Kb49ndwQ0gTay
- 06uvqVgWIQoO6jzReKb//6zt7S2VMUXkPTUYA+KxF47eO7Ex9A84Vov2Y8MHrNjIGoD3 wQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sq907g91x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 26 Aug 2023 08:07:53 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37Q87qI0023779
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 26 Aug 2023 08:07:52 GMT
-Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sat, 26 Aug 2023 01:07:49 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Nicolas Schier" <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        "Bjorn Andersson" <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <quic_pkondeti@quicinc.com>
-CC:     <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <workflows@vger.kernel.org>, <tools@linux.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
-Subject: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Date:   Sat, 26 Aug 2023 01:07:42 -0700
-Message-ID: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <cover.1693037031.git.quic_gurus@quicinc.com>
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
+        Sat, 26 Aug 2023 04:59:11 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E901FF5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 01:59:08 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50078eba7afso2613816e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 01:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693040347; x=1693645147;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VMV0LkL6XTvk7F0cHIqMZf1QrNVpfMIvkj9fG41FagQ=;
+        b=lgk2m4D5SV3fD/P2u4/1d+8AR6SPFpPi+2GPAd3p+2w4cKz0cR+4UosIMI/GZIwuiG
+         32WstuPhV1vP1jVIZPJad66p7yFiwZe6qAuseRXmMNCWjqJ3GWKNjP0H2gGTHIcewCe7
+         YrZvAbTwmF3C+Vi6Limdkzb8MihLQYT2aQNni5guI4Tk0994CuKSg+yQY+ZYQY1NRxr8
+         603vcX7SftjJaZsKCRFS24pAiQqbtVirE4Ci4AigQjRhaXw1nkXmW/ZFUCAai0dw5EhQ
+         OGzkuXdUa8DmlxtyHKY+zNd+lyPkCuGHHyZ2+1suZOUxANqqfoVI9weuDEbQuvZLdUg2
+         iC5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693040347; x=1693645147;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VMV0LkL6XTvk7F0cHIqMZf1QrNVpfMIvkj9fG41FagQ=;
+        b=eu4JQ26FhAZDhKRv6759yX23bUzh6eiOETdaxZHjVYm/ysh0Kqum3vlk0bO300yK5Q
+         v/RTdWgdvfStjcCpd2iOxMcSc9SLTC1Jad9vUHSjheI5H4ccTX8HBLfW4sTlzZowOGLj
+         NdefMuscn2ii/cRmWTxa1M6ou8muAjXRrdqRmwF1sjpYaxNtrwgZb2G7qRc6Di94VFYX
+         E+qqnqUBUG0Sl15vi8ecIZ1QhJarr+SwVCnVATxKyMmYOyhTIsp2s4xE7fqRJfPIhZU1
+         t5IkEpxF7rQ9rE4btGPIg4khWPoE6TE5KEhUT4MQV91AuHMn9m1a2bWSfjnAW2MtckQn
+         hUmA==
+X-Gm-Message-State: AOJu0YxiVugeQe9i3BPNAaRBBdaLer+BhyoMb7U0Cw6CnlMvwlapk4E2
+        N2fvPMWuVFmY5Nqbd/BKXmzH6Q==
+X-Google-Smtp-Source: AGHT+IGNz3iCa5gUvcXoBK3a6bk4ESqUsl3Vqx26TgGDafVng3nY3NLrZPaFN8CklqhDuZLTOwb8nA==
+X-Received: by 2002:ac2:4c82:0:b0:4ff:87f6:6ee5 with SMTP id d2-20020ac24c82000000b004ff87f66ee5mr13340004lfl.10.1693040346718;
+        Sat, 26 Aug 2023 01:59:06 -0700 (PDT)
+Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
+        by smtp.gmail.com with ESMTPSA id w12-20020a05651204cc00b004fe0760354bsm631206lfq.275.2023.08.26.01.59.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Aug 2023 01:59:06 -0700 (PDT)
+Message-ID: <83b9eb79-ba6d-4485-a945-c9a14bbd18d2@linaro.org>
+Date:   Sat, 26 Aug 2023 10:59:04 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/adreno: Fix SM6375 GPU ID
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230825-topic-6375_gpu_id-v1-1-e24f46d7f139@linaro.org>
+ <CAF6AEGsNr+5zaXqKRhyeY6NV+iRD+Yz8ftqiX6Z08esoyh=DzQ@mail.gmail.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <CAF6AEGsNr+5zaXqKRhyeY6NV+iRD+Yz8ftqiX6Z08esoyh=DzQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FVDnSdgPZtRCDd6m7P3bOpnVoPIOH3MY
-X-Proofpoint-ORIG-GUID: FVDnSdgPZtRCDd6m7P3bOpnVoPIOH3MY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-26_05,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- mlxlogscore=999 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
- mlxscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308260074
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This script runs get_maintainer.py on a given patch file (or multiple
-patch files) and adds its output to the patch file in place with the
-appropriate email headers "To: " or "Cc: " as the case may be. These new
-headers are added after the "From: " line in the patch.
+On 26.08.2023 03:29, Rob Clark wrote:
+> On Fri, Aug 25, 2023 at 2:11 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> SM6375 comes with a patchlevel=1. Fix the chipid up to reflect that.
+>>
+>> Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying GPU")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> index 575e7c56219f..f2d9d34ed50f 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> @@ -331,7 +331,7 @@ static const struct adreno_info gpulist[] = {
+>>                 ),
+>>         }, {
+>>                 .machine = "qcom,sm6375",
+>> -               .chip_ids = ADRENO_CHIP_IDS(0x06010900),
+>> +               .chip_ids = ADRENO_CHIP_IDS(0x06010901),
+> 
+> r-b, but maybe we should list both to be safe?  But unsure if any
+> patchlevel=0 things are out there in the wild...
+AFAICT only 1 for this soc
 
-Currently, for a single patch, maintainers and reviewers are added as
-"To: ", mailing lists and all other roles are added as "Cc: ".
+Konrad
 
-For a series of patches, however, a set-union scheme is employed in
-order to solve the all-too-common problem of ending up sending only
-subsets of a patch series to some lists, which results in important
-pieces of context such as the cover letter (or other patches in the
-series) being dropped from those lists. This scheme is as follows:
-
-- Create set-union of all maintainers and reviewers from all patches and
-  use this to do the following per patch:
-  - add only that specific patch's maintainers and reviewers as "To: "
-  - add the other maintainers and reviewers from the other patches as "Cc: "
-
-- Create set-union of all mailing lists corresponding to all patches and
-  add this to all patches as "Cc: "
-
-- Create set-union of all other roles corresponding to all patches and
-  add this to all patches as "Cc: "
-
-Please note that patch files that don't have any "Maintainer"s or
-"Reviewers" explicitly listed in their `get_maintainer.pl` output will
-not have any "To: " entries added to them; developers are expected to
-manually make edits to the added entries in such cases to convert some
-"Cc: " entries to "To: " as desired.
-
-The script is quiet by default (only prints errors) and its verbosity
-can be adjusted via an optional parameter.
-
-Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
----
- MAINTAINERS               |   5 ++
- scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 169 insertions(+)
- create mode 100755 scripts/add-maintainer.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0903d87b17cb..b670e9733f03 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8721,6 +8721,11 @@ M:	Joe Perches <joe@perches.com>
- S:	Maintained
- F:	scripts/get_maintainer.pl
- 
-+ADD MAINTAINER SCRIPT
-+M:	Guru Das Srinagesh <quic_gurus@quicinc.com>
-+S:	Maintained
-+F:	scripts/add-maintainer.py
-+
- GFS2 FILE SYSTEM
- M:	Bob Peterson <rpeterso@redhat.com>
- M:	Andreas Gruenbacher <agruenba@redhat.com>
-diff --git a/scripts/add-maintainer.py b/scripts/add-maintainer.py
-new file mode 100755
-index 000000000000..5a5cc9482b06
---- /dev/null
-+++ b/scripts/add-maintainer.py
-@@ -0,0 +1,164 @@
-+#! /usr/bin/env python3
-+
-+import argparse
-+import logging
-+import os
-+import sys
-+import subprocess
-+import re
-+
-+def gather_maintainers_of_file(patch_file):
-+    all_entities_of_patch = dict()
-+
-+    # Run get_maintainer.pl on patch file
-+    logging.info("GET: Patch: {}".format(os.path.basename(patch_file)))
-+    cmd = ['scripts/get_maintainer.pl']
-+    cmd.extend([patch_file])
-+
-+    try:
-+        p = subprocess.run(cmd, stdout=subprocess.PIPE, check=True)
-+    except:
-+        sys.exit(1)
-+
-+    logging.debug("\n{}".format(p.stdout.decode()))
-+
-+    entries = p.stdout.decode().splitlines()
-+
-+    maintainers = []
-+    lists = []
-+    others = []
-+
-+    for entry in entries:
-+        entity = entry.split('(')[0].strip()
-+        if any(role in entry for role in ["maintainer", "reviewer"]):
-+            maintainers.append(entity)
-+        elif "list" in entry:
-+            lists.append(entity)
-+        else:
-+            others.append(entity)
-+
-+    all_entities_of_patch["maintainers"] = set(maintainers)
-+    all_entities_of_patch["lists"] = set(lists)
-+    all_entities_of_patch["others"] = set(others)
-+
-+    return all_entities_of_patch
-+
-+def find_pattern_in_lines(pattern, lines):
-+    index = 0
-+    for line in lines:
-+        if re.search(pattern, line):
-+            break;
-+        index = index + 1
-+
-+    if index == len(lines):
-+        logging.error("Couldn't find pattern {} in patch".format(pattern))
-+        sys.exit(1)
-+
-+    return index
-+
-+def add_maintainers_to_file(patch_file, entities_per_file, all_entities_union):
-+    logging.info("ADD: Patch: {}".format(os.path.basename(patch_file)))
-+
-+    # For each patch:
-+    # - Add all lists from all patches in series as Cc:
-+    # - Add all others from all patches in series as Cc:
-+    # - Add only maintainers of that patch as To:
-+    # - Add maintainers of other patches in series as Cc:
-+
-+    lists = list(all_entities_union["all_lists"])
-+    others = list(all_entities_union["all_others"])
-+    file_maintainers = all_entities_union["all_maintainers"].intersection(entities_per_file[os.path.basename(patch_file)].get("maintainers"))
-+    other_maintainers = all_entities_union["all_maintainers"].difference(entities_per_file[os.path.basename(patch_file)].get("maintainers"))
-+
-+    # Specify email headers appropriately
-+    cc_lists        = ["Cc: " + l for l in lists]
-+    cc_others       = ["Cc: " + o for o in others]
-+    to_maintainers  = ["To: " + m for m in file_maintainers]
-+    cc_maintainers  = ["Cc: " + om for om in other_maintainers]
-+    logging.debug("Cc Lists:\n{}".format('\n'.join(cc_lists)))
-+    logging.debug("Cc Others:\n{}".format('\n'.join(cc_others)))
-+    logging.debug("Cc Maintainers:\n{}".format('\n'.join(cc_maintainers) or None))
-+    logging.debug("To Maintainers:\n{}\n".format('\n'.join(to_maintainers) or None))
-+
-+    # Edit patch file in place to add maintainers
-+    with open(patch_file, "r") as pf:
-+        lines = pf.readlines()
-+
-+    # Get the index of the first "From: <email address>" line in patch
-+    from_line = find_pattern_in_lines("^(From: )(.*)<(.*)@(.*)>", lines)
-+
-+    # Insert our To: and Cc: headers after it.
-+    next_line_after_from = from_line + 1
-+
-+    for l in cc_lists:
-+        lines.insert(next_line_after_from, l + "\n")
-+    for o in cc_others:
-+        lines.insert(next_line_after_from, o + "\n")
-+    for om in cc_maintainers:
-+        lines.insert(next_line_after_from, om + "\n")
-+    for m in to_maintainers:
-+        lines.insert(next_line_after_from, m + "\n")
-+
-+    with open(patch_file, "w") as pf:
-+        pf.writelines(lines)
-+
-+def add_maintainers(patch_files):
-+    entities_per_file = dict()
-+
-+    for patch in patch_files:
-+        entities_per_file[os.path.basename(patch)] = gather_maintainers_of_file(patch)
-+
-+    all_entities_union = {"all_maintainers": set(), "all_lists": set(), "all_others": set()}
-+    for patch in patch_files:
-+        all_entities_union["all_maintainers"] = all_entities_union["all_maintainers"].union(entities_per_file[os.path.basename(patch)].get("maintainers"))
-+        all_entities_union["all_lists"] = all_entities_union["all_lists"].union(entities_per_file[os.path.basename(patch)].get("lists"))
-+        all_entities_union["all_others"] = all_entities_union["all_others"].union(entities_per_file[os.path.basename(patch)].get("others"))
-+
-+    for patch in patch_files:
-+        add_maintainers_to_file(patch, entities_per_file, all_entities_union)
-+
-+    logging.info("Maintainers added to all patch files successfully")
-+
-+def remove_to_cc_from_header(patch_files):
-+    for patch in patch_files:
-+        logging.info("UNDO: Patch: {}".format(os.path.basename(patch)))
-+        with open(patch, "r") as pf:
-+            lines = pf.readlines()
-+
-+        # Get the index of the first "From: <email address>" line in patch
-+        from_line = find_pattern_in_lines("^(From: )(.*)<(.*)@(.*)>", lines)
-+
-+        # Get the index of the first "Date: " line in patch
-+        date_line = find_pattern_in_lines("^(Date: )", lines)
-+
-+        # Delete everything in between From: and Date:
-+        # These are the lines that this script adds - any To: or Cc: anywhere
-+        # else in the patch will not be removed.
-+        del lines[(from_line + 1):date_line]
-+
-+        with open(patch, "w") as pf:
-+            pf.writelines(lines)
-+
-+    logging.info("Maintainers removed from all patch files successfully")
-+
-+def main():
-+    parser = argparse.ArgumentParser(description='Add the respective maintainers and mailing lists to patch files')
-+    parser.add_argument('patches', nargs='+', help="One or more patch files")
-+    parser.add_argument('-v', '--verbosity', choices=['debug', 'info', 'error'], default='error', help="Verbosity level of script output")
-+    parser.add_argument('-u', '--undo', action='store_true', help="Remove maintainers added by this script from patch(es)")
-+    args = parser.parse_args()
-+
-+    logging.basicConfig(level=args.verbosity.upper(), format='%(levelname)s: %(message)s')
-+
-+    for patch in args.patches:
-+        if not os.path.isfile(patch):
-+            logging.error("File does not exist: {}".format(patch))
-+            sys.exit(1)
-+
-+    if args.undo:
-+        remove_to_cc_from_header(args.patches)
-+    else:
-+        add_maintainers(args.patches)
-+
-+if __name__ == "__main__":
-+    main()
--- 
-2.41.0
-
+I guess we could add
+> it back in later if needed
+> 
+> BR,
+> -
+> 
+>>                 .family = ADRENO_6XX_GEN1,
+>>                 .revn = 619,
+>>                 .fw = {
+>>
+>> ---
+>> base-commit: 6269320850097903b30be8f07a5c61d9f7592393
+>> change-id: 20230825-topic-6375_gpu_id-cf1596e2b147
+>>
+>> Best regards,
+>> --
+>> Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
