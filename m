@@ -2,85 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28CD9789762
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 16:30:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD868789782
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 16:47:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbjHZO3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 10:29:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42700 "EHLO
+        id S229638AbjHZOqv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 10:46:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbjHZO3c (ORCPT
+        with ESMTP id S230306AbjHZOq1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 10:29:32 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D023DCD1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:29:30 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99c93638322so385926666b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:29:30 -0700 (PDT)
+        Sat, 26 Aug 2023 10:46:27 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74FD62109
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:46:23 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1bc8a2f71eeso12405655ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:46:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693060169; x=1693664969;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UoHwOTKGuupL476rFcW8I642v+ujJo8hTqxA/kEoIVc=;
-        b=yFKGic01iRVPyL4PsX55rDX8WIy7c6znpSM5R8aLe7RpP2VBqVwYhnRKZRjfQfvBkJ
-         SVd9InmtFtKNB8srwsbuTS66sEYRqZ2KtjwaHberQH1SvHeqYDYW/Q6TGLRanL3NdEpb
-         7xgifl+p3XTssLpg9RiB7OKGDuueJ1Sj1F0p2ydK+ELRu1bDqxbShFXVYfLJj+lK8uQr
-         AdST1hMObcMpVt4oXJ6oZORjh560bj9PyOEnYSVbVCYSgA5iaSoglN7uekh1N5PIAu+m
-         oCytOa8GlenkygJhgMH7P2sh+oUCPIeqhEhi3wRFZVx4BcSvzFvBV7QF6VG3YR9sfT4F
-         YesQ==
+        d=linaro.org; s=google; t=1693061183; x=1693665983;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=cvjjfe1KUBN3ohw6yJuUww67ITTu8nVKPCe0bxCs6OE=;
+        b=Wtq31WVrNH5UsZYQaC0tTuFHA8JMb3nTGV4XvpJdirkyPpnNr2ozFq+/JjibIxB9uI
+         dJLQaDRF7kI6UBh3DZDt46LnVgQRrOzDFQ7W5sVpfAu+/+THbv3rAcKBkoqOVGP+yBAg
+         3Nysg/Ec6h9hBKCN6OQGIhdDLxh0TyHcJRBJdoz2x5z+o02AV6VNXii84n6l6tgCHkmc
+         g2iyBmRg+cK2U+EBuguXlypMzz1n2mYoyMke90yH+7o1HRFJcX7+AYK3DRmLuCF8unP4
+         k790/Nm1Znr0P9wlwq5H4qGOWHRsJzhZadgdmNdWBCZ4WVc8AdzZn7lMIuR9V6jCk82r
+         zbCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693060169; x=1693664969;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693061183; x=1693665983;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UoHwOTKGuupL476rFcW8I642v+ujJo8hTqxA/kEoIVc=;
-        b=G/2q+MQsA3NnKGCvghYkDKAEuYtIT3T7RPr+wSoXBJOg1XNvCmBniQbY2g3Xd4UtMW
-         HDGFusAfFKUcWsW4gumdF/ujgZYcSjyS+HUDBVmRvOm9Z/ICQfUrwrIBepvMNPnh+W2a
-         CTuF10P09Llw3fzaZYuzIn3fluM3V32shgvDzRB2TTvNPSY1vYyTRtfPT1kx1wzygxiR
-         hKg3wwXyWb51SOLsJxrMEzazImbunTEwPSek6TF/i69IVgNFkjiKF+lzL8JzzHiRnheL
-         3+nQWDws682DR2w+Rf/PwC8xWl65owY/ZWFCuPvDGVj9uK+azvrGTwpm642R9s3WdvaK
-         jIzQ==
-X-Gm-Message-State: AOJu0Yx79fACwNlfvyr5bCYRwygJWqWdtGjtUaA4LJbuTJx503UndLDm
-        +ozQuFdrUH6tPBxy50N9YMp7ZQ==
-X-Google-Smtp-Source: AGHT+IFFtNX5/1x+vPBsm+ndbnTzoPdNJBmv/tkhp3W8Qop5+BkHCGF+0A7SABanuHFJLm3T355oQw==
-X-Received: by 2002:a17:907:7804:b0:9a1:914e:491a with SMTP id la4-20020a170907780400b009a1914e491amr19325263ejc.3.1693060169184;
-        Sat, 26 Aug 2023 07:29:29 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id l8-20020a1709067d4800b009a1c4d04989sm2227595ejp.217.2023.08.26.07.29.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 07:29:28 -0700 (PDT)
-Message-ID: <5847be93-68c3-95fb-1d3e-9678804b9a70@linaro.org>
-Date:   Sat, 26 Aug 2023 16:29:27 +0200
+        bh=cvjjfe1KUBN3ohw6yJuUww67ITTu8nVKPCe0bxCs6OE=;
+        b=jlIxu6oAiCQ7p9QEPpDQAvcdMpSfMxLPENoz04556w7gXmgT9y3X5MZsNpBw0vojfv
+         YpazTi3AIgXyNYfUiJP/len7TbKYEdF64HUJEY40tAFiJBogZ8tt1qi6c1g4Qju638xW
+         Kh0kIa0sVQzXaMZ2l4aHm3n0QR9RiQNV1z8rcnCjN70TE8GRrIBfPMLPZsdmLLtrjFZr
+         zSSQjZL6f6wrR0WiyN9KsqmYJfejFC5YE4ss6UfaxrH31/KDaRdQtu/PdN6pVAKKYVz6
+         o5M7Iar3SeehBn64b8XRsXOhlQlDF1ZQV6tBKWcVp3K3k7KFIu+OwFJuClEyDkc6BgdP
+         2BEQ==
+X-Gm-Message-State: AOJu0Yyq1coXM9ohDv/U5nfV/TA+VeuOHeNUX468LPyyeGNtMFzq9mPS
+        OqptJ/9BcwHK5KpJtayEMCpc
+X-Google-Smtp-Source: AGHT+IGGdf6SFxcjFol+302zSJxRzdTlKENX2fADfCRYYugfQ8pgY9tLxKTwVccX5HvNrpmRwa57uA==
+X-Received: by 2002:a17:902:a416:b0:1bf:46ee:9c6 with SMTP id p22-20020a170902a41600b001bf46ee09c6mr16552524plq.48.1693061182827;
+        Sat, 26 Aug 2023 07:46:22 -0700 (PDT)
+Received: from thinkpad ([117.206.116.138])
+        by smtp.gmail.com with ESMTPSA id k1-20020a170902694100b001b8b45b177esm3742889plt.274.2023.08.26.07.46.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Aug 2023 07:46:22 -0700 (PDT)
+Date:   Sat, 26 Aug 2023 20:16:15 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] PCI: epf-mhi: Make use of the alignment
+ restriction from EPF core
+Message-ID: <20230826144615.GA8858@thinkpad>
+References: <20230717065459.14138-3-manivannan.sadhasivam@linaro.org>
+ <20230825225006.GA642059@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 3/3] clk: qcom: Add SM6115 LPASSCC
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
- <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org>
- <a9d52cd9-845e-ff88-3c26-858cb6604e43@linaro.org>
- <CAA8EJprEnMjbKw2fbU1X7GV=ANARNhofSQh49Bdo1kvuOskbbQ@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJprEnMjbKw2fbU1X7GV=ANARNhofSQh49Bdo1kvuOskbbQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230825225006.GA642059@bhelgaas>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,26 +76,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2023 16:09, Dmitry Baryshkov wrote:
-
->>> +MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
->>
->> Everything here is almost the same as sc8280xp one, so this should be
->> added to sc8280xp. You cut some boilerplate and additional driver.
+On Fri, Aug 25, 2023 at 05:50:06PM -0500, Bjorn Helgaas wrote:
+> On Mon, Jul 17, 2023 at 12:24:54PM +0530, Manivannan Sadhasivam wrote:
+> > Instead of hardcoding the alignment restriction in the EPF_MHI driver, make
+> > use of the info available from the EPF core that reflects the alignment
+> > restriction of the endpoint controller.
+> > 
+> > For this purpose, let's introduce the get_align_offset() static function.
 > 
-> We have been there. It quickly becomes a nightmare to maintain.
-> Consider dispcc-sm8250.c
-
-Because too much was added. I do not propose to keep all resets here.
-
+> I thought this might be related to the [1/7] patch since they both
+> mention an alignment restriction in the EPF core, but [1/7] sets
+> pci_epc_features.align and this patch doesn't reference .align, so
+> this must be a different alignment restriction?
 > 
-> But I agree with you, this code looks too similar. If we expect more
-> similar lpasscc drivers, which provide no clocks, just several resets,
-> maybe we can create a common generic wrapper and make resets lists
-> corresponding driver data?
+> I'm sure there's nothing wrong here, and this is already applied, so
+> no need to do anything unless .align *should* appear here.
+> 
 
-This would also work.
+You are absolutely right! The patch was intented to make use of "align" but
+"page_size" was used as per old revision. Even though this patch works (because
+both "page_size" and "align" were 4K in my setup), it should be fixed.
 
-Best regards,
-Krzysztof
+I will send a fix up patch now. Thanks for spotting.
 
+- Mani
+
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/endpoint/functions/pci-epf-mhi.c | 15 +++++++++++----
+> >  1 file changed, 11 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > index 9c1f5a154fbd..bb7de6884824 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > @@ -102,6 +102,11 @@ struct pci_epf_mhi {
+> >  	int irq;
+> >  };
+> >  
+> > +static size_t get_align_offset(struct pci_epc *epc, u64 addr)
+> > +{
+> > +	return addr % epc->mem->window.page_size;
+> > +}
+> > +
+> >  static int __pci_epf_mhi_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
+> >  				 phys_addr_t *paddr, void __iomem **vaddr,
+> >  				 size_t offset, size_t size)
+> > @@ -134,7 +139,7 @@ static int pci_epf_mhi_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
+> >  {
+> >  	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+> >  	struct pci_epc *epc = epf_mhi->epf->epc;
+> > -	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
+> > +	size_t offset = get_align_offset(epc, pci_addr);
+> >  
+> >  	return __pci_epf_mhi_alloc_map(mhi_cntrl, pci_addr, paddr, vaddr,
+> >  				      offset, size);
+> > @@ -161,7 +166,7 @@ static void pci_epf_mhi_unmap_free(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
+> >  	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+> >  	struct pci_epf *epf = epf_mhi->epf;
+> >  	struct pci_epc *epc = epf->epc;
+> > -	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
+> > +	size_t offset = get_align_offset(epc, pci_addr);
+> >  
+> >  	__pci_epf_mhi_unmap_free(mhi_cntrl, pci_addr, paddr, vaddr, offset,
+> >  				 size);
+> > @@ -185,7 +190,8 @@ static int pci_epf_mhi_read_from_host(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
+> >  				      void *to, size_t size)
+> >  {
+> >  	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+> > -	size_t offset = from % SZ_4K;
+> > +	struct pci_epc *epc = epf_mhi->epf->epc;
+> > +	size_t offset = get_align_offset(epc, from);
+> >  	void __iomem *tre_buf;
+> >  	phys_addr_t tre_phys;
+> >  	int ret;
+> > @@ -213,7 +219,8 @@ static int pci_epf_mhi_write_to_host(struct mhi_ep_cntrl *mhi_cntrl,
+> >  				     void *from, u64 to, size_t size)
+> >  {
+> >  	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+> > -	size_t offset = to % SZ_4K;
+> > +	struct pci_epc *epc = epf_mhi->epf->epc;
+> > +	size_t offset = get_align_offset(epc, to);
+> >  	void __iomem *tre_buf;
+> >  	phys_addr_t tre_phys;
+> >  	int ret;
+> > -- 
+> > 2.25.1
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
