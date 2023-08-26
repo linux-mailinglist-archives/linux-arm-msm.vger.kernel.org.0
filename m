@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 799367895B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:02:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D7297895B9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:04:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231234AbjHZKCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 06:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37916 "EHLO
+        id S229920AbjHZKDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 06:03:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231691AbjHZKCJ (ORCPT
+        with ESMTP id S231720AbjHZKDk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 06:02:09 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB16A9D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:02:06 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-500aed06ffcso1019485e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:02:06 -0700 (PDT)
+        Sat, 26 Aug 2023 06:03:40 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5215C1BE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:03:35 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-5007c8308c3so2615172e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693044125; x=1693648925;
+        d=linaro.org; s=google; t=1693044213; x=1693649013;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4wihlPAHCQyE2MHUMACtA8INTrlsBlg1yrsBWc8GDmM=;
-        b=v5uxljoKHKrDn4CzKwlI3h94rPTGkRdRWTFCRVw7KRzVH7fWTMHsS9kF+QKXO5OG5K
-         /yO0+NvRmVpLjUy+8Aqk7WMyC1VWqOXoWIf/EV2g+qrnWTNisSlZt6mc/3oNu48i2jh6
-         aV172HhPxCXdYuHOcsv65opv1KgfA7FWSWLm++xdmrf+FbXkQ47iUbp3mAQf4nKnC2TJ
-         UdtSwSeWz6ylHDhgUjS9i/H2b0/Y6kfYQTnGOiIFD0jiY/cctnRVS5EefGx+WkCB0e/y
-         eoCRP88RLicCZsLv67thyFCpeZa87RJkxuI+a8YQ4ar5OVfKZr/YEGD4EB7TuuGceAjb
-         H/Rg==
+        bh=HKmxaHf0ZCY9cdaR9lbNFhczw+xqCeEHcZPAPTRkxJU=;
+        b=MntcTVfDKQhzKDjGf7XzF22+QZupQemLWd6myQV7bIBQVHWxwmtYYySuH6Nr5vlpJO
+         1JdgQI/vKDCB1e0ilUitcwMCn4z5oyBQ0NiFaaqUaSbEUVRzIiCHvLk5/BzuwZTIbCay
+         bJwYJ5kPd+W8ICqC1R1SScpVj/riDRM8UmtNQqG1L3b8KgyqPHTJSAac0NmXOSs4dvCJ
+         pvhX0EFc382P6Hbg5NqrrY0yxtd7za9/TSuFncIZw/psBWhtT+DxfWmYOBoS2LJCCb5O
+         gcq1hZiP+SeEI91CqEoMkbudRTK8lXq7TD9Vkb4oRmFMmEu60dXTUTDxCKgM5Rb/V7VR
+         jm3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693044125; x=1693648925;
+        d=1e100.net; s=20221208; t=1693044213; x=1693649013;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4wihlPAHCQyE2MHUMACtA8INTrlsBlg1yrsBWc8GDmM=;
-        b=YPADACn18w/JMA8t70eSShsHXE8C2jv1cV9iAWhZQhzJl1y9v/bP/YiSUdKNlVd5SO
-         jl4XUtQdjJLZtwSqLo4zC7myzglHopri+cc+jtuxKzcmCcwlf4w0Flbem1QfPxyESyJa
-         GOixU7K1mzLRZh8Gohm3VkpuMfHT56RQDaTpOj1MmVID+u+Te55WN189KKiKl42zrI55
-         G5AuuvT/K7wCda7yR2YywtoxzKyaDYDb7UYVbOLRmAkRU0Dki8dAtux+bkhtpQkCLiz/
-         9OTLeEDkf4yL6QnIm+/77JRqFePKty7gMCggxGYZ2uFyibNKfR1LuFrk5OY/kLstFUaV
-         PICA==
-X-Gm-Message-State: AOJu0YySV7wEN2dC5bUUd5J0mkwTZ2MH2Mm3vzriZqHx8GStpsaXdpGC
-        8CzLEg9drARUw8iOIxBCiktNuw==
-X-Google-Smtp-Source: AGHT+IEULLHv09I6IWB4Li7pyLGhZ2NULf87wgF1YJX64yem/iG/D1aDHr6u3vD0A5VE6sBwyJ+gEA==
-X-Received: by 2002:a05:6512:3d1f:b0:500:7dc0:b0b2 with SMTP id d31-20020a0565123d1f00b005007dc0b0b2mr17000844lfv.28.1693044125066;
-        Sat, 26 Aug 2023 03:02:05 -0700 (PDT)
+        bh=HKmxaHf0ZCY9cdaR9lbNFhczw+xqCeEHcZPAPTRkxJU=;
+        b=hpeKLZQlVcJERdNAc0UguwOIMrnUMshEB7QgJEjOzj+8rj3reAWUfTjqyMlMPmpOSH
+         5mV4AJaSla3XYoLCg2RgaG/qN38XpaqFXDxKveXBjqvhWzB0TOS1fupX66pe2zGBRNCo
+         7b/h+WBGpbXvIPFyDkb4QaKr+g9k7+nkjPRdqq1gxu7h3RPIEkIaTQzaJ2X61AlCRhOs
+         IIoLAZLhXNVCc9bDyoBSo+QOmzkhoiVPz15PDEoTFvGjUuAkzD4G7lIXv44Evk6lyVYd
+         UgjJKmoVux/SxmXPlV/dNa0Vnoz8zuMENJ+xzUesZGM7iBVIVWCIYI4cdOuSW9zHpPOk
+         yyVg==
+X-Gm-Message-State: AOJu0YyLpDdynwHhxuIgSgygsxBWTDCMUte+UnMxywVa2YO22eaM93BY
+        oDFX7B4byk8P2JIc3zxuPYtzcg==
+X-Google-Smtp-Source: AGHT+IEg5ZKSOeTLqyRaowNyumIm25qD6cbqmX1h/edkF3RVG5OmgFe4c3k0VZETj6mzdrUCh8uZdg==
+X-Received: by 2002:a19:6d1b:0:b0:4ff:9efd:8a9c with SMTP id i27-20020a196d1b000000b004ff9efd8a9cmr12987506lfc.5.1693044213601;
+        Sat, 26 Aug 2023 03:03:33 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id y1-20020a197501000000b004fdbb36a677sm654770lfe.288.2023.08.26.03.02.03
+        by smtp.gmail.com with ESMTPSA id y1-20020a197501000000b004fdbb36a677sm654770lfe.288.2023.08.26.03.03.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 03:02:04 -0700 (PDT)
-Message-ID: <a84f33f5-cf46-48ef-a9a9-01acb926c145@linaro.org>
-Date:   Sat, 26 Aug 2023 12:02:02 +0200
+        Sat, 26 Aug 2023 03:03:33 -0700 (PDT)
+Message-ID: <f80941f3-766f-4202-99eb-54ec20e3b861@linaro.org>
+Date:   Sat, 26 Aug 2023 12:03:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/15] media: qcom: camss: Capture VFE CSID dependency
- in a helper function
+Subject: Re: [PATCH v3 08/15] media: qcom: camss: Untangle if/else spaghetti
+ in camss
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
@@ -65,7 +65,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-8-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-9-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,12 +102,13 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230823104444.1954663-8-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230823104444.1954663-9-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -115,57 +116,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.08.2023 12:44, Bryan O'Donoghue wrote:
-> From sdm845 onwards we need to ensure the VFE is powered on prior to
-> switching on the CSID.
-And what's the symptom if we fail to ensure this? How can someone
-adding support for another platform tell whether the match-list
-should be expanded?
-
+> I refuse to add another SoC to this convoluted if/else structure. By the
+> time we added in a third SoC we ought to have transitioned these control
+> flow strutures to switches.
 > 
-> Alternatively we could model up the GDSCs and clocks the CSID needs
-> without the VFE but, there's a real question of the legitimacy of such a
-> use-case.
+> Adding in another Soc or two will make some of these if statements into
+> five clause behemoths.
 > 
-> For now drawing a line at sdm845 and switching on the associated VFEs is
-> a perfectly valid thing to do.
-> 
-> Rather than continually extend out this clause for at least two new SoCs
-> with this same model - making the vfe_get/vfe_put path start to look
-> like spaghetti we can encoded the dependency in a helper function.
-> 
-> Use csid_depends_vfe() for this purpose.
+> Introduce switches in the obvious places to despaghetiify.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  .../media/platform/qcom/camss/camss-csid.c    | 20 +++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index 08991b070bd61..fd04ed112b564 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -146,6 +146,22 @@ static int csid_set_clock_rates(struct csid_device *csid)
->  	return 0;
->  }
->  
-> +static bool csid_depends_vfe(u32 version)
-toggle_vfe_before_csid?
-
-> +{
-> +	bool ret = false;
-> +
-> +	switch (version) {
-> +	case CAMSS_845:
-> +	case CAMSS_8250:
-> +		ret = true;
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	return ret;
-I'm not sure if it would be okay with like C conventions and
-stuff, but this can be made shorter by returning from within
-the switch statement
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
