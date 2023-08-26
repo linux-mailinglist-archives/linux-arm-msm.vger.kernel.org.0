@@ -2,119 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 648DB789775
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 16:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28CD9789762
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 16:30:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbjHZOib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 10:38:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40718 "EHLO
+        id S229953AbjHZO3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 10:29:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbjHZOiY (ORCPT
+        with ESMTP id S229764AbjHZO3c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 10:38:24 -0400
-X-Greylist: delayed 1233 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 26 Aug 2023 07:38:21 PDT
-Received: from out203-205-221-231.mail.qq.com (out203-205-221-231.mail.qq.com [203.205.221.231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A6302109;
-        Sat, 26 Aug 2023 07:38:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-        s=s201512; t=1693060699;
-        bh=bBm3JZWtV19d5mTvY144XG0VpJxbcD0Lb6oNpBSzTKw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=Ze4oRoN1kIr3DhvJvQGgL256L3hzrppxLwmitikcQSK8BlZWnYSDUAXg4w1gqDko4
-         4i+PxpeIkBAGcPI187RzxUprkUxHWqe5c9QYKV0fkYo0qDs/fMqxBWcVFpJVQiSOMQ
-         ubkpqid8dTGGzn2gnB+bDUSafPYIGEQwFPDWxSvs=
-Received: from localhost.localdomain ([220.243.191.34])
-        by newxmesmtplogicsvrsza10-0.qq.com (NewEsmtp) with SMTP
-        id 46A86A0C; Sat, 26 Aug 2023 22:17:42 +0800
-X-QQ-mid: xmsmtpt1693059462tjsabkefh
-Message-ID: <tencent_D0AA2D25300E0F108559545E899C9B8EDA07@qq.com>
-X-QQ-XMAILINFO: M3X79PAqfpWTsaSODfveg0gn1w+AdJXCvBs4ZojKWmplo/bKlgY+Naa/Oa1kR9
-         iRth/98V87fdTt3810GEHAT/zmy9LZi0y2GANFUrBP1a2Rr0c/OuAGsLFSeSsQH8g+RKJi+uvRAb
-         MamYUOZUIV/3ag0vwguLtMu4OST5QeNWUkHT+cp5i6idQVWw0Lu6NWr87xSVgeT/NurrG0Vpzg9x
-         OeKAp6VkydQrFCH0t6NQAtxepVj/dH1+bglVrM3o2wRH1f8o2j+Dn2OY48ZJe35eFaK5t6GBIWbp
-         XtUA21+moSODPBt4DqYi0cIVgzRE0TP4JutrLJVC2Sg4DTBS8/2v/0RMGbRc/A/hdPFHhH5ENlEP
-         m2P2IipjG70IiKd7Y6jxt+6F+uCoKx12uxNxV8PwrTjOhWhg1dlb6/LCr/EsM0Q5u3nzKM538Mlg
-         b/MDeAwNtg/KrpCpJtY42uktniFiIBdVp/L9GpfzO0ipKwcjMHnsXOllR0RUwm0PIyne2UCBnSsm
-         bG/0jtj5yU571vHTjMSZjjhkThMJdtlUd/aFNz9nxqMyvAXXWLtXo7rkLldvfUmi3MKWEatWHGg9
-         yYQio28hv2wgabtO+48CucW/thjRivO6D21F+1GUN0B1v80zgBmDF/4+O4VvK4hUautQN6DxJxeU
-         BxTjMcM+w2slLrADMCK38eJoXoKxWw3020DooGOuNbFIPQfimYlWjV37Z2rKdLpb3Z6cyrrpt8qM
-         gQyoFhmegjDXhMcTMJ7ZcXj4ZJeXGSKlte2VIZYZAVvbOZZ2VqrIneI1EdMJgkciGmo/kUhBFy8l
-         YRA+UsJ8agPD2NsyKJ1PHwkbAEckIjxOQSHHo4HhxB2Zw0DKL0wKDwV8ys3Od0Fdw9wLCSRVB4el
-         kV78hU9GX8YKj8v/bAgsPA0GlUmWgoaGgzYetW2krNUh9rc5RKEA2k6TQRmQQDuKtOMKgcrbuWZf
-         JU8X4wiHnE3pk2AnQ6pSD27Wlb34W5vpe8Z4dGdpjBkdhv6nYiWRy7hpXA9ldlufkd20f1eRxJlV
-         jUmUzqoqufUHmOBRJIm0ckp0kgAPpM8KQGQ8TMlw==
-X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
-From:   Zhang Shurong <zhang_shurong@foxmail.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: misc: eud: Fix missing IRQ check in eud_probe()
-Date:   Sat, 26 Aug 2023 22:17:42 +0800
-X-OQ-MSGID: <4832339.GXAFRqVoOG@localhost.localdomain>
-In-Reply-To: <f9df2e02-9fae-4e16-9412-d378ef168903@linaro.org>
-References: <tencent_C40B301A0F71853A540809BE1BB85AB12D07@qq.com>
- <f9df2e02-9fae-4e16-9412-d378ef168903@linaro.org>
+        Sat, 26 Aug 2023 10:29:32 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D023DCD1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:29:30 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99c93638322so385926666b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:29:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693060169; x=1693664969;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UoHwOTKGuupL476rFcW8I642v+ujJo8hTqxA/kEoIVc=;
+        b=yFKGic01iRVPyL4PsX55rDX8WIy7c6znpSM5R8aLe7RpP2VBqVwYhnRKZRjfQfvBkJ
+         SVd9InmtFtKNB8srwsbuTS66sEYRqZ2KtjwaHberQH1SvHeqYDYW/Q6TGLRanL3NdEpb
+         7xgifl+p3XTssLpg9RiB7OKGDuueJ1Sj1F0p2ydK+ELRu1bDqxbShFXVYfLJj+lK8uQr
+         AdST1hMObcMpVt4oXJ6oZORjh560bj9PyOEnYSVbVCYSgA5iaSoglN7uekh1N5PIAu+m
+         oCytOa8GlenkygJhgMH7P2sh+oUCPIeqhEhi3wRFZVx4BcSvzFvBV7QF6VG3YR9sfT4F
+         YesQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693060169; x=1693664969;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UoHwOTKGuupL476rFcW8I642v+ujJo8hTqxA/kEoIVc=;
+        b=G/2q+MQsA3NnKGCvghYkDKAEuYtIT3T7RPr+wSoXBJOg1XNvCmBniQbY2g3Xd4UtMW
+         HDGFusAfFKUcWsW4gumdF/ujgZYcSjyS+HUDBVmRvOm9Z/ICQfUrwrIBepvMNPnh+W2a
+         CTuF10P09Llw3fzaZYuzIn3fluM3V32shgvDzRB2TTvNPSY1vYyTRtfPT1kx1wzygxiR
+         hKg3wwXyWb51SOLsJxrMEzazImbunTEwPSek6TF/i69IVgNFkjiKF+lzL8JzzHiRnheL
+         3+nQWDws682DR2w+Rf/PwC8xWl65owY/ZWFCuPvDGVj9uK+azvrGTwpm642R9s3WdvaK
+         jIzQ==
+X-Gm-Message-State: AOJu0Yx79fACwNlfvyr5bCYRwygJWqWdtGjtUaA4LJbuTJx503UndLDm
+        +ozQuFdrUH6tPBxy50N9YMp7ZQ==
+X-Google-Smtp-Source: AGHT+IFFtNX5/1x+vPBsm+ndbnTzoPdNJBmv/tkhp3W8Qop5+BkHCGF+0A7SABanuHFJLm3T355oQw==
+X-Received: by 2002:a17:907:7804:b0:9a1:914e:491a with SMTP id la4-20020a170907780400b009a1914e491amr19325263ejc.3.1693060169184;
+        Sat, 26 Aug 2023 07:29:29 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id l8-20020a1709067d4800b009a1c4d04989sm2227595ejp.217.2023.08.26.07.29.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Aug 2023 07:29:28 -0700 (PDT)
+Message-ID: <5847be93-68c3-95fb-1d3e-9678804b9a70@linaro.org>
+Date:   Sat, 26 Aug 2023 16:29:27 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_BLOCKED,RDNS_DYNAMIC,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 3/3] clk: qcom: Add SM6115 LPASSCC
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
+ <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org>
+ <a9d52cd9-845e-ff88-3c26-858cb6604e43@linaro.org>
+ <CAA8EJprEnMjbKw2fbU1X7GV=ANARNhofSQh49Bdo1kvuOskbbQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJprEnMjbKw2fbU1X7GV=ANARNhofSQh49Bdo1kvuOskbbQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-=E5=9C=A8 2023=E5=B9=B48=E6=9C=8826=E6=97=A5=E6=98=9F=E6=9C=9F=E5=85=AD CST=
- =E4=B8=8B=E5=8D=886:49:27=EF=BC=8CKonrad Dybcio =E5=86=99=E9=81=93=EF=BC=9A
-> On 26.08.2023 12:47, Zhang Shurong wrote:
-> > This func misses checking for platform_get_irq()'s call and may passes =
-the
-> > negative error codes to request_irq(), which takes unsigned IRQ #,
-> > causing it to fail with -EINVAL, overriding an original error code.
-> >=20
-> > Fix this by stop calling request_irq() with invalid IRQ #s.
-> >=20
-> > Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded U=
-SB
-> > Debugger(EUD)") Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-> > ---
-> >=20
-> >  drivers/usb/misc/qcom_eud.c | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-> > index 7f371ea1248c..b33c615a2037 100644
-> > --- a/drivers/usb/misc/qcom_eud.c
-> > +++ b/drivers/usb/misc/qcom_eud.c
-> > @@ -204,7 +204,12 @@ static int eud_probe(struct platform_device *pdev)
-> >=20
-> >  	if (IS_ERR(chip->mode_mgr))
-> >  =09
-> >  		return PTR_ERR(chip->mode_mgr);
-> >=20
-> > -	chip->irq =3D platform_get_irq(pdev, 0);
-> > +	ret =3D platform_get_irq(pdev, 0);
-> > +	if (ret < 0)
-> > +		return ret;
-> > +
-> > +	chip->irq =3D ret;chip->irq =3D plat..
->=20
-> if (chip->irq < 0)
-> 	return chip->irq
->=20
-> ?
->=20
-> Konrad
-Thank you for your thoughtful response. To clarify, are you suggesting that=
- I=20
-replace the usage of `ret` with `chip->irq`? If that is the case, I will=20
-proceed with creating a patch for version 2.
+On 26/08/2023 16:09, Dmitry Baryshkov wrote:
 
+>>> +MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
+>>
+>> Everything here is almost the same as sc8280xp one, so this should be
+>> added to sc8280xp. You cut some boilerplate and additional driver.
+> 
+> We have been there. It quickly becomes a nightmare to maintain.
+> Consider dispcc-sm8250.c
 
+Because too much was added. I do not propose to keep all resets here.
 
+> 
+> But I agree with you, this code looks too similar. If we expect more
+> similar lpasscc drivers, which provide no clocks, just several resets,
+> maybe we can create a common generic wrapper and make resets lists
+> corresponding driver data?
 
+This would also work.
+
+Best regards,
+Krzysztof
 
