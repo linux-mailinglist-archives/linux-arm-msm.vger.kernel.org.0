@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B67A278958C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:50:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AB18789590
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:52:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230077AbjHZJuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 05:50:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60602 "EHLO
+        id S229646AbjHZJwW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 05:52:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231670AbjHZJtr (ORCPT
+        with ESMTP id S232592AbjHZJwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 05:49:47 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15BC52D4B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:49:25 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50087d47d4dso2629796e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:49:24 -0700 (PDT)
+        Sat, 26 Aug 2023 05:52:17 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9122BE7F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:52:11 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso2569130e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693043355; x=1693648155;
+        d=linaro.org; s=google; t=1693043530; x=1693648330;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5Tmmq8ybvO0syyR4VafsZNQhYCeLjSBRDGg+3P4MXSo=;
-        b=ec/SnErYIqXNu26BB+IjU9vpz8kxH3f4FDpZ7z8/wsuexhkdzQJAazxTtq4oclQKCt
-         SPiWEU4gvEUvBXhJXXLLO4Ur0zaAG/d2IXqFan/tjGqyDRaWVyywmBtKuNmovYbncqPY
-         /YOj9/i3KEkAr9ZzBoRnj2ZnEnD4u+HEgs7kYxOhUgJ1qwInd1MkkPtDvKSzOyF9PLkp
-         uKNvZcHWGVtg0EVbdgIeP1vt9lyi46j8xPdhvlWKtx7FYi9/0V13dcw2GlEemATaBM9P
-         AnpySwD9eZxqTXp3QgRzVEr5/+pTbfNpANOZStmgx98gtadWMu+aXDLjUILFLmSuvRTh
-         lYGw==
+        bh=RcCJka8GaBPp1JWKaEMYYjB5JT7EHUSr4X2gpzZXC9g=;
+        b=pnl4MhHP53c380d37z7A+ixNSi3Xr+ZO/n0gY/FXrhnuC3Tgt+qDvopTltBePdDHUK
+         MZY6OBxHnj0arQ+GfS3Oi+bB0pO+g070Q3evp4v337aL81SHzFGrsmxr6RDSr/lng2zq
+         hhlEk62QQmvgrySwPE+Z3AigeHBoXh0nSbilc3jPoraW4DexahW8l3U/PtNHZWINrWQh
+         FxNzvqN+TFPnngqv+ipTyl2yDsMylinXUda4LVcsDXKAc2ZRtVJj1x6f9X75tb5uuKm0
+         YbT7Zl1kmjEfNwHEZK6KPXiof0xYl/+LLenWTi8lsf4FkG9FPKHTxmzwMwbhNRmUOzVf
+         FaNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693043355; x=1693648155;
+        d=1e100.net; s=20221208; t=1693043530; x=1693648330;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Tmmq8ybvO0syyR4VafsZNQhYCeLjSBRDGg+3P4MXSo=;
-        b=glc1IDdqi3c8orlOpWOEY8g3IW1WmdmvQmytvXP1WWdPFoP4GCTf6EzsRFGWTSXhwZ
-         RsB7aw+Fg9aBxW71w11MR5Q/+5CqFZpxp6FWRTF1xWFDjEY7LYJFSwzRVpyk3IDtJhBB
-         PHLVa3FF4P9/jTAJJKZJylu7li88wcrdLtPVXUbHbRB3thLpzDmG7dZdvybyARbg5rXS
-         iVM2TevapX2vuckVWHH+Ou6Fnls+D898CIr06VRnueVS35PwsP9ACDp1WwKLA+k7KGb9
-         yzU1x9wYAsaodgBb2kFkJfZhtfLStCD2o3TTlLPIoqNt/NeA1TL/joqzCUQnrAm7U4pw
-         Zzaw==
-X-Gm-Message-State: AOJu0YzJ8qVnY3rAI7DVbNeZPgssEMe03bKsret+E+AsgDnUjU+OLUfp
-        lTm2timvPxa0f4fyytFj1Xs01i1y352wlxT1ajVddw==
-X-Google-Smtp-Source: AGHT+IGM4dkbpFFvM81LMgabeWTKJQzN2F9LwWdQ6qcuX9Lba/oM/+wtQ0zHLnk0J6rBQ44OoR5XQA==
-X-Received: by 2002:a05:6512:3a87:b0:500:b053:7f84 with SMTP id q7-20020a0565123a8700b00500b0537f84mr874644lfu.61.1693043355429;
-        Sat, 26 Aug 2023 02:49:15 -0700 (PDT)
+        bh=RcCJka8GaBPp1JWKaEMYYjB5JT7EHUSr4X2gpzZXC9g=;
+        b=GQ33jAcHnmw53FZaXk75XqlmvVVQB1O2Hf6YlWvJLKzcierQ+f+CWkSe4mDR8KXQ6b
+         E9PFTa0jxm9IEIPeMynpfY8dpGM54mbgpa/TLlx3cz9iCEuDDuFFOU3YpKG/xwScQJx0
+         wNFleDjrNAbPI/hPIv3BzPvAundEF2ngRVPP63lDjmTAdnhgAHXObVBPD3hQBqFLYGqJ
+         S5L2NbjIq/ptF+72KCgAeZln8/MWV8EfzYEmk2B2Y+9frMD1rCH00Px6gxAOxoIcoSn+
+         MFrfg1Br7ciGhGMsJ4vWXtbc0t+302e/280Iznw/HVCgPVPCLv/dxCxFoQgZq/+Yf+ww
+         NbtA==
+X-Gm-Message-State: AOJu0Yz7qWqxPDSNbfdyu1SV3g6ip3tavd8tJo0igiVkSKuKC1oaBlDU
+        y+cvuqafHU2p772ZQ/CF4saD7Q==
+X-Google-Smtp-Source: AGHT+IH/6EoQPI/jxdprlMmW/GOjCqqBLDpSULcNdofMvV+kmS2E2NnKymyAllE0jIvAIGAZaKcl4A==
+X-Received: by 2002:a19:791d:0:b0:4fd:cbd6:d2ff with SMTP id u29-20020a19791d000000b004fdcbd6d2ffmr12826691lfc.33.1693043529828;
+        Sat, 26 Aug 2023 02:52:09 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id l17-20020ac25551000000b004fdfd79e732sm645732lfk.289.2023.08.26.02.49.14
+        by smtp.gmail.com with ESMTPSA id u8-20020ac25188000000b00500a44e158csm649584lfi.235.2023.08.26.02.52.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 02:49:15 -0700 (PDT)
-Message-ID: <df264f74-e0b0-4f48-8b25-168a18230dfe@linaro.org>
-Date:   Sat, 26 Aug 2023 11:49:14 +0200
+        Sat, 26 Aug 2023 02:52:09 -0700 (PDT)
+Message-ID: <832569a3-096e-435e-8a60-c6a501fd385a@linaro.org>
+Date:   Sat, 26 Aug 2023 11:52:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8150: extend the size of the PDC
- resource
+Subject: Re: [PATCH v2 2/6] ARM: dts: qcom: add common dt for MSM8x26 Lumias
+ along with Nokia Lumia 630
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>,
+        Jack Matthews <jm5112356@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
- <20230825213552.1646321-2-dmitry.baryshkov@linaro.org>
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+References: <20230813152623.64989-1-rayyan@ansari.sh>
+ <20230813152623.64989-3-rayyan@ansari.sh>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +105,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230825213552.1646321-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230813152623.64989-3-rayyan@ansari.sh>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -114,29 +117,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.08.2023 23:35, Dmitry Baryshkov wrote:
-> Follow the example of other platforms and extend the PDC resource region
-> to 0x30000, so that the PDC driver can read the PDC_VERSION register.
+On 13.08.2023 17:23, Rayyan Ansari wrote:
+> Add a common device tree for Lumia phones based on the Qualcomm MSM8x26
+> family of chipsets.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Currently supports:
+> - Framebuffer
+> - Touchscreen
+> - Keys
+> - Regulators
+> - MMC
+> - USB
+> - UART
+> 
+> Also add an initial device tree for the Nokia Lumia 630, codenamed
+> "moneypenny".
+> 
+> Co-authored-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+> Co-authored-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> Co-authored-by: Jack Matthews <jm5112356@gmail.com>
+> Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> Signed-off-by: Jack Matthews <jm5112356@gmail.com>
+> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 > ---
-Fixes: 397ad94668c1 ("arm64: dts: qcom: sm8150: Add pdc interrupt controller node")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm/boot/dts/qcom/Makefile               |   1 +
+>  .../qcom/qcom-msm8226-microsoft-common.dtsi   | 329 ++++++++++++++++++
+>  .../qcom-msm8226-microsoft-moneypenny.dts     |  23 ++
+>  3 files changed, 353 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
+>  create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-moneypenny.dts
+> 
+> diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+> index 3dfb1c8cefb8..b2569059ce8d 100644
+> --- a/arch/arm/boot/dts/qcom/Makefile
+> +++ b/arch/arm/boot/dts/qcom/Makefile
+> @@ -23,6 +23,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>  	qcom-ipq4019-ap.dk07.1-c2.dtb \
+>  	qcom-ipq8064-ap148.dtb \
+>  	qcom-ipq8064-rb3011.dtb \
+> +	qcom-msm8226-microsoft-moneypenny.dtb \
+>  	qcom-msm8226-samsung-s3ve3g.dtb \
+>  	qcom-msm8660-surf.dtb \
+>  	qcom-msm8916-samsung-e5.dtb \
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
+> new file mode 100644
+> index 000000000000..ddfe7965f564
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
+> @@ -0,0 +1,329 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Common Board Device Tree for Microsoft MSM8x26-based Lumias
+> + *
+> + * Copyright (c) 2023, Jack Matthews <jm5112356@gmail.com>
+> + * Copyright (c) 2023, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> + * Copyright (c) 2023, Dominik Kobinski <dominikkobinski314@gmail.com>
+> + * Copyright (c) 2023, Rayyan Ansari <rayyan@ansari.sh>
+> + */
+> +
+> +#include "qcom-msm8226.dtsi"
+> +#include "qcom-pm8226.dtsi"
+> +#include <dt-bindings/input/input.h>
+> +
+> +/*
+> + * Delete all generic (msm8226.dtsi) reserved
+> + * memory mappings which are different on these devices.
+> + */
+> +/delete-node/ &smem_region;
+> +
+> +/ {
+> +	aliases {
+> +		mmc0 = &sdhc_1; /* eMMC */
+> +		mmc1 = &sdhc_2; /* microSD */
+> +		display0 = &framebuffer;
+> +	};
+> +
+> +	chosen {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		stdout-path = "display0";
+> +
+> +		framebuffer: framebuffer@3200000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0x3200000 0x800000>;
+> +			format = "a8r8g8b8";
+> +			width = <720>;
+> +			height = <1280>;
+> +			stride = <(720 * 4)>;
+> +
+> +			clocks = <&mmcc MDSS_AHB_CLK>,
+> +				 <&mmcc MDSS_AXI_CLK>,
+> +				 <&mmcc MDSS_BYTE0_CLK>,
+> +				 <&mmcc MDSS_MDP_CLK>,
+> +				 <&mmcc MDSS_PCLK0_CLK>,
+> +				 <&mmcc MDSS_VSYNC_CLK>;
+> +			power-domains = <&mmcc MDSS_GDSC>;
+> +		};
+> +	};
+> +
+> +	gpio_keys: gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-0 = <&gpio_keys_default>;
+> +		pinctrl-names = "default";
+> +
+> +		label = "GPIO Buttons";
+> +
+> +		key-volume-up {
+> +			label = "Volume Up";
+> +			gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +		};
+> +	};
+> +
+> +	/*
+> +	 * This device being a WP platform has a different
+> +	 * memory layout than other Android based devices.
+> +	 * This smem memory region is directly copied from
+> +	 * the original UEFI firmware.
+> +	 */
+> +	reserved-memory {
+> +		display_reserved: framebuffer@3200000 {
+> +			reg = <0x3200000 0x800000>;
+> +			no-map;
+> +		};
+> +
+> +		smem_region: smem@fa00000 {
+> +			reg = <0xfa00000 0x100000>;
+Padding the addr field to 8 hex digits would make this easier to 
+compare
+
+[...]
+
+> +	touchscreen_default: touchscreen-default-state {
+> +		irq-pins {
+> +			pins = "gpio17";
+> +			function = "gpio";
+> +
+> +			drive-strength = <8>;
+Drop newline above
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 380712aee977..38c5d6dbd0d7 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -3923,7 +3923,7 @@ dispcc: clock-controller@af00000 {
->  
->  		pdc: interrupt-controller@b220000 {
->  			compatible = "qcom,sm8150-pdc", "qcom,pdc";
-> -			reg = <0 0x0b220000 0 0x400>;
-> +			reg = <0 0x0b220000 0 0x30000>;
->  			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
->  					  <125 63 1>;
->  			#interrupt-cells = <2>;
