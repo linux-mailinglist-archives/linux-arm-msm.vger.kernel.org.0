@@ -2,85 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 558E4789564
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:47:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C56CD789567
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:47:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232326AbjHZJq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 05:46:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39712 "EHLO
+        id S232311AbjHZJrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 05:47:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232479AbjHZJqT (ORCPT
+        with ESMTP id S232492AbjHZJqv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 05:46:19 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52D4710D7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:46:17 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5230a22cfd1so2252872a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:46:17 -0700 (PDT)
+        Sat, 26 Aug 2023 05:46:51 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 597601FF0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:46:46 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-52889bc61b6so2427961a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:46:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693043176; x=1693647976;
+        d=linaro.org; s=google; t=1693043205; x=1693648005;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=L/9cF7mUGcs5lnURjy7czI/q0cwno2d09/e2CkYrp74=;
-        b=iXXSLwwIRGNrtx2YExsxI7JPrANjYjRiv4pogNxDEWAvhN929yxMbz+1yFpp+uCmaK
-         Nm5sJ5x2vtXm9NLcNEbRWQC8Qb4hKl69abp+XapaXEJRmVBYxdoroSnDPV9Qlq9KoSjy
-         oj+0jC1HRvFeCem4I1sZ1Uinw726gdUCbOhEcaTPv2JM2NsgEgLyIyRcWUXHGp441NON
-         gIxG9UK+BpwCgnjHS3itX4YhV5leVdq7ML0L8zuGudv5d+ArDGblmdI05J0WfEdtAuuF
-         JQ71d7zi69AMMZGIK9pv4zOJRgVPAJT5V04K+STOHKU9TkwFf6wKadiO9Bpm6yhPQiGi
-         U8IQ==
+        bh=xEbLos18PAXF+VWDexugVSPY8cGgVPouJFgqeAIgj2g=;
+        b=lmCoxeIqztpe+opKBbUijFsC6GOPWVrhtomY78qaM6TlZjVaPJSPk8s5ZlFe61FC7l
+         p39cb4dpX1s+D3B0Jnrz9M1ECcH5aO7DTRyZAynGM5icqJjRr+caI80bdPdVM8Uw5+NN
+         nIraLLC7pxJAmJt/QEdO7exAcUMsT7DxAnUaheSCaI1U3qsTqzHK68dinbD21gZDajGR
+         rpiMi+G5nsu8DTn3+mDwZyD5pepNbhLfnuJ8CCWI2BVJzMQs+oylBtMUuKtL7vF1V+R0
+         dryzW4yO1sm0IETnkgkdQ9rKJMt269re2UQrEfOKeCK99vBwCHZE993T2DmaX9r1Epqq
+         5bKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693043176; x=1693647976;
+        d=1e100.net; s=20221208; t=1693043205; x=1693648005;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L/9cF7mUGcs5lnURjy7czI/q0cwno2d09/e2CkYrp74=;
-        b=ktQUi9W8SpO+kd38uI+UDV3jXe9iDKrUeeO5koo2dBeqU7HQFYBgI2t4GUrhwzpFUS
-         hxI6OBTDlaNae1Vm6xcF9QaNoGM2YUl2bn8COmlC1GtJwXqEHnP5pcN+Du39h6ybzhVp
-         5+YIjWL2vPcTW7nUIMk6Vk/9caXmn/4DGnpwEkru/JGTp+WJAVqGrv4hx3BxSoOi+r1O
-         V2tq1qUzeNwSk7SKUZLfChOV7WRp/m24ue5LSUlTS9TbJXup484gf9b+58ogEtc9Gnud
-         z0j6JrCXbPeByegXSCbxw00BLZBcAPZx2zRCNXfHB0WEgD5Ap7g5aXrH83kdTUfUBsTJ
-         rLqw==
-X-Gm-Message-State: AOJu0YxfZNXYKDDmvaOlqSufuSn1zo9TGjcPU28ebJsTGj3uoDsgNNc/
-        Wa/hXe16gTK02YKO4EIDXOdiJw==
-X-Google-Smtp-Source: AGHT+IF6ONPf1t5PcgHA07gMjKsXc4Q4wOIhd3qXTJXgn/fivxGj+UiCAcfYejmfcbHb598D7X6wvw==
-X-Received: by 2002:a17:907:7845:b0:9a1:8f6f:6873 with SMTP id lb5-20020a170907784500b009a18f6f6873mr13551115ejc.33.1693043175769;
-        Sat, 26 Aug 2023 02:46:15 -0700 (PDT)
+        bh=xEbLos18PAXF+VWDexugVSPY8cGgVPouJFgqeAIgj2g=;
+        b=bKr/e9h8WjD/U1FCzStR/GxXoQcZ87H2KY+a1KwZXBuQthnyc7iIR1hjurDlcsWCw1
+         7Qk5H1mDvqN2pSqpyjfMmc4Vyy+nGDOlyal4kg/uR7O8fbIYnGo8rX1N2wJrxtnRgsmG
+         t9DqGPuB0RxCOu0x8Psd1I0Ki6BfBAUfVX1YyY23kVyjxuGq9BjSy9ud1gFXkTrUQKbH
+         7VfRIOyBvsZMxP0S9R2Kmrf60+vxaWHHnkyaYPehyDv34K2QM1ch62h7aIjoWFFSvZuU
+         7353XeUjnLb8yu+3+bYSESTlfEGiI5k6T1dqnPRQm9r8grvAp2APtY5aoPzzk9ZlcKzU
+         M2EQ==
+X-Gm-Message-State: AOJu0Yz9dQSUhztgFL5m6P2gWxRoRCWrWENgw0pQjjQOF6ThyL4BkK7y
+        u7wsQqC83jdkSNRKuxJwUjGQ4g==
+X-Google-Smtp-Source: AGHT+IEP7ndTWQOR+5ImclTFoFfHYoXYsPwZTnUGtRVfLr6CS1R55d2YXHpGL89sNFFvaNIT17wSUg==
+X-Received: by 2002:a17:906:2098:b0:9a1:dd2a:c2c6 with SMTP id 24-20020a170906209800b009a1dd2ac2c6mr7448605ejq.8.1693043204734;
+        Sat, 26 Aug 2023 02:46:44 -0700 (PDT)
 Received: from [192.168.0.22] ([77.252.47.198])
-        by smtp.gmail.com with ESMTPSA id s16-20020a17090699d000b0099315454e76sm1928144ejn.211.2023.08.26.02.46.14
+        by smtp.gmail.com with ESMTPSA id d14-20020a17090648ce00b0099cb349d570sm1939294ejt.185.2023.08.26.02.46.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 02:46:15 -0700 (PDT)
-Message-ID: <997bab8c-aae0-1f04-0a31-8d02ff6abe67@linaro.org>
-Date:   Sat, 26 Aug 2023 11:46:13 +0200
+        Sat, 26 Aug 2023 02:46:44 -0700 (PDT)
+Message-ID: <4007687e-1176-cffa-5945-94787fe6d5d9@linaro.org>
+Date:   Sat, 26 Aug 2023 11:46:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH 1/3] dt-bindings: clock: Add Qualcomm SM6115 LPASS clock
- controller
+Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM6115
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
- <20230825-topic-6115_lpasscc-v1-1-d4857be298e3@linaro.org>
- <40fd108a-86e3-e68e-04bc-caab45a3381e@linaro.org>
- <3985f56a-7152-4b73-b456-24d3a329a2b4@linaro.org>
+References: <20230825-topic-6115tx-v1-0-ebed201ad54b@linaro.org>
+ <20230825-topic-6115tx-v1-1-ebed201ad54b@linaro.org>
+ <1a0dc235-eb44-9923-6206-560199a70d4e@linaro.org>
+ <f3c43297-1b05-47b6-a158-5b45df77cfed@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <3985f56a-7152-4b73-b456-24d3a329a2b4@linaro.org>
+In-Reply-To: <f3c43297-1b05-47b6-a158-5b45df77cfed@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,45 +89,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2023 11:39, Konrad Dybcio wrote:
-> On 26.08.2023 11:28, Krzysztof Kozlowski wrote:
->> On 25/08/2023 20:13, Konrad Dybcio wrote:
->>> SM6115 (and its derivatives or similar SoCs) have a LPASS clock
->>> controller block which provides audio-related resets.
+On 26/08/2023 11:37, Konrad Dybcio wrote:
+> On 26.08.2023 11:32, Krzysztof Kozlowski wrote:
+>> On 25/08/2023 19:23, Konrad Dybcio wrote:
+>>> SM6115 has a TX Macro, requiring an NPL clock, but not DCODEC.
+>>> Document it.
 >>>
->>> Add bindings for it.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>  .../bindings/clock/qcom,sm6115-lpasscc.yaml        | 53 ++++++++++++++++++++++
->>>  include/dt-bindings/clock/qcom,sm6115-lpasscc.h    | 15 ++++++
->>>  2 files changed, 68 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml
->>> new file mode 100644
->>> index 000000000000..58ee84aed073
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml
->>> @@ -0,0 +1,53 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/clock/qcom,sm6115-lpasscc.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm LPASS Core & Audio Clock Controller on SM6115
 >>
->> Everything here looks the same as sc8280xp, so this could be just added
->> there as enum. The overall LPASS block version is different, but the
->> resets/clock controller look similar, doesn't it?
-> I think the 6115 cc block is a bit different, 8280 has more swr
-> hosts. Maybe Srini would know more.
+>> ...
+>>
+>>>  
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          enum:
+>>> +            - qcom,sm6115-lpass-tx-macro
+>>> +    then:
+>>> +      properties:
+>>> +        clocks:
+>>> +          minItems: 4
+>>> +          maxItems: 4
+>>> +        clock-names:
+>>> +          items:
+>>> +            - const: mclk
+>>> +            - const: npl
+>>> +            - const: dcodec
+>>> +            - const: fsgen
+>>
+>> Are you sure there is no macro? This means there will be no
+>> LPASS_HW_MACRO_VOTE vote.
+> Yes.
+> 
+> Do you have downstream sources somewhere?
+> Also yes, but they're not public..
 
-Indeed, looking at downstream DTS this is closer to SM8250 and SM8350
-than SC8280xp, with some interesting differences. But if you bring it
-up, you also might fix SM8350, to which I looked a bit but then gave up.
-
-Anyway, with the example staying or removed:
+Indeed. Looks correct:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
