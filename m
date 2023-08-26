@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE617895F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:28:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 212F27895FF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 12:30:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232098AbjHZK2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 06:28:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38482 "EHLO
+        id S232053AbjHZKaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 06:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232378AbjHZK2R (ORCPT
+        with ESMTP id S232139AbjHZK3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 06:28:17 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09E22105
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:28:14 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso2596280e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:28:14 -0700 (PDT)
+        Sat, 26 Aug 2023 06:29:40 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8892102
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:29:37 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-500a8b2b73eso2208348e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 03:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693045693; x=1693650493;
+        d=linaro.org; s=google; t=1693045776; x=1693650576;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9NaqpQGhpgcdFIYlLox3jPu67fTUX1n/MSYQfQDLUR8=;
-        b=v978hgK98BtZFwGsy5EcrE6uFH3UrKXgHY28cyBA11TUxC9Mg+xR/iozQ95wQUvq+V
-         oAGYFN4ycdF8rZzKF7gB9F/MXOPC6WGu2GIR/5F8H6/TDS7ZPw26TAy4hFkCQcXdjyia
-         KkRNyyjiqwvpCvhQ43VLF9zxCyj4E5J6M2x+LIyOajMrLLoBeYQic5yF6fUTbgWB+lRT
-         T40WQFKvfmiyBY7oJtvVACYnn1tSJpcH1MRdFkmVzNRJlfmlTmm19TG4Y6seuZGKk1b8
-         XHSrTdld72E+P53odTkKM9aFDB/EfSVoHjUKAIYWp0vAOlCSCmpuuubCDIU3TzZcQaqQ
-         nYyw==
+        bh=GsNUN6pqnz0TuH+F4mwwIbD9xuCZQL0gzpUGeQXtpFk=;
+        b=zH/Q/+pqS2Wa0vxdtDigAdNP/6bkDMG3RFWXZpRmekjXovIYMERoHRRNgAAM6iLlPU
+         ClAIeXYP6NUWLSYmTGnAT5540Pi1/fGVysbqW07j8N0MmxM3Iv2yrYf3g5Q7Oofu5NZr
+         cob+Uyegkg7xjfquST6JirXlWA9RLaMIHYpwQfamH71Zk8JKqMIyUM3vi6dGTUN/sAcn
+         HV8ekoWqwQBni/ngVeHNuOCna9yY8XcknUNOq2XLf99oOZcQRbBixD+kYsfbzh+89AdL
+         imUgjYgcYzkaEpzymMv4F3KjtiSuAHBBQYDRbp9cayO5GiEze8tF0M28El4E0nbJXbAE
+         j4ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693045693; x=1693650493;
+        d=1e100.net; s=20221208; t=1693045776; x=1693650576;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9NaqpQGhpgcdFIYlLox3jPu67fTUX1n/MSYQfQDLUR8=;
-        b=RGJurYakjaA2VG8zSfk9q6X4JBdJU+HQYffBHWSsJ5KxC//hZGy8y7J3jK7q8ZyLFM
-         QJ53c3ZmQrnhphwtk88M/4/s8F0e5ixM4ZcbpOQmmmqUHNQ+UFXXkS9E682MtuLDb9XJ
-         dAr9vIGm+AKx3yubeCGg2Cbl8t1jPMZVVkTWgqm6iK+mN2Qnm/E9d5VPIyYLsC74giFq
-         g+9ux6+NkNskaNB7PWoBbaqwD2/Lr7Si2JVWg4JgQutJ/GmuQ5USPRwRF+UhXkf48Zc4
-         +4aMmXgPCulkypCvwMy8UU5BdpL8AiN/zrk49LKUjMfb+p4RfdrSGbIdwbXokLe4tQ+P
-         F60w==
-X-Gm-Message-State: AOJu0YxyEGHMB4/2A0TfyHxXNbmjMHddSCGnbgtMjoxTRQVxouOY/9wX
-        ZJbr1ImKTGiehMoJzLBp6UCUgw==
-X-Google-Smtp-Source: AGHT+IFUAHbnBeb2eJEvhE5Io16hy36o/NNQVVMwB2dqai8gEej52VvUu3DYuNzwjRdZRG0ZYKm5Ww==
-X-Received: by 2002:a05:6512:11e3:b0:4fe:15b5:a5f9 with SMTP id p3-20020a05651211e300b004fe15b5a5f9mr13121848lfs.54.1693045693015;
-        Sat, 26 Aug 2023 03:28:13 -0700 (PDT)
+        bh=GsNUN6pqnz0TuH+F4mwwIbD9xuCZQL0gzpUGeQXtpFk=;
+        b=WP27ATaWl5DvYI3M59hA8ZCDG6GwLpkDcYkxwlk+Mb9qZI1RoINPIqf+QNSRRytJmS
+         NxlaQdSR15M33caQGIR8jduZ6sQKuZMDJ5tMnhFCKJIaXL83JSazLOY3IJMgA+d8pDT0
+         GirZO0ggkGPjCWChOu7GSldsCnoF8iIDfUR1jDGkUyOvgtzMaJGkfji1l/z0eEUoUNPp
+         k/ryTfr33PUlf8Ag0PGe8fGRLYOkIaNoftuDFRcBtuEt+RZHyIFtpKy3QCPmc3ROsvwm
+         +Godzeln4LDA2jqSH398ua8OpxdbKexUhK6lFuC8/GF+SiSR/VfpK1U0Zpcmb0cxRlRU
+         YT4w==
+X-Gm-Message-State: AOJu0YwZwQbAGJAEaxD8KU28OOGkCW08BUyK+LLtNsLVyBgKhcHo5uV0
+        mjEyisITdfwZ+Sdz3ZQbIPsGgw==
+X-Google-Smtp-Source: AGHT+IFRhChplWciczblVbM/j/a6uTbdRJi9ezDFTRStIJxdY0CuJl0LLWZ0Gy1mgmRsbdt8h/9GwA==
+X-Received: by 2002:a05:6512:33c5:b0:4f9:cd02:4af1 with SMTP id d5-20020a05651233c500b004f9cd024af1mr16860889lfg.34.1693045775850;
+        Sat, 26 Aug 2023 03:29:35 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id o13-20020ac2434d000000b004fe4d45f56bsm658996lfl.68.2023.08.26.03.28.12
+        by smtp.gmail.com with ESMTPSA id o13-20020ac2434d000000b004fe4d45f56bsm658996lfl.68.2023.08.26.03.29.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 03:28:12 -0700 (PDT)
-Message-ID: <dfea3272-7397-4a91-8f3d-b58a77e6c605@linaro.org>
-Date:   Sat, 26 Aug 2023 12:28:12 +0200
+        Sat, 26 Aug 2023 03:29:35 -0700 (PDT)
+Message-ID: <790bfcec-48dc-4a6a-8ca5-fd6d11f93d50@linaro.org>
+Date:   Sat, 26 Aug 2023 12:29:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 19/32] ARM: dts: qcom: pm8921: reorder nodes
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: msm8916-samsung-gt510: Add display
+ panel
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org
-References: <20230822001349.899298-1-dmitry.baryshkov@linaro.org>
- <20230822001349.899298-20-dmitry.baryshkov@linaro.org>
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jasper Korten <jja2000@gmail.com>
+References: <20230725-gt5-panel-v1-0-7c787e33a614@trvn.ru>
+ <20230725-gt5-panel-v1-1-7c787e33a614@trvn.ru>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +104,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230822001349.899298-20-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230725-gt5-panel-v1-1-7c787e33a614@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -114,12 +117,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22.08.2023 02:13, Dmitry Baryshkov wrote:
-> Move pm8921 device nodes to follow the alphanumberic sorting order.
+On 25.07.2023 13:52, Nikita Travkin wrote:
+> From: Jasper Korten <jja2000@gmail.com>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> The device has a 9.7 inch ltl101at01 display. Add it to the device tree.
+> 
+> Signed-off-by: Jasper Korten <jja2000@gmail.com>
+> Co-developed-by: Nikita Travkin <nikita@trvn.ru>
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
