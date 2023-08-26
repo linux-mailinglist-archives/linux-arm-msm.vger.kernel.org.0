@@ -2,153 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2DC87896EF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 15:38:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D698E7896F5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 15:43:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbjHZNiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 09:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40538 "EHLO
+        id S231357AbjHZNnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 09:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231393AbjHZNiR (ORCPT
+        with ESMTP id S232706AbjHZNnS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 09:38:17 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48C322110
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 06:38:15 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ba1e9b1fa9so27098621fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 06:38:15 -0700 (PDT)
+        Sat, 26 Aug 2023 09:43:18 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C1C2115
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 06:43:16 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d746ea563f9so1789040276.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 06:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693057093; x=1693661893;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G9SgFDv7E50+Hpq3nmjKvqF8IQ9dgI58NUkPjP5JpyY=;
-        b=Bv6/6wDWhD8YabIZkVDDIT4xOSLkR+SqRA/51bt56W+8k0L6XZjKivwQfd+cmhSchQ
-         YfQlwmE89P5JBitroJRAPyV5g0sIpaKYf9rmKxTvdV4vK4JmVcYNF5llsmhiOLs0sOzt
-         6oEQVOIeiueSmldFz4fXOMlu03J5+Tf10XDvUkhLIwjlFzWALqlC28rYYuYU2Veb4W4q
-         X7d52oWkKXQnAJFMFULMOOjp4LZAV/FO26zwhLrJJlxPa1tfsGmtoHpDUuMr85hqLCyc
-         jpGWQ2DX09YT0hw1FlvqNXhLohp5V8YiTyc1eeu7e/2OaHPFM21Dnikxfv3DU6yRirF8
-         4faw==
+        d=linaro.org; s=google; t=1693057395; x=1693662195;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZQjPQncEhFfHNzBdVkIuccPrrLI6I2i5ji4GfF/HXGA=;
+        b=QvvEjqaW5NGoyt/76vLwvsGtmjlx8KRWvOgu7djTaLs6HVjP2bQ+y3O3rXiBpHB4ND
+         dufr+C03tyf8LoHVBkNhQ1cVnJ3cJkmbNZVbZphZAXpMe7nxFVleet9nv3WWH4jM+zzo
+         cBvZOg4a8FaVSXj+xNrzs9sQV9lWpcDi8jpFHVhJa2e+/iMfVB42m7f6TmEuD43fqtP4
+         fjSG47UagO4++sROhcVl+7zAainIDKnkmhT9LG0L76XU6ueySYYWbDfhn01/Lqa5sJpj
+         vyhK9TN90NcJ9+BeW7sNg9EDFuTxqSA/rXKG0IFwKhFj8o0d8BCAIG7srFElkpy3YCeD
+         4Htw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693057093; x=1693661893;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G9SgFDv7E50+Hpq3nmjKvqF8IQ9dgI58NUkPjP5JpyY=;
-        b=jvCI0SAZnHlAbbTUsEt+mZ4JHwWbAPwIyj3ZU2YZOeu1uFPXjNrHV1cg4P5CZHWKB9
-         bQ8tsyTiH3g5zh/sWrOW6NNAQDPxS+bGmhZcJql1wfEp6SfRtV42lqpDVD1JHsGS2a2B
-         g5mJPqW/1oH/a9CWG+j4v5ZzR/ijzvD+pHyL3+E6OUDGcOrpEGsPdy6JjTnwPsSo0qjL
-         AEx/HjjcBtazeSGMFlHTUTTTb+A1mxo5pQmRe5Y6uXk8tQC6VKZMIyQXBmlzB5s54pFy
-         gUPASMln0wOXaFcruEz7mgbM7+F2x347pIQh5pgSIgj3e530NFL9gtJytL+q3wKJTvwH
-         LTog==
-X-Gm-Message-State: AOJu0YzdfXo/MTtzTkylZEcCJeDZ4eUb1+sHYBieolx+m0HH46VSrxVR
-        BXP3qG0o9DFedcRtQicBJo48iw==
-X-Google-Smtp-Source: AGHT+IGOOe4NRVVciDOLuPW6zZbQIteqXBz8Yh+SmQkl8iB5eV4JI2+u5ly9aQKtcUeyZkQTpITxEQ==
-X-Received: by 2002:a05:6512:11e3:b0:4fb:ca59:42d7 with SMTP id p3-20020a05651211e300b004fbca5942d7mr14104758lfs.33.1693057093505;
-        Sat, 26 Aug 2023 06:38:13 -0700 (PDT)
-Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id e5-20020ac25465000000b005008cd93961sm714187lfn.192.2023.08.26.06.38.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 06:38:13 -0700 (PDT)
-Message-ID: <fd016130-12c2-4aa3-a19a-24153754b338@linaro.org>
-Date:   Sat, 26 Aug 2023 15:38:11 +0200
+        d=1e100.net; s=20221208; t=1693057395; x=1693662195;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZQjPQncEhFfHNzBdVkIuccPrrLI6I2i5ji4GfF/HXGA=;
+        b=ZMtEZVyiZfcdGyDUJXwDzEtFbOHtayZRub4wsRrA0OX7VnDpkyNiP0PBZaGYBV+0Jg
+         JXwM0zFcZpl/jIW4dwkKA51SqKozsvFgVkLdGuZnMg/Ok72kQ1cjdBFG6Vkus/PGGryf
+         zf/fEwRJQY6gjcLrKZx5HX4cHIjL6rkJXARnAoufHs3GSBERPYSHS+0L0sM84B/VVR7T
+         +2XbvwJgy/HTefI4DnkAYEEGQBNzCGdQYBbw4AMjuM0vC3jByGa+JNCfj49bPGAbHT96
+         0HvE0k/M5njsVm1EgpRurlIka/dHDMN0wgEQjxxtA+yhKN3ncMrGx3JWcQPW9BedA/id
+         uZ3Q==
+X-Gm-Message-State: AOJu0YydYGSVs33A3rF2Kh7ENvGYVm2wH8642O9LAULwJDI8gYgeiWS+
+        04dAMIIXMsbiQTAnNlxtVizDDYpUTD4S/1rE8ruHtaPSoinwXwFA
+X-Google-Smtp-Source: AGHT+IHcDC3t4yiX2xuvB5FhDZS40/AzZ3y3R7pq8UQJuwx3jDiV0nPfvPkBvp/zXSlwDRB6pfbVs/gMDuNNbBcLPK4=
+X-Received: by 2002:a25:dfd4:0:b0:d05:fa02:5bf5 with SMTP id
+ w203-20020a25dfd4000000b00d05fa025bf5mr23538354ybg.48.1693057395493; Sat, 26
+ Aug 2023 06:43:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] media: platform: venus: Add optional LLCC path
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+References: <20230822001349.899298-1-dmitry.baryshkov@linaro.org>
+ <20230822001349.899298-17-dmitry.baryshkov@linaro.org> <2dea943a-7a9e-4963-8ae5-6b126c750f80@linaro.org>
+In-Reply-To: <2dea943a-7a9e-4963-8ae5-6b126c750f80@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 26 Aug 2023 16:43:04 +0300
+Message-ID: <CAA8EJpoB6JYrFPZ7PMrVYvuwxgu6SH1zuPWG3q8Xy1J2YcCPcA@mail.gmail.com>
+Subject: Re: [PATCH v3 16/32] ARM: dts: qcom: mdm9615: split PMIC to separate
+ dtsi files
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org>
- <20230731-topic-8280_venus-v1-4-8c8bbe1983a5@linaro.org>
- <78d2fd56-804d-827b-d074-b139cf62a498@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <78d2fd56-804d-827b-d074-b139cf62a498@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-input@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.08.2023 23:04, Bryan O'Donoghue wrote:
-> On 04/08/2023 21:09, Konrad Dybcio wrote:
->> Some newer SoCs (such as SM8350) have a third interconnect path. Add
->> it and make it optional.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-[...]
+On Sat, 26 Aug 2023 at 15:08, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 22.08.2023 02:13, Dmitry Baryshkov wrote:
+> > The PMIC is not a part of the SoC, so move PMIC to a separate file and
+> > include it from the board files.
+> >
+> > Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> [...]
+>
+> > +                     pmic {
+> Are you leaving an empty subnode here?
 
-> I would scream if someone left me this comment but...
-> 
-> In probe we have
-> 
-> video_path =
-> cpu_cfgpath =
-> 
-> llc_path =
-> 
-> suspend
-> 
-> icc_set_bw(cpu_cfgpath,);
-> icc_set_bw(llc_path,);
-> icc_set_bw(video_path,);
-> 
-> resume
-> icc_set_bw(video_path,);
-> icc_set_bw(llc_path,);
-> icc_set_bw(cpu_cfgpath,);
-suspend == resume[::-1] is totally the right thing, but I'll
-reorder things in probe for your viewing pleasure
+No. It contains 'interrupts' property (which is specific to the SoC).
 
-Konrad
+-- 
+With best wishes
+Dmitry
