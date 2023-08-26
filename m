@@ -2,212 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E7C8789733
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 16:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 648DB789775
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 16:39:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbjHZOKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 10:10:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59708 "EHLO
+        id S229932AbjHZOib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 10:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232805AbjHZOJ4 (ORCPT
+        with ESMTP id S229821AbjHZOiY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 10:09:56 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFBD22117
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:09:52 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-d6b1025fc7aso1693264276.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 07:09:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693058992; x=1693663792;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GLSSaVuhVa/Seaf2opF9C5bgQRp/jxtlH/etGCBIFHY=;
-        b=rLOAt/D51tglIMQNlYbSHCQqbPy/NaR0UR/nMvV/BoPW2nHHO9+GGDIV4Xm6JngLzy
-         +LMxsvxWaiRJqIEKjJT9cv7dvWoI6OzLuri3h9eA+VVNlWqd9l+EoeUoNYgHQ1GdcAVu
-         0vN++69Vi0OdJ6gyQ3OyGzHSNWTvf3MKR7Iz+SFbSYLiKq7zvnvjinr63IrI3YIzOaSd
-         WtQDJyN25t6xTVt/VK1BrLpnh+YqF4dfzzG4rrsCuHJMX/PYdVsNW1g3qJz+okJyJlho
-         cDwPnZSRrvSz8OfwsnSlKHJ83MazDGCYwNQCdfZi8AoSIT0aM+Byu5BfRL5fE+Cr3TCm
-         saEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693058992; x=1693663792;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GLSSaVuhVa/Seaf2opF9C5bgQRp/jxtlH/etGCBIFHY=;
-        b=Vu6TRMS/QXc34KTQyrDEpDXaLFho8myOEDRqml6St0VP9h/uPEXVUXFDyf1K8+Nmec
-         /sQaAtAq5FW/UMtVbeO+AAsYAgYMacRlETYENdlsAlRehZy+Afhyp6wbLsKCqZl4W5HN
-         xBcGD9azhDtU2Domia/v80wEEkYRNuBcT6i1WQWlsQb9UJ9XvvBZs2HmEgZYYFGvPDtq
-         Nyq6TFX7p7/HESopLS6q1uqsFeXzn/EJZBh3qKQyU5QdEty+kmYRee2EZTJQvC9A49/C
-         lpHd1i9JVkEXqyLKN4mVTq1YF1bClHxyRpFdS29JztNBp7nObAntnvUu5LwjkjKtkZfX
-         9xuQ==
-X-Gm-Message-State: AOJu0YwdccD7h0BhfdPPHdk/t502u+NnBDW0eu5ok3ei/smgMO1K8bmr
-        xHba6TJOziMwpEgoDQk+vzwFkOZaQvc2JYy3WXjbfg==
-X-Google-Smtp-Source: AGHT+IGgBzt5ZyWKDExLe7+eimASykGaadRBeGKuOHwEO8O81GoNT1rO3C548Ws1CO71WAzF1aqupoG6R5Z5HE5KnGk=
-X-Received: by 2002:a25:9111:0:b0:d7a:be78:d57b with SMTP id
- v17-20020a259111000000b00d7abe78d57bmr2119358ybl.20.1693058992052; Sat, 26
- Aug 2023 07:09:52 -0700 (PDT)
+        Sat, 26 Aug 2023 10:38:24 -0400
+X-Greylist: delayed 1233 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 26 Aug 2023 07:38:21 PDT
+Received: from out203-205-221-231.mail.qq.com (out203-205-221-231.mail.qq.com [203.205.221.231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A6302109;
+        Sat, 26 Aug 2023 07:38:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1693060699;
+        bh=bBm3JZWtV19d5mTvY144XG0VpJxbcD0Lb6oNpBSzTKw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=Ze4oRoN1kIr3DhvJvQGgL256L3hzrppxLwmitikcQSK8BlZWnYSDUAXg4w1gqDko4
+         4i+PxpeIkBAGcPI187RzxUprkUxHWqe5c9QYKV0fkYo0qDs/fMqxBWcVFpJVQiSOMQ
+         ubkpqid8dTGGzn2gnB+bDUSafPYIGEQwFPDWxSvs=
+Received: from localhost.localdomain ([220.243.191.34])
+        by newxmesmtplogicsvrsza10-0.qq.com (NewEsmtp) with SMTP
+        id 46A86A0C; Sat, 26 Aug 2023 22:17:42 +0800
+X-QQ-mid: xmsmtpt1693059462tjsabkefh
+Message-ID: <tencent_D0AA2D25300E0F108559545E899C9B8EDA07@qq.com>
+X-QQ-XMAILINFO: M3X79PAqfpWTsaSODfveg0gn1w+AdJXCvBs4ZojKWmplo/bKlgY+Naa/Oa1kR9
+         iRth/98V87fdTt3810GEHAT/zmy9LZi0y2GANFUrBP1a2Rr0c/OuAGsLFSeSsQH8g+RKJi+uvRAb
+         MamYUOZUIV/3ag0vwguLtMu4OST5QeNWUkHT+cp5i6idQVWw0Lu6NWr87xSVgeT/NurrG0Vpzg9x
+         OeKAp6VkydQrFCH0t6NQAtxepVj/dH1+bglVrM3o2wRH1f8o2j+Dn2OY48ZJe35eFaK5t6GBIWbp
+         XtUA21+moSODPBt4DqYi0cIVgzRE0TP4JutrLJVC2Sg4DTBS8/2v/0RMGbRc/A/hdPFHhH5ENlEP
+         m2P2IipjG70IiKd7Y6jxt+6F+uCoKx12uxNxV8PwrTjOhWhg1dlb6/LCr/EsM0Q5u3nzKM538Mlg
+         b/MDeAwNtg/KrpCpJtY42uktniFiIBdVp/L9GpfzO0ipKwcjMHnsXOllR0RUwm0PIyne2UCBnSsm
+         bG/0jtj5yU571vHTjMSZjjhkThMJdtlUd/aFNz9nxqMyvAXXWLtXo7rkLldvfUmi3MKWEatWHGg9
+         yYQio28hv2wgabtO+48CucW/thjRivO6D21F+1GUN0B1v80zgBmDF/4+O4VvK4hUautQN6DxJxeU
+         BxTjMcM+w2slLrADMCK38eJoXoKxWw3020DooGOuNbFIPQfimYlWjV37Z2rKdLpb3Z6cyrrpt8qM
+         gQyoFhmegjDXhMcTMJ7ZcXj4ZJeXGSKlte2VIZYZAVvbOZZ2VqrIneI1EdMJgkciGmo/kUhBFy8l
+         YRA+UsJ8agPD2NsyKJ1PHwkbAEckIjxOQSHHo4HhxB2Zw0DKL0wKDwV8ys3Od0Fdw9wLCSRVB4el
+         kV78hU9GX8YKj8v/bAgsPA0GlUmWgoaGgzYetW2krNUh9rc5RKEA2k6TQRmQQDuKtOMKgcrbuWZf
+         JU8X4wiHnE3pk2AnQ6pSD27Wlb34W5vpe8Z4dGdpjBkdhv6nYiWRy7hpXA9ldlufkd20f1eRxJlV
+         jUmUzqoqufUHmOBRJIm0ckp0kgAPpM8KQGQ8TMlw==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+From:   Zhang Shurong <zhang_shurong@foxmail.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] usb: misc: eud: Fix missing IRQ check in eud_probe()
+Date:   Sat, 26 Aug 2023 22:17:42 +0800
+X-OQ-MSGID: <4832339.GXAFRqVoOG@localhost.localdomain>
+In-Reply-To: <f9df2e02-9fae-4e16-9412-d378ef168903@linaro.org>
+References: <tencent_C40B301A0F71853A540809BE1BB85AB12D07@qq.com>
+ <f9df2e02-9fae-4e16-9412-d378ef168903@linaro.org>
 MIME-Version: 1.0
-References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
- <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org> <a9d52cd9-845e-ff88-3c26-858cb6604e43@linaro.org>
-In-Reply-To: <a9d52cd9-845e-ff88-3c26-858cb6604e43@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 26 Aug 2023 17:09:40 +0300
-Message-ID: <CAA8EJprEnMjbKw2fbU1X7GV=ANARNhofSQh49Bdo1kvuOskbbQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] clk: qcom: Add SM6115 LPASSCC
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_BLOCKED,RDNS_DYNAMIC,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 26 Aug 2023 at 12:23, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 25/08/2023 20:13, Konrad Dybcio wrote:
-> > SM6115 (and its derivatives or similar SoCs) have a LPASS clock
-> > controller block which provides audio-related resets.
-> >
-> > Add the required code to support them.
-> >
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+=E5=9C=A8 2023=E5=B9=B48=E6=9C=8826=E6=97=A5=E6=98=9F=E6=9C=9F=E5=85=AD CST=
+ =E4=B8=8B=E5=8D=886:49:27=EF=BC=8CKonrad Dybcio =E5=86=99=E9=81=93=EF=BC=9A
+> On 26.08.2023 12:47, Zhang Shurong wrote:
+> > This func misses checking for platform_get_irq()'s call and may passes =
+the
+> > negative error codes to request_irq(), which takes unsigned IRQ #,
+> > causing it to fail with -EINVAL, overriding an original error code.
+> >=20
+> > Fix this by stop calling request_irq() with invalid IRQ #s.
+> >=20
+> > Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded U=
+SB
+> > Debugger(EUD)") Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
 > > ---
-> >  drivers/clk/qcom/Kconfig          |  9 +++++
-> >  drivers/clk/qcom/Makefile         |  1 +
-> >  drivers/clk/qcom/lpasscc-sm6115.c | 84 +++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 94 insertions(+)
-> >
-> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> > index bd9bfb11b328..df9cf112e4b6 100644
-> > --- a/drivers/clk/qcom/Kconfig
-> > +++ b/drivers/clk/qcom/Kconfig
-> > @@ -1001,6 +1001,15 @@ config SM_GPUCC_8550
-> >         Say Y if you want to support graphics controller devices and
-> >         functionality such as 3D graphics.
-> >
-> > +config SM_LPASSCC_6115
-> > +     tristate "SM6115 Low Power Audio Subsystem (LPASS) Clock Controller"
-> > +     depends on ARM64 || COMPILE_TEST
-> > +     select SM_GCC_6115
-> > +     help
-> > +       Support for the LPASS clock controller on SM6115 devices.
-> > +       Say Y if you want to toggle LPASS-adjacent resets within
-> > +       this clock controller to reset the LPASS subsystem.
+> >=20
+> >  drivers/usb/misc/qcom_eud.c | 7 ++++++-
+> >  1 file changed, 6 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> > index 7f371ea1248c..b33c615a2037 100644
+> > --- a/drivers/usb/misc/qcom_eud.c
+> > +++ b/drivers/usb/misc/qcom_eud.c
+> > @@ -204,7 +204,12 @@ static int eud_probe(struct platform_device *pdev)
+> >=20
+> >  	if (IS_ERR(chip->mode_mgr))
+> >  =09
+> >  		return PTR_ERR(chip->mode_mgr);
+> >=20
+> > -	chip->irq =3D platform_get_irq(pdev, 0);
+> > +	ret =3D platform_get_irq(pdev, 0);
+> > +	if (ret < 0)
+> > +		return ret;
 > > +
-> >  config SM_TCSRCC_8550
-> >       tristate "SM8550 TCSR Clock Controller"
-> >       depends on ARM64 || COMPILE_TEST
-> > diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> > index 4790c8cca426..61e3c72fe954 100644
-> > --- a/drivers/clk/qcom/Makefile
-> > +++ b/drivers/clk/qcom/Makefile
-> > @@ -128,6 +128,7 @@ obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
-> >  obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
-> >  obj-$(CONFIG_SM_GPUCC_8450) += gpucc-sm8450.o
-> >  obj-$(CONFIG_SM_GPUCC_8550) += gpucc-sm8550.o
-> > +obj-$(CONFIG_SM_LPASSCC_6115) += lpasscc-sm6115.o
-> >  obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
-> >  obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
-> >  obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
-> > diff --git a/drivers/clk/qcom/lpasscc-sm6115.c b/drivers/clk/qcom/lpasscc-sm6115.c
-> > new file mode 100644
-> > index 000000000000..6aa19e16c53b
-> > --- /dev/null
-> > +++ b/drivers/clk/qcom/lpasscc-sm6115.c
-> > @@ -0,0 +1,84 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2022, 2023 Linaro Limited
-> > + */
-> > +
-> > +#include <linux/clk-provider.h>
-> > +#include <linux/err.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of_device.h>
-> > +#include <linux/regmap.h>
-> > +
-> > +#include <dt-bindings/clock/qcom,sm6115-lpasscc.h>
-> > +
-> > +#include "common.h"
-> > +#include "reset.h"
-> > +
-> > +static const struct qcom_reset_map lpass_audiocc_sm6115_resets[] = {
-> > +     [LPASS_AUDIO_SWR_RX_CGCR] =  { .reg = 0x98, .bit = 1, .udelay = 500 },
-> > +};
-> > +
-> > +static struct regmap_config lpass_audiocc_sm6115_regmap_config = {
-> > +     .reg_bits = 32,
-> > +     .reg_stride = 4,
-> > +     .val_bits = 32,
-> > +     .name = "lpass-audio-csr",
-> > +     .max_register = 0x1000,
-> > +};
-> > +
-> > +static const struct qcom_cc_desc lpass_audiocc_sm6115_reset_desc = {
-> > +     .config = &lpass_audiocc_sm6115_regmap_config,
-> > +     .resets = lpass_audiocc_sm6115_resets,
-> > +     .num_resets = ARRAY_SIZE(lpass_audiocc_sm6115_resets),
-> > +};
-> > +
-> > +static const struct qcom_reset_map lpasscc_sm6115_resets[] = {
-> > +     [LPASS_SWR_TX_CONFIG_CGCR] = { .reg = 0x100, .bit = 1, .udelay = 500 },
-> > +};
-> > +
-> > +static struct regmap_config lpasscc_sm6115_regmap_config = {
-> > +     .reg_bits = 32,
-> > +     .reg_stride = 4,
-> > +     .val_bits = 32,
-> > +     .name = "lpass-tcsr",
-> > +     .max_register = 0x1000,
-> > +};
-> > +
-> > +static const struct qcom_cc_desc lpasscc_sm6115_reset_desc = {
-> > +     .config = &lpasscc_sm6115_regmap_config,
-> > +     .resets = lpasscc_sm6115_resets,
-> > +     .num_resets = ARRAY_SIZE(lpasscc_sm6115_resets),
-> > +};
-> > +
-> > +static const struct of_device_id lpasscc_sm6115_match_table[] = {
-> > +     {
-> > +             .compatible = "qcom,sm6115-lpassaudiocc",
-> > +             .data = &lpass_audiocc_sm6115_reset_desc,
-> > +     }, {
-> > +             .compatible = "qcom,sm6115-lpasscc",
-> > +             .data = &lpasscc_sm6115_reset_desc,
-> > +     },
-> > +     { },
-> > +};
-> > +MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
->
-> Everything here is almost the same as sc8280xp one, so this should be
-> added to sc8280xp. You cut some boilerplate and additional driver.
+> > +	chip->irq =3D ret;chip->irq =3D plat..
+>=20
+> if (chip->irq < 0)
+> 	return chip->irq
+>=20
+> ?
+>=20
+> Konrad
+Thank you for your thoughtful response. To clarify, are you suggesting that=
+ I=20
+replace the usage of `ret` with `chip->irq`? If that is the case, I will=20
+proceed with creating a patch for version 2.
 
-We have been there. It quickly becomes a nightmare to maintain.
-Consider dispcc-sm8250.c
 
-But I agree with you, this code looks too similar. If we expect more
-similar lpasscc drivers, which provide no clocks, just several resets,
-maybe we can create a common generic wrapper and make resets lists
-corresponding driver data?
 
--- 
-With best wishes
-Dmitry
+
+
