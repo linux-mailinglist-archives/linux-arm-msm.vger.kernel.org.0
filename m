@@ -2,101 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82960789670
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:02:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35A70789672
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:04:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232719AbjHZMCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 08:02:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37142 "EHLO
+        id S231540AbjHZMDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 08:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232715AbjHZMBz (ORCPT
+        with ESMTP id S232728AbjHZMDs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 08:01:55 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFACA2107
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:01:52 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fef56f7248so15580315e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:01:52 -0700 (PDT)
+        Sat, 26 Aug 2023 08:03:48 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B598DC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:03:45 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4ff93a7f230so2097278e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693051311; x=1693656111;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693051423; x=1693656223;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RO8Yyz2oHTR16ECZ9Rr/IoSLhSOOtJfBRk2Q+FHvz2I=;
-        b=UNgdJXuoBfk2mYXCWlsSN5/r0eXptoM2PMRb1lUyw92Ix1ueZgrbEQHPWckg0BW6ZT
-         zCbNu30hdb70ynY2kz95DF9fX7Ly3O7fZLcEtUkj18rnQcqa41u5YXBYezH9SNjWviAF
-         DFA65k2ni2+XrwK/GUAOKk/YJcu93EugffqezHYqsPC41e8FkJRaZ1KUn1lmrcudkxKi
-         lO78+v3s+XsjMehk3mHl9yCRVrg8TRT27xSilthVNlQ7hOYiH8dMq3EI2lhtFlSn3+fv
-         /N27dFaMmSoL52GTo77dcoTeoT9b8KtJL7eelpsOlkh/Z7+AzeI3XHUGhI6ckNsgAadV
-         QLYQ==
+        bh=SG+FRA6Jdj7lloQ4CW4VDp8In+rYXljtoh+/xtNc81Q=;
+        b=AQjawv90XA6JscmYjGQ/4tY5fCDVRZdeTNh/TCIRnz/SMgswAbboswgnPhjXOvG1Au
+         mZUUf19xCG/1sL76eWHX7H4MUsI3KGYz7IwEIQNN7eP2vb3KHivEQh9JVU4hNpnvwDMV
+         Pft/TwotggUNwbMpPPkB8EDPwmuBc6Y/sXtLX6DOxuJPyxP0Y6e2TJpdw53GxFWy+y45
+         Egxa8Phc32xAJM5m8zSTqzHlAYw4vseLbMlTG60U8Yt+VqegzyEEyqYj1OA00Hnjnmy+
+         9xwOnb21zBfGemIbtRw/HZgBjweZq61JjNicpGQlgrwSxpG9km2a/dyVa2aUTlCgmmpY
+         /0qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693051311; x=1693656111;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693051423; x=1693656223;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RO8Yyz2oHTR16ECZ9Rr/IoSLhSOOtJfBRk2Q+FHvz2I=;
-        b=Sywevah90V1dLOBEEoIAs/6yqIQV6pyuiZO5d+x0d0DH8XTe/zvyLUb2shIvDQv5ty
-         TR6D0/N/ELCzu7/tLMADTgRX6028jKYH/EzxHNq0Sm7EtK2hGOK+WAWTk2R+YxUF8sbd
-         BDfOm6k4UTnfQPkjPN/5d5IYT95BJd9kQ2eZkXC7uQbY/djy+T+si2RhGy33Lw47cmbx
-         JiMM8WWquoxmV+NTZkgEj6OgJAgk6P+1NqsVadetbNx2AlkL62tq4AXb51/WgZyI2Ank
-         KV2sdT23MwBlU3y0VZGPArGTC0EAotOn1sQBTLSOeAP0XuPtYOVwMcFOWCk4hG7kne5Z
-         tCGA==
-X-Gm-Message-State: AOJu0YxIFgavFxG7XqwWV18TTOctHJQ7E5M3SnXgZ7zBnEMWfbkPaQWh
-        dLoKvAcenfNXMbgbKFwqAZfWPg==
-X-Google-Smtp-Source: AGHT+IGfg0YU6vo3D5Gw6EI77NS2wTCFEgGf6amHUaQ6pN1e8MMnuBSRUFaaQTjlcDA6wKnEA9S4nw==
-X-Received: by 2002:a05:600c:ad2:b0:401:aa8f:7562 with SMTP id c18-20020a05600c0ad200b00401aa8f7562mr5271832wmr.11.1693051311340;
-        Sat, 26 Aug 2023 05:01:51 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x7-20020a1c7c07000000b003ffca80edb8sm4854067wmc.15.2023.08.26.05.01.50
+        bh=SG+FRA6Jdj7lloQ4CW4VDp8In+rYXljtoh+/xtNc81Q=;
+        b=kRGRc0i1VCX8SCkuW5gQ3WMdvH2jlph530y7siBaA4TRVgnvlmEFwTdqbYapwRLBC+
+         zByxOHp6cAeiyJvhCZ+ktI/I08wvIVUTFopsXTtF+yjRtZmxoD8wufwqihr/I4tXQKqC
+         FOefUVxpt4s53srnGq9wxIhj9FODkR1FVpvqtxxQpTP3AgramjJTLMTPwnEB5ADuRcNi
+         ZJMvUnzpJp7QO++eZj06Go/BSRK4GLhm700606cBxCrCV+lGNan97ld3zYqjoZA6npT7
+         nVUyRlvNLoDZxu2qpblkT6QEHj2oJEN0g+5LxsUXFV9Mrfd4qEKfnuZTYCCfgmg5zmT5
+         4pIw==
+X-Gm-Message-State: AOJu0YzRioFAGNcZd0S93fzi51maDxgIhT6hzevQr21l04VREOIkOXel
+        IDezLPAVolCj9JAEyIcsb6bgLw==
+X-Google-Smtp-Source: AGHT+IFpvXi4fjnNXJ2u7zaCwDs8iSYEeMB5aZQE3cjcHpzGBtrCL/j3jjyZohowM9qd1n8rJPG8YA==
+X-Received: by 2002:a05:6512:6cb:b0:4f8:4b19:9533 with SMTP id u11-20020a05651206cb00b004f84b199533mr8533138lff.19.1693051423583;
+        Sat, 26 Aug 2023 05:03:43 -0700 (PDT)
+Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
+        by smtp.gmail.com with ESMTPSA id f17-20020ac25331000000b00500a2091e2bsm689347lfh.99.2023.08.26.05.03.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 05:01:50 -0700 (PDT)
-Message-ID: <50b9d9f5-0433-2d7d-71af-10f4b3b8e448@linaro.org>
-Date:   Sat, 26 Aug 2023 13:01:49 +0100
+        Sat, 26 Aug 2023 05:03:43 -0700 (PDT)
+Message-ID: <024ded8e-d6b9-45dd-9633-03daa403f125@linaro.org>
+Date:   Sat, 26 Aug 2023 14:03:42 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 09/15] media: qcom: camss: Improve error printout on
- icc_get fail
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] ARM: dts: qcom-msm8916-samsung-fortuna: Include
+ dts from arm64
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
         linux-kernel@vger.kernel.org
-References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-10-bryan.odonoghue@linaro.org>
- <92e864cd-b98f-45d1-a46e-e5bfc52b4b08@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <92e864cd-b98f-45d1-a46e-e5bfc52b4b08@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Gareth Peoples <mail@gpeopl.es>
+References: <20230801111745.4629-1-linmengbo0689@protonmail.com>
+ <20230801112134.4689-1-linmengbo0689@protonmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230801112134.4689-1-linmengbo0689@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2023 11:05, Konrad Dybcio wrote:
-> On 23.08.2023 12:44, Bryan O'Donoghue wrote:
->> If icc_get() fails print the name of the failing path.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> Aren't the return messages propagated from
+On 1.08.2023 13:22, Lin, Meng-Bo wrote:
+> After adding all necessary support for MSM8916 SMP/cpuidle without PSCI
+> on ARM32, build fortunaltezt and heatqlte device trees from the arm64
+> tree together with the ARM32 include to allow booting this device on ARM32.
 > 
-> * of_icc_get()
-> 	|_ of_icc_get_by_index()
+> The approach to include device tree files from other architectures is
+> inspired from e.g. the Raspberry Pi (bcm2711-rpi-4-b.dts) where this is
+> used to build the device tree for both ARM32 and ARM64.
 > 
-> enough here?
+> [Add workaround to TSENS problem]
+> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> [Add heatqlte]
+> Co-developed-by: Gareth Peoples <mail@gpeopl.es>
+> Signed-off-by: Gareth Peoples <mail@gpeopl.es>
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> ---
+>  arch/arm/boot/dts/qcom-msm8916-samsung-fortunaltezt.dts | 8 ++++++++
+>  arch/arm/boot/dts/qcom-msm8916-samsung-heatqlte.dts     | 8 ++++++++
+>  arch/arm/boot/dts/qcom/Makefile                         | 2 ++
+>  3 files changed, 18 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom-msm8916-samsung-fortunaltezt.dts
+>  create mode 100644 arch/arm/boot/dts/qcom-msm8916-samsung-heatqlte.dts
 > 
-> Perhaps we should use dev_err_probe in camss too
-> 
-> Konrad
+> diff --git a/arch/arm/boot/dts/qcom-msm8916-samsung-fortunaltezt.dts b/arch/arm/boot/dts/qcom-msm8916-samsung-fortunaltezt.dts
+> new file mode 100644
+> index 000000000000..b9704fea7029
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom-msm8916-samsung-fortunaltezt.dts
+> @@ -0,0 +1,8 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +#include "arm64/qcom/msm8916-samsung-fortunaltezt.dts"
+> +#include "qcom-msm8916-smp.dtsi"
+> +
+> +&tsens {
+> +	/* FIXME: The device crashes when accessing the SROT region for some reason */
+> +	status = "disabled";
+All of SROT, or just e.g. TSENS_EN?
 
-IDK, I will check
+If only the headswitch is inaccessible, you may still reach
+the hardware if it's been turned on from bl
+
+Konrad
