@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 797E2789689
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:09:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D91978968A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 14:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbjHZMJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 08:09:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54276 "EHLO
+        id S231981AbjHZMJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 08:09:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232801AbjHZMI5 (ORCPT
+        with ESMTP id S232831AbjHZMJo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 08:08:57 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004F72118
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:08:53 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bcb54226e7so21164701fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:08:53 -0700 (PDT)
+        Sat, 26 Aug 2023 08:09:44 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A992108
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:09:41 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b974031aeaso26752181fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 05:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693051732; x=1693656532;
+        d=linaro.org; s=google; t=1693051780; x=1693656580;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ql+MXuvfyL6aoHHknNF6YfP8WpLQ0F5Va0P1RD3CvZ4=;
-        b=VgAPu6KVkxmy9MPtI1b4ex17Cwi0ITZyCrKS1LPU9C4wOPqw42CqIVQ19njBWF/u8n
-         GfoQHtqjjOqFsgLqvT9u7Dbr4veT1cWNRGTJEimOuR3kIAL7A28ixD+E/nwml5SCewsW
-         p+N4ArjrA/9fKFxlv81S7e07PtZ4ELd2U9ItjX1Wloe3l7L4rhe9cQvCEwBQaBpAFiPE
-         verAkt+FJxFr/eopDwEn5KTgBUa0rxhfF84SEkvfozgoGDtiGQYzFWklb8TqWfh8AdMU
-         KMjFLolWRthubRwfzYHNFVjhYJ3uKn7hFNYw8n9H9d2fN7nDTGbLJtdfwb2EZ+k+oHKJ
-         56yg==
+        bh=hUle7HwdN7QMhCOnuFTRQWCdkxNfmQQVHGtr/Mhk/FE=;
+        b=QwsRgU3vhB9Peewr9EtnSdptlNGkHomrYI9FXtjf4HICaNj5sOYWyPs8p1Iean7lWt
+         vltm0zkwnY1dXN+L6oOLgRw2w3rFN02pxacunGHNoOziRmsNjuBFOGvb8AHjCkj521J0
+         z6kBT/WpRMzEgG0TEQ994hQiN8CoYvvaoRfjBdOctfsnbj0+Qc2Et6VHFVBB4k4Ne0QK
+         MF9HUu86BSJClH36pRFJL8RptgnVbhsxwcBteKXkf37O35NhqJZlmruvEeQG6wOr3O+E
+         aBv40fS1mWhfBsjHQxnVelpGfQs5b/5qwtdRItcSG2gTf83ImO0h8jQTpumJK5yHnEE+
+         XFDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693051732; x=1693656532;
+        d=1e100.net; s=20221208; t=1693051780; x=1693656580;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ql+MXuvfyL6aoHHknNF6YfP8WpLQ0F5Va0P1RD3CvZ4=;
-        b=Vq66gFwkosDrunWVMLNu4wq56N6VZ9S6FbWrW1Eknkarj5OPd7OqdCpXoMxXecQ9/4
-         E3DJteKKBKRVK7Zne42yCslc75mG+g6H5rcD38et2IJi2yoU8FZIaKbX5v5143ak4/wH
-         Tq5uKYSgTrzahGdpreFh5uhCTIn6MN05WZrQY/Qeb7WiuQ1j9fvjNm56j8L5NLBnGRrg
-         JH0b/RylEk1yg5wrtBOyd/wZ608/+jV8UGAjWEc2U/YKdfqBSdX+IJ7y/7Ysbw1NpsUn
-         PKIo7V1f+5pVOPlZzpvdvejqcSdP/bPI15d209zkyD0DhySVzuCEH/AzrzUwwH4t8xop
-         2Eug==
-X-Gm-Message-State: AOJu0Yx7QHHquShGKLohD+k7NawGMkIxz0EgCCBKNcJ29M8i7zV+erY0
-        barZ+bWjoxdNV3lXfJSur2aiIA==
-X-Google-Smtp-Source: AGHT+IFbzI9uwL2wg4gQ7631/iR0L5BbEQTe/U9b1mHQeuQe6eKKuky1ZunPlbsH01gFfGxkFTf3bQ==
-X-Received: by 2002:a2e:a9a7:0:b0:2bc:fbc9:c0a2 with SMTP id x39-20020a2ea9a7000000b002bcfbc9c0a2mr868347ljq.16.1693051732329;
-        Sat, 26 Aug 2023 05:08:52 -0700 (PDT)
+        bh=hUle7HwdN7QMhCOnuFTRQWCdkxNfmQQVHGtr/Mhk/FE=;
+        b=BmWuj6JZn0D4gtduRitWLkSWEWTvUReugBQuH61OqZ2koTmqVVXf5y7py/bNVFuvyo
+         GJ2egdrCkrfbueLfixT/kvFxNaaksX1YZTa7jM5sagDdsKi8KhfJe4gBuB23MZhpyrjF
+         txtgxDLTtEeJV2jWRnkt44hBDcQhFaDZi0JgihLViJ8XeXgJqieSCL36R2YpuPiz8frO
+         mPXsnpqXODBaVYgI9IX3VWC04U0fSOp8V2fLyHgG1xgrjaRrunAJnFYcpgzNXsZtkafT
+         TN4hZ0qvbs4bRJSYTA4XIO/lC5IpZZ4o3rS0Ac6pJRJ2uGTEXjMeps6dqh0il8yGIbCT
+         2LZQ==
+X-Gm-Message-State: AOJu0YxbiZD/xMK86wS+/nIOLJeSFOqBBWBNd59Js8fZ7T+WTMszswvV
+        jUwXtl9/1NexmnniEpYs35k0ug==
+X-Google-Smtp-Source: AGHT+IHNV+bDhV+fi/XpXaxmI9nsDqGzhh/Y0LGJA+Q03Q7Hc0Lt9jE38iwQC0mYLvY6aHPLi2AYtQ==
+X-Received: by 2002:a2e:9c99:0:b0:2bc:dd6b:9220 with SMTP id x25-20020a2e9c99000000b002bcdd6b9220mr7938003lji.24.1693051779778;
+        Sat, 26 Aug 2023 05:09:39 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id a8-20020a2e88c8000000b002b9f0b25ff6sm776135ljk.4.2023.08.26.05.08.51
+        by smtp.gmail.com with ESMTPSA id a8-20020a2e88c8000000b002b9f0b25ff6sm776135ljk.4.2023.08.26.05.09.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 05:08:52 -0700 (PDT)
-Message-ID: <58afaf5a-9b52-4ba4-ab1d-5b259dbe7a41@linaro.org>
-Date:   Sat, 26 Aug 2023 14:08:51 +0200
+        Sat, 26 Aug 2023 05:09:39 -0700 (PDT)
+Message-ID: <fb452457-6687-4f68-9498-92a3077c9a44@linaro.org>
+Date:   Sat, 26 Aug 2023 14:09:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/32] ARM: dts: qcom: msm8660: split PMIC to separate
- dtsi files
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916/39-samsung-a2015: Add flash LED
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org
-References: <20230822001349.899298-1-dmitry.baryshkov@linaro.org>
- <20230822001349.899298-18-dmitry.baryshkov@linaro.org>
+To:     Raymond Hackley <raymondhackley@protonmail.com>
+Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        nikita@trvn.ru, robh+dt@kernel.org, stephan@gerhold.net,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230822140407.3316-1-raymondhackley@protonmail.com>
+ <c016d9ac-da33-4a0b-8684-ab7b4b50ebe3@linaro.org>
+ <20230822150035.3803-1-raymondhackley@protonmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230822001349.899298-18-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230822150035.3803-1-raymondhackley@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,16 +114,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22.08.2023 02:13, Dmitry Baryshkov wrote:
-> The PMIC is not a part of the SoC, so move PMIC to a separate file and
-> include it from the board files.
+On 22.08.2023 17:01, Raymond Hackley wrote:
+> Hi Konrad,
 > 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-[...]
+>> What about the other subdevices registered with the RT5033 MFD?
+> 
+> Currently the MFD is not able to control the flash LED, due to missing
+> driver for it.
+> Alternatively we control it with GPIO pins. With driver leds-sgm3140, the
+> binding is not under the RT5033 MFD.
+Hm.. I have mixed feelings..
 
-> +			pmic {
-empty sub?
+Does the led controlled onboard this chip have some super complex
+functionality that is going to be exposed through a specific driver
+and that is not exposed through the sgm3140 driver?
 
 Konrad
