@@ -2,124 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68E537894FF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:04:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17307789512
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:23:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232030AbjHZJD4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 05:03:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54736 "EHLO
+        id S232207AbjHZJWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 05:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231438AbjHZJD1 (ORCPT
+        with ESMTP id S232196AbjHZJWY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 05:03:27 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FA1A2694
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:03:24 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ff882397ecso2506956e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:03:24 -0700 (PDT)
+        Sat, 26 Aug 2023 05:22:24 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F127F1995
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:22:20 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51bece5d935so2265494a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:22:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693040603; x=1693645403;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693041739; x=1693646539;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wFsaZfdxh3AgtRzh0fv8ru2xvQ5zjSC2AeHCCNN6BcY=;
-        b=y1K6XG4CixtcGZOMQEelOpWAFcE4LkjiiGkHsVceKtcZ+71M027qn36sKFKOJCbgaD
-         /g8sjUt1oWSfn8QyV1IWKJ+rVVphKn/pDNAug8L+Z2YabMmdok2B4MKxe5GozcdvoC5y
-         ip4FuF9CSybie2oZsodmtMfTj5JF108HpPvs8DkfFVOaN8f7UhwQIL8sOuVrBtNiOPzW
-         kWEzh99b8XBy1eXweb0sIdb5eMjR9GThcUcE2lrwDSHCrNoDNo6PFZU7swIeLJl7lOLF
-         yIPAU499q+dshDShvL1a3I5HwNRshDotkaKoehUuGNVxPHM9AM4ASKsXHECcppk+Hv9l
-         hfGw==
+        bh=ujQSKV2q1WTc1rtA/ac/WYkEvifC5+suFNij4ldFKKQ=;
+        b=eQNFBrypsepUIV9QHa2uj5K66l1sj6M5lxJhecDY3b1kJz7luFf3FVjMq8k4/KRfKQ
+         2SRhJHfYNHvlCkLVzFpDgOL6G4XxwOorTuNu96GZYTVWE4sstM89kP/0mEDNyp4PYCIR
+         uB5qpFO67aWUyf+1A1K/zIk2Q48To9HJPxbegXUJWJazC3erskq1Q6aohH6i23rzbghu
+         1nAZLYJ3S/lQEBSDtXKMNuvBfv/TmYvZLHeTfhyohVQaqjVIqHOolZFhy5THTan9ME+c
+         xs+LAsJBozJIQprkay6GqXlrElW9/UzsZjtG6Dm3jnp9MwR41WwHaazAZSSA9j7rAtfv
+         n6kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693040603; x=1693645403;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693041739; x=1693646539;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wFsaZfdxh3AgtRzh0fv8ru2xvQ5zjSC2AeHCCNN6BcY=;
-        b=Mp7nwvnHVBY50r5FiaMioLaJ9a8Rlkfau9kpDkRp3m7hfkSAgN+FbPrk8eG83hHCnf
-         vBmR62orlzm5Avhi0J3IPzBvty+tMf9wKauTTZwhwKsoIDvVSV/aQl4mP2q+ixMApJOE
-         LC/OurClHjSCyYwAXwcAnoB6qLIWI7TeWsUb2XEQ6KTBc0ZZItrlZpGc/QGhfu81jmOo
-         QaAK5zwkYg/CJnm+gjVgUgONeBsKeOzAVtMds1BX+7WS2Zm0YErIWciqe8SIu1vEnjAu
-         rI2GPmVjmKLBNhPvS/qmJNrqAprNUm9xHdJxDFvdYxMxfzyq1KKldx7TwuZDkYwO/7Pp
-         Mgdw==
-X-Gm-Message-State: AOJu0YxhxqMrYGhwrL9d18IALF99wQYxNnCBrn+jjUynVQkvXyvb9Mhq
-        6Fjh4evVtFqUDelsQdz9f4McPw==
-X-Google-Smtp-Source: AGHT+IFA36nxyM2d+JQ8Xs6B70qdM3JznwQHiqEhhjT9A9fjmH2VMavbGjMk6+LdRNP07oVc2Ix4BA==
-X-Received: by 2002:a05:6512:704:b0:4ff:a25b:bca1 with SMTP id b4-20020a056512070400b004ffa25bbca1mr13700905lfs.33.1693040602801;
-        Sat, 26 Aug 2023 02:03:22 -0700 (PDT)
-Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id h20-20020a197014000000b004f864690901sm635184lfc.244.2023.08.26.02.03.21
+        bh=ujQSKV2q1WTc1rtA/ac/WYkEvifC5+suFNij4ldFKKQ=;
+        b=W32vZ9OATgTuCLvxGqRCTL/4GzMBUIJhN3vCb++I6r+2nTDdCDzkligI5NDAO+nq4X
+         JHK4udsMXrOD8/gdaojMg28h3MX2J0LwdfVWOE31zcMZAOUGb4efdiO+8j3r8m2UH+tP
+         BLvdYR/U4sUnpa9VhZbl0GfVzPDFpuKvPCSjwxo4nLOiFyEKJ8vY2pn6b9xJc5TTIveA
+         cWRYG6SU7rHldhDRfgtizQcNXbeaHhvxEOaR/scKMJUfH669OTrsxiLvDA+8CgxhojT8
+         Dv2Ha6z7EUwCf/RmmzWkjAx2qjsD6EXCGLOjx+VrDuP46NIa3qShTI+l/14z3WyPXy5M
+         Q+Ag==
+X-Gm-Message-State: AOJu0YzT5H/b0FKryQX/x3PhBIH6PfvL0c9G8VF3ytyyqcOahK72NpNz
+        6SC3hUIRsBYoB8Px94edLO46Hw==
+X-Google-Smtp-Source: AGHT+IEaSCxBOdkRZUukHKRgvjUCj61hoQM5BErksYdtKO/OWio+dLUoa3lHiOPhM6/l6+4Hz8fjvw==
+X-Received: by 2002:aa7:ccc9:0:b0:525:7cd4:34da with SMTP id y9-20020aa7ccc9000000b005257cd434damr14932807edt.40.1693041739354;
+        Sat, 26 Aug 2023 02:22:19 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.198])
+        by smtp.gmail.com with ESMTPSA id d2-20020a056402078200b005232ea6a330sm1921486edy.2.2023.08.26.02.22.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 02:03:22 -0700 (PDT)
-Message-ID: <93977e76-db44-4ad3-ba3f-04e843baafd8@linaro.org>
-Date:   Sat, 26 Aug 2023 11:03:21 +0200
+        Sat, 26 Aug 2023 02:22:18 -0700 (PDT)
+Message-ID: <a9d52cd9-845e-ff88-3c26-858cb6604e43@linaro.org>
+Date:   Sat, 26 Aug 2023 11:22:17 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8350-hdk: add pmr735a regulators
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 3/3] clk: qcom: Add SM6115 LPASSCC
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230825214550.1650938-1-dmitry.baryshkov@linaro.org>
- <20230825214550.1650938-3-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230825214550.1650938-3-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
+ <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.08.2023 23:45, Dmitry Baryshkov wrote:
-> The SM8350 HDK uses pmr735a to supply some of the voltages (e.g. to
-> WiFi/BT chip). Declare corresponding regulators together with voltage
-> boundaries.
+On 25/08/2023 20:13, Konrad Dybcio wrote:
+> SM6115 (and its derivatives or similar SoCs) have a LPASS clock
+> controller block which provides audio-related resets.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add the required code to support them.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  drivers/clk/qcom/Kconfig          |  9 +++++
+>  drivers/clk/qcom/Makefile         |  1 +
+>  drivers/clk/qcom/lpasscc-sm6115.c | 84 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 94 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index bd9bfb11b328..df9cf112e4b6 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -1001,6 +1001,15 @@ config SM_GPUCC_8550
+>  	  Say Y if you want to support graphics controller devices and
+>  	  functionality such as 3D graphics.
+>  
+> +config SM_LPASSCC_6115
+> +	tristate "SM6115 Low Power Audio Subsystem (LPASS) Clock Controller"
+> +	depends on ARM64 || COMPILE_TEST
+> +	select SM_GCC_6115
+> +	help
+> +	  Support for the LPASS clock controller on SM6115 devices.
+> +	  Say Y if you want to toggle LPASS-adjacent resets within
+> +	  this clock controller to reset the LPASS subsystem.
+> +
+>  config SM_TCSRCC_8550
+>  	tristate "SM8550 TCSR Clock Controller"
+>  	depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 4790c8cca426..61e3c72fe954 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -128,6 +128,7 @@ obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
+>  obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
+>  obj-$(CONFIG_SM_GPUCC_8450) += gpucc-sm8450.o
+>  obj-$(CONFIG_SM_GPUCC_8550) += gpucc-sm8550.o
+> +obj-$(CONFIG_SM_LPASSCC_6115) += lpasscc-sm6115.o
+>  obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
+>  obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
+>  obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
+> diff --git a/drivers/clk/qcom/lpasscc-sm6115.c b/drivers/clk/qcom/lpasscc-sm6115.c
+> new file mode 100644
+> index 000000000000..6aa19e16c53b
+> --- /dev/null
+> +++ b/drivers/clk/qcom/lpasscc-sm6115.c
+> @@ -0,0 +1,84 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022, 2023 Linaro Limited
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/err.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,sm6115-lpasscc.h>
+> +
+> +#include "common.h"
+> +#include "reset.h"
+> +
+> +static const struct qcom_reset_map lpass_audiocc_sm6115_resets[] = {
+> +	[LPASS_AUDIO_SWR_RX_CGCR] =  { .reg = 0x98, .bit = 1, .udelay = 500 },
+> +};
+> +
+> +static struct regmap_config lpass_audiocc_sm6115_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.name = "lpass-audio-csr",
+> +	.max_register = 0x1000,
+> +};
+> +
+> +static const struct qcom_cc_desc lpass_audiocc_sm6115_reset_desc = {
+> +	.config = &lpass_audiocc_sm6115_regmap_config,
+> +	.resets = lpass_audiocc_sm6115_resets,
+> +	.num_resets = ARRAY_SIZE(lpass_audiocc_sm6115_resets),
+> +};
+> +
+> +static const struct qcom_reset_map lpasscc_sm6115_resets[] = {
+> +	[LPASS_SWR_TX_CONFIG_CGCR] = { .reg = 0x100, .bit = 1, .udelay = 500 },
+> +};
+> +
+> +static struct regmap_config lpasscc_sm6115_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.name = "lpass-tcsr",
+> +	.max_register = 0x1000,
+> +};
+> +
+> +static const struct qcom_cc_desc lpasscc_sm6115_reset_desc = {
+> +	.config = &lpasscc_sm6115_regmap_config,
+> +	.resets = lpasscc_sm6115_resets,
+> +	.num_resets = ARRAY_SIZE(lpasscc_sm6115_resets),
+> +};
+> +
+> +static const struct of_device_id lpasscc_sm6115_match_table[] = {
+> +	{
+> +		.compatible = "qcom,sm6115-lpassaudiocc",
+> +		.data = &lpass_audiocc_sm6115_reset_desc,
+> +	}, {
+> +		.compatible = "qcom,sm6115-lpasscc",
+> +		.data = &lpasscc_sm6115_reset_desc,
+> +	},
+> +	{ },
+> +};
+> +MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
 
-Konrad
+Everything here is almost the same as sc8280xp one, so this should be
+added to sc8280xp. You cut some boilerplate and additional driver.
+
+Best regards,
+Krzysztof
+
