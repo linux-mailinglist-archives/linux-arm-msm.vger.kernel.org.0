@@ -2,73 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FD33789598
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADA3F78959F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 11:56:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230111AbjHZJx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 05:53:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52990 "EHLO
+        id S231248AbjHZJ4I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 05:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231248AbjHZJxq (ORCPT
+        with ESMTP id S231794AbjHZJz5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 05:53:46 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DD9D2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:53:42 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-5008faf4456so2572889e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:53:42 -0700 (PDT)
+        Sat, 26 Aug 2023 05:55:57 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D24C1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:55:55 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fe8c16c1b4so2537885e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 02:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693043621; x=1693648421;
+        d=linaro.org; s=google; t=1693043753; x=1693648553;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lwgd269gxjUosCYYFxs4t8hQP/Yl26oGDPqfLJK5Y1I=;
-        b=OimAFHzYmzStKRjSOffREcdk7UeMWpfaJmshrx0KjHT1QRHxGMYW6VnPIczxL6jcuW
-         Lbdouh4tL4tpIseypxw1+/+p5WO+1qM9nnCXojgFBtDDZVfYv3MwKfwmuyROv6T411CV
-         J8zKXqokJURoxRTHflvr5eJk5Mfeyjqmk++2jPJo/0nXat6Kb85j07jkiEiXj2ixpahC
-         vZfatmvlXbjn/LD1QTYOymPfg6taljwGIc5lDjl8CRBue/nJ27L2F0rs67+pCLfuC7Va
-         Xz6IM6iOeTFL7VkqiwMTD8bk9nMx0/6/tRk81fEmTvK6v6NPjBM/48QxrbgNFcDJwXzq
-         6YAQ==
+        bh=T4oYN0aRNUVFesn9ULiHfoosoxVcUS1HAOQjXDAGJXM=;
+        b=fvRdAYVPWxjwyTDXvOGS5JsTA52RGbdYBoJQa6SER4ypptydnF96vhkSJFLGLYitS2
+         xIeCGM9ZwhyEutk3GOjxIgwfVROOmeJBz0rbdp/9wNu6Psj+NVz6CRVqJrJrPErmmlDi
+         v1aMPSARzau8xTLKmi4tjxMmBwY3YPn/LaIqlVsLhRALR/1PHNQBPInHV7dy2kY6bMvd
+         hJUR6gNN8WIm2awCKWAgH6u7rdsBq/vjQ2KixZe6B+b7WtPksq4bY75JXNWIy140yxLz
+         2jNcNtWBfNnx08JGC0+A9VR1Z8Pi/i+2Dc+O7O88/ZMPCCn1JVdP1CxytzmyKwviGZ7r
+         BA+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693043621; x=1693648421;
+        d=1e100.net; s=20221208; t=1693043753; x=1693648553;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lwgd269gxjUosCYYFxs4t8hQP/Yl26oGDPqfLJK5Y1I=;
-        b=OvRdqGA+GgYejfHq6z1URP1w6UyNliJn0VtcFlRiHY0aGUXoSlrZEb08ieqmhT0fX/
-         2aLtUDhT2I6UBQsNNNnB3Nq5OElrQb1jsQrqP/lhuUNR0a2gY8mDsqji5d7ZUwwNDoGK
-         g/GeLX+U+T4Aaigypg6lroakhZQBr07VFwVarkaSMmUxb8d2JLrOrnARlkCWJnrsNWLs
-         x1QfjbyD1rjOwasgEhocH5OmL6vlrk2T2zM5KKFD9Fk+OzYpCtCGZ85wDOesTZ8pS45L
-         2J+G4SzgURLvdRsIiksLVKCQJ21HJBxTaoJ2sDYszF522+ejxTNVVQ9onboJieTgYABn
-         pajw==
-X-Gm-Message-State: AOJu0YwVkiEFuI0w8N5oRA49U3VAcetXpnyU2CKQ5DAnunbzqeGpHXLG
-        I5edHtV7yjm2fGBagUj55Eu62g==
-X-Google-Smtp-Source: AGHT+IH116AltuvCjnY57igesskS+O8r6dfOtlKraQI87e7evEEE2BfGCP9zHUdmnJOXqTEM4kryAw==
-X-Received: by 2002:a05:6512:128c:b0:4ff:9aaa:6e3e with SMTP id u12-20020a056512128c00b004ff9aaa6e3emr21106954lfs.41.1693043620909;
-        Sat, 26 Aug 2023 02:53:40 -0700 (PDT)
+        bh=T4oYN0aRNUVFesn9ULiHfoosoxVcUS1HAOQjXDAGJXM=;
+        b=TWN40gIxoiPSi78r+c1LfMP+3aEUzVXn/Mlesv/1SyC73sI+9v3fkzEZyAcWFFhzTF
+         9lZgHpK6//NIYi15KyQR5fyUVfAPvsA6BmWSw1B8ZuozZX3NXnmSutKTxT0ZLzQ+HuqD
+         /s6YPg+pBOhDRtorjTxl2SrtjjFzaXNpI4TSdJkWZ2BfENi45TGRctSII2UNgC65TlWL
+         79Doi7j6w4CN1ykw3cz92uCH/rS6Bj21XsRdR2dZiJSbwOOEzH6AFKDmF+IzRq7ePWnl
+         XXKVSF3X7eS4pCW1Cw2BujA6PFuP9ffIftsE4jS7U/k9MiEa702KqJ+5yTUSO2SdFZXO
+         Rx9A==
+X-Gm-Message-State: AOJu0YyKx2UTw2PWgNiVfa8JS4N9BqFWLw3gbIGyjphfrh5aY0cGJKw5
+        nTgwI0iME6VB43uogZzsIRK+3g==
+X-Google-Smtp-Source: AGHT+IFh2vL3clE2BQpBYcjvI++VBweBfIt2Vi6CQsdWx7xc8uCW94YZy+lYJ6hp4LzwAsrsEaCuBw==
+X-Received: by 2002:a05:6512:3692:b0:4f9:5ca5:f1a6 with SMTP id d18-20020a056512369200b004f95ca5f1a6mr13670036lfs.17.1693043753393;
+        Sat, 26 Aug 2023 02:55:53 -0700 (PDT)
 Received: from [192.168.1.101] (abyl74.neoplus.adsl.tpnet.pl. [83.9.31.74])
-        by smtp.gmail.com with ESMTPSA id u8-20020ac25188000000b00500a44e158csm649584lfi.235.2023.08.26.02.53.39
+        by smtp.gmail.com with ESMTPSA id j8-20020ac253a8000000b005009b979e3dsm642751lfh.303.2023.08.26.02.55.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Aug 2023 02:53:40 -0700 (PDT)
-Message-ID: <15787b7c-dc8d-4782-8ba1-98dca16aeb96@linaro.org>
-Date:   Sat, 26 Aug 2023 11:53:39 +0200
+        Sat, 26 Aug 2023 02:55:53 -0700 (PDT)
+Message-ID: <c1fcaf1c-f25e-496f-a61a-82b4176f2269@linaro.org>
+Date:   Sat, 26 Aug 2023 11:55:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] ARM: dts: qcom: add device tree for Nokia Lumia
- 830
+Subject: Re: [PATCH v3 01/15] media: qcom: camss: Amalgamate struct resource
+ with struct resource_ispif
 Content-Language: en-US
-To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>,
-        Jack Matthews <jm5112356@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-References: <20230813152623.64989-1-rayyan@ansari.sh>
- <20230813152623.64989-7-rayyan@ansari.sh>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-2-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -105,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230813152623.64989-7-rayyan@ansari.sh>
+In-Reply-To: <20230823104444.1954663-2-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -117,23 +114,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13.08.2023 17:23, Rayyan Ansari wrote:
-> Add an initial device tree for the Nokia Lumia 830, codenamed
-> "tesla".
+On 23.08.2023 12:44, Bryan O'Donoghue wrote:
+> There is no good reason to differentiate the two resource structures
+> here. As part of a general tidyup of the declaration and passing of
+> resources within in the CAMSS driver it will be advantageous to have
+> one unified resource structure.
 > 
-> Co-authored-by: Dominik Kobinski <dominikkobinski314@gmail.com>
-> Co-authored-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> Co-authored-by: Jack Matthews <jm5112356@gmail.com>
-> Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> Signed-off-by: Jack Matthews <jm5112356@gmail.com>
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+> The two structures are very similar anyway thus leading more credence
+> still to the argument there should be only one.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-
-> +&blsp1_i2c5 {
-> +	status = "disabled";
-> +
-> +	/delete-node/ touchscreen@4b;
-same as patch5
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
