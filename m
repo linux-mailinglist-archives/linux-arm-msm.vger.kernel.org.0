@@ -2,82 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F5347892B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 02:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5372F789314
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Aug 2023 03:30:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231407AbjHZAX7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Aug 2023 20:23:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50476 "EHLO
+        id S231214AbjHZBaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Aug 2023 21:30:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231375AbjHZAXd (ORCPT
+        with ESMTP id S231329AbjHZBaE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Aug 2023 20:23:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26102117;
-        Fri, 25 Aug 2023 17:23:31 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37Q0M31M012741;
-        Sat, 26 Aug 2023 00:23:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UVrA7hFTknaYMrfth6agguVc8LsTfqzkHFmMYsvCLEc=;
- b=Aw/IX2WpSBXMMfSTZOyKy0IvbTq7OM8DwyUZwxiClnj7pX4Sae0QKAlIenwEXsiZUFeM
- jaZ9ARUFYxI0UyTfE1ezL9Y6hyDROVP0VPBkiCke/k8rPCWTTRwThCUZEqj0ppY1lZrI
- ZQhOaTATyA2yEEExtaMaCmjWBOtY7o7Gkd3rwH6piyHOC+25RdQl9UdxWYJF6D3gjAnV
- N34eR+EV3iYSNEpEVM2dGJtk6uQfNRutsQJbeCZalLcf0qA8tTgJGX0If2K3WVJ0QnZf
- GO4vzbvJZSGXVHXNXJdhDO+bgwVzshOpZu+GDAMO84/CkwgdzvPM6RiEkIMwdKPT6jCd gQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmm6a96k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 26 Aug 2023 00:23:15 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37Q0NF2H018497
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 26 Aug 2023 00:23:15 GMT
-Received: from [10.110.6.4] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 25 Aug
- 2023 17:23:14 -0700
-Message-ID: <6772a956-e511-484d-771e-529df8fbc199@quicinc.com>
-Date:   Fri, 25 Aug 2023 17:23:13 -0700
+        Fri, 25 Aug 2023 21:30:04 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8B21FD7;
+        Fri, 25 Aug 2023 18:30:01 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-525bd0b2b48so2014057a12.0;
+        Fri, 25 Aug 2023 18:30:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693013400; x=1693618200;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S2D36dOoa06BWR5AgzTMO8lYHiZ+scFy120F5WcTjb4=;
+        b=FDM7incZcG0SAgE8+njJbysK0lJLfbZ5w5pqVsOhU0RVVKAbbu9S2DM/Ck1prs72Pq
+         I1r85m4ckvcMwSk1x9V/A6/mHix2474u+E+NzTZ4GWI3bHSDYt9JoYxCISI9J3MBWfQ7
+         g1CoUg3IzIojkWoDzheYx/OTFNTt1V/6tkwFQ2peXQWpAEhQxGcVNC70/9TV7NC3NfW8
+         1qLkYtq3W7SQg4Mgvc4a12z8gMdWJX+3B0OJlVtmliGYW/Qpm5PV/EYkpVeVqO+FiNyh
+         OPmriR2FLEwDSulrTmguaW/O2uxJ3T/ZR5TdkJL5lv9TmqjEHrUTVKdnmaV385nDHbxF
+         Xiuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693013400; x=1693618200;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S2D36dOoa06BWR5AgzTMO8lYHiZ+scFy120F5WcTjb4=;
+        b=h8131xYGlNH73KWewRU28PEBeerSFZkJMACOsr32VHBzQU45ASacy6yGTLd97/As/l
+         eOGye3Vb6RLGsjpSTiQQVIW0Yc2xWloKvPfMLo+c41d30As7/fkFnhPnDCb/qmKw44TY
+         9zbGj1AqvQ6BR+f8F4dtTlc5jaSUPnzltxrmEI2isoW8/U1Q38yfmMhTPwblmSjGIrtB
+         JVPwmLQw99aTA3HfFa0AUXXdvflms0+fKrMOHnWY4nkGTdksw49Xv/umKZFUQGsAaehA
+         9GF9ZF76eKpxsuMVl4UXxYnGvv5yzsZG0IEx118tVv7uxcdHSh1PN95fwb2FidPKi2Ze
+         TzPQ==
+X-Gm-Message-State: AOJu0YwjoAyJQcFpV1xOjZYI239UroQCz3uwHdW+8VPjCN5xepfZ9TQc
+        pRkuTDJEYs+GMxxmCrEAQnH5Uf4uM6ePYEr9nSs=
+X-Google-Smtp-Source: AGHT+IEXsOl+EHSkkBQhRH9RjwYOfhOsIxG3m6cpaf528qm11nkEYjjL1pWzb1LveXcoEDTjgx812Dp7EL91FKYuxKo=
+X-Received: by 2002:a05:6402:34b:b0:525:69ec:e1c8 with SMTP id
+ r11-20020a056402034b00b0052569ece1c8mr12651629edw.40.1693013399773; Fri, 25
+ Aug 2023 18:29:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 4/4] drm/msm/dsi: Enable widebus for DSI
-Content-Language: en-US
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
+References: <20230825-topic-6375_gpu_id-v1-1-e24f46d7f139@linaro.org>
+In-Reply-To: <20230825-topic-6375_gpu_id-v1-1-e24f46d7f139@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 25 Aug 2023 18:29:48 -0700
+Message-ID: <CAF6AEGsNr+5zaXqKRhyeY6NV+iRD+Yz8ftqiX6Z08esoyh=DzQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: Fix SM6375 GPU ID
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230822-add-widebus-support-v4-0-9dc86083d6ea@quicinc.com>
- <20230822-add-widebus-support-v4-4-9dc86083d6ea@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230822-add-widebus-support-v4-4-9dc86083d6ea@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DAuK1jenotUUm5yEXhV82UoS-ocl2ec9
-X-Proofpoint-GUID: DAuK1jenotUUm5yEXhV82UoS-ocl2ec9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-25_19,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 phishscore=0
- clxscore=1015 mlxscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
- mlxlogscore=716 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308260001
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,20 +75,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/22/2023 10:42 AM, Jessica Zhang wrote:
-> DSI 6G v2.5.x+ supports a data-bus widen mode that allows DSI to send
-> 48 bits of compressed data instead of 24.
-> 
-> Enable this mode whenever DSC is enabled for supported chipsets.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+On Fri, Aug 25, 2023 at 2:11=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> SM6375 comes with a patchlevel=3D1. Fix the chipid up to reflect that.
+>
+> Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying G=
+PU")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/gpu/drm/msm/dsi/dsi.c      |  2 +-
->   drivers/gpu/drm/msm/dsi/dsi.h      |  1 +
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 31 +++++++++++++++++++++++++++----
->   3 files changed, 29 insertions(+), 5 deletions(-)
-> 
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm=
+/msm/adreno/adreno_device.c
+> index 575e7c56219f..f2d9d34ed50f 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -331,7 +331,7 @@ static const struct adreno_info gpulist[] =3D {
+>                 ),
+>         }, {
+>                 .machine =3D "qcom,sm6375",
+> -               .chip_ids =3D ADRENO_CHIP_IDS(0x06010900),
+> +               .chip_ids =3D ADRENO_CHIP_IDS(0x06010901),
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+r-b, but maybe we should list both to be safe?  But unsure if any
+patchlevel=3D0 things are out there in the wild... I guess we could add
+it back in later if needed
+
+BR,
+-
+
+>                 .family =3D ADRENO_6XX_GEN1,
+>                 .revn =3D 619,
+>                 .fw =3D {
+>
+> ---
+> base-commit: 6269320850097903b30be8f07a5c61d9f7592393
+> change-id: 20230825-topic-6375_gpu_id-cf1596e2b147
+>
+> Best regards,
+> --
+> Konrad Dybcio <konrad.dybcio@linaro.org>
+>
