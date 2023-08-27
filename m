@@ -2,56 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA8E678A1BF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 23:15:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CA4F78A1C0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 23:15:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230263AbjH0VOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 17:14:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37600 "EHLO
+        id S230268AbjH0VOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 17:14:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbjH0VOY (ORCPT
+        with ESMTP id S230210AbjH0VOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 27 Aug 2023 17:14:24 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6AF7B9;
-        Sun, 27 Aug 2023 14:14:21 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31c73c21113so2295083f8f.1;
-        Sun, 27 Aug 2023 14:14:21 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0670C1;
+        Sun, 27 Aug 2023 14:14:22 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-31dcd553fecso26640f8f.2;
+        Sun, 27 Aug 2023 14:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693170860; x=1693775660;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oFbgrL50bzSftgmNjyPujQR4Of2JfipVU9EaUv5eW7k=;
-        b=B5c+CBf7Yn/n8mBJmOnnd1TShNW0G5Opod/g1mWNmOZe5oaLLGZRiGXZKyloxPpTbv
-         54UdCUiSdKo49RguR4xMFZgQ7nm0X1/rlEWV3VyT6j6YHoo3i6S8M6NKrZ+4bJJV0Snt
-         zQS7SBZKvRpTys1e8bBSjKIbja4iIyGI4Cg0EMtViB3ZRSP4NCKUwCM+m0ajJyHGzZSp
-         Hk4qbPAFJslPNYW8/WvIGl+RAu3tbdvJh7jFc4ezLZ6YZvFrGYOO8iPx5waH4p5yqx0m
-         nZOIGymc2bCFybtOmuwb+4khu+gMa58aKmnTbrpxlnBFY+OGtqAcKms2/b6kNAXlsq4q
-         2eHw==
+        d=gmail.com; s=20221208; t=1693170861; x=1693775661;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iEuyiUjnDtOu7dR9owxX9v0FKvTrdzN40pWJ8696GMc=;
+        b=oohInnsxCA//EmDY4Q8ZPTK0VhvvjdIvV6IkYcGqDOoew27+6NTeBU8GYOcil2YlQ9
+         SvtXAQdls66MdBIpUuB8U61iC5tiUhs0CPingXS/d6i6QBFF6i1s9gjyfr3LkVbKlYKW
+         nhM4cKYWvg4HHC6cB9oBOtTKrBZTgzbporwBLFHaksRLy0s+V3QXiWnqlyCfqRzAKoby
+         sN5sDg8/24+6lmazKf4cGsjK9OxkWimyd130RTYM5iMt2tsLldP1DcCDqOszw0YyLyxm
+         YFfNrl8cY/wndxzh1ozGjZKwW/eWNca82NN5nxT+eybugaCoogng7y24SjMfnRgMJM+M
+         VBXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693170860; x=1693775660;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oFbgrL50bzSftgmNjyPujQR4Of2JfipVU9EaUv5eW7k=;
-        b=gTaREs3/veR3KUOaIOX55HVzRELFqoJeTYgzUDVjk0g30j98Qfc4x+c3o74ndqTggi
-         78PFY8RZc9GulW+UfDaG6rZy55mvxCpFma8A/Lm5eeb4UxeRgm/ynwQXxugou0w+H4nv
-         471GXVzkksD2aDOC6esZsUO6WBWsYyEWScGeyyiJEdr4WodLcpfbCfNu0j6Ge+JDb6Ln
-         ePPzBvxUPqVOGCrtM9q+gYVD9f44XXdggycKUk0/2hOMd4iZfu3RegcCiZIDShdo1F0P
-         Il31hTb3uTJaEccuaRA67kJ1V+dj8i+vY8kXH+Xk1UZr3lY717VttOE5CiJMCagFyf6t
-         Xn1g==
-X-Gm-Message-State: AOJu0YwZFXQJUkytkks+NhI1eUA0cq7MWuJUri4Zxvp3o9YxeV2gwPw9
-        /7RXD5T1+DO8QudOgVyTq91opL3uxBU=
-X-Google-Smtp-Source: AGHT+IGaKQafzwpIEkOUAjoanB8y3BbvHV7Le9YzTS+LmIdP/bFXe2qobbXbha1VypEqPKqR+cUVdQ==
-X-Received: by 2002:adf:f9c4:0:b0:314:420c:5ef7 with SMTP id w4-20020adff9c4000000b00314420c5ef7mr17282539wrr.11.1693170859784;
-        Sun, 27 Aug 2023 14:14:19 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693170861; x=1693775661;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iEuyiUjnDtOu7dR9owxX9v0FKvTrdzN40pWJ8696GMc=;
+        b=GOM101jzyIcFbiDVCpCk3foCCLeMBQtj6ax2gy6XPGWHQapQFQauiR1W1OdpG9yZTo
+         82Ar0LHZomtJBFsK/eQXGiSOlMgh2boRRD3jqp69SdxOVLVh71+sYQJ6P2TMj1i7lXM7
+         Rw4RF/BIGPTqF7GeY90gdmO/J2W69beQ1utszR13L0Nw5FLHSM2OuxiJhApdNpNE783b
+         FkVg5cgueoJkEGwy30FNsa1lEn1sZRj93t/Hqz08VSqnG2GW/K3pxEhnnkE/QfVtmzlB
+         a5AnvlFoi5QMjDja2WWBHCipF8qGpbmUs73YnBLGKglEWRf5JyWh+KYmBypU50ODVng3
+         i9bw==
+X-Gm-Message-State: AOJu0YwqAQ89VHsYafJX4BqfPsmpyNGFudtnfrPoSZZi8MIPgfd5m0CG
+        BDlAKwxEvGGYFVm7dOvPn0c=
+X-Google-Smtp-Source: AGHT+IHErb8yMhcoLxajYmBWfymwcWBdwCcCG9vfP0RSequX4LujqIwhvWl4Vl15Gn8nsa+vI2QFGw==
+X-Received: by 2002:adf:e4ce:0:b0:31c:6697:6947 with SMTP id v14-20020adfe4ce000000b0031c66976947mr10998390wrm.69.1693170861114;
+        Sun, 27 Aug 2023 14:14:21 -0700 (PDT)
 Received: from xws.fritz.box ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id p14-20020a5d638e000000b0031971ab70c9sm8541997wru.73.2023.08.27.14.14.18
+        by smtp.gmail.com with ESMTPSA id p14-20020a5d638e000000b0031971ab70c9sm8541997wru.73.2023.08.27.14.14.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Aug 2023 14:14:19 -0700 (PDT)
+        Sun, 27 Aug 2023 14:14:20 -0700 (PDT)
 From:   Maximilian Luz <luzmaximilian@gmail.com>
 To:     Bjorn Andersson <andersson@kernel.org>
 Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Kees Cook <keescook@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Ard Biesheuvel <ardb@kernel.org>,
@@ -61,10 +63,12 @@ Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
         Johan Hovold <johan@kernel.org>,
         Steev Klimaszewski <steev@kali.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v6 0/3] firmware: Add support for Qualcomm UEFI Secure Application
-Date:   Sun, 27 Aug 2023 23:14:03 +0200
-Message-ID: <20230827211408.689076-1-luzmaximilian@gmail.com>
+Subject: [PATCH v6 1/3] lib/ucs2_string: Add UCS-2 strscpy function
+Date:   Sun, 27 Aug 2023 23:14:04 +0200
+Message-ID: <20230827211408.689076-2-luzmaximilian@gmail.com>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230827211408.689076-1-luzmaximilian@gmail.com>
+References: <20230827211408.689076-1-luzmaximilian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,107 +81,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds basic support for the QSEECOM interface used to
-communicate with secure applications running in the TrustZone on certain
-Qualcomm devices. In addition to that, it also provides a driver for
-"uefisecapp", the secure application managing access to UEFI variables
-on such platforms.
+Add a ucs2_strscpy() function for UCS-2 strings. The behavior is
+equivalent to the standard strscpy() function, just for 16-bit character
+UCS-2 strings.
 
-For a more detailed description, see the blurb of v1.
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+---
 
-Previous versions:
-
- - V5: https://lore.kernel.org/lkml/20230730161906.606163-1-luzmaximilian@gmail.com/t/
- - V4: https://lore.kernel.org/lkml/72c0359a-eda6-30ea-0ec0-b7e9b804b87b@gmail.com/t/
- - V3: https://lore.kernel.org/lkml/20230305022119.1331495-4-luzmaximilian@gmail.com/t/
- - V2: https://lore.kernel.org/lkml/20230127184650.756795-1-luzmaximilian@gmail.com/
- - V1: https://lore.kernel.org/lkml/20220723224949.1089973-1-luzmaximilian@gmail.com/
+Changes in v6:
+- Add function documentation
+- Clarify that we're copying/working in terms of characters, not bytes
+- Change size warning to be INT_MAX bytes, not INT_MAX characters
 
 Changes in v5:
+ - Add ucs2_strscpy() instead of ucs2_strlcpy()
 
- - Small code fixes (e.g., missing 'static inline', missing includes,
-   removal of unnecessary functions, improvements and fixes for
-   documentation and comments). No larger or structural changes.
+Patch introduced in v4.
+---
+ include/linux/ucs2_string.h |  1 +
+ lib/ucs2_string.c           | 52 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
 
-Changes in v5:
-
- - Re-introduce a dedicated platform device for managing QSEECOM client
-   devices. The device is now added via qcom_scm.c instead of the device
-   tree (as has been done in v3).
-
- - Replace ucs2_strlcpy() with ucs2_strscpy()
-
- - Drop "firmware: qcom_scm: Clear scm pointer on probe failure" and
-   sort out probe-related issue.
-
- - Clean up comments in qcom_qseecom_uefisecapp.c
-
-Changes in v4:
-
- - Integrate the QSEECOM interface into qcom_scm.c instead of
-   instantiating a custom device and requiring device-tree bindings for
-   it. With that, drop the respective patches exporting SCM call
-   functions from qcom_scm.c and the DT bindings.
-
- - Restructure management of DMA memory and move DMA mapping entirely
-   into the app_send() command, removing the need for DMA handling in
-   app client drivers.
-
- - Add support for EFI's query_variable_info() call.
-
- - Move UCS-2 string helpers to lib/ucs2_string.c (introduces patch 1).
-
- - Add fix for related cleanup-issue in qcom_scm.c (introduces patch 2).
-
- (Refer to individual patches for more details.)
-
-Changes in v3:
-
- - Fix doc comment in qcom_scm.c
- - Rebase on top of latest changes to qcom_scm.
-
-Changes in v2:
-
- - Bind the qseecom interface to a device.
-
- - Establish a device link between the new qseecom device and the SCM
-   device to ensure proper PM and remove ordering.
-
- - Remove the compatible for uefisecapp. Instead, introduce a compatible
-   for the qseecom device. This directly reflects ACPI tables and the
-   QCOM0476 device described therein, which is responsible for the
-   secure app / qseecom interface (i.e., the same purpose).
-
-   Client devices representing apps handled by the kernel (such as
-   uefisecapp) are now directly instantiated by the qseecom driver,
-   based on the respective platform-specific compatible.
-
- - Rename the base name (qctree -> qseecom) to allow differentiation
-   between old (qseecom) and new (smcinvoke) interfaces to the trusted
-   execution environment. This directly reflects downstream naming by
-   Qualcomm.
-
-Maximilian Luz (3):
-  lib/ucs2_string: Add UCS-2 strscpy function
-  firmware: qcom_scm: Add support for Qualcomm Secure Execution
-    Environment SCM interface
-  firmware: Add support for Qualcomm UEFI Secure Application
-
- MAINTAINERS                                |  12 +
- drivers/firmware/Kconfig                   |  32 +
- drivers/firmware/Makefile                  |   2 +
- drivers/firmware/qcom_qseecom.c            | 120 +++
- drivers/firmware/qcom_qseecom_uefisecapp.c | 871 +++++++++++++++++++++
- drivers/firmware/qcom_scm.c                | 394 ++++++++++
- include/linux/firmware/qcom/qcom_qseecom.h |  46 ++
- include/linux/firmware/qcom/qcom_scm.h     |  22 +
- include/linux/ucs2_string.h                |   1 +
- lib/ucs2_string.c                          |  52 ++
- 10 files changed, 1552 insertions(+)
- create mode 100644 drivers/firmware/qcom_qseecom.c
- create mode 100644 drivers/firmware/qcom_qseecom_uefisecapp.c
- create mode 100644 include/linux/firmware/qcom/qcom_qseecom.h
-
+diff --git a/include/linux/ucs2_string.h b/include/linux/ucs2_string.h
+index cf3ada3e820e..c499ae809c7d 100644
+--- a/include/linux/ucs2_string.h
++++ b/include/linux/ucs2_string.h
+@@ -10,6 +10,7 @@ typedef u16 ucs2_char_t;
+ unsigned long ucs2_strnlen(const ucs2_char_t *s, size_t maxlength);
+ unsigned long ucs2_strlen(const ucs2_char_t *s);
+ unsigned long ucs2_strsize(const ucs2_char_t *data, unsigned long maxlength);
++ssize_t ucs2_strscpy(ucs2_char_t *dst, const ucs2_char_t *src, size_t count);
+ int ucs2_strncmp(const ucs2_char_t *a, const ucs2_char_t *b, size_t len);
+ 
+ unsigned long ucs2_utf8size(const ucs2_char_t *src);
+diff --git a/lib/ucs2_string.c b/lib/ucs2_string.c
+index 0a559a42359b..9308bcfb2ad5 100644
+--- a/lib/ucs2_string.c
++++ b/lib/ucs2_string.c
+@@ -32,6 +32,58 @@ ucs2_strsize(const ucs2_char_t *data, unsigned long maxlength)
+ }
+ EXPORT_SYMBOL(ucs2_strsize);
+ 
++/**
++ * ucs2_strscpy() - Copy a UCS2 string into a sized buffer.
++ *
++ * @dst: Pointer to the destination buffer where to copy the string to.
++ * @src: Pointer to the source buffer where to copy the string from.
++ * @count: Size of the destination buffer, in UCS2 (16-bit) characters.
++ *
++ * Like strscpy(), only for UCS2 strings.
++ *
++ * Copy the source string @src, or as much of it as fits, into the destination
++ * buffer @dst. The behavior is undefined if the string buffers overlap. The
++ * destination buffer @dst is always NUL-terminated, unless it's zero-sized.
++ *
++ * Return: The number of characters copied into @dst (excluding the trailing
++ * %NUL terminator) or -E2BIG if @count is 0 or @src was truncated due to the
++ * destination buffer being too small.
++ */
++ssize_t ucs2_strscpy(ucs2_char_t *dst, const ucs2_char_t *src, size_t count)
++{
++	long res;
++
++	/*
++	 * Ensure that we have a valid amount of space. We need to store at
++	 * least one NUL-character.
++	 */
++	if (count == 0 || WARN_ON_ONCE(count > INT_MAX / sizeof(*dst)))
++		return -E2BIG;
++
++	/*
++	 * Copy at most 'count' characters, return early if we find a
++	 * NUL-terminator.
++	 */
++	for (res = 0; res < count; res++) {
++		ucs2_char_t c;
++
++		c = src[res];
++		dst[res] = c;
++
++		if (!c)
++			return res;
++	}
++
++	/*
++	 * The loop above terminated without finding a NUL-terminator,
++	 * exceeding the 'count': Enforce proper NUL-termination and return
++	 * error.
++	 */
++	dst[count - 1] = 0;
++	return -E2BIG;
++}
++EXPORT_SYMBOL(ucs2_strscpy);
++
+ int
+ ucs2_strncmp(const ucs2_char_t *a, const ucs2_char_t *b, size_t len)
+ {
 -- 
 2.42.0
 
