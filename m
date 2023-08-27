@@ -2,73 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7D6A789D4A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 13:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 653ED789D4D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 13:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbjH0Lkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 07:40:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43800 "EHLO
+        id S229630AbjH0Lps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 07:45:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjH0Lkc (ORCPT
+        with ESMTP id S229833AbjH0Lp1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 07:40:32 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3C7132
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:40:30 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-99c0cb7285fso301569166b.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:40:30 -0700 (PDT)
+        Sun, 27 Aug 2023 07:45:27 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F5DA189
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:45:24 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51cff235226so4977774a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693136428; x=1693741228;
+        d=linaro.org; s=google; t=1693136723; x=1693741523;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r5yXjlx9eXs/s1lbf4NHbswyaJlJiZM8NIf6FC05ww0=;
-        b=NWmpa3ICKJgt/YAFRNQRWMpDVZ8JpJtB6egrzMBKx0soIWIHVZS0r7dFodVnJUVyaB
-         1KiNhGWLrvcerJy2J1X8OSXKleDEUDUVzoOgXU3K7Zl/EW8e6Cv0BXHdmx4PRjyetwAo
-         gajNF/bCh0wtSjv5rt95wI2Xr9U6QOLpmgRIqMrVvXcOS3yGh4yxXy7c57ZvUluzPm6f
-         HbQ8WCEz5bpJuvCqR+dVyIZHXPQkf1KCiCUsMuve/O+8A7YX7TSVx8eYwZ5HKpjdzhvk
-         ffk/v3rrtZnlO4giCzQXt1TZF7Ft9AxlHTJ2e09VhVrKAKXkVd6B3Xdt6n0IjcgbEGZi
-         /FtQ==
+        bh=T3VrehCt458ibSdrOVnk/zwaZSSbAqnHtk/nn44owVU=;
+        b=LkDAqhhVDyIx/fGa/oCkvgT/DEzdsPJrfilY5/kXtZd3z+8vLchlzL3BSlTUopVZaL
+         D0CtbSMGOar0UBRcOiFlYy/h/ABy0omoZ2hIE3VhL740rPcXf3txGD568LOSsf+ZjSLN
+         j0cZP6vp9gKzWQY1a2/PJz1Kq4ZhieYq8H6HIWT39g0jFXKCbg/TK1LXTuorYfMAIBgu
+         qxBCIpF0Sc3oobNJ4ZIJhRGOivDIJACuP5KTflJILZyv37TrewXCUsouWgoDAZNTbLO0
+         tfc0xBS4yTAHyYen0S0Y2DSlf+UJjFEqOADK1GAaM7JV7CdsAKMzVGRy7RRnldInrkHn
+         RwyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693136428; x=1693741228;
+        d=1e100.net; s=20221208; t=1693136723; x=1693741523;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=r5yXjlx9eXs/s1lbf4NHbswyaJlJiZM8NIf6FC05ww0=;
-        b=RWLy8bAc0DDU4F0NMwQe71nNXjpH4vC4LJz9SOoxpYO02Pcpt/2oPWZoJgbg7RVUNB
-         Bl+LymoFQXNpXGaqWXoKDArXpVNrNooRfPBFh6vpnqNiBt2g2vOAOK4TISc16ArUM5de
-         r5tudWD8bSnLbuc8rw2GX9gdbMsl3snVj9lOOIWinZgAo3p3DszYwt58/scfVoLT2tCs
-         XPgaqjuXXO7QCU6afLBLLvKMjHCAyoQaxFpxTf4l4iW6h2kooKnUxUXw1+a1zLRlOoP8
-         SDsMfVwSsXB+nYk+TdtVzsieux/2IAMcaQlDQC/XFqQseiS7syhtPIUpAWVesg9mQgJp
-         bjdw==
-X-Gm-Message-State: AOJu0Yybn8PwTRSde3n6maDCQp8dW7KA5vxMxEOMbNvAhDi5GGSffKRN
-        76pi1GqZ6FNftEeOw4AJu++s/A==
-X-Google-Smtp-Source: AGHT+IFJzgqawTOC8x8uvouQh8iok/M1NAVoCFi9ln0CxPQRDAoA3OzEUGucKvKZAn5I4wWukUyZ2Q==
-X-Received: by 2002:a17:906:5354:b0:9a1:fab3:ee37 with SMTP id j20-20020a170906535400b009a1fab3ee37mr7016209ejo.14.1693136428400;
-        Sun, 27 Aug 2023 04:40:28 -0700 (PDT)
+        bh=T3VrehCt458ibSdrOVnk/zwaZSSbAqnHtk/nn44owVU=;
+        b=H1FxBnoM7+wazSQRDXVN/KJ0bdsDADswRO2APivTEBz3SbqjtG5XgfQbZaueUACybG
+         t2IUfH79HTJUUUtdDuAhG+bTz+BbRs6bjv9olWwSJI+mW8kDfW4eaXYnoYbt5rQKgctR
+         tC5gqfmysZWMSwsqXGQgvky4hQBxl4HS+JSSNf53Q/QvFe3FjDOKnh6dmw5BsKyTDR3x
+         tOYoapB8/Mr5H9e3PqNcAaXg2IpuO8KA3KT5vuUrx6UOxgWSSXbeotwt/xNrUKbcC774
+         7GRMT/leWghwYT1v4nYM9NwoLWVhz55HpgKDSicRA1IAQMck2+F3JdkdVLn2aVhGpq4N
+         0ILA==
+X-Gm-Message-State: AOJu0YyLoVGEcnAwJ6Z5no8QDDzYwRL1O5iuG5cIWFdaTH5dxc6ADZs3
+        kN9eJ9gqTWf9MqLv1WClRZFVVw==
+X-Google-Smtp-Source: AGHT+IHptsmveRqKRhslwS+sYBDjeT1ECGZ9QDsvSvEr0ODB5JNJ4Ehu7svhew95UHzddWNBZFvs/A==
+X-Received: by 2002:a05:6402:26c2:b0:522:ddeb:cdcb with SMTP id x2-20020a05640226c200b00522ddebcdcbmr28009384edd.18.1693136722995;
+        Sun, 27 Aug 2023 04:45:22 -0700 (PDT)
 Received: from krzk-bin.. ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id e2-20020a17090681c200b00997e99a662bsm3351927ejx.20.2023.08.27.04.40.27
+        by smtp.gmail.com with ESMTPSA id m15-20020a50ef0f000000b005254b41f507sm3239024eds.32.2023.08.27.04.45.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Aug 2023 04:40:27 -0700 (PDT)
+        Sun, 27 Aug 2023 04:45:22 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Odelu Kukatla <quic_okukatla@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: interconnect: qcom,rpmh: do not require reg on SDX65 MC virt
-Date:   Sun, 27 Aug 2023 13:40:26 +0200
-Message-Id: <20230827114026.47806-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] ARM: dts: qcom: sdx65: correct PCIe EP phy-names
+Date:   Sun, 27 Aug 2023 13:45:18 +0200
+Message-Id: <20230827114519.48797-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,29 +75,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MC virt interconnect in SDX65 DTSI does not have reg.  Similarly in
-the downstream DTS, thus assume this is an interconnect without own
-dedicated IO address space.  This fixes dtbs_check warnings like:
+Qualcomm PCIe endpoint bindings expect phy-names to be "pciephy":
 
-  qcom-sdx65-mtp.dtb: interconnect-mc-virt: 'reg' is a required property
+  arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dtb: pcie-ep@1c00000: phy-names:0: 'pciephy' was expected
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-index a46497af1fd8..74ab080249ff 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-@@ -113,6 +113,7 @@ allOf:
-         properties:
-           compatible:
-             enum:
-+              - qcom,sdx65-mc-virt
-               - qcom,sm8250-qup-virt
-     then:
-       required:
+diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+index 81d018fe7d9b..93c6c80dc379 100644
+--- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
+@@ -337,7 +337,7 @@ pcie_ep: pcie-ep@1c00000 {
+ 			power-domains = <&gcc PCIE_GDSC>;
+ 
+ 			phys = <&pcie_phy>;
+-			phy-names = "pcie-phy";
++			phy-names = "pciephy";
+ 
+ 			max-link-speed = <3>;
+ 			num-lanes = <2>;
 -- 
 2.34.1
 
