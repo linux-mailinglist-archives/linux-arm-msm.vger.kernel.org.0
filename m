@@ -2,88 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A51A5789DBE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 14:00:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25E79789DC9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 14:13:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbjH0MAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 08:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52766 "EHLO
+        id S229573AbjH0MKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 08:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbjH0MAP (ORCPT
+        with ESMTP id S229508AbjH0MKh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 08:00:15 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A966B132
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:00:12 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9a19bf6ab66so300705966b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:00:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693137611; x=1693742411;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A1vb1NKNxPWmF22t3LyBlcMBv4ZL6aYsl1zImyCmPqk=;
-        b=nkU9QDA3ZQPrE80K5WNGyInIxQ+rjGO9+Y4Z8NK3FX1YJWYxfR7fjbDSFwSImABVDH
-         mbe2eh0mTre7O4pp4wCf+6X4jRtTLqa2PUZZKoW/ZvG5GF2LO2sed8c7OXzDTFtn3LQ+
-         LPZbcQXOI5ABjn1Zq1JssUMUBZp/svujuVqjbJBLcf/ydP0ypHWCa/pCMRvMbKT6r7Xk
-         RHvdiFofd8NiFURYeL0gJ2wKwK/4q1ssGyQARjsVPjFKJenIRN9VcAUWg37/GiNyxMm5
-         ubi0xkOFN34WVQPEMIKTSyZZwrShzqb8fk4TPyncxI/tDiNojq9UvDAqSgWtnrwrh+mZ
-         MlwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693137611; x=1693742411;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A1vb1NKNxPWmF22t3LyBlcMBv4ZL6aYsl1zImyCmPqk=;
-        b=Q3HV4zWsKXOQyF6GTebAgO3sR99BQcAvB9k6HiHXJl90Weem93YK23HPQueY7jQCnw
-         xjdUHgiim3/dFGpq9Y/1SbW1rJugUpPHdDMl3CeUI2cB9V940SozaBjtxKpxvTWHwGSo
-         d8JJbGy5Sk3tBcaUoBakuXF46rPBsL8W5ZD6ArbwXC2NVyWTUHcn9ln5tx28HUwzV3nZ
-         g4yChNtJ7xV1R5fRA4EcAQpFnnuG8n9KJUi8kBS+v1UR0IcWxa6zcMzq+9dLEbSsXPXn
-         hfi/r0CjvRE1vYRqSn/GFQ8lROYwa4ZYOiB4NbYVxnTjpL4GBcgXupeWV0ou/fwimNw5
-         w1+w==
-X-Gm-Message-State: AOJu0Yx9w88HreNFwKAhNU8ORCCf1QKqhTHT58O6jdVX1Wiz2/kZW8R/
-        L215j7CTdbJXPBokCFUmBIT2Ug==
-X-Google-Smtp-Source: AGHT+IHfvkkfwHnTPi8nCl9XpByE/JPq0GfNI6XI37kZ85boixd1ibZVDvSULqUh7Q6KLm4+pQXTmw==
-X-Received: by 2002:a17:906:18a1:b0:99d:fab5:e888 with SMTP id c1-20020a17090618a100b0099dfab5e888mr16063184ejf.34.1693137611153;
-        Sun, 27 Aug 2023 05:00:11 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id w26-20020a1709064a1a00b009786c8249d6sm3385960eju.175.2023.08.27.05.00.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 27 Aug 2023 05:00:10 -0700 (PDT)
-Message-ID: <e6340d20-40f3-be5c-b4fc-33da59799d91@linaro.org>
-Date:   Sun, 27 Aug 2023 14:00:09 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v4 03/38] dt-bindings: mfd: qcom-pm8xxx: allow using
- interrupts-extended
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sun, 27 Aug 2023 08:10:37 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CAE130;
+        Sun, 27 Aug 2023 05:10:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7751B60F0F;
+        Sun, 27 Aug 2023 12:10:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B0DC433C7;
+        Sun, 27 Aug 2023 12:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693138233;
+        bh=WMzxN+/vPzfmnWAACf8mcof6OpZORi1WlHwqzQDLUrk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jCAZep4DsRDmbmzerSlURVj5dx6DHazJVvmof31F0VAjS3U6WGGomC14azfCjxn73
+         7aqr07Ia/1W6K0EMqWSRGkgQYSs0rWRWfeFhjKG1w1XQsqwOZw0THjcQEWQdijPQ1c
+         N0qUJOtf0V61x/PXv0rfbNheIhOOuQJ6Sn96EPpUHplPiJLJv/GukG3b3zgFsE89sf
+         g7e0Lm8SQZfjHzyFT7sw2jjHy+1uQhfbB94ST/x6KxHj8wbweG9Il6CrhluyYf5xHU
+         lFFVTi5nDVGKeegzZXqO2Rl5QBFG8ZjktDtJbkG8mAP4rdjAGMb+6ny6V+hB4C7nyb
+         V0Gt5YLkbNCTg==
+Date:   Sun, 27 Aug 2023 13:10:28 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-iio@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        linux-leds@vger.kernel.org
-References: <20230827005920.898719-1-dmitry.baryshkov@linaro.org>
- <20230827005920.898719-4-dmitry.baryshkov@linaro.org>
- <39af3ab5-4fa5-5b3c-395a-e86e70bbe803@linaro.org>
- <CAA8EJppw0Kxo3W560ucWey959368M1c8BFnvF4Ggi5XKCOfesw@mail.gmail.com>
- <74dcc5b4-dda2-5de7-9e58-4191a0fb7972@linaro.org>
- <CAA8EJpoWvoNfomMg34cL=h+qBLHQq3bZO2X-02Pcz6oLiKRxWA@mail.gmail.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJpoWvoNfomMg34cL=h+qBLHQq3bZO2X-02Pcz6oLiKRxWA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: fix SDX65 compatible
+Message-ID: <20230827-eggshell-rift-94f423e74dab@spud>
+References: <20230827085351.21932-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="Y5ooK+v/FYTMRcoa"
+Content-Disposition: inline
+In-Reply-To: <20230827085351.21932-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,50 +68,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/08/2023 13:48, Dmitry Baryshkov wrote:
-> On Sun, 27 Aug 2023 at 14:12, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 27/08/2023 12:42, Dmitry Baryshkov wrote:
->>> On Sun, 27 Aug 2023 at 11:35, Krzysztof Kozlowski
->>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>
->>>> On 27/08/2023 02:58, Dmitry Baryshkov wrote:
->>>>> Allow using interrupts-extended, which is a preferred form of interrupts
->>>>> specification compared to the interrupt-parrent + interrupts pair.
->>>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>  Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 10 +++++++++-
->>>>>  1 file changed, 9 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
->>>>> index 7fe3875a5996..33d9615e63c8 100644
->>>>> --- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
->>>>> +++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
->>>>> @@ -37,6 +37,9 @@ properties:
->>>>>    interrupts:
->>>>>      maxItems: 1
->>>>>
->>>>> +  interrupts-extended:
->>>>> +    maxItems: 1
->>>>
->>>> The entire patch is not needed. At least should not be needed. What
->>>> problem are you trying to solve here?
->>>
->>> The main problem is the next chunk, which (currently) explicitly
->>> requires `interrupts' property. My goal is to allow
->>> `interrupts-extended' in addition to `interrupts'.
->>
->> They are allowed. Why do you think they aren't? That's why I don't
->> understand what real problem is here.
-> 
-> qcom-pm8xxx.yaml lists `interrupts' property under the `required'
-> clause. So I can not simply replace it with `interrupts-extended'
 
-Since when? So again: The entire patch is not needed.
+--Y5ooK+v/FYTMRcoa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Sun, Aug 27, 2023 at 10:53:51AM +0200, Krzysztof Kozlowski wrote:
+> Commit c0aba9f32801 ("dt-bindings: PCI: qcom: Add SDX65 SoC") adding
+> SDX65 was not ever tested and is clearly bogus.  The qcom,sdx65-pcie-ep
+> compatible is followed by fallback in DTS and there is no driver
+> matching by this compatible.  Driver matches by its fallback
+> qcom,sdx55-pcie-ep.  This fixes also dtbs_check warnings like:
+>=20
+>   qcom-sdx65-mtp.dtb: pcie-ep@1c00000: compatible: ['qcom,sdx65-pcie-ep',=
+ 'qcom,sdx55-pcie-ep'] is too long
+>=20
+> Fixes: c0aba9f32801 ("dt-bindings: PCI: qcom: Add SDX65 SoC")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
+Thanks,
+Conor.
+
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml        | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Do=
+cumentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> index 811112255d7d..c94b49498f69 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> @@ -11,10 +11,13 @@ maintainers:
+> =20
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,sdx55-pcie-ep
+> -      - qcom,sdx65-pcie-ep
+> -      - qcom,sm8450-pcie-ep
+> +    oneOf:
+> +      - enum:
+> +          - qcom,sdx55-pcie-ep
+> +          - qcom,sm8450-pcie-ep
+> +      - items:
+> +          - const: qcom,sdx65-pcie-ep
+> +          - const: qcom,sdx55-pcie-ep
+> =20
+>    reg:
+>      items:
+> @@ -110,7 +113,6 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,sdx55-pcie-ep
+> -              - qcom,sdx65-pcie-ep
+>      then:
+>        properties:
+>          clocks:
+> --=20
+> 2.34.1
+>=20
+
+--Y5ooK+v/FYTMRcoa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZOs9NAAKCRB4tDGHoIJi
+0iL6APsGucI4pCdyWDXNGs3In99cNJWvdrvhE7ev5q0DILG3NAEA+2q4eG9xiZCJ
+POmCuJO6gXOLawwxCu2gSWuTtCNA1w4=
+=pkml
+-----END PGP SIGNATURE-----
+
+--Y5ooK+v/FYTMRcoa--
