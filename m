@@ -2,116 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25B6E789D50
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 13:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B295789D52
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 13:49:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229816AbjH0Lpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 07:45:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
+        id S229845AbjH0LtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 07:49:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbjH0Lp3 (ORCPT
+        with ESMTP id S229811AbjH0Ls3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 07:45:29 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4119B132
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:45:26 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4ff09632194so3692736e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:45:26 -0700 (PDT)
+        Sun, 27 Aug 2023 07:48:29 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6962C13E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:48:26 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d6b1025fc7aso2143667276.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 04:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693136724; x=1693741524;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aa3H2iefcQlYYWOvTv26OeJQbCdCn/zWrEM8kKvHomY=;
-        b=eHY14BrrVoJsqDZDlPmLXbfPcayLOiTnqDAlXbHg7ehMmSIOWMz1H27x6kgwhpWZVC
-         vQfyfuO3Zsp3HGy6YGd4c2geiNp8b2Qh2pQifShJIk3rMFtYo7hpcsS2/a7hM8NNup3g
-         OF8emR+k8et2vMDOu9msuvc5YBA2IuCGLh7GnIj9zvsH4Js/AwP/6p9ghqrv0GeYHs0Y
-         7nZVo6OZ3sh3Hw5vSO59rMCSBucuC5mehw3KvVWHsKAA7FjaTxc71RnPsG1f1kBK/C/i
-         ZGQvewGK+W60IS8jBZ7ZmtdhQjQ9mMVrhu4wwaXgCqWaALjIxYESrvVJ2P8MF1bouyB+
-         3x9A==
+        d=linaro.org; s=google; t=1693136905; x=1693741705;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SOCpPWe7OKGhP+mivko2oCOZT+7pMKJtiqyOcjFKW4s=;
+        b=sU+i4612l8iq6Q+vgFGPuT+B9hmqIxRTZKdUIWw00c+MSZTw4YmdvA0Uo8S8aXcPgk
+         qkY5SjZnBhXS76NzxK60muAJV5d4PsMoFSaamO9jmkcR74CRGQvyvzGVuvjtAgRzP6Wv
+         uCM0+bfiy5LmV00+ujYUgYIbbvtpEsJocEu3ORwjY4nCPd3mF8euH43Rhbu8SyIwd7Cg
+         EV0EMm8YsxemHOOgBiSvRDhQSL3uLfVjouNaA9zz0d+Wz9BHdylfeldNSc4GqwryVQtk
+         DuxeKXj9J7g/0VVtRmV1swqzKOKwGYE0qz0FYC5591h4w8I0YZi5AuxwC3PfJqFmFo5l
+         E0pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693136724; x=1693741524;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aa3H2iefcQlYYWOvTv26OeJQbCdCn/zWrEM8kKvHomY=;
-        b=KSWGWRPW/j6CskGRs88GLtYi5k24pH1Owu96wE6ePPOQQ6I1thHka5CRKJZrN6PzIA
-         OWbqd1W3On7eWRGcsfuVpFUO48Da8p2b9cSBEYTdDUhin48KPLmQQMtKHjKDMZ/0yuis
-         2jWuPtzC9afFmP6FFhr7fb37ZEYULHmWYETzjsFXFA0sKdiSOj4JGUtoZu5mN2gEVPwm
-         hwKE1wxOONR62whWTfWqL5koG42NkuCtudNgtXgV+8L+NeQtvU0Zw83iIkphwHiARlkg
-         ZuHxIbMqC1uWA2uNB/6EfduABWRF/qgTDMSH6HNq2Tfw9bxjTkIgjRzYiyhDz/EDNyVA
-         U5jw==
-X-Gm-Message-State: AOJu0YzMqNqiBrDoYzeFOzQFw/02STNug5zTNTYzJ0D5zfnX/uXSNJhh
-        PTJ74ZBJU9YPFHgJpKHDEuCzdQ==
-X-Google-Smtp-Source: AGHT+IGwC58vPd6gVaZ2rZzjpBpbfeahrxbw4hICOCqX+x4aGvq7mANdbs1Ik/uE29QdPQiIlixvYg==
-X-Received: by 2002:a05:6512:304f:b0:500:b890:fb38 with SMTP id b15-20020a056512304f00b00500b890fb38mr554588lfb.24.1693136724245;
-        Sun, 27 Aug 2023 04:45:24 -0700 (PDT)
-Received: from krzk-bin.. ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id m15-20020a50ef0f000000b005254b41f507sm3239024eds.32.2023.08.27.04.45.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Aug 2023 04:45:23 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        d=1e100.net; s=20221208; t=1693136905; x=1693741705;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SOCpPWe7OKGhP+mivko2oCOZT+7pMKJtiqyOcjFKW4s=;
+        b=dNczs4mPVfQna2GnilAVWwRFcq+qenFyqf41wk5VoSGAG4N8O/DjJqzigtN5XDFzGB
+         XJeBg5H3z1cGxGuxBWWAezlOf5/jF7RgA2t85cRSg0jXwe0LLZLgLHsaLwO5jSa3m8Wj
+         K9UPSTgFTT/3fc2R6U4KuNabpubmTTFg+LADB43atXvWODNFrufXZB0+0wV1w9OWE52j
+         P9NaTEQR+1nFkCLoGKvWf+E6fPC5P8AscA8BhLOALAej+a5CYhDbQZtWN5chGjIbwZIg
+         KLZWqPa6g3oTg9xm5oe/ezSttxBT6QOsw8VQCRBwalrXzSF4jykRPpINTArhaJYkGZiw
+         7lHQ==
+X-Gm-Message-State: AOJu0Yyx5JZqBjWRwbAIw4/telWameJL2/rNecpeJ28NY/yq34h316+H
+        UqdnenA4bjL/Iwid2OhzGp6h/LwVPwS0oRn3Zocv1g==
+X-Google-Smtp-Source: AGHT+IFLYC8MWF6L7rtrBC0qkMHSJ92tbN2J+48NUnJzxXbVXtV/MtFa+jzW0Als7Y7HiKTZavgKbCgtjN+2toPccX8=
+X-Received: by 2002:a25:bccb:0:b0:c15:c55d:c26e with SMTP id
+ l11-20020a25bccb000000b00c15c55dc26emr21853470ybm.54.1693136905652; Sun, 27
+ Aug 2023 04:48:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230827005920.898719-1-dmitry.baryshkov@linaro.org>
+ <20230827005920.898719-4-dmitry.baryshkov@linaro.org> <39af3ab5-4fa5-5b3c-395a-e86e70bbe803@linaro.org>
+ <CAA8EJppw0Kxo3W560ucWey959368M1c8BFnvF4Ggi5XKCOfesw@mail.gmail.com> <74dcc5b4-dda2-5de7-9e58-4191a0fb7972@linaro.org>
+In-Reply-To: <74dcc5b4-dda2-5de7-9e58-4191a0fb7972@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 27 Aug 2023 14:48:14 +0300
+Message-ID: <CAA8EJpoWvoNfomMg34cL=h+qBLHQq3bZO2X-02Pcz6oLiKRxWA@mail.gmail.com>
+Subject: Re: [PATCH v4 03/38] dt-bindings: mfd: qcom-pm8xxx: allow using interrupts-extended
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] ARM: dts: qcom: sdx65: add missing GCC clocks
-Date:   Sun, 27 Aug 2023 13:45:19 +0200
-Message-Id: <20230827114519.48797-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230827114519.48797-1-krzysztof.kozlowski@linaro.org>
-References: <20230827114519.48797-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        linux-leds@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SDX65 GCC clock controller expects two required clocks:
-pcie_pipe_clk and usb3_phy_wrapper_gcc_usb30_pipe_clk.  The first one is
-provided by existing phy node, but second is not yet implemented.
+On Sun, 27 Aug 2023 at 14:12, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 27/08/2023 12:42, Dmitry Baryshkov wrote:
+> > On Sun, 27 Aug 2023 at 11:35, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> On 27/08/2023 02:58, Dmitry Baryshkov wrote:
+> >>> Allow using interrupts-extended, which is a preferred form of interrupts
+> >>> specification compared to the interrupt-parrent + interrupts pair.
+> >>>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>> ---
+> >>>  Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 10 +++++++++-
+> >>>  1 file changed, 9 insertions(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >>> index 7fe3875a5996..33d9615e63c8 100644
+> >>> --- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >>> +++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >>> @@ -37,6 +37,9 @@ properties:
+> >>>    interrupts:
+> >>>      maxItems: 1
+> >>>
+> >>> +  interrupts-extended:
+> >>> +    maxItems: 1
+> >>
+> >> The entire patch is not needed. At least should not be needed. What
+> >> problem are you trying to solve here?
+> >
+> > The main problem is the next chunk, which (currently) explicitly
+> > requires `interrupts' property. My goal is to allow
+> > `interrupts-extended' in addition to `interrupts'.
+>
+> They are allowed. Why do you think they aren't? That's why I don't
+> understand what real problem is here.
 
-  qcom-sdx65-mtp.dtb: clock-controller@100000: clocks: [[11, 0], [11, 1], [12]] is too short
-  qcom-sdx65-mtp.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk'] is too short
+qcom-pm8xxx.yaml lists `interrupts' property under the `required'
+clause. So I can not simply replace it with `interrupts-extended'
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-sdx65.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-index 93c6c80dc379..58635bbc1123 100644
---- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-@@ -204,8 +204,16 @@ soc: soc {
- 		gcc: clock-controller@100000 {
- 			compatible = "qcom,gcc-sdx65";
- 			reg = <0x00100000 0x001f7400>;
--			clocks = <&rpmhcc RPMH_CXO_CLK>, <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>;
--			clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <&pcie_phy>,
-+				 <0>;
-+			clock-names = "bi_tcxo",
-+				      "bi_tcxo_ao",
-+				      "sleep_clk",
-+				      "pcie_pipe_clk",
-+				      "usb3_phy_wrapper_gcc_usb30_pipe_clk";
- 			#power-domain-cells = <1>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
 -- 
-2.34.1
-
+With best wishes
+Dmitry
