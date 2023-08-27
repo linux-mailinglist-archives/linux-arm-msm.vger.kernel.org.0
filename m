@@ -2,101 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50414789DCB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 14:16:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BEA8789DD1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 14:18:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbjH0MPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 08:15:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37174 "EHLO
+        id S229777AbjH0MRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 08:17:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjH0MPG (ORCPT
+        with ESMTP id S229947AbjH0MRh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 08:15:06 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D136813D
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:15:03 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5298e43bb67so4929001a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:15:03 -0700 (PDT)
+        Sun, 27 Aug 2023 08:17:37 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931CF18E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:17:34 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ff8f2630e3so3575494e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693138502; x=1693743302;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nL00MkR7LeahzMDUv+0Kc99z+1SowEYeDRlQjwoP8ws=;
-        b=glZdThQj3GUhm6yRWkpKmXv8rdIV58JZJXhJWsdfao+aJXMyt9EWSNYRZYQvorLYBF
-         lGJj4exN4qs6+0z9eeRX6fDoszliok2gvc6bTTiklULpfJYKgLR5kRGp/wimeyCmSCe3
-         /jIoD4vDd2RLOx5rcbD4h299yQiOrvihdW2lLmMAWXt81zaCxwGUyO4Fnbkkv2YOT8T/
-         Ahrg8YTsv/hs1ZH8z/q+355Xc/7BmPi/Y2CNYQMSw8YK3H8kI28fO7AEkqnxBS4r2yse
-         iGW6Tc37Ikj/h4anayDF7r6i9kFHSELfb9d1DtTs2Fy0cGSQFeO3Jd8Eue+DC3Ul7Lui
-         EMiQ==
+        d=linaro.org; s=google; t=1693138653; x=1693743453;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ms53FQzfvHrdmAehuimq9ADoAdRcM9q5qE08X0YTEfc=;
+        b=CAJ6tyJFXeSmBm4uLwKQOgBsCiuHsItHGfNhEJSRQLMA/+7E7JszZcJ76ClpEAWTWQ
+         QNXIzDMjLGvLAmEwuIJFKLrgiBNneGmmCVMHYbOndrcPgVSfthX/53/IGM+jSJTiWr3d
+         PUaSe4EcMQA/mt40yJWLJycrJqdqYq+RHymwkcrfCRsGpsY4YhJRSPciZN8fiFioEsLd
+         p96X3S464e5IVUOKsynZYgkzYeVrCobC7tDBIBIeJaDCgRJlrE8UWOYi4txMKaRbwjTE
+         jMRzog+y6753Qq+Ufev+JlqfKzFFIm+jvOn2uJpOYfUuK509Hqd4nhPGstBTB7T1ySlW
+         Aewg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693138502; x=1693743302;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nL00MkR7LeahzMDUv+0Kc99z+1SowEYeDRlQjwoP8ws=;
-        b=KM3uGssqBMrGHI37TlILaMKPhzc8BzkFPezwJI9xBVtLmyRkW2myATBmkNhy8RxlLE
-         CsVXuoxECmA3d1L/KvixLXCcK1G4OL2SM41Ncxwd3mJJlhcb0xIX2+jyuu1h3QkJEmx5
-         1Fh+R8Zw7H/9i4N/zA12S81vhonVs15SWQEuFnKZfEClo8xwotvPeJz80LViIcEKjzo0
-         XXoSBu9BpE30q5gbSeGyIeuGZV/SZFPhi4aDr7uPhvljVV/VfQSkZp0iSvkgDL25ESEk
-         U4yeItJ6ghTTam5yX6m55seAGHgMu7JYyZ89EHKQKvhNIY1zOvaOH4Bn6n8bY/otTqgC
-         dwHw==
-X-Gm-Message-State: AOJu0YzKUfY4Ku+NE5Ri9Jiz5bD4HXzcgJL4cGUQ+c46K9nwf7nzCtd+
-        z+99lADrhtk6USfADxAv0zV7Cg==
-X-Google-Smtp-Source: AGHT+IHJk50T0YOAxhoYaNypDAGvnuDOj7ZbUgBV4kxxaM6gDB6JHuiu6sxSQekum+voYE+n6xrJcQ==
-X-Received: by 2002:aa7:db47:0:b0:523:b37e:b83b with SMTP id n7-20020aa7db47000000b00523b37eb83bmr24339093edt.13.1693138502090;
-        Sun, 27 Aug 2023 05:15:02 -0700 (PDT)
-Received: from krzk-bin.. ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id b14-20020a05640202ce00b00522572f323dsm3247656edx.16.2023.08.27.05.15.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Aug 2023 05:15:01 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693138653; x=1693743453;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ms53FQzfvHrdmAehuimq9ADoAdRcM9q5qE08X0YTEfc=;
+        b=WJ2pfMrQxhJIF/TpAZumEpH9sr6yyy7qkTFZqHL9j97QFPLa9Ved87sxvIJoCuZ5cU
+         A37SeSMTDJNCNaMefcWZc4o8VmD4rh6UKiyBWY6WaCGhVuqb33uxQR/ypnb142BXn9pb
+         ZjWbT92O5Cdqnpi+XTfkZaqzRmuum3ZaEyQXbUg1PvrLJq/TYSA6nv4Ym00TucUlXyHJ
+         0HMzSC+8mY1YfLGQ5rbk42gKlBk7PfUqUD1Psd8z59zLgsLbmEkWWfCxFCu/pKYC3M/i
+         BaijAGRtquTDu5HVAd2duOS92UkIs3IfLpiHvXT58ycjQDqCi2JvLYFHUobe4W+scRNc
+         o9gg==
+X-Gm-Message-State: AOJu0YxaLaJrzvGYtLP/NtC73od+QaL7TLi4LnxUOBbcvb/1hvvd2nZZ
+        6BXfpqu6YUV4XN+Rmx2RkZSeeQ==
+X-Google-Smtp-Source: AGHT+IHb9V6xyS2UAZrxM+3U5NYR6e8ovIvZ4PhPZ6aqKHCtHYaaz/PMUjzxKEghq7oFjerqpuGC2g==
+X-Received: by 2002:a05:6512:4003:b0:500:848a:80df with SMTP id br3-20020a056512400300b00500848a80dfmr16483588lfb.66.1693138652874;
+        Sun, 27 Aug 2023 05:17:32 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.225])
+        by smtp.gmail.com with ESMTPSA id x11-20020aa7d6cb000000b0052284228e3bsm3263682edr.8.2023.08.27.05.17.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Aug 2023 05:17:32 -0700 (PDT)
+Message-ID: <63b2f0a1-548f-4a5c-3b11-df324e4edad5@linaro.org>
+Date:   Sun, 27 Aug 2023 14:17:31 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 00/11] mailbox/arm64/ qcom: rework compatibles for
+ fallback
+Content-Language: en-US
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ARM: dts: qcom: sdx65: correct SPMI node name
-Date:   Sun, 27 Aug 2023 14:14:59 +0200
-Message-Id: <20230827121459.62539-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230322174148.810938-1-krzysztof.kozlowski@linaro.org>
+ <6c0a7f12-10d2-4a07-a07f-67ec0d39b279@linaro.org>
+ <38fbb9d1-f263-2ec1-a3d8-4b09a26eaf2d@linaro.org>
+In-Reply-To: <38fbb9d1-f263-2ec1-a3d8-4b09a26eaf2d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Node names should not have vendor prefixes:
+On 05/08/2023 20:46, Krzysztof Kozlowski wrote:
+> On 05/08/2023 14:21, Konrad Dybcio wrote:
+>> On 22.03.2023 18:41, Krzysztof Kozlowski wrote:
+>>> Hi,
+>>>
+>>> Changes since v2
+>>> ================
+>>> 1. Split fixes to separate patchset which is now dependency:
+>>>    https://lore.kernel.org/linux-arm-msm/20230322173559.809805-1-krzysztof.kozlowski@linaro.org/T/#t
+>>> 2. Add Ack
+>>> 3. No other changes, as discussion with Dmitry did not reach conclusion on incompatibility.
+>>>
+>>> Changes since v1
+>>> ================
+>>> 1. Rebase
+>>> 2. Make msm8994 fallback for several variants, not msm8953, because the latter
+>>>    actually might take some clocks.
+>>> 3. Two new patches for SDX55.
+>>> 4. Minor corrections in bindings style.
+>>> v1: https://lore.kernel.org/all/20230202161856.385825-1-krzysztof.kozlowski@linaro.org/
+>>>
+>>> Description
+>>> ===========
+>>>
+>>> If entire approach is accepted (and correct), there are no dependencies and
+>>> patches can be picked independently.  Although the best in the same cycle, so
+>>> there will be no new `dtbs_check` warnings.
+>>>
+>>> Best regards,
+>>> Krzysztof
+>> Looks like this was only partially merged, resulting in schema warnings
+> 
+> There was discussion/disagreement about the bindings. DTS was applied,
+> thus it's partially limbo state...
 
-  qcom-sdx65-mtp.dtb: qcom,spmi@c440000: $nodename:0: 'qcom,spmi@c440000' does not match '^spmi@.*
+Anyone has any ideas what to do with this stuff? DTS was applied, even
+though bindings were discussed. Since some time we have tons of warnings
+because of this.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-sdx65.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Maybe let's just go with my original patchset?
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-index 58635bbc1123..ff596215ae3c 100644
---- a/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi
-@@ -537,7 +537,7 @@ restart@c264000 {
- 			reg = <0x0c264000 0x1000>;
- 		};
- 
--		spmi_bus: qcom,spmi@c440000 {
-+		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0xc440000 0xd00>,
- 				<0xc600000 0x2000000>,
--- 
-2.34.1
+Best regards,
+Krzysztof
 
