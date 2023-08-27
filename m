@@ -2,109 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5538A789B80
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 07:55:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44090789C30
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 10:36:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbjH0Fyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 01:54:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39874 "EHLO
+        id S230170AbjH0If4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 04:35:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbjH0FyH (ORCPT
+        with ESMTP id S230274AbjH0Ifb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 01:54:07 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE6A121;
-        Sat, 26 Aug 2023 22:53:57 -0700 (PDT)
-Received: from leknes.fjasle.eu ([46.142.97.125]) by mrelayeu.kundenserver.de
- (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MUokB-1q9uju3HLV-00QnIT; Sun, 27 Aug 2023 07:52:55 +0200
-Received: by leknes.fjasle.eu (Postfix, from userid 1000)
-        id B485D3E71A; Sun, 27 Aug 2023 07:52:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fjasle.eu; s=mail;
-        t=1693115573; bh=PEBDu2LsYY9cfkceNFyC5Y0UToOR2TEeQSWUUb4j1EY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JCf0AfwHTDyJG1qgVCiprdeiykbLHvErIpo0x7UTB/0gmVSCUg1uzVwkcrUDGHUoQ
-         72PMany4IEdzQXz86FVIak/eHwGo/UMjsszLFXnZ2MuPBlYFOkpK8JmZsu3A++zAXw
-         oXXdPN13opbRFW2Z0qoA7PjqiUxkog34/G114yB4=
-Date:   Sun, 27 Aug 2023 07:52:53 +0200
-From:   Nicolas Schier <nicolas@fjasle.eu>
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, u.kleine-koenig@pengutronix.de,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] scripts: Add add-maintainer.py
-Message-ID: <ZOrktcX1L6WHmLBi@fjasle.eu>
-References: <cover.1691049436.git.quic_gurus@quicinc.com>
- <829b08342568735095bbd3f8c44f435f44688018.1691049436.git.quic_gurus@quicinc.com>
- <ZOYicEP8D7kNGFin@fjasle.eu>
- <20230824214436.GA22659@quicinc.com>
- <ZOiUOcMOeYvMzq58@bergen.fjasle.eu>
- <20230825170001.GB22659@quicinc.com>
+        Sun, 27 Aug 2023 04:35:31 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D531194
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 01:35:27 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51cff235226so4819275a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 01:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693125325; x=1693730125;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9QgNqVUT0PUzMRYztLqBgJtsTJC3vN3Wx4d1g2QAn98=;
+        b=WO3WWSB3mLxJ4JegKG945hEcH+WL5j1z6/qqG+Ewa8BgXqsDOh4lQMmJyqtBVvx4T1
+         G7cLNnU/DT5p685loEIp6cA98FEklgkPZakXqOJo6y4lCZH6oVUtVAYq3h7A+ZIhZmtV
+         HCDW7n+TTh/z2XqLfGrcSBgVTUapcIBN4V/ExAungctz+COwKKtLe7ekQ9J1cA9D+Uq1
+         RHoR6k3Rx/4eKs6NVgindNe1cHu1zfhZJ/E8Jy6XFRh5NtEOgfQKUHnpwhn+UTcB0mw6
+         wdc4L/DuDRAzZkXxHSoOyEdKJA4RopjBE0S6FQyVjMKhAnBvMExE/gkYD4BJ3oPVDQ4N
+         8jNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693125325; x=1693730125;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9QgNqVUT0PUzMRYztLqBgJtsTJC3vN3Wx4d1g2QAn98=;
+        b=PiJpS3IO2aBJiI3dPqTOyoO/RD6T1XwFhlXpLxZR9IwSvYiWNIGzrOBLQ9WQZ1vXXs
+         Hjyh2xix8pO/hYvb1lQRN8WozFFcEN9aixDFyuhasa9mBfJsDiDBywy/HOSgEwIczCbL
+         5LxnSMVKjVhHMqZryYkJ6o9UD0s3W1MM/jLrY1ojMyZM/hB59VH/+V472NgkDAFStYHJ
+         dkWXPh0HToOiFfmMuaormdwvZvAYJtqG13XFRxHjbIvt4nU+25tU8UXsg0hgPzfjuc1K
+         KXjLXr6QhQn9lAdIZQinf00kv5B9fNxQw8zxSMJjEXL6mYM0JctHL2FAhZPczngybnRN
+         P6Kg==
+X-Gm-Message-State: AOJu0Yx9RnJkwd/xwyKX+DPTDWCkBOIcpFl+Nzb4NT0JuKjgbA2fv3wf
+        UtraTTIWT1SwzzW9wWVBLrp5DQ==
+X-Google-Smtp-Source: AGHT+IHFxiSvTWcd5IilQnNtpnYNzVsqATgW7ewhyWWd2IMPc2SKm/myh2nr3Y6KXX0l7Jky6PpEUQ==
+X-Received: by 2002:a05:6402:3586:b0:522:b9ae:db3c with SMTP id y6-20020a056402358600b00522b9aedb3cmr23265938edc.6.1693125325585;
+        Sun, 27 Aug 2023 01:35:25 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.225])
+        by smtp.gmail.com with ESMTPSA id s1-20020aa7c541000000b0052333e5237esm3046553edr.88.2023.08.27.01.35.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Aug 2023 01:35:25 -0700 (PDT)
+Message-ID: <39af3ab5-4fa5-5b3c-395a-e86e70bbe803@linaro.org>
+Date:   Sun, 27 Aug 2023 10:35:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230825170001.GB22659@quicinc.com>
-X-Provags-ID: V03:K1:SHb9/Jr2C2NWaPBXsZy0Asb6ySKk1dxrD8lEMkQnI7Yz5bn3Bws
- wL9hkEZV66e+uhHiooIZXq4Tnyy/vy+IIljkiMhA5PM8a+heCD9cEm2wwwDbZiUCN6idND/
- csJbRciSBbi9Qgh7tTo3VJTx1yNtNI7UUnZvNM+zLKXo68/Ry78e2VSL9D4lDWIw4Zj/ich
- ZmHumxiXlyy67Rxf8Mywg==
-UI-OutboundReport: notjunk:1;M01:P0:pb8TgKev4sc=;b+LNStGfk+7SG1dylUYX4fWyXEd
- GbmjoydExqsKwip/t1r6MtoRY7AnqFmu9TNDE/nUN/xJLzo1tV6euglY0ZfYbSb4kOFwoFHKh
- IDOzWdcS9oYgfz5GqC3owEfMVj92Qj+/iFcMSGiJh46P+zl/sXpLbEsFlQ2YNdEJG5hgHX384
- 43YHVrB//kpPGKhvJsDlLD7UxfbGR+Wi69Fothe6it4KdUSDpS5Uh5GfIk89QIBW6M0RrzhNh
- vi7d+OXCMIIMzabHWWfKJFGqKN5cvqp3nSlgivMCP5nWHu03gD6jKzdgRSN/Y15bi4NuSy5HQ
- 12D2C1g5kBem/A8k/F8QYO3qMFlX2lGZycBftGe6pp4Go0YOS7dXDHUW+Rym9iesU5zlwqdQQ
- Gtk9sKmtvNV69WoQRHmCrdHyVWdE040og8Hjr/TnSRvUY6Y3l93+uhgdj96IkQwsZ2IHp2aJ+
- I6OJ1azevh+sppDxhvsGTpXIUBa3zKDzdb8WVg1EPqqTNo5ul0Yr04diXMXYI9o6syaLbJ+9B
- d4AUpB1oZvl/nboFTAPdo0iwyqkkfpKoqnh3ETd5yJC+aQE8Jg+S6j7AEmhSu8+jToES3jfUk
- iGlRAETOWyIwzqRVj00WpFNnGvfVqb9Al4asIRwXrr8KbbtzQYV/+hrLrYTZmSkdeeU9jzMLP
- Rs5HpSKn2c+9/dDb3W7u0mhLx6Ot0WFGmE4ERf6T4fmWGxaBB8UgNW1ysdSdn8lQcFt2wKHQx
- UG9j0htsw9TCJqfGXcbT9Z44xbUAVcmp6XtQMGSwQueKN83/wCNM7tFl0Syhdr8IrYfcs7JB6
- wRGeDNWUnsokLK7BdKfPWQq9eQ0djKw56yR+HenDPiBMbGRh4vnqmdE8AQ+//gSKOCbJ+wb9d
- r9dwLWIR7CxYN4g==
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v4 03/38] dt-bindings: mfd: qcom-pm8xxx: allow using
+ interrupts-extended
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        linux-leds@vger.kernel.org
+References: <20230827005920.898719-1-dmitry.baryshkov@linaro.org>
+ <20230827005920.898719-4-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230827005920.898719-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 25, 2023 at 10:00:01AM -0700 Guru Das Srinagesh wrote:
-> On Aug 25 2023 13:44, Nicolas Schier wrote:
-> > On Thu 24 Aug 2023 14:44:36 GMT, Guru Das Srinagesh wrote:
-> > > > While testing, I thought that adding addresses without filtering-out duplicates
-> > > > was odd; but as git-send-email does the unique filtering, it doesn't matter.
-> > > 
-> > > Since I'm using `set()` in this script, the uniqueness is guaranteed here as
-> > > well - there won't be any duplicates.
-> > 
-> > I thought about patch files that already have 'To/Cc' headers (e.g.  
-> > 'git format-patch --to=... --cc=...' or by running add-maintainer.py 
-> > multiple times for updating the lists of recipients.  The result is a 
-> > patch file with possible duplicated lines; but as written: it does 
-> > matter, effectively.
+On 27/08/2023 02:58, Dmitry Baryshkov wrote:
+> Allow using interrupts-extended, which is a preferred form of interrupts
+> specification compared to the interrupt-parrent + interrupts pair.
 > 
-> Sorry, did you mean "does" or "does *not*"?
-
-I'm sorry, "it doe not matter".
-
-Nicolas
-
-> I'll make sure to test v3 of this script out on patches that have To/Cc already
-> included and also run it multiple times on the same patch (effectively the same
-> thing).
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
 > 
-> Thank you.
-> 
-> Guru Das.
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> index 7fe3875a5996..33d9615e63c8 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> @@ -37,6 +37,9 @@ properties:
+>    interrupts:
+>      maxItems: 1
+>  
+> +  interrupts-extended:
+> +    maxItems: 1
+
+The entire patch is not needed. At least should not be needed. What
+problem are you trying to solve here?
+
+
+Best regards,
+Krzysztof
+
