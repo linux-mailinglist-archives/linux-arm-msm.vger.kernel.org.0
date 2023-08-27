@@ -2,94 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C4D578A038
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 18:45:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2433578A049
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 18:53:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbjH0QpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 12:45:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47994 "EHLO
+        id S229576AbjH0QxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 12:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229787AbjH0Qo4 (ORCPT
+        with ESMTP id S230073AbjH0QxB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 12:44:56 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E69118;
-        Sun, 27 Aug 2023 09:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-        bh=ze7w8GV++/W5Alkw9IxiM745XJDb5+qg93ZRPcqtNVo=; b=tCSirH6E04X/F0h2/B7WH7gwrj
-        Q/sZwgZWJG077o53lA4Hi8G6gF880h09U2tixIT+w3R8X/0Rvv19laHab2vuE6GpDXhGyRmNDX5mG
-        J5AxMq1EDU6ztfFI6jcbtxItCI3tUA5aEDcWidQAZLizXLIun4/rofwxLhL9iV7vjwA2Mom9qutbE
-        ETwn9qQbWZUcKfCRHxnEK35EjOnH4uyHl0udY4VR2K7y/BQ2VAKy8G2wiGPrzMaa6/+AdE4C8cvOr
-        6UpJJXWfof9R2b5HgYRyUfeuzM8Zm7bZMQsZXj75vuttVFmv+vb6vsOHD7rCCRMy/hIoTXzpIRLcs
-        AsdNraVg==;
-Received: from [2601:1c2:980:9ec0::2764]
-        by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-        id 1qaIsV-008G9g-0W;
-        Sun, 27 Aug 2023 16:44:43 +0000
-Message-ID: <6a3ad63d-5b4d-e861-3fec-2e8fa929e156@infradead.org>
-Date:   Sun, 27 Aug 2023 09:44:42 -0700
+        Sun, 27 Aug 2023 12:53:01 -0400
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D80DA139;
+        Sun, 27 Aug 2023 09:52:55 -0700 (PDT)
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-565334377d0so1556061a12.2;
+        Sun, 27 Aug 2023 09:52:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693155175; x=1693759975;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ImkyWrYqH8lg/cu5/toGD9Vw+jK2UHolY7FUCZL6OdE=;
+        b=hwoyIGOuN4MJaB+1+5Fb0FIJaWkKb9UKcG+ZTWs5FSfhLzHAwu9wqzSWZnjyPfA+w9
+         RCjJLVmvULAGYD5DXYpal0MkHdRjk7K5ydL2W0N3+8GqhGdzlRsvle0plPcA+PnoaaGT
+         ozB1ErVvTyjz3qD6gscBhWDnw1KSOcdGuDTrBGioVyBnu0kXB/ZhLZ/h303FnnvGIctQ
+         E8DlbPRct/rVSWTuBfDyGTEODh0z02nKISVeql2RhUiJHcnYn3kQieLUbJcZxH6BhDKt
+         hWxT74KIgP9ZmWukTWMse5vxfZQRd1FtZC/9bNW8fIpsFaQHzaLod2ceIOzYZq9Mhx+U
+         Z+EA==
+X-Gm-Message-State: AOJu0YyXajby3gntrN3oChd0+/oleq0ZZg6tzHuQkXgKPW58wknCVsTH
+        mPENdQNIwL4suLb3aH3DK9c=
+X-Google-Smtp-Source: AGHT+IGQtRfWPaISyzI4T0Mr5/nRWzHuzFWUjp93ZJlkqnVi4QGK3coCaHFP+i/PC3lqhGoTNciR9w==
+X-Received: by 2002:a05:6a20:1444:b0:149:424e:b26a with SMTP id a4-20020a056a20144400b00149424eb26amr22909646pzi.19.1693155175186;
+        Sun, 27 Aug 2023 09:52:55 -0700 (PDT)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id fk22-20020a056a003a9600b006887037cde6sm5072546pfb.60.2023.08.27.09.52.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Aug 2023 09:52:54 -0700 (PDT)
+Date:   Mon, 28 Aug 2023 01:52:52 +0900
+From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: fix SDX65 compatible
+Message-ID: <20230827165252.GB2932694@rocinante>
+References: <20230827085351.21932-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Content-Language: en-US
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com
-Cc:     linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        workflows@vger.kernel.org, tools@linux.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
-From:   Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230827085351.21932-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hello,
 
-On 8/26/23 01:07, Guru Das Srinagesh wrote:
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 0903d87b17cb..b670e9733f03 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8721,6 +8721,11 @@ M:	Joe Perches <joe@perches.com>
->  S:	Maintained
->  F:	scripts/get_maintainer.pl
->  
+> Commit c0aba9f32801 ("dt-bindings: PCI: qcom: Add SDX65 SoC") adding
+> SDX65 was not ever tested and is clearly bogus.  The qcom,sdx65-pcie-ep
+> compatible is followed by fallback in DTS and there is no driver
+> matching by this compatible.  Driver matches by its fallback
+> qcom,sdx55-pcie-ep.  This fixes also dtbs_check warnings like:
+> 
+>   qcom-sdx65-mtp.dtb: pcie-ep@1c00000: compatible: ['qcom,sdx65-pcie-ep', 'qcom,sdx55-pcie-ep'] is too long
 
-The MAINTAINERS file should be maintained in alphabetical order,
-so this is not in the correct place.
+Applied to controller/qcom, thank you!
 
-> +ADD MAINTAINER SCRIPT
-> +M:	Guru Das Srinagesh <quic_gurus@quicinc.com>
-> +S:	Maintained
-> +F:	scripts/add-maintainer.py
-> +
->  GFS2 FILE SYSTEM
->  M:	Bob Peterson <rpeterso@redhat.com>
->  M:	Andreas Gruenbacher <agruenba@redhat.com>
+[1/1] dt-bindings: PCI: qcom: Fix SDX65 compatible
+      https://git.kernel.org/pci/pci/c/15d63a897f79
 
--- 
-~Randy
+	Krzysztof
