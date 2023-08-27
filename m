@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC708789AB6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 03:02:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4604789B20
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 05:29:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbjH0BAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Aug 2023 21:00:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48476 "EHLO
+        id S229920AbjH0D2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Aug 2023 23:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230162AbjH0BAO (ORCPT
+        with ESMTP id S229948AbjH0D2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Aug 2023 21:00:14 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4E9CD5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 18:00:09 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-5008d16cc36so3201077e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 18:00:09 -0700 (PDT)
+        Sat, 26 Aug 2023 23:28:09 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADBEDA
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 20:28:06 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4ffa6e25ebbso3773950e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Aug 2023 20:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693098007; x=1693702807;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hgscUjE5yDYSGHC1956h5azSC53EgKvpe5p9UzSNGuk=;
-        b=Ltz2C1HJNu7vP+v9xWUs3JGPdJ6MtfPz4e6tiLD4W8mO4hKhoqxcLl4A2i0yIzAeZo
-         qCVPLH7F74n4/T5FgaVwi7oBXLPmxZPmj0N6SkCXa0M54OY2dv4U4Y74erESnpDZNIS3
-         I1fpxsjkYaSoLYMPMYTyVqWIsu3KvAYEmcm+iq96I2UbQ71XtwG05H69g7QxdFSTxNAz
-         G2bF0oXmUlvG/062tOEuh1mLafvsO0SVO0CTDcC3QDczy4Hc7/les9aWW1m1sswAU2mv
-         4xhK902bzFuRjCPEK+DfXs7A3ZiiY7x0kNncwK/CnHh3k+quaOq1vDxCHrsjH1WmCEE9
-         QvwQ==
+        d=linaro.org; s=google; t=1693106885; x=1693711685;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=48xtmF1RnTb+8jPIXovOcqZJ91keOMez755QP1H58RQ=;
+        b=XWRUrkYylmdHJ+m4eo20x5wpsT8zClDJNCgFw/AyBsMmAzdCWa9qJ7gPcZU9/JLX0v
+         wk1WCbbEpUTPKPUcU0tQYwJhLL6wt+0/NmYq26bbD8E5nZPV54Q0P8dLT/jHh4NRB/5P
+         MkhZwNh/fihWnNKvX5rXIY4RvMbMmBdJmvwokHsiPttOCHLuY8s5yhFItiGYSyUfXGMx
+         jTxAAL2zUYiuKFDeIdF2cdQNDu1kb+AvNGG33xrXDs1q2M8uje+M3QqXIfRzbFvSXJVp
+         +wgR9zp5qtuA2wK5S+90Soh6+sp6yGTnPiLhOk/RoUtWwUGZQ6g3mquIO46rNwquUnRZ
+         ViIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693098007; x=1693702807;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hgscUjE5yDYSGHC1956h5azSC53EgKvpe5p9UzSNGuk=;
-        b=frrDIzzMyqpqHAHY1SFVLufYC1NhLfYV1WTFpPefvry46Q/2PRpZr5YmgguWgoHxKj
-         2YFcJNDX3ypiUNwxO1fG9rBkCJbKbvuQdUgMw854zVUZgUsM+rFWPTIITVOMY5IIduGB
-         NV89BBAJ65+aOM77n05SA1IFtSGuhjscCmdsAKXL5ccPeZT9VlqxkfKUpnfh4SUDZ8xU
-         q4eP+FSPT8zYZHOa/OCYtwc3hJm9k6uNGjP3CXnF/4XIm2mFzadP/ADQKaccP+/cudL7
-         tri2ACi15aPkwCQ5Lhnz28LVySx7fNKqnoBgncK8ddIDWbXSOauxcx3YSpzyiLk3UOsp
-         4TOQ==
-X-Gm-Message-State: AOJu0YyPb2g83WlMG7oqFLBacmLW8KN7Jew9YU7iww02Z9yzIdvKgtOM
-        uua0iXmJSHT0+ykTq5DFbzYVhA==
-X-Google-Smtp-Source: AGHT+IEfU6g8xk3TlLFDQZKmBEJCe3koZ5101OaR+MtGsHgNyPucXI5am8COezn5/591tL/dLkZAug==
-X-Received: by 2002:a05:6512:3e9:b0:4fb:8de9:ac0e with SMTP id n9-20020a05651203e900b004fb8de9ac0emr13229291lfq.1.1693098007650;
-        Sat, 26 Aug 2023 18:00:07 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693106885; x=1693711685;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=48xtmF1RnTb+8jPIXovOcqZJ91keOMez755QP1H58RQ=;
+        b=lKLfQ1paAlFFnlHS6R4bNWVhfGrhhPnnpxDjQK05LympcWl3VzgmDY6jDveMrIuFqn
+         9MWzwofCgqs6ZQxikWTapZlUdikourGuwn6R2B4FFPprMamviqNBQ1MWNzpyhSA8HiEY
+         U29paGKYOnuGRcqf0zM4B9q4yblenOmPEHYrba62v8xEHowhoVPdePFAo30sV+mMfT25
+         kDD/ijqq3DtHs4qOcyimN19t7ZNTb5skwyhtPoIc5piQbR8VkQTaAOMEZtLACCQvO9Rl
+         Xd0D1Ji73n7MUB9ub94UiJ9EtrEaKo+DVxHFJ5oj8JX5elkLri/7tUgDDIePAR5g9oVQ
+         sp+Q==
+X-Gm-Message-State: AOJu0YwnYizoqoeJkjV59fi6qFiDHOvl2/knSLO0s3mcEMZihkZG6p70
+        r0pG1ROb5MBeLXtBIfa70404dQ==
+X-Google-Smtp-Source: AGHT+IEP1TwgavtqGqI8GF+JZMvSgf4yFA5cu5rgQxO5fBAFgONeasxDuVAOx1984PXjxIsEg9lenw==
+X-Received: by 2002:a05:6512:3ba2:b0:500:91f6:f129 with SMTP id g34-20020a0565123ba200b0050091f6f129mr6263855lfv.26.1693106884785;
+        Sat, 26 Aug 2023 20:28:04 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id p18-20020ac246d2000000b00500a08e42e7sm917729lfo.124.2023.08.26.18.00.06
+        by smtp.gmail.com with ESMTPSA id w7-20020ac254a7000000b004fb99da37e3sm955709lfk.220.2023.08.26.20.28.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Aug 2023 18:00:06 -0700 (PDT)
+        Sat, 26 Aug 2023 20:28:04 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-iio@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        linux-leds@vger.kernel.org
-Subject: [PATCH v4 38/38] ARM: dts: qcom: mdm9615: drop qcom, prefix from SSBI node name
-Date:   Sun, 27 Aug 2023 03:59:20 +0300
-Message-Id: <20230827005920.898719-39-dmitry.baryshkov@linaro.org>
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH v4 0/6] cpufreq: qcom-nvmem: support apq8064 cpufreq scaling
+Date:   Sun, 27 Aug 2023 06:27:57 +0300
+Message-Id: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230827005920.898719-1-dmitry.baryshkov@linaro.org>
-References: <20230827005920.898719-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,24 +81,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is a split of APQ8064 cpufreq series, as requested by Viresh. This
+series includes only opp and cpufreq parts, with the DT and soc parts
+being split to a separate patchset.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-index 07e712e890f6..b02336bd8370 100644
---- a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-@@ -258,7 +258,7 @@ gsbi5_serial: serial@16440000 {
- 			};
- 		};
- 
--		ssbi: qcom,ssbi@500000 {
-+		ssbi: ssbi@500000 {
- 			compatible = "qcom,ssbi";
- 			reg = <0x500000 0x1000>;
- 			qcom,controller-type = "pmic-arbiter";
+Each core has independent power and frequency control. Additionally the
+L2 cache is scaled to follow the CPU frequencies (failure to do so
+results in strange semi-random crashes).
+
+Core voltage is controlled through the SAW2 devices, one for each core.
+The L2 has two regulators, vdd-mem and vdd-dig.
+
+Dmitry Baryshkov (6):
+  dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm Krait SoCs
+  cpufreq: qcom-nvmem: create L2 cache device
+  cpufreq: qcom-nvmem: also accept operating-points-v2-krait-cpu
+  cpufreq: qcom-nvmem: drop pvs_ver for format a fuses
+  cpufreq: qcom-nvmem: provide separate configuration data for apq8064
+  cpufreq: qcom-nvmem: enable core voltage scaling for MSM8960
+
+ .../bindings/opp/opp-v2-kryo-cpu.yaml         | 12 ++-
+ drivers/cpufreq/qcom-cpufreq-nvmem.c          | 80 +++++++++++++++++--
+ 2 files changed, 81 insertions(+), 11 deletions(-)
+
 -- 
 2.39.2
 
