@@ -2,144 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD378789DE1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 14:29:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5663789DEF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Aug 2023 14:58:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbjH0M3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Aug 2023 08:29:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39686 "EHLO
+        id S229809AbjH0M5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Aug 2023 08:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbjH0M2u (ORCPT
+        with ESMTP id S229699AbjH0M5T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Aug 2023 08:28:50 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 578E913E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:28:48 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99c4923195dso282316966b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:28:48 -0700 (PDT)
+        Sun, 27 Aug 2023 08:57:19 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273AE188
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:57:15 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d6b1025fc7aso2167234276.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 05:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693139327; x=1693744127;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IcVnzZ8MSOPSpFPMNqTfyeOLJhI+g+xFMbAA/QR3NNQ=;
-        b=bQ+/of5oF4QEdpOByeDf+hUPyIAkVs/qAY5Dll4xIBx1/X5zD/K7itkdW4SXt9Mf5+
-         UVsO0tV9n8BpMvZXBVYzpWjS1b98/BXM1Y8mhxXc+oHyVEBS6yNWLGlB8ftmhKjtXfrO
-         sziU9lT/rNKxgNSlfp5Yothn2G1HaWRPM2kRhuxBpSQJqWa50OheIU3mUCavnIHgQuBp
-         pK3OUPXYAUmXuqscR2dF82FrqvTBf2HSAHb9/RLdiSxqFuinTP4jUIkd3hMeuOJ4VzBq
-         kKjKWVC06ogVdmqAUfX6aGlGG6P0JpVGu4jKDJmGQbXdCRMjjLi7o6mKgrv1u/PgsVq3
-         NEdw==
+        d=linaro.org; s=google; t=1693141034; x=1693745834;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sj8LKx4CnBxMfHurDVM+MhSr1DoWwi/klInNb3DLgxE=;
+        b=y6T4i+RmiCuyEiFaXP3WJtnQO+ucT7ZE1hrqzSGnrldF0cAAsF112wwlbylmeF0vrw
+         UKvwUdpMMvvSBikDZNOCaEi6Dq5r04aWCbIudBtSjl9XDdmj2E48EnRXUrECRXRKI0RV
+         uBuwIdc1Y6HNT3dPvlaa9OBaNTq6/2se7sTtqks5tS3RYhqMJOE7mZ6qFPZ4WROk2tdV
+         iLButqPZaDUKaZ8dPs0olUA3neN7y60MWRecTTQmofj8RdE8+UviNpEsBo3a5+3YIGwd
+         JlQJv1vRL/fI5AkGiekv+2MFhYhpzaL2+PIQQlRj9A0IZWCl1ENMuSAxEYJj3Q+V4sVt
+         zUaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693139327; x=1693744127;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IcVnzZ8MSOPSpFPMNqTfyeOLJhI+g+xFMbAA/QR3NNQ=;
-        b=e8oLG+zFrbnfHksh9x+oPb1jmFLCh2Z8t7TomWdkJwdmsGShn0O4Hol/pl40xNbJvm
-         Pt3F3RgSxLt/X/XAW3xsgYk0i3dEaFvO2MjEzuGbzZdTZRnAD16UyhLO1MdQY+NRdGv8
-         B2bMqJ98+E98qWmVWvCvDapKNoh5qLpKBak5ha7J06qlDDss+9XChAm7HiWAHNORqGE5
-         6E9ucFqe03j5s3/6b3b9oKr3Nu8M0fZZSZQWVQT9/LzfKlBVFYuHSBalgQpIy0WK43fZ
-         eyipxEub0DtB81vdP1nvtTvGixqvzUb8Z5k0nqu2czXVgxv58tUH5tipU2HGw9BH8yX0
-         OhJg==
-X-Gm-Message-State: AOJu0Yy6JGB/atmtI/9We4zGzphLkAj7ctuLfLb+qVcNeYP+U86OilQE
-        o3mTpvZ8NDdTR7O2MC7Z6dEynw==
-X-Google-Smtp-Source: AGHT+IEaBWj4HoPwemXMp4e33SXcx4jTCKmnqkv2bgAxXf5aahwtKV9mCr+u6fWN5pWjvuQHS3nmXw==
-X-Received: by 2002:a17:907:7888:b0:9a2:25a6:a42f with SMTP id ku8-20020a170907788800b009a225a6a42fmr7433519ejc.19.1693139326658;
-        Sun, 27 Aug 2023 05:28:46 -0700 (PDT)
-Received: from krzk-bin.. ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id rp25-20020a170906d97900b00993150e5325sm3384826ejb.60.2023.08.27.05.28.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Aug 2023 05:28:46 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        d=1e100.net; s=20221208; t=1693141034; x=1693745834;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sj8LKx4CnBxMfHurDVM+MhSr1DoWwi/klInNb3DLgxE=;
+        b=Xwm2eSvwOY5OeoAKPniVl3d53d0H9LQv0BbyeUNy3m0/OrdZfceL8yUjQRHrtlsjSz
+         DFE0Uhr8E3DfoB7KCsrwN9YZuxrwOA4V8Ff6O3OuPgW1X3Zj+DmCPgW9DoEalUxG4vDi
+         /hRHt+QJGcXDLEpDNP4NmuJzP1oGn2EHohojPqCO/xUR72zTKp/AZdO0QMPY6cgRx7eA
+         D+jOpmnhdDexwYo3mLs6BAnjmwJkuXxwCIt9cViL/DpVULeFWIaobK/3vRy5JURzk9bn
+         l5NtOyr3t6akYtH9J3OO7No5EptvkugMNMS1QTL34/DkKMRQqE7gdapt3H8LpfxPdB1i
+         0wNA==
+X-Gm-Message-State: AOJu0YwjZCUDxKoosCp7dONHo0EToG9HueUnmDlz1NqCeL73BFO1iHDr
+        lfFEfEklrqYxFKx9K80lWo4R6jTMq6y6w6gtnJmsDg==
+X-Google-Smtp-Source: AGHT+IGJrJoS+rbVC0itLsracJvLZBlNmbpwhDfacD2gSucpcry2L0CAeIsQKXmAkFMm1rLMq76i6ti0foQm0Ti5BuQ=
+X-Received: by 2002:a25:cccc:0:b0:d78:3a9b:843c with SMTP id
+ l195-20020a25cccc000000b00d783a9b843cmr6502400ybf.58.1693141034332; Sun, 27
+ Aug 2023 05:57:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230827005920.898719-1-dmitry.baryshkov@linaro.org>
+ <20230827005920.898719-4-dmitry.baryshkov@linaro.org> <39af3ab5-4fa5-5b3c-395a-e86e70bbe803@linaro.org>
+ <CAA8EJppw0Kxo3W560ucWey959368M1c8BFnvF4Ggi5XKCOfesw@mail.gmail.com>
+ <74dcc5b4-dda2-5de7-9e58-4191a0fb7972@linaro.org> <CAA8EJpoWvoNfomMg34cL=h+qBLHQq3bZO2X-02Pcz6oLiKRxWA@mail.gmail.com>
+ <e6340d20-40f3-be5c-b4fc-33da59799d91@linaro.org>
+In-Reply-To: <e6340d20-40f3-be5c-b4fc-33da59799d91@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 27 Aug 2023 15:57:03 +0300
+Message-ID: <CAA8EJpoWEABv6RrZn9FE+5N79Kz=24BhmpdnGbnO+vzX3A8v_Q@mail.gmail.com>
+Subject: Re: [PATCH v4 03/38] dt-bindings: mfd: qcom-pm8xxx: allow using interrupts-extended
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm7225-fp4: Revert "arm64: dts: qcom: sm7225-fairphone-fp4: Add AW8695 haptics"
-Date:   Sun, 27 Aug 2023 14:28:42 +0200
-Message-Id: <20230827122842.63741-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230827122842.63741-1-krzysztof.kozlowski@linaro.org>
-References: <20230827122842.63741-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        linux-leds@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit 413821b7777d062b57f8dc66ab088ed390cbc3ec because it
-was never reviewed, was buggy (report from kernel test robot:
-https://lore.kernel.org/all/202204090333.QZXMI2tu-lkp@intel.com/) and
-used undocumented, broken bindings.  Half of the properties in this
-device are questioned, thus adding DTS node causes only errors and does
-not make the device usable without the bindings and driver part:
+On Sun, 27 Aug 2023 at 15:00, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 27/08/2023 13:48, Dmitry Baryshkov wrote:
+> > On Sun, 27 Aug 2023 at 14:12, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> On 27/08/2023 12:42, Dmitry Baryshkov wrote:
+> >>> On Sun, 27 Aug 2023 at 11:35, Krzysztof Kozlowski
+> >>> <krzysztof.kozlowski@linaro.org> wrote:
+> >>>>
+> >>>> On 27/08/2023 02:58, Dmitry Baryshkov wrote:
+> >>>>> Allow using interrupts-extended, which is a preferred form of interrupts
+> >>>>> specification compared to the interrupt-parrent + interrupts pair.
+> >>>>>
+> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>>> ---
+> >>>>>  Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 10 +++++++++-
+> >>>>>  1 file changed, 9 insertions(+), 1 deletion(-)
+> >>>>>
+> >>>>> diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >>>>> index 7fe3875a5996..33d9615e63c8 100644
+> >>>>> --- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >>>>> +++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >>>>> @@ -37,6 +37,9 @@ properties:
+> >>>>>    interrupts:
+> >>>>>      maxItems: 1
+> >>>>>
+> >>>>> +  interrupts-extended:
+> >>>>> +    maxItems: 1
+> >>>>
+> >>>> The entire patch is not needed. At least should not be needed. What
+> >>>> problem are you trying to solve here?
+> >>>
+> >>> The main problem is the next chunk, which (currently) explicitly
+> >>> requires `interrupts' property. My goal is to allow
+> >>> `interrupts-extended' in addition to `interrupts'.
+> >>
+> >> They are allowed. Why do you think they aren't? That's why I don't
+> >> understand what real problem is here.
+> >
+> > qcom-pm8xxx.yaml lists `interrupts' property under the `required'
+> > clause. So I can not simply replace it with `interrupts-extended'
+>
+> Since when? So again: The entire patch is not needed.
 
-  sm7225-fairphone-fp4.dtb: haptics@5a: failed to match any schema with compatible: ['awinic,aw8695']
-  sm7225-fairphone-fp4.dtb: haptics@5a: awinic,tset: b'\x12' is not of type 'object', 'array', 'boolean', 'null'
-  sm7225-fairphone-fp4.dtb: haptics@5a: awinic,r-spare: b'h' is not of type 'object', 'array', 'boolean', 'null'
+Hmm, interesting. I'm pretty sure that I saw the issue, but now I can
+no longer reproduce it. Maybe I misinterpreted some other warning
+which I saw while this was WIP.
+I see that it is handled by the `fixup_interrupts` in dtschema itself.
 
-Since bindings were abandoned (4 months since review), revert the commit
-to avoid false sense of supporting something which is not supported.
-
-Cc: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 28 +------------------
- 1 file changed, 1 insertion(+), 27 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index 18171c5d8a38..568165f4f9e4 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -386,36 +386,10 @@ &i2c8 {
- };
- 
- &i2c10 {
--	clock-frequency = <400000>;
--	status = "okay";
--
- 	/* PM8008 PMIC @ 8 and 9 */
- 	/* PX8618 @ 26 */
- 	/* SMB1395 PMIC @ 34 */
--
--	haptics@5a {
--		compatible = "awinic,aw8695";
--		reg = <0x5a>;
--		interrupts-extended = <&tlmm 85 IRQ_TYPE_EDGE_FALLING>;
--		reset-gpios = <&tlmm 90 GPIO_ACTIVE_HIGH>;
--
--		awinic,f0-preset = <2350>;
--		awinic,f0-coefficient = <260>;
--		awinic,f0-calibration-percent = <7>;
--		awinic,drive-level = <125>;
--
--		awinic,f0-detection-play-time = <5>;
--		awinic,f0-detection-wait-time = <3>;
--		awinic,f0-detection-repeat = <2>;
--		awinic,f0-detection-trace = <15>;
--
--		awinic,boost-debug = /bits/ 8 <0x30 0xeb 0xd4>;
--		awinic,tset = /bits/ 8 <0x12>;
--		awinic,r-spare = /bits/ 8 <0x68>;
--
--		awinic,bemf-upper-threshold = <4104>;
--		awinic,bemf-lower-threshold = <1016>;
--	};
-+	/* awinic,aw8695 @ 5a */
- };
- 
- &ipa {
 -- 
-2.34.1
-
+With best wishes
+Dmitry
