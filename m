@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BCAB78BB6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 01:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2A4C78BB72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 01:23:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233836AbjH1XTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 19:19:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41224 "EHLO
+        id S234316AbjH1XWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 19:22:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232967AbjH1XTK (ORCPT
+        with ESMTP id S231997AbjH1XV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 19:19:10 -0400
+        Mon, 28 Aug 2023 19:21:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23ABC10C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 16:18:22 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F1B2CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 16:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1693264701;
+        s=mimecast20190719; t=1693264872;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=NqA+se+NtJmo6VZ6Aa5eIZ0Mw7Oak0MLDxzh66FDHNk=;
-        b=d6xNKgjlS9CH+ZuDN2utM1wWpXH3ZlAI9xdkvTOfQIWcTqMw4skyDDlOOhYdAQb2p8cH3E
-        HUuCIaRrcRI46Wy/wxnzsy+QF1nYctYE+NZzVopuwie0mEKBXe0xaW4PvPRsiGBaMrEWjs
-        7s1JRMFM8lPK/cAnNEH/50XxrgwRQSs=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=2tY2O409yN5fYvGoN8/JrlRj7FUk0pOGMULUjvQaUpg=;
+        b=Gg4UGtu8YZcMeEQJKO8+0Ms4vYsbn75bO8Maf8SRoFNpK2ZZYPu3o1C4nODhYmjMGW/uAM
+        LLxLC674MyP2U+63g3Dc3hMjncJySolSwzyZKiV0sVPKnSTArIh15eiIbflbF/ZgG6so7E
+        ESZkv1481/1BZAjWjJOQRDOWWXX4yM0=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-lnU4kL2dM5yr6jGKHlSDuA-1; Mon, 28 Aug 2023 19:18:19 -0400
-X-MC-Unique: lnU4kL2dM5yr6jGKHlSDuA-1
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-1bf58d92bd9so38618115ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 16:18:19 -0700 (PDT)
+ us-mta-523-fsK69tEoM4StRvSPtSi5yA-1; Mon, 28 Aug 2023 19:21:11 -0400
+X-MC-Unique: fsK69tEoM4StRvSPtSi5yA-1
+Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-6bc7afd0498so3912369a34.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 16:21:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693264698; x=1693869498;
+        d=1e100.net; s=20221208; t=1693264870; x=1693869670;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NqA+se+NtJmo6VZ6Aa5eIZ0Mw7Oak0MLDxzh66FDHNk=;
-        b=loTNRn3MJQpdlkDaK0sc5S3ljxQfkTrHSS3iArKEYPCLkYPz2mxi1fCQKcvrwJpCeY
-         wqlK32SsnrBCoyECZyx364ZYlJRpuU3BhKZ3pefjXfroruMbrjUroliqOjKOrrzyCO6k
-         CRFm2blGJQ+WUojj0q1Fow6xRfry+iPMyE+hwwpcUVp6oJET1VWSUz4vxywHe6KiYqO2
-         R/0qhb7JbydU54nqYft/9lOmVPJO4jgrGZ7EOUENH0bXmcpfl4CdkjnjRvcRN507Aykt
-         DFef2xBbpb9MMUPoXAgKvZJGcu4MC9hZvIWrm6f0+TqfM1ZmKnIsYwy5kGYIvKAMNWn3
-         pDIg==
-X-Gm-Message-State: AOJu0Ywu+G+c1nAv2M36OgZr0K+/oDX7dRlDPvrn5AkFSjfrc6C68UqJ
-        WiFbbla46RLNbZ8O58KB1qYOmKxGteXAgyYQW7X43suoR7122u7o+35cUTHUQfBc5HtjSczhj4Y
-        oOxbrldWtRlkynK4ftfDNGMo0Hw==
-X-Received: by 2002:a17:902:ea08:b0:1c0:a30e:2388 with SMTP id s8-20020a170902ea0800b001c0a30e2388mr17734008plg.31.1693264698549;
-        Mon, 28 Aug 2023 16:18:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4PLIDBi9wZuEsVkyH1S0PFnZ5haeuWus0luN/Yrn+a4DV04N4xayoEkUTdP5JJP349iuJ+Q==
-X-Received: by 2002:a17:902:ea08:b0:1c0:a30e:2388 with SMTP id s8-20020a170902ea0800b001c0a30e2388mr17733983plg.31.1693264698231;
-        Mon, 28 Aug 2023 16:18:18 -0700 (PDT)
+        bh=2tY2O409yN5fYvGoN8/JrlRj7FUk0pOGMULUjvQaUpg=;
+        b=TU/x+hK3vXfrq6/nyfz8AvbMQnq3W3XJwqD4yXLSUPyolemkGNkUHuBXwOFlhpgZQs
+         BnjUKgxrtXOJVa5hitTH8bcVE1p1y13PpcA/G2PcCXgsb7VfdplLluvpmRz/c/Jm/9Nx
+         uQYdQ9RpHoV4OtYvBAWA7NpGvdpMwpP6hA3a8d7DeD5haohATSpRvqPS7d9tek3o3U+u
+         3DRUbX4xKJlyV7wAUothPAS22fYqP2sML4gmmnBRWBjt2WF6kz2Vfy02F9h/I5JAnCke
+         L3VwnfVieLWmtoMiEeR+u4WzLQzNgR7Pumgb/qIKq+oeDtd55goL2FeXcQjjeuGS2NUR
+         rlRw==
+X-Gm-Message-State: AOJu0YyoMNnNIIDEs+dTBymap1nW/B58BbAbQJj9+xlOcT1eC8i02Lsa
+        OcpKsIWmhtqslsWCUO32AHOdpqKcOiOoWI+abBw3l0bsICWr7L3Mrs7nEG0BV4pYvqvdJkjy+Sg
+        ObkYkBf0E5gUAAUrogPExkMtjPg==
+X-Received: by 2002:a05:6830:1e69:b0:6b9:6663:4648 with SMTP id m9-20020a0568301e6900b006b966634648mr15282033otr.3.1693264870371;
+        Mon, 28 Aug 2023 16:21:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFP5/EEWHTR1bez5m3Juu4cnUjVIKCsfQBSYEYoBbAOKOAwmWfu7HwgfLHfFstKObHsFOXoGQ==
+X-Received: by 2002:a05:6830:1e69:b0:6b9:6663:4648 with SMTP id m9-20020a0568301e6900b006b966634648mr15282011otr.3.1693264870175;
+        Mon, 28 Aug 2023 16:21:10 -0700 (PDT)
 Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id f11-20020a170902ce8b00b001b53953f306sm7947728plg.178.2023.08.28.16.18.17
+        by smtp.gmail.com with ESMTPSA id e29-20020a63371d000000b00565eb4fa8d1sm7893911pga.16.2023.08.28.16.21.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 16:18:17 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 16:18:16 -0700
+        Mon, 28 Aug 2023 16:21:09 -0700 (PDT)
+Date:   Mon, 28 Aug 2023 16:21:08 -0700
 From:   Jerry Snitselaar <jsnitsel@redhat.com>
 To:     Jason Gunthorpe <jgg@nvidia.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -99,51 +99,46 @@ Cc:     Andy Gross <agross@kernel.org>,
         Niklas Schnelle <schnelle@linux.ibm.com>,
         Steven Price <steven.price@arm.com>,
         Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 22/24] iommu: Add ops->domain_alloc_paging()
-Message-ID: <6wbamqxazr3yxu25haul2vcbyt5da5py4i2pemga77pg74knov@htfe53txxkzx>
+Subject: Re: [PATCH v7 23/24] iommu: Convert simple drivers with DOMAIN_DMA
+ to domain_alloc_paging()
+Message-ID: <hqpyajmraabu5hwhprghy43p53f4qjwdux2job7bv3ss4mijuq@2ov4rd6ppqol>
 References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <22-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+ <23-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <22-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+In-Reply-To: <23-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:36PM -0300, Jason Gunthorpe wrote:
-> This callback requests the driver to create only a __IOMMU_DOMAIN_PAGING
-> domain, so it saves a few lines in a lot of drivers needlessly checking
-> the type.
+On Wed, Aug 23, 2023 at 01:47:37PM -0300, Jason Gunthorpe wrote:
+> These drivers are all trivially converted since the function is only
+> called if the domain type is going to be
+> IOMMU_DOMAIN_UNMANAGED/DMA.
 > 
-> More critically, this allows us to sweep out all the
-> IOMMU_DOMAIN_UNMANAGED and IOMMU_DOMAIN_DMA checks from a lot of the
-> drivers, simplifying what is going on in the code and ultimately removing
-> the now-unused special cases in drivers where they did not support
-> IOMMU_DOMAIN_DMA.
-> 
-> domain_alloc_paging() should return a struct iommu_domain that is
-> functionally compatible with ARM_DMA_USE_IOMMU, dma-iommu.c and iommufd.
-> 
-> Be forwards looking and pass in a 'struct device *' argument. We can
-> provide this when allocating the default_domain. No drivers will look at
-> this.
-> 
+> Tested-by: Heiko Stuebner <heiko@sntech.de>
 > Tested-by: Steven Price <steven.price@arm.com>
 > Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
 > Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  drivers/iommu/iommu.c | 17 ++++++++++++++---
->  include/linux/iommu.h |  3 +++
->  2 files changed, 17 insertions(+), 3 deletions(-)
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 6 ++----
+>  drivers/iommu/exynos-iommu.c            | 7 ++-----
+>  drivers/iommu/ipmmu-vmsa.c              | 7 ++-----
+>  drivers/iommu/mtk_iommu.c               | 7 ++-----
+>  drivers/iommu/rockchip-iommu.c          | 7 ++-----
+>  drivers/iommu/sprd-iommu.c              | 7 ++-----
+>  drivers/iommu/sun50i-iommu.c            | 9 +++------
+>  drivers/iommu/tegra-smmu.c              | 7 ++-----
+>  8 files changed, 17 insertions(+), 40 deletions(-)
 > 
 
 Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
