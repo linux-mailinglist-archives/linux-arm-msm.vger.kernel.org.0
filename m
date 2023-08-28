@@ -2,132 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C3CF78AAE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:26:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EB4D78AAFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:27:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231150AbjH1K0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59484 "EHLO
+        id S230091AbjH1K1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 06:27:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbjH1KZx (ORCPT
+        with ESMTP id S231189AbjH1K0b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:25:53 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0699A127
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:25:48 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-500b6456c7eso1636744e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:25:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693218346; x=1693823146;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f2XzqsSsmE3l45hP4mU3k5M6kXYXzeumOpdKps22yCs=;
-        b=jRIBELIDlIbEZQJXuDCYvtGdZFoPDMYxWION1DgtAhFwBRNzoYknV7CX4HexmPzMTn
-         SXmkRX25Jn3SXfpgRIsT8etv4YHvEzw4Lwzt7f937I/s+Hq13nlARffdR5hl85SOE/2H
-         np+2FFhMdFuvwDoG5faO7MTxqYVRxWNi6N3kR9YdaoN6XjvaQgO5X5Dth5dO9rfqFGn1
-         QLMcusd4XjbifPzneOFxE5taL87RNnQDazsbpmQhXocyLlZ3LlUHP9GkJDOfWv4s29PK
-         lzf2Gb1FRO4KM8cebEDSXuHGb8gzMpvmaFtys4n1AwluVDPShoCYtQ4jYV2yK+gZTtZ4
-         syIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693218346; x=1693823146;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f2XzqsSsmE3l45hP4mU3k5M6kXYXzeumOpdKps22yCs=;
-        b=R5jg7mHfO5KWhwyvtd++Sv7Tf6Jl9K1UiG23o6e15SHs3aCQ4O2SbbMLzz714ZKS+X
-         b5giOTWPyBDssgCRChJB2McFvxtTgPhWheRwjtfm9462XGhSBb0FMyTvSoEOPlpYGAzJ
-         qAmmdVk6K82v9xlcOerEBKAtWzifhkxMnmv8i09Lm9ghfyLurt+t9OwIDHrqxJ5oiLJ5
-         Ot08v3JOf0X7QrEdRRU3xUy98KuLOk51wmYJhqUOPIIr2fuj15Z9PF9zakP9ns1wP2m6
-         4WBIhDKYZ1naFfba5CQkeIrHwuYyowYC85GZnjI3l4fiofMRelgC9gNorK7AtzkuJZCH
-         NVbw==
-X-Gm-Message-State: AOJu0Yw3ibIlkz9ooVGE9xRLQKbkSFxTO7vMMVsXP5HNonvLDUieUyok
-        CpGitETMiehAoMtPK3+2d1uZOw==
-X-Google-Smtp-Source: AGHT+IGmG7wKZMpRMRPb+72UjrYzpgzGEeM/qYPJ1h0hbXslVdaOQe2JpeiolVhbe6pKmVNkN6QQHw==
-X-Received: by 2002:a05:6512:6d5:b0:500:b9e3:91bd with SMTP id u21-20020a05651206d500b00500b9e391bdmr1832482lff.41.1693218346178;
-        Mon, 28 Aug 2023 03:25:46 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id u8-20020ac243c8000000b004ff9ecbf158sm1504928lfl.74.2023.08.28.03.25.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 03:25:45 -0700 (PDT)
-Message-ID: <6da3dc68-cbea-4670-a560-62c67059004c@linaro.org>
-Date:   Mon, 28 Aug 2023 12:25:44 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/37] ARM: dts: qcom: apq8064: move PMIC interrupts to
- the board files
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 28 Aug 2023 06:26:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B17D7;
+        Mon, 28 Aug 2023 03:26:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 35D0E63AC0;
+        Mon, 28 Aug 2023 10:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B55FC433C8;
+        Mon, 28 Aug 2023 10:26:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693218387;
+        bh=tkjosulHP+16FnPz+CCatC7X/KqMbHjO933JFiN4Vyc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=eMPXz575TzNzXB5u0LKu+9V+itGSDZneFKB5uJdztcOA2rwwbFShZQN/6z+VpbsMX
+         30erM4veQeEWbSEAtOfXAXtBHh2Sp04OKH8xbhFFk7LYLB0gt9F/F6IqyVn5ZVvHPh
+         Tc0jzALyAFyJ9FxmHC12DpDJq2B+i16sxwEPfpk8bJtc9TJM+ZaKZ1jdeX+F4/6n8M
+         gvcw5mt66PQ54yzm8M9xEs0pjauVBL9lxNuwMaXwcgm4kvWsAL5ydiTlIoSi6AFEKY
+         eNaHyMM4ZyfnZ5mSJKARVWPfazXNWhsZ7FSYWZnDLebdAaj6miy1xakfVGAuqiDU3G
+         dsUJXaiCr/ckA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <maz@kernel.org>)
+        id 1qaZRx-008gst-4k;
+        Mon, 28 Aug 2023 11:26:25 +0100
+Date:   Mon, 28 Aug 2023 11:26:24 +0100
+Message-ID: <863503foof.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-iio@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        linux-leds@vger.kernel.org
-References: <20230827132525.951475-1-dmitry.baryshkov@linaro.org>
- <20230827132525.951475-14-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230827132525.951475-14-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it is not available
+In-Reply-To: <CAA8EJppkJ1s=yjruBm0mntGQ4NBGut2jMLFRtZr6KquA5zn+=Q@mail.gmail.com>
+References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
+        <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
+        <CAA8EJppmn5hM5=zdkQoaGAYghw822vP8YoW0wQsNmAZY0v7dtA@mail.gmail.com>
+        <865y4zfppf.wl-maz@kernel.org>
+        <CAA8EJppkJ1s=yjruBm0mntGQ4NBGut2jMLFRtZr6KquA5zn+=Q@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/28.2
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: dmitry.baryshkov@linaro.org, quic_mkshah@quicinc.com, agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, tglx@linutronix.de, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, neil.armstrong@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.08.2023 15:25, Dmitry Baryshkov wrote:
-> The interrupt of SSBI PMICs is routed to the SoCs GPIO. As such, it is
-> not a property of the SoC, it is a property of the particular board
-> (even if it is standard and unified between all devices). Move these
-> interrupt specifications to the board files.
+On Mon, 28 Aug 2023 11:18:10 +0100,
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> On Mon, 28 Aug 2023 at 13:04, Marc Zyngier <maz@kernel.org> wrote:
+> >
+> > On Mon, 28 Aug 2023 10:46:10 +0100,
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On Mon, 28 Aug 2023 at 12:36, Maulik Shah (mkshah)
+> > > <quic_mkshah@quicinc.com> wrote:
+> > > >
+> > > > Hi Dmitry,
+> > > >
+> > > > This patch may be useful if there was a case where some PDCs don't have
+> > > > version register populated/available,
+> > > > In all PDC versions, version register is always available but due to reg
+> > > > size not good enough in device tree for SM8150 it failed to read.
+> > > >
+> > > > reg size in device node must be expanded if its too small to access all
+> > > > registers and i think
+> > > > additional check in driver to check if size is good enough would not be
+> > > > of much use.
+> > >
+> > > Unfortunately, it doesn't work this way. DT files are ABI. Even if we
+> > > change the DT, the kernel should continue working with the older
+> > > version.
+> > > Thus, we have to add such bandaid code, which will keep the kernel
+> > > from crashing if old DT was used.
+> >
+> > You're missing the point: all existing PDC HW have version register.
+> > The fact that the DT is crap doesn't invalidate this simple fact. It
+> > is thus perfectly possible for the driver to *ignore* the crap and do
+> > the right thing by expanding the size of the mapping, rather than
+> > falling back to the non-versioned code.
+> 
+> Ah. Interesting idea. If that's the overall consensus I can send v2
+> doing this. Not sure what is better though.
 
-Konrad
+Given that DT files are mostly generated using copy-paste by people
+making a point not to read specifications, odds are that your current
+patch would end-up applying the v0 behaviour to v3.2 HW.
+
+What could possibly go wrong?
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
