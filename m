@@ -2,137 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4124378A680
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 09:31:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60F8A78A685
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 09:31:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbjH1HbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 03:31:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55414 "EHLO
+        id S229636AbjH1HbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 03:31:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbjH1Hao (ORCPT
+        with ESMTP id S229775AbjH1Hax (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 03:30:44 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D4B91A3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 00:30:32 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99c136ee106so363232866b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 00:30:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693207831; x=1693812631;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wHa0HVCjRRwz9x8YQh2seHVH7TP0dnCcmAnXVZioCXg=;
-        b=DHNj8tl5xcvW/Ucy9pUawhwEahutH8EEW//WITttZs8bMpc0b9BJaiBli53QILsKZA
-         qAUQgvk+TqO768yUBilIHGG4R+cg/LpCDKdwWnAVtJlDehJMFlz6+1QQn6x65UFCrRsT
-         OPtttFLdmH0W3faHG6hzx/6O5ZaWIZVQpguIQtEhasfGt7oKIvUsb8QwDgshy5eI2lVG
-         rNPBpYIQtcQL51OYsEZOgYLQ9CgY0LFpVOftoEbrASpHwriu6slnF0OTEa1P3PykDj5Q
-         Wb9/v3zNdAMG40jB7M4FXHqNJxHOoXQbfk8yhVLu7vw57LXtyGiX6sIXofWq2cjvgCFC
-         ol5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693207831; x=1693812631;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wHa0HVCjRRwz9x8YQh2seHVH7TP0dnCcmAnXVZioCXg=;
-        b=cskVVOfoiJ1VREspSY7qDpNzHBX+gOM08jbPObr333E6DK2RkkUYmwiDOLcq91avF5
-         RuIOqPp3lJtlnnbapHVjFlMtGCoXW3EizEiAiDvu6GPnAIY1Aw9+XlNNuAfg9KSDEzVg
-         nnVkLEYHBysq0aRwx9FjSEnxMC4Jrv97jWbF816qnyT7Uu/8FuHWNm2IZUZlJZ/CPVPD
-         D/khNYYs1G1afOJtBEL6e0P8Rf3VtHrTN/8hQA4X+mIs8oW2bY3Yz0Yb6sJarqfDtW6m
-         ihRuUczjWm6Vbf6orwZ6AMEjzpPV4nQdUHjBJ3Eh0PHst4mivNXzHQReFle48i+dr1rH
-         pRZw==
-X-Gm-Message-State: AOJu0Yyo7hkrQ4z4KNxLfduyStom4Ib+Z68i0bvZkLzME7wwOUp4KPbj
-        /7D1lo/1pECKb5XrqWcV6rTH7w==
-X-Google-Smtp-Source: AGHT+IFNYvZ+2QAqiHBlUuRvGlyfuzJy6GBwSY4PegrCXjPAErtwa83fzStvRhYrm810XMf5Idt+Dg==
-X-Received: by 2002:a17:906:1da1:b0:99b:d580:546c with SMTP id u1-20020a1709061da100b0099bd580546cmr19463883ejh.23.1693207830903;
-        Mon, 28 Aug 2023 00:30:30 -0700 (PDT)
-Received: from linaro.org ([84.232.191.92])
-        by smtp.gmail.com with ESMTPSA id ju26-20020a17090798ba00b00982a352f078sm4306817ejc.124.2023.08.28.00.30.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 00:30:30 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 10:30:28 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>
-Subject: Re: [PATCH v2 4/6] clk: qcom: Use HW_CTRL_TRIGGER flag to switch
- video GDSC to HW mode
-Message-ID: <ZOxNFPRZI/N3a7Kr@linaro.org>
-References: <20230816145741.1472721-1-abel.vesa@linaro.org>
- <20230816145741.1472721-5-abel.vesa@linaro.org>
- <2fc0d771-cee2-4826-a62a-56ed4bfad3a2@linaro.org>
- <ZOXiUzxfs1cj3SWT@linaro.org>
- <07e93a9d-69ac-41b7-aa21-b855b97bf801@linaro.org>
- <ef1439f8-4a9b-53b4-34be-1229b39d2310@quicinc.com>
+        Mon, 28 Aug 2023 03:30:53 -0400
+Received: from mail.profitpathwaygo.com (mail.profitpathwaygo.com [141.94.21.238])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629DC91
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 00:30:51 -0700 (PDT)
+Received: by mail.profitpathwaygo.com (Postfix, from userid 1002)
+        id 2050B49C57; Mon, 28 Aug 2023 07:30:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=profitpathwaygo.com;
+        s=mail; t=1693207850;
+        bh=qp3Ofokho6Ql+WtI8ZPVilyHYhskXL7fod7u9CWs8W4=;
+        h=Date:From:To:Subject:From;
+        b=swMq9UzVwYdiDLaqfBkzucOMAOO9qu1DKrS8g/2UPAathJC/Sv+UjRqTm8iIpMeNH
+         89vyGHxDLjse+MpYvz/zVRlfUWdfnDGvwJtNpppFEqjc2n4shyQeEPvIZ+XWgGcu28
+         sU2M2fxyDqW3ULm07F5Wbm5mhApm6FMt3uUeH3Zd+vAkegTBwCqD+5V9wEKJ6e3SOG
+         +IqKj1ubulqt68QtfzLZIUZvmkh5aruS1bYay40Q5A2qVFu8JSdfMIguUoFbGzLvgP
+         ml+HTFneF30CkPKmake36+4XYTjMyQLjWdEfHBSiKtgd/GEklr70t1qAYSplZEyVAs
+         TnqMF6f2luXCA==
+Received: by mail.profitpathwaygo.com for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 07:30:28 GMT
+Message-ID: <20230828064500-0.1.1e.dc7r.0.54h40q353h@profitpathwaygo.com>
+Date:   Mon, 28 Aug 2023 07:30:28 GMT
+From:   "Adam Charachuta" <adam.charachuta@profitpathwaygo.com>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: =?UTF-8?Q?S=C5=82owa_kluczowe_do_wypozycjonowania_?=
+X-Mailer: mail.profitpathwaygo.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ef1439f8-4a9b-53b4-34be-1229b39d2310@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_CSS_A,URIBL_DBL_SPAM
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-08-28 12:18:30, Jagadeesh Kona wrote:
-> 
-> 
-> On 8/26/2023 4:17 PM, Konrad Dybcio wrote:
-> > On 23.08.2023 12:41, Abel Vesa wrote:
-> > > On 23-08-16 19:56:46, Konrad Dybcio wrote:
-> > > > On 16.08.2023 16:57, Abel Vesa wrote:
-> > > > > From: Jagadeesh Kona <quic_jkona@quicinc.com>
-> > > > > 
-> > > > > The current HW_CTRL flag switches the video GDSC to HW control mode as
-> > > > > part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
-> > > > > give consumer drivers more control and switch the GDSC mode as and when
-> > > > > required.
-> > > > > 
-> > > > > HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
-> > > > > HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
-> > > > > 
-> > > > > Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > > ---
-> > > > Do we have any use for the HW_CTRL flag?
-> > > > 
-> > > > Perhaps it should be renamed to HW_CTRL_ALWAYS?
-> > > > 
-> > > > Or even better, *if and only if* that is necessary, add a common
-> > > > property like "always_hw_managed" to the genpd code?
-> > > 
-> > > The HW_CTRL flag is still needed for the consumers that expect the GDSC
-> > > to be have the HW control bit set right after it gets enabled.
-> > Guess the correct question here would be.. Are there any?
-> > 
-> 
-> Yes, Display GDSC(mdss_gdsc) is required to be controlled always in HW
-> control mode when it is enabled.
-> 
+Dzie=C5=84 dobry,
 
-Actually, since all the GDSCs that support HW control are by default
-switched to HW mode after they are enabled, we can't make any changes
-with respect to that since we risk breaking consumers. Therefore, the
-new flag makes perfect sense since we can switch GDSCs from HW_CTRL to
-HW_CTRL_TRIGGER per platform/consumer.
+zapozna=C5=82em si=C4=99 z Pa=C5=84stwa ofert=C4=85 i z przyjemno=C5=9Bci=
+=C4=85 przyznaj=C4=99, =C5=BCe przyci=C4=85ga uwag=C4=99 i zach=C4=99ca d=
+o dalszych rozm=C3=B3w.=20
+
+Pomy=C5=9Bla=C5=82em, =C5=BCe mo=C5=BCe m=C3=B3g=C5=82bym mie=C4=87 sw=C3=
+=B3j wk=C5=82ad w Pa=C5=84stwa rozw=C3=B3j i pom=C3=B3c dotrze=C4=87 z t=C4=
+=85 ofert=C4=85 do wi=C4=99kszego grona odbiorc=C3=B3w. Pozycjonuj=C4=99 =
+strony www, dzi=C4=99ki czemu generuj=C4=85 =C5=9Bwietny ruch w sieci.
+
+Mo=C5=BCemy porozmawia=C4=87 w najbli=C5=BCszym czasie?
 
 
-> Thanks,
-> Jagadeesh
-> 
-> > Konrad
+Pozdrawiam serdecznie
+Adam Charachuta
