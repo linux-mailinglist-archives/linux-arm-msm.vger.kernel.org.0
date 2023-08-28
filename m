@@ -2,73 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4557978AA50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:21:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 761A978AAB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:24:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbjH1KVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
+        id S231167AbjH1KYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 06:24:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229846AbjH1KUk (ORCPT
+        with ESMTP id S231142AbjH1KXy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:20:40 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE80CC3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:20:13 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4ff882397ecso4541884e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:20:13 -0700 (PDT)
+        Mon, 28 Aug 2023 06:23:54 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B32125
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:23:49 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50078eba7afso4774340e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693218011; x=1693822811;
+        d=linaro.org; s=google; t=1693218227; x=1693823027;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cvoOITWtFaNG9POgyW2mF9j8Nw/ZFb+8+V0tdCk2Wrs=;
-        b=PDEoA1CgaH3JBNLP4OI69JrUISJzVSa0wszoHtPiKnO+qynjXqmZV7czsVCjfeYOXw
-         27VhbVYhXhULpJZZbEbg2GOlEvw9xKqrtweVsPNpb6mIYsWRk5K4oLVxs9iwMvrU1y7/
-         Y3W949T+SGPoXXRUAFoBlokNL7hfC/NQLUKv16VZjvbxX997iFBsbxQ/ZLhEC71pQlXB
-         gPvhD4ZM9JcPZ03ThSElkjlQm6XwaDdXKSzIq5kGZLDCV1BebHwTJtaVk47wxc6DvPN/
-         10v8Ha1APilB49mfe9I21v7tCxBHsYaF+Vyt2inUEUUo4IZD2aY8yyB+fbbO8HgY3lFp
-         aaag==
+        bh=/Vf2xBekLNY4UkyniaFZccQg7OJqM7OsARHlmmZ/O20=;
+        b=Ifz2CNfPr8RAvr3LjT+YzMO2OnTDYjSglgHYJyzCY6gU7g+HZWBnGIZg49FQJBnK1o
+         Hlv66mELAm3G5YyWqToH7nBFKWLY+DmfeEbGhzDPcS/gYLaYzNz5DzwfmvNqWDO6wNHA
+         yWyw8T5zGjGq+ktuMXIwKHTlIssUiNkcCMNaZ6vb7O/HrPbUHyCgnBvSUCkVl2iN45V9
+         DM+EmnSbDjnH/Kz68EdtRnZasImvXy63KLkM/70q+sywMNC4KYSHJ8OfrpdHkytlDk85
+         kMdRNiSGu0sD/mzaFTwtCLX7rqou8Tbs/I8C0/pXEo53i9SALjCFLcfplApgDlHSN1lu
+         PqSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693218011; x=1693822811;
+        d=1e100.net; s=20221208; t=1693218227; x=1693823027;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cvoOITWtFaNG9POgyW2mF9j8Nw/ZFb+8+V0tdCk2Wrs=;
-        b=ZbpBLZhnRviqu/gZkYdRQC28yilucKjW2NgE9yb5dl5ve4Y+A8kCwazZNBjhCGyLJe
-         rI2FwvghdNulZkFOxNIiq7DIqq/VGkxVjkq6fLZNDlPl480xPGrcDE2CNpcMEGILWqRZ
-         1isTnAy+gEki3Ed0VEdHJ7dETLtRc0Q0BRByL47QdCIFscRqWqeMnDnlKUDObdlz54zy
-         KzPcICQkObtO5/x+IkxZQUC4Gd4VE0yH19soqRdSnwNdrIVIsfpd0ZNuWTVhkDDP/j5h
-         /1bgbRY7x5p8VgQiT1Phw0Kr4QYoAdDxKsDNh25vdll0G8xGeASgv2U2jQf7K/klrO6U
-         oLzA==
-X-Gm-Message-State: AOJu0Yz9sAHWTQtVmAQPn8yMxtWY4cK8n3SL9ZOTq+PY9BOY16lYsPVI
-        DllAfXty6oL+1HtQ5lkb0Cu0qg==
-X-Google-Smtp-Source: AGHT+IGOmOYMHsHLMpmbGBNUWNAqmHNZVUvHB3LgOdAD1xiIwjirxbzn+XXMQjcAeR4q3Amxi6qTEw==
-X-Received: by 2002:ac2:562f:0:b0:4f8:5755:5b22 with SMTP id b15-20020ac2562f000000b004f857555b22mr16670646lff.27.1693218010994;
-        Mon, 28 Aug 2023 03:20:10 -0700 (PDT)
+        bh=/Vf2xBekLNY4UkyniaFZccQg7OJqM7OsARHlmmZ/O20=;
+        b=FLv/ddPXmklMOloSFweCPhpgr3sw7iUJ4FX2tK3GtWRLTdzflzXfQj10qxqmvbZnUd
+         cJpaIb9hEPKj6vfrbaGFmEdIqB+KiXrsKOwzaG9KHEhtEC04/DgwM7JVzA84mW9A0f+O
+         nsTPD4RL3mOhf88tFyT4I6fY/57Qx+ArTIFhWqXw/Xr3oVQvCvCAxGv4P7C6/9abCoRT
+         0Nq5rs9C7ItyskQ9+wg6AzHQN8lSZvsQXVnpJWZzDXVzaKlRT6pJs3EHQnYtRz/Y+rWy
+         8Au6Fm8AtPnUqD4S5DBvidYtLpwXtSHSwW1IzBqRboPHsoQ4DyavA3GygXpOvC1zfACt
+         Nj7A==
+X-Gm-Message-State: AOJu0YwwCpNHQAXYOpaAHOtZMU9A+WcfKexVexl5K8b9A+RL2ZtWN/lS
+        UerltF22CWO/06GnmwFe6GqKdw==
+X-Google-Smtp-Source: AGHT+IEJbKfHbAed13DNoE4TuoOpJBRgQ2YAewCcsNelmqIZdXnxK6m3IDupo4cbIRb3l0ukuIrF0Q==
+X-Received: by 2002:a05:6512:e85:b0:500:8146:9ebc with SMTP id bi5-20020a0565120e8500b0050081469ebcmr18810886lfb.47.1693218227298;
+        Mon, 28 Aug 2023 03:23:47 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id m13-20020ac2424d000000b004fea9cf6a32sm1520604lfl.204.2023.08.28.03.20.10
+        by smtp.gmail.com with ESMTPSA id x29-20020ac259dd000000b004fbac2646e3sm1507819lfn.195.2023.08.28.03.23.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 03:20:10 -0700 (PDT)
-Message-ID: <8876d95c-e7ea-478a-bb88-b97e5cf67f08@linaro.org>
-Date:   Mon, 28 Aug 2023 12:20:09 +0200
+        Mon, 28 Aug 2023 03:23:46 -0700 (PDT)
+Message-ID: <7c3f63d2-9fc1-44c0-8320-ed376e04d472@linaro.org>
+Date:   Mon, 28 Aug 2023 12:23:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it
- is not available
+Subject: Re: [PATCH v5 36/37] ARM: dts: qcom: ipq8064: drop qcom, prefix from
+ SSBI node name
 Content-Language: en-US
-To:     Marc Zyngier <maz@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
- <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
- <CAA8EJppmn5hM5=zdkQoaGAYghw822vP8YoW0wQsNmAZY0v7dtA@mail.gmail.com>
- <865y4zfppf.wl-maz@kernel.org>
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        linux-leds@vger.kernel.org
+References: <20230827132525.951475-1-dmitry.baryshkov@linaro.org>
+ <20230827132525.951475-37-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -105,49 +107,25 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <865y4zfppf.wl-maz@kernel.org>
+In-Reply-To: <20230827132525.951475-37-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.08.2023 12:04, Marc Zyngier wrote:
-> On Mon, 28 Aug 2023 10:46:10 +0100,
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
->>
->> On Mon, 28 Aug 2023 at 12:36, Maulik Shah (mkshah)
->> <quic_mkshah@quicinc.com> wrote:
->>>
->>> Hi Dmitry,
->>>
->>> This patch may be useful if there was a case where some PDCs don't have
->>> version register populated/available,
->>> In all PDC versions, version register is always available but due to reg
->>> size not good enough in device tree for SM8150 it failed to read.
->>>
->>> reg size in device node must be expanded if its too small to access all
->>> registers and i think
->>> additional check in driver to check if size is good enough would not be
->>> of much use.
->>
->> Unfortunately, it doesn't work this way. DT files are ABI. Even if we
->> change the DT, the kernel should continue working with the older
->> version.
->> Thus, we have to add such bandaid code, which will keep the kernel
->> from crashing if old DT was used.
-> 
-> You're missing the point: all existing PDC HW have version register.
-> The fact that the DT is crap doesn't invalidate this simple fact. It
-> is thus perfectly possible for the driver to *ignore* the crap and do
-> the right thing by expanding the size of the mapping, rather than
-> falling back to the non-versioned code.
-I wasn't sure if this would cross the "too hacky" boundary, but if
-you're fine with it, I'll happily ack this approach.
+On 27.08.2023 15:25, Dmitry Baryshkov wrote:
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+"eeh" to not have a commit message at all..
+
+Could at least say something about vendor prefixes being forbidden
+in node names to explain the rationale.
 
 Konrad
