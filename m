@@ -2,124 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB4D78AAFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:27:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A78F078AB61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:31:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbjH1K1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:27:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55950 "EHLO
+        id S231365AbjH1KaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 06:30:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231189AbjH1K0b (ORCPT
+        with ESMTP id S231411AbjH1K3x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:26:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B17D7;
-        Mon, 28 Aug 2023 03:26:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 35D0E63AC0;
-        Mon, 28 Aug 2023 10:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B55FC433C8;
-        Mon, 28 Aug 2023 10:26:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693218387;
-        bh=tkjosulHP+16FnPz+CCatC7X/KqMbHjO933JFiN4Vyc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=eMPXz575TzNzXB5u0LKu+9V+itGSDZneFKB5uJdztcOA2rwwbFShZQN/6z+VpbsMX
-         30erM4veQeEWbSEAtOfXAXtBHh2Sp04OKH8xbhFFk7LYLB0gt9F/F6IqyVn5ZVvHPh
-         Tc0jzALyAFyJ9FxmHC12DpDJq2B+i16sxwEPfpk8bJtc9TJM+ZaKZ1jdeX+F4/6n8M
-         gvcw5mt66PQ54yzm8M9xEs0pjauVBL9lxNuwMaXwcgm4kvWsAL5ydiTlIoSi6AFEKY
-         eNaHyMM4ZyfnZ5mSJKARVWPfazXNWhsZ7FSYWZnDLebdAaj6miy1xakfVGAuqiDU3G
-         dsUJXaiCr/ckA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.95)
-        (envelope-from <maz@kernel.org>)
-        id 1qaZRx-008gst-4k;
-        Mon, 28 Aug 2023 11:26:25 +0100
-Date:   Mon, 28 Aug 2023 11:26:24 +0100
-Message-ID: <863503foof.wl-maz@kernel.org>
-From:   Marc Zyngier <maz@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        Mon, 28 Aug 2023 06:29:53 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A20D12D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:29:51 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99bf8e5ab39so390569966b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693218589; x=1693823389;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xgWbl8lPDl41Al6QpsrWevt2TQ1ACauu918bY4j1z+s=;
+        b=bb/1I8Sm+ca97kh3b6g55IZcyB3k/N69Wdcm6OZ5O2Yp8H5f9FhmL3lg+5jbnGhVbl
+         /aTvMBwbieOYKlVj7VqcD2DYvC/Sb2uwGOy52Nm81n7mWyAGe8wXxPHQY9cU7hRPbIgZ
+         IpSm/Fi+TSeUmBhFZyp6CFHKrjsAFb2MENhkXo9LmULlSXI5J7+G+/sCvPC5ghCRTq49
+         5w1GsbIl2CSHsNuFWTlUHtPXfRQMtfWXjbtOaG+rurF3wcLeDJkr8L8/hNiF7qn6jLGU
+         UVguUParRgO9JTc5Q9oAlvTZABJDhe+0Zu7M99q2cf4ckB/byeUUkDUQc4R8SQ8TUlaL
+         u/xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693218589; x=1693823389;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xgWbl8lPDl41Al6QpsrWevt2TQ1ACauu918bY4j1z+s=;
+        b=JIp1B6TGq3L3Ezk6rohhaEvur4Kjzx48dnCMKt0IvhZN6J2KDeOPGmUE/8ud/EGsC5
+         H6t9RkOIlIDDNqXccNABEAok7NESi0C7zxSic/5ahdt09chJcK0XzvFTfUHgBWXr0Ypm
+         vxv48DI2KPBXqsFqtSkTF9IfzetdOaGbQebCYGoK/3ot/bDuLX2X61VKE63RMoUpMIE+
+         apRo06aolTMqywchgX1V+8KAl4fXt355qaRB+7kNYBpVb4g810dPOYgv7k9d6QHLyMMA
+         OBfRljT7AzB//F2zfhvI0OBIvR+3HrrP2f0ZoHo3XPOFzgNLYsKBUsdXKALlSrHswyRK
+         MPnw==
+X-Gm-Message-State: AOJu0YwnUhMxdE+qTeiPcSsjQdIImhubmHbbC0gD77305Cifb/i+9TRw
+        LRV70qXGiKkscXniHD2N7143Og==
+X-Google-Smtp-Source: AGHT+IEvflAPEhQk9eVSwuVE3hLZKV3uv9/1Nn0BRVXbRA8n/i3Y6qZDfP5ehGeIoJ4+m69+C2I4Ug==
+X-Received: by 2002:a17:907:7897:b0:993:f15f:efb7 with SMTP id ku23-20020a170907789700b00993f15fefb7mr19814166ejc.8.1693218589623;
+        Mon, 28 Aug 2023 03:29:49 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.225])
+        by smtp.gmail.com with ESMTPSA id e5-20020a170906044500b0099b8234a9fesm4462264eja.1.2023.08.28.03.29.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Aug 2023 03:29:49 -0700 (PDT)
+Message-ID: <5cb45ff4-a279-f47e-8d2f-700856cdff0f@linaro.org>
+Date:   Mon, 28 Aug 2023 12:29:48 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: sdx65: correct PCIe EP phy-names
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it is not available
-In-Reply-To: <CAA8EJppkJ1s=yjruBm0mntGQ4NBGut2jMLFRtZr6KquA5zn+=Q@mail.gmail.com>
-References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
-        <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
-        <CAA8EJppmn5hM5=zdkQoaGAYghw822vP8YoW0wQsNmAZY0v7dtA@mail.gmail.com>
-        <865y4zfppf.wl-maz@kernel.org>
-        <CAA8EJppkJ1s=yjruBm0mntGQ4NBGut2jMLFRtZr6KquA5zn+=Q@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/28.2
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: dmitry.baryshkov@linaro.org, quic_mkshah@quicinc.com, agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, tglx@linutronix.de, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, neil.armstrong@linaro.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230827114519.48797-1-krzysztof.kozlowski@linaro.org>
+ <1c2faca3-d10c-429e-961d-447ae076d319@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1c2faca3-d10c-429e-961d-447ae076d319@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Aug 2023 11:18:10 +0100,
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+On 28/08/2023 11:53, Konrad Dybcio wrote:
+> On 27.08.2023 13:45, Krzysztof Kozlowski wrote:
+>> Qualcomm PCIe endpoint bindings expect phy-names to be "pciephy":
+>>
+>>   arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dtb: pcie-ep@1c00000: phy-names:0: 'pciephy' was expected
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+> drivers/pci/controller/dwc/pcie-qcom-ep.c
+> 549:    pcie_ep->phy = devm_phy_optional_get(dev, "pciephy");
 > 
-> On Mon, 28 Aug 2023 at 13:04, Marc Zyngier <maz@kernel.org> wrote:
-> >
-> > On Mon, 28 Aug 2023 10:46:10 +0100,
-> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Mon, 28 Aug 2023 at 12:36, Maulik Shah (mkshah)
-> > > <quic_mkshah@quicinc.com> wrote:
-> > > >
-> > > > Hi Dmitry,
-> > > >
-> > > > This patch may be useful if there was a case where some PDCs don't have
-> > > > version register populated/available,
-> > > > In all PDC versions, version register is always available but due to reg
-> > > > size not good enough in device tree for SM8150 it failed to read.
-> > > >
-> > > > reg size in device node must be expanded if its too small to access all
-> > > > registers and i think
-> > > > additional check in driver to check if size is good enough would not be
-> > > > of much use.
-> > >
-> > > Unfortunately, it doesn't work this way. DT files are ABI. Even if we
-> > > change the DT, the kernel should continue working with the older
-> > > version.
-> > > Thus, we have to add such bandaid code, which will keep the kernel
-> > > from crashing if old DT was used.
-> >
-> > You're missing the point: all existing PDC HW have version register.
-> > The fact that the DT is crap doesn't invalidate this simple fact. It
-> > is thus perfectly possible for the driver to *ignore* the crap and do
-> > the right thing by expanding the size of the mapping, rather than
-> > falling back to the non-versioned code.
+> welp looks like this never worked..
+
+And if only it could have been spotted with some automated tooling,
+before posting to LKML...
+
 > 
-> Ah. Interesting idea. If that's the overall consensus I can send v2
-> doing this. Not sure what is better though.
+> 
+> Fixes: 9c0bb38414a4 ("ARM: dts: qcom: sdx65: Add support for PCIe EP")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Given that DT files are mostly generated using copy-paste by people
-making a point not to read specifications, odds are that your current
-patch would end-up applying the v0 behaviour to v3.2 HW.
 
-What could possibly go wrong?
+Thanks
 
-	M.
+Best regards,
+Krzysztof
 
--- 
-Without deviation from the norm, progress is not possible.
