@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C5E978A52F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 07:25:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B57CB78A538
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 07:33:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbjH1FZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 01:25:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
+        id S229463AbjH1Fch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 01:32:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjH1FYy (ORCPT
+        with ESMTP id S229456AbjH1FcZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 01:24:54 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B7E4129;
-        Sun, 27 Aug 2023 22:24:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3033460AAF;
-        Mon, 28 Aug 2023 05:24:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8A537C433C7;
-        Mon, 28 Aug 2023 05:24:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693200289;
-        bh=0Xk4uK/2TRf9VsLF/92kL0q0rtsuDOsk2AN3vjKX7jA=;
-        h=From:Date:Subject:To:Cc:Reply-To:From;
-        b=abUTbwgSeH3Oe6ZIl78vZ9Knd56LOALemfma5QsXC9wDcEx0KVsmi7CkgQzh4rcIx
-         qoXEKu03RIld5TNF1owSlkqIF+piz2cFMG4VxUIxf4E+ImZ0ngKOxr+0Lp9kpysyp5
-         6izzAXCJ66p6vNJ1tsehheY5PaTQKeCTBGOg5RmalSZK80hZclPMIf+g70luNJJ0zN
-         kLmZlSKQlafURgBNCW2MkTEN7YYOTXqnRBfmbH81VpguKJ03LP4+mDfNd0enhWVxkf
-         wYXCWdzWY1WwTv5pmiasYTkI6Rr3MDQ9AMDxr9SDmHM7CoBc+MAaIGgt6+u8JCjsWb
-         uxqvLWQMiT2KQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC1BC83F13;
-        Mon, 28 Aug 2023 05:24:49 +0000 (UTC)
-From:   Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
-Date:   Mon, 28 Aug 2023 13:16:30 +0800
-Subject: [PATCH v3] usb: typec: qcom: check regulator enable status before
- disabling it
+        Mon, 28 Aug 2023 01:32:25 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E109A92;
+        Sun, 27 Aug 2023 22:32:22 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37S4Xj9a006854;
+        Mon, 28 Aug 2023 05:32:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=sDumSUEEqZ5zLBEK3Ni6BUoqqetakJvnpH6yY0Eb1xY=;
+ b=mWNeUrmsYcGJGWeV8tqpNkqoV7clYJdGGGoznas7NELOnxArUK+eAlzlNhULiFOkYMwu
+ izTY2ekl6jbziiGpgRDmyKX4nRY5kWbyniM7JSe0yMXwnq5kSnN/NtQ3wrZneyh1aksD
+ WSt3Csw2NLNsoFRKN639/JHCogLCc5QcNtc5nKlNsu1q16yNDEQhQnlcOQIeN+FMvPkK
+ +iLlHs0GaWYotzIIfQAN2/W74VsliiV1NlWCvZsPMd729tI3qyBCKG5hC6IhVvZK+5iY
+ NVYzcUZQiH7iNSbltI8hOPYHVG0nIEPzBKLjT6dL9ii5/WzMv7jvXZCsIwwVyqVptwjQ 3A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sq9g1jmvy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 05:32:18 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37S5WHJw012297
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 05:32:17 GMT
+Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Sun, 27 Aug 2023 22:32:14 -0700
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_fenglinw@quicinc.com>, <quic_kamalw@quicinc.com>,
+        <jestar@qti.qualcomm.com>
+Subject: [RESEND PATCH v6 0/3] Add support for vibrator in multiple PMICs
+Date:   Mon, 28 Aug 2023 13:32:02 +0800
+Message-ID: <20230828053205.218950-1-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230828-qcom-tcpc-v3-1-e95b7afa34d9@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAK4t7GQC/1WMyw7CIBBFf6VhLQYGaFpX/odxQQZqZ2EfUImm4
- d+lTUzq8tzcc1YWfSAf2aVaWfCJIo1DAXWqGPZ2eHhOrjADAUo0AHzG8ckXnJA7LVujLdams6z
- 8p+A7eu+t271wT3EZw2dPJ7mtv4o6VJLkkne2kVa0aIWpr/OLkAY8lwvbOgmOrj66UFzlXINKg
- za1/ndzzl/z4Xkg4AAAAA==
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
-        subbaram@quicinc.com, Hui Liu <quic_huliu@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1693200287; l=2740;
- i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
- bh=PhtbUNi497LxsIT+PR23WnfyXiZjybQwxlZzIfUUR5o=;
- b=bCWEQzBXl080+WyLCKcjD4QwE7Jc4U3EfZtl4SMmaP4uobY/tBzbcihL2B/CSc8GrXaGvCs7L
- oyP1VIASZIlCv9FXNhvkMmx5I99EYk1it1tDwbhIU6H6eFNX/h7KMBC
-X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
- pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
-X-Endpoint-Received: by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
-X-Original-From: Hui Liu <quic_huliu@quicinc.com>
-Reply-To: <quic_huliu@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FfsDHUoxffREtDJHlyFXK6XsyvWzT0_4
+X-Proofpoint-GUID: FfsDHUoxffREtDJHlyFXK6XsyvWzT0_4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-28_02,2023-08-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=949
+ malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ adultscore=0 mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2308280049
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,80 +78,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Hui Liu <quic_huliu@quicinc.com>
+Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
+It is very similar to the vibrator module inside PM8916 which is supported in
+pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
+and the register base offset in each PMIC is different.
 
-Check regulator enable status before disabling it to avoid
-unbalanced regulator disable warnings.
+Changes in v6:
+  1. Add "qcom,pmi632-vib" as a standalone compatible string.
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
----
+Changes in v5:
+  1. Drop "qcom,spmi-vib-gen2" generic compatible string as requested
+     and use device specific compatible strings only.
+
+Changes in v4:
+  1. Update to use the combination of the HW type and register offset
+     as the constant match data, the register base address defined in
+     'reg' property will be added when accessing SPMI registers using
+     regmap APIs.
+  2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
+
 Changes in v3:
-- Take Bryan's proposal to remove enable/disable operation in pdphy
-enable and pdphy disable function, then enable regulator in pdphy start
-function and disable it in pdphy stop function.
-- Link to v2: https://lore.kernel.org/r/20230824-qcom-tcpc-v2-1-3dd8c3424564@quicinc.com
+  1. Refactor the driver to support different type of the vibrators with
+    better flexibility by introducing the HW type with corresponding
+    register fields definitions.
+  2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
+    strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
+    spmi-vib-gen2.
 
 Changes in v2:
-- Add Fixes tag
-- Link to v1: https://lore.kernel.org/r/20230823-qcom-tcpc-v1-1-fa81a09ca056@quicinc.com
----
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+  Remove the "pm7550ba-vib" compatible string as it's compatible with pm7325b.
 
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-index bb0b8479d80f..52c81378e36e 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-@@ -381,10 +381,6 @@ static int qcom_pmic_typec_pdphy_enable(struct pmic_typec_pdphy *pmic_typec_pdph
- 	struct device *dev = pmic_typec_pdphy->dev;
- 	int ret;
- 
--	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
--	if (ret)
--		return ret;
--
- 	/* PD 2.0, DR=TYPEC_DEVICE, PR=TYPEC_SINK */
- 	ret = regmap_update_bits(pmic_typec_pdphy->regmap,
- 				 pmic_typec_pdphy->base + USB_PDPHY_MSG_CONFIG_REG,
-@@ -422,8 +418,6 @@ static int qcom_pmic_typec_pdphy_disable(struct pmic_typec_pdphy *pmic_typec_pdp
- 	ret = regmap_write(pmic_typec_pdphy->regmap,
- 			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
- 
--	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
--
- 	return ret;
- }
- 
-@@ -447,6 +441,10 @@ int qcom_pmic_typec_pdphy_start(struct pmic_typec_pdphy *pmic_typec_pdphy,
- 	int i;
- 	int ret;
- 
-+	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
-+	if (ret)
-+		return ret;
-+
- 	pmic_typec_pdphy->tcpm_port = tcpm_port;
- 
- 	ret = pmic_typec_pdphy_reset(pmic_typec_pdphy);
-@@ -467,6 +465,8 @@ void qcom_pmic_typec_pdphy_stop(struct pmic_typec_pdphy *pmic_typec_pdphy)
- 		disable_irq(pmic_typec_pdphy->irq_data[i].irq);
- 
- 	qcom_pmic_typec_pdphy_reset_on(pmic_typec_pdphy);
-+
-+	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
- }
- 
- struct pmic_typec_pdphy *qcom_pmic_typec_pdphy_alloc(struct device *dev)
 
----
-base-commit: bbb9e06d2c6435af9c62074ad7048910eeb2e7bc
-change-id: 20230822-qcom-tcpc-d41954ac65fa
+Fenglin Wu (3):
+  input: pm8xxx-vib: refactor to easily support new SPMI vibrator
+  dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+  input: pm8xxx-vibrator: add new SPMI vibrator support
 
-Best regards,
+ .../bindings/input/qcom,pm8xxx-vib.yaml       |  16 +-
+ drivers/input/misc/pm8xxx-vibrator.c          | 171 ++++++++++++------
+ 2 files changed, 132 insertions(+), 55 deletions(-)
+
 -- 
-Hui Liu <quic_huliu@quicinc.com>
+2.25.1
 
