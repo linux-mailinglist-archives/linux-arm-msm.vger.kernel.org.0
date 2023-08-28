@@ -2,78 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F275F78AE78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:08:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 050BD78AE7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:09:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbjH1LHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 07:07:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50314 "EHLO
+        id S232427AbjH1LIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 07:08:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232435AbjH1LHd (ORCPT
+        with ESMTP id S232438AbjH1LIQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 07:07:33 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB374AB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:07:29 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso45071941fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:07:29 -0700 (PDT)
+        Mon, 28 Aug 2023 07:08:16 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ED87C3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:08:12 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50078eba7afso4845704e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693220848; x=1693825648;
+        d=linaro.org; s=google; t=1693220890; x=1693825690;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CVyKhMPYbxxDZsbVVqtzl9C1WJS8LoUN1G1b49bSUuE=;
-        b=vMUHL9JNQitPrPv5IrR2bgyofR78FRg04LBTfCZpwdB4/7vmFBcuZn6Oh4mScvbLUc
-         wz/XlKpZAzhp2sNBWPrKBjBlGvFTKk0qhr/iV1d4oB1NoGzkCmUuW8d4H6GAKb9nXclk
-         GczzMPFlheUJ2LGyBXc6M4HYo8mZcCqwtjuczwmTN3LBOfgf7Abbv/G2TOMP+ldGB8y9
-         xa+6wYF9zmJe7Zitwy9U7HqUgzFiDLtHbJqtX45J9YepvMEsZAzk3L0/XVweG7JtbNXj
-         GJGCljyDpQ0+93sxw8zPxoBgBa0kyO2mUF861v7BGbuXwDah2QPFM/fZq3DrjlaLBHx/
-         Jz5Q==
+        bh=XVi2r7g2AHGsHj2w2HLipRqWc1va81tYKBkM2qZWa4Y=;
+        b=FSfHBDT14Su2QR77o+VMPyner0llyaMUFlW9hEX68V+v1i3sy7SlEqHmBOo1Gt19Ir
+         KYxMX1LrV7m9uLkduT+ma+UHjNbt3Ao3efMUIp031xgIu2KUZQZ0MfR/PPZeOMU5DU0n
+         ERx1h9plhdS90BoOLhbfL6HYTUB6QsLaMgggS4bVPcXrarGHaiiWogI+QUx2wwEGB7AX
+         pVp6vQxcVbuNmRjuXLLAj342sY8s9S2MthTSEf+/5QWPcG1gKZztMzouhMnKs+VEa2s5
+         ajUiUmbahj7wvqaCyN91Y+NWNSE6re8eCy6bvfZ94jDURxxtCBtbEZxpc31U4rhLAFwi
+         KVIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693220848; x=1693825648;
+        d=1e100.net; s=20221208; t=1693220890; x=1693825690;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CVyKhMPYbxxDZsbVVqtzl9C1WJS8LoUN1G1b49bSUuE=;
-        b=TCEOkGjiMJo6o2cOIPMFyrlhOXox+ecJ+5gg+B7IzWCZFIq2REV5v3kNzbqjzc1tkE
-         LzwHKOmENdFtNmAClPATL8oCwDANieIkFyqE65YOSJreHM9vDaJMoR42yZhRTDhYhBQt
-         vnGHTuZBMCYHe3EZzoODAjUlgtmVq5yOMUeU7mZCjVdQrT9nX2xKgfB2OgIsILBXaMf9
-         2kvdILazbv0fflOH84+vwzWWN4/jDbVPi/+mTrYcM7Oj4BW8o2rJ6HRgtPfkVY6Ebtz2
-         6adVqF9IJY0PGdSIzsATtr5gyMZWcTm5B8K23Sbo/adGQIYItdFQzhw2UfrCCGN8MmmV
-         V2Dw==
-X-Gm-Message-State: AOJu0Yw7h4uMN3HORrg9ww2zQpTuBXMoapOFGVyPJC+/wk4Lp0Eu7uAa
-        6oSXRN4hi5mn6Bv17Djyw9l96g==
-X-Google-Smtp-Source: AGHT+IEFEznKnZlgUVLjUa71julJu1yhPfnHGBZoc4+kBV+F16R5b2USRiEi+lkfz+UnTLhaBOGnuA==
-X-Received: by 2002:a2e:b0f4:0:b0:2bc:e827:a4f9 with SMTP id h20-20020a2eb0f4000000b002bce827a4f9mr8336164ljl.30.1693220848031;
-        Mon, 28 Aug 2023 04:07:28 -0700 (PDT)
+        bh=XVi2r7g2AHGsHj2w2HLipRqWc1va81tYKBkM2qZWa4Y=;
+        b=ZEoPNHCpLKRM4C1s4IXPUCqg0HTiCC39pLc/St6A5EMtFTr3pNmA8J6a7ChqGlcMUr
+         6tWIJW1R9trHpoSXZMTefbpCmxnk00G0SjAcyRhVAKXanNZlqUciunrq3cd2fnaXX6cS
+         QGAHXLSMz6uz48Ccb/tjeQRt8NHUqkTGwcfeBwR/jykTW7KlZO+7CEyPA7yk0etcDwL0
+         fMxuNug33jiSuOgrY0MMLTnU+CDbwqQTmbejqh7k852L6fL5hyu5w5XiraLHMm5CNIEV
+         lguPczBraJeGt1tFO0BoX2kDb7yOIhIeRLjfe1Y3+N9MFGvaOs9qvSChdxQh8HjRplGu
+         qwXQ==
+X-Gm-Message-State: AOJu0Ywoe0phREqv/Qp1vt8W5pxhxZrOdq+lmzgOcOXGMcLT1AM6MvVB
+        z5jZtz2lRCZU9ZNSr4fu8V3Xew==
+X-Google-Smtp-Source: AGHT+IFGIbmPDyIF/SHGMVGogNc6L08QiQKVkf3S/uCkWXgig06L8xdHCrDKnBhHdW8aWhC6j2JCZw==
+X-Received: by 2002:a2e:9591:0:b0:2bc:b448:b8b2 with SMTP id w17-20020a2e9591000000b002bcb448b8b2mr17049493ljh.19.1693220890568;
+        Mon, 28 Aug 2023 04:08:10 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id i4-20020a2e8084000000b002b9e0aeff68sm1697246ljg.95.2023.08.28.04.07.26
+        by smtp.gmail.com with ESMTPSA id i4-20020a2e8084000000b002b9e0aeff68sm1697246ljg.95.2023.08.28.04.08.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 04:07:27 -0700 (PDT)
-Message-ID: <73c0e457-ce2d-4fb5-9bc7-50e391c92230@linaro.org>
-Date:   Mon, 28 Aug 2023 13:07:26 +0200
+        Mon, 28 Aug 2023 04:08:10 -0700 (PDT)
+Message-ID: <504bed33-2170-4172-8b56-42eb5cac0698@linaro.org>
+Date:   Mon, 28 Aug 2023 13:08:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/6] cpufreq: qcom-nvmem: create L2 cache device
+Subject: Re: [PATCH] thermal/drivers/qcom/lmh: Fix missing IRQ check in
+ lmh_probe()
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
- <20230827032803.934819-3-dmitry.baryshkov@linaro.org>
+To:     Zhang Shurong <zhang_shurong@foxmail.com>, amitk@kernel.org
+Cc:     thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <tencent_A0D4966C4180DD7B582A20A06A49ECDD600A@qq.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,7 +99,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230827032803.934819-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <tencent_A0D4966C4180DD7B582A20A06A49ECDD600A@qq.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -123,60 +112,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.08.2023 05:27, Dmitry Baryshkov wrote:
-> Scaling the frequencies on some of Qualcomm Krait platforms (e.g.
-> APQ8064) also requires scaling of the L2 cache frequency. As the
-> l2-cache device node is places under /cpus/ path, it is not created by
-> default by the OF code. Create corresponding device here.
+On 26.08.2023 13:09, Zhang Shurong wrote:
+> This func misses checking for platform_get_irq()'s call and may passes the
+> negative error codes to request_irq(), which takes unsigned IRQ #,
+> causing it to fail with -EINVAL, overriding an original error code.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fix this by stop calling request_irq() with invalid IRQ #s.
+> 
+> Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+> Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
 > ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+>  drivers/thermal/qcom/lmh.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 84d7033e5efe..f4c196ba4432 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -22,6 +22,7 @@
->  #include <linux/module.h>
->  #include <linux/nvmem-consumer.h>
->  #include <linux/of.h>
-> +#include <linux/of_platform.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
->  #include <linux/pm_opp.h>
-> @@ -377,6 +378,7 @@ static int __init qcom_cpufreq_init(void)
->  {
->  	struct device_node *np = of_find_node_by_path("/");
->  	const struct of_device_id *match;
-> +	unsigned int cpu;
->  	int ret;
+> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+> index f6edb12ec004..38aedb9a7c67 100644
+> --- a/drivers/thermal/qcom/lmh.c
+> +++ b/drivers/thermal/qcom/lmh.c
+> @@ -198,7 +198,11 @@ static int lmh_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
 >  
->  	if (!np)
-> @@ -387,6 +389,25 @@ static int __init qcom_cpufreq_init(void)
->  	if (!match)
->  		return -ENODEV;
->  
-> +	for_each_possible_cpu(cpu) {
-> +		struct device *dev = get_cpu_device(cpu);
-> +		struct device_node *cache;
-> +		struct platform_device *pdev;
-Aaaalmost reverse-Christmas-tree :D
-
+> -	lmh_data->irq = platform_get_irq(pdev, 0);
+> +	ret = platform_get_irq(pdev, 0);
+> +	if (ret < 0)
+> +		return ret;
 > +
-> +		cache = of_find_next_cache_node(dev->of_node);
-> +		if (!cache)
-> +			continue;
-> +
-> +		if (of_device_is_compatible(cache, "qcom,krait-l2-cache")) {
-> +			pdev = of_platform_device_create(cache, NULL, NULL);
-> +			if (IS_ERR(pdev))
-> +				pr_err("%s: %pe, failed to create L2 cache node\n", __func__, pdev);
-The return value should be null-checked instead
-
-
-> +			/* the error is not fatal */
-"This error"?
+> +	lmh_data->irq = ret;
+Similarly to the other patch, please assign to lmh_data->irq directly
 
 Konrad
