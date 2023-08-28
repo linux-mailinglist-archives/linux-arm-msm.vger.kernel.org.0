@@ -2,161 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F92178B6E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 20:00:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEB1D78B747
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 20:37:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230340AbjH1SAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 14:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38646 "EHLO
+        id S231928AbjH1Sgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 14:36:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233033AbjH1SAB (ORCPT
+        with ESMTP id S230306AbjH1SgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 14:00:01 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BF1712D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 10:59:58 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-99cce6f7de2so453142666b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 10:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693245597; x=1693850397;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BjrkEommxgzVsvPeELM83BT2d5xXvo75H1UStaGsfMI=;
-        b=JTayhNgjtHQx8fxD1S0ic9K2eV0gHdK4jVwPvnPUGd2lV1rXAApieBetsa8bytyDW5
-         kMywhMh+NFRhCXY36/qiT3S+8rQTEW+i/V9PBCqjsV/VcP8DScv2dhRyBuZWwt3ghzRB
-         m8KwSRIQ8hTxsukbALZVslO4oivb0kZSsuC3weid+ly8l8KNNyjRfAZzl3BH+KfHXmDv
-         cVrxK6SpS1YGApwo4iLhrKEIW2iBp1nGzCFWGASuUbfp94glhsFkKKjOQVqARPKZbGIs
-         fAxj62ynY1wCpC7pkNCdi5h+EA10oCOXTjyg2BuRZ+r78s9uIXEdtA/l+JpCzH4OUS7m
-         QCuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693245597; x=1693850397;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BjrkEommxgzVsvPeELM83BT2d5xXvo75H1UStaGsfMI=;
-        b=LMoMyoze01xg1koq3rog4GE3Kjow4ciiPj7quYj61VnEgu23HBqqAiYSpWI/E/iGnV
-         CsfgcxvmX6X2Tfor7WUjppa+k8y96nJ/qOTK3ws6T0f1O4ZWcYEyZCrAyrYyrCkAmWGM
-         blrpviRPbQPG9D7o1U5MdSZW8bboBImwsMpP7oOBYLYlZZkJgwISbVO7YCXR+StGvaB0
-         xsn4mgCUCqy6EQLLAkKq8xUy2hVIpE2Ytjcbdzi5VeXRKyTHdl5y3UeXXrbCmiIdCy35
-         shAZHSsLmg3K62BaGkprohPIAzx5OfIPE2DR6Tu9rA0MpEO1PdVh+XhNjDOiwKvhuPyn
-         lZHQ==
-X-Gm-Message-State: AOJu0YzRevJQ3AS9Y5I2lc4wy6vcCrJH4qyblTfsp655xA4JZrwLaRDv
-        652ygIF4vEhzICSqEWH8xh7/kA==
-X-Google-Smtp-Source: AGHT+IEgWbg5t5ZGn+L+7J47VuL32+upXijCivlJd+5GNKo6BO3FJ+P2Y6r8QA61T+yNo9WfJ947sA==
-X-Received: by 2002:a17:906:2921:b0:99c:f966:9ea2 with SMTP id v1-20020a170906292100b0099cf9669ea2mr17270150ejd.25.1693245597040;
-        Mon, 28 Aug 2023 10:59:57 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id b8-20020a170906194800b009920e9a3a73sm4921968eje.115.2023.08.28.10.59.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 10:59:56 -0700 (PDT)
-Message-ID: <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
-Date:   Mon, 28 Aug 2023 19:59:54 +0200
+        Mon, 28 Aug 2023 14:36:12 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C10C0B0;
+        Mon, 28 Aug 2023 11:36:08 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6F19A2D8;
+        Mon, 28 Aug 2023 20:34:45 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1693247685;
+        bh=2LMZvM7f/L2lSgdZaw7tJ5C0Mvviajs9B+1lkKCLG/k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qZlR3UuXKCpX3sIyiIl4vyQFFIShWmP0GEF2OjSvpOzTSLGK3ERpsN3Qdpo3FfqJd
+         lXJ42WRrkQyMghpASYrKz9HSVnbg1qJqT8eO09oiZ0HiNztI9OyrUYACIRLyXjeNub
+         HY9tNWBFVrxoumBaFMqnuN822O9siSCc1NYAN/Kw=
+Date:   Mon, 28 Aug 2023 21:36:16 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hverkuil-cisco@xs4all.nl, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 05/15] media: qcom: camss: Pass line_num from compat
+ resources
+Message-ID: <20230828183616.GJ14596@pendragon.ideasonboard.com>
+References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-6-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Content-Language: en-US
-To:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, workflows@vger.kernel.org,
-        tools@linux.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
- <20230828175629.GC23466@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230828175629.GC23466@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230823104444.1954663-6-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/08/2023 19:56, Guru Das Srinagesh wrote:
-> On Aug 28 2023 10:21, Krzysztof Kozlowski wrote:
->> On 26/08/2023 10:07, Guru Das Srinagesh wrote:
->>> This script runs get_maintainer.py on a given patch file (or multiple
->>> patch files) and adds its output to the patch file in place with the
->>> appropriate email headers "To: " or "Cc: " as the case may be. These new
->>> headers are added after the "From: " line in the patch.
->>>
->>> Currently, for a single patch, maintainers and reviewers are added as
->>> "To: ", mailing lists and all other roles are added as "Cc: ".
->>>
->>> For a series of patches, however, a set-union scheme is employed in
->>> order to solve the all-too-common problem of ending up sending only
->>> subsets of a patch series to some lists, which results in important
->>> pieces of context such as the cover letter (or other patches in the
->>> series) being dropped from those lists. This scheme is as follows:
->>>
->>> - Create set-union of all maintainers and reviewers from all patches and
->>>   use this to do the following per patch:
->>>   - add only that specific patch's maintainers and reviewers as "To: "
->>>   - add the other maintainers and reviewers from the other patches as "Cc: "
->>>
->>> - Create set-union of all mailing lists corresponding to all patches and
->>>   add this to all patches as "Cc: "
->>>
->>> - Create set-union of all other roles corresponding to all patches and
->>>   add this to all patches as "Cc: "
->>>
->>> Please note that patch files that don't have any "Maintainer"s or
->>> "Reviewers" explicitly listed in their `get_maintainer.pl` output will
->>
->> So before you will ignoring the reviewers, right? One more reason to not
->> get it right...
+Hi Bryan,
+
+Thank you for the patch.
+
+On Wed, Aug 23, 2023 at 11:44:34AM +0100, Bryan O'Donoghue wrote:
+> line_num indicates the number of RDI - raw data interface channels which
+> are associated with a given IFE/VFE - image/video front end.
+
+Should the variable then be renamed to num_rdi or similar ?
+
+> On several SoCs the RDI number is not static for each VFE - for example
+> on sm8250 VFE Lite has four RDIs where regular VFE has three.
 > 
-> In v2, Reviewers were added as "Cc:" whereas here in v3 they are added as
-> "To:". Not sure where you're getting "ignoring the reviewers" from.
+> Assigning line_num statically in the subdev_init() phase initialises
+> each VFE to the lower number, meaning in practical terms that we are
+> lobbing off one RDI on some VFEs.
 > 
->>> not have any "To: " entries added to them; developers are expected to
->>> manually make edits to the added entries in such cases to convert some
->>> "Cc: " entries to "To: " as desired.
->>>
->>> The script is quiet by default (only prints errors) and its verbosity
->>> can be adjusted via an optional parameter.
->>>
->>> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
->>> ---
->>>  MAINTAINERS               |   5 ++
->>>  scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
->>>  2 files changed, 169 insertions(+)
->>>  create mode 100755 scripts/add-maintainer.py
->>>
->>
->> I do not see the benefits of this script. For me - it's unnecessarily
->> more complicated instead of my simple bash function which makes
+> Interrupt handling uses static for (i = RDI0; i < RDI2; i++) {} in some
+> of our VFE blocks but this can't work for situations where we have a
+> mixture of VFE @ 3 RDI and VFE-lite @ 4 RDI blocks.
 > 
-> Your function adds mailing lists also in "To:" which is not ideal, in my view.
-> You've mentioned before that To or Cc doesn't matter [1] which I disagree
-> with: it doesn't matter, why does Cc exist as a concept at all?
+> First step to remediate is to pass line_num from a compat string
+> controlled data-structure and do so on a per-VFE basis.
+> 
+> Later patches will assign the correct number of RDI blocks per VFE.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-To/Cc does not matter when sending new patch, because maintainers know
-they are maintainers of which parts. I know what I handle.
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-To/Cc still makes sense in other cases, when for example you ping
-someone asking for reviews. It also makes much more sense in all
-corpo-worlds where such distinction is obvious. We are not a corpo-world
-here.
+> ---
+>  .../media/platform/qcom/camss/camss-vfe-170.c |  2 --
+>  .../media/platform/qcom/camss/camss-vfe-4-1.c |  2 --
+>  .../media/platform/qcom/camss/camss-vfe-4-7.c |  2 --
+>  .../media/platform/qcom/camss/camss-vfe-4-8.c |  2 --
+>  .../media/platform/qcom/camss/camss-vfe-480.c |  1 -
+>  drivers/media/platform/qcom/camss/camss-vfe.c |  5 +++
+>  drivers/media/platform/qcom/camss/camss.c     | 36 ++++++++++++-------
+>  drivers/media/platform/qcom/camss/camss.h     |  1 +
+>  8 files changed, 30 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> index 9905bb06b3823..8aa921400ded0 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> @@ -756,8 +756,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+>  {
+>  	vfe->isr_ops = vfe_isr_ops_170;
+>  	vfe->video_ops = vfe_video_ops_170;
+> -
+> -	vfe->line_num = VFE_LINE_NUM_GEN2;
+>  }
+>  
+>  const struct vfe_hw_ops vfe_ops_170 = {
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> index bc309f326f519..2911e4126e7ad 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> @@ -992,8 +992,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+>  	vfe->isr_ops = vfe_isr_ops_gen1;
+>  	vfe->ops_gen1 = &vfe_ops_gen1_4_1;
+>  	vfe->video_ops = vfe_video_ops_gen1;
+> -
+> -	vfe->line_num = VFE_LINE_NUM_GEN1;
+>  }
+>  
+>  const struct vfe_hw_ops vfe_ops_4_1 = {
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> index 8acd76c9746ba..b65ed0fef595e 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> @@ -1188,8 +1188,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+>  	vfe->isr_ops = vfe_isr_ops_gen1;
+>  	vfe->ops_gen1 = &vfe_ops_gen1_4_7;
+>  	vfe->video_ops = vfe_video_ops_gen1;
+> -
+> -	vfe->line_num = VFE_LINE_NUM_GEN1;
+>  }
+>  
+>  const struct vfe_hw_ops vfe_ops_4_7 = {
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+> index 3a0167ecf873a..7b3805177f037 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+> @@ -1173,8 +1173,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+>  	vfe->isr_ops = vfe_isr_ops_gen1;
+>  	vfe->ops_gen1 = &vfe_ops_gen1_4_8;
+>  	vfe->video_ops = vfe_video_ops_gen1;
+> -
+> -	vfe->line_num = VFE_LINE_NUM_GEN1;
+>  }
+>  
+>  const struct vfe_hw_ops vfe_ops_4_8 = {
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> index 80338efceb9e1..b1a07e846e25b 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> @@ -572,7 +572,6 @@ static const struct camss_video_ops vfe_video_ops_480 = {
+>  static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+>  {
+>  	vfe->video_ops = vfe_video_ops_480;
+> -	vfe->line_num = MAX_VFE_OUTPUT_LINES;
+>  }
+>  
+>  const struct vfe_hw_ops vfe_ops_480 = {
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 526dd4ab343fe..b789b3b2e4cfd 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -1305,6 +1305,11 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+>  	default:
+>  		return -EINVAL;
+>  	}
+> +
+> +	if (!res->line_num)
+> +		return -EINVAL;
+> +
+> +	vfe->line_num = res->line_num;
+>  	vfe->ops->subdev_init(dev, vfe);
+>  
+>  	/* Memory */
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index c8a2571e664fe..ce0d86e45fe48 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -123,7 +123,8 @@ static const struct resources vfe_res_8x16[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe0" },
+> -		.interrupt = { "vfe0" }
+> +		.interrupt = { "vfe0" },
+> +		.line_num = VFE_LINE_NUM_GEN1,
+>  	}
+>  };
+>  
+> @@ -263,7 +264,8 @@ static const struct resources vfe_res_8x96[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe0" },
+> -		.interrupt = { "vfe0" }
+> +		.interrupt = { "vfe0" },
+> +		.line_num = VFE_LINE_NUM_GEN1,
+>  	},
+>  
+>  	/* VFE1 */
+> @@ -281,7 +283,8 @@ static const struct resources vfe_res_8x96[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe1" },
+> -		.interrupt = { "vfe1" }
+> +		.interrupt = { "vfe1" },
+> +		.line_num = VFE_LINE_NUM_GEN1,
+>  	}
+>  };
+>  
+> @@ -442,7 +445,8 @@ static const struct resources vfe_res_660[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe0" },
+> -		.interrupt = { "vfe0" }
+> +		.interrupt = { "vfe0" },
+> +		.line_num = VFE_LINE_NUM_GEN1,
+>  	},
+>  
+>  	/* VFE1 */
+> @@ -463,7 +467,8 @@ static const struct resources vfe_res_660[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe1" },
+> -		.interrupt = { "vfe1" }
+> +		.interrupt = { "vfe1" },
+> +		.line_num = VFE_LINE_NUM_GEN1,
+>  	}
+>  };
+>  
+> @@ -621,7 +626,8 @@ static const struct resources vfe_res_845[] = {
+>  				{ 19200000, 75000000, 384000000, 538666667 },
+>  				{ 384000000 } },
+>  		.reg = { "vfe0" },
+> -		.interrupt = { "vfe0" }
+> +		.interrupt = { "vfe0" },
+> +		.line_num = VFE_LINE_NUM_GEN2,
+>  	},
+>  
+>  	/* VFE1 */
+> @@ -641,7 +647,8 @@ static const struct resources vfe_res_845[] = {
+>  				{ 19200000, 75000000, 384000000, 538666667 },
+>  				{ 384000000 } },
+>  		.reg = { "vfe1" },
+> -		.interrupt = { "vfe1" }
+> +		.interrupt = { "vfe1" },
+> +		.line_num = VFE_LINE_NUM_GEN2,
+>  	},
+>  
+>  	/* VFE-lite */
+> @@ -660,7 +667,8 @@ static const struct resources vfe_res_845[] = {
+>  				{ 19200000, 75000000, 384000000, 538666667 },
+>  				{ 384000000 } },
+>  		.reg = { "vfe_lite" },
+> -		.interrupt = { "vfe_lite" }
+> +		.interrupt = { "vfe_lite" },
+> +		.line_num = VFE_LINE_NUM_GEN2,
+>  	}
+>  };
+>  
+> @@ -787,7 +795,8 @@ static const struct resources vfe_res_8250[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe0" },
+> -		.interrupt = { "vfe0" }
+> +		.interrupt = { "vfe0" },
+> +		.line_num = 4,
+>  	},
+>  	/* VFE1 */
+>  	{
+> @@ -805,7 +814,8 @@ static const struct resources vfe_res_8250[] = {
+>  				{ 0 },
+>  				{ 0 } },
+>  		.reg = { "vfe1" },
+> -		.interrupt = { "vfe1" }
+> +		.interrupt = { "vfe1" },
+> +		.line_num = 4,
+>  	},
+>  	/* VFE2 (lite) */
+>  	{
+> @@ -822,7 +832,8 @@ static const struct resources vfe_res_8250[] = {
+>  				{ 400000000, 480000000 },
+>  				{ 0 } },
+>  		.reg = { "vfe_lite0" },
+> -		.interrupt = { "vfe_lite0" }
+> +		.interrupt = { "vfe_lite0" },
+> +		.line_num = 4,
+>  	},
+>  	/* VFE3 (lite) */
+>  	{
+> @@ -839,7 +850,8 @@ static const struct resources vfe_res_8250[] = {
+>  				{ 400000000, 480000000 },
+>  				{ 0 } },
+>  		.reg = { "vfe_lite1" },
+> -		.interrupt = { "vfe_lite1" }
+> +		.interrupt = { "vfe_lite1" },
+> +		.line_num = 4,
+>  	},
+>  };
+>  
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index dd8c58d349685..101ce6e527931 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -48,6 +48,7 @@ struct resources {
+>  	u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
+>  	char *reg[CAMSS_RES_MAX];
+>  	char *interrupt[CAMSS_RES_MAX];
+> +	u8 line_num;
+>  };
+>  
+>  struct icc_bw_tbl {
 
+-- 
+Regards,
 
-Best regards,
-Krzysztof
-
+Laurent Pinchart
