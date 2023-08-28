@@ -2,205 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC32878B483
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 17:34:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B078378B488
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 17:35:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbjH1PeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 11:34:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39014 "EHLO
+        id S231258AbjH1Pew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 11:34:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231631AbjH1Pdw (ORCPT
+        with ESMTP id S231494AbjH1Pes (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 11:33:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A22E1;
-        Mon, 28 Aug 2023 08:33:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1BACA61D9E;
-        Mon, 28 Aug 2023 15:33:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6F9C433C8;
-        Mon, 28 Aug 2023 15:33:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693236828;
-        bh=8fTqi3PUJyverYLoU49ckT4M1bhzFmNgEVyoOpQkhm0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vLJzaMB2SnvqYflXpLrS0Ma6H1s0+/bj1iGWyWkerXAO0cxRg4tA6ObJAcVuxxyfG
-         QUmcNOKatsgJidvNGlN7MPZ3a8ugfY+LfDH4mS5uUPbOF6Bla4ioF9tWWBY0aP54i9
-         aGGMqil4Ym/MI/SPELgaQoEVeNQ5v5rIQI4im8/7otN055kUZ7HvoMra4kCDCnRs/c
-         I0uObMebj7AUScXWazE59BVV9r/pvKBiGcX5EZhZigdXdMHkactjLHZSOuKY3cnhlX
-         2giYa6xEgcDSPreBaYUS+CRXG8cVnXD377QSp01b0t60HIOdSYRKo7EdjfnNUDBH+V
-         1XPT6B7Ynq+/A==
-Received: (nullmailer pid 595471 invoked by uid 1000);
-        Mon, 28 Aug 2023 15:33:45 -0000
-Date:   Mon, 28 Aug 2023 10:33:45 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH v4 04/23] dt-bindings: cache: describe L2 cache on
- Qualcomm Krait platforms
-Message-ID: <20230828153345.GA585617-robh@kernel.org>
-References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-5-dmitry.baryshkov@linaro.org>
+        Mon, 28 Aug 2023 11:34:48 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D92102
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 08:34:45 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-31c8321c48fso1674264f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 08:34:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693236884; x=1693841684;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ONKM10Wmc3NrfrZ+9H0DuQyG8/OjRH71zbSgD3QHX3k=;
+        b=kcUS+UEHkA3KajEFjsPuuj7eleSPye8oZm9O+fA7GNfU/eG20PDEQHEWNiu9apYeEI
+         Hdj3QqOPaIQXQQ26TyfmGRV9wAXCPbmO/OvfezX/HQhM7FhqSRkQyXL5pYPnq8hP21Js
+         4DZAbcs986ghZqYr5OtcIb2/7wj65fAZkDEN8TPKd3yusx0BsY+7tFmUam6Dle1xk+56
+         qIO8u1NI5U06W4kbW9oIzhbGVpFxTgRcztudRD1mFY+L0du39ZbQc2qIbfiy+w4GlNU9
+         IZxrw2+iNKexGtKbT3oYW30dngZMU1n6OwlNXSc49PJ273U3NyFGF373RYzVSZDrJSZn
+         dEXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693236884; x=1693841684;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ONKM10Wmc3NrfrZ+9H0DuQyG8/OjRH71zbSgD3QHX3k=;
+        b=IILIfGYKC8LHpwRIrgIVeQ6+v+DWHJYJrRtkEIhAhjMerQaSgjXqL6Sev9xKz6cO+u
+         3NP3263kkGZPpkZAcxgBG71MX2uT7uHcbqP/HLHF2+4LUAbeMdyqiQoUhbyMqneQqiJ6
+         rak22NE14j3t5paNqrJPT4fVrjosC1ndsEExxGQgramwdlIyR5cpuIkWE2bTd/1CwX+W
+         LCnzQgM2cEn8ycvKv1vq6gJatZJnw9BATIdgeweGmhSbW7N3Du+D8P67RKv8f35rDo1t
+         Wdki7bYSpc71ZLBxAM1BKAcwkNqXDun9MQ+0wt0d1TIuORaWBYfa58bpZ4F9jhCx5Ag7
+         rrNg==
+X-Gm-Message-State: AOJu0YwA/S6Yc0+hzUvJZ3T2thM8DcxdPPQO/igA0QVRcEfHCNutRht/
+        5TPKrj7EGseh9tVo0uPzyw6JUg==
+X-Google-Smtp-Source: AGHT+IH06t7aqZTIv+J+ouKvEaxICnWCrVM2DQhFTEFAypp/UEMw7EcorLIgH59N6d9pBifiywVpGw==
+X-Received: by 2002:adf:e849:0:b0:317:a499:72c8 with SMTP id d9-20020adfe849000000b00317a49972c8mr17274656wrn.1.1693236884282;
+        Mon, 28 Aug 2023 08:34:44 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 12-20020a05600c028c00b003feef5b0bb7sm11120746wmk.40.2023.08.28.08.34.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Aug 2023 08:34:43 -0700 (PDT)
+Message-ID: <b4545982-af6c-5460-d662-36b0eb80bb4e@linaro.org>
+Date:   Mon, 28 Aug 2023 16:34:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230827115033.935089-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 15/15] media: qcom: camss: Comment CSID dt_id field
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
+ <20230823104444.1954663-16-bryan.odonoghue@linaro.org>
+ <4929aa72-a134-4eeb-850e-46d9255c011b@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <4929aa72-a134-4eeb-850e-46d9255c011b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Aug 27, 2023 at 02:50:14PM +0300, Dmitry Baryshkov wrote:
-> The L2 cache device on Qualcomm Krait platforms controls the supplying
-> voltages and the cache frequency. Add corresponding bindings for this
-> device.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/cache/qcom,krait-l2-cache.yaml   | 86 +++++++++++++++++++
->  include/dt-bindings/soc/qcom,krait-l2-cache.h | 12 +++
->  2 files changed, 98 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/cache/qcom,krait-l2-cache.yaml
->  create mode 100644 include/dt-bindings/soc/qcom,krait-l2-cache.h
-> 
-> diff --git a/Documentation/devicetree/bindings/cache/qcom,krait-l2-cache.yaml b/Documentation/devicetree/bindings/cache/qcom,krait-l2-cache.yaml
-> new file mode 100644
-> index 000000000000..59ce11dd0a24
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/cache/qcom,krait-l2-cache.yaml
-> @@ -0,0 +1,86 @@
-> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+On 26/08/2023 11:18, Konrad Dybcio wrote:
+>> +		/*
+>> +		 * A value caled 'CID' gets generated internal to CAMSS logic
+>> +		 * which is a concatenation of [vc:6 | dt_id:2] hence we reuse
+>> +		 * the least significant two bits of the VC to 'stuff' the CID value.
+>> +		 */
+>>   		u8 dt_id = vc;
+> And where are you discarding the non-2-lsb?
 
-'only', not 'or-later'
+At the assignment of dt_id
 
-With that,
+vc:6
+dt_id:2
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+=>
 
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/cache/qcom,krait-l2-cache.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Krait L2 Cache
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +
-> +description:
-> +  L2 cache on Qualcomm Krait platforms is shared between all CPU cores. L2
-> +  cache frequency and voltages should be scaled according to the needs of the
-> +  cores.
-> +
-> +allOf:
-> +  - $ref: /schemas/cache-controller.yaml#
-> +
-> +select:
-> +  properties:
-> +    compatible:
-> +      contains:
-> +        enum:
-> +          - qcom,krait-l2-cache
-> +
-> +  required:
-> +    - compatible
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,krait-l2-cache
-> +      - const: cache
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  '#interconnect-cells':
-> +    const: 1
-> +
-> +  vdd-mem-supply:
-> +    description: suppling regulator for the memory cells of the cache
-> +
-> +  vdd-dig-supply:
-> +    description: suppling regulator for the digital logic of the cache
-> +
-> +  operating-points-v2: true
-> +  opp-table:
-> +    type: object
-> +
-> +required:
-> +  - compatible
-> +  - cache-level
-> +  - cache-unified
-> +  - clocks
-> +  - '#interconnect-cells'
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/soc/qcom,krait-l2-cache.h>
-> +
-> +    l2-cache {
-> +        compatible = "qcom,krait-l2-cache", "cache";
-> +        cache-level = <2>;
-> +        cache-unified;
-> +        vdd-mem-supply = <&pm8921_l24>;
-> +        vdd-dig-supply = <&pm8921_s3>;
-> +        clocks = <&kraitcc 4>;
-> +        #interconnect-cells = <1>;
-> +        operating-points-v2 = <&l2_opp_table>;
-> +
-> +        l2_opp_table: opp-table {
-> +            compatible = "operating-points-v2";
-> +
-> +            opp-384000000 {
-> +                opp-hz = /bits/ 64 <384000000>;
-> +                opp-microvolt = <1050000 1050000 1150000>,
-> +                                <950000 950000 1150000>;
-> +            };
-> +        };
-> +    };
-> +...
-> +
-> diff --git a/include/dt-bindings/soc/qcom,krait-l2-cache.h b/include/dt-bindings/soc/qcom,krait-l2-cache.h
-> new file mode 100644
-> index 000000000000..c9a38d368111
-> --- /dev/null
-> +++ b/include/dt-bindings/soc/qcom,krait-l2-cache.h
-> @@ -0,0 +1,12 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (C) 2023 Linaro Ltd. All rights reserved.
-> + */
-> +
-> +#ifndef __DT_BINDINGS_SOC_QCOM_KRAIT_L2_CACHE_H
-> +#define __DT_BINDINGS_SOC_QCOM_KRAIT_L2_CACHE_H
-> +
-> +#define MASTER_KRAIT_L2		0
-> +#define SLAVE_KRAIT_L2		1
-> +
-> +#endif
-> -- 
-> 2.39.2
-> 
+cid:8 = [vc:6 | dt_id:2]
+vc == 00110110
+cid = [110110 | 10]
+
+I have no more information what CID is or how the bitfield is populated 
+than I have already indicated in the comment/commit log.
+
+---
+bod
