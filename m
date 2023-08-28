@@ -2,221 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC67078A782
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:20:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD44A78A79B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:23:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbjH1ITz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 04:19:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39942 "EHLO
+        id S230234AbjH1IWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 04:22:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbjH1ITb (ORCPT
+        with ESMTP id S230070AbjH1IWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 04:19:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EC5DE54;
-        Mon, 28 Aug 2023 01:18:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 918C6633D3;
-        Mon, 28 Aug 2023 08:18:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11B7C433C7;
-        Mon, 28 Aug 2023 08:18:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693210734;
-        bh=cDzbDvHx9JvnjQPqDVFUcA/4mZdgWX5ArbwdyQslnRI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LgnoRXGCXBc9zb+6F9kJ/F3ghF/JP/pRNJdRkSD7Qx+xa8lEhwj6fZLOB/5Cge8PJ
-         rrp4aRuIVvWlmE1KlLglzDOjIXvH2tKK3BumZvS4gfR4bmgKhCuyXCTNNYKSMWOB6P
-         p3AcS0UEEibvzlVE9eHP94fb1oATqnpAyJaR35yMQfJt7wkKVKGWStYxuhWUJxicmf
-         6RaYqcHCg0GnWDDo3ralloh0luMa/CuYjdfSxopli5gq8RnatTfiZtYPOBcT78Jt46
-         UXdBHi+4nJ7+up+wsypZuONQPhGuRydZFSd+uCsQMjaPlPzMG/RnzRZkTMAYlDqW0+
-         bH2216HMMMqJQ==
-Date:   Mon, 28 Aug 2023 13:48:37 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Subject: Re: [PATCH V5 6/6] scsi: ufs: qcom: Handle unipro clk HW division
- based on scaling conditions.
-Message-ID: <20230828081837.GH5148@thinkpad>
-References: <20230823154413.23788-1-quic_nitirawa@quicinc.com>
- <20230823154413.23788-7-quic_nitirawa@quicinc.com>
+        Mon, 28 Aug 2023 04:22:17 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D90FCF1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 01:21:42 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99c1d03e124so380174766b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 01:21:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693210894; x=1693815694;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=R/ThTKBMXaBdcMw21bB4Tb4UrarGnjH7VR3jlnjNz0o=;
+        b=p0ofPENfE3XRABjMqYG0NDnT45lF6wkg4OivHw849Jmd0NTzi42hEWq4NSQm/ui6/H
+         mx+cwroHygO0OeNDvQFFKbX4ynkLaDOOF8/1d0TzAbG5PGFRXdDhu+hqF/kSxGrZdmvX
+         e6V0YiOH8qQPJoBgoNd331iQFOgFiRTtSX+bceYEo8QIdxaUjjggwwpKNCRG2lfuih9U
+         YUA9cUMkdFwbdO4XsGbhVJ9BbxWdk7vMCFIMK519m6PXam6shCgHvBUA+lep9Em5zDD3
+         AwQnmUMZj/8CrZwRg1r+SCdrak/ThkoTNCWe05o7IqFg06EMGtFoKmhu0dEJ+3/HhqUs
+         UKLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693210894; x=1693815694;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=R/ThTKBMXaBdcMw21bB4Tb4UrarGnjH7VR3jlnjNz0o=;
+        b=dKSa8kStFTTInGJgVEbw6mV3NgjWCbp6wmUuPBiqNXEunx/zamI8hJdEXyKyewOX0n
+         OOlSldfL1JBdt5lbZMus05VMtRKpl89BRnPlMuCcqyClUpaQ7ygCfcfVbBnSAliEI8LP
+         byfQAviqp3EjCQumxF9HPWse7bKUBEELPhpY0A0vVKjvRDtN29nJjc4DqWQVgBGcYgvY
+         91KCVSWAzQwPjmR9F+Gcmmbgh95rxRa9FhcEYFvVsAWLrBKSVx35/AI7+rO/sKndf7qs
+         emiYS6/0nk6CqCafr5k6jZqymFQCUWooU/FZyWAcJN0lhI9v7346+kAj11QudNbpQSjW
+         aOiA==
+X-Gm-Message-State: AOJu0YyeySq8Z3WtYALoRq+mtDenRo9FKT6cGGI0ccBKD8xsJKcHkwYz
+        iCNNX6WtqtwpE7IGoGicWRx5hw==
+X-Google-Smtp-Source: AGHT+IFBUK6E4zrbQPaHC6jS5bTEiJnj2yId8vtYo61AG/BoM8FRNNTdWT0PxEWyM0E9uZwDnNK+lg==
+X-Received: by 2002:a17:907:a04a:b0:9a5:78c0:44e6 with SMTP id gz10-20020a170907a04a00b009a578c044e6mr5892043ejc.16.1693210894452;
+        Mon, 28 Aug 2023 01:21:34 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.225])
+        by smtp.gmail.com with ESMTPSA id v24-20020a17090606d800b0099364d9f0e2sm4368823ejb.98.2023.08.28.01.21.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Aug 2023 01:21:34 -0700 (PDT)
+Message-ID: <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
+Date:   Mon, 28 Aug 2023 10:21:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230823154413.23788-7-quic_nitirawa@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com
+Cc:     linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        workflows@vger.kernel.org, tools@linux.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 09:14:13PM +0530, Nitin Rawat wrote:
-> Configure internal HW division of unipro core_clk based on scale up and
-> scale down condition. This bit should be cleared before entering any
-> SVS mode as per hardware specification.
+On 26/08/2023 10:07, Guru Das Srinagesh wrote:
+> This script runs get_maintainer.py on a given patch file (or multiple
+> patch files) and adds its output to the patch file in place with the
+> appropriate email headers "To: " or "Cc: " as the case may be. These new
+> headers are added after the "From: " line in the patch.
 > 
+> Currently, for a single patch, maintainers and reviewers are added as
+> "To: ", mailing lists and all other roles are added as "Cc: ".
+> 
+> For a series of patches, however, a set-union scheme is employed in
+> order to solve the all-too-common problem of ending up sending only
+> subsets of a patch series to some lists, which results in important
+> pieces of context such as the cover letter (or other patches in the
+> series) being dropped from those lists. This scheme is as follows:
+> 
+> - Create set-union of all maintainers and reviewers from all patches and
+>   use this to do the following per patch:
+>   - add only that specific patch's maintainers and reviewers as "To: "
+>   - add the other maintainers and reviewers from the other patches as "Cc: "
+> 
+> - Create set-union of all mailing lists corresponding to all patches and
+>   add this to all patches as "Cc: "
+> 
+> - Create set-union of all other roles corresponding to all patches and
+>   add this to all patches as "Cc: "
+> 
+> Please note that patch files that don't have any "Maintainer"s or
+> "Reviewers" explicitly listed in their `get_maintainer.pl` output will
 
-Same comment as previous patch.
+So before you will ignoring the reviewers, right? One more reason to not
+get it right...
 
-- Mani
-
-> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> not have any "To: " entries added to them; developers are expected to
+> manually make edits to the added entries in such cases to convert some
+> "Cc: " entries to "To: " as desired.
+> 
+> The script is quiet by default (only prints errors) and its verbosity
+> can be adjusted via an optional parameter.
+> 
+> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
 > ---
->  drivers/ufs/host/ufs-qcom.c | 49 ++++++++++++++++++++-----------------
->  drivers/ufs/host/ufs-qcom.h |  2 +-
->  2 files changed, 27 insertions(+), 24 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 82cf3ac4193a..d886e28b8a2a 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -95,7 +95,8 @@ static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
->  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
->  static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
->  					u32 clk_cycles,
-> -					u32 clk_40ns_cycles);
-> +					u32 clk_40ns_cycles,
-> +					bool scale_up);
-> 
->  static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
->  {
-> @@ -700,19 +701,19 @@ static int ufs_qcom_cfg_core_clk_ctrl(struct ufs_hba *hba)
-> 
->  	switch (max_freq) {
->  	case MHZ_403:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16, true);
->  		break;
->  	case MHZ_300:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12, true);
->  		break;
->  	case MHZ_201_5:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8, true);
->  		break;
->  	case MHZ_150:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6, true);
->  		break;
->  	case MHZ_100:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, true);
->  		break;
->  	default:
->  		dev_err(hba->dev, "unipro max_freq=%u entry missing\n", max_freq);
-> @@ -1352,7 +1353,8 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
-> 
->  static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
->  					u32 clk_1us_cycles,
-> -					u32 clk_40ns_cycles)
-> +					u32 clk_40ns_cycles,
-> +					bool scale_up)
->  {
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	u32 mask = DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
-> @@ -1378,18 +1380,20 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
->  	core_clk_ctrl_reg &= ~(mask << offset);
->  	core_clk_ctrl_reg |= clk_1us_cycles << offset;
-> 
-> -	/* Clear CORE_CLK_DIV_EN */
-> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-> +	if (scale_up)
-> +		core_clk_ctrl_reg |= CORE_CLK_DIV_EN_BIT;
-> 
->  	err = ufshcd_dme_set(hba,
-> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -			    core_clk_ctrl_reg);
-> +			     UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> +			     core_clk_ctrl_reg);
-> +	if (err)
-> +		return err;
->  	/*
->  	 * UFS host controller V4.0.0 onwards needs to program
->  	 * PA_VS_CORE_CLK_40NS_CYCLES attribute per programmed
->  	 * frequency of unipro core clk of UFS host controller.
->  	 */
-> -	if (!err && (host->hw_ver.major >= 4)) {
-> +	if (host->hw_ver.major >= 4) {
->  		if (clk_40ns_cycles > PA_VS_CORE_CLK_40NS_CYCLES_MASK)
->  			return -EINVAL;
-> 
-> @@ -1442,22 +1446,21 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
->  {
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	int err;
-> -	u32 core_clk_ctrl_reg;
-> +	u32 reg;
-> 
->  	if (!ufs_qcom_cap_qunipro(host))
->  		return 0;
-> 
-> -	err = ufshcd_dme_get(hba,
-> -			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -			    &core_clk_ctrl_reg);
-> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL), &reg);
-> +	if (err)
-> +		return err;
-> 
->  	/* make sure CORE_CLK_DIV_EN is cleared */
-> -	if (!err &&
-> -	    (core_clk_ctrl_reg & DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT)) {
-> -		core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-> +	if (reg & CORE_CLK_DIV_EN_BIT) {
-> +		reg &= ~CORE_CLK_DIV_EN_BIT;
->  		err = ufshcd_dme_set(hba,
->  				    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
-> -				    core_clk_ctrl_reg);
-> +				    reg);
->  	}
-> 
->  	return err;
-> @@ -1488,13 +1491,13 @@ static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
->  	}
->  	switch (curr_freq) {
->  	case MHZ_37_5:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2, false);
->  		break;
->  	case MHZ_75:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3, false);
->  		break;
->  	case MHZ_100:
-> -		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4);
-> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4, false);
->  		break;
->  	default:
->  		err = -EINVAL;
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index 56550fd36c4e..6e8eb4bb9247 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -140,7 +140,7 @@ enum {
->  /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
->  #define MAX_CORE_CLK_1US_CYCLES_MASK_V4		0xFFF
->  #define MAX_CORE_CLK_1US_CYCLES_OFFSET_V4	0x10
-> -#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
-> +#define CORE_CLK_DIV_EN_BIT			BIT(8)
->  #define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
->  #define PA_VS_CORE_CLK_40NS_CYCLES	0x9007
->  #define PA_VS_CORE_CLK_40NS_CYCLES_MASK	0x3F
-> --
-> 2.17.1
+>  MAINTAINERS               |   5 ++
+>  scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 169 insertions(+)
+>  create mode 100755 scripts/add-maintainer.py
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+I do not see the benefits of this script. For me - it's unnecessarily
+more complicated instead of my simple bash function which makes
+everything one command less than here.
+One more thing to maintain.
+
+I don't see the benefits of this for newcomers, either. They should use
+b4. b4 can do much, much more, so anyone creating his workflow should
+start from b4, not from this script.
+
+Best regards,
+Krzysztof
+
