@@ -2,151 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE87378AF41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:47:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 596A478AF70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 14:02:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbjH1Lqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 07:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42874 "EHLO
+        id S232269AbjH1MC2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 08:02:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232606AbjH1Lqn (ORCPT
+        with ESMTP id S232566AbjH1MCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 07:46:43 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A360131
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:46:11 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5007f3d3235so4836140e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:46:11 -0700 (PDT)
+        Mon, 28 Aug 2023 08:02:07 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03099123
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 05:02:04 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-31aeef88a55so2541609f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 05:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693223141; x=1693827941;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6dr8kOwOsDboXjhvNdOS41TNLyrTWEdq0XWTC5Df7tY=;
-        b=QQD8Ameg4gMcUdDMYhMto/Hi/7tnyS4tDVntfE/tGymUvmk92wDRd2UtqPldnveVK5
-         EdwotR0vKrCJ0w24OADGtEXQJYG5lUBBmn4el/fQJqJ65wff5vFRrkN+F9Q+NktKAaBB
-         kvxbUp/WO2x8bSDWL9dYpkMLM4DUXn9qrMKumZhOTbNkYW1L0H92jjDfbM9MgYz802lk
-         NYzMb/kMBrB1mLfBO/kxPAlDV+zLbloJI8xKBS+qupeSz4hPllNNDe1eXSj14LnOW6SL
-         /O7X9KDxE68YsNlldXBEsRsq0b/4qtWVzKhPsiQ8O7q8w0xPeKbhvoNjyHQBjEZUq9vw
-         PAFg==
+        d=linaro.org; s=google; t=1693224122; x=1693828922;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G4LOFGk83zQX2KrDyKlNIv7kPex2iroC/9McWaOOjU0=;
+        b=ZXr8y21bnezTCJzPWE7dly1U/ZSIStQt3th/zy5ZBa3oUkT+oFgZhVpS1QSt+hkJCP
+         RtkHcTyv5pH383Kgx3uCouF6cmpzVgAT0YpJWQuuJL0eRE47UzLmHsNn+kL2kb170i9l
+         JHAz2SFf9vvbuVI6D42t+LHOvwVprfAodOm5jY04vZQwcabP+MiCSCXyhg/e65zO9sho
+         VvxQ6980Uk78nDBFtUorU3hQS8V3Ek1YtUvFrRVI2ufcW9EOJOrUCZD2DsATKLno6lmF
+         WFgzoBxgxsuyz98o9tMugTGkXCHFmL2iSew6IndX3UVnRdOBNsJKzlk/Xa6qLgkXpvHr
+         a51w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693223141; x=1693827941;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6dr8kOwOsDboXjhvNdOS41TNLyrTWEdq0XWTC5Df7tY=;
-        b=f55wKUkN2xssYFZIUNEqJS+EVrvKflrCBn/1f6Z+VRMWh4YzY3qyOMVC4XbnH1eX82
-         8gbqdPkyZnen50Y0PE97jhtw/5LVohzkeVpVicQ6hFjIp/nA4lCo7yiJc4WA6E5Q5AKv
-         MsqKv7ByCsq2Ge+chD9sUb0vc5Hr2YMum/MGBuClQibllqgevXY1lgiF8UIlwsdW2/Pf
-         bTGefmz8Da+q98jOr/qBgQ0lZhrDqvABl6uUx+v1zsL2LcOLf4U7jYdoMykC0vGxOOE7
-         sOYpjvGVxJ2q2SEa2lS2ruamDbuD/aL/0pmDKaXh+LswsLqmSxQc6WQUkfJhrlEAyk/n
-         latQ==
-X-Gm-Message-State: AOJu0Yw2KzUhw2nwJUCHM7LatN5Eycz9VbetgFx5XsUbXVc/KF7Vuk7g
-        X78rGjpo0pgpaiVcq77ytDPznw==
-X-Google-Smtp-Source: AGHT+IF6DFfsQgsH8hrHCCkBH8ra8UAma78Y1ZsfOHa33tSwNnuRfE8kzVVbfJkhMv/fqHwwXX6Nuw==
-X-Received: by 2002:a19:ca44:0:b0:500:90d1:90a6 with SMTP id h4-20020a19ca44000000b0050090d190a6mr10738379lfj.63.1693223140723;
-        Mon, 28 Aug 2023 04:45:40 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id t16-20020ac25490000000b004ff91a94156sm1548628lfk.121.2023.08.28.04.45.39
+        d=1e100.net; s=20221208; t=1693224122; x=1693828922;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=G4LOFGk83zQX2KrDyKlNIv7kPex2iroC/9McWaOOjU0=;
+        b=N27EkoWYdeRP2GE2zN1RbzZOfOjeazGbPkIiRO8Q6Wold+dgOnrAs3NP3DKKHzPbwQ
+         QeYAlxo3IcsQ7EhhrekcWWvYU1wvusw7K6fGQJjZklNF8Ic78xNaL7dco8irzDhCBvPb
+         hUqfD31v0lUR+bjaShJdWgJyn3Gz37UoJY34vBGTK6+Mq8Go725Jst1maJCEWbKLOBl/
+         xCw3+zYrBt2RyaEGLjpFtVEBuJhJ135fx7GLpNNMZWeBxarjqUmcZvmk4zu76IzwZbCN
+         5Osf6z1nLdxeFI/RH6UWwhQe4HW+JjE3PBw6RGWy8BBKkExp4dSwXTfck4rw7Jsb3diE
+         SzhA==
+X-Gm-Message-State: AOJu0Yyt88u1TCVI/LK22I8nkgzPOEPImh1AaNrNGKYclGlRH0D4qTgQ
+        KdFlFhJ0mNIvZPYTPZdsiAGVlQDNWTlznK/PC+QfYiSX
+X-Google-Smtp-Source: AGHT+IENVciCxp3fUi00y/5js/oyS7KUS1Q7KDVmD/4Q2caHzdsynkrA78S8StsnqqQ3IH0sPtEBuw==
+X-Received: by 2002:adf:ec48:0:b0:314:2e95:1ec9 with SMTP id w8-20020adfec48000000b003142e951ec9mr18493673wrn.10.1693224122279;
+        Mon, 28 Aug 2023 05:02:02 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5e59:c27b:747a:3f52? ([2a01:e0a:982:cbb0:5e59:c27b:747a:3f52])
+        by smtp.gmail.com with ESMTPSA id l11-20020adff48b000000b0031c3ee933b5sm10323520wro.108.2023.08.28.05.02.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 04:45:40 -0700 (PDT)
-Message-ID: <b6b655ca-e20d-462b-b1a5-a96b9196e641@linaro.org>
-Date:   Mon, 28 Aug 2023 13:45:38 +0200
+        Mon, 28 Aug 2023 05:02:01 -0700 (PDT)
+Message-ID: <b9972273-97c7-4b70-833d-c4842cd612d5@linaro.org>
+Date:   Mon, 28 Aug 2023 14:02:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] clk: qcom: Add SM6115 LPASSCC
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it
+ is not available
+Content-Language: en-US, fr
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230825-topic-6115_lpasscc-v1-0-d4857be298e3@linaro.org>
- <20230825-topic-6115_lpasscc-v1-3-d4857be298e3@linaro.org>
- <a9d52cd9-845e-ff88-3c26-858cb6604e43@linaro.org>
- <CAA8EJprEnMjbKw2fbU1X7GV=ANARNhofSQh49Bdo1kvuOskbbQ@mail.gmail.com>
- <5847be93-68c3-95fb-1d3e-9678804b9a70@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <5847be93-68c3-95fb-1d3e-9678804b9a70@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
+ <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
+ <CAA8EJppmn5hM5=zdkQoaGAYghw822vP8YoW0wQsNmAZY0v7dtA@mail.gmail.com>
+ <865y4zfppf.wl-maz@kernel.org>
+ <CAA8EJppkJ1s=yjruBm0mntGQ4NBGut2jMLFRtZr6KquA5zn+=Q@mail.gmail.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CAA8EJppkJ1s=yjruBm0mntGQ4NBGut2jMLFRtZr6KquA5zn+=Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.08.2023 16:29, Krzysztof Kozlowski wrote:
-> On 26/08/2023 16:09, Dmitry Baryshkov wrote:
-> 
->>>> +MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
+On 28/08/2023 12:18, Dmitry Baryshkov wrote:
+> On Mon, 28 Aug 2023 at 13:04, Marc Zyngier <maz@kernel.org> wrote:
+>>
+>> On Mon, 28 Aug 2023 10:46:10 +0100,
+>> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 >>>
->>> Everything here is almost the same as sc8280xp one, so this should be
->>> added to sc8280xp. You cut some boilerplate and additional driver.
+>>> On Mon, 28 Aug 2023 at 12:36, Maulik Shah (mkshah)
+>>> <quic_mkshah@quicinc.com> wrote:
+>>>>
+>>>> Hi Dmitry,
+>>>>
+>>>> This patch may be useful if there was a case where some PDCs don't have
+>>>> version register populated/available,
+>>>> In all PDC versions, version register is always available but due to reg
+>>>> size not good enough in device tree for SM8150 it failed to read.
+>>>>
+>>>> reg size in device node must be expanded if its too small to access all
+>>>> registers and i think
+>>>> additional check in driver to check if size is good enough would not be
+>>>> of much use.
+>>>
+>>> Unfortunately, it doesn't work this way. DT files are ABI. Even if we
+>>> change the DT, the kernel should continue working with the older
+>>> version.
+>>> Thus, we have to add such bandaid code, which will keep the kernel
+>>> from crashing if old DT was used.
 >>
->> We have been there. It quickly becomes a nightmare to maintain.
->> Consider dispcc-sm8250.c
+>> You're missing the point: all existing PDC HW have version register.
+>> The fact that the DT is crap doesn't invalidate this simple fact. It
+>> is thus perfectly possible for the driver to *ignore* the crap and do
+>> the right thing by expanding the size of the mapping, rather than
+>> falling back to the non-versioned code.
 > 
-> Because too much was added. I do not propose to keep all resets here.
+> Ah. Interesting idea. If that's the overall consensus I can send v2
+> doing this. Not sure what is better though.
+
+Please take my PDC 3.2 patch in the same set!
+
+Neil
+
 > 
 >>
->> But I agree with you, this code looks too similar. If we expect more
->> similar lpasscc drivers, which provide no clocks, just several resets,
->> maybe we can create a common generic wrapper and make resets lists
->> corresponding driver data?
+>> There is definitely precedents for this sort of behaviour, such as the
+>> ARM GICv2 probe code.
 > 
-> This would also work.
-Sounds like a good idea until somebody at qualcomm decides to add
-support for bypassing adsp that only works on chromebooks that may get
-cancelled or super secret internal devboards and the driver will gain
-support for clocks..
 
-But I guess that person will have to worry about squaring this out.
-
-Konrad
