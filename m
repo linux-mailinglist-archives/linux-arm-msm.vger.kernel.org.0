@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22A5F78AE69
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:05:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F275F78AE78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:08:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjH1LE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 07:04:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55812 "EHLO
+        id S230080AbjH1LHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 07:07:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230188AbjH1LEg (ORCPT
+        with ESMTP id S232435AbjH1LHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 07:04:36 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C9EAB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:04:32 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-500b6456c7eso1696545e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:04:32 -0700 (PDT)
+        Mon, 28 Aug 2023 07:07:33 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB374AB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:07:29 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso45071941fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693220671; x=1693825471;
+        d=linaro.org; s=google; t=1693220848; x=1693825648;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lmMR63i69wE8/b9RkFpou+l6zEGQJ7lmmfXhEmNqTjY=;
-        b=i9CNeWehusZdR30wSYSORX/eK/HNKfb/HYIPLSK37pTt2uWHh87K6PKD/R0FfJoQkV
-         5Un6NGPJKEOKRc2UCLvKYRPGfNe+74QzlaV9lEmeaUKU5EMhRsIkZ4ok0bXqbrPrK9zn
-         lbEmrULA4Gjq3Ri3a1V8N2Nmls1VBsV9T0zES0WUrmV6hACv/SuAZmvfQQd2r5MbkR7j
-         6r4+8361TNhDpETZKcsEYk5ndIGXaCHLrq33V+vYUoayGRzLRM+bd/F+89LLoODHl4DF
-         VY1iQl5+omyk0VQ9ALKOxg6B2v73qOzTvsSKk9PWuOb2bvUzZjYlc1UXOh0B1PBOzWOm
-         OpSw==
+        bh=CVyKhMPYbxxDZsbVVqtzl9C1WJS8LoUN1G1b49bSUuE=;
+        b=vMUHL9JNQitPrPv5IrR2bgyofR78FRg04LBTfCZpwdB4/7vmFBcuZn6Oh4mScvbLUc
+         wz/XlKpZAzhp2sNBWPrKBjBlGvFTKk0qhr/iV1d4oB1NoGzkCmUuW8d4H6GAKb9nXclk
+         GczzMPFlheUJ2LGyBXc6M4HYo8mZcCqwtjuczwmTN3LBOfgf7Abbv/G2TOMP+ldGB8y9
+         xa+6wYF9zmJe7Zitwy9U7HqUgzFiDLtHbJqtX45J9YepvMEsZAzk3L0/XVweG7JtbNXj
+         GJGCljyDpQ0+93sxw8zPxoBgBa0kyO2mUF861v7BGbuXwDah2QPFM/fZq3DrjlaLBHx/
+         Jz5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693220671; x=1693825471;
+        d=1e100.net; s=20221208; t=1693220848; x=1693825648;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lmMR63i69wE8/b9RkFpou+l6zEGQJ7lmmfXhEmNqTjY=;
-        b=eTSwbYBcQMX3hPfnSMH4ooZa8xN1jSM6e9XFWanl2zLwzop84UgL79gjRHMvB5MW5J
-         wU8qYHCzeTRGK8R+xBBLC1Gn3c0Np9zLuGy4idlT3+6W8v77td+xW7Zhd8QHud18Kdmw
-         gdKDZ5MPK48HyB4qrU++61lncXRjKrnGF4i40t5bWM79gSNLKEpaXDXpZ/29lQqiZL1t
-         osd22qdqttgHdL2f7s+4PPYqCyT+pvWduun4V06s0RAIo10paQRLcU4VZJX8GlBUop1g
-         /7ShIInY2GHqN7Ampt9RtL/L9A1CwfG7WOpwR6iSEgrZtgOmkUZrJjfwXyjeyPt0a0oS
-         6xDg==
-X-Gm-Message-State: AOJu0YyqiXciVtBBpriQ/VB54WpJt7biV/8NgVqWvflQvAp3yRkMBbcD
-        lNZbichc6FIyqVovsiq/nMLMvQ==
-X-Google-Smtp-Source: AGHT+IEW8at6c7DdFsHCNACWwN5LiMnAyoT6lrVD62kzT/hOk/P6D9CD0W37S2TbtsNAF+33pUiE+Q==
-X-Received: by 2002:a05:6512:313b:b0:500:81fa:46f1 with SMTP id p27-20020a056512313b00b0050081fa46f1mr13487265lfd.67.1693220670922;
-        Mon, 28 Aug 2023 04:04:30 -0700 (PDT)
+        bh=CVyKhMPYbxxDZsbVVqtzl9C1WJS8LoUN1G1b49bSUuE=;
+        b=TCEOkGjiMJo6o2cOIPMFyrlhOXox+ecJ+5gg+B7IzWCZFIq2REV5v3kNzbqjzc1tkE
+         LzwHKOmENdFtNmAClPATL8oCwDANieIkFyqE65YOSJreHM9vDaJMoR42yZhRTDhYhBQt
+         vnGHTuZBMCYHe3EZzoODAjUlgtmVq5yOMUeU7mZCjVdQrT9nX2xKgfB2OgIsILBXaMf9
+         2kvdILazbv0fflOH84+vwzWWN4/jDbVPi/+mTrYcM7Oj4BW8o2rJ6HRgtPfkVY6Ebtz2
+         6adVqF9IJY0PGdSIzsATtr5gyMZWcTm5B8K23Sbo/adGQIYItdFQzhw2UfrCCGN8MmmV
+         V2Dw==
+X-Gm-Message-State: AOJu0Yw7h4uMN3HORrg9ww2zQpTuBXMoapOFGVyPJC+/wk4Lp0Eu7uAa
+        6oSXRN4hi5mn6Bv17Djyw9l96g==
+X-Google-Smtp-Source: AGHT+IEFEznKnZlgUVLjUa71julJu1yhPfnHGBZoc4+kBV+F16R5b2USRiEi+lkfz+UnTLhaBOGnuA==
+X-Received: by 2002:a2e:b0f4:0:b0:2bc:e827:a4f9 with SMTP id h20-20020a2eb0f4000000b002bce827a4f9mr8336164ljl.30.1693220848031;
+        Mon, 28 Aug 2023 04:07:28 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id d17-20020ac244d1000000b0050096cc3ba1sm1531586lfm.255.2023.08.28.04.04.29
+        by smtp.gmail.com with ESMTPSA id i4-20020a2e8084000000b002b9e0aeff68sm1697246ljg.95.2023.08.28.04.07.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 04:04:30 -0700 (PDT)
-Message-ID: <8a7af8ce-3ff4-4520-b4e2-dd39570ca796@linaro.org>
-Date:   Mon, 28 Aug 2023 13:04:28 +0200
+        Mon, 28 Aug 2023 04:07:27 -0700 (PDT)
+Message-ID: <73c0e457-ce2d-4fb5-9bc7-50e391c92230@linaro.org>
+Date:   Mon, 28 Aug 2023 13:07:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/6] cpufreq: qcom-nvmem: provide separate
- configuration data for apq8064
+Subject: Re: [PATCH v4 2/6] cpufreq: qcom-nvmem: create L2 cache device
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -74,7 +73,7 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Christian Marangi <ansuelsmth@gmail.com>,
         Stephan Gerhold <stephan@gerhold.net>
 References: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
- <20230827032803.934819-6-dmitry.baryshkov@linaro.org>
+ <20230827032803.934819-3-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,7 +110,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230827032803.934819-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230827032803.934819-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -124,64 +123,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.08.2023 05:28, Dmitry Baryshkov wrote:
-> APQ8064 can scale core voltage according to the frequency needs. Rather
-> than reusing the A/B format multiplexer, use a simple fuse parsing
-> function and configure required regulator.
+On 27.08.2023 05:27, Dmitry Baryshkov wrote:
+> Scaling the frequencies on some of Qualcomm Krait platforms (e.g.
+> APQ8064) also requires scaling of the L2 cache frequency. As the
+> l2-cache device node is places under /cpus/ path, it is not created by
+> default by the OF code. Create corresponding device here.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 49 ++++++++++++++++++++++++++--
->  1 file changed, 47 insertions(+), 2 deletions(-)
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 > 
 > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 81c080b854fe..35e2610c9526 100644
+> index 84d7033e5efe..f4c196ba4432 100644
 > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
 > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -26,6 +26,7 @@
+> @@ -22,6 +22,7 @@
+>  #include <linux/module.h>
+>  #include <linux/nvmem-consumer.h>
+>  #include <linux/of.h>
+> +#include <linux/of_platform.h>
 >  #include <linux/platform_device.h>
 >  #include <linux/pm_domain.h>
 >  #include <linux/pm_opp.h>
-> +#include <linux/regulator/consumer.h>
->  #include <linux/slab.h>
->  #include <linux/soc/qcom/smem.h>
+> @@ -377,6 +378,7 @@ static int __init qcom_cpufreq_init(void)
+>  {
+>  	struct device_node *np = of_find_node_by_path("/");
+>  	const struct of_device_id *match;
+> +	unsigned int cpu;
+>  	int ret;
 >  
-> @@ -39,6 +40,7 @@ struct qcom_cpufreq_match_data {
->  			   char **pvs_name,
->  			   struct qcom_cpufreq_drv *drv);
->  	const char **genpd_names;
-> +	const char * const *regulator_names;
->  };
+>  	if (!np)
+> @@ -387,6 +389,25 @@ static int __init qcom_cpufreq_init(void)
+>  	if (!match)
+>  		return -ENODEV;
 >  
->  struct qcom_cpufreq_drv {
-> @@ -203,6 +205,34 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
->  	return ret;
->  }
->  
-> +static int qcom_cpufreq_apq8064_name_version(struct device *cpu_dev,
-> +					     struct nvmem_cell *speedbin_nvmem,
-> +					     char **pvs_name,
-> +					     struct qcom_cpufreq_drv *drv)
-> +{
-> +	int speed = 0, pvs = 0;
-> +	u8 *speedbin;
-> +	size_t len;
-> +	int ret = 0;
-Unused, just return 0
+> +	for_each_possible_cpu(cpu) {
+> +		struct device *dev = get_cpu_device(cpu);
+> +		struct device_node *cache;
+> +		struct platform_device *pdev;
+Aaaalmost reverse-Christmas-tree :D
 
 > +
-> +	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
-> +	if (IS_ERR(speedbin))
-> +		return PTR_ERR(speedbin);
+> +		cache = of_find_next_cache_node(dev->of_node);
+> +		if (!cache)
+> +			continue;
 > +
-> +	if (len != 4)
-> +		return -EINVAL;
-> +
-> +	get_krait_bin_format_a(cpu_dev, &speed, &pvs, speedbin);
-> +
-> +	snprintf(*pvs_name, sizeof("speedXX-pvsXX"), "speed%d-pvs%d",
-> +		 speed, pvs);
-speed and pvs are both one hex digit long at best (see masking in
-get_krait_bin_format_a)
+> +		if (of_device_is_compatible(cache, "qcom,krait-l2-cache")) {
+> +			pdev = of_platform_device_create(cache, NULL, NULL);
+> +			if (IS_ERR(pdev))
+> +				pr_err("%s: %pe, failed to create L2 cache node\n", __func__, pdev);
+The return value should be null-checked instead
+
+
+> +			/* the error is not fatal */
+"This error"?
 
 Konrad
