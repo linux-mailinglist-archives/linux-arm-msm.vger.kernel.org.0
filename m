@@ -2,67 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E8CB78B4B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 17:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C15B978B58F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 18:47:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjH1Po7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 11:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
+        id S231150AbjH1QrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 12:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232170AbjH1Poa (ORCPT
+        with ESMTP id S232719AbjH1Qqt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 11:44:30 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93723CCC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 08:44:15 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-58d41109351so59620707b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 08:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693237455; x=1693842255;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FemZS8VWPOulUCmdGN9kQgxO+l7x46lH6UViND/XB8w=;
-        b=VuyOvdEgp5Vdthot7iLwnrYTPCrxffA8kTgkypuSmszxRfwTJyNhWqwDimTmsqNQvV
-         UlLTgyb7ivVaxjz9ZtzRHRUu4Pqbc/K0oYQFWsQA+Zo9NyfPt54Isy15+NigDZmfLBBG
-         sAErRyNGkkAOygxUmAcym6q5fJa89zjb/py9sE8joh3wXksCGCzt8d1eHfOteKU+3fj7
-         Cj/Q2FBoKTCDuKHYHpyTCkeWdnocSJ33UfvZBaF5kjZ2R6VPPPRVMD1ZkFIvTa5+FmKj
-         Pr6DH74J7z4QzX12TauQgGM5tm9OUFCPMdkTyxCOwqlJTFX+nQtGhpqVBILYd75DHwsR
-         RXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693237455; x=1693842255;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FemZS8VWPOulUCmdGN9kQgxO+l7x46lH6UViND/XB8w=;
-        b=DIcWhV/f72vFY9SwIecjYdQFQaEA4MoXbcoBCBGsGiO9wtuulpUY1+FLSESI1pv+v2
-         /6VbgItYK1CSwlTq9gRfLdlqjdrsHny8ZTdEQ1cvpjx0bnTkVbVr0/XwOT3UG6jpPIx8
-         0yfD0kZYxxP1Q4orkIVlTNQrf30pkpTmlTmV0X9DK4mP2VqtDTABeD9zogOgd4ZPmhXA
-         oIcMb7RXf+PNQM5dpG3pFQz+duxW0dO49k09LqFSJzMSxBZS0VHLsPbvH89M9Ug7QdT8
-         4HYlyN+WFIACMwXJBhA2dYCwpNAo+LRykOVtJ4FP/4ljJ4XQvvIPARNcJi/UCRHq4/JN
-         Yxxw==
-X-Gm-Message-State: AOJu0Ywv0Yhr7Is1fVie/qDdBIfEhVMxNJ7wN4yO5PoDJSV1oTKRlJko
-        mYuzYm4N/QbB/fms+20YkoBLoeEOB/snIft+FKaaXQ==
-X-Google-Smtp-Source: AGHT+IGKhafr0XWogGuIMMOOZIJPm0MmxxVwI28CARRyw0rUK4kSwJe9qcO6O/jXfXr8J8a/LK0vhFZ7W0tt64IlAPE=
-X-Received: by 2002:a25:aa25:0:b0:d78:351b:8661 with SMTP id
- s34-20020a25aa25000000b00d78351b8661mr7874ybi.3.1693237454787; Mon, 28 Aug
- 2023 08:44:14 -0700 (PDT)
+        Mon, 28 Aug 2023 12:46:49 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D798B188;
+        Mon, 28 Aug 2023 09:46:41 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37SGBZf2022780;
+        Mon, 28 Aug 2023 16:45:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=NOvWmPA8vCv3I8JAi/sQBgH15Si5uceAZBnenlQq2X4=;
+ b=Pu2OnWQQo8nDxgFT3HdL0/WcPreu0aMjVnqgFlnQRc3ax+MfoD3l9dic/xVFjyg//e26
+ /89S6/qtaJtD94zW1ZCJQkP7okbSR1IoF07QfyEUgYYM7LLq9zhIqjE/oR6btGq2q0GB
+ LjZPfN91Mh3n5i0aQiYzoNLPEY0ivdhSuzBd0xbnuSJI2GFLbxtbu4+vGKjUWERR7BvJ
+ bvsxG+nQSLRkffdDsHjA7yUHLrAC7qMB6VcCqsZWseHSdSCx0Zq4HbUcovSjGqmUvPma
+ 0jDVfUYmexZdL2V5an+5NzR7AsuzTRbVg8j9v6ScjVwQCPGL+6r0wLmuyc21kWj47Oa9 +Q== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sq9m8v6rv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 16:45:59 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37SGjwkT022544
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 16:45:58 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 28 Aug
+ 2023 09:45:55 -0700
+Date:   Mon, 28 Aug 2023 09:45:54 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Randy Dunlap <rdunlap@infradead.org>
+CC:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Andrew Morton" <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <quic_pkondeti@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <workflows@vger.kernel.org>,
+        <tools@linux.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Message-ID: <20230828164554.GA23466@quicinc.com>
+Mail-Followup-To: Randy Dunlap <rdunlap@infradead.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, workflows@vger.kernel.org,
+        tools@linux.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-pm@vger.kernel.org
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <6a3ad63d-5b4d-e861-3fec-2e8fa929e156@infradead.org>
 MIME-Version: 1.0
-References: <20230828152353.16529-1-athierry@redhat.com> <20230828152353.16529-2-athierry@redhat.com>
-In-Reply-To: <20230828152353.16529-2-athierry@redhat.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 28 Aug 2023 18:44:03 +0300
-Message-ID: <CAA8EJpow=mZkp6zH-C7=kWY6W03zXyBWFdvifjir4EEa80=aAQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] phy: qcom-qmp-usb: initialize PCS_USB registers
-To:     Adrien Thierry <athierry@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6a3ad63d-5b4d-e861-3fec-2e8fa929e156@infradead.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -YS60OBZXd_tLYi-Ssa3295G5PBZc5iB
+X-Proofpoint-GUID: -YS60OBZXd_tLYi-Ssa3295G5PBZc5iB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-28_14,2023-08-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ bulkscore=0 clxscore=1011 mlxscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=597
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308280148
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,21 +105,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Aug 2023 at 18:24, Adrien Thierry <athierry@redhat.com> wrote:
->
-> Currently, PCS_USB registers that have their initialization data in a
-> pcs_usb_tbl table are never initialized. Fix that.
->
-> Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
-> Signed-off-by: Adrien Thierry <athierry@redhat.com>
+On Aug 27 2023 09:44, Randy Dunlap wrote:
+> Hi,
+> 
+> On 8/26/23 01:07, Guru Das Srinagesh wrote:
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 0903d87b17cb..b670e9733f03 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -8721,6 +8721,11 @@ M:	Joe Perches <joe@perches.com>
+> >  S:	Maintained
+> >  F:	scripts/get_maintainer.pl
+> >  
+> 
+> The MAINTAINERS file should be maintained in alphabetical order,
+> so this is not in the correct place.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Thank you - didn't know about that. Will fix.
 
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 4 ++++
->  1 file changed, 4 insertions(+)
-
-
--- 
-With best wishes
-Dmitry
+Guru Das.
