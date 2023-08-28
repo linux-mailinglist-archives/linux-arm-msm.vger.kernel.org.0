@@ -2,131 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACC8578BA50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 23:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C186A78BA60
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 23:36:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233735AbjH1VdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 17:33:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48582 "EHLO
+        id S229820AbjH1Vf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 17:35:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233874AbjH1Vck (ORCPT
+        with ESMTP id S233794AbjH1Vfj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 17:32:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9071918D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1693258314;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=dVb5tmc8EbITtSkSc6gJJy1RyzNckSiwLu+iLvVILak=;
-        b=Lau8zgtjsq1xfaMsthbVscRzJDNaG8nLYcBgVoic9zvHk6QFdxuluFVZKet/GoIK5D6yTT
-        6SQDtNWX+oT04JxNjcG7ejEc/OxOXnTni1gSNyVIUqOX11ZnuMwzonHStJyQVGdHK2GMht
-        gC5xhzr2m0Vwvmz6rwcgQ9d99Ip7hP8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-gyLNJ6IiMkuVojh8XvczhQ-1; Mon, 28 Aug 2023 17:31:52 -0400
-X-MC-Unique: gyLNJ6IiMkuVojh8XvczhQ-1
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-76e26652e6fso464271685a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:31:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693258312; x=1693863112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dVb5tmc8EbITtSkSc6gJJy1RyzNckSiwLu+iLvVILak=;
-        b=ZguybDsT97n2tRWQqhXCbyPbcBp9ddSzG1bPH4XX8Di2d/3HMJjDtqCt/fd71UOcpI
-         zJuHqnmOX5l81SQJpOUWmazaFHdwSgcxyaoug3A5RQvy/yos2GPrzKk8U+KxEi0Ugs6z
-         LD08XKNl3IR7xPD4IgbfB45Ck8vqFmQWBtqOaJ8NRCGz5b0pI948j3ryoud2x1cmAPFb
-         xxZw54tW0ySyX9luhNtm6SaTVbi5nQPi0siHpo6Q8+RQi0FCaZX9Z8t1RaW5ebpHr03q
-         KrknPddGY5iZltoVPjRNPfLBaz+1va6LMtpY2uc7t0pBmjHdjBA5TzlfmV62uc7mcH3H
-         kJag==
-X-Gm-Message-State: AOJu0YzAy1f4u1JP9Q9+YWuT8knTgG4cfygcV0pbc4GIGrCPry8u3m8b
-        uPlm9b45dgq+U26ELa3j/9Fl7Elh2XkmaqxPESjZrhMS+hQMOSRnzW3/Az2sjvKHgEGr166eGdC
-        chwhAmA04L2zK4UwHoG7imBab3Q==
-X-Received: by 2002:a05:620a:9c7:b0:766:fe28:35a3 with SMTP id y7-20020a05620a09c700b00766fe2835a3mr28616579qky.32.1693258312045;
-        Mon, 28 Aug 2023 14:31:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuVcTMTBbnLPs86MnCDU8eGTgJIDkNhQ+SHq++g5N+BlxbjD8TqX467y2sj6EMGyNhF/9w9w==
-X-Received: by 2002:a05:620a:9c7:b0:766:fe28:35a3 with SMTP id y7-20020a05620a09c700b00766fe2835a3mr28616567qky.32.1693258311828;
-        Mon, 28 Aug 2023 14:31:51 -0700 (PDT)
-Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id a12-20020a05620a124c00b0076f16a00693sm697233qkl.47.2023.08.28.14.31.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 14:31:51 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 14:31:49 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 21/24] iommu: Add __iommu_group_domain_alloc()
-Message-ID: <dwrebxdzqjhnryum3czsh6zroapbhpjre7untly3cvl2tn3nij@hpckzx65oxx6>
-References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <21-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+        Mon, 28 Aug 2023 17:35:39 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E402D186
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:35:36 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37SLXZBh000646;
+        Mon, 28 Aug 2023 21:35:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=QX0IWt4Uo65a2ZO0nHly3/Zk1oxm5PDDbCMTrurBS8w=;
+ b=LfWFB3Ljlm/8g8PK+3/AA1WFGlOwxDRvP/WJ6jJUj65h3YLD5JXUm/fU5gG1WLyraVov
+ TP2DHn+UK6fZj/1DDMc2JboBUzzZmaliTeSD8BSZybX+uUwyK+6eu0SrRETriwP16AQz
+ j6hCRYMRowQLSiXUbCaKnKPy0SL9Qyvq9l6SUnBzNgM7qdZ5y6DuS7WmMN1n+ryut5Ls
+ 9CZNp+Q4SBY/cd1dGxEr2Y0e7gtxq45BaV4mU7ZkxJVI1s0SflW0dE/pvaWMdy+3R886
+ po4N45yy3FpdHaAnuyauATRF4eDUwCC3hdRKOifRCmC2GYGPNXMSPoNpvQzBYdBhkg+9 2Q== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss3fr00dn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 21:35:11 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37SLZBnF002730
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 21:35:11 GMT
+Received: from [10.110.112.60] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 28 Aug
+ 2023 14:35:10 -0700
+Message-ID: <c06a31fd-e3b5-1f58-9e4f-7fafd8aa3f28@quicinc.com>
+Date:   Mon, 28 Aug 2023 14:35:09 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <21-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: NULL pointer check for driver data
+Content-Language: en-US
+To:     Rob Clark <robdclark@chromium.org>
+CC:     <will@kernel.org>, <joro@8bytes.org>, <robin.murphy@arm.com>,
+        <dmitry.baryshkov@linaro.org>, <quic_bjorande@quicinc.com>,
+        <konrad.dybcio@linaro.org>, <quic_eberman@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_rvishwak@quicinc.com>,
+        <quic_saipraka@quicinc.com>, <quic_molvera@quicinc.com>,
+        <marijn.suijten@somainline.org>, <mani@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230816225509.11070-1-quic_aprasann@quicinc.com>
+ <CAJs_Fx7132o3iHDH0ZR7L9G69o2YV2-jC0v15shQcEhH6=-6RA@mail.gmail.com>
+From:   Aravind Vijayakumar <quic_aprasann@quicinc.com>
+In-Reply-To: <CAJs_Fx7132o3iHDH0ZR7L9G69o2YV2-jC0v15shQcEhH6=-6RA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Zh__iUlPR0h4jW3lq5ydSAoJjAQ-h5_n
+X-Proofpoint-ORIG-GUID: Zh__iUlPR0h4jW3lq5ydSAoJjAQ-h5_n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-28_18,2023-08-28_04,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ adultscore=0 spamscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308280186
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:35PM -0300, Jason Gunthorpe wrote:
-> Allocate a domain from a group. Automatically obtains the iommu_ops to use
-> from the device list of the group. Convert the internal callers to use it.
-> 
-> Tested-by: Steven Price <steven.price@arm.com>
-> Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
 
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+On 8/16/2023 6:01 PM, Rob Clark wrote:
+> On Wed, Aug 16, 2023 at 3:55 PM Aravind Vijayakumar
+> <quic_aprasann@quicinc.com> wrote:
+>> The driver_data is NULL when qcom_adreno_smmu_init_context()
+>> is called before the dev_set_drvdata() from the client driver
+>> and is resulting in kernel crash.
+>>
+>> So add a null pointer check to handle the scenario
+>> where the client driver for the GPU SMMU device would
+>> be setting the driver data after the smmu client device
+>> probe is done and not necessarily before that. The function
+>> qcom_adreno_smmu_init_context() assumes that the client
+>> driver always set the driver data using dev_set_drvdata()
+>> before the smmu client device probe, but this assumption
+>> is not always true.
+>>
+>> Signed-off-by: Aravind Vijayakumar <quic_aprasann@quicinc.com>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> index c71afda79d64..5323f82264ca 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> @@ -231,6 +231,9 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>           */
+>>
+>>          priv = dev_get_drvdata(dev);
+>> +       if (!priv)
+>> +               return 0;
+> could this -EPROBE_DEFER instead, or something like that?  I think you
+> patch as proposed would result in per-process gpu pgtables silently
+> failing
+>
+> BR,
+> -R
 
+Thanks for the review comments. Returning -EPROBE_DEFER wont work 
+because the probe of the client driver (which sets the driver data) will 
+never get triggered. However, the probe of the client driver succeeds if 
+we return -ENODATA. would that be acceptable?
+
+Regards,
+
+Aravind
+
+>> +
+>>          priv->cookie = smmu_domain;
+>>          priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
+>>          priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
+>> --
+>> 2.40.1
+>>
