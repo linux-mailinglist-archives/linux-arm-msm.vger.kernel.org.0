@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8DA778B9E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 23:02:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66E0578B9EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 23:04:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233218AbjH1VCQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 17:02:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
+        id S233008AbjH1VDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 17:03:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233365AbjH1VBs (ORCPT
+        with ESMTP id S233506AbjH1VDd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 17:01:48 -0400
+        Mon, 28 Aug 2023 17:03:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82137131
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:00:54 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD83D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1693256453;
+        s=mimecast20190719; t=1693256563;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=mPucHT4vAUhtQdeHUtkBDDGaES5ThoGt/JYy///1HlU=;
-        b=HzYaN8RBYe/PFKVckKpPmuF/VFZs69CNqOaaSHhtA58gn4SREE1TM/On8OQ+fOYFdOV2hC
-        NdYMoltCLF35keijEjvtHy3EbnI8s5ACCvcm4SgPUSkMc6clTLkMn2m3mUsZDG3M+Cqij4
-        mma/33nn+8FoG+AOcKXbKdkCqJ0WKc0=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=P4Hc7lOVUb37Hr8DSGTvFTUMZzvNY/pqjNxxEvyeHyI=;
+        b=hLLEVDFgmxgxJE3XBMLNTX0qXrQfsl3P0x1GSvZUZXgb17Pjr5BCjE9IMModOyo1bTP7mZ
+        4gAlOqtEnvLQ5eLx6ahPzXkIcWHT2q90SwDkldCQ/eBQ5QS3Yr8Ag4x2VUIYuNPbpdW5s2
+        MTJ1FjmaK6YPfQehzYcri1vzb3195k4=
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-YwJ4wmqiMMeSyuXby0_oVQ-1; Mon, 28 Aug 2023 17:00:52 -0400
-X-MC-Unique: YwJ4wmqiMMeSyuXby0_oVQ-1
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-76d86b5e2f1so509716285a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:00:52 -0700 (PDT)
+ us-mta-390-xXwAxzGBMBiwFFvbBhU61Q-1; Mon, 28 Aug 2023 17:02:42 -0400
+X-MC-Unique: xXwAxzGBMBiwFFvbBhU61Q-1
+Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-44d4b7993c3so1620717137.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 14:02:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693256452; x=1693861252;
+        d=1e100.net; s=20221208; t=1693256562; x=1693861362;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mPucHT4vAUhtQdeHUtkBDDGaES5ThoGt/JYy///1HlU=;
-        b=kWG9vv84FiYr/K38ks0QOPgMMkoD9LXClCZtn9b+zB+TuPTE9+1wdYHKP4sSh8BeEp
-         JwV9I8CJRYK1f/gVlB0J99Hyj7nsf4yhiGSKVUJ8tyGJzLaMtIiTog+v0iJ/3imxSBFU
-         48+Ks2aIaUoGc1wkfn/fIs0zaWyzTCrHaIdQTBrA9yu4rejAlS0z8QQapPo/BonjD/aM
-         URQ+JP6X/AoxHqT4EUy7bPFo/lwHyUoeOqlvQtbk+PQk/xG5XipwMh1fgGc+FsxA5xUW
-         hQEO1aBf1h7KNpk8ugoon3tN6HLDc02clrYUtuuuiOpt6pmIRWu0BKHz727GBvQfok9s
-         ut0g==
-X-Gm-Message-State: AOJu0YzFi2GWEudLpL4tXWouFWSs30Eeh47Q4HJaaXAef77zZhrHd3iW
-        N8dqRL3zuisSbNjMC8/G3iHxUL4SW44Tp6fUgWQdvWgQ2/MDW8dOzMuef11SJLo7govlvKXonuN
-        s711IF1GmB6SlaRdttFGw8J9QZg==
-X-Received: by 2002:a05:620a:254e:b0:767:dd2c:9a1 with SMTP id s14-20020a05620a254e00b00767dd2c09a1mr32435886qko.20.1693256452113;
-        Mon, 28 Aug 2023 14:00:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFc76gVDSQjoSi7VzVoCzv2VufWTRTR2JHknan7WgS/aaS2xw9REImaP5+SJVlVkj2Kooggog==
-X-Received: by 2002:a05:620a:254e:b0:767:dd2c:9a1 with SMTP id s14-20020a05620a254e00b00767dd2c09a1mr32435844qko.20.1693256451852;
-        Mon, 28 Aug 2023 14:00:51 -0700 (PDT)
+        bh=P4Hc7lOVUb37Hr8DSGTvFTUMZzvNY/pqjNxxEvyeHyI=;
+        b=WRXcj/VCZPu7d3Z1A8T0wir1lMpaDExcT4LrO3xIxvFVVg4mdG7fiTKT0pkuE1AGct
+         Sy/8Fn92/Xw2jvFDsYdiesJW9WQTNrFezyaBdbsW6JzoHbWiyuav3nvKffJBHh6IKEkt
+         QE7e1S+qtLM1CjnRgLwH7MhxgiXBAhEvXeG5Yv+Cus010sLBHsmBb/WJmyabiy2gNBo5
+         gowTuOZ9+ITFMIX1Y4G2K0cIaOUw9vsNkxzyx0sXYjKeuG34l2tFBRow1dMjFVuMypgh
+         uezDq2viPGpZSNHRaxjVHSDUTVSlvpL+TywIaUfnVVkw7QsZjYWGNuEoiRoAL40Cp2c4
+         eJCQ==
+X-Gm-Message-State: AOJu0Yx9oPg5coBr8333dRnnGUqtzHohpxS4g2oE0+864mNRS1l9SbVB
+        qvELx4b7rbB+fdPQ80nAUYE/ZJWqqyP28g56M1XP3oPdMSyOJzHD0r49tgK/W0P9Ndg43C1tvBk
+        77dP2fSpTD+VA0ZInMPZf49P+oQ==
+X-Received: by 2002:a67:ad1a:0:b0:44d:4196:f374 with SMTP id t26-20020a67ad1a000000b0044d4196f374mr21657388vsl.14.1693256562235;
+        Mon, 28 Aug 2023 14:02:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1O+ulqQs16fLrviLhIDcWj2NFGLF73P8fTFl1IfopkK1Ei1hjIoNJD//dyDhnkd8Fjfj6aA==
+X-Received: by 2002:a67:ad1a:0:b0:44d:4196:f374 with SMTP id t26-20020a67ad1a000000b0044d4196f374mr21657332vsl.14.1693256561816;
+        Mon, 28 Aug 2023 14:02:41 -0700 (PDT)
 Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id v14-20020ae9e30e000000b00767d2870e39sm2642220qkf.41.2023.08.28.14.00.51
+        by smtp.gmail.com with ESMTPSA id j10-20020a0cf50a000000b0064f732aa45csm2873129qvm.133.2023.08.28.14.02.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 14:00:51 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 14:00:50 -0700
+        Mon, 28 Aug 2023 14:02:41 -0700 (PDT)
+Date:   Mon, 28 Aug 2023 14:02:40 -0700
 From:   Jerry Snitselaar <jsnitsel@redhat.com>
 To:     Jason Gunthorpe <jgg@nvidia.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -99,34 +99,37 @@ Cc:     Andy Gross <agross@kernel.org>,
         Niklas Schnelle <schnelle@linux.ibm.com>,
         Steven Price <steven.price@arm.com>,
         Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 16/24] iommu/qcom_iommu: Add an IOMMU_IDENTITIY_DOMAIN
-Message-ID: <cfl4ixqvcradllxpjzbmyikl6jtr5q53tipn4p3bka7obavxjj@novxolxpv7sr>
+Subject: Re: [PATCH v7 17/24] iommu/ipmmu: Add an IOMMU_IDENTITIY_DOMAIN
+Message-ID: <ftxla3xdnxqknqg4k6qxwh6nquhdpzfmzyuvkzg7gwjxf42p6w@7ek73gnk5mue>
 References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <16-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+ <17-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <16-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+In-Reply-To: <17-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:30PM -0300, Jason Gunthorpe wrote:
+On Wed, Aug 23, 2023 at 01:47:31PM -0300, Jason Gunthorpe wrote:
 > This brings back the ops->detach_dev() code that commit
 > 1b932ceddd19 ("iommu: Remove detach_dev callbacks") deleted and turns it
 > into an IDENTITY domain.
 > 
+> Also reverts commit 584d334b1393 ("iommu/ipmmu-vmsa: Remove
+> ipmmu_utlb_disable()")
+> 
 > Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 39 +++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+>  drivers/iommu/ipmmu-vmsa.c | 43 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
 > 
 
 Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
