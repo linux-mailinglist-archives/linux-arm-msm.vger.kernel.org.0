@@ -2,93 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71DDA78A60E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 08:49:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2FC178A61F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 08:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229460AbjH1GtS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 02:49:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50426 "EHLO
+        id S229463AbjH1G4v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 02:56:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjH1GtH (ORCPT
+        with ESMTP id S229553AbjH1G4e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 02:49:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9414C10D;
-        Sun, 27 Aug 2023 23:49:05 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37S6196F021198;
-        Mon, 28 Aug 2023 06:48:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ZkKeM4FclNAHL+N6xLWvTF+AySgNT0OlDIdrec2T3hM=;
- b=GZVD8uLF7iary1yUcjjQ82tYYf57VtUakrCt4jZ48c6DoRnNqhT1tmp7rP1MzKNg3jKe
- ngeAPdHPRA3r3sREWuLwE/GieHQIucQPIrdxZBDqLCGfx2s6mXt/gyJyYzmEG6kifD1I
- LXIXtH0uwrnEBlRshqA72M+DWUp6eMH0QVPfYIuoAP8aH1D/aDaeSHIVwaITw9XBCuvz
- Cg6KRBvELuewUzP5CYHPx5gR9GIBfxUgG16fMlHZIej667Ia3rlGjt5u6P4c2b7frN+d
- 8iMrshmoGgBwjEGjfn6VcaOsO5kjv4HwdNPushoQ+f0GBZaogzlwo+aciKdwbUFvg2aY iQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sqa5ptv53-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Aug 2023 06:48:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37S6ml4d025319
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Aug 2023 06:48:47 GMT
-Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 27 Aug
- 2023 23:48:42 -0700
-Message-ID: <ef1439f8-4a9b-53b4-34be-1229b39d2310@quicinc.com>
-Date:   Mon, 28 Aug 2023 12:18:30 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 4/6] clk: qcom: Use HW_CTRL_TRIGGER flag to switch
- video GDSC to HW mode
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 28 Aug 2023 02:56:34 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3927F126
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 23:56:28 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-99c353a395cso360909266b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Aug 2023 23:56:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1693205786; x=1693810586;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+CbUT7b5YjU9P228SDDHko9vselWOLP8ICBut5LNj2c=;
+        b=2rNhbgoRHVDFkzEpf81k4KaCrCEAsCDYs0ux+pAPX3dt8Sct/z38NnYADiB9GutA+H
+         joy9/F/84EF3vEdzMqqwZGd4bA3SGCH4KTCae9+pP8BA4zcq9WPvQ6UulTBoTlhElPpF
+         tjaxd3W1dzqsosSgoA4sv2mtYsN2P3WA7oBaP0guFWQCifaUZSMwyg6SnFoBOB7yoAMb
+         SzIPqBhy/Yr4dPp+E0HZTgPVa/d5gLVxvD9SfzTBbn3g+USdvf/gbzoHTKgZxhL3DZNI
+         ZWV7EyUuvLkbL17+IP8CJn4kpF0hNsd9uJ5hSz5FMTNwuRKDXhk2xKaD5LoHXdMmL54U
+         kWHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693205786; x=1693810586;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+CbUT7b5YjU9P228SDDHko9vselWOLP8ICBut5LNj2c=;
+        b=Lc94HCsx2m+H2puQ9GYkt7FRRMwgsUF1fKnNoqrHg6W3gcXzEqiPy0qx0kV6TJBCg8
+         Z4WZcktzdQzATaZjYhfT8i2iP377N9RVs7wykVjWnFnnaYnXsnx+8Z2nPUveoeng9oZ+
+         xzv8rNw7XWV1SU36T/IqBgudJQg3QGqkYWSzdMWvKnnZiOn4QDPcCuoINXziMucMcDLE
+         HjflI+QToEzjUzGBXz5vvFiQzytphKRPmtS2YdvZE0KV7IFUypC5HU25Jg3wUTdlO3jV
+         6mtcv9k95v/qrZYUtE52658AkSx/oE7qJkwesFFL/pXNajMhsf7az8Xit9rmNXXPlin0
+         7OxQ==
+X-Gm-Message-State: AOJu0YwGYF/hKBg5hUha0Ei/8rAZEZhBCO/5ZGTd32N1H12DLVPIYlAQ
+        cRGBM3cUw6Nh2cuzR6ppjxprQw==
+X-Google-Smtp-Source: AGHT+IGpD+i6cTIMpPLeel6+nmEVQ3zCBV3QHxnYxIWG/i4LHURGs8TnS7EH2Tl0fCt8kxtHdFJ+bQ==
+X-Received: by 2002:a17:906:2097:b0:9a2:19ea:88f7 with SMTP id 23-20020a170906209700b009a219ea88f7mr8449355ejq.64.1693205786646;
+        Sun, 27 Aug 2023 23:56:26 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id va17-20020a17090711d100b00992b71d8f19sm4320827ejb.133.2023.08.27.23.56.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Aug 2023 23:56:26 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 28 Aug 2023 08:56:25 +0200
+Message-Id: <CV3ZCVK29BLY.D7Y8AEEOYLO3@otso>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm7225-fp4: Revert "arm64: dts:
+ qcom: sm7225-fairphone-fp4: Add AW8695 haptics"
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
         "Andy Gross" <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        "Stephen Boyd" <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, <linux-pm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>
-References: <20230816145741.1472721-1-abel.vesa@linaro.org>
- <20230816145741.1472721-5-abel.vesa@linaro.org>
- <2fc0d771-cee2-4826-a62a-56ed4bfad3a2@linaro.org>
- <ZOXiUzxfs1cj3SWT@linaro.org>
- <07e93a9d-69ac-41b7-aa21-b855b97bf801@linaro.org>
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <07e93a9d-69ac-41b7-aa21-b855b97bf801@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xUzvyVDW9nBF7cT3b23So4sTWTa4jiaO
-X-Proofpoint-GUID: xUzvyVDW9nBF7cT3b23So4sTWTa4jiaO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-28_03,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- suspectscore=0 clxscore=1011 mlxlogscore=721 lowpriorityscore=0
- spamscore=0 adultscore=0 phishscore=0 impostorscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308280060
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20230827122842.63741-1-krzysztof.kozlowski@linaro.org>
+ <20230827122842.63741-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230827122842.63741-3-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,41 +80,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krzysztof,
 
+On Sun Aug 27, 2023 at 2:28 PM CEST, Krzysztof Kozlowski wrote:
+> This reverts commit 413821b7777d062b57f8dc66ab088ed390cbc3ec because it
+> was never reviewed, was buggy (report from kernel test robot:
+> https://lore.kernel.org/all/202204090333.QZXMI2tu-lkp@intel.com/) and
 
-On 8/26/2023 4:17 PM, Konrad Dybcio wrote:
-> On 23.08.2023 12:41, Abel Vesa wrote:
->> On 23-08-16 19:56:46, Konrad Dybcio wrote:
->>> On 16.08.2023 16:57, Abel Vesa wrote:
->>>> From: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>
->>>> The current HW_CTRL flag switches the video GDSC to HW control mode as
->>>> part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
->>>> give consumer drivers more control and switch the GDSC mode as and when
->>>> required.
->>>>
->>>> HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
->>>> HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
->>>>
->>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>> ---
->>> Do we have any use for the HW_CTRL flag?
->>>
->>> Perhaps it should be renamed to HW_CTRL_ALWAYS?
->>>
->>> Or even better, *if and only if* that is necessary, add a common
->>> property like "always_hw_managed" to the genpd code?
->>
->> The HW_CTRL flag is still needed for the consumers that expect the GDSC
->> to be have the HW control bit set right after it gets enabled.
-> Guess the correct question here would be.. Are there any?
-> 
+(I wouldn't say this part is accurate, the robot just didn't use a tree
+with the i2c10 node already present, it was sent in an earlier patch
+IIRC, but whatever)
 
-Yes, Display GDSC(mdss_gdsc) is required to be controlled always in HW 
-control mode when it is enabled.
+> used undocumented, broken bindings.  Half of the properties in this
+> device are questioned, thus adding DTS node causes only errors and does
+> not make the device usable without the bindings and driver part:
+>
+>   sm7225-fairphone-fp4.dtb: haptics@5a: failed to match any schema with c=
+ompatible: ['awinic,aw8695']
+>   sm7225-fairphone-fp4.dtb: haptics@5a: awinic,tset: b'\x12' is not of ty=
+pe 'object', 'array', 'boolean', 'null'
+>   sm7225-fairphone-fp4.dtb: haptics@5a: awinic,r-spare: b'h' is not of ty=
+pe 'object', 'array', 'boolean', 'null'
+>
+> Since bindings were abandoned (4 months since review), revert the commit
+> to avoid false sense of supporting something which is not supported.
 
-Thanks,
-Jagadeesh
+I've been avoiding touching this topic again since I'm really not sure
+how to resolve.
 
-> Konrad
+There's a bunch of magic registers being written to in the downstream
+driver, I don't have any documentation for that so I'm not exactly sure
+what I can do to make nice bindings with proper properties.
+
+Would you recommend just hardcoding some of these properties in the
+driver, assuming they're constant for every AW8695, even though the
+downstream driver has these properties in devicetree? Because of that I
+assumed these properties could differ per implementation / usage of the
+AW8695 in different devices.
+
+Or do you have any other suggestion?
+
+In any case:
+
+Acked-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Regards
+Luca
+
+>
+> Cc: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 28 +------------------
+>  1 file changed, 1 insertion(+), 27 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm=
+64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> index 18171c5d8a38..568165f4f9e4 100644
+> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> @@ -386,36 +386,10 @@ &i2c8 {
+>  };
+> =20
+>  &i2c10 {
+> -	clock-frequency =3D <400000>;
+> -	status =3D "okay";
+> -
+>  	/* PM8008 PMIC @ 8 and 9 */
+>  	/* PX8618 @ 26 */
+>  	/* SMB1395 PMIC @ 34 */
+> -
+> -	haptics@5a {
+> -		compatible =3D "awinic,aw8695";
+> -		reg =3D <0x5a>;
+> -		interrupts-extended =3D <&tlmm 85 IRQ_TYPE_EDGE_FALLING>;
+> -		reset-gpios =3D <&tlmm 90 GPIO_ACTIVE_HIGH>;
+> -
+> -		awinic,f0-preset =3D <2350>;
+> -		awinic,f0-coefficient =3D <260>;
+> -		awinic,f0-calibration-percent =3D <7>;
+> -		awinic,drive-level =3D <125>;
+> -
+> -		awinic,f0-detection-play-time =3D <5>;
+> -		awinic,f0-detection-wait-time =3D <3>;
+> -		awinic,f0-detection-repeat =3D <2>;
+> -		awinic,f0-detection-trace =3D <15>;
+> -
+> -		awinic,boost-debug =3D /bits/ 8 <0x30 0xeb 0xd4>;
+> -		awinic,tset =3D /bits/ 8 <0x12>;
+> -		awinic,r-spare =3D /bits/ 8 <0x68>;
+> -
+> -		awinic,bemf-upper-threshold =3D <4104>;
+> -		awinic,bemf-lower-threshold =3D <1016>;
+> -	};
+> +	/* awinic,aw8695 @ 5a */
+>  };
+> =20
+>  &ipa {
+
