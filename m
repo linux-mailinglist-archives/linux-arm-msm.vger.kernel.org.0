@@ -2,67 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB3A478AE4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A5F78AE69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:05:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232123AbjH1K7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:59:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48744 "EHLO
+        id S230348AbjH1LE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 07:04:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232359AbjH1K7G (ORCPT
+        with ESMTP id S230188AbjH1LEg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:59:06 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64DDCEB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:58:47 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bb97f2c99cso46278181fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:58:47 -0700 (PDT)
+        Mon, 28 Aug 2023 07:04:36 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C9EAB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:04:32 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-500b6456c7eso1696545e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 04:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693220326; x=1693825126;
+        d=linaro.org; s=google; t=1693220671; x=1693825471;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=d/OB7PKo07RgUFZpiehXJXNKqPXLjU99gDHLTVOVii8=;
-        b=cJXfrHMJNPS/QKMrTTlE5vfpH974HXftpuSY9uJs9MfVS7vc2mXinUh9ADC2STqq3k
-         5WNnPwsOq3rjlCr/JlQZURcjtrH2q2IdRvWytQYT1l+kcjhVAqDM5ELFcurx9w5rEXed
-         yaO4gDOcAp5aORCgm32uLrh+lUesOUFQRzDaKjVsy1NqQ269QA0T0ACauz8czEnt/9p+
-         I8/VwRP8mVEyupf+HtVu2tm/p+Wfcj9+cRYArd2exPuJqTY77Wc+2o1lElpn93LqLXBd
-         6er4vDPQ7rF0zfitvBwtpmn9UkrQVTY79hvkSXx1oOk7iVaG6Ft2xtj95vpS/nTnAHW3
-         6tOQ==
+        bh=lmMR63i69wE8/b9RkFpou+l6zEGQJ7lmmfXhEmNqTjY=;
+        b=i9CNeWehusZdR30wSYSORX/eK/HNKfb/HYIPLSK37pTt2uWHh87K6PKD/R0FfJoQkV
+         5Un6NGPJKEOKRc2UCLvKYRPGfNe+74QzlaV9lEmeaUKU5EMhRsIkZ4ok0bXqbrPrK9zn
+         lbEmrULA4Gjq3Ri3a1V8N2Nmls1VBsV9T0zES0WUrmV6hACv/SuAZmvfQQd2r5MbkR7j
+         6r4+8361TNhDpETZKcsEYk5ndIGXaCHLrq33V+vYUoayGRzLRM+bd/F+89LLoODHl4DF
+         VY1iQl5+omyk0VQ9ALKOxg6B2v73qOzTvsSKk9PWuOb2bvUzZjYlc1UXOh0B1PBOzWOm
+         OpSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693220326; x=1693825126;
+        d=1e100.net; s=20221208; t=1693220671; x=1693825471;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d/OB7PKo07RgUFZpiehXJXNKqPXLjU99gDHLTVOVii8=;
-        b=bSfSPDEMt0jiqYrB+bPUmSu59BHR/GMROFsyrHcxsjt6SHegT+ndbPNGum10ZlJte2
-         xFhH43Kqq9CK5cMY9eQZgIjCzv3bHt/SoGxvRJ/9MMFZxCfxipFXLNOW6eCz7bjagVwJ
-         /YFZGF+i9YlQ6TXUTerH0NrSmjI4BByw9ui4cMAkw4l2qTp6yLHvLYnaovBPGyhB+tOH
-         su5yoPLDQEelQExCHCo0uhz+LcNnXZ4BgjsRldfY1AdCQGL44pRTEppPVQnWhfsx1i4z
-         7VY9CPGxzOdshdK8WJ+aufcUKPZTjZ3zBRxkZASjYpZhXv5kaNGM/3U1mhKnM38SZa2V
-         KnKQ==
-X-Gm-Message-State: AOJu0Yy26BSijEJH9jqze8bLXnr6O7ZietOk1bKlbmfkNenfPLAs6l3p
-        +i8Vhmev1HSjnyzp3pFm+eqLO0Pg5IDRCs9SqWXN0Q==
-X-Google-Smtp-Source: AGHT+IG/gueuI9Cxw+c3jnrN0MdQrB+kDMkFMyE8XslmGTM4ZZFnIcaUdSesgvMKixU6F+4T33HR+A==
-X-Received: by 2002:a2e:81d3:0:b0:2bc:db5a:9545 with SMTP id s19-20020a2e81d3000000b002bcdb5a9545mr11327243ljg.14.1693220326336;
-        Mon, 28 Aug 2023 03:58:46 -0700 (PDT)
+        bh=lmMR63i69wE8/b9RkFpou+l6zEGQJ7lmmfXhEmNqTjY=;
+        b=eTSwbYBcQMX3hPfnSMH4ooZa8xN1jSM6e9XFWanl2zLwzop84UgL79gjRHMvB5MW5J
+         wU8qYHCzeTRGK8R+xBBLC1Gn3c0Np9zLuGy4idlT3+6W8v77td+xW7Zhd8QHud18Kdmw
+         gdKDZ5MPK48HyB4qrU++61lncXRjKrnGF4i40t5bWM79gSNLKEpaXDXpZ/29lQqiZL1t
+         osd22qdqttgHdL2f7s+4PPYqCyT+pvWduun4V06s0RAIo10paQRLcU4VZJX8GlBUop1g
+         /7ShIInY2GHqN7Ampt9RtL/L9A1CwfG7WOpwR6iSEgrZtgOmkUZrJjfwXyjeyPt0a0oS
+         6xDg==
+X-Gm-Message-State: AOJu0YyqiXciVtBBpriQ/VB54WpJt7biV/8NgVqWvflQvAp3yRkMBbcD
+        lNZbichc6FIyqVovsiq/nMLMvQ==
+X-Google-Smtp-Source: AGHT+IEW8at6c7DdFsHCNACWwN5LiMnAyoT6lrVD62kzT/hOk/P6D9CD0W37S2TbtsNAF+33pUiE+Q==
+X-Received: by 2002:a05:6512:313b:b0:500:81fa:46f1 with SMTP id p27-20020a056512313b00b0050081fa46f1mr13487265lfd.67.1693220670922;
+        Mon, 28 Aug 2023 04:04:30 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002b6d7682050sm1698240lji.89.2023.08.28.03.58.45
+        by smtp.gmail.com with ESMTPSA id d17-20020ac244d1000000b0050096cc3ba1sm1531586lfm.255.2023.08.28.04.04.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 03:58:46 -0700 (PDT)
-Message-ID: <cb5194fc-cb66-44a5-8127-a7155f0dade6@linaro.org>
-Date:   Mon, 28 Aug 2023 12:58:45 +0200
+        Mon, 28 Aug 2023 04:04:30 -0700 (PDT)
+Message-ID: <8a7af8ce-3ff4-4520-b4e2-dd39570ca796@linaro.org>
+Date:   Mon, 28 Aug 2023 13:04:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usb: misc: eud: Fix missing IRQ check in eud_probe()
+Subject: Re: [PATCH v4 5/6] cpufreq: qcom-nvmem: provide separate
+ configuration data for apq8064
 Content-Language: en-US
-To:     Zhang Shurong <zhang_shurong@foxmail.com>
-Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <tencent_C40B301A0F71853A540809BE1BB85AB12D07@qq.com>
- <f9df2e02-9fae-4e16-9412-d378ef168903@linaro.org>
- <tencent_D0AA2D25300E0F108559545E899C9B8EDA07@qq.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
+ <20230827032803.934819-6-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -99,9 +111,9 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <tencent_D0AA2D25300E0F108559545E899C9B8EDA07@qq.com>
+In-Reply-To: <20230827032803.934819-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -112,48 +124,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.08.2023 16:17, Zhang Shurong wrote:
-> 在 2023年8月26日星期六 CST 下午6:49:27，Konrad Dybcio 写道：
->> On 26.08.2023 12:47, Zhang Shurong wrote:
->>> This func misses checking for platform_get_irq()'s call and may passes the
->>> negative error codes to request_irq(), which takes unsigned IRQ #,
->>> causing it to fail with -EINVAL, overriding an original error code.
->>>
->>> Fix this by stop calling request_irq() with invalid IRQ #s.
->>>
->>> Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB
->>> Debugger(EUD)") Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
->>> ---
->>>
->>>  drivers/usb/misc/qcom_eud.c | 7 ++++++-
->>>  1 file changed, 6 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
->>> index 7f371ea1248c..b33c615a2037 100644
->>> --- a/drivers/usb/misc/qcom_eud.c
->>> +++ b/drivers/usb/misc/qcom_eud.c
->>> @@ -204,7 +204,12 @@ static int eud_probe(struct platform_device *pdev)
->>>
->>>  	if (IS_ERR(chip->mode_mgr))
->>>  	
->>>  		return PTR_ERR(chip->mode_mgr);
->>>
->>> -	chip->irq = platform_get_irq(pdev, 0);
->>> +	ret = platform_get_irq(pdev, 0);
->>> +	if (ret < 0)
->>> +		return ret;
->>> +
->>> +	chip->irq = ret;chip->irq = plat..
->>
->> if (chip->irq < 0)
->> 	return chip->irq
->>
->> ?
->>
->> Konrad
-> Thank you for your thoughtful response. To clarify, are you suggesting that I 
-> replace the usage of `ret` with `chip->irq`? If that is the case, I will 
-> proceed with creating a patch for version 2.
-Yes please
+On 27.08.2023 05:28, Dmitry Baryshkov wrote:
+> APQ8064 can scale core voltage according to the frequency needs. Rather
+> than reusing the A/B format multiplexer, use a simple fuse parsing
+> function and configure required regulator.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 49 ++++++++++++++++++++++++++--
+>  1 file changed, 47 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index 81c080b854fe..35e2610c9526 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -26,6 +26,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_domain.h>
+>  #include <linux/pm_opp.h>
+> +#include <linux/regulator/consumer.h>
+>  #include <linux/slab.h>
+>  #include <linux/soc/qcom/smem.h>
+>  
+> @@ -39,6 +40,7 @@ struct qcom_cpufreq_match_data {
+>  			   char **pvs_name,
+>  			   struct qcom_cpufreq_drv *drv);
+>  	const char **genpd_names;
+> +	const char * const *regulator_names;
+>  };
+>  
+>  struct qcom_cpufreq_drv {
+> @@ -203,6 +205,34 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
+>  	return ret;
+>  }
+>  
+> +static int qcom_cpufreq_apq8064_name_version(struct device *cpu_dev,
+> +					     struct nvmem_cell *speedbin_nvmem,
+> +					     char **pvs_name,
+> +					     struct qcom_cpufreq_drv *drv)
+> +{
+> +	int speed = 0, pvs = 0;
+> +	u8 *speedbin;
+> +	size_t len;
+> +	int ret = 0;
+Unused, just return 0
+
+> +
+> +	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
+> +	if (IS_ERR(speedbin))
+> +		return PTR_ERR(speedbin);
+> +
+> +	if (len != 4)
+> +		return -EINVAL;
+> +
+> +	get_krait_bin_format_a(cpu_dev, &speed, &pvs, speedbin);
+> +
+> +	snprintf(*pvs_name, sizeof("speedXX-pvsXX"), "speed%d-pvs%d",
+> +		 speed, pvs);
+speed and pvs are both one hex digit long at best (see masking in
+get_krait_bin_format_a)
 
 Konrad
