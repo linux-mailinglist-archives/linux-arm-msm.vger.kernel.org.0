@@ -2,75 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA78B78AE40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:59:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB3A478AE4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 13:00:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232101AbjH1K7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:59:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35092 "EHLO
+        id S232123AbjH1K7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 06:59:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232105AbjH1K6e (ORCPT
+        with ESMTP id S232359AbjH1K7G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:58:34 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8E0218F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:58:19 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bcc331f942so36298181fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:58:19 -0700 (PDT)
+        Mon, 28 Aug 2023 06:59:06 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64DDCEB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:58:47 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bb97f2c99cso46278181fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693220298; x=1693825098;
+        d=linaro.org; s=google; t=1693220326; x=1693825126;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=f2XzqsSsmE3l45hP4mU3k5M6kXYXzeumOpdKps22yCs=;
-        b=t4WSrm+5ViWlAM5gzwMKYJc5jnKbkBwhcuDRbmCYiWzv4HsT1za3eOtGlJdB82VnH0
-         bMCdYZzzIYY1EUDSk1L5QOS+10YIhox2595hMOxy3rxjxigGzjvUj2I2GMIpcK6gHvBR
-         +Sb9GQRScorezzULATyRFGhtNexHSGSS+yAv6XNBk1TZjKe/YMOLDr/dnEOPfqao+A1j
-         hhD6dTcfL3pTyIFu18H/fMTr+c6+rxF6gFWPTSCudQywjPvCHqkZflx0e9nRsxSKz012
-         vxQaw7ScANzCN6lxLjoCrBFRyXG9V/NYiZrl30Oqkrk8R97AUFrWJZl5LM35G0pLGFSG
-         N6nA==
+        bh=d/OB7PKo07RgUFZpiehXJXNKqPXLjU99gDHLTVOVii8=;
+        b=cJXfrHMJNPS/QKMrTTlE5vfpH974HXftpuSY9uJs9MfVS7vc2mXinUh9ADC2STqq3k
+         5WNnPwsOq3rjlCr/JlQZURcjtrH2q2IdRvWytQYT1l+kcjhVAqDM5ELFcurx9w5rEXed
+         yaO4gDOcAp5aORCgm32uLrh+lUesOUFQRzDaKjVsy1NqQ269QA0T0ACauz8czEnt/9p+
+         I8/VwRP8mVEyupf+HtVu2tm/p+Wfcj9+cRYArd2exPuJqTY77Wc+2o1lElpn93LqLXBd
+         6er4vDPQ7rF0zfitvBwtpmn9UkrQVTY79hvkSXx1oOk7iVaG6Ft2xtj95vpS/nTnAHW3
+         6tOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693220298; x=1693825098;
+        d=1e100.net; s=20221208; t=1693220326; x=1693825126;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f2XzqsSsmE3l45hP4mU3k5M6kXYXzeumOpdKps22yCs=;
-        b=X9d4V517ui6EODPxG3jsZCZF5PccIQMNJmKrb2dIWGl3sE7+Gkmp2b1leKVTuG87V7
-         FdXUauLWppsghbi7rIptP5sJRz2+eS5ARLflFSmJFDbdv/7KI78RNF5NUokgW2asHPWL
-         1m+rbK/v4AE3b7hedx3WfFGbBfnvbGhpeIlSZnCfPslx/5GTq2K2QDhDs90DV6wv5Jha
-         sogssmxcucblI7HopvQO+nvqJL5wxs3e/SaBT9DGYl5aesqzmbj7TbhYFV4nk96KsXi7
-         iKVzm9U7R7qG0ypbfBvLPi2oM5YsP0K1kbIeylb+H5d+y4s04KUQFQY7GWSsF0Eebf5c
-         ob0Q==
-X-Gm-Message-State: AOJu0YzfbwYcWBKxG4bNZI1/OextIwIGku9aiBtIDpHjn8RXTFX4wGE4
-        wcbvGHaV03HYH0BCcrpLJAtSXQ==
-X-Google-Smtp-Source: AGHT+IFqXv5ZJniD9wN2HNJG0SNvHvgC+QU/+zXjtJ6B84YEyrSFMtHf4x/A5llcQz6M15BHWeZlGA==
-X-Received: by 2002:a2e:98c4:0:b0:2bc:dd8f:ccd7 with SMTP id s4-20020a2e98c4000000b002bcdd8fccd7mr5262439ljj.16.1693220298086;
-        Mon, 28 Aug 2023 03:58:18 -0700 (PDT)
+        bh=d/OB7PKo07RgUFZpiehXJXNKqPXLjU99gDHLTVOVii8=;
+        b=bSfSPDEMt0jiqYrB+bPUmSu59BHR/GMROFsyrHcxsjt6SHegT+ndbPNGum10ZlJte2
+         xFhH43Kqq9CK5cMY9eQZgIjCzv3bHt/SoGxvRJ/9MMFZxCfxipFXLNOW6eCz7bjagVwJ
+         /YFZGF+i9YlQ6TXUTerH0NrSmjI4BByw9ui4cMAkw4l2qTp6yLHvLYnaovBPGyhB+tOH
+         su5yoPLDQEelQExCHCo0uhz+LcNnXZ4BgjsRldfY1AdCQGL44pRTEppPVQnWhfsx1i4z
+         7VY9CPGxzOdshdK8WJ+aufcUKPZTjZ3zBRxkZASjYpZhXv5kaNGM/3U1mhKnM38SZa2V
+         KnKQ==
+X-Gm-Message-State: AOJu0Yy26BSijEJH9jqze8bLXnr6O7ZietOk1bKlbmfkNenfPLAs6l3p
+        +i8Vhmev1HSjnyzp3pFm+eqLO0Pg5IDRCs9SqWXN0Q==
+X-Google-Smtp-Source: AGHT+IG/gueuI9Cxw+c3jnrN0MdQrB+kDMkFMyE8XslmGTM4ZZFnIcaUdSesgvMKixU6F+4T33HR+A==
+X-Received: by 2002:a2e:81d3:0:b0:2bc:db5a:9545 with SMTP id s19-20020a2e81d3000000b002bcdb5a9545mr11327243ljg.14.1693220326336;
+        Mon, 28 Aug 2023 03:58:46 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002b6d7682050sm1698240lji.89.2023.08.28.03.58.16
+        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002b6d7682050sm1698240lji.89.2023.08.28.03.58.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 03:58:17 -0700 (PDT)
-Message-ID: <697ded4a-6d52-4aa3-b7a7-dab0a49e85c9@linaro.org>
-Date:   Mon, 28 Aug 2023 12:58:16 +0200
+        Mon, 28 Aug 2023 03:58:46 -0700 (PDT)
+Message-ID: <cb5194fc-cb66-44a5-8127-a7155f0dade6@linaro.org>
+Date:   Mon, 28 Aug 2023 12:58:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 16/37] ARM: dts: qcom: msm8960: move PMIC interrupts to
- the board files
+Subject: Re: [PATCH] usb: misc: eud: Fix missing IRQ check in eud_probe()
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-iio@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        linux-leds@vger.kernel.org
-References: <20230827132525.951475-1-dmitry.baryshkov@linaro.org>
- <20230827132525.951475-17-dmitry.baryshkov@linaro.org>
+To:     Zhang Shurong <zhang_shurong@foxmail.com>
+Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <tencent_C40B301A0F71853A540809BE1BB85AB12D07@qq.com>
+ <f9df2e02-9fae-4e16-9412-d378ef168903@linaro.org>
+ <tencent_D0AA2D25300E0F108559545E899C9B8EDA07@qq.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,9 +99,9 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230827132525.951475-17-dmitry.baryshkov@linaro.org>
+In-Reply-To: <tencent_D0AA2D25300E0F108559545E899C9B8EDA07@qq.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -120,14 +112,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.08.2023 15:25, Dmitry Baryshkov wrote:
-> The interrupt of SSBI PMICs is routed to the SoCs GPIO. As such, it is
-> not a property of the SoC, it is a property of the particular board
-> (even if it is standard and unified between all devices). Move these
-> interrupt specifications to the board files.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 26.08.2023 16:17, Zhang Shurong wrote:
+> 在 2023年8月26日星期六 CST 下午6:49:27，Konrad Dybcio 写道：
+>> On 26.08.2023 12:47, Zhang Shurong wrote:
+>>> This func misses checking for platform_get_irq()'s call and may passes the
+>>> negative error codes to request_irq(), which takes unsigned IRQ #,
+>>> causing it to fail with -EINVAL, overriding an original error code.
+>>>
+>>> Fix this by stop calling request_irq() with invalid IRQ #s.
+>>>
+>>> Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB
+>>> Debugger(EUD)") Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+>>> ---
+>>>
+>>>  drivers/usb/misc/qcom_eud.c | 7 ++++++-
+>>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+>>> index 7f371ea1248c..b33c615a2037 100644
+>>> --- a/drivers/usb/misc/qcom_eud.c
+>>> +++ b/drivers/usb/misc/qcom_eud.c
+>>> @@ -204,7 +204,12 @@ static int eud_probe(struct platform_device *pdev)
+>>>
+>>>  	if (IS_ERR(chip->mode_mgr))
+>>>  	
+>>>  		return PTR_ERR(chip->mode_mgr);
+>>>
+>>> -	chip->irq = platform_get_irq(pdev, 0);
+>>> +	ret = platform_get_irq(pdev, 0);
+>>> +	if (ret < 0)
+>>> +		return ret;
+>>> +
+>>> +	chip->irq = ret;chip->irq = plat..
+>>
+>> if (chip->irq < 0)
+>> 	return chip->irq
+>>
+>> ?
+>>
+>> Konrad
+> Thank you for your thoughtful response. To clarify, are you suggesting that I 
+> replace the usage of `ret` with `chip->irq`? If that is the case, I will 
+> proceed with creating a patch for version 2.
+Yes please
 
 Konrad
