@@ -2,85 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD44A78A79B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:23:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0B8B78A905
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 11:37:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbjH1IWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 04:22:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54032 "EHLO
+        id S229664AbjH1JhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 05:37:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbjH1IWR (ORCPT
+        with ESMTP id S230071AbjH1JhH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 04:22:17 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D90FCF1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 01:21:42 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99c1d03e124so380174766b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 01:21:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693210894; x=1693815694;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=R/ThTKBMXaBdcMw21bB4Tb4UrarGnjH7VR3jlnjNz0o=;
-        b=p0ofPENfE3XRABjMqYG0NDnT45lF6wkg4OivHw849Jmd0NTzi42hEWq4NSQm/ui6/H
-         mx+cwroHygO0OeNDvQFFKbX4ynkLaDOOF8/1d0TzAbG5PGFRXdDhu+hqF/kSxGrZdmvX
-         e6V0YiOH8qQPJoBgoNd331iQFOgFiRTtSX+bceYEo8QIdxaUjjggwwpKNCRG2lfuih9U
-         YUA9cUMkdFwbdO4XsGbhVJ9BbxWdk7vMCFIMK519m6PXam6shCgHvBUA+lep9Em5zDD3
-         AwQnmUMZj/8CrZwRg1r+SCdrak/ThkoTNCWe05o7IqFg06EMGtFoKmhu0dEJ+3/HhqUs
-         UKLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693210894; x=1693815694;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=R/ThTKBMXaBdcMw21bB4Tb4UrarGnjH7VR3jlnjNz0o=;
-        b=dKSa8kStFTTInGJgVEbw6mV3NgjWCbp6wmUuPBiqNXEunx/zamI8hJdEXyKyewOX0n
-         OOlSldfL1JBdt5lbZMus05VMtRKpl89BRnPlMuCcqyClUpaQ7ygCfcfVbBnSAliEI8LP
-         byfQAviqp3EjCQumxF9HPWse7bKUBEELPhpY0A0vVKjvRDtN29nJjc4DqWQVgBGcYgvY
-         91KCVSWAzQwPjmR9F+Gcmmbgh95rxRa9FhcEYFvVsAWLrBKSVx35/AI7+rO/sKndf7qs
-         emiYS6/0nk6CqCafr5k6jZqymFQCUWooU/FZyWAcJN0lhI9v7346+kAj11QudNbpQSjW
-         aOiA==
-X-Gm-Message-State: AOJu0YyeySq8Z3WtYALoRq+mtDenRo9FKT6cGGI0ccBKD8xsJKcHkwYz
-        iCNNX6WtqtwpE7IGoGicWRx5hw==
-X-Google-Smtp-Source: AGHT+IFBUK6E4zrbQPaHC6jS5bTEiJnj2yId8vtYo61AG/BoM8FRNNTdWT0PxEWyM0E9uZwDnNK+lg==
-X-Received: by 2002:a17:907:a04a:b0:9a5:78c0:44e6 with SMTP id gz10-20020a170907a04a00b009a578c044e6mr5892043ejc.16.1693210894452;
-        Mon, 28 Aug 2023 01:21:34 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id v24-20020a17090606d800b0099364d9f0e2sm4368823ejb.98.2023.08.28.01.21.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 01:21:34 -0700 (PDT)
-Message-ID: <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
-Date:   Mon, 28 Aug 2023 10:21:32 +0200
+        Mon, 28 Aug 2023 05:37:07 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4B12113;
+        Mon, 28 Aug 2023 02:37:02 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37S8xYY0003697;
+        Mon, 28 Aug 2023 09:36:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=FZlRFk85xm5SzVZnUHE/P5SR7tD1zBGbVkLxHkbTQsg=;
+ b=gc6iMnSWr0my6EW2XOO5yiB0txWrSEhrMlwaL+wsggBJzkl1kmujxFgIa8Jr2xITP+SG
+ vSS40DVwadOHH70zJVkGuymYLic/47IV+VcPHJlg3CuC2/AcCSuQeI+KiXA/l8ZuKErI
+ riaak9FQHKYo2xh4kqiQM5cjhm4IeJBsa0TvBQoh5FSTZ4vqtlUNwo/H7/uIAsVXz66c
+ n+2SK/6aDMPC4ow0N+NgQ07jc1/Drjn7t2Ctubia8IbOK4OicDI5M0zABBnFbizHA0s1
+ 3Z9Y67MJzH68cgcXd+qYkQNX/AAXlYn4vLCZjeTeJIuQgpu03geEcGNoNLCvnBb/hyMT +Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sq9sdk18c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 09:36:46 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37S9aLhV003810
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Aug 2023 09:36:21 GMT
+Received: from [10.217.198.224] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 28 Aug
+ 2023 02:36:18 -0700
+Message-ID: <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
+Date:   Mon, 28 Aug 2023 15:06:14 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com
-Cc:     linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        workflows@vger.kernel.org, tools@linux.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it
+ is not available
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
 Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From:   "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
+In-Reply-To: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ab9yEwWZFUr1Bf8RYWr4nubiUf-rs9Np
+X-Proofpoint-ORIG-GUID: ab9yEwWZFUr1Bf8RYWr4nubiUf-rs9Np
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-28_06,2023-08-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 adultscore=0 impostorscore=0 spamscore=0
+ phishscore=0 clxscore=1011 mlxlogscore=643 mlxscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308280087
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,62 +85,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2023 10:07, Guru Das Srinagesh wrote:
-> This script runs get_maintainer.py on a given patch file (or multiple
-> patch files) and adds its output to the patch file in place with the
-> appropriate email headers "To: " or "Cc: " as the case may be. These new
-> headers are added after the "From: " line in the patch.
-> 
-> Currently, for a single patch, maintainers and reviewers are added as
-> "To: ", mailing lists and all other roles are added as "Cc: ".
-> 
-> For a series of patches, however, a set-union scheme is employed in
-> order to solve the all-too-common problem of ending up sending only
-> subsets of a patch series to some lists, which results in important
-> pieces of context such as the cover letter (or other patches in the
-> series) being dropped from those lists. This scheme is as follows:
-> 
-> - Create set-union of all maintainers and reviewers from all patches and
->   use this to do the following per patch:
->   - add only that specific patch's maintainers and reviewers as "To: "
->   - add the other maintainers and reviewers from the other patches as "Cc: "
-> 
-> - Create set-union of all mailing lists corresponding to all patches and
->   add this to all patches as "Cc: "
-> 
-> - Create set-union of all other roles corresponding to all patches and
->   add this to all patches as "Cc: "
-> 
-> Please note that patch files that don't have any "Maintainer"s or
-> "Reviewers" explicitly listed in their `get_maintainer.pl` output will
+Hi Dmitry,
 
-So before you will ignoring the reviewers, right? One more reason to not
-get it right...
+This patch may be useful if there was a case where some PDCs don't have 
+version register populated/available,
+In all PDC versions, version register is always available but due to reg 
+size not good enough in device tree for SM8150 it failed to read.
 
-> not have any "To: " entries added to them; developers are expected to
-> manually make edits to the added entries in such cases to convert some
-> "Cc: " entries to "To: " as desired.
-> 
-> The script is quiet by default (only prints errors) and its verbosity
-> can be adjusted via an optional parameter.
-> 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> ---
->  MAINTAINERS               |   5 ++
->  scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 169 insertions(+)
->  create mode 100755 scripts/add-maintainer.py
-> 
+reg size in device node must be expanded if its too small to access all 
+registers and i think
+additional check in driver to check if size is good enough would not be 
+of much use.
 
-I do not see the benefits of this script. For me - it's unnecessarily
-more complicated instead of my simple bash function which makes
-everything one command less than here.
-One more thing to maintain.
+Thanks,
+Maulik
 
-I don't see the benefits of this for newcomers, either. They should use
-b4. b4 can do much, much more, so anyone creating his workflow should
-start from b4, not from this script.
+On 8/26/2023 3:05 AM, Dmitry Baryshkov wrote:
 
-Best regards,
-Krzysztof
-
+> On Qualcomm SM8150 the PDC resource has size 0x400. When PDC driver
+> tries to read the version register (0x1000), it reads past the end of
+> this resource, causing kernel crash.
+>
+> Check the size of PDC resource before reading the PDC_VERSION register.
+>
+> Fixes: bc82cc42644b ("irqchip/qcom-pdc: Add support for v3.2 HW")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
