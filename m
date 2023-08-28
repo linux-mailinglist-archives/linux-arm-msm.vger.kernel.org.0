@@ -2,79 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F2D878A919
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 11:44:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7661C78A92B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 11:47:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbjH1Jnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 05:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57404 "EHLO
+        id S229544AbjH1Jqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 05:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230146AbjH1Jnf (ORCPT
+        with ESMTP id S230260AbjH1JqT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 05:43:35 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 487D5103
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:43:32 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5007616b756so4775867e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:43:32 -0700 (PDT)
+        Mon, 28 Aug 2023 05:46:19 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41213123
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:45:58 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bccda76fb1so45123071fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:45:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693215810; x=1693820610;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yhVX7VhHlnSep5YYZsTCdxwQxLtdl09EGg1bZ6g3kHs=;
-        b=npagDB+KBbInNvFKGzF9s9QDYgfpIJ5gT98Opzl6gMo3LqH0tzEsqciyGJECtIycS9
-         fa1prqSAN9bz1mNI37oRDUH7xPSYOuv20fKS1DdcoeYyDxXp4YwjuO7KJqijKXNgsJbF
-         YBlyjemay3zgrnvgZK3b61l5/HJIjR/4fKNV5fH1Fufh+lSNxj4XtepDX1OA/csmFMD6
-         LtrLGuW7iM3QGPb3Z14/zMle/2kkUcqvNi/RiyVSQ2K1T7QIOSPXqLCxHVgFUpimA/hr
-         akNJTfmsQ3kt9X/5pyFH8c2kmKgbj1Xp9+I6QesFxvtDZ86WZxJMpeOtfDdx7R+Cs/bf
-         NSuA==
+        d=linaro.org; s=google; t=1693215956; x=1693820756;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rusxYmLJ/HZcugojPMEWWJ5RDjniz2ycIA7Aqq/Y6+Q=;
+        b=m1AjtH+eUzgoS3yBSLT4i27hoMYwwbdW+rmtmXRhhoH6nYci96WlIRzCeuIQ0gzJSx
+         SaaBAbNPHE0t0Pt9CSzimCtqe+cUb1r1II7g9iyQnmvP3BN/wnwG3scD2XrTGYdScka4
+         0/+X6fDZsD8toUj+VWcYdZEr73SEHtMlaeJLuVxJP1kMrIEk1PnSP0GM18kDXIWYbANr
+         7N5STVI4oIgb+GZlqoI5UQOJVA3U5ZUFw7SSpDGiVl1YkiIO2y6u+iLbkSiBWlLwoirN
+         VNdmzXo0iD+mGXjrnAJKtWbZgYgwm/7WvbCs0nxtqmLKSkF5aUSw8+hC+1XX0xOhV7lG
+         6rkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693215810; x=1693820610;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yhVX7VhHlnSep5YYZsTCdxwQxLtdl09EGg1bZ6g3kHs=;
-        b=fmTIKQzJ+I/ihO7NKGyzixuF5OfnSAq/79saPtGXqu2wtavoN8hYfGyguM6s2sZsl8
-         KvwwLD3OqlZJK5jKWbN7VJ5Tit2q5t6A177Fpy32C5JnxHxGMfKKx2qapy38rAJ+7Rny
-         kmAzb8Mk2LJfNS4b81HB6bRGkQHjkur3fmZ45qXNLKM4I70D87WrWyCGbLVO8Aqq71uu
-         pOus52XRrL1/h5UQnmBscReHARdqjE1x6bb+fVq9eCxVqU9YglZoIJvuUeMXdn7ZUnJ8
-         m/E/zGoewsE0xDNJdSX5t52PG6oyf8ZltUrlDhtM/Ukhf+wb0y3jwuzDeONqtbaR/4UL
-         grrQ==
-X-Gm-Message-State: AOJu0YyhA3vd4OcPJ4YiXTgtw2lDwVqge6Yp6lOKHrR0ToBocpCwqMw6
-        MDgcKf4lYpjpgTjiz4UHVfP0/w==
-X-Google-Smtp-Source: AGHT+IHVtdRVQqep/bfO6ii5wgyMfF/IM4dHmUiUi1Mys5yqilgBdyoJueQUpBg3GZPylaUKIm40Xw==
-X-Received: by 2002:ac2:5587:0:b0:500:b3e3:6fa6 with SMTP id v7-20020ac25587000000b00500b3e36fa6mr2660708lfg.68.1693215810437;
-        Mon, 28 Aug 2023 02:43:30 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693215956; x=1693820756;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rusxYmLJ/HZcugojPMEWWJ5RDjniz2ycIA7Aqq/Y6+Q=;
+        b=K95ZlUtG7QMXuTt36TbBEUsB4j4++h/glK5uIGmDmZcN0ZEzvFQ34m/yshppIql7tU
+         ivjyxKt5BcYCnAADngvUqS/kyrQ6yzTTspqc3Wi9+Tu/HdIoV3XYVoYBR9ebilW5CNPN
+         /yZQWiEZhqq4jIHUP+geFWcE1jmXRpY/caA7qiLe99vHMt9WtiD5zuHDo3Nnyc/PrDoK
+         z7QQSq5Kk4n08vW7wfza5ej2LNQvMbFeW7SCOlWpTK8quoS09BvE1zXTtb8qOayYYEtF
+         vayoHuXkdRx80Y6EDu+AI5HSCROwN1yKzvSN6J0vgnkMYfXqUjThBeSn2sRiVMC58CtD
+         prmA==
+X-Gm-Message-State: AOJu0YzNf04NiXUOQGh2SkX7c/dh7bwd5E2njCLJBGYO0OqyM//Tbl5u
+        WF3rZfEe7tGGiHg23/giMTfxUg==
+X-Google-Smtp-Source: AGHT+IGFT98V4kV4nCaLPdXsK8MuhMdn2cVe7BDRU7gUksxtPIexqWAh7oIz7PnqVwrP0w9xUidE5A==
+X-Received: by 2002:a2e:9d08:0:b0:2b9:b4eb:c39c with SMTP id t8-20020a2e9d08000000b002b9b4ebc39cmr17412442lji.8.1693215956521;
+        Mon, 28 Aug 2023 02:45:56 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id u24-20020ac248b8000000b004fe48a27fa1sm1486976lfg.114.2023.08.28.02.43.28
+        by smtp.gmail.com with ESMTPSA id h10-20020a2e900a000000b002ba130e9a29sm1682693ljg.76.2023.08.28.02.45.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 02:43:30 -0700 (PDT)
-Message-ID: <ccd35516-04e4-4e24-82cb-8502d4694e8b@linaro.org>
-Date:   Mon, 28 Aug 2023 11:43:27 +0200
+        Mon, 28 Aug 2023 02:45:56 -0700 (PDT)
+Message-ID: <76b29f8b-9106-4436-a816-926b016f667f@linaro.org>
+Date:   Mon, 28 Aug 2023 11:45:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] cpufreq: qcom-nvmem: support apq8064 cpufreq
- scaling
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: don't read version register if it
+ is not available
+Content-Language: en-US
+To:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
-Content-Language: en-US
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230825213552.1646321-1-dmitry.baryshkov@linaro.org>
+ <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,30 +103,30 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <09d89b1c-8c78-7671-a385-99c6a8910fde@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.08.2023 05:27, Dmitry Baryshkov wrote:
-> This is a split of APQ8064 cpufreq series, as requested by Viresh. This
-> series includes only opp and cpufreq parts, with the DT and soc parts
-> being split to a separate patchset.
+On 28.08.2023 11:36, Maulik Shah (mkshah) wrote:
+> Hi Dmitry,
 > 
-> Each core has independent power and frequency control. Additionally the
-> L2 cache is scaled to follow the CPU frequencies (failure to do so
-> results in strange semi-random crashes).
+> This patch may be useful if there was a case where some PDCs don't have version register populated/available,
+> In all PDC versions, version register is always available but due to reg size not good enough in device tree for SM8150 it failed to read.
 > 
-> Core voltage is controlled through the SAW2 devices, one for each core.
-> The L2 has two regulators, vdd-mem and vdd-dig.
-> 
-No changelog?
+> reg size in device node must be expanded if its too small to access all registers and i think
+> additional check in driver to check if size is good enough would not be of much use.
+The devicetree change has already been commited and not taking care
+of this on the driver side would break backwards compatibility with
+devicetrees without this change.
+
 
 Konrad
