@@ -2,129 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0722678B424
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 17:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C10B78B465
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 17:25:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230449AbjH1POW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 11:14:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41742 "EHLO
+        id S229756AbjH1PZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 11:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232554AbjH1PON (ORCPT
+        with ESMTP id S232214AbjH1PY6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 11:14:13 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2CC11B;
-        Mon, 28 Aug 2023 08:14:07 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 860961F383;
-        Mon, 28 Aug 2023 15:14:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1693235646; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=a7/Km/jKsLvw/NKxCW99seF9lWJLgqSMYTjISiIIMKY=;
-        b=juD3P3pg0IENzHff2mRHsgSANByBQnrGln5C3hvcCzhoqJYhonY1TUGpJLhJZGgf0MvXcP
-        +PtjfZah9cWEzPiDO9+Gvo9S+TGt9hH960NL/IiEVuDEDqEVWDLncPTnHthr0sf4alrAhT
-        fb9+7E0p4jOMihGKndQ3IVBUdJb8VL8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1693235646;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=a7/Km/jKsLvw/NKxCW99seF9lWJLgqSMYTjISiIIMKY=;
-        b=dvUTP6SlcF9q6wm+rNzL0rLC/Km4gFRV9ib+4Lm87cMoll/Oolti2EbwuhB3xhWG+WRWFB
-        7gf3JDwBCteRWTDQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3502913A11;
-        Mon, 28 Aug 2023 15:14:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id y/UUDL657GTYdgAAMHmgww
-        (envelope-from <vbabka@suse.cz>); Mon, 28 Aug 2023 15:14:06 +0000
-Message-ID: <9aec0740-2482-d3ad-caf2-5e6278a050b3@suse.cz>
-Date:   Mon, 28 Aug 2023 17:14:05 +0200
+        Mon, 28 Aug 2023 11:24:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325F7E0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 08:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1693236249;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=fvt8AW+mIi2eZBWcexrLs2yuZIumHq8i5HiBkv83ZV4=;
+        b=Szj9H3Dfr6iaQ+6/zhTBVqVWZdYADwV0OJxHlPg2awQugoo7XSQK/CL7i3Z+HwlCSxJEoy
+        1fGrKHnOkI62zokrPz4mKHfy92IvqGZ0TUz0qVBEgMOU7AaEjKPh08YDKWZpf0LGYCzkPK
+        FqrNPUxbN/cFk/Dftc1VETIgXWRHzfY=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561--KheOTpNMVyGdt8dxjswXw-1; Mon, 28 Aug 2023 11:24:08 -0400
+X-MC-Unique: -KheOTpNMVyGdt8dxjswXw-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6491907dba4so30232016d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 08:24:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693236247; x=1693841047;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fvt8AW+mIi2eZBWcexrLs2yuZIumHq8i5HiBkv83ZV4=;
+        b=G69F2QMsK4AaoDOKc/DW4kxnz3O+jQKS9mj+TjoHjJSmbX8hLlSJAkmt94/cWTAouD
+         9MUbmV/czJEI2MsISHxx7m4dTr5sDN7rPPHBrgVh2vC4eXU/OzD8rNfFK9caPn49IpdC
+         kXoL1qqhuXuPjpwbly1VNTL3W7Hvv7HKLpYSrSIP/7CiMhmZXUS5Jqjus49uAtbajnDC
+         D1oBjwXgNk0AjKjcCEqoAN1R9zSUGLSnBsYrkAHdaYr+kv4LaGVYiy/aea2D1ChSkYW8
+         CgRmSDrlQgXR0eKHODZSrqeWBmEKdfui/MCTAe5IpfeSKiICx5jqeQONl1YRpFoq6W6k
+         ay4Q==
+X-Gm-Message-State: AOJu0Yyvc/3XuwDYeAoVnQ9ZSitzpVqmBrJtrCY8xVoHG/EHot8qTWhk
+        z2Kw/a1bWmPJxp8krriZZ2v2KcXY0va46eb6y6/wm3gdRIyRhug6OCAVUI3DmgsdWGRya+U++qk
+        tSuRcsYpJ+QwCKCN16efDXDwEwQ==
+X-Received: by 2002:ad4:5d66:0:b0:647:225e:13cc with SMTP id fn6-20020ad45d66000000b00647225e13ccmr32576420qvb.31.1693236247637;
+        Mon, 28 Aug 2023 08:24:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEl6XRmltSExgA8qzDmTIFQeCM0HRt2xpp2Va0ZoaBZdkg+stEwSFsNHM1N6xPTJIw21/P/hw==
+X-Received: by 2002:ad4:5d66:0:b0:647:225e:13cc with SMTP id fn6-20020ad45d66000000b00647225e13ccmr32576403qvb.31.1693236247434;
+        Mon, 28 Aug 2023 08:24:07 -0700 (PDT)
+Received: from fedora.redhat.com ([107.171.218.122])
+        by smtp.gmail.com with ESMTPSA id m9-20020a0cf189000000b0063fbfbde4adsm2632860qvl.129.2023.08.28.08.24.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Aug 2023 08:24:06 -0700 (PDT)
+From:   Adrien Thierry <athierry@redhat.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Adrien Thierry <athierry@redhat.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v2 0/2] phy: qcom-qmp-usb: fix initialization of PCS_USB
+Date:   Mon, 28 Aug 2023 11:23:49 -0400
+Message-ID: <20230828152353.16529-1-athierry@redhat.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Jani Nikula <jani.nikula@intel.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, workflows@vger.kernel.org,
-        tools@linux.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <87jztf37ny.fsf@intel.com>
- <20230828133554.GA818859@hu-bjorande-lv.qualcomm.com>
- <CAMuHMdU+3oj+-3=f5WFVTRsKQjqCpU8SnVqKSZGk8XRxhsDcVQ@mail.gmail.com>
-From:   Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <CAMuHMdU+3oj+-3=f5WFVTRsKQjqCpU8SnVqKSZGk8XRxhsDcVQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/28/23 15:48, Geert Uytterhoeven wrote:
-> Hi Bjorn,
-> 
-> On Mon, Aug 28, 2023 at 3:37 PM Bjorn Andersson
-> <quic_bjorande@quicinc.com> wrote:
->> On Mon, Aug 28, 2023 at 11:14:41AM +0300, Jani Nikula wrote:
->> > On Sat, 26 Aug 2023, Guru Das Srinagesh <quic_gurus@quicinc.com> wrote:
->> > > This script runs get_maintainer.py on a given patch file (or multiple
->> > > patch files) and adds its output to the patch file in place with the
->> > > appropriate email headers "To: " or "Cc: " as the case may be. These new
->> > > headers are added after the "From: " line in the patch.
->> >
->> > FWIW, I personally prefer tooling to operate on git branches and commits
->> > than patches. For me, the patches are just an intermediate step in
->> > getting the commits from my git branch to the mailing list. That's not
->> > where I add the Cc's, but rather in the commits in my local branch,
->> > where they're preserved. YMMV.
->> >
->>
->> May I ask how you add/carry the recipients in a commit?
-> 
-> I guess below a "---" line in the commit description?
+This series attempts at making sure PCS_USB registers are properly
+initialized. I tested it on the sa8775p. AFAICT there's no noticeable
+change before/after the patch series: lsusb and dmesg output are the same.
+USB is still working properly. I don't know what those PCS_USB registers
+do exactly on the qmp PHY and I don't have access to the PHY datasheet, so
+it's hard for me to tell the impact of them being initialized vs not.
 
-Does that do anything special in commit log? I'd expect (and I do it that
-way) it's rather just adding a
+v1 -> v2:
+- Don't fallback to pcs for PCS_USB initialization (Dmitry Baryshkov)
 
-Cc: Name <email>
+Adrien Thierry (2):
+  phy: qcom-qmp-usb: initialize PCS_USB registers
+  phy: qcom-qmp-usb: split PCS_USB init table for sc8280xp and sa8775p
 
-in the tag area where s-o-b, reviewed-by etc are added.
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-> Gr{oetje,eeting}s,
-> 
->                         Geert
-> 
+-- 
+2.41.0
 
