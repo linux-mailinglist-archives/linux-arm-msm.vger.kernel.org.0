@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 540DE78AE22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:58:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 121FA78AE1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:58:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232295AbjH1K5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:57:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57874 "EHLO
+        id S232287AbjH1K5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 06:57:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232536AbjH1K43 (ORCPT
+        with ESMTP id S232441AbjH1K4x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:56:29 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAD0E26B1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:55:56 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bcde83ce9fso45761231fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:55:56 -0700 (PDT)
+        Mon, 28 Aug 2023 06:56:53 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37ABF1A3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:56:45 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bcc331f942so36279361fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693220135; x=1693824935;
+        d=linaro.org; s=google; t=1693220203; x=1693825003;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X8Kw9Gk3+Q3NbpaubJDvq27IOe+OQQYt7bdMuLQlMe8=;
-        b=Uhir4f1KTK3Tfx3FJrC4gazSMf8I+qvnAd1pT0CYtgMZjGgCT5u53/uVJtdINK70TP
-         BfoTEp+ZXg+ulMdp9CHN4kM2AWfJ3KNFH/0b+2zPjvegqL7GYEsnhAmPuupgEXoVKnuk
-         WyXpGKvM63ZAzn1x0730QZPXx+lb2soPd9W7aditJWjY/pQNU+7bwRjnr2MOwIJN7OTM
-         8uhOc7axKp4oBHY3Pxzacc/Q7DA/ySlbgQG8zPagzx7EXtUxZd56zhAvxUjwXrBSst7X
-         qzuYJuwN5yKyDE6+RYe/BOCRR/1mub7toAOrYCBjP5L67quXljzdyVOAfZqPin28EnhT
-         2Qhw==
+        bh=srKA/ALXPSnQ62rsT+MiaUT6YrnaLtt+5wgGzzrgvds=;
+        b=g0A7NBMC9NL0QQM0wY+Dsz4aYlU8NeO8roX0MzalgcIVUkmBZygRh/kE0lgvSr/W62
+         OeNgHLiFg7ExsaxgXwMZsKeQrnutK2QkksymgT70hS6ZGqwPxx8uf/NEBYWTnWOUak+H
+         13rh3m7URj+eiC3/NPOtj348NgbckkxpGSEMlisGH/NOKWmlKynGAtoY4V1Pojh3FvAT
+         pGk0iRqYH03INQmPriOY5K9ycdy/RLFPtsUPm4tp/hswpFoxUNFiaOeo+G3TXTgmp2DJ
+         10xwPJH6qQ1T1iFf3eFRX6+9DHciBw41BZcRaBr40OZmWdA+CAWZ00zqJdoDnqblEaPJ
+         5uUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693220135; x=1693824935;
+        d=1e100.net; s=20221208; t=1693220203; x=1693825003;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X8Kw9Gk3+Q3NbpaubJDvq27IOe+OQQYt7bdMuLQlMe8=;
-        b=igDhAZj07pnLBCkAwfWBhBWpcA7qf+8bs4rnKwLPe7bJ/Hi0J0bs/QHkqr0mKb43eb
-         QrQZtY6HrcGxkMktvpfBCZCB7nJRTnRUzwRpLns6jhR9bE93za8LFCFz6UNLm7K2C5I6
-         r0inQ4yCUb9fzr3SsBpAe3H3rsUlOQ9Pjf9E2lzvgz91HkwW4SSCxBnSpr2/kDB9vzyP
-         kFCoa2gssAGSd+CEi4u0ICt0acoVyhw3dFI/nudyWLsapDeZgKU+FVjNtYsVDH3zY4+V
-         84ftl3CfG+rvx55dH3HZvEpvFhUjzxx6eRJW9RM70Soi5OjE8gdyZN/Z0HCymv0TOQ6N
-         BvCg==
-X-Gm-Message-State: AOJu0YzDpGeu7cC7s/m706d1Mmu1Rhp634Kh/EwkQgm//GIH71lCIY/I
-        Faek61X+aOv7bd5oS45mLcLL/A==
-X-Google-Smtp-Source: AGHT+IHoOA10Yb85WM5JQrFoTFK2LBF0w7IuZdHV/H6yvcuikPFOGbWNlMbUo7HIGAptpU7oRjpDhQ==
-X-Received: by 2002:a2e:9e97:0:b0:2b9:ba02:436c with SMTP id f23-20020a2e9e97000000b002b9ba02436cmr16901731ljk.28.1693220135519;
-        Mon, 28 Aug 2023 03:55:35 -0700 (PDT)
+        bh=srKA/ALXPSnQ62rsT+MiaUT6YrnaLtt+5wgGzzrgvds=;
+        b=f9vFNTQIKn2pGJmC9swVPi1c8VooztRpPS+PaUym+NeqqaM3eLjQLib0Qci/2WB+eG
+         JUxhF6wWD+luSSaUFju7uXMHNVEfmMTAuXFZRlBnGGp0MsvH2vPoI3WoYIwjV4Vzxu1s
+         IpOZ8zR7G14vubqStMrwx3Oz7vJ2nAc8QNr82/BHnCuE6I4ytLpmMRY+aknZbT0bJUo3
+         FdTJVWulIlcWRRNrugZ/7Lfn4O5e0C7PDodtuKARzceoSrqGiDFOVHjvG66iczMV1nly
+         UtsFMN/Lkh7qR9GYyXKlFsg7qQbYxudv70Dg+CMYZopvnulD8zcrVj+uYcd7fIoxsbK3
+         IOKA==
+X-Gm-Message-State: AOJu0Yzc4N3IfP/bUbB/mj7UlAxvV1DYI7wuc22SuJDCDhq9mBdz3IgQ
+        TNDGy4A7rvuzThWPnxGmBSCsgA==
+X-Google-Smtp-Source: AGHT+IHTtnlPqthCzOC6wPyXJohzr03QjLSt+lEdrakLa7RNz/guZwXTE6EYvN9OfxQlKYOMJiMcCQ==
+X-Received: by 2002:a2e:b74b:0:b0:2bc:c2d8:e050 with SMTP id k11-20020a2eb74b000000b002bcc2d8e050mr8231520ljo.24.1693220203517;
+        Mon, 28 Aug 2023 03:56:43 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002b6d7682050sm1698240lji.89.2023.08.28.03.55.34
+        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002b6d7682050sm1698240lji.89.2023.08.28.03.56.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 03:55:35 -0700 (PDT)
-Message-ID: <b42a00ab-1fc1-49f5-aee8-f435648cc816@linaro.org>
-Date:   Mon, 28 Aug 2023 12:55:34 +0200
+        Mon, 28 Aug 2023 03:56:43 -0700 (PDT)
+Message-ID: <1c38d466-a878-44f3-bc9f-25d26c07ebb3@linaro.org>
+Date:   Mon, 28 Aug 2023 12:56:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 16/23] ARM: dts: qcom: apq8064: add L2 cache scaling
+Subject: Re: [PATCH v4 17/23] ARM: dts: qcom: apq8064: add simple CPUFreq
+ support
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -73,7 +74,7 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Christian Marangi <ansuelsmth@gmail.com>,
         Stephan Gerhold <stephan@gerhold.net>
 References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-17-dmitry.baryshkov@linaro.org>
+ <20230827115033.935089-18-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,13 +111,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230827115033.935089-17-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230827115033.935089-18-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -124,8 +124,9 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 27.08.2023 13:50, Dmitry Baryshkov wrote:
-> Populate L2 cache node with clock, supplies and OPP information to
-> facilitate scaling L2 frequency.
+> Declare CPU frequency-scaling properties. Each CPU has its own clock,
+> how all CPUs have the same OPP table. Voltage scaling is not (yet)
+> enabled with this patch. It will be enabled later.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
