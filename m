@@ -2,125 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFDED78B5A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 18:52:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2A4678B5BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 19:01:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232585AbjH1Qvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 12:51:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38522 "EHLO
+        id S229974AbjH1RAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 13:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230508AbjH1Qvd (ORCPT
+        with ESMTP id S232152AbjH1RAW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 12:51:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F7311D;
-        Mon, 28 Aug 2023 09:51:31 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37SFqH6a024952;
-        Mon, 28 Aug 2023 16:51:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=9PBrR4jk55eipB1X4aqSkySykCN0uMDYG07U4ikjyAM=;
- b=nN/XBuAKQ8eLwATKEkSMeBqYNYuTcgBRacvpQqyCXP3N0t72pp3D0IR4hqljz7LrRfyx
- wncPy6ZKgc7c16wysZdrS+3JWdUUd4mCFcE0DNdzMGcb1ErfoBxFzZ+BSt8cwgeC5K6u
- 97DGdmoTfPiGEaRygyTM7a1MSL9LRgf7ZAgPTPHBrkQJm8Z5Wf1LpmSCimBCNPJDNuod
- 7/YZMbH8EtQh/j2a65LUwht6W9QNSt1i7/d+RLGyjH5Q7ADdQylLr4Sn3JpSUqLtL2ug
- d3gSEJmLCgmaZ50CB4yHsgH7SOGE6ItHax8Wr2oLZLtJivZrNWVSn+N5bfr9yJF869vS 7w== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sq9m8v729-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Aug 2023 16:51:02 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37SGp1Fg009324
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Aug 2023 16:51:01 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 28 Aug
- 2023 09:50:59 -0700
-Date:   Mon, 28 Aug 2023 09:50:57 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Jani Nikula <jani.nikula@intel.com>
-CC:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Andrew Morton" <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <quic_pkondeti@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, <workflows@vger.kernel.org>,
-        <tools@linux.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-Message-ID: <20230828165057.GB23466@quicinc.com>
-Mail-Followup-To: Jani Nikula <jani.nikula@intel.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, workflows@vger.kernel.org,
-        tools@linux.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <87jztf37ny.fsf@intel.com>
+        Mon, 28 Aug 2023 13:00:22 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F7BB4;
+        Mon, 28 Aug 2023 10:00:19 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 3F9105AA;
+        Mon, 28 Aug 2023 18:58:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1693241937;
+        bh=wSes04bw3l6N6NXQnvUcioTMnfn9XPGaRGnnPYAbHtw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OkkOMlGu/iZXRT/6zuJNUXS7Tw7LYplCQlhomh9oLQGU7d+dOi1ic+gPdHC+yu2Xh
+         +UOfDQAQOk764H0JH9mLdtuClbq+V8Cck6yggWF3qA7EAuTVffQh/iqUU2r1/vjSGR
+         r7g3XuVFC+f6db5oBTv+4AYmZwNTRsjhQvcY3QoQ=
+Date:   Mon, 28 Aug 2023 20:00:27 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hverkuil-cisco@xs4all.nl, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/9] media: qcom: camss: Fix pm_domain_on sequence in
+ probe
+Message-ID: <20230828170027.GV14596@pendragon.ideasonboard.com>
+References: <20230822200626.1931129-1-bryan.odonoghue@linaro.org>
+ <20230822200626.1931129-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87jztf37ny.fsf@intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VhG6oX1ZF1JTKIw_AvnNzhY7zv28Elfv
-X-Proofpoint-GUID: VhG6oX1ZF1JTKIw_AvnNzhY7zv28Elfv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-28_14,2023-08-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- bulkscore=0 clxscore=1011 mlxscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=705
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308280149
+In-Reply-To: <20230822200626.1931129-2-bryan.odonoghue@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Aug 28 2023 11:14, Jani Nikula wrote:
-> On Sat, 26 Aug 2023, Guru Das Srinagesh <quic_gurus@quicinc.com> wrote:
-> > This script runs get_maintainer.py on a given patch file (or multiple
-> > patch files) and adds its output to the patch file in place with the
-> > appropriate email headers "To: " or "Cc: " as the case may be. These new
-> > headers are added after the "From: " line in the patch.
+Hi Bryan,
+
+Thank you for the patch.
+
+On Tue, Aug 22, 2023 at 09:06:18PM +0100, Bryan O'Donoghue wrote:
+> We need to make sure camss_configure_pd() happens before
+> camss_register_entities() as the vfe_get() path relies on the pointer
+> provided by camss_configure_pd().
 > 
-> FWIW, I personally prefer tooling to operate on git branches and commits
-> than patches. For me, the patches are just an intermediate step in
-> getting the commits from my git branch to the mailing list. That's not
-> where I add the Cc's, but rather in the commits in my local branch,
-> where they're preserved. YMMV.
+> Fix the ordering sequence in probe to ensure the pointers vfe_get() demands
+> are present by the time camss_register_entities() runs.
+> 
+> In order to facilitate backporting to stable kernels I've moved the
+> configure_pd() call pretty early on the probe() function so that
+> irrespective of the existence of the old error handling jump labels this
+> patch should still apply to -next circa Aug 2023 to v5.13 inclusive.
+> 
+> Fixes: 2f6f8af67203 ("media: camss: Refactor VFE power domain toggling")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Could you please share more details about your workflow? Specifically, how you
-fit `get_maintainer.pl` in it.
+It seems like the device links and power domains won't be properly
+cleaned up if probe fails. The problem predates this patch though, so
+even if moving genpd initialization may make it worse, it's not a reason
+to block this patch.
 
-Thank you.
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-Guru Das.
+Maybe a patch further in the series will fix this :-)
+
+> ---
+>  drivers/media/platform/qcom/camss/camss.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index f11dc59135a5a..75991d849b571 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1619,6 +1619,12 @@ static int camss_probe(struct platform_device *pdev)
+>  	if (ret < 0)
+>  		goto err_cleanup;
+>  
+> +	ret = camss_configure_pd(camss);
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to configure power domains: %d\n", ret);
+> +		goto err_cleanup;
+> +	}
+> +
+>  	ret = camss_init_subdevices(camss);
+>  	if (ret < 0)
+>  		goto err_cleanup;
+> @@ -1678,12 +1684,6 @@ static int camss_probe(struct platform_device *pdev)
+>  		}
+>  	}
+>  
+> -	ret = camss_configure_pd(camss);
+> -	if (ret < 0) {
+> -		dev_err(dev, "Failed to configure power domains: %d\n", ret);
+> -		return ret;
+> -	}
+> -
+>  	pm_runtime_enable(dev);
+>  
+>  	return 0;
+
+-- 
+Regards,
+
+Laurent Pinchart
