@@ -2,94 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 900F378A723
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:06:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E6E378A720
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbjH1IF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 04:05:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45942 "EHLO
+        id S229613AbjH1IGD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 04:06:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbjH1IF3 (ORCPT
+        with ESMTP id S229869AbjH1IFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 04:05:29 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DFF0131
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 01:05:22 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-401187f8071so17998915e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 01:05:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693209920; x=1693814720;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UQ5Oj6dPwAeurm4890sw86MQpHuIzNsi2cFp4x5AjEw=;
-        b=Or+X4HqXgab7p8Bc6QU0kgEnAZkyk8YD5tkpmqMVP2bvEoJNWb5li3w/ua17Wa1jd/
-         outK8KUi4/EWIH7InY3sIrvRoi2vQUMgwwEjHIbZsjEKHqVMAioGAXIVVXNoBp11B0dp
-         iXxRVbAXtdYnPNZFlu9Oe6tuBBZKW0F82AX2W9I2OUoOt2384aTCEAmkxSXVAK1Yqy6A
-         4saV/a47fveFBAlMNANN4Xwi93Wli3r1T3QhL6gwkTC8I1QakAb2giP9T3b1Y9omdQBP
-         my4CBxpH6LSJp3rYHVtUntPFs9TAExVdAx3pmh94j91d9VDVqaj77usIy1yvs+X439e8
-         glrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693209920; x=1693814720;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UQ5Oj6dPwAeurm4890sw86MQpHuIzNsi2cFp4x5AjEw=;
-        b=XerEIl4kgRdJlkxXh9c05Svj2RjI7sF29aIIHIMYLFe7ias7S+pAlk1KAvVZicx045
-         CWjV0n+Fh4s8n7+3tifZg+IPlLmWnH7AZjvUe74TMGCVHWitqdM0BcPeHh2zGDK+RP7X
-         7wBVfnVea8UFtJjwHDev+de+a3XrOSn3QAkv+KfWj5mtVCBuPTnaH5eAQHh24HRxJ7YS
-         ng+FJNGAPCSUbWIVmR0TCf2vw7rIY5Zky+ziCSAUIBG9xR3zy8uSO96r9XI7k5hJ85Ng
-         D8xy3Kz/kB0mSCmkOrvc6QylGrXB08FzE0OclESBv2wOYyv+crNDRzHsJCm8SaEvjzdh
-         zt7w==
-X-Gm-Message-State: AOJu0Ywe3L8Avl5YoRLiNAX/CAglagmHwaIEEGZmbmoGFZ6h0B8oMqJM
-        c7QAqVDZuxbHx+RvhMDpyPLm9w==
-X-Google-Smtp-Source: AGHT+IF22r5FjSBxYy8sW/y39UnlaDyM/PsQz1C7ObZ/6JiOQheJ1wW/uoh/KdxajGS0R5jzMnWIYA==
-X-Received: by 2002:a7b:c8d0:0:b0:3f6:d90:3db with SMTP id f16-20020a7bc8d0000000b003f60d9003dbmr20239679wml.3.1693209920712;
-        Mon, 28 Aug 2023 01:05:20 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id z16-20020a1c4c10000000b003fa96fe2bd9sm13067035wmf.22.2023.08.28.01.05.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 01:05:20 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 28 Aug 2023 10:04:41 +0200
-Subject: [PATCH v3 6/6] arm64: dts: qcom: sm8450: add TRNG node
+        Mon, 28 Aug 2023 04:05:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65278125;
+        Mon, 28 Aug 2023 01:05:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EBC1C616BA;
+        Mon, 28 Aug 2023 08:05:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62984C433C8;
+        Mon, 28 Aug 2023 08:05:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693209937;
+        bh=gE6AAo7LpJHIX8SAFv0wwRy03H31xBkBS7hCtLUOaO8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qAOpd3aAB5MxDARCQ4QrDCaSU8ylI0MXVkU/mqxVEvwxZK7imseh28543c+ZYTMnx
+         LqABG4kZ6la3bK5Jew+HaK7deWscP9o+YUiIwBgyIMcIkV9gzrLMXTqcNErXW11iaR
+         AVppITIqmcN6u5UbZXdF+iMY8IxMljJyci4yKcdntfTTtO681R4QIW+toek6Nn7TfG
+         cBMZmrt/3cniSXZHmB+V5YcATTpKPDrY9kD5/tSoZFwdd5xkTfsvEqj42F77s7/UUq
+         VE67U61S6IDnIsoPhkd7HkEeaSekUxk17NstamYAtF4ZgCy9rUC+8ZZGcu6moNkMCF
+         2/SN9khKBF4Zw==
+Date:   Mon, 28 Aug 2023 13:35:22 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+Subject: Re: [PATCH V5 3/6] scsi: ufs: qcom: Add multiple frequency support
+ for unipro clk attributes
+Message-ID: <20230828080522.GD5148@thinkpad>
+References: <20230823154413.23788-1-quic_nitirawa@quicinc.com>
+ <20230823154413.23788-4-quic_nitirawa@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230828-topic-sm8550-rng-v3-6-7a0678ca7988@linaro.org>
-References: <20230828-topic-sm8550-rng-v3-0-7a0678ca7988@linaro.org>
-In-Reply-To: <20230828-topic-sm8550-rng-v3-0-7a0678ca7988@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=826;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=dDA/t5wxOksk/sHtfojL7tFaSJFH5RjxPNNhxCh91eY=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk7FU5W5EUQDZTjl8yU1azqFvazPRpMFkFH9e8IRbS
- HclK4HWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZOxVOQAKCRB33NvayMhJ0RkgEA
- CaTwxgg+dHEFnY+HuVmYb7WoBT39wsJ5v3o0AXAAxGVRImWgWbdsX4dLiBQCXJejUtKQjiT3IQAPag
- mSoDOIXsQLhS/huzsgkNI8IIGKzP/W2iLqdcS/IAnpaURWWlOzYTnHYAkMZasvxXXX6now3DjEZpA7
- izTFclq4PAjDclQmzt+2O3s3Z+Xp5OWMk5zhStDfN67z3woCOg6nXMBM5pvhzAwOHAJdPXONRZ3yJC
- kOtKUHnIC2xiQNxWErPpKKQNYXsY5Jy/2YrgdE3UsdaMwz51nzUgUiZL/MWYx2Fj/CCylL2KxYztyI
- INA21YyjzDmO/QYunse2P+CN3DGqr8UJEEQJEn19FMuzg5oLJxW6J+Jk+UCkjCpv8HvzWi/X7XQjYX
- 4p1kG5mtmeQPZnqwPdDt0RZsprTEl7GmscLXNHtRmW4jmZyuBmHwoxRdg4oeJsX8aO5yu9YZkTs6JH
- L0K0Ib1f/m5SFcqWdq4S+EZXDWLrMDBKCWs4Da0EUs7zRHcBVVXSEEh2IHs25vRXBVmJTnLKYvWPmw
- sgcjjQOI1hozD8iwdJCpya2daexh/caJtYiuRimg8+qBAUFuWeac4uCAH34y/wwY2aoPt46aLueGVe
- QQbYd3sJPXLo7nZVwAy15mY2IIet3Vy0h0bS7bJCrrU6/37REr9/IutKXxPA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230823154413.23788-4-quic_nitirawa@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,32 +61,196 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SM8450 SoC has a True Random Number Generator, add the node with
-the correct compatible set.
+On Wed, Aug 23, 2023 at 09:14:10PM +0530, Nitin Rawat wrote:
+> Add Support to configure CORE_CLK_1US_CYCLES, PA_VS_CORE_CLK_40NS_CYCLES
+> for multiple unipro clock frequencies. Currently this is handled only for
+> only 150Mhz and 75MHz.
+> 
+> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 88 ++++++++++++++++++++++++++++++++-----
+>  drivers/ufs/host/ufs-qcom.h |  9 ++++
+>  2 files changed, 87 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index abc0e7f7d1b0..8162b19191a9 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -671,6 +671,45 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>  	return 0;
+>  }
+> 
+> +static int ufs_qcom_cfg_core_clk_ctrl(struct ufs_hba *hba)
+> +{
+> +	struct list_head *head = &hba->clk_list_head;
+> +	struct ufs_clk_info *clki;
+> +	u32 max_freq = 0;
+> +	int err;
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+Let's use "ret" from now onwards. Existing "err" can be cleaned up later.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 6ae64059cea5..e267c6286b1a 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1738,6 +1738,11 @@ spi14: spi@a98000 {
- 			};
- 		};
- 
-+		rng: rng@10c3000 {
-+			compatible = "qcom,sm8450-trng", "qcom,trng";
-+			reg = <0 0x010c3000 0 0x1000>;
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sm8450-pcie0";
- 			reg = <0 0x01c00000 0 0x3000>,
+> +
+> +	list_for_each_entry(clki, head, list) {
+> +		if (!IS_ERR_OR_NULL(clki->clk) &&
+> +			!strcmp(clki->name, "core_clk_unipro")) {
+
+Odd indentation.
+
+> +			max_freq = clki->max_freq;
+> +			break;
+> +		}
+> +	}
+> +
+> +	switch (max_freq) {
+> +	case MHZ_403:
+
+UNIPRO_CORE_CLK_FREQ_403_MHZ?
+
+Same applies to other defines.
+
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 403, 16);
+
+#define to_cycles_per_1us(freq)		(freq / (1000 * 1000))
+
+		ret = ufs_qcom_set_core_clk_ctrl(hba, to_cycles_per_1us(max_freq), 16);
+
+> +		break;
+> +	case MHZ_300:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 300, 12);
+> +		break;
+> +	case MHZ_201_5:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 202, 8);
+> +		break;
+> +	case MHZ_150:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6);
+> +		break;
+> +	case MHZ_100:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4);
+> +		break;
+> +	default:
+> +		dev_err(hba->dev, "unipro max_freq=%u entry missing\n", max_freq);
+
+"UNIPRO clk max frequency (%u) not supported!"
+
+> +		err = -EINVAL;
+
+-ERANGE
+
+> +		break;
+> +	}
+> +
+> +	return err;
+> +}
+>  static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>  					enum ufs_notify_change_status status)
+>  {
+> @@ -686,12 +725,15 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>  			return -EINVAL;
+>  		}
+> 
+> -		if (ufs_qcom_cap_qunipro(host))
+> -			/*
+> -			 * set unipro core clock cycles to 150 & clear clock
+> -			 * divider
+> -			 */
+> -			err = ufs_qcom_set_core_clk_ctrl(hba, 150, 6);
+> +		if (ufs_qcom_cap_qunipro(host)) {
+> +			err = ufs_qcom_cfg_core_clk_ctrl(hba);
+> +			if (err) {
+> +				dev_err(hba->dev,
+> +					"%s cfg core clk ctrl failed\n",
+
+"Failed to configure UNIPRO core clk"
+
+> +					__func__);
+> +				return err;
+> +			}
+> +		}
+> 
+>  		/*
+>  		 * Some UFS devices (and may be host) have issues if LCC is
+> @@ -1369,8 +1411,7 @@ static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
+>  	if (!ufs_qcom_cap_qunipro(host))
+>  		return 0;
+> 
+> -	/* set unipro core clock cycles to 150 and clear clock divider */
+> -	return ufs_qcom_set_core_clk_ctrl(hba, 150, 6);
+> +	return ufs_qcom_cfg_core_clk_ctrl(hba);
+>  }
+> 
+>  static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+> @@ -1401,12 +1442,39 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+>  static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct list_head *head = &hba->clk_list_head;
+> +	struct ufs_clk_info *clki;
+> +	u32 curr_freq = 0;
+> +	int err;
+> 
+>  	if (!ufs_qcom_cap_qunipro(host))
+>  		return 0;
+> 
+> -	/* set unipro core clock cycles to 75 and clear clock divider */
+> -	return ufs_qcom_set_core_clk_ctrl(hba, 75, 3);
+> +
+> +	list_for_each_entry(clki, head, list) {
+> +		if (!IS_ERR_OR_NULL(clki->clk) &&
+> +			!strcmp(clki->name, "core_clk_unipro")) {
+> +			curr_freq = clk_get_rate(clki->clk);
+> +			break;
+> +		}
+> +	}
+> +	switch (curr_freq) {
+> +	case MHZ_37_5:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 38, 2);
+> +		break;
+> +	case MHZ_75:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 75, 3);
+> +		break;
+> +	case MHZ_100:
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, 100, 4);
+> +		break;
+> +	default:
+> +		err = -EINVAL;
+> +		dev_err(hba->dev, "unipro curr_freq=%u entry missing\n", curr_freq);
+> +		break;
+> +	}
+> +
+> +	return err;
+
+Why can't you use the existing ufs_qcom_cfg_core_clk_ctrl() function?
+
+- Mani
+
+>  }
+> 
+>  static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index 325f08aca260..56550fd36c4e 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -79,6 +79,15 @@ enum {
+>  	UFS_MEM_CQIS_VS		= 0x8,
+>  };
+> 
+> +/* QCOM UFS host controller core clk frequencies */
+> +#define MHZ_37_5	37500000
+> +#define MHZ_50		50000000
+> +#define MHZ_75		75000000
+> +#define MHZ_100		100000000
+> +#define MHZ_150		150000000
+> +#define MHZ_300		300000000
+> +#define MHZ_201_5	201500000
+> +#define MHZ_403		403000000
+>  #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
+>  #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
+> 
+> --
+> 2.17.1
+> 
 
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
