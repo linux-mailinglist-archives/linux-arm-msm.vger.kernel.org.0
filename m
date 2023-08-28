@@ -2,153 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9203B78B08C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 14:36:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12A0B78B13F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 15:00:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230232AbjH1MgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 08:36:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
+        id S230380AbjH1NA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 09:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231452AbjH1Mf6 (ORCPT
+        with ESMTP id S232630AbjH1M7y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 08:35:58 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A001E125
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 05:35:53 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2ba1e9b1fa9so47550961fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 05:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693226152; x=1693830952;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U8FHoF0EEmuxAOTXhuGWB0DeQBV57gCB/+pF5x9rYb8=;
-        b=gRDXI736iuTJFUUiRF4E62C+qEsccSMJ1SkQ9nG0QQNdFSO+Kt6BbzdhAUnFTjziGI
-         EeuMZa+UaUDJ+o07JNOtP1S1idXGzCuOzbgyMwziHzkdBfnn7y1EhhTxDUeQxXrsWjbk
-         jQhawFqvcQsACxULxRSjo6oi8DkDNA2MxjEem5JKXrUu3ff/C12sMtdMGIq8cH+oCmX1
-         +FnzUvPvXz7nQYTgWc22cfIF0/73cGcyIOVGJF8nplrtVTn9hFwO4SHZjnSu2flTBWP9
-         dk9B91+11lPK/whCssNn+wc2IYAhvRTCw8Q8NAKTUv/xVQTD7Q9hVym0NbiKxROuv2GC
-         WgiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693226152; x=1693830952;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U8FHoF0EEmuxAOTXhuGWB0DeQBV57gCB/+pF5x9rYb8=;
-        b=NPiv//scCGRDLZp3U3BD2+117QGsbhtBQSlLtWJbW5NC4P4xqgIvITmKSDj8tIo6ul
-         uGsjkL/ywpTZpy4eQPPL26qugscNIx0myDc/Q/5PPBZQvuBGxnN8EGrSQVWRYvnCpSM/
-         Mp1lr72xyVL6uYLUKUdSWKslNd8uzXl1dvFM9lIZ0Gy1k7TDhwuMRmVa8kY4dYyOTXOb
-         2TWWwMZnqXVAR5qZzvDWbdF9N1yQZE4/sAp3yV4N0q57ChU5iKZ4DxGd0/K4wahpwjk+
-         2OySLUy/QNKdpU03yZ/nmin9tF5UXdWBOEQb+Of9GVkErstNSWEr97nja66Rg0T8spiH
-         9XZQ==
-X-Gm-Message-State: AOJu0Yw3Id/p/Wj4xBi1TZ2nHSwCpg+Sn9njuUIjwd7fPCN4lCTqeVDy
-        45BPE9x6lD4MS5gxMgaeW99gF7pPRa0xQohaYWYcVw==
-X-Google-Smtp-Source: AGHT+IHaVAV7m/SxxXQTce6SzKSz9Jg84rLyUgxT39ppgMlbeCRLlAK4JgHzs+HlNgnDqopNISb+nA==
-X-Received: by 2002:a2e:8918:0:b0:2bc:eaec:e23f with SMTP id d24-20020a2e8918000000b002bceaece23fmr9199572lji.43.1693226151808;
-        Mon, 28 Aug 2023 05:35:51 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id l26-20020a2e99da000000b002bcb239a7efsm1742551ljj.56.2023.08.28.05.35.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 05:35:51 -0700 (PDT)
-Message-ID: <790ead1e-7b15-4f88-bdf9-738b24531ef0@linaro.org>
-Date:   Mon, 28 Aug 2023 14:35:49 +0200
+        Mon, 28 Aug 2023 08:59:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EABDD126;
+        Mon, 28 Aug 2023 05:59:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 77D6363A73;
+        Mon, 28 Aug 2023 12:59:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2D5C433C8;
+        Mon, 28 Aug 2023 12:59:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693227590;
+        bh=UWDYrB+OaFsKrZ4prIKM9qiS9QoBdhDptwEyds6RsBQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NlYjenbhMOadwbG6IQ8/yxoAXRKMTlZBeWOqCzDudhuHdmqFm6TSrix8lzt8Gk1dY
+         8KU9wHNTaqBuxZEaoCJUFpmlSqevjIuHJ8FOwHF+D81XQ0hIZfEAgSlGaHZ/oE8FgF
+         +g3zXGbLRPArUplYKArXA6twkHoAvL946Zy7ZM6uQSFxxJeNTxNZFMjBr36pimJCPm
+         7/bX1fRCAp9gSAGeUbHSrErfh8iy0/O4uGCXTKMdvnBJUD3433NLmNQhdECa1dzyYJ
+         9bEq0X+6vsu0+Lo/B/H1wTRagUqYKAOYvZOVVXPPRrJz4hg8nsmXCPVJiZkefJ5DnD
+         qORdGmTSuH6ZQ==
+Date:   Mon, 28 Aug 2023 18:29:35 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc:     Nitin Rawat <quic_nitirawa@quicinc.com>, mani@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        jejb@linux.ibm.com, quic_cang@quicinc.com,
+        quic_nguyenb@quicinc.com, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V5 0/6] scsi: ufs: qcom: Align programming sequence as
+ per HW spec
+Message-ID: <20230828125935.GJ5148@thinkpad>
+References: <20230823154413.23788-1-quic_nitirawa@quicinc.com>
+ <yq1h6omztl3.fsf@ca-mkp.ca.oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 5/7] clk: qcom: Add NSS clock Controller driver for
- IPQ9574
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, richardcochran@gmail.com, arnd@arndb.de,
-        geert+renesas@glider.be, nfraprado@collabora.com, rafal@milecki.pl,
-        peng.fan@nxp.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        netdev@vger.kernel.org
-Cc:     quic_saahtoma@quicinc.com
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
- <20230825091234.32713-6-quic_devipriy@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230825091234.32713-6-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <yq1h6omztl3.fsf@ca-mkp.ca.oracle.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.08.2023 11:12, Devi Priya wrote:
-> Add Networking Sub System Clock Controller(NSSCC) driver for ipq9574 based
-> devices.
+On Fri, Aug 25, 2023 at 05:44:01PM -0400, Martin K. Petersen wrote:
 > 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
-[...]
+> Nitin,
+> 
+> > This patch aligns programming sequence as per Qualcomm UFS hardware
+> > specification.
+> 
+> Which tree is this against? Doesn't apply to 6.6/scsi-queue...
+> 
 
-> +	[UBI3_CLKRST_CLAMP_ENABLE] = { 0x28A04, 9 },
-Please make all hex lowercase.
+Martin, thanks for considering this series. However, I'd request you to wait for
+an Ack from atleast one reviewer/maintainer before merging the Qcom patches.
+Reviews might be delayed, but for sure we are keeping an eye on all patches.
 
-[...]
+- Mani
 
-> +	[PPE_FULL_RESET] = { 0x28A08, 0, 1, 0x1E0000 },
-{ .reg = 0x28a08, .bitmask = GENMASK(foo,bar) },
+> -- 
+> Martin K. Petersen	Oracle Linux Engineering
 
-[...]
-
-> +	ret = devm_pm_runtime_enable(&pdev->dev);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = devm_pm_clk_create(&pdev->dev);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = of_pm_clk_add_clk(&pdev->dev, "nssnoc_nsscc");
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "Failed to acquire nssnoc_nsscc clock\n");
-> +		return ret;
-dev_err_probe, everywhere?
-
-Konrad
+-- 
+மணிவண்ணன் சதாசிவம்
