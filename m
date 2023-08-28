@@ -2,109 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A78F078AB61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:31:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B52678ADA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 12:50:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231365AbjH1KaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 06:30:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46244 "EHLO
+        id S232079AbjH1KuF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 06:50:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231411AbjH1K3x (ORCPT
+        with ESMTP id S232257AbjH1Ktc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 06:29:53 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A20D12D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:29:51 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99bf8e5ab39so390569966b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:29:51 -0700 (PDT)
+        Mon, 28 Aug 2023 06:49:32 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF6FFC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:49:12 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2bcb89b476bso44715491fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 03:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693218589; x=1693823389;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693219744; x=1693824544;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xgWbl8lPDl41Al6QpsrWevt2TQ1ACauu918bY4j1z+s=;
-        b=bb/1I8Sm+ca97kh3b6g55IZcyB3k/N69Wdcm6OZ5O2Yp8H5f9FhmL3lg+5jbnGhVbl
-         /aTvMBwbieOYKlVj7VqcD2DYvC/Sb2uwGOy52Nm81n7mWyAGe8wXxPHQY9cU7hRPbIgZ
-         IpSm/Fi+TSeUmBhFZyp6CFHKrjsAFb2MENhkXo9LmULlSXI5J7+G+/sCvPC5ghCRTq49
-         5w1GsbIl2CSHsNuFWTlUHtPXfRQMtfWXjbtOaG+rurF3wcLeDJkr8L8/hNiF7qn6jLGU
-         UVguUParRgO9JTc5Q9oAlvTZABJDhe+0Zu7M99q2cf4ckB/byeUUkDUQc4R8SQ8TUlaL
-         u/xw==
+        bh=WtO2TTrSnX6G+xITUv8mDjEBqLEfGkUNhiTW4x04Kf4=;
+        b=nex5uLyfaPwtf80LCAHHvJ5dFGyycbg99U/gdZWi0VwPGA5Zo/YINorxdUhRJw6Mo/
+         FaLgpKtS7KLztLHnSiJ0Q4+wEim+gzaOWFUDD9/XYLg/5Sd5gm2y8xzrtrTBqFMJck/F
+         lRP3Ra1W2DoFhKPBROcDQiqj23mEf52wAVHs69Hi7gLR910569BM290FIBA6+O/sI3ys
+         nJIKAOsvQTs6JYZDxOdOM4/bWfSpEFcmoNOiglZBOv0UEJ1pY8QhElCGka5N2wMNWQaH
+         G1dLC2Bsvpc3UoiAnz27m4VM7t+MORhma7+kwp0oPUQjIXlZMmlq/6shV2xzYrIs/f/g
+         6vWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693218589; x=1693823389;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693219744; x=1693824544;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xgWbl8lPDl41Al6QpsrWevt2TQ1ACauu918bY4j1z+s=;
-        b=JIp1B6TGq3L3Ezk6rohhaEvur4Kjzx48dnCMKt0IvhZN6J2KDeOPGmUE/8ud/EGsC5
-         H6t9RkOIlIDDNqXccNABEAok7NESi0C7zxSic/5ahdt09chJcK0XzvFTfUHgBWXr0Ypm
-         vxv48DI2KPBXqsFqtSkTF9IfzetdOaGbQebCYGoK/3ot/bDuLX2X61VKE63RMoUpMIE+
-         apRo06aolTMqywchgX1V+8KAl4fXt355qaRB+7kNYBpVb4g810dPOYgv7k9d6QHLyMMA
-         OBfRljT7AzB//F2zfhvI0OBIvR+3HrrP2f0ZoHo3XPOFzgNLYsKBUsdXKALlSrHswyRK
-         MPnw==
-X-Gm-Message-State: AOJu0YwnUhMxdE+qTeiPcSsjQdIImhubmHbbC0gD77305Cifb/i+9TRw
-        LRV70qXGiKkscXniHD2N7143Og==
-X-Google-Smtp-Source: AGHT+IEvflAPEhQk9eVSwuVE3hLZKV3uv9/1Nn0BRVXbRA8n/i3Y6qZDfP5ehGeIoJ4+m69+C2I4Ug==
-X-Received: by 2002:a17:907:7897:b0:993:f15f:efb7 with SMTP id ku23-20020a170907789700b00993f15fefb7mr19814166ejc.8.1693218589623;
-        Mon, 28 Aug 2023 03:29:49 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.225])
-        by smtp.gmail.com with ESMTPSA id e5-20020a170906044500b0099b8234a9fesm4462264eja.1.2023.08.28.03.29.48
+        bh=WtO2TTrSnX6G+xITUv8mDjEBqLEfGkUNhiTW4x04Kf4=;
+        b=dEQuJgbV2KzzmLq253GgsZnHgBE6/7N+gaRhUfh+zvcplORRYGrJqZnMHZ9N41t/n3
+         ntNrmaEZPOCCmXmeiBAJNeR8UpRNrSGXsCxi+FaVr+7U/+0LK9fLtzZ681Vx3aNjYQQD
+         37FySWXCUkowIHGZD/Qj1SOSRu3chAbj9rpQzARHhXXUVXr79qZHWp5ZH2ttJtKjkDfS
+         P2hlhcrVwaOzkxEWg1cohUURoTRUsolZS9EtdQMXN84hOl48c0LPcnW8wm7Ub59S00Yr
+         +BR3zcvzuZ8gbPtlV+oPhfJZO29UGQCYY41QsoYWN0W18F+Cazv6oq0hBKzgUavJrEQX
+         flTA==
+X-Gm-Message-State: AOJu0YxuUCbKyLS3WEVho7U1Sv4/OyzK3sIU9gnVGtRjKbjEwCJpXJa3
+        AGwMe8pfB2Bt+FgfKWP17oFyfA==
+X-Google-Smtp-Source: AGHT+IE50FbfTJtiVGy9APUH1ROPk5aDpqJAkW5+7B/09VOmAPVNOA9ICPF1VE6lrTafQgRUEBioHQ==
+X-Received: by 2002:a05:651c:146:b0:2b6:9ed0:46f4 with SMTP id c6-20020a05651c014600b002b69ed046f4mr19087979ljd.23.1693219744154;
+        Mon, 28 Aug 2023 03:49:04 -0700 (PDT)
+Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
+        by smtp.gmail.com with ESMTPSA id u11-20020a2ea16b000000b002b6dba16f28sm1710655ljl.127.2023.08.28.03.49.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 03:29:49 -0700 (PDT)
-Message-ID: <5cb45ff4-a279-f47e-8d2f-700856cdff0f@linaro.org>
-Date:   Mon, 28 Aug 2023 12:29:48 +0200
+        Mon, 28 Aug 2023 03:49:03 -0700 (PDT)
+Message-ID: <177d9f9c-3609-4340-b553-b6285e3fd6b2@linaro.org>
+Date:   Mon, 28 Aug 2023 12:49:02 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: sdx65: correct PCIe EP phy-names
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/23] soc: qcom: spm: add support for voltage
+ regulator
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230827114519.48797-1-krzysztof.kozlowski@linaro.org>
- <1c2faca3-d10c-429e-961d-447ae076d319@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1c2faca3-d10c-429e-961d-447ae076d319@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
+ <20230827115033.935089-8-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230827115033.935089-8-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/08/2023 11:53, Konrad Dybcio wrote:
-> On 27.08.2023 13:45, Krzysztof Kozlowski wrote:
->> Qualcomm PCIe endpoint bindings expect phy-names to be "pciephy":
->>
->>   arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dtb: pcie-ep@1c00000: phy-names:0: 'pciephy' was expected
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> drivers/pci/controller/dwc/pcie-qcom-ep.c
-> 549:    pcie_ep->phy = devm_phy_optional_get(dev, "pciephy");
+On 27.08.2023 13:50, Dmitry Baryshkov wrote:
+> The SPM / SAW2 device also provides a voltage regulator functionality
+> with optional AVS (Adaptive Voltage Scaling) support. The exact register
+> sequence and voltage ranges differs from device to device.
 > 
-> welp looks like this never worked..
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-And if only it could have been spotted with some automated tooling,
-before posting to LKML...
-
-> 
-> 
-> Fixes: 9c0bb38414a4 ("ARM: dts: qcom: sdx65: Add support for PCIe EP")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-
-Thanks
-
-Best regards,
-Krzysztof
-
+Konrad
