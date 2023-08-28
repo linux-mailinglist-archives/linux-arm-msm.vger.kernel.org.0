@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDD0C78A93E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 11:49:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C726B78A949
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 11:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbjH1Jsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 05:48:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50968 "EHLO
+        id S229635AbjH1Jus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 05:50:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbjH1Js0 (ORCPT
+        with ESMTP id S229719AbjH1Jug (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 05:48:26 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BA2110C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:48:20 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso44376141fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:48:20 -0700 (PDT)
+        Mon, 28 Aug 2023 05:50:36 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A410E7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:50:33 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ffa248263cso4738797e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Aug 2023 02:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693216098; x=1693820898;
+        d=linaro.org; s=google; t=1693216231; x=1693821031;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zKlHsSeuVGTpkMdRS5+LwSEAr5nAZTkLGPaU8OU91kw=;
-        b=vrxU9MRTJVI2wEm1w5KY5/AjXquGR/9cwq19GOMM2vAL4TN+chHOVLgl65J+ihKaYd
-         cw6fg/G5yyta6HEYoqqiz0a3BsTxT15fKa/D9DeaV3Jnmqoc4ImNvWZR+NjcPXD79WT+
-         RZcjAmPIh7Tx2CjVtRc/vX59lJ26PwF/CvNIaUHyM4UFq3jPuCfVtShZvR/rJV/EmYLv
-         In7l+lsK32Lbn5T2RauQTaJj2vSxZsXi8nRYCXDv3XCsB6S5zRdosn0J/H1ELmtnCnq0
-         Q54ziDSkHKfpKe0/yA46BAllP8kib/Rl/BVagnMVewiCH9opTSibxIVgvmTpFmsQc7V/
-         FwEw==
+        bh=SJPMpeIf/VtSImv+u1qWe4zm+TD++rDWtpyI399Vc8c=;
+        b=Xy7Co4TSovCtYOflRdnCJJQ/w+ZrmK6ikiXpQrmgFDKGwZdOFMjpx3HR9VxIo75vH8
+         YmaLXHaTJYfZQfVXI8aCceMEXBakO5RL84Hy5/aSr6ymCUCgF6QzAOLgKNoM0YrlcVcH
+         B3MLzYdUxNpOSjMXiG8L7RH/WhjivBp1XFtnAgxVy/xORjJgUkkZlqYWOGKqTDqmXxsu
+         vRRsbUT7hKgyJWPHRWoOZJAM0tnk5h43TaXADwXklmQ8zJ4grsCUha5jIv04WhmSkrDf
+         BNLCEez7OmsKJnNfEdEzfR02aNR2eLUD/mBNxLViAi1hKLgZ71Y9kePaIEPri/Rw57xP
+         YHTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693216098; x=1693820898;
+        d=1e100.net; s=20221208; t=1693216231; x=1693821031;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zKlHsSeuVGTpkMdRS5+LwSEAr5nAZTkLGPaU8OU91kw=;
-        b=K6HvRruyV88p8vns6DB0sSV4pcnrTqvDU6oqEq/qGOeHAeVEzCNv3jl3m4oRrX1dLX
-         PQ/fVX/DCHm7UBU5UiRWEGj7Ps4OwGhQ54lu60jhQT4xUm3PQ84jHR/PVRdCJoS+dck5
-         3wKNL1vUtIYthnp7X+TBNQGlfJR7ZEvgq9JcIqcge1syWMNp2bMMHG9nZFXJlAsHVoyf
-         cyadCws4ACtOPdo3NG2kGu5nUyj8Jp4aJ2Ok2API7fEjhoG9lVuLNWZzd2x6Em6s0jv/
-         g9zWQchcMTy+V/d4bYSRWlFZtjPHpdOXETeIdqrTZasW6LCAFzGLL9yzoL1lMp/UfjF6
-         XyXA==
-X-Gm-Message-State: AOJu0YxDUk1REv+7u1sdlVZz1inzxKf+SEwCYYzwMd1Rk1Def1cIPLEt
-        z+IDgostwOGTOI3tbp1Wk6uR+A==
-X-Google-Smtp-Source: AGHT+IFaYsQ3+vhNlH2eIC8IHFmDnZdOcTcoqkP4FAv7PIMBSDyzbC9UH4Sgw+Mag133BPvkVzGMWA==
-X-Received: by 2002:a2e:9b18:0:b0:2bc:db99:1306 with SMTP id u24-20020a2e9b18000000b002bcdb991306mr11760946lji.38.1693216098466;
-        Mon, 28 Aug 2023 02:48:18 -0700 (PDT)
+        bh=SJPMpeIf/VtSImv+u1qWe4zm+TD++rDWtpyI399Vc8c=;
+        b=XD7m+JU0TwZsKXeqB9SBhWAv6dGJ3T46rb82SNXiw+7r8gcwypuB8xSswyNhXXs+BX
+         KdQ0VfqiF85JyNnTOVj/Rd4XpFMMgJXybZ9m61GJ3Ggqx/12PFUdpmV+oAUQIndmMYzE
+         BGjtlGFPNmS+9SNqMGkKibSKXKlgfq4HEDjIxGRArLrTbhRiQZd+3pxgSIQ1Z++7Waui
+         cfDenUeaVuR2vWuYMRCKa85ewH1yXKRM46G1Gr/AyF+FpHKfT6arUm65OoXPXvErCUBY
+         JBGiiCwQmF3JQD/R+XSLmSuhKNRH6htqWlEsgf097T9Ki2UDeTUm0B+0oC44Pbo6MWla
+         gjMA==
+X-Gm-Message-State: AOJu0YyLg+2Mq3K1X+LlXRqgVolmE6km1X7Wg7mwzhpqN6ZlCBx3JjZq
+        nYU+5rPdF2tnBOYLCt2g1ZfykA==
+X-Google-Smtp-Source: AGHT+IGnyMt1dF4dnFb76ZzbflSUIeFuDwgALJIYcmRSwc/Ss4hCR16rIfN7hSrBll62SXJGOmm23g==
+X-Received: by 2002:a05:6512:ba6:b0:500:a378:db71 with SMTP id b38-20020a0565120ba600b00500a378db71mr9461783lfv.57.1693216231436;
+        Mon, 28 Aug 2023 02:50:31 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id h10-20020a2e900a000000b002ba130e9a29sm1682693ljg.76.2023.08.28.02.48.17
+        by smtp.gmail.com with ESMTPSA id g25-20020ac25399000000b004ff8cd27a61sm1503303lfh.213.2023.08.28.02.50.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Aug 2023 02:48:18 -0700 (PDT)
-Message-ID: <31b528cf-53e3-41f8-921c-691614296da4@linaro.org>
-Date:   Mon, 28 Aug 2023 11:48:17 +0200
+        Mon, 28 Aug 2023 02:50:31 -0700 (PDT)
+Message-ID: <9a69b3d5-66bd-4085-8b36-2972b06e0a0a@linaro.org>
+Date:   Mon, 28 Aug 2023 11:50:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm7225-fp4: Revert "arm64: dts:
- qcom: sm7225-fairphone-fp4: Add AW8695 haptics"
+Subject: Re: [PATCH v3] usb: typec: qcom: check regulator enable status before
+ disabling it
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     quic_huliu@quicinc.com,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Luca Weiss <luca.weiss@fairphone.com>
-References: <20230827122842.63741-1-krzysztof.kozlowski@linaro.org>
- <20230827122842.63741-3-krzysztof.kozlowski@linaro.org>
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
+        subbaram@quicinc.com
+References: <20230828-qcom-tcpc-v3-1-e95b7afa34d9@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -104,7 +104,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230827122842.63741-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230828-qcom-tcpc-v3-1-e95b7afa34d9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -117,24 +117,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.08.2023 14:28, Krzysztof Kozlowski wrote:
-> This reverts commit 413821b7777d062b57f8dc66ab088ed390cbc3ec because it
-> was never reviewed, was buggy (report from kernel test robot:
-> https://lore.kernel.org/all/202204090333.QZXMI2tu-lkp@intel.com/) and
-> used undocumented, broken bindings.  Half of the properties in this
-> device are questioned, thus adding DTS node causes only errors and does
-> not make the device usable without the bindings and driver part:
+On 28.08.2023 07:16, Hui Liu via B4 Relay wrote:
+> From: Hui Liu <quic_huliu@quicinc.com>
 > 
->   sm7225-fairphone-fp4.dtb: haptics@5a: failed to match any schema with compatible: ['awinic,aw8695']
->   sm7225-fairphone-fp4.dtb: haptics@5a: awinic,tset: b'\x12' is not of type 'object', 'array', 'boolean', 'null'
->   sm7225-fairphone-fp4.dtb: haptics@5a: awinic,r-spare: b'h' is not of type 'object', 'array', 'boolean', 'null'
+> Check regulator enable status before disabling it to avoid
+> unbalanced regulator disable warnings.
 > 
-> Since bindings were abandoned (4 months since review), revert the commit
-> to avoid false sense of supporting something which is not supported.
-> 
-> Cc: Luca Weiss <luca.weiss@fairphone.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
 > ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Changes in v3:
+> - Take Bryan's proposal to remove enable/disable operation in pdphy
+> enable and pdphy disable function, then enable regulator in pdphy start
+> function and disable it in pdphy stop function.
+The commit message makes no sense now, it should have been updated
+to reflect what you're doing after the logic had changed.
 
 Konrad
