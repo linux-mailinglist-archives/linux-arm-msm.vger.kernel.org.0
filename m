@@ -2,72 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DABD78A74F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:15:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B595F78A778
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Aug 2023 10:18:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbjH1IPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Aug 2023 04:15:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57018 "EHLO
+        id S229738AbjH1ISU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Aug 2023 04:18:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229962AbjH1IOy (ORCPT
+        with ESMTP id S230084AbjH1ISD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Aug 2023 04:14:54 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D1D126;
-        Mon, 28 Aug 2023 01:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693210489; x=1724746489;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=QLFf9ulvG0seTevyAaf2b7IoLOlWlrsa/M3s7UysrKw=;
-  b=g3s9mckMWLK/ulFO5M1mjgOWc3qRx9o4JVn9ZL9ZwtvX9GQwUhkHJkvI
-   RfBx26QRbGps+IMjTX0V3Ho6fokbt+7E1JlXMVh+hPHymh421RzG8ajoh
-   xVdF/sQbyqY+CaKLvZxqdhzlEQcC0ODnGlL6BZygmmXTai+1yJdw8Fa33
-   WyI+8IYB8TOoxdDU3uiGwmhHB4ilyvnJ6DtWwBMSpU5Z941PIA7RWQQku
-   iDbNo6OFBVO25nbToC4C+1grPzwBnTlqdYJ8pS96GJGASdJ6vuNSC7SQC
-   4Rl9ugLmhNYqZihL+3TJ0KP57FlvYULRLJ/CNv+i+oCyfz4EVimYrMbVj
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10815"; a="373936837"
-X-IronPort-AV: E=Sophos;i="6.02,207,1688454000"; 
-   d="scan'208";a="373936837"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2023 01:14:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10815"; a="984786383"
-X-IronPort-AV: E=Sophos;i="6.02,207,1688454000"; 
-   d="scan'208";a="984786383"
-Received: from golubevv-mobl2.ger.corp.intel.com (HELO localhost) ([10.252.57.84])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2023 01:14:43 -0700
-From:   Jani Nikula <jani.nikula@intel.com>
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com
-Cc:     linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        workflows@vger.kernel.org, tools@linux.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-In-Reply-To: <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
-Date:   Mon, 28 Aug 2023 11:14:41 +0300
-Message-ID: <87jztf37ny.fsf@intel.com>
+        Mon, 28 Aug 2023 04:18:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956251A6;
+        Mon, 28 Aug 2023 01:17:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0FE8D633BD;
+        Mon, 28 Aug 2023 08:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CEDC433C7;
+        Mon, 28 Aug 2023 08:17:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693210654;
+        bh=qBWd+q0agMWBA8SxQUSyoQNGqIS2NvJEdeZcW4X58/E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nJFZkjuLooSQvl/kgsH1ZkpLmIIss/WI+uoGjtqSrIOItxcM2Sht5rRE+hu5smAlP
+         Fyq9S4oyFjU4PokoNAr5OxWM3CeaS08mL7HXStL5D7PZ6ITylcbU/jVLgTZwYTyfqv
+         PGiWdHjAs4B1/xbXjYv8rleVmly596b3adDXZerFTBln+dFHz8SiXXIWz8LLgdzltu
+         mb/vkRJ3ryOeMk3X55cDbl2vmVIVDrqvR7OcwimAGD5O1G3/tBWFo4NKD/0XuS2Hti
+         EsLnFCWqjGoGbSlc3BpbQGZgvoyyYPPsvrU6nu1L20P1v5sC4fapSFIOOdl1DMc+Wo
+         pPhARmXvybT9Q==
+Date:   Mon, 28 Aug 2023 13:47:19 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+Subject: Re: [PATCH V5 5/6] scsi: ufs: qcom: Refactor ufs_qcom_cfg_timers
+ function.
+Message-ID: <20230828081719.GG5148@thinkpad>
+References: <20230823154413.23788-1-quic_nitirawa@quicinc.com>
+ <20230823154413.23788-6-quic_nitirawa@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230823154413.23788-6-quic_nitirawa@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,245 +62,174 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 26 Aug 2023, Guru Das Srinagesh <quic_gurus@quicinc.com> wrote:
-> This script runs get_maintainer.py on a given patch file (or multiple
-> patch files) and adds its output to the patch file in place with the
-> appropriate email headers "To: " or "Cc: " as the case may be. These new
-> headers are added after the "From: " line in the patch.
+On Wed, Aug 23, 2023 at 09:14:12PM +0530, Nitin Rawat wrote:
+> This change configures SYS1CLK_1US_REG for pre scale up condition. Also
+> move ufs_qcom_cfg_timers from clk scaling post change ops to clk scaling
+> pre change ops to align with the hardware specification.
+> 
 
-FWIW, I personally prefer tooling to operate on git branches and commits
-than patches. For me, the patches are just an intermediate step in
-getting the commits from my git branch to the mailing list. That's not
-where I add the Cc's, but rather in the commits in my local branch,
-where they're preserved. YMMV.
+Same comment as previous patch. This looks like a bug fix to me.
 
-BR,
-Jani.
+Also, this patch should be splitted into 2. SYS1CLK_1US_REG and
+ufs_qcom_cfg_timers change.
 
+- Mani
 
->
-> Currently, for a single patch, maintainers and reviewers are added as
-> "To: ", mailing lists and all other roles are added as "Cc: ".
->
-> For a series of patches, however, a set-union scheme is employed in
-> order to solve the all-too-common problem of ending up sending only
-> subsets of a patch series to some lists, which results in important
-> pieces of context such as the cover letter (or other patches in the
-> series) being dropped from those lists. This scheme is as follows:
->
-> - Create set-union of all maintainers and reviewers from all patches and
->   use this to do the following per patch:
->   - add only that specific patch's maintainers and reviewers as "To: "
->   - add the other maintainers and reviewers from the other patches as "Cc: "
->
-> - Create set-union of all mailing lists corresponding to all patches and
->   add this to all patches as "Cc: "
->
-> - Create set-union of all other roles corresponding to all patches and
->   add this to all patches as "Cc: "
->
-> Please note that patch files that don't have any "Maintainer"s or
-> "Reviewers" explicitly listed in their `get_maintainer.pl` output will
-> not have any "To: " entries added to them; developers are expected to
-> manually make edits to the added entries in such cases to convert some
-> "Cc: " entries to "To: " as desired.
->
-> The script is quiet by default (only prints errors) and its verbosity
-> can be adjusted via an optional parameter.
->
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
->  MAINTAINERS               |   5 ++
->  scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 169 insertions(+)
->  create mode 100755 scripts/add-maintainer.py
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 0903d87b17cb..b670e9733f03 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8721,6 +8721,11 @@ M:	Joe Perches <joe@perches.com>
->  S:	Maintained
->  F:	scripts/get_maintainer.pl
->  
-> +ADD MAINTAINER SCRIPT
-> +M:	Guru Das Srinagesh <quic_gurus@quicinc.com>
-> +S:	Maintained
-> +F:	scripts/add-maintainer.py
+>  drivers/ufs/host/ufs-qcom.c | 61 +++++++++++++++++++++++++------------
+>  1 file changed, 42 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 491c0173603e..82cf3ac4193a 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -533,7 +533,8 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+>   * Return: zero for success and non-zero in case of a failure.
+>   */
+>  static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+> -			       u32 hs, u32 rate, bool update_link_startup_timer)
+> +				 u32 hs, u32 rate, bool link_startup,
+> +				 bool is_pre_scale_up)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>  	struct ufs_clk_info *clki;
+> @@ -564,11 +565,16 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>  	/*
+>  	 * The Qunipro controller does not use following registers:
+>  	 * SYS1CLK_1US_REG, TX_SYMBOL_CLK_1US_REG, CLK_NS_REG &
+> -	 * UFS_REG_PA_LINK_STARTUP_TIMER
+> -	 * But UTP controller uses SYS1CLK_1US_REG register for Interrupt
+> -	 * Aggregation logic.
+> -	*/
+> -	if (ufs_qcom_cap_qunipro(host) && !ufshcd_is_intr_aggr_allowed(hba))
+> +	 * UFS_REG_PA_LINK_STARTUP_TIMER.
+> +	 * However UTP controller uses SYS1CLK_1US_REG register for Interrupt
+> +	 * Aggregation logic and Auto hibern8 logic.
+> +	 * It is mandatory to write SYS1CLK_1US_REG register on UFS host
+> +	 * controller V4.0.0 onwards.
+> +	 */
+> +	if (ufs_qcom_cap_qunipro(host) &&
+> +	    !(ufshcd_is_intr_aggr_allowed(hba) ||
+> +	    ufshcd_is_auto_hibern8_supported(hba) ||
+> +	    host->hw_ver.major >= 4))
+>  		return 0;
+> 
+>  	if (gear == 0) {
+> @@ -577,8 +583,14 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>  	}
+> 
+>  	list_for_each_entry(clki, &hba->clk_list_head, list) {
+> -		if (!strcmp(clki->name, "core_clk"))
+> -			core_clk_rate = clk_get_rate(clki->clk);
+> +		if (!strcmp(clki->name, "core_clk")) {
+> +			if (is_pre_scale_up)
+> +				core_clk_rate = clki->max_freq;
+> +			else
+> +				core_clk_rate = clk_get_rate(clki->clk);
+> +			break;
+> +		}
 > +
->  GFS2 FILE SYSTEM
->  M:	Bob Peterson <rpeterso@redhat.com>
->  M:	Andreas Gruenbacher <agruenba@redhat.com>
-> diff --git a/scripts/add-maintainer.py b/scripts/add-maintainer.py
-> new file mode 100755
-> index 000000000000..5a5cc9482b06
-> --- /dev/null
-> +++ b/scripts/add-maintainer.py
-> @@ -0,0 +1,164 @@
-> +#! /usr/bin/env python3
+>  	}
+> 
+>  	/* If frequency is smaller than 1MHz, set to 1MHz */
+> @@ -658,7 +670,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>  		mb();
+>  	}
+> 
+> -	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
+> +	if (link_startup && host->hw_ver.major != 0x5) {
+>  		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
+>  			      REG_UFS_CFG0);
+>  		/*
+> @@ -719,7 +731,7 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>  	switch (status) {
+>  	case PRE_CHANGE:
+>  		if (ufs_qcom_cfg_timers(hba, UFS_PWM_G1, SLOWAUTO_MODE,
+> -					0, true)) {
+> +					0, true, false)) {
+>  			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+>  				__func__);
+>  			return -EINVAL;
+> @@ -968,7 +980,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>  	case POST_CHANGE:
+>  		if (ufs_qcom_cfg_timers(hba, dev_req_params->gear_rx,
+>  					dev_req_params->pwr_rx,
+> -					dev_req_params->hs_rate, false)) {
+> +					dev_req_params->hs_rate, false, false)) {
+>  			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+>  				__func__);
+>  			/*
+> @@ -1401,11 +1413,24 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
+>  static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
+> +	int err;
+> 
+>  	if (!ufs_qcom_cap_qunipro(host))
+> -		return 0;
+> +		goto out;
 > +
-> +import argparse
-> +import logging
-> +import os
-> +import sys
-> +import subprocess
-> +import re
-> +
-> +def gather_maintainers_of_file(patch_file):
-> +    all_entities_of_patch = dict()
-> +
-> +    # Run get_maintainer.pl on patch file
-> +    logging.info("GET: Patch: {}".format(os.path.basename(patch_file)))
-> +    cmd = ['scripts/get_maintainer.pl']
-> +    cmd.extend([patch_file])
-> +
-> +    try:
-> +        p = subprocess.run(cmd, stdout=subprocess.PIPE, check=True)
-> +    except:
-> +        sys.exit(1)
-> +
-> +    logging.debug("\n{}".format(p.stdout.decode()))
-> +
-> +    entries = p.stdout.decode().splitlines()
-> +
-> +    maintainers = []
-> +    lists = []
-> +    others = []
-> +
-> +    for entry in entries:
-> +        entity = entry.split('(')[0].strip()
-> +        if any(role in entry for role in ["maintainer", "reviewer"]):
-> +            maintainers.append(entity)
-> +        elif "list" in entry:
-> +            lists.append(entity)
-> +        else:
-> +            others.append(entity)
-> +
-> +    all_entities_of_patch["maintainers"] = set(maintainers)
-> +    all_entities_of_patch["lists"] = set(lists)
-> +    all_entities_of_patch["others"] = set(others)
-> +
-> +    return all_entities_of_patch
-> +
-> +def find_pattern_in_lines(pattern, lines):
-> +    index = 0
-> +    for line in lines:
-> +        if re.search(pattern, line):
-> +            break;
-> +        index = index + 1
-> +
-> +    if index == len(lines):
-> +        logging.error("Couldn't find pattern {} in patch".format(pattern))
-> +        sys.exit(1)
-> +
-> +    return index
-> +
-> +def add_maintainers_to_file(patch_file, entities_per_file, all_entities_union):
-> +    logging.info("ADD: Patch: {}".format(os.path.basename(patch_file)))
-> +
-> +    # For each patch:
-> +    # - Add all lists from all patches in series as Cc:
-> +    # - Add all others from all patches in series as Cc:
-> +    # - Add only maintainers of that patch as To:
-> +    # - Add maintainers of other patches in series as Cc:
-> +
-> +    lists = list(all_entities_union["all_lists"])
-> +    others = list(all_entities_union["all_others"])
-> +    file_maintainers = all_entities_union["all_maintainers"].intersection(entities_per_file[os.path.basename(patch_file)].get("maintainers"))
-> +    other_maintainers = all_entities_union["all_maintainers"].difference(entities_per_file[os.path.basename(patch_file)].get("maintainers"))
-> +
-> +    # Specify email headers appropriately
-> +    cc_lists        = ["Cc: " + l for l in lists]
-> +    cc_others       = ["Cc: " + o for o in others]
-> +    to_maintainers  = ["To: " + m for m in file_maintainers]
-> +    cc_maintainers  = ["Cc: " + om for om in other_maintainers]
-> +    logging.debug("Cc Lists:\n{}".format('\n'.join(cc_lists)))
-> +    logging.debug("Cc Others:\n{}".format('\n'.join(cc_others)))
-> +    logging.debug("Cc Maintainers:\n{}".format('\n'.join(cc_maintainers) or None))
-> +    logging.debug("To Maintainers:\n{}\n".format('\n'.join(to_maintainers) or None))
-> +
-> +    # Edit patch file in place to add maintainers
-> +    with open(patch_file, "r") as pf:
-> +        lines = pf.readlines()
-> +
-> +    # Get the index of the first "From: <email address>" line in patch
-> +    from_line = find_pattern_in_lines("^(From: )(.*)<(.*)@(.*)>", lines)
-> +
-> +    # Insert our To: and Cc: headers after it.
-> +    next_line_after_from = from_line + 1
-> +
-> +    for l in cc_lists:
-> +        lines.insert(next_line_after_from, l + "\n")
-> +    for o in cc_others:
-> +        lines.insert(next_line_after_from, o + "\n")
-> +    for om in cc_maintainers:
-> +        lines.insert(next_line_after_from, om + "\n")
-> +    for m in to_maintainers:
-> +        lines.insert(next_line_after_from, m + "\n")
-> +
-> +    with open(patch_file, "w") as pf:
-> +        pf.writelines(lines)
-> +
-> +def add_maintainers(patch_files):
-> +    entities_per_file = dict()
-> +
-> +    for patch in patch_files:
-> +        entities_per_file[os.path.basename(patch)] = gather_maintainers_of_file(patch)
-> +
-> +    all_entities_union = {"all_maintainers": set(), "all_lists": set(), "all_others": set()}
-> +    for patch in patch_files:
-> +        all_entities_union["all_maintainers"] = all_entities_union["all_maintainers"].union(entities_per_file[os.path.basename(patch)].get("maintainers"))
-> +        all_entities_union["all_lists"] = all_entities_union["all_lists"].union(entities_per_file[os.path.basename(patch)].get("lists"))
-> +        all_entities_union["all_others"] = all_entities_union["all_others"].union(entities_per_file[os.path.basename(patch)].get("others"))
-> +
-> +    for patch in patch_files:
-> +        add_maintainers_to_file(patch, entities_per_file, all_entities_union)
-> +
-> +    logging.info("Maintainers added to all patch files successfully")
-> +
-> +def remove_to_cc_from_header(patch_files):
-> +    for patch in patch_files:
-> +        logging.info("UNDO: Patch: {}".format(os.path.basename(patch)))
-> +        with open(patch, "r") as pf:
-> +            lines = pf.readlines()
-> +
-> +        # Get the index of the first "From: <email address>" line in patch
-> +        from_line = find_pattern_in_lines("^(From: )(.*)<(.*)@(.*)>", lines)
-> +
-> +        # Get the index of the first "Date: " line in patch
-> +        date_line = find_pattern_in_lines("^(Date: )", lines)
-> +
-> +        # Delete everything in between From: and Date:
-> +        # These are the lines that this script adds - any To: or Cc: anywhere
-> +        # else in the patch will not be removed.
-> +        del lines[(from_line + 1):date_line]
-> +
-> +        with open(patch, "w") as pf:
-> +            pf.writelines(lines)
-> +
-> +    logging.info("Maintainers removed from all patch files successfully")
-> +
-> +def main():
-> +    parser = argparse.ArgumentParser(description='Add the respective maintainers and mailing lists to patch files')
-> +    parser.add_argument('patches', nargs='+', help="One or more patch files")
-> +    parser.add_argument('-v', '--verbosity', choices=['debug', 'info', 'error'], default='error', help="Verbosity level of script output")
-> +    parser.add_argument('-u', '--undo', action='store_true', help="Remove maintainers added by this script from patch(es)")
-> +    args = parser.parse_args()
-> +
-> +    logging.basicConfig(level=args.verbosity.upper(), format='%(levelname)s: %(message)s')
-> +
-> +    for patch in args.patches:
-> +        if not os.path.isfile(patch):
-> +            logging.error("File does not exist: {}".format(patch))
-> +            sys.exit(1)
-> +
-> +    if args.undo:
-> +        remove_to_cc_from_header(args.patches)
-> +    else:
-> +        add_maintainers(args.patches)
-> +
-> +if __name__ == "__main__":
-> +    main()
+> +	if (attr) {
+> +		err = ufs_qcom_cfg_timers(hba, attr->gear_rx,
+> +					    attr->pwr_rx, attr->hs_rate,
+> +					    false, true);
+> +		if (err)
+> +			dev_err(hba->dev, "%s ufs cfg timer failed\n",
+> +								__func__);
+> +	}
+> 
+> -	return ufs_qcom_cfg_core_clk_ctrl(hba);
+> +	err = ufs_qcom_cfg_core_clk_ctrl(hba);
+> +out:
+> +	return err;
+>  }
+> 
+>  static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
+> @@ -1441,6 +1466,7 @@ static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
+>  static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
+>  	struct list_head *head = &hba->clk_list_head;
+>  	struct ufs_clk_info *clki;
+>  	u32 curr_freq = 0;
+> @@ -1449,6 +1475,9 @@ static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
+>  	if (!ufs_qcom_cap_qunipro(host))
+>  		return 0;
+> 
+> +	if (attr)
+> +		ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
+> +					 attr->hs_rate, false, false);
+> 
+>  	list_for_each_entry(clki, head, list) {
+>  		if (!IS_ERR_OR_NULL(clki->clk) &&
+> @@ -1480,7 +1509,6 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+>  		bool scale_up, enum ufs_notify_change_status status)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> -	struct ufs_pa_layer_attr *dev_req_params = &host->dev_req_params;
+>  	int err = 0;
+> 
+>  	/* check the host controller state before sending hibern8 cmd */
+> @@ -1510,11 +1538,6 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+>  			return err;
+>  		}
+> 
+> -		ufs_qcom_cfg_timers(hba,
+> -				    dev_req_params->gear_rx,
+> -				    dev_req_params->pwr_rx,
+> -				    dev_req_params->hs_rate,
+> -				    false);
+>  		ufs_qcom_icc_update_bw(host);
+>  		ufshcd_uic_hibern8_exit(hba);
+>  	}
+> --
+> 2.17.1
+> 
 
 -- 
-Jani Nikula, Intel Open Source Graphics Center
+மணிவண்ணன் சதாசிவம்
