@@ -2,152 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C2BF78C2F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 13:03:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54F7278C31C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 13:11:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234215AbjH2LDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 07:03:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51936 "EHLO
+        id S229723AbjH2LLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 07:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235559AbjH2LCz (ORCPT
+        with ESMTP id S230369AbjH2LK5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 07:02:55 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37F8E5B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 04:02:22 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d749f57cb22so3992076276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 04:02:22 -0700 (PDT)
+        Tue, 29 Aug 2023 07:10:57 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC812113
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 04:10:53 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bceb02fd2bso62602871fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 04:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693306942; x=1693911742;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=htUA3Pqo/wgLtU7I+zMlvC08LizycSF6y3MTiiAzjIA=;
-        b=SHVKGTKArE3D4BM2ZsqPPWSUAEyaHwP4S2Gx4s42htL72dNFX86nOXeclRNBARGLdQ
-         ft3NgLRsUXf27FqtWnL0TvxRlODwbu+HLiJsZ/aCxhDDt+ETnIBHk424sRlEQwuT0tmS
-         fL9XC9/7f48QWc4ogDzsHzWuwesB9hxxSutBhCvEWgVPinqCOc3G6lJEa6CeqqoMOCK2
-         eYclgA6jixDwTt++4hayHS6NqX4XO4nF4njBsFSl/mk/wS53yT1nK0NTwLC0D8QE0REf
-         5fqnhXxUWkB2UgPIbyUF2qEOuaWUlOq0ZWV5aXnSzWitbTLqkW5YitIN92Uzv4CpAPcN
-         67eg==
+        d=linaro.org; s=google; t=1693307452; x=1693912252;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0r2GjALbWtOQSWtEI0zRkNY6QzBe9xzJHAY3ewhrC4c=;
+        b=pZ1LoshjGQVaUbh88Ob9zvAlxushJcciivYWBYhFcHdriEAgLklhIcARi0uHyRpDE0
+         99OcSofOZgVnXFlBEv9CTauF+0V9br1FzAmIMSv/NKEpbxGhYjzuBhKB4qd7ZxvPDexm
+         cdoHZSWULazsYv/LA2LqUfqQeTRZN9ORgyZMgVEMIOJrpbugBDQhiAe80r7l6sxFSudc
+         aQXqr1vecodTCeSjBCkXUN9U4NbQOdl5ScuLjRjfjuCyBECwUwW+ZPjNcU7NlLmNzZtY
+         HuWmmEjGt7kZZDDU+9iVkW8p7wSoqqMZK6NbOMVaY44JiJlnDk6rNNO0Grfz40ql3Zow
+         l+Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693306942; x=1693911742;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=htUA3Pqo/wgLtU7I+zMlvC08LizycSF6y3MTiiAzjIA=;
-        b=XWFQvTqSKBH1t2gnov+lYG4LmseeqnU26z+QQVLLqe/BzAEXjJz6t32ZT/iIXv4tCN
-         IIawAQumayI/ZJjA7cKtJDcYfBnKTlGKscZ9wvqjT3D9ASmD3Ft5wySdPLenVMBtbE0Y
-         eWutaTx1R9MqdhyljrhOpnSkpuFX6C+ZHUGwRDcAnTA+ursUhvRKc+xhHPkJoBqTdT5X
-         HHPHtmX3lAXupBx63sgkuXjwq1OPzrJHgzvjAfGDvEaGAtB+/PYfDp6IKXX6ZtKeEHs6
-         8FZ7dsKocoxq8H+ra8BRpgQVBp8BV/adEHSJ8eHb75v0j3jwauKqiRIldyKRLNbzH/Ei
-         rkVg==
-X-Gm-Message-State: AOJu0Yw5s5QKHJ50GN0DCGO6zEGyynXQKkIIpED0pazdrHrUJ/pvONdr
-        S+gMw7bw/TyhLN/CoWRPDNHSFZt91DE6oBMiFzssoQ==
-X-Google-Smtp-Source: AGHT+IHp3Ajd7M1WNI45jKTX2bxQ7+cfWJifOSd/dyJsestJojnJeanITjApP5TIGB6ATtG2mqNPkVJtIObLu75p+i0=
-X-Received: by 2002:a25:1ec4:0:b0:d0c:3be2:b626 with SMTP id
- e187-20020a251ec4000000b00d0c3be2b626mr24690245ybe.30.1693306942195; Tue, 29
- Aug 2023 04:02:22 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693307452; x=1693912252;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0r2GjALbWtOQSWtEI0zRkNY6QzBe9xzJHAY3ewhrC4c=;
+        b=kamCEIvbM5arXipxG+PbnTQl+OmRaSNE36vLGr4T/js2BymJIdF3fRS4x2XFN42Vk9
+         Cl7oDtU+6RBakYa/eWzLKJrJG3CB0v3T/i11Uiv7KPyeKT5Gu312klm3+Rzn75K/T2w1
+         5B9mewLV0ju91rTXKP99BNYPhUCSQZG5pOpkPzlfo3uQANBCCGrwdvdneeBT/AVpg7YU
+         y/gObAZHoE7JKwspMCNSJ0iATx+1ujPu2+Uhmu0Tf6E3YNp47W1lx7BAvgp57Y07W1XG
+         EBuCQHmOEiSuprE/efo9TjgcvxlYeIuEeH5JpP7qlWcnWkOBS2m21fJpJWMkoLfDRATJ
+         FA7Q==
+X-Gm-Message-State: AOJu0YwekQDcl+iQFmFn+he+/Q+MMDXL9dc/Xy22nAF6wgN6iYcF52IU
+        iPAz7rHSGECONCMZEhJjSq9RBA==
+X-Google-Smtp-Source: AGHT+IER1IFZ7/ug9j7OI1vTIHvLWZqoJWfIPZIKhx7eIjEo3PLnmdqCA57+CNtMw5SZZ9zIk5GY1g==
+X-Received: by 2002:a05:6512:2395:b0:4fb:73ce:8e7d with SMTP id c21-20020a056512239500b004fb73ce8e7dmr25341399lfv.15.1693307451972;
+        Tue, 29 Aug 2023 04:10:51 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.196])
+        by smtp.gmail.com with ESMTPSA id t7-20020aa7d4c7000000b00529fa63ef6fsm5551036edr.57.2023.08.29.04.10.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 04:10:51 -0700 (PDT)
+Message-ID: <0941e2f4-6b58-a4e7-3dda-c1723f5503ac@linaro.org>
+Date:   Tue, 29 Aug 2023 13:10:50 +0200
 MIME-Version: 1.0
-References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org> <20230217-topic-cpr3h-v14-3-9fd23241493d@linaro.org>
-In-Reply-To: <20230217-topic-cpr3h-v14-3-9fd23241493d@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 29 Aug 2023 13:01:44 +0200
-Message-ID: <CAPDyKFrXT+2NEMUzVv-kWjXAhLinXq99GKq4_Ge2VjthtYxtaA@mail.gmail.com>
-Subject: Re: [PATCH v14 3/9] dt-bindings: soc: qcom: cpr3: Add bindings for
- CPR3 driver
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: ipq5018: enable the CPUFreq support
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>,
+        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com
+References: <20230829095423.760641-1-quic_gokulsri@quicinc.com>
+ <20230829095423.760641-4-quic_gokulsri@quicinc.com>
+ <f457ee94-81d0-bd28-1432-ba2828dabb79@linaro.org>
+ <efe09cb6-7b67-9307-28e7-99e238a3672b@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <efe09cb6-7b67-9307-28e7-99e238a3672b@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Aug 2023 at 13:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->
-> Add the bindings for the CPR3 driver to the documentation.
->
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> [Konrad: Make binding check pass; update AGdR's email]
-> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 286 +++++++++++++++++++++
->  1 file changed, 286 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-> new file mode 100644
-> index 000000000000..acf2e294866b
+On 29/08/2023 12:56, Robert Marko wrote:
+> 
+> On 29. 08. 2023. 12:12, Krzysztof Kozlowski wrote:
+>> On 29/08/2023 11:54, Gokul Sriram Palanisamy wrote:
+>>> Add the APCS, A53 PLL, cpu-opp-table nodes to set
+>>> the CPU frequency at optimal range.
+>>>
+>>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 34 +++++++++++++++++++++++++++
+>>>   1 file changed, 34 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> index 9f13d2dcdfd5..05843517312c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> @@ -8,6 +8,7 @@
+>>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>>   #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+>>>   #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
+>>> +#include <dt-bindings/clock/qcom,apss-ipq.h>
+>> c is before r.
+>>
+>>>   
+>>>   / {
+>>>   	interrupt-parent = <&intc>;
+>>> @@ -36,6 +37,8 @@ CPU0: cpu@0 {
+>>>   			reg = <0x0>;
+>>>   			enable-method = "psci";
+>>>   			next-level-cache = <&L2_0>;
+>>> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>>> +			operating-points-v2 = <&cpu_opp_table>;
+>>>   		};
+>>>   
+>>>   		CPU1: cpu@1 {
+>>> @@ -44,6 +47,8 @@ CPU1: cpu@1 {
+>>>   			reg = <0x1>;
+>>>   			enable-method = "psci";
+>>>   			next-level-cache = <&L2_0>;
+>>> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>>> +			operating-points-v2 = <&cpu_opp_table>;
+>>>   		};
+>>>   
+>>>   		L2_0: l2-cache {
+>>> @@ -54,6 +59,17 @@ L2_0: l2-cache {
+>>>   		};
+>>>   	};
+>>>   
+>>> +	cpu_opp_table: opp-table-cpu {
+>>> +		compatible = "operating-points-v2";
+>>> +		opp-shared;
+>>> +
+>>> +		opp-1008000000 {
+>>> +			opp-hz = /bits/ 64 <1008000000>;
+>>> +			opp-microvolt = <1100000>;
+>>> +			clock-latency-ns = <200000>;
+>> And the rest of OPPs?
+> Hi Krzysztof,
+> IPQ5018 only supports running at 1.1GHz, but its running at 800MHz
+> by default from the bootloader so there is only one OPP.
 
-[...]
+Isn't this contradictory? If it is running at 800 initially, then it
+supports running at 800...
 
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +    cpus {
-> +        #address-cells = <2>;
-> +        #size-cells = <0>;
-> +
-> +        cpu@0 {
-> +            compatible = "qcom,kryo280";
-> +            device_type = "cpu";
-> +            reg = <0x0 0x0>;
-> +            operating-points-v2 = <&cpu0_opp_table>;
-> +            power-domains = <&apc_cprh 0>;
-> +            power-domain-names = "cprh";
 
-Rather than using a Qcom specific power-domain-name, perhaps a common
-power-domain-name for cpus, that can be used for "the performance
-domain" would be a good idea here?
+Best regards,
+Krzysztof
 
-I have suggested using "perf" for the SCMI performance domain [1],
-perhaps that description should be extended to cover this and other
-performance domains too?
-
-> +        };
-> +
-> +        cpu@100 {
-> +            compatible = "qcom,kryo280";
-> +            device_type = "cpu";
-> +            reg = <0x0 0x100>;
-> +            operating-points-v2 = <&cpu4_opp_table>;
-> +            power-domains = <&apc_cprh 1>;
-> +            power-domain-names = "cprh";
-> +        };
-> +    };
-
-[...]
-
-Kind regards
-Uffe
-
-[1]
-https://lore.kernel.org/linux-arm-kernel/20230825112633.236607-9-ulf.hansson@linaro.org/
