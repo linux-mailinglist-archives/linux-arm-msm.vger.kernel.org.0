@@ -2,193 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 703BF78C029
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:23:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0613C78C068
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:39:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbjH2IWy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 04:22:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54096 "EHLO
+        id S234231AbjH2Iij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 04:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234094AbjH2IWh (ORCPT
+        with ESMTP id S234206AbjH2IiN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 04:22:37 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30B8BDF;
-        Tue, 29 Aug 2023 01:22:35 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bcd7a207f7so60182531fa.3;
-        Tue, 29 Aug 2023 01:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693297353; x=1693902153;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TZx2hAPgb6zexMBqHQBnKFsfmBtJ6v3UCYZHdfm75zk=;
-        b=isCI/UHL/rijnXWcbnjeYAi1Je/vch6QIf3TsTrdhDfl/DY/AMhdJfGZdaZGNzV/18
-         6VTiqksGNNxik81zgiByQPsK4wR+psldPSPTqXoGlfovYXS2tlWvQI6qIlJ6akiOU4XR
-         wbfnF7Swcp8+UEvbE8+T9eHPLPzy9cbqm2O9JCFCgBZykrD1eykl41nh6p4D7Mdq76bq
-         aiAdb3F7PDnUI/JLnIilu+frb3j5A5tszuhfwU7j5qQJABVAYxdc2w/gQJg4zmuZABqn
-         llX2roRrSPEkGdY3yvyRavjWZWgMCr3vVR+4V4QJk1UN9GJDgVfXzgsy3n3pO0zxl05P
-         8OIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693297353; x=1693902153;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TZx2hAPgb6zexMBqHQBnKFsfmBtJ6v3UCYZHdfm75zk=;
-        b=U8Aa4bWxxwZEnoT3MaomTMjdOMTfA5tF90vxqRC0sy3Le+W+4XU8JqpFqLIXM6c6u0
-         nyziL94PuRNN7XUWUjmpj/+tnHwPPY9kDtBVNh71pep1VlkA+3SCKMHDJImz7MmeAo2T
-         hbMhY49P78OijYtE8jLS6D3azOXSYt73CrHLFGWENoseznzFi09Ak64/fe1c64pOm4PE
-         /efLLO8HZvrHOhUjbYaql4YjtWeZieSSS5EYL0d0cbz39UnMkoOYf8CicoWzEUOi5Tyf
-         Qt7rpHFk/Nso6eTZ6JOjf5EiR6V8HfzqjODoJbjYJz7UPgF0GWFnbjOcLoaRreL3joq/
-         cJ5Q==
-X-Gm-Message-State: AOJu0YyTNv6DEKdLqFoefFqeYXsmuiSRdfxdgl6Baybk7iBUFPUbCemS
-        3pganMRTX54OfLlzeN4IUmA=
-X-Google-Smtp-Source: AGHT+IFKGlUrcw3OW+R+3iPrHDJYsUPDRMtiFHIqcU66b25u63kZISd1JgPjox1EJwgWhYds1QzNDg==
-X-Received: by 2002:a2e:a16b:0:b0:2bc:c490:10cf with SMTP id u11-20020a2ea16b000000b002bcc49010cfmr18584533ljl.18.1693297353192;
-        Tue, 29 Aug 2023 01:22:33 -0700 (PDT)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id i4-20020a2e8084000000b002b6d68b520esm2022029ljg.65.2023.08.29.01.22.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Aug 2023 01:22:33 -0700 (PDT)
-Date:   Tue, 29 Aug 2023 11:22:30 +0300
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
-        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
-        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <wayland-devel@lists.freedesktop.org>
-Subject: Re: [PATCH RFC v6 07/10] drm/atomic: Loosen FB atomic checks
-Message-ID: <20230829112230.7106a8bf@eldfell>
-In-Reply-To: <20230828-solid-fill-v6-7-a820efcce852@quicinc.com>
-References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
-        <20230828-solid-fill-v6-7-a820efcce852@quicinc.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+        Tue, 29 Aug 2023 04:38:13 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E7D2139;
+        Tue, 29 Aug 2023 01:38:10 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T7F96k027676;
+        Tue, 29 Aug 2023 08:37:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=2IOlwG3nZRrWfrFToBPXH1yf1wBr3oMotrbKLVbkpwg=;
+ b=A0x+rpUajEae8wRxWQiMrBLQ8C1OjO7IG4IxY1I/x97fhuzX70SPJlUzlcJMa1gW+cXv
+ DbXZ2u+ku6ZKublEkMrkkXYEmKYIFrsgTq5GXVlf9LrECmdGT+0nrJfvnDwAmR9Ncz4R
+ Hhwy/IyLXGrUSVrd3upy8IOVIQDxm0dFA0Y/XvXstWxJNFYnxxSbN7K6ckn053fO82m0
+ LlURPnTwklAsNZ1jKVAg6/6aIwfOD/71CrugqXAFXGJXeBfPLYhJBXds4SXZXv5+TbWA
+ Xwt0u8e/QicrP0fLrG23FROnl248+Xab6AHfQCYKwS5V1VHphkjHS1mATvkhx4CIX+FX Mg== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss6j88u61-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 08:37:25 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37T8bNNS010841
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 08:37:23 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 29 Aug 2023 01:37:18 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <arnd@arndb.de>, <geert+renesas@glider.be>,
+        <nfraprado@collabora.com>, <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-phy@lists.infradead.org>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v10 0/4] Enable IPQ5332 USB2
+Date:   Tue, 29 Aug 2023 14:07:06 +0530
+Message-ID: <cover.1693296360.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/H5g8wKc5R4arUhKQdvg=lAj";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cq5EV1Hw-mLovJ52KoVqu4Vd4JcWnA9K
+X-Proofpoint-GUID: cq5EV1Hw-mLovJ52KoVqu4Vd4JcWnA9K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_05,2023-08-28_04,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=396
+ lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308290073
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/H5g8wKc5R4arUhKQdvg=lAj
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+This patch series adds the relevant phy and controller
+DT configurations for enabling USB2 on IPQ5332
 
-On Mon, 28 Aug 2023 17:05:13 -0700
-Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+v10:
+	Driver: Restore register success print per Dmitry's comment
+	DTS:	usb@8a00000 -> usb@8af8800
+		regulator_s0500 -> regulator-s0500
+v9:
+	Driver: Since the driver code has been picked up for merge,
+		(https://lore.kernel.org/linux-arm-msm/169226613917.81413.1200008047604336868.b4-ty@kernel.org/)
+		adding the coding style fixes alone in this patch.
 
-> Loosen the requirements for atomic and legacy commit so that, in cases
-> where pixel_source !=3D FB, the commit can still go through.
->=20
-> This includes adding framebuffer NULL checks in other areas to account for
-> FB being NULL when non-FB pixel sources are enabled.
->=20
-> To disable a plane, the pixel_source must be NONE or the FB must be NULL
-> if pixel_source =3D=3D FB.
->=20
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/drm_atomic.c        | 20 +++++++++++---------
->  drivers/gpu/drm/drm_atomic_helper.c | 36 ++++++++++++++++++++-----------=
------
->  include/drm/drm_atomic_helper.h     |  4 ++--
->  include/drm/drm_plane.h             | 29 +++++++++++++++++++++++++++++
->  4 files changed, 62 insertions(+), 27 deletions(-)
+		Fix line break alignment
+		Remove register success print
+	DTS:	usb2@8a00000 -> usb@8a00000
+		regulator_fixed_5p0: s0500 -> regulator_fixed_5p0: regulator
+v8:
+	Driver:-
+		Change commit subject and message per review comments
+		Don't include of_platform.h
+		Change struct initialization coding style
+		GENMASK -> BIT for one of the defines
+v7:
+	Binding:-
+		Move 'compatible' to be the first entry
+		In the example have 'usb-phy' instead of 'usb2-phy'
+		Add 'Reviewed-by: Krzysztof Kozlowski'
+v6:
+	Binding and dts:-
+		Dropped the qcom,dwc3.yaml patch as it has been picked up for linux-next
+		Add const to compatible, vdd-supply
+		Move nodes per register address
+	Driver:-
+		Add vdd-supply
+		Cleanup error paths in probe with dev_err_probe
+v5:
+	Binding and dts:-
+		Fix email id
+		Removed 'Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>'
+		as had to change bindings file to be able to use generic phy instead of
+		usb-phy
 
-...
+	Driver:-
+		Remove unused definition
+		Use generic phy instead of usb-phy
+v4:
+	Binding and dts:-
+		Change node name (bindings & dts)
+	Driver:-
+		Remove unused enum
+		static const for '.data'
+		Error handling for devm_clk_get
+v3:
+	Fix bindings file based on review comments
 
-> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
-> index a58f84b6bd5e..4c5b7bcdb25c 100644
-> --- a/include/drm/drm_plane.h
-> +++ b/include/drm/drm_plane.h
-> @@ -992,6 +992,35 @@ static inline struct drm_plane *drm_plane_find(struc=
-t drm_device *dev,
->  #define drm_for_each_plane(plane, dev) \
->  	list_for_each_entry(plane, &(dev)->mode_config.plane_list, head)
-> =20
-> +/**
-> + * drm_plane_solid_fill_enabled - Check if solid fill is enabled on plane
-> + * @state: plane state
-> + *
-> + * Returns:
-> + * Whether the plane has been assigned a solid_fill_blob
-> + */
-> +static inline bool drm_plane_solid_fill_enabled(struct drm_plane_state *=
-state)
-> +{
-> +	if (!state)
-> +		return false;
-> +	return state->pixel_source =3D=3D DRM_PLANE_PIXEL_SOURCE_SOLID_FILL && =
-state->solid_fill_blob;
-> +}
-> +
-> +static inline bool drm_plane_has_visible_data(const struct drm_plane_sta=
-te *state)
-> +{
-> +	switch (state->pixel_source) {
-> +	case DRM_PLANE_PIXEL_SOURCE_NONE:
-> +		return false;
-> +	case DRM_PLANE_PIXEL_SOURCE_SOLID_FILL:
-> +		return state->solid_fill_blob !=3D NULL;
+v1:
+	Cleanup DTS
+	Combine driver, kconfig and makefile patches
+	Remove unused functions from M31 driver
+	Drop the clock driver changes
 
-This reminds me, new UAPI docs did not say what the requirements are for
-choosing solid fill pixel source. Is the atomic commit rejected if
-pixel source is solid fill, but solid_fill property has no blob?
+Varadarajan Narayanan (4):
+  phy: qcom: m31: Fix indentation issues
+  arm64: dts: qcom: ipq5332: Add USB related nodes
+  arm64: dts: qcom: ipq5332: Enable USB
+  arm64: defconfig: Enable M31 USB phy driver
 
-This should be doc'd.
+ arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts | 23 ++++++++++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi       | 55 +++++++++++++++++++++++++++++
+ arch/arm64/configs/defconfig                |  1 +
+ drivers/phy/qualcomm/phy-qcom-m31.c         |  6 ++--
+ 4 files changed, 82 insertions(+), 3 deletions(-)
 
+-- 
+2.7.4
 
-Thanks,
-pq
-
-> +	case DRM_PLANE_PIXEL_SOURCE_FB:
-> +	default:
-> +		WARN_ON(state->pixel_source !=3D DRM_PLANE_PIXEL_SOURCE_FB);
-> +	}
-> +
-> +	return state->fb !=3D NULL;
-> +}
-> +
->  bool drm_any_plane_has_format(struct drm_device *dev,
->  			      u32 format, u64 modifier);
-> =20
->=20
-
-
---Sig_/H5g8wKc5R4arUhKQdvg=lAj
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmTtqsYACgkQI1/ltBGq
-qqeTog/8Dv877MsYgD2yMEFq4iy4cM+PK7kLDTvDtGCBUI7yDeFvqA46SuALLBp2
-R0f6Lm3HkKZjCIcZ2LZZZSiESJCd9KFqoxyqj1dFYtdcUOO1iKISvzXeZJHGb7Qs
-BtjsFYtOGPFE91O+xonH4/UqDHNfZeQ8tCmFMNK7Lw/iaqyCUE5RPQFvDjFOqMAy
-t2BMaQntcKhr4KjIxWgS8n1isaPI/h4hNEzc/WS8rEwblubaamJr8UWQsvtV3sJd
-wCbJHAhMsORQjE15xm6siGTp/x2q9HUjbuDUUvEa+lO9owpXrJPucGMAyhf4flwN
-FOftM6kAYy7+Nu2RxYPzO086JsyGoUnxzIdrlBn5Qq/5a/RfdUosXJYYFPr7tWVC
-CjEJBonNvLLK0QW/mnGs+yD8BoPKp6qI/CbCe1nQhrOWPKSakzpF2DfWmeOmd7bZ
-Kn2xsqNTPZSn6ZE/8HDvtlUloktwJPKvyS1dBZ025YlIBi17exLVwBQREYTVZSS0
-GS9J7h9blKD9I0H/c6vrQpf5wa93SVRka/52LBeNRU82ReaTQyRNH7QFpbIJqvdc
-zXW5oFeQqdBFbZcxB8SGIyYYNLGbwn7/vKbntRcB7GCh/dQAsXIewODNVbGXCa9b
-IgRToTt7i//LwFFH4Uw1+3zNqjuK7SinpSs7ni611esewEEySR8=
-=NP0j
------END PGP SIGNATURE-----
-
---Sig_/H5g8wKc5R4arUhKQdvg=lAj--
