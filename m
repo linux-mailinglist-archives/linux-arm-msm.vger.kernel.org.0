@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 439C578C9FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 18:54:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0444B78CA01
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 18:56:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237472AbjH2QyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 12:54:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57214 "EHLO
+        id S237561AbjH2Qz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 12:55:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237558AbjH2Qx6 (ORCPT
+        with ESMTP id S237626AbjH2QzY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 12:53:58 -0400
+        Tue, 29 Aug 2023 12:55:24 -0400
 Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 377891BB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 09:53:55 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52a3aa99bcdso6459808a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 09:53:55 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 895921B3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 09:55:20 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52a40cf952dso6148178a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 09:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693328034; x=1693932834;
+        d=linaro.org; s=google; t=1693328119; x=1693932919;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ACmQAc0Os4N98Z3d3R/oIFedpQZZYFrbAteEg6HsG0U=;
-        b=I/a0kp/X+qSLU+PdEBr24kCAVtAqmcmI7BCas6WtO3JCDrAbuQynu6E54l+oTgHKmK
-         c9eA+7wqka6EVKEbwNbG4+Eqrp6RkjNGXq9irM4PWeJLwjx2Dmmu7j5EJj9/FiGvCX+E
-         eJ8UJdQZX7URDGf0zr+99AJigTImTySx0pabeADIk6hAtTjCqlEejLjIJjwl9LnhW+MK
-         6vvbpsTmdKZKkypszJJQ3eLuoGNchTYAOIek7jVanMZN8GCYPKbq7WAsYyadiilTApNg
-         QifliMykN14crqmecnBJeWWOA8mvMzoN7EbyarrOlFh2tM6SUoF1oVtk6FgUd+p7Prv8
-         YC+A==
+        bh=3BpJgivS3dlGuz7t1+9iCEke02uZzCJ683AvwGIuOoo=;
+        b=tmGtO8ZTCn9K5zClsMbwhH/hKL3nvRuCXYjKmcjwde5Wwp78tv7UrrrXnc81b4MW21
+         pURng7CBFFmptMmXxVGEalJfHtBIzDcPgRXVL+e/Myfsu095i34PWzY+BhIKQDDz7aax
+         lTCspFt/UKeML95+kyrbtwqlGOFsEc6z2WlbMNlreIy4nNJCqxzC6bnkr1IXaVqtMc5e
+         tawyC/68XUzeyaYUbRtp2oT7uq8z31mfckmw39E4NV5mnfwbLlBUP18DlzKS5gcKs+G+
+         ApGPLCnqGczjxCqDmL+wGJEmPxL6kzAbPCJ1zxvgZRXMTdOdz5p5peSp9A2WkA4ciCQu
+         ShFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693328034; x=1693932834;
+        d=1e100.net; s=20221208; t=1693328119; x=1693932919;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ACmQAc0Os4N98Z3d3R/oIFedpQZZYFrbAteEg6HsG0U=;
-        b=FEC+eExTCxl7Ve0kl0qRnSWZ8rOhTPKwUU0fF8amdXI0ApcxCkcxHzTaozxrHxXBKQ
-         4I6qaN6+6b/7OxIdDFD+7TP2qTKVEHMrC4KMh884HcMTKLz2XCpMbZMsRT365cHfkoUG
-         7mQpRpe2X+n1LU4nf76yBnf2CEtdooPw6TDfEix842ZGhWbbMEvt8/4XD/dkio3js5eX
-         fRAWrSefSGiwxHkxMXnAvV7iRC8nUBESHCNuPtdF3S0OZV8vFQnwJRdqsTFUSaUe+MHK
-         AEIPcL+2OhdRG2AKoTxB33y6wsASW3af+7/mAY85WftfvTyDcY1fdHSyowCQDunVPmxi
-         S2Cw==
-X-Gm-Message-State: AOJu0YxtalyE+hPBQGrGYLcs0PcmuyXEcH0qZKa4uIw+XnoF5OYNhOlD
-        AEmGOmsXgxwqYTcWNQWZ7WT5+A==
-X-Google-Smtp-Source: AGHT+IFj6qY9ZGIZ7zhLjscs5t/l6tiV+o0WMRw/Smkie7Au+T0++diSeuW+C9be47Z4c2Gxfc/m6g==
-X-Received: by 2002:aa7:d9cb:0:b0:51e:309:2e11 with SMTP id v11-20020aa7d9cb000000b0051e03092e11mr23265767eds.36.1693328033755;
-        Tue, 29 Aug 2023 09:53:53 -0700 (PDT)
+        bh=3BpJgivS3dlGuz7t1+9iCEke02uZzCJ683AvwGIuOoo=;
+        b=fJFReX2cK67e5SnFAuYD5DN1igTdsa1AogRW1qajnHcrin7AxPfdTGgRzmmdLPbgVV
+         5WbAqb7q4Jp70n5mbR5/dBpviQ1gbwL+bouYh6OuuyiHHGaIv+P9tucsFJ8t1VelJQZK
+         uGj3pNGwRShanYCbzVyVPq+gDUuCjeSfsq4m39LZo9zuGdtWIvBmdzgCFsfbGSqO73+2
+         yxLhkwoOUhjdOPFS+DVvSfUk/ROCckgIyCIlP6A7lrRVELBOPKCqcc6brSiScZ6/ITBt
+         sv6p3LZwbIE27a15TqpZNB3H/4rvom70igPQqxodMu4TVB2wg+mwm+/MiN1oakQpaZJW
+         CL4A==
+X-Gm-Message-State: AOJu0Yw76E/OmME2SugYQa9/TVqQcqYpfg4IJnAyS2xj8e063p6BBdoD
+        TBFQwPF1ux6MqI0c9mfWV7NY7g==
+X-Google-Smtp-Source: AGHT+IF0hK7L2NbSch0GNoms7PJA7260zSeTpFfKq5naoZ4uA3lJ3h0h8FizIDcR0esq873qWjKw+g==
+X-Received: by 2002:a50:ef0d:0:b0:52a:250e:a04a with SMTP id m13-20020a50ef0d000000b0052a250ea04amr15569445eds.7.1693328118928;
+        Tue, 29 Aug 2023 09:55:18 -0700 (PDT)
 Received: from [192.168.0.22] ([77.252.47.196])
-        by smtp.gmail.com with ESMTPSA id bf8-20020a0564021a4800b00529fb5fd3b9sm5830878edb.80.2023.08.29.09.53.51
+        by smtp.gmail.com with ESMTPSA id r9-20020aa7da09000000b005236b47116asm5860050eds.70.2023.08.29.09.55.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Aug 2023 09:53:53 -0700 (PDT)
-Message-ID: <ae477c6d-b5a5-929f-0a36-3c0d2484add5@linaro.org>
-Date:   Tue, 29 Aug 2023 18:53:51 +0200
+        Tue, 29 Aug 2023 09:55:18 -0700 (PDT)
+Message-ID: <d30742d6-7fe2-c5fe-ac42-86642acc076e@linaro.org>
+Date:   Tue, 29 Aug 2023 18:55:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH 1/9] dt-bindings: phy: qcom,uniphy: Rename ipq4019 usb PHY
- to UNIPHY
+Subject: Re: [PATCH 2/9] phy: qcom: uniphy: Rename ipq4019 USB phy driver to
+ UNIPHY driver
 Content-Language: en-US
 To:     Praveenkumar I <quic_ipkumar@quicinc.com>, robert.marko@sartura.hr,
         luka.perkov@sartura.hr, agross@kernel.org, andersson@kernel.org,
@@ -71,9 +71,9 @@ To:     Praveenkumar I <quic_ipkumar@quicinc.com>, robert.marko@sartura.hr,
         linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Cc:     quic_varada@quicinc.com
 References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com>
- <20230829135818.2219438-2-quic_ipkumar@quicinc.com>
+ <20230829135818.2219438-3-quic_ipkumar@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230829135818.2219438-2-quic_ipkumar@quicinc.com>
+In-Reply-To: <20230829135818.2219438-3-quic_ipkumar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,10 +88,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 29/08/2023 15:58, Praveenkumar I wrote:
 > UNIPHY / Combo PHY used on various qualcomm SoC's are very similar to
-> ipq4019 PHY. Hence renaming this dt-binding to uniphy dt-binding and
-> can be used for other qualcomm SoCs which are having similar UNIPHY.
+> ipq4019 PHY. Hence renaming this driver to uniphy driver and can be
+> used for other SoC's which are having the similar UNIPHY.
+> 
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> ---
+>  MAINTAINERS                                                | 7 ++++---
+>  drivers/phy/qualcomm/Kconfig                               | 7 ++++---
+>  drivers/phy/qualcomm/Makefile                              | 2 +-
+>  .../qualcomm/{phy-qcom-ipq4019-usb.c => phy-qcom-uniphy.c} | 0
+>  4 files changed, 9 insertions(+), 7 deletions(-)
+>  rename drivers/phy/qualcomm/{phy-qcom-ipq4019-usb.c => phy-qcom-uniphy.c} (100%)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index ff1f273b4f36..7f4553c1a69a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -17774,13 +17774,14 @@ F:	Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+>  F:	drivers/mailbox/qcom-ipcc.c
+>  F:	include/dt-bindings/mailbox/qcom-ipcc.h
+>  
+> -QUALCOMM IPQ4019 USB PHY DRIVER
+> +QUALCOMM UNIPHY DRIVER
+>  M:	Robert Marko <robert.marko@sartura.hr>
+>  M:	Luka Perkov <luka.perkov@sartura.hr>
+> +M:	Praveenkumar I <quic_ipkumar@quicinc.com>
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
+> -F:	Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> -F:	drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+> +F:	Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
 
-That's not the reason to rename it. Keep the old name.
+You broke the path in your previous commit, but anyway this will go away.
+
+> +F:	drivers/phy/qualcomm/phy-qcom-uniphy.c
+>  
+>  QUALCOMM IPQ4019 VQMMC REGULATOR DRIVER
+>  M:	Robert Marko <robert.marko@sartura.hr>
+> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+> index d891058b7c39..e6981bc212b3 100644
+> --- a/drivers/phy/qualcomm/Kconfig
+> +++ b/drivers/phy/qualcomm/Kconfig
+> @@ -28,12 +28,13 @@ config PHY_QCOM_EDP
+>  	  Enable this driver to support the Qualcomm eDP PHY found in various
+>  	  Qualcomm chipsets.
+>  
+> -config PHY_QCOM_IPQ4019_USB
+> -	tristate "Qualcomm IPQ4019 USB PHY driver"
+> +config PHY_QCOM_UNIPHY
+> +	tristate "Qualcomm UNIPHY driver"
+>  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+>  	select GENERIC_PHY
+>  	help
+> -	  Support for the USB PHY-s on Qualcomm IPQ40xx SoC-s.
+> +	  Enable this driver to support the Qualcomm UNIPHY found in various
+> +	  Qualcomm chipsets.
+
+I don't quite get why this is renamed, either. Just because you re-use
+it? Re-usage is not affected with old name...
 
 Best regards,
 Krzysztof
