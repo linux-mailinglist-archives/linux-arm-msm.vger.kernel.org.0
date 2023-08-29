@@ -2,122 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66C0B78C8BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 17:40:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790EA78C8D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 17:45:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237306AbjH2PkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 11:40:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
+        id S236961AbjH2Poa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 11:44:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237303AbjH2Pj5 (ORCPT
+        with ESMTP id S237361AbjH2PoD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 11:39:57 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 69D76B7;
-        Tue, 29 Aug 2023 08:39:54 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 623062F4;
-        Tue, 29 Aug 2023 08:40:33 -0700 (PDT)
-Received: from [10.1.34.35] (010265703453.arm.com [10.1.34.35])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4671B3F738;
-        Tue, 29 Aug 2023 08:39:47 -0700 (PDT)
-Message-ID: <f2a46201-d807-d7af-bf84-8c99b33cd916@arm.com>
-Date:   Tue, 29 Aug 2023 16:39:42 +0100
+        Tue, 29 Aug 2023 11:44:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57167CEB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 08:42:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1693323769;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=u6sDIU3K4vYx0nS6YYLcsSqypEnaVcZpJGHz3tdgGMc=;
+        b=CJvCt50fqCMAh9COza3e0t/bdXTWQcGT8SnEnOeawlDYM/O5H0tQcxEp3cEjfGURpd8IMy
+        PYCkMlGPfQMb4GE7SwP1N3TRSHTNH5li1P8MMezr7OheBxLJjCfdZdUB47o660BC3Fl4La
+        l7qkjfRsZuBUeiYg0EwHLavF9qc3ADY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-kdtY3MlQPr-ud4JfGzqKVg-1; Tue, 29 Aug 2023 11:42:47 -0400
+X-MC-Unique: kdtY3MlQPr-ud4JfGzqKVg-1
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-3ff00714328so32371385e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 08:42:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693323767; x=1693928567;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u6sDIU3K4vYx0nS6YYLcsSqypEnaVcZpJGHz3tdgGMc=;
+        b=CwZvODMnZMDHoN6rgrg1/9E0r/Y36if2kjNK/Zr3l2EVUC/nUUGNM5mbEuEr1L/51X
+         NRc3qHdmyULg0JUW1VsOc7dbuZ97hc8EOuLaKQNRPn9Vmi6u9gWogM0ADseXLDMN6fVM
+         lkv1BnKDcMSn8Rdu8rA852LhFmV185iZgOBKPEclg+qR3mUs494EaCJ0GbwOR7o4pELC
+         UJWzfOmM4vgg/cVN8gqomgzLIbYQ1GJGJU5YNYS0kK31rL8wMax8wHVmDsTwBzBQpkdK
+         /SgkvXJLS4eYVbGQiekD+rjWQ9RXgTgN5kD/2pGOZCbdCQj1JSNT6h3TiWfECsNnPg/K
+         Vcog==
+X-Gm-Message-State: AOJu0Yw7ywOq/Xr/hdNQZPQoP/aCrl9UEetAJV+eEDxTdsUtHmC8KC7d
+        70MeOKwrRzhx2pjJm2X/x1hTKcpNhhkwhg6a2tCEHef0tb+rbJOgTt0O/0anRxQSQmMBy+ZOWbB
+        zVYFKyKlv2H+/WZ7hX4I8P/8BsA==
+X-Received: by 2002:a05:6000:98c:b0:31d:caae:982c with SMTP id by12-20020a056000098c00b0031dcaae982cmr5603171wrb.47.1693323766841;
+        Tue, 29 Aug 2023 08:42:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE68Tjgg1iNWjdiPHoiTE7fPT5ClNu+9OggcScdoXXlRdgxO5W4SL2VyHLt3ahqOCnHuM4ilw==
+X-Received: by 2002:a05:6000:98c:b0:31d:caae:982c with SMTP id by12-20020a056000098c00b0031dcaae982cmr5603141wrb.47.1693323766510;
+        Tue, 29 Aug 2023 08:42:46 -0700 (PDT)
+Received: from toolbox ([2001:9e8:898c:cd00:3d7e:40e1:d773:8f52])
+        by smtp.gmail.com with ESMTPSA id f19-20020a1c6a13000000b003fefcbe7fa8sm14264216wmc.28.2023.08.29.08.42.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 08:42:46 -0700 (PDT)
+Date:   Tue, 29 Aug 2023 17:42:44 +0200
+From:   Sebastian Wick <sebastian.wick@redhat.com>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
+        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
+        ville.syrjala@linux.intel.com, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        wayland-devel@lists.freedesktop.org
+Subject: Re: [PATCH RFC v6 00/10] Support for Solid Fill Planes
+Message-ID: <20230829154244.GA260653@toolbox>
+References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v11 5/6] iommu/dma: Allow a single FQ in addition to
- per-CPU FQs
-Content-Language: en-GB
-To:     Niklas Schnelle <schnelle@linux.ibm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>
-Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-References: <20230717-dma_iommu-v11-0-a7a0b83c355c@linux.ibm.com>
- <20230717-dma_iommu-v11-5-a7a0b83c355c@linux.ibm.com>
- <9a466109-01c5-96b0-bf03-304123f435ee@arm.com>
- <b46210ce00b46ce42b8487e5670cc56b4458031f.camel@linux.ibm.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <b46210ce00b46ce42b8487e5670cc56b4458031f.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-08-23 15:21, Niklas Schnelle wrote:
-[...]
->>> +struct dma_iommu_options {
->>> +#define IOMMU_DMA_OPTS_PER_CPU_QUEUE	0L
->>
->> Nit: if the intent is to add more flags then that will no longer make
->> sense, and if not then we may as well just have a bool ;)
->>
->>> +#define IOMMU_DMA_OPTS_SINGLE_QUEUE	BIT(0)
+On Mon, Aug 28, 2023 at 05:05:06PM -0700, Jessica Zhang wrote:
+> Some drivers support hardware that have optimizations for solid fill
+> planes. This series aims to expose these capabilities to userspace as
+> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
+> hardware composer HAL) that can be set by apps like the Android Gears
+> app.
 > 
-> My thinking was that the above two options are mutually exclusive with
-> per-CPU encoded as BIT(0) unset and single queue as set. Then other
-> options could still use the other bits. It's true though that the below
-> use of IOMMU_DMA_OPTS_PER_CPU_QUEUE is a nop so maybe just drop that?
-> Or we could use an enum even if I don't forsee more than these 2 queue
-> types.
+> In order to expose this capability to userspace, this series will:
+> 
+> - Introduce solid_fill and pixel_source properties to allow userspace to
+>   toggle between FB and solid fill sources
+> - Loosen NULL FB checks within the DRM atomic commit callstack to allow
+>   for NULL FB when solid fill is enabled.
+> - Add NULL FB checks in methods where FB was previously assumed to be
+>   non-NULL
+> - Have MSM DPU driver use drm_plane_state.solid_fill instead of
+>   dpu_plane_state.color_fill
+> 
+> Note: The solid fill planes feature depends on both the solid_fill *and*
+> pixel_source properties.
+> 
+> To use this feature, userspace can set the solid_fill property to a blob
+> containing the appropriate version number and solid fill color (in
+> RGB323232 format) and and setting the pixel_source property to
+> DRM_PLANE_PIXEL_SOURCE_COLOR. This will disable memory fetch and the
+> resulting plane will display the color specified by the solid_fill blob.
+> 
+> Currently, there's only one version of the solid_fill blob property.
+> However if other drivers want to support a similar feature, but require
+> more than just the solid fill color, they can extend this feature by
+> creating additional versions of the drm_solid_fill struct.
+> 
+> This 2 property approach was chosen because passing in a special 1x1 FB
+> with the necessary color information would have unecessary overhead that
+> does not reflect the behavior of the solid fill feature. In addition,
+> assigning the solid fill blob to FB_ID would require loosening some core
+> drm_property checks that might cause unwanted side effects elsewhere.
 
-My point was that the value 0 can only mean "all flags not set", so 
-while we can very much have the semantic of "single queue flag not set 
-means percpu queue", we cannot infer "0 means percpu queue" unless "all 
-flags" and "single queue flag" are the same thing. As soon as any 
-additional flag is defined, 0 then has a different meaning which may 
-well not even be a combination that's useful to put a specific name to.
+The cover letter is a bit outdated by now. Anyway, with Pekkas issues
+addressed the core drm parts are
 
-I'd like to hope it's sufficiently obvious from the implementation that 
-the opposite of a single queue is multiple queues, since contextually 
-this is already all happening in distinct paths from the case of no queue.
+Acked-by: Sebastian Wick <sebastian@sebastianwick.net>
+ 
+> ---
+> Changes in v6:
+> - Have _dpu_plane_color_fill() take in a single ABGR8888 color instead
+>   of having separate alpha and BGR color parameters (Dmitry)
+> - Drop plane->state->pixel_source != DRM_PLANE_PIXEL_SOURCE_FB check
+>   in SetPlane ioctl (Dmitry)
+> - Add DRM_PLANE_PIXEL_SOURCE_NONE as a default pixel source (Sebastian)
+> - Dropped versioning from solid fill property blob (Dmitry)
+> - Use DRM_ENUM_NAME_FN (Dmitry)
+> - Use drm_atomic_replace_property_blob_from_id() (Dmitry)
+> - drm_atomic_check_fb -> drm_atomic_plane_check_fb (Dmitry)
+> - Group redundant NULL FB checks (Dmitry)
+> - Squashed drm_plane_needs_disable() implementation with 
+>   DRM_PLANE_PIXEL_SOURCE_NONE declaration (Sebastian)
+> - Add comment to support RGBA solid fill color in the future (Dmitry)
+> - Link to v5: https://lore.kernel.org/r/20230728-solid-fill-v5-0-053dbefa909c@quicinc.com
+> 
+> Changes in v5:
+> - Added support for PIXEL_SOURCE_NONE (Sebastian)
+> - Added WARN_ON() in drm_plane_has_visible_data() if pixel_source isn't
+>   set (Dmitry)
+> - Added debugfs support for both properties (Dmitry)
+> - Corrected u32 to u8 conversion (Pekka)
+> - Moved drm_solid_fill_info struct and related documentation to
+>   include/uapi (Pekka)
+> - Changed drm_solid_fill_info.version to __u32 for data alignment (Pekka)
+> - Added more detailed UAPI and kernel documentation (Pekka)
+> - Reordered patch series so that the pixel_source property is introduced
+>   before solid_fill (Dmitry)
+> - Fixed inconsistent ABGR8888/RGBA8888 format declaration (Pekka)
+> - Reset pixel_source to FB in drm_mode_setplane() (Dmitry)
+> - Rename supported_sources to extra_sources (Dmitry)
+> - Only destroy old solid_fill blob state if new state is valid (Pekka)
+> - Link to v4: https://lore.kernel.org/r/20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com
+> 
+> Changes in v4:
+> - Rebased onto latest kernel
+> - Reworded cover letter for clarity (Dmitry)
+> - Reworded commit messages for clarity
+> - Split existing changes into smaller commits
+> - Added pixel_source enum property (Dmitry, Pekka, Ville)
+> - Updated drm-kms comment docs with pixel_source and solid_fill
+>   properties (Dmitry)
+> - Inlined drm_atomic_convert_solid_fill_info() (Dmitry)
+> - Passed in plane state alpha value to _dpu_plane_color_fill_pipe()
+> - Link to v3: https://lore.kernel.org/r/20230104234036.636-1-quic_jesszhan@quicinc.com
+> 
+> Changes in v3:
+> - Fixed some logic errors in atomic checks (Dmitry)
+> - Introduced drm_plane_has_visible_data() and drm_atomic_check_fb() helper
+>   methods (Dmitry)
+> - Fixed typo in drm_solid_fill struct documentation
+> - Created drm_plane_has_visible_data() helper and corrected CRTC and FB
+>   NULL-check logic (Dmitry)
+> - Merged `if (fb)` blocks in drm_atomic_plane_check() and abstracted
+>   them into helper method (Dmitry)
+> - Inverted `if (solid_fill_enabled) else if (fb)` check order (Dmitry)
+> - Fixed indentation (Dmitry)
+> 
+> Changes in v2:
+> - Dropped SOLID_FILL_FORMAT property (Simon)
+> - Switched to implementing solid_fill property as a blob (Simon, Dmitry)
+> - Added drm_solid_fill and drm_solid_fill_info structs (Simon)
+> - Changed to checks for if solid_fill_blob is set (Dmitry)
+> - Abstracted (plane_state && !solid_fill_blob) checks to helper method
+>   (Dmitry)
+> - Removed DPU_PLANE_COLOR_FILL_FLAG
+> - Fixed whitespace and indentation issues (Dmitry)
+> - Changed to checks for if solid_fill_blob is set (Dmitry)
+> - Abstracted (plane_state && !solid_fill_blob) checks to helper method
+>   (Dmitry)
+> - Fixed dropped 'const' warning
+> - Added helper to convert color fill to BGR888 (Rob)
+> - Fixed indentation issue (Dmitry)
+> - Added support for solid fill on planes of varying sizes
+> 
+> ---
+> Jessica Zhang (10):
+>       drm: Introduce pixel_source DRM plane property
+>       drm: Introduce solid fill DRM plane property
+>       drm: Add solid fill pixel source
+>       drm/atomic: Add pixel source to plane state dump
+>       drm/atomic: Add solid fill data to plane state dump
+>       drm/atomic: Move framebuffer checks to helper
+>       drm/atomic: Loosen FB atomic checks
+>       drm/msm/dpu: Allow NULL FBs in atomic commit
+>       drm/msm/dpu: Use DRM solid_fill property
+>       drm/msm/dpu: Add solid fill and pixel source properties
+> 
+>  drivers/gpu/drm/drm_atomic.c              | 147 +++++++++++++++++-------------
+>  drivers/gpu/drm/drm_atomic_helper.c       |  36 ++++----
+>  drivers/gpu/drm/drm_atomic_state_helper.c |  10 ++
+>  drivers/gpu/drm/drm_atomic_uapi.c         |  30 ++++++
+>  drivers/gpu/drm/drm_blend.c               | 129 ++++++++++++++++++++++++++
+>  drivers/gpu/drm/drm_crtc_internal.h       |   1 +
+>  drivers/gpu/drm/drm_plane.c               |  27 +++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |   9 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c |  80 ++++++++++------
+>  include/drm/drm_atomic_helper.h           |   4 +-
+>  include/drm/drm_blend.h                   |   3 +
+>  include/drm/drm_plane.h                   |  90 ++++++++++++++++++
+>  include/uapi/drm/drm_mode.h               |  24 +++++
+>  13 files changed, 478 insertions(+), 112 deletions(-)
+> ---
+> base-commit: 00ee72279c963989ab435b0bc90b5dc05a9aab79
+> change-id: 20230404-solid-fill-05016175db36
+> 
+> Best regards,
+> -- 
+> Jessica Zhang <quic_jesszhan@quicinc.com>
+> 
 
-Thanks,
-Robin.
