@@ -2,59 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EF2578CBE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 20:13:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F39878CC5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 20:47:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231136AbjH2SMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 14:12:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51162 "EHLO
+        id S232100AbjH2SrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 14:47:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231316AbjH2SM2 (ORCPT
+        with ESMTP id S234761AbjH2Sqf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 14:12:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0EC6109;
-        Tue, 29 Aug 2023 11:12:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5F97263C45;
-        Tue, 29 Aug 2023 18:12:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEFDC433C8;
-        Tue, 29 Aug 2023 18:12:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693332744;
-        bh=nx79xqGNmXPPNjSKyMSft2vmUfy9hb3j6upsNNfY24I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Cgjd0KgEZoIF025z4si4TMZaEkGza9i/CeRoUkoi3zdlFRzCvCWGg0k9uQfK7isFp
-         hpGhKfWdIUnYL6OlNBWYQoetRca39I5M2IW0pbJ2HZOxcOOyRwieGF+eHjEu2a/X5Q
-         QBNnhE/70eLmI0Px/oxm/XLRVuweMZiSr75u3RNG4x+H+zclx5Jv95CFiMyMgnm1Cd
-         2tTBWr4mKGbHkFmikZogWkQKpkyfKUgvBK6tmXl5/X0mi+okSkT+XJGrsCnvlYHkTr
-         adHjjFfjNdtIodyLJ/d+F21J/9WleoR1Y18K24VicjYHhEFCy6SHSc9Gg43/56faWC
-         bV16h2h5NEe5Q==
-Date:   Tue, 29 Aug 2023 18:12:23 +0000
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
-        quic_psodagud@quicinc.com, avmenon@quicinc.com,
-        abel.vesa@linaro.org, quic_spuppala@quicinc.com
-Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
- ufs
-Message-ID: <20230829181223.GA2066264@google.com>
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
- <20230825210727.GA1366@sol.localdomain>
- <f63ce281-1434-f86f-3f4e-e1958a684bbd@linaro.org>
+        Tue, 29 Aug 2023 14:46:35 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C28119A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 11:46:32 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d7484cfdc11so4572938276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 11:46:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693334791; x=1693939591;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6+ED0KXs67DGrmo6iXaWzPAJQDmbnXsYGdJFbasrMdI=;
+        b=ClWjzcAfjYvtZ8nl+s7yeWbc+hc5FJFSCfsmTr8wmd/zVGplocRb++tAmdLjdsc9zc
+         nfs6Ak/RS7XX2cggg/o75ialkDJwSUmqpoE0jlMeh3HrLPdu5cp3G0lkpB0XGMYE3XOC
+         s5Z3wGgOcqeZVH4rZ4Z18ix/VHAoHldddAp34xZc28soOqMULHblq4fl9sVDsgxIZLN1
+         UQWTMxiRjLNSy54jTnOGWiDCUivs75yf4KiJWzQlLbqvLyuPzW4fmCFix5ea17knoMq4
+         7Ov+viFXw9Qeb7kfTlBZ45jKJGGg1ngVZixWXIuhHigS6SN/T5lzODHIBbHBip0x5fcC
+         2OJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693334791; x=1693939591;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6+ED0KXs67DGrmo6iXaWzPAJQDmbnXsYGdJFbasrMdI=;
+        b=PZp2j7ZgCRrrL9YuCQvdaVi7mjckPqFkdVcvTm/FPN/DzMDcu/uwWFgdYc6EsUGKNN
+         RfX1OEVLMFVpF9xea2FedX+H0L/LVKi0T0izmlhR1Kf/AS1gZIbkQMx7IhDmy2W0rFZ4
+         H17VCDzP6uKcqDi35BamOlzyaf5YeUdnGD5oBCSxJaQHtQYEXB4fPAzDajzj720zzI2c
+         nMKLJq5a+bxk6RpuVH8kWQnwq3o9W9HFKd4uv2cblB5QGxjmo+JkBclZnUz30i+J2vht
+         BYt/65rGTTY/v0Vloleh4I245F/zphJLL75KGsRHZzK9Anf8d3yExGDLRPd4wOV8eVr2
+         FuFA==
+X-Gm-Message-State: AOJu0Yxw+wUWRffmtMUA/QxUTB93XB/pV40ed6oPORMKbtzbOGLowWoM
+        iC9lTF5gZWM+DgKBIHGgtJ1OHjoEmsiZN9pQasCJGQ==
+X-Google-Smtp-Source: AGHT+IF7Q+2ONedva5BlExE5dN6mOQYTGK+793vpj6L4wQkNIymKBXWY+28Y72O3M02h08fxfWekTJ3xhcGsPQoR0RA=
+X-Received: by 2002:a25:d10a:0:b0:d62:b91b:10e3 with SMTP id
+ i10-20020a25d10a000000b00d62b91b10e3mr30257956ybg.48.1693334791365; Tue, 29
+ Aug 2023 11:46:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f63ce281-1434-f86f-3f4e-e1958a684bbd@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com>
+ <20230829135818.2219438-5-quic_ipkumar@quicinc.com> <169331975886.2142011.7345682428392154402.robh@kernel.org>
+ <17e2413b-6d06-a113-e35b-30cc078a6e83@linaro.org>
+In-Reply-To: <17e2413b-6d06-a113-e35b-30cc078a6e83@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 29 Aug 2023 21:46:20 +0300
+Message-ID: <CAA8EJppNGs0UVhBJq_+RFt8pALEk0tEoKfUo1AxzbSu82A5_HA@mail.gmail.com>
+Subject: Re: [PATCH 4/9] dt-bindings: phy: qcom,uniphy: Add ipq5332 USB3 SS UNIPHY
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kishon@kernel.org, robert.marko@sartura.hr, robh+dt@kernel.org,
+        geert+renesas@glider.be, peng.fan@nxp.com,
+        konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org, will@kernel.org,
+        conor+dt@kernel.org, p.zabel@pengutronix.de,
+        quic_varada@quicinc.com, vkoul@kernel.org, nfraprado@collabora.com,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-kernel@lists.infradead.org, quic_wcheng@quicinc.com,
+        rafal@milecki.pl, gregkh@linuxfoundation.org,
+        luka.perkov@sartura.hr, andersson@kernel.org, arnd@arndb.de,
+        linux-usb@vger.kernel.org, agross@kernel.org,
+        catalin.marinas@arm.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,97 +81,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivas,
+On Tue, 29 Aug 2023 at 20:09, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 29/08/2023 16:35, Rob Herring wrote:
+> >
+> > On Tue, 29 Aug 2023 19:28:13 +0530, Praveenkumar I wrote:
+> >> Add ipq5332 USB3 SS UNIPHY support.
+> >>
+> >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >> ---
+> >>  .../devicetree/bindings/phy/qcom,uniphy.yaml  | 117 +++++++++++++++++-
+> >>  1 file changed, 114 insertions(+), 3 deletions(-)
+> >>
+> >
+> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> >
+> > yamllint warnings/errors:
+> >
+> > dtschema/dtc warnings/errors:
+> > In file included from Documentation/devicetree/bindings/phy/qcom,uniphy.example.dts:45:
+> > ./scripts/dtc/include-prefixes/dt-bindings/clock/qcom,ipq5332-gcc.h:19: warning: "GCC_BLSP1_AHB_CLK" redefined
+> >    19 | #define GCC_BLSP1_AHB_CLK                               10
+> >       |
+>
+> So the only patch which actually needed dependency information did not
+> have it. All other patches have something, even defconfig (!). Confusing.
 
-On Tue, Aug 29, 2023 at 06:11:55PM +0100, Srinivas Kandagatla wrote:
-> > It's true that Qualcomm based Android devices already use HW-wrapped keys on
-> > SoCs earlier than SM8650.  The problem is that the key generation, import, and
-> > conversion were added to Android's KeyMint HAL, as a quick way to get the
-> > feature out the door when it was needed (so to speak).  Unfortunately this
-> 
-> There is an attempt in 2021 todo exactly same thing I guess,
-> 
-> https://patchwork.kernel.org/project/linux-fscrypt/cover/20211206225725.77512-1-quic_gaurkash@quicinc.com/
-> 
-> If this was the right thing to do they why is the TZ firmware on SoCs after
-> 2021 not having support for this ?
+Much simpler. This patch adds a second example to the schema. Both
+examples include something-gcc.h. As both examples end up in the same
+example.dts file, second include conflicts with the first one.
 
-That's on Qualcomm.  But my understanding is that it's just taking them several
-years to get the TZ changes out due to their branching schedule.  Garauv
-submitted the TZ changes in 2021, but apparently SM8550 had already branched at
-that point, so SM8650 is the first one that will have it.
-
-Just because it takes Qualcomm a while to get the firmware support for this
-feature deployed doesn't mean that it's the wrong approach.
-
-> 
-> > coupled this feature unnecessarily to the Android KeyMint and the corresponding
-> > (closed source) userspace HAL provided by Qualcomm, which it's not actually
-> 
-> So how does Andriod kernel upgrades work after applying this patchset on
-> platforms like SM8550 or SM8450 or SM8250..or any old platforms.
-
-The same way they did before.  Older devices won't use this new code.
-
-BTW, this is irrelevant for upstream.
-
-> 
-> > related to.  I'd guess that Qualcomm's closed source userspace HAL makes SMC
-> > calls into Qualcomm's KeyMint TA, but I have no insight into those details.
-> > 
-> If we have an smcinvoke tee driver we can talk to to this TA.
-> 
-> > The new SMC calls eliminate the dependency on the Android-specific KeyMint.
-> 
-> I can see that.
-> 
-> Am not against adding this new interface, but is this new interface leaving
-> a gap for older platforms?
-> 
-> 
-> Is there any other technical reason for moving out from TA based to a smc
-> calls?
-> 
-> And are we doing a quick solution here to fix something
-
-I have very little insight into Qualcomm's old interface, which is tied to the
-Android-specific KeyMint and is not known to be usable outside the Android
-context or without the closed source userspace HAL from Qualcomm.
-
-I understand that Linux kernel features that are only usable with closed source
-userspace libraries are heavily frowned on.  As are features that are tied to
-Android and cannot be used on other Linux distros.
-
-If Qualcomm can document the old interface and show that it's usable directly by
-the Linux kernel, then we could consider it.  But without that, the new
-interface is our only option.
-
-> > They're also being documented by Qualcomm.  So, as this patchset does, they can
-> > be used by Linux in the implementation of new ioctls which provide a vendor
-> > independent interface to HW-wrapped key generation, import, and conversion.
-> > 
-> > I think the new approach is the only one that is viable outside the Android
-> > context.  As such, I don't think anyone has any plan to upstream support for
-> > HW-wrapped keys for older Qualcomm SoCs that lack the new interface.
-> 
-> AFAIU, There are other downstream Qualcomm LE platforms that use wrapped key
-> support with the older interface.
-> What happens to them whey then upgrade the kernel?
-> 
-> Does TA interface still continue to work with the changes that went into
-> common drivers (ufs/sd)?
-
-This is a strange line of questioning for upstream review, as this feature does
-not exist upstream.  This is the first time it will be supported by upstream
-Linux, ever.  Adding support for this feature does not break anything.
-
-Downstream users who implemented a less well designed version of this feature
-can continue to use their existing code.
-
-BTW, I am the person who has gotten stuck maintaining the framework for
-HW-wrapped key support in the Android Common Kernels...  So if you're trying to
-make things "easier" for me, please don't.  I want to have a properly designed
-version of the feature upstream, and then I'll change Android to use that
-whenever possible.  That's the only real long-term solution.
-
-- Eric
+-- 
+With best wishes
+Dmitry
