@@ -2,68 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0A2678CFB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 00:56:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F76B78D039
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 01:18:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239749AbjH2W4D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 18:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45154 "EHLO
+        id S232114AbjH2XSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 19:18:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239913AbjH2Wzi (ORCPT
+        with ESMTP id S240035AbjH2XRu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 18:55:38 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D40BCCF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 15:55:36 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d77ad095e5cso4971867276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 15:55:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693349735; x=1693954535; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=V5z5Ea0/s611VoAt5Pa4bFhJ/Bo9nHhqcd1Tv501Afg=;
-        b=TIUELmKnHqL+LpemZHoZdaPLOW8T6G7lFHHiHdyJ8QjDh+fRDchb4/S8zkwMLxcuQo
-         Oi7IEhmdk0xfHd36n1Tm3p/6/D+5un4muWcIMs76Ug37F6jYN2AHCSNmyguLEduJGnod
-         aTGFLbU7cPcOtGALRxRBUO9jqZzHqDZXPMkJjtVg1dyDkn42dgF4OZ5SFlsJT6MwBBdg
-         nSs4nwLBTyWWpbZeyUiaXpzfH22zqNydAugNQo1Suy9mwo2U3TXpIs/bC4d3Y6HuyMK+
-         UUEsjzZYpqEI7ttsc1KgU0VcqDuUOLiXZKoIqMN+rPnPCnN5Mm4Pzr6qH5wsULXTDZrn
-         6+hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693349735; x=1693954535;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V5z5Ea0/s611VoAt5Pa4bFhJ/Bo9nHhqcd1Tv501Afg=;
-        b=ChNNdgp2Dp43msgfWrmG+/PsKgBfgqGrYNvb93ihcWxe2NGBDwH7FFjECgEbAeqnxW
-         PXZtzn3eWW9MRFbTJ4dGp8vYr1OcZrO0qaVQGI1yLTDj9GipSNZHNJN6V1/EyBmAy8gN
-         zY9p+ymoy54HWXgmNM4ZJMmI+qonAu8Y4P3GV/08Xtv45nWfFSSNu32oHxmvp9zcWT8f
-         A43AREwSliVVSqNAUsQXcv97WvXlJAoc/eA6yNhflMqJxGja6xTdVrGsAaRHIaWmqEWv
-         yxBCAuy9DlJkGhXx+/ieyYlayHLouX4HS+qgdSP+RwD0SNpZOth/cc68dXxe48mkoM/P
-         7moQ==
-X-Gm-Message-State: AOJu0YyuFcMfl/VXZKhfT1+GLVkagb4B2Z7LlBUuqrI2rucGrbIzMZ/y
-        Ou00Dn5pyb5ssaneIREkUDTx3Wcv5Ul/htUGH11ysw==
-X-Google-Smtp-Source: AGHT+IFt7/BCxH0GtWiSupqqehbMdutKrtDpqoa4v3TstBRoXA/a5IYrYad6OentD54Vy4/ADeok71pR5tfNhySZekg=
-X-Received: by 2002:a25:258f:0:b0:d12:1094:2036 with SMTP id
- l137-20020a25258f000000b00d1210942036mr526110ybl.43.1693349735279; Tue, 29
- Aug 2023 15:55:35 -0700 (PDT)
+        Tue, 29 Aug 2023 19:17:50 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D02B9C;
+        Tue, 29 Aug 2023 16:17:44 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37TMiv5g026041;
+        Tue, 29 Aug 2023 23:16:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=4ATyD/tEgZ/efDPx/mmt2wlb1CN5pBAvQLDrRXLw3ok=;
+ b=XMhcQly4dK6o3auQzr5fit1xLKIjjSF9UyzNGSzuo6DvWoxWZV3jjWNwiqL9d+ec5ufD
+ +UAMD3URsK9EnNZ3ugBTmO4I+EaOBjHFjJRfb5Gh1N5tj1QyJzSTBj1H7QJYdgjLWxGe
+ EF66/3AMsPfRDCz8K1+SNOjuHd/ymi8j59ZP6aTj2r5zhdt6geJwxoCJdmvYhQNwhCjw
+ 8G2/Z5trIJstAWDULDAeJomu+8SO54fO6B1hfncyDcvMCGf5Gf8yOHSIgSH88ehe9l7h
+ mPdQDLaGyM3UbBlbNGJPBZf5qpIAUUdAkWhtiSXXUUPESrVrzpxRL5HDZfw/RG30pwcT bA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ssmcv8q8a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 23:16:44 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37TNGh6H021191
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 23:16:43 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
+ 2023 16:16:40 -0700
+Date:   Tue, 29 Aug 2023 16:16:39 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     Mark Brown <broonie@kernel.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <quic_pkondeti@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <workflows@vger.kernel.org>,
+        <tools@linux.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Message-ID: <20230829231638.GA27843@quicinc.com>
+Mail-Followup-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, workflows@vger.kernel.org,
+        tools@linux.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-pm@vger.kernel.org
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
+ <20230828175629.GC23466@quicinc.com>
+ <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
+ <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
+ <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
 MIME-Version: 1.0
-References: <20230829-topic-8550_usbphy-v1-0-599ddbfa094a@linaro.org> <20230829-topic-8550_usbphy-v1-1-599ddbfa094a@linaro.org>
-In-Reply-To: <20230829-topic-8550_usbphy-v1-1-599ddbfa094a@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 30 Aug 2023 01:55:24 +0300
-Message-ID: <CAA8EJppHjejyKn6d2H34ofX6MYG+pFNnCCTaKrDO9=P8A-WrAg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] phy: qcom-qmp-combo: Square out 8550 POWER_STATE_CONFIG1
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BTfg8Gx4HnM4ASTi3r21PGrkzeCDsTD-
+X-Proofpoint-GUID: BTfg8Gx4HnM4ASTi3r21PGrkzeCDsTD-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ mlxlogscore=631 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308290202
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -73,26 +111,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Aug 2023 at 23:59, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> There are two instances of the POWER_STATE_CONFIG1 register: one in
-> the PCS space and another one in PCS_USB.
->
-> The downstream init sequence pokes the latter one while we've been poking
-> the former one (and misnamed it as the latter one, impostor!). Fix that
-> up to avoid UB.
->
-> Fixes: 49742e9edab3 ("phy: qcom-qmp-combo: Add support for SM8550")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 2 +-
->  drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 3 ++-
->  2 files changed, 3 insertions(+), 2 deletions(-)
->
+On Aug 28 2023 21:45, Krzysztof Kozlowski wrote:
+> On 28/08/2023 21:41, Mark Brown wrote:
+> > On Mon, Aug 28, 2023 at 07:59:54PM +0200, Krzysztof Kozlowski wrote:
+> >> On 28/08/2023 19:56, Guru Das Srinagesh wrote:
+> > 
+> >>> Your function adds mailing lists also in "To:" which is not ideal, in my view.
+> >>> You've mentioned before that To or Cc doesn't matter [1] which I disagree
+> >>> with: it doesn't matter, why does Cc exist as a concept at all?
+> > 
+> >> To/Cc does not matter when sending new patch, because maintainers know
+> >> they are maintainers of which parts. I know what I handle.
+> > 
+> > That might be true for you (and also is for me) but I know there are
+> > people who pay attention to if they're in the To: for various reasons, I
+> > gather it's mostly about triaging their emails and is especially likely
+> > in cases where trees have overlaps in the code they cover.
+> 
+> True, there can be cases where people pay attention to addresses of
+> emails. Just like there are cases where people pay attention to "To/Cc"
+> difference.
+> 
+> In my short experience with a few patches sent, no one complained to me
+> that I put him/her/they in "To" field of a patch instead of "Cc" (with
+> remark to not spamming to much, so imagine I send a patch for regulator
+> and DTS). Big, multi-subsystem patchsets are different case and this
+> script does not solve it either.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Not sure what you mean by "does not solve it" - what is the problem being
+referred to here?
 
+In case of multi-subsystem patches in a series, the commit message of this
+patch explains exactly the actions taken.
 
--- 
-With best wishes
-Dmitry
+> Anyway, if it is not ideal for Guru, I wonder how his LKML maintainer
+> filters work that it is not ideal? What is exactly not ideal in
+> maintainer workflow?
+
+I am not a maintainer - only an individual contributor - and as such, even
+though I may get patches on files I've contributed to, I deeply appreciate the
+distinction between being Cc-ed in a patch vs To-ed in one. The distinction
+being that if I'm in "To:" I ascribe higher priority to it and lesser if I'm in
+"Cc:".
+
+If this script is accepted and gains adoption, maintainers like yourself will
+only be To-ed in patches that touch files that you're a direct "Maintainer" or
+"Reviewer" of. For all other patches in the series you'll be in "Cc:". I
+imagine that this can be very useful regardless of the specifics of your
+workflow.
+
+Also, lists should just be in "Cc:" - that's just my personal preference, but
+one that I'm sure others also share.
+
+Guru Das.
