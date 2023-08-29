@@ -2,154 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3E178CCA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 21:04:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 234F378CDCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 22:47:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234106AbjH2TEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 15:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45820 "EHLO
+        id S240343AbjH2Uqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 16:46:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239566AbjH2TD6 (ORCPT
+        with ESMTP id S240612AbjH2Uq2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 15:03:58 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA4CCE6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 12:03:54 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d7b66b5641eso902055276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 12:03:54 -0700 (PDT)
+        Tue, 29 Aug 2023 16:46:28 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 080C71BB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 13:46:26 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-5008faf4456so7702675e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 13:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693335833; x=1693940633; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pUpheKq+1JSQMZjnZF4kInD8StAyFEmUTtjvjFiSFy4=;
-        b=rper8cZkIV5pYarlVzm9r6QWzY3T2UdfruxO8NQxVfN+/Ay9dB65coOnS5aYxavazX
-         8LYAN3YQr66dT2A4sCk0FpiHDZ/Uaqge12lkLQOe4jYOM574Lay3kFOJ9DEu6tzC0GbM
-         CSfAuZRNQkOuskGSafmL2BHAIl8RtH8SbkLFfAS1e6ug/Pds1eocGtFowImTiSGsfilM
-         f2C74eVqNusyBkiuHvew7/zLuyBlZFYTiiUiYJzqAMtCECobbHtLmOqHYGg8zKtaddEl
-         3BsJDteKyWkAZoA2VrK00h0HsfklcQk+6XDuiIir0b7//WMlfzBeQyQYBAMnjFwV2Fn7
-         bZ3Q==
+        d=linaro.org; s=google; t=1693341984; x=1693946784; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8dRS7HdHyI2+gvAfWGzRLz3CQwFxpkJeq8X4pv6H5dc=;
+        b=HSiQHIjsYf0nksCsAzW+Tpckrgb5aWxoUBdPTG2fGs9IEMxEd+iU5KXBUgcLf23ZU7
+         TbtOWis6mwnQXJIxlwvOlWPdAxvQveP2ksfEFtsNhrBt8rejrVnuVn/5ObLBJJ7HVRDm
+         lFo7EY/AzKMJvLRew+eXBW7AtFVCfH/HYHC2kc55XVKxyA5yWCsRe4JXSuQeKHELxEsE
+         lmy/5Jkn6RP2eDNo5y9OQGC63mXcW3wDiNb17RPABa9f2rRi3fjN8w4XIU2kmLNqiUcM
+         We4xKL9jIKS7yF5J0zUuunsp9pVXrpVxUfvm/k9i9JEKvOWwopog7zaX7yVFEZVwpLlb
+         klYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693335833; x=1693940633;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pUpheKq+1JSQMZjnZF4kInD8StAyFEmUTtjvjFiSFy4=;
-        b=GLqXc8sUqO9VckaZzvjQdACF2tkGrzPfqPAMyxF7UadO+fOEFtaMzRvK9n4pPX8Piz
-         zQ+LpO2JHLP9kG7QYcWLHOZr0H6uAYNbSSJ6Pd0sQnW3NE8yiNew/b17IDVEJohHB/zG
-         Y8TeJqxBcFqAuXD1U1rtBj+31lxHqk5n1FqaDcUCNS8E3/sxQ4uEhfLZiUTEnSVbj1hh
-         SlWAOMxboA+erCTgwTavC1OBOvVHfkKnj8DtI5eE03bu9s312P3F+B6hZzXgRTjy5IJ0
-         kyqCNyfrrcXyWNJ7YQ6HeB2qS29d62fbthIOP+FbDHxgxJN07wJm+vdQuKA3XNFXvHKP
-         YjxQ==
-X-Gm-Message-State: AOJu0Yw+hIRGkhJUm3bnusTpsEkOkb0xsVLlS/BMiaqBycwOL/ejcQI+
-        lbOKZUrDdXWK7ayHgO1Ob6RgLmCBbOLpxGbh836eSQ==
-X-Google-Smtp-Source: AGHT+IFNtj7fwawiWbux5Dq90/Rn4syHRy4EBua4A31ueNEAReWJhLBQL+bHOuTOrPBbl1KEogyErWrZdfGLWV9R2U4=
-X-Received: by 2002:a25:a247:0:b0:d12:25d:fd60 with SMTP id
- b65-20020a25a247000000b00d12025dfd60mr29062ybi.9.1693335833197; Tue, 29 Aug
- 2023 12:03:53 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693341984; x=1693946784;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8dRS7HdHyI2+gvAfWGzRLz3CQwFxpkJeq8X4pv6H5dc=;
+        b=WNCWrJFfvYQZcgHcEffH3dAz6+u2OPwZOihOVRqyDIEjKReT22wMU39ylUi3u4S0jA
+         ffxR91nfaDeWP6dxXi65/6v+sG4g45zIqEBah2BOHoonN8WUR4Z7h2zO9AdBoryyIHWW
+         IJ1u1aSDTNAg/fOHSUNzfWq+Td/RbgWJ/EWEtbDQbVcODbURQuWdn98P0XFXZaZ/Re9V
+         Fx0dJ7DCuLDiMrt5GGWl/v5yEnE7FvZ8CT3rlJ84XfRBfSBOXmLk0JhzJziFxtUZMHdf
+         x9YkxG5TYVZ362AAr6xz3RePdom5QBfC4O9MGb4Abn1hK5oLjp2LXBKLffFS9DaYVMmR
+         m58g==
+X-Gm-Message-State: AOJu0YyraQo85n6YDo9tnI2GEtlKVgCbKtKp0Axwif5XqLSilknEBv0O
+        hMgiTezxbNor/mwZE5bYkFpohfC5eybL7Kg+jFckOA==
+X-Google-Smtp-Source: AGHT+IFcYug55Tp0lNJopJnaL5nAbs+IH/2y7/m18QZbjvouGbRIdQ9I1qTMA+dls8AEqSYUh6LjHQ==
+X-Received: by 2002:a05:6512:452:b0:4f8:714e:27a8 with SMTP id y18-20020a056512045200b004f8714e27a8mr79540lfk.0.1693341984183;
+        Tue, 29 Aug 2023 13:46:24 -0700 (PDT)
+Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
+        by smtp.gmail.com with ESMTPSA id q3-20020ac25a03000000b004edc72be17csm2098876lfn.2.2023.08.29.13.46.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 13:46:23 -0700 (PDT)
+Message-ID: <8fbcce8b-4286-44c5-9593-6e4ae959cfd2@linaro.org>
+Date:   Tue, 29 Aug 2023 22:46:22 +0200
 MIME-Version: 1.0
-References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org> <CAA8EJpp_Uu62TDknZ-X0DQYinnwxxoriPpetfppCySxg_25YQg@mail.gmail.com>
-In-Reply-To: <CAA8EJpp_Uu62TDknZ-X0DQYinnwxxoriPpetfppCySxg_25YQg@mail.gmail.com>
-From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date:   Tue, 29 Aug 2023 21:03:42 +0200
-Message-ID: <CACMJSet-1tbTnMOab2GvMEc-b6Y3Xq5AZEE4mrfiUOZ=65z3MQ@mail.gmail.com>
-Subject: Re: [PATCH 00/11] arm64: qcom: add and enable SHM Bridge support
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: Fix SM_GPUCC_8450 dependencies
+Content-Language: en-US
+To:     Nathan Chancellor <nathan@kernel.org>, agross@kernel.org,
+        andersson@kernel.org
+Cc:     mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        patches@lists.linux.dev
+References: <20230829-fix-sm_gpucc_8550-deps-v1-1-d751f6cd35b2@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230829-fix-sm_gpucc_8550-deps-v1-1-d751f6cd35b2@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Aug 2023 at 23:24, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Mon, 28 Aug 2023 at 22:29, Bartosz Golaszewski
-> <bartosz.golaszewski@linaro.org> wrote:
-> >
-> > SHM Bridge is a mechanism allowing to map limited areas of kernel's
-> > virtual memory to physical addresses and share those with the
-> > trustzone in order to not expose the entire RAM for SMC calls.
-> >
-> > This series adds support for Qualcomm SHM Bridge in form of a platform
-> > driver and library functions available to users. It enables SHM Bridge
-> > support for three platforms and contains a bunch of cleanups for
-> > qcom-scm.
->
-> Which users do you expect for this API?
->
+On 29.08.2023 16:08, Nathan Chancellor wrote:
+> CONFIG_SM_GCC_8450 depends on ARM64 but it is selected by
+> CONFIG_SM_GPUCC_8450, which can be selected on ARM, resulting in a
+> Kconfig warning.
+> 
+> WARNING: unmet direct dependencies detected for SM_GCC_8450
+>   Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
+>   Selected by [y]:
+>   - SM_GPUCC_8450 [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
+> 
+> Add the same dependencies to CONFIG_SM_GPUCC_8450 to resolve the
+> warning.
+> 
+> Fixes: 728692d49edc ("clk: qcom: Add support for SM8450 GPUCC")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> I think this is more of a silent conflict between commit ab7f00379fe9
+> ("clk: qcom: restrict drivers per ARM/ARM64") and commit 728692d49edc
+> ("clk: qcom: Add support for SM8450 GPUCC"), rather than just a fault of
+> 728692d49edc but ab7f00379fe9 was merged first so I just chose
+> 728692d49edc as the problematic commit for the message, feel free to
+> adjust it as necessary.
+Yep, looks like
 
-This series adds a single user: the SCM driver. We have another user
-almost ready for upstream in the form of the scminvoke driver and I
-learned today, I can already convert another user upstream right now
-that I will try to get ready for v2.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> Also, could you please describe your design a bit more? Why have you
-> implemented the shm-bridge as a separate driver rather than a part of
-> the SCM driver?
->
-
-It's self-contained enough to be put into a separate module and not
-all platforms support it so in order to avoid unnecessary ifdeffery in
-the scm driver, I made it separate.
-
-Bart
-
-> >
-> > Bartosz Golaszewski (11):
-> >   firmware: qcom-scm: drop unneeded 'extern' specifiers
-> >   firmware: qcom-scm: order includes alphabetically
-> >   firmware: qcom-scm: atomically assign and read the global __scm
-> >     pointer
-> >   firmware: qcom-scm: add support for SHM bridge operations
-> >   dt-bindings: document the Qualcomm TEE Shared Memory Bridge
-> >   firmware: qcom-shm-bridge: new driver
-> >   firmware: qcom-scm: use SHM bridge if available
-> >   arm64: defconfig: enable Qualcomm SHM bridge module
-> >   arm64: dts: qcom: sm8450: enable SHM bridge
-> >   arm64: dts: qcom: sa8775p: enable SHM bridge
-> >   arm64: dts: qcom: sm8150: enable SHM bridge
-> >
-> >  .../bindings/firmware/qcom,shm-bridge.yaml    |  36 ++
-> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |   4 +
-> >  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   4 +
-> >  arch/arm64/boot/dts/qcom/sm8450.dtsi          |   4 +
-> >  arch/arm64/configs/defconfig                  |   1 +
-> >  drivers/firmware/Kconfig                      |   8 +
-> >  drivers/firmware/Makefile                     |   1 +
-> >  drivers/firmware/qcom-shm-bridge.c            | 452 ++++++++++++++++++
-> >  drivers/firmware/qcom_scm-smc.c               |  20 +-
-> >  drivers/firmware/qcom_scm.c                   | 106 +++-
-> >  drivers/firmware/qcom_scm.h                   |   3 +
-> >  include/linux/firmware/qcom/qcom_scm.h        | 109 +++--
-> >  include/linux/firmware/qcom/shm-bridge.h      |  32 ++
-> >  13 files changed, 712 insertions(+), 68 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> >  create mode 100644 drivers/firmware/qcom-shm-bridge.c
-> >  create mode 100644 include/linux/firmware/qcom/shm-bridge.h
-> >
-> > --
-> > 2.39.2
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+Konrad
