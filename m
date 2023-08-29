@@ -2,195 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8CE078CDDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 22:54:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98F3078CDF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 23:00:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231636AbjH2UyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 16:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58596 "EHLO
+        id S240557AbjH2U7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 16:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239734AbjH2UyD (ORCPT
+        with ESMTP id S240575AbjH2U71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 16:54:03 -0400
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956C51BE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 13:53:59 -0700 (PDT)
-Received: by mail-ua1-x931.google.com with SMTP id a1e0cc1a2514c-7a4ee7f9c37so1094366241.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 13:53:59 -0700 (PDT)
+        Tue, 29 Aug 2023 16:59:27 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8EB1BC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 13:59:22 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5008d16cc36so7596509e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 13:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693342438; x=1693947238; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=svGG2wDB13uzDpJWe1CVUXYNJtH8VDQ471kzgce2wjI=;
-        b=mWP1nOSP3T9RR90fek1HecNdnSYKDLx5bgLp1/ppk/xUMtO3/W7Df2NqNaEHvFWT+t
-         CYjyL3cHa8LtQfdksQ/vBMIBRHktHFHZ77AeuyozHsqyXqClB7t+FLpacuUliefFTS9M
-         mOnN1xKLVDAugcmWuN4RgwLmwl3HLbqCNSY6YYkfD1DcjafB4oGziitx5r0CqUOWmhSX
-         OFegtkxEswFEJigg0OU19mno/6rQrvPTdtmSsxREs0bNfhN2bYDf6yFfqB70LLKgQ1wN
-         OHzsFj8GN16xE+9gaLHJhx7VJXGlmk1UxbFGrbHgj4WZVAS9oynTbzWwe0SVmF11Hu9q
-         9j9A==
+        d=linaro.org; s=google; t=1693342761; x=1693947561; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tZtGJPMqA3+qy7SC3bVVwrx8Hadb7bSfghlu98ga0vU=;
+        b=uBNdEZ+FDtQub/TQpHTcPNcjLv3MDpvGrVTk2yY4QpMJwJEdeIuJ78s15P+3a66Wje
+         0LEhM3HBwDguFvjBCWXiwWQFWw8BjYFRbFKeYKAvrAuwxr5FmSnS5Nzk4DU7HOP1+gpt
+         uxGbfh7paCBrBgHdsvMtVU3yhUmfMUMbx2D8YcomIFOcl7/MQzvFbjtAQdzyflDj5kFL
+         xbTNfbso8UOAC1hdaHpgIBntpsHQTv0J3UHYrD+IEjgeXpLZpO0LlZGhNjd7z2y3Il/k
+         cMbtFra20tD478+5MDyEI3RpDUde3+J0jUQH++C33oqInMPALkTNjCtBYWlHJLo2bh+A
+         h6GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693342438; x=1693947238;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1693342761; x=1693947561;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=svGG2wDB13uzDpJWe1CVUXYNJtH8VDQ471kzgce2wjI=;
-        b=jBF/sU7cTNQaie5a6BFApnbLWx00PhqUak4rfkPL6iMLViDpAbtdhBVfyfgxXg5RML
-         pU50KmhqYUx6scKrgPb4LmgYQ+/lRPgrCebhn7v5TOh4jgsZUjBeJTaYFr6PR5/Rr1ma
-         WfSWtEhPuoG0NVR3vBBrjYzKPJ53QLQAfFMgikMSW6/nqzmLrm5WYmq9t6mqi4E5xl05
-         CCkOgiuqCBgVSIWX6lhGIjP7XRnIBbKlE/whZsoH4JGRVg/Aqp+Kn1ooD6jqxzgvGuvX
-         DUzSVkc/g/uQy7wUpUxzbJLWBTWX7o/sy4tLBBnDcuVNdpGZWboipTq25qIt/LSKTzPk
-         /Jeg==
-X-Gm-Message-State: AOJu0YziU7aCzgbxH/PBtJpgobDJE4A5142SuqONAjVvm5uwiYFlRAz1
-        P+5W7Lbw6+iTUc9LGBFst2yZCUyg4TRMHsLKLAH2ew==
-X-Google-Smtp-Source: AGHT+IHJ1fFSnp2bLxtzdjcguBGoW+n9sRJTKhN/7CGgIE3TJOEWwPaEM5HHfLDkf0ms64pN4JqoBQ8Kli0mV/LqTOc=
-X-Received: by 2002:a67:f3c7:0:b0:44a:a4ea:3f90 with SMTP id
- j7-20020a67f3c7000000b0044aa4ea3f90mr371283vsn.26.1693342438657; Tue, 29 Aug
- 2023 13:53:58 -0700 (PDT)
+        bh=tZtGJPMqA3+qy7SC3bVVwrx8Hadb7bSfghlu98ga0vU=;
+        b=PVqWq0MkNSV4Os5xb9fuEMj/xdPzBiYkS/bb5CJacu0mx7VzNpQxdKRaVQ9sQabrZ3
+         CHOSc7zYr/7BhZzCvMCXiqPGi4sNzuwU416v9GnnFbAuW7VX4v505vUiGDuvuYkA8vn5
+         5E0rMBBBTRgyX2xvxT4k+F7c7wtPS74OHmzeHzFRqOWY4rsYrUsVsbFMNgLJLktIXliH
+         uvPlMUwlyw1N5+gjezZbV8Zk3QK2jcq9zQy7dGEQg4UrszgcOLfk1t6LYeZE4ujdFsrd
+         gTTAiCnXfgQrAipUcTvmkwHvqjUbTyhLT4zJik0HH992OPF+5aaNPABO43ZoP2TCKdkX
+         lWHQ==
+X-Gm-Message-State: AOJu0YyIm4b9Gidq91q6u7amJUJloGCsi1seIqY0U6COoXRTa4GgI1Rg
+        hRx+QYqZTKhqmp145VJrGAX8Ew==
+X-Google-Smtp-Source: AGHT+IEcdMrmJxE2aJj/jV2hEqio6NzYH0SNelvPC/jDlyK4JlIHA3ikCuV+e47VYI9y9Mps5r8bdQ==
+X-Received: by 2002:a05:6512:5d0:b0:500:9ee2:15f with SMTP id o16-20020a05651205d000b005009ee2015fmr42215lfo.46.1693342760949;
+        Tue, 29 Aug 2023 13:59:20 -0700 (PDT)
+Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
+        by smtp.gmail.com with ESMTPSA id q30-20020ac2515e000000b004fbad09317csm2074025lfd.189.2023.08.29.13.59.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 13:59:20 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] 8550 USB QMPPHY fixups
+Date:   Tue, 29 Aug 2023 22:59:03 +0200
+Message-Id: <20230829-topic-8550_usbphy-v1-0-599ddbfa094a@linaro.org>
 MIME-Version: 1.0
-References: <20230508153524.2371795-1-dmitry.baryshkov@linaro.org> <o7wou4ob4vo2rzyhvzxl35cj52frok6jt3qjhdhwszvtsipewz@776l7jgunfqa>
-In-Reply-To: <o7wou4ob4vo2rzyhvzxl35cj52frok6jt3qjhdhwszvtsipewz@776l7jgunfqa>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 29 Aug 2023 23:53:47 +0300
-Message-ID: <CAA8EJpqc8zoW9nNm84F8kW2FzAb4jLd6TmNYEN_UWAh7PtGm3A@mail.gmail.com>
-Subject: Re: [PATCH v2] remoteproc: qcom_q6v5_mss: support loading MBN file on msm8974
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABdc7mQC/x2N0QrCMAwAf2Xk2UDXsrn6KyLS1swGRlcaJ8rYv
+ xt8vIPjdhBqTAKXbodGbxZei0J/6iDlUJ6E/FAGa6wzk/X4WisnnIbB3DeJNX9x9P3sxnP00RF
+ oF4MQxhZKylqWbVlU1kYzf/6j6+04fivHdst4AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Adrien Thierry <athierry@redhat.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693342759; l=767;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=LZ6XZ3mggyAs4bqjIFE2iaDrGjBXBRUJrIRgbaHBbA8=;
+ b=FI1L+7AsJ4F9NBPyc6tx/PIqm34odB1VlyqcTI1V8LdnlGhYs+EBkPnoM/6jEoj8VhGhCQJ69
+ h45wQOfvihhDJ/TdhOXG9hIFOpq6rqcJEj9c9n6LnZPtHByXf7RUCCE
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 15 Jul 2023 at 23:35, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Mon, May 08, 2023 at 06:35:24PM +0300, Dmitry Baryshkov wrote:
-> > On MSM8974 and APQ8074 the MSS requires loading raw MBA image instead of
-> > the ELF file. Skip the ELF headers if mba.mbn was specified as the
-> > firmware image.
-> >
-> > Fixes: 051fb70fd4ea ("remoteproc: qcom: Driver for the self-authenticating Hexagon v5")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Rather than complicating the driver further, can't we just extract that
-> first segment? Or specify the first split segment file?
+Inspired by [1] I went over the 8550 QMPPHY init sequences and found
+some inconsistencies. This series attempts to fix them.
 
-Missed your response.
+[1] https://lore.kernel.org/linux-arm-msm/20230828152353.16529-1-athierry@redhat.com/
 
-Of course, we can. But this makes this particular case really stand
-off. In all other cases we use the .mbn file and only msm8974/apq8084
-only mba requires .b00 file. I think from the point of uniformity we'd
-better use mba.mbn here too.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      phy: qcom-qmp-combo: Square out 8550 POWER_STATE_CONFIG1
+      phy: qcom-qmp-combo: initialize PCS_USB registers
 
-If the q6v5_mba_get_offset() design seems too complicated, I can
-replace that with the fixed offset of 0x1000. WDYT?
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 6 +++++-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 3 ++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+---
+base-commit: ae782d4e2bf53b0b642ae860794f7a39470f995a
+change-id: 20230829-topic-8550_usbphy-691f367b9b3e
 
->
-> Regards,
-> Bjorn
->
-> > ---
-> >
-> > Changes since v1:
-> > - Replace fixed offset 0x1000 with the value obtained from ELF headers
-> > - Implement ELF validity checks
-> >
-> > ---
-> >  drivers/remoteproc/qcom_q6v5_mss.c | 47 +++++++++++++++++++++++++++++-
-> >  1 file changed, 46 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> > index ab053084f7a2..b4ff900f0304 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > @@ -11,6 +11,7 @@
-> >  #include <linux/delay.h>
-> >  #include <linux/devcoredump.h>
-> >  #include <linux/dma-mapping.h>
-> > +#include <linux/firmware.h>
-> >  #include <linux/interrupt.h>
-> >  #include <linux/kernel.h>
-> >  #include <linux/mfd/syscon.h>
-> > @@ -29,6 +30,7 @@
-> >  #include <linux/iopoll.h>
-> >  #include <linux/slab.h>
-> >
-> > +#include "remoteproc_elf_helpers.h"
-> >  #include "remoteproc_internal.h"
-> >  #include "qcom_common.h"
-> >  #include "qcom_pil_info.h"
-> > @@ -459,6 +461,35 @@ static void q6v5_debug_policy_load(struct q6v5 *qproc, void *mba_region)
-> >       release_firmware(dp_fw);
-> >  }
-> >
-> > +/* Get the offset of the segment 0 for mba.mbn */
-> > +static int q6v5_mba_get_offset(struct rproc *rproc, const struct firmware *fw)
-> > +{
-> > +     const struct elf32_hdr *ehdr;
-> > +     const void *phdr;
-> > +     char class;
-> > +     u64 phoffset, poffset;
-> > +     u16 phentsize;
-> > +     int ret;
-> > +
-> > +     ret = rproc_elf_sanity_check(rproc, fw);
-> > +     if (ret < 0)
-> > +             return ret;
-> > +
-> > +     ehdr = (const struct elf32_hdr *)fw->data;
-> > +     class = ehdr->e_ident[EI_CLASS];
-> > +     phoffset = elf_hdr_get_e_phoff(class, ehdr);
-> > +     phentsize = elf_hdr_get_e_phentsize(class, ehdr);
-> > +     if (phoffset + phentsize > fw->size)
-> > +             return -EINVAL;
-> > +
-> > +     phdr = fw->data + elf_hdr_get_e_phoff(class, ehdr);
-> > +     poffset = elf_phdr_get_p_offset(class, phdr);
-> > +     if (poffset > fw->size)
-> > +             return -EINVAL;
-> > +
-> > +     return poffset;
-> > +}
-> > +
-> >  static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
-> >  {
-> >       struct q6v5 *qproc = rproc->priv;
-> > @@ -477,7 +508,21 @@ static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
-> >               return -EBUSY;
-> >       }
-> >
-> > -     memcpy(mba_region, fw->data, fw->size);
-> > +     if (qproc->version == MSS_MSM8974 &&
-> > +         !memcmp(fw->data, ELFMAG, SELFMAG)) {
-> > +             int poffset;
-> > +
-> > +             poffset = q6v5_mba_get_offset(rproc, fw);
-> > +             if (poffset < 0) {
-> > +                     memunmap(mba_region);
-> > +                     return poffset;
-> > +             }
-> > +
-> > +             memcpy(mba_region, fw->data + poffset, fw->size - poffset);
-> > +     } else {
-> > +             memcpy(mba_region, fw->data, fw->size);
-> > +     }
-> > +
-> >       q6v5_debug_policy_load(qproc, mba_region);
-> >       memunmap(mba_region);
-> >
-> > --
-> > 2.39.2
-> >
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-
-
---
-With best wishes
-Dmitry
