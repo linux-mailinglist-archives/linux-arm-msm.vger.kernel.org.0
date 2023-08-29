@@ -2,117 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F39878CC5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 20:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C3E178CCA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 21:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232100AbjH2SrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 14:47:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59616 "EHLO
+        id S234106AbjH2TEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 15:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234761AbjH2Sqf (ORCPT
+        with ESMTP id S239566AbjH2TD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 14:46:35 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C28119A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 11:46:32 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d7484cfdc11so4572938276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 11:46:32 -0700 (PDT)
+        Tue, 29 Aug 2023 15:03:58 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA4CCE6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 12:03:54 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d7b66b5641eso902055276.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 12:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693334791; x=1693939591;
+        d=linaro.org; s=google; t=1693335833; x=1693940633; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6+ED0KXs67DGrmo6iXaWzPAJQDmbnXsYGdJFbasrMdI=;
-        b=ClWjzcAfjYvtZ8nl+s7yeWbc+hc5FJFSCfsmTr8wmd/zVGplocRb++tAmdLjdsc9zc
-         nfs6Ak/RS7XX2cggg/o75ialkDJwSUmqpoE0jlMeh3HrLPdu5cp3G0lkpB0XGMYE3XOC
-         s5Z3wGgOcqeZVH4rZ4Z18ix/VHAoHldddAp34xZc28soOqMULHblq4fl9sVDsgxIZLN1
-         UQWTMxiRjLNSy54jTnOGWiDCUivs75yf4KiJWzQlLbqvLyuPzW4fmCFix5ea17knoMq4
-         7Ov+viFXw9Qeb7kfTlBZ45jKJGGg1ngVZixWXIuhHigS6SN/T5lzODHIBbHBip0x5fcC
-         2OJQ==
+        bh=pUpheKq+1JSQMZjnZF4kInD8StAyFEmUTtjvjFiSFy4=;
+        b=rper8cZkIV5pYarlVzm9r6QWzY3T2UdfruxO8NQxVfN+/Ay9dB65coOnS5aYxavazX
+         8LYAN3YQr66dT2A4sCk0FpiHDZ/Uaqge12lkLQOe4jYOM574Lay3kFOJ9DEu6tzC0GbM
+         CSfAuZRNQkOuskGSafmL2BHAIl8RtH8SbkLFfAS1e6ug/Pds1eocGtFowImTiSGsfilM
+         f2C74eVqNusyBkiuHvew7/zLuyBlZFYTiiUiYJzqAMtCECobbHtLmOqHYGg8zKtaddEl
+         3BsJDteKyWkAZoA2VrK00h0HsfklcQk+6XDuiIir0b7//WMlfzBeQyQYBAMnjFwV2Fn7
+         bZ3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693334791; x=1693939591;
+        d=1e100.net; s=20221208; t=1693335833; x=1693940633;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6+ED0KXs67DGrmo6iXaWzPAJQDmbnXsYGdJFbasrMdI=;
-        b=PZp2j7ZgCRrrL9YuCQvdaVi7mjckPqFkdVcvTm/FPN/DzMDcu/uwWFgdYc6EsUGKNN
-         RfX1OEVLMFVpF9xea2FedX+H0L/LVKi0T0izmlhR1Kf/AS1gZIbkQMx7IhDmy2W0rFZ4
-         H17VCDzP6uKcqDi35BamOlzyaf5YeUdnGD5oBCSxJaQHtQYEXB4fPAzDajzj720zzI2c
-         nMKLJq5a+bxk6RpuVH8kWQnwq3o9W9HFKd4uv2cblB5QGxjmo+JkBclZnUz30i+J2vht
-         BYt/65rGTTY/v0Vloleh4I245F/zphJLL75KGsRHZzK9Anf8d3yExGDLRPd4wOV8eVr2
-         FuFA==
-X-Gm-Message-State: AOJu0Yxw+wUWRffmtMUA/QxUTB93XB/pV40ed6oPORMKbtzbOGLowWoM
-        iC9lTF5gZWM+DgKBIHGgtJ1OHjoEmsiZN9pQasCJGQ==
-X-Google-Smtp-Source: AGHT+IF7Q+2ONedva5BlExE5dN6mOQYTGK+793vpj6L4wQkNIymKBXWY+28Y72O3M02h08fxfWekTJ3xhcGsPQoR0RA=
-X-Received: by 2002:a25:d10a:0:b0:d62:b91b:10e3 with SMTP id
- i10-20020a25d10a000000b00d62b91b10e3mr30257956ybg.48.1693334791365; Tue, 29
- Aug 2023 11:46:31 -0700 (PDT)
+        bh=pUpheKq+1JSQMZjnZF4kInD8StAyFEmUTtjvjFiSFy4=;
+        b=GLqXc8sUqO9VckaZzvjQdACF2tkGrzPfqPAMyxF7UadO+fOEFtaMzRvK9n4pPX8Piz
+         zQ+LpO2JHLP9kG7QYcWLHOZr0H6uAYNbSSJ6Pd0sQnW3NE8yiNew/b17IDVEJohHB/zG
+         Y8TeJqxBcFqAuXD1U1rtBj+31lxHqk5n1FqaDcUCNS8E3/sxQ4uEhfLZiUTEnSVbj1hh
+         SlWAOMxboA+erCTgwTavC1OBOvVHfkKnj8DtI5eE03bu9s312P3F+B6hZzXgRTjy5IJ0
+         kyqCNyfrrcXyWNJ7YQ6HeB2qS29d62fbthIOP+FbDHxgxJN07wJm+vdQuKA3XNFXvHKP
+         YjxQ==
+X-Gm-Message-State: AOJu0Yw+hIRGkhJUm3bnusTpsEkOkb0xsVLlS/BMiaqBycwOL/ejcQI+
+        lbOKZUrDdXWK7ayHgO1Ob6RgLmCBbOLpxGbh836eSQ==
+X-Google-Smtp-Source: AGHT+IFNtj7fwawiWbux5Dq90/Rn4syHRy4EBua4A31ueNEAReWJhLBQL+bHOuTOrPBbl1KEogyErWrZdfGLWV9R2U4=
+X-Received: by 2002:a25:a247:0:b0:d12:25d:fd60 with SMTP id
+ b65-20020a25a247000000b00d12025dfd60mr29062ybi.9.1693335833197; Tue, 29 Aug
+ 2023 12:03:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com>
- <20230829135818.2219438-5-quic_ipkumar@quicinc.com> <169331975886.2142011.7345682428392154402.robh@kernel.org>
- <17e2413b-6d06-a113-e35b-30cc078a6e83@linaro.org>
-In-Reply-To: <17e2413b-6d06-a113-e35b-30cc078a6e83@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 29 Aug 2023 21:46:20 +0300
-Message-ID: <CAA8EJppNGs0UVhBJq_+RFt8pALEk0tEoKfUo1AxzbSu82A5_HA@mail.gmail.com>
-Subject: Re: [PATCH 4/9] dt-bindings: phy: qcom,uniphy: Add ipq5332 USB3 SS UNIPHY
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Praveenkumar I <quic_ipkumar@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kishon@kernel.org, robert.marko@sartura.hr, robh+dt@kernel.org,
-        geert+renesas@glider.be, peng.fan@nxp.com,
-        konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, will@kernel.org,
-        conor+dt@kernel.org, p.zabel@pengutronix.de,
-        quic_varada@quicinc.com, vkoul@kernel.org, nfraprado@collabora.com,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-kernel@lists.infradead.org, quic_wcheng@quicinc.com,
-        rafal@milecki.pl, gregkh@linuxfoundation.org,
-        luka.perkov@sartura.hr, andersson@kernel.org, arnd@arndb.de,
-        linux-usb@vger.kernel.org, agross@kernel.org,
-        catalin.marinas@arm.com
+References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org> <CAA8EJpp_Uu62TDknZ-X0DQYinnwxxoriPpetfppCySxg_25YQg@mail.gmail.com>
+In-Reply-To: <CAA8EJpp_Uu62TDknZ-X0DQYinnwxxoriPpetfppCySxg_25YQg@mail.gmail.com>
+From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date:   Tue, 29 Aug 2023 21:03:42 +0200
+Message-ID: <CACMJSet-1tbTnMOab2GvMEc-b6Y3Xq5AZEE4mrfiUOZ=65z3MQ@mail.gmail.com>
+Subject: Re: [PATCH 00/11] arm64: qcom: add and enable SHM Bridge support
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Aug 2023 at 20:09, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Mon, 28 Aug 2023 at 23:24, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> On 29/08/2023 16:35, Rob Herring wrote:
+> On Mon, 28 Aug 2023 at 22:29, Bartosz Golaszewski
+> <bartosz.golaszewski@linaro.org> wrote:
 > >
-> > On Tue, 29 Aug 2023 19:28:13 +0530, Praveenkumar I wrote:
-> >> Add ipq5332 USB3 SS UNIPHY support.
-> >>
-> >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> >> ---
-> >>  .../devicetree/bindings/phy/qcom,uniphy.yaml  | 117 +++++++++++++++++-
-> >>  1 file changed, 114 insertions(+), 3 deletions(-)
-> >>
+> > SHM Bridge is a mechanism allowing to map limited areas of kernel's
+> > virtual memory to physical addresses and share those with the
+> > trustzone in order to not expose the entire RAM for SMC calls.
 > >
-> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> >
-> > yamllint warnings/errors:
-> >
-> > dtschema/dtc warnings/errors:
-> > In file included from Documentation/devicetree/bindings/phy/qcom,uniphy.example.dts:45:
-> > ./scripts/dtc/include-prefixes/dt-bindings/clock/qcom,ipq5332-gcc.h:19: warning: "GCC_BLSP1_AHB_CLK" redefined
-> >    19 | #define GCC_BLSP1_AHB_CLK                               10
-> >       |
+> > This series adds support for Qualcomm SHM Bridge in form of a platform
+> > driver and library functions available to users. It enables SHM Bridge
+> > support for three platforms and contains a bunch of cleanups for
+> > qcom-scm.
 >
-> So the only patch which actually needed dependency information did not
-> have it. All other patches have something, even defconfig (!). Confusing.
+> Which users do you expect for this API?
+>
 
-Much simpler. This patch adds a second example to the schema. Both
-examples include something-gcc.h. As both examples end up in the same
-example.dts file, second include conflicts with the first one.
+This series adds a single user: the SCM driver. We have another user
+almost ready for upstream in the form of the scminvoke driver and I
+learned today, I can already convert another user upstream right now
+that I will try to get ready for v2.
 
--- 
-With best wishes
-Dmitry
+> Also, could you please describe your design a bit more? Why have you
+> implemented the shm-bridge as a separate driver rather than a part of
+> the SCM driver?
+>
+
+It's self-contained enough to be put into a separate module and not
+all platforms support it so in order to avoid unnecessary ifdeffery in
+the scm driver, I made it separate.
+
+Bart
+
+> >
+> > Bartosz Golaszewski (11):
+> >   firmware: qcom-scm: drop unneeded 'extern' specifiers
+> >   firmware: qcom-scm: order includes alphabetically
+> >   firmware: qcom-scm: atomically assign and read the global __scm
+> >     pointer
+> >   firmware: qcom-scm: add support for SHM bridge operations
+> >   dt-bindings: document the Qualcomm TEE Shared Memory Bridge
+> >   firmware: qcom-shm-bridge: new driver
+> >   firmware: qcom-scm: use SHM bridge if available
+> >   arm64: defconfig: enable Qualcomm SHM bridge module
+> >   arm64: dts: qcom: sm8450: enable SHM bridge
+> >   arm64: dts: qcom: sa8775p: enable SHM bridge
+> >   arm64: dts: qcom: sm8150: enable SHM bridge
+> >
+> >  .../bindings/firmware/qcom,shm-bridge.yaml    |  36 ++
+> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |   4 +
+> >  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   4 +
+> >  arch/arm64/boot/dts/qcom/sm8450.dtsi          |   4 +
+> >  arch/arm64/configs/defconfig                  |   1 +
+> >  drivers/firmware/Kconfig                      |   8 +
+> >  drivers/firmware/Makefile                     |   1 +
+> >  drivers/firmware/qcom-shm-bridge.c            | 452 ++++++++++++++++++
+> >  drivers/firmware/qcom_scm-smc.c               |  20 +-
+> >  drivers/firmware/qcom_scm.c                   | 106 +++-
+> >  drivers/firmware/qcom_scm.h                   |   3 +
+> >  include/linux/firmware/qcom/qcom_scm.h        | 109 +++--
+> >  include/linux/firmware/qcom/shm-bridge.h      |  32 ++
+> >  13 files changed, 712 insertions(+), 68 deletions(-)
+> >  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
+> >  create mode 100644 drivers/firmware/qcom-shm-bridge.c
+> >  create mode 100644 include/linux/firmware/qcom/shm-bridge.h
+> >
+> > --
+> > 2.39.2
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
