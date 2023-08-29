@@ -2,88 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A06D178BFAD
+	by mail.lfdr.de (Postfix) with ESMTP id 029B678BFAC
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 09:52:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231524AbjH2HwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 03:52:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
+        id S232570AbjH2HwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 03:52:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232940AbjH2Hvp (ORCPT
+        with ESMTP id S233942AbjH2Hvu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 03:51:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA57184;
-        Tue, 29 Aug 2023 00:51:32 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T7E8XU022824;
-        Tue, 29 Aug 2023 07:51:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=n0qmg06RN1x9oidKdpsB9U+geqMev7HxNzt7gY8+6os=;
- b=LM5qESvPAmYL1wfU0EiIAOa6tNJMpqgdxdt6A7r0LhBlV35i0/lDKRpExt3I+wkoU5uR
- W52DTGpNDwDIQft5jhIhmcS+T9cSDPPPD2drdL1tUkkF6btg8fiNue+ae2GKRp83vNsT
- T8t0Q39soTo+cuZ0r2UK3vj7FKwONxyHQ/3B15P9qb4chljwFmFceoRS+3nd5MRtLozh
- R84vXaa/y8RDeMfdl34pUO9qt6RvgFn9JYQrecIuvxkYrY/mO2gJtwxHrLht4vfR7XcD
- Igp6RdTWpdC+u/W7UB1DD6KGL7VT6er2qCupIFphjQHTrR09KvakssNrQ/KAze1Yh7WO Og== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss4wq0rvu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Aug 2023 07:51:16 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37T7oqTf021732
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Aug 2023 07:50:52 GMT
-Received: from [10.110.46.69] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
- 2023 00:50:51 -0700
-Message-ID: <c6a5b214-7812-25a4-c23c-8e57c0efe3fd@quicinc.com>
-Date:   Tue, 29 Aug 2023 00:50:51 -0700
+        Tue, 29 Aug 2023 03:51:50 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A44184
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 00:51:46 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9a2185bd83cso529360966b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 00:51:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693295505; x=1693900305;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EqLCIfx/nQbDdaf7ISe4UiAeoOCZvB+r0pCvlD3LGTQ=;
+        b=zPpL6N44WL7inyhdHAAHDUNf8j+oQF1Stzswm7B4hCLQCL4IF3ZUMkMUjB6ic/rmmH
+         YpYaHvRJft527lOamtW3awCAvvzKceVPJfPEOdKr4qJrvwWFQWY620BktlS7NRz8urv3
+         bb88702yHwxhP1KvND/aQyWJiG2pzL3S0E5x0lnJf5kZkVHb79Wq74ABZtciSEZVLsnh
+         ognvLJYZmJf8NOfpJ9yvR2CRVL9rypn5k7JcRs8fz8lqhjSceJ7861N452i50QN8tGBZ
+         ElSqUlSoSnwRLXxl+mPx746O4mghhd8Rsv8kG2KF2Wu8A4q8xow7cc3MCqV1LzeKKEK3
+         ggLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693295505; x=1693900305;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EqLCIfx/nQbDdaf7ISe4UiAeoOCZvB+r0pCvlD3LGTQ=;
+        b=IRmHQCbCsfmZxho2W136NuvPuWQ1VRUgpQ1uMe+wnG4ZEOQx11tc1Oqn/Ht7kXwD34
+         fU1hI+AA8kO+74HP/e+QGrUPMIUd+y/mmljSVeWKNlfJlB7uB4rx3FANAHJnFquaETW6
+         h4eHPxxJTBxN3n9t0w/Q3lNthnVB4EPGnz/LC/ttIr+l05cdCErx51L5j/HE8KxOc8N4
+         5Eo42L26RjRQnxx8dk4JiLJtZ2Ig6MYntgf8hMFHpX6p0hPh92AkAXouKnJBlY1ab2ee
+         1xAWPHUDmGHKRpfDGoaLlLpg6JDFFXnO5u5b3B99KiSD4ZziLG6xw6Rkggmh5rCp+rWG
+         8FFw==
+X-Gm-Message-State: AOJu0Yxyq3+rcIS8GjAwU0DMguabzxPo1q59s4uY1+o2mJQJkyJWZBgR
+        2/DLAKibCxPweten9fB2cYv4prkseHJp+HdF+ng=
+X-Google-Smtp-Source: AGHT+IGDpUJD0SJNbKFg5McNu0Y7Pe/LRRlvTH3Z5Y9WrBT69j1eGeD+n5n8OJBMK0Bixn99CqCy6A==
+X-Received: by 2002:a17:907:a053:b0:9a3:c4f4:12dc with SMTP id gz19-20020a170907a05300b009a3c4f412dcmr8842608ejc.7.1693295504932;
+        Tue, 29 Aug 2023 00:51:44 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.196])
+        by smtp.gmail.com with ESMTPSA id sd26-20020a170906ce3a00b00997d76981e0sm5638413ejb.208.2023.08.29.00.51.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 00:51:44 -0700 (PDT)
+Message-ID: <5d9a522c-7a36-2438-37af-5ee6ccb0cdc1@linaro.org>
+Date:   Tue, 29 Aug 2023 09:51:43 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 11/28] dt-bindings: usb: dwc3: Add
- snps,num-hc-interrupters definition
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 01/11] firmware: qcom-scm: drop unneeded 'extern'
+ specifiers
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>,
-        <andersson@kernel.org>, <gregkh@linuxfoundation.org>,
-        <tiwai@suse.com>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <quic_jackp@quicinc.com>, <quic_plai@quicinc.com>
-References: <20230308235751.495-1-quic_wcheng@quicinc.com>
- <20230308235751.495-12-quic_wcheng@quicinc.com>
- <20230311134008.GA20831-robh@kernel.org>
- <f7bd1ae7-fc38-0f29-546b-9ea4a323f42f@quicinc.com>
- <73655c17-5246-2c96-d415-6a30497966c3@linaro.org>
- <9d31db9c-4e58-767a-15c5-65f7c04bd989@quicinc.com>
- <e2b2f268-182a-5ba4-2541-f0a401eda1c8@linaro.org>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <e2b2f268-182a-5ba4-2541-f0a401eda1c8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
+ <20230828192507.117334-2-bartosz.golaszewski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230828192507.117334-2-bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZcPfopBsDJ1JQuOuXkevSo_AEwKMdkw2
-X-Proofpoint-ORIG-GUID: ZcPfopBsDJ1JQuOuXkevSo_AEwKMdkw2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_04,2023-08-28_04,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
- spamscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 adultscore=0
- mlxlogscore=433 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308290067
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -94,30 +88,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/29/2023 12:42 AM, Krzysztof Kozlowski wrote:
-> On 29/08/2023 09:19, Wesley Cheng wrote:
->>>>
->>>> This is a XHCI feature, but the DWC3 design is built in a way that DWC3
->>>> host initializes the XHCI device and populates the properties associated
->>>> to XHCI dev.
->>>
->>> You speak about driver now, not bindings. If driver has limitations,
->>> change it. Not really problem of bindings.
->>>
->>
->> Its the limitation of the HW.  Depending on how the SNPS DWC3 controller
->> was implemented the vendor it can support less than the value mentioned
->> in the Synopsys databook.
+On 28/08/2023 21:24, Bartosz Golaszewski wrote:
+> The 'extern' specifier in front of a function declaration has no effect.
+> Remove all of them from the qcom-scm header.
 > 
-> Then what is "XHCI dev"? A Linux device? Then a driver topic. What is
-> "populates the properties" - what or whose properties? Of Linux device?
-> Then a driver topic...
-> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  include/linux/firmware/qcom/qcom_scm.h | 101 ++++++++++++------
 
-I will reword it to using XHCI host controller versus using terms like 
-device and properties for the next rev.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks
-Wesley Cheng
+Best regards,
+Krzysztof
+
