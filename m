@@ -2,82 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B727B78BF9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 09:50:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A06D178BFAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 09:52:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231670AbjH2Hte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 03:49:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47610 "EHLO
+        id S231524AbjH2HwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 03:52:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233286AbjH2HtG (ORCPT
+        with ESMTP id S232940AbjH2Hvp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 03:49:06 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43550184;
-        Tue, 29 Aug 2023 00:49:03 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-5007616b756so6518108e87.3;
-        Tue, 29 Aug 2023 00:49:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693295341; x=1693900141;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OI1R5ue1l4PwCG2oi/y01LYQvO74RnqK27QxURC5nsg=;
-        b=eP601AowgqNwM3BD8z2/bvld0CsvKwhr9cjQO77ANQJMtKiQWJJ4DwrM7bbQsPJYFK
-         /8FELTL+8pvo8H8DuzDqstKrOPeFonP7oZZ+RmMDNYi1rVXb8v+rMo49cJeRGlN3gsQi
-         2F3/2nA4G3YpWbnY15TSF+U9dGben0keGIUQMXP84bMYsNp3SiEvCh7UMwPGSX9rU5YC
-         zkfUYelPFLHrNYG6QRqt/FKoEmOpQN9KOdb07A9uEYB7tAafvjHwAWHX1DVN2qmf8EKE
-         a1ir6xqNv7bcX/P/pbzQdGvVBhdQmRuXQ19EJEIpw+5Ob+B9aHDV9QC8SAgOoZcpaW2P
-         6UaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693295341; x=1693900141;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OI1R5ue1l4PwCG2oi/y01LYQvO74RnqK27QxURC5nsg=;
-        b=IeXGiN3A6KsfzV3QmimuEQhhoJcyEbSGOy0MMNpDx181sLTt5wylYGikwMpN0zfRd9
-         giHpgBYpfkU7S9O8qYD9pAtnOJOpRxPZVSKt63bvBF7FsopRikeTTWbUXCcUZwdUjL6O
-         yS4fKTbMuoC8DSc9mCtC3iKloxeYt6h17O5y1ArsQiIQY2qW6rnbuBpqRsjDZvZN/hmS
-         3K4WizZ5IUYRxJ9Y+cf2+0HH3zqCYJ7o7EyL7NgK+w1++cNMizZ5S8sn6grrfKYQ7pyt
-         8LdD4aMD/m2IkOPhXkMnJ/7RPnANZVbH04+L3P3vvg3xooAG9mznuVGHHF+mAfa/h/aS
-         1sPw==
-X-Gm-Message-State: AOJu0Yxe3bfjUrWR0tANmWRdOH0esah8chp/lVO9lodoLgANRite7YUZ
-        N6Ffg4WJnLj/B/IlagGlSdY=
-X-Google-Smtp-Source: AGHT+IGIlCEkJil4AnAwfWLiAfpjl2igqxZQluROeJEGmtOcAHN0LTRShvTWhmTqQEjer/Yqx7Vqxw==
-X-Received: by 2002:a19:385e:0:b0:4fd:d517:fbcd with SMTP id d30-20020a19385e000000b004fdd517fbcdmr16742007lfj.6.1693295341041;
-        Tue, 29 Aug 2023 00:49:01 -0700 (PDT)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id o21-20020a056512051500b004ff8f090057sm1871769lfb.59.2023.08.29.00.49.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Aug 2023 00:49:00 -0700 (PDT)
-Date:   Tue, 29 Aug 2023 10:48:16 +0300
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
-        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
-        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <wayland-devel@lists.freedesktop.org>
-Subject: Re: [PATCH RFC v6 01/10] drm: Introduce pixel_source DRM plane
- property
-Message-ID: <20230829104816.19122c6d@eldfell>
-In-Reply-To: <20230828-solid-fill-v6-1-a820efcce852@quicinc.com>
-References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
-        <20230828-solid-fill-v6-1-a820efcce852@quicinc.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+        Tue, 29 Aug 2023 03:51:45 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA57184;
+        Tue, 29 Aug 2023 00:51:32 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T7E8XU022824;
+        Tue, 29 Aug 2023 07:51:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=n0qmg06RN1x9oidKdpsB9U+geqMev7HxNzt7gY8+6os=;
+ b=LM5qESvPAmYL1wfU0EiIAOa6tNJMpqgdxdt6A7r0LhBlV35i0/lDKRpExt3I+wkoU5uR
+ W52DTGpNDwDIQft5jhIhmcS+T9cSDPPPD2drdL1tUkkF6btg8fiNue+ae2GKRp83vNsT
+ T8t0Q39soTo+cuZ0r2UK3vj7FKwONxyHQ/3B15P9qb4chljwFmFceoRS+3nd5MRtLozh
+ R84vXaa/y8RDeMfdl34pUO9qt6RvgFn9JYQrecIuvxkYrY/mO2gJtwxHrLht4vfR7XcD
+ Igp6RdTWpdC+u/W7UB1DD6KGL7VT6er2qCupIFphjQHTrR09KvakssNrQ/KAze1Yh7WO Og== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss4wq0rvu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 07:51:16 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37T7oqTf021732
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 07:50:52 GMT
+Received: from [10.110.46.69] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
+ 2023 00:50:51 -0700
+Message-ID: <c6a5b214-7812-25a4-c23c-8e57c0efe3fd@quicinc.com>
+Date:   Tue, 29 Aug 2023 00:50:51 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/kN5KPVrZpDI_roK/yihBVMo";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v3 11/28] dt-bindings: usb: dwc3: Add
+ snps,num-hc-interrupters definition
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
+        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>,
+        <andersson@kernel.org>, <gregkh@linuxfoundation.org>,
+        <tiwai@suse.com>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <quic_jackp@quicinc.com>, <quic_plai@quicinc.com>
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <20230308235751.495-12-quic_wcheng@quicinc.com>
+ <20230311134008.GA20831-robh@kernel.org>
+ <f7bd1ae7-fc38-0f29-546b-9ea4a323f42f@quicinc.com>
+ <73655c17-5246-2c96-d415-6a30497966c3@linaro.org>
+ <9d31db9c-4e58-767a-15c5-65f7c04bd989@quicinc.com>
+ <e2b2f268-182a-5ba4-2541-f0a401eda1c8@linaro.org>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <e2b2f268-182a-5ba4-2541-f0a401eda1c8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZcPfopBsDJ1JQuOuXkevSo_AEwKMdkw2
+X-Proofpoint-ORIG-GUID: ZcPfopBsDJ1JQuOuXkevSo_AEwKMdkw2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_04,2023-08-28_04,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 adultscore=0
+ mlxlogscore=433 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308290067
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,93 +94,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/kN5KPVrZpDI_roK/yihBVMo
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, 28 Aug 2023 17:05:07 -0700
-Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-
-> Add support for pixel_source property to drm_plane and related
-> documentation. In addition, force pixel_source to
-> DRM_PLANE_PIXEL_SOURCE_FB in DRM_IOCTL_MODE_SETPLANE as to not break
-> legacy userspace.
->=20
-> This enum property will allow user to specify a pixel source for the
-> plane. Possible pixel sources will be defined in the
-> drm_plane_pixel_source enum.
->=20
-> Currently, the only pixel sources are DRM_PLANE_PIXEL_SOURCE_FB (the
-> default value) and DRM_PLANE_PIXEL_SOURCE_NONE.
->=20
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/drm_atomic_state_helper.c |  1 +
->  drivers/gpu/drm/drm_atomic_uapi.c         |  4 ++
->  drivers/gpu/drm/drm_blend.c               | 90 +++++++++++++++++++++++++=
-++++++
->  drivers/gpu/drm/drm_plane.c               | 19 +++++--
->  include/drm/drm_blend.h                   |  2 +
->  include/drm/drm_plane.h                   | 21 ++++++++
->  6 files changed, 133 insertions(+), 4 deletions(-)
-
-...
-
-> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
-> index 6e74de833466..c3c57bae06b7 100644
-> --- a/drivers/gpu/drm/drm_blend.c
-> +++ b/drivers/gpu/drm/drm_blend.c
-> @@ -185,6 +185,21 @@
->   *		 plane does not expose the "alpha" property, then this is
->   *		 assumed to be 1.0
->   *
-> + * pixel_source:
-> + *	pixel_source is set up with drm_plane_create_pixel_source_property().
-> + *	It is used to toggle the active source of pixel data for the plane.
-> + *	The plane will only display data from the set pixel_source -- any
-> + *	data from other sources will be ignored.
-> + *
-> + *	Possible values:
-> + *
-> + *	"NONE":
-> + *		No active pixel source.
-> + *		Committing with a NONE pixel source will disable the plane.
-> + *
-> + *	"FB":
-> + *		Framebuffer source set by the "FB_ID" property.
-> + *
->   * Note that all the property extensions described here apply either to =
-the
->   * plane or the CRTC (e.g. for the background color, which currently is =
-not
->   * exposed and assumed to be black).
-
-This UAPI:
-Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
 
 
-Thanks,
-pq
+On 8/29/2023 12:42 AM, Krzysztof Kozlowski wrote:
+> On 29/08/2023 09:19, Wesley Cheng wrote:
+>>>>
+>>>> This is a XHCI feature, but the DWC3 design is built in a way that DWC3
+>>>> host initializes the XHCI device and populates the properties associated
+>>>> to XHCI dev.
+>>>
+>>> You speak about driver now, not bindings. If driver has limitations,
+>>> change it. Not really problem of bindings.
+>>>
+>>
+>> Its the limitation of the HW.  Depending on how the SNPS DWC3 controller
+>> was implemented the vendor it can support less than the value mentioned
+>> in the Synopsys databook.
+> 
+> Then what is "XHCI dev"? A Linux device? Then a driver topic. What is
+> "populates the properties" - what or whose properties? Of Linux device?
+> Then a driver topic...
+> 
 
---Sig_/kN5KPVrZpDI_roK/yihBVMo
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+I will reword it to using XHCI host controller versus using terms like 
+device and properties for the next rev.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmTtosAACgkQI1/ltBGq
-qqebyRAAi5m4OshgltcLENupHhZJbAyOF4Vgz6aKR+OJ9smMDKbW6FmmNZmJqtj7
-qq4Vb00Id6DDEnZidpPvMFRIoS10VChTqEF/kptq47/xoAtXmjeansqskKT6m6h5
-rLuURGUKNRDy+r54irp86Gz5PPAwCUQEW+1WQebI2ph7I1wAkFp065LCf0zoJiQv
-9z/hmqjnt6aiiGlDvc0IuRitiJp25VZa0p/FPW3eI/ob6zxT10r9lFAkvRz0UikE
-ICw7tqEAVWJPQaqCOuJbRMR7fEmPhVYWj/sQ0wZqB75FQTzyay4zEHGwANyyXfFd
-eMgKNv+Vn350Vari1CxY1nEvFC0/BIJT6s7G4h/bFZuaJebqQn7i1g05LRxY5WbK
-g4c6kMIN26dJei4yHkPE22yFf9hPyx8mNK/EfC3LZ4LN2oIfimiUqH/mSSKkahLc
-3RHN1zQ7TwlcLkHT9lVggZFFjhsv2YuACf9O34KzrAbh9ta0Nh1HOfazh3XxLrs5
-WcFecPziUw/jT5HwdpsdENePJ9iMhds4/7aKx951HSXUdparXEaO7gjyy++7JqcE
-5X80m73A321nxOSa6JLICiFMWHTobI3Qc+0nbanQElxcmDNFDyQrYP+du+dPCTXa
-m+KUEU5syHRTxg7t51Acpjv7lVCec+Zgj+t+sfG8rxZKa5ziX88=
-=eLDG
------END PGP SIGNATURE-----
-
---Sig_/kN5KPVrZpDI_roK/yihBVMo--
+Thanks
+Wesley Cheng
