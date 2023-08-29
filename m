@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5008478C7DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 16:46:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 024B078C7E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 16:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236987AbjH2Opj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 10:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44312 "EHLO
+        id S236901AbjH2OrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 10:47:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236981AbjH2OpR (ORCPT
+        with ESMTP id S237012AbjH2Oqz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 10:45:17 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E39BE1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 07:45:15 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-d749f57cb22so4212184276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 07:45:15 -0700 (PDT)
+        Tue, 29 Aug 2023 10:46:55 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BC6198
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 07:46:52 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-58d41109351so74035697b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 07:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693320314; x=1693925114;
+        d=linaro.org; s=google; t=1693320412; x=1693925212;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sYJFL/oP3SaDlhdD3A5BVkBBrDmASIKsskxYu/T8gOk=;
-        b=GY0rtHFHuTCGCTm11spgEUbsSzmNYPKJ1piASOWE3ElhgJN7T+MNyYtD9MdkmLRGHj
-         YykbxRufPy04Pie620zQY8M9JF9lGQVFlc4IquUKpxBHibg53HW6y+iBIfXaQC46uIvZ
-         ntgj4qOqt8V7eoSSYpNSsACFZprYH3cuMTJ62c1z2WwenCA0CCZfK+czw+PoiYk57xKk
-         PXB6DeOeDUor2bkWHnRyAEigbWq5I5CksfcVZk+dxjohBbLmeCUQFwTBstwU6FmbQUCj
-         gXyu5ZLuGcjiyu7BekuXsBmqPyp6V455ezYy+EZvQQC8JC/VvXByKYEAXheoEBtj3TBR
-         2NFg==
+        bh=Mfw6V7LFqYsw0ItItmPglDYqzrcWxbzlv2UHVUeAG74=;
+        b=Qv1HHbYet7wTAy3rg11WkrEiujtXYr/rlXOQu0l/gJM940a/S9fmxO0RASnbW3GEq8
+         BxnN5niAf4gYx1bi4jkz+kDIMDSqckjcgHuTDZtLtrQgfbVu0Tebk2+ODGUaC76H6Nhq
+         3WA/EyQ89de/fbUR0V3a7CbRHTjQU7r+XeqeMwklyHBDYgsfduboGxtsRm0+chL5yhuT
+         nlZCJloJAGoX20Od0JYNDbLAhAAaMVS5gvbl9DShDeVWPbrmrJVY1cpxVZWL+7CLHhf7
+         mVCCSZ1GaK/6cR3LP9QUO3S1oR9Ya8sCxVMLkYNzYzgWAs15/b1y1ePcCEHBg5PoBXSx
+         YUpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693320314; x=1693925114;
+        d=1e100.net; s=20221208; t=1693320412; x=1693925212;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sYJFL/oP3SaDlhdD3A5BVkBBrDmASIKsskxYu/T8gOk=;
-        b=iK2hXQr28iOfV1Ln9TH5aRYvOq8ja6nE98Ky0QJ32BAsQ60a8+Z2fMEKp4LtmE/jtV
-         BAiGKwChWi0dLJpLQLww6WvpnW588+s5ciST/clsZvgUNfMo26OyEy5A9nGkngzQ+U4A
-         Ni+R7He5wotS3czFjGEYBz/8cAqx3kZ9HoSPPNsZBakOmc/celh1D+BYoboTMc55hs1U
-         StfPfJsTG3uo6kWKPjp3JTTAL8R7U/GqwjIfAKZWVwMaqhwBeTaG5pZmw3SBUNe0lvPD
-         eySmsKGmLGdGMpmLE65wBOIcvuQFjItNiippAVkqInfCdhJAmz0ldnqSPJZ8GEBP59Pg
-         Bbtw==
-X-Gm-Message-State: AOJu0YxP7KVpkbNN57nl+PpCPLpnczbamNdm2ZoSrCs6Wvrp0MmJLOoJ
-        eyOpx1OjOFNojiCKYxmIDC2SgzNaJrhZPjaUcftgKg==
-X-Google-Smtp-Source: AGHT+IGs1a1lOiAH7BmcROycjWaFcW0bQVi0E8yagxKqODme69iYwdaPfRNKIXre8FrW8ccNKSINi3f6JinWFQR0BBE=
-X-Received: by 2002:a25:b0a3:0:b0:d39:fa2f:8b63 with SMTP id
- f35-20020a25b0a3000000b00d39fa2f8b63mr30342451ybj.25.1693320314602; Tue, 29
- Aug 2023 07:45:14 -0700 (PDT)
+        bh=Mfw6V7LFqYsw0ItItmPglDYqzrcWxbzlv2UHVUeAG74=;
+        b=DMWdqodSmcmiO8uf5tHs1zXKBM0VPDdJJ+pCw5dkKnaQ+UZS1hg2Tf+ZxPoSlaUEAQ
+         WvwKHyzmaCB/6xvSrpHVe50q5OuWLWfJlVYg8r4StIZAwOio51+e66dcTxprlTBSeumu
+         pQR+h3vT6kZ45syhB2pKuozAiTjBW3yvvbCWnqNcXULAeXNTlfaQaslh+iva+GNuyeB5
+         Zamgph8YelIlWagnhDS4j8i9mI9YAXv2sIDzhooS/CZR9MYFSpGFg/XNuhLSKMX0iWl7
+         67oDZDgwpw739P4zpexPGZrH7IcFNOiC74Z7oDyNTryg5Ibq+9QNN0LtAQB9Quv3POe1
+         HylA==
+X-Gm-Message-State: AOJu0Yx5eq9fOqMIJnSaIuKh20TgOGfaClY5yrVJIoL1CYAbnx31OZ+g
+        BqFXT1rfnErK4XEk+s6X1Qxju846pOS9bVScJ5766g==
+X-Google-Smtp-Source: AGHT+IEKmemJLC0tOe8DvGL0hEpWvrphbIpLY5kTOZufedvsfBX+7jKL52HwA0mwZ4wzjwkLvezDYDq17DF7cpctlO4=
+X-Received: by 2002:a0d:eb0a:0:b0:581:7958:5bda with SMTP id
+ u10-20020a0deb0a000000b0058179585bdamr2974154ywe.1.1693320411878; Tue, 29 Aug
+ 2023 07:46:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com> <20230829135818.2219438-9-quic_ipkumar@quicinc.com>
-In-Reply-To: <20230829135818.2219438-9-quic_ipkumar@quicinc.com>
+References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com> <20230829135818.2219438-7-quic_ipkumar@quicinc.com>
+In-Reply-To: <20230829135818.2219438-7-quic_ipkumar@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 29 Aug 2023 17:45:03 +0300
-Message-ID: <CAA8EJpqraO6UXBs=aPpWNuhEPjdcQ01FyV_Np1KtuJtEkJE0Hg@mail.gmail.com>
-Subject: Re: [PATCH 8/9] phy: qcom: uniphy: Add ipq5332 USB UNIPHY support
+Date:   Tue, 29 Aug 2023 17:46:41 +0300
+Message-ID: <CAA8EJpp1+iHndFO5NVDvn2TxSxCmPG1Oa5o4-aYhQGCSQz8gbQ@mail.gmail.com>
+Subject: Re: [PATCH 6/9] arm64: dts: qcom: ipq5332: Add USB3 related nodes
 To:     Praveenkumar I <quic_ipkumar@quicinc.com>
 Cc:     robert.marko@sartura.hr, luka.perkov@sartura.hr, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
@@ -79,16 +79,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 29 Aug 2023 at 17:00, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
 >
-> This patch adds ipq5332 USB SS UNIPHY support.
-
-First, please read to Documentation/process/submitting-patches.rst,
-then rewrite the commit message.
-
-Next, I tend to say that this driver doesn't have a lot in common with
-the ipq4019 driver you have modified. Please consider adding new
-driver for ipq5332, then we can see whether it makes sense to fold
-ipq4019 to use new infrastructure.
-
+> Add SS UNIPHY and update controller node for USB3.
 >
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > ---
@@ -96,80 +87,91 @@ ipq4019 to use new infrastructure.
 > IPQ5332
 > https://lore.kernel.org/all/cover.1692699472.git.quic_varada@quicinc.com/
 >
->  drivers/phy/qualcomm/phy-qcom-uniphy.c | 37 ++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 39 ++++++++++++++++++++++-----
+>  1 file changed, 32 insertions(+), 7 deletions(-)
 >
-> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy.c b/drivers/phy/qualcomm/phy-qcom-uniphy.c
-> index eb71588f5417..91487e68bb6e 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-uniphy.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy.c
-> @@ -26,6 +26,10 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/reset.h>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> index e6baf694488c..7fbe6c9f4784 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> @@ -158,6 +158,27 @@ usbphy0: phy@7b000 {
+>                         status = "disabled";
+>                 };
 >
-> +#define PCIE_USB_COMBO_PHY_CFG_MISC1           0x214
-> +#define PCIE_USB_COMBO_PHY_CFG_RX_AFE_2                0x7C4
-> +#define PCIE_USB_COMBO_PHY_CFG_RX_DLF_DEMUX_2  0x7E8
+> +               ssuniphy0: ssuniphy@4b0000 {
+> +                       compatible = "qcom,ipq5332-usb-ssphy";
+> +                       reg = <0x4b0000 0x800>;
+> +                       clocks = <&gcc GCC_USB0_PIPE_CLK>,
+> +                                <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> +                                <&gcc GCC_PCIE3X1_PHY_AHB_CLK>;
 > +
->  struct uniphy_init_tbl {
->         unsigned int offset;
->         unsigned int val;
-> @@ -37,6 +41,12 @@ struct uniphy_init_tbl {
->                 .val = v,               \
->         }
+> +                       #clock-cells = <0>;
+> +                       clock-output-names = "usb_pcie_wrapper_pipe_clk";
+> +
+> +                       clock-names = "pipe",
+> +                                     "phy_cfg_ahb",
+> +                                     "phy_ahb";
+> +
+> +                       resets =  <&gcc GCC_USB0_PHY_BCR>;
+> +                       reset-names = "por_rst";
+> +                       #phy-cells = <0>;
+> +                       qcom,phy-mux-sel = <&tcsr 0x10540 0x1>;
+> +                       status = "disabled";
+> +               };
+> +
+>                 qfprom: efuse@a4000 {
+>                         compatible = "qcom,ipq5332-qfprom", "qcom,qfprom";
+>                         reg = <0x000a4000 0x721>;
+> @@ -313,30 +334,34 @@ usb: usb@8a00000 {
+>                         clocks = <&gcc GCC_USB0_MASTER_CLK>,
+>                                  <&gcc GCC_SNOC_USB_CLK>,
+>                                  <&gcc GCC_USB0_SLEEP_CLK>,
+> -                                <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +                                <&gcc GCC_USB0_MOCK_UTMI_CLK>,
+> +                                <&gcc GCC_USB0_AUX_CLK>,
+> +                                <&gcc GCC_USB0_LFPS_CLK>;
+> +
+>                         clock-names = "core",
+>                                       "iface",
+>                                       "sleep",
+> -                                     "mock_utmi";
+> +                                     "mock_utmi",
+> +                                     "aux",
+> +                                     "lfps";
 >
-> +static const struct uniphy_init_tbl ipq5332_usb_ssphy_init_tbl[] = {
-> +       UNIPHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_RX_AFE_2, 0x1076),
-> +       UNIPHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_RX_DLF_DEMUX_2, 0x3142),
-> +       UNIPHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_MISC1, 0x3),
-> +};
-> +
->  struct uniphy_cfg {
->         const struct uniphy_init_tbl *init_seq;
->         int num_init_seq;
-> @@ -83,6 +93,32 @@ static const struct uniphy_cfg ipq4019_usb_hsphy_cfg = {
->         .reset_udelay   = 10000,
->  };
+>                         resets = <&gcc GCC_USB_BCR>;
 >
-> +static const char * const ipq5332_usb_ssphy_clk_l[] = {
-> +       "phy_ahb", "phy_cfg_ahb", "pipe",
-> +};
+> -                       qcom,select-utmi-as-pipe-clk;
+> -
+>                         #address-cells = <1>;
+>                         #size-cells = <1>;
+>                         ranges;
+>
+>                         status = "disabled";
+>
+> -                       usb2_0_dwc: usb@8a00000 {
+> +                       usb3_0_dwc: usb@8a00000 {
+
+At this point you have broken compilation of all ipq5332 DT files.
+Don't. The kernel should be bisectable. At each point, after each
+commit it should compile and work.
+
+>                                 compatible = "snps,dwc3";
+>                                 reg = <0x08a00000 0xe000>;
+>                                 clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>                                 clock-names = "ref";
+>                                 interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
+> -                               phy-names = "usb2-phy";
+> -                               phys = <&usbphy0>;
+> +                               phy-names = "usb2-phy", "usb3-phy";
+> +                               phys = <&usbphy0>, <&ssuniphy0>;
 > +
-> +static const char * const ipq5332_usb_ssphy_reset_l[] = {
-> +       "por_rst",
-> +};
-> +
-> +static const char * const ipq5332_usb_ssphy_vreg_l[] = {
-> +       "vdda-phy",
-> +};
-> +
-> +static const struct uniphy_cfg ipq5332_usb_ssphy_cfg = {
-> +       .init_seq       = ipq5332_usb_ssphy_init_tbl,
-> +       .num_init_seq   = ARRAY_SIZE(ipq5332_usb_ssphy_init_tbl),
-> +       .clk_list       = ipq5332_usb_ssphy_clk_l,
-> +       .num_clks       = ARRAY_SIZE(ipq5332_usb_ssphy_clk_l),
-> +       .reset_list     = ipq5332_usb_ssphy_reset_l,
-> +       .num_resets     = ARRAY_SIZE(ipq5332_usb_ssphy_reset_l),
-> +       .vreg_list      = ipq5332_usb_ssphy_vreg_l,
-> +       .num_vregs      = ARRAY_SIZE(ipq5332_usb_ssphy_vreg_l),
-> +       .pipe_clk_rate  = 250000000,
-> +       .reset_udelay   = 1,
-> +       .autoload_udelay = 35,
-> +};
-> +
->  static int phy_mux_sel(struct phy *phy)
->  {
->         struct qcom_uniphy *uniphy = phy_get_drvdata(phy);
-> @@ -396,6 +432,7 @@ static int qcom_uniphy_probe(struct platform_device *pdev)
->  static const struct of_device_id qcom_uniphy_of_match[] = {
->         { .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hsphy_cfg},
->         { .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ssphy_cfg},
-> +       { .compatible = "qcom,ipq5332-usb-ssphy", .data = &ipq5332_usb_ssphy_cfg},
->         { },
->  };
->  MODULE_DEVICE_TABLE(of, qcom_uniphy_of_match);
+>                                 tx-fifo-resize;
+>                                 snps,is-utmi-l1-suspend;
+>                                 snps,hird-threshold = /bits/ 8 <0x0>;
 > --
 > 2.34.1
+>
 
 
 -- 
