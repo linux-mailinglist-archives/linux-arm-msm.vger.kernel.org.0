@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E55FF78BFD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:02:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2CA778BFEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:11:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233969AbjH2IC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 04:02:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41868 "EHLO
+        id S233996AbjH2IK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 04:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233954AbjH2ICO (ORCPT
+        with ESMTP id S234002AbjH2IKP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 04:02:14 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B58113
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 01:02:08 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52bcd4db4cbso784311a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 01:02:08 -0700 (PDT)
+        Tue, 29 Aug 2023 04:10:15 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CA299E;
+        Tue, 29 Aug 2023 01:10:12 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bcb89b476bso60492631fa.1;
+        Tue, 29 Aug 2023 01:10:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693296127; x=1693900927;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3ffv5qw/6jxHEizOlIzxqYRFHwCAgzFtDLHEMCrXrHo=;
-        b=BbMLPYtBom3oXw6zYv3nACWBOPYGb6pGAlI/z0dXUofyBMSzlBFQx2AOiVZ0+33whA
-         6C3a9pEQb3as0eF0AmRL8UYKmQF3pewBAZayZ/fkMwBOEEq4qE4Y20ofk9pO1KJsf6k/
-         a/7z+Ah2zYwh3U0mnYMWyMbj+7lsVBdO100oQqxTvzi5GmJ9Mw1yLOFL5LxFMxg3854j
-         AlllGlwipBSrpsfoO4FvR28l8IDscpfRfLScEdNdi3QK0XCJT+N0opd9izN3G1GYz34T
-         3CcjZrzGmfp/oe+TPU/MswLbOqMc8dpCEpqiVpC0EdWm3HyLLoDYRb3PNkNnFvhsGTpo
-         GrQQ==
+        d=gmail.com; s=20221208; t=1693296610; x=1693901410;
+        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=v4mC9KYKkQXQDiZEbLbQSAIp6lc85QhEw4RvIjClzpU=;
+        b=Pj6FASlTlX3l4PisP5ZpRbEya65eqoRinHgFnl1vkHR/WPdyaY0mfgk6eSDxKzyUyx
+         FsJzHTzikQ3139OVGG+vTlBTFQztNE7Vxdg4JyvTB39sgWWSiRcQlQhEcmp+Utqey4lu
+         oOQ14vRjGwav3iNFIrTHx6mg80tTopG6HJbJJU9McXW1bQkK/gy2nAPD3XAPESRzQocb
+         DYVa5CqqjgDm9K841Nb21/BawJ73gghj49vNq05Ve/l3pwoS+6E47JNsXm+Vyy/SukkZ
+         9rjApIAL6fLnf5b2X29Y6BEH4FJEAetGI+zu4YMY6MNYpZKSOdbDxujLa64r+9Xznrc0
+         cs9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693296127; x=1693900927;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ffv5qw/6jxHEizOlIzxqYRFHwCAgzFtDLHEMCrXrHo=;
-        b=BGQdNohRk1xmn8SfyvSywbm6jbV8K3z17RyHa/SCRbQUtJgtRuYO/CHnnMbVdqhf7q
-         mR2+7r9jBOCPl3r4B3eABDzWsklYUv09M1Izcwf+Sk9feHSXs1eeVFQe9HUwzZcdhGln
-         cgbFy5mdz1r/EgxtxpdJwQc6iZBr1Fsyt6Yp9t0mywxsPr6IoQfoJq0JXuuVJUdU80Qx
-         NnaOyRgsrIb35K5PXNOAwb7zw9KWbcL11lEibtnHekwVhUCx7P4dI1ohUu0ZdUGN0vIq
-         p9XlEmuUszdGhtLqibepzv/vPIOYGAakGs6tp2oKgl5HTEtowZ39Vaqe01eW0pvROYzO
-         hvOg==
-X-Gm-Message-State: AOJu0Ywb83o0bLBRJmjgefW2gS9zb3n8CsY8oJdDf6KGUxUOWCe5gmKn
-        reqO+nVkJ+oL8M7+AFn6PGZvlg==
-X-Google-Smtp-Source: AGHT+IFqEpbqllRr9CmppqIvv8zyZ4jAIDeUvqKWTsD0QK0EcQXaJCfzI0u6bX/7CG2STBh5BqFSKg==
-X-Received: by 2002:a17:906:d14d:b0:9a5:8eab:49da with SMTP id br13-20020a170906d14d00b009a58eab49damr6813967ejb.19.1693296126878;
-        Tue, 29 Aug 2023 01:02:06 -0700 (PDT)
-Received: from [192.168.0.22] ([77.252.47.196])
-        by smtp.gmail.com with ESMTPSA id u4-20020a170906108400b0099d798a6bb5sm5640390eju.67.2023.08.29.01.02.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Aug 2023 01:02:06 -0700 (PDT)
-Message-ID: <9b69a4a6-b011-f0e8-217f-5f91d9a00382@linaro.org>
-Date:   Tue, 29 Aug 2023 10:02:04 +0200
+        d=1e100.net; s=20221208; t=1693296610; x=1693901410;
+        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v4mC9KYKkQXQDiZEbLbQSAIp6lc85QhEw4RvIjClzpU=;
+        b=DfDQ40rFxYFX0IHBCaB2Gpq6JoClV2ViwMx2lnJnQtaHWKyQWMBvTFb5OxQapsF3Al
+         /u0ZcWdePtgZtnHfZ37TVUObDwREej45KRMGDoaCdjIVaq3w7b4fAgtUhQMhw8v3njae
+         zhAYmr+OE8KCJFiFx+NdXRd/Nu5OuEVCE9YeKzxdrcYEoDTghLOr5Z1BbGGIUuCHaV7P
+         7p0nIOHaqIlwE0PSMAotROgdkiF8pUwGM2CB2iJlHTeP/t19xSile1E40E6p+GTuYYpN
+         e8X1K3umk/Nok5/AnQiM4OV816mD7ON7SjjVDn9oD0V9RO8KIPVmqAscVJvZ+6ZRXS8o
+         79Vw==
+X-Gm-Message-State: AOJu0YzROQ+3x+2r8lora43JoNuw/kP57wjXhx1hn9m42MS+EIP/beCR
+        K/CgTNQMr3B1mU0zWe6OYTo=
+X-Google-Smtp-Source: AGHT+IGXPuRW3MQGAlACbyOnXXAhlU3tssV5YGnrQVQgtb/RMpBl2U7Y+awGMUWAhS5caRIY2CWjZQ==
+X-Received: by 2002:a2e:380a:0:b0:2b6:d13a:8e34 with SMTP id f10-20020a2e380a000000b002b6d13a8e34mr19594076lja.46.1693296609195;
+        Tue, 29 Aug 2023 01:10:09 -0700 (PDT)
+Received: from eldfell ([194.136.85.206])
+        by smtp.gmail.com with ESMTPSA id h17-20020a2e3a11000000b002b9b90474c7sm2074300lja.129.2023.08.29.01.10.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 01:10:08 -0700 (PDT)
+Date:   Tue, 29 Aug 2023 11:10:06 +0300
+From:   Pekka Paalanen <ppaalanen@gmail.com>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Sean Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
+        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
+        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        <wayland-devel@lists.freedesktop.org>
+Subject: Re: [PATCH RFC v6 02/10] drm: Introduce solid fill DRM plane
+ property
+Message-ID: <20230829111006.69cab33e@eldfell>
+In-Reply-To: <20230828-solid-fill-v6-2-a820efcce852@quicinc.com>
+References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
+        <20230828-solid-fill-v6-2-a820efcce852@quicinc.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 05/11] dt-bindings: document the Qualcomm TEE Shared
- Memory Bridge
-Content-Language: en-US
-To:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
- <20230828192507.117334-6-bartosz.golaszewski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230828192507.117334-6-bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+Content-Type: multipart/signed; boundary="Sig_/Tx9fmnSVUoZ_ajb1c3JK4ZY";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,77 +86,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/08/2023 21:25, Bartosz Golaszewski wrote:
-> Add Device Tree bindings for Qualcomm TEE Shared Memory Brige - a
-> mechanism that allows sharing memory buffers between trustzone and the
-> kernel.
+--Sig_/Tx9fmnSVUoZ_ajb1c3JK4ZY
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Subject prefix:
-dt-bindings: firmware:
+On Mon, 28 Aug 2023 17:05:08 -0700
+Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 
-
-
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Document and add support for solid_fill property to drm_plane. In
+> addition, add support for setting and getting the values for solid_fill.
+>=20
+> To enable solid fill planes, userspace must assign a property blob to
+> the "solid_fill" plane property containing the following information:
+>=20
+> struct drm_mode_solid_fill {
+> 	u32 r, g, b;
+> };
+>=20
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  .../bindings/firmware/qcom,shm-bridge.yaml    | 36 +++++++++++++++++++
->  1 file changed, 36 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml b/Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> new file mode 100644
-> index 000000000000..f660962b7b86
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> @@ -0,0 +1,36 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/firmware/qcom,shm-bridge.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  drivers/gpu/drm/drm_atomic_state_helper.c |  9 ++++++++
+>  drivers/gpu/drm/drm_atomic_uapi.c         | 26 ++++++++++++++++++++++
+>  drivers/gpu/drm/drm_blend.c               | 30 ++++++++++++++++++++++++++
+>  include/drm/drm_blend.h                   |  1 +
+>  include/drm/drm_plane.h                   | 36 +++++++++++++++++++++++++=
+++++++
+>  include/uapi/drm/drm_mode.h               | 24 +++++++++++++++++++++
+>  6 files changed, 126 insertions(+)
+
+...
+
+> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
+> index c3c57bae06b7..273021cc21c8 100644
+> --- a/drivers/gpu/drm/drm_blend.c
+> +++ b/drivers/gpu/drm/drm_blend.c
+> @@ -200,6 +200,10 @@
+>   *	"FB":
+>   *		Framebuffer source set by the "FB_ID" property.
+>   *
+> + * solid_fill:
+> + *	solid_fill is set up with drm_plane_create_solid_fill_property(). It
+> + *	contains pixel data that drivers can use to fill a plane.
+> + *
+>   * Note that all the property extensions described here apply either to =
+the
+>   * plane or the CRTC (e.g. for the background color, which currently is =
+not
+>   * exposed and assumed to be black).
+
+...
+
+> diff --git a/include/uapi/drm/drm_mode.h b/include/uapi/drm/drm_mode.h
+> index 43691058d28f..1fd92886d66c 100644
+> --- a/include/uapi/drm/drm_mode.h
+> +++ b/include/uapi/drm/drm_mode.h
+> @@ -259,6 +259,30 @@ struct drm_mode_modeinfo {
+>  	char name[DRM_DISPLAY_MODE_LEN];
+>  };
+> =20
+> +/**
+> + * struct drm_mode_solid_fill - User info for solid fill planes
+> + *
+> + * This is the userspace API solid fill information structure.
+> + *
+> + * Userspace can enable solid fill planes by assigning the plane "solid_=
+fill"
+> + * property to a blob containing a single drm_mode_solid_fill struct pop=
+ulated with an RGB323232
+> + * color and setting the pixel source to "SOLID_FILL".
+> + *
+> + * For information on the plane property, see drm_plane_create_solid_fil=
+l_property()
+> + *
+> + * @r: Red color value of single pixel
+> + * @g: Green color value of single pixel
+> + * @b: Blue color value of single pixel
+> + * @pad: padding
+
+Document that padding must be zero, and ensure userspace obeys that. If
+there is ever need to re-purpose the pad field, requiring it to be zero
+today makes re-purposing possible.
+
+Alternatively, if it is likely that it might be used as alpha if
+alpha-ful format is added, then it would make more sense to require it
+to be 0xffffffff instead of zero. Then the kernel could internally
+interpret it as alpha always without special-casing zero. Or, it could
+be straight out called "alpha" to begin with, but document and verify
+that it must be set to 0xffffffff which means opaque.
+
+> + */
+> +struct drm_mode_solid_fill {
+> +	__u32 r;
+> +	__u32 g;
+> +	__u32 b;
+> +	__u32 pad;
+> +};
 > +
-> +title: QCOM Shared Memory Bridge
 > +
-> +description: |
+>  struct drm_mode_card_res {
+>  	__u64 fb_id_ptr;
+>  	__u64 crtc_id_ptr;
+>=20
 
-Do not need '|' unless you need to preserve formatting.
+Looking good.
 
-> +  Qualcomm TEE Shared Memory Bridge allows sharing limited areas of kernel's
-> +  virtual memory with the trustzone in order to avoid mapping the entire RAM.
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +  - Konrad Dybcio <konrad.dybcio@linaro.org>
-> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,shm-bridge-sa8775p
-> +          - qcom,shm-bridge-sm8150
-> +          - qcom,shm-bridge-sm8450
-> +      - const: qcom,shm-bridge
-> +
 
-Looks quite empty... Why this cannot be part of qcom,scm? IOW, why do
-you need new binding if you do not have any resources here and the block
-is essentially feature of qcom,scm firmware?
+Thanks,
+pq
 
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    firmware {
-> +         compatible = "qcom,shm-bridge-sa8775p", "qcom,shm-bridge";
+--Sig_/Tx9fmnSVUoZ_ajb1c3JK4ZY
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-Use 4 spaces for example indentation.
+-----BEGIN PGP SIGNATURE-----
 
-> +    };
+iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmTtp94ACgkQI1/ltBGq
+qqc5JxAAplJnS6jraS8LqXWheo+3tbrSW2HwSRw7IqbQOJMfYTRdwDYMJ8oymOcX
+KFiKavBCkh87z9wGHImDqmNbdL3+ROB8YiSRm0wtRbhmx5gQC+1f1a2dG7izzTvK
+0gOOKmQxVPNLB1iZ1DqxaJtq7yluDWAdAsg6Pg15+Cfet+I50O+Ot4TuteRcuM5T
+oac1pOHX7VMRMHs1gX0+/shWA7nLDiVXwIyBEdt1jH1xIKVoAE7c+KQ5ouDrB9zY
+vn0CbdOoH8/ANkZ1LGMI6+DMW80o1Zw+JlkT95g42+Mshu2x/QHh3mPu11shTHm0
+fZcfUNAXGqY9HmKQeQgwY/houpQAB+Vc8xpVws3m3CPFhkwIV8XtW7G9fmLPWqh3
+EVNg5x7eWpKov0XVEz+Vi/2rTAtQkB06817VEVoEi+zfsB2mifiSznpI7xdl4dxx
+rf9PjT/Q6fA/tsqux3Bw8YgStR7UGFhdUytntU4ZsoD/A4nsfNJ+UpzQUWp9OmT2
+kcus0eeab8PPE5nLqAc0uv66TY5SujcCs5sLyhIuQUTsjn2SxBD2K4U7c9MSWQIv
+lCrGuAFb6OTEOCTPKfRjD9tgLMHfZJmlNv1X2FF7eCBq2tFMBsC7tWvw2OTKU+3n
+sQpa8SjOXaQxz8n7YekBz+sbtvzwGAuIVZO9oLbL/Ba19VTa3Dg=
+=GM1/
+-----END PGP SIGNATURE-----
 
-Best regards,
-Krzysztof
-
+--Sig_/Tx9fmnSVUoZ_ajb1c3JK4ZY--
