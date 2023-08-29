@@ -2,158 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 345B178BF4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 09:39:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62A3478BF6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 09:43:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233703AbjH2Hir (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 03:38:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42594 "EHLO
+        id S231561AbjH2HnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 03:43:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233725AbjH2HiU (ORCPT
+        with ESMTP id S233769AbjH2Hmd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 03:38:20 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D2C132;
-        Tue, 29 Aug 2023 00:38:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693294697; x=1724830697;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version:content-transfer-encoding;
-  bh=7xbIuAVv6BRYk1f4b+LCb+VtGRsblUZaWwZkr0s2oa0=;
-  b=liawHG+5vekYu4rkUywU+qoo4MNKKB01hy6wZ7oY7gUJGc7yX9u9h2YX
-   mHdTCI+ft7gJSFj0qHK2Bvx4TKBAh0m42hR+vzOKcH9pdHbhtEAgSHMlj
-   5b2JWM/A6Yybk2VHZWQRwQJfP5QWzEQp9jOtzYDJ6kO+zxzHD0wA2EpYU
-   CI53mz5WScBeqCkb7gNVJc75n/oz/SVpdDoo0TaTe1yHfOz5LPjTt2xIM
-   KA5xuBU6KBnpq7ZlQY3MnR5HXVvM8T0O3qJIAuzdeps1/SxJwwRbMA4GT
-   laI0ogFEQC/o+IH1FDclLyAtJQtFFSfEmRx21oXsnGacyjel71QAQeO0Z
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="375263854"
-X-IronPort-AV: E=Sophos;i="6.02,210,1688454000"; 
-   d="scan'208";a="375263854"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 00:38:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="853178928"
-X-IronPort-AV: E=Sophos;i="6.02,210,1688454000"; 
-   d="scan'208";a="853178928"
-Received: from mnefedov-mobl1.ger.corp.intel.com (HELO localhost) ([10.252.32.206])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 00:38:11 -0700
-From:   Jani Nikula <jani.nikula@intel.com>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Vlastimil Babka <vbabka@suse.cz>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, workflows@vger.kernel.org,
-        tools@linux.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
-In-Reply-To: <20230828165038.GB818859@hu-bjorande-lv.qualcomm.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <87jztf37ny.fsf@intel.com>
- <20230828133554.GA818859@hu-bjorande-lv.qualcomm.com>
- <CAMuHMdU+3oj+-3=f5WFVTRsKQjqCpU8SnVqKSZGk8XRxhsDcVQ@mail.gmail.com>
- <9aec0740-2482-d3ad-caf2-5e6278a050b3@suse.cz>
- <89c73602-43f1-30a4-ad58-637aadacd653@linaro.org>
- <20230828165038.GB818859@hu-bjorande-lv.qualcomm.com>
-Date:   Tue, 29 Aug 2023 10:38:08 +0300
-Message-ID: <87cyz62t9b.fsf@intel.com>
+        Tue, 29 Aug 2023 03:42:33 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95875132
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 00:42:30 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9a2185bd83cso528182266b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 00:42:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693294949; x=1693899749;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fZidkGWNPi5BjyVLjLVMFpv4YzU60iSJ/Ecori1AkQ0=;
+        b=i5va1TsUR/sivxWYmTNw0ts25LKsB6R7S9P3dyzzTC+Fh7W68bccjTByx/vLozPCD7
+         It7sG2Ds7/CWT2/M7z8KA6r0Zx5v+Lqj0ks1AHc2YuE2LIFYmOyqdNSFemEYsWB6gd6v
+         dzAoiFpNymOG7WMSmamobMgoHU7JfXgdMmHXuDqKieR1cFTu6Fg4SonCIH6An8oTxsnQ
+         RqIL6KjiHnVgEEK3qiD/20g2v2VcSQkg25MLPb/ioLLr5TcP1rqanOpbrBeaRmA8PbAV
+         IQDFriKYp3OMel93CxJxtaaOwpESEjrNGmC0bs45BksGbVMWvgsiZEWgFeZHhTkn6X8R
+         eIHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693294949; x=1693899749;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fZidkGWNPi5BjyVLjLVMFpv4YzU60iSJ/Ecori1AkQ0=;
+        b=Qv88GxVlFITZ10VlTJduLT1YcNSBy/HsPcYRhKLy9NZU758RZoZB9BTpOIUGhAOxVW
+         fQYRRQpEojgtaw79ChRdQ7LtpSR6JBoYvsN/e+WL5M7C2Yg29aOwmTUoHNTsxNIvBRTt
+         A4eWl8ZMdSBw44EGMJ1MQQBGuuI8upUsOEA9xeeLRYXR/gfw+D5K2enZGDvF21z3fpxH
+         AunO+MvSGn8T+XrzX8m6z08dMqKMWuixyIYBybAIb4FN3K8ECIXfNHVfRHdCR0DhTHNi
+         FXcx6D8gBxIPsMivu2BlBUODizmH9RM4AN92hfj7odkNrbk5yPzou9yegmFIvmLfbRK/
+         cahg==
+X-Gm-Message-State: AOJu0YytRGosBTPx3nA+qBrYQq/+Ksfc+3upbw+le5q/zfk2LWKafmAi
+        Sz1ELAaYDY15tb8Gg1oXYdH2hmx9+fveDA44ahc=
+X-Google-Smtp-Source: AGHT+IEWQr3QZ34jpK/5hL3ExGpvkPxLMtK2asR6mbFflpZ3LI8Ub6Apso9Cl+apOGcp3MwFMSZd6g==
+X-Received: by 2002:a17:906:2243:b0:9a1:8a39:c62d with SMTP id 3-20020a170906224300b009a18a39c62dmr20024316ejr.38.1693294948996;
+        Tue, 29 Aug 2023 00:42:28 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.196])
+        by smtp.gmail.com with ESMTPSA id s11-20020a170906354b00b00992bea2e9d2sm5615023eja.62.2023.08.29.00.42.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 00:42:28 -0700 (PDT)
+Message-ID: <e2b2f268-182a-5ba4-2541-f0a401eda1c8@linaro.org>
+Date:   Tue, 29 Aug 2023 09:42:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v3 11/28] dt-bindings: usb: dwc3: Add
+ snps,num-hc-interrupters definition
+Content-Language: en-US
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, gregkh@linuxfoundation.org, tiwai@suse.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <20230308235751.495-12-quic_wcheng@quicinc.com>
+ <20230311134008.GA20831-robh@kernel.org>
+ <f7bd1ae7-fc38-0f29-546b-9ea4a323f42f@quicinc.com>
+ <73655c17-5246-2c96-d415-6a30497966c3@linaro.org>
+ <9d31db9c-4e58-767a-15c5-65f7c04bd989@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <9d31db9c-4e58-767a-15c5-65f7c04bd989@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Aug 2023, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> On Mon, Aug 28, 2023 at 05:23:58PM +0200, Krzysztof Kozlowski wrote:
->> On 28/08/2023 17:14, Vlastimil Babka wrote:
->> > On 8/28/23 15:48, Geert Uytterhoeven wrote:
->> >> Hi Bjorn,
->> >>
->> >> On Mon, Aug 28, 2023 at 3:37=E2=80=AFPM Bjorn Andersson
->> >> <quic_bjorande@quicinc.com> wrote:
->> >>> On Mon, Aug 28, 2023 at 11:14:41AM +0300, Jani Nikula wrote:
->> >>>> On Sat, 26 Aug 2023, Guru Das Srinagesh <quic_gurus@quicinc.com> wr=
-ote:
->> >>>>> This script runs get_maintainer.py on a given patch file (or multi=
-ple
->> >>>>> patch files) and adds its output to the patch file in place with t=
-he
->> >>>>> appropriate email headers "To: " or "Cc: " as the case may be. The=
-se new
->> >>>>> headers are added after the "From: " line in the patch.
->> >>>>
->> >>>> FWIW, I personally prefer tooling to operate on git branches and co=
-mmits
->> >>>> than patches. For me, the patches are just an intermediate step in
->> >>>> getting the commits from my git branch to the mailing list. That's =
-not
->> >>>> where I add the Cc's, but rather in the commits in my local branch,
->> >>>> where they're preserved. YMMV.
->> >>>>
->> >>>
->> >>> May I ask how you add/carry the recipients in a commit?
->> >>
->> >> I guess below a "---" line in the commit description?
->> >=20
->> > Does that do anything special in commit log? I'd expect (and I do it t=
-hat
->> > way) it's rather just adding a
->>=20
->> It does. It goes away.
->
-> Afaict, it's verbatim copied into the .patch, which would mean that it
-> goes away when the patch is applied on the other side.
->
-> But it's still going to be in the email (followed by another ---), so
-> unless there's another step later in the process that cleans this up I
-> it looks ugly, and not very useful - unless I'm missing something.
->
->> >=20
->> > Cc: Name <email>
->> >=20
->> > in the tag area where s-o-b, reviewed-by etc are added.
->>=20
->> Why storing autogenerated scripts/get_maintainer.pl CC-entries in commit
->> msg? The non-maintainer-output but the automated output? There is no
->> single need to store automated output of get_maintainers.pl in the git
->> log. It can be easily re-created at any given time, thus its presence in
->> the git history is redundant and obfuscates the log.
->>=20
->
-> Fully agree to this. In particular if the patch is going to be sent as
-> part of a series the recipients list won't be accurate for any patch.
->
-> The case I was looking for was the case where I want to make sure to
-> include a specific person, beyond the get_maintainers output. So pretty
-> much the usual Cc: tag in the commit message, but I don't necessarily
-> want to write this fact into the git history.
+On 29/08/2023 09:19, Wesley Cheng wrote:
+>>>
+>>> This is a XHCI feature, but the DWC3 design is built in a way that DWC3
+>>> host initializes the XHCI device and populates the properties associated
+>>> to XHCI dev.
+>>
+>> You speak about driver now, not bindings. If driver has limitations,
+>> change it. Not really problem of bindings.
+>>
+> 
+> Its the limitation of the HW.  Depending on how the SNPS DWC3 controller 
+> was implemented the vendor it can support less than the value mentioned 
+> in the Synopsys databook.
 
-The point is, I *never* use get_maintainer.pl output as-is.
+Then what is "XHCI dev"? A Linux device? Then a driver topic. What is
+"populates the properties" - what or whose properties? Of Linux device?
+Then a driver topic...
 
-BR,
-Jani.
+Best regards,
+Krzysztof
 
-
---=20
-Jani Nikula, Intel Open Source Graphics Center
