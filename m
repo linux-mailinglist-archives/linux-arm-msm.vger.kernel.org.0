@@ -2,88 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A86878C992
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 18:23:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B2CA78C9E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 18:48:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231864AbjH2QXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 12:23:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37878 "EHLO
+        id S235246AbjH2Qrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 12:47:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233278AbjH2QWj (ORCPT
+        with ESMTP id S237592AbjH2Qrt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 12:22:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C10F8A6;
-        Tue, 29 Aug 2023 09:22:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B0F062788;
-        Tue, 29 Aug 2023 16:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBB8C433C8;
-        Tue, 29 Aug 2023 16:22:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693326155;
-        bh=7bXUJT2kfyzw7wkUfS8lZ78Kd1ZXxCKkRkhvrc8fDl4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EoinLj3oznsPcWf/YylB/LBHyZqdAoZ4eE9Whhs473rhkonSq6wITSiEd3KzWEtsz
-         rzKR14aZk8FUR+QjplaXqxwNEDNNCldABMMjq4IlS6Yhh/pcMlmdMS9lE+f7dhltw7
-         9b+s7IGxT5FK8nt9MNY1feYGaQlE/SNRujNSvQW5wyheGO7OJU+0WgJJNQ/8AxDwAQ
-         CtXGWSiVO3bX2opi6t0VHEmzD76ewDF6ZdqHHsuWLQo0znfWvFipG7xPJ1myR1MVWy
-         qxZON2t4o8cTagDm7ybXJW0zZwocJuA73fxOAP3k4u+1uXYEj4SswnirsfmkafbYy0
-         OdxBA6RNHo8uQ==
-Received: (nullmailer pid 2288009 invoked by uid 1000);
-        Tue, 29 Aug 2023 16:22:33 -0000
-Date:   Tue, 29 Aug 2023 11:22:33 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
+        Tue, 29 Aug 2023 12:47:49 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D24C0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 09:47:44 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-529fb2c6583so6009007a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 09:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693327662; x=1693932462;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CoICQnZ+/1yj9HsG6bu1Mx//y76k4Gd6Az5IWEzBVsk=;
+        b=GEMf1a3hbMdzkFCzmgPFzxmDuDy2nBq+Wld2OrIq8yT2i6K6bBpv5XTEFsoJcciz+Q
+         xPNhQRY2Sv6QXeTo/TnBbflcISdgsMb+CEGhAC2zJgx1ADDcncM7o74UBLq4QJxQeTWd
+         eMEzFa0xOj2l7OvPR2A+3KlzrcOu2LV5qTqCS89y4JIBi2fBumornF6eyQ0klERsmt6e
+         8fCo36Tq1m2N3Lq0JsNasrheWt20yG7VHrWLVAA0ERjL0HY2mOapSanDyAkDSLgTHSdg
+         q7B69XhmJy6wabwpyNDNi3qnm63ZcC4IvY08xUxlPemjzh6kxW0SAPAwBIv4nBMCW8R3
+         nAOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693327662; x=1693932462;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CoICQnZ+/1yj9HsG6bu1Mx//y76k4Gd6Az5IWEzBVsk=;
+        b=Tg99qr1XPslFIN4EWH27dLHhMLxVH4j01Pmqr9CHFdHIFsWfcAFjLZcYrMnKw6/fG0
+         4CiXERpEUfs0jnlS4+zMmPFeGPnroFBFjkTE6wWetzpYgSRJHCvetnXZahp9YNZWmbVP
+         obFuLg3VH4DH5uVTCb4/H6uHRMPMLDfYvq0wRhZnM48V1bPiQek4NCaRrbVH4aJP1yQ1
+         UFjD5GZ36mZhCj1uUQq+r+op5g9ZMrdWHgPiR72I9CxTnWBbhTsfGP8iyJhLPKNCLsCq
+         PPvU/ivvjdbbAnZ+lZ/7w0pI1jNQ8TyORt0c9P2/T07jY2GM050BuSfdqXmvsWn8CV4Y
+         XJ0w==
+X-Gm-Message-State: AOJu0Yx93v8qhTYsMBGkdnca792fnEaF0PWoSCxGge0ACR3UYJxLN8iD
+        nceU/tuh70q5SR/2GFoK/y48Cw==
+X-Google-Smtp-Source: AGHT+IEYq4lgF8fnv6SKXO4z5kBvC6yirtahECpFE2Y6m+eLtciH/SLFVGyGqPSQ8n7gRtpWgPXtDg==
+X-Received: by 2002:aa7:ccc9:0:b0:51e:362d:b172 with SMTP id y9-20020aa7ccc9000000b0051e362db172mr21105256edt.32.1693327662667;
+        Tue, 29 Aug 2023 09:47:42 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.196])
+        by smtp.gmail.com with ESMTPSA id f15-20020aa7d84f000000b0052228721f84sm5881691eds.77.2023.08.29.09.47.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 09:47:42 -0700 (PDT)
+Message-ID: <86bb50fd-72f3-7c76-c4fe-f8e4765e33d5@linaro.org>
+Date:   Tue, 29 Aug 2023 18:47:40 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 06/11] firmware: qcom-shm-bridge: new driver
+Content-Language: en-US
+To:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Om Prakash Singh <quic_omprsing@quicinc.com>
-Subject: Re: [PATCH v3 4/6] dt-bindings: crypto: qcom,prng: document SM8550
-Message-ID: <20230829162233.GA2283052-robh@kernel.org>
-References: <20230828-topic-sm8550-rng-v3-0-7a0678ca7988@linaro.org>
- <20230828-topic-sm8550-rng-v3-4-7a0678ca7988@linaro.org>
- <20230828213610.GA386486-robh@kernel.org>
- <c741c4be-50b4-0bd8-79eb-37895342f5af@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c741c4be-50b4-0bd8-79eb-37895342f5af@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
+ <20230828192507.117334-7-bartosz.golaszewski@linaro.org>
+ <8b7bada9-3898-1b60-3dea-766a760412f7@linaro.org>
+ <CACMJSetObp0k312DmqhTCkw7jsf05OHX1yxbyYj+sVfbtwRcVQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CACMJSetObp0k312DmqhTCkw7jsf05OHX1yxbyYj+sVfbtwRcVQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 29, 2023 at 08:38:48AM +0200, Krzysztof Kozlowski wrote:
-> On 28/08/2023 23:36, Rob Herring wrote:
-> > On Mon, Aug 28, 2023 at 10:04:39AM +0200, Neil Armstrong wrote:
-> >> Document SM8550 compatible for the True Random Number Generator.
-> >>
-> >> Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > 
-> > Where's Krzysztof's tag?
-> > 
+On 29/08/2023 15:24, Bartosz Golaszewski wrote:
+>>> +phys_addr_t qcom_shm_bridge_to_phys_addr(void *vaddr)
+>>> +{
+>>> +     struct qcom_shm_bridge_chunk *chunk;
+>>> +     struct qcom_shm_bridge_pool *pool;
+>>> +
+>>> +     guard(spinlock_irqsave)(&qcom_shm_bridge_chunks_lock);
+>>> +
+>>> +     chunk = radix_tree_lookup(&qcom_shm_bridge_chunks,
+>>> +                               (unsigned long)vaddr);
+>>> +     if (!chunk)
+>>> +             return 0;
+>>> +
+>>> +     pool = chunk->parent;
+>>> +
+>>> +     guard(spinlock_irqsave)(&pool->lock);
+>>
+>> Why both locks are spinlocks? The locks are used quite a lot.
 > 
-> The patch evolved and Neil mentioned in cover letter changelog that he
-> did not collect Reviews because of that. Seems ok for me.
+> I'm not sure what to answer. The first one protects the global chunk
+> mapping stored in the radix tree. The second one protects a single
+> memory pool from concurrent access. Both can be modified from any
+> context, hence spinlocks.
 
-I did go look there and just saw 'Added review tags'. Not too helpful.  
-That's why changelogs for a patch belong in the patch.
+Not much PREEMPT friendly, although indeed protected code is small. At
+least here, I did not check other places.
 
-Rob
+> 
+>>
+>>> +
+>>> +     return gen_pool_virt_to_phys(pool->genpool, (unsigned long)vaddr);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(qcom_shm_bridge_to_phys_addr);
+>>> +
+>>> +static int qcom_shm_bridge_probe(struct platform_device *pdev)
+>>> +{
+>>> +     struct qcom_shm_bridge_pool *default_pool;
+>>> +     struct device *dev = &pdev->dev;
+>>> +     int ret;
+>>> +
+>>> +     /*
+>>> +      * We need to wait for the SCM device to be created and bound to the
+>>> +      * SCM driver.
+>>> +      */
+>>> +     if (!qcom_scm_is_available())
+>>> +             return -EPROBE_DEFER;
+>>
+>> I think we miss here (and in all other drivers) device links to qcm.
+>>
+> 
+> Well, SCM, once probed, cannot be unbound. What would device links
+> guarantee above that?
+
+Runtime PM, probe ordering (dependencies) detection.
+
+> 
+>>> +
+>>> +     ret = qcom_scm_enable_shm_bridge();
+>>> +     if (ret)
+>>> +             return dev_err_probe(dev, ret,
+>>> +                                  "Failed to enable the SHM bridge\n");
+>>> +
+>>> +     default_pool = qcom_shm_bridge_pool_new_for_dev(
+>>> +                             dev, qcom_shm_bridge_default_pool_size);
+>>> +     if (IS_ERR(default_pool))
+>>> +             return dev_err_probe(dev, PTR_ERR(default_pool),
+>>> +                                  "Failed to create the default SHM Bridge pool\n");
+>>> +
+>>> +     WRITE_ONCE(qcom_shm_bridge_default_pool, default_pool);
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +
+>>> +static const struct of_device_id qcom_shm_bridge_of_match[] = {
+>>> +     { .compatible = "qcom,shm-bridge", },
+>>> +     { }
+>>> +};
+>>> +
+>>> +static struct platform_driver qcom_shm_bridge_driver = {
+>>> +     .driver = {
+>>> +             .name = "qcom-shm-bridge",
+>>> +             .of_match_table = qcom_shm_bridge_of_match,
+>>> +             /*
+>>> +              * Once enabled, the SHM Bridge feature cannot be disabled so
+>>> +              * there's no reason to ever unbind the driver.
+>>> +              */
+>>> +             .suppress_bind_attrs = true,
+>>> +     },
+>>> +     .probe = qcom_shm_bridge_probe,
+>>> +};
+>>> +
+>>> +static int __init qcom_shm_bridge_init(void)
+>>> +{
+>>> +     return platform_driver_register(&qcom_shm_bridge_driver);
+>>> +}
+>>> +subsys_initcall(qcom_shm_bridge_init);
+>>
+>> Why this is part of subsystem? Should be rather device_initcall... or
+>> simply module (and a tristate).
+>>
+> 
+> We want it to get up as soon as possible (right after SCM, because SCM
+> is the first user).
+
+Then probably should be populated/spawned by SCM.
+
+Best regards,
+Krzysztof
+
