@@ -2,121 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0366378C4EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 15:13:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B741778C52A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 15:25:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232501AbjH2NNL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 09:13:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56962 "EHLO
+        id S232847AbjH2NZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 09:25:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235935AbjH2NMi (ORCPT
+        with ESMTP id S236041AbjH2NYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 09:12:38 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E37E390;
-        Tue, 29 Aug 2023 06:12:34 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37TCC3Zu006643;
-        Tue, 29 Aug 2023 13:12:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=aRvhbDSNBHrfBMzTta6N6C7WJuGvOKAdbHxdgC1vxes=;
- b=MqAp71LX5YMVecg8plzA8qd8TyvXJqfQjoTSJGncIbfLYZ5lxlVZe+62kAkqop8C4SHz
- KDnuCluBMd87bgwWtAe+cqT8AJPdO03ygJO13VMpWZNSb8Os2Au3ps7QWbAAAzyNljgg
- Pmm9UQN3vZlinZXjjg3x6SwzncXGffsi/tZ9YHY24KwFlyLRtgVeWo25auLySiwa9oTp
- 7y/hLWGZ2Vni8VH0UB3lPNRFa+WSrY+8GRd52DbrUfgGWRFOXNzUpiDUeWcv1Gcu4T3L
- m8m05PPk0n+FCFv2xDjSFOezXBWYhbbat6+8ifR7+HeItOqJE666+CseUvEvNWMnDZzj SA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss4wq1g8j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Aug 2023 13:12:29 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37TDCL6x011207
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Aug 2023 13:12:21 GMT
-Received: from [10.216.57.128] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
- 2023 06:12:17 -0700
-Message-ID: <0bd1fddf-a05f-69a0-b4b0-1b2378bc0c58@quicinc.com>
-Date:   Tue, 29 Aug 2023 18:42:14 +0530
+        Tue, 29 Aug 2023 09:24:35 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 860551B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 06:24:20 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d743a5fe05aso4125630276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 06:24:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693315459; x=1693920259;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QQGcrjC3KtXL/WdFtDZEft3OUinDXOscuAhMHuzeiG0=;
+        b=MRRc3FrpPp6z8OWaDouOk4Mv0t8kEKCeV3hlFg4S1OX8fFXm2Gc2I/gSPjEXpWm+2d
+         woaAzzTC2Xz753IcYVfjcMXvwmMg9Duzim6HpodfR3F52c/LJLGlooCeCFoB0t7Fuqrr
+         e1Vv0pZK9jvgBRP0kVvQCzIunQ7UVmqvwsR0klCR2iyzjIGd8T8yg7AxJJ1dmk5JyJ0Z
+         I6C1HO+Uot+CbNsNFW/wFUjri74/K+Cfojf+aOPBC0Mfiv8L3QigzLC6CCQ/YQoZvV9W
+         vn95jm90vQ7GcZUKQ5Z1gO7pA7ZygzmSpWjCukGmfdUKv8DkiePPRVAEJ7JkL3zKcHB7
+         IT6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693315459; x=1693920259;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QQGcrjC3KtXL/WdFtDZEft3OUinDXOscuAhMHuzeiG0=;
+        b=VThy5/O/BT0LOw6fHI8TGm6Wx6uHPBYNq1LjP6Lh+c7TKD1DolbCEPIiZWx/l0zQRV
+         2GInB/dQ29l3nGrsegaTuNBp5gaQ+zLNEBLYac9PoSHFN0ggugKrzmCM0rGDkNfWjOKS
+         PR2k/RhdX0FiNw51ExY3Eew/Y/LMCIs1j621dnHYsv/LHMu3q2UBBzaYAyUKcMBE1p1T
+         5hwM9yyOIZuZtP5vkhvBSCNMTkzBWCvhZO81DYx8g/d0uifiAvGRjCBzxD6lq3Qvys1V
+         89KKsljU0R5E57stGJh38Z8W3EnF8uzZt9shrfDd9h/R3RfVSQiBXdcsF8eMQtmyjuA6
+         RJdw==
+X-Gm-Message-State: AOJu0YxA/6FRwMvImGYUuGEWMdPHpo3LGyK7bi53O/uGj+OWq/QZI7sm
+        9ummD0/ogSTwLIdWaxbf6rX+q8RRUiUcUpxq3xmbmg==
+X-Google-Smtp-Source: AGHT+IE8owYc6+9kqyx/gI4M2g1vQve6zIM5p0WJ9SO8njujPD7jZlPj2/YwIdTXyS/qP/5rwINWbpRO+JF/REs12PE=
+X-Received: by 2002:a5b:dc3:0:b0:d62:bc43:426e with SMTP id
+ t3-20020a5b0dc3000000b00d62bc43426emr27235931ybr.43.1693315458586; Tue, 29
+ Aug 2023 06:24:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Subject: Re: Disconnect interrupt generation for QC targets when role switch
- is enabled
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
+ <20230828192507.117334-7-bartosz.golaszewski@linaro.org> <8b7bada9-3898-1b60-3dea-766a760412f7@linaro.org>
+In-Reply-To: <8b7bada9-3898-1b60-3dea-766a760412f7@linaro.org>
+From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date:   Tue, 29 Aug 2023 15:24:07 +0200
+Message-ID: <CACMJSetObp0k312DmqhTCkw7jsf05OHX1yxbyYj+sVfbtwRcVQ@mail.gmail.com>
+Subject: Re: [PATCH 06/11] firmware: qcom-shm-bridge: new driver
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-References: <af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com>
- <20230816165455.GA23057@thinkpad>
-Content-Language: en-US
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20230816165455.GA23057@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1p3OLyTOqYr3AuzK-fT0RcIM3xKyQIij
-X-Proofpoint-ORIG-GUID: 1p3OLyTOqYr3AuzK-fT0RcIM3xKyQIij
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_10,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
- spamscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 adultscore=0
- mlxlogscore=795 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308290114
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 29 Aug 2023 at 10:18, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 28/08/2023 21:25, Bartosz Golaszewski wrote:
+> > This module is a platform driver that also exposes an interface for
+> > kernel users to allocate blocks of memory shared with the trustzone.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  drivers/firmware/Kconfig                 |   8 +
+> >  drivers/firmware/Makefile                |   1 +
+> >  drivers/firmware/qcom-shm-bridge.c       | 452 +++++++++++++++++++++++
+> >  include/linux/firmware/qcom/shm-bridge.h |  32 ++
+> >  4 files changed, 493 insertions(+)
+> >  create mode 100644 drivers/firmware/qcom-shm-bridge.c
+> >  create mode 100644 include/linux/firmware/qcom/shm-bridge.h
+> >
+>
+> ...
+>
+> > +/**
+> > + * qcom_shm_bridge_to_phys_addr - Translate address from virtual to physical.
+> > + *
+> > + * @vaddr: Virtual address to translate.
+> > + *
+> > + * Return:
+> > + * Physical address corresponding to 'vaddr'.
+> > + */
+> > +phys_addr_t qcom_shm_bridge_to_phys_addr(void *vaddr)
+> > +{
+> > +     struct qcom_shm_bridge_chunk *chunk;
+> > +     struct qcom_shm_bridge_pool *pool;
+> > +
+> > +     guard(spinlock_irqsave)(&qcom_shm_bridge_chunks_lock);
+> > +
+> > +     chunk = radix_tree_lookup(&qcom_shm_bridge_chunks,
+> > +                               (unsigned long)vaddr);
+> > +     if (!chunk)
+> > +             return 0;
+> > +
+> > +     pool = chunk->parent;
+> > +
+> > +     guard(spinlock_irqsave)(&pool->lock);
+>
+> Why both locks are spinlocks? The locks are used quite a lot.
 
+I'm not sure what to answer. The first one protects the global chunk
+mapping stored in the radix tree. The second one protects a single
+memory pool from concurrent access. Both can be modified from any
+context, hence spinlocks.
 
-On 8/16/2023 10:24 PM, Manivannan Sadhasivam wrote:
-> 
-> Since you have quoted my series, I'd like to get clarification on one issue I'm
-> seeing. When resuming from runtime suspend in host mode, dwc3-qcom driver gets
-> the wakeup event and it resumes the xhci driver. But the XHCI IRQs are received
-> after some delay. Due to this, xhci driver doesn't resume the device, instead,
-> all the drivers (dwc3-qcom, dwc3-core, xhci) went to runtime suspend again.
-> 
-> But once the XHCI IRQs are received, dwc3-qcom gets the wakeup event and this
-> time, xhci driver resumes the device.
-> 
-> This is the reason why I added the autosuspend delay of 200ms to allow the xhci
-> driver to wait for IRQs before going to runtime suspend.
-> 
-> Can you clarify why there is a delay in receiving XHCI IRQs?
-> 
+>
+> > +
+> > +     return gen_pool_virt_to_phys(pool->genpool, (unsigned long)vaddr);
+> > +}
+> > +EXPORT_SYMBOL_GPL(qcom_shm_bridge_to_phys_addr);
+> > +
+> > +static int qcom_shm_bridge_probe(struct platform_device *pdev)
+> > +{
+> > +     struct qcom_shm_bridge_pool *default_pool;
+> > +     struct device *dev = &pdev->dev;
+> > +     int ret;
+> > +
+> > +     /*
+> > +      * We need to wait for the SCM device to be created and bound to the
+> > +      * SCM driver.
+> > +      */
+> > +     if (!qcom_scm_is_available())
+> > +             return -EPROBE_DEFER;
+>
+> I think we miss here (and in all other drivers) device links to qcm.
+>
 
-Hi Manivannan,
+Well, SCM, once probed, cannot be unbound. What would device links
+guarantee above that?
 
-  Apologies for the delay in response. Can you help check if the phy 
-clocks are ON at the instant we see that the xhci irq not coming up. I 
-got to know that after resume, the clocks need to be ON for phy for it 
-to signal the controller which would then generate the xhci irq. I also 
-see that in resume_irq call in dwc3-qcom, we call runtime_resume for 
-xhci->dev, probably causing it to resume before dwc3->dev (I might be 
-wrong though). Can you confirm if the clocks for phy and GDSC for 
-controller are ON when this issue is seen. Also can you let know how 
-much time its taking for the xhci irq to be generated after resume.
+> > +
+> > +     ret = qcom_scm_enable_shm_bridge();
+> > +     if (ret)
+> > +             return dev_err_probe(dev, ret,
+> > +                                  "Failed to enable the SHM bridge\n");
+> > +
+> > +     default_pool = qcom_shm_bridge_pool_new_for_dev(
+> > +                             dev, qcom_shm_bridge_default_pool_size);
+> > +     if (IS_ERR(default_pool))
+> > +             return dev_err_probe(dev, PTR_ERR(default_pool),
+> > +                                  "Failed to create the default SHM Bridge pool\n");
+> > +
+> > +     WRITE_ONCE(qcom_shm_bridge_default_pool, default_pool);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static const struct of_device_id qcom_shm_bridge_of_match[] = {
+> > +     { .compatible = "qcom,shm-bridge", },
+> > +     { }
+> > +};
+> > +
+> > +static struct platform_driver qcom_shm_bridge_driver = {
+> > +     .driver = {
+> > +             .name = "qcom-shm-bridge",
+> > +             .of_match_table = qcom_shm_bridge_of_match,
+> > +             /*
+> > +              * Once enabled, the SHM Bridge feature cannot be disabled so
+> > +              * there's no reason to ever unbind the driver.
+> > +              */
+> > +             .suppress_bind_attrs = true,
+> > +     },
+> > +     .probe = qcom_shm_bridge_probe,
+> > +};
+> > +
+> > +static int __init qcom_shm_bridge_init(void)
+> > +{
+> > +     return platform_driver_register(&qcom_shm_bridge_driver);
+> > +}
+> > +subsys_initcall(qcom_shm_bridge_init);
+>
+> Why this is part of subsystem? Should be rather device_initcall... or
+> simply module (and a tristate).
+>
 
-Regards,
-Krishna,
+We want it to get up as soon as possible (right after SCM, because SCM
+is the first user).
+
+Bartosz
+
+> Best regards,
+> Krzysztof
+>
