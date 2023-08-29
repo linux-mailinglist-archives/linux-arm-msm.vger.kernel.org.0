@@ -2,178 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 024B078C7E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 16:47:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AAC478C866
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 17:16:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236901AbjH2OrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 10:47:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53402 "EHLO
+        id S237167AbjH2PPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 11:15:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237012AbjH2Oqz (ORCPT
+        with ESMTP id S237194AbjH2PPf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 10:46:55 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BC6198
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 07:46:52 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-58d41109351so74035697b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 07:46:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693320412; x=1693925212;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mfw6V7LFqYsw0ItItmPglDYqzrcWxbzlv2UHVUeAG74=;
-        b=Qv1HHbYet7wTAy3rg11WkrEiujtXYr/rlXOQu0l/gJM940a/S9fmxO0RASnbW3GEq8
-         BxnN5niAf4gYx1bi4jkz+kDIMDSqckjcgHuTDZtLtrQgfbVu0Tebk2+ODGUaC76H6Nhq
-         3WA/EyQ89de/fbUR0V3a7CbRHTjQU7r+XeqeMwklyHBDYgsfduboGxtsRm0+chL5yhuT
-         nlZCJloJAGoX20Od0JYNDbLAhAAaMVS5gvbl9DShDeVWPbrmrJVY1cpxVZWL+7CLHhf7
-         mVCCSZ1GaK/6cR3LP9QUO3S1oR9Ya8sCxVMLkYNzYzgWAs15/b1y1ePcCEHBg5PoBXSx
-         YUpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693320412; x=1693925212;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Mfw6V7LFqYsw0ItItmPglDYqzrcWxbzlv2UHVUeAG74=;
-        b=DMWdqodSmcmiO8uf5tHs1zXKBM0VPDdJJ+pCw5dkKnaQ+UZS1hg2Tf+ZxPoSlaUEAQ
-         WvwKHyzmaCB/6xvSrpHVe50q5OuWLWfJlVYg8r4StIZAwOio51+e66dcTxprlTBSeumu
-         pQR+h3vT6kZ45syhB2pKuozAiTjBW3yvvbCWnqNcXULAeXNTlfaQaslh+iva+GNuyeB5
-         Zamgph8YelIlWagnhDS4j8i9mI9YAXv2sIDzhooS/CZR9MYFSpGFg/XNuhLSKMX0iWl7
-         67oDZDgwpw739P4zpexPGZrH7IcFNOiC74Z7oDyNTryg5Ibq+9QNN0LtAQB9Quv3POe1
-         HylA==
-X-Gm-Message-State: AOJu0Yx5eq9fOqMIJnSaIuKh20TgOGfaClY5yrVJIoL1CYAbnx31OZ+g
-        BqFXT1rfnErK4XEk+s6X1Qxju846pOS9bVScJ5766g==
-X-Google-Smtp-Source: AGHT+IEKmemJLC0tOe8DvGL0hEpWvrphbIpLY5kTOZufedvsfBX+7jKL52HwA0mwZ4wzjwkLvezDYDq17DF7cpctlO4=
-X-Received: by 2002:a0d:eb0a:0:b0:581:7958:5bda with SMTP id
- u10-20020a0deb0a000000b0058179585bdamr2974154ywe.1.1693320411878; Tue, 29 Aug
- 2023 07:46:51 -0700 (PDT)
+        Tue, 29 Aug 2023 11:15:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B2B71B6;
+        Tue, 29 Aug 2023 08:15:33 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T9pPL3001900;
+        Tue, 29 Aug 2023 15:15:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=n+qoRzSouWfIAkfU1nrJqei5rteFOw/ClcLeMDhq9zA=;
+ b=DKGXfH2I8YbFRNliBkDBOtQ2yxjPMS1ZbkUGvhntWwjZbUf5uSD9HtVdf7Be0LhXNQz5
+ 4Q6FWjwCG8EJ41obzCcmGId0tvTP4Ai5LAmQ9M7B5KTAZObSg/gBjv0l+6vjH+aTiGZ5
+ PGWnRofvC4F50uLxm1GSfmepLy9D/+JInI18zU0uY+vIG8MWPHcXoYCX9iyJN0kzgK4I
+ gQv8WXk+EHgbKmMzLgPEM8P3bGbVBR12NEgRfWpv9OuvQL0ASSPkrUCn1/59FUsuag3Y
+ dhOSXyjXtak1sTOJj+RZD0eZKXAJEKjNHSbsdcHDC6uALzjqdOT2wjP/tIwPYbiOP+c+ XA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss2xba5u7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 15:15:12 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37TFFBj7011980
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Aug 2023 15:15:11 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 29 Aug 2023 08:15:10 -0700
+Date:   Tue, 29 Aug 2023 08:15:09 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH v14 4/9] soc: qcom: cpr: Move common functions to new file
+Message-ID: <20230829151509.GN818859@hu-bjorande-lv.qualcomm.com>
+References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
+ <20230217-topic-cpr3h-v14-4-9fd23241493d@linaro.org>
 MIME-Version: 1.0
-References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com> <20230829135818.2219438-7-quic_ipkumar@quicinc.com>
-In-Reply-To: <20230829135818.2219438-7-quic_ipkumar@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 29 Aug 2023 17:46:41 +0300
-Message-ID: <CAA8EJpp1+iHndFO5NVDvn2TxSxCmPG1Oa5o4-aYhQGCSQz8gbQ@mail.gmail.com>
-Subject: Re: [PATCH 6/9] arm64: dts: qcom: ipq5332: Add USB3 related nodes
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>
-Cc:     robert.marko@sartura.hr, luka.perkov@sartura.hr, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
-        geert+renesas@glider.be, nfraprado@collabora.com, rafal@milecki.pl,
-        peng.fan@nxp.com, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        quic_varada@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230217-topic-cpr3h-v14-4-9fd23241493d@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JDMi5WBolj903Ew5F17GyyKJeqvNO907
+X-Proofpoint-GUID: JDMi5WBolj903Ew5F17GyyKJeqvNO907
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_11,2023-08-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ mlxscore=0 clxscore=1011 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2308290133
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Aug 2023 at 17:00, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->
-> Add SS UNIPHY and update controller node for USB3.
->
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+On Mon, Aug 28, 2023 at 01:42:16PM +0200, Konrad Dybcio wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> 
+
+It seems reasonable to update the subject prefix, now that things have
+moved to the genpd subsystem.
+
+> In preparation for implementing a new driver that will be handling
+> CPRv3, CPRv4 and CPR-Hardened, format out common functions to a new
+> file.
+> 
+> Update cpr_get_fuses in preparation for CPR3 implementation, change
+> parameters where necessary to not take cpr.c private data structures.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> [Konrad: rebase, apply review comments, improve msg, split]
+> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> This patch depends on the below series which adds support for USB2 in
-> IPQ5332
-> https://lore.kernel.org/all/cover.1692699472.git.quic_varada@quicinc.com/
->
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 39 ++++++++++++++++++++++-----
->  1 file changed, 32 insertions(+), 7 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index e6baf694488c..7fbe6c9f4784 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -158,6 +158,27 @@ usbphy0: phy@7b000 {
->                         status = "disabled";
->                 };
->
-> +               ssuniphy0: ssuniphy@4b0000 {
-> +                       compatible = "qcom,ipq5332-usb-ssphy";
-> +                       reg = <0x4b0000 0x800>;
-> +                       clocks = <&gcc GCC_USB0_PIPE_CLK>,
-> +                                <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> +                                <&gcc GCC_PCIE3X1_PHY_AHB_CLK>;
-> +
-> +                       #clock-cells = <0>;
-> +                       clock-output-names = "usb_pcie_wrapper_pipe_clk";
-> +
-> +                       clock-names = "pipe",
-> +                                     "phy_cfg_ahb",
-> +                                     "phy_ahb";
-> +
-> +                       resets =  <&gcc GCC_USB0_PHY_BCR>;
-> +                       reset-names = "por_rst";
-> +                       #phy-cells = <0>;
-> +                       qcom,phy-mux-sel = <&tcsr 0x10540 0x1>;
-> +                       status = "disabled";
-> +               };
-> +
->                 qfprom: efuse@a4000 {
->                         compatible = "qcom,ipq5332-qfprom", "qcom,qfprom";
->                         reg = <0x000a4000 0x721>;
-> @@ -313,30 +334,34 @@ usb: usb@8a00000 {
->                         clocks = <&gcc GCC_USB0_MASTER_CLK>,
->                                  <&gcc GCC_SNOC_USB_CLK>,
->                                  <&gcc GCC_USB0_SLEEP_CLK>,
-> -                                <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> +                                <&gcc GCC_USB0_MOCK_UTMI_CLK>,
-> +                                <&gcc GCC_USB0_AUX_CLK>,
-> +                                <&gcc GCC_USB0_LFPS_CLK>;
-> +
->                         clock-names = "core",
->                                       "iface",
->                                       "sleep",
-> -                                     "mock_utmi";
-> +                                     "mock_utmi",
-> +                                     "aux",
-> +                                     "lfps";
->
->                         resets = <&gcc GCC_USB_BCR>;
->
-> -                       qcom,select-utmi-as-pipe-clk;
-> -
->                         #address-cells = <1>;
->                         #size-cells = <1>;
->                         ranges;
->
->                         status = "disabled";
->
-> -                       usb2_0_dwc: usb@8a00000 {
-> +                       usb3_0_dwc: usb@8a00000 {
+>  drivers/genpd/qcom/Makefile     |   2 +-
+>  drivers/genpd/qcom/cpr-common.c | 350 ++++++++++++++++++++++++++++++++++++
+>  drivers/genpd/qcom/cpr-common.h | 103 +++++++++++
+>  drivers/genpd/qcom/cpr.c        | 384 +++-------------------------------------
+>  4 files changed, 475 insertions(+), 364 deletions(-)
+> 
+> diff --git a/drivers/genpd/qcom/Makefile b/drivers/genpd/qcom/Makefile
+> index 403dfc5af095..b28c8d9128c4 100644
+> --- a/drivers/genpd/qcom/Makefile
+> +++ b/drivers/genpd/qcom/Makefile
+> @@ -1,4 +1,4 @@
+>  # SPDX-License-Identifier: GPL-2.0
+> -obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+> +obj-$(CONFIG_QCOM_CPR)		+= cpr-common.o cpr.o
 
-At this point you have broken compilation of all ipq5332 DT files.
-Don't. The kernel should be bisectable. At each point, after each
-commit it should compile and work.
+Is there a reason for this to be split in two drivers? Would it make
+sense to rewrite this such that the result ends up as a single .ko?
 
->                                 compatible = "snps,dwc3";
->                                 reg = <0x08a00000 0xe000>;
->                                 clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
->                                 clock-names = "ref";
->                                 interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-> -                               phy-names = "usb2-phy";
-> -                               phys = <&usbphy0>;
-> +                               phy-names = "usb2-phy", "usb3-phy";
-> +                               phys = <&usbphy0>, <&ssuniphy0>;
-> +
->                                 tx-fifo-resize;
->                                 snps,is-utmi-l1-suspend;
->                                 snps,hird-threshold = /bits/ 8 <0x0>;
-> --
-> 2.34.1
->
+Then you shouldn't need to EXPORT_SYMBOL between the two parts of the
+same "driver".
 
-
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
