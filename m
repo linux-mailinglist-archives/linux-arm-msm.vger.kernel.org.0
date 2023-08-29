@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A741978BFFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:12:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F6A978C012
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:16:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234011AbjH2IMF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 04:12:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54618 "EHLO
+        id S229794AbjH2IPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 04:15:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234016AbjH2ILj (ORCPT
+        with ESMTP id S230092AbjH2IPU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 04:11:39 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E250BDE;
-        Tue, 29 Aug 2023 01:11:36 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso60387951fa.0;
-        Tue, 29 Aug 2023 01:11:36 -0700 (PDT)
+        Tue, 29 Aug 2023 04:15:20 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8371B6;
+        Tue, 29 Aug 2023 01:14:38 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5009969be25so6456303e87.3;
+        Tue, 29 Aug 2023 01:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693296695; x=1693901495;
+        d=gmail.com; s=20221208; t=1693296867; x=1693901667;
         h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QcuYJIkWkqttiEFUgjzpw9+w8oYYeUVuwo8y1FUeWpw=;
-        b=J1PcgSd1BqMxBQvun64Fuuvhhr8YTHvbh6//P+i/Dh1RJ+9poUFPkzr4fCh2qWw3xR
-         G1NBq0BZTz/VqftdPEviBeUxtnWLYjoPvwO6EGnRHn9y8MWqyUF+Ogb0k/1gz4NLKqqT
-         WJMkv+qjPWwlm7estlENv5YXeFr4M2880+tMJmdUTme/djNa47wBAZzOzQ1bgdlZxyrJ
-         ojOvMOkIZmi2LNiBEI8XK7bvqAp42WGICvKdADNRj03AAnxOdCSZ/FDhgy+P2ZWyAfDy
-         kZT6XX+mGkKfY0iFVN2Zsnh1Y4JBalnbqtpplwDk1BatXz9V1WGPC0oouc+55Y5WjJ+U
-         0Lcw==
+        bh=WpCt/3rI6BwltGm6OrrHxjmtGTGMQx5mSNvkMRK1Jws=;
+        b=YRQlOcCRcFxAqYZAwQxhMqpBs0MSqAHQdVO4iPz2daPciNJKDVkPuS62HK15kZCZ+h
+         ytMMNW0a+CGr2GIUFWW3KWVXWhdo5dHe99iVnoohjqTGHKnJcUTn/QE80iKX0CDAw00X
+         aZGT0zVpbxgzRSArWz0MHWpTFXBiu4e74gsoVkgXcn9BVh4q38RrmBXvUH/BtkTcgtYw
+         dqOm3iwtmjjVnj2UASckxpKxkneNrxH4mpIvfeM2/gtLPH8rkGkYTELxsRyk+Ta9VmNd
+         SfZ4ag4yv0vpEIKvV53/rCKge6WCsXfEbXLPHb15pgv9QPDb/3+yrV7HpEmofNcFyboH
+         EMsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693296695; x=1693901495;
+        d=1e100.net; s=20221208; t=1693296867; x=1693901667;
         h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QcuYJIkWkqttiEFUgjzpw9+w8oYYeUVuwo8y1FUeWpw=;
-        b=Z1rK2byPSVlG3I9do0m0y9p0WhAtEfLA/Bb1Kkvbs9pI1WuP+malLR8lSIBr80cLDH
-         HRgH0VE7MSMeWW/oZNarYAuR/1vH+ivxY5Q8eEeobx9p4tWn7Cm1KvISEMi6ujxio004
-         oBQoKELnzqdbXir7uTIA2UrRM4C4etQ20SjCsp8ulmTsXUvvYvffkCJFbZlylM/VB6Av
-         M0aCAYpUfIFnNh2q84e76hwGU/W9XK94wtqGzrqruE7MG0ccaegGR2lwP0qOLo7MfPom
-         iFJnQ4dXtoxUftD61Rn0NtKwT3cp4FqXS1jGFxb5aheRX/kAcHSmPDfRCls97jOkgR7Q
-         gFAA==
-X-Gm-Message-State: AOJu0YwYddMOlthirMzonxHPGm/HvgqvlIXR6W0xseLGyTjtPOz3kFLV
-        JWJXck++PnaPNTCgxDI+I/g=
-X-Google-Smtp-Source: AGHT+IFMlAx6sqTJuzUZsB/QddKc9/jYUouieId2yrQNkMF4IjefFx/1fYXL6lteGDwOKzAf8OGf2w==
-X-Received: by 2002:a2e:7e0d:0:b0:2bc:d33f:3e8f with SMTP id z13-20020a2e7e0d000000b002bcd33f3e8fmr15271739ljc.53.1693296694747;
-        Tue, 29 Aug 2023 01:11:34 -0700 (PDT)
+        bh=WpCt/3rI6BwltGm6OrrHxjmtGTGMQx5mSNvkMRK1Jws=;
+        b=e02csuOX0SfkYWMAamC+qPsmLFNtdsmalY7fWrrrJlypbOGXzinKDCQRDe04dvVe8v
+         Gme4eHIQh53N7++PxqhBkpoiXUYQV5TuV+7R/rXqxMN6GgDhl5HPvVODKzCTtLPB9sEj
+         ZhKgAN9tq5vCvDWuSaIgTRu17QS5CyW53w0szEHtrBjlnKp/WqGA9laEeTlVh5Y4dcMW
+         QYZ8jhNfzGrUiYITKriVyQdgl2epk7sC0y/+OMSa6tUox0H5+sJWQy0IARr/IbF5fCKd
+         iAYEKj8uare0uuTZrx+5lsfG7+srcOIgTTdywvVAUk2jcYz74rNXn1389rr+TPMwZcWs
+         Trrg==
+X-Gm-Message-State: AOJu0YzBhDyhkKbQuNjKjX0H5RyLXob2jt+wVJnEmoFbEV6cgcI5OkP5
+        sa5qp6/M3OCZzUd+I0Ext4s=
+X-Google-Smtp-Source: AGHT+IF6eneRxFLz00elzVlsaViyXlp9Lf/PuaIKg7elUxgACLx6idoz53N5/PfqryD/gK9F++hr7w==
+X-Received: by 2002:a05:6512:1594:b0:500:9b26:9760 with SMTP id bp20-20020a056512159400b005009b269760mr13354264lfb.13.1693296866888;
+        Tue, 29 Aug 2023 01:14:26 -0700 (PDT)
 Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id v6-20020a2e9246000000b002bce3123639sm2054014ljg.98.2023.08.29.01.11.34
+        by smtp.gmail.com with ESMTPSA id q17-20020ac25151000000b004fcdf8b8ab4sm1878629lfd.23.2023.08.29.01.14.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Aug 2023 01:11:34 -0700 (PDT)
-Date:   Tue, 29 Aug 2023 11:11:33 +0300
+        Tue, 29 Aug 2023 01:14:26 -0700 (PDT)
+Date:   Tue, 29 Aug 2023 11:14:24 +0300
 From:   Pekka Paalanen <ppaalanen@gmail.com>
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -66,128 +66,127 @@ Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <freedreno@lists.freedesktop.org>,
         <wayland-devel@lists.freedesktop.org>
-Subject: Re: [PATCH RFC v6 03/10] drm: Add solid fill pixel source
-Message-ID: <20230829111133.201afd11@eldfell>
-In-Reply-To: <20230828-solid-fill-v6-3-a820efcce852@quicinc.com>
+Subject: Re: [PATCH RFC v6 05/10] drm/atomic: Add solid fill data to plane
+ state dump
+Message-ID: <20230829111424.3f187b88@eldfell>
+In-Reply-To: <20230828-solid-fill-v6-5-a820efcce852@quicinc.com>
 References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
-        <20230828-solid-fill-v6-3-a820efcce852@quicinc.com>
+        <20230828-solid-fill-v6-5-a820efcce852@quicinc.com>
 X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/9XiJ10hPEUcELqgCY+fqAZj";
+Content-Type: multipart/signed; boundary="Sig_/p3ZFNBA7.FbYl_glCOK8o6h";
  protocol="application/pgp-signature"; micalg=pgp-sha256
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_FILL_THIS_FORM_SHORT
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/9XiJ10hPEUcELqgCY+fqAZj
+--Sig_/p3ZFNBA7.FbYl_glCOK8o6h
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 28 Aug 2023 17:05:09 -0700
+On Mon, 28 Aug 2023 17:05:11 -0700
 Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 
-> Add "SOLID_FILL" as a valid pixel source. If the pixel_source property is
-> set to "SOLID_FILL", it will display data from the drm_plane "solid_fill"
-> blob property.
+> Add solid_fill property data to the atomic plane state dump.
 >=20
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  drivers/gpu/drm/drm_blend.c | 10 +++++++++-
->  include/drm/drm_plane.h     |  1 +
->  2 files changed, 10 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/drm_atomic.c | 4 ++++
+>  drivers/gpu/drm/drm_plane.c  | 8 ++++++++
+>  include/drm/drm_plane.h      | 3 +++
+>  3 files changed, 15 insertions(+)
 >=20
-> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
-> index 273021cc21c8..1016a206ca0c 100644
-> --- a/drivers/gpu/drm/drm_blend.c
-> +++ b/drivers/gpu/drm/drm_blend.c
-> @@ -200,6 +200,9 @@
->   *	"FB":
->   *		Framebuffer source set by the "FB_ID" property.
->   *
-> + *	"SOLID_FILL":
-> + *		Solid fill color source set by the "solid_fill" property.
-> + *
->   * solid_fill:
->   *	solid_fill is set up with drm_plane_create_solid_fill_property(). It
->   *	contains pixel data that drivers can use to fill a plane.
-> @@ -638,6 +641,7 @@ EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
->  static const struct drm_prop_enum_list drm_pixel_source_enum_list[] =3D {
->  	{ DRM_PLANE_PIXEL_SOURCE_NONE, "NONE" },
->  	{ DRM_PLANE_PIXEL_SOURCE_FB, "FB" },
-> +	{ DRM_PLANE_PIXEL_SOURCE_SOLID_FILL, "SOLID_FILL" },
->  };
+> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+> index bcecb64ccfad..3cb599b3304a 100644
+> --- a/drivers/gpu/drm/drm_atomic.c
+> +++ b/drivers/gpu/drm/drm_atomic.c
+> @@ -717,6 +717,10 @@ static void drm_atomic_plane_print_state(struct drm_=
+printer *p,
+>  	drm_printf(p, "\tfb=3D%u\n", state->fb ? state->fb->base.id : 0);
+>  	if (state->fb)
+>  		drm_framebuffer_print_info(p, 2, state->fb);
+> +	drm_printf(p, "\tsolid_fill=3D%u\n",
+> +			state->solid_fill_blob ? state->solid_fill_blob->base.id : 0);
+> +	if (state->solid_fill_blob)
+> +		drm_plane_solid_fill_print_info(p, 2, state);
+>  	drm_printf(p, "\tcrtc-pos=3D" DRM_RECT_FMT "\n", DRM_RECT_ARG(&dest));
+>  	drm_printf(p, "\tsrc-pos=3D" DRM_RECT_FP_FMT "\n", DRM_RECT_FP_ARG(&src=
+));
+>  	drm_printf(p, "\trotation=3D%x\n", state->rotation);
+> diff --git a/drivers/gpu/drm/drm_plane.c b/drivers/gpu/drm/drm_plane.c
+> index 559d101162ba..6244b622a21a 100644
+> --- a/drivers/gpu/drm/drm_plane.c
+> +++ b/drivers/gpu/drm/drm_plane.c
+> @@ -1495,6 +1495,14 @@ __drm_plane_get_damage_clips(const struct drm_plan=
+e_state *state)
+>  					state->fb_damage_clips->data : NULL);
+>  }
 > =20
->  /**
-> @@ -662,6 +666,9 @@ static const struct drm_prop_enum_list drm_pixel_sour=
-ce_enum_list[] =3D {
->   * "FB":
->   *	Framebuffer pixel source
->   *
-> + * "SOLID_FILL":
-> + * 	Solid fill color pixel source
-> + *
->   * Returns:
->   * Zero on success, negative errno on failure.
->   */
-> @@ -671,7 +678,8 @@ int drm_plane_create_pixel_source_property(struct drm=
-_plane *plane,
->  	struct drm_device *dev =3D plane->dev;
->  	struct drm_property *prop;
->  	static const unsigned int valid_source_mask =3D BIT(DRM_PLANE_PIXEL_SOU=
-RCE_FB) |
-> -						      BIT(DRM_PLANE_PIXEL_SOURCE_NONE);
-> +						      BIT(DRM_PLANE_PIXEL_SOURCE_NONE) |
-> +						      BIT(DRM_PLANE_PIXEL_SOURCE_SOLID_FILL);
->  	int i;
-> =20
->  	/* FB is supported by default */
-> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
-> index a38e18bfb43e..49995c4be2ab 100644
-> --- a/include/drm/drm_plane.h
-> +++ b/include/drm/drm_plane.h
-> @@ -43,6 +43,7 @@ enum drm_scaling_filter {
->  enum drm_plane_pixel_source {
->  	DRM_PLANE_PIXEL_SOURCE_NONE,
->  	DRM_PLANE_PIXEL_SOURCE_FB,
-> +	DRM_PLANE_PIXEL_SOURCE_SOLID_FILL,
->  	DRM_PLANE_PIXEL_SOURCE_MAX
->  };
-> =20
->=20
+> +void drm_plane_solid_fill_print_info(struct drm_printer *p, unsigned int=
+ indent,
+> +				     const struct drm_plane_state *state)
+> +{
+> +	drm_printf_indent(p, indent, "r=3D0x%x\n", state->solid_fill.r);
+> +	drm_printf_indent(p, indent, "g=3D0x%x\n", state->solid_fill.g);
+> +	drm_printf_indent(p, indent, "b=3D0x%x\n", state->solid_fill.b);
 
-This UAPI:
-Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
+I'd recommend %08x format, so that leading zeroes are explicit. That
+makes it easier to see the difference between e.g. 0xffffffff and
+0x0fffffff.
 
 
 Thanks,
 pq
 
---Sig_/9XiJ10hPEUcELqgCY+fqAZj
+> +}
+> +
+>  /**
+>   * drm_plane_get_damage_clips - Returns damage clips.
+>   * @state: Plane state.
+> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+> index 49995c4be2ab..a58f84b6bd5e 100644
+> --- a/include/drm/drm_plane.h
+> +++ b/include/drm/drm_plane.h
+> @@ -1001,6 +1001,9 @@ drm_plane_get_damage_clips_count(const struct drm_p=
+lane_state *state);
+>  struct drm_mode_rect *
+>  drm_plane_get_damage_clips(const struct drm_plane_state *state);
+> =20
+> +void drm_plane_solid_fill_print_info(struct drm_printer *p, unsigned int=
+ indent,
+> +				     const struct drm_plane_state *state);
+> +
+>  int drm_plane_create_scaling_filter_property(struct drm_plane *plane,
+>  					     unsigned int supported_filters);
+> =20
+>=20
+
+
+--Sig_/p3ZFNBA7.FbYl_glCOK8o6h
 Content-Type: application/pgp-signature
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmTtqDUACgkQI1/ltBGq
-qqf4phAAhXuiIR8fQ4IXOlA0nxQVJB549LK2+4jwQZ0RDRwRf5OQ4O4pUAf5LnRL
-V/4MhUHMHen2fzkvIVhKxT0VX+gc+3LrUama/GNUuKJz13as7zWuHrug9AgItlah
-r0I1kEiG+mzI3N3LNebBIv5LJxBcdSsj0HbLIqBvoCmUFw3JNbSDUu+SWVJwNMUo
-SUN4LRUhaTrltQPjXfsIKHwDhpfjogng14AQC+XpzUAXq5mK5Fd62K8bVtFsIFkS
-z9Y3O8mtvhFCAad+f3tPXIsixt+/+V9jJkb/cDQFN+jWklSy3zjZsLPYrwwHzCBA
-xiC3kbhssRIsQwifJN3MJQaYIA1aw/3n5nbL3ysmcgE7LZGl9jAnukmag4SJvgX1
-02H/FOfqiXLiG24M4OOG3ll9rV8XDHBnug6JMquZvTh2JuNBYl90qce7o4M9RaLg
-6u92Azu4VFU81eLMm/FGA+1a3lBRTyZJmVzVwW8IerEfVQHECpAsNHAp32zMZqiW
-hSxAdAVRRA1SyaPi64Fp1C4bKruCZIboG0sg0zbkhCaFahCADmy2AoM4m7OOS/Y+
-a6WQ5E94IIA64dviEqzKidVNk4clOxU3K9zu2NM0mLjPoqoNa8GAFJ6oOiY4g1WT
-fzEyIiL6MVly7HTVZSqE67aBsBFKHe2CZmfI/lVLYaCoL17MUKc=
-=GyQP
+iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmTtqOAACgkQI1/ltBGq
+qqfEIw//VTbz8t1OwEo0CcfNcMpnOHydv9qTAEla3tDyevZTdRJVT/sMDlyAoEJM
+Xl8y+9mZOiIl2GNHr1eg+FIKyAC/dnjFHK7wVNb2Qg4iw2pKuwFhEmbPgSf+Oyo4
+ira8tQYseDoXoAERgbDSTZ13a5QXFk0kplnWtzDILTrLRRu5n78gamzlQb2LWjij
+FW8LcFzxH8SrRUKZHZuVq0FUBRMq7XQyANJepM4wQ1YlmbEvRJRZUFIN5l/lE4kU
+Rja6otQUZg+zRrWVvOeAFxPp+nkdN9JxBf52SFz44taFrVu/FmWl1FzhnYCju7wj
+ZdhiB3OnsuQ3LifJd1tJCG/AndoYnkQoz0jXBvGlmXDpLraoCboHs6/k/QPgiX6Q
+XQ0rcunlTrdtyKDPGzOt41TEVyRxV1WHUZCCWIWmRcJI6WvCUL0r/lR09Y4WwhSU
+0S1+hxc1wdJj4l/Ay8HzFAu159/EipGnOQe6OdsKeaEkOTc5s1XLhkDC3W4bMN6O
+zVXSEAhzGCjEdQdg24yabhVXwqyNzqqWuxcrLAe2P0QbBTnzHLH/H7LIFgi6y9yY
+rXenXRL18kxyYLmBw8Vrx1w5EZhp05/fE4OklK2czh3I0PK/A8nV4j7GzcgwlPeQ
+MT6a2xZ1/m7vAWvBitN7D5pcw4D/i3hqLZscm8I+39lbahyIwIg=
+=9B8a
 -----END PGP SIGNATURE-----
 
---Sig_/9XiJ10hPEUcELqgCY+fqAZj--
+--Sig_/p3ZFNBA7.FbYl_glCOK8o6h--
