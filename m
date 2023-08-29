@@ -2,191 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F6A978C012
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C169578C01B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 10:19:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbjH2IPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 04:15:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55744 "EHLO
+        id S233184AbjH2ITF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 04:19:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbjH2IPU (ORCPT
+        with ESMTP id S232808AbjH2ISj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 04:15:20 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8371B6;
-        Tue, 29 Aug 2023 01:14:38 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5009969be25so6456303e87.3;
-        Tue, 29 Aug 2023 01:14:38 -0700 (PDT)
+        Tue, 29 Aug 2023 04:18:39 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0504BEC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 01:18:36 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-52a49a42353so5717989a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 01:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693296867; x=1693901667;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WpCt/3rI6BwltGm6OrrHxjmtGTGMQx5mSNvkMRK1Jws=;
-        b=YRQlOcCRcFxAqYZAwQxhMqpBs0MSqAHQdVO4iPz2daPciNJKDVkPuS62HK15kZCZ+h
-         ytMMNW0a+CGr2GIUFWW3KWVXWhdo5dHe99iVnoohjqTGHKnJcUTn/QE80iKX0CDAw00X
-         aZGT0zVpbxgzRSArWz0MHWpTFXBiu4e74gsoVkgXcn9BVh4q38RrmBXvUH/BtkTcgtYw
-         dqOm3iwtmjjVnj2UASckxpKxkneNrxH4mpIvfeM2/gtLPH8rkGkYTELxsRyk+Ta9VmNd
-         SfZ4ag4yv0vpEIKvV53/rCKge6WCsXfEbXLPHb15pgv9QPDb/3+yrV7HpEmofNcFyboH
-         EMsQ==
+        d=linaro.org; s=google; t=1693297114; x=1693901914;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HAL+QW1Uxu14SX9zM6XGspJb7wIOSyL2pK7dTNh/26U=;
+        b=roc5GwCTf4Wov4tDBI/QnszPHmiYCEvRyWplc/HaO3bkm2vMvbg65394r99uJPFPU3
+         XKQmcppXsNgIQxw2dFesLqHLvd5knr1bTHLd0YPAaNcJo0OA3jW4p2Ke7zENQePy+JV1
+         5tM/icOdhJdlF/hvNsj5PqQ2CtO34lv93epbMPIjLaTt4Bz8FDXR4WL9W6O9TG7D2C/T
+         HLRk/EkCJei99aAX06/oMdpBNrgMBOZDTgFOD6fJVyFSSVLWkEhEobOEEFDzjqD4R75g
+         VOCFYpMmH/91dLEiUte/H/sxPYdWCWD+2HAQ6iFdbZaF+qUAligW7qeFwzs9afZ9z8b8
+         PR6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693296867; x=1693901667;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WpCt/3rI6BwltGm6OrrHxjmtGTGMQx5mSNvkMRK1Jws=;
-        b=e02csuOX0SfkYWMAamC+qPsmLFNtdsmalY7fWrrrJlypbOGXzinKDCQRDe04dvVe8v
-         Gme4eHIQh53N7++PxqhBkpoiXUYQV5TuV+7R/rXqxMN6GgDhl5HPvVODKzCTtLPB9sEj
-         ZhKgAN9tq5vCvDWuSaIgTRu17QS5CyW53w0szEHtrBjlnKp/WqGA9laEeTlVh5Y4dcMW
-         QYZ8jhNfzGrUiYITKriVyQdgl2epk7sC0y/+OMSa6tUox0H5+sJWQy0IARr/IbF5fCKd
-         iAYEKj8uare0uuTZrx+5lsfG7+srcOIgTTdywvVAUk2jcYz74rNXn1389rr+TPMwZcWs
-         Trrg==
-X-Gm-Message-State: AOJu0YzBhDyhkKbQuNjKjX0H5RyLXob2jt+wVJnEmoFbEV6cgcI5OkP5
-        sa5qp6/M3OCZzUd+I0Ext4s=
-X-Google-Smtp-Source: AGHT+IF6eneRxFLz00elzVlsaViyXlp9Lf/PuaIKg7elUxgACLx6idoz53N5/PfqryD/gK9F++hr7w==
-X-Received: by 2002:a05:6512:1594:b0:500:9b26:9760 with SMTP id bp20-20020a056512159400b005009b269760mr13354264lfb.13.1693296866888;
-        Tue, 29 Aug 2023 01:14:26 -0700 (PDT)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id q17-20020ac25151000000b004fcdf8b8ab4sm1878629lfd.23.2023.08.29.01.14.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Aug 2023 01:14:26 -0700 (PDT)
-Date:   Tue, 29 Aug 2023 11:14:24 +0300
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
-        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
-        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <wayland-devel@lists.freedesktop.org>
-Subject: Re: [PATCH RFC v6 05/10] drm/atomic: Add solid fill data to plane
- state dump
-Message-ID: <20230829111424.3f187b88@eldfell>
-In-Reply-To: <20230828-solid-fill-v6-5-a820efcce852@quicinc.com>
-References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
-        <20230828-solid-fill-v6-5-a820efcce852@quicinc.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+        d=1e100.net; s=20221208; t=1693297114; x=1693901914;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HAL+QW1Uxu14SX9zM6XGspJb7wIOSyL2pK7dTNh/26U=;
+        b=CTvzZ94d0YetsfJ1sdCc6X+iXwcLHXrXNiL2k9gdCYY0aj4u2J6QX4AQ9vjU3YpgGE
+         Hdkr05Zakdl3QoyKQ51RD4DnrCpsqwnaz7uUCgOrKB1gC36p0D64GY0bBiyu9S+dCEb9
+         qjuEtwwyvWOONLGsxm1by4+Xb5P2wNuG4Yql2YAP7AxbkkkRNRm7FacHoLXki7jSNvp7
+         A5Vt4UXR+LUNRZkGAQCYVtfQ/Z7LOwriaFJEAckkvPt8RZZhPREZESiY7ACCGcvqm1D9
+         Lvvgz2amxrl3rcZMjZ5b6UIrO4lyuW02jioIbKYlodkIMwt6COhC1iTcGl7iOZoimlOQ
+         CeAw==
+X-Gm-Message-State: AOJu0YxD/Lm6zm4mgKRM5tqqsOzmHU69zkmX4SGSnUB1H92rViNLLrni
+        7/Cm2T71btLssfbqrw3sRybfsw==
+X-Google-Smtp-Source: AGHT+IG2+d5PEh9rBmWoOPU9HPi/XpqQcvKK3PEkc3ZJaZR3D/RfTXVQfgYCM+c+SUI99a4J2q6IlA==
+X-Received: by 2002:aa7:d1cc:0:b0:52a:250e:a052 with SMTP id g12-20020aa7d1cc000000b0052a250ea052mr14348868edp.7.1693297114502;
+        Tue, 29 Aug 2023 01:18:34 -0700 (PDT)
+Received: from [192.168.0.22] ([77.252.47.196])
+        by smtp.gmail.com with ESMTPSA id r9-20020aa7da09000000b005236b47116asm5402296eds.70.2023.08.29.01.18.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 01:18:34 -0700 (PDT)
+Message-ID: <8b7bada9-3898-1b60-3dea-766a760412f7@linaro.org>
+Date:   Tue, 29 Aug 2023 10:18:32 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/p3ZFNBA7.FbYl_glCOK8o6h";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_FILL_THIS_FORM_SHORT
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 06/11] firmware: qcom-shm-bridge: new driver
+Content-Language: en-US
+To:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
+ <20230828192507.117334-7-bartosz.golaszewski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230828192507.117334-7-bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/p3ZFNBA7.FbYl_glCOK8o6h
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, 28 Aug 2023 17:05:11 -0700
-Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-
-> Add solid_fill property data to the atomic plane state dump.
->=20
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+On 28/08/2023 21:25, Bartosz Golaszewski wrote:
+> This module is a platform driver that also exposes an interface for
+> kernel users to allocate blocks of memory shared with the trustzone.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  drivers/gpu/drm/drm_atomic.c | 4 ++++
->  drivers/gpu/drm/drm_plane.c  | 8 ++++++++
->  include/drm/drm_plane.h      | 3 +++
->  3 files changed, 15 insertions(+)
->=20
-> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-> index bcecb64ccfad..3cb599b3304a 100644
-> --- a/drivers/gpu/drm/drm_atomic.c
-> +++ b/drivers/gpu/drm/drm_atomic.c
-> @@ -717,6 +717,10 @@ static void drm_atomic_plane_print_state(struct drm_=
-printer *p,
->  	drm_printf(p, "\tfb=3D%u\n", state->fb ? state->fb->base.id : 0);
->  	if (state->fb)
->  		drm_framebuffer_print_info(p, 2, state->fb);
-> +	drm_printf(p, "\tsolid_fill=3D%u\n",
-> +			state->solid_fill_blob ? state->solid_fill_blob->base.id : 0);
-> +	if (state->solid_fill_blob)
-> +		drm_plane_solid_fill_print_info(p, 2, state);
->  	drm_printf(p, "\tcrtc-pos=3D" DRM_RECT_FMT "\n", DRM_RECT_ARG(&dest));
->  	drm_printf(p, "\tsrc-pos=3D" DRM_RECT_FP_FMT "\n", DRM_RECT_FP_ARG(&src=
-));
->  	drm_printf(p, "\trotation=3D%x\n", state->rotation);
-> diff --git a/drivers/gpu/drm/drm_plane.c b/drivers/gpu/drm/drm_plane.c
-> index 559d101162ba..6244b622a21a 100644
-> --- a/drivers/gpu/drm/drm_plane.c
-> +++ b/drivers/gpu/drm/drm_plane.c
-> @@ -1495,6 +1495,14 @@ __drm_plane_get_damage_clips(const struct drm_plan=
-e_state *state)
->  					state->fb_damage_clips->data : NULL);
->  }
-> =20
-> +void drm_plane_solid_fill_print_info(struct drm_printer *p, unsigned int=
- indent,
-> +				     const struct drm_plane_state *state)
+>  drivers/firmware/Kconfig                 |   8 +
+>  drivers/firmware/Makefile                |   1 +
+>  drivers/firmware/qcom-shm-bridge.c       | 452 +++++++++++++++++++++++
+>  include/linux/firmware/qcom/shm-bridge.h |  32 ++
+>  4 files changed, 493 insertions(+)
+>  create mode 100644 drivers/firmware/qcom-shm-bridge.c
+>  create mode 100644 include/linux/firmware/qcom/shm-bridge.h
+> 
+
+...
+
+> +/**
+> + * qcom_shm_bridge_to_phys_addr - Translate address from virtual to physical.
+> + *
+> + * @vaddr: Virtual address to translate.
+> + *
+> + * Return:
+> + * Physical address corresponding to 'vaddr'.
+> + */
+> +phys_addr_t qcom_shm_bridge_to_phys_addr(void *vaddr)
 > +{
-> +	drm_printf_indent(p, indent, "r=3D0x%x\n", state->solid_fill.r);
-> +	drm_printf_indent(p, indent, "g=3D0x%x\n", state->solid_fill.g);
-> +	drm_printf_indent(p, indent, "b=3D0x%x\n", state->solid_fill.b);
+> +	struct qcom_shm_bridge_chunk *chunk;
+> +	struct qcom_shm_bridge_pool *pool;
+> +
+> +	guard(spinlock_irqsave)(&qcom_shm_bridge_chunks_lock);
+> +
+> +	chunk = radix_tree_lookup(&qcom_shm_bridge_chunks,
+> +				  (unsigned long)vaddr);
+> +	if (!chunk)
+> +		return 0;
+> +
+> +	pool = chunk->parent;
+> +
+> +	guard(spinlock_irqsave)(&pool->lock);
 
-I'd recommend %08x format, so that leading zeroes are explicit. That
-makes it easier to see the difference between e.g. 0xffffffff and
-0x0fffffff.
+Why both locks are spinlocks? The locks are used quite a lot.
 
+> +
+> +	return gen_pool_virt_to_phys(pool->genpool, (unsigned long)vaddr);
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_shm_bridge_to_phys_addr);
+> +
+> +static int qcom_shm_bridge_probe(struct platform_device *pdev)
+> +{
+> +	struct qcom_shm_bridge_pool *default_pool;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	/*
+> +	 * We need to wait for the SCM device to be created and bound to the
+> +	 * SCM driver.
+> +	 */
+> +	if (!qcom_scm_is_available())
+> +		return -EPROBE_DEFER;
 
-Thanks,
-pq
+I think we miss here (and in all other drivers) device links to qcm.
 
+> +
+> +	ret = qcom_scm_enable_shm_bridge();
+> +	if (ret)
+> +		return dev_err_probe(dev, ret,
+> +				     "Failed to enable the SHM bridge\n");
+> +
+> +	default_pool = qcom_shm_bridge_pool_new_for_dev(
+> +				dev, qcom_shm_bridge_default_pool_size);
+> +	if (IS_ERR(default_pool))
+> +		return dev_err_probe(dev, PTR_ERR(default_pool),
+> +				     "Failed to create the default SHM Bridge pool\n");
+> +
+> +	WRITE_ONCE(qcom_shm_bridge_default_pool, default_pool);
+> +
+> +	return 0;
 > +}
 > +
->  /**
->   * drm_plane_get_damage_clips - Returns damage clips.
->   * @state: Plane state.
-> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
-> index 49995c4be2ab..a58f84b6bd5e 100644
-> --- a/include/drm/drm_plane.h
-> +++ b/include/drm/drm_plane.h
-> @@ -1001,6 +1001,9 @@ drm_plane_get_damage_clips_count(const struct drm_p=
-lane_state *state);
->  struct drm_mode_rect *
->  drm_plane_get_damage_clips(const struct drm_plane_state *state);
-> =20
-> +void drm_plane_solid_fill_print_info(struct drm_printer *p, unsigned int=
- indent,
-> +				     const struct drm_plane_state *state);
+> +static const struct of_device_id qcom_shm_bridge_of_match[] = {
+> +	{ .compatible = "qcom,shm-bridge", },
+> +	{ }
+> +};
 > +
->  int drm_plane_create_scaling_filter_property(struct drm_plane *plane,
->  					     unsigned int supported_filters);
-> =20
->=20
+> +static struct platform_driver qcom_shm_bridge_driver = {
+> +	.driver = {
+> +		.name = "qcom-shm-bridge",
+> +		.of_match_table = qcom_shm_bridge_of_match,
+> +		/*
+> +		 * Once enabled, the SHM Bridge feature cannot be disabled so
+> +		 * there's no reason to ever unbind the driver.
+> +		 */
+> +		.suppress_bind_attrs = true,
+> +	},
+> +	.probe = qcom_shm_bridge_probe,
+> +};
+> +
+> +static int __init qcom_shm_bridge_init(void)
+> +{
+> +	return platform_driver_register(&qcom_shm_bridge_driver);
+> +}
+> +subsys_initcall(qcom_shm_bridge_init);
 
+Why this is part of subsystem? Should be rather device_initcall... or
+simply module (and a tristate).
 
---Sig_/p3ZFNBA7.FbYl_glCOK8o6h
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+Best regards,
+Krzysztof
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmTtqOAACgkQI1/ltBGq
-qqfEIw//VTbz8t1OwEo0CcfNcMpnOHydv9qTAEla3tDyevZTdRJVT/sMDlyAoEJM
-Xl8y+9mZOiIl2GNHr1eg+FIKyAC/dnjFHK7wVNb2Qg4iw2pKuwFhEmbPgSf+Oyo4
-ira8tQYseDoXoAERgbDSTZ13a5QXFk0kplnWtzDILTrLRRu5n78gamzlQb2LWjij
-FW8LcFzxH8SrRUKZHZuVq0FUBRMq7XQyANJepM4wQ1YlmbEvRJRZUFIN5l/lE4kU
-Rja6otQUZg+zRrWVvOeAFxPp+nkdN9JxBf52SFz44taFrVu/FmWl1FzhnYCju7wj
-ZdhiB3OnsuQ3LifJd1tJCG/AndoYnkQoz0jXBvGlmXDpLraoCboHs6/k/QPgiX6Q
-XQ0rcunlTrdtyKDPGzOt41TEVyRxV1WHUZCCWIWmRcJI6WvCUL0r/lR09Y4WwhSU
-0S1+hxc1wdJj4l/Ay8HzFAu159/EipGnOQe6OdsKeaEkOTc5s1XLhkDC3W4bMN6O
-zVXSEAhzGCjEdQdg24yabhVXwqyNzqqWuxcrLAe2P0QbBTnzHLH/H7LIFgi6y9yY
-rXenXRL18kxyYLmBw8Vrx1w5EZhp05/fE4OklK2czh3I0PK/A8nV4j7GzcgwlPeQ
-MT6a2xZ1/m7vAWvBitN7D5pcw4D/i3hqLZscm8I+39lbahyIwIg=
-=9B8a
------END PGP SIGNATURE-----
-
---Sig_/p3ZFNBA7.FbYl_glCOK8o6h--
