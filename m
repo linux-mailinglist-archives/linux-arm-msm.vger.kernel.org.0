@@ -2,165 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1D8978BE0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 07:53:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A0878BE26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Aug 2023 08:01:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbjH2Fw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 01:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45928 "EHLO
+        id S232358AbjH2GAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 02:00:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjH2Fwd (ORCPT
+        with ESMTP id S233204AbjH2GAS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 01:52:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30EDF4;
-        Mon, 28 Aug 2023 22:52:30 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T2Qomq032661;
-        Tue, 29 Aug 2023 05:52:22 GMT
+        Tue, 29 Aug 2023 02:00:18 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09C8109;
+        Mon, 28 Aug 2023 23:00:15 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T3r4pY015322;
+        Tue, 29 Aug 2023 06:00:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
+ mime-version : subject : to : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DMAO/tZrI0bbmSE7TU4ffinXGhYBrCGAIWUvF+7P4OQ=;
- b=fEmyBrig12OGG8ASW+LeheDLoUfXZdnbKkZpXYzwkv/jwuk4fuQx8wrIsFynG9yKWlI0
- h9KgaDAxFgRIC3bj0xOKaOla1HvlcXyIk0+YE3QWgYboAqkzazTqm3FC+oWcuVmWItrp
- PvGOhcwF3mtOxc/PGAvstoQ+/+VCGAz9rWgoTpj9CWrjAgBsLxyal70Ig+D/dWGD/4J4
- sINl9Q2P449FUwNYEBeBEWqu9Q+rD7HSrPuA1JG+yfY2SNinTH2SyYfk5VZsIv6kVRbM
- cHHnHzRcUlYnxIqKz8DchPBxHqZaVDpjdlqsyNPxyLokdYa2jUgk9hNznLYgSzBbQtTD gw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss7merb2d-1
+ bh=NjoQx7of7gZvUoNJcfHCAxqixOcJ5euA5VWBRBwebP0=;
+ b=MrDcMwPHQb8VfRd7HTXg1tfqE9ivTb2M7q1X6/RDhTTmIC5KtPfFPoU5b6G23FX5NlpE
+ VQZEo1anJscK2TlGEMu98LiSMdiRmqlG+BB2tL16wI/X/HNp1SInZ0Hfb92GV8TUc0Ac
+ llK9t+Vf5330WDeutiHvvUsgpcvU/U9AnJPf/KDOrysByjVg2+wk4965ns1rrSdOqz3W
+ 4EZpmCSPPR/tVUCTMl/xDJoQwgly2laZsPalAmE6Yi9d1xPBHFk2vShRyj+mNGw/oSYn
+ Xh/slr3dYssSMU/ouf/wqlgroZuT6IJml7+tsXCjziBErJ2t4alMBG1eS2IsWPlAN/j5 9A== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sruhnsr0j-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Aug 2023 05:52:22 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37T5qKpb028659
+        Tue, 29 Aug 2023 06:00:10 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37T609hr023075
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Aug 2023 05:52:21 GMT
-Received: from [10.218.10.146] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 28 Aug
- 2023 22:52:16 -0700
-Message-ID: <8d53a098-bf0d-1b40-45c0-264a42d6e72d@quicinc.com>
-Date:   Tue, 29 Aug 2023 11:21:15 +0530
+        Tue, 29 Aug 2023 06:00:09 GMT
+Received: from [10.216.63.45] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 28 Aug
+ 2023 23:00:04 -0700
+Message-ID: <7abd0b40-a364-b7f2-3057-2b522e5674e1@quicinc.com>
+Date:   Tue, 29 Aug 2023 11:29:59 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 2/4] clk: qcom: rpmh: Add RPMH clocks support for SM4450
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 1/7] dt-bindings: thermal: qcom-tsens: Add ipq5018
+ compatible
 Content-Language: en-US
-To:     <neil.armstrong@linaro.org>, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Jagadeesh Kona" <quic_jkona@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230824173410.550126-1-quic_ajipan@quicinc.com>
- <20230824173410.550126-3-quic_ajipan@quicinc.com>
- <71d1d748-133a-470b-986c-ece79f743aa4@linaro.org>
-From:   Ajit Pandey <quic_ajipan@quicinc.com>
-In-Reply-To: <71d1d748-133a-470b-986c-ece79f743aa4@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <thara.gopinath@gmail.com>,
+        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+References: <1693250307-8910-1-git-send-email-quic_srichara@quicinc.com>
+ <1693250307-8910-2-git-send-email-quic_srichara@quicinc.com>
+ <97501b4f-614c-b3a3-c17f-5699b21e101f@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <97501b4f-614c-b3a3-c17f-5699b21e101f@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PMSyR2Py-LjshopZXoslD-8dqc5NwZZr
-X-Proofpoint-GUID: PMSyR2Py-LjshopZXoslD-8dqc5NwZZr
+X-Proofpoint-GUID: 9ZmKMdnUoDcl93d9CrUZiH2lCAhNmuMW
+X-Proofpoint-ORIG-GUID: 9ZmKMdnUoDcl93d9CrUZiH2lCAhNmuMW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-29_03,2023-08-28_04,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=999 phishscore=0 priorityscore=1501 clxscore=1011 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2308290049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015 phishscore=0
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308290050
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krzysztof,
 
-
-On 8/25/2023 7:31 PM, Neil Armstrong wrote:
-> Hi,
-> 
-> On 24/08/2023 19:34, Ajit Pandey wrote:
->> Add support for RPMH clocks for SM4450 platform.
+On 8/29/2023 12:51 AM, Krzysztof Kozlowski wrote:
+> On 28/08/2023 21:18, Sricharan Ramabadhran wrote:
+>> IPQ5018 has tsens v1.0 block with 4 sensors and 1 interrupt.
 >>
->> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >> ---
->>   drivers/clk/qcom/clk-rpmh.c | 21 +++++++++++++++++++++
->>   1 file changed, 21 insertions(+)
+>>   .../bindings/thermal/qcom-tsens.yaml          | 19 +++++++++++++++++++
+>>   1 file changed, 19 insertions(+)
 >>
->> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
->> index 4c5b552b47b6..5d853fd43294 100644
->> --- a/drivers/clk/qcom/clk-rpmh.c
->> +++ b/drivers/clk/qcom/clk-rpmh.c
->> @@ -350,6 +350,7 @@ DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _a2, "lnbclka3", 2);
->>   DEFINE_CLK_RPMH_VRM(ln_bb_clk1, _a4, "lnbclka1", 4);
->>   DEFINE_CLK_RPMH_VRM(ln_bb_clk2, _a4, "lnbclka2", 4);
->> +DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _a4, "lnbclka3", 4);
->>   DEFINE_CLK_RPMH_VRM(ln_bb_clk2, _g4, "lnbclkg2", 4);
->>   DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _g4, "lnbclkg3", 4);
->> @@ -717,6 +718,25 @@ static const struct clk_rpmh_desc clk_rpmh_sdx75 = {
->>       .num_clks = ARRAY_SIZE(sdx75_rpmh_clocks),
->>   };
->> +static struct clk_hw *sm4450_rpmh_clocks[] = {
->> +    [RPMH_CXO_CLK]        = &clk_rpmh_bi_tcxo_div4.hw,
->> +    [RPMH_CXO_CLK_A]    = &clk_rpmh_bi_tcxo_div4_ao.hw,
+>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> index 27e9e16e6455..2309bb6dce1b 100644
+>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> @@ -42,6 +42,7 @@ properties:
+>>                 - qcom,msm8956-tsens
+>>                 - qcom,msm8976-tsens
+>>                 - qcom,qcs404-tsens
+>> +              - qcom,ipq5018-tsens
 > 
-> Are you sure about div4 here ?
+> This does not look like placed in alphanumeric order.
 > 
-> Kailua uses div2 because the CXO input gets used divided by 2
-> by PHYs and divided by 4 for GCC/DISPCC/...
-> 
-> This is why we introduced a div2 clock in DT used to feed GCC/DISPCC/...
-> 
-> Neil
 
-Yes div4 is the correct divider only for sm4450 as CXO input get 
-directly divided by 4 only. This is someting similiar to sm8450 and 
-there is no in between div2 divider like Kailua.
+  ok, will sort.
 
-> 
->> +    [RPMH_LN_BB_CLK2]    = &clk_rpmh_ln_bb_clk2_a4.hw,
->> +    [RPMH_LN_BB_CLK2_A]    = &clk_rpmh_ln_bb_clk2_a4_ao.hw,
->> +    [RPMH_LN_BB_CLK3]       = &clk_rpmh_ln_bb_clk3_a4.hw,
->> +    [RPMH_LN_BB_CLK3_A]     = &clk_rpmh_ln_bb_clk3_a4_ao.hw,
->> +    [RPMH_RF_CLK1]        = &clk_rpmh_rf_clk1_a.hw,
->> +    [RPMH_RF_CLK1_A]    = &clk_rpmh_rf_clk1_a_ao.hw,
->> +    [RPMH_RF_CLK5]        = &clk_rpmh_rf_clk5_a.hw,
->> +    [RPMH_RF_CLK5_A]    = &clk_rpmh_rf_clk5_a_ao.hw,
->> +    [RPMH_IPA_CLK]        = &clk_rpmh_ipa.hw,
->> +};
+>>             - const: qcom,tsens-v1
+>>   
+>>         - description: v2 of TSENS
+>> @@ -409,4 +410,22 @@ examples:
+>>              #qcom,sensors = <16>;
+>>              #thermal-sensor-cells = <1>;
+>>       };
 >> +
->> +static const struct clk_rpmh_desc clk_rpmh_sm4450 = {
->> +    .clks = sm4450_rpmh_clocks,
->> +    .num_clks = ARRAY_SIZE(sm4450_rpmh_clocks),
->> +};
->> +
->>   static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args 
->> *clkspec,
->>                        void *data)
->>   {
->> @@ -810,6 +830,7 @@ static const struct of_device_id 
->> clk_rpmh_match_table[] = {
->>       { .compatible = "qcom,sdx55-rpmh-clk",  .data = &clk_rpmh_sdx55},
->>       { .compatible = "qcom,sdx65-rpmh-clk",  .data = &clk_rpmh_sdx65},
->>       { .compatible = "qcom,sdx75-rpmh-clk",  .data = &clk_rpmh_sdx75},
->> +    { .compatible = "qcom,sm4450-rpmh-clk", .data = &clk_rpmh_sm4450},
->>       { .compatible = "qcom,sm6350-rpmh-clk", .data = &clk_rpmh_sm6350},
->>       { .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
->>       { .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +    // Example 5 (for any IPQ5018 based SoC-s):
 > 
+> No need for new example for a difference in compatible. Drop it.
+
+  ok, will drop it.
+
+Regards,
+  Sricharan
