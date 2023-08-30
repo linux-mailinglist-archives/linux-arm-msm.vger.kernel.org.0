@@ -2,183 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0619478D8D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8203978D958
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235778AbjH3SbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52734 "EHLO
+        id S235917AbjH3Scz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244283AbjH3Mvh (ORCPT
+        with ESMTP id S244395AbjH3NJ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 08:51:37 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70950132;
-        Wed, 30 Aug 2023 05:51:34 -0700 (PDT)
-Received: from [IPV6:2a01:e0a:120:3210:3c80:2375:ed1d:19ee] (unknown [IPv6:2a01:e0a:120:3210:3c80:2375:ed1d:19ee])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 78F0A660722B;
-        Wed, 30 Aug 2023 13:51:32 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1693399892;
-        bh=ATFNlFErqZ0DT6q6oV6nUkS2hS/qdeMG0yqOrN3MSgk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=grBQL/Me/AQSKnGXDsM+f85KJNzEEFJDfQbBeuzCklPS0k9B0cmtilehE5zKRYu/t
-         TtV/dyQfppH74lB05sAV/VsXWgaDexMHs1RPCOCcCNZ+wkVPBEIymWDEX96+OSBOvZ
-         hcvl4UYaMfBYhNM1TzhmuweEvku6Ox/K8F+a+Y/mmO6tvueqjLpjoq+aE2OcT1m9Nh
-         qeR4oxhg+yIrXzde+Z+KiMuxBZaSgAZ4XQRFzOzuntRs5PJ/DpzBObPWs1gTGFe/i5
-         GqNZhQWD0fukRTvVQKnmo3zaxLeESSifUnsZr63gW6bt1RPa2UNzAUrnR3pwaYDVEi
-         BQwFKwll1kpHw==
-Message-ID: <643a7811-60ff-6ac9-be3d-edcd9a0b95cc@collabora.com>
-Date:   Wed, 30 Aug 2023 14:51:30 +0200
+        Wed, 30 Aug 2023 09:09:26 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1CE8185
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 06:09:22 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-58df8cab1f2so61854597b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 06:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693400962; x=1694005762; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DwGoXvc98B29/NZ2z5FtlBwDc8c/5Vn6sQFUBsFMehM=;
+        b=jEmWvMQfYFnlzffDbxw5mXgyneUOyH70keUaWNiIHj4/9Q58xqaMaqHuj8xInc9GT/
+         txcoWC41ahEz+MPy7pLi0CoV3OKBMsGxItXcWKHMzDXhCmhk4FHOThVWONJYrADxxa3u
+         2VriFRu+2Yd5xs4StT6q7CzF+Wxe+nqaWIPbGL9hRl004uZPBHoM4f9tCoM73869oJNS
+         +wmh9dQy0rWd64mvmOUSOWN46YevkHhCD+L46mOMH7DeFDGabY5xGyV8tVeA23IM6vs3
+         UTJxmaoowxc2SxCW8nqng78RKBgi7P4IAqK2+W4uUExWA4gj7K+gcIncJqool447XREa
+         Vf/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693400962; x=1694005762;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DwGoXvc98B29/NZ2z5FtlBwDc8c/5Vn6sQFUBsFMehM=;
+        b=ih5w6zlnbjiyIDFAqbIjqSuF58dXNXSyhtz3fkTDBgW5tTkIBcgxTw9pFovfKPt/BA
+         zYHZ1hyMl/FCIuP25qrj0NxXRIVg2Sta2meix7WEpFDu/S2LrrkMA2dnzhELRMFxgOm7
+         2FHnxEtvpE9k19H9Unf2of+xsctaytrZCgYuXKa9+H1kvkQfB4LrqUT8cU7lCziEQLYb
+         8BKm7yJnkjhv6Fc3+eJMUhWUdG5BoYblMzp1xUfDk33SYmfXnxaSfNihEMhDQXCLTnYI
+         YsdJCo9heoSYRfckeMG6ToiXSODEtYlp4KVC3BnvWKWcKQhyYhrdeJs1V+muwbvfCUfT
+         AhcQ==
+X-Gm-Message-State: AOJu0YxTFrP9wQHuWdRw/2OCSqCg+M3xufEuqK6fe9ZVjhp1biIri5cw
+        g4ecM6NyOwrXIs6RFU1Nz5Lb37yBhWeOLXKyHrw3Xg==
+X-Google-Smtp-Source: AGHT+IGm+kjClWgL76JeczMmO+h3IT4TxeT/7KWlbDA9G2smzM8OdYQu3wjRGDyP5zdSFFunQHUHMzAcTQEhKJc2RH4=
+X-Received: by 2002:a25:3201:0:b0:d11:205f:c55 with SMTP id
+ y1-20020a253201000000b00d11205f0c55mr2070828yby.4.1693400961971; Wed, 30 Aug
+ 2023 06:09:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 01/10] media: videobuf2: Rework offset 'cookie'
- encoding pattern
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, mchehab@kernel.org,
-        tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230824092133.39510-1-benjamin.gaignard@collabora.com>
- <20230824092133.39510-2-benjamin.gaignard@collabora.com>
- <01c299f2-8118-5d86-e9b6-a459c1b6c467@xs4all.nl>
-Content-Language: en-US
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-In-Reply-To: <01c299f2-8118-5d86-e9b6-a459c1b6c467@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
+ <20230828192507.117334-7-bartosz.golaszewski@linaro.org> <8b7bada9-3898-1b60-3dea-766a760412f7@linaro.org>
+ <CACMJSetObp0k312DmqhTCkw7jsf05OHX1yxbyYj+sVfbtwRcVQ@mail.gmail.com> <86bb50fd-72f3-7c76-c4fe-f8e4765e33d5@linaro.org>
+In-Reply-To: <86bb50fd-72f3-7c76-c4fe-f8e4765e33d5@linaro.org>
+From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date:   Wed, 30 Aug 2023 15:09:10 +0200
+Message-ID: <CACMJSes9Lwgh+xSDQo4KQhOHdcLigYgi=scFTeCtiqKFt1QNnw@mail.gmail.com>
+Subject: Re: [PATCH 06/11] firmware: qcom-shm-bridge: new driver
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 29 Aug 2023 at 18:47, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 29/08/2023 15:24, Bartosz Golaszewski wrote:
+> >>> +phys_addr_t qcom_shm_bridge_to_phys_addr(void *vaddr)
+> >>> +{
+> >>> +     struct qcom_shm_bridge_chunk *chunk;
+> >>> +     struct qcom_shm_bridge_pool *pool;
+> >>> +
+> >>> +     guard(spinlock_irqsave)(&qcom_shm_bridge_chunks_lock);
+> >>> +
+> >>> +     chunk = radix_tree_lookup(&qcom_shm_bridge_chunks,
+> >>> +                               (unsigned long)vaddr);
+> >>> +     if (!chunk)
+> >>> +             return 0;
+> >>> +
+> >>> +     pool = chunk->parent;
+> >>> +
+> >>> +     guard(spinlock_irqsave)(&pool->lock);
+> >>
+> >> Why both locks are spinlocks? The locks are used quite a lot.
+> >
+> > I'm not sure what to answer. The first one protects the global chunk
+> > mapping stored in the radix tree. The second one protects a single
+> > memory pool from concurrent access. Both can be modified from any
+> > context, hence spinlocks.
+>
+> Not much PREEMPT friendly, although indeed protected code is small. At
+> least here, I did not check other places.
+>
+> >
+> >>
+> >>> +
+> >>> +     return gen_pool_virt_to_phys(pool->genpool, (unsigned long)vaddr);
+> >>> +}
+> >>> +EXPORT_SYMBOL_GPL(qcom_shm_bridge_to_phys_addr);
+> >>> +
+> >>> +static int qcom_shm_bridge_probe(struct platform_device *pdev)
+> >>> +{
+> >>> +     struct qcom_shm_bridge_pool *default_pool;
+> >>> +     struct device *dev = &pdev->dev;
+> >>> +     int ret;
+> >>> +
+> >>> +     /*
+> >>> +      * We need to wait for the SCM device to be created and bound to the
+> >>> +      * SCM driver.
+> >>> +      */
+> >>> +     if (!qcom_scm_is_available())
+> >>> +             return -EPROBE_DEFER;
+> >>
+> >> I think we miss here (and in all other drivers) device links to qcm.
+> >>
+> >
+> > Well, SCM, once probed, cannot be unbound. What would device links
+> > guarantee above that?
+>
+> Runtime PM, probe ordering (dependencies) detection.
+>
 
-Le 30/08/2023 à 14:25, Hans Verkuil a écrit :
-> On 24/08/2023 11:21, Benjamin Gaignard wrote:
->> Change how offset 'cookie' field value is computed to make possible
->> to use more buffers (up to 0xffff).
->> With this encoding pattern we know the maximum number that a queue
->> could store so we can check ing at queue init time.
->> It also make easier and faster to find buffer and plane from using
->> the offset field.
->>
->> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->> ---
->> v5:
->> - I haven't change DST_QUEUE_OFF_BASE definition because it used in
->>    v4l2-mem2mem and s5p_mfc driver with a shift.
->>
->>   .../media/common/videobuf2/videobuf2-core.c   | 48 +++++++++----------
->>   1 file changed, 24 insertions(+), 24 deletions(-)
->>
->> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
->> index cf6727d9c81f..e06905533ef4 100644
->> --- a/drivers/media/common/videobuf2/videobuf2-core.c
->> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
->> @@ -31,6 +31,10 @@
->>   
->>   #include <trace/events/vb2.h>
->>   
->> +#define PLANE_INDEX_SHIFT	3
->> +#define PLANE_INDEX_MASK	0x7
->> +#define MAX_BUFFERS		0xffff
-> Very poor name, see below.
->
->> +
->>   static int debug;
->>   module_param(debug, int, 0644);
->>   
->> @@ -358,21 +362,23 @@ static void __setup_offsets(struct vb2_buffer *vb)
->>   	unsigned int plane;
->>   	unsigned long off = 0;
->>   
->> -	if (vb->index) {
->> -		struct vb2_buffer *prev = q->bufs[vb->index - 1];
->> -		struct vb2_plane *p = &prev->planes[prev->num_planes - 1];
->> -
->> -		off = PAGE_ALIGN(p->m.offset + p->length);
->> -	}
->> +	/*
->> +	 * Offsets cookies value have the following constraints:
->> +	 * - a buffer could have up to 8 planes.
->> +	 * - v4l2 mem2mem use bit 30 to distinguish between source and destination buffers.
->> +	 * - must be page aligned
->> +	 * That led to this bit mapping:
->> +	 * |30                |29        15|14       12|11 0|
->> +	 * |DST_QUEUE_OFF_BASE|buffer index|plane index| 0  |
->> +	 * where there is 16 bits to store buffer index.
-> 16 -> 15: there are 15 (not 16!) bits available for buffer indices. So the maximum
-> number of buffers is 32768, given that the indices start at 0.
->
->> +	 */
->> +	off = vb->index << (PLANE_INDEX_SHIFT + PAGE_SHIFT);
->>   
->>   	for (plane = 0; plane < vb->num_planes; ++plane) {
->> -		vb->planes[plane].m.offset = off;
->> +		vb->planes[plane].m.offset = off + (plane << PAGE_SHIFT);
->>   
->>   		dprintk(q, 3, "buffer %d, plane %d offset 0x%08lx\n",
->>   				vb->index, plane, off);
->> -
->> -		off += vb->planes[plane].length;
->> -		off = PAGE_ALIGN(off);
->>   	}
->>   }
->>   
->> @@ -2209,21 +2215,15 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long off,
->>   		return -EBUSY;
->>   	}
->>   
->> -	/*
->> -	 * Go over all buffers and their planes, comparing the given offset
->> -	 * with an offset assigned to each plane. If a match is found,
->> -	 * return its buffer and plane numbers.
->> -	 */
->> -	for (buffer = 0; buffer < q->num_buffers; ++buffer) {
->> -		vb = q->bufs[buffer];
->> +	/* Get buffer and plane from the offset */
->> +	buffer = (off >> (PLANE_INDEX_SHIFT + PAGE_SHIFT)) & MAX_BUFFERS;
-> Hmm, you use it as a mask. The name MAX_BUFFERS is really confusing.
-> How about BUFFER_INDEX_MASK? That is consistent with PLANE_INDEX_MASK.
+Shouldn't we cross that bridge when we get there? SCM has no support
+for runtime PM. Probe ordering is quite well handled with a simple
+probe deferral. This is also not a parent-child relationship. SHM
+Bridge calls into the trustzone using SCM, but SCM is also a user of
+SHM Bridge.
 
-I will follow your advice and fix that in next version.
-I will until you have finish your review in this series before send it.
+> >
+> >>> +
+> >>> +     ret = qcom_scm_enable_shm_bridge();
+> >>> +     if (ret)
+> >>> +             return dev_err_probe(dev, ret,
+> >>> +                                  "Failed to enable the SHM bridge\n");
+> >>> +
+> >>> +     default_pool = qcom_shm_bridge_pool_new_for_dev(
+> >>> +                             dev, qcom_shm_bridge_default_pool_size);
+> >>> +     if (IS_ERR(default_pool))
+> >>> +             return dev_err_probe(dev, PTR_ERR(default_pool),
+> >>> +                                  "Failed to create the default SHM Bridge pool\n");
+> >>> +
+> >>> +     WRITE_ONCE(qcom_shm_bridge_default_pool, default_pool);
+> >>> +
+> >>> +     return 0;
+> >>> +}
+> >>> +
+> >>> +static const struct of_device_id qcom_shm_bridge_of_match[] = {
+> >>> +     { .compatible = "qcom,shm-bridge", },
+> >>> +     { }
+> >>> +};
+> >>> +
+> >>> +static struct platform_driver qcom_shm_bridge_driver = {
+> >>> +     .driver = {
+> >>> +             .name = "qcom-shm-bridge",
+> >>> +             .of_match_table = qcom_shm_bridge_of_match,
+> >>> +             /*
+> >>> +              * Once enabled, the SHM Bridge feature cannot be disabled so
+> >>> +              * there's no reason to ever unbind the driver.
+> >>> +              */
+> >>> +             .suppress_bind_attrs = true,
+> >>> +     },
+> >>> +     .probe = qcom_shm_bridge_probe,
+> >>> +};
+> >>> +
+> >>> +static int __init qcom_shm_bridge_init(void)
+> >>> +{
+> >>> +     return platform_driver_register(&qcom_shm_bridge_driver);
+> >>> +}
+> >>> +subsys_initcall(qcom_shm_bridge_init);
+> >>
+> >> Why this is part of subsystem? Should be rather device_initcall... or
+> >> simply module (and a tristate).
+> >>
+> >
+> > We want it to get up as soon as possible (right after SCM, because SCM
+> > is the first user).
+>
+> Then probably should be populated/spawned by SCM.
+>
 
-Regards,
-Benjamin
+I really prefer probe deferral over one platform driver creating
+platform devices for another. The device is on the DT, let's let OF
+populate it as it should.
 
->
->> +	plane = (off >> PAGE_SHIFT) & PLANE_INDEX_MASK;
->>   
->> -		for (plane = 0; plane < vb->num_planes; ++plane) {
->> -			if (vb->planes[plane].m.offset == off) {
->> -				*_buffer = buffer;
->> -				*_plane = plane;
->> -				return 0;
->> -			}
->> -		}
->> +	vb = q->bufs[buffer];
->> +	if (vb->planes[plane].m.offset == off) {
->> +		*_buffer = buffer;
->> +		*_plane = plane;
->> +		return 0;
->>   	}
->>   
->>   	return -EINVAL;
-> Regards,
->
-> 	Hans
->
+Bart
