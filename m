@@ -2,115 +2,368 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C31D78D93F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ACC678DC03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:47:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236678AbjH3Scj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:32:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55780 "EHLO
+        id S235840AbjH3Sb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:31:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244265AbjH3Ms7 (ORCPT
+        with ESMTP id S244280AbjH3Mu6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 08:48:59 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235E9132
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:48:57 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bccda76fb1so84716871fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693399735; x=1694004535; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qcnhbfxFM27/YYGpjtvsx/QJ64Wrwp+MNdL+XQ3gmi0=;
-        b=mao3j/LfnX3WA+olYxDSiF9ldkCv8iqzX1KMZG/3CPoUxWJebGkwK+hq6eeOX+fot6
-         lg/J4FXhT5CYP8eMhTaL7lIAqWNu37pkDl/Jw829kLoGvtMOpzImXWtddNTaS/3cpRiC
-         vi0avOs/nZXXaF58nO6ycumDgkB0v/ycYZK4FAVuegWrQjjrSUen/r3L5JEeP0ruoSsx
-         HLuqdWI+9NC1K1oSI9PpH4wQC1BjxqiNyspJ0MNU8835iPMzJdb+B1yL7kAuPvWxnNGN
-         6uJ8uilLZjLYv3sCGxUi5VGXhClf1/hwAGqqrxvu0s7IUB7i1vkUj1NPlfpr9uRbJ5JE
-         afqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693399735; x=1694004535;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qcnhbfxFM27/YYGpjtvsx/QJ64Wrwp+MNdL+XQ3gmi0=;
-        b=OsqkHMda0FpPemm4pDTABSr21sS+OBz3aABWI29q4tJGDaQ/nFeeEhfwHXetS0JgQ+
-         5gPHunqb/YSJy1fO3AgyyBPJCn3ZU8nBt41COiettjMxS3nOf4t/euUBSe/OT4qGaztl
-         EeHseiVaOTakjYeDxKDl6z+0pkMFr8ErkT+D4TzqtYUMRlkp+nDxmXvAyHDCrA8yW8RX
-         eVQOy2blcAQQz6uW7oDyt8QPsSvcZmrAjdElB34L9t8YD4yz/AJkHJrejsQSYbnApS2o
-         iTvoC+uYkIM64BXJkpBDGf5cJBpfCLWpX/qjdYkjGbIJHEHYr7OwbGsTiipt3JgF2ul0
-         HbnQ==
-X-Gm-Message-State: AOJu0YyIfmW6R+toHzrpAd9h5VX/EHmCYb4f3nuJYDVytULkxBX6hyBs
-        sMmoOun7PxqCHNVg9Qe5OXTviw==
-X-Google-Smtp-Source: AGHT+IGuEf/6YYmry7qMXTc0R82etA6M+I8h4gEU9tlVVfSLYuGUNUbYuHBtbqImj5xG1Rsfod5A9g==
-X-Received: by 2002:a2e:9097:0:b0:2bc:df55:eec7 with SMTP id l23-20020a2e9097000000b002bcdf55eec7mr1471279ljg.40.1693399735467;
-        Wed, 30 Aug 2023 05:48:55 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id y23-20020a2e7d17000000b002b94b355527sm2602662ljc.32.2023.08.30.05.48.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 05:48:55 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 30 Aug 2023 14:48:46 +0200
-Subject: [PATCH 7/7] arm64: dts: qcom: sm8550: Mark DWC3 as dma-coherent
+        Wed, 30 Aug 2023 08:50:58 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 919E0132;
+        Wed, 30 Aug 2023 05:50:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693399855; x=1724935855;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=WEY11JQKSeAw/tLmEXYWcs832d5TRluZszGSj1NWkPQ=;
+  b=N9OSBT3zrpfNrv04GgZ4gkypLHoizv3/lSeVG/XH6YIPDOIorjBT/DDq
+   S5GFdSApSSwYVxcthW7XKrT3/U7t5Q5EwSb5cCTOOnLQzjA0st4vaZuex
+   SMFb9S9VAmX9ZcvCTLhHv6LF5xwOGGiK4ZKAJnO/4fhGdPMf5xkz6MtW/
+   Ok8iX+A/SLO7+zmI4zvymxZI+SHETMLx0cEOrRjqLf7Nqum0jMbk7NLZL
+   9CkDocB0p4KUDnEJzVcAnbofJjEgOsXgND2x01HbUTXapwAwwq5euA0Hq
+   1aq8ACKMN/OjBuT9F4/MXGXEs0kYs0cRd2OuLKJbcImQ+TzAWxrwDWY9y
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10818"; a="365839340"
+X-IronPort-AV: E=Sophos;i="6.02,213,1688454000"; 
+   d="scan'208";a="365839340"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2023 05:50:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10818"; a="739081818"
+X-IronPort-AV: E=Sophos;i="6.02,213,1688454000"; 
+   d="scan'208";a="739081818"
+Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.0.91]) ([10.94.0.91])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2023 05:50:44 -0700
+Message-ID: <cd39ced8-fa89-a666-383f-8fd1c7a14d23@linux.intel.com>
+Date:   Wed, 30 Aug 2023 14:50:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v5 10/32] ASoC: qcom: Add USB backend ASoC driver for Q6
+Content-Language: en-US
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, broonie@kernel.org,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230829210657.9904-1-quic_wcheng@quicinc.com>
+ <20230829210657.9904-11-quic_wcheng@quicinc.com>
+From:   =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?= 
+        <amadeuszx.slawinski@linux.intel.com>
+In-Reply-To: <20230829210657.9904-11-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230830-topic-8550_dmac2-v1-7-49bb25239fb1@linaro.org>
-References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
-In-Reply-To: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1693399725; l=756;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=dnJcWN3O+4dW4BpW8WVC+TsWF2Kag9dSFf6u/P+2HPs=;
- b=KDPX0N5yhosxV7DxLW8v3QII3Iz3liG/NKaGK/vHLOmuih4YpdWfTsqd/ayF91PW+S56K/H4K
- XCytdh3vAcxBOt/+OrH8x6tmK7ntcZZOgz6Vk1YDjK8MpoyRm3PcN65
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In a fairly new development, Qualcomm somehow made the DWC3 block
-cache-coherent. Annotate that.
+On 8/29/2023 11:06 PM, Wesley Cheng wrote:
+> Create a USB BE component that will register a new USB port to the ASoC USB
+> framework.  This will handle determination on if the requested audio
+> profile is supported by the USB device currently selected.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>   include/sound/q6usboffload.h  |  20 ++++
+>   sound/soc/qcom/Kconfig        |   4 +
+>   sound/soc/qcom/qdsp6/Makefile |   1 +
+>   sound/soc/qcom/qdsp6/q6usb.c  | 200 ++++++++++++++++++++++++++++++++++
+>   4 files changed, 225 insertions(+)
+>   create mode 100644 include/sound/q6usboffload.h
+>   create mode 100644 sound/soc/qcom/qdsp6/q6usb.c
+> 
+> diff --git a/include/sound/q6usboffload.h b/include/sound/q6usboffload.h
+> new file mode 100644
+> index 000000000000..4fb1912d9f55
+> --- /dev/null
+> +++ b/include/sound/q6usboffload.h
+> @@ -0,0 +1,20 @@
+> +/* SPDX-License-Identifier: GPL-2.0
+> + *
+> + * linux/sound/q6usboffload.h -- QDSP6 USB offload
+> + *
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/**
+> + * struct q6usb_offload
+> + * @dev - dev handle to usb be
+> + * @sid - streamID for iommu
+> + * @intr_num - usb interrupter number
+> + * @domain - allocated iommu domain
+> + **/
+> +struct q6usb_offload {
+> +	struct device *dev;
+> +	long long sid;
+> +	u32 intr_num;
+> +	struct iommu_domain *domain;
+> +};
+> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+> index e7b00d1d9e99..bb285af6bb04 100644
+> --- a/sound/soc/qcom/Kconfig
+> +++ b/sound/soc/qcom/Kconfig
+> @@ -114,6 +114,9 @@ config SND_SOC_QDSP6_APM
+>   config SND_SOC_QDSP6_PRM_LPASS_CLOCKS
+>   	tristate
+>   
+> +config SND_SOC_QDSP6_USB
+> +	tristate
+> +
+>   config SND_SOC_QDSP6_PRM
+>   	tristate
+>   	select SND_SOC_QDSP6_PRM_LPASS_CLOCKS
+> @@ -134,6 +137,7 @@ config SND_SOC_QDSP6
+>   	select SND_SOC_TOPOLOGY
+>   	select SND_SOC_QDSP6_APM
+>   	select SND_SOC_QDSP6_PRM
+> +	select SND_SOC_QDSP6_USB
+>   	help
+>   	 To add support for MSM QDSP6 Soc Audio.
+>   	 This will enable sound soc platform specific
+> diff --git a/sound/soc/qcom/qdsp6/Makefile b/sound/soc/qcom/qdsp6/Makefile
+> index 3963bf234664..c9457ee898d0 100644
+> --- a/sound/soc/qcom/qdsp6/Makefile
+> +++ b/sound/soc/qcom/qdsp6/Makefile
+> @@ -17,3 +17,4 @@ obj-$(CONFIG_SND_SOC_QDSP6_APM_DAI) += q6apm-dai.o
+>   obj-$(CONFIG_SND_SOC_QDSP6_APM_LPASS_DAI) += q6apm-lpass-dais.o
+>   obj-$(CONFIG_SND_SOC_QDSP6_PRM) += q6prm.o
+>   obj-$(CONFIG_SND_SOC_QDSP6_PRM_LPASS_CLOCKS) += q6prm-clocks.o
+> +obj-$(CONFIG_SND_SOC_QDSP6_USB) += q6usb.o
+> diff --git a/sound/soc/qcom/qdsp6/q6usb.c b/sound/soc/qcom/qdsp6/q6usb.c
+> new file mode 100644
+> index 000000000000..88aa0a64201a
+> --- /dev/null
+> +++ b/sound/soc/qcom/qdsp6/q6usb.c
+> @@ -0,0 +1,200 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/err.h>
+> +#include <linux/init.h>
+> +#include <linux/module.h>
+> +#include <linux/device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +#include <linux/iommu.h>
+> +#include <linux/dma-mapping.h>
+> +#include <linux/dma-map-ops.h>
+> +
+> +#include <sound/pcm.h>
+> +#include <sound/soc.h>
+> +#include <sound/soc-usb.h>
+> +#include <sound/pcm_params.h>
+> +#include <sound/asound.h>
+> +#include <sound/q6usboffload.h>
+> +
+> +#include "q6dsp-lpass-ports.h"
+> +#include "q6afe.h"
+> +
+> +#define SID_MASK	0xF
+> +
+> +struct q6usb_port_data {
+> +	struct q6afe_usb_cfg usb_cfg;
+> +	struct snd_soc_usb *usb;
+> +	struct q6usb_offload priv;
+> +	int active_idx;
+> +};
+> +
+> +static const struct snd_soc_dapm_widget q6usb_dai_widgets[] = {
+> +	SND_SOC_DAPM_HP("USB_RX_BE", NULL),
+> +};
+> +
+> +static const struct snd_soc_dapm_route q6usb_dapm_routes[] = {
+> +	{"USB Playback", NULL, "USB_RX_BE"},
+> +};
+> +
+> +static int q6usb_hw_params(struct snd_pcm_substream *substream,
+> +			   struct snd_pcm_hw_params *params,
+> +			   struct snd_soc_dai *dai)
+> +{
+> +	return 0;
+> +}
 
-Fixes: 7f7e5c1b037f ("arm64: dts: qcom: sm8550: Add USB PHYs and controller nodes")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Missing new line after closing bracket between function and following 
+struct.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 8ee61c9383ec..95ba9a9ac78e 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2944,6 +2944,7 @@ usb_1_dwc3: usb@a600000 {
- 				snps,usb2-lpm-disable;
- 				snps,has-lpm-erratum;
- 				tx-fifo-resize;
-+				dma-coherent;
- 
- 				ports {
- 					#address-cells = <1>;
+> +static const struct snd_soc_dai_ops q6usb_ops = {
+> +	.hw_params = q6usb_hw_params,
+> +};
+> +
+> +static struct snd_soc_dai_driver q6usb_be_dais[] = {
+> +	{
+> +		.playback = {
+> +			.stream_name = "USB BE RX",
+> +			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_11025 |
+> +				SNDRV_PCM_RATE_16000 | SNDRV_PCM_RATE_22050 |
+> +				SNDRV_PCM_RATE_32000 | SNDRV_PCM_RATE_44100 |
+> +				SNDRV_PCM_RATE_48000 | SNDRV_PCM_RATE_96000 |
+> +				SNDRV_PCM_RATE_192000,
+> +			.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S16_BE |
+> +				SNDRV_PCM_FMTBIT_U16_LE | SNDRV_PCM_FMTBIT_U16_BE |
+> +				SNDRV_PCM_FMTBIT_S24_LE | SNDRV_PCM_FMTBIT_S24_BE |
+> +				SNDRV_PCM_FMTBIT_U24_LE | SNDRV_PCM_FMTBIT_U24_BE,
+> +			.channels_min = 1,
+> +			.channels_max = 2,
+> +			.rate_max =     192000,
+> +			.rate_min =	8000,
+> +		},
+> +		.id = USB_RX,
+> +		.name = "USB_RX_BE",
+> +		.ops = &q6usb_ops,
+> +	},
+> +};
+> +
+> +static int q6usb_audio_ports_of_xlate_dai_name(struct snd_soc_component *component,
+> +					const struct of_phandle_args *args,
+> +					const char **dai_name)
+> +{
+> +	int id = args->args[0];
+> +	int ret = -EINVAL;
+> +	int i;
+> +
+> +	for (i = 0; i  < ARRAY_SIZE(q6usb_be_dais); i++) {
 
--- 
-2.42.0
+Double space after second i.
+
+> +		if (q6usb_be_dais[i].id == id) {
+> +			*dai_name = q6usb_be_dais[i].name;
+> +			ret = 0;
+> +			break;
+> +		}
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb,
+> +			struct snd_soc_usb_device *sdev, bool connected)
+> +{
+> +	struct q6usb_port_data *data;
+> +
+> +	if (!usb->component)
+> +		return -ENODEV;
+> +
+> +	data = dev_get_drvdata(usb->component->dev);
+> +
+> +	if (connected)
+> +		/* We only track the latest USB headset plugged in */
+> +		data->active_idx = sdev->card_idx;
+
+Maybe add brackets around both comment and code? Not sure what guidance 
+there is in such cases, but above code looks weird to me.
+
+> +
+> +	return 0;
+> +}
+> +
+> +static int q6usb_component_probe(struct snd_soc_component *component)
+> +{
+> +	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
+> +
+> +	data->usb = snd_soc_usb_add_port(component->dev, &data->priv, q6usb_alsa_connection_cb);
+> +	if (IS_ERR(data->usb)) {
+> +		dev_err(component->dev, "failed to add usb port\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	data->usb->component = component;
+> +
+> +	return 0;
+> +}
+> +
+> +static void q6usb_component_remove(struct snd_soc_component *component)
+> +{
+> +	snd_soc_usb_remove_port(component->dev);
+> +}
+> +
+> +static const struct snd_soc_component_driver q6usb_dai_component = {
+> +	.probe = q6usb_component_probe,
+> +	.remove = q6usb_component_remove,
+> +	.name = "q6usb-dai-component",
+> +	.dapm_widgets = q6usb_dai_widgets,
+> +	.num_dapm_widgets = ARRAY_SIZE(q6usb_dai_widgets),
+> +	.dapm_routes = q6usb_dapm_routes,
+> +	.num_dapm_routes = ARRAY_SIZE(q6usb_dapm_routes),
+> +	.of_xlate_dai_name = q6usb_audio_ports_of_xlate_dai_name,
+> +};
+> +
+> +static int q6usb_dai_dev_probe(struct platform_device *pdev)
+> +{
+> +	struct device_node *node = pdev->dev.of_node;
+> +	struct q6usb_port_data *data;
+> +	struct device *dev = &pdev->dev;
+> +	struct of_phandle_args args;
+> +	int ret;
+> +
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	ret = of_property_read_u32(node, "qcom,usb-audio-intr-num",
+> +				&data->priv.intr_num);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to read intr num.\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = of_parse_phandle_with_fixed_args(node, "iommus", 1, 0, &args);
+> +	if (ret < 0)
+> +		data->priv.sid = -1;
+> +	else
+> +		data->priv.sid = args.args[0] & SID_MASK;
+> +
+> +	data->priv.domain = iommu_get_domain_for_dev(&pdev->dev);
+> +
+> +	data->priv.dev = dev;
+> +	dev_set_drvdata(dev, data);
+> +
+> +	return devm_snd_soc_register_component(dev, &q6usb_dai_component,
+> +					q6usb_be_dais, ARRAY_SIZE(q6usb_be_dais));
+> +}
+> +
+> +static int q6usb_dai_dev_remove(struct platform_device *pdev)
+> +{
+> +	return 0;
+> +}
+
+Does platform driver really need empty remove function? Remove it.
+
+> +
+> +static const struct of_device_id q6usb_dai_device_id[] = {
+> +	{ .compatible = "qcom,q6usb" },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(of, q6usb_dai_device_id);
+> +
+> +static struct platform_driver q6usb_dai_platform_driver = {
+> +	.driver = {
+> +		.name = "q6usb-dai",
+> +		.of_match_table = of_match_ptr(q6usb_dai_device_id),
+> +	},
+> +	.probe = q6usb_dai_dev_probe,
+> +	.remove = q6usb_dai_dev_remove,
+> +};
+> +module_platform_driver(q6usb_dai_platform_driver);
+> +
+> +MODULE_DESCRIPTION("Q6 USB backend dai driver");
+> +MODULE_LICENSE("GPL");
 
