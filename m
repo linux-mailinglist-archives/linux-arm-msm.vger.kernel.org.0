@@ -2,190 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C2EA78D1FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 04:21:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 776E478D21F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 04:41:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240199AbjH3CVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 22:21:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35452 "EHLO
+        id S241727AbjH3Cka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 22:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238872AbjH3CUj (ORCPT
+        with ESMTP id S241732AbjH3CkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 22:20:39 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FCB31AD;
-        Tue, 29 Aug 2023 19:20:36 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37U1QYo5010404;
-        Wed, 30 Aug 2023 02:20:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=VqevAR2WBoXjzqJy62/LqZY/p887heW7e0n4UOrCB4M=;
- b=b9aH3+ROK0WQw/Sr6RG2cqqM+2sBoHXdFe9Wloh13JMZtKXq0cfyCoJ74AsCS/38OEjR
- UuCOARSbEFZWH9QlCXH6EqRHP/kh5Y12NaCJu11H168TFcy4E2M2pJqteW/tk1dXmKck
- HACEcqUWwEnbiWZAQeunX+Mn6khoAb6oWkFiKYO1X+HRq9KZyxrCtaKFdp+ckr8zIzCt
- BqHWiB5QNmkipuAVyBr2FaslCFsPBpgRccAvdDcc4p6cSTDqqv82nbEOaF43ivQN0YKG
- 87igxTiXVMoJ0AAir9rkoMADuAL3NVi0UCOYWM3/ksP47Z4mpxsYRxrvgFD5MKiPCwl9 JQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sruhnv5ch-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 02:20:31 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U2KUw0020019
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 02:20:30 GMT
-Received: from [10.216.63.45] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 29 Aug
- 2023 19:20:25 -0700
-Message-ID: <ee50d097-6213-36dd-9966-bdd5b2bb953b@quicinc.com>
-Date:   Wed, 30 Aug 2023 07:50:22 +0530
+        Tue, 29 Aug 2023 22:40:22 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29A1EE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 19:40:18 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ff9b389677so7907842e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 19:40:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693363217; x=1693968017; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TYl22KxB6jGXLk1gj90BJzrDvJpaGX8RVj0kioZtfHs=;
+        b=rrlDL6o7Yi662KWF1olz2PRh4tHCGgSydDmlkwFpLvrNGpYuXAeGX8cncaluWxVW5U
+         r8NsBuGmVhl/mXzTJ+mYC/1+l8UgxNvn8U9fz7orUNtXMU9bUmErGMHmm4krMPUlciq3
+         ciQebuhbZwlSZI3u1Z+pgMdNt/k5UHI08nNyFzhHrZKa5aMPzylL4gqyqNNOdGXlCkWu
+         GnTaS91NqG9hEZnCWhaj5JgVBgU1uD6iRR0zdbbbipvWvRVhDm1+afKHDE5lMyujX/++
+         x43xihnwb92Lq9M2fe1p+5F5YoVjKBh5/4bg0aSLdq7F28Jm5RFXOpbpvK2p0Nfk4+EY
+         y6yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693363217; x=1693968017;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TYl22KxB6jGXLk1gj90BJzrDvJpaGX8RVj0kioZtfHs=;
+        b=eaB0lISSYRgKsMZ/xg/1PB3c4gJjS/JnnfoT55pXX6oZbE5yQtz8yK31nWJrbz4eKn
+         IbjUL1mNEvMHEOsOHLnFI1MgCego0XHSDc7E31xCu69NwICoDxQg/Elmknx5mxOYEwtk
+         upfab4kFI8/Hx7t+Oz+G/tVrVSpR8BERFHL9HsUBIVTVX8Umn3Ujsmr0pJF6jLQZkt0E
+         c9W/pO9Cit/lwcMtI0L/S7fdCcAMDAHIjOLnXg19QjxEuzD57sDQFtzY4zLm/dplKSMi
+         mWdKVelnIdU7pjwjgvBgkdBtWrfJIqzqt4Hmkmw8QdNUmwby6ZC9FW0FXX+G53c7YMha
+         wXvg==
+X-Gm-Message-State: AOJu0Yzymqe287wLOzsH/rs9Bx7fhX+Lc4Jjb5YtCpj8JQY/86XoO6L7
+        5dX/btw6gHHm52bLA/tw62YPGA==
+X-Google-Smtp-Source: AGHT+IFG7M9utsj2NkARucjHfHCoDgpRvP30BdMWVw/RB4/vr0a9l+pK0NT1SMrWbu8mxGVpXpaprg==
+X-Received: by 2002:ac2:4184:0:b0:500:bf38:2d7c with SMTP id z4-20020ac24184000000b00500bf382d7cmr410768lfh.60.1693363216925;
+        Tue, 29 Aug 2023 19:40:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
+        by smtp.gmail.com with ESMTPSA id w7-20020ac254a7000000b004fb99da37e3sm2183878lfk.220.2023.08.29.19.40.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 19:40:16 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/4] EUSB2 repeater init sequence override
+Date:   Wed, 30 Aug 2023 04:40:14 +0200
+Message-Id: <20230830-topic-eusb2_override-v1-0-ab23825385a8@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH 3/7] thermal/drivers/qcom/tsens: Add support for IPQ5018
- tsens
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <thara.gopinath@gmail.com>,
-        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
-References: <1693250307-8910-1-git-send-email-quic_srichara@quicinc.com>
- <1693250307-8910-4-git-send-email-quic_srichara@quicinc.com>
- <CAA8EJpoHCW2H12U9wzmz5a86TriZr9mLuPi6D6h02byAWOG2mQ@mail.gmail.com>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <CAA8EJpoHCW2H12U9wzmz5a86TriZr9mLuPi6D6h02byAWOG2mQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BXsVVyP3tsGlC49FkZgAmbaflBtU4Qxs
-X-Proofpoint-ORIG-GUID: BXsVVyP3tsGlC49FkZgAmbaflBtU4Qxs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015 phishscore=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308300019
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAA6s7mQC/x2N0QrCMAwAf2Xk2UDXSVF/RUTSNnOB0Y5kG8LYv
+ 1t8vIPjDjBWYYNHd4DyLia1NOgvHaSJyodRcmPwzg/uNjhc6yIJebPo33VnVcmMRCHk8Z4oXHt
+ oaSRjjEolTS0u2zw3uSiP8v2/nq/z/AExXG+BewAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693363215; l=926;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=CfJBIElEn8UI8i/wAQYUM9vwf/SxwqhC6FM1s62h6D4=;
+ b=9pCj0G48P0rsXKvDwG5QSQkgHWdFXZzPaJUDmsNer/zmmDH30ywNwYxecNhmxl2lY2j7YL8J4
+ GK7026qV+BxAjebkEXulloRHYo2XjVfml0HA6VQlYMHK11Ec59fsw5k
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-<..>
+The EUSB2 repeater goes through a tuning sequence as part of its
+initialization. This series ensures the tuning is "clean" and can be
+overriden for devices that need it.
 
->> +{
->> +       u32 p1[10], p2[10];
->> +       u32 *qfprom_cdata;
->> +       int mode;
->> +
->> +       qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
->> +       if (IS_ERR(qfprom_cdata))
->> +               return PTR_ERR(qfprom_cdata);
->> +
->> +       mode = tsens_read_calibration_legacy(priv, &tsens_ipq5018_nvmem,
->> +                                            p1, p2,
->> +                                            qfprom_cdata, NULL);
-> 
-> No, this should be used only in _legacy_ cases. Please use
-> tsens_calibrate_common() / tsens_calibrate_nvmem() / etc.
-> 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (4):
+      dt-bindings: phy: qcom,snps-eusb2-repeater: Add magic tuning overrides
+      phy: qualcomm: phy-qcom-eusb2-repeater: Use regmap_fields
+      phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs
+      phy: qualcomm: phy-qcom-eusb2-repeater: Add tuning overrides
 
-  ok.
+ .../bindings/phy/qcom,snps-eusb2-repeater.yaml     |  21 ++++
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c     | 135 +++++++++++++++------
+ 2 files changed, 121 insertions(+), 35 deletions(-)
+---
+base-commit: ae782d4e2bf53b0b642ae860794f7a39470f995a
+change-id: 20230830-topic-eusb2_override-aa66df9ca641
 
->> +
->> +       fixup_ipq5018_points(mode, p1, p2);
->> +       compute_intercept_slope(priv, p1, p2, mode);
->> +       kfree(qfprom_cdata);
->> +
->> +       return 0;
->> +}
->> +
->>   static int calibrate_v1(struct tsens_priv *priv)
->>   {
->>          u32 p1[10], p2[10];
->> @@ -79,6 +132,18 @@ static struct tsens_features tsens_v1_feat = {
->>          .trip_max_temp  = 120000,
->>   };
->>
->> +static struct tsens_features tsens_v1_ipq5018_feat = {
->> +       .ver_major      = VER_1_X,
->> +       .crit_int       = 0,
->> +       .combo_int      = 0,
->> +       .adc            = 1,
->> +       .srot_split     = 1,
->> +       .max_sensors    = 11,
->> +       .trip_min_temp  = -40000,
->> +       .trip_max_temp  = 120000,
->> +       .no_early_init  = 1,
->> +};
->> +
->>   static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
->>          /* ----- SROT ------ */
->>          /* VERSION */
->> @@ -150,6 +215,43 @@ static int __init init_8956(struct tsens_priv *priv) {
->>          return init_common(priv);
->>   }
->>
->> +static int init_ipq5018(struct tsens_priv *priv)
->> +{
->> +       int ret;
->> +       u32 mask;
->> +
->> +       init_common(priv);
->> +       if (!priv->tm_map)
->> +               return -ENODEV;
->> +
->> +       ret = regmap_field_write(priv->rf[TSENS_SW_RST], 1);
->> +       if (ret) {
->> +               dev_err(priv->dev, "Reset failed\n");
->> +               return ret;
->> +       }
->> +
->> +       mask = GENMASK(10, 0);
-> 
-> #define this, then inline the variable. Or extract this codepiece into
-> generic function which uses num_sensors to calculate the mask
-> 
-
-  ok.
-
->> +       ret = regmap_field_update_bits(priv->rf[SENSOR_EN], mask, mask);
->> +       if (ret) {
->> +               dev_err(priv->dev, "Sensor Enable failed\n");
->> +               return ret;
->> +       }
->> +
->> +       ret = regmap_field_write(priv->rf[TSENS_EN], 1);
->> +       if (ret) {
->> +               dev_err(priv->dev, "Enable failed\n");
->> +               return ret;
->> +       }
->> +
->> +       ret = regmap_field_write(priv->rf[TSENS_SW_RST], 0);
->> +       if (ret) {
->> +               dev_err(priv->dev, "Reset failed\n");
-> 
-> This error message is useless. You can not determine if it comes from
-> this error or from setting the reset bit.
-> 
-
-  ok, will drop it.
-
-Regards,
-  Sricharan
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
