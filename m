@@ -2,53 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAF9D78D8BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:31:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 999DE78D914
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235486AbjH3SbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42240 "EHLO
+        id S234824AbjH3ScQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244756AbjH3Nxh (ORCPT
+        with ESMTP id S244987AbjH3ORR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 09:53:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E02BE8;
-        Wed, 30 Aug 2023 06:53:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 35781611DD;
-        Wed, 30 Aug 2023 13:53:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B49C433C8;
-        Wed, 30 Aug 2023 13:53:30 +0000 (UTC)
-Message-ID: <8ee883bf-f8f8-29cb-c034-13bd142fe9f8@xs4all.nl>
-Date:   Wed, 30 Aug 2023 15:53:29 +0200
+        Wed, 30 Aug 2023 10:17:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93F3122;
+        Wed, 30 Aug 2023 07:17:13 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37UDR0bn014094;
+        Wed, 30 Aug 2023 14:16:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=t+pa7pawiXHGZsyFpEhyJeURi1Iqk12oeRHuQvv8HfI=;
+ b=JJuR33EIgP9wPpvFBDwqZfRoVVFoweXSPTpDpfOxkJiaqmgIfDs+b1jm9/xv/4H2BisG
+ O4whebwnwqbjFnV+PvO2z2HHOKp2vo0aFn9y4JRxXq5pNt18BoCtREU3QYHeUS1bjy7P
+ XH1gGt3H4fTaiBezGwGzzcf6Gdr1X0fFv+m4eCkatQLgyqNcTNGw2X/mWBDrSVPHXdHt
+ WuUhdOdwpMX+jw5CwfiS1jT/+VBNG7GHV8mzd7m5aDG3EfRZ7HX177EOTnLq8691HJHU
+ AHO+waUx2eVQBKOPeCoc/w/XrPrmtCAIeJv9NKoNUHIY+EKr5thKEtlJNn20Baa3ePmf Ig== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st28a8kvx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Aug 2023 14:16:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37UEGVeB023380
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Aug 2023 14:16:31 GMT
+Received: from [10.111.178.80] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 30 Aug
+ 2023 07:16:28 -0700
+Message-ID: <42177428-c85f-4fa8-af0a-0252dd4aef43@quicinc.com>
+Date:   Wed, 30 Aug 2023 07:16:28 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v5 10/10] media: v4l2: Add mem2mem helpers for DELETE_BUFS
- ioctl
-Content-Language: en-US, nl
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230824092133.39510-1-benjamin.gaignard@collabora.com>
- <20230824092133.39510-11-benjamin.gaignard@collabora.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230824092133.39510-11-benjamin.gaignard@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <quic_pkondeti@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <workflows@vger.kernel.org>,
+        <tools@linux.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
+ <20230828175629.GC23466@quicinc.com>
+ <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
+ <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
+ <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
+ <20230829231638.GA27843@quicinc.com>
+ <0f7b32e1-1b26-4543-bfec-471641a67416@sirena.org.uk>
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <0f7b32e1-1b26-4543-bfec-471641a67416@sirena.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.9 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Y99vl80-AQIBPhE1u991VngBk1l7j4Xp
+X-Proofpoint-GUID: Y99vl80-AQIBPhE1u991VngBk1l7j4Xp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 spamscore=0 adultscore=0 bulkscore=0 mlxlogscore=965
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308300132
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,116 +98,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/08/2023 11:21, Benjamin Gaignard wrote:
-> Create v4l2-mem2mem helpers for VIDIOC_DELETE_BUFS ioctl.
+On 8/30/2023 4:22 AM, Mark Brown wrote:
+> On Tue, Aug 29, 2023 at 04:16:39PM -0700, Guru Das Srinagesh wrote:
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  .../media/platform/verisilicon/hantro_v4l2.c  |  1 +
->  drivers/media/test-drivers/vim2m.c            |  1 +
->  drivers/media/v4l2-core/v4l2-mem2mem.c        | 20 +++++++++++++++++++
->  include/media/v4l2-mem2mem.h                  | 12 +++++++++++
->  4 files changed, 34 insertions(+)
+>> If this script is accepted and gains adoption, maintainers like yourself will
+>> only be To-ed in patches that touch files that you're a direct "Maintainer" or
+>> "Reviewer" of. For all other patches in the series you'll be in "Cc:". I
+>> imagine that this can be very useful regardless of the specifics of your
+>> workflow.
 > 
-> diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-> index 27a1e77cca38..0fd1c2fc78c8 100644
-> --- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-> +++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-> @@ -756,6 +756,7 @@ const struct v4l2_ioctl_ops hantro_ioctl_ops = {
->  	.vidioc_dqbuf = v4l2_m2m_ioctl_dqbuf,
->  	.vidioc_prepare_buf = v4l2_m2m_ioctl_prepare_buf,
->  	.vidioc_create_bufs = v4l2_m2m_ioctl_create_bufs,
-> +	.vidioc_delete_bufs = v4l2_m2m_ioctl_delete_bufs,
->  	.vidioc_expbuf = v4l2_m2m_ioctl_expbuf,
->  
->  	.vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
-> diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
-> index 3e3b424b4860..3014b8ee13d0 100644
-> --- a/drivers/media/test-drivers/vim2m.c
-> +++ b/drivers/media/test-drivers/vim2m.c
-> @@ -960,6 +960,7 @@ static const struct v4l2_ioctl_ops vim2m_ioctl_ops = {
->  	.vidioc_dqbuf		= v4l2_m2m_ioctl_dqbuf,
->  	.vidioc_prepare_buf	= v4l2_m2m_ioctl_prepare_buf,
->  	.vidioc_create_bufs	= v4l2_m2m_ioctl_create_bufs,
-> +	.vidioc_delete_buf	= v4l2_m2m_ioctl_delete_buf,
+> Given that b4 solves a lot more problems and is getting quite widely
+> adopted it's probably going to be more effective to look at trying to
+> get this implemented there.  That might still mean a separate script
+> that b4 can hook into, but it's probably important that whatever you do
+> can be used easily with b4.
 
-I suspect you didn't enable vim2m in your kernel config, since this
-should be:
+As someone who has recently moved to using b4 I second this comment.
+b4 makes it so much easier to maintain patch versioning and to add the 
+right folks to the review. And most folks aren't performing tree-wide 
+changes so the per-patch customization doesn't seem to be a big win.
 
-	.vidioc_delete_bufs = v4l2_m2m_ioctl_delete_bufs,
-
->  	.vidioc_expbuf		= v4l2_m2m_ioctl_expbuf,
->  
->  	.vidioc_streamon	= v4l2_m2m_ioctl_streamon,
-> diff --git a/drivers/media/v4l2-core/v4l2-mem2mem.c b/drivers/media/v4l2-core/v4l2-mem2mem.c
-> index 0cc30397fbad..d1d59943680f 100644
-> --- a/drivers/media/v4l2-core/v4l2-mem2mem.c
-> +++ b/drivers/media/v4l2-core/v4l2-mem2mem.c
-> @@ -831,6 +831,17 @@ int v4l2_m2m_prepare_buf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
->  }
->  EXPORT_SYMBOL_GPL(v4l2_m2m_prepare_buf);
->  
-> +int v4l2_m2m_delete_bufs(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
-> +			 struct v4l2_delete_buffers *d)
-> +{
-> +	struct vb2_queue *vq;
-> +
-> +	vq = v4l2_m2m_get_vq(m2m_ctx, d->type);
-> +
-> +	return vb2_delete_bufs(vq, d);
-> +}
-> +EXPORT_SYMBOL_GPL(v4l2_m2m_delete_bufs);
-> +
->  int v4l2_m2m_create_bufs(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
->  			 struct v4l2_create_buffers *create)
->  {
-> @@ -1377,6 +1388,15 @@ int v4l2_m2m_ioctl_create_bufs(struct file *file, void *priv,
->  }
->  EXPORT_SYMBOL_GPL(v4l2_m2m_ioctl_create_bufs);
->  
-> +int v4l2_m2m_ioctl_delete_bufs(struct file *file, void *priv,
-> +			       struct v4l2_delete_buffers *d)
-> +{
-> +	struct v4l2_fh *fh = file->private_data;
-> +
-> +	return v4l2_m2m_delete_bufs(file, fh->m2m_ctx, d);
-> +}
-> +EXPORT_SYMBOL_GPL(v4l2_m2m_ioctl_delete_bufs);
-> +
->  int v4l2_m2m_ioctl_querybuf(struct file *file, void *priv,
->  				struct v4l2_buffer *buf)
->  {
-> diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
-> index d6c8eb2b5201..161f85c42dc8 100644
-> --- a/include/media/v4l2-mem2mem.h
-> +++ b/include/media/v4l2-mem2mem.h
-> @@ -381,6 +381,16 @@ int v4l2_m2m_dqbuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
->  int v4l2_m2m_prepare_buf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
->  			 struct v4l2_buffer *buf);
->  
-> +/**
-> + * v4l2_m2m_delete_bufs() - delete buffers from the queue
-> + *
-> + * @file: pointer to struct &file
-> + * @m2m_ctx: m2m context assigned to the instance given by struct &v4l2_m2m_ctx
-> + * @d: pointer to struct &v4l2_delete_buffers
-> + */
-> +int v4l2_m2m_delete_bufs(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
-> +			 struct v4l2_delete_buffers *d);
-> +
->  /**
->   * v4l2_m2m_create_bufs() - create a source or destination buffer, depending
->   * on the type
-> @@ -860,6 +870,8 @@ int v4l2_m2m_ioctl_reqbufs(struct file *file, void *priv,
->  				struct v4l2_requestbuffers *rb);
->  int v4l2_m2m_ioctl_create_bufs(struct file *file, void *fh,
->  				struct v4l2_create_buffers *create);
-> +int v4l2_m2m_ioctl_delete_bufs(struct file *file, void *priv,
-> +			       struct v4l2_delete_buffers *d);
->  int v4l2_m2m_ioctl_querybuf(struct file *file, void *fh,
->  				struct v4l2_buffer *buf);
->  int v4l2_m2m_ioctl_expbuf(struct file *file, void *fh,
-
-Regards,
-
-	Hans
+/jeff
