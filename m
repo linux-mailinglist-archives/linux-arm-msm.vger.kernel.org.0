@@ -2,143 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4BD278D8D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3F7D78D93E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235697AbjH3SbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34706 "EHLO
+        id S232490AbjH3ScN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243359AbjH3Kpo (ORCPT
+        with ESMTP id S243385AbjH3KwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 06:45:44 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C56ECCB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:45:41 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-500cefc3644so207252e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:45:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693392340; x=1693997140; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fT/ozBf9lp5RAcCZGbAfkxmq5EWCKLUOVIlRGJ+e7rE=;
-        b=JVs8lX1Su1ICcNnoB0jqqAS2B75Jh8bq/4tv0MnVldY2xbAt6SjbIHlgnNspOjcItz
-         LB5WrCtUIUj3d3zP7pNaD/SS3gSs/7rJEKOKO1YVoDYpbd73rHUP5UMtK3z/kQ94ZJ+/
-         lBUqMpFixMW1IrjFfH7cLIo/1XX+fhmZxWOF/yt9jnawQGgBRc39Iz5hvI7iOcB5oV9n
-         a6yt31gzYPhK7AdAt0DT76wBG/g87NU960OuOay19p8hvhWgdOLvEQoQ7PrTJB7Uy659
-         bew+O7lMyN+Ysu0A8NP374YH179eCDEFy49SrvuiEeghbC0nb/C6+YxiwOzjWetZCpZo
-         xDaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693392340; x=1693997140;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fT/ozBf9lp5RAcCZGbAfkxmq5EWCKLUOVIlRGJ+e7rE=;
-        b=HfZYCsn9lTtURkyS3ntYubo1M/BMJCmUmS22sVVWMReCFeUTq6zhaDZ+chyJufJI5V
-         TdMv1LE//q6zoZSyQX58OS1OXOTS9DYq3wPJY0D/oIfiwLVtk7se7tY0SZ1dSBHpGDlU
-         TGOgVxeWysY8sMw4obS3a2qJPdpH1nPWp3hTm3jsxu0RaKOYffcUBo/N6RMZ4zbowCWm
-         d+nlU85KDn8UvhneepcJDJuykFPKbOfftiecH17LOuBzDUr2mbzS886hF7dBAvQgmYi3
-         wUtPVefGK8N3uIbeR9lbBEj+BtN+vPvgTmE9Ck+WKQbIqHCc/xpxkYMXg5lVoqyuqxz7
-         OSZQ==
-X-Gm-Message-State: AOJu0YyX9Im+K/Z5XOoZ+Z6MykiQpnB3ezIoTrfiuSWgXCE4TslP1bdd
-        Lx2G2876Y+3GJA8J1uEkqO/YQA==
-X-Google-Smtp-Source: AGHT+IF1Bzc5p983+o6I1vBO6KSa4P7wHAmsv8YtZghMA+otHk7k6+kPCCfKX9dMUQW5mXfLnzLENA==
-X-Received: by 2002:a05:6512:310a:b0:4ff:8f12:c4d7 with SMTP id n10-20020a056512310a00b004ff8f12c4d7mr1357921lfb.31.1693392339844;
-        Wed, 30 Aug 2023 03:45:39 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id j17-20020a19f511000000b004ff6fa3f038sm2316808lfb.144.2023.08.30.03.45.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 03:45:39 -0700 (PDT)
-Message-ID: <1c95f61c-7460-43aa-9858-37e8799a1e5d@linaro.org>
-Date:   Wed, 30 Aug 2023 12:45:38 +0200
+        Wed, 30 Aug 2023 06:52:17 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB3891BE;
+        Wed, 30 Aug 2023 03:52:14 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id E49476600BB0;
+        Wed, 30 Aug 2023 11:52:12 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693392733;
+        bh=dbS1lvMO+EWcHbCFdrfmh2QjQKfiQs4eFDLWNBEANo0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=m72MEeUmHGk1P97OhTJQWD8XI/JHoqzurbw8ObmlSSh44ygfFNWXaxoKhK6IIqMls
+         rBJrZkWt0NbanPNU6yuK9eoNvg/nDlz8CEk/LdlPMw402Eh6/IJFUmJz0vnAWCr//c
+         amO03Q0ediIepVt/21ALqLLoK/0alL+k3dRAmwtZ3JZOjZKyz/Fto1grZbYbpj0Zg+
+         ysMq+eGDVydV+CzURNvTpPgxYt8vMBLj1NZt6ZI3Dy0dJi+DsptmYnv+1GmHSUEIg2
+         6WD+SYnPOBeq0vGk3TZhEWbN/9BUJiRlJKHkepfBYeivwpd9nX+JgE9b5bwVHHwJ+V
+         7g6AszpfYUtlA==
+Date:   Wed, 30 Aug 2023 12:52:10 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 5/6] drm/panfrost: Implement generic DRM object RSS
+ reporting function
+Message-ID: <20230830125210.3d1172db@collabora.com>
+In-Reply-To: <20230824013604.466224-6-adrian.larumbe@collabora.com>
+References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
+        <20230824013604.466224-6-adrian.larumbe@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] arm64: dts: qcom: sc7280: Mark some nodes as
- 'reserved'
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-1-5a954519bbad@fairphone.com>
- <160d6151-914b-4f2f-9f7c-d14cbb901619@linaro.org>
- <CV5T9FXMWOAT.2ZXS0CZ8S0EUM@otso>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <CV5T9FXMWOAT.2ZXS0CZ8S0EUM@otso>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.08.2023 12:35, Luca Weiss wrote:
-> On Wed Aug 30, 2023 at 12:08 PM CEST, Konrad Dybcio wrote:
->> On 30.08.2023 11:58, Luca Weiss wrote:
->>> With the standard Qualcomm TrustZone setup, components such as lpasscc,
->>> pdc_reset and watchdog shouldn't be touched by Linux. Mark them with
->>> the status 'reserved' and reeable them in the chrome-common dtsi.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->> Could probably use /* Owned by ADSP firmware */ or /* Owned by Gunyah hyp */
-> 
-> Do you know which one is more fitting for these nodes? I don't really
-> have a reference to if the ADSP or Gunyah (is this even used here?) owns
-> this.
-ADSP owns the audio hw, Gunyah owns the wdog
+On Thu, 24 Aug 2023 02:34:48 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-Konrad
+> BO's RSS is updated every time new pages are allocated and mapped for the
+> object, either in its entirety at creation time for non-heap buffers, or
+> else on demand for heap buffers at GPU page fault's IRQ handler.
+>=20
+> Same calculations had to be done for imported PRIME objects, since backing
+> storage for it might have already been allocated by the exporting driver.
+>=20
+> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
+> ---
+>  drivers/gpu/drm/panfrost/panfrost_gem.c | 22 ++++++++++++++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +++++
+>  drivers/gpu/drm/panfrost/panfrost_mmu.c | 16 +++++++++++-----
+>  3 files changed, 38 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_gem.c
+> index aea16b0e4dda..c6bd1f16a6d4 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gem.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
+> @@ -206,6 +206,17 @@ static enum drm_gem_object_status panfrost_gem_statu=
+s(struct drm_gem_object *obj
+> =20
+>  	return res;
+>  }
+> +
+> +size_t panfrost_gem_rss(struct drm_gem_object *obj)
+> +{
+> +	struct panfrost_gem_object *bo =3D to_panfrost_bo(obj);
+> +
+> +	if (!bo->base.pages)
+> +		return 0;
+> +
+> +	return bo->rss_size;
+> +}
+> +
+>  static const struct drm_gem_object_funcs panfrost_gem_funcs =3D {
+>  	.free =3D panfrost_gem_free_object,
+>  	.open =3D panfrost_gem_open,
+> @@ -218,6 +229,7 @@ static const struct drm_gem_object_funcs panfrost_gem=
+_funcs =3D {
+>  	.vunmap =3D drm_gem_shmem_object_vunmap,
+>  	.mmap =3D drm_gem_shmem_object_mmap,
+>  	.status =3D panfrost_gem_status,
+> +	.rss =3D panfrost_gem_rss,
+>  	.vm_ops =3D &drm_gem_shmem_vm_ops,
+>  };
+> =20
+> @@ -274,13 +286,23 @@ panfrost_gem_prime_import_sg_table(struct drm_devic=
+e *dev,
+>  {
+>  	struct drm_gem_object *obj;
+>  	struct panfrost_gem_object *bo;
+> +	struct scatterlist *sgl;
+> +	unsigned int count;
+> +	size_t total =3D 0;
+> =20
+>  	obj =3D drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
+>  	if (IS_ERR(obj))
+>  		return ERR_CAST(obj);
+> =20
+> +	for_each_sgtable_dma_sg(sgt, sgl, count) {
+> +		size_t len =3D sg_dma_len(sgl);
+> +
+> +		total +=3D len;
+> +	}
+
+Why not simply have bo->rss_size =3D obj->size here? Not sure I see a
+reason to not trust dma_buf?
+
+> +
+>  	bo =3D to_panfrost_bo(obj);
+>  	bo->noexec =3D true;
+> +	bo->rss_size =3D total;
+> =20
+>  	return obj;
+>  }
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/pa=
+nfrost/panfrost_gem.h
+> index e06f7ceb8f73..e2a7c46403c7 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+> @@ -36,6 +36,11 @@ struct panfrost_gem_object {
+>  	 */
+>  	atomic_t gpu_usecount;
+> =20
+> +	/*
+> +	 * Object chunk size currently mapped onto physical memory
+> +	 */
+> +	size_t rss_size;
+> +
+>  	bool noexec		:1;
+>  	bool is_heap		:1;
+>  	bool is_purgable	:1;
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_mmu.c
+> index c0123d09f699..e03a5a9da06f 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+> @@ -285,17 +285,19 @@ static void panfrost_mmu_flush_range(struct panfros=
+t_device *pfdev,
+>  	pm_runtime_put_autosuspend(pfdev->dev);
+>  }
+> =20
+> -static int mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_mmu=
+ *mmu,
+> +static size_t mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_=
+mmu *mmu,
+>  		      u64 iova, int prot, struct sg_table *sgt)
+>  {
+>  	unsigned int count;
+>  	struct scatterlist *sgl;
+>  	struct io_pgtable_ops *ops =3D mmu->pgtbl_ops;
+>  	u64 start_iova =3D iova;
+> +	size_t total =3D 0;
+> =20
+>  	for_each_sgtable_dma_sg(sgt, sgl, count) {
+>  		unsigned long paddr =3D sg_dma_address(sgl);
+>  		size_t len =3D sg_dma_len(sgl);
+> +		total +=3D len;
+> =20
+>  		dev_dbg(pfdev->dev, "map: as=3D%d, iova=3D%llx, paddr=3D%lx, len=3D%zx=
+", mmu->as, iova, paddr, len);
+> =20
+> @@ -315,7 +317,7 @@ static int mmu_map_sg(struct panfrost_device *pfdev, =
+struct panfrost_mmu *mmu,
+> =20
+>  	panfrost_mmu_flush_range(pfdev, mmu, start_iova, iova - start_iova);
+> =20
+> -	return 0;
+> +	return total;
+>  }
+> =20
+>  int panfrost_mmu_map(struct panfrost_gem_mapping *mapping)
+> @@ -326,6 +328,7 @@ int panfrost_mmu_map(struct panfrost_gem_mapping *map=
+ping)
+>  	struct panfrost_device *pfdev =3D to_panfrost_device(obj->dev);
+>  	struct sg_table *sgt;
+>  	int prot =3D IOMMU_READ | IOMMU_WRITE;
+> +	size_t mapped_size;
+> =20
+>  	if (WARN_ON(mapping->active))
+>  		return 0;
+> @@ -337,9 +340,10 @@ int panfrost_mmu_map(struct panfrost_gem_mapping *ma=
+pping)
+>  	if (WARN_ON(IS_ERR(sgt)))
+>  		return PTR_ERR(sgt);
+> =20
+> -	mmu_map_sg(pfdev, mapping->mmu, mapping->mmnode.start << PAGE_SHIFT,
+> +	mapped_size =3D mmu_map_sg(pfdev, mapping->mmu, mapping->mmnode.start <=
+< PAGE_SHIFT,
+>  		   prot, sgt);
+>  	mapping->active =3D true;
+> +	bo->rss_size +=3D mapped_size;
+
+Actually, the GEM might be resident even before panfrost_mmu_map() is
+called: as soon as drm_gem_shmem_get_pages[_locked]() is called, it's
+resident (might get evicted after that point though). That means any
+mmap coming from userspace will make the buffer resident too. I know
+we're automatically mapping GEMs to the GPU VM in panfrost_gem_open(),
+so it makes no difference, but I think I'd prefer if we keep ->rss_size
+for heap BOs only (we probably want to rename it heap_rss_size) and
+then have
+
+
+	if (bo->is_heap)
+		return bo->heap_rss_size;
+	else if (bo->base.pages)
+		return bo->base.base.size;
+	else
+		return 0;
+
+in panfrost_gem_rss().
+
+> =20
+>  	return 0;
+>  }
+> @@ -447,6 +451,7 @@ static int panfrost_mmu_map_fault_addr(struct panfros=
+t_device *pfdev, int as,
+>  	pgoff_t page_offset;
+>  	struct sg_table *sgt;
+>  	struct page **pages;
+> +	size_t mapped_size;
+> =20
+>  	bomapping =3D addr_to_mapping(pfdev, as, addr);
+>  	if (!bomapping)
+> @@ -518,10 +523,11 @@ static int panfrost_mmu_map_fault_addr(struct panfr=
+ost_device *pfdev, int as,
+>  	if (ret)
+>  		goto err_map;
+> =20
+> -	mmu_map_sg(pfdev, bomapping->mmu, addr,
+> -		   IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
+> +	mapped_size =3D mmu_map_sg(pfdev, bomapping->mmu, addr,
+> +				 IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
+> =20
+>  	bomapping->active =3D true;
+> +	bo->rss_size +=3D mapped_size;
+> =20
+>  	dev_dbg(pfdev->dev, "mapped page fault @ AS%d %llx", as, addr);
+> =20
+
