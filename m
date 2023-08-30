@@ -2,130 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4F5F78D869
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDB0978D961
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234150AbjH3Sa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:30:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
+        id S235396AbjH3SdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:33:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343737AbjH3QoI (ORCPT
+        with ESMTP id S1343959AbjH3Rhf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 12:44:08 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67461A3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 09:44:04 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-52bca2e8563so3467796a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 09:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693413843; x=1694018643; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mJJlek7R83oK8d/2pVvV6qgerAYb4e+pH9LJHZNOAZM=;
-        b=D9KzcvWHxGTCcuSHpVJU3DTCfH/So/HRBvz8ql4UyMhXFvkxcBAbFaDerquf25aaTQ
-         bWmZSx9Ounbv/EBI1f2SIEOBj3ykLJRGkz0YKY/Rf4W7du3jt7hqN0MQP/r0fTu7XP8a
-         0eLne5If7BrstuWwej6YXBYm8SFvQzC0BmncZAn+LaPrdX8sjIZ/JaVS1EzFgEx3Jhf7
-         lLYTlxXRoKk8o+hE32qUwDMp5koxynXUrBer6MlEEKt1yGMpxpRLfItkOkURzokOuePu
-         KPMNz8o5DklmXvehkTcqWoySOqlZCH8Nzuho1/NAwfWEkbqhtyHCZUO5pY56+4FuIlfr
-         w2GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693413843; x=1694018643;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mJJlek7R83oK8d/2pVvV6qgerAYb4e+pH9LJHZNOAZM=;
-        b=TSJWQZG3I2HBNP5aM/vKmuBwXTf4U2lIp2S39dwMC84x3e43DoCdEIK+Iez1knFKh0
-         uwXEngCgdEJIa52GKhSBRc9mhBnveE7OZ2lc65x2a+I+EIS56+GIDtNhDQ1o3Sf2BWBl
-         W7eZEUueHeC9S4reJIKozMLl+bCfFRoSmVepYEwl5qNnkO6mdbrJ8GYcX/jYh+FrzwOI
-         o0i/7seTyf5xPneP7eNSoe1N7mMRnrIix5L8WRbhzDWUoyVXEYDsEGsVs4zFRTD7Immd
-         KH7k/bPg0bddYoOfLU3Ym1wRDdKhvJ+JPrzaAtiKs8b+YbC+bUICZfio5YgvJGrn7vFA
-         AJXA==
-X-Gm-Message-State: AOJu0Yyf6uSigtAmCQVyEQTNVztwezcD+cYxlvW1RVKPkMlawGz4IY3H
-        fH3+h8mwpdgrkGi0QeP0sjZKcg==
-X-Google-Smtp-Source: AGHT+IEh9vHrZXzLULcxeCJyYvXSmxHauWdNpvw1Ksk5IA4QZMsBUUukL43s/mHCdq4zsxlM5OGixQ==
-X-Received: by 2002:a17:906:109a:b0:99c:75f7:19c1 with SMTP id u26-20020a170906109a00b0099c75f719c1mr2218651eju.39.1693413843373;
-        Wed, 30 Aug 2023 09:44:03 -0700 (PDT)
-Received: from [192.168.86.24] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id rn14-20020a170906d92e00b00992afee724bsm7358857ejb.76.2023.08.30.09.44.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 09:44:02 -0700 (PDT)
-Message-ID: <18db547c-45b3-4d2a-cd98-d1d1a01270d3@linaro.org>
-Date:   Wed, 30 Aug 2023 17:44:01 +0100
+        Wed, 30 Aug 2023 13:37:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B61193;
+        Wed, 30 Aug 2023 10:37:32 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37UBRKTb032392;
+        Wed, 30 Aug 2023 17:37:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nNy7eSzdBf2dY0Kyt3YqfNUI/M99itlZDAn9BbT5trI=;
+ b=TF9isnwfS8XY1QQ6BaN82nXZG4D54otecktDD8E8xMBuOHdhjHRgX3sgizPR6GnE2dRm
+ +94TnTpCpyWKUMLmnUUHSTiWIXPSThGYHQS0DkADL0Xu+7pP5/rVcqUda2k8v/n90YAY
+ 9Q8ISUyMVx2oXf67pHdatWOofUfvZieFSo/JY5PTto2bMJ74VC7fSxcAtGNwH0TX9BHZ
+ 3koSrzvV/Kos/wVsWwHco03SBFBB6QndYTAcPFSUr1Yo2HxEHZ1xXgLn1akE2+LLalep
+ 3bOhvTs6qp8X+cp3HhkkL6cg+8gMX9VP3kXn94lZdtyZzhYPgXKJ1Kp/+xxWhq7eM6l6 jQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st159s9df-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Aug 2023 17:37:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37UHbIBK001773
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Aug 2023 17:37:18 GMT
+Received: from [10.216.23.190] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 30 Aug
+ 2023 10:37:13 -0700
+Message-ID: <5bfd0788-d9a5-40e9-225d-a5f6bbd80c29@quicinc.com>
+Date:   Wed, 30 Aug 2023 23:07:09 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
- ufs
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH V5 1/6] scsi: ufs: qcom: Update offset for
+ core_clk_1us_cycles
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
+        <martin.petersen@oracle.com>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Naveen Kumar Goud Arepalli" <quic_narepall@quicinc.com>
+References: <20230823154413.23788-1-quic_nitirawa@quicinc.com>
+ <20230823154413.23788-2-quic_nitirawa@quicinc.com>
+ <20230828073849.GB5148@thinkpad>
 Content-Language: en-US
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
-        quic_psodagud@quicinc.com, avmenon@quicinc.com,
-        abel.vesa@linaro.org, quic_spuppala@quicinc.com
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
- <20230825210727.GA1366@sol.localdomain>
- <f63ce281-1434-f86f-3f4e-e1958a684bbd@linaro.org>
- <20230829181223.GA2066264@google.com>
- <2230571a-114c-0d03-d02a-fa08c2a8d483@linaro.org>
- <20230830161215.GA893@sol.localdomain>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230830161215.GA893@sol.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <20230828073849.GB5148@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FbilSMZ2WT9ZkUHFXATDvkflrJlYQAn1
+X-Proofpoint-GUID: FbilSMZ2WT9ZkUHFXATDvkflrJlYQAn1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-30_13,2023-08-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 spamscore=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
+ malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2308300162
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 8/28/2023 1:08 PM, Manivannan Sadhasivam wrote:
+> On Wed, Aug 23, 2023 at 09:14:08PM +0530, Nitin Rawat wrote:
+>> This Patch updates offset for core_clk_1us_cycles in DME_VS_CORE_CLK_CTRL
+> 
+> Please do not use "This patch" in commit message. Just reword it in imperative
+> form.
+
+Thanks Mani for the review. We Will address the commit text in next 
+patchset.
+
+-Nitin
 
 
-On 30/08/2023 17:12, Eric Biggers wrote:
-> On Wed, Aug 30, 2023 at 11:00:07AM +0100, Srinivas Kandagatla wrote:
+> 
+>> register. Offset for core_clk_1us_cycles is changed from Qualcomm UFS
+>> Controller V4.0.0 onwards.
 >>
->> 3. We are adding these apis/callbacks in common code without doing any
->> compatible or SoC checks. Is this going to be a issue if someone tries
->> fscrypt?
+>> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+>> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>> ---
+>>   drivers/ufs/host/ufs-qcom.c | 19 ++++++++++++++-----
+>>   drivers/ufs/host/ufs-qcom.h |  2 ++
+>>   2 files changed, 16 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index f88febb23123..1108b0cd43b3 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -1297,12 +1297,21 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
+>>   }
+>>
+>>   static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+>> -						       u32 clk_cycles)
+>> +						       u32 clk_1us_cycles)
 > 
-> ufs-qcom only declares support for wrapped keys if it's supported.  See patch 5
-> of this series:
-> 
-> +	if (qcom_ice_hwkm_supported(host->ice))
-> +		hba->quirks |= UFSHCD_QUIRK_USES_WRAPPED_CRYPTO_KEYS;
-> 
-> That in turn uses:
-> 
-> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice)
-> +{
-> +	return (ice->hwkm_version > 0);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
-> 
-> Which in turn comes from the ICE version being >= 3.2.  It does seem a bit
-> suspicious; it probably should check for both the ICE version and the
-> availability of QCOM_SCM_ES_GENERATE_ICE_KEY, QCOM_SCM_ES_PREPARE_ICE_KEY, and
-> QCOM_SCM_ES_IMPORT_ICE_KEY.  Regardless, it sounds like you want it to be
-> determined by something set in the device tree instead?  I don't think it's been
-> demonstrated that that's necessary.  If we can detect the hardware capabilities
-> dynamically, we should do that, right?
+> How about "cycles_in_1us", since this value specifies "Number of clk cycles in
+> 1us"?
+I Will take care of this in next patchset
 
-I don't mind either way.
+-Nitin
 
-It would be perfect if we can dynamically query the TZ version to 
-determine these capabilities.
-
-
-If not we are left with some way to derive that information either via 
-DT or other means.
-
---srini
 > 
-> - Eric
+>>   {
+>> -	int err;
+>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> +	u32 mask = DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
+>>   	u32 core_clk_ctrl_reg;
+>> +	u32 offset = 0;
+>> +	int err;
+>> +
+>> +	/* Bit mask and offset changed on UFS host controller V4.0.0 onwards */
+> 
+> This is not offset value, but rather shift. Still, if you use bitfield macros
+> as I suggested below, you could get rid of this variable.
+
+I Will take care of this in next patchset
+
+-Nitin
+
+> 
+>> +	if (host->hw_ver.major >= 4) {
+>> +		mask = MAX_CORE_CLK_1US_CYCLES_MASK_V4;
+>> +		offset = MAX_CORE_CLK_1US_CYCLES_OFFSET_V4;
+>> +	}
+>>
+>> -	if (clk_cycles > DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK)
+>> +	if (clk_1us_cycles > mask)
+>>   		return -EINVAL;
+> 
+> 	if (!FIELD_FIT(mask, cycles_in_1us))
+> 		return -ERANGE;
+> 
+>>
+>>   	err = ufshcd_dme_get(hba,
+>> @@ -1311,8 +1320,8 @@ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+>>   	if (err)
+>>   		return err;
+>>
+>> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
+>> -	core_clk_ctrl_reg |= clk_cycles;
+>> +	core_clk_ctrl_reg &= ~(mask << offset);
+>> +	core_clk_ctrl_reg |= clk_1us_cycles << offset;
+>>
+> 
+> 	core_clk_ctrl_reg &= ~mask;
+> 	core_clk_ctrl_reg |= FIELD_PREP(mask, cycles_in_1us);
+> 
+>>   	/* Clear CORE_CLK_DIV_EN */
+>>   	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
+>> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+>> index d6f8e74bd538..a829296e11bb 100644
+>> --- a/drivers/ufs/host/ufs-qcom.h
+>> +++ b/drivers/ufs/host/ufs-qcom.h
+>> @@ -129,6 +129,8 @@ enum {
+>>   #define PA_VS_CONFIG_REG1	0x9000
+>>   #define DME_VS_CORE_CLK_CTRL	0xD002
+>>   /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
+> 
+>> +#define MAX_CORE_CLK_1US_CYCLES_MASK_V4		0xFFF
+> 
+> #define MAX_CORE_CLK_1US_CYCLES_MASK_V4				GENMASK(27, 16)
+> #define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	GENMASK(7, 0)
+> 
+> - Mani
+
+
+I will update it. Thanks
+-Nitin
+
+> 
+>> +#define MAX_CORE_CLK_1US_CYCLES_OFFSET_V4	0x10
+>>   #define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
+>>   #define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
+>>
+>> --
+>> 2.17.1
+>>
+> 
