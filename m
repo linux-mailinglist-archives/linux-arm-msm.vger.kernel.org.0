@@ -2,75 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2A2A78E1A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 23:53:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 281FF78E300
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 01:04:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242874AbjH3VxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 17:53:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56236 "EHLO
+        id S1344336AbjH3XD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 19:03:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242893AbjH3VxA (ORCPT
+        with ESMTP id S239837AbjH3XD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 17:53:00 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE492CEE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 14:52:31 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-1a1fa977667so46140fac.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 14:52:31 -0700 (PDT)
+        Wed, 30 Aug 2023 19:03:57 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA22CF3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:03:34 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b703a0453fso5471221fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:03:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693432286; x=1694037086; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xP1G3N95SJQabxQlJ+eLhOCwSvJQ3rpYZFxHjeJYZ+A=;
-        b=G5/Y2lBhOG9wRglytnPKzzk1Z/Wsp05PtAfekdCno1rprrAwhnpHtmrabVP8dM74B6
-         x3Of1z44kYYMIZyc/ZjCJCEUhhQgjzhudkgH7ob/V2VM/kWivhBpEZjab0lqDssPofCB
-         KzRELlFzfUBTxfJzEQRZ58JeIc0ydoEXEAcFSSJOOj1DZSM38BZZkBGJe9D1vG88i/bd
-         mNcSrqIN99xSUb/Vxc8Rrsf+1CfqX7zA8k83yHekGSZTWoFyLpcqeypiCuaN8dkVlj5+
-         tr+5C5jUKB7DeckSaUIJRzzO4nhhSZQRHQFV++Am5Jtp1zfCSTPj365Gv744v7gP+SJK
-         hv+w==
+        d=linaro.org; s=google; t=1693436612; x=1694041412; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=msHyshj90vSnmjfMS+CD0pnHPjuRl2jy7F4rESiCNlg=;
+        b=UK6jzu1bZ4FbcVADQA2Jh191imgHJpEDdA4w7lo+i8cY7osibZwiKAy34QfSZhfR30
+         bqcVUmZdIt0Au5V6bUNBrTg55fyqLE97MPoXK+pSFyfD6DUb85aZnMWtqudLfj+4K8JP
+         OAjOAFMz8kuCzCljfh8Ea9wZGDxM4AVNedw2Xz5bIdBQgd49bBJ8puqnYET/dFeyRA1x
+         o5ZoTI+m9VNpaG1/zMcDxo/BTDIz7J7AhKodVa7c/fgNZW6vrQ1WXR6GlADxWCuMVFTg
+         mP8ZcE2kXI23x1WrdCF0kv0Gl3YdZ0yGbNTrl98GsNSiYlE/L5eNFekAevzLcDfoN+VF
+         VjMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693432286; x=1694037086;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xP1G3N95SJQabxQlJ+eLhOCwSvJQ3rpYZFxHjeJYZ+A=;
-        b=N5IW0FxhVeZYslnp6HUEasZZyOjIyx+O2S3mDg/WzwwfrkuCJSUNzQalXH9vCWTgZY
-         rvh7dP06CsGfFWJ3AE12o8tb6T1/T/FKjOb78btDLsxgDRbVNvE0lIdh/YTEO0zDe+Et
-         NaA8P4GLi4vFvmx+ahC4ikIMRF8LudVB10FM5C4GpsLUO/c2ti2/gyfWrgYn5hCBJO92
-         6PaVi20QchjMlrFhhoPRyvVvuZJg2fNiYhPYzG/uzU8KwvWt+/BMXHKNI+5jmJ/vIfyS
-         HiUa78TUfW+XJtE9YZRK4C6Z5Bs32WJpgutecpDweP4QXH2cQC6+5lF02TWIIK6RmtMo
-         ZBFA==
-X-Gm-Message-State: AOJu0Ywqc4coEcURpuVw1yjTzgT2e6vPofHTtWdyKZlHfjTtYeaFR+IL
-        FW/aHGPg9Z4x42vwNV6HzEjUJE+aGk5A4g/ASyTH+D4SSVqH4h8g
-X-Google-Smtp-Source: AGHT+IH/CoTzgEqYKC0G3tVTVTxlFII4TRiKmoS1Mk5vUlf8PI/wpGXsKNUTh4M9uDYfrpxRz4f2Hv88QrkHlQj8aG8=
-X-Received: by 2002:a25:dbd2:0:b0:d7b:a834:3b2c with SMTP id
- g201-20020a25dbd2000000b00d7ba8343b2cmr3039268ybf.1.1693430205549; Wed, 30
- Aug 2023 14:16:45 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693436612; x=1694041412;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=msHyshj90vSnmjfMS+CD0pnHPjuRl2jy7F4rESiCNlg=;
+        b=PqW1DZnUa1Gh78zUM3n4/MKvUCtFDSyAd5mtMS5GfvNXjopJqecJSnzLqDthZdM8Vk
+         jHVmBqLsNIhCR7sKAmC5DFPhp+HOsNiscpwXFxfVQAsVQXFB81qN9AGj1+coDl0GGehu
+         yvHabQ9+/Bz7+zL9t1ttuiEES4KHAxu9LrHkXEnLY4CgTc2i4HmhPEes4G605NOR5OST
+         nNjeCwOABoMCSCRvv/3l2/ao3Tv5wX1uR5qfAcTTj+5eH+CBcL+fs+7DujAmw3mC6BZi
+         EKcU7CkZrgK2dsK2JVFtSo7RqFGSpOANe3PQ6XuIeT+XReqnCW+UGYB+sjIs/DMy9f4F
+         9LwQ==
+X-Gm-Message-State: AOJu0YyfR/6GE3ilTXEOx8qLu6vddK7NKztnQLKsNACAKwbxo3P061m3
+        VxXl2zeeGDSxmBzh1UL8tdQCJ+HTqB0q9YOsfTk7mg==
+X-Google-Smtp-Source: AGHT+IFZN0XFLmTMVpli86I9XELxCx+opSVmKto0P8fKRgp/dvzpFqZUwlf4S3Ov+q1yxFaX3RGzDQ==
+X-Received: by 2002:a05:6512:3da6:b0:500:b2c9:7da9 with SMTP id k38-20020a0565123da600b00500b2c97da9mr2444317lfv.45.1693420497376;
+        Wed, 30 Aug 2023 11:34:57 -0700 (PDT)
+Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
+        by smtp.gmail.com with ESMTPSA id l12-20020ac24a8c000000b004fe633bfcc7sm2473562lfp.17.2023.08.30.11.34.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Aug 2023 11:34:57 -0700 (PDT)
+Message-ID: <951a2f24-931a-4a25-a3b7-c3009e135d7d@linaro.org>
+Date:   Wed, 30 Aug 2023 20:34:52 +0200
 MIME-Version: 1.0
-References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
- <20230830-topic-8550_dmac2-v1-3-49bb25239fb1@linaro.org> <CAA8EJpp7bxq4=i1CMPYvz99ZuKLz+th6zSFhhRhFMjDwGB5Z8Q@mail.gmail.com>
- <6bcb460b-6deb-4918-9058-67536e0af0ad@linaro.org>
-In-Reply-To: <6bcb460b-6deb-4918-9058-67536e0af0ad@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 31 Aug 2023 00:16:33 +0300
-Message-ID: <CAA8EJppZ+kyoL6yM58qY6V0gsoSpX6b=L+Xp0-m0QMMhLFTG4A@mail.gmail.com>
-Subject: Re: [PATCH 3/7] arm64: dts: qcom: sm8550: Fix up CPU idle states
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/7] leds: rgb: leds-qcom-lpg: Update PMI632 lpg_data
+ to support PPG
+Content-Language: en-US
+To:     Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
+        lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org
+Cc:     luca.weiss@fairphone.com, u.kleine-koenig@pengutronix.de,
+        quic_subbaram@quicinc.com, quic_gurus@quicinc.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org, kernel@quicinc.com
+References: <20230830180600.1865-2-quic_amelende@quicinc.com>
+ <20230830180600.1865-8-quic_amelende@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20230830180600.1865-8-quic_amelende@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,70 +117,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 30 Aug 2023 at 23:35, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 30.08.2023 22:13, Dmitry Baryshkov wrote:
-> > On Wed, 30 Aug 2023 at 22:04, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >> The idle residency times are largely too low according to the vendor
-> >> kernel (maybe they came from an earlier release or something), especially
-> >> for the prime X2 core. Fix them.
-> >>
-> >> Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 32 +++++++++++++++++++++-----------
-> >>  1 file changed, 21 insertions(+), 11 deletions(-)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> >> index d115960bdeec..c21ba6afa752 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> >> @@ -283,9 +283,9 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> >>                                 compatible = "arm,idle-state";
-> >>                                 idle-state-name = "silver-rail-power-collapse";
-> >>                                 arm,psci-suspend-param = <0x40000004>;
-> >> -                               entry-latency-us = <800>;
-> >> +                               entry-latency-us = <550>;
-> >>                                 exit-latency-us = <750>;
-> >> -                               min-residency-us = <4090>;
-> >> +                               min-residency-us = <6700>;
-> >>                                 local-timer-stop;
-> >>                         };
-> >>
-> >> @@ -294,8 +294,18 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> >>                                 idle-state-name = "gold-rail-power-collapse";
-> >>                                 arm,psci-suspend-param = <0x40000004>;
-> >>                                 entry-latency-us = <600>;
-> >> -                               exit-latency-us = <1550>;
-> >> -                               min-residency-us = <4791>;
-> >> +                               exit-latency-us = <1300>;
-> >> +                               min-residency-us = <8136>;
-> >> +                               local-timer-stop;
-> >> +                       };
-> >> +
-> >> +                       PRIME_CPU_SLEEP_0: cpu-sleep-2-0 {
-> >> +                               compatible = "arm,idle-state";
-> >> +                               idle-state-name = "gold-plus-rail-power-collapse";
-> >> +                               arm,psci-suspend-param = <0x40000004>;
-> >> +                               entry-latency-us = <500>;
-> >> +                               exit-latency-us = <1350>;
-> >> +                               min-residency-us = <7480>;
-> >>                                 local-timer-stop;
-> >
-> > This isn't only fixing the time properties, but also adds the whole
-> > new sleep state!
-> It does add a "new" sleep state with the exact same parameters,
-> the only thing being that it's exclusive to the prime core and
-> the only thing that differs is the residencies.
+On 30.08.2023 20:06, Anjelique Melendez wrote:
+> Update the pmi632 lpg_data struct so that pmi632 devices use PPG
+> for LUT pattern.
+> 
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> ---
+>  drivers/leds/rgb/leds-qcom-lpg.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> index 90dc27d5eb7c..0b37d3b539f8 100644
+> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> @@ -1672,11 +1672,14 @@ static const struct lpg_data pm8994_lpg_data = {
+>  static const struct lpg_data pmi632_lpg_data = {
+>  	.triled_base = 0xd000,
+>  
+> +	.lut_size = 64,
+> +	.lut_sdam_base = 0x80,
+Is that a predefined space for use with LPG?
 
-Then it should be stated in the commit message.
+Or can it be reclaimed for something else?
 
-With that fixed,
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
--- 
-With best wishes
-Dmitry
+Konrad
