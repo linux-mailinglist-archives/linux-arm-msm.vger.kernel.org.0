@@ -2,81 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55DEC78D128
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 02:35:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BCA978D19F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 03:14:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238361AbjH3Ae5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 20:34:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43590 "EHLO
+        id S234862AbjH3BOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 21:14:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234328AbjH3Aew (ORCPT
+        with ESMTP id S241536AbjH3BOU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 20:34:52 -0400
+        Tue, 29 Aug 2023 21:14:20 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254F6107;
-        Tue, 29 Aug 2023 17:34:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A9FD95
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 18:14:16 -0700 (PDT)
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37TNjf06015808;
-        Wed, 30 Aug 2023 00:33:42 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37U0naCr009147;
+        Wed, 30 Aug 2023 01:14:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=zf7L9MvxmjbWQSiof5mmYp7kywmOzRvcWTDpK/u39ws=;
- b=jOddOX6OG9hvaOOXQw9Zo+WC2LGEz2IID4P8OUbmGIGwpGnCmU/kJJ8SeR9gMVUEr9s8
- TPdL08Qa8c03hPvBYXRMYG3n08Q4HwyRj7zQ1Ih1jujRSyNXFxj8n72mCAxUwD8gf09Z
- OFR17n9BJkKo5autB7g0FU20F74EmliY8IveKyQ/8x/afD1FJNDNiHix2hiQTpMRlWe9
- 1/ueIeOYzxN0bi29q1uIwuJhIHH7aerLsq3uU6RNFBG+RbUzGclb65yeXB5NCUyXgRMA
- f+5HmnZes0s6cgXZ5c39tWIW7ojx17rS/g2oZDNiCe7OKHHYbJ2g76fDn9tnf8uzfWmc Ug== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ssmcv8tnj-1
+ bh=lqpIsJbkR0i6dcMGmQDqHyrkmWLSujaVJ+NexLQzJ1M=;
+ b=KAOH4wBd1FoWg0aeOxKk59EzjsOX+bIRuYs6RlCQwDU9K8nlv1wvsLgW69agA9QNlaPk
+ h2eovPYADwOSLpadV0xE6XrOsC5mBz9iT4Bnu0ywbFyLIldC/hr933QNmYLJYxCQu7l7
+ M79XE/xpUv5WRohNdEYCIwQEjjQr/OoMGUZ7zMV9gJybyZs/+joXzYr5YXnBD3PO7qSr
+ odQ3gGG5nL/ogAAmAc7Sr+2Q3w8J8QN3S1efxFwyVlXBmnCvupQ7tuJ3pN723vmWrQJk
+ iP0FVfNabD95cIr8EsbQmo4j2GIIVsRAXjHhatHCmMHD2WWtC2ZsXnV+Bw9mTHVAVnXl Yg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ssmcv8vdv-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 00:33:42 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U0Xfsg000585
+        Wed, 30 Aug 2023 01:14:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U1E1l0023816
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 00:33:41 GMT
-Received: from [10.71.110.139] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 30 Aug 2023 01:14:01 GMT
+Received: from [10.71.110.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
- 2023 17:33:37 -0700
-Message-ID: <ae8942f9-fe89-e059-fe83-f2a6d133f8e0@quicinc.com>
-Date:   Tue, 29 Aug 2023 17:33:37 -0700
+ 2023 18:14:00 -0700
+Message-ID: <ed3773ea-973f-07a6-bfc5-4772903406ff@quicinc.com>
+Date:   Tue, 29 Aug 2023 18:14:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] freezer,sched: Use saved_state to reduce some spurious
- wakeups
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     Ingo Molnar <mingo@redhat.com>,
-        Peter Zijlstra <peterz@infradead.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        "Thomas Gleixner" <tglx@linutronix.de>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>,
-        Prakash Viswalingam <quic_prakashv@quicinc.com>
-References: <20230828-avoid-spurious-freezer-wakeups-v1-1-8be8cf761472@quicinc.com>
- <f7d23e37-8c09-43ea-83fb-0731a3439c1a@quicinc.com>
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/3] drm/msm/dpu: split irq_control into irq_enable and
+ _disable
 Content-Language: en-US
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <f7d23e37-8c09-43ea-83fb-0731a3439c1a@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230604144514.949628-1-dmitry.baryshkov@linaro.org>
+ <20230604144514.949628-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230604144514.949628-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G1ch5QS0YkX_dIdFGkX70RU9eD8ukhEs
-X-Proofpoint-GUID: G1ch5QS0YkX_dIdFGkX70RU9eD8ukhEs
+X-Proofpoint-ORIG-GUID: 8uUbK-qtMmHb8x6ABn7HPu5wUUjY9BSB
+X-Proofpoint-GUID: 8uUbK-qtMmHb8x6ABn7HPu5wUUjY9BSB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
  bulkscore=0 phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- mlxlogscore=999 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ mlxlogscore=995 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308300003
+ engine=8.12.0-2308100000 definitions=main-2308300009
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -89,216 +89,349 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8/28/2023 10:22 PM, Pavan Kondeti wrote:
-> On Mon, Aug 28, 2023 at 10:33:04AM -0700, Elliot Berman wrote:
->> After commit f5d39b020809 ("freezer,sched: Rewrite core freezer logic"),
->> tasks that are in TASK_FREEZABLE state and end up getting frozen are
+On 6/4/2023 7:45 AM, Dmitry Baryshkov wrote:
+> The single helper for both enable and disable cases is too complicated,
+> especially if we start adding more code to these helpers. Split it into
+> irq_enable and irq_disable cases.
 > 
-> TASK_FREEZABLE state and what? Pls check once.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 36 ++++++++---
+>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  6 +-
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 63 ++++++++++---------
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 48 +++++++-------
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 29 ++++++---
+>   5 files changed, 112 insertions(+), 70 deletions(-)
 > 
->> always woken up. Prior to that commit, tasks could ask freezer to
->> consider them "frozen enough" via freezer_do_not_conut(). As described
->> in Peter's commit, the reason for this change is to prevent these tasks
->> from being woken before SMP is back. The commit introduced a
->> TASK_FREEZABLE state which allows freezer to immediately mark the task
->> as TASK_FROZEN without waking up the task. On the thaw path, the task is
->> woken up even if the task didn't need to wake up and goes back to its
->> TASK_(UN)INTERRUPTIBLE state. Although these tasks are capable of
->> handling of the wakeup, we can observe a power/perf impact from the
->> extra wakeup.
->>
->> We observed on Android many tasks wait in the TASK_FREEZABLE state
->> (particularly due to many of them being binder clients). We observed
->> nearly 4x the number of tasks and a corresponding (almost) linear increase in
->> latency and power consumption when thawing the system. The latency
->> increased from ~15ms to ~50ms.
->>
->> Save the state of TASK_FREEZABLE tasks and restore it after thawing the
->> task without waking the task up. If the task received a wake up for the
->> saved_state before thawing, then the task is still woken upon thawing.
->>
->> Re-use saved_state from RT sleeping spinlocks because freezer doesn't
->> consider TASK_RTLOCK_WAIT freezable.
->>
->> Reported-by: Prakash Viswalingam <quic_prakashv@quicinc.com>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->> For testing purposes, I use these commands can help see how many tasks were
->> woken during thawing:
->>
->> 1. Setup:
->>     mkdir /sys/kernel/tracing/instances/freezer
->>     cd /sys/kernel/tracing/instances/freezer
->>     echo 0 > tracing_on ; echo > trace
->>     echo power:suspend_resume > set_event
->>     echo 'enable_event:sched:sched_wakeup if action == \"thaw_processes\" && start == 1' > events/power/suspend_resume/trigger
->>     echo 'traceoff if action == \"thaw_processes\" && start == 0' > events/power/suspend_resume/trigger
->>     echo 1 > tracing_on
->>
->> 2. Let kernel go to suspend
->>
->> 3. After kernel's back up:
->>     cat /sys/kernel/tracing/instances/freezer/trace | grep sched_wakeup | grep -o "pid=[0-9]*" | sort -u | wc -l
->> ---
->>   include/linux/sched.h |  4 ++--
->>   kernel/freezer.c      | 15 +++++++++++++--
->>   kernel/sched/core.c   | 21 +++++++++++++--------
->>   3 files changed, 28 insertions(+), 12 deletions(-)
->>
->> diff --git a/include/linux/sched.h b/include/linux/sched.h
->> index eed5d65b8d1f..e4ade5a18df2 100644
->> --- a/include/linux/sched.h
->> +++ b/include/linux/sched.h
->> @@ -746,8 +746,8 @@ struct task_struct {
->>   #endif
->>   	unsigned int			__state;
->>   
->> -#ifdef CONFIG_PREEMPT_RT
->> -	/* saved state for "spinlock sleepers" */
->> +#if IS_ENABLED(CONFIG_PREEMPT_RT) || IS_ENABLED(CONFIG_FREEZER)
->> +	/* saved state for "spinlock sleepers" and freezer */
->>   	unsigned int			saved_state;
->>   #endif
->>   
->> diff --git a/kernel/freezer.c b/kernel/freezer.c
->> index 4fad0e6fca64..6222cbfd97ab 100644
->> --- a/kernel/freezer.c
->> +++ b/kernel/freezer.c
->> @@ -71,7 +71,11 @@ bool __refrigerator(bool check_kthr_stop)
->>   	for (;;) {
->>   		bool freeze;
->>   
->> +		raw_spin_lock_irq(&current->pi_lock);
->>   		set_current_state(TASK_FROZEN);
->> +		/* unstale saved_state so that __thaw_task() will wake us up */
->> +		current->saved_state = TASK_RUNNING;
->> +		raw_spin_unlock_irq(&current->pi_lock);
->>   
->>   		spin_lock_irq(&freezer_lock);
->>   		freeze = freezing(current) && !(check_kthr_stop && kthread_should_stop());
->> @@ -129,6 +133,7 @@ static int __set_task_frozen(struct task_struct *p, void *arg)
->>   		WARN_ON_ONCE(debug_locks && p->lockdep_depth);
->>   #endif
->>   
->> +	p->saved_state = p->__state;
->>   	WRITE_ONCE(p->__state, TASK_FROZEN);
->>   	return TASK_FROZEN;
->>   }
->> @@ -174,10 +179,16 @@ bool freeze_task(struct task_struct *p)
->>    * state in p->jobctl. If either of them got a wakeup that was missed because
->>    * TASK_FROZEN, then their canonical state reflects that and the below will
->>    * refuse to restore the special state and instead issue the wakeup.
->> + *
->> + * Otherwise, restore the saved_state before the task entered freezer. For
->> + * typical tasks in the __refrigerator(), saved_state == 0 so nothing happens
->> + * here. For tasks which were TASK_NORMAL | TASK_FREEZABLE, their initial state
->> + * is returned unless they got an expected wakeup. Then they will be woken up as
->> + * TASK_FROZEN back in __thaw_task().
->>    */
-> 
-> Thanks for the detailed comment. The change looks good to me.
-> 
->>   static int __set_task_special(struct task_struct *p, void *arg)
->>   {
->> -	unsigned int state = 0;
->> +	unsigned int state = p->saved_state;
->>   
->>   	if (p->jobctl & JOBCTL_TRACED)
->>   		state = TASK_TRACED;
->> @@ -188,7 +199,7 @@ static int __set_task_special(struct task_struct *p, void *arg)
->>   	if (state)
->>   		WRITE_ONCE(p->__state, state);
->>   
->> -	return state;
->> +	return state & ~TASK_FROZEN;
->>   }
-> 
-> void __thaw_task(struct task_struct *p)
-> {
-> 
-> ...
-> 
-> 	if (lock_task_sighand(p, &flags2)) {
-> 		/* TASK_FROZEN -> TASK_{STOPPED,TRACED} */
-> 		bool ret = task_call_func(p, __set_task_special, NULL);
-> 		unlock_task_sighand(p, &flags2);
-> 		if (ret)
-> 			goto unlock;
-> 	}
-> 
-> 	wake_up_state(p, TASK_FROZEN);
-> unlock:
-> 	spin_unlock_irqrestore(&freezer_lock, flags);
-> }
-> 
-> 
-> The comment there about task change needs update. I feel the "ret"
-> should be renamed approriately to indicate whether wakeup is needed
-> or not.
-> 
-> Now that we have saved_state capturing the previous and any state change
-> while task is frozen, can that be used and remove the job control and
-> associated locking here? for ex: if saved_state is running, we need to
-> wakeup otherwise, simply restore the __state from saved_state.
-> 
->>   
->>   void __thaw_task(struct task_struct *p)
->> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
->> index a68d1276bab0..815d955764a5 100644
->> --- a/kernel/sched/core.c
->> +++ b/kernel/sched/core.c
->> @@ -3992,13 +3992,17 @@ static void ttwu_queue(struct task_struct *p, int cpu, int wake_flags)
->>    * The caller holds p::pi_lock if p != current or has preemption
->>    * disabled when p == current.
->>    *
->> - * The rules of PREEMPT_RT saved_state:
->> + * The rules of saved_state:
->>    *
->>    *   The related locking code always holds p::pi_lock when updating
->>    *   p::saved_state, which means the code is fully serialized in both cases.
->>    *
->> - *   The lock wait and lock wakeups happen via TASK_RTLOCK_WAIT. No other
->> - *   bits set. This allows to distinguish all wakeup scenarios.
->> + *   For PREEMPT_RT, the lock wait and lock wakeups happen via TASK_RTLOCK_WAIT.
->> + *   No other bits set. This allows to distinguish all wakeup scenarios.
->> + *
->> + *   For FREEZER, the wakeup happens via TASK_FROZEN. No other bits set. This
->> + *   allows us to prevent early wakeup of tasks before they can be run on
->> + *   asymmetric ISA architectures (eg ARMv9).
->>    */
->>   static __always_inline
->>   bool ttwu_state_match(struct task_struct *p, unsigned int state, int *success)
->> @@ -4013,13 +4017,14 @@ bool ttwu_state_match(struct task_struct *p, unsigned int state, int *success)
->>   		return true;
->>   	}
->>   
->> -#ifdef CONFIG_PREEMPT_RT
->> +#if IS_ENABLED(CONFIG_PREEMPT_RT) || IS_ENABLED(CONFIG_FREEZER)
->>   	/*
->>   	 * Saved state preserves the task state across blocking on
->> -	 * an RT lock.  If the state matches, set p::saved_state to
->> -	 * TASK_RUNNING, but do not wake the task because it waits
->> -	 * for a lock wakeup. Also indicate success because from
->> -	 * the regular waker's point of view this has succeeded.
->> +	 * an RT lock or TASK_FREEZABLE tasks.  If the state matches,
->> +	 * set p::saved_state to TASK_RUNNING, but do not wake the task
->> +	 * because it waits for a lock wakeup or __thaw_task(). Also
->> +	 * indicate success because from the regular waker's point of
->> +	 * view this has succeeded.
->>   	 *
->>   	 * After acquiring the lock the task will restore p::__state
->>   	 * from p::saved_state which ensures that the regular
->>
->> ---
->> base-commit: 6995e2de6891c724bfeb2db33d7b87775f913ad1
->> change-id: 20230817-avoid-spurious-freezer-wakeups-9f8619680b3a
-> 
-> Your patch seems based on v6.4. You might want to resend the patch on
-> v6.5 to take the below commit into account.
-> 
-> 1c06918788e8a ("sched: Consider task_struct::saved_state in
-> wait_task_inactive()")
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 2e1873d29c4b..7c131c5cbe71 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -717,7 +717,7 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
+>   	}
+>   }
+>   
+> -static void _dpu_encoder_irq_control(struct drm_encoder *drm_enc, bool enable)
+> +static void _dpu_encoder_irq_enable(struct drm_encoder *drm_enc)
+>   {
+>   	struct dpu_encoder_virt *dpu_enc;
+>   	int i;
+> @@ -729,14 +729,32 @@ static void _dpu_encoder_irq_control(struct drm_encoder *drm_enc, bool enable)
+>   
+>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>   
+> -	DPU_DEBUG_ENC(dpu_enc, "enable:%d\n", enable);
+> +	DPU_DEBUG_ENC(dpu_enc, "\n");
+>   	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+>   		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+>   
+> -		if (phys->ops.irq_control)
+> -			phys->ops.irq_control(phys, enable);
+> +		phys->ops.irq_enable(phys);
+> +	}
+> +}
+> +
+> +static void _dpu_encoder_irq_disable(struct drm_encoder *drm_enc)
+> +{
+> +	struct dpu_encoder_virt *dpu_enc;
+> +	int i;
+> +
+> +	if (!drm_enc) {
+> +		DPU_ERROR("invalid encoder\n");
+> +		return;
+>   	}
+>   
+> +	dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +
+> +	DPU_DEBUG_ENC(dpu_enc, "\n");
+> +	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> +		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+> +
+> +		phys->ops.irq_disable(phys);
+> +	}
+>   }
+>   
+>   static void _dpu_encoder_resource_control_helper(struct drm_encoder *drm_enc,
+> @@ -762,11 +780,11 @@ static void _dpu_encoder_resource_control_helper(struct drm_encoder *drm_enc,
+>   		pm_runtime_get_sync(&dpu_kms->pdev->dev);
+>   
+>   		/* enable all the irq */
+> -		_dpu_encoder_irq_control(drm_enc, true);
+> +		_dpu_encoder_irq_enable(drm_enc);
+>   
+>   	} else {
+>   		/* disable all the irq */
+> -		_dpu_encoder_irq_control(drm_enc, false);
+> +		_dpu_encoder_irq_disable(drm_enc);
+>   
+>   		/* disable DPU core clks */
+>   		pm_runtime_put_sync(&dpu_kms->pdev->dev);
+> @@ -827,7 +845,7 @@ static int dpu_encoder_resource_control(struct drm_encoder *drm_enc,
+>   		}
+>   
+>   		if (is_vid_mode && dpu_enc->rc_state == DPU_ENC_RC_STATE_IDLE)
+> -			_dpu_encoder_irq_control(drm_enc, true);
+> +			_dpu_encoder_irq_enable(drm_enc);
+>   		else
+>   			_dpu_encoder_resource_control_helper(drm_enc, true);
+>   
+> @@ -882,7 +900,7 @@ static int dpu_encoder_resource_control(struct drm_encoder *drm_enc,
+>   
+>   		if (is_vid_mode &&
+>   			  dpu_enc->rc_state == DPU_ENC_RC_STATE_IDLE) {
+> -			_dpu_encoder_irq_control(drm_enc, true);
+> +			_dpu_encoder_irq_enable(drm_enc);
+>   		}
+>   		/* skip if is already OFF or IDLE, resources are off already */
+>   		else if (dpu_enc->rc_state == DPU_ENC_RC_STATE_OFF ||
+> @@ -957,7 +975,7 @@ static int dpu_encoder_resource_control(struct drm_encoder *drm_enc,
+>   		}
+>   
+>   		if (is_vid_mode)
+> -			_dpu_encoder_irq_control(drm_enc, false);
+> +			_dpu_encoder_irq_disable(drm_enc);
+>   		else
+>   			_dpu_encoder_resource_control_helper(drm_enc, false);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> index d48558ede488..faf033cd086e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> @@ -84,7 +84,8 @@ struct dpu_encoder_phys;
+>    * @handle_post_kickoff:	Do any work necessary post-kickoff work
+>    * @trigger_start:		Process start event on physical encoder
+>    * @needs_single_flush:		Whether encoder slaves need to be flushed
+> - * @irq_control:		Handler to enable/disable all the encoder IRQs
+> + * @irq_enable:			Handler to enable all the encoder IRQs
+> + * @irq_disable:		Handler to disable all the encoder IRQs
+>    * @prepare_idle_pc:		phys encoder can update the vsync_enable status
+>    *                              on idle power collapse prepare
+>    * @restore:			Restore all the encoder configs.
+> @@ -111,7 +112,8 @@ struct dpu_encoder_phys_ops {
+>   	void (*handle_post_kickoff)(struct dpu_encoder_phys *phys_enc);
+>   	void (*trigger_start)(struct dpu_encoder_phys *phys_enc);
+>   	bool (*needs_single_flush)(struct dpu_encoder_phys *phys_enc);
+> -	void (*irq_control)(struct dpu_encoder_phys *phys, bool enable);
+> +	void (*irq_enable)(struct dpu_encoder_phys *phys);
+> +	void (*irq_disable)(struct dpu_encoder_phys *phys);
+>   	void (*prepare_idle_pc)(struct dpu_encoder_phys *phys_enc);
+>   	void (*restore)(struct dpu_encoder_phys *phys);
+>   	int (*get_line_count)(struct dpu_encoder_phys *phys);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index 4f8c9187f76d..3422b49f23c2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -280,40 +280,44 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
+>   	return ret;
+>   }
+>   
+> -static void dpu_encoder_phys_cmd_irq_control(struct dpu_encoder_phys *phys_enc,
+> -		bool enable)
+> +static void dpu_encoder_phys_cmd_irq_enable(struct dpu_encoder_phys *phys_enc)
+>   {
+>   	trace_dpu_enc_phys_cmd_irq_ctrl(DRMID(phys_enc->parent),
+> -			phys_enc->hw_pp->idx - PINGPONG_0,
+> -			enable, atomic_read(&phys_enc->vblank_refcount));
 
-Thanks for pointing this out! I am pretty sure that with that change, we 
-can remove the checks for the jobctl and also remove the 
-lock_task_sighand(). I'll run some tests.
+Was it intentional to re-use this trace and not add a new one for 
+dpu_encoder_phys_cmd_irq_enable/dpu_encoder_phys_cmd_irq_disable?
+
+Just thinking if the trace names Vs function names not matching would 
+become confusing.
+
+> -
+> -	if (enable) {
+> +					phys_enc->hw_pp->idx - PINGPONG_0,
+> +					true,
+> +					atomic_read(&phys_enc->vblank_refcount));
+> +
+> +	dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> +				       phys_enc->irq[INTR_IDX_PINGPONG],
+> +				       dpu_encoder_phys_cmd_pp_tx_done_irq,
+> +				       phys_enc);
+> +	dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> +				       phys_enc->irq[INTR_IDX_UNDERRUN],
+> +				       dpu_encoder_phys_cmd_underrun_irq,
+> +				       phys_enc);
+> +	dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, true);
+> +
+> +	if (dpu_encoder_phys_cmd_is_master(phys_enc))
+>   		dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> -				phys_enc->irq[INTR_IDX_PINGPONG],
+> -				dpu_encoder_phys_cmd_pp_tx_done_irq,
+> -				phys_enc);
+> -		dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> -				phys_enc->irq[INTR_IDX_UNDERRUN],
+> -				dpu_encoder_phys_cmd_underrun_irq,
+> -				phys_enc);
+> -		dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, true);
+> +					       phys_enc->irq[INTR_IDX_CTL_START],
+> +					       dpu_encoder_phys_cmd_ctl_start_irq,
+> +					       phys_enc);
+> +}
+>   
+> -		if (dpu_encoder_phys_cmd_is_master(phys_enc))
+> -			dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> -					phys_enc->irq[INTR_IDX_CTL_START],
+> -					dpu_encoder_phys_cmd_ctl_start_irq,
+> -					phys_enc);
+> -	} else {
+> -		if (dpu_encoder_phys_cmd_is_master(phys_enc))
+> -			dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+> -					phys_enc->irq[INTR_IDX_CTL_START]);
+> +static void dpu_encoder_phys_cmd_irq_disable(struct dpu_encoder_phys *phys_enc)
+> +{
+> +	trace_dpu_enc_phys_cmd_irq_ctrl(DRMID(phys_enc->parent),
+> +			phys_enc->hw_pp->idx - PINGPONG_0,
+> +			false,
+> +			atomic_read(&phys_enc->vblank_refcount));
+>   
+> +	if (dpu_encoder_phys_cmd_is_master(phys_enc))
+>   		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+> -				phys_enc->irq[INTR_IDX_UNDERRUN]);
+> -		dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, false);
+> -		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+> -				phys_enc->irq[INTR_IDX_PINGPONG]);
+> -	}
+> +				phys_enc->irq[INTR_IDX_CTL_START]);
+> +
+> +	dpu_core_irq_unregister_callback(phys_enc->dpu_kms, phys_enc->irq[INTR_IDX_UNDERRUN]);
+> +	dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, false);
+> +	dpu_core_irq_unregister_callback(phys_enc->dpu_kms, phys_enc->irq[INTR_IDX_PINGPONG]);
+>   }
+>   
+>   static void dpu_encoder_phys_cmd_tearcheck_config(
+> @@ -744,7 +748,8 @@ static void dpu_encoder_phys_cmd_init_ops(
+>   	ops->wait_for_vblank = dpu_encoder_phys_cmd_wait_for_vblank;
+>   	ops->trigger_start = dpu_encoder_phys_cmd_trigger_start;
+>   	ops->needs_single_flush = dpu_encoder_phys_cmd_needs_single_flush;
+> -	ops->irq_control = dpu_encoder_phys_cmd_irq_control;
+> +	ops->irq_enable = dpu_encoder_phys_cmd_irq_enable;
+> +	ops->irq_disable = dpu_encoder_phys_cmd_irq_disable;
+>   	ops->restore = dpu_encoder_phys_cmd_enable_helper;
+>   	ops->prepare_idle_pc = dpu_encoder_phys_cmd_prepare_idle_pc;
+>   	ops->handle_post_kickoff = dpu_encoder_phys_cmd_handle_post_kickoff;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> index e26629e9e303..a550b290246c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> @@ -611,30 +611,35 @@ static void dpu_encoder_phys_vid_handle_post_kickoff(
+>   	}
+>   }
+>   
+> -static void dpu_encoder_phys_vid_irq_control(struct dpu_encoder_phys *phys_enc,
+> -		bool enable)
+> +static void dpu_encoder_phys_vid_irq_enable(struct dpu_encoder_phys *phys_enc)
+>   {
+>   	int ret;
+>   
+>   	trace_dpu_enc_phys_vid_irq_ctrl(DRMID(phys_enc->parent),
+> -			    phys_enc->hw_intf->idx - INTF_0,
+> -			    enable,
+> -			    atomic_read(&phys_enc->vblank_refcount));
+> -
+> -	if (enable) {
+> -		ret = dpu_encoder_phys_vid_control_vblank_irq(phys_enc, true);
+> -		if (WARN_ON(ret))
+> -			return;
+> -
+> -		dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> -				phys_enc->irq[INTR_IDX_UNDERRUN],
+> -				dpu_encoder_phys_vid_underrun_irq,
+> -				phys_enc);
+> -	} else {
+> -		dpu_encoder_phys_vid_control_vblank_irq(phys_enc, false);
+> -		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+> -				phys_enc->irq[INTR_IDX_UNDERRUN]);
+> -	}
+> +					phys_enc->hw_intf->idx - INTF_0,
+> +					true,
+> +					atomic_read(&phys_enc->vblank_refcount));
+> +
+> +	ret = dpu_encoder_phys_vid_control_vblank_irq(phys_enc, true);
+> +	if (WARN_ON(ret))
+> +		return;
+> +
+> +	dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> +				       phys_enc->irq[INTR_IDX_UNDERRUN],
+> +				       dpu_encoder_phys_vid_underrun_irq,
+> +				       phys_enc);
+> +}
+> +
+> +static void dpu_encoder_phys_vid_irq_disable(struct dpu_encoder_phys *phys_enc)
+> +{
+> +	trace_dpu_enc_phys_vid_irq_ctrl(DRMID(phys_enc->parent),
+> +					phys_enc->hw_intf->idx - INTF_0,
+> +					false,
+> +					atomic_read(&phys_enc->vblank_refcount));
+> +
+> +	dpu_encoder_phys_vid_control_vblank_irq(phys_enc, false);
+> +	dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+> +					 phys_enc->irq[INTR_IDX_UNDERRUN]);
+>   }
+>   
+>   static int dpu_encoder_phys_vid_get_line_count(
+> @@ -687,7 +692,8 @@ static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
+>   	ops->wait_for_commit_done = dpu_encoder_phys_vid_wait_for_commit_done;
+>   	ops->wait_for_vblank = dpu_encoder_phys_vid_wait_for_vblank;
+>   	ops->wait_for_tx_complete = dpu_encoder_phys_vid_wait_for_vblank;
+> -	ops->irq_control = dpu_encoder_phys_vid_irq_control;
+> +	ops->irq_enable = dpu_encoder_phys_vid_irq_enable;
+> +	ops->irq_disable = dpu_encoder_phys_vid_irq_disable;
+>   	ops->prepare_for_kickoff = dpu_encoder_phys_vid_prepare_for_kickoff;
+>   	ops->handle_post_kickoff = dpu_encoder_phys_vid_handle_post_kickoff;
+>   	ops->needs_single_flush = dpu_encoder_phys_vid_needs_single_flush;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index e9325cafb1a8..858fe6656c9b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -382,21 +382,31 @@ static void dpu_encoder_phys_wb_done_irq(void *arg, int irq_idx)
+>   }
+>   
+>   /**
+> - * dpu_encoder_phys_wb_irq_ctrl - irq control of WB
+> + * dpu_encoder_phys_wb_irq_enable - irq control of WB
+>    * @phys:	Pointer to physical encoder
+> - * @enable:	indicates enable or disable interrupts
+>    */
+> -static void dpu_encoder_phys_wb_irq_ctrl(
+> -		struct dpu_encoder_phys *phys, bool enable)
+> +static void dpu_encoder_phys_wb_irq_enable(struct dpu_encoder_phys *phys)
+>   {
+>   
+>   	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys);
+>   
+> -	if (enable && atomic_inc_return(&wb_enc->wbirq_refcount) == 1)
+> +	if (atomic_inc_return(&wb_enc->wbirq_refcount) == 1)
+>   		dpu_core_irq_register_callback(phys->dpu_kms,
+> -				phys->irq[INTR_IDX_WB_DONE], dpu_encoder_phys_wb_done_irq, phys);
+> -	else if (!enable &&
+> -			atomic_dec_return(&wb_enc->wbirq_refcount) == 0)
+> +					       phys->irq[INTR_IDX_WB_DONE],
+> +					       dpu_encoder_phys_wb_done_irq,
+> +					       phys);
+> +}
+> +
+> +/**
+> + * dpu_encoder_phys_wb_irq_disable - irq control of WB
+> + * @phys:	Pointer to physical encoder
+> + */
+> +static void dpu_encoder_phys_wb_irq_disable(struct dpu_encoder_phys *phys)
+> +{
+> +
+> +	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys);
+> +
+> +	if (atomic_dec_return(&wb_enc->wbirq_refcount) == 0)
+>   		dpu_core_irq_unregister_callback(phys->dpu_kms, phys->irq[INTR_IDX_WB_DONE]);
+>   }
+>   
+> @@ -670,7 +680,8 @@ static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
+>   	ops->trigger_start = dpu_encoder_helper_trigger_start;
+>   	ops->prepare_wb_job = dpu_encoder_phys_wb_prepare_wb_job;
+>   	ops->cleanup_wb_job = dpu_encoder_phys_wb_cleanup_wb_job;
+> -	ops->irq_control = dpu_encoder_phys_wb_irq_ctrl;
+> +	ops->irq_enable = dpu_encoder_phys_wb_irq_enable;
+> +	ops->irq_disable = dpu_encoder_phys_wb_irq_disable;
+>   	ops->is_valid_for_commit = dpu_encoder_phys_wb_is_valid_for_commit;
+>   
+>   }
