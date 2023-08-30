@@ -2,269 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3F7D78D93E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A31A78D954
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232490AbjH3ScN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58192 "EHLO
+        id S230526AbjH3Scv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243385AbjH3KwR (ORCPT
+        with ESMTP id S243418AbjH3K51 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 06:52:17 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB3891BE;
-        Wed, 30 Aug 2023 03:52:14 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id E49476600BB0;
-        Wed, 30 Aug 2023 11:52:12 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1693392733;
-        bh=dbS1lvMO+EWcHbCFdrfmh2QjQKfiQs4eFDLWNBEANo0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=m72MEeUmHGk1P97OhTJQWD8XI/JHoqzurbw8ObmlSSh44ygfFNWXaxoKhK6IIqMls
-         rBJrZkWt0NbanPNU6yuK9eoNvg/nDlz8CEk/LdlPMw402Eh6/IJFUmJz0vnAWCr//c
-         amO03Q0ediIepVt/21ALqLLoK/0alL+k3dRAmwtZ3JZOjZKyz/Fto1grZbYbpj0Zg+
-         ysMq+eGDVydV+CzURNvTpPgxYt8vMBLj1NZt6ZI3Dy0dJi+DsptmYnv+1GmHSUEIg2
-         6WD+SYnPOBeq0vGk3TZhEWbN/9BUJiRlJKHkepfBYeivwpd9nX+JgE9b5bwVHHwJ+V
-         7g6AszpfYUtlA==
-Date:   Wed, 30 Aug 2023 12:52:10 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 5/6] drm/panfrost: Implement generic DRM object RSS
- reporting function
-Message-ID: <20230830125210.3d1172db@collabora.com>
-In-Reply-To: <20230824013604.466224-6-adrian.larumbe@collabora.com>
-References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
-        <20230824013604.466224-6-adrian.larumbe@collabora.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+        Wed, 30 Aug 2023 06:57:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01BE8CC2;
+        Wed, 30 Aug 2023 03:57:23 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37U95bmK022981;
+        Wed, 30 Aug 2023 10:57:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=6GD1xS8oDkRT5pT/QjB2C1IGjUTHDeA0RHlXdPU68kM=;
+ b=ny7nYT2bLEXA15d8DpbwXP0f+7N3GzOblNcPJWYtNqcDEgf8KNbnpIYHj319Ppo6ru7a
+ V9o0CYPxU+wEAVE8xjEaobvHiOayUFJQNCJdzk7cF9CbmLj1uXI3tgwrxxYz2fwU4+T3
+ 7sLOYb7m7tTXa8fNvfsZzwjurz7oGOYD//R112MOMV9OnJ+wlBIor7dvk0z58oLkTASb
+ 39x0/HffjcbTNmSabwSTvLMwhVplMiUHqrYqng3somgB6RgNt7XpBn/6gwmu9VvjFuiy
+ gqt36+FGw3RGQapSjxjH0s4HgJ9m33vEJB2MQY4i01qCYEPej9oCG9BnceF21NYgHgxX Wg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ssv0y0xnb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Aug 2023 10:57:17 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37UAvGlo011164
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Aug 2023 10:57:16 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Wed, 30 Aug 2023 03:57:12 -0700
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <bryan.odonoghue@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v8 0/6] soc: qcom: llcc: Add support for QDU1000/QRU1000
+Date:   Wed, 30 Aug 2023 16:26:48 +0530
+Message-ID: <20230830105654.28057-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: h3hRhHv8URRYBu_qtAaV45GkIWbZxVm1
+X-Proofpoint-ORIG-GUID: h3hRhHv8URRYBu_qtAaV45GkIWbZxVm1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ phishscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308300102
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Aug 2023 02:34:48 +0100
-Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
+This patch series does the following -
+ * Refactor LLCC driver to support multiple configuration
+ * Add stub function for nvmem_cell_read_u8
+ * Add support for multi channel DDR configuration in LLCC
+ * Add LLCC support for the Qualcomm QDU1000 and QRU1000 SoCs
 
-> BO's RSS is updated every time new pages are allocated and mapped for the
-> object, either in its entirety at creation time for non-heap buffers, or
-> else on demand for heap buffers at GPU page fault's IRQ handler.
->=20
-> Same calculations had to be done for imported PRIME objects, since backing
-> storage for it might have already been allocated by the exporting driver.
->=20
-> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
-> ---
->  drivers/gpu/drm/panfrost/panfrost_gem.c | 22 ++++++++++++++++++++++
->  drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +++++
->  drivers/gpu/drm/panfrost/panfrost_mmu.c | 16 +++++++++++-----
->  3 files changed, 38 insertions(+), 5 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/pa=
-nfrost/panfrost_gem.c
-> index aea16b0e4dda..c6bd1f16a6d4 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_gem.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
-> @@ -206,6 +206,17 @@ static enum drm_gem_object_status panfrost_gem_statu=
-s(struct drm_gem_object *obj
-> =20
->  	return res;
->  }
-> +
-> +size_t panfrost_gem_rss(struct drm_gem_object *obj)
-> +{
-> +	struct panfrost_gem_object *bo =3D to_panfrost_bo(obj);
-> +
-> +	if (!bo->base.pages)
-> +		return 0;
-> +
-> +	return bo->rss_size;
-> +}
-> +
->  static const struct drm_gem_object_funcs panfrost_gem_funcs =3D {
->  	.free =3D panfrost_gem_free_object,
->  	.open =3D panfrost_gem_open,
-> @@ -218,6 +229,7 @@ static const struct drm_gem_object_funcs panfrost_gem=
-_funcs =3D {
->  	.vunmap =3D drm_gem_shmem_object_vunmap,
->  	.mmap =3D drm_gem_shmem_object_mmap,
->  	.status =3D panfrost_gem_status,
-> +	.rss =3D panfrost_gem_rss,
->  	.vm_ops =3D &drm_gem_shmem_vm_ops,
->  };
-> =20
-> @@ -274,13 +286,23 @@ panfrost_gem_prime_import_sg_table(struct drm_devic=
-e *dev,
->  {
->  	struct drm_gem_object *obj;
->  	struct panfrost_gem_object *bo;
-> +	struct scatterlist *sgl;
-> +	unsigned int count;
-> +	size_t total =3D 0;
-> =20
->  	obj =3D drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
->  	if (IS_ERR(obj))
->  		return ERR_CAST(obj);
-> =20
-> +	for_each_sgtable_dma_sg(sgt, sgl, count) {
-> +		size_t len =3D sg_dma_len(sgl);
-> +
-> +		total +=3D len;
-> +	}
+Changes in v8 -
+ - Removed macro DEF_NUM_CFG as suggested by Bryan.
+ - Rebased on top of linux-next/master.
+ - Link to v7: https://lore.kernel.org/all/20230810061140.15608-1-quic_kbajaj@quicinc.com/
 
-Why not simply have bo->rss_size =3D obj->size here? Not sure I see a
-reason to not trust dma_buf?
+Changes in v7 -
+ - Changed the macro name as suggested by Mukesh.
+ - Added NULL check for llcc cfgs as suggested by Mukesh.
+ - Updated the num_config for qdu1000 to use ARRAY_SIZE().
+ - Link to v6: https://lore.kernel.org/lkml/20230802091429.20892-1-quic_kbajaj@quicinc.com/
 
-> +
->  	bo =3D to_panfrost_bo(obj);
->  	bo->noexec =3D true;
-> +	bo->rss_size =3D total;
-> =20
->  	return obj;
->  }
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/pa=
-nfrost/panfrost_gem.h
-> index e06f7ceb8f73..e2a7c46403c7 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
-> @@ -36,6 +36,11 @@ struct panfrost_gem_object {
->  	 */
->  	atomic_t gpu_usecount;
-> =20
-> +	/*
-> +	 * Object chunk size currently mapped onto physical memory
-> +	 */
-> +	size_t rss_size;
-> +
->  	bool noexec		:1;
->  	bool is_heap		:1;
->  	bool is_purgable	:1;
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/pa=
-nfrost/panfrost_mmu.c
-> index c0123d09f699..e03a5a9da06f 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-> @@ -285,17 +285,19 @@ static void panfrost_mmu_flush_range(struct panfros=
-t_device *pfdev,
->  	pm_runtime_put_autosuspend(pfdev->dev);
->  }
-> =20
-> -static int mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_mmu=
- *mmu,
-> +static size_t mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_=
-mmu *mmu,
->  		      u64 iova, int prot, struct sg_table *sgt)
->  {
->  	unsigned int count;
->  	struct scatterlist *sgl;
->  	struct io_pgtable_ops *ops =3D mmu->pgtbl_ops;
->  	u64 start_iova =3D iova;
-> +	size_t total =3D 0;
-> =20
->  	for_each_sgtable_dma_sg(sgt, sgl, count) {
->  		unsigned long paddr =3D sg_dma_address(sgl);
->  		size_t len =3D sg_dma_len(sgl);
-> +		total +=3D len;
-> =20
->  		dev_dbg(pfdev->dev, "map: as=3D%d, iova=3D%llx, paddr=3D%lx, len=3D%zx=
-", mmu->as, iova, paddr, len);
-> =20
-> @@ -315,7 +317,7 @@ static int mmu_map_sg(struct panfrost_device *pfdev, =
-struct panfrost_mmu *mmu,
-> =20
->  	panfrost_mmu_flush_range(pfdev, mmu, start_iova, iova - start_iova);
-> =20
-> -	return 0;
-> +	return total;
->  }
-> =20
->  int panfrost_mmu_map(struct panfrost_gem_mapping *mapping)
-> @@ -326,6 +328,7 @@ int panfrost_mmu_map(struct panfrost_gem_mapping *map=
-ping)
->  	struct panfrost_device *pfdev =3D to_panfrost_device(obj->dev);
->  	struct sg_table *sgt;
->  	int prot =3D IOMMU_READ | IOMMU_WRITE;
-> +	size_t mapped_size;
-> =20
->  	if (WARN_ON(mapping->active))
->  		return 0;
-> @@ -337,9 +340,10 @@ int panfrost_mmu_map(struct panfrost_gem_mapping *ma=
-pping)
->  	if (WARN_ON(IS_ERR(sgt)))
->  		return PTR_ERR(sgt);
-> =20
-> -	mmu_map_sg(pfdev, mapping->mmu, mapping->mmnode.start << PAGE_SHIFT,
-> +	mapped_size =3D mmu_map_sg(pfdev, mapping->mmu, mapping->mmnode.start <=
-< PAGE_SHIFT,
->  		   prot, sgt);
->  	mapping->active =3D true;
-> +	bo->rss_size +=3D mapped_size;
+Changes in v6 -
+ - Changed variable name from num_cfgs to num_config as suggested by Mukesh.
+ - Added a check for default llcc configuration as per suggestion from Mukesh.
+ - Updated the commit summary for the third and fifth patch.
+ - Fixed alignment in the fourth patch.
+ - Used ARRAY_SIZE() to calculate the num_config as per suggested by Konrad.
+ - Link to v5: https://lore.kernel.org/lkml/20230724084155.8682-1-quic_kbajaj@quicinc.com/
 
-Actually, the GEM might be resident even before panfrost_mmu_map() is
-called: as soon as drm_gem_shmem_get_pages[_locked]() is called, it's
-resident (might get evicted after that point though). That means any
-mmap coming from userspace will make the buffer resident too. I know
-we're automatically mapping GEMs to the GPU VM in panfrost_gem_open(),
-so it makes no difference, but I think I'd prefer if we keep ->rss_size
-for heap BOs only (we probably want to rename it heap_rss_size) and
-then have
+Changes in v5 -
+ - Separated out the secure qfprom driver changes to a separate series [1].
+ - Created a wrapper struct with a pointer to qcom_llcc_config and
+   length of array qcom_llcc_config.
+ - Added stub function for nvmem_cell_read_u8.
+ - Split commit 6/6 in the previous series into two commits.
+ - Link to v4: https://lore.kernel.org/lkml/20230623141806.13388-1-quic_kbajaj@quicinc.com/
+
+Changes in v4 -
+ - Created a separate driver for reading from secure fuse region as suggested.
+ - Added patch for dt-bindings of secure qfprom driver accordingly.
+ - Added new properties in the dt-bindings for LLCC.
+ - Implemented new logic to read the nvmem cell as suggested by Bjorn.
+ - Separating the DT patches from this series as per suggestion.
+ - Link to v3: https://lore.kernel.org/lkml/20230512122134.24339-1-quic_kbajaj@quicinc.com/
+
+Changes in v3 -
+ - Addressed comments from Krzysztof and Mani.
+ - Using qfprom to read DDR configuration from feature register.
+ - Link to v2: https://lore.kernel.org/lkml/20230313124040.9463-1-quic_kbajaj@quicinc.com/
+
+Changes in v2:
+  - Addressing comments from Konrad.
+  - Link to v1: https://lore.kernel.org/lkml/20230313071325.21605-1-quic_kbajaj@quicinc.com/
+
+[1] https://lore.kernel.org/linux-arm-msm/20230724082946.7441-1-quic_kbajaj@quicinc.com/
 
 
-	if (bo->is_heap)
-		return bo->heap_rss_size;
-	else if (bo->base.pages)
-		return bo->base.base.size;
-	else
-		return 0;
+Komal Bajaj (6):
+  dt-bindings: cache: qcom,llcc: Add LLCC compatible for QDU1000/QRU1000
+  soc: qcom: llcc: Refactor llcc driver to support multiple
+    configuration
+  nvmem: core: Add stub for nvmem_cell_read_u8
+  soc: qcom: Add LLCC support for multi channel DDR
+  soc: qcom: llcc: Updating the macro name
+  soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC support
 
-in panfrost_gem_rss().
+ .../devicetree/bindings/cache/qcom,llcc.yaml  |  10 +
+ drivers/soc/qcom/llcc-qcom.c                  | 361 +++++++++++++-----
+ include/linux/nvmem-consumer.h                |   6 +
+ include/linux/soc/qcom/llcc-qcom.h            |   2 +-
+ 4 files changed, 291 insertions(+), 88 deletions(-)
 
-> =20
->  	return 0;
->  }
-> @@ -447,6 +451,7 @@ static int panfrost_mmu_map_fault_addr(struct panfros=
-t_device *pfdev, int as,
->  	pgoff_t page_offset;
->  	struct sg_table *sgt;
->  	struct page **pages;
-> +	size_t mapped_size;
-> =20
->  	bomapping =3D addr_to_mapping(pfdev, as, addr);
->  	if (!bomapping)
-> @@ -518,10 +523,11 @@ static int panfrost_mmu_map_fault_addr(struct panfr=
-ost_device *pfdev, int as,
->  	if (ret)
->  		goto err_map;
-> =20
-> -	mmu_map_sg(pfdev, bomapping->mmu, addr,
-> -		   IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
-> +	mapped_size =3D mmu_map_sg(pfdev, bomapping->mmu, addr,
-> +				 IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
-> =20
->  	bomapping->active =3D true;
-> +	bo->rss_size +=3D mapped_size;
-> =20
->  	dev_dbg(pfdev->dev, "mapped page fault @ AS%d %llx", as, addr);
-> =20
+--
+2.41.0
 
