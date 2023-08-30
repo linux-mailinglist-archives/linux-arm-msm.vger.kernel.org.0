@@ -2,158 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4B5378D8E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63B3978D943
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236069AbjH3Sbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38666 "EHLO
+        id S235133AbjH3Scn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242463AbjH3Ikg (ORCPT
+        with ESMTP id S242910AbjH3J6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 04:40:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA17B1B7;
-        Wed, 30 Aug 2023 01:40:33 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37U6vI00029802;
-        Wed, 30 Aug 2023 08:40:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=71ekcuHULVbsEdIqnFr9o/2b5AzjhuE5u9KKik9CREM=;
- b=fwCKf5LHSBDwL9fakypZEcfTwWadqWelme2NzJcvHkElUfJVaGSzu72dN+KUH0ryZTnX
- vOCHN5Humh4xfx8XtNJ2U80FZNWePEUwkIP+sLgYbzWsJPZvGHw1vood/BgLgh8IOz7a
- RAXh4fjxA4D5qHw7rg9R0cC1tJfxObCrmUKupd9MlZ5Lsd3fLn34EjGUoN2IALh8sInA
- 96a9NSezsUeefPGlT/5TaRvUr/vYesl6WPHLZUKJuqptlDDlD8RiSHfbYBkTkNvmZ2cv
- rmTf5ipuCuS+N98KCuhccHdqAGegM2+hlbtjCBztpmO4qSb/52wiaq83K87Jy9KW0UJZ BQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ssv008qh5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 08:40:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U8eLQv000435
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 08:40:21 GMT
-Received: from [10.216.62.155] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 30 Aug
- 2023 01:40:17 -0700
-Message-ID: <16ae9733-3e22-db7f-56c4-47c1a55cf23c@quicinc.com>
-Date:   Wed, 30 Aug 2023 14:10:08 +0530
+        Wed, 30 Aug 2023 05:58:48 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 365521BB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 02:58:44 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4ff09632194so8583437e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 02:58:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1693389522; x=1693994322; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ImC06/+tS7Twj3eQRRUsuycUqqVXH052q1hemh/ikWU=;
+        b=r8GAC4lMHUa5I2T/ySPKd0cIPPQWidpqX97LzVX/TOy2IDuwivuTKw8Iqz6DA1VQa/
+         OhFvUiDvaCIz0TNirzmBBK15++Vh0P+RiGU2RZfYPIPTR3zqJCoL242WasZCd3Jf4ggt
+         fYi+QCfjcNwHIWoAvP48Fnl5foc1u4ZK0KJuTuHxxwiaipK+AFmotyUc3xkom+RpsL+V
+         njQA0ZTUlUhBDurGXIM8dqBq7pZfioWaNfD6VjN/QnbQOquX/9vlivBZ77/Bs7tHF7dc
+         1/vlbj454uSNwRyAIPqc3hRzyCrEiCoCKBXWVU+P4sYVqoAEeF4quaM1zoncUfiJREG6
+         GvhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693389522; x=1693994322;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ImC06/+tS7Twj3eQRRUsuycUqqVXH052q1hemh/ikWU=;
+        b=Afxjr07RVdlR1xHjimW4UUMR0p5kMA1YRafzBeYLe49dJkYv/SalMupOF42yTrO3bf
+         U1d8hNufMowC38EFztuiioyOyJhWKOQati0i6rCm/5yAKpDd4pqQwz+btgnGEgHMxbqT
+         AhM9tQ1tbb37RpowNyBymKlsStBQ2YA3U3PAk51RMDZFnLGVMGlJ6VGlXsF0DxFebWsA
+         /7GlA5Yflvg3CTH/1gsChC4IkaEbDsBF+xnkVLKc5bKn9qlF5brXnmJrVC+Y93yX3Gh5
+         ZV9wsGN1Kc+T/oMo1kh5WslUfI9vb43KMqj+Up39SMkwdW9r9OC/uog25TveRu93/RWR
+         3zZA==
+X-Gm-Message-State: AOJu0Yx99oB3SaOT37aLKdZ0dI7JW0oxLlUlRZWcKApTA1+CXdb1v+24
+        1C2r9W0hmfANlwqSpU6XS7Py1A==
+X-Google-Smtp-Source: AGHT+IHhkgd47WHbYn3fJiBbQlVzHfchnV6Zhz/9BP+uHBaTqzKkkSmXoZ5vGmgUP4lJA5UX0lAuqQ==
+X-Received: by 2002:a05:6512:224c:b0:4fe:cc2:247a with SMTP id i12-20020a056512224c00b004fe0cc2247amr1121093lfu.49.1693389522330;
+        Wed, 30 Aug 2023 02:58:42 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (5073ED84.static.ziggozakelijk.nl. [80.115.237.132])
+        by smtp.gmail.com with ESMTPSA id i15-20020a1709064ecf00b009a2202bfce5sm6957130ejv.118.2023.08.30.02.58.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Aug 2023 02:58:41 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 00/11] Initial support for the Fairphone 5 smartphone
+Date:   Wed, 30 Aug 2023 11:58:25 +0200
+Message-Id: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] clk: qcom: clk-rcg2: Fix wrong RCG clock rate for high
- parent frequencies
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_saahtoma@quicinc.com>
-References: <20230720083304.28881-1-quic_devipriy@quicinc.com>
- <v2jtnqomqr3bmewtollty2wlu73ymtbobt3pd5aypprmezhow2@edrb3w3kz56b>
-Content-Language: en-US
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <v2jtnqomqr3bmewtollty2wlu73ymtbobt3pd5aypprmezhow2@edrb3w3kz56b>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6vol6wSwB92wY49cXFpnU8zPApqwJ_EE
-X-Proofpoint-GUID: 6vol6wSwB92wY49cXFpnU8zPApqwJ_EE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 spamscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
- adultscore=0 mlxlogscore=910 lowpriorityscore=0 phishscore=0 clxscore=1011
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308300080
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAMES72QC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2MDC0ML3bQCU93MvMySzMQc3SSzZAsjQ4OkRMtkCyWgjoKi1LTMCrBp0bG
+ 1tQCNAZuXXQAAAA==
+To:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add support to boot up mainline kernel on the QCM6490-based Fairphone 5
+smartphone.
 
+These patches only cover a part of the functionality brought up on
+mainline so far, with the rest needing larger dts and driver changes or
+depend on patches that are not yet merged. I will work on sending those
+once these base patches here have settled.
 
-On 7/21/2023 12:37 AM, Marijn Suijten wrote:
-> Can you retitle this to state "overflow" rather than just "wrong"?
-> That's more descriptive.
-> 
-> E.g "Fix clockrate overflow for high parent frequencies"
-Sure okay
-> 
-> On 2023-07-20 14:03:04, Devi Priya wrote:
->> If the parent clock rate is greater than unsigned long max/2 then
->> integer overflow happens when calculating the clock rate on 32-bit systems.
->> As RCG2 uses half integer dividers, the clock rate is first being
->> multiplied by 2 which will overflow the unsigned long max value. So, use
->> unsigned long long for rate computations to avoid overflow.
->>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   drivers/clk/qcom/clk-rcg2.c | 12 ++++++------
->>   1 file changed, 6 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
->> index e22baf3a7112..42d00b134975 100644
->> --- a/drivers/clk/qcom/clk-rcg2.c
->> +++ b/drivers/clk/qcom/clk-rcg2.c
->> @@ -156,18 +156,18 @@ static int clk_rcg2_set_parent(struct clk_hw *hw, u8 index)
->>    *            hid_div       n
->>    */
->>   static unsigned long
->> -calc_rate(unsigned long rate, u32 m, u32 n, u32 mode, u32 hid_div)
->> +calc_rate(unsigned long parent_rate, u32 m, u32 n, u32 mode, u32 hid_div)
->>   {
->> +	u64 rate = parent_rate;
->> +
->>   	if (hid_div) {
->>   		rate *= 2;
->> -		rate /= hid_div + 1;
->> +		do_div(rate, hid_div + 1);
-> 
-> I'm pretty sure mult_frac() could have solved this as well, without
-> temporarily going to u64?
-> 
->      mult_frac(rate, 2, hid_div + 1)
+Since QCM6490, like SC7280 are 'yupik' in the vendor-provided kernel, we
+can base the dts on it and leverage existing support. Though current
+sc7280 support mostly assumes ChromeOS devices which have a different
+TrustZone setup, so we need to move some ChromeOS-specific bits to the
+sc7280-chrome-common.dtsi file to make it boot on a standard TZ board.
 
-Yes, sure will update
-> 
->>   	}
->>   
->>   	if (mode) {
->> -		u64 tmp = rate;
->> -		tmp *= m;
->> -		do_div(tmp, n);
->> -		rate = tmp;
->> +		rate *= m;
->> +		do_div(rate, n);
-> 
->      mult_frac(rate, m, n)
+Depends on (just for the #include in sc7280.dtsi):
+https://lore.kernel.org/linux-arm-msm/20230818-qcom-vmid-defines-v1-1-45b610c96b13@fairphone.com/
 
-Will update in V2
+The pm7250b patch has been picked up from this series:
+https://lore.kernel.org/linux-arm-msm/20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com/
 
-Thanks,
-Devi Priya
-> 
-> Or am I totally wrong?
-> 
-> - Marijn
-> 
->>   	}
->>   
->>   	return rate;
->> -- 
->> 2.17.1
->>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (11):
+      arm64: dts: qcom: sc7280: Mark some nodes as 'reserved'
+      nvmem: qfprom: Mark core clk as optional
+      arm64: dts: qcom: sc7280: Move qfprom clock to chrome-common
+      arm64: dts: qcom: pm7250b: make SID configurable
+      arm64: dts: qcom: pm8350c: Add flash led node
+      dt-bindings: pinctrl: qcom,sc7280: Allow gpio-reserved-ranges
+      dt-bindings: arm: qcom,ids: Add SoC ID for QCM6490
+      soc: qcom: socinfo: Add SoC ID for QCM6490
+      cpufreq: Add QCM6490 to cpufreq-dt-platdev blocklist
+      dt-bindings: arm: qcom: Add QCM6490 Fairphone 5
+      arm64: dts: qcom: qcm6490: Add device-tree for Fairphone 5
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml      |   4 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi              |  23 +-
+ arch/arm64/boot/dts/qcom/pm8350c.dtsi              |   6 +
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 659 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |  17 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   7 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c               |   1 +
+ drivers/nvmem/qfprom.c                             |   2 +-
+ drivers/soc/qcom/socinfo.c                         |   1 +
+ include/dt-bindings/arm/qcom,ids.h                 |   1 +
+ 12 files changed, 717 insertions(+), 11 deletions(-)
+---
+base-commit: 0255bba921438ea1e45d3f0873c3e8c5a1e03876
+change-id: 20230818-fp5-initial-b6c8210ba9c8
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
