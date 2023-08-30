@@ -2,112 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 348FF78D94E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC59078D90B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232366AbjH3Scs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:32:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
+        id S234708AbjH3ScK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243263AbjH3KfP (ORCPT
+        with ESMTP id S243267AbjH3KfV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 06:35:15 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DE419A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:35:12 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9a21b6d105cso696322266b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:35:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1693391710; x=1693996510; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PakJOWM3f2X2lU1WdNU5BXfvb8MoSegIjT2fCvwDw80=;
-        b=GixEsPqB2Th8dNC6y1A9NmVJ8DU68tCEFs3pbkeUL4NK6rr9DIqgUYW7J2xdZAeMD5
-         n2GLwwRWMo+pBNZDev8GBEq1BVhRmHssjQ86kPyVIsifDM24qP2hQooWK0Db2yXkkCWE
-         Uu8tCeqeOwFA0aW0j7DcTUHfpsqmZWg4zeLR7Rq/QUnw/Mv2hAcguwBpltqNt/ciknKd
-         6mB94S6VsuyKyzdkYwGIxW66fqxcnALruf20ueO/+n47nuepdTKY3gPg3QjNUlPKdrAi
-         ei1Aoab16YdrNxSuo0lNGAagk9+tx38EAPAcuL8yb/fewoei36LhKqorJqB5LJXyeqcB
-         GzvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693391710; x=1693996510;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=PakJOWM3f2X2lU1WdNU5BXfvb8MoSegIjT2fCvwDw80=;
-        b=DKEbDLdx0wfylS2/O+cZftszQ1sY68WPw9T7PVQV6YBc0SBC8hM7/bJIyV9MuiaoNi
-         7ZlZCiZm7o7r4Jj1EdjpdlOgzmL4BFGZZZvnzdsf1f0ZgKARApA+e3FetDpel0etxXkk
-         J8yxSHJOdtZheA4+tFdsfhTNwyjrDz8kzaqyrLdMFzTIUGHvJtKFjXYXByJw/AyqM8xe
-         X1IakklfmKnK3jV9iw1VrKqeWcVOpzkmwXReghADHBjSTHEkkjtOC1gAd3ciqEUGCSgX
-         uL5+/Z2NlTA1kEL8x3xsZz/NX9MqMIZobs0+8mCfWftBx8CQTVM//DWbM8NgQ2kW7XsN
-         m5rg==
-X-Gm-Message-State: AOJu0YzuQLurv08aSZOA6bEIiVOHbnvfufD95DNHBxvtF/NPsn8RHFl2
-        oaklFVwDgfHxqxHlbXVroGXCEg==
-X-Google-Smtp-Source: AGHT+IGXWivNh1ZlN/nqyhwxsykDuhrosQf2fDYTztx4ftyPi0mkO+YgqlM65aT3mHmdxazJFxUSiQ==
-X-Received: by 2002:a17:906:3152:b0:994:1844:c7d1 with SMTP id e18-20020a170906315200b009941844c7d1mr1175949eje.13.1693391710514;
-        Wed, 30 Aug 2023 03:35:10 -0700 (PDT)
-Received: from localhost (5073ED84.static.ziggozakelijk.nl. [80.115.237.132])
-        by smtp.gmail.com with ESMTPSA id gy25-20020a170906f25900b00985ed2f1584sm7066888ejb.187.2023.08.30.03.35.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 03:35:10 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        Wed, 30 Aug 2023 06:35:21 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A3C19A;
+        Wed, 30 Aug 2023 03:35:18 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id D5A4F6607236;
+        Wed, 30 Aug 2023 11:35:16 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693391717;
+        bh=KZarq9IFVHe9P2TumUzb/mQlXyao/cCu6/Rbx6Q3Nyo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=YfVsk8X7VNMGYXNgW/cDHU4E153/CP3CtOk45NFNGR65Vp6P/f9KXRLLj+nZmEFBc
+         nBGdE7ACLkrM8cE+XKXAn0ek6I+GBHYMH+Ua0u5aVyC09rbxMBTPw9AM8b9rkOZMYc
+         p6u1CLmYyj5kku4TXSNU5M+RkOAVh/HYcXmDieg7U8QRi6UX1lE2li+Sy0N9JQqE9r
+         jkzu79p+Lc8F+jNomNnX8LhNACanNZ2RVbFFkOEipWzXKXK1phr8xmcbRYZ5NzWkra
+         9xd2KqLzpK6AUY/vfv6UY0i5pcL3XjzAXPrl+OgTHKNnCCebBtbz2EKgdW8zqov7F1
+         QiFeHv1OnQgjg==
+Date:   Wed, 30 Aug 2023 12:35:14 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/6] drm/panfrost: Add cycle count GPU register
+ definitions
+Message-ID: <20230830123514.28c0180f@collabora.com>
+In-Reply-To: <20230824013604.466224-2-adrian.larumbe@collabora.com>
+References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
+        <20230824013604.466224-2-adrian.larumbe@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date:   Wed, 30 Aug 2023 12:35:09 +0200
-Message-Id: <CV5T9FXMWOAT.2ZXS0CZ8S0EUM@otso>
-To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Viresh Kumar" <viresh.kumar@linaro.org>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 01/11] arm64: dts: qcom: sc7280: Mark some nodes as
- 'reserved'
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.15.2
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-1-5a954519bbad@fairphone.com>
- <160d6151-914b-4f2f-9f7c-d14cbb901619@linaro.org>
-In-Reply-To: <160d6151-914b-4f2f-9f7c-d14cbb901619@linaro.org>
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed Aug 30, 2023 at 12:08 PM CEST, Konrad Dybcio wrote:
-> On 30.08.2023 11:58, Luca Weiss wrote:
-> > With the standard Qualcomm TrustZone setup, components such as lpasscc,
-> > pdc_reset and watchdog shouldn't be touched by Linux. Mark them with
-> > the status 'reserved' and reeable them in the chrome-common dtsi.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> Could probably use /* Owned by ADSP firmware */ or /* Owned by Gunyah hyp=
- */
+On Thu, 24 Aug 2023 02:34:44 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-Do you know which one is more fitting for these nodes? I don't really
-have a reference to if the ADSP or Gunyah (is this even used here?) owns
-this.
+> These GPU registers will be used when programming the cycle counter, which
+> we need for providing accurate fdinfo drm-cycles values to user space.
+>=20
+> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
 
-Regards
-Luca
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
 
->
-> the change lgtm though
->
-> Konrad
+> ---
+>  drivers/gpu/drm/panfrost/panfrost_regs.h | 5 +++++
+>  1 file changed, 5 insertions(+)
+>=20
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_regs.h b/drivers/gpu/drm/p=
+anfrost/panfrost_regs.h
+> index 919f44ac853d..55ec807550b3 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_regs.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_regs.h
+> @@ -46,6 +46,8 @@
+>  #define   GPU_CMD_SOFT_RESET		0x01
+>  #define   GPU_CMD_PERFCNT_CLEAR		0x03
+>  #define   GPU_CMD_PERFCNT_SAMPLE	0x04
+> +#define   GPU_CMD_CYCLE_COUNT_START	0x05
+> +#define   GPU_CMD_CYCLE_COUNT_STOP	0x06
+>  #define   GPU_CMD_CLEAN_CACHES		0x07
+>  #define   GPU_CMD_CLEAN_INV_CACHES	0x08
+>  #define GPU_STATUS			0x34
+> @@ -73,6 +75,9 @@
+>  #define GPU_PRFCNT_TILER_EN		0x74
+>  #define GPU_PRFCNT_MMU_L2_EN		0x7c
+> =20
+> +#define GPU_CYCLE_COUNT_LO		0x90
+> +#define GPU_CYCLE_COUNT_HI		0x94
+> +
+>  #define GPU_THREAD_MAX_THREADS		0x0A0	/* (RO) Maximum number of threads =
+per core */
+>  #define GPU_THREAD_MAX_WORKGROUP_SIZE	0x0A4	/* (RO) Maximum workgroup si=
+ze */
+>  #define GPU_THREAD_MAX_BARRIER_SIZE	0x0A8	/* (RO) Maximum threads waitin=
+g at a barrier */
 
