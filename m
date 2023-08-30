@@ -2,86 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2445378D94C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9732678D862
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235255AbjH3Scq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:32:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56072 "EHLO
+        id S234027AbjH3SaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241528AbjH3G4q (ORCPT
+        with ESMTP id S241955AbjH3HL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 02:56:46 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DE91194;
-        Tue, 29 Aug 2023 23:56:44 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37U40Ib9029236;
-        Wed, 30 Aug 2023 06:56:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3DoJYGklD1tQaMTZRLQgv4ZxOJNnKBu2cN/iyXz1foY=;
- b=T2lOnrZNvuqxawi5To1zSUdWwGMtVBDt+WMHStXUEufEpD90DtBhX9rO3AkOw24xnVU6
- 4QkA7krGW/g5iJdsfdw1JLq0W6+x9sfW21HW9qfmiTesIB0j0zRMs6Z64HWWEnDApC5n
- KbgSbb6Y3XS7EkLQdkcRXxsc0GvIB5XPWeG/xpOpvjzbiTb9o8MzQ+qfLM0XAs6D2NN/
- OECMvQh7fueqF2pV0sGGbK4qmGAQKIcJyd4g4TIsoPgNsBzwDvrSZPoLVg0I5jFb33yk
- 0dfL/aOd7tBOxiwmdqPK4LYKg4e9C62LNaEBR5Ulcxco/dy7lGEK7zzTuUXHOjeQP703 yQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss7meufdc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 06:56:36 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U6uZ97030433
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 06:56:35 GMT
-Received: from [10.50.47.209] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
- 2023 23:56:30 -0700
-Message-ID: <edfa69b8-0bc2-6121-6edd-b08e99490a47@quicinc.com>
-Date:   Wed, 30 Aug 2023 12:26:27 +0530
+        Wed, 30 Aug 2023 03:11:28 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECA9A1BE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 00:11:23 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52a4b62c2f5so6803389a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 00:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693379482; x=1693984282; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4X810Sd+FAfinOuDeQjJFxdDeSuw3tPSc7gW/bUxxmc=;
+        b=a9Y5QTZNXXKs9nPMXo417JCz/QKAcQy1xgeBcXtqVuXe8uLKIF/yrOaNpEqX5Pf/io
+         qnuGi5UXluXpNgEWOMuiC4+Ggl2M0NZOjzcklz6pcZqj+UgvxAwRdDyqwSPJTKtQ8gCi
+         E6r3gXNYg6pZmJvhTzV41yfhyS6mfmHJfZug5MngAZFOj+hp5fdpWHyOdjUH1IiXNCv1
+         jalUgZPSNf/zajd4QppFkTKpi287wr+TGEa7xceG9zzvCugTzra0mSuN02GSSlhpIOtL
+         4YIlKRcCf3Rof4g2Z8+IuqizM6pf39m6nGuhIissvFGfQ12UQghjwZd5INmkAZngSYHK
+         5SgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693379482; x=1693984282;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4X810Sd+FAfinOuDeQjJFxdDeSuw3tPSc7gW/bUxxmc=;
+        b=Iq+9JMAl0TzDN6PPObdMK03DbBSn/PpnMOxYCJLKSjOfnfumi386YlJ+geeSsD/bq6
+         TwSTtfmmFnii9XowgFbw7Nxb8y6Na4T73pK/paDcaEM/HIVgwkrd0sxhwCoKeTpwBG4b
+         FXKH2HrPPWpbOw1yQ0eIT4xlLzPskxoeDCT3CHhd4+LUFaz9NiNHE5hJmSzgwAkYwS49
+         9FhWeSzyVxMciOK+vWuDSjkghUSIIw01wPkhhQK+yvL0id0O+rBSkYBKDKu+IdYCDEKD
+         MCHqSQqoM3qvK5lLAzJvHqXmvHWu1znCZVNLfOEjWC3APRQrc9lsE063JVYc32Ltk4Ra
+         YZ5g==
+X-Gm-Message-State: AOJu0YytIf3ITLG6GbQhoUT0LkHMjpQSTmWFl4y+aQ8/LDNoKicktkJ6
+        b+SMJQ16f8s8nHzVbQcunrNIDQ==
+X-Google-Smtp-Source: AGHT+IEYCPnvQKeOC3qIczHiEZucOO/GNEh252whblJjg9K7h3SNi2mOr9jig7a/o2KtxMadPr1MLQ==
+X-Received: by 2002:a17:906:76c8:b0:9a1:d67c:b4eb with SMTP id q8-20020a17090676c800b009a1d67cb4ebmr913139ejn.48.1693379482411;
+        Wed, 30 Aug 2023 00:11:22 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id n11-20020a17090625cb00b009934855d8f1sm6910043ejb.34.2023.08.30.00.11.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Aug 2023 00:11:21 -0700 (PDT)
+Message-ID: <db8d5123-19d7-50d0-935b-a25d235e6e2e@linaro.org>
+Date:   Wed, 30 Aug 2023 09:11:20 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: ipq5018: Enable USB
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-CC:     Amandeep Singh <quic_amansing@quicinc.com>
-References: <20230825093531.7399-1-quic_nsekar@quicinc.com>
- <20230825093531.7399-6-quic_nsekar@quicinc.com>
- <5373a7b5-df23-47df-b732-60a31c1ea6d0@linaro.org>
-From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
-In-Reply-To: <5373a7b5-df23-47df-b732-60a31c1ea6d0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Mark Brown <broonie@kernel.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, workflows@vger.kernel.org,
+        tools@linux.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
+ <20230828175629.GC23466@quicinc.com>
+ <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
+ <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
+ <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
+ <20230829231638.GA27843@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230829231638.GA27843@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: im_ySFxKRodp7HMTmPIqPLtOom66hULb
-X-Proofpoint-GUID: im_ySFxKRodp7HMTmPIqPLtOom66hULb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=653 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2308300063
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,30 +94,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 8/25/2023 4:08 PM, Krzysztof Kozlowski wrote:
-> On 25/08/2023 11:35, Nitheesh Sekar wrote:
->> Enable USB2 in host mode.
+On 30/08/2023 01:16, Guru Das Srinagesh wrote:
+> On Aug 28 2023 21:45, Krzysztof Kozlowski wrote:
+>> On 28/08/2023 21:41, Mark Brown wrote:
+>>> On Mon, Aug 28, 2023 at 07:59:54PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 28/08/2023 19:56, Guru Das Srinagesh wrote:
+>>>
+>>>>> Your function adds mailing lists also in "To:" which is not ideal, in my view.
+>>>>> You've mentioned before that To or Cc doesn't matter [1] which I disagree
+>>>>> with: it doesn't matter, why does Cc exist as a concept at all?
+>>>
+>>>> To/Cc does not matter when sending new patch, because maintainers know
+>>>> they are maintainers of which parts. I know what I handle.
+>>>
+>>> That might be true for you (and also is for me) but I know there are
+>>> people who pay attention to if they're in the To: for various reasons, I
+>>> gather it's mostly about triaging their emails and is especially likely
+>>> in cases where trees have overlaps in the code they cover.
 >>
->> Co-developed-by: Amandeep Singh <quic_amansing@quicinc.com>
->> Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
->> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 12 ++++++++++++
->>   1 file changed, 12 insertions(+)
+>> True, there can be cases where people pay attention to addresses of
+>> emails. Just like there are cases where people pay attention to "To/Cc"
+>> difference.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->> index e636a1cb9b77..cdf5e22ec54e 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->> @@ -70,3 +70,15 @@
->>   &xo_board_clk {
->>   	clock-frequency = <24000000>;
->>   };
->> +
->> +&usbphy0 {
-> u is before x
-Sure, will sort and reorder the nodes.
+>> In my short experience with a few patches sent, no one complained to me
+>> that I put him/her/they in "To" field of a patch instead of "Cc" (with
+>> remark to not spamming to much, so imagine I send a patch for regulator
+>> and DTS). Big, multi-subsystem patchsets are different case and this
+>> script does not solve it either.
+> 
+> Not sure what you mean by "does not solve it" - what is the problem being
+> referred to here?
 
-Regards,
-Nitheesh
+Exactly, no one even knows what problem you want to solve by swapping
+To-Cc between patches...
+
+> 
+> In case of multi-subsystem patches in a series, the commit message of this
+> patch explains exactly the actions taken.
+> 
+>> Anyway, if it is not ideal for Guru, I wonder how his LKML maintainer
+>> filters work that it is not ideal? What is exactly not ideal in
+>> maintainer workflow?
+> 
+> I am not a maintainer - only an individual contributor - and as such, even
+> though I may get patches on files I've contributed to, I deeply appreciate the
+> distinction between being Cc-ed in a patch vs To-ed in one. The distinction
+> being that if I'm in "To:" I ascribe higher priority to it and lesser if I'm in
+> "Cc:".
+
+That's your feeling, quite subjective. I understand it comes from
+corporate world, but again...
+
+> 
+> If this script is accepted and gains adoption, maintainers like yourself will
+> only be To-ed in patches that touch files that you're a direct "Maintainer" or
+> "Reviewer" of. 
+
+It will not get traction because:
+1. People should use b4, not this script.
+2. Remaining people will just use get_maintainers.pl.
+3. People cannot get right even basic commands, so we will never be able
+to rely on To or Cc distinction. I can give you example: my email
+address in get_maintainers.pl is a bit different. Does it matter? Often
+not. Entire bunch of folks were Ccing me on different address. Even
+though every tool told them not to...
+
+> For all other patches in the series you'll be in "Cc:". I
+> imagine that this can be very useful regardless of the specifics of your
+> workflow.
+
+Zero usefulness for me.
+
+Best regards,
+Krzysztof
+
