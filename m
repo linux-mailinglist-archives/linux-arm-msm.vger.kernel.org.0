@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 881EF78D8BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:31:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DB1878D85E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233977AbjH3SbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58460 "EHLO
+        id S233752AbjH3SaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242912AbjH3J6v (ORCPT
+        with ESMTP id S242918AbjH3J6w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 05:58:51 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D786CCB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 02:58:45 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99c3c8adb27so676202766b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 02:58:45 -0700 (PDT)
+        Wed, 30 Aug 2023 05:58:52 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8F791B3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 02:58:46 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so1465777a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 02:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1693389524; x=1693994324; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1693389525; x=1693994325; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xX0/yXPE7aSISxZJn2hMtArfZI0yA7qiHLxVlnkrZys=;
-        b=Y9hZ7+A5HiT8beas78k26hVgAAx9719kCV2QlhX19KYdRzG9zrKvsU19WL/ynr8dIE
-         U1mAOwqVauz8S1QiuPXTRb+njFq4RA6N2kB0EdhQDcDQgjDtf9BooH+BQVH+glzIQwsn
-         n0ozbiUvrHusuS9jfrfumr3wcG9ZatSBoTPrTuBu89QLdFtWGknzGHhsJ3NyaE80HHhX
-         4S9BshQ5aIAddvff+/JNz/4akqpbWGW9o0WYzrisx8L55rFsx7TFYnkeP8rVjnLI7Hrb
-         MA5eghZQ3AOlx1QFyzwzPsH6N4gj3UUotdSS4AjbCVqZi09valZCVLrLLUwiE0D2iME9
-         PsaQ==
+        bh=gKtgdDeh3KGEuNDRaZoZ19ZkmrfCqDJYBlZVW0lWVIw=;
+        b=oRgKORGQ4IjGWo5kvSfaotzAPwxitDtK0ILXoqAtV2gfr4yjFH41ndOaRTCeHPmit1
+         Cuhhcy9mVbhbwe9YwSxd66AcinmBEaAYLACkuydS29uNg0OosW6EHkdjNYAvgxsMAr6e
+         1Z2HI+Y8hxZAVUOmPyTljmWX3GF1cc34lfSiYgV/cXbYn2Wt3Fnwcqsiz26NWA69lolC
+         H786Dy1vBwayvVf8B8nBjiedA6NE0NCgQlO+XfYIboc02SHNIxCguqpdcZaVPiz29Hq0
+         9OxJ9zu7B9/JQlsOCnZqfNUto3SYXu9dkXN87Ao3+C+tyniEIBVjCPZYqOlm2qOxYJll
+         zh4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693389524; x=1693994324;
+        d=1e100.net; s=20221208; t=1693389525; x=1693994325;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xX0/yXPE7aSISxZJn2hMtArfZI0yA7qiHLxVlnkrZys=;
-        b=FuG8uNMtHo1I6r0auTgVRCMYTCLK592DLeBgQwuQpmLXYRdlYSsdri0uIPJCUY0EmQ
-         knThCXl87b5ljTUoWlG5bvus0Z5JU5jwBTPpQzz2OmAaiztQxIBos9UFcXS85mcuZ/Zj
-         nhvedY587l+tLvkTGZnxIFD+so+5iuMslY5BK/nfN0Cxe8WM6miusDoPdwgVCduOnm9k
-         qbMss5mFBFI0Eo2RV7aeGBa99SpDN07BELSMvebyFTiUAc1p1Tt3inhj4sCdPHnlJde4
-         wTRGx8Sx/Jy4ofoR8rmBX54oDhvaZdVSTgt+Q7sgt2kp6MfKIzxYtkm3ccagmWdmppPJ
-         D1gA==
-X-Gm-Message-State: AOJu0Yx6+yd23MmywnWx/Qf75OQs22GwvSAY9bvGfh98KN8HO5VeJW3D
-        rUHwdi98LawmzTOvqS7NZ4MPdg==
-X-Google-Smtp-Source: AGHT+IHE2oNPr8YGDecm3++Y/fHkgaWwsbjkXdc3triMzGQUW4D74YTAwBQ4M0EqJPBcxNRdKwGq0Q==
-X-Received: by 2002:a17:907:78d1:b0:9a5:eedb:ee1d with SMTP id kv17-20020a17090778d100b009a5eedbee1dmr560880ejc.46.1693389523821;
-        Wed, 30 Aug 2023 02:58:43 -0700 (PDT)
+        bh=gKtgdDeh3KGEuNDRaZoZ19ZkmrfCqDJYBlZVW0lWVIw=;
+        b=IgQJEB9Sg9xFSniYaT1c/pPytFIquzViBv3KYuTMzLJxoC0BtxQyn3msSC0XyZwQcm
+         IjDP2UChkt2N0Cs2eC7ahIRTswsNU1flFUbYe7RXKCZ4oHzV2nzsoy8iZEYw8J40hBat
+         6XKFSVSK+YRKabPCpAib5WDEXYnxEWZSAneoNIDlU3/KeWH9E7AVkMqXyEuBukzSNQl1
+         5IZKRtx/4uwTxmVCIJop1h41cvnDRDAlmlNKTHBMp2aGFPxfoQuUZLsJH6pzO/rzShiC
+         p1si5TPICEYldXZu82w9gicrIn55ZvFeX+D6cDhOVPTCEARH4obg9kpYirkkmcK1EHtI
+         faNA==
+X-Gm-Message-State: AOJu0Yxzt4Fvt3LWfknfYBi8si4blUkVs9tiZmST3+KNuqacTuGnmCuz
+        9KDqRYKY1bkADLFo41dyMRukdg==
+X-Google-Smtp-Source: AGHT+IFvaPiFN9nageuHk31s1vdZkno6Ubq7GZhPBE0O982W9QQGDgTFFzP8fTeAc7MFi4EBvubAIw==
+X-Received: by 2002:a17:906:9bde:b0:9a2:1e14:86b9 with SMTP id de30-20020a1709069bde00b009a21e1486b9mr1942919ejc.0.1693389525352;
+        Wed, 30 Aug 2023 02:58:45 -0700 (PDT)
 Received: from otso.luca.vpn.lucaweiss.eu (5073ED84.static.ziggozakelijk.nl. [80.115.237.132])
-        by smtp.gmail.com with ESMTPSA id i15-20020a1709064ecf00b009a2202bfce5sm6957130ejv.118.2023.08.30.02.58.42
+        by smtp.gmail.com with ESMTPSA id i15-20020a1709064ecf00b009a2202bfce5sm6957130ejv.118.2023.08.30.02.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 02:58:43 -0700 (PDT)
+        Wed, 30 Aug 2023 02:58:44 -0700 (PDT)
 From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Wed, 30 Aug 2023 11:58:26 +0200
-Subject: [PATCH 01/11] arm64: dts: qcom: sc7280: Mark some nodes as
- 'reserved'
+Date:   Wed, 30 Aug 2023 11:58:27 +0200
+Subject: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230830-fp5-initial-v1-1-5a954519bbad@fairphone.com>
+Message-Id: <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com>
 References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
 In-Reply-To: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
 To:     cros-qcom-dts-watchers@chromium.org,
@@ -77,7 +76,7 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-pm@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,80 +85,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With the standard Qualcomm TrustZone setup, components such as lpasscc,
-pdc_reset and watchdog shouldn't be touched by Linux. Mark them with
-the status 'reserved' and reeable them in the chrome-common dtsi.
+On some platforms like sc7280 on non-ChromeOS devices the core clock
+cannot be touched by Linux so we cannot provide it. Mark it as optional
+as accessing qfprom works without it.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 12 ++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi               |  5 ++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/nvmem/qfprom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-index 2e1cd219fc18..8eb30aa226a2 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-@@ -46,6 +46,14 @@ wpss_mem: memory@9ae00000 {
- 	};
- };
+diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
+index 14814cba2dd6..739dc502b39e 100644
+--- a/drivers/nvmem/qfprom.c
++++ b/drivers/nvmem/qfprom.c
+@@ -423,7 +423,7 @@ static int qfprom_probe(struct platform_device *pdev)
+ 		if (IS_ERR(priv->vcc))
+ 			return PTR_ERR(priv->vcc);
  
-+&lpasscc {
-+	status = "okay";
-+};
-+
-+&pdc_reset {
-+	status = "okay";
-+};
-+
- /* The PMIC PON code isn't compatible w/ how Chrome EC/BIOS handle things. */
- &pmk8350_pon {
- 	status = "disabled";
-@@ -84,6 +92,10 @@ &scm {
- 	dma-coherent;
- };
+-		priv->secclk = devm_clk_get(dev, "core");
++		priv->secclk = devm_clk_get_optional(dev, "core");
+ 		if (IS_ERR(priv->secclk))
+ 			return dev_err_probe(dev, PTR_ERR(priv->secclk), "Error getting clock\n");
  
-+&watchdog {
-+	status = "okay";
-+};
-+
- &wifi {
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 042908048d09..98a8d627a348 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2267,6 +2267,7 @@ lpasscc: lpasscc@3000000 {
- 			clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
- 			clock-names = "iface";
- 			#clock-cells = <1>;
-+			status = "reserved";
- 		};
- 
- 		lpass_rx_macro: codec@3200000 {
-@@ -4216,6 +4217,7 @@ pdc_reset: reset-controller@b5e0000 {
- 			compatible = "qcom,sc7280-pdc-global";
- 			reg = <0 0x0b5e0000 0 0x20000>;
- 			#reset-cells = <1>;
-+			status = "reserved";
- 		};
- 
- 		tsens0: thermal-sensor@c263000 {
-@@ -5212,11 +5214,12 @@ msi-controller@17a40000 {
- 			};
- 		};
- 
--		watchdog@17c10000 {
-+		watchdog: watchdog@17c10000 {
- 			compatible = "qcom,apss-wdt-sc7280", "qcom,kpss-wdt";
- 			reg = <0 0x17c10000 0 0x1000>;
- 			clocks = <&sleep_clk>;
- 			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "reserved";
- 		};
- 
- 		timer@17c20000 {
 
 -- 
 2.42.0
