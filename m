@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCB5178D867
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AEC778D8AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:31:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234104AbjH3SaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:30:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50378 "EHLO
+        id S234843AbjH3SbF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:31:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243196AbjH3KRx (ORCPT
+        with ESMTP id S243259AbjH3Kbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 06:17:53 -0400
+        Wed, 30 Aug 2023 06:31:41 -0400
 Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0956193;
-        Wed, 30 Aug 2023 03:17:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E41F3C0;
+        Wed, 30 Aug 2023 03:31:37 -0700 (PDT)
 Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 87814660319E;
-        Wed, 30 Aug 2023 11:17:47 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 008496607236;
+        Wed, 30 Aug 2023 11:31:35 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1693390668;
-        bh=qfLXkuJgP4OPzQt9eNV1t9MKcbUqq1gaQq7BjtHZJR8=;
+        s=mail; t=1693391496;
+        bh=TrJml6JTyiAfnpRokZqFxLCk8+PH5QpvXEDiBbE4KFE=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=c0aB9TlD2LjL+Idd2Zuecx4cx2/3ZAsa2jcvcXoDrYEBI8iUYXQdpf/L/kzF/lScX
-         gjAr2jioUQHiU2+mwLNXd0ohpuLvJJwcsuG3TkcAdRf+/+nm/M24fC2Rf5Bc7R/bmt
-         qPpDk8KJrw/4+45ysECoR0pK1PX2KRzcpNRI/EkiureiMszVBN+Np/RxA34s2W5gPQ
-         S8D9qxPywe2BtJCJiPfLUJWMqEBqZLqE+7FEydat1/fQUuCVdI8vhvrC/HMgUjZJB5
-         YOdx6DokP7p2n8Z/vJv4wF3X4VO72d5ltJZsfu5+W6yLmZtUWzViOWDzvLHdRs3+mE
-         MwF84sEKpicuA==
-Date:   Wed, 30 Aug 2023 12:17:43 +0200
+        b=RPuNObdK89/bg/iE2BCYHdx5acPZCVw+0Pdu/h2oa3Ss0pGLXUEtC9kFF3LMt0xNz
+         U1ty746my09ett0Vu5PMCNiz15Ca2aHvKOx/b6iRJUm0Cdu5AR8XHpkIEvBTf4in3+
+         +of4Uwxb9gV6rOypfEBLuW65bKTUG8BHyqSwqdN37IeVblgY75KfJlybjfvJaMYKJH
+         lo3COHmt6BbZnsIrGcdT9nMJUQtv3XRkpP2oxgwVLPDdWeCDGv6knUJ8m/otpM8DtU
+         DXt3bunZc+T/5i6NUPnnUZjHUbeXZ6FiANV26p5kINdMrfsEYc8vmKwA+YOo9+5Cn9
+         1cDTbAih03X+A==
+Date:   Wed, 30 Aug 2023 12:31:29 +0200
 From:   Boris Brezillon <boris.brezillon@collabora.com>
 To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
 Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
@@ -44,12 +44,12 @@ Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         healych@amazon.com, kernel@collabora.com,
         freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 2/6] drm/panfrost: Add fdinfo support GPU load
- metrics
-Message-ID: <20230830121743.15673d3d@collabora.com>
-In-Reply-To: <20230824013604.466224-3-adrian.larumbe@collabora.com>
+Subject: Re: [PATCH v2 3/6] drm/panfrost: Add fdinfo support for memory
+ stats
+Message-ID: <20230830122641.78d21f94@collabora.com>
+In-Reply-To: <20230824013604.466224-4-adrian.larumbe@collabora.com>
 References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
-        <20230824013604.466224-3-adrian.larumbe@collabora.com>
+        <20230824013604.466224-4-adrian.larumbe@collabora.com>
 Organization: Collabora
 X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
@@ -64,333 +64,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Aug 2023 02:34:45 +0100
+On Thu, 24 Aug 2023 02:34:46 +0100
 Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-> The drm-stats fdinfo tags made available to user space are drm-engine,
-> drm-cycles, drm-max-freq and drm-curfreq, one per job slot.
+> A new DRM GEM object function is added so that drm_show_memory_stats can
+> provider more accurate memory usage numbers.
 
-Pretty sure this has already been discussed, but it's probably worth
-mentioning that drm-cycles is not accurate, it just gives you a rough
-idea of how much GPU cycles were dedicated to a context (just like
-drm-engine elapsed-ns is giving you an approximation of the
-GPU utilization). This comes from 2 factors:
-
-1. We're dependent on the time the kernel/CPU takes to process the GPU
-interrupt.
-2. The pipelining done by the Job Manager (2 job slots per engine)
-implies that you can't really know how much time each job spent on the
-GPU. When these jobs are coming from the same context, that's not a
-problem, but when they don't, it's impossible to have a clear split.
-
-I'd really like to have that mentioned somewhere in the code+commit
-message to lower users expectation.
+  s/provider/provide/
 
 >=20
-> This deviates from standard practice in other DRM drivers, where a single
-> set of key:value pairs is provided for the whole render engine. However,
-> Panfrost has separate queues for fragment and vertex/tiler jobs, so a
-> decision was made to calculate bus cycles and workload times separately.
->=20
-> Maximum operating frequency is calculated at devfreq initialisation time.
-> Current frequency is made available to user space because nvtop uses it
-> when performing engine usage calculations.
+> Ideally, in panfrost_gem_status, the BO's purgeable flag would be checked
+> after locking the driver's shrinker mutex, but drm_show_memory_stats takes
+> over the drm file's object handle database spinlock, so there's potential
+> for a race condition here.
+
+Yeah, I don't think it matters much if we report a BO non-purgeable,
+and this BO becomes purgeable in the meantime. You'd have the same
+problem
+
 >=20
 > Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
 > ---
->  drivers/gpu/drm/panfrost/panfrost_devfreq.c |  8 ++++
->  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  3 ++
->  drivers/gpu/drm/panfrost/panfrost_device.h  | 13 ++++++
->  drivers/gpu/drm/panfrost/panfrost_drv.c     | 45 ++++++++++++++++++++-
->  drivers/gpu/drm/panfrost/panfrost_job.c     | 30 ++++++++++++++
->  drivers/gpu/drm/panfrost/panfrost_job.h     |  4 ++
->  6 files changed, 102 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/panfrost/panfrost_drv.c |  9 +++++++--
+>  drivers/gpu/drm/panfrost/panfrost_gem.c | 12 ++++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_gem.h |  1 +
+>  3 files changed, 20 insertions(+), 2 deletions(-)
 >=20
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/dr=
-m/panfrost/panfrost_devfreq.c
-> index 58dfb15a8757..28caffc689e2 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-> @@ -58,6 +58,7 @@ static int panfrost_devfreq_get_dev_status(struct devic=
-e *dev,
->  	spin_lock_irqsave(&pfdevfreq->lock, irqflags);
-> =20
->  	panfrost_devfreq_update_utilization(pfdevfreq);
-> +	pfdevfreq->current_frequency =3D status->current_frequency;
-> =20
->  	status->total_time =3D ktime_to_ns(ktime_add(pfdevfreq->busy_time,
->  						   pfdevfreq->idle_time));
-> @@ -117,6 +118,7 @@ int panfrost_devfreq_init(struct panfrost_device *pfd=
-ev)
->  	struct devfreq *devfreq;
->  	struct thermal_cooling_device *cooling;
->  	struct panfrost_devfreq *pfdevfreq =3D &pfdev->pfdevfreq;
-> +	unsigned long freq =3D ULONG_MAX;
-> =20
->  	if (pfdev->comp->num_supplies > 1) {
->  		/*
-> @@ -172,6 +174,12 @@ int panfrost_devfreq_init(struct panfrost_device *pf=
-dev)
->  		return ret;
->  	}
-> =20
-> +	/* Find the fastest defined rate  */
-> +	opp =3D dev_pm_opp_find_freq_floor(dev, &freq);
-> +	if (IS_ERR(opp))
-> +		return PTR_ERR(opp);
-> +	pfdevfreq->fast_rate =3D freq;
-> +
->  	dev_pm_opp_put(opp);
-> =20
->  	/*
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.h b/drivers/gpu/dr=
-m/panfrost/panfrost_devfreq.h
-> index 1514c1f9d91c..48dbe185f206 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
-> @@ -19,6 +19,9 @@ struct panfrost_devfreq {
->  	struct devfreq_simple_ondemand_data gov_data;
->  	bool opp_of_table_added;
-> =20
-> +	unsigned long current_frequency;
-> +	unsigned long fast_rate;
-> +
->  	ktime_t busy_time;
->  	ktime_t idle_time;
->  	ktime_t time_last_update;
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm=
-/panfrost/panfrost_device.h
-> index b0126b9fbadc..680f298fd1a9 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_device.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
-> @@ -24,6 +24,7 @@ struct panfrost_perfcnt;
-> =20
->  #define NUM_JOB_SLOTS 3
->  #define MAX_PM_DOMAINS 5
-> +#define MAX_SLOT_NAME_LEN 10
-> =20
->  struct panfrost_features {
->  	u16 id;
-> @@ -135,12 +136,24 @@ struct panfrost_mmu {
->  	struct list_head list;
->  };
-> =20
-> +struct drm_info_gpu {
-> +	unsigned int maxfreq;
-> +
-> +	struct engine_info {
-> +		unsigned long long elapsed_ns;
-> +		unsigned long long cycles;
-> +		char name[MAX_SLOT_NAME_LEN];
-> +	} engines[NUM_JOB_SLOTS];
-> +};
-> +
->  struct panfrost_file_priv {
->  	struct panfrost_device *pfdev;
-> =20
->  	struct drm_sched_entity sched_entity[NUM_JOB_SLOTS];
-> =20
->  	struct panfrost_mmu *mmu;
-> +
-> +	struct drm_info_gpu fdinfo;
->  };
-> =20
->  static inline struct panfrost_device *to_panfrost_device(struct drm_devi=
-ce *ddev)
 > diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/pa=
 nfrost/panfrost_drv.c
-> index a2ab99698ca8..3fd372301019 100644
+> index 3fd372301019..93d5f5538c0b 100644
 > --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
 > +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> @@ -267,6 +267,7 @@ static int panfrost_ioctl_submit(struct drm_device *d=
-ev, void *data,
->  	job->requirements =3D args->requirements;
->  	job->flush_id =3D panfrost_gpu_get_latest_flush_id(pfdev);
->  	job->mmu =3D file_priv->mmu;
-> +	job->priv =3D file_priv;
-
-Uh, I'm not comfortable passing the file context here, unless you reset
-it to NULL in panfrost_job_close() and have code that's robust to
-job->priv being NULL. We've had cases in the past where jobs outlived
-the file context itself.
-
+> @@ -440,11 +440,14 @@ static int panfrost_ioctl_madvise(struct drm_device=
+ *dev, void *data,
+>  	args->retained =3D drm_gem_shmem_madvise(&bo->base, args->madv);
 > =20
->  	slot =3D panfrost_job_get_slot(job);
-> =20
-> @@ -483,6 +484,14 @@ panfrost_open(struct drm_device *dev, struct drm_fil=
-e *file)
->  		goto err_free;
+>  	if (args->retained) {
+> -		if (args->madv =3D=3D PANFROST_MADV_DONTNEED)
+> +		if (args->madv =3D=3D PANFROST_MADV_DONTNEED) {
+>  			list_move_tail(&bo->base.madv_list,
+>  				       &pfdev->shrinker_list);
+> -		else if (args->madv =3D=3D PANFROST_MADV_WILLNEED)
+> +			bo->is_purgable =3D true;
+> +		} else if (args->madv =3D=3D PANFROST_MADV_WILLNEED) {
+>  			list_del_init(&bo->base.madv_list);
+> +			bo->is_purgable =3D false;
+
+Should we really flag the BO as purgeable if it's already been evicted
+(args->retained =3D=3D false)?
+
+> +		}
 >  	}
 > =20
-> +	snprintf(panfrost_priv->fdinfo.engines[0].name, MAX_SLOT_NAME_LEN, "frg=
-");
-> +	snprintf(panfrost_priv->fdinfo.engines[1].name, MAX_SLOT_NAME_LEN, "vtx=
-");
-> +#if 0
-> +	/* Add compute engine in the future */
-> +	snprintf(panfrost_priv->fdinfo.engines[2].name, MAX_SLOT_NAME_LEN, "cmp=
-");
-> +#endif
-> +	panfrost_priv->fdinfo.maxfreq =3D pfdev->pfdevfreq.fast_rate;
-> +
->  	ret =3D panfrost_job_open(panfrost_priv);
->  	if (ret)
->  		goto err_job;
-> @@ -523,7 +532,40 @@ static const struct drm_ioctl_desc panfrost_drm_driv=
-er_ioctls[] =3D {
->  	PANFROST_IOCTL(MADVISE,		madvise,	DRM_RENDER_ALLOW),
->  };
+>  out_unlock_mappings:
+> @@ -559,6 +562,8 @@ static void panfrost_show_fdinfo(struct drm_printer *=
+p, struct drm_file *file)
+>  	struct panfrost_device *pfdev =3D dev->dev_private;
 > =20
-> -DEFINE_DRM_GEM_FOPS(panfrost_drm_driver_fops);
+>  	panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
 > +
-> +static void panfrost_gpu_show_fdinfo(struct panfrost_device *pfdev,
-> +				     struct panfrost_file_priv *panfrost_priv,
-> +				     struct drm_printer *p)
-> +{
-> +	int i;
-> +
-> +	for (i =3D 0; i < NUM_JOB_SLOTS - 1; i++) {
-> +		struct engine_info *ei =3D &panfrost_priv->fdinfo.engines[i];
-> +
-> +		drm_printf(p, "drm-engine-%s:\t%llu ns\n",
-> +			   ei->name, ei->elapsed_ns);
-> +		drm_printf(p, "drm-cycles-%s:\t%llu\n",
-> +			   ei->name, ei->cycles);
-> +		drm_printf(p, "drm-maxfreq-%s:\t%u Hz\n",
-> +			   ei->name, panfrost_priv->fdinfo.maxfreq);
-> +		drm_printf(p, "drm-curfreq-%s:\t%u Hz\n",
-> +			   ei->name, pfdev->pfdevfreq.current_frequency);
-> +	}
-> +}
-> +
-> +static void panfrost_show_fdinfo(struct drm_printer *p, struct drm_file =
-*file)
-> +{
-> +	struct drm_device *dev =3D file->minor->dev;
-> +	struct panfrost_device *pfdev =3D dev->dev_private;
-> +
-> +	panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
-> +}
-> +
-> +static const struct file_operations panfrost_drm_driver_fops =3D {
-> +	.owner =3D THIS_MODULE,
-> +	DRM_GEM_FOPS,
-> +	.show_fdinfo =3D drm_show_fdinfo,
-> +};
-> =20
->  /*
->   * Panfrost driver version:
-> @@ -535,6 +577,7 @@ static const struct drm_driver panfrost_drm_driver =
-=3D {
->  	.driver_features	=3D DRIVER_RENDER | DRIVER_GEM | DRIVER_SYNCOBJ,
->  	.open			=3D panfrost_open,
->  	.postclose		=3D panfrost_postclose,
-> +	.show_fdinfo		=3D panfrost_show_fdinfo,
->  	.ioctls			=3D panfrost_drm_driver_ioctls,
->  	.num_ioctls		=3D ARRAY_SIZE(panfrost_drm_driver_ioctls),
->  	.fops			=3D &panfrost_drm_driver_fops,
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/pa=
-nfrost/panfrost_job.c
-> index dbc597ab46fb..a847e183b5d0 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_job.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_job.c
-> @@ -153,10 +153,31 @@ panfrost_get_job_chain_flag(const struct panfrost_j=
-ob *job)
->  	return (f->seqno & 1) ? JS_CONFIG_JOB_CHAIN_FLAG : 0;
+> +	drm_show_memory_stats(p, file);
 >  }
 > =20
-> +static inline unsigned long long read_cycles(struct panfrost_device *pfd=
-ev)
-> +{
-> +	u64 address =3D (u64) gpu_read(pfdev, GPU_CYCLE_COUNT_HI) << 32;
-> +
-> +	address |=3D gpu_read(pfdev, GPU_CYCLE_COUNT_LO);
-> +
-
-We probably want to handle the 32-bit overflow case with something like:
-
-	u32 hi, lo;
-
-	do {
-		hi =3D gpu_read(pfdev, GPU_CYCLE_COUNT_HI);
-		lo =3D gpu_read(pfdev, GPU_CYCLE_COUNT_LO);
-	} while (hi !=3D gpu_read(pfdev, GPU_CYCLE_COUNT_HI));
-
-	return ((u64)hi << 32) | lo;
-
-> +	return address;
-> +}
-> +
->  static struct panfrost_job *
->  panfrost_dequeue_job(struct panfrost_device *pfdev, int slot)
->  {
->  	struct panfrost_job *job =3D pfdev->jobs[slot][0];
-> +	struct engine_info *engine_info =3D &job->priv->fdinfo.engines[slot];
-> +
-> +	engine_info->elapsed_ns +=3D
-> +		ktime_to_ns(ktime_sub(ktime_get(), job->start_time));
-> +	engine_info->cycles +=3D
-> +		read_cycles(pfdev) - job->start_cycles;
-> +
-> +	/* Reset in case the job has to be requeued */
-> +	job->start_time =3D 0;
-> +	/* A GPU reset puts the Cycle Counter register back to 0 */
-> +	job->start_cycles =3D atomic_read(&pfdev->reset.pending) ?
-> +		0 : read_cycles(pfdev);
-
-Do we need to reset these values? If the jobs are re-submitted, those
-fields will be re-assigned, and if the job is done, I don't see where
-we're using it after that point (might have missed something).
-
-> =20
->  	WARN_ON(!job);
->  	pfdev->jobs[slot][0] =3D pfdev->jobs[slot][1];
-> @@ -233,6 +254,9 @@ static void panfrost_job_hw_submit(struct panfrost_jo=
-b *job, int js)
->  	subslot =3D panfrost_enqueue_job(pfdev, js, job);
->  	/* Don't queue the job if a reset is in progress */
->  	if (!atomic_read(&pfdev->reset.pending)) {
-> +		job->start_time =3D ktime_get();
-> +		job->start_cycles =3D read_cycles(pfdev);
-> +
->  		job_write(pfdev, JS_COMMAND_NEXT(js), JS_COMMAND_START);
->  		dev_dbg(pfdev->dev,
->  			"JS: Submitting atom %p to js[%d][%d] with head=3D0x%llx AS %d",
-> @@ -297,6 +321,9 @@ int panfrost_job_push(struct panfrost_job *job)
-> =20
->  	kref_get(&job->refcount); /* put by scheduler job completion */
-> =20
-> +	if (panfrost_job_is_idle(pfdev))
-> +		gpu_write(pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_START);
-> +
->  	drm_sched_entity_push_job(&job->base);
-> =20
->  	mutex_unlock(&pfdev->sched_lock);
-> @@ -351,6 +378,9 @@ static void panfrost_job_free(struct drm_sched_job *s=
-ched_job)
-> =20
->  	drm_sched_job_cleanup(sched_job);
-> =20
-> +	if (panfrost_job_is_idle(job->pfdev))
-> +		gpu_write(job->pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_STOP);
-> +
->  	panfrost_job_put(job);
+>  static const struct file_operations panfrost_drm_driver_fops =3D {
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_gem.c
+> index 3c812fbd126f..aea16b0e4dda 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gem.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
+> @@ -195,6 +195,17 @@ static int panfrost_gem_pin(struct drm_gem_object *o=
+bj)
+>  	return drm_gem_shmem_pin(&bo->base);
 >  }
 > =20
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.h b/drivers/gpu/drm/pa=
-nfrost/panfrost_job.h
-> index 8becc1ba0eb9..038171c39dd8 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_job.h
-> +++ b/drivers/gpu/drm/panfrost/panfrost_job.h
-> @@ -32,6 +32,10 @@ struct panfrost_job {
-> =20
->  	/* Fence to be signaled by drm-sched once its done with the job */
->  	struct dma_fence *render_done_fence;
+> +static enum drm_gem_object_status panfrost_gem_status(struct drm_gem_obj=
+ect *obj)
+> +{
+> +	struct panfrost_gem_object *bo =3D to_panfrost_bo(obj);
+> +	enum drm_gem_object_status res =3D 0;
 > +
-> +	struct panfrost_file_priv *priv;
-> +	ktime_t start_time;
-> +	u64 start_cycles;
+> +	res |=3D (bo->is_purgable) ? DRM_GEM_OBJECT_PURGEABLE : 0;
+
+Why not checking bo->base.madv here instead of adding an is_purgeable
+field?
+
+> +
+> +	res |=3D (bo->base.pages) ? DRM_GEM_OBJECT_RESIDENT : 0;
+
+Does it make sense to have DRM_GEM_OBJECT_PURGEABLE set when
+DRM_GEM_OBJECT_RESIDENT is not?
+
+> +
+> +	return res;
+> +}
+>  static const struct drm_gem_object_funcs panfrost_gem_funcs =3D {
+>  	.free =3D panfrost_gem_free_object,
+>  	.open =3D panfrost_gem_open,
+> @@ -206,6 +217,7 @@ static const struct drm_gem_object_funcs panfrost_gem=
+_funcs =3D {
+>  	.vmap =3D drm_gem_shmem_object_vmap,
+>  	.vunmap =3D drm_gem_shmem_object_vunmap,
+>  	.mmap =3D drm_gem_shmem_object_mmap,
+> +	.status =3D panfrost_gem_status,
+>  	.vm_ops =3D &drm_gem_shmem_vm_ops,
 >  };
 > =20
->  int panfrost_job_init(struct panfrost_device *pfdev);
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/pa=
+nfrost/panfrost_gem.h
+> index ad2877eeeccd..e06f7ceb8f73 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+> @@ -38,6 +38,7 @@ struct panfrost_gem_object {
+> =20
+>  	bool noexec		:1;
+>  	bool is_heap		:1;
+> +	bool is_purgable	:1;
+>  };
+> =20
+>  struct panfrost_gem_mapping {
 
