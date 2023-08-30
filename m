@@ -2,77 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8855578D8A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:31:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79D9E78DC02
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:47:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232493AbjH3SbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
+        id S236480AbjH3Sbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244719AbjH3Ns4 (ORCPT
+        with ESMTP id S244754AbjH3Nvx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 09:48:56 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E98AC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 06:48:53 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d7bb34576b9so489147276.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 06:48:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693403332; x=1694008132; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bmDbfaUQlbEK+YwLPVvf1B5npyIMZNGFC67fQJu+cXY=;
-        b=OglMEbYZdhKMaOtTbDedbcZkbcTcJ0I4EM5eITxqsr9PH3Q9L7SOTR4Bb2Uuhhd46c
-         NR0xpnCf1Vnu6ak+LF6eKjBnyvMihtezLIU1B9UaFbz+zNVn9tecU0rHhbOkG08nNAdc
-         MKeaKNo0V1y3zHIeg/2Erwudgcgkv6OopkFHDpxfYmSJe8goQE9KWxvOHcRX6qKoeS1i
-         5O0ZpIZle9XD/jGHQfm4YZjmXhSrbjRqcmC7l5/pnatPlZyEbnqFjImbyp9pmKeOnamC
-         gxpDX1yXrI2H17BcaHufa4cfLnpoGCIbD79dVxT5eK4h3j+TP+mSx4n3UmDp/odf/+VT
-         hB3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693403332; x=1694008132;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bmDbfaUQlbEK+YwLPVvf1B5npyIMZNGFC67fQJu+cXY=;
-        b=Na3jqxtVCZsBiMwXVoRbqQB/XpP9Avkht2sqVHdoyGJG6QybOxAJAFAyMt2M24lpMK
-         BX55e+gFAE/DnBILOVjCL/2zYB2ZXvlJPs65vnhMBrr+clEo/cvc92e9rlSkbhlmhldq
-         fwxpjxbtTzgpKqfD4jRYa6WVWiKYIPgj2LuNiUbTTeWpZrPheHg3IWft0EUMIX57R0YN
-         3U87FfKuMp8VS0dnbvav2PRg3rqBQOoObBq1LULUR7KGSEzS0kTcnl3wSocnHhekwp1v
-         yCGmZMPqzA/5PyPeLUjcEAXdMuKd64NeHZ+tOnC1bgAkJbgZLjQmJWJMyLwh09Kno3QU
-         EebA==
-X-Gm-Message-State: AOJu0Yw2qnF5PJO4b165smZMbaFxjhGOu5I39IfJELbEQBtyr5yHUR8O
-        j1Dw18jI6Ud0DCLuJHESLhNgLY+7+ejZMwxd4asjbQ==
-X-Google-Smtp-Source: AGHT+IHlMvC0xiLqI09ca+xpteK5AXoqqkRQfTvX+t7kMRxQYclnhcIORHZgLG5E7mynM+cLCl9UhhtEQu1wrVLfcAw=
-X-Received: by 2002:a25:e0ca:0:b0:d71:7cb4:8293 with SMTP id
- x193-20020a25e0ca000000b00d717cb48293mr2266093ybg.44.1693403332289; Wed, 30
- Aug 2023 06:48:52 -0700 (PDT)
+        Wed, 30 Aug 2023 09:51:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA65E8;
+        Wed, 30 Aug 2023 06:51:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 42AB661178;
+        Wed, 30 Aug 2023 13:51:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD88C433C8;
+        Wed, 30 Aug 2023 13:51:46 +0000 (UTC)
+Message-ID: <970e55be-d5ed-e4d5-b12a-451113b9be90@xs4all.nl>
+Date:   Wed, 30 Aug 2023 15:51:45 +0200
 MIME-Version: 1.0
-References: <20230828192507.117334-1-bartosz.golaszewski@linaro.org>
- <20230828192507.117334-6-bartosz.golaszewski@linaro.org> <9b69a4a6-b011-f0e8-217f-5f91d9a00382@linaro.org>
- <48feda07-525d-4319-ba09-14928ab1fd29@linaro.org>
-In-Reply-To: <48feda07-525d-4319-ba09-14928ab1fd29@linaro.org>
-From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date:   Wed, 30 Aug 2023 15:48:41 +0200
-Message-ID: <CACMJSeuOigO38_jgjNLz6AiWK1BoLN+shDQHrubS5s-dkDFG7A@mail.gmail.com>
-Subject: Re: [PATCH 05/11] dt-bindings: document the Qualcomm TEE Shared
- Memory Bridge
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v5 09/10] media: v4l2: Add DELETE_BUFS ioctl
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230824092133.39510-1-benjamin.gaignard@collabora.com>
+ <20230824092133.39510-10-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20230824092133.39510-10-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,80 +55,140 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Aug 2023 at 11:30, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 29.08.2023 10:02, Krzysztof Kozlowski wrote:
-> > On 28/08/2023 21:25, Bartosz Golaszewski wrote:
-> >> Add Device Tree bindings for Qualcomm TEE Shared Memory Brige - a
-> >> mechanism that allows sharing memory buffers between trustzone and the
-> >> kernel.
-> >
-> > Subject prefix:
-> > dt-bindings: firmware:
-> >
-> >
-> >
-> >>
-> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >> ---
-> >>  .../bindings/firmware/qcom,shm-bridge.yaml    | 36 +++++++++++++++++++
-> >>  1 file changed, 36 insertions(+)
-> >>  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml b/Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> >> new file mode 100644
-> >> index 000000000000..f660962b7b86
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/firmware/qcom,shm-bridge.yaml
-> >> @@ -0,0 +1,36 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/firmware/qcom,shm-bridge.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: QCOM Shared Memory Bridge
-> >> +
-> >> +description: |
-> >
-> > Do not need '|' unless you need to preserve formatting.
-> >
-> >> +  Qualcomm TEE Shared Memory Bridge allows sharing limited areas of kernel's
-> >> +  virtual memory with the trustzone in order to avoid mapping the entire RAM.
-> >> +
-> >> +maintainers:
-> >> +  - Bjorn Andersson <andersson@kernel.org>
-> >> +  - Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    items:
-> >> +      - enum:
-> >> +          - qcom,shm-bridge-sa8775p
-> >> +          - qcom,shm-bridge-sm8150
-> >> +          - qcom,shm-bridge-sm8450
-> >> +      - const: qcom,shm-bridge
-> >> +
-> >
-> > Looks quite empty... Why this cannot be part of qcom,scm? IOW, why do
-> > you need new binding if you do not have any resources here and the block
-> > is essentially feature of qcom,scm firmware?
-> Since it's "discoverable" (via retval of an scm call), I'd second the
-> idea of probing this from within the SCM driver.
->
-> Konrad
+On 24/08/2023 11:21, Benjamin Gaignard wrote:
+> VIDIOC_DELETE_BUFS ioctl allows to delete buffers from a queue.
+> The number of buffers to delete in given by count field of
+> struct v4l2_delete_buffers and the range start at the index
+> specified in the same structure.
+> 
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> ---
+>  .../userspace-api/media/v4l/user-func.rst     |  1 +
+>  .../media/v4l/vidioc-delete-bufs.rst          | 73 +++++++++++++++++++
+>  .../media/common/videobuf2/videobuf2-core.c   | 34 +++++++++
+>  .../media/common/videobuf2/videobuf2-v4l2.c   | 16 ++++
+>  drivers/media/v4l2-core/v4l2-dev.c            |  1 +
+>  drivers/media/v4l2-core/v4l2-ioctl.c          | 17 +++++
+>  include/media/v4l2-ioctl.h                    |  4 +
+>  include/media/videobuf2-core.h                |  9 +++
+>  include/media/videobuf2-v4l2.h                | 11 +++
+>  include/uapi/linux/videodev2.h                | 17 +++++
+>  10 files changed, 183 insertions(+)
+>  create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/user-func.rst b/Documentation/userspace-api/media/v4l/user-func.rst
+> index 15ff0bf7bbe6..3fd567695477 100644
+> --- a/Documentation/userspace-api/media/v4l/user-func.rst
+> +++ b/Documentation/userspace-api/media/v4l/user-func.rst
+> @@ -17,6 +17,7 @@ Function Reference
+>      vidioc-dbg-g-chip-info
+>      vidioc-dbg-g-register
+>      vidioc-decoder-cmd
+> +    vidioc-delete-bufs
+>      vidioc-dqevent
+>      vidioc-dv-timings-cap
+>      vidioc-encoder-cmd
+> diff --git a/Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst b/Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
+> new file mode 100644
+> index 000000000000..a55fe6331fc8
+> --- /dev/null
+> +++ b/Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
+> @@ -0,0 +1,73 @@
+> +.. SPDX-License-Identifier: GFDL-1.1-no-invariants-or-later
+> +.. c:namespace:: V4L
+> +
+> +.. _VIDIOC_DELETE_BUFS:
+> +
+> +************************
+> +ioctl VIDIOC_DELETE_BUFS
+> +************************
+> +
+> +Name
+> +====
+> +
+> +VIDIOC_DELETE_BUFS - Deletes buffers from a queue
+> +
+> +Synopsis
+> +========
+> +
+> +.. c:macro:: VIDIOC_DELETE_BUFs
+> +
+> +``int ioctl(int fd, VIDIOC_DELETE_BUFs, struct v4l2_delete_buffers *argp)``
+> +
+> +Arguments
+> +=========
+> +
+> +``fd``
+> +    File descriptor returned by :c:func:`open()`.
+> +
+> +``argp``
+> +    Pointer to struct :c:type:`v4l2_delete_buffers`.
+> +
+> +Description
+> +===========
+> +
+> +Applications can optionally call the :ref:`VIDIOC_DELETE_BUFS` ioctl to
+> +delete buffers from a queue.
+> +
+> +.. c:type:: v4l2_delete_buffers
+> +
+> +.. tabularcolumns:: |p{4.4cm}|p{4.4cm}|p{8.5cm}|
+> +
+> +.. flat-table:: struct v4l2_delete_buffers
+> +    :header-rows:  0
+> +    :stub-columns: 0
+> +    :widths:       1 1 2
+> +
+> +    * - __u32
+> +      - ``index``
+> +      - The starting buffer index to delete.
+> +    * - __u32
+> +      - ``count``
+> +      - The number of buffers to be deleted.
+> +    * - __u32
+> +      - ``type``
+> +      - Type of the stream or buffers, this is the same as the struct
+> +	:c:type:`v4l2_format` ``type`` field. See
+> +	:c:type:`v4l2_buf_type` for valid values.
+> +    * - __u32
+> +      - ``reserved``\ [13]
+> +      - A place holder for future extensions. Drivers and applications
+> +	must set the array to zero.
+> +
+> +Return Value
+> +============
+> +
+> +On success 0 is returned, on error -1 and the ``errno`` variable is set
+> +appropriately. The generic error codes are described at the
+> +:ref:`Generic Error Codes <gen-errors>` chapter.
+> +
+> +EBUSY
+> +    File I/O is in progress.
+> +
+> +EINVAL
+> +    The buffer ``index`` doesn't exist in the queue.
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index 70e36389b704..3d915b4c33b2 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -1634,6 +1634,40 @@ int vb2_core_prepare_buf(struct vb2_queue *q, unsigned int index, void *pb)
+>  }
+>  EXPORT_SYMBOL_GPL(vb2_core_prepare_buf);
+>  
+> +int vb2_core_delete_buf(struct vb2_queue *q, unsigned int index)
 
-Downstream has a bunch of DT switches that we don't support for now
-upstream. I disagree about shoehorning this into the SCM driver. It
-really is a layer on top of SCM but also SCM is a user of this
-interface.
+I didn't realize this the first time I reviewed this, but I would
+suggest that you change this to
 
-I will send a v2 with QCom ICE as a second user so that exporting
-symbols pointed out by Krzysztof as having no users make more sense.
-Hopefully keeping it separate will make more sense too.
+vb2_core_delete_bufs(struct vb2_queue *q, unsigned int index, unsigned int count)
 
-If anything, the SHM Bridge code should stay in a separate compilation
-unit even as part of SCM.
+This is consistent with vb2_core_create_bufs, and I strongly suspect it will
+help with locking (mmap_lock), since you don't need to lock for every buffer you
+delete, you can do it up front.
 
-Bart
+And you can move the index/count validation to the core as well, that will help
+if e.g. dvb would want to use this ioctl in the future.
+
+Regards,
+
+	Hans
