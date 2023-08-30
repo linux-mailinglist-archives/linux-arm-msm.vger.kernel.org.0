@@ -2,169 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9732678D862
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11BC778D848
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234027AbjH3SaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:30:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47164 "EHLO
+        id S233149AbjH3SaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241955AbjH3HL2 (ORCPT
+        with ESMTP id S242450AbjH3IeD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 03:11:28 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECA9A1BE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 00:11:23 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52a4b62c2f5so6803389a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 00:11:23 -0700 (PDT)
+        Wed, 30 Aug 2023 04:34:03 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ECCC1AE;
+        Wed, 30 Aug 2023 01:34:00 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 46e09a7af769-6bc9811558cso3873822a34.0;
+        Wed, 30 Aug 2023 01:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693379482; x=1693984282; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=gmail.com; s=20221208; t=1693384439; x=1693989239; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4X810Sd+FAfinOuDeQjJFxdDeSuw3tPSc7gW/bUxxmc=;
-        b=a9Y5QTZNXXKs9nPMXo417JCz/QKAcQy1xgeBcXtqVuXe8uLKIF/yrOaNpEqX5Pf/io
-         qnuGi5UXluXpNgEWOMuiC4+Ggl2M0NZOjzcklz6pcZqj+UgvxAwRdDyqwSPJTKtQ8gCi
-         E6r3gXNYg6pZmJvhTzV41yfhyS6mfmHJfZug5MngAZFOj+hp5fdpWHyOdjUH1IiXNCv1
-         jalUgZPSNf/zajd4QppFkTKpi287wr+TGEa7xceG9zzvCugTzra0mSuN02GSSlhpIOtL
-         4YIlKRcCf3Rof4g2Z8+IuqizM6pf39m6nGuhIissvFGfQ12UQghjwZd5INmkAZngSYHK
-         5SgQ==
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=SNhm82/yD2XJatnGAr0vBKs9bR4mP6ICOeiAlhv3D3w=;
+        b=S9IfiC3bVXp8/08C30G84BodEDx2SGcUYTdidPUytMQpeyXgy/En4TD04Qh4Dhafk+
+         xdquH/ylJUGZKqLvjN6pFMaIyjVAuwh7a73LzIbKOJS8pr2oacDzLYSD7hAE2lgFpHxE
+         5P/Ibf/lBe4vW6Dfsw9it/cAFxzEmr629HxnUdgcMOrXV+BjGBKHMa0xPb2DblePq5z8
+         nd1oWA6XtNKI70k7CYreQ/RDCOW4TcKJC0FUKPhuoZU1u3+83de3A+RqMhUemjbsTQ5M
+         Uw07Bp5W9TIQyLIMq/GMVd/QKw1u0jEXM6rXQKqZkvp+wTZvI4u0EGTyirlUGe6UnXAk
+         yTeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693379482; x=1693984282;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1693384439; x=1693989239;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4X810Sd+FAfinOuDeQjJFxdDeSuw3tPSc7gW/bUxxmc=;
-        b=Iq+9JMAl0TzDN6PPObdMK03DbBSn/PpnMOxYCJLKSjOfnfumi386YlJ+geeSsD/bq6
-         TwSTtfmmFnii9XowgFbw7Nxb8y6Na4T73pK/paDcaEM/HIVgwkrd0sxhwCoKeTpwBG4b
-         FXKH2HrPPWpbOw1yQ0eIT4xlLzPskxoeDCT3CHhd4+LUFaz9NiNHE5hJmSzgwAkYwS49
-         9FhWeSzyVxMciOK+vWuDSjkghUSIIw01wPkhhQK+yvL0id0O+rBSkYBKDKu+IdYCDEKD
-         MCHqSQqoM3qvK5lLAzJvHqXmvHWu1znCZVNLfOEjWC3APRQrc9lsE063JVYc32Ltk4Ra
-         YZ5g==
-X-Gm-Message-State: AOJu0YytIf3ITLG6GbQhoUT0LkHMjpQSTmWFl4y+aQ8/LDNoKicktkJ6
-        b+SMJQ16f8s8nHzVbQcunrNIDQ==
-X-Google-Smtp-Source: AGHT+IEYCPnvQKeOC3qIczHiEZucOO/GNEh252whblJjg9K7h3SNi2mOr9jig7a/o2KtxMadPr1MLQ==
-X-Received: by 2002:a17:906:76c8:b0:9a1:d67c:b4eb with SMTP id q8-20020a17090676c800b009a1d67cb4ebmr913139ejn.48.1693379482411;
-        Wed, 30 Aug 2023 00:11:22 -0700 (PDT)
-Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id n11-20020a17090625cb00b009934855d8f1sm6910043ejb.34.2023.08.30.00.11.21
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SNhm82/yD2XJatnGAr0vBKs9bR4mP6ICOeiAlhv3D3w=;
+        b=ahhrJBhAEDN4f+44O7+NiaTWtV2m/j7MBnvc5KA+NSfbbdzS6I5IKlqkaWS60jws2X
+         J0iz2BdYY1mg3PfYR/qnlLPiYicPV4xKwRyLECAQXJoGCHKSH/fZQ6bMDVCWzLm4lWww
+         6wG9fj7tUVxtS09E/0Dvxiiv9uXFCDgFF13ouPLJ0IaDm8OOx3hfzPSxcwJvXq7awzRo
+         6ANQDRqpNCy34TZE++ZzzheXc4y1rEBcXONQD7pWlp1Dh1s7Mf+KO2gFHDcKVvi6o0T1
+         Yxf02I2u53Jwy8natkvtavVWByAB77a+kqKQd6gSHG4RTpsvgbNVeFkGwiNHK9PRxnV3
+         ap+w==
+X-Gm-Message-State: AOJu0YyUiZmJ103KxQlLlKJ4Sgn5Sx2fZZQYboSn+2Si4GGWNjYZnPE1
+        08Rc0tCcjtVbGnt12JxnCow=
+X-Google-Smtp-Source: AGHT+IH4ZhfEnaAkZGMykkJRKfiN3d5ACC8sCq9Mk9PI6f9+a6622SjCGiGGGMWyZcawvPU1mIWHcA==
+X-Received: by 2002:a05:6870:8a21:b0:1c0:131b:2bb8 with SMTP id p33-20020a0568708a2100b001c0131b2bb8mr1784884oaq.58.1693384439500;
+        Wed, 30 Aug 2023 01:33:59 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id t2-20020a17090a024200b002717a368efasm875416pje.12.2023.08.30.01.33.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 00:11:21 -0700 (PDT)
-Message-ID: <db8d5123-19d7-50d0-935b-a25d235e6e2e@linaro.org>
-Date:   Wed, 30 Aug 2023 09:11:20 +0200
+        Wed, 30 Aug 2023 01:33:58 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <c477c29c-74db-9d48-0b45-b22b70dc93c0@roeck-us.net>
+Date:   Wed, 30 Aug 2023 01:33:57 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4] usb: typec: qcom: Update the logic of regulator enable
+ and disable
 Content-Language: en-US
-To:     Mark Brown <broonie@kernel.org>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Kees Cook <keescook@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        quic_pkondeti@quicinc.com, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, workflows@vger.kernel.org,
-        tools@linux.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
-References: <cover.1693037031.git.quic_gurus@quicinc.com>
- <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
- <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
- <20230828175629.GC23466@quicinc.com>
- <78aa33f9-ead8-b128-2a7a-40530a1a3ed0@linaro.org>
- <ZOz4XtX3DFRQpvQY@finisterre.sirena.org.uk>
- <670a87e9-2f0c-ec9e-ebb4-9041c8972ace@linaro.org>
- <20230829231638.GA27843@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230829231638.GA27843@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     hui liu <quic_huliu@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
+        subbaram@quicinc.com
+References: <20230830-qcom-tcpc-v4-1-c19b0984879b@quicinc.com>
+ <a2353ce6-bd39-f5ca-ad81-63b061147400@roeck-us.net>
+ <fea72c0f-f23d-493c-beae-6bc830b9c2a2@quicinc.com>
+From:   Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <fea72c0f-f23d-493c-beae-6bc830b9c2a2@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/08/2023 01:16, Guru Das Srinagesh wrote:
-> On Aug 28 2023 21:45, Krzysztof Kozlowski wrote:
->> On 28/08/2023 21:41, Mark Brown wrote:
->>> On Mon, Aug 28, 2023 at 07:59:54PM +0200, Krzysztof Kozlowski wrote:
->>>> On 28/08/2023 19:56, Guru Das Srinagesh wrote:
+On 8/29/23 23:37, hui liu wrote:
+> 
+> 
+> On 8/30/2023 2:25 PM, Guenter Roeck wrote:
+>> On 8/29/23 20:00, Hui Liu via B4 Relay wrote:
+>>> From: Hui Liu <quic_huliu@quicinc.com>
 >>>
->>>>> Your function adds mailing lists also in "To:" which is not ideal, in my view.
->>>>> You've mentioned before that To or Cc doesn't matter [1] which I disagree
->>>>> with: it doesn't matter, why does Cc exist as a concept at all?
+>>> Removed the call logic of disable and enable regulator
+>>> in reset function. Enable the regulator in qcom_pmic_typec_start
+>>> function and disable it in qcom_pmic_typec_stop function to
+>>> avoid unbalanced regulator disable warnings.
 >>>
->>>> To/Cc does not matter when sending new patch, because maintainers know
->>>> they are maintainers of which parts. I know what I handle.
->>>
->>> That might be true for you (and also is for me) but I know there are
->>> people who pay attention to if they're in the To: for various reasons, I
->>> gather it's mostly about triaging their emails and is especially likely
->>> in cases where trees have overlaps in the code they cover.
+>>> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 >>
->> True, there can be cases where people pay attention to addresses of
->> emails. Just like there are cases where people pay attention to "To/Cc"
->> difference.
->>
->> In my short experience with a few patches sent, no one complained to me
->> that I put him/her/they in "To" field of a patch instead of "Cc" (with
->> remark to not spamming to much, so imagine I send a patch for regulator
->> and DTS). Big, multi-subsystem patchsets are different case and this
->> script does not solve it either.
-> 
-> Not sure what you mean by "does not solve it" - what is the problem being
-> referred to here?
+>> Please drop.
+> I didn't get your mean. would you please explain it?
 
-Exactly, no one even knows what problem you want to solve by swapping
-To-Cc between patches...
+You kept my Reviewed-by: tag even though the current version
+of the patch is completely different to the patch I reviewed.
+This is inappropriate. Please drop my Reviewed-by: tag.
 
-> 
-> In case of multi-subsystem patches in a series, the commit message of this
-> patch explains exactly the actions taken.
-> 
->> Anyway, if it is not ideal for Guru, I wonder how his LKML maintainer
->> filters work that it is not ideal? What is exactly not ideal in
->> maintainer workflow?
-> 
-> I am not a maintainer - only an individual contributor - and as such, even
-> though I may get patches on files I've contributed to, I deeply appreciate the
-> distinction between being Cc-ed in a patch vs To-ed in one. The distinction
-> being that if I'm in "To:" I ascribe higher priority to it and lesser if I'm in
-> "Cc:".
-
-That's your feeling, quite subjective. I understand it comes from
-corporate world, but again...
-
-> 
-> If this script is accepted and gains adoption, maintainers like yourself will
-> only be To-ed in patches that touch files that you're a direct "Maintainer" or
-> "Reviewer" of. 
-
-It will not get traction because:
-1. People should use b4, not this script.
-2. Remaining people will just use get_maintainers.pl.
-3. People cannot get right even basic commands, so we will never be able
-to rely on To or Cc distinction. I can give you example: my email
-address in get_maintainers.pl is a bit different. Does it matter? Often
-not. Entire bunch of folks were Ccing me on different address. Even
-though every tool told them not to...
-
-> For all other patches in the series you'll be in "Cc:". I
-> imagine that this can be very useful regardless of the specifics of your
-> workflow.
-
-Zero usefulness for me.
-
-Best regards,
-Krzysztof
+Guenter
 
