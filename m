@@ -2,101 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87B4278D88C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80B6478D8D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231421AbjH3Sao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:30:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39676 "EHLO
+        id S231389AbjH3SbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:31:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243676AbjH3L0a (ORCPT
+        with ESMTP id S243814AbjH3Lrk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 07:26:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACFF8132;
-        Wed, 30 Aug 2023 04:26:27 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37UAKIU5021502;
-        Wed, 30 Aug 2023 11:26:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=39FSy9iMArq4qwujTHj5LNIHuUSVAhx3F/QVlkULB20=;
- b=HALMrjKWsXLkQj6ygdDezub4Y/KPZquEMvsH44LYDDN9N1HGAxLXx97o2X0lm0gq22Zh
- VcePBzMMiN/beu3hm5qSzhX9sc5y8Fjs1X5ysilJ4eh3LhOdguMlSIA04FRfIumEVG6o
- nkoztBeBCuvlZyYg/0xSvrIerfn8rxVctzAX5o92pbgcmOwjO5P83uOqXNQ/pk+E+TOp
- vMp8tUQf870o/xFpQEteWAByQsXKMl22SIHJ2IbgDdzBEIhlqT/+7O7IaqfRuZ6d3aqS
- Vl9IdJ6cl0Jxn0Ay2TNLI3dAGTiZzaOGwP4ZgH3tIvLh1XM1M2Voawrwlyw2nZ77wpSI GA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st3whr3dt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 11:26:23 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37UBQMqc004209
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 11:26:22 GMT
-Received: from [10.50.47.209] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 30 Aug
- 2023 04:26:18 -0700
-Message-ID: <3f0d3997-effd-4f51-7aeb-a52428eca47e@quicinc.com>
-Date:   Wed, 30 Aug 2023 16:56:15 +0530
+        Wed, 30 Aug 2023 07:47:40 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 681821BB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 04:47:37 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-58d40c2debeso61836437b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 04:47:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693396056; x=1694000856; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E6qY7mr1if4mjzl6N/X/QNgn05V4Hq/iGd+Okpb2gPA=;
+        b=dsEnzXEJxuqidSDS1+aIt0UnyaZ+/EWIFdvkiJhxfISwuVGlAcWx3VrTIeZPKeB5LW
+         yW5/4H3QF+tl2/s6NcJ8R99D339/D0MhsH9gXKPZ9VuRXV+0QHTQVUxSFGVU7sePaQwZ
+         PQ/Fp2NtoM8SsfSlJYqVNwXUWCBwPn9ZEd8+elAXRWJ42cmgd5/n0qhQuB9rYpvL6X1P
+         7DXS3vn91YZBZbzxhu+sMfhW3ouH687I7Xr6ql0DYsPOM7svNo6Axdt7o9V+V0qhxFVj
+         o8v5qq0SUPVXyNoBG+azlRArycP0T+ArxuqvsWLEmA26t3stwcJpBytTr7PCRd/zqhfw
+         4jlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693396056; x=1694000856;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E6qY7mr1if4mjzl6N/X/QNgn05V4Hq/iGd+Okpb2gPA=;
+        b=b0LdIolS6uHYkV8ViA6u525hOKM6Olh/TcqV7/BkRw+l919O0AhNVUEa9rDUSE/eD6
+         idaOHp0iTbldwnC3j+AInNQPbnuJv3XD6oRX4HDJqbfu5uChaKcnnFw6Fg8TRa3lVSEr
+         9gPECSy1dT5Is58nVNhVOEWSXZyfWaWZx3+innbGDkOtplsp0/d75V/xXkCar+P6rnfq
+         hJw+1bTvuzuCnuNyaasQ5q8ekrOIg7hMq6Iy6upa9HBDQ6jOrOI0X6PqH1mW75n34SCE
+         ElV7yIgLTDrPGWUp1s66QMpZ8jnLV03E+PfMmOUurfqHIupD6kiKl6Gw8L+FgvFVoNAt
+         OZOQ==
+X-Gm-Message-State: AOJu0YxdmbuBui8SgZ6tQiO4HJM/PWMVdo7w3Yv7Z/D7kpOxsRrF0Tc1
+        jVA/efIvxwXoUiHlJ3zHXBISgXsE7wZlwzeFseM+CQ==
+X-Google-Smtp-Source: AGHT+IG+cDfVhvedCJoh1MydyK7VKRA/KVbr4a7x5p2hLIqH/Y7y+yfFDrrjPE8FE1bGRWGIDiLivpaB3dJHFKPBchA=
+X-Received: by 2002:a5b:889:0:b0:d32:cd49:2469 with SMTP id
+ e9-20020a5b0889000000b00d32cd492469mr2006211ybq.24.1693396056658; Wed, 30 Aug
+ 2023 04:47:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH] dt-bindings: usb: dwc3: Add IPQ5018 compatible
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <gregkh@linuxfoundation.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230830111641.19293-1-quic_nsekar@quicinc.com>
- <3b4c873a-a091-51dd-4ce1-84b40886b5cd@linaro.org>
-From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
-In-Reply-To: <3b4c873a-a091-51dd-4ce1-84b40886b5cd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Fcegh49H6YntyNDQ36BoE_Mw_vIvi6R6
-X-Proofpoint-ORIG-GUID: Fcegh49H6YntyNDQ36BoE_Mw_vIvi6R6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 lowpriorityscore=0 adultscore=0 phishscore=0 malwarescore=0
- mlxlogscore=696 priorityscore=1501 impostorscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308300107
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com> <20230830-fp5-initial-v1-6-5a954519bbad@fairphone.com>
+In-Reply-To: <20230830-fp5-initial-v1-6-5a954519bbad@fairphone.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 30 Aug 2023 13:47:25 +0200
+Message-ID: <CACRpkdarpxAS21is7mOeSjqh0_teQcNYf2-WPd5BuLQSjFVF8g@mail.gmail.com>
+Subject: Re: [PATCH 06/11] dt-bindings: pinctrl: qcom,sc7280: Allow gpio-reserved-ranges
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Aug 30, 2023 at 11:58=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.c=
+om> wrote:
 
-On 8/30/2023 4:48 PM, Krzysztof Kozlowski wrote:
-> On 30/08/2023 13:16, Nitheesh Sekar wrote:
->> Document the IPQ5018 dwc3 compatible.
->>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->> ---
->> Link: https://lore.kernel.org/all/3e4e03b6-380c-ce61-dd93-30669e6f9b5c@linaro.org/
->> As per the review comments in the above series
->> created a new series for this patchset as per subsystem.
-> Please provide changelog. This is not v1 anymore.
-ok. Will add tag "V2" and post another version.
+> Allow the gpio-reserved-ranges property on SC7280 TLMM.
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Regards,
-Nitheesh
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+
+I assume this will be merged with the rest of the patches, poke me
+after v6.6-rc1 if you want me to apply it to the pinctrl tree.
+
+Yours,
+Linus Walleij
