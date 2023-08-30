@@ -2,140 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF55E78D906
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8550B78D86E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231447AbjH3ScG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:32:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48314 "EHLO
+        id S234348AbjH3Sa2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244153AbjH3Mhb (ORCPT
+        with ESMTP id S244240AbjH3Msv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 08:37:31 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 923511B2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:37:28 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-500bbe3ef0eso995138e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:37:28 -0700 (PDT)
+        Wed, 30 Aug 2023 08:48:51 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 788CB185
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:48:48 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b9338e4695so83920941fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:48:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693399047; x=1694003847; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I58sq5xTxwCx/GyljuH0Q6KBHvrDLZQ7PUXbI0PsH2Y=;
-        b=m0AqtxQcGi5qN6h8Sj3jcNUWNMiue+wxcwP2SvncfVRcsuPCfGF1DA/LRJ8IIL2BYD
-         H0qY4bPC4EH39m+uNbcItKxHjDEG2zBUZnI0eO9J1J4KlwC6zXXAtnhp2RFrn1FsrldP
-         yZaA4XWIY4W1QOiW1kyBF0+6EY/dlHBNBGrwGVrf/0kTrBIAY+vfrAkMQ+Rgc3yyvcwH
-         Zz+tydSkQuNy6jJH8l/KbdvW6i4wPHcxgJoEo8jk9AxjmjNPYRrGziPRUJw2UCuTPRwL
-         GvsJav18ThdEJxON7teKubSDW7f0NO3CjS720EYA+iPFcQnKp1DvDy4qLe0KfEUCrMrv
-         e2vg==
+        d=linaro.org; s=google; t=1693399727; x=1694004527; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bY6Ts8AN6wULo96E7oKoB6J6G/OTH3Af15URc3xEMoA=;
+        b=n2lmKWfbLfegfvS/Q/G/o9QfsyqNfh1syxUX6fyIpwQmXtIJ7ZNjRslMcqtnJEegYh
+         17Q0enxRpgTphYeHKw9nPhg0baqnDzXHgbnbwHjGU1x4qciUOm8vmaEIImzR9Mg5Dgk+
+         z4XVmWs+hW1QoKyDzulsWBmELYcvKQIRWxIwNvtljrQo1r3bHPQ+JgBXSQ8toX35REnu
+         AJtjFE5zxAUlQ4ds595W4mRJjJ1qR3xBSTTdX2bzL+vrSjNoETnsZqnDg9RGACbAbVZV
+         zK0BCbX3VEmrg8svPDZkhnHfqwNPaOqC+5DeHpilZ6uOZQtAjnPUmZn6aGAxlDqTujdX
+         8WfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693399047; x=1694003847;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I58sq5xTxwCx/GyljuH0Q6KBHvrDLZQ7PUXbI0PsH2Y=;
-        b=X4IzjUTOR9lJUHNVjSX35q1KugWr7eKo9sQSZm7Cq4Sd58GQ2fE500krfGRs935+an
-         yhc/nRghiOxw24oUDac60cjCaIDvn6mDjJflUcWWEOKE43YjD4GK8QMDwYyzopekslBu
-         ibGX3WivnUhK75gH/B4ywq3eDxasUz4Cwx34c5gf/pnLc3M3Wcgym6fj1t7kitZRxLiw
-         Lu4Hk/OIJmzXdhYGNjwAWhqtXa0DFqzJzj2ywKjYgmit1PnAAnG48KHwxqDNUDRhsHvP
-         ab7xC1N8UZ5F3QzdUfn4URMrerX6hPZ/Oy5euwWdjzAijJJOMYDbNJgzt0lGqMTOimbA
-         3oHQ==
-X-Gm-Message-State: AOJu0YxLGz0O6KUy1KjiQWrc3f2Co2GFZ7RqwWTUjV2o1INIRxtBRqrg
-        gGXON2dkKA4zSc2Uv+UTnN6Cvg+SJqdaGYeavUzEkg==
-X-Google-Smtp-Source: AGHT+IEp+gLK73xWw+QqO6fWJI74gXK+me05R7lOQ0QCXV4Bjz00bLArMSjq6XgfqF7mOJb8+dQrzQ==
-X-Received: by 2002:a05:6512:402a:b0:4fb:7624:85a5 with SMTP id br42-20020a056512402a00b004fb762485a5mr872461lfb.0.1693399046844;
-        Wed, 30 Aug 2023 05:37:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693399727; x=1694004527;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bY6Ts8AN6wULo96E7oKoB6J6G/OTH3Af15URc3xEMoA=;
+        b=N5J/iEoW4tr+W8SDi8ZkDDAnDAtFwj14mf6gjRKOM86oqIfbpsUrlrywX2vk5M5WE2
+         A5D7Cf1K8TBVxz+JOyCEaQ/MlM8qBursYgeRpa1fYcf7SAaZCs1Rjrrul9xdw8iqlKyE
+         1rFOsPQ03Chrzw9O9xDgh5nwg8Rk7HPRnsdVK/44mTVWa8LU4o0OUH8+5jbcDpEuxZBm
+         DYZdjOz7vJq3GxK9dytwULWILUuzMw2lDSFe/ArwPUs4H726+HF0el9UhgmLLeOJGS7v
+         yTZD7S3GNmV3Q5Y4vcdVVPddg/dMbJSMnYpJeCCj3e52ilnTJ/i4rt2xysHlG1EnzVib
+         Y8HQ==
+X-Gm-Message-State: AOJu0YyW/hZcOa8eBIwu6wHPVZhbbA/iA1yRLVAeLsWd52TlnASm92Fb
+        chU+dBQBV9yW8t036LOLF5qftg==
+X-Google-Smtp-Source: AGHT+IG+D0lOo9lrJZs4kvBiHpFPiLDgGrGIGGnT3fYaPcIYMUuKqyNtN8gSy6DepAKYbhlKShZt0w==
+X-Received: by 2002:a2e:968c:0:b0:2b6:eb68:fe76 with SMTP id q12-20020a2e968c000000b002b6eb68fe76mr1943138lji.25.1693399726751;
+        Wed, 30 Aug 2023 05:48:46 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id cf5-20020a056512280500b00500b3157ec8sm1772351lfb.163.2023.08.30.05.37.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 05:37:26 -0700 (PDT)
-Message-ID: <49310ff8-80ea-447d-a63e-a181afade189@linaro.org>
-Date:   Wed, 30 Aug 2023 14:37:24 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/4] phy: qcom-m31: Add compatible, phy init sequence
- for IPQ5018
-Content-Language: en-US
-To:     Nitheesh Sekar <quic_nsekar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, gregkh@linuxfoundation.org,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20230830111722.19380-1-quic_nsekar@quicinc.com>
- <20230830111722.19380-3-quic_nsekar@quicinc.com>
+        by smtp.gmail.com with ESMTPSA id y23-20020a2e7d17000000b002b94b355527sm2602662ljc.32.2023.08.30.05.48.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Aug 2023 05:48:46 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230830111722.19380-3-quic_nsekar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH 0/7] 8550 dma coherent and more
+Date:   Wed, 30 Aug 2023 14:48:39 +0200
+Message-Id: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKc672QC/x2NWwqDMBAAryL73YU0QRu9SpGSx1oXNEqiRRDv7
+ tLPGRjmhEKZqUBXnZDpx4WXJPB8VBBGl76EHIVBK22UNQq3ZeWAtq7VJ84uaHy1tomNNbH1A0j
+ mXSH02aUwSpj2aRK5Zhr4+H/e/XXdobsSEXcAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693399725; l=1120;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Q2YXK69Spz2pE0ISEYTPLsY9leUsqULG9hqpcmUi0EI=;
+ b=irxyzxwv56ierVsx6/JI+hChLN2S3zTCLQiO+0kIHxLCtxbluCGgOzIBHGnQshC4bjv2vvMWG
+ pIDYsYCpaTzBNE/aq7n33CfICvNyoFIMVO2T0AfwYLFzfMAM9DKFj05
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.08.2023 13:17, Nitheesh Sekar wrote:
-> Add phy init sequence and compatible string for IPQ5018
-> chipset.
-> 
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> ---
-> V2:
-> 	Updated the commit message.
-> ---
->  drivers/phy/qualcomm/phy-qcom-m31.c | 60 +++++++++++++++++++++++++++++
->  1 file changed, 60 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
-> index ed08072ca032..81b72ebde305 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-m31.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-> @@ -82,6 +82,59 @@ struct m31_priv_data {
->  	unsigned int			nregs;
->  };
->  
-> +struct m31_phy_regs m31_ipq5018_regs[] = {
-static const?
+Qualcomm made some under-the-hood changes and made more peripherals
+capable of coherent transfers with SM8550.
 
-Konrad
+This series marks them as such and brings fixups to usb and psci-cpuidle.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (7):
+      dt-bindings: dmaengine: qcom: gpi: Allow dma-coherent
+      dt-bindings: qcom: geni-se: Allow dma-coherent
+      arm64: dts: qcom: sm8550: Fix up CPU idle states
+      arm64: dts: qcom: sm8550: Mark QUPs and GPI dma-coherent
+      arm64: dts: qcom: sm8550: Mark APPS SMMU as dma-coherent
+      arm64: dts: qcom: sm8550: Add missing DWC3 quirks
+      arm64: dts: qcom: sm8550: Mark DWC3 as dma-coherent
+
+ .../devicetree/bindings/dma/qcom,gpi.yaml          |  2 +
+ .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml |  2 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 52 ++++++++++++++++------
+ 3 files changed, 42 insertions(+), 14 deletions(-)
+---
+base-commit: 56585460cc2ec44fc5d66924f0a116f57080f0dc
+change-id: 20230830-topic-8550_dmac2-7986d683d9bf
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
