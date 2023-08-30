@@ -2,127 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E402678D882
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D0DC78D8FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234568AbjH3Sak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45660 "EHLO
+        id S231207AbjH3ScB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242979AbjH3KAP (ORCPT
+        with ESMTP id S243002AbjH3KD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 06:00:15 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A59FC1B0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:00:11 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-500c63c9625so2245080e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:00:11 -0700 (PDT)
+        Wed, 30 Aug 2023 06:03:57 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA1CC1BF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:03:53 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-5007616b756so8556514e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693389610; x=1693994410; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693389832; x=1693994632; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3xTYLzShSJrMNa33kOQFBwQyF7CcLinjfIsI73sj6mA=;
-        b=NhZVFfnZrY4lUb7uBX51m41Wvv2oL8ZuKoDEcP347ewa3qI6U3GfIJLNtwr1jVDnFF
-         E8lUHrzatV/ve4JM0dKcLqAecCAs5+WAqyHS2B7NvhP9SiFZ7NcAlhvLKCwR3dPK4peX
-         TqkxTDhY4a4C8qfmbfhvHnmBjmEqsTbwHicf/TKHh4gVQcBvV8us5V4Japo+tMnEembw
-         VA2Pqny78q90kCaoC5xTx1Ia3W3ZfN2VAUcINRg1t3c60ailf1WO6eH0c2MyAYRThFIG
-         U6juh+WNxwBT+Cdt4v521GRG9jB3fiVvoiT6YQchcO1Hd+1hD/KtZ0b1oEY6xPboByFA
-         7HPw==
+        bh=aA2Dayv4Oe/O8G7/FYwi9OP3/w4lpPEhlrM3LEd7RiU=;
+        b=DFZUkBlgMqHRmPlXC83xk7jbbdMkdRkXVZkJpxfjq/CLbcWtwknl2dZM6aerZ7MMW4
+         +vP2y2qni+baNx6Ab8Alu14IolWnxzIJKf4auunWfL4rhTWdKu9vALfIj39irIx8F3la
+         pRZeBEnTLFbX1tPD390apIR9sKETm4MR1eBAuhTtdaSCSLNxL+7iGddEdazmpsyZhU+S
+         a9Fm28LAvciFn9rl+ChWsrxOcsP3Xlk+hn4l1HUr97YpcHF26TBDxv5fvsT+vKeWc8L2
+         sZ2t+Xw84f6oiZlXq/wtOnwLzY2E2zhXx6ogdOwi92UAcSvaRGNotwFF1UJjYPVgIyru
+         1cFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693389610; x=1693994410;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693389832; x=1693994632;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3xTYLzShSJrMNa33kOQFBwQyF7CcLinjfIsI73sj6mA=;
-        b=XbPbI/16fwUVQxI2D17Twl8HG1C34B37max/63YmTP/kutop9JohQJvIKAPb4jen54
-         zaBfNS301T5PSgBFcR0n2pDXk3EHFcSBnalNqobBlEWcVJeDvdO7duvT0d8eVyYvCm/R
-         XeQbr8YD8Muw70EKjIXndUyfnEhnrf8XizlJM5MvW0C+kN8nZeJY4i35ZAB1Coqa4Zp/
-         3+R/lZwJAbA2Q+v5xymh+HHfxPlYnT0NNbhWAwd7pUHRWbe1ilg9ymKhuLE8hCkAPPBG
-         CDBnc4PDJ317z8+8JAlKUHQ/Ks0gTcxpFaKZWVgLYGg1qHTnkxeMSmjHN7sZbkA+JG61
-         GVcQ==
-X-Gm-Message-State: AOJu0YzJBgdAfFRMCxdRSZKwwI49MEVBLWoJVo23iuYT7rV0VsHM/aPg
-        GqxAO9y/8FjbrTY2DKkffSHTtw==
-X-Google-Smtp-Source: AGHT+IHCaFP31zkAGHF02AmzezLz996huf1FhuxFlQEm+QFgPfp9jCQOyRrIpXdq64Q6sPBPvdP6GQ==
-X-Received: by 2002:a05:6512:2088:b0:500:7881:7b2f with SMTP id t8-20020a056512208800b0050078817b2fmr1125481lfr.54.1693389609676;
-        Wed, 30 Aug 2023 03:00:09 -0700 (PDT)
-Received: from [192.168.86.24] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id dk24-20020a170906f0d800b0099ddc81903asm7030466ejb.221.2023.08.30.03.00.08
+        bh=aA2Dayv4Oe/O8G7/FYwi9OP3/w4lpPEhlrM3LEd7RiU=;
+        b=YxSPdSJazdUnJdE4bJUGjywbHSzzwb1/Ir1JPgORQqIDZ8V8cmAZqmOmLd2kTEVgUp
+         EMcxIaaEQzRHFkUgbehQ2+kfoXNq1vLz0e44Jg85BDZIXMRkDPC8ZHy/lo6fb3FT+XPC
+         HoJvqXeIXKQ1qK864VjJ3oxWpr3yIHNquEJ500youiutJsQmtb9pCft+62anvFmymUp+
+         jGZyYU5fKKOEXUi9Lgqo7KA/JZVCBLPDiXNRbHN5XAM2CyYPMjcUqRHgNVv6AQ8qbu8Q
+         WpEJ+VBEObyrXJUytDYXfhtW70LeVojOHBK/cerR1jAIvUdlqsW6WL+sJJhtuLIeEtaW
+         kRcA==
+X-Gm-Message-State: AOJu0Yx8lAWU4YslSzYRY+ezazA4zLn2dUbGAyvuUKuqmdVjeZ3d2B3S
+        WIFzM1n2Sf0C7Rj5LdMvoeitdA==
+X-Google-Smtp-Source: AGHT+IE3zXCljvqDSTqW4Fk1MJeyD7qTPp19ksqtWCrPK6ziygOgdXiN7RSHG5AANWY2Zv7kF+XIdw==
+X-Received: by 2002:a05:6512:2302:b0:4fb:8f79:631 with SMTP id o2-20020a056512230200b004fb8f790631mr1222638lfu.46.1693389832021;
+        Wed, 30 Aug 2023 03:03:52 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id n26-20020aa7c69a000000b0052567e6586bsm6661378edq.38.2023.08.30.03.03.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 03:00:08 -0700 (PDT)
-Message-ID: <2230571a-114c-0d03-d02a-fa08c2a8d483@linaro.org>
-Date:   Wed, 30 Aug 2023 11:00:07 +0100
+        Wed, 30 Aug 2023 03:03:51 -0700 (PDT)
+Message-ID: <eed9ddbb-08ac-238c-82b8-a575076c5d71@linaro.org>
+Date:   Wed, 30 Aug 2023 12:03:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
- ufs
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com>
 Content-Language: en-US
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
-        quic_psodagud@quicinc.com, avmenon@quicinc.com,
-        abel.vesa@linaro.org, quic_spuppala@quicinc.com
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
- <20230825210727.GA1366@sol.localdomain>
- <f63ce281-1434-f86f-3f4e-e1958a684bbd@linaro.org>
- <20230829181223.GA2066264@google.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230829181223.GA2066264@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Eric,
-
-On 29/08/2023 19:12, Eric Biggers wrote:
+On 30/08/2023 11:58, Luca Weiss wrote:
+> On some platforms like sc7280 on non-ChromeOS devices the core clock
+> cannot be touched by Linux so we cannot provide it. Mark it as optional
+> as accessing qfprom works without it.
 > 
->>> They're also being documented by Qualcomm.  So, as this patchset does, they can
->>> be used by Linux in the implementation of new ioctls which provide a vendor
->>> independent interface to HW-wrapped key generation, import, and conversion.
->>>
->>> I think the new approach is the only one that is viable outside the Android
->>> context.  As such, I don't think anyone has any plan to upstream support for
->>> HW-wrapped keys for older Qualcomm SoCs that lack the new interface.
->> AFAIU, There are other downstream Qualcomm LE platforms that use wrapped key
->> support with the older interface.
->> What happens to them whey then upgrade the kernel?
->>
->> Does TA interface still continue to work with the changes that went into
->> common drivers (ufs/sd)?
-> This is a strange line of questioning for upstream review, as this feature does
-> not exist upstream.  This is the first time it will be supported by upstream
-> Linux, ever.  Adding support for this feature does not break anything.
-These are not unusual questions, what am trying to understand here is 
-below questions for better context, big picture and review/test. At the 
-end of the day we all want to get these features available in upstream.
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  drivers/nvmem/qfprom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-1. How backward compatibility of this wrapped key support. I guess the 
-answer is NO.
+This should not be between DTS patches. DTS goes different tree than
+other driver changes. Please split your patchset and do not mix drivers
+and DTS.
 
-2. secondly reasons behind this change. Am still not really convinced 
-with the current technical reasoning to shift from TA based approach to 
-this. But I guess this is all done to dump the closed source userspace 
-thingy. Am hoping that this can be made available to other older SoCs at 
-some point in time.
+Best regards,
+Krzysztof
 
-3. We are adding these apis/callbacks in common code without doing any 
-compatible or SoC checks. Is this going to be a issue if someone tries 
-fscrypt?
-
---srini
-
-> 
-> Downstream users who implemented a less well designed version of this feature
-> can continue to use their existing code.
