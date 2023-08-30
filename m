@@ -2,65 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE54F78D8F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B90578D8AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:31:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230407AbjH3Sbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45614 "EHLO
+        id S235310AbjH3SbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:31:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243055AbjH3KJg (ORCPT
+        with ESMTP id S243067AbjH3KKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 06:09:36 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8764B1BE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:09:32 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bd0bc8b429so52087301fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:09:32 -0700 (PDT)
+        Wed, 30 Aug 2023 06:10:43 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B211B1BE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:10:39 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-5298e43bb67so1531329a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 03:10:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693390171; x=1693994971; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693390238; x=1693995038; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bov9xVFMldFAN1KMV9uo+ZahFMBXwvAR+iHvzm1nQ00=;
-        b=PnueSf0z2e/EX8q63FmTtc0XtApmMMrFxe/k9XsT1Hoyzg3rYWkeuUE262OCnlEWc9
-         qQnqqtM29hK6ozHLlpAIwRbajD2REnDRIZc693Juq2dEw77jCztolugQtZuMjQdgl6MR
-         T/7ZhNXGaYmKVx3mNdzlIXWVRaqQnfuD44Iq/AWJXKdUy6aPnUzCFPUPTkwUs0D8neTf
-         BK0EyyNn3h/E2HwS5bDJMbe0b1g7pFPNRUShnQF1sx7O36UFlZ1uBDVdDzqXIcY8xrJq
-         UVW5R7dJSm3SRdwqZMnOWLJkP89HKXb73nexz1N0UJ+JBjUheCmAakzHhpDxweBz1EvH
-         T7PQ==
+        bh=K6fAYHYlD9Q4cP+9uuxhoOpBar+Sw6tLFQ7HlxyUaOA=;
+        b=LHWatOru0oTj90FU8rMxmwxUAobrtEdK9jeeQhJr+XnbpCKsTc2X0E9ijss4gdWj+t
+         bHQRDtmJUejQ8GAUMTY0MOwEQyBci+xhW2YvSxSZIcItAa1bf01UkfJHerhIUDtDr0vE
+         a7/B9LtTSy9ZQl+h2m01y8OyuWzi3B0cQR7S7PWIkaGw4CxXFimbXKCAlq7PC5wo6YsC
+         f8ePmAeq8RSpQSAnpgNcasfgZ2N3rgl8qtaQRSDKAs3i1Cn7GMw6monC/TsZflSR0ukI
+         a/xrZnUcsPVWdCp+zyQRLW0DMOKpYgOPC9k7gIjyYlvH9bboKeBhz/BubpNRs05XuBG/
+         qYUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693390171; x=1693994971;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693390238; x=1693995038;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bov9xVFMldFAN1KMV9uo+ZahFMBXwvAR+iHvzm1nQ00=;
-        b=RPYskv/pvfmdvgcgqCMf0TAho5kFWYwKF1rrhAurZgQxkaQw24qGRnGds6RmQuH+2g
-         SD9Psr/MPl6oNA+TDUgolqWy29S3XmF+K4Yy0LMlzuf26tl8U8QBy1u8X+4/Cfn8KrWW
-         1CPhnw+/Sx1DK0xGBFxqvwpHDFu0liauknGAyni7YXnmnZz2LhX8DS9wonF7KQAFV95O
-         ypgezLseKzjR56gOzf0rX+d6nfvbx/K/IAnIyqu6ArE8u8Q8POLYXtjtD6byGM4+U6Z+
-         IJgaf2iYfZTwDZJqgZ5MVutRqv7WlZaRe7Fbo71Cur7Pit0unj06oL4P/NoVhRlyNPHy
-         GVUQ==
-X-Gm-Message-State: AOJu0YwZ/nGhz4gdM4eytC1udijT1MIwPKZTW0TBPFzkO5M2UTGFonft
-        pIm5ATgjREC2PY44s+0eXRpKSA==
-X-Google-Smtp-Source: AGHT+IFzh2YKw1VLbI+NJF9/S7Tlv0/uw5GKFMiUefjpqmPyjAIxfRbE7r5HxLI/EwYOLAWDtaNcsQ==
-X-Received: by 2002:a2e:7c0d:0:b0:2bc:fc2e:7671 with SMTP id x13-20020a2e7c0d000000b002bcfc2e7671mr1353917ljc.13.1693390170911;
-        Wed, 30 Aug 2023 03:09:30 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002b6d7682050sm2537655lji.89.2023.08.30.03.09.29
+        bh=K6fAYHYlD9Q4cP+9uuxhoOpBar+Sw6tLFQ7HlxyUaOA=;
+        b=iYUCccpPDAMkhABnq+oeWGyaWIeWGNCAxfvV702AGBGUC6PPyWHQtoqReBMXtbP1z3
+         my/UOrzmtng2x/4qYfXlVfUhhGMHTvjIdikIOJqQ+N8x/dMUs37HbeDdjkLubQD9xi7g
+         En+qF7C3yQ650GbwM2OeRMLH5bmxNJRYrPEcBYx82LE4a6i3AqXGzKKmx3oTd+0U1RKd
+         rK4CKepQrf0uyzWeKIy9Q9cibd+jvZhGUKdkEplLwT0PQdxd1DxRpnvhL5eo+RnpVKGb
+         66sO2Qb1MlhlCsCGu+AqF1WItZg0N3Zqg4PJtKR+TfOmsww2oti0yLNDhdOD3J0/EL+s
+         r8SQ==
+X-Gm-Message-State: AOJu0Ywt0tWd4ODB1GuaIoilBPnaRihUMSqf5TeVJ7BdvytpWyW0gq/u
+        zPVMQ+HWY+CRdwM1EsqJQLaiwA==
+X-Google-Smtp-Source: AGHT+IFCwyfUmZdNpIfAR/2r8grquZf8w/lqNiLhyAhfpvYWkbd/+vc192a/XgLTwHSrcsc8zUTWUw==
+X-Received: by 2002:aa7:c903:0:b0:523:b37e:b83b with SMTP id b3-20020aa7c903000000b00523b37eb83bmr2026693edt.13.1693390238047;
+        Wed, 30 Aug 2023 03:10:38 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id o8-20020aa7d3c8000000b0052544bca116sm6579125edr.13.2023.08.30.03.10.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 03:09:30 -0700 (PDT)
-Message-ID: <0ab29903-9861-4736-b827-5dd45b504baa@linaro.org>
-Date:   Wed, 30 Aug 2023 12:09:29 +0200
+        Wed, 30 Aug 2023 03:10:37 -0700 (PDT)
+Message-ID: <6f339b46-9f75-9b76-28e9-e15b5c1c3590@linaro.org>
+Date:   Wed, 30 Aug 2023 12:10:35 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] arm64: dts: qcom: sc7280: Move qfprom clock to
- chrome-common
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 09/11] cpufreq: Add QCM6490 to cpufreq-dt-platdev
+ blocklist
 Content-Language: en-US
 To:     Luca Weiss <luca.weiss@fairphone.com>,
         cros-qcom-dts-watchers@chromium.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
@@ -73,48 +75,13 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-pm@vger.kernel.org
 References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-3-5a954519bbad@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230830-fp5-initial-v1-3-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-9-5a954519bbad@fairphone.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230830-fp5-initial-v1-9-5a954519bbad@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -123,13 +90,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.08.2023 11:58, Luca Weiss wrote:
-> On non-ChromeOS boards the clock cannot be touched, so move it in the
-> chrome-common dtsi which is the only place where it's needed.
+On 30/08/2023 11:58, Luca Weiss wrote:
+> The Qualcomm QCM6490 platform uses the qcom-cpufreq-hw driver, so add it
+> to the cpufreq-dt-platdev driver's blocklist.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-If that clock is not registered (e.g. it's in protected-clocks = <>,
-would the _optional handler not handle it just fine?
 
-Konrad
+This patchset is collecting unnecessarily way too many subsystems. It
+creates some feeling of dependencies, which is not true and not correct.
+Putting DTS in the middle makes it more confusing - if driver depends on
+DTS, then it is NAK.
+
+Please split your patchset - independent changes touching separate
+subsystems should go to their own set.
+
+Best regards,
+Krzysztof
+
