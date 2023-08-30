@@ -2,161 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D27F078DBFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:47:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24D9178D946
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:33:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236358AbjH3Sbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55914 "EHLO
+        id S231610AbjH3Scm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:32:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245473AbjH3PQh (ORCPT
+        with ESMTP id S245663AbjH3PvW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 11:16:37 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417B31B0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 08:16:32 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-400a087b0bfso53691655e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 08:16:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693408591; x=1694013391; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2IkRunNGFvIUJfzmN6ZAOdQYKxHXQcRYO09oUxFh850=;
-        b=c3PT7U7Lj/4oiPhQ21wVDQxLw+K5NmnFvzFWXxuVoicCp/kIimH1f54x7DPy3qq64Y
-         oTJF5m56wLrVPrM6PWqesduc+aSrFEgWRaARLjbxxi3EAR1kl2fUkPf48Qmwvb4uepQo
-         y5axITUR+o2zP6RYewb/0Ge8JjEEpAoloBGpM8/S4OGvTIgCgUJNdFGMLjlGnqYFRcpI
-         CuPYeO2Uy++VYwXNqFwrYs8M9ZO+VsYzOleJ2tq/vnGWs72Vg4M4oIPMGbpHqDIGsB1b
-         GkerDeYyCqIzIiiHHPmfCRdmoO9LbkXYEVyZ50FHWFieWggPzUt99B9ye66W0Wt9O9p2
-         dszg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693408591; x=1694013391;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2IkRunNGFvIUJfzmN6ZAOdQYKxHXQcRYO09oUxFh850=;
-        b=VA1+VbpZvyoMLSnkTCrfLpIgqzIg8VK2w6CriHvBqynHm/slPRVAo7Wm+9RVD7MVsy
-         zsHWEDmjvvXC7fOrrefQhLwkHbxdTonE2PEvmbtaQuGgc1oCkE3pfrFy0Q8tjAluRbmH
-         QaXxab69X4dkWhZfRzPQpzemL31JHe87V70igCZe5Y8Ya+lnfnaS7D75lfpIJJBlOSpJ
-         khKOW+VzoyZFeLy68Rf0JX8nl2I4L0W1RYBpyDi938B4TCCdyUqCgST4nJtHeirK4W8N
-         Qz5RATHfUYSTiKg5XpW/8SCAjc3/nJQyh7FKJUfmXHU0dEuxqENMsau9rTxxugoBeFpF
-         ZbFw==
-X-Gm-Message-State: AOJu0YwVSTFYKq3TqySd+8LR7UcxyCmQ9xNR2n3nT1Q2D/B9wZ+4QIF5
-        kcC4t80VQrMfKzSk28HIWETmgg==
-X-Google-Smtp-Source: AGHT+IHFl1yrh0ovBa90KE0kq0+ttmyMeRKswrgsfajAr7QL3hpxWJxBE3YovtaB1CnKt0Tfj4M63Q==
-X-Received: by 2002:a7b:c7c7:0:b0:401:bf62:9456 with SMTP id z7-20020a7bc7c7000000b00401bf629456mr2507971wmk.8.1693408590646;
-        Wed, 30 Aug 2023 08:16:30 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b16-20020a5d4d90000000b0030fd03e3d25sm16989961wru.75.2023.08.30.08.16.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 08:16:29 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH v3 10/10] media: qcom: camss: Fix csid-gen2 for test pattern generator
-Date:   Wed, 30 Aug 2023 16:16:15 +0100
-Message-ID: <20230830151615.3012325-11-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230830151615.3012325-1-bryan.odonoghue@linaro.org>
-References: <20230830151615.3012325-1-bryan.odonoghue@linaro.org>
+        Wed, 30 Aug 2023 11:51:22 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6758B122;
+        Wed, 30 Aug 2023 08:51:19 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: alarumbe)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id C084D66071C9;
+        Wed, 30 Aug 2023 16:51:17 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693410677;
+        bh=kjUaL5VR03TEh1MPjIv78EGFfK/hRCmMtUCTAAdazBc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GukEUIfKnpFKvAszreQSRQAt6GYkCQaSzGgV7+bPCcAEFLBL1TsDtLAgZ4Uu6B9Ck
+         S4JzqnYTBrMnTsl3nON6wFXADZAZ9ZV4gtS+R3Y2WBEwMH4jN//LLVtZYE8cfcGPmE
+         9x9J6KOX/jdB2LsHF3BdFkd4HifeIs9D5hqZgkt3S537FFnJWObNqYETpCxK4qMBAN
+         LU4Y/LbaZDn9p6svH8gBC5xD4u9oIrVWE4onSyqUPBrYVty56x3V/qbaBAmJkxPx5W
+         vGkg5/PO7rmy+LBwQSc3U1QpydyVmMzE/tyPyKchthI7INU1KefPF3CIUP3Ap2zao4
+         d9UK9/dxkQ4pA==
+Date:   Wed, 30 Aug 2023 16:51:15 +0100
+From:   =?utf-8?Q?Adri=C3=A1n?= Larumbe <adrian.larumbe@collabora.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, healych@amazon.com,
+        kernel@collabora.com, Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: Re: [PATCH v2 6/6] drm/drm-file: Allow size unit selection in
+ drm_show_memory_stats
+Message-ID: <tc7x4uzxvfwakzoqxgaxbkzh3nyhub56ksrgaqmrb4uaq4rruw@7xwan7qfofw7>
+References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
+ <20230824013604.466224-7-adrian.larumbe@collabora.com>
+ <CAF6AEGtXUTs3ta0N+0hiORa+Tsyh94AXPYm9XdaK6xZbqf+nzA@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGtXUTs3ta0N+0hiORa+Tsyh94AXPYm9XdaK6xZbqf+nzA@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Andrey Konovalov <andrey.konovalov@linaro.org>
+>> The current implementation will try to pick the highest available
+>> unit. This is rather unflexible, and allowing drivers to display BO size
+>> statistics through fdinfo in units of their choice might be desirable.
+>>
+>> The new argument to drm_show_memory_stats is to be interpreted as the
+>> integer multiplier of a 10-power of 2, so 1 would give us size in Kib and 2
+>> in Mib. If we want drm-file functions to pick the highest unit, then 0
+>> should be passed.
+>>
+>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+>> ---
+>>  drivers/gpu/drm/drm_file.c              | 22 +++++++++++++---------
+>>  drivers/gpu/drm/msm/msm_drv.c           |  2 +-
+>>  drivers/gpu/drm/panfrost/panfrost_drv.c |  2 +-
+>>  include/drm/drm_file.h                  |  5 +++--
+>>  4 files changed, 18 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+>> index 762965e3d503..517e1fb8072a 100644
+>> --- a/drivers/gpu/drm/drm_file.c
+>> +++ b/drivers/gpu/drm/drm_file.c
+>> @@ -873,7 +873,7 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
+>>  EXPORT_SYMBOL(drm_send_event);
+>>
+>>  static void print_size(struct drm_printer *p, const char *stat,
+>> -                      const char *region, u64 sz)
+>> +                      const char *region, u64 sz, unsigned int unit)
+>>  {
+>>         const char *units[] = {"", " KiB", " MiB"};
+>>         unsigned u;
+>> @@ -881,6 +881,8 @@ static void print_size(struct drm_printer *p, const char *stat,
+>>         for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
+>>                 if (sz < SZ_1K)
+>>                         break;
+>> +               if (unit > 0 && unit == u)
+>> +                       break;
+>>                 sz = div_u64(sz, SZ_1K);
+>>         }
+>>
+>> @@ -898,17 +900,18 @@ static void print_size(struct drm_printer *p, const char *stat,
+>>  void drm_print_memory_stats(struct drm_printer *p,
+>>                             const struct drm_memory_stats *stats,
+>>                             enum drm_gem_object_status supported_status,
+>> -                           const char *region)
+>> +                           const char *region,
+>> +                           unsigned int unit)
+>
+>I'm not really adverse to changing what units we use.. or perhaps
+>changing the threshold to go to higher units to be 10000x or 100000x
+>of the previous unit.  But I'm less excited about having different
+>drivers using different units.
+>
+>BR,
+>-R
 
-In the current driver csid Test Pattern Generator (TPG) doesn't work.
-This change:
-- fixes writing frame width and height values into CSID_TPG_DT_n_CFG_0
-- fixes the shift by one between test_pattern control value and the
-  actual pattern.
-- drops fixed VC of 0x0a which testing showed prohibited some test
-  patterns in the CSID to produce output.
-So that TPG starts working, but with the below limitations:
-- only test_pattern=9 works as it should
-- test_pattern=8 and test_pattern=7 produce black frame (all zeroes)
-- the rest of test_pattern's don't work (yavta doesn't get the data)
-- regardless of the CFA pattern set by 'media-ctl -V' the actual pixel
-  order is always the same (RGGB for any RAW8 or RAW10P format in
-  4608x2592 resolution).
+Would it be alright if I left it set to the default unit, and allow changing it
+at runtime with a debugfs file?
 
-Tested with:
-
-RAW10P format, VC0:
- media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
- media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
- media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
- v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=9
- yavta -B capture-mplane --capture=3 -n 3 -f SRGGB10P -s 4608x2592 /dev/video0
-
-RAW10P format, VC1:
- media-ctl -V '"msm_csid0":2[fmt:SRGGB10/4608x2592 field:none]'
- media-ctl -V '"msm_vfe0_rdi1":0[fmt:SRGGB10/4608x2592 field:none]'
- media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
- v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=9
- yavta -B capture-mplane --capture=3 -n 3 -f SRGGB10P -s 4608x2592 /dev/video1
-
-RAW8 format, VC0:
- media-ctl --reset
- media-ctl -V '"msm_csid0":0[fmt:SRGGB8/4608x2592 field:none]'
- media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB8/4608x2592 field:none]'
- media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
- yavta -B capture-mplane --capture=3 -n 3 -f SRGGB8 -s 4608x2592 /dev/video0
-
-Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware version Titan 170")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
----
- drivers/media/platform/qcom/camss/camss-csid-gen2.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-index 140c584bfb8b1..6ba2b10326444 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-@@ -355,9 +355,6 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
- 		u8 dt_id = vc;
- 
- 		if (tg->enabled) {
--			/* Config Test Generator */
--			vc = 0xa;
--
- 			/* configure one DT, infinite frames */
- 			val = vc << TPG_VC_CFG0_VC_NUM;
- 			val |= INTELEAVING_MODE_ONE_SHOT << TPG_VC_CFG0_LINE_INTERLEAVING_MODE;
-@@ -370,14 +367,14 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
- 
- 			writel_relaxed(0x12345678, csid->base + CSID_TPG_LFSR_SEED);
- 
--			val = input_format->height & 0x1fff << TPG_DT_n_CFG_0_FRAME_HEIGHT;
--			val |= input_format->width & 0x1fff << TPG_DT_n_CFG_0_FRAME_WIDTH;
-+			val = (input_format->height & 0x1fff) << TPG_DT_n_CFG_0_FRAME_HEIGHT;
-+			val |= (input_format->width & 0x1fff) << TPG_DT_n_CFG_0_FRAME_WIDTH;
- 			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
- 
- 			val = format->data_type << TPG_DT_n_CFG_1_DATA_TYPE;
- 			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_1(0));
- 
--			val = tg->mode << TPG_DT_n_CFG_2_PAYLOAD_MODE;
-+			val = (tg->mode - 1) << TPG_DT_n_CFG_2_PAYLOAD_MODE;
- 			val |= 0xBE << TPG_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD;
- 			val |= format->decode_format << TPG_DT_n_CFG_2_ENCODE_FORMAT;
- 			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_2(0));
--- 
-2.41.0
-
+>>  {
+>> -       print_size(p, "total", region, stats->private + stats->shared);
+>> -       print_size(p, "shared", region, stats->shared);
+>> -       print_size(p, "active", region, stats->active);
+>> +       print_size(p, "total", region, stats->private + stats->shared, unit);
+>> +       print_size(p, "shared", region, stats->shared, unit);
+>> +       print_size(p, "active", region, stats->active, unit);
+>>
+>>         if (supported_status & DRM_GEM_OBJECT_RESIDENT)
+>> -               print_size(p, "resident", region, stats->resident);
+>> +               print_size(p, "resident", region, stats->resident, unit);
+>>
+>>         if (supported_status & DRM_GEM_OBJECT_PURGEABLE)
+>> -               print_size(p, "purgeable", region, stats->purgeable);
+>> +               print_size(p, "purgeable", region, stats->purgeable, unit);
+>>  }
+>>  EXPORT_SYMBOL(drm_print_memory_stats);
+>>
+>> @@ -916,11 +919,12 @@ EXPORT_SYMBOL(drm_print_memory_stats);
+>>   * drm_show_memory_stats - Helper to collect and show standard fdinfo memory stats
+>>   * @p: the printer to print output to
+>>   * @file: the DRM file
+>> + * @unit: multipliyer of power of two exponent of desired unit
+>>   *
+>>   * Helper to iterate over GEM objects with a handle allocated in the specified
+>>   * file.
+>>   */
+>> -void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
+>> +void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file, unsigned int unit)
+>>  {
+>>         struct drm_gem_object *obj;
+>>         struct drm_memory_stats status = {};
+>> @@ -967,7 +971,7 @@ void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
+>>         }
+>>         spin_unlock(&file->table_lock);
+>>
+>> -       drm_print_memory_stats(p, &status, supported_status, "memory");
+>> +       drm_print_memory_stats(p, &status, supported_status, "memory", unit);
+>>  }
+>>  EXPORT_SYMBOL(drm_show_memory_stats);
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>> index 2a0e3529598b..cd1198151744 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>> @@ -1067,7 +1067,7 @@ static void msm_show_fdinfo(struct drm_printer *p, struct drm_file *file)
+>>
+>>         msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, p);
+>>
+>> -       drm_show_memory_stats(p, file);
+>> +       drm_show_memory_stats(p, file, 0);
+>>  }
+>>
+>>  static const struct file_operations fops = {
+>> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> index 93d5f5538c0b..79c08cee3e9d 100644
+>> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> @@ -563,7 +563,7 @@ static void panfrost_show_fdinfo(struct drm_printer *p, struct drm_file *file)
+>>
+>>         panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
+>>
+>> -       drm_show_memory_stats(p, file);
+>> +       drm_show_memory_stats(p, file, 1);
+>>  }
+>>
+>>  static const struct file_operations panfrost_drm_driver_fops = {
+>> diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
+>> index 010239392adf..21a3b022dd63 100644
+>> --- a/include/drm/drm_file.h
+>> +++ b/include/drm/drm_file.h
+>> @@ -466,9 +466,10 @@ enum drm_gem_object_status;
+>>  void drm_print_memory_stats(struct drm_printer *p,
+>>                             const struct drm_memory_stats *stats,
+>>                             enum drm_gem_object_status supported_status,
+>> -                           const char *region);
+>> +                           const char *region,
+>> +                           unsigned int unit);
+>>
+>> -void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file);
+>> +void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file, unsigned int unit);
+>>  void drm_show_fdinfo(struct seq_file *m, struct file *f);
+>>
+>>  struct file *mock_drm_getfile(struct drm_minor *minor, unsigned int flags);
+>> --
+>> 2.42.0
+>>
