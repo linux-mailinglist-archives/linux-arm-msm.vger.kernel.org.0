@@ -2,144 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9FE978D1B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 03:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C2EA78D1FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 04:21:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236692AbjH3BYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Aug 2023 21:24:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56892 "EHLO
+        id S240199AbjH3CVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Aug 2023 22:21:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238571AbjH3BXp (ORCPT
+        with ESMTP id S238872AbjH3CUj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Aug 2023 21:23:45 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96E0E0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Aug 2023 18:23:42 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37TNQ6Zt014815;
-        Wed, 30 Aug 2023 01:23:24 GMT
+        Tue, 29 Aug 2023 22:20:39 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FCB31AD;
+        Tue, 29 Aug 2023 19:20:36 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37U1QYo5010404;
+        Wed, 30 Aug 2023 02:20:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MG5bPwsb8mA4cEQB3tMsY3yjc65TWrt89/JLttn37Yw=;
- b=RRmmOjFiw8AV9UsFMQurw6ZKUj7uU5aRw/fX74pSYjBI8EkgNq5A0D5c1/hvTQsW3JDw
- ahoNnnfSjOeCyegFhqD7GVqYu++rKT74tiDCwUNADz6SiJExDxEZfiRycMKfDdHiKNUW
- +7m+OXOgKVQpAI33kIfRmQAPrO+SJrxoMOjCOqJa/XquumKf5DRpbZftBONoj7HvTpQv
- oHBP/fqnOf3jRnn3HkcOXJKZ7nWSlcXYnp9OBON1g+OGPWA6IwOK+AuKBhTxWdjm/X1W
- /YmEgkR1IaRN0Wp9pVDDYRn4C1ZCOpYujD5GWFYvYYwvUKVjlB3smBnr7LC2hAEGaLRY Cg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ss3fr395w-1
+ bh=VqevAR2WBoXjzqJy62/LqZY/p887heW7e0n4UOrCB4M=;
+ b=b9aH3+ROK0WQw/Sr6RG2cqqM+2sBoHXdFe9Wloh13JMZtKXq0cfyCoJ74AsCS/38OEjR
+ UuCOARSbEFZWH9QlCXH6EqRHP/kh5Y12NaCJu11H168TFcy4E2M2pJqteW/tk1dXmKck
+ HACEcqUWwEnbiWZAQeunX+Mn6khoAb6oWkFiKYO1X+HRq9KZyxrCtaKFdp+ckr8zIzCt
+ BqHWiB5QNmkipuAVyBr2FaslCFsPBpgRccAvdDcc4p6cSTDqqv82nbEOaF43ivQN0YKG
+ 87igxTiXVMoJ0AAir9rkoMADuAL3NVi0UCOYWM3/ksP47Z4mpxsYRxrvgFD5MKiPCwl9 JQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sruhnv5ch-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 01:23:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U1NM3u019906
+        Wed, 30 Aug 2023 02:20:31 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37U2KUw0020019
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Aug 2023 01:23:22 GMT
-Received: from [10.71.110.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 29 Aug
- 2023 18:23:22 -0700
-Message-ID: <6df79bbd-729c-6832-a31d-a7fba5c4b6d4@quicinc.com>
-Date:   Tue, 29 Aug 2023 18:23:21 -0700
+        Wed, 30 Aug 2023 02:20:30 GMT
+Received: from [10.216.63.45] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 29 Aug
+ 2023 19:20:25 -0700
+Message-ID: <ee50d097-6213-36dd-9966-bdd5b2bb953b@quicinc.com>
+Date:   Wed, 30 Aug 2023 07:50:22 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dpu: drop
- dpu_encoder_phys_ops.atomic_mode_set
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 3/7] thermal/drivers/qcom/tsens: Add support for IPQ5018
+ tsens
 Content-Language: en-US
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230604144514.949628-1-dmitry.baryshkov@linaro.org>
- <20230604144514.949628-4-dmitry.baryshkov@linaro.org>
- <821d87bd-f428-57d1-ba30-29aed8fcdb65@quicinc.com>
- <93881487-6574-47df-92bc-b5fb4d174d33@linaro.org>
- <9f86ce98-156d-25cb-e35f-6d266d2eac14@quicinc.com>
-In-Reply-To: <9f86ce98-156d-25cb-e35f-6d266d2eac14@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <thara.gopinath@gmail.com>,
+        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+References: <1693250307-8910-1-git-send-email-quic_srichara@quicinc.com>
+ <1693250307-8910-4-git-send-email-quic_srichara@quicinc.com>
+ <CAA8EJpoHCW2H12U9wzmz5a86TriZr9mLuPi6D6h02byAWOG2mQ@mail.gmail.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <CAA8EJpoHCW2H12U9wzmz5a86TriZr9mLuPi6D6h02byAWOG2mQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: y7pILq3N-tFX6DtamOqscYrpJbboBSlg
-X-Proofpoint-ORIG-GUID: y7pILq3N-tFX6DtamOqscYrpJbboBSlg
+X-Proofpoint-GUID: BXsVVyP3tsGlC49FkZgAmbaflBtU4Qxs
+X-Proofpoint-ORIG-GUID: BXsVVyP3tsGlC49FkZgAmbaflBtU4Qxs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-29_16,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- adultscore=0 spamscore=0 phishscore=0 bulkscore=0 mlxlogscore=633
- impostorscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308300011
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015 phishscore=0
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308300019
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+<..>
 
+>> +{
+>> +       u32 p1[10], p2[10];
+>> +       u32 *qfprom_cdata;
+>> +       int mode;
+>> +
+>> +       qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+>> +       if (IS_ERR(qfprom_cdata))
+>> +               return PTR_ERR(qfprom_cdata);
+>> +
+>> +       mode = tsens_read_calibration_legacy(priv, &tsens_ipq5018_nvmem,
+>> +                                            p1, p2,
+>> +                                            qfprom_cdata, NULL);
+> 
+> No, this should be used only in _legacy_ cases. Please use
+> tsens_calibrate_common() / tsens_calibrate_nvmem() / etc.
+> 
 
-On 8/17/2023 12:27 PM, Abhinav Kumar wrote:
-> 
-> 
-> On 8/17/2023 11:50 AM, Dmitry Baryshkov wrote:
->> On 08/08/2023 02:49, Abhinav Kumar wrote:
->>>
->>>
->>> On 6/4/2023 7:45 AM, Dmitry Baryshkov wrote:
->>>> The atomic_mode_set() callback only sets the phys_enc's IRQ data. As 
->>>> the
->>>> INTF and WB are statically allocated to each encoder/phys_enc, drop the
->>>> atomic_mode_set callback and set the IRQs during encoder init.
->>>>
->>>> For the CMD panel usecase some of IRQ indexes depend on the selected
->>>> resources. Move setting them to the irq_enable() callback.
->>>>
->>>
->>> The irq_enable() callback is called from the 
->>> dpu_encoder_virt_atomic_enable() after the phys layer's enable.
->>>
->>> Thats late.
->>>
->>> So lets consider the case where command mode panel's clock is powered 
->>> from bootloader (quite common).
->>>
->>> Now, as soon as the tearcheck is configured and interface is ON from 
->>> the phys's enable(), nothing prevents / should prevent the interrupt 
->>> from firing.
+  ok.
+
+>> +
+>> +       fixup_ipq5018_points(mode, p1, p2);
+>> +       compute_intercept_slope(priv, p1, p2, mode);
+>> +       kfree(qfprom_cdata);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>>   static int calibrate_v1(struct tsens_priv *priv)
+>>   {
+>>          u32 p1[10], p2[10];
+>> @@ -79,6 +132,18 @@ static struct tsens_features tsens_v1_feat = {
+>>          .trip_max_temp  = 120000,
+>>   };
 >>
->> Please note that interrupt callbacks are also registered from the 
->> irq_control(). There is no way the interrupt can fire beforehand (and 
->> the call chain is dpu_encoder_virt_atomic_enable() -> 
->> dpu_encoder_resource_control() -> 
->> _dpu_encoder_resource_control_helper() -> _dpu_encoder_irq_control() 
->> -> irq_control().
+>> +static struct tsens_features tsens_v1_ipq5018_feat = {
+>> +       .ver_major      = VER_1_X,
+>> +       .crit_int       = 0,
+>> +       .combo_int      = 0,
+>> +       .adc            = 1,
+>> +       .srot_split     = 1,
+>> +       .max_sensors    = 11,
+>> +       .trip_min_temp  = -40000,
+>> +       .trip_max_temp  = 120000,
+>> +       .no_early_init  = 1,
+>> +};
+>> +
+>>   static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+>>          /* ----- SROT ------ */
+>>          /* VERSION */
+>> @@ -150,6 +215,43 @@ static int __init init_8956(struct tsens_priv *priv) {
+>>          return init_common(priv);
+>>   }
 >>
->> If we ever want to move irq_control() to be called before phys's 
->> enable() callbacks, this will be a separate patchset, involving 
->> refactoring of dpu_encoder_resource_control().
->>
+>> +static int init_ipq5018(struct tsens_priv *priv)
+>> +{
+>> +       int ret;
+>> +       u32 mask;
+>> +
+>> +       init_common(priv);
+>> +       if (!priv->tm_map)
+>> +               return -ENODEV;
+>> +
+>> +       ret = regmap_field_write(priv->rf[TSENS_SW_RST], 1);
+>> +       if (ret) {
+>> +               dev_err(priv->dev, "Reset failed\n");
+>> +               return ret;
+>> +       }
+>> +
+>> +       mask = GENMASK(10, 0);
 > 
-> Ack, I will rebase my patches on top of this and re-test it.
-> 
-> Then will give my R-b, tested-by tags by Monday.
+> #define this, then inline the variable. Or extract this codepiece into
+> generic function which uses num_sensors to calculate the mask
 > 
 
-Sorry for the delay on this.
+  ok.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+>> +       ret = regmap_field_update_bits(priv->rf[SENSOR_EN], mask, mask);
+>> +       if (ret) {
+>> +               dev_err(priv->dev, "Sensor Enable failed\n");
+>> +               return ret;
+>> +       }
+>> +
+>> +       ret = regmap_field_write(priv->rf[TSENS_EN], 1);
+>> +       if (ret) {
+>> +               dev_err(priv->dev, "Enable failed\n");
+>> +               return ret;
+>> +       }
+>> +
+>> +       ret = regmap_field_write(priv->rf[TSENS_SW_RST], 0);
+>> +       if (ret) {
+>> +               dev_err(priv->dev, "Reset failed\n");
+> 
+> This error message is useless. You can not determine if it comes from
+> this error or from setting the reset bit.
+> 
 
-Made sure that sc7280 boots up fine and kms_writeback works
+  ok, will drop it.
+
+Regards,
+  Sricharan
+
