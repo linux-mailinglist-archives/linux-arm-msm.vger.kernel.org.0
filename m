@@ -2,168 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D44178D908
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:32:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7EF578D88E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 20:30:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233299AbjH3ScI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 14:32:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59786 "EHLO
+        id S235087AbjH3Sas (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 14:30:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244051AbjH3MZV (ORCPT
+        with ESMTP id S244088AbjH3McX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 08:25:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42450CCB;
-        Wed, 30 Aug 2023 05:25:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C13A462641;
-        Wed, 30 Aug 2023 12:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0634BC433C8;
-        Wed, 30 Aug 2023 12:25:10 +0000 (UTC)
-Message-ID: <01c299f2-8118-5d86-e9b6-a459c1b6c467@xs4all.nl>
-Date:   Wed, 30 Aug 2023 14:25:09 +0200
+        Wed, 30 Aug 2023 08:32:23 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83F5FCD6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:32:18 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fe27849e6aso8627989e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 05:32:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693398737; x=1694003537; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5r1keJ/kWAAxQG+Uvunq/iR+weSqXVfz/qnLo14Mcqk=;
+        b=kEbBa2/za2nNwjUto/YLsZQSjrICZmo/zQuhiFHqPP/hDWSljqQP9YSi99VE/sw5p/
+         ePxVzq5JHzxGCEN9VmKTtaB6dwnXzHIkS4j5ky+uKFi36+beJgBeRRYr7KwhJXpVm5TI
+         z5pEbjkQQQrsu5HOdKl2fRV2nJ+w5NSIuj5bWvBvhPBuDDEDK/JFxxjO7/Sln30tgDW3
+         YJmTOmcSBXnD05KxOx4lz8M9cIvYJPsMK07dMt41jJL+7ZQOTp2uSPu8rnHShTEvVUBx
+         WirDLLQfiVYZiYZBlNOshcAEWR9Syxu3r+NR4vpPh4Vh8eYjpfkJKYeBohfLBJpvacKh
+         AEXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693398737; x=1694003537;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5r1keJ/kWAAxQG+Uvunq/iR+weSqXVfz/qnLo14Mcqk=;
+        b=QcLPDUt5NBmgWgUxmyywLA8BNQq00AVTlTNhnN858Q0eaTXwUgXbqJt7RNt+a5fT31
+         amUKa7F8watfDL7uplvayUEobQiCbffZZcjKeBWsnx7yZGEcJO0EgG274glS+HtcTZWT
+         fVLyxH8A5PmRHlzEOWDi5d7Rq72OJy3Cd7+reT4mwzbotHFDMnLHcDk9fR18YqgHG8KV
+         0EkrpAmGDXMf91ndl1mSmG851WcNDna3ynupJ3tvnJAn72OKfRCCiLM0qfxjqpCnMdw4
+         9xMq0vNqdYerfHIkOHo/5nbvDKSi/gFSRPUNJ723b9vgo2WglJ9wCoXQ3wC5wFMb819C
+         wUZQ==
+X-Gm-Message-State: AOJu0YwagdvasWA0HDjoYoc4GdnUkHRdw+/2qaNTk5Hp8/G2mfbUysaX
+        G7JyVw7ZwMh0sF+96jVTIM6njQ==
+X-Google-Smtp-Source: AGHT+IFPx/YtSSyv7YnBejw0huWHhyd8/IcHV02rGhHOFn6argDN11yKt0gt4w5oMxZyr2qx0cFW7g==
+X-Received: by 2002:a05:6512:3d9e:b0:4fe:993:2218 with SMTP id k30-20020a0565123d9e00b004fe09932218mr1960325lfv.31.1693398736622;
+        Wed, 30 Aug 2023 05:32:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
+        by smtp.gmail.com with ESMTPSA id v20-20020ac25614000000b004fbc82dd1a5sm2366788lfd.13.2023.08.30.05.32.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Aug 2023 05:32:16 -0700 (PDT)
+Message-ID: <cec9318c-9a70-4392-89b7-048d30b7b790@linaro.org>
+Date:   Wed, 30 Aug 2023 14:32:14 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v5 01/10] media: videobuf2: Rework offset 'cookie'
- encoding pattern
-Content-Language: en-US, nl
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230824092133.39510-1-benjamin.gaignard@collabora.com>
- <20230824092133.39510-2-benjamin.gaignard@collabora.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230824092133.39510-2-benjamin.gaignard@collabora.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/6] soc: qcom: Add LLCC support for multi channel DDR
+Content-Language: en-US
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, bryan.odonoghue@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230830105654.28057-1-quic_kbajaj@quicinc.com>
+ <20230830105654.28057-5-quic_kbajaj@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230830105654.28057-5-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/08/2023 11:21, Benjamin Gaignard wrote:
-> Change how offset 'cookie' field value is computed to make possible
-> to use more buffers (up to 0xffff).
-> With this encoding pattern we know the maximum number that a queue
-> could store so we can check ing at queue init time.
-> It also make easier and faster to find buffer and plane from using
-> the offset field.
+On 30.08.2023 12:56, Komal Bajaj wrote:
+> Add LLCC support for multi channel DDR configuration
+> based on a feature register.
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
-> v5:
-> - I haven't change DST_QUEUE_OFF_BASE definition because it used in
->   v4l2-mem2mem and s5p_mfc driver with a shift.
+[...]
+
+global pointer to a error code to avoid referencing it */
+> @@ -1031,6 +1050,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  	const struct qcom_llcc_config *cfg;
+>  	const struct llcc_slice_config *llcc_cfg;
+>  	u32 sz;
+> +	u8 cfg_index;
+>  	u32 version;
+>  	struct regmap *regmap;
 > 
->  .../media/common/videobuf2/videobuf2-core.c   | 48 +++++++++----------
->  1 file changed, 24 insertions(+), 24 deletions(-)
-> 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index cf6727d9c81f..e06905533ef4 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -31,6 +31,10 @@
->  
->  #include <trace/events/vb2.h>
->  
-> +#define PLANE_INDEX_SHIFT	3
-> +#define PLANE_INDEX_MASK	0x7
-> +#define MAX_BUFFERS		0xffff
-
-Very poor name, see below.
-
-> +
->  static int debug;
->  module_param(debug, int, 0644);
->  
-> @@ -358,21 +362,23 @@ static void __setup_offsets(struct vb2_buffer *vb)
->  	unsigned int plane;
->  	unsigned long off = 0;
->  
-> -	if (vb->index) {
-> -		struct vb2_buffer *prev = q->bufs[vb->index - 1];
-> -		struct vb2_plane *p = &prev->planes[prev->num_planes - 1];
-> -
-> -		off = PAGE_ALIGN(p->m.offset + p->length);
-> -	}
-> +	/*
-> +	 * Offsets cookies value have the following constraints:
-> +	 * - a buffer could have up to 8 planes.
-> +	 * - v4l2 mem2mem use bit 30 to distinguish between source and destination buffers.
-> +	 * - must be page aligned
-> +	 * That led to this bit mapping:
-> +	 * |30                |29        15|14       12|11 0|
-> +	 * |DST_QUEUE_OFF_BASE|buffer index|plane index| 0  |
-> +	 * where there is 16 bits to store buffer index.
-
-16 -> 15: there are 15 (not 16!) bits available for buffer indices. So the maximum
-number of buffers is 32768, given that the indices start at 0.
-
-> +	 */
-> +	off = vb->index << (PLANE_INDEX_SHIFT + PAGE_SHIFT);
->  
->  	for (plane = 0; plane < vb->num_planes; ++plane) {
-> -		vb->planes[plane].m.offset = off;
-> +		vb->planes[plane].m.offset = off + (plane << PAGE_SHIFT);
->  
->  		dprintk(q, 3, "buffer %d, plane %d offset 0x%08lx\n",
->  				vb->index, plane, off);
-> -
-> -		off += vb->planes[plane].length;
-> -		off = PAGE_ALIGN(off);
+> @@ -1052,7 +1072,10 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  		ret = -EINVAL;
+>  		goto err;
 >  	}
->  }
->  
-> @@ -2209,21 +2215,15 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long off,
->  		return -EBUSY;
->  	}
->  
-> -	/*
-> -	 * Go over all buffers and their planes, comparing the given offset
-> -	 * with an offset assigned to each plane. If a match is found,
-> -	 * return its buffer and plane numbers.
-> -	 */
-> -	for (buffer = 0; buffer < q->num_buffers; ++buffer) {
-> -		vb = q->bufs[buffer];
-> +	/* Get buffer and plane from the offset */
-> +	buffer = (off >> (PLANE_INDEX_SHIFT + PAGE_SHIFT)) & MAX_BUFFERS;
+> -	cfg = &cfgs->llcc_config[0];
+This is unnecessary, get_cfg_index returns 0 when no nvmem cell is
+present.
 
-Hmm, you use it as a mask. The name MAX_BUFFERS is really confusing.
-How about BUFFER_INDEX_MASK? That is consistent with PLANE_INDEX_MASK.
-
-> +	plane = (off >> PAGE_SHIFT) & PLANE_INDEX_MASK;
->  
-> -		for (plane = 0; plane < vb->num_planes; ++plane) {
-> -			if (vb->planes[plane].m.offset == off) {
-> -				*_buffer = buffer;
-> -				*_plane = plane;
-> -				return 0;
-> -			}
-> -		}
-> +	vb = q->bufs[buffer];
-> +	if (vb->planes[plane].m.offset == off) {
-> +		*_buffer = buffer;
-> +		*_plane = plane;
-> +		return 0;
->  	}
->  
->  	return -EINVAL;
-
-Regards,
-
-	Hans
+Konrad
