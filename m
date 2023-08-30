@@ -2,142 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 281FF78E300
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 01:04:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0188B78E32B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 01:22:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344336AbjH3XD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 19:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34268 "EHLO
+        id S1344402AbjH3XWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 19:22:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239837AbjH3XD5 (ORCPT
+        with ESMTP id S239154AbjH3XWx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 19:03:57 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA22CF3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:03:34 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b703a0453fso5471221fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:03:33 -0700 (PDT)
+        Wed, 30 Aug 2023 19:22:53 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C8EE9C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:22:47 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99cdb0fd093so16900466b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693436612; x=1694041412; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693437765; x=1694042565; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=msHyshj90vSnmjfMS+CD0pnHPjuRl2jy7F4rESiCNlg=;
-        b=UK6jzu1bZ4FbcVADQA2Jh191imgHJpEDdA4w7lo+i8cY7osibZwiKAy34QfSZhfR30
-         bqcVUmZdIt0Au5V6bUNBrTg55fyqLE97MPoXK+pSFyfD6DUb85aZnMWtqudLfj+4K8JP
-         OAjOAFMz8kuCzCljfh8Ea9wZGDxM4AVNedw2Xz5bIdBQgd49bBJ8puqnYET/dFeyRA1x
-         o5ZoTI+m9VNpaG1/zMcDxo/BTDIz7J7AhKodVa7c/fgNZW6vrQ1WXR6GlADxWCuMVFTg
-         mP8ZcE2kXI23x1WrdCF0kv0Gl3YdZ0yGbNTrl98GsNSiYlE/L5eNFekAevzLcDfoN+VF
-         VjMg==
+        bh=qx5DJCNgJ8zJ230zq1kmkZEmDWRvp7rGzLqeHmcD04Y=;
+        b=T3Hfx8qB0Jzo/ZeelPkVAd/nXvhxf8F+spJFSwg6pfR317FB2sZxtdCpQYZpd42f0w
+         PLi2xYS/2x0lMKgbPBNTiBUD8YHzq9emtH9Hz9NpmDLba70lvIvIhCPtOwwbEF6w2+gX
+         iEpnh2jSqRs3hOGBY39W+WmGugjbO+fvobgwvnI7TivKQ9neDfnKwJvR+ZWNl42Vga9a
+         3wUy8rL2FxrTp+MvyJB8xn+A9k7J/z37v1EnTMtOphVduz3IR0rpNiuEZyy5ZRcbeDep
+         rrv9aDSZe13Bkv3j7t2/TdP8Gi28HhgQ36JTL8R/MqeJziRyh8+EJRTIkzX3wAd4CXhJ
+         7Lmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693436612; x=1694041412;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693437765; x=1694042565;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=msHyshj90vSnmjfMS+CD0pnHPjuRl2jy7F4rESiCNlg=;
-        b=PqW1DZnUa1Gh78zUM3n4/MKvUCtFDSyAd5mtMS5GfvNXjopJqecJSnzLqDthZdM8Vk
-         jHVmBqLsNIhCR7sKAmC5DFPhp+HOsNiscpwXFxfVQAsVQXFB81qN9AGj1+coDl0GGehu
-         yvHabQ9+/Bz7+zL9t1ttuiEES4KHAxu9LrHkXEnLY4CgTc2i4HmhPEes4G605NOR5OST
-         nNjeCwOABoMCSCRvv/3l2/ao3Tv5wX1uR5qfAcTTj+5eH+CBcL+fs+7DujAmw3mC6BZi
-         EKcU7CkZrgK2dsK2JVFtSo7RqFGSpOANe3PQ6XuIeT+XReqnCW+UGYB+sjIs/DMy9f4F
-         9LwQ==
-X-Gm-Message-State: AOJu0YyfR/6GE3ilTXEOx8qLu6vddK7NKztnQLKsNACAKwbxo3P061m3
-        VxXl2zeeGDSxmBzh1UL8tdQCJ+HTqB0q9YOsfTk7mg==
-X-Google-Smtp-Source: AGHT+IFZN0XFLmTMVpli86I9XELxCx+opSVmKto0P8fKRgp/dvzpFqZUwlf4S3Ov+q1yxFaX3RGzDQ==
-X-Received: by 2002:a05:6512:3da6:b0:500:b2c9:7da9 with SMTP id k38-20020a0565123da600b00500b2c97da9mr2444317lfv.45.1693420497376;
-        Wed, 30 Aug 2023 11:34:57 -0700 (PDT)
-Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id l12-20020ac24a8c000000b004fe633bfcc7sm2473562lfp.17.2023.08.30.11.34.52
+        bh=qx5DJCNgJ8zJ230zq1kmkZEmDWRvp7rGzLqeHmcD04Y=;
+        b=hCO+oGMYIBDWWCLjlJCHLhzGeiksRFxax+dJDK7FFaCHMGe9diVDobgisf2lSRp+wr
+         2oJHuirhzSTQNDWN6hQAYSaiO8rFmu9SPe2lTDm4pRp5uagJEqjDyz32GKfQjHcfLRJQ
+         +IRBYpGdrNFv8ND4YgH8CCeZElG1Dy5hWOtNXcIrfqnoWpRPrxhR/KrUSdDiMvIfBEIw
+         CkyzMUYyyz40infG851ekuIKBfShh0k/neHbThJm+3wx547igN7wHvkg8cj4gb8D9lAB
+         6s/KMJs+/dbfT0KETYv/H2uH/Sfs/pCQiR1QraQ8NG0AfT7nyRN2ybsrpTwrr+TeIYW6
+         6IPA==
+X-Gm-Message-State: AOJu0YwojsX/lE6rfOBkCm3B1taph2uzzV+5jl7mHO6YaXmrUdy5n0b8
+        yx90u4Zaom9JPCyOMkv3ezKgU2y0QUneLzEQcmk=
+X-Google-Smtp-Source: AGHT+IFXNZcyo4pUIk1PPXndLXO1UNfBpn1JrGCeRhJIxONMleDn656s7prFtG+aetDALvFjZFL6tw==
+X-Received: by 2002:adf:e6ce:0:b0:319:74d5:a2d7 with SMTP id y14-20020adfe6ce000000b0031974d5a2d7mr2636773wrm.32.1693420543899;
+        Wed, 30 Aug 2023 11:35:43 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id b4-20020adff244000000b0031423a8f4f7sm17337600wrp.56.2023.08.30.11.35.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Aug 2023 11:34:57 -0700 (PDT)
-Message-ID: <951a2f24-931a-4a25-a3b7-c3009e135d7d@linaro.org>
-Date:   Wed, 30 Aug 2023 20:34:52 +0200
+        Wed, 30 Aug 2023 11:35:43 -0700 (PDT)
+Message-ID: <e0a4ba7d-7cc0-2b51-994f-9f48284dcf02@linaro.org>
+Date:   Wed, 30 Aug 2023 19:35:42 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/7] leds: rgb: leds-qcom-lpg: Update PMI632 lpg_data
- to support PPG
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 00/10] media: qcom: camss: Bugfix series
 Content-Language: en-US
-To:     Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
-        lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org
-Cc:     luca.weiss@fairphone.com, u.kleine-koenig@pengutronix.de,
-        quic_subbaram@quicinc.com, quic_gurus@quicinc.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org, kernel@quicinc.com
-References: <20230830180600.1865-2-quic_amelende@quicinc.com>
- <20230830180600.1865-8-quic_amelende@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230830180600.1865-8-quic_amelende@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
+        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230830151615.3012325-1-bryan.odonoghue@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230830151615.3012325-1-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.08.2023 20:06, Anjelique Melendez wrote:
-> Update the pmi632 lpg_data struct so that pmi632 devices use PPG
-> for LUT pattern.
-> 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  drivers/leds/rgb/leds-qcom-lpg.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-> index 90dc27d5eb7c..0b37d3b539f8 100644
-> --- a/drivers/leds/rgb/leds-qcom-lpg.c
-> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
-> @@ -1672,11 +1672,14 @@ static const struct lpg_data pm8994_lpg_data = {
->  static const struct lpg_data pmi632_lpg_data = {
->  	.triled_base = 0xd000,
->  
-> +	.lut_size = 64,
-> +	.lut_sdam_base = 0x80,
-Is that a predefined space for use with LPG?
+On 30/08/2023 16:16, Bryan O'Donoghue wrote:
+> V3:
+> - Adds Reviewed-by where indicated - Laurent
+> - Adds a new patch for genpd cleanup. TBH I completely missed this so thanks ! - Laurent
+> - "media: qcom: camss: Fix V4L2 async notifier error path" stays the same fixes spalt in -next
+>    Fixes: 51397a4ec75d ("media: qcom: Initialise V4L2 async notifier later")
+> - I like the suggesting of using a common fix for vfe-17x and vfe-480 however, I believe
+>    we need to support multiple write-master/RDI => VCs in 17x which currently we only do
+>    in vfe-480 so sharing the code between the two here right now, is	n't possible.
+> - Included other suggestions on vfe-17x and vfe-480 - Laurent
+> - I didn't change the val |= 1 << CSI2_RX_CFG1_VC_MODE to BIT(2)
+>    The reason for that is all of the code uses this odd bit-shifting and I'd rather do
+>    the conversion from shifting to BIT(x) as a distinct series instead of piecemeal - bod
 
-Or can it be reclaimed for something else?
+Pardon me I forgot to add a link to a tree for this series
 
-Konrad
+Link: 
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/c13bb323d4f081d634dca3a9f3f56fbee370e8f4
+
+---
+bod
+
