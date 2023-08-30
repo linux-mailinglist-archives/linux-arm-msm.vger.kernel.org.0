@@ -2,172 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C690578E0B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 22:31:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D3E078E012
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Aug 2023 22:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239649AbjH3Ub0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 16:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33228 "EHLO
+        id S239199AbjH3UIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 16:08:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240116AbjH3UbO (ORCPT
+        with ESMTP id S239850AbjH3UID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 16:31:14 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7202A8E073
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 12:45:12 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d746ea563f9so5623850276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 12:45:12 -0700 (PDT)
+        Wed, 30 Aug 2023 16:08:03 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90AEC3171E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 12:55:31 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-68a440a8a20so30923b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 12:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693424624; x=1694029424; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693425260; x=1694030060; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJiEYvthVUOcpYJPy9yFGFD2aO5cf2VHnVMOssUOmRg=;
-        b=ePdmGT9H+NNcqRumPz2z4DfI1stmMgT0TFsHhZg9dyx2Dbv4vAchsHZfwe1mabq9T5
-         Xxz/NGz3MtpIzP/2MgoIKFydpia5KtjtiGcr1vlkk762rVmSm2cMs5C9oP9J/+/Du2dm
-         XOYzN0gEsukkbZ/eWCg8fic+fe9Z1JBdJJ1QZKGLs1EBfP/iykHjJvICwNB4S60dSSi1
-         rNT+AiHCUiP/Va12JdHHFWo94zWbqhVLJV0Y0bVetMOHYnUf8wZGpgfc27+C362mwnSU
-         4kccF/9YWX58jJUfef2T+v31A0LHtqH79diMC3nwLGtTCOkyQr5cU+bNDdr9jtKSEzJR
-         MqTw==
+        bh=YJMdw/C4AyMPoyB2tq4Z62TY5NrdXD5YnDuPj2zmJiM=;
+        b=Em+EaU/DCJVGjRDwmNwc/tTue200oGR6xG34EazfO1ju3e88vrHCOcVq1f25uVWJv6
+         M94+WtlqiYh10S2MGmUT84HGmgVHNoPugfXx7KIC+kXT34whg+wd4YxnEny5BYB0wJ+d
+         5DwQbM30tS2zTyH7aYzx3avVpsSkWL2Nq1wHAxWPXJC86I36W6mjy9wi3UNUx5P+fmtu
+         PO7YrlPIhRcAQabKiQDdxJExsoJ3CU3szXundivg9uCeZ8cxsnMC3gSb815OPuiRCVpI
+         7F6IQKJe/KrRAV2Tm99SzX2FK9smmA+YXORVOEcnCV39eCyqZyxZoW2NiJRjMCsUzpUR
+         GBBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693424624; x=1694029424;
+        d=1e100.net; s=20221208; t=1693425260; x=1694030060;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VJiEYvthVUOcpYJPy9yFGFD2aO5cf2VHnVMOssUOmRg=;
-        b=MB0XRvaxtvqkhyC/xjEy7ZhJ2U2KS4e1BUH2hkowWoH3x6I7nNeHWeLbNca2s5SDps
-         wZEQVBc22LXqQhi0sz38oLU26wgehhx5yifJdubGN3l1lpvGQR5sZ3c674TREJLDzjPt
-         M5eaq/xqkorDe6UZUNO5Zpo8B/JUB+oLd5aX8Sh1bnCmYWpCubzhN/RfEIJ0LIPTRV9e
-         mzyOAaM4iLZPQkY/qqEpgnKnwA1i5Zo83kAHMqIzUh/Xo0suOHMCW0VtDEhR3i5a8tQG
-         jVa2uBBqXKUBd4N5oYfuQ4WtwOxBaIjuOR/PxNMtuuLlZqTHftUz2EdUDOizm9yCeod8
-         g6HQ==
-X-Gm-Message-State: AOJu0YzGUJ3F2nuBVp6UCU/gUTkdxALMfNmuPLudPIeOZrNDmfjXa9vr
-        klSfvxo243b5i2zaV0ukTs3QUdMxhAUUKgo8rzUfzw==
-X-Google-Smtp-Source: AGHT+IE2iDDTjFTVDoB3gZ4fX5lg6uyzcQRItrwWgsQ3B9T43cbbiyZMI0KSJ+aavpFonXZjy3iNu1t/WvVG3AWOXxc=
-X-Received: by 2002:a05:6902:18cd:b0:d78:48b0:21d2 with SMTP id
- ck13-20020a05690218cd00b00d7848b021d2mr3630806ybb.3.1693424624644; Wed, 30
- Aug 2023 12:43:44 -0700 (PDT)
+        bh=YJMdw/C4AyMPoyB2tq4Z62TY5NrdXD5YnDuPj2zmJiM=;
+        b=lMb3Qi4y7sJv9PP+aGao0ics/my56edVUU1h8iKIIXqgLVujOqH7YMEiNQw44THqJT
+         CvE+PfaIEOROZI8onYqo/Q/kN82SDXINRKYlv+KZeiNOu+xdOeUQrRGS9aDbkoLOxv3Y
+         uCDMijVLlENhzNv7HuuWzrNZbynO7RgrlvAMWa3VTWDSa/efCER05h23OyYW13r0YueI
+         pv554UcH4gtNwwaMV9QP5HfX79FuyU7ec2MTxLh9AC8w7c9Om6hOQBV7dv0JNojTuzRp
+         MMbaUwFU5Bw3DlvX5J3jnifjvZP4ZeC0X2nbHzbJPp7xddlB3yEDeBpsfFOTDtk2WBN2
+         uuJg==
+X-Gm-Message-State: AOJu0Yx8SaTZKvs79qins7O+rIeGedmJ/3CX/w9y8SiOsOfVMtt+Wgra
+        t1uisV3JVp+uvnYA6F4rOzwhif1rWmIcAgYQZdzyzWyOecoS8O7n
+X-Google-Smtp-Source: AGHT+IGkX+b8/id5mnhsdSwU9pp41YFk3WYZkYEZqYPlBixDk1KbdsztU74V3Q6iBQqWEbgI4/9irEaASDq7WrvYvAE=
+X-Received: by 2002:a5b:889:0:b0:d47:3d16:4b0d with SMTP id
+ e9-20020a5b0889000000b00d473d164b0dmr2944641ybq.25.1693424889246; Wed, 30 Aug
+ 2023 12:48:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230830111722.19380-1-quic_nsekar@quicinc.com> <20230830111722.19380-4-quic_nsekar@quicinc.com>
-In-Reply-To: <20230830111722.19380-4-quic_nsekar@quicinc.com>
+References: <20230829095423.760641-1-quic_gokulsri@quicinc.com>
+ <20230829095423.760641-2-quic_gokulsri@quicinc.com> <3722a8f6-8f63-fe7c-6983-ac96caa18c87@linaro.org>
+ <d2080d0b-f0d2-b5f2-4fd5-c929735e406c@quicinc.com>
+In-Reply-To: <d2080d0b-f0d2-b5f2-4fd5-c929735e406c@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 30 Aug 2023 22:43:33 +0300
-Message-ID: <CAA8EJpr3SnEXRENAgzdemANnYWvwM7Z-xyZYe335O45Jps91kg@mail.gmail.com>
-Subject: Re: [PATCH V2 3/4] arm64: dts: qcom: ipq5018: Add USB related nodes
-To:     Nitheesh Sekar <quic_nsekar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+Date:   Wed, 30 Aug 2023 22:47:58 +0300
+Message-ID: <CAA8EJpo=e0JNWRhERUFFtLZ6o+hMhdBspC8yPi3j8U0AAo_FQw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,a53pll: add IPQ5018 compatible
+To:     Gokul Sriram P <quic_gokulsri@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        Amandeep Singh <quic_amansing@quicinc.com>
+        quic_varada@quicinc.com, quic_srichara@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 30 Aug 2023 at 21:30, Nitheesh Sekar <quic_nsekar@quicinc.com> wrote:
+On Wed, 30 Aug 2023 at 21:31, Gokul Sriram P <quic_gokulsri@quicinc.com> wrote:
 >
-> Add USB phy and controller nodes.
 >
-> Co-developed-by: Amandeep Singh <quic_amansing@quicinc.com>
-> Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> ---
-> V2:
->         Fix ordering of the USB related nodes and use
->         generic node names.
-> ---
->  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 54 +++++++++++++++++++++++++++
->  1 file changed, 54 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 9f13d2dcdfd5..917e4a2d8e64 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -93,6 +93,19 @@
->                 #size-cells = <1>;
->                 ranges = <0 0 0 0xffffffff>;
->
-> +               usbphy0: phy@5b000 {
-> +                       compatible = "qcom,ipq5018-usb-hsphy";
-> +                       reg = <0x0005b000 0x120>;
-> +
-> +                       clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
-> +
-> +                       resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> +
-> +                       #phy-cells = <0>;
-> +
-> +                       status = "disabled";
-> +               };
-> +
->                 tlmm: pinctrl@1000000 {
->                         compatible = "qcom,ipq5018-tlmm";
->                         reg = <0x01000000 0x300000>;
-> @@ -155,6 +168,47 @@
->                         status = "disabled";
->                 };
->
-> +               usb: usb@8af8800 {
-> +                       compatible = "qcom,ipq5018-dwc3", "qcom,dwc3";
-> +                       reg = <0x08af8800 0x400>;
-> +
-> +                       interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-names = "hs_phy_irq";
-> +
-> +                       clocks = <&gcc GCC_USB0_MASTER_CLK>,
-> +                                <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
-> +                                <&gcc GCC_USB0_SLEEP_CLK>,
-> +                                <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> +                       clock-names = "core",
-> +                                     "iface",
-> +                                     "sleep",
-> +                                     "mock_utmi";
-> +
-> +                       resets = <&gcc GCC_USB0_BCR>;
-> +
-> +                       qcom,select-utmi-as-pipe-clk;
-> +                       #address-cells = <1>;
-> +                       #size-cells = <1>;
-> +                       ranges;
-> +
-> +                       status = "disabled";
-> +
-> +                       usb2_0_dwc: usb@8a00000 {
+> On 8/29/2023 3:39 PM, Krzysztof Kozlowski wrote:
+> > On 29/08/2023 11:54, Gokul Sriram Palanisamy wrote:
+> >> Add IPQ5018 compatible to A53 PLL bindings.
+> >>
+> >> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> >> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > Knowing that this patch could not come from downstream (it's some old
+> > kernel without this file), I really wonder why two people were involved
+> > in developing trivial one line change.
+> Sure, I had kept this co-developed-by for this whole series of patches.
+> will remove co-developed-by for this patch.
 
-As we have seen from the next patchset, this host supports USB 3.0.
-Can you please drop the 2_0 part of the label?
-
-> +                               compatible = "snps,dwc3";
-> +                               reg = <0x08a00000 0xe000>;
-> +                               clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> +                               clock-names = "ref";
-> +                               interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> +                               phy-names = "usb2-phy";
-> +                               phys = <&usbphy0>;
-> +                               tx-fifo-resize;
-> +                               snps,is-utmi-l1-suspend;
-> +                               snps,hird-threshold = /bits/ 8 <0x0>;
-> +                               snps,dis_u2_susphy_quirk;
-> +                               snps,dis_u3_susphy_quirk;
-> +                       };
-> +               };
-> +
->                 intc: interrupt-controller@b000000 {
->                         compatible = "qcom,msm-qgic2";
->                         reg = <0x0b000000 0x1000>,  /* GICD */
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+Each patch is individual, even if they form a series. Different
+patches might be developed by different parties or a combination of
+them.
 
 
 -- 
