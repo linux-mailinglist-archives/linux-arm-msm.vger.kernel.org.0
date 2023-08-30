@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27CE778E352
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 01:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E034478E35C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 01:40:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344504AbjH3XiX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 19:38:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41572 "EHLO
+        id S238611AbjH3XkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 19:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237374AbjH3XiX (ORCPT
+        with ESMTP id S239394AbjH3XkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 19:38:23 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C638CC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:38:20 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d71dd633f33so78228276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:38:20 -0700 (PDT)
+        Wed, 30 Aug 2023 19:40:14 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76F811F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:40:10 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d7820f9449bso94363276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 16:40:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693438699; x=1694043499; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693438810; x=1694043610; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0OA6F/cJGjE0KJb9/0REuMAEmnQQM4Zu3TAc/AkZeiw=;
-        b=fIIByo55YBM8ubkoYY8RdooXzgIHOL5zcvS6tozV3zd/LOtY3czWCgOuso9SeH/fIZ
-         U4u4N6strL8+WcJRUljkvPYwbNmMCTwx2v9WzLd4Pjf8gxoTSR0ycLFz2wONMLyZ8ICw
-         WFje5tiS7A2y1CzjkysZNd9KnN+PhWeb975+pF4nqJaN9riOisZiKX17WIabum4JIfkZ
-         AcOq6H/t1sKrVkOdU8aHF1Yy5FnybfnpkL1NSSNyqskAEAC/p7j1NV+tYA63IJQtJKo3
-         kZBJM+JrAcTJpylYpFZ6adA6QCWRHeTjzEA4Nw8xdTB8+UXQEzzii/E4CzFPN52IubjP
-         KHLw==
+        bh=NazOzKPkx7AjojgQQ4WRVyoU6M4Mb5zkgyFuSk7fqSA=;
+        b=PlhQBYfe1RMnCfx3VMoPubbrntFLRzgsN+OG14i+spPiCG3VWH922WnZsn78VRlsv4
+         xGYhXx9iE2qDj5Rp3Js/AHSi3jPfIiu9OjbkfVzxBB0WoYERA6eR14CPdw7Xb6eAB0/g
+         K2sRofKeCZYj0gWrRSPGjtyAZylZioWnwfkqFttfHd4HbyAJx0SVmtgKY3c6HApGoNwj
+         wkT0KWBJlSc6Hea09uucpkesvcD5ICqNTIfjbIWNe0juGuaGnXavvvxBvsGO5JsEn/vE
+         k7VJgdQ+n0wShb4ZPj/9GCUoF9PG2GO7m8Dpa/LiZ0Fu5bjZ3orgHcgL+IYX3qN5uGml
+         lPKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693438699; x=1694043499;
+        d=1e100.net; s=20221208; t=1693438810; x=1694043610;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0OA6F/cJGjE0KJb9/0REuMAEmnQQM4Zu3TAc/AkZeiw=;
-        b=FRVykDmPrjA76HjmvU/miW9HNwV1DxyFlGX5bqC2V1nUsTM28pYw7ZShdybRiRPGTR
-         WJhDvpdZtLK+Ogkikl/1hn7ijmSU033x8lvjrqgn3aTOYaSklV6hmnJAcIK+/RTnDU4w
-         V9ImYGgAU0JVQDDcYmG1Qc+lAFpB4ERMoTz4iXInDVdhzsP032gOzdatcNSsuw+L6pIv
-         H1A5XHMNm5dZWsfT72IK1TsT2UouJtvJ27a6RWWdcXgjXX6tfllSG7Hefr7nXSAeE9gv
-         JuWWd6KSvsUY038bW/DAt7sVzmp01nv3GblX4TrZ5f28w+sEpr19hR8Urb3ZUjuqhmC0
-         2Etg==
-X-Gm-Message-State: AOJu0YydbQWYDCgVb0KktMSUOsq20Pgui42WG+1fvisXBgQ2NC26ypw+
-        OlZsNdtq4m52mcwuVckdGDOWM8l63woKXnhqYomIew==
-X-Google-Smtp-Source: AGHT+IGeQW7IWHk2KJWCy3x28ARi2otnY3Ztho5B4SiUmBLUWIBSTp+/mtvRVCUvyoWZFH12R61ivtvnFWmJDdFi1/M=
-X-Received: by 2002:a5b:748:0:b0:d3f:208:b8ea with SMTP id s8-20020a5b0748000000b00d3f0208b8eamr3491103ybq.11.1693438699616;
- Wed, 30 Aug 2023 16:38:19 -0700 (PDT)
+        bh=NazOzKPkx7AjojgQQ4WRVyoU6M4Mb5zkgyFuSk7fqSA=;
+        b=kF+bkgxJWRIMRnOZErARX/+Fra5K7/2fkxEBAndnv9C6Lksx8Wiz1E8c/YWd9kpyu/
+         IfwXV6enpC0+s5zrQqjY1nwsNxrrxayM/xdJtjNK7h016PVWxEAeofPJChx3kOIsY0cQ
+         795Ois3Zq1/e+pweNcEa87x5DmI41vkdjsrHvMMYNXuKxavbi2cheike1TQ++7aWugXO
+         0oiKJdrhNxxuLPit4h4QzMHddzCJ991U4vTtXewy7Oy8TjfIyrCph/H/H3Qik38HGB3w
+         9a+gacqgUG8tKZ6oeEl4cRxjSZgeJXC07EMyyD9kroKOm4ujPTWB7e6mIT/KTSVgciKI
+         zzGA==
+X-Gm-Message-State: AOJu0Yx127TGYkZfTuwplkNo2seV9qjhwtb4Fn1GKNHfg6vXd3e2vOXL
+        +Tyxqc+9oCxurVHGnhPtP4OlbHoeRmAtkZ4BDBfbLg==
+X-Google-Smtp-Source: AGHT+IFejm9Q+Ex9Nv89RkmnYcqWsShM6TIShSIoUZ/+RLO6C9oKn0Gw/p6tqXp2c+X6rIN0NlKUrtFa8py8qS1XbDM=
+X-Received: by 2002:a25:2e47:0:b0:d72:a54d:4b7 with SMTP id
+ b7-20020a252e47000000b00d72a54d04b7mr3334092ybn.1.1693438809917; Wed, 30 Aug
+ 2023 16:40:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230830224910.8091-1-quic_abhinavk@quicinc.com> <20230830224910.8091-2-quic_abhinavk@quicinc.com>
-In-Reply-To: <20230830224910.8091-2-quic_abhinavk@quicinc.com>
+References: <20230830224910.8091-1-quic_abhinavk@quicinc.com> <20230830224910.8091-3-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230830224910.8091-3-quic_abhinavk@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 31 Aug 2023 02:38:08 +0300
-Message-ID: <CAA8EJpoc6ig=Vy7gFJ0nnsAP5HvFB+=ajk94x26Ah0D_g2yJug@mail.gmail.com>
-Subject: Re: [PATCH 01/16] drm/msm/dpu: fix writeback programming for YUV cases
+Date:   Thu, 31 Aug 2023 02:39:59 +0300
+Message-ID: <CAA8EJpoNqWTspHADS6PKKMLcfHCKhgbZTXO39tueSZE+a64MwQ@mail.gmail.com>
+Subject: Re: [PATCH 02/16] drm/msm/dpu: add formats check for writeback encoder
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>,
@@ -73,34 +74,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, 31 Aug 2023 at 01:49, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> For YUV cases, setting the required format bits was missed
-> out in the register programming. Lets fix it now in preparation
-> of adding YUV formats support for writeback.
+> In preparation of adding more formats to dpu writeback add
+
+I think it is `preparation to'
+
+Other than that:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> format validation to it to fail any unsupported formats.
 >
-> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks")
-
-Since we were not exporting YUV formats, this tag is not correct. This
-is a mere functional change, not a fix.
-
+> Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
 > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> index ebc416400382..0aa598b355e9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> @@ -86,6 +86,9 @@ static void dpu_hw_wb_setup_format(struct dpu_hw_wb *ctx,
->                         dst_format |= BIT(14); /* DST_ALPHA_X */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index 284a88060221..6a1f8e34f18a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -238,6 +238,7 @@ static int dpu_encoder_phys_wb_atomic_check(
+>  {
+>         struct drm_framebuffer *fb;
+>         const struct drm_display_mode *mode = &crtc_state->mode;
+> +       int ret;
+>
+>         DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
+>                         phys_enc->hw_wb->idx, mode->name, mode->hdisplay, mode->vdisplay);
+> @@ -274,6 +275,12 @@ static int dpu_encoder_phys_wb_atomic_check(
+>                 return -EINVAL;
 >         }
 >
-> +       if (DPU_FORMAT_IS_YUV(fmt))
-> +               dst_format |= BIT(15);
+> +       ret = drm_atomic_helper_check_wb_encoder_state(phys_enc->parent, conn_state);
+> +       if (ret < 0) {
+> +               DPU_ERROR("invalid pixel format %p4cc\n", &fb->format->format);
+> +               return ret;
+> +       }
 > +
->         pattern = (fmt->element[3] << 24) |
->                 (fmt->element[2] << 16) |
->                 (fmt->element[1] << 8)  |
+>         return 0;
+>  }
+>
 > --
 > 2.40.1
 >
