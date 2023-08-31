@@ -2,166 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAD0878F15E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 18:34:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B6CA78F167
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 18:41:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238124AbjHaQe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 12:34:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46000 "EHLO
+        id S241511AbjHaQlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 12:41:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbjHaQez (ORCPT
+        with ESMTP id S229892AbjHaQlA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 12:34:55 -0400
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn2018.outbound.protection.outlook.com [40.92.107.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A493112D;
-        Thu, 31 Aug 2023 09:34:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IFzjcftqeHpIvoFME8V3ijA84zhI4ywPH9e8Di1+WJ7Dm5kFv9Lf2dcWOInurYD+Jb1hKn8Rv0SreL87uy3A/J8Yq1CC+2MATU2iC7iAwH2457gpTac0HyCE7oo6MuERO2rfaYTR8majwRVhb5uisDMN4cV/RDFAHFudvodPLaKegpdggJjBkIC8moCqYcrawbJFjV2J6LEWjatwntUlJcbf5UJUmQPvw+UNSL7cJSJlC3Zhc9snbxqbdghb48aoGH5okRxFdwNiytXPZk4Bk1S1+jaz/D4KWLvszpn8Tdjck50vXV+DsWzJICUuII+q8QeT4uH54LhqioJDGWzfwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z9Ybkavbx3D4Q/c30zUNm0cNx73cdS5Hv/sdrA421Rs=;
- b=IkckEsT4J/Ymew2WybNdPAHz4YkjJf0y95M2fJwEQ19spTVUmhedD8UQy4IeI+2uL3upUHlIkL294byvjbmhd68fTx5jewI7O1tYwB3/qxq/1Z3K0Zi19Dc7kEc0SGPK3OKl+YOYFIIQvpSDxSjV0FBZyqnYdkBDr2ERbASeI0MQD25CBiS1iA914dIoHD4XubPMRpl5+WCJ2Q13kb93NDJ4+0elIUPy5UeAvajZOZ3Ilg1dOHfF0j6SHhleDn6umrtaJJmTNfrelG6b6Qzg7idYAA17w2dxeyZp1qAhOwT0VPk2kXxhYtnjrObFbh73AeOgNsOJV5Yobj2qG36tZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z9Ybkavbx3D4Q/c30zUNm0cNx73cdS5Hv/sdrA421Rs=;
- b=YFGzjk/SgVyyB2k0oovgfxhcRXXZMcBQ9T2H17oVQBHxV7XRHvT2w3uwaOxtWu1dsymOU4AJ9guLGRBQNGssD9L70b3OqhH0dvCXFNMlKEN7kvIF8NkZlWo8xmTS1qOEbKj3jW2K/gZeH60PVwVjGCqkZacUWP5H0NRuuHCo4FMzLj2QytbfJIuhFaNInjsFNHIXsjA+J4RsJArPcnMoqrF8nIgfdXW01/JSKHlNqofoPPlfS5Ztyer09OvGYwj/g0IYQxrsjYco5NjFcymTWZXUrcQ4VJ8POj+0jdrpicMmxo02VXOMOquuiWFxUQDqqizg2X8PlKMJvF0w1nsGJQ==
-Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9) by SG2PR01MB4411.apcprd01.prod.exchangelabs.com
- (2603:1096:4:1b6::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.20; Thu, 31 Aug
- 2023 16:34:45 +0000
-Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- ([fe80::a40d:d453:3c29:577c]) by TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- ([fe80::a40d:d453:3c29:577c%4]) with mapi id 15.20.6745.020; Thu, 31 Aug 2023
- 16:34:44 +0000
-From:   Ziyang Huang <hzyitc@outlook.com>
-To:     agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gokulsri@quicinc.com, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Ziyang Huang <hzyitc@outlook.com>
-Subject: [PATCH v2] arm64: dts: ipq5018: Correct uart1_pins pinconf
-Date:   Fri,  1 Sep 2023 00:34:15 +0800
-Message-ID: <TYZPR01MB5556F902BF64AF857C3ABD44C9E5A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-X-Mailer: git-send-email 2.40.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN:  [L568jpMYFgUzfXmVnz3GJK/bJlLvqHwjB5NaQ/MmBDaHU9dW/GZ5uA==]
-X-ClientProxiedBy: SJ0PR03CA0096.namprd03.prod.outlook.com
- (2603:10b6:a03:333::11) To TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9)
-X-Microsoft-Original-Message-ID: <20230831163415.1137690-1-hzyitc@outlook.com>
+        Thu, 31 Aug 2023 12:41:00 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CAEB122
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 09:40:57 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b962535808so19337121fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 09:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693500055; x=1694104855; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=32VO4iE+9AUaoXKhjN8FGYng4VNGJNxRjuAGulwkX3A=;
+        b=D0/zGLLGmuydeo7/WdPm0BrabT8Evt0zrPhVdb41Jy2q6lUV3r5C66Zhuc4xnOfef9
+         sgDpb1PjOhmj2mZa8b9Wd3vK5WfYeyFCAbWT62ePCL4AikXNOnFD5lX1COE0RH50OR9D
+         8omciMzj2qtJ7dKvAh+SPAncTvaJ9VCcHvp6eJDI5GNb+niHEXVKHVMNw3Y9VzHhc+vc
+         LuqG3IrpYEbd9Vfu9bpXwcU4qd4slSU4K6BH9hEW92P8yYiCNBRSJUHFWvfmdzEYVQjt
+         BK5YIRUZdbnRkO7d1jxXzJ5J1+uexcFL/vIEl7BH6dM7KiH6oe+ol8I+VJCpTBlaTtgk
+         VShQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693500055; x=1694104855;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=32VO4iE+9AUaoXKhjN8FGYng4VNGJNxRjuAGulwkX3A=;
+        b=DM00gxDenOmaTUpYQzQ4FL3W6iiQmlwVDf1PQaLW3uBFCnEBw+KOiQULkXwjPWsECb
+         +kCOqlkPRmUn25NEcA9MNYuFOMZD2H95y+BYSY8hQKSDkoouq78wifNIhvBvLoKu1KrR
+         xYAXGMTnl6F5LCUoIQD2Gvgh39FzqJq0bTvp7nGvInfOWIoUVTIOx0apSgUP4Q40Re+H
+         DxY3KE02hOivlmXfr2CEPQbOsFj7AE8hCQMuaweTHjN39pNRmdta2Rxs2s7Kt1eV42zf
+         al4/5HhEvAuNc5qWyp951SgneSNaOe5mtxW9qUgJDV6IgYxUMdPQjAZaOfMgPMWRpRsP
+         k8yA==
+X-Gm-Message-State: AOJu0YxgqY1csusM3ZPqMcjv6Uc0yyLU4XHgvzAI2ENPFHBHBoa4gbM/
+        abeOfPosiURS7Z8WK7042IbYzg==
+X-Google-Smtp-Source: AGHT+IHEKkqBMsrhr42Vv9weNDnAD6WdXqK5Onb+9zx4IfnsLu7lPJA5n4KeZI7uo9A9Og4Aq9qTcw==
+X-Received: by 2002:a2e:8e89:0:b0:2bc:fdb9:5bf4 with SMTP id z9-20020a2e8e89000000b002bcfdb95bf4mr4375910ljk.11.1693500055525;
+        Thu, 31 Aug 2023 09:40:55 -0700 (PDT)
+Received: from [192.168.1.101] (abyk13.neoplus.adsl.tpnet.pl. [83.9.30.13])
+        by smtp.gmail.com with ESMTPSA id c1-20020a2e9d81000000b002b9b9fd0f92sm378214ljj.105.2023.08.31.09.40.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Aug 2023 09:40:55 -0700 (PDT)
+Message-ID: <f1f60df1-7632-48a2-a211-dcd6c1fa419f@linaro.org>
+Date:   Thu, 31 Aug 2023 18:40:53 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR01MB5556:EE_|SG2PR01MB4411:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee308674-1a52-4fd1-1341-08dbaa402ef2
-X-MS-Exchange-SLBlob-MailProps: znQPCv1HvwVFYtSO87k/Yw3hvgb2vP4kqTfKBHaYaCc5hs0Uhsc4cm9siZINbfJNlkVkOn86oaR4J6ByL0erAe7WfF6+vK2uTISr94rulXwcYixChUeqqIgAkwJmSc6mrBxK5bqpdg9A4TxeGoaerb08w4BuY3TO4UPY02ZwvrojAoC34+wGnONy/SQxcfC/YtyAZP8/zMLm8P8SAGj4QYPCQR/pg3VXso36WgKuQCw77e/26kyl/XnDWH8Bbsgs6RKThyP2jzKIL6MxsRv5QKKlg8AENI5lHffYq4klWIkjhJPHLxpm55lZAOYu3tjjCYbRizGSov0AxG2iPydc6B04FtF23uFRG00UQoQbnRmafFrkSkuqw8EA0BwAl1tZk3UNuf3p4mera91TqaWo3EB1uDBalYc5ze5L9J42qNBD4S6WAsQKZNyPWpMRt4n5Y9xcHMGmf4a1DHyoRgMRtQnwa0HuokQzE3jWW0Ilr9bTaW+19IUyxUWG0tUoooyGYL4ZviQU7bM+f0Q/eCcBUa89dPAwpLFEyrIh+A4MpVG+sQmAz1mQK6xxxTiEl7c+YhosWxiOG8vXSOqgs8KPe2HjWn0QIKCp47y9+eAmEYSSDWs2Hy+3JYxyBBD+WSm5hIauyk2jKmBomFC+2GcFfxZFXOq8bkzjuxgajbyPYvCTL8jutxT/F0Ok48xC3ShKHzs5uHZETb9lJVwln9y98ybUOmM0SO96I7I1Qbdct9bsNKivSnrS0CMPu34IYWvUP8xJFfXFblc=
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xZ1SoxHx2rsbR1meU1oI6VkKcuHytSlWG55KhRhEhoZlrvhvcRWPZSKDUW9S7m9IQcKs0E2pC1x/kbeYXiBF/FLi3+MKLk9esNVSHeeLzFJwZuwQ74PSc6OcyJtWzM7oEvcjXXpWOBZ5mz8VDYNK8l3APcgrKZfMbgeK93jCNYLFCj6HK5ggJKpmBUCbuXmG0aSVZ27y+p+sj4rwNLOX0vYUTrImUjEhJvZkBn5XKm2Gs5rfIOdDbokeO8U9SJYWwQrWISmZc/+JqJAvbm9hDwP6bBHNRqxIn2vDbrkpqhRNjVh8IEoFzig4ESZ6REWH9rGIHjC3RdMmeapgBH9J/weBiPeyThdmMcSEwoZAAWjJ5oXUQU4BFlWa5Bw9Wf2v3qoto7I+zcBVVgPpTZPCX6gOO2odsmzZUv3fdwswtjwGreQIukowyS2iRcFXY518kUADYFVrhBOO2uSeI9KimtsyRBQlM+A5baXg8Lp5BNZulpqFt9AytCSV0S5QUbmNX/JtFXXx4ceqS6qV/kYDW5FHWclSIp+Yf1K60FoNS7JhlSGPrFe7Uxf02ZECIGHTXvO1zyMF0ArHfR9FJQvsnCTNvTUwaj3mU12sVVY2p7Pn+YsRUbNLSunNCIAQCbsz
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tNSTszad32IDlvyAwjdBCOuSVieiQz6CDN9+SneS3i5Z9Dt8dePXRxxX2SoP?=
- =?us-ascii?Q?AOAEkhpKp98v5WH28/cF/KWW8HLxCvJjV7jT3CGjjhWPcnIIQ7g7yAuBEoXH?=
- =?us-ascii?Q?8Dxe4uDx575O7iQGlmY/4X4EEV+46WikhHmM4jS5JU4L7t7ozifcUFOfCDpy?=
- =?us-ascii?Q?Dfd35oFTxGNppQfRhLNgrm1sSPduztqvUF+FFO1SlWVZIkoB9U2ugNbX9iXj?=
- =?us-ascii?Q?pVWy/UmmLqtdy4JC53zoVyuPlDjt2EPmBQ4/9cfgNiWusHuoywefugV/u0vH?=
- =?us-ascii?Q?V2mIvIcMDXOasE0jyIghXE4sL5dR5fzf7DMqC97CulrPlumpZ7JoBvQ+8XN/?=
- =?us-ascii?Q?Mou1dn1GeMPnc1d1WNc/+B2/HV0Wb9gQ/Wa84RZxLl4Mq+OqHum9orpRQNgt?=
- =?us-ascii?Q?STv8UCK/R9oryQIdlxF0B866JTSLUdwc4krtZbDL9rr7z1FgJHWsYm7w4uZQ?=
- =?us-ascii?Q?J0Vz5lxtZxgwbQPISq66Uc2c26r8keffKL8PeJUkN4HWcKUpDoXGLK9pgfX6?=
- =?us-ascii?Q?INIw7JW+e1EHqNSL1YdtBaagJ7Bf+t3AwQW/fXsW7hqw8mgpgTVSpEO2wuOF?=
- =?us-ascii?Q?14XJPlQR16OC1N3rW9lOFVtGNxcoZossOYE2fsRn6DvBj2Z59MeB1sQQyBu6?=
- =?us-ascii?Q?wPFrAwGc/4XR5gRW6FJHvRzK7nhljcOtGI2LaeCZRFSNjVJD5K4rqR3cm6lf?=
- =?us-ascii?Q?zjgerg8WAvw9ALjJ8aUvkSBbKaGEL1HZHlLDamBWQ1QkwDVG3RUoFGQ135HG?=
- =?us-ascii?Q?V0C7dgz0MTjLspW2enXut7SO9ju5CT49p4p+CezEYt03jaiUvnXjzwhw7BIA?=
- =?us-ascii?Q?cDZQF5ZpqK5MPpC/bm9lQyBvEONPvMijt7Eov3C+LDn6chAcLFg3b7lAiicb?=
- =?us-ascii?Q?0pnUXexvv00zTBPjbTWoMMk+/GiGZUet9w6qiJ7qeGYc/pFOeP/PL3kqWLHf?=
- =?us-ascii?Q?u8jgUszQOD43JTHdwUI08bbY5EpFBjFfmCj4JbwMdLeLWwyzL+bQnTuBoRpx?=
- =?us-ascii?Q?1vrEux3srIND7uGqHtcMC5B/uXHamHsQUycrC4n2bA+4fx+goKmK5Kexzw8P?=
- =?us-ascii?Q?/QIMVuC7Ir0nbOuAU182S2v8Lr5LTBEB4wsYqQp37fvTynS9j0Q09vpKfbHq?=
- =?us-ascii?Q?kDsuhejIk3XHqYiQkS53eh7bgkc7Bjxf8G/yzQsTafbpNAZ9+0dmB7KAQxvY?=
- =?us-ascii?Q?68pOaJTbWkQpSE0elIVY9fi4GkWfqodfxic6hnzt4hQm5GTGxd6BoOegt5TZ?=
- =?us-ascii?Q?cYe5iGXr6P34a48mjuiP?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee308674-1a52-4fd1-1341-08dbaa402ef2
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR01MB5556.apcprd01.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2023 16:34:44.9555
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR01MB4411
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 3/9] dt-bindings: soc: qcom: cpr3: Add bindings for
+ CPR3 driver
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
+ <20230217-topic-cpr3h-v14-3-9fd23241493d@linaro.org>
+ <CAPDyKFrXT+2NEMUzVv-kWjXAhLinXq99GKq4_Ge2VjthtYxtaA@mail.gmail.com>
+ <20230831162835.GA2390385-robh@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230831162835.GA2390385-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In pinctrl, the pinconfigs for uart are named "blspX_uartY".
-  X is the UART ID. Starts from 1.
-    1-6 are in BLSP Block 1.
-    7-12 are in BLSP Block 2.
-  Y is the index of mux config. Starts from 0.
+On 31.08.2023 18:28, Rob Herring wrote:
+> On Tue, Aug 29, 2023 at 01:01:44PM +0200, Ulf Hansson wrote:
+>> On Mon, 28 Aug 2023 at 13:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>>
+>>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>>
+>>> Add the bindings for the CPR3 driver to the documentation.
+>>>
+>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>> [Konrad: Make binding check pass; update AGdR's email]
+>>> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 286 +++++++++++++++++++++
+>>>  1 file changed, 286 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+>>> new file mode 100644
+>>> index 000000000000..acf2e294866b
+>>
+>> [...]
+>>
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
+>>> +    #include <dt-bindings/interrupt-controller/irq.h>
+>>> +
+>>> +    cpus {
+>>> +        #address-cells = <2>;
+>>> +        #size-cells = <0>;
+>>> +
+>>> +        cpu@0 {
+>>> +            compatible = "qcom,kryo280";
+>>> +            device_type = "cpu";
+>>> +            reg = <0x0 0x0>;
+>>> +            operating-points-v2 = <&cpu0_opp_table>;
+>>> +            power-domains = <&apc_cprh 0>;
+>>> +            power-domain-names = "cprh";
+>>
+>> Rather than using a Qcom specific power-domain-name, perhaps a common
+>> power-domain-name for cpus, that can be used for "the performance
+>> domain" would be a good idea here?
+>>
+>> I have suggested using "perf" for the SCMI performance domain [1],
+>> perhaps that description should be extended to cover this and other
+>> performance domains too?
+> 
+> Better yet, nothing. There's no value to -names when there is only 1 
+> entry.
+As of today, it's required for devm_pm_opp_attach_genpd()
 
-In dts, the serials are also named "blspX_uartY", but with different logic.
-  X is the BLSP Block ID. Starts from 1.
-  Y is the uart id inside block.
-    In "ipq6018.dtsi" and "ipq8074.dtsi", it starts from 1.
-    But in "ipq5332.dtsi" and "ipq9574.dtsi", it starts from 0.
+Ulf, is there a better way to do this that doesn't require names?
 
-+-----------------+-----------------+-------------+-----------------+
-|     Block ID    | ID inside Block |  dts name   | pinconfig name  |
-| (Starts from 1) | (Starts from 1) |             |                 |
-+-----------------+-----------------+-------------+-----------------+
-|        1        |        1        | blsp1_uart1 |   blsp0_uartY   |
-|        1        |        2        | blsp1_uart2 |   blsp1_uartY   |
-|        1        |        6        | blsp1_uart6 |   blsp5_uartY   |
-|        2        |        1        | blsp2_uart1 |   blsp6_uartY   |
-|        2        |        6        | blsp2_uart6 |   blsp12_uartY  |
-+-----------------+-----------------+-------------+-----------------+
-
-In "ipq5018.dts", "blsp1_uart1" (dts name) is the first serial (confimed
-by the address), So its pinconfig should be "blsp0_uart0" (pinconfig name,
-use GPIO 20 and 21) or "blsp0_uart1" (pinconfig name, use GPIO 28 and 29).
-
-Fixes: 570006756a16 ("arm64: dts: Add ipq5018 SoC and rdp432-c2 board support")
-Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
----
-Changes since v1
-- Use corrent name in From
-
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 9f13d2dcdfd5..91b98020e1c6 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -104,10 +104,10 @@ tlmm: pinctrl@1000000 {
- 			#interrupt-cells = <2>;
- 
- 			uart1_pins: uart1-state {
--				pins = "gpio31", "gpio32", "gpio33", "gpio34";
--				function = "blsp1_uart1";
-+				pins = "gpio28", "gpio29";
-+				function = "blsp0_uart1";
- 				drive-strength = <8>;
--				bias-pull-down;
-+				bias-disabled;
- 			};
- 		};
- 
--- 
-2.40.1
-
+Konrad
