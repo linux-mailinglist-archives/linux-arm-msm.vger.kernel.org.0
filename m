@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B66278F1E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 19:29:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 511D578F1EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 19:30:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243569AbjHaR3f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 13:29:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43306 "EHLO
+        id S231476AbjHaRaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 13:30:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240965AbjHaR3e (ORCPT
+        with ESMTP id S235041AbjHaRaJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 13:29:34 -0400
+        Thu, 31 Aug 2023 13:30:09 -0400
 Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DDDFE5F;
-        Thu, 31 Aug 2023 10:29:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE916E7A;
+        Thu, 31 Aug 2023 10:29:57 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id EA767CE201B;
-        Thu, 31 Aug 2023 17:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86588C433C7;
-        Thu, 31 Aug 2023 17:29:25 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 35A87CE216A;
+        Thu, 31 Aug 2023 17:29:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD63C433C7;
+        Thu, 31 Aug 2023 17:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693502967;
-        bh=m2mFHdLb5akULhutA+xwBEH6Sa4t3tjPRJFFhXFkIsc=;
+        s=k20201202; t=1693502994;
+        bh=057dXhBltFNY+YXutamWEKDOENY+dS9838PYVA3CeIk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ukG3XhOIQt4TGpxNwIxmrhlaWzF1CZZ7iz1KBcXUuA2SaM70aReb4BT2bjz/h6g6r
-         awNF6cgNx/eAZc+7kWZUmZD01zUzvnsUH+dyewPa21iYPySKUNx96GmfQ5xuDEWNVx
-         IRzlMTp3ux7LfwpXAcCXldy3Vfg6trqOZ54Y4huy2pEOW9IEEjadDpdPgeN2H9ekwd
-         ACeBzYusXVsxb+Gcj4uS/sULcH4GSPKswpPe946uV8dlPXnKJCi9ZUFxWsfAZ101Pg
-         4eUgPeU1eK2DOHKTFYGu0d523Uh3ViAJ3swl4KuF3PNbLwihcvsO8dnajpaRn7lPSy
-         H3iREe5wC4K4A==
-Received: (nullmailer pid 2472105 invoked by uid 1000);
-        Thu, 31 Aug 2023 17:29:24 -0000
-Date:   Thu, 31 Aug 2023 12:29:24 -0500
+        b=YAg2oRB2Hz4CCaDGqT+FpM5RsRuIyfObS5GYwv4qsjQsEN+HmzbDaTxJnvFpStRRd
+         b00tiO7VLBSRyilW0ijkSUxyBAa2sxb+FML2eTBhG35GFsAA7qf1hQtb5f+8vVKixa
+         yPAriWirIlFos9iq7I9p40aG0ObfpRrBETt185Z4c7+nye4Pl0kmDrhh4cl/A3sHh/
+         uIFwdmugmKkajgnRbu5f8yhjugaVMRr/Dg4NVmbzdayh5+tdFBYE/vs+XrMoncl889
+         BE5JBZn6DL45yNp3NIxH2AkFPcQseeitRtr7OnBCFYW3vK3UyAMTlZlPQsHU/n6nfz
+         2nYRKMW8Jas6Q==
+Received: (nullmailer pid 2472823 invoked by uid 1000);
+        Thu, 31 Aug 2023 17:29:51 -0000
+Date:   Thu, 31 Aug 2023 12:29:51 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        Thinh.Nguyen@synopsys.com, broonie@kernel.org,
-        bgoswami@quicinc.com, tiwai@suse.com, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-Subject: Re: [PATCH v5 23/32] ASoC: dt-bindings: Add Q6USB backend
-Message-ID: <20230831172924.GA2465731-robh@kernel.org>
+Cc:     alsa-devel@alsa-project.org, andersson@kernel.org,
+        quic_plai@quicinc.com, linux-arm-msm@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        perex@perex.cz, bgoswami@quicinc.com, devicetree@vger.kernel.org,
+        tiwai@suse.com, linux-kernel@vger.kernel.org, agross@kernel.org,
+        lgirdwood@gmail.com, srinivas.kandagatla@linaro.org,
+        mathias.nyman@intel.com, linux-usb@vger.kernel.org,
+        broonie@kernel.org, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, quic_jackp@quicinc.com
+Subject: Re: [PATCH v5 24/32] ASoC: dt-bindings: Update example for enabling
+ USB offload on SM8250
+Message-ID: <169350299098.2472764.11068604113616998755.robh@kernel.org>
 References: <20230829210657.9904-1-quic_wcheng@quicinc.com>
- <20230829210657.9904-24-quic_wcheng@quicinc.com>
+ <20230829210657.9904-25-quic_wcheng@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230829210657.9904-24-quic_wcheng@quicinc.com>
+In-Reply-To: <20230829210657.9904-25-quic_wcheng@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -65,85 +66,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 29, 2023 at 02:06:48PM -0700, Wesley Cheng wrote:
-> Add a dt-binding to describe the definition of enabling the Q6 USB backend
-> device for audio offloading.  The node carries information, which is passed
-> along to the QC USB SND class driver counterpart.  These parameters will be
-> utilized during QMI stream enable requests.
+
+On Tue, 29 Aug 2023 14:06:49 -0700, Wesley Cheng wrote:
+> Add an example on enabling of USB offload for the Q6DSP.  The routing can
+> be done by the mixer, which can pass the multimedia stream to the USB
+> backend.
 > 
 > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
->  .../bindings/sound/qcom,q6usb-dais.yaml       | 53 +++++++++++++++++++
-
-filename should match the compatible.
-
->  1 file changed, 53 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml
+>  .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml b/Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml
-> new file mode 100644
-> index 000000000000..72254d7e70d2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,q6usb-dais.yaml
-> @@ -0,0 +1,53 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,q6usb-dais.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm ASoC DPCM USB backend DAI
-> +
-> +maintainers:
-> +  - Wesley Cheng <quic_wcheng@quicinc.com>
-> +
-> +description:
-> +  The USB port is a supported AFE path on the Q6 DSP.  This ASoC DPCM
-> +  backend DAI will communicate the required settings to initialize the
-> +  XHCI host controller properly for enabling the offloaded audio stream.
-> +  Parameters defined under this node will carry settings, which will be
-> +  passed along during the QMI stream enable request and configuration of
-> +  the XHCI host controller.
-> +
-> +allOf:
-> +  - $ref: dai-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,q6usb
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  "#sound-dai-cells":
-> +    const: 1
-> +
-> +  qcom,usb-audio-intr-num:
-> +    description:
-> +      Desired XHCI interrupter number to use.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
 
-This is the range as num-hc-interrupters, right?
+Acked-by: Rob Herring <robh@kernel.org>
 
-Perhaps this should also be uint16 and limited to 1024 (or 8).
-
-But why does this need to be in DT? Can't the OS just pick one to 
-assign? (the description should answer this)
-
-> +
-> +required:
-> +  - compatible
-> +  - "#sound-dai-cells"
-> +  - qcom,usb-audio-intr-num
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    dais {
-> +      compatible = "qcom,q6usb";
-> +      #sound-dai-cells = <1>;
-> +      iommus = <&apps_smmu 0x180f 0x0>;
-> +      qcom,usb-audio-intr-num = <2>;
-> +    };
