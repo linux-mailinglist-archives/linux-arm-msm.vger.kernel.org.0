@@ -2,135 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC5A478F41C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 22:34:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4B9278F437
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 22:40:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239555AbjHaUeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 16:34:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47584 "EHLO
+        id S1347392AbjHaUks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 16:40:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347416AbjHaUeQ (ORCPT
+        with ESMTP id S239202AbjHaUkr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 16:34:16 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 230ADE5D;
-        Thu, 31 Aug 2023 13:34:11 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E5284C15;
-        Thu, 31 Aug 2023 13:34:49 -0700 (PDT)
-Received: from [10.57.91.85] (unknown [10.57.91.85])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE9663F740;
-        Thu, 31 Aug 2023 13:34:07 -0700 (PDT)
-Message-ID: <46a48c06-0d6c-d943-5f20-bd0002c76342@arm.com>
-Date:   Thu, 31 Aug 2023 21:34:06 +0100
+        Thu, 31 Aug 2023 16:40:47 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7371B1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:40:44 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bceb02fd2bso21938641fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693514443; x=1694119243; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jmh9FExlycgbmfRymrwXGINB5p9AMhlFKblzDNqy3Qk=;
+        b=JuhebmW0QQiDIH/L7C5RxJikxIjRPg8Idt1kpr2HwTQ82O/7Cl7NUoKqMsIcJpbXBE
+         ZTIIGNP1Or+1USixtPa6jjGi8/A3fa3n3QfUu06ag5lLnOSFWURlZhxAj18njKHUFnA7
+         4EWf1XW3cSGOrCX/3BKVmy9es8rq6Zr7kkK/wUX2+ctb//Px8lR8vbmg1BOXUzB+bb4W
+         U407XBlhy0gjF4vpQ6FSmKrjJXTaNtu8qXEsUmqrR4NZF5DdEtUNv0vlRWAfffIBjrW6
+         eA1uanDYqg165cB3P0i1FoX8/U+01IQd3kbVWSadkv3waQAoEhe+fEFKAi+IVzq+vvXb
+         vUIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693514443; x=1694119243;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jmh9FExlycgbmfRymrwXGINB5p9AMhlFKblzDNqy3Qk=;
+        b=fUEcY2dE08h/5Am3thrrDxy0n9QqPeY5kUbQm4nWBvzkNGvT2G6LZXyRtSZRF1KSxH
+         0yiszWC6XrxkTA/HniPnQd0ZIEAYdRdfoY4r2y1I3nW3L/YKoMfNGXi4unmWK5c1iR1P
+         TGZZyE+f/r6navSuFK5u6A1nOesATzYY03VMDsT4XPjgs85uqyIvsIvewp4AriaUiifm
+         FrqWiQTly6iqdDk9BG2ExW6lVrKoIOjR9gsMEliZ5wnPO6YgwHxhuSifUIuGwKtTYPee
+         pXtZupKVGC4Gzc4+hUn2cgPMKlIbnpAO7W4tLiqabajymZJrmTmxKBIfuK9i3vffTQx2
+         fIKA==
+X-Gm-Message-State: AOJu0Yy/seuiNum0DsFG2l5h2JPvqMj8lKaBHRhO1FH+UxeMi0oyHYIG
+        c/FVFjy5h59sYaINjEOQDs8MSQ==
+X-Google-Smtp-Source: AGHT+IHvucSDAeT+xVwHkfOaHi/9UEs2qNN5mdDevojByrsF5+OU84HysdBunzySgfm2pK3iRiW+yw==
+X-Received: by 2002:a19:5e0b:0:b0:500:8fc1:8aba with SMTP id s11-20020a195e0b000000b005008fc18abamr218772lfb.26.1693514442333;
+        Thu, 31 Aug 2023 13:40:42 -0700 (PDT)
+Received: from [192.168.1.101] (abxj164.neoplus.adsl.tpnet.pl. [83.9.3.164])
+        by smtp.gmail.com with ESMTPSA id g23-20020ac25397000000b004ff884e9936sm409207lfh.12.2023.08.31.13.40.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Aug 2023 13:40:41 -0700 (PDT)
+Message-ID: <9de94c43-5274-4eb3-96b3-a77db2822b92@linaro.org>
+Date:   Thu, 31 Aug 2023 22:40:39 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.14.0
-Subject: Re: [PATCH v8 06/13] coresight-tpdm: Add reset node to TPDM node
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
- <1692681973-20764-7-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1692681973-20764-7-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,usb-snps-femto-v2: Add REFGEN
+ regulator
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20230830-topic-refgenphy-v1-0-892db196a1c0@linaro.org>
+ <20230830-topic-refgenphy-v1-1-892db196a1c0@linaro.org>
+ <20230831182505.GA2541736-robh@kernel.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230831182505.GA2541736-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/08/2023 06:26, Tao Zhang wrote:
-> TPDM device need a node to reset the configurations and status of
-> it. This change provides a node to reset the configurations and
-> disable the TPDM if it has been enabled.
+On 31.08.2023 20:25, Rob Herring wrote:
+> On Wed, Aug 30, 2023 at 11:13:51PM +0200, Konrad Dybcio wrote:
+>> The HSPHY is (or at least can be) one of the users of the reference
+>> voltage generating regulator. Ensure that dependency is described
+>> properly.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+>> index 0f200e3f97a9..e895b6c4ee49 100644
+>> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+>> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+>> @@ -53,6 +53,9 @@ properties:
+>>      items:
+>>        - description: PHY core reset
+>>  
+>> +  refgen-supply:
+>> +    description: phandle to the REFGEN regulator node
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 ++++++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 22 ++++++++++++++++++++++
->   2 files changed, 32 insertions(+)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 4a58e64..2936226 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -11,3 +11,13 @@ Description:
->   		Accepts only one of the 2 values -  1 or 2.
->   		1 : Generate 64 bits data
->   		2 : Generate 32 bits data
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/reset_dataset
-> +Date:		March 2023
-> +KernelVersion	6.5
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Reset the dataset of the tpdm.
-> +
-> +		Accepts only one value -  1.
-> +		1 : Reset the dataset of the tpdm
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 951ad4d..d6e7c8c 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -162,6 +162,27 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
->   	return 0;
->   }
->   
-> +static ssize_t reset_dataset_store(struct device *dev,
-> +					  struct device_attribute *attr,
-> +					  const char *buf,
-> +					  size_t size)
-> +{
-> +	int ret = 0;
-> +	unsigned long val;
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	ret = kstrtoul(buf, 0, &val);
-> +	if (ret || val != 1)
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	tpdm_reset_datasets(drvdata);
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_WO(reset_dataset);
-> +
->   /*
->    * value 1: 64 bits test data
->    * value 2: 32 bits test data
-> @@ -202,6 +223,7 @@ static ssize_t integration_test_store(struct device *dev,
->   static DEVICE_ATTR_WO(integration_test);
->   
->   static struct attribute *tpdm_attrs[] = {
-> +	&dev_attr_reset_dataset.attr,
+> Supply names are local to the device (sink name), but this seems to be 
+> named based on the supply source. Maybe hard to do if all internal 
+> stuff. What is this supplying and what's the source if not REFGEN?
+I don't think I have anything that would answer this question..
+Though I would not at all be surprised if Qualcomm also called the
+input "refgen"..
 
-Should this be only visible when DSB data set is present ?
+Maybe Bjorn or Dmitry would know.
 
-Suzuki
-
->   	&dev_attr_integration_test.attr,
->   	NULL,
->   };
-
+Konrad
