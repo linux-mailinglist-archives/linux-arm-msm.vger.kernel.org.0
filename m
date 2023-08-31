@@ -2,113 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67F7B78EFF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 17:11:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E428178F03D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 17:26:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230471AbjHaPLO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 11:11:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35746 "EHLO
+        id S242436AbjHaP0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 11:26:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241589AbjHaPLO (ORCPT
+        with ESMTP id S241859AbjHaPZ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 11:11:14 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760E2E4F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 08:11:09 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bd0d135ca3so17850431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 08:11:09 -0700 (PDT)
+        Thu, 31 Aug 2023 11:25:59 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD02E54
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 08:25:56 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3fee8af9cb9so9534365e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 08:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693494668; x=1694099468; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OOFcgWJvykU3ufqPjMeqWWJXmE/XqPoeHSC5WspwBo8=;
-        b=sTbdHp2zDtjcLXvz+flCdxxtgBkfcYgwV4O45gYt3bGT9Tzhm6ObfsjJUqYNuz5xbh
-         1zzyLqWk3bnyTfOeZj+m0ejb+8Ij2mEfZop6SgMiMlNYYFALrSOM/ZG/UzhGvTxv9CUv
-         I6mkuUDKIGjrGVOni5LteaoRUCX/3jArWgxbcfG8+J50yVrds6WgGgdqieleHt58EGI5
-         R5Phygxi27e06MTTyYLnYwyoCPyD4fPF1MrhiwLBN2XRk9ELDacxeiJ501MmiaHLobql
-         1T+14S2W8ZHO9hxxg2bCjaS+0JuUBYq1jT6I+uS6EiWZq/7xbOtyKekdIZsD73iC95DQ
-         wq3g==
+        d=linaro.org; s=google; t=1693495555; x=1694100355; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d6znyQKCV8DafBmq+P0iqvg8LkmCAkhxHacNwGIHAdE=;
+        b=pVwKLqqiaSAFqang4Gtl2lH+IrGStVepPDktHzErhLw7EaJ+vAxRFFEnB60XaWxoqY
+         Ni+GMpr6obfFyfReCy+cJ/EwfqVwa8exsnKJoZvRgJ/nkVBbefhB8UlywaVMZhvfKiG/
+         9pEshq5yryYF5ToQpIv6aSI1rNgFIJursguh8DX6FKTz4TVugtNMdKOV6gxwY4fAsPvl
+         U/BHMhOgbvpk7S79oEWbgIm90CsNFl5y/95rRAP0Hqn6xvEoIjqOJriD/kQrHqHU9136
+         cCRbux8LS1EPPSA4nIXO+DCH/f3L+tk8g9rnVzSRNXmPp1+wGBG1YlPwBPj4nQF1bShf
+         juCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693494668; x=1694099468;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OOFcgWJvykU3ufqPjMeqWWJXmE/XqPoeHSC5WspwBo8=;
-        b=bGmLIYxR2kGNpDzDkKX9uWpqByhTS/uBy1L7zKDfU3A2MY04kAjN3E1A0nBcZNsjR7
-         YOdQ+295Q6CPqpU3XijRlHB8HzMeFLF5AmfsBEo1/Im+JR+wWZxFTiCYyuDwWzyX2cGI
-         LkEgQ16olERbmVgN4l07NGye8BlSQ+KzCSkTC+K9Su6uqx0K3AhPKpULzsULxoV+qVvK
-         zvZQmyYGiy/esVuLILtv4z2UCqX937FVRcIg2oPNQZ7ozs8zAZOz2ZZ49bZHkdw1ctIW
-         kX+cJ1ISMVtrYOAax4Pvs9ijvEbeStn4rppTlcdQmCfiJGmSVzqInkj3z4XoR7256Sn8
-         ystw==
-X-Gm-Message-State: AOJu0Yx0ctHI1zVmgUX0o2NrwEcBZcHfxiuOp3fgvyOMKghILd/xJ/is
-        H4AdjJh5GnMnIoMW3LplWDpFU9jkB/rx/3KeGN5ZFA==
-X-Google-Smtp-Source: AGHT+IG3/w4gj2xbUPTCxyRSzFHoeJLeFZiW2uiiFnMe/1mHL0wORIqiK41cZCBiiOqL4QB/7ON/5A==
-X-Received: by 2002:a2e:3515:0:b0:2b9:f2e8:363 with SMTP id z21-20020a2e3515000000b002b9f2e80363mr4195887ljz.51.1693494667500;
-        Thu, 31 Aug 2023 08:11:07 -0700 (PDT)
-Received: from [192.168.1.101] (abxh58.neoplus.adsl.tpnet.pl. [83.9.1.58])
-        by smtp.gmail.com with ESMTPSA id r11-20020a2eb60b000000b002b9cc2f5c39sm356202ljn.37.2023.08.31.08.11.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 08:11:07 -0700 (PDT)
-Message-ID: <4c6877c9-97ad-4092-86a3-f9b314f131ef@linaro.org>
-Date:   Thu, 31 Aug 2023 17:11:05 +0200
+        d=1e100.net; s=20221208; t=1693495555; x=1694100355;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d6znyQKCV8DafBmq+P0iqvg8LkmCAkhxHacNwGIHAdE=;
+        b=C6ug3zteFo3d7TGJczXTviHyXujLnPU5Mwbw3XQOX8BrkKLFHDIEgB9W37d0WGxA1a
+         L1YRIh+KaRCIBl/yweJDfSkJxL6XTE+VmqNYpYr+v1hXpm3WQgXLrXyMNemv/N4rTqGF
+         9dmCvQuTwJ1rMZ5e+3EUQKDsNJtU9yWKmy0AwLXoZsrreLUBrCNAJMV00bOS7tReiNG2
+         SeyiquK4EO6bJ6ay02xjgh6n7dmJe4bVQSwmEbzGYvpoc2+SdAq9RPZ0zgpK9EUWS1QF
+         S025EhRygcUr33tUiepc2Z9FkteRb6E589dFIUJzlYufe74rZnn478gAusPBwSW/pOpz
+         Q0dQ==
+X-Gm-Message-State: AOJu0YyDge5LuhrSPpGijyv9mi5jCWQ7TGAyiqO0BxPhvV6qH5RFVC8h
+        lPzbMBvHcVx0o8cAO3Ne8iCWWQ==
+X-Google-Smtp-Source: AGHT+IGqi6Zhg7O/e3nNg0h/YAXgrMhFBgTWmCrq5DFYHS6y7lj1ivdYRiX1hWZH0S5ZMRcWpnLT8w==
+X-Received: by 2002:a5d:44c5:0:b0:319:6b6c:dd01 with SMTP id z5-20020a5d44c5000000b003196b6cdd01mr4202339wrr.17.1693495554816;
+        Thu, 31 Aug 2023 08:25:54 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d4084000000b00317b0155502sm2546410wrp.8.2023.08.31.08.25.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Aug 2023 08:25:54 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Thu, 31 Aug 2023 17:25:49 +0200
+Subject: [PATCH] arm64: dts: qcom: split pmr735d into 2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] phy: qualcomm: phy-qcom-eusb2-repeater: Zero out
- untouched tuning regs
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230831-topic-sm8550-upstream-pmr735d-split-v1-1-98e632636415@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPyw8GQC/x3NwQrCMAyA4VcZORvIVqqbryIeShc1YLeQdCKMv
+ bvF43f5/x2cTdjh2u1g/BGXdWnoTx3kV1qejDI3w0BDoDH0WFeVjF7GGAk39WqcCmqxS4gzur6
+ l4jTFTER8TpygldT4Id//5XY/jh9Y6I88dQAAAA==
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230830-topic-eusb2_override-v1-0-ab23825385a8@linaro.org>
- <20230830-topic-eusb2_override-v1-3-ab23825385a8@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230830-topic-eusb2_override-v1-3-ab23825385a8@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4777;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=9fw5Mg+Da85nnJhVVEO1GAnxk4nSA+fneKHtZag2yj4=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk8LEB2EbaTJ09Te/feC97tbyfSwS3tA6XVDNYmkAh
+ z8J+H2SJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZPCxAQAKCRB33NvayMhJ0UTgD/
+ 9pWE+/6Hjn/x0eUcC2yelmeWou5gRf/8Rp5garpQI4Cajod9jvC5wIYafGVSnBYuRzhIke0fwcv/a2
+ /R4Lv0m4eZaU/LkYRcTJ5iz5PJSse6oQtq09F87SSteAe+3OA+v1p28jYC1v+FN7/IbNA5FHDNB1u9
+ TafL2XLqgTs1zhRt/padMxVQl5G3eTxpn69DhYjzZDWFONH3XR++GEvH93wlpse+IEryuXB/YSZOYU
+ RZb3j7X9RGTB4DwgPK7MvOqrVWXv8spn9r6fMWtlcnd9q+Alk/rRP1GvrYBI20kOcLvwWLTmzGmYgO
+ PAW9sSmu5HHELHzcnZLe4kV7+z2EvLBQM6y6fevMR32OIaSMC+f8Yhj1sktcfdD2tJ5JokE/Ec7sRO
+ 6wqgvrZpyM/vEbVT0WfTCMWzxhRMqV/x9SI054+uY9BvKICy15nI+dDNj0k9HaafP8yxGy9B8k3ycy
+ iajF7y9hfwXKgWrS8nY4Z5dzZs0qhWfu6nUEZwTvEyBeA1D8SjcW38kHUnSKyPZzy7lq6DoI+602rD
+ JU/8oejz73uLiJ2M8d+ee9h8jy9fGHtc6rA7FyVyZBilvXMC+EUsSRAtVnFFRsI+8HUldZ9SVkh+o8
+ cHOpnYbyZq5NYWPS1MYrEBNiX++HZNixf/H9YRwJcTKnVzgccxgQEM50vmig==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -119,10 +95,182 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.08.2023 04:40, Konrad Dybcio wrote:
-> The vendor kernel zeroes out all tuning data outside the init sequence
-> as part of initialization. Follow suit to avoid UB.
-This patch doesn't do what it says. It passes 0x0 as val and mask
-to regmap_update_bits resulting in a NOP, still..
+The second PMR735D PMIC is not always presend on SM8550 based devices,
+split the pmr735d.dtsi file in two so boards files can only include the
+ones present on the platform.
 
-Konrad
+Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ .../boot/dts/qcom/{pmr735d.dtsi => pmr735d_a.dtsi} | 45 -----------------
+ arch/arm64/boot/dts/qcom/pmr735d_b.dtsi            | 59 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            |  3 +-
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts            |  3 +-
+ 4 files changed, 63 insertions(+), 47 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/pmr735d.dtsi b/arch/arm64/boot/dts/qcom/pmr735d_a.dtsi
+similarity index 55%
+rename from arch/arm64/boot/dts/qcom/pmr735d.dtsi
+rename to arch/arm64/boot/dts/qcom/pmr735d_a.dtsi
+index 41fb664a10b3..37daaefe3431 100644
+--- a/arch/arm64/boot/dts/qcom/pmr735d.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmr735d_a.dtsi
+@@ -28,27 +28,6 @@ trip1 {
+ 				};
+ 			};
+ 		};
+-
+-		pmr735d-l-thermal {
+-			polling-delay-passive = <100>;
+-			polling-delay = <0>;
+-
+-			thermal-sensors = <&pmr735d_l_temp_alarm>;
+-
+-			trips {
+-				trip0 {
+-					temperature = <95000>;
+-					hysteresis = <0>;
+-					type = "passive";
+-				};
+-
+-				trip1 {
+-					temperature = <115000>;
+-					hysteresis = <0>;
+-					type = "hot";
+-				};
+-			};
+-		};
+ 	};
+ };
+ 
+@@ -77,28 +56,4 @@ pmr735d_k_gpios: gpio@8800 {
+ 			#interrupt-cells = <2>;
+ 		};
+ 	};
+-
+-	pmr735d_l: pmic@b {
+-		compatible = "qcom,pmr735d", "qcom,spmi-pmic";
+-		reg = <0xb SPMI_USID>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		pmr735d_l_temp_alarm: temp-alarm@a00 {
+-			compatible = "qcom,spmi-temp-alarm";
+-			reg = <0xa00>;
+-			interrupts = <0xb 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+-			#thermal-sensor-cells = <0>;
+-		};
+-
+-		pmr735d_l_gpios: gpio@8800 {
+-			compatible = "qcom,pmr735d-gpio", "qcom,spmi-gpio";
+-			reg = <0x8800>;
+-			gpio-controller;
+-			gpio-ranges = <&pmr735d_l_gpios 0 0 2>;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-		};
+-	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/pmr735d_b.dtsi b/arch/arm64/boot/dts/qcom/pmr735d_b.dtsi
+new file mode 100644
+index 000000000000..3b470f6ac46f
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/pmr735d_b.dtsi
+@@ -0,0 +1,59 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2022, Linaro Limited
++ */
++
++#include <dt-bindings/interrupt-controller/irq.h>
++#include <dt-bindings/spmi/spmi.h>
++
++/ {
++	thermal-zones {
++		pmr735d-l-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <0>;
++
++			thermal-sensors = <&pmr735d_l_temp_alarm>;
++
++			trips {
++				trip0 {
++					temperature = <95000>;
++					hysteresis = <0>;
++					type = "passive";
++				};
++
++				trip1 {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "hot";
++				};
++			};
++		};
++	};
++};
++
++
++&spmi_bus {
++	pmr735d_l: pmic@b {
++		compatible = "qcom,pmr735d", "qcom,spmi-pmic";
++		reg = <0xb SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pmr735d_l_temp_alarm: temp-alarm@a00 {
++			compatible = "qcom,spmi-temp-alarm";
++			reg = <0xa00>;
++			interrupts = <0xb 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
++			#thermal-sensor-cells = <0>;
++		};
++
++		pmr735d_l_gpios: gpio@8800 {
++			compatible = "qcom,pmr735d-gpio", "qcom,spmi-gpio";
++			reg = <0x8800>;
++			gpio-controller;
++			gpio-ranges = <&pmr735d_l_gpios 0 0 2>;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+index f29cce5186ac..a0d7d6eba0c6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+@@ -13,7 +13,8 @@
+ #include "pm8550ve.dtsi"
+ #include "pm8550vs.dtsi"
+ #include "pmk8550.dtsi"
+-#include "pmr735d.dtsi"
++#include "pmr735d_a.dtsi"
++#include "pmr735d_b.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. SM8550 MTP";
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index 2c09ce8aeafd..afee755c075a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -14,7 +14,8 @@
+ #include "pm8550ve.dtsi"
+ #include "pm8550vs.dtsi"
+ #include "pmk8550.dtsi"
+-#include "pmr735d.dtsi"
++#include "pmr735d_a.dtsi"
++#include "pmr735d_b.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. SM8550 QRD";
+
+---
+base-commit: a47fc304d2b678db1a5d760a7d644dac9b067752
+change-id: 20230831-topic-sm8550-upstream-pmr735d-split-995c000e6aea
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
