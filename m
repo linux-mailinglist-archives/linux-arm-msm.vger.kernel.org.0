@@ -2,152 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9477C78F482
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 23:23:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9888178F493
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 23:27:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345803AbjHaVXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 17:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45822 "EHLO
+        id S1347580AbjHaV1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 17:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242388AbjHaVXS (ORCPT
+        with ESMTP id S1347509AbjHaV1S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 17:23:18 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F31E10CC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 14:22:47 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b974031aeaso24464861fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 14:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693516949; x=1694121749; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1AoFu3YY2A2D/Vht+AXgb+PkLNyMfnsxtR7/rrK95mo=;
-        b=YCa+9+JNjTPz7bpvY8+epdEyMY5+APK1AMHkcycFk45Iy5pu67HRM/wrtFz3IJ9klU
-         F4+Y+QBRd+vMqLqHal6MsOkBMBnx1kYwVV4x/3Fn1YmOAZdil3sSEvNHPb3kjTe480i1
-         en1ySOl4rikx3mG441FEU9tgl3pkwROtyQwfx/Dpe2Su6D5Wtfr5bV8ljmgA8nqDnmYi
-         8tpOe2rQ4Dh1TIWucIMgaYNjjTD4gx/71waDXCgA6qHwb+lmeondPDRqHrDRhDN6lqaD
-         G83mR0vfEdATeN3Nm/OFfRTzgASAzIwHiQUYjUhtbeY/6ihGm90mTbOUxTmU1eqbp7kd
-         bNmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693516949; x=1694121749;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1AoFu3YY2A2D/Vht+AXgb+PkLNyMfnsxtR7/rrK95mo=;
-        b=kPmRPkKzHNOvQU9CUjut6Fkt3IEOwrXRr9/rLx0BWO8OLy8gMSFFMxbmlFPdF6vmN9
-         Lotw85LXdudL4+amJRgo2b7It16raggaX+TXs81BpHvXvKzPSyA1ejLcJj9Ihk/DFGAU
-         /umyw8locHepsDuAdD5RgobbIMnKYlb4OwLcYQzJwwiuRernfTnHLlh01NkG5cvYUTKN
-         Fkt3t+kAELMBaWn4x4kbwQxL6BcPcCNodi6app87JaTvFaFzszHa5ulwjqnagpgBLFX9
-         atS66oFHBbE5a2oSGwsBn4MLnaZuxKAos+FQPyp5DutBaw0VeofyZXNgf+d8RJHq84jP
-         mzug==
-X-Gm-Message-State: AOJu0YwvNQkK1VvS3pYNnhapDqijEkPT7u+0wfep8oC2JGpl2M1vJh3A
-        Gez5KyRlf09hafd5P3NXFEU+Y2Ql+HkDyexlKiregg==
-X-Google-Smtp-Source: AGHT+IGFPvcXmKwK9xVDDjCOUvIZGOIn3s3MnWew1g7JSFY9e4DGWfZWv+T6bb12+VwAzMEdVmsGzA==
-X-Received: by 2002:a05:651c:8f:b0:2b9:ee3e:2412 with SMTP id 15-20020a05651c008f00b002b9ee3e2412mr314104ljq.22.1693516948990;
-        Thu, 31 Aug 2023 14:22:28 -0700 (PDT)
-Received: from [192.168.1.101] (abxh154.neoplus.adsl.tpnet.pl. [83.9.1.154])
-        by smtp.gmail.com with ESMTPSA id m6-20020a2e9106000000b002b6e15ccf88sm499933ljg.135.2023.08.31.14.22.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 14:22:28 -0700 (PDT)
-Message-ID: <36c90f71-3e74-4aab-aec7-4ad222ac8665@linaro.org>
-Date:   Thu, 31 Aug 2023 23:22:27 +0200
+        Thu, 31 Aug 2023 17:27:18 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96373E79;
+        Thu, 31 Aug 2023 14:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693517231; x=1725053231;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wDJDgkpzCa0Dj2A44lk0VL2Xq1n0Zp7FUI5JTQBRV3Y=;
+  b=Sr4aOx+y8j43U+FQCs3KRv/gL5ddRQzp5xCwYfch8GCeXXCluXwhaZp7
+   VhJ8YlnsJXdjlVB1W1Rm+/FAmPhHv19pNK6B226/9ZaOwArluM6jEfbD6
+   X9x4dDYJoO6CmF8MNoBjLv1fiMLQS6O/tV1rj/gdB6woV6pixTiXleZCp
+   tvfWyBlru/+ZcrfJRXu1kTkBcA3MhAAozIeoWCVt0MM9JlRREWxiqwX1a
+   27kVZv+VOtb4RAZMOWuHEKJ7rrQrfNZPER+/9h81WmRM06eVGFHu9h5x/
+   JxTSpt22l0l63Apa2VIMVzdNQihBHP/wrS7pX+JZu25zd7Z7Ve1I01CX0
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="374974886"
+X-IronPort-AV: E=Sophos;i="6.02,217,1688454000"; 
+   d="scan'208";a="374974886"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 14:27:11 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="805184902"
+X-IronPort-AV: E=Sophos;i="6.02,217,1688454000"; 
+   d="scan'208";a="805184902"
+Received: from lkp-server01.sh.intel.com (HELO 5d8055a4f6aa) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 31 Aug 2023 14:27:08 -0700
+Received: from kbuild by 5d8055a4f6aa with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qbpBy-0000Yx-2K;
+        Thu, 31 Aug 2023 21:27:06 +0000
+Date:   Fri, 1 Sep 2023 05:26:13 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev,
+        Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH v1 1/5] misc: fastrpc: Add fastrpc multimode invoke
+ request support
+Message-ID: <202309010543.Xc8XI7oZ-lkp@intel.com>
+References: <1693499292-19083-2-git-send-email-quic_ekangupt@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] pinctrl: qcom: sm6115: Add MPM pin mappings
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230809-topic-mpm_mappings-v1-0-5e17dd76b3c8@linaro.org>
- <20230809-topic-mpm_mappings-v1-3-5e17dd76b3c8@linaro.org>
- <ZNSPi3mDScn9ZMNJ@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZNSPi3mDScn9ZMNJ@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1693499292-19083-2-git-send-email-quic_ekangupt@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.08.2023 09:19, Stephan Gerhold wrote:
-> On Wed, Aug 09, 2023 at 09:38:56PM +0200, Konrad Dybcio wrote:
->> Add pin <-> wakeirq mappings to allow for waking up the AP from sleep
->> through MPM-connected pins.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/pinctrl/qcom/pinctrl-sm6115.c | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-sm6115.c b/drivers/pinctrl/qcom/pinctrl-sm6115.c
->> index 2a06025f4885..4e91c75ad952 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-sm6115.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-sm6115.c
->> @@ -867,6 +867,16 @@ static const struct msm_pingroup sm6115_groups[] = {
->>  	[120] = SDC_QDSD_PINGROUP(sdc2_data, SOUTH, 0x73000, 9, 0),
->>  };
->>  
->> +static const struct msm_gpio_wakeirq_map sm6115_mpm_map[] = {
->> +	{ 0, 84 }, { 3, 75 }, { 4, 16 }, { 6, 59 }, { 8, 63 }, { 11, 17 }, { 13, 18 },
->> +	{ 14, 51 }, { 17, 20 }, { 18, 52 }, { 19, 53 }, { 24, 6 }, { 25, 71 }, { 27, 73 },
->> +	{ 28, 41 }, { 31, 27 }, { 32, 54 }, { 33, 55 }, { 34, 56 }, { 35, 57 }, { 36, 58 },
->> +	{ 39, 28 }, { 46, 29 }, { 62, 60 }, { 63, 61 }, { 64, 62 }, { 65, 30 }, { 66, 31 },
->> +	{ 67, 32 }, { 69, 33 }, { 70, 34 }, { 72, 72 }, { 75, 35 }, { 79, 36 }, { 80, 21 },
->> +	{ 81, 38 }, { 83, 9 }, { 84, 39 }, { 85, 40 }, { 86, 19 }, { 87, 42 }, { 88, 43 },
->> +	{ 89, 45 }, { 91, 74 }, { 93, 46 }, { 94, 47 }, { 95, 48 }, { 96, 49 }, { 97, 50 },
->> +};
-> 
-> Did you omit the mappings for GPIO 99-112 here on purpose?
-> 
-> The order here looks fine BTW. Maybe downstream changed the order and
-> you got confused? :)
-I checked more downstreams and still couldn't find it, I'll skip it
-for now.
+Hi Ekansh,
 
-Konrad
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on char-misc/char-misc-testing]
+[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.5 next-20230831]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-fastrpc-multimode-invoke-request-support/20230901-002929
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/1693499292-19083-2-git-send-email-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v1 1/5] misc: fastrpc: Add fastrpc multimode invoke request support
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230901/202309010543.Xc8XI7oZ-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230901/202309010543.Xc8XI7oZ-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309010543.Xc8XI7oZ-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/misc/fastrpc.c: In function 'fastrpc_context_alloc':
+>> drivers/misc/fastrpc.c:607:29: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+     607 |                 ctx->args = (struct fastrpc_invoke_args *)invoke->inv.args;
+         |                             ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_init_create_static_process':
+>> drivers/misc/fastrpc.c:1320:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1320 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_init_create_process':
+   drivers/misc/fastrpc.c:1453:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1453 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_release_current_dsp_process':
+   drivers/misc/fastrpc.c:1517:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1517 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_init_attach':
+   drivers/misc/fastrpc.c:1665:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1665 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_invoke':
+   drivers/misc/fastrpc.c:1696:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1696 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_multimode_invoke':
+   drivers/misc/fastrpc.c:1732:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1732 |                 einv.inv.args = (__u64)args;
+         |                                 ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_get_info_from_dsp':
+   drivers/misc/fastrpc.c:1762:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1762 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_munmap_impl':
+   drivers/misc/fastrpc.c:1865:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1865 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_mmap':
+   drivers/misc/fastrpc.c:1963:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1963 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_unmap_impl':
+   drivers/misc/fastrpc.c:2044:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    2044 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_map':
+   drivers/misc/fastrpc.c:2113:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    2113 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+
+
+vim +607 drivers/misc/fastrpc.c
+
+   573	
+   574	static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+   575				struct fastrpc_user *user, u32 kernel, u32 sc,
+   576				struct fastrpc_enhanced_invoke *invoke)
+   577	{
+   578		struct fastrpc_channel_ctx *cctx = user->cctx;
+   579		struct fastrpc_invoke_ctx *ctx = NULL;
+   580		unsigned long flags;
+   581		int ret;
+   582	
+   583		ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+   584		if (!ctx)
+   585			return ERR_PTR(-ENOMEM);
+   586	
+   587		INIT_LIST_HEAD(&ctx->node);
+   588		ctx->fl = user;
+   589		ctx->nscalars = REMOTE_SCALARS_LENGTH(sc);
+   590		ctx->nbufs = REMOTE_SCALARS_INBUFS(sc) +
+   591			     REMOTE_SCALARS_OUTBUFS(sc);
+   592	
+   593		if (ctx->nscalars) {
+   594			ctx->maps = kcalloc(ctx->nscalars,
+   595					    sizeof(*ctx->maps), GFP_KERNEL);
+   596			if (!ctx->maps) {
+   597				kfree(ctx);
+   598				return ERR_PTR(-ENOMEM);
+   599			}
+   600			ctx->olaps = kcalloc(ctx->nscalars,
+   601					    sizeof(*ctx->olaps), GFP_KERNEL);
+   602			if (!ctx->olaps) {
+   603				kfree(ctx->maps);
+   604				kfree(ctx);
+   605				return ERR_PTR(-ENOMEM);
+   606			}
+ > 607			ctx->args = (struct fastrpc_invoke_args *)invoke->inv.args;
+   608			fastrpc_get_buff_overlaps(ctx);
+   609		}
+   610	
+   611		/* Released in fastrpc_context_put() */
+   612		fastrpc_channel_ctx_get(cctx);
+   613	
+   614		ctx->sc = sc;
+   615		ctx->retval = -1;
+   616		ctx->pid = current->pid;
+   617		ctx->tgid = user->tgid;
+   618		ctx->cctx = cctx;
+   619		init_completion(&ctx->work);
+   620		INIT_WORK(&ctx->put_work, fastrpc_context_put_wq);
+   621	
+   622		spin_lock(&user->lock);
+   623		list_add_tail(&ctx->node, &user->pending);
+   624		spin_unlock(&user->lock);
+   625	
+   626		spin_lock_irqsave(&cctx->lock, flags);
+   627		ret = idr_alloc_cyclic(&cctx->ctx_idr, ctx, 1,
+   628				       FASTRPC_CTX_MAX, GFP_ATOMIC);
+   629		if (ret < 0) {
+   630			spin_unlock_irqrestore(&cctx->lock, flags);
+   631			goto err_idr;
+   632		}
+   633		ctx->ctxid = ret << 4;
+   634		spin_unlock_irqrestore(&cctx->lock, flags);
+   635	
+   636		kref_init(&ctx->refcount);
+   637	
+   638		return ctx;
+   639	err_idr:
+   640		spin_lock(&user->lock);
+   641		list_del(&ctx->node);
+   642		spin_unlock(&user->lock);
+   643		fastrpc_channel_ctx_put(cctx);
+   644		kfree(ctx->maps);
+   645		kfree(ctx->olaps);
+   646		kfree(ctx);
+   647	
+   648		return ERR_PTR(ret);
+   649	}
+   650	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
