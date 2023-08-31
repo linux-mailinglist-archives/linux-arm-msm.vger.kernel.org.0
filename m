@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A7C178E3B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 02:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D678178E3C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 02:11:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242922AbjHaAGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Aug 2023 20:06:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48788 "EHLO
+        id S1345215AbjHaAL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Aug 2023 20:11:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234612AbjHaAGx (ORCPT
+        with ESMTP id S244455AbjHaALZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Aug 2023 20:06:53 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC098CC9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 17:06:50 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id 46e09a7af769-6bf04263dc8so291920a34.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 17:06:50 -0700 (PDT)
+        Wed, 30 Aug 2023 20:11:25 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F35CE6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 17:11:17 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d7e387c33f3so93382276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Aug 2023 17:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693440410; x=1694045210; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693440677; x=1694045477; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9DxU0ht48yqHP10Qw8l/djALIpoGzHmCLS1fvFvSy7A=;
-        b=qgp7cqpFcrZZOJyzOFZnPoJHTcspPfotVZtwWU9j4DJqA5aAGSb0BJewdMF5faDwVy
-         GPaulvKR5LqCZIyn/8NpyBA7eyENwoA0lfZghmIgzJFTm8G6pNAc+q+SBQYWQPBfe8IZ
-         IajUy4lJRuT6yVrmO575Qpfxt4PMXC/D1rEdKe86ozmpJ2jObrFmOTxD+TlppnaHyf7R
-         e8JoVhPh+9/Vlo8F/oBXWABsl4FYU901yMNK0zID1EVRzJC8+sbTWiC/pTAeK37hHoxC
-         MuZMTjtWzuiPWeJprCKCko7kh1sCGO3Ofs2GastKv4pKGEFtyM3rckpzv2RSIK+OFbwE
-         hH3Q==
+        bh=gIBwcu9asHhKTNXvUBuLlfNgStaSIK7100qTPTBSgtE=;
+        b=nFFtG5aCbqQY5SfauoW1LJXx3ejm33AMiL4XJ2NztpsU1jz34cS4HgakL5YpV3nRqq
+         sXc0OSVT+jeCEZyRw3AVobWOZEPZCkO8FDuRfcxKGkhxzV4JuavI+fuEeNoennIT+jjG
+         1UkppYZLsRMcC7JxBtLEo48RQQGQDqiTY+gIms0fUaoSNWZFNoPKGEF1L6PThIKAhPHi
+         kv0jr2hqwTe0n6XFJ5Xg0aiyFN2GSVBW3Z/v2u3xDnykt2xjzxKKvIEdbRigB7JGKZgm
+         A6kXkhrXKEeAiYVpqsMa7n5HiA81gPGUKKLZ+dtQMObctohlnLs6dpB04+lDc2aSPUm7
+         /SbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693440410; x=1694045210;
+        d=1e100.net; s=20221208; t=1693440677; x=1694045477;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9DxU0ht48yqHP10Qw8l/djALIpoGzHmCLS1fvFvSy7A=;
-        b=HidwLAcxqEASnZIesJ6oHVtQOS1sZxgb31nNooBGneATxuvNXj4fu3fl2EJPzoRv2i
-         vFXS1vwJvV8/RwxNZxV5Cyk4ZCLE4EFjDfVFpgyIE95NYV1hmwXzveDq57Jkhq+vGB50
-         dgQkf9EH3RUktX19+cDiaRFfjD9RjIPRRXe73snIG7OjcGLtLhUTFLdRIHEsS4zaE0Ft
-         U+4MN9dDdfiRNBAUkG2tDq5S6tAsIfoViNMhbFYtrsNjvpXJFRb5I72Pnz3c69SGUs3K
-         iPU5jJEQ5UXgP45gBOFzWe0I9xcV9SI+iVelGvehaZhMQjrSi/0fn1vzKlZ000B5JRPr
-         cOYw==
-X-Gm-Message-State: AOJu0YyKd/RNJsL7KGChxqXWDTkIrKsRy1rOg1LPaFXgcyy2y78NjI7m
-        AADMVLrcMIM8V7cuXvvIotuIFNcezhD/UE9sylWOIw==
-X-Google-Smtp-Source: AGHT+IGvlB2nE9Ks9HzVwilx3FixuPm+1K5NBqlv0K9dMaVCk1T3KdaSLfWY+Vx2/EpUDdNGAHP3MppXz0S8hhIBvw4=
-X-Received: by 2002:a05:6358:7e0f:b0:134:cd32:3565 with SMTP id
- o15-20020a0563587e0f00b00134cd323565mr3238453rwm.31.1693440409878; Wed, 30
- Aug 2023 17:06:49 -0700 (PDT)
+        bh=gIBwcu9asHhKTNXvUBuLlfNgStaSIK7100qTPTBSgtE=;
+        b=by7GQzgR/e5FGoFbMOb9qOfG8AtpCFTtEJXWPIPSOnEEhamiZm+zlnTAL7Gg/deEgi
+         JOr6Z5drcgEU5RejOZbLxYYf5VLyHxIN5TK/9GERGrSnCZ+OLlMQUTwCx89svkgBXDjP
+         th3bDEI5dH9f5Ni0d7OqFkEpqldrqLziwhqwtU2v2tdQgu88T/k+jLP8Daf1rjkoul2Y
+         vOGhjjkphhzFdve49LsU1d/gRgJZjgI20PXz55zMn9+WPetvecHbIfw5nIzgRKUwl5uG
+         vBnoa19uxtWkSt0WjqyY3ajVi+4UxIUrnG3ZgEvRkCQJ9KUpWtBFWsWkfX7itmP7Uucn
+         IuxQ==
+X-Gm-Message-State: AOJu0YzZfJ2D1KBrtpe9tC/+SB5gqFmihtnQYnNY989eOUTdT+ZvfOZt
+        x+K7SgiOn3SopJ9si4mPfveYdLkiQ/78OH9/A7LxIg==
+X-Google-Smtp-Source: AGHT+IFOm47/Wg0hyuL558fbKI7vPtAQEGDnPC23HR2eYIJX98zqsB0H68hv3/vj5TnMMY1cTcgA5vjvMLwrDmG5GzY=
+X-Received: by 2002:a25:c586:0:b0:d06:f0ab:e17b with SMTP id
+ v128-20020a25c586000000b00d06f0abe17bmr3426273ybe.55.1693440676746; Wed, 30
+ Aug 2023 17:11:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230830224910.8091-1-quic_abhinavk@quicinc.com> <20230830224910.8091-9-quic_abhinavk@quicinc.com>
-In-Reply-To: <20230830224910.8091-9-quic_abhinavk@quicinc.com>
+References: <20230830224910.8091-1-quic_abhinavk@quicinc.com> <20230830224910.8091-12-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230830224910.8091-12-quic_abhinavk@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 31 Aug 2023 03:06:38 +0300
-Message-ID: <CAA8EJporcrBikTob9xJe8_96AJSP1vDJNYPkt1za73PAcg1+Bw@mail.gmail.com>
-Subject: Re: [PATCH 08/16] drm/msm/dpu: add support to allocate CDM from RM
+Date:   Thu, 31 Aug 2023 03:11:05 +0300
+Message-ID: <CAA8EJppBskavOzn4_vUa=kvyYi2zn2XR70Ft-6ZyuOdGYWWL2A@mail.gmail.com>
+Subject: Re: [PATCH 11/16] drm/msm/dpu: add an API to setup the CDM block for writeback
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>,
@@ -64,8 +64,9 @@ Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -74,197 +75,213 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, 31 Aug 2023 at 01:50, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> Even though there is usually only one CDM block, it can be
-> used by either HDMI, DisplayPort OR Writeback interfaces.
+> Add an API dpu_encoder_helper_phys_setup_cdm() which can be used by
+> the writeback encoder to setup the CDM block.
 >
-> Hence its allocation needs to be tracked properly by the
-> resource manager to ensure appropriate availability of the
-> block.
-
-It almost feels like an overkill, as up to now there is at most one CDM block.
-
+> Currently, this is defined and used within the writeback's physical
+> encoder layer however, the function can be modified to be used to setup
+> the CDM block even for non-writeback interfaces.
+>
+> Until those modifications are planned and made, keep it local to
+> writeback.
 >
 > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 45 +++++++++++++++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  4 +-
->  5 files changed, 48 insertions(+), 5 deletions(-)
+>  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |   3 +
+>  .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 123 +++++++++++++++++-
+>  2 files changed, 125 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 6cf6597148fd..582680804016 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -663,7 +663,7 @@ static int dpu_encoder_virt_atomic_check(
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> index 510c1c41ddbc..93a8ae67beff 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> @@ -16,6 +16,7 @@
+>  #include "dpu_hw_pingpong.h"
+>  #include "dpu_hw_ctl.h"
+>  #include "dpu_hw_top.h"
+> +#include "dpu_hw_cdm.h"
+>  #include "dpu_encoder.h"
+>  #include "dpu_crtc.h"
 >
->                 if (!crtc_state->active_changed || crtc_state->enable)
->                         ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
-> -                                       drm_enc, crtc_state, topology);
-> +                                       drm_enc, crtc_state, topology, false);
->         }
+> @@ -209,6 +210,7 @@ static inline int dpu_encoder_phys_inc_pending(struct dpu_encoder_phys *phys)
+>   * @wbirq_refcount:     Reference count of writeback interrupt
+>   * @wb_done_timeout_cnt: number of wb done irq timeout errors
+>   * @wb_cfg:  writeback block config to store fb related details
+> + * @cdm_cfg: cdm block config needed to store writeback block's CDM configuration
+>   * @wb_conn: backpointer to writeback connector
+>   * @wb_job: backpointer to current writeback job
+>   * @dest:   dpu buffer layout for current writeback output buffer
+> @@ -218,6 +220,7 @@ struct dpu_encoder_phys_wb {
+>         atomic_t wbirq_refcount;
+>         int wb_done_timeout_cnt;
+>         struct dpu_hw_wb_cfg wb_cfg;
+> +       struct dpu_hw_cdm_cfg cdm_cfg;
+>         struct drm_writeback_connector *wb_conn;
+>         struct drm_writeback_job *wb_job;
+>         struct dpu_hw_fmt_layout dest;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index 4c2736c3ee6d..11935aac9fd5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -24,6 +24,20 @@
+>  #define to_dpu_encoder_phys_wb(x) \
+>         container_of(x, struct dpu_encoder_phys_wb, base)
 >
->         trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index 34f943102499..07f75f295844 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -98,6 +98,7 @@ enum dpu_hw_blk_type {
->         DPU_HW_BLK_DSPP,
->         DPU_HW_BLK_MERGE_3D,
->         DPU_HW_BLK_DSC,
-> +       DPU_HW_BLK_CDM,
->         DPU_HW_BLK_MAX,
->  };
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index b6f53ca6e962..61aa58643fda 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -136,6 +136,7 @@ struct dpu_global_state {
->         uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
->         uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
->         uint32_t dsc_to_enc_id[DSC_MAX - DSC_0];
-> +       uint32_t cdm_to_enc_id;
->  };
->
->  struct dpu_global_state
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index 7b6444a3fcb1..e7d4beb4661e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -29,10 +29,12 @@ static inline bool reserved_by_other(uint32_t *res_map, int idx,
+> +#define TO_S15D16(_x_)((_x_) << 7)
+> +
+> +static struct dpu_csc_cfg dpu_encoder_phys_wb_rgb2yuv_601l = {
+> +       {
+> +               TO_S15D16(0x0083), TO_S15D16(0x0102), TO_S15D16(0x0032),
+> +               TO_S15D16(0x1fb5), TO_S15D16(0x1f6c), TO_S15D16(0x00e1),
+> +               TO_S15D16(0x00e1), TO_S15D16(0x1f45), TO_S15D16(0x1fdc)
+> +       },
+> +       { 0x00, 0x00, 0x00 },
+> +       { 0x0040, 0x0200, 0x0200 },
+> +       { 0x000, 0x3ff, 0x000, 0x3ff, 0x000, 0x3ff },
+> +       { 0x040, 0x3ac, 0x040, 0x3c0, 0x040, 0x3c0 },
+> +};
+
+Nit: we probably need to have a single place with all dpu_csc_cfg entries.
+
+> +
 >  /**
->   * struct dpu_rm_requirements - Reservation requirements parameter bundle
->   * @topology:  selected topology for the display
-> + * @needs_cdm: whether the display needs a CDM block for the current mode
->   * @hw_res:       Hardware resources required as reported by the encoders
->   */
->  struct dpu_rm_requirements {
->         struct msm_display_topology topology;
-> +       bool needs_cdm;
->  };
->
->  int dpu_rm_destroy(struct dpu_rm *rm)
-> @@ -505,6 +507,26 @@ static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
->         return 0;
+>   * dpu_encoder_phys_wb_is_master - report wb always as master encoder
+>   * @phys_enc:  Pointer to physical encoder
+> @@ -225,6 +239,112 @@ static void dpu_encoder_phys_wb_setup_ctl(struct dpu_encoder_phys *phys_enc)
+>         }
 >  }
 >
-> +static int _dpu_rm_reserve_cdm(struct dpu_rm *rm,
-> +                              struct dpu_global_state *global_state,
-> +                              struct drm_encoder *enc)
+> +/**
+> + * dpu_encoder_phys_wb_setup_cdp - setup chroma down sampling block
+> + * @phys_enc:Pointer to physical encoder
+> + */
+> +static void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc)
 > +{
-> +       /* try allocating only one CDM block */
-> +       if (!rm->cdm_blk) {
-> +               DPU_ERROR("CDM block does not exist\n");
-> +               return -EIO;
+> +       struct dpu_hw_cdm *hw_cdm;
+> +       struct dpu_hw_cdm_cfg *cdm_cfg;
+> +       struct dpu_hw_pingpong *hw_pp;
+> +       struct dpu_encoder_phys_wb *wb_enc;
+> +       const struct msm_format *format;
+> +       const struct dpu_format *dpu_fmt;
+> +       struct drm_writeback_job *wb_job;
+> +       int ret;
+> +
+> +       if (!phys_enc)
+> +               return;
+> +
+> +       wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+> +       cdm_cfg = &wb_enc->cdm_cfg;
+> +       hw_pp = phys_enc->hw_pp;
+> +       hw_cdm = phys_enc->hw_cdm;
+> +       wb_job = wb_enc->wb_job;
+> +
+> +       format = msm_framebuffer_format(wb_enc->wb_job->fb);
+> +       dpu_fmt = dpu_get_dpu_format_ext(format->pixel_format, wb_job->fb->modifier);
+> +
+> +       if (!hw_cdm)
+> +               return;
+> +
+> +       if (!DPU_FORMAT_IS_YUV(dpu_fmt)) {
+> +               DPU_DEBUG("[enc:%d] cdm_disable fmt:%x\n", DRMID(phys_enc->parent),
+> +                         dpu_fmt->base.pixel_format);
+> +               if (hw_cdm->ops.disable)
+> +                       hw_cdm->ops.disable(hw_cdm);
+> +
+> +               return;
 > +       }
 > +
-> +       if (global_state->cdm_to_enc_id) {
-> +               DPU_ERROR("CDM_0 is already allocated\n");
-> +               return -EIO;
+> +       memset(cdm_cfg, 0, sizeof(struct dpu_hw_cdm_cfg));
+> +
+> +       cdm_cfg->output_width = wb_job->fb->width;
+> +       cdm_cfg->output_height = wb_job->fb->height;
+> +       cdm_cfg->output_fmt = dpu_fmt;
+> +       cdm_cfg->output_type = CDM_CDWN_OUTPUT_WB;
+> +       cdm_cfg->output_bit_depth = DPU_FORMAT_IS_DX(dpu_fmt) ?
+> +                       CDM_CDWN_OUTPUT_10BIT : CDM_CDWN_OUTPUT_8BIT;
+> +
+> +       /* enable 10 bit logic */
+> +       switch (cdm_cfg->output_fmt->chroma_sample) {
+> +       case DPU_CHROMA_RGB:
+> +               cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
+> +               cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
+> +               break;
+> +       case DPU_CHROMA_H2V1:
+> +               cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
+> +               cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
+> +               break;
+> +       case DPU_CHROMA_420:
+> +               cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
+> +               cdm_cfg->v_cdwn_type = CDM_CDWN_OFFSITE;
+> +               break;
+> +       case DPU_CHROMA_H1V2:
+> +       default:
+> +               DPU_ERROR("[enc:%d] unsupported chroma sampling type\n",
+> +                         DRMID(phys_enc->parent));
+> +               cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
+> +               cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
+> +               break;
 > +       }
 > +
-> +       global_state->cdm_to_enc_id = enc->base.id;
+> +       DPU_DEBUG("[enc:%d] cdm_enable:%d,%d,%X,%d,%d,%d,%d]\n",
+> +                 DRMID(phys_enc->parent), cdm_cfg->output_width,
+> +                 cdm_cfg->output_height, cdm_cfg->output_fmt->base.pixel_format,
+> +                 cdm_cfg->output_type, cdm_cfg->output_bit_depth,
+> +                 cdm_cfg->h_cdwn_type, cdm_cfg->v_cdwn_type);
 > +
-> +       return 0;
-> +}
-> +
->  static int _dpu_rm_make_reservation(
->                 struct dpu_rm *rm,
->                 struct dpu_global_state *global_state,
-> @@ -530,15 +552,25 @@ static int _dpu_rm_make_reservation(
->         if (ret)
->                 return ret;
->
-> +       if (reqs->needs_cdm) {
-> +               ret = _dpu_rm_reserve_cdm(rm, global_state, enc);
-> +               if (ret) {
-> +                       DPU_ERROR("unable to find CDM blk\n");
-> +                       return ret;
+> +       if (hw_cdm && hw_cdm->ops.setup_csc_data) {
+> +               ret = hw_cdm->ops.setup_csc_data(hw_cdm, &dpu_encoder_phys_wb_rgb2yuv_601l);
+> +               if (ret < 0) {
+> +                       DPU_ERROR("[enc:%d] failed to setup CSC; ret:%d\n",
+> +                                 DRMID(phys_enc->parent), ret);
+> +                       return;
 > +               }
 > +       }
 > +
->         return ret;
->  }
->
->  static int _dpu_rm_populate_requirements(
->                 struct drm_encoder *enc,
->                 struct dpu_rm_requirements *reqs,
-> -               struct msm_display_topology req_topology)
-> +               struct msm_display_topology req_topology,
-> +               bool needs_cdm)
+> +       if (hw_cdm && hw_cdm->ops.setup_cdwn) {
 
-Push it to the topology, please. It is a part of the topology at some
-point of view.
+You have checked for (!hw_cdm) several lines above. We can drop this
+condition here.
 
->  {
->         reqs->topology = req_topology;
-> +       reqs->needs_cdm = needs_cdm;
->
->         DRM_DEBUG_KMS("num_lm: %d num_dsc: %d num_intf: %d\n",
->                       reqs->topology.num_lm, reqs->topology.num_dsc,
-> @@ -571,6 +603,7 @@ void dpu_rm_release(struct dpu_global_state *global_state,
->                 ARRAY_SIZE(global_state->dsc_to_enc_id), enc->base.id);
->         _dpu_rm_clear_mapping(global_state->dspp_to_enc_id,
->                 ARRAY_SIZE(global_state->dspp_to_enc_id), enc->base.id);
-> +       _dpu_rm_clear_mapping(&global_state->cdm_to_enc_id, 1, enc->base.id);
->  }
->
->  int dpu_rm_reserve(
-> @@ -578,7 +611,8 @@ int dpu_rm_reserve(
->                 struct dpu_global_state *global_state,
->                 struct drm_encoder *enc,
->                 struct drm_crtc_state *crtc_state,
-> -               struct msm_display_topology topology)
-> +               struct msm_display_topology topology,
-> +               bool needs_cdm)
->  {
->         struct dpu_rm_requirements reqs;
->         int ret;
-> @@ -595,7 +629,7 @@ int dpu_rm_reserve(
->         DRM_DEBUG_KMS("reserving hw for enc %d crtc %d\n",
->                       enc->base.id, crtc_state->crtc->base.id);
->
-> -       ret = _dpu_rm_populate_requirements(enc, &reqs, topology);
-> +       ret = _dpu_rm_populate_requirements(enc, &reqs, topology, needs_cdm);
->         if (ret) {
->                 DPU_ERROR("failed to populate hw requirements\n");
->                 return ret;
-> @@ -644,6 +678,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
->                 hw_to_enc_id = global_state->dsc_to_enc_id;
->                 max_blks = ARRAY_SIZE(rm->dsc_blks);
->                 break;
-> +       case DPU_HW_BLK_CDM:
-> +               hw_blks = &rm->cdm_blk;
-> +               hw_to_enc_id = &global_state->cdm_to_enc_id;
-> +               max_blks = 1;
-> +               break;
->         default:
->                 DPU_ERROR("blk type %d not managed by rm\n", type);
->                 return 0;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> index 29b221491926..74262d3cb6c3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> @@ -69,13 +69,15 @@ int dpu_rm_destroy(struct dpu_rm *rm);
->   * @drm_enc: DRM Encoder handle
->   * @crtc_state: Proposed Atomic DRM CRTC State handle
->   * @topology: Pointer to topology info for the display
-> + * @needs_cdm: bool to indicate whether current encoder needs CDM
->   * @Return: 0 on Success otherwise -ERROR
->   */
->  int dpu_rm_reserve(struct dpu_rm *rm,
->                 struct dpu_global_state *global_state,
->                 struct drm_encoder *drm_enc,
->                 struct drm_crtc_state *crtc_state,
-> -               struct msm_display_topology topology);
-> +               struct msm_display_topology topology,
-> +               bool needs_cdm);
->
+> +               ret = hw_cdm->ops.setup_cdwn(hw_cdm, cdm_cfg);
+> +               if (ret < 0) {
+> +                       DPU_ERROR("[enc:%d] failed to setup CDWN; ret:%d\n",
+> +                                 DRMID(phys_enc->parent), ret);
+> +                       return;
+> +               }
+> +       }
+> +
+> +       if (hw_cdm && hw_pp && hw_cdm->ops.enable) {
+
+And what if !hw_pp ? Can it happen here? No, if I understand correctly.
+
+> +               cdm_cfg->pp_id = hw_pp->idx;
+> +               ret = hw_cdm->ops.enable(hw_cdm, cdm_cfg);
+
+As we are calling these three ops in a row, can we merge them together
+into a single callback to be called from dpu_encoder.c?
+
+> +               if (ret < 0) {
+> +                       DPU_ERROR("[enc:%d] failed to enable CDM; ret:%d\n",
+> +                                 DRMID(phys_enc->parent), ret);
+> +                       return;
+> +               }
+> +       }
+> +}
+> +
 >  /**
->   * dpu_rm_reserve - Given the encoder for the display chain, release any
+>   * dpu_encoder_phys_wb_atomic_check - verify and fixup given atomic states
+>   * @phys_enc:  Pointer to physical encoder
+> @@ -348,8 +468,9 @@ static void dpu_encoder_phys_wb_setup(
+>
+>         dpu_encoder_phys_wb_setup_fb(phys_enc, fb);
+>
+> -       dpu_encoder_phys_wb_setup_ctl(phys_enc);
+> +       dpu_encoder_helper_phys_setup_cdm(phys_enc);
+>
+> +       dpu_encoder_phys_wb_setup_ctl(phys_enc);
+>  }
+>
+>  static void _dpu_encoder_phys_wb_frame_done_helper(void *arg)
 > --
 > 2.40.1
 >
