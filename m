@@ -2,145 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90CD978EC9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 13:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D7F178EC97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 13:54:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244318AbjHaLyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 07:54:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346151AbjHaLyu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1346157AbjHaLyu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 31 Aug 2023 07:54:50 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958E7E54;
-        Thu, 31 Aug 2023 04:54:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37VAtKpV008861;
-        Thu, 31 Aug 2023 11:54:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ln9W+1/tu6jELF7c4HBDDM3MPqq7CJqkt6tbQ7JY83o=;
- b=p6fc+shQMUcWFavaImcygl3gjfV3d0O58i2F9WbE05gE77HyPIGFdDb1LwH5tX/1+XD+
- 3nxEozJ5JlJUlr3RabnfaDbzHjPodyyCiwd8upXav8APiresAGEK7/REg5e2Ib2KkkyS
- QRiekHai4ViQDBCx6aOA8DqCVzW/rYvrfPs1o/hN9lNKkHb65RBZK2U3viAY7kr/OnQl
- id0PSnHPbOcXh3kbHBoJasZMLbOj7IS9kU/ezm8YNj+j8cq1cczUDHEDScfutwanta9p
- +SfzEi3QEB9ksAW1qRXpiWdWheNJ9gSPJrcLgdWVGbYpUC5GtGthDA67b2U1A3n6VP3Z Qw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st4p3jf8m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 31 Aug 2023 11:54:08 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37VBs6oY026563
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 31 Aug 2023 11:54:06 GMT
-Received: from [10.201.3.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 31 Aug
- 2023 04:53:59 -0700
-Message-ID: <73879012-581d-47fb-b741-577c90b31dfb@quicinc.com>
-Date:   Thu, 31 Aug 2023 17:23:55 +0530
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49734 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345955AbjHaLyq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 31 Aug 2023 07:54:46 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0DD8CFA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 04:54:42 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-99bc9e3cbf1so145144466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 04:54:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693482881; x=1694087681; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/hD9FTxJbMKacozOlk38SeaYZ8nm15TjXdv4WV8+FzQ=;
+        b=B7kaoMOkhaQEV8+d2OJLv/GMBYNhhr2mkjlrAX91TYhJYJM641006iI6xzluCknU3P
+         zEz/z/zLUJzeWErbWpkeWLuxKP7DVxgSOJNFzq49XT3NFKdumtVa1tJ4NREpzfbQ/G76
+         5kR5NgvgGyyNoKwnSciQEEywEqQhknhyKlJC6T7hdjJt97QGk9378vmKd+o+KtMzhvzw
+         vX0rnhLTd+Zv6cIprR9iJtCKWuMRuqnUyQcsSghKvBut4vbt1N8XHsxJOZC2dAFOFb3o
+         a6bzBV/mmeN2w4w9WCxaL45HlvE5MEwfMANvCQSus/L2Es757que78Rph5tRFnJ9o3k+
+         EfZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693482881; x=1694087681;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/hD9FTxJbMKacozOlk38SeaYZ8nm15TjXdv4WV8+FzQ=;
+        b=fkyCPdGvDdpwj2YKrzSMrFEa3hDy6/jFXXfzS4RKGTf6h+ybSJm3XV8UcA8NFvIHCM
+         XlcAX4b3hVO8TctmZzUpJPRtSrnNHhnwqhq5IcIUq90uMkYbge0om6rTeIHd1GrnSzLj
+         kvn7XqUoaTDMsJ6U5jVusk2d3LLvy0xVM5DCTQDo5qZ3FS7/aYySPC4owDHD1WceZ9ce
+         aeV2+Ll9D5UMazPX1P0ppCErjX4jyjBgWTEuDgS3wbAGPiNCO6vEmDCaH+o+c0Adabkk
+         uhUxzRr7VkETyKA7Wi18/4XI2npYQuw4mvuZpkNb7LhD51L3nh3SyR6W18XPtsztsU7Q
+         8CwQ==
+X-Gm-Message-State: AOJu0YxopT1a84qeH8x+Ptwz52/PmYana7Se/OZeyaTbcdOn2BolzP9x
+        Wmzw8OAZYMe9gW316fEVyB9SGw==
+X-Google-Smtp-Source: AGHT+IEv7SRBdXlCmMcMYVzriOzfH5+6r/nMV6Or12OHswNkE+1axAP7Y6sSExBTWPJjO3FYpjyL4Q==
+X-Received: by 2002:a17:907:781a:b0:99c:5056:4e31 with SMTP id la26-20020a170907781a00b0099c50564e31mr3138983ejc.15.1693482881101;
+        Thu, 31 Aug 2023 04:54:41 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id k13-20020a17090646cd00b00997e00e78e6sm673645ejs.112.2023.08.31.04.54.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Aug 2023 04:54:40 -0700 (PDT)
+Message-ID: <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
+Date:   Thu, 31 Aug 2023 13:54:37 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] dt-bindings: phy: qcom,uniphy: Rename ipq4019 usb PHY
- to UNIPHY
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
+ <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
+ <CV6NF0466658.20DGU7QKF2UBR@otso>
+ <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <robert.marko@sartura.hr>, <luka.perkov@sartura.hr>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <nfraprado@collabora.com>,
-        <rafal@milecki.pl>, <peng.fan@nxp.com>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_varada@quicinc.com>
-References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com>
- <20230829135818.2219438-2-quic_ipkumar@quicinc.com>
- <CAA8EJpqA-poJ9=XKJa2s=yZUGbBbgOqgiDC-q9skJzBqLux84g@mail.gmail.com>
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-In-Reply-To: <CAA8EJpqA-poJ9=XKJa2s=yZUGbBbgOqgiDC-q9skJzBqLux84g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: he6N0M1o3_Z22uLQBnvrl5asdGQTJkbv
-X-Proofpoint-GUID: he6N0M1o3_Z22uLQBnvrl5asdGQTJkbv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-31_09,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 mlxscore=0 clxscore=1015 suspectscore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308310106
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 31/08/2023 13:33, Dmitry Baryshkov wrote:
+> On Thu, 31 Aug 2023 at 13:13, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>
+>> On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
+>>> On 30/08/2023 11:58, Luca Weiss wrote:
+>>>> Like other Qualcomm PMICs the PM7250B can be used on different addresses
+>>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
+>>>> possible.
+>>>>
+>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
+>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>> index e8540c36bd99..3514de536baa 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>> @@ -7,6 +7,15 @@
+>>>>  #include <dt-bindings/interrupt-controller/irq.h>
+>>>>  #include <dt-bindings/spmi/spmi.h>
+>>>>
+>>>> +/* This PMIC can be configured to be at different SIDs */
+>>>> +#ifndef PM7250B_SID
+>>>> +   #define PM7250B_SID 2
+>>>> +#endif
+>>>
+>>> Why do you send the same patch as v1, without any reference to previous
+>>> discussions?
+>>>
+>>> You got here feedback already.
+>>>
+>>> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org/
+>>
+>> Hi Krzysztof,
+>>
+>> I did mention that original patch in the cover letter of this series.
+>> I'm definitely aware of the discussion earlier this year there but also
+>> tried to get an update lately if there's any update with no response.
+> 
+> I think the overall consensus was that my proposal is too complicated
+> for the DT files.
 
-On 8/29/2023 7:49 PM, Dmitry Baryshkov wrote:
-> On Tue, 29 Aug 2023 at 16:59, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->> UNIPHY / Combo PHY used on various qualcomm SoC's are very similar to
->> ipq4019 PHY. Hence renaming this dt-binding to uniphy dt-binding and
->> can be used for other qualcomm SoCs which are having similar UNIPHY.
->>
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> ---
->>   .../phy/{qcom-usb-ipq4019-phy.yaml => qcom,uniphy.yaml}  | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
->>   rename Documentation/devicetree/bindings/phy/{qcom-usb-ipq4019-phy.yaml => qcom,uniphy.yaml} (78%)
->>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
->> similarity index 78%
->> rename from Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
->> rename to Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
->> index 09c614952fea..cbe2cc820009 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
->> @@ -1,13 +1,18 @@
->>   # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>   %YAML 1.2
->>   ---
->> -$id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml#
->> +$id: http://devicetree.org/schemas/phy/qcom,uniphy.yaml#
->>   $schema: http://devicetree.org/meta-schemas/core.yaml#
->>
->> -title: Qualcom IPQ40xx Dakota HS/SS USB PHY
->> +title: Qualcomm UNIPHY
-> We know that UNIPHY was a common design / IP block used for APQ8064
-> SATA and MSM8974 DSI and HDMI PHYs. Is this the same design, or was
-> the name reused by the Qualcomm for some other PHYs?
-> Several latest generations have USB QMP PHYs which are called 'uni-phy'.
-This PHY is build on top of QCA Uniphy 22ull. A combo PHY used between 
-USB Gen3 / PCIe Gen3 controller.
-It is different from USB QMP PHYs.
+I proposed to duplicate the entries. Do you keep QUP nodes in DTSI and
+customize per address? No.
 
-- Praveenkumar
->>   maintainers:
->>     - Robert Marko <robert.marko@sartura.hr>
->> +  - Praveenkumar I <quic_ipkumar@quicinc.com>
->> +
->> +description:
->> +  UNIPHY / COMBO PHY supports physical layer functionality for USB and PCIe on
->> +  Qualcomm chipsets.
->>
->>   properties:
->>     compatible:
->> --
->> 2.34.1
->>
->
+I definitely do not agree to these ifndef->define. Maybe using just
+define would work (so drop ifndef->define), because this makes it
+obvious and fail-safe if included in wrong place... except that it is
+still not the define we expect. This is not the coding style present in
+other DTSes.
+
+The true problem how these SPMI bindings were created. Requiring SID
+address in every child is clearly redundant and I think we do not follow
+such approach anywhere else.
+
+Best regards,
+Krzysztof
+
