@@ -2,77 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4B9278F437
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 22:40:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B4B178F444
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 22:48:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347392AbjHaUks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 16:40:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35418 "EHLO
+        id S1347457AbjHaUsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 16:48:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239202AbjHaUkr (ORCPT
+        with ESMTP id S1347445AbjHaUsm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 16:40:47 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7371B1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:40:44 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bceb02fd2bso21938641fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:40:44 -0700 (PDT)
+        Thu, 31 Aug 2023 16:48:42 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CD5ECFE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:48:36 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4ff9b389677so2267417e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693514443; x=1694119243; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jmh9FExlycgbmfRymrwXGINB5p9AMhlFKblzDNqy3Qk=;
-        b=JuhebmW0QQiDIH/L7C5RxJikxIjRPg8Idt1kpr2HwTQ82O/7Cl7NUoKqMsIcJpbXBE
-         ZTIIGNP1Or+1USixtPa6jjGi8/A3fa3n3QfUu06ag5lLnOSFWURlZhxAj18njKHUFnA7
-         4EWf1XW3cSGOrCX/3BKVmy9es8rq6Zr7kkK/wUX2+ctb//Px8lR8vbmg1BOXUzB+bb4W
-         U407XBlhy0gjF4vpQ6FSmKrjJXTaNtu8qXEsUmqrR4NZF5DdEtUNv0vlRWAfffIBjrW6
-         eA1uanDYqg165cB3P0i1FoX8/U+01IQd3kbVWSadkv3waQAoEhe+fEFKAi+IVzq+vvXb
-         vUIw==
+        d=linaro.org; s=google; t=1693514914; x=1694119714; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q+VNiNJcbRB6L5CsfmBHuAoSkrFtMVzdoiE8/5l+Qls=;
+        b=PFqUYZwvZcQIG0v2rV+sIss8orvKIgU/rk7H/SH91faixsOTu06fKZf4FlW5TqOPfg
+         ODeuoMCWUpPkGkpKrhwvlFmCRyv4O2uzJSLIy4qW+ZPWAkKPWTHaRVRGQFkl230uldng
+         3dUdE4gdh1pdGq/e6wGy7l2ihDdeUdsxgmRo1rH9lLPseL6NCdUJNgRJ3gdF3y9ZbV0Q
+         IGhEqvoOaaLGhXQsqwo9QF12Ma1MNtE8fiYBmPii9oHBX6+Ex14FD2DKJjlg4S/3hWcR
+         +xIpFCUxinQJMMhbEA0AUzE1yxAalvoZdBOOv1vcYF2ysKOiYtbNIqxZ6iWWsiwyrdBj
+         uWsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693514443; x=1694119243;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jmh9FExlycgbmfRymrwXGINB5p9AMhlFKblzDNqy3Qk=;
-        b=fUEcY2dE08h/5Am3thrrDxy0n9QqPeY5kUbQm4nWBvzkNGvT2G6LZXyRtSZRF1KSxH
-         0yiszWC6XrxkTA/HniPnQd0ZIEAYdRdfoY4r2y1I3nW3L/YKoMfNGXi4unmWK5c1iR1P
-         TGZZyE+f/r6navSuFK5u6A1nOesATzYY03VMDsT4XPjgs85uqyIvsIvewp4AriaUiifm
-         FrqWiQTly6iqdDk9BG2ExW6lVrKoIOjR9gsMEliZ5wnPO6YgwHxhuSifUIuGwKtTYPee
-         pXtZupKVGC4Gzc4+hUn2cgPMKlIbnpAO7W4tLiqabajymZJrmTmxKBIfuK9i3vffTQx2
-         fIKA==
-X-Gm-Message-State: AOJu0Yy/seuiNum0DsFG2l5h2JPvqMj8lKaBHRhO1FH+UxeMi0oyHYIG
-        c/FVFjy5h59sYaINjEOQDs8MSQ==
-X-Google-Smtp-Source: AGHT+IHvucSDAeT+xVwHkfOaHi/9UEs2qNN5mdDevojByrsF5+OU84HysdBunzySgfm2pK3iRiW+yw==
-X-Received: by 2002:a19:5e0b:0:b0:500:8fc1:8aba with SMTP id s11-20020a195e0b000000b005008fc18abamr218772lfb.26.1693514442333;
-        Thu, 31 Aug 2023 13:40:42 -0700 (PDT)
-Received: from [192.168.1.101] (abxj164.neoplus.adsl.tpnet.pl. [83.9.3.164])
-        by smtp.gmail.com with ESMTPSA id g23-20020ac25397000000b004ff884e9936sm409207lfh.12.2023.08.31.13.40.40
+        d=1e100.net; s=20221208; t=1693514914; x=1694119714;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q+VNiNJcbRB6L5CsfmBHuAoSkrFtMVzdoiE8/5l+Qls=;
+        b=LHqbsigzDHqG+HfeD+Iw+lXsoIWOWdTu8e1+lDaM7yocAVxjJjCuJO3S58671D+ppX
+         Cnm6GqAa8OSXaTk0u8APjuvpgpvvTK25miau58CKkohO+44Q1oO3+777pEO0K9Q/NEKQ
+         pyuVyRwK5eDViJY6ZhSo7pE6586pyjCm2rPBKuNeTd5RlEsDY7lnDETiLQGYqnfPPMOr
+         YKWFa5JC4NQHBS/+kRNMmdI/pb1bVIiIRPcb/0qC0HKCLuMjkvstfgSUIeFhrGQLJINP
+         7so0hBgxdLIBCfcJZVV2DdXg57NNBgJAyCeSh3wiNe++dhLBG8LJotBMuHaBXVjwrhOR
+         HbBQ==
+X-Gm-Message-State: AOJu0Yymte1aMvx8dL9XcBL1iaHYHeBczOUkuxiaD4O62/EWJk60N+hO
+        8u41c1AVnlOfioPr3BxhPEnPrCqb+lnWM+/WSriPyg==
+X-Google-Smtp-Source: AGHT+IF4IT9J4RhjGBLsuNtS/p90trbwJ67hqDYHXbmr3jc+38tFf4hB7PjRzc/EGdnMpDwIz4cIbQ==
+X-Received: by 2002:a19:5f53:0:b0:4fd:ddbc:1577 with SMTP id a19-20020a195f53000000b004fdddbc1577mr217173lfj.2.1693514914009;
+        Thu, 31 Aug 2023 13:48:34 -0700 (PDT)
+Received: from [192.168.1.101] (abxj133.neoplus.adsl.tpnet.pl. [83.9.3.133])
+        by smtp.gmail.com with ESMTPSA id k20-20020ac24574000000b00500a7c7ea59sm404894lfm.173.2023.08.31.13.48.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 13:40:41 -0700 (PDT)
-Message-ID: <9de94c43-5274-4eb3-96b3-a77db2822b92@linaro.org>
-Date:   Thu, 31 Aug 2023 22:40:39 +0200
+        Thu, 31 Aug 2023 13:48:33 -0700 (PDT)
+Message-ID: <836fab48-9602-4b3d-8393-64ffb7602dcf@linaro.org>
+Date:   Thu, 31 Aug 2023 22:48:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,usb-snps-femto-v2: Add REFGEN
- regulator
-To:     Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH 1/5] pinctrl: qcom: msm8998: Fix MPM mappings
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20230830-topic-refgenphy-v1-0-892db196a1c0@linaro.org>
- <20230830-topic-refgenphy-v1-1-892db196a1c0@linaro.org>
- <20230831182505.GA2541736-robh@kernel.org>
-Content-Language: en-US
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230809-topic-mpm_mappings-v1-0-5e17dd76b3c8@linaro.org>
+ <20230809-topic-mpm_mappings-v1-1-5e17dd76b3c8@linaro.org>
+ <ZNSOO47C5N88FpUz@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,48 +102,74 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230831182505.GA2541736-robh@kernel.org>
+In-Reply-To: <ZNSOO47C5N88FpUz@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.08.2023 20:25, Rob Herring wrote:
-> On Wed, Aug 30, 2023 at 11:13:51PM +0200, Konrad Dybcio wrote:
->> The HSPHY is (or at least can be) one of the users of the reference
->> voltage generating regulator. Ensure that dependency is described
->> properly.
+On 10.08.2023 09:14, Stephan Gerhold wrote:
+> On Wed, Aug 09, 2023 at 09:38:54PM +0200, Konrad Dybcio wrote:
+>> Commit 29f6e7e379fd ("pinctrl: qcom: msm8998: Add MPM pin mappings")
+>> added a map of pins <-> wakeirqs. The values in each tuple were swapped
+>> and the last one was missing. Fix that.
 >>
+>> Fixes: 29f6e7e379fd ("pinctrl: qcom: msm8998: Add MPM pin mappings")
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
->>  Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml | 3 +++
->>  1 file changed, 3 insertions(+)
+>>  drivers/pinctrl/qcom/pinctrl-msm8998.c | 19 ++++++++++---------
+>>  1 file changed, 10 insertions(+), 9 deletions(-)
 >>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> index 0f200e3f97a9..e895b6c4ee49 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> @@ -53,6 +53,9 @@ properties:
->>      items:
->>        - description: PHY core reset
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm8998.c b/drivers/pinctrl/qcom/pinctrl-msm8998.c
+>> index b7cbf32b3125..08d6e555652a 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm8998.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm8998.c
+>> @@ -1496,15 +1496,16 @@ static const struct msm_pingroup msm8998_groups[] = {
+>>  };
 >>  
->> +  refgen-supply:
->> +    description: phandle to the REFGEN regulator node
+>>  static const struct msm_gpio_wakeirq_map msm8998_mpm_map[] = {
+>> -	{ 1, 3 }, { 5, 4 }, { 9, 5 }, { 11, 6 }, { 22, 8 }, { 24, 9 }, { 26, 10 },
+>> -	{ 34, 11 }, { 36, 12 }, { 37, 13 }, { 38, 14 }, { 40, 15 }, { 42, 16 }, { 46, 17 },
+>> -	{ 50, 18 }, { 53, 19 }, { 54, 20 }, { 56, 21 }, { 57, 22 }, { 58, 23 }, { 59, 24 },
+>> -	{ 60, 25 }, { 61, 26 }, { 62, 27 }, { 63, 28 }, { 64, 29 }, { 66, 7 }, { 71, 30 },
+>> -	{ 73, 31 }, { 77, 32 }, { 78, 33 }, { 79, 34 }, { 80, 35 }, { 82, 36 }, { 86, 37 },
+>> -	{ 91, 38 }, { 92, 39 }, { 95, 40 }, { 97, 41 }, { 101, 42 }, { 104, 43 }, { 106, 44 },
+>> -	{ 108, 45 }, { 110, 48 }, { 112, 46 }, { 113, 47 }, { 115, 51 }, { 116, 54 }, { 117, 55 },
+>> -	{ 118, 56 }, { 119, 57 }, { 120, 58 }, { 121, 59 }, { 122, 60 }, { 123, 61 }, { 124, 62 },
+>> -	{ 125, 63 }, { 126, 64 }, { 127, 50 }, { 129, 65 }, { 131, 66 }, { 132, 67 }, { 133, 68 },
+>> +	{ 3, 1 }, { 4, 5 }, { 5, 9 }, { 6, 11 }, { 8, 22 }, { 9, 24 }, { 10, 26 },
+>> +	{ 11, 34 }, { 12, 36 }, { 13, 37 }, { 14, 38 }, { 15, 40 }, { 16, 42 }, { 17, 46 },
+>> +	{ 18, 50 }, { 19, 53 }, { 20, 54 }, { 21, 56 }, { 22, 57 }, { 23, 58 }, { 24, 59 },
+>> +	{ 25, 60 }, { 26, 61 }, { 27, 62 }, { 28, 63 }, { 29, 64 }, { 7, 66 }, { 30, 71 },
+>> +	{ 31, 73 }, { 32, 77 }, { 33, 78 }, { 34, 79 }, { 35, 80 }, { 36, 82 }, { 37, 86 },
+>> +	{ 38, 91 }, { 39, 92 }, { 40, 95 }, { 41, 97 }, { 42, 101 }, { 43, 104 }, { 44, 106 },
+>> +	{ 45, 108 }, { 48, 110 }, { 46, 112 }, { 47, 113 }, { 51, 115 }, { 54, 116 }, { 55, 117 },
+>> +	{ 56, 118 }, { 57, 119 }, { 58, 120 }, { 59, 121 }, { 60, 122 }, { 61, 123 }, { 62, 124 },
+>> +	{ 63, 125 }, { 64, 126 }, { 50, 127 }, { 65, 129 }, { 66, 131 }, { 67, 132 }, { 68, 133 },
+>> +	{ 69, 145 },
+>>  };
 > 
-> Supply names are local to the device (sink name), but this seems to be 
-> named based on the supply source. Maybe hard to do if all internal 
-> stuff. What is this supplying and what's the source if not REFGEN?
-I don't think I have anything that would answer this question..
-Though I would not at all be surprised if Qualcomm also called the
-input "refgen"..
-
-Maybe Bjorn or Dmitry would know.
+> Are you sure this is correct?
+> 
+> /**
+>  * struct msm_gpio_wakeirq_map - Map of GPIOs and their wakeup pins
+>  * @gpio:          The GPIOs that are wakeup capable
+>  * @wakeirq:       The interrupt at the always-on interrupt controller
+>  */
+> struct msm_gpio_wakeirq_map {
+> 	unsigned int gpio;
+> 	unsigned int wakeirq;
+> };
+> 
+> MSM8998 has 150 GPIOs and 96 MPM IRQs. The tuple { 69, 145 } can't be
+> right because 145 is not a valid MPM pin. It's a valid GPIO though so
+> the original order was correct. Maybe replace "Fixes:" with "Breaks:"? :D
+Went over this again, this is totally a "Breaks"
 
 Konrad
