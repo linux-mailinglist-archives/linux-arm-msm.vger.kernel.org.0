@@ -2,147 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1608678F3DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 22:20:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC5A478F41C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 22:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347302AbjHaUUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 16:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33606 "EHLO
+        id S239555AbjHaUeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 16:34:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344885AbjHaUUG (ORCPT
+        with ESMTP id S1347416AbjHaUeQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 16:20:06 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 078D0E6F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:19:58 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-401c90ed2ecso13003485e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 13:19:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1693513196; x=1694117996; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TbAGwjrbP3wJw/XyfuKcVfBZuXKE+qWablDMlIo3xlA=;
-        b=TsgjcYbLYR8FFqMJA7901+qQ46KWqhJeLb5QfIaSVvvVC2S4olJqRKerJwaSs5ycnv
-         lleNrn6OJ0DdwF8WAGXusHzKUxx0KXmZq+AUUgkfXeZariMaf0kJL5mTgJJokPNNY05r
-         uAIG/vt0+6MrUAgWCpMGt48j6+zLb5QFrLcBHg9Ln4k5LbyJNSXEels0PoPGP0SpueGx
-         i5yiKZ5XJcjrEvCgK6O/JRLqMdze2PpPof75lM9GZTg1PtHAnTUchtm64+PUH8CFFENS
-         wYxgeoKfWPOBKzv36XSbfMJj+VfDSoIp3JzUcitpiME069lgdaZ22tVYmhaVyn1YxLXx
-         kMsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693513196; x=1694117996;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TbAGwjrbP3wJw/XyfuKcVfBZuXKE+qWablDMlIo3xlA=;
-        b=A4SR8WLnJpuiQgBjlRN9BZoj83aNm57x6Cujo6o88ntowtFkixXUujl651/7NOwmTd
-         S4FZvWajezPh/cTD5lmsIyAA94jjyyB2KT87OouaEed80i2FMhhrkJik6UXyk9Y6aJuP
-         w7Q3fawk5fy/18ISJZNLPzWQKfQM0GrQ7uxv7Whib28w13OiqEerehSz0EoB1qZzXn3X
-         oH16PDywH5BvBeCvtdouivPz48dnp0niPm4ZLFD86Kr0/ud3Fx801BImE9QmG8kG2hj4
-         rYZbktBG8aQY4T8XbAqPYE/dm6aiP0/gJIOENxLR8iEl+YxmBE7LonJVSAOsq0ZKEvAf
-         Tqng==
-X-Gm-Message-State: AOJu0Yyg5u0D1gTeNUM16LcLV2Oh/UB2uPMydSQxB5NJWY9MxaJ61MbE
-        j3inG0qqpZB6UtAk2ib+9XXNGA==
-X-Google-Smtp-Source: AGHT+IGRWtQXXQ/4Fa+JT3KC4UtOZDnaGKakyrrx7kEF0AAlUNk//9L8FLqoiWeVYYAlLLZqTMtkoQ==
-X-Received: by 2002:a7b:cc85:0:b0:3ff:28b8:c53d with SMTP id p5-20020a7bcc85000000b003ff28b8c53dmr299774wma.33.1693513196321;
-        Thu, 31 Aug 2023 13:19:56 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s5-20020a7bc385000000b003fe61c33df5sm6102993wmj.3.2023.08.31.13.19.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 13:19:55 -0700 (PDT)
-Message-ID: <49fbae87-ce09-23af-6bcd-459b5646e680@nexus-software.ie>
-Date:   Thu, 31 Aug 2023 21:19:54 +0100
+        Thu, 31 Aug 2023 16:34:16 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 230ADE5D;
+        Thu, 31 Aug 2023 13:34:11 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E5284C15;
+        Thu, 31 Aug 2023 13:34:49 -0700 (PDT)
+Received: from [10.57.91.85] (unknown [10.57.91.85])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE9663F740;
+        Thu, 31 Aug 2023 13:34:07 -0700 (PDT)
+Message-ID: <46a48c06-0d6c-d943-5f20-bd0002c76342@arm.com>
+Date:   Thu, 31 Aug 2023 21:34:06 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2] arm64: dts: ipq5018: Correct uart1_pins pinconf
-Content-Language: en-US
-To:     Ziyang Huang <hzyitc@outlook.com>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gokulsri@quicinc.com, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <TYZPR01MB5556F902BF64AF857C3ABD44C9E5A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <TYZPR01MB5556F902BF64AF857C3ABD44C9E5A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [PATCH v8 06/13] coresight-tpdm: Add reset node to TPDM node
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
+ <1692681973-20764-7-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1692681973-20764-7-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/08/2023 17:34, Ziyang Huang wrote:
-> In pinctrl, the pinconfigs for uart are named "blspX_uartY".
->    X is the UART ID. Starts from 1.
->      1-6 are in BLSP Block 1.
->      7-12 are in BLSP Block 2.
->    Y is the index of mux config. Starts from 0.
+On 22/08/2023 06:26, Tao Zhang wrote:
+> TPDM device need a node to reset the configurations and status of
+> it. This change provides a node to reset the configurations and
+> disable the TPDM if it has been enabled.
 > 
-> In dts, the serials are also named "blspX_uartY", but with different logic.
->    X is the BLSP Block ID. Starts from 1.
->    Y is the uart id inside block.
->      In "ipq6018.dtsi" and "ipq8074.dtsi", it starts from 1.
->      But in "ipq5332.dtsi" and "ipq9574.dtsi", it starts from 0.
-> 
-> +-----------------+-----------------+-------------+-----------------+
-> |     Block ID    | ID inside Block |  dts name   | pinconfig name  |
-> | (Starts from 1) | (Starts from 1) |             |                 |
-> +-----------------+-----------------+-------------+-----------------+
-> |        1        |        1        | blsp1_uart1 |   blsp0_uartY   |
-> |        1        |        2        | blsp1_uart2 |   blsp1_uartY   |
-> |        1        |        6        | blsp1_uart6 |   blsp5_uartY   |
-> |        2        |        1        | blsp2_uart1 |   blsp6_uartY   |
-> |        2        |        6        | blsp2_uart6 |   blsp12_uartY  |
-> +-----------------+-----------------+-------------+-----------------+
-> 
-> In "ipq5018.dts", "blsp1_uart1" (dts name) is the first serial (confimed
-> by the address), So its pinconfig should be "blsp0_uart0" (pinconfig name,
-> use GPIO 20 and 21) or "blsp0_uart1" (pinconfig name, use GPIO 28 and 29).
-> 
-> Fixes: 570006756a16 ("arm64: dts: Add ipq5018 SoC and rdp432-c2 board support")
-> Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
-> Changes since v1
-> - Use corrent name in From
+>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 ++++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.c       | 22 ++++++++++++++++++++++
+>   2 files changed, 32 insertions(+)
 > 
->   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 9f13d2dcdfd5..91b98020e1c6 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -104,10 +104,10 @@ tlmm: pinctrl@1000000 {
->   			#interrupt-cells = <2>;
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index 4a58e64..2936226 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -11,3 +11,13 @@ Description:
+>   		Accepts only one of the 2 values -  1 or 2.
+>   		1 : Generate 64 bits data
+>   		2 : Generate 32 bits data
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/reset_dataset
+> +Date:		March 2023
+> +KernelVersion	6.5
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Reset the dataset of the tpdm.
+> +
+> +		Accepts only one value -  1.
+> +		1 : Reset the dataset of the tpdm
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 951ad4d..d6e7c8c 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -162,6 +162,27 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
+>   	return 0;
+>   }
 >   
->   			uart1_pins: uart1-state {
-> -				pins = "gpio31", "gpio32", "gpio33", "gpio34";
-> -				function = "blsp1_uart1";
-> +				pins = "gpio28", "gpio29";
-> +				function = "blsp0_uart1";
->   				drive-strength = <8>;
-> -				bias-pull-down;
-> +				bias-disabled;
->   			};
->   		};
+> +static ssize_t reset_dataset_store(struct device *dev,
+> +					  struct device_attribute *attr,
+> +					  const char *buf,
+> +					  size_t size)
+> +{
+> +	int ret = 0;
+> +	unsigned long val;
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	ret = kstrtoul(buf, 0, &val);
+> +	if (ret || val != 1)
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	tpdm_reset_datasets(drvdata);
+> +	spin_unlock(&drvdata->spinlock);
+> +
+> +	return size;
+> +}
+> +static DEVICE_ATTR_WO(reset_dataset);
+> +
+>   /*
+>    * value 1: 64 bits test data
+>    * value 2: 32 bits test data
+> @@ -202,6 +223,7 @@ static ssize_t integration_test_store(struct device *dev,
+>   static DEVICE_ATTR_WO(integration_test);
 >   
+>   static struct attribute *tpdm_attrs[] = {
+> +	&dev_attr_reset_dataset.attr,
 
-So this change will have the effect of changing the console on 
-ipq5018-rdp432 from gpio31-gpio34 to gpio28, gpio29.
+Should this be only visible when DSB data set is present ?
 
-Have you verified that change on hardware or the schematic ?
+Suzuki
 
-https://forum.openwrt.org/t/add-support-for-xiaomi-redmi-ax5400-white-version/140879/22?page=2
+>   	&dev_attr_integration_test.attr,
+>   	NULL,
+>   };
 
-This has the wrong UART pinout ?
-
-Is this change something that should be expressed for a particular board ?
-
----
-bod
