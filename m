@@ -2,140 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 834BE78E9F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 12:13:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2103A78EA12
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 12:19:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343785AbjHaKNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 06:13:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36346 "EHLO
+        id S244735AbjHaKT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 06:19:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238116AbjHaKNM (ORCPT
+        with ESMTP id S242212AbjHaKTz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 06:13:12 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445F5E67
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 03:13:01 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-529fb2c6583so768873a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 03:13:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1693476780; x=1694081580; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e7v4YEHKe+eCw/TeGULI02ezKGrSX/6FZe8vszhKShU=;
-        b=GDZ07FpT+CNej/aZSh1Np170rhrgZlJvNr7rN2UfCQCEFdE+x0XoodqDWDnbK7AEaR
-         7vbJCYHNV9WoepvB26K4Na02Ai3SiwGPSONp7aPVTvCuko0DKAZxhGb5333X2dYucEco
-         3tgh+LSaeYPjOsC121NFuJAvWmdasM2Sw3YWwA76BOBV+bFDE1h7kssMqZDaX6hJ5zZh
-         t0Z85r0ZfgrBcxWXBsu5UcgVM4e4BLR0UjnTdMF6inOqmHqIBMsxmL1i7t4aBrirlRBv
-         LGa02fBEJxENZ575c6mrk1xDPeDNNdHwHp2FmxkwrLGheY6OAKxMI2I3Q63/eCX/f6mr
-         VRvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693476780; x=1694081580;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=e7v4YEHKe+eCw/TeGULI02ezKGrSX/6FZe8vszhKShU=;
-        b=OEd8k25Xqn6TQsMWWk9clArPb+ecE0zE0/PDN2R7cB4JVKxG2KiNdtzZcgDkWKjjEo
-         me8gwAWp54xL7CgcrSaAe/fSxhXiM19+ENsWWsChLVE1dpX/zJWNjruimd7Vfu9vLWCB
-         eq4m9rVrEJQveLnoWMxsuilIZFe4tmjxAiXZVew8U7Wm/iHEZoo+fkBOQM9AclYMVk48
-         bgCIzP7HVSBexdeapNVVMTjfH0LHa5Dgb1gIZiyGIl+j/VcoFvNotBUkludIkgFIxqij
-         gOuQ0UfGPT96QaBo1+syVHXEeH1l3H/TFmXEpN6ky4nJ74Olo5gd5WlcFVzuji+fCtK2
-         MRQw==
-X-Gm-Message-State: AOJu0Ywszhvm38gQeslGgHfgkF/E8XvpC+p7v/zxHnwnWka1GyRPNOye
-        q9008FBqGn2h79Dt197kVMhEpw==
-X-Google-Smtp-Source: AGHT+IEuYVCopo/jdrk+kN9i1QSXZe6VfZ6G0pxlPUpl/QjLI2c9L+8wfjA/Ey3Yg4SWpToT5CAN9w==
-X-Received: by 2002:a50:fc05:0:b0:525:680a:6b89 with SMTP id i5-20020a50fc05000000b00525680a6b89mr3661319edr.12.1693476779584;
-        Thu, 31 Aug 2023 03:12:59 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id x18-20020aa7d6d2000000b0052718577668sm608976edr.11.2023.08.31.03.12.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 03:12:59 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 31 Aug 2023 12:12:58 +0200
-Message-Id: <CV6NF0466658.20DGU7QKF2UBR@otso>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Viresh Kumar" <viresh.kumar@linaro.org>
-X-Mailer: aerc 0.15.2
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
- <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
-In-Reply-To: <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Thu, 31 Aug 2023 06:19:55 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C61D9CF3;
+        Thu, 31 Aug 2023 03:19:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DE55DB82171;
+        Thu, 31 Aug 2023 10:19:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9C177C433C7;
+        Thu, 31 Aug 2023 10:19:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693477189;
+        bh=YkOxDXBCUDLl6Cguo4+rc9hRV8tH3QYa5BZ+A8uztWA=;
+        h=From:Date:Subject:To:Cc:Reply-To:From;
+        b=bRBzAiUkzGOjkp1o+lGoEBBKUuDzEpGZJWeKDbbWfrMueA9BPcSG8omcTONDiizi0
+         r/EBGGaC2EMxnjAgVWbCkD9XPJIiS87jqXmxVbr1u8t95YU1XapGAvPolyIp2rFy+P
+         OWGkQ330jnV5IbaVwuvvIpaMTo3OguF3BTy49JqeuIwtRj+JRxV8Lqy5t1xJt5ggqx
+         irRZCz/Lh80ZGLLSmXPZmLREdjYp23Cm47nm6uXApGZJZ13AnDoHwKbGjZ5Jp6/Va+
+         IB72gXhVKGQngK2vsJvNPBVbT7ovUMTm67Ax14nrfGc4ASHkhKvDu9uq2hBpCAeJ0W
+         hBg8P4HlEQsOw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.lore.kernel.org (Postfix) with ESMTP id 7DE31C83F12;
+        Thu, 31 Aug 2023 10:19:49 +0000 (UTC)
+From:   Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date:   Thu, 31 Aug 2023 18:19:45 +0800
+Subject: [PATCH v5] usb: typec: qcom: Update the logic of regulator enable
+ and disable
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230831-qcom-tcpc-v5-1-5e2661dc6c1d@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAEJp8GQC/2XMyw6CMBCF4VchXVvTyxRaV76HcVGmRbqQu0RDe
+ HcLiUkNyzOZ71/I6IfgR3LJFjL4OYyhbeJQp4xgbZuHp8HFTQQTkmkhaI/tk07YIXXAjQKLuao
+ sif/d4Kvw3lu3e9x1GKd2+OzpmW/XX0UmlZlTTiuruWUGLVP5tX8FDA2e4wvZOrNILaRWRCud0
+ yhBgMrhaGVqdWpltN6osrCVleDM0UJiJUstRIvclMxo0IUp/+26rl978+U1WAEAAA==
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
+        subbaram@quicinc.com, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693477188; l=3206;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=2oArl3p3f4nGra9OaL8wrTdlGSIGZy5nArkkLq2X1WQ=;
+ b=wOFTaj5NpC1jhXmeOUvbOaohgy/Xu/GtXVUzhJKflZyqduIAuYv5G39xqA53jvCNzGTHHKqpR
+ Bfc2iH5VL1UAyHiaeHQ/Ns4YOJLUt+SFai/7v3Un2em5H1yxHpyAkSq
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received: by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
-> On 30/08/2023 11:58, Luca Weiss wrote:
-> > Like other Qualcomm PMICs the PM7250B can be used on different addresse=
-s
-> > on the SPMI bus. Use similar defines like the PMK8350 to make this
-> > possible.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
-> >  1 file changed, 16 insertions(+), 7 deletions(-)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dt=
-s/qcom/pm7250b.dtsi
-> > index e8540c36bd99..3514de536baa 100644
-> > --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> > @@ -7,6 +7,15 @@
-> >  #include <dt-bindings/interrupt-controller/irq.h>
-> >  #include <dt-bindings/spmi/spmi.h>
-> > =20
-> > +/* This PMIC can be configured to be at different SIDs */
-> > +#ifndef PM7250B_SID
-> > +	#define PM7250B_SID 2
-> > +#endif
->
-> Why do you send the same patch as v1, without any reference to previous
-> discussions?
->
-> You got here feedback already.
->
-> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3f313d9fe=
-9@linaro.org/
+From: Hui Liu <quic_huliu@quicinc.com>
 
-Hi Krzysztof,
+Removed the call logic of disable and enable regulator
+in reset function. Enable the regulator in qcom_pmic_typec_start
+function and disable it in qcom_pmic_typec_stop function to
+avoid unbalanced regulator disable warnings.
 
-I did mention that original patch in the cover letter of this series.
-I'm definitely aware of the discussion earlier this year there but also
-tried to get an update lately if there's any update with no response.
+Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb5
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+---
+Changes in v5:
+- Removed Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+- Updated V4 history
+- Link to v4: https://lore.kernel.org/r/20230830-qcom-tcpc-v4-1-c19b0984879b@quicinc.com
 
-If you want to block this patch, I'll have to remove pm7250b from the
-device dts, so we'll lose some functionality. Not sure what other
-approaches there could be.
+Changes in v4:
+- Rephrased commit text
+- Link to v3: https://lore.kernel.org/r/20230828-qcom-tcpc-v3-1-e95b7afa34d9@quicinc.com
 
-Regards
-Luca
+Changes in v3:
+- Take Bryan's proposal to remove enable/disable operation in pdphy
+enable and pdphy disable function, then enable regulator in pdphy start
+function and disable it in pdphy stop function.
+- Link to v2: https://lore.kernel.org/r/20230824-qcom-tcpc-v2-1-3dd8c3424564@quicinc.com
 
->
-> Best regards,
-> Krzysztof
+Changes in v2:
+- Add Fixes tag
+- Link to v1: https://lore.kernel.org/r/20230823-qcom-tcpc-v1-1-fa81a09ca056@quicinc.com
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+index bb0b8479d80f..52c81378e36e 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+@@ -381,10 +381,6 @@ static int qcom_pmic_typec_pdphy_enable(struct pmic_typec_pdphy *pmic_typec_pdph
+ 	struct device *dev = pmic_typec_pdphy->dev;
+ 	int ret;
+ 
+-	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
+-	if (ret)
+-		return ret;
+-
+ 	/* PD 2.0, DR=TYPEC_DEVICE, PR=TYPEC_SINK */
+ 	ret = regmap_update_bits(pmic_typec_pdphy->regmap,
+ 				 pmic_typec_pdphy->base + USB_PDPHY_MSG_CONFIG_REG,
+@@ -422,8 +418,6 @@ static int qcom_pmic_typec_pdphy_disable(struct pmic_typec_pdphy *pmic_typec_pdp
+ 	ret = regmap_write(pmic_typec_pdphy->regmap,
+ 			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
+ 
+-	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
+-
+ 	return ret;
+ }
+ 
+@@ -447,6 +441,10 @@ int qcom_pmic_typec_pdphy_start(struct pmic_typec_pdphy *pmic_typec_pdphy,
+ 	int i;
+ 	int ret;
+ 
++	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
++	if (ret)
++		return ret;
++
+ 	pmic_typec_pdphy->tcpm_port = tcpm_port;
+ 
+ 	ret = pmic_typec_pdphy_reset(pmic_typec_pdphy);
+@@ -467,6 +465,8 @@ void qcom_pmic_typec_pdphy_stop(struct pmic_typec_pdphy *pmic_typec_pdphy)
+ 		disable_irq(pmic_typec_pdphy->irq_data[i].irq);
+ 
+ 	qcom_pmic_typec_pdphy_reset_on(pmic_typec_pdphy);
++
++	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
+ }
+ 
+ struct pmic_typec_pdphy *qcom_pmic_typec_pdphy_alloc(struct device *dev)
+
+---
+base-commit: bbb9e06d2c6435af9c62074ad7048910eeb2e7bc
+change-id: 20230822-qcom-tcpc-d41954ac65fa
+
+Best regards,
+-- 
+Hui Liu <quic_huliu@quicinc.com>
 
