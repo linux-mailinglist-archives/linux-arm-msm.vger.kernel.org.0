@@ -2,178 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02C9578ED22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 14:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4680778ED32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 14:34:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231908AbjHaMcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 08:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51244 "EHLO
+        id S1346270AbjHaMeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 08:34:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238898AbjHaMcm (ORCPT
+        with ESMTP id S231956AbjHaMeU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 08:32:42 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F012CCDD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 05:32:38 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-99bf8e5ab39so87269866b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 05:32:38 -0700 (PDT)
+        Thu, 31 Aug 2023 08:34:20 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F302CDB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 05:34:17 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d73c595b558so548363276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 05:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1693485157; x=1694089957; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cj4e69HAaMOOdlvr+WIWTnSbaYlLGaoLGvsHESxOroI=;
-        b=t80J9iBsHgwc38mPwyXOf6kIGe08KqFyxVERI58fPPJoQ20bgP12GYKTPg8X2jQw0U
-         yY+0fJVSLNhf1/skaoCvFWhiv80HuXbeZH7ePs1TS/aTJuB/xcaK8DPYZhJnHRd5dCbu
-         JGvsWNPFeWZv/SwFM7BD3O6n+oco8yQmp3PYzEWJJf6PzSUpyqsNeDteJtEj645o3gHO
-         Ld4HDDbTSyhKgze3fRNpZI+6/S1FtLa9poO5lXspbLJBcqJmje/PzslEFYaZiJlghK9/
-         WLQrZ3xWM3+5WhHI8sx+au4F3Q7nMVQf/Ir097g72WjnYgnWTcTXupC3RI/dZSG4QB80
-         85aw==
+        d=linaro.org; s=google; t=1693485256; x=1694090056; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=C40f3DUoPo3gJsTKxhxSJrYNVhaMXcBmegCE2EfQH5A=;
+        b=dSXwBMO5YtC6q8FeuXteOzHn2MSoycarwDrWgsUtWD4nwtfTJX/wuzlLkaBLRKlrAW
+         WbbofUrzSPUFRQrbiMHxS+ERRuVTGpddZv1uXtrt+PX8MCJowcgKma3rIAAbQIy8oS0x
+         Q25K7ZTLmiZJYduE6ewDlJJivESY5dsDijHwndI0rpofmLnKhgATo5ortqGZjIHbF8qc
+         6ag4cXIFstXHNfFdHcg5yJSZi8FW8oOtjR21Xo6EmsWnSl246xqURn+fDy/fhZZr0xdz
+         JB99oL6vNj0PC9V/2F02OFfcY3gQJxwwoUmZdbhYcSzRwmU+pKu/99tlchKb3v1vasim
+         eueA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693485157; x=1694089957;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Cj4e69HAaMOOdlvr+WIWTnSbaYlLGaoLGvsHESxOroI=;
-        b=MxpuxF0tifdIm98whDsMfMxnnV7fMvPFg8/bqPfDdLyz8ZcjgWidfgIXxNv05vIBX4
-         OlaG213fPtcXmPT7awf686Kim046GZ6ZDT8WAaaQAaF6piqIfOiYAVAUoTW0d/8G4V8I
-         gKQP7jtew0xITQEOc9e3R7EtU5r0afXJ2nD1jo3h/Dv74PKp1+XfvJ1qrZCOKlILxLUr
-         qMw08kCeuri4IyUoaz/N5QWDxEp0nnaa90gZMF71o1JuXg1alngOKU79bRdBePZ3ThQ8
-         FUejHGywvNjY2/21naY2FaltT3KcjGgTD98KLlyFcm64XEOhu5RnExKHSQiFTFvJgHit
-         HmEg==
-X-Gm-Message-State: AOJu0Ywpjf8pPnQLdJpc2CSdRe91750izHJWvIoMgaFoxbt7dl5FDp28
-        ARjYDUHb3O+StQ//TCY+ZUnCjg==
-X-Google-Smtp-Source: AGHT+IHyE5BVYp70Ll+vKcK9XwzMnRGpWsl9jIQBoASbYwV/rC/46WZgUGOARkhdfkh5OQgp6z9Qug==
-X-Received: by 2002:a17:907:75f6:b0:988:9b29:5653 with SMTP id jz22-20020a17090775f600b009889b295653mr3326856ejc.77.1693485157385;
-        Thu, 31 Aug 2023 05:32:37 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id g3-20020a170906594300b0099cf44adf2csm703919ejr.46.2023.08.31.05.32.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 05:32:37 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 31 Aug 2023 14:32:35 +0200
-Message-Id: <CV6QDWJRJNRH.27JMF9AB7MEXO@otso>
-Cc:     <cros-qcom-dts-watchers@chromium.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Viresh Kumar" <viresh.kumar@linaro.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-X-Mailer: aerc 0.15.2
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
- <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
- <CV6NF0466658.20DGU7QKF2UBR@otso>
- <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
- <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
-In-Reply-To: <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
+        d=1e100.net; s=20221208; t=1693485256; x=1694090056;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C40f3DUoPo3gJsTKxhxSJrYNVhaMXcBmegCE2EfQH5A=;
+        b=COa5wT1BUm0huOABkShoE4vJTTwWdkhzYsZP3nuyl94ZQVLw6rvBYcJM93wHAHrr8V
+         LQMirIG/N5kRwXGp8shgCgNDIQJmf1jGd/AyeVTv3dJmmZZBpUXF60jReiQSdOOSxglx
+         ygIQb4v8M6QTZ5diMotSlcqpZRmVMgwr9oXdTB6vhnqZ43SKk736O+6d64E3a8zeJGKO
+         3ktlhFvSkq+xO6Ynp1Utv8DdEgVO4B4+O/wF09MmdcbRAt2yQd2ELxolEKPXqlxnO7xw
+         UNbPkO0xYDhROV96n7/qzZbhcfURrLzJSuFY41dmNl0w37EvMw1AZulCJu4Ding34OGN
+         uSfg==
+X-Gm-Message-State: AOJu0Yyp3J+TKjA+ZHqoZDFXnlsKglL/E6UJn0CsDtqh+TwUISBL9oli
+        QBBdoSWwNDf/QZmRDOdiZG5ceRUWT19sPXybe1KQow==
+X-Google-Smtp-Source: AGHT+IGNzttzOCm+rkPjq+eGj1cyifmZPjni+dDxUsvO/jegctR83ayV/AWgvekHFloDQPa7nhRiUyF46+koWaPL9UM=
+X-Received: by 2002:a25:b323:0:b0:d7a:d716:233c with SMTP id
+ l35-20020a25b323000000b00d7ad716233cmr5124847ybj.41.1693485256548; Thu, 31
+ Aug 2023 05:34:16 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com>
+ <20230829135818.2219438-2-quic_ipkumar@quicinc.com> <CAA8EJpqA-poJ9=XKJa2s=yZUGbBbgOqgiDC-q9skJzBqLux84g@mail.gmail.com>
+ <73879012-581d-47fb-b741-577c90b31dfb@quicinc.com> <CAA8EJpr3PJtvyYKRPqT=hO4sUd4oOjTvOjD3kOqffbjzHdByAw@mail.gmail.com>
+ <4e9a43c5-43ec-4a07-9053-366a517f5c54@quicinc.com>
+In-Reply-To: <4e9a43c5-43ec-4a07-9053-366a517f5c54@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 31 Aug 2023 15:34:05 +0300
+Message-ID: <CAA8EJpofAM4deqg1H_WSh2uJavTEXQC5x=26P1FLAUgJcT7yOg@mail.gmail.com>
+Subject: Re: [PATCH 1/9] dt-bindings: phy: qcom,uniphy: Rename ipq4019 usb PHY
+ to UNIPHY
+To:     Praveenkumar I <quic_ipkumar@quicinc.com>
+Cc:     robert.marko@sartura.hr, luka.perkov@sartura.hr, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
+        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
+        geert+renesas@glider.be, nfraprado@collabora.com, rafal@milecki.pl,
+        peng.fan@nxp.com, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_varada@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu Aug 31, 2023 at 1:54 PM CEST, Krzysztof Kozlowski wrote:
-> On 31/08/2023 13:33, Dmitry Baryshkov wrote:
-> > On Thu, 31 Aug 2023 at 13:13, Luca Weiss <luca.weiss@fairphone.com> wro=
-te:
+On Thu, 31 Aug 2023 at 15:30, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+>
+>
+> On 8/31/2023 5:47 PM, Dmitry Baryshkov wrote:
+> > On Thu, 31 Aug 2023 at 14:54, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
 > >>
-> >> On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
-> >>> On 30/08/2023 11:58, Luca Weiss wrote:
-> >>>> Like other Qualcomm PMICs the PM7250B can be used on different addre=
-sses
-> >>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
-> >>>> possible.
+> >> On 8/29/2023 7:49 PM, Dmitry Baryshkov wrote:
+> >>> On Tue, 29 Aug 2023 at 16:59, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+> >>>> UNIPHY / Combo PHY used on various qualcomm SoC's are very similar to
+> >>>> ipq4019 PHY. Hence renaming this dt-binding to uniphy dt-binding and
+> >>>> can be used for other qualcomm SoCs which are having similar UNIPHY.
 > >>>>
-> >>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > >>>> ---
-> >>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
-> >>>>  1 file changed, 16 insertions(+), 7 deletions(-)
+> >>>>    .../phy/{qcom-usb-ipq4019-phy.yaml => qcom,uniphy.yaml}  | 9 +++++++--
+> >>>>    1 file changed, 7 insertions(+), 2 deletions(-)
+> >>>>    rename Documentation/devicetree/bindings/phy/{qcom-usb-ipq4019-phy.yaml => qcom,uniphy.yaml} (78%)
 > >>>>
-> >>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot=
-/dts/qcom/pm7250b.dtsi
-> >>>> index e8540c36bd99..3514de536baa 100644
-> >>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> >>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> >>>> @@ -7,6 +7,15 @@
-> >>>>  #include <dt-bindings/interrupt-controller/irq.h>
-> >>>>  #include <dt-bindings/spmi/spmi.h>
+> >>>> diff --git a/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
+> >>>> similarity index 78%
+> >>>> rename from Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> >>>> rename to Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
+> >>>> index 09c614952fea..cbe2cc820009 100644
+> >>>> --- a/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> >>>> +++ b/Documentation/devicetree/bindings/phy/qcom,uniphy.yaml
+> >>>> @@ -1,13 +1,18 @@
+> >>>>    # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> >>>>    %YAML 1.2
+> >>>>    ---
+> >>>> -$id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml#
+> >>>> +$id: http://devicetree.org/schemas/phy/qcom,uniphy.yaml#
+> >>>>    $schema: http://devicetree.org/meta-schemas/core.yaml#
 > >>>>
-> >>>> +/* This PMIC can be configured to be at different SIDs */
-> >>>> +#ifndef PM7250B_SID
-> >>>> +   #define PM7250B_SID 2
-> >>>> +#endif
-> >>>
-> >>> Why do you send the same patch as v1, without any reference to previo=
-us
-> >>> discussions?
-> >>>
-> >>> You got here feedback already.
-> >>>
-> >>> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3f313=
-d9fe9@linaro.org/
-> >>
-> >> Hi Krzysztof,
-> >>
-> >> I did mention that original patch in the cover letter of this series.
-> >> I'm definitely aware of the discussion earlier this year there but als=
-o
-> >> tried to get an update lately if there's any update with no response.
-> >=20
-> > I think the overall consensus was that my proposal is too complicated
-> > for the DT files.
->
-> I proposed to duplicate the entries.
+> >>>> -title: Qualcom IPQ40xx Dakota HS/SS USB PHY
+> >>>> +title: Qualcomm UNIPHY
+> >>> We know that UNIPHY was a common design / IP block used for APQ8064
+> >>> SATA and MSM8974 DSI and HDMI PHYs. Is this the same design, or was
+> >>> the name reused by the Qualcomm for some other PHYs?
+> >>> Several latest generations have USB QMP PHYs which are called 'uni-phy'.
+> >> This PHY is build on top of QCA Uniphy 22ull. A combo PHY used between
+> >> USB Gen3 / PCIe Gen3 controller.
+> >> It is different from USB QMP PHYs.
+> > So we have now three different items called Qualcomm uniphy. Could you
+> > please add some distinctive name?
+> There is one more target called IPQ5018 which is also having similar USB
+> PHY built on top of
+> Uniphy 28nm LP. That also can leverage this upcoming IPQ5332 USB PHY
+> driver. Considering that,
+> given a common name 'uniphy'.
 
-If you mean creating a pm7250b-8.dtsi with pm7250b copy-pasted but the
-SID changed from 2 & 3 to 8 & 9, I can do that if that's the way
-forward.
+Just to verify, do we mean the same thing, when speaking about the
+28nm LP UNIPHY?
+I was referencing the apq8064 SATA and msm8974 HDMI / DSI PHYs. See [1] and [2].
 
-If this was done, I'd also say then that pm7250b.dtsi should be renamed
-to e.g. pm7250b-2.dtsi since it's currently sitting on SID 2 & 3.
-
-> Do you keep QUP nodes in DTSI and customize per address? No.
->
-> I definitely do not agree to these ifndef->define. Maybe using just
-> define would work (so drop ifndef->define), because this makes it
-> obvious and fail-safe if included in wrong place... except that it is
-> still not the define we expect. This is not the coding style present in
-> other DTSes.
-
-I really don't mind either way, I'd just like to have some way for now.
+[1] https://patchwork.freedesktop.org/patch/544131/?series=118210&rev=2
+[2] https://patchwork.freedesktop.org/patch/544125/?series=118210&rev=2
 
 >
-> The true problem how these SPMI bindings were created. Requiring SID
-> address in every child is clearly redundant and I think we do not follow
-> such approach anywhere else.
+> - Praveenkumar
+> >
+> >> - Praveenkumar
+> >>>>    maintainers:
+> >>>>      - Robert Marko <robert.marko@sartura.hr>
+> >>>> +  - Praveenkumar I <quic_ipkumar@quicinc.com>
+> >>>> +
+> >>>> +description:
+> >>>> +  UNIPHY / COMBO PHY supports physical layer functionality for USB and PCIe on
+> >>>> +  Qualcomm chipsets.
+> >>>>
+> >>>>    properties:
+> >>>>      compatible:
+> >>>> --
+> >>>> 2.34.1
+> >>>>
+> >
+> >
 
-Is this something that could be fixed long term? Especially since
-Qualcomm is reconfiguring PMICs on different addresses nowadays maybe
-there's more or a push to do this?
 
-Regards
-Luca
 
->
-> Best regards,
-> Krzysztof
-
+-- 
+With best wishes
+Dmitry
