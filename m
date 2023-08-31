@@ -2,159 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FEFB78F541
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 00:03:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF6CC78F5FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 01:07:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231926AbjHaWDJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 18:03:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47968 "EHLO
+        id S245147AbjHaXHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 19:07:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244435AbjHaWDJ (ORCPT
+        with ESMTP id S1346808AbjHaXHJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 18:03:09 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FF51B1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 15:03:05 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d77c5414433so1024639276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 15:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693519385; x=1694124185; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Nhr+MlGU8motavYCyDqtqnGnLslEKTIGE/1NrcgH84=;
-        b=bpd7oDZrgtdqG/vB/0Os+UGsLIYH4L8obUQ/ULomra6c/J5qjp0k2SGWk8TFd3FQhQ
-         tTR0+wcZpp1hxau8hI9WMYuihlxKLwv96217DbG68+PaZe4h6Awk3PCUZD4w3jx4H+x+
-         fz564XJROYDayfgvjx+08wB6qXWfBstFIac+4mRBA6K+YnP3ko4z+7lpqQK/ReMagNhQ
-         dY+eNNeGYKOLrn+Cof51rU+yDsT7LVhqtJMOy0L4Bkp11Ue+OIicsUycNB1pOs57yVqm
-         w7Bbig+0U2nbr+D+bDsi3uzy8HQnPjx0s5HewHYYVLzMdhny6d5Tac0BuvN09akSd2/Z
-         d/vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693519385; x=1694124185;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1Nhr+MlGU8motavYCyDqtqnGnLslEKTIGE/1NrcgH84=;
-        b=TSve0llWH6e0TE926psH0ihL1lSayGepyhkBUYUnEcCTYJm5aiNgPhRyawLqDXwggH
-         A89/TaaPIPeidMeR4P2ULlpN+IAnyr7ELr7gIs3FyNxk36HUKBAY/UPHFYYO9WYlP3fP
-         P4XkDWprqKzUJFdnYd9z33BEeuQcv9OmM1EU82QLxDpLYfwIt8Zx/XKlq6yESZEJOy81
-         fQb00iRxhRPi4sb85CePFjMI59/h7yZO7THcI/FmkENaEhgf9PGtoG9TfZNU/agm3BJX
-         GuwNc2iWYSkG8xLd7F9BgMamHAaJcUuWslTnsizI7jROSfyH/CgLeXmEwSSNLepwhutK
-         QF1w==
-X-Gm-Message-State: AOJu0Yww20zqAuyCn5uRqyCuB4N6oup3qcdV8FIJTkDggUW1MzdzWW9j
-        cIO5P6xmSIQcy9moRbHUvRJhJPBbjt7g5vbaUqgAnA==
-X-Google-Smtp-Source: AGHT+IGu/8umP4ViODWJYwkjfphaRkMX0GAjallqMv7PlNEBVl3a9Cn1lw/JTW8EU9hrvomRWdeDj5CICMQ+IJSGZXE=
-X-Received: by 2002:a25:cb52:0:b0:d4d:b6de:69bd with SMTP id
- b79-20020a25cb52000000b00d4db6de69bdmr1210138ybg.23.1693519384881; Thu, 31
- Aug 2023 15:03:04 -0700 (PDT)
+        Thu, 31 Aug 2023 19:07:09 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D11F2FB;
+        Thu, 31 Aug 2023 16:07:05 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: alarumbe)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2E35466071C9;
+        Fri,  1 Sep 2023 00:07:04 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693523224;
+        bh=fs0FwuY9MddiJkWRrbkwal+1lyXgqjXeNjci1Mj4awQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZyvnT8Ds+wR4bYMRfM/cEC8aCY2oub6jnsiup6uCxPbvv2Ge7cQpTNzHal/BldrFb
+         Ju7w3Hgmmd2qq/XfPZsGGlO+8mYU1ANR9CN/JNEVOJhLSYSq9Vo/yUceTHDR3SkdqL
+         3p0Ue/ah4IlxOAaNcTDqSdZpXsUP6CTiSZ6OUDFEQoL6FxMWZCwjS9Z3rA3crffcRN
+         E2zOqZAAz/5mAFVwgpiTkSqNLZLnzMEJiwf7h81KOUGpobDVqPlhsCmtVgPXkUhPzA
+         TIHK8ztI1wzA8qUjgbMQQDlnHr9Dfj0pUuS3kNNzxdfzrAQP8nJKCkyRKnKGhhD8X8
+         gtxIPMpxcHuDA==
+Date:   Fri, 1 Sep 2023 00:07:01 +0100
+From:   =?utf-8?Q?Adri=C3=A1n?= Larumbe <adrian.larumbe@collabora.com>
+To:     Boris Brezillon <boris.brezillon@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 3/6] drm/panfrost: Add fdinfo support for memory stats
+Message-ID: <h67vxvmhcvcccnnoqxyfukhhnokqsaqacjhhgrh7bdypyjz6so@4vcy4kwtwrzq>
+References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
+ <20230824013604.466224-4-adrian.larumbe@collabora.com>
+ <20230830122641.78d21f94@collabora.com>
 MIME-Version: 1.0
-References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
- <20230217-topic-cpr3h-v14-3-9fd23241493d@linaro.org> <CAPDyKFrXT+2NEMUzVv-kWjXAhLinXq99GKq4_Ge2VjthtYxtaA@mail.gmail.com>
- <20230831162835.GA2390385-robh@kernel.org> <f1f60df1-7632-48a2-a211-dcd6c1fa419f@linaro.org>
-In-Reply-To: <f1f60df1-7632-48a2-a211-dcd6c1fa419f@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 1 Sep 2023 00:02:27 +0200
-Message-ID: <CAPDyKFokY6F3dxhR3d8PyUwTvLOrt6+W=_JbfvGW_4XHHPaTsg@mail.gmail.com>
-Subject: Re: [PATCH v14 3/9] dt-bindings: soc: qcom: cpr3: Add bindings for
- CPR3 driver
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230830122641.78d21f94@collabora.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Aug 2023 at 18:40, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On 30.08.2023 12:31, Boris Brezillon wrote:
+>On Thu, 24 Aug 2023 02:34:46 +0100
+>Adrián Larumbe <adrian.larumbe@collabora.com> wrote:
 >
-> On 31.08.2023 18:28, Rob Herring wrote:
-> > On Tue, Aug 29, 2023 at 01:01:44PM +0200, Ulf Hansson wrote:
-> >> On Mon, 28 Aug 2023 at 13:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>
-> >>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> >>>
-> >>> Add the bindings for the CPR3 driver to the documentation.
-> >>>
-> >>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> >>> [Konrad: Make binding check pass; update AGdR's email]
-> >>> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>> ---
-> >>>  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 286 +++++++++++++++++++++
-> >>>  1 file changed, 286 insertions(+)
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-> >>> new file mode 100644
-> >>> index 000000000000..acf2e294866b
-> >>
-> >> [...]
-> >>
-> >>> +
-> >>> +examples:
-> >>> +  - |
-> >>> +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
-> >>> +    #include <dt-bindings/interrupt-controller/irq.h>
-> >>> +
-> >>> +    cpus {
-> >>> +        #address-cells = <2>;
-> >>> +        #size-cells = <0>;
-> >>> +
-> >>> +        cpu@0 {
-> >>> +            compatible = "qcom,kryo280";
-> >>> +            device_type = "cpu";
-> >>> +            reg = <0x0 0x0>;
-> >>> +            operating-points-v2 = <&cpu0_opp_table>;
-> >>> +            power-domains = <&apc_cprh 0>;
-> >>> +            power-domain-names = "cprh";
-> >>
-> >> Rather than using a Qcom specific power-domain-name, perhaps a common
-> >> power-domain-name for cpus, that can be used for "the performance
-> >> domain" would be a good idea here?
-> >>
-> >> I have suggested using "perf" for the SCMI performance domain [1],
-> >> perhaps that description should be extended to cover this and other
-> >> performance domains too?
-> >
-> > Better yet, nothing. There's no value to -names when there is only 1
-> > entry.
-> As of today, it's required for devm_pm_opp_attach_genpd()
+>> A new DRM GEM object function is added so that drm_show_memory_stats can
+>> provider more accurate memory usage numbers.
 >
-> Ulf, is there a better way to do this that doesn't require names?
+>  s/provider/provide/
+>
+>> 
+>> Ideally, in panfrost_gem_status, the BO's purgeable flag would be checked
+>> after locking the driver's shrinker mutex, but drm_show_memory_stats takes
+>> over the drm file's object handle database spinlock, so there's potential
+>> for a race condition here.
+>
+>Yeah, I don't think it matters much if we report a BO non-purgeable,
+>and this BO becomes purgeable in the meantime. You'd have the same
+>problem
+>
+>> 
+>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+>> ---
+>>  drivers/gpu/drm/panfrost/panfrost_drv.c |  9 +++++++--
+>>  drivers/gpu/drm/panfrost/panfrost_gem.c | 12 ++++++++++++
+>>  drivers/gpu/drm/panfrost/panfrost_gem.h |  1 +
+>>  3 files changed, 20 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> index 3fd372301019..93d5f5538c0b 100644
+>> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> @@ -440,11 +440,14 @@ static int panfrost_ioctl_madvise(struct drm_device *dev, void *data,
+>>  	args->retained = drm_gem_shmem_madvise(&bo->base, args->madv);
+>>  
+>>  	if (args->retained) {
+>> -		if (args->madv == PANFROST_MADV_DONTNEED)
+>> +		if (args->madv == PANFROST_MADV_DONTNEED) {
+>>  			list_move_tail(&bo->base.madv_list,
+>>  				       &pfdev->shrinker_list);
+>> -		else if (args->madv == PANFROST_MADV_WILLNEED)
+>> +			bo->is_purgable = true;
+>> +		} else if (args->madv == PANFROST_MADV_WILLNEED) {
+>>  			list_del_init(&bo->base.madv_list);
+>> +			bo->is_purgable = false;
+>
+>Should we really flag the BO as purgeable if it's already been evicted
+>(args->retained == false)?
 
-In my opinion I think using names is valuable from a future and
-flexibility point of view. To pick the proper name is another
-question.
+I checked what msm is doing, and I guess it shouldn't be marked as purgeable after eviction.
+I didn't catch this at first because Freedreno isn't using drm_gem_shmem_madvise, but apparently
+tracking whether a BO was already purged through an additional MADV state.
 
-Anyway, in this case I think you should consider the case of
-potentially having multiple power-domains for the cpu. Having both a
-cpr(h) (for performance-scaling) and a psci (for power) power-domain
-sounds like a combination that should already exist. Maybe not
-upstream wise, but at least this is what I have been told to exist
-several years ago by Qcom engineers.
+>> +		}
+>>  	}
+>>  
+>>  out_unlock_mappings:
+>> @@ -559,6 +562,8 @@ static void panfrost_show_fdinfo(struct drm_printer *p, struct drm_file *file)
+>>  	struct panfrost_device *pfdev = dev->dev_private;
+>>  
+>>  	panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
+>> +
+>> +	drm_show_memory_stats(p, file);
+>>  }
+>>  
+>>  static const struct file_operations panfrost_drm_driver_fops = {
+>> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
+>> index 3c812fbd126f..aea16b0e4dda 100644
+>> --- a/drivers/gpu/drm/panfrost/panfrost_gem.c
+>> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
+>> @@ -195,6 +195,17 @@ static int panfrost_gem_pin(struct drm_gem_object *obj)
+>>  	return drm_gem_shmem_pin(&bo->base);
+>>  }
+>>  
+>> +static enum drm_gem_object_status panfrost_gem_status(struct drm_gem_object *obj)
+>> +{
+>> +	struct panfrost_gem_object *bo = to_panfrost_bo(obj);
+>> +	enum drm_gem_object_status res = 0;
+>> +
+>> +	res |= (bo->is_purgable) ? DRM_GEM_OBJECT_PURGEABLE : 0;
+>
+>Why not checking bo->base.madv here instead of adding an is_purgeable
+>field?
 
-Kind regards
-Uffe
+I thought it would make the meaning more clear, but I guess there's no point in
+duplicating information.
+
+>> +
+>> +	res |= (bo->base.pages) ? DRM_GEM_OBJECT_RESIDENT : 0;
+>
+>Does it make sense to have DRM_GEM_OBJECT_PURGEABLE set when
+>DRM_GEM_OBJECT_RESIDENT is not?
+
+Freedreno's msm_gem_status seems not to care about this because drm_show_memory_stats is already
+handling this situation:
+
+	if (s & DRM_GEM_OBJECT_RESIDENT) {
+		if (obj->funcs && obj->funcs->rss)
+			status.resident += obj->funcs->rss(obj);
+		else
+			status.resident += obj->size;
+	} else {
+		/* If already purged or not yet backed by pages, don't
+		 * count it as purgeable:
+		 */
+		s &= ~DRM_GEM_OBJECT_PURGEABLE;
+	}
+
+>> +
+>> +	return res;
+>> +}
+>>  static const struct drm_gem_object_funcs panfrost_gem_funcs = {
+>>  	.free = panfrost_gem_free_object,
+>>  	.open = panfrost_gem_open,
+>> @@ -206,6 +217,7 @@ static const struct drm_gem_object_funcs panfrost_gem_funcs = {
+>>  	.vmap = drm_gem_shmem_object_vmap,
+>>  	.vunmap = drm_gem_shmem_object_vunmap,
+>>  	.mmap = drm_gem_shmem_object_mmap,
+>> +	.status = panfrost_gem_status,
+>>  	.vm_ops = &drm_gem_shmem_vm_ops,
+>>  };
+>>  
+>> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
+>> index ad2877eeeccd..e06f7ceb8f73 100644
+>> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
+>> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+>> @@ -38,6 +38,7 @@ struct panfrost_gem_object {
+>>  
+>>  	bool noexec		:1;
+>>  	bool is_heap		:1;
+>> +	bool is_purgable	:1;
+>>  };
+>>  
+>>  struct panfrost_gem_mapping {
