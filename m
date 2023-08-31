@@ -2,82 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E28A78EBF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 13:28:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE5E378EC12
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 13:32:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238130AbjHaL2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 07:28:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60844 "EHLO
+        id S244089AbjHaLcc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 07:32:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbjHaL2I (ORCPT
+        with ESMTP id S235708AbjHaLcc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 07:28:08 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5666BCFE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 04:28:04 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso79073666b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 04:28:04 -0700 (PDT)
+        Thu, 31 Aug 2023 07:32:32 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EADFCF3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 04:32:29 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d7b66b5641eso464270276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 04:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1693481283; x=1694086083; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9yvHyjPG7qUuINUCRplJZoEcbwB6qImIpL5RY/TwBK8=;
-        b=gJPowC5T5XnE2dRfmE1HYdTrXIJUiGjy10McutUK/lhG2Hl2hrLyYC2sp5NqioJr4v
-         aF5VY/zgu882zOxp2UY6NEGyBiVPXUXRa3rP+ZWNtKWn+e+b+hFtOgzziUNE4AG5wOTx
-         Qvw9OP58Y5qNHW39HdGvLzNBtzDrKh9xWVUtiv1tsKe45f8yIqrFPns17Cer45bskcwo
-         4xcWiy7Z6lz8OfaGc+inoTw34CxFSYyweK2WUKp1lI0qy8GPpbCiG4xFEsyuU5eAOn2C
-         LKJDMxe4ZdLjwoTvAQLXPDz6fgOLR+DLe4eJ4zjPc9+2VyexjSJuSHwj4qQgPdt3XNPe
-         dfew==
+        d=linaro.org; s=google; t=1693481548; x=1694086348; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Y4Cq/IHdVsRZWccJ+nEpibfReLfGO5CUKhv7KNNEEs=;
+        b=r22IQQCEFtQcbJRHBCq5qEcauLLGwMO++3wX21yyE8QrruYLJ2o5hdnH6eYCbDaH6J
+         Lm7/PFLFfckGz+upSVnz3h6l9DwrWIEMMO2rLLzZU1vjBNJ2HF9nII3t0JvFTHsY3bEI
+         yXXS07bojLRSxMlPSKr7E/zxvwJ8cRKB2ODJ5wEf+ntLb90dnz3zvs3YqZdQ1Aq6xcNc
+         72LTT3v1RXqZQZIZf0jUUXqrrQkqggN7TBssKGpzvGYDc2iipFnEYxCxohNs39ONx/Mf
+         ORL9L58hFjfyPS6dEYKjdyxQBBWnxhAL+tlBP1LAaerW4GOxyNniBLv44khEOKROGj5Z
+         9Gsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693481283; x=1694086083;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9yvHyjPG7qUuINUCRplJZoEcbwB6qImIpL5RY/TwBK8=;
-        b=OJXE3by64zvSyS2UJ9exCNOp2UxMileA4v6xP0/DHITbggOuNY2YGhnX70glmhiapj
-         JCEtmZRDFvJWPAfiHl20SKoZjq9Wnrf3wVYdqCS3HAtPMD97eQdyTZUsWM9xAyobT3+1
-         TxP0iut2CAjmMqBaYgthBrgglbuM0RbDTGswEpBR1U+HUDmKlxRuIbpT0YbvRhxeADcN
-         Ii3gvjcgxwxRqzg/wPgy8tWNx6F6EzgOqE8HXpqD0Qn/rzqmU/IJT56cky2gSbgqEWS1
-         Wu9POBKmk4m6kzbJFkf7SeQZnemR91e7TVEbFHL0CoYXurFonLgrSIMpoZEHaqBYPIFk
-         rfFQ==
-X-Gm-Message-State: AOJu0Yw/VSSlEzJ6kTuRN39JDKr2Qw3Obkmv/su/9Q5xOwSqafyB+0lD
-        pmgg26LMtIkY+E2BVXlKcynltA==
-X-Google-Smtp-Source: AGHT+IG/hpDsEDtftxv8WRfScAb1QpBlf4Zc8+8cS6j6PB4BK2HHNwPv823nbljA1+JmHjuosy8iUw==
-X-Received: by 2002:a17:906:3195:b0:9a5:c49e:7145 with SMTP id 21-20020a170906319500b009a5c49e7145mr3734010ejy.69.1693481282782;
-        Thu, 31 Aug 2023 04:28:02 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id r10-20020a170906c28a00b0099297782aa9sm655606ejz.49.2023.08.31.04.28.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 04:28:02 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 31 Aug 2023 13:28:01 +0200
-Message-Id: <CV6P0GSF8HWI.1I9L17HVQA7CJ@otso>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 03/11] arm64: dts: qcom: sc7280: Move qfprom clock to
- chrome-common
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Viresh Kumar" <viresh.kumar@linaro.org>
-X-Mailer: aerc 0.15.2
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-3-5a954519bbad@fairphone.com>
- <0ab29903-9861-4736-b827-5dd45b504baa@linaro.org>
-In-Reply-To: <0ab29903-9861-4736-b827-5dd45b504baa@linaro.org>
+        d=1e100.net; s=20221208; t=1693481548; x=1694086348;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6Y4Cq/IHdVsRZWccJ+nEpibfReLfGO5CUKhv7KNNEEs=;
+        b=DIrIaQsxwoL2W2YCjrfGTWe+ic+DJ3CBAXSMFrH7KdTAVKmx+Qg36c16S5dmn/QNDX
+         wVYA4b2azNfOcT3s6aDMFzp1/A6xJksFfDI+qsWW5As2M6Nf2PyQqXqSwwAWJlcWV7I/
+         Lx7m/EXmaUBE/maJ+Cr6A5EGKwsqRqTfLUYiPO1b3tO3wgIjOLRjaG0lNeVD6NT1SUjs
+         OwZT+qpUeyGNFSdhLKJNQMBRvYn/KXT1siFFOsKpzCa+RoPEbirVt7ssXMp+wxdKDZlh
+         +O8adl1vLxrnr72VKvI/JasIiLqUmFjnDD+Cm7+ZWCGu1SB6Ogt5ae1fdLIlIOJ6cWAi
+         6s1w==
+X-Gm-Message-State: AOJu0Yye9uVYZDfPDC/WzXP2KZKE7JNV98BVOewZN5uadfzZzcuFQJD8
+        N4YRBzdpubIhNWymUk+e5NC1fGf6rXgQw17JSDQNHAXLHQTPIU6a/oY=
+X-Google-Smtp-Source: AGHT+IGmZkwOv9/T3myqmvLQt+2FQYaNTQx2vhwnosm5z0c5JuszozfA/F3Oh1I0GuscrvpOIc2G/zJJoa5FiM3GqoA=
+X-Received: by 2002:a25:b8b:0:b0:c73:e6b5:c452 with SMTP id
+ 133-20020a250b8b000000b00c73e6b5c452mr4431574ybl.2.1693481548627; Thu, 31 Aug
+ 2023 04:32:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230830-topic-rpmbusclocks8996gcc-v1-1-9e99bedcdc3b@linaro.org>
+In-Reply-To: <20230830-topic-rpmbusclocks8996gcc-v1-1-9e99bedcdc3b@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 31 Aug 2023 14:32:17 +0300
+Message-ID: <CAA8EJprupMJY7xKq4qO_+vBsrtBDvEPr+HEZqc2S+o0B1tQsWg@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gcc-msm8996: Remove RPM bus clocks
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -88,35 +73,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed Aug 30, 2023 at 12:09 PM CEST, Konrad Dybcio wrote:
-> On 30.08.2023 11:58, Luca Weiss wrote:
-> > On non-ChromeOS boards the clock cannot be touched, so move it in the
-> > chrome-common dtsi which is the only place where it's needed.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> If that clock is not registered (e.g. it's in protected-clocks =3D <>,
-> would the _optional handler not handle it just fine?
-
-Right, that appears to work!
-
-~ # ls -d /sys/bus/platform/drivers/qcom,qfprom/*.efuse
-/sys/bus/platform/drivers/qcom,qfprom/784000.efuse
-~ # cat /sys/firmware/devicetree/base/soc@0/efuse@784000/clock-names; echo
-core
-~ # hexdump -C /sys/firmware/devicetree/base/soc@0/efuse@784000/clocks
-00000000  00 00 00 03 00 00 00 b8                           |........|
-00000008
-
-Never tested this case before, but since it appears to work with the
-patched qfprom driver (other patch in this series) I think we can drop
-this patch.
-Will also have to adjust some other patches in my local tree then that
-do similar things ;)
-
-Regards
-Luca
-
+On Thu, 31 Aug 2023 at 12:39, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> Konrad
+> The GCC driver contains clocks that are owned (meaning configured and
+> scaled) by the RPM core.
+>
+> Remove them from Linux to stop interjecting the RPM's logic.
+>
+> Fixes: b1e010c0730a ("clk: qcom: Add MSM8996 Global Clock Control (GCC) driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Evolution of:
+> https://lore.kernel.org/linux-arm-msm/20230612-topic-rcg2_ro-v1-0-e7d824aeb628@linaro.org/
+> ---
+>  drivers/clk/qcom/gcc-msm8996.c | 237 +----------------------------------------
+>  1 file changed, 5 insertions(+), 232 deletions(-)
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+
+-- 
+With best wishes
+Dmitry
