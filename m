@@ -2,57 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CCBA78F4B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 23:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E69E78F4D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 23:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245204AbjHaVe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 17:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57866 "EHLO
+        id S1347616AbjHaVs0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 17:48:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245419AbjHaVe7 (ORCPT
+        with ESMTP id S1347610AbjHaVsV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 17:34:59 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 581541BF;
-        Thu, 31 Aug 2023 14:34:55 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: alarumbe)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id A778D660729F;
-        Thu, 31 Aug 2023 22:34:53 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1693517693;
-        bh=Tr8cyPxFm6NZJjvBVjrX3JuZaQwyE6Fdkowrsree0xs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Mn8k0oE/cQXiOiLUmMg2x4XuYG4KUdEds/qopnG47Q0gRnUUy59Ft3CrIFpPexG6c
-         pWwEICfNLvNY4CR5bCqciVW+I8/LQcmeEyykG4yVKoHnpiDlUTwSgrRfi9G1/DmCF8
-         i738yfgmrKIpxvNrmISsjPxyGgM5PWMZ+G+4/KkU1Lx1fzhYhr8tSOSjeePBAFzBQG
-         QY9RoHaPuaJ+2Bsv++Pw3r1yW8c4bNOIeZsjnV4c2QJUGlDMtQvIRUzaFwaK836cW2
-         EPog7es5q68Rc0HglgV/cpVdQhwU7+nYrqINO1tVsFEq+MTmPi1QWeDIT3Fx14U5IF
-         m5xCT2YI6DK1g==
-Date:   Thu, 31 Aug 2023 22:34:51 +0100
-From:   =?utf-8?Q?Adri=C3=A1n?= Larumbe <adrian.larumbe@collabora.com>
-To:     Steven Price <steven.price@arm.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com
-Subject: Re: [PATCH v2 2/6] drm/panfrost: Add fdinfo support GPU load metrics
-Message-ID: <enzglusbu4anwaqyalsyan3bfzecbpxttnq5v2o65hun4foj7s@ql5byzj6krk2>
-References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
- <20230824013604.466224-3-adrian.larumbe@collabora.com>
- <23f38307-3246-28a9-f396-5660acb21a18@arm.com>
+        Thu, 31 Aug 2023 17:48:21 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0BB1B2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 14:48:18 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-58cbdf3eecaso15093187b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Aug 2023 14:48:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693518498; x=1694123298; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vYQm3HLTVW0PLSRJWbeaTbNjeFSBbaECmMIm+40Gbmk=;
+        b=yd/40IO2G+j0u0NQqPr0r5ze685Tm8YwWkrpW3hhdJ2pGzVxwAmB1isM0N74o3bB5x
+         WwbaCYOL/x1y2pcBYBhRJd6TqC2RPP2683Mq41sUamjSfroUelKphqBthsNN5YC9arFn
+         vHRjSWiCIRxA8fBXsDfk4nExZTt5u7l5Ug3dRc4MnWkpzMWjY7qVZp4xc2D1jtrfmTaj
+         XJouyoVcUzAN0nIooeE57yn5XYLMMWnRdv4M2Kd1OPV86vSSUwJypNojoNFnLsjc610l
+         PWr5KIpljhyf/6EN3C2PsRGeaOp6TE7643CJc/FxwJBZ6/e+9+Xb2Y27PCsKEdnxwvta
+         HADA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693518498; x=1694123298;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vYQm3HLTVW0PLSRJWbeaTbNjeFSBbaECmMIm+40Gbmk=;
+        b=gpcmbtKBFGLNwiIh7w7swnROHWAeMQmQQLIvtD1GwrJwk+o08IFwQhn612+frVxDHh
+         YH+69Seys10OkUtAdioq8ryIPAfwCbUBqYWsi4Xf6Mx7u/aA/aakBVJjwReZKAJjM6DP
+         SK+n1Z4WewLTgXnLLgUcjE2ELECNwdg5DXYx3jGvi0q6iUPydOMCHBsBciTDDtbDCHRd
+         ssZIqOLSfDIs0Hvi3N07qD3DTnwk7iAWRidxiEDPVrQDz6BAPRO0csDFkN/Dzqvpn86m
+         dys9mOIk2Y3ywWw26uz9cvtSDERoSYLLMtmu+4bQX9PSr3okt7N4ne9j1fJWodbJntUG
+         xu9A==
+X-Gm-Message-State: AOJu0Yzv9gNz4Hq7UfmCCWo/xsTV+r9Aa+5QO5w/8hIiO3rIt72s3DTD
+        VQK9o5UruzWKATA1E3rvJu6PRMO5zKl8HsPSOFyPjA==
+X-Google-Smtp-Source: AGHT+IGUdiOKQp2YoszPk/mqnRyLATy++xSQZaMCP71grCQFvhU122vT3LwQYefcUXv4RXe/FHdk3jTendYgMlkPz/o=
+X-Received: by 2002:a25:e082:0:b0:d7b:9f03:20c9 with SMTP id
+ x124-20020a25e082000000b00d7b9f0320c9mr1026573ybg.10.1693518498053; Thu, 31
+ Aug 2023 14:48:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <23f38307-3246-28a9-f396-5660acb21a18@arm.com>
+References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
+ <20230217-topic-cpr3h-v14-3-9fd23241493d@linaro.org> <CAPDyKFrXT+2NEMUzVv-kWjXAhLinXq99GKq4_Ge2VjthtYxtaA@mail.gmail.com>
+ <20230831162835.GA2390385-robh@kernel.org>
+In-Reply-To: <20230831162835.GA2390385-robh@kernel.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 31 Aug 2023 23:47:40 +0200
+Message-ID: <CAPDyKFrpumkD0fPwgu_0xr1q3XM3t+U5rT9nj0Cg78tF9CGZ0w@mail.gmail.com>
+Subject: Re: [PATCH v14 3/9] dt-bindings: soc: qcom: cpr3: Add bindings for
+ CPR3 driver
+To:     Rob Herring <robh@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -62,94 +88,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.08.2023 16:54, Steven Price wrote:
->On 24/08/2023 02:34, Adrián Larumbe wrote:
->> The drm-stats fdinfo tags made available to user space are drm-engine,
->> drm-cycles, drm-max-freq and drm-curfreq, one per job slot.
->> 
->> This deviates from standard practice in other DRM drivers, where a single
->> set of key:value pairs is provided for the whole render engine. However,
->> Panfrost has separate queues for fragment and vertex/tiler jobs, so a
->> decision was made to calculate bus cycles and workload times separately.
->> 
->> Maximum operating frequency is calculated at devfreq initialisation time.
->> Current frequency is made available to user space because nvtop uses it
->> when performing engine usage calculations.
->> 
->> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
->> ---
->>  drivers/gpu/drm/panfrost/panfrost_devfreq.c |  8 ++++
->>  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  3 ++
->>  drivers/gpu/drm/panfrost/panfrost_device.h  | 13 ++++++
->>  drivers/gpu/drm/panfrost/panfrost_drv.c     | 45 ++++++++++++++++++++-
->>  drivers/gpu/drm/panfrost/panfrost_job.c     | 30 ++++++++++++++
->>  drivers/gpu/drm/panfrost/panfrost_job.h     |  4 ++
->>  6 files changed, 102 insertions(+), 1 deletion(-)
->> 
+On Thu, 31 Aug 2023 at 18:28, Rob Herring <robh@kernel.org> wrote:
 >
->[...]
+> On Tue, Aug 29, 2023 at 01:01:44PM +0200, Ulf Hansson wrote:
+> > On Mon, 28 Aug 2023 at 13:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > >
+> > > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > >
+> > > Add the bindings for the CPR3 driver to the documentation.
+> > >
+> > > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > > [Konrad: Make binding check pass; update AGdR's email]
+> > > Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > ---
+> > >  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 286 +++++++++++++++++++++
+> > >  1 file changed, 286 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+> > > new file mode 100644
+> > > index 000000000000..acf2e294866b
+> >
+> > [...]
+> >
+> > > +
+> > > +examples:
+> > > +  - |
+> > > +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
+> > > +    #include <dt-bindings/interrupt-controller/irq.h>
+> > > +
+> > > +    cpus {
+> > > +        #address-cells = <2>;
+> > > +        #size-cells = <0>;
+> > > +
+> > > +        cpu@0 {
+> > > +            compatible = "qcom,kryo280";
+> > > +            device_type = "cpu";
+> > > +            reg = <0x0 0x0>;
+> > > +            operating-points-v2 = <&cpu0_opp_table>;
+> > > +            power-domains = <&apc_cprh 0>;
+> > > +            power-domain-names = "cprh";
+> >
+> > Rather than using a Qcom specific power-domain-name, perhaps a common
+> > power-domain-name for cpus, that can be used for "the performance
+> > domain" would be a good idea here?
+> >
+> > I have suggested using "perf" for the SCMI performance domain [1],
+> > perhaps that description should be extended to cover this and other
+> > performance domains too?
 >
->> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
->> index a2ab99698ca8..3fd372301019 100644
->> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
->> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
->> @@ -267,6 +267,7 @@ static int panfrost_ioctl_submit(struct drm_device *dev, void *data,
->>  	job->requirements = args->requirements;
->>  	job->flush_id = panfrost_gpu_get_latest_flush_id(pfdev);
->>  	job->mmu = file_priv->mmu;
->> +	job->priv = file_priv;
->>  
->>  	slot = panfrost_job_get_slot(job);
->>  
->> @@ -483,6 +484,14 @@ panfrost_open(struct drm_device *dev, struct drm_file *file)
->>  		goto err_free;
->>  	}
->>  
->> +	snprintf(panfrost_priv->fdinfo.engines[0].name, MAX_SLOT_NAME_LEN, "frg");
->> +	snprintf(panfrost_priv->fdinfo.engines[1].name, MAX_SLOT_NAME_LEN, "vtx");
->> +#if 0
->> +	/* Add compute engine in the future */
->> +	snprintf(panfrost_priv->fdinfo.engines[2].name, MAX_SLOT_NAME_LEN, "cmp");
->> +#endif
->
->I'm not sure what names are best, but slot 2 isn't actually a compute slot.
->
->Slot 0 is fragment, that name is fine.
->
->Slot 1 and 2 are actually the same (from a hardware perspective) but the
->core affinity of the two slots cannot overlap which means you need to
->divide the GPU in two to usefully use both slots. The only GPU that this
->actually makes sense for is the T628[1] as it has two (non-coherent)
->core groups.
->
->The upshot is that slot 1 is used for all of vertex, tiling and compute.
->Slot 2 is currently never used, but kbase will use it only for compute
->(and only on the two core group GPUs).
+> Better yet, nothing. There's no value to -names when there is only 1
+> entry.
 
-I think I might've be rushed to draw inspiration for this from a comment in panfrost_job.c:
+The above is just an example of a consumer node for a cpu. The
+bindings for cpus are in
+Documentation/devicetree/bindings/arm/cpus.yaml.
 
-int panfrost_job_get_slot(struct panfrost_job *job)
-{
-	/* JS0: fragment jobs.
-	 * JS1: vertex/tiler jobs
-	 * JS2: compute jobs
-	 */
-         [...]
-}
+Please have a look there. We don't even have a maxItems specified for it.
 
-Maybe I could rename the engine names to "fragment", "vertex-tiler" and "compute-only"?
-There's no reason why I would skimp on engine name length, and anything more
-descriptive would be just as good.
-
->Personally I'd be tempted to call them "slot 0", "slot 1" and "slot 2" -
->but I appreciate that's not very helpful to people who aren't intimately
->familiar with the hardware ;)
-
-The downside of this is that both IGT's fdinfo library and nvtop will use the
-engime name for display, and like you said these numbers might mean nothing to
-someone who isn't acquainted with the hardware.
-
->Steve
->
->[1] And technically the T608 but that's even rarer and the T60x isn't
->(yet) supported by Panfrost.
+Kind regards
+Uffe
