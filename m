@@ -2,89 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6E1878ECC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 14:07:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A14E678ECBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 14:06:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236317AbjHaMH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 08:07:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54606 "EHLO
+        id S239833AbjHaMGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 08:06:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229876AbjHaMH0 (ORCPT
+        with ESMTP id S238309AbjHaMGx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 08:07:26 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21B15CFA;
-        Thu, 31 Aug 2023 05:07:17 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37V9FUQv024216;
-        Thu, 31 Aug 2023 12:06:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=85YMpzQVPOLVhBgEmW4Gwy3yaFWi+vOJuj3Gi37qnmQ=;
- b=dSVp9VA812FQsR8fvl3nB/ci9qEW5ivrdqpPlRAwbbOzN5qQT5Rigs9y7LjXPawxkJTr
- vTofBt6p8WsWpTChjXNJHSK0+VgtCYhy2v01yHg2GMg/fnjtaKhL5ulq1MOwYsFA3uJI
- 0THEHaipgTBd/SXXqsdpdqXILZLeak3tNkrWOtPoz8oE7PRsz9MRg4tp1BOHqzGu4f3z
- KQNOSD4SkpqNO+nlpe26taIYszIfJT/6zxfqugKXd/DgwY4ubiGVNmjxwLBEet0BLPrA
- eYtYGYMQBYVMmGX9g8xAdCPfNhvXCz+4CD9mccmoMjRsjGQotTrqluYnkemwqYT0Sd3p XQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stks5rthr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 31 Aug 2023 12:06:00 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37VC5xei012284
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 31 Aug 2023 12:05:59 GMT
-Received: from [10.201.3.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 31 Aug
- 2023 05:05:51 -0700
-Message-ID: <25352cd1-22a9-414e-86da-3401e1956d27@quicinc.com>
-Date:   Thu, 31 Aug 2023 17:35:48 +0530
+        Thu, 31 Aug 2023 08:06:53 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CFAE43;
+        Thu, 31 Aug 2023 05:06:46 -0700 (PDT)
+Received: from [IPV6:2a01:e0a:120:3210:9a31:f0b8:5396:b210] (unknown [IPv6:2a01:e0a:120:3210:9a31:f0b8:5396:b210])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id C3D66660729D;
+        Thu, 31 Aug 2023 13:06:44 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693483605;
+        bh=w+ZU/TWdQKxOUI+pBfcnrwQKSOksel5g+K2WL3c3vm4=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=DAoT8CX2D/msOLqYcNhtHxhJ40p1xFqfQgd0TS4NUP9og/OykREf4m6VQQ8xSI25o
+         /JV8eagqqwyOGjYtu+Ooce6c+RqnK7Rx9Y/Y1fC4tXPj1+C6HfhU2s7sOYB6S8FPHE
+         MsgZU6u0NlPaDIeZAosWGIL9XbSusBiikjraEOtbj2ePp3fLjXxCjUMwBXzUIRd5GY
+         HA6yzOE4UUfSIQR7OhrRVsU0rgjK9JeR+g/Ul+8PmT2EB1wSRc8P413/Q1KKaDnywv
+         UPSXFMCjOsjfZi8baRlqnioXtVjBLv0BtdZG0h2Mq22F6kyicaXGsg3LKudaEpOpkS
+         7PGYRuq9ef+wQ==
+Message-ID: <b8480c15-3390-b57f-b2c5-9d9e0f2c1382@collabora.com>
+Date:   Thu, 31 Aug 2023 14:06:42 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] phy: qcom: uniphy: Update UNIPHY driver to be a
- common driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v5 02/10] media: videobuf2: Access vb2_queue bufs array
+ through helper functions
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <robert.marko@sartura.hr>, <luka.perkov@sartura.hr>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <nfraprado@collabora.com>,
-        <rafal@milecki.pl>, <peng.fan@nxp.com>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_varada@quicinc.com>
-References: <20230829135818.2219438-1-quic_ipkumar@quicinc.com>
- <20230829135818.2219438-4-quic_ipkumar@quicinc.com>
- <CAA8EJpoYu_98GhofMcJ_Z6tfGZXxDLOyG8Xbo_ohC6R8+JdF4g@mail.gmail.com>
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-In-Reply-To: <CAA8EJpoYu_98GhofMcJ_Z6tfGZXxDLOyG8Xbo_ohC6R8+JdF4g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VhbCau3nm_kN4ZowVHXAMijORRj0WELd
-X-Proofpoint-ORIG-GUID: VhbCau3nm_kN4ZowVHXAMijORRj0WELd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-31_09,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- spamscore=0 impostorscore=0 clxscore=1011 malwarescore=0 bulkscore=0
- mlxlogscore=663 suspectscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308310108
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, mchehab@kernel.org,
+        tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230824092133.39510-1-benjamin.gaignard@collabora.com>
+ <20230824092133.39510-3-benjamin.gaignard@collabora.com>
+ <397c6779-6153-5df2-a9f7-708bb7fcf58d@xs4all.nl>
+ <73e3e87b-78d6-13b2-8a20-09a75d5f23d0@collabora.com>
+ <ac1a0848-8b95-0141-c590-f29d74e8c9da@xs4all.nl>
+ <07c2de04-f4a7-71e2-ef41-64e87495ff42@collabora.com>
+ <c927dccb-9915-38dc-a522-f3d4a9755abf@xs4all.nl>
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+In-Reply-To: <c927dccb-9915-38dc-a522-f3d4a9755abf@xs4all.nl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,554 +70,740 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 8/29/2023 8:07 PM, Dmitry Baryshkov wrote:
-> On Tue, 29 Aug 2023 at 17:00, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->> This patch updates the UNIPHY driver to be a common driver to
->> accommodate all UNIPHY / Combo PHY. This driver can be used for
->> both USB and PCIe UNIPHY. Using phy-mul-sel from DTS MUX selection
->> for USB / PCIe can be acheived.
-> I'm not sure why you are talking about PCIe here. This patch adds only
-> SS PHY support.
->
-> Also, I'd like to point out that we had this 'USB and PCIe and
-> everything else' design in the QMP driver. We had to split the driver
-> into individual pieces to make it manageable again.
-This Uniphy 22ull is a combo PHY used between USB GEN3 or PCIe GEN3. Via 
-mux selection
-the one of the controller interface can use it. Hence thought to have a 
-same PHY driver for
-both USB3 and PCIe. Will drop the plan of adding the PCIe support.
->
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-uniphy.c | 401 +++++++++++++++++++++----
->>   1 file changed, 335 insertions(+), 66 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy.c b/drivers/phy/qualcomm/phy-qcom-uniphy.c
->> index da6f290af722..eb71588f5417 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-uniphy.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy.c
->> @@ -5,141 +5,410 @@
->>    * Based on code from
->>    * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
->>    *
->> + * Modified the driver to be common for Qualcomm UNIPHYs
->> + * Copyright (c) 2023, The Linux Foundation. All rights reserved.
-> I'd not call this 'modified', but rather 'rewritten from scratch.
-Sure, will correct.
->
->>    */
->>
->> +#include <linux/bitfield.h>
->> +#include <linux/clk.h>
->> +#include <linux/clk-provider.h>
->>   #include <linux/delay.h>
->>   #include <linux/err.h>
->>   #include <linux/io.h>
->>   #include <linux/kernel.h>
->> +#include <linux/mfd/syscon.h>
->>   #include <linux/module.h>
->>   #include <linux/mutex.h>
->>   #include <linux/of.h>
->>   #include <linux/phy/phy.h>
->>   #include <linux/platform_device.h>
->> +#include <linux/regmap.h>
->> +#include <linux/regulator/consumer.h>
->>   #include <linux/reset.h>
->>
->> -struct ipq4019_usb_phy {
->> +struct uniphy_init_tbl {
->> +       unsigned int offset;
->> +       unsigned int val;
->> +};
-> unused
->
->> +
->> +#define UNIPHY_INIT_CFG(o, v)          \
->> +       {                               \
->> +               .offset = o,            \
->> +               .val = v,               \
->> +       }
-> unused
->
->> +
->> +struct uniphy_cfg {
->> +       const struct uniphy_init_tbl *init_seq;
->> +       int num_init_seq;
->> +       const char * const *clk_list;
->> +       int num_clks;
->> +       const char * const *reset_list;
->> +       int num_resets;
->> +       const char * const *vreg_list;
->> +       int num_vregs;
->> +       unsigned int pipe_clk_rate;
->> +       unsigned int reset_udelay;
->> +       unsigned int autoload_udelay;
->> +};
->> +
->> +struct qcom_uniphy {
->>          struct device           *dev;
->> +       const struct uniphy_cfg *cfg;
->>          struct phy              *phy;
->>          void __iomem            *base;
->> -       struct reset_control    *por_rst;
->> -       struct reset_control    *srif_rst;
->> +       struct clk_bulk_data    *clks;
->> +       struct reset_control_bulk_data  *resets;
->> +       struct regulator_bulk_data *vregs;
->> +       struct clk_fixed_rate pipe_clk_fixed;
->> +};
->> +
->> +static const char * const ipq4019_ssphy_reset_l[] = {
->> +       "por_rst",
->> +};
->> +
->> +static const struct uniphy_cfg ipq4019_usb_ssphy_cfg = {
->> +       .reset_list     = ipq4019_ssphy_reset_l,
->> +       .num_resets     = ARRAY_SIZE(ipq4019_ssphy_reset_l),
->> +       .reset_udelay   = 10000,
->> +
->>   };
->>
->> -static int ipq4019_ss_phy_power_off(struct phy *_phy)
->> +static const char * const ipq4019_hsphy_reset_l[] = {
->> +       "por_rst", "srif_rst",
->> +};
-> +
->> +static const struct uniphy_cfg ipq4019_usb_hsphy_cfg = {
->> +       .reset_list     = ipq4019_hsphy_reset_l,
->> +       .num_resets     = ARRAY_SIZE(ipq4019_hsphy_reset_l),
->> +       .reset_udelay   = 10000,
->> +};
->> +
->> +static int phy_mux_sel(struct phy *phy)
->> +{
->> +       struct qcom_uniphy *uniphy = phy_get_drvdata(phy);
->> +       struct device *dev = uniphy->dev;
->> +       struct regmap *tcsr;
->> +       unsigned int args[2];
->> +       int ret;
->> +
->> +       tcsr = syscon_regmap_lookup_by_phandle_args(dev->of_node, "qcom,phy-mux-sel",
->> +                                                   ARRAY_SIZE(args), args);
-> No. mux data should come from match_data rather than polluting DT with it.
->
->> +       if (IS_ERR(tcsr)) {
->> +               ret = PTR_ERR(tcsr);
->> +               if (ret == -ENOENT)
->> +                       return 0;
->> +
->> +               dev_err(dev, "failed to lookup syscon for phy mux %d\n", ret);
->> +               return ret;
->> +       }
->> +
->> +       /* PHY MUX registers only have this BIT0 */
-> huh?
->
->> +       ret = regmap_write(tcsr, args[0], args[1]);
->> +       if (ret < 0) {
->> +               dev_err(dev, "PHY Mux selection failed: %d\n", ret);
->> +               return ret;
->> +       }
->> +
->> +       return 0;
->> +}
->> +
->> +static int uniphy_enable(struct phy *phy)
->>   {
->> -       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +       struct qcom_uniphy *uniphy = phy_get_drvdata(phy);
->> +       const struct uniphy_cfg *cfg = uniphy->cfg;
->> +       const struct uniphy_init_tbl *tbl;
->> +       void __iomem *base = uniphy->base;
->> +       int i, ret;
->>
->> -       reset_control_assert(phy->por_rst);
->> -       msleep(10);
->> +       ret = regulator_bulk_enable(cfg->num_vregs, uniphy->vregs);
->> +       if (ret) {
->> +               dev_err(uniphy->dev, "failed to enable regulators: %d\n", ret);
->> +               return ret;
->> +       }
->> +
->> +       /* Assert all available resets */
->> +       for (i = 0; i < cfg->num_resets; i++) {
->> +               ret = reset_control_assert(uniphy->resets[i].rstc);
->> +               if (ret) {
->> +                       dev_err(uniphy->dev, "reset assert failed: %d\n", ret);
->> +                       goto err_assert_reset;
->> +               }
->> +               if (cfg->reset_udelay)
->> +                       usleep_range(cfg->reset_udelay, cfg->reset_udelay + 10);
->> +       }
-> There is a whole reset_control_bulk_*() set of API. Please use it
-> instead of hardcoding reset cycles.
->
->> +
->> +       /* Deassert all available resets */
->> +       for (i = 0; i < cfg->num_resets; i++) {
->> +               ret = reset_control_deassert(uniphy->resets[i].rstc);
->> +               if (ret) {
->> +                       dev_err(uniphy->dev, "reset deassert failed: %d\n", ret);
->> +                       goto err_assert_reset;
->> +               }
->> +               if (cfg->reset_udelay)
->> +                       usleep_range(cfg->reset_udelay, cfg->reset_udelay + 10);
->> +       }
->> +
->> +       ret = phy_mux_sel(phy);
->> +       if (ret < 0)
->> +               goto err_assert_reset;
->> +
->> +       ret = clk_bulk_prepare_enable(cfg->num_clks, uniphy->clks);
->> +       if (ret) {
->> +               dev_err(uniphy->dev, "failed to enable clocks: %d\n", ret);
->> +               goto err_assert_reset;
->> +       }
->> +
->> +       if (cfg->autoload_udelay)
->> +               usleep_range(cfg->autoload_udelay, cfg->autoload_udelay + 10);
->> +
->> +       if (cfg->num_init_seq) {
->> +               tbl = cfg->init_seq;
->> +               for (i = 0; i < cfg->num_init_seq; i++, tbl++)
->> +                       writel(tbl->val, base + tbl->offset);
->> +       }
-> unused
->
->>          return 0;
->> +
->> +err_assert_reset:
->> +       /* Assert all available resets */
->> +       for (i = 0; i < cfg->num_resets; i++) {
->> +               reset_control_assert(uniphy->resets[i].rstc);
->> +               if (cfg->reset_udelay)
->> +                       usleep_range(cfg->reset_udelay, cfg->reset_udelay + 10);
->> +       }
->> +
->> +       return ret;
->>   }
->>
->> -static int ipq4019_ss_phy_power_on(struct phy *_phy)
->> +static int uniphy_disable(struct phy *phy)
->>   {
->> -       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +       struct qcom_uniphy *uniphy = phy_get_drvdata(phy);
->> +       const struct uniphy_cfg *cfg = uniphy->cfg;
->> +       int i;
->>
->> -       ipq4019_ss_phy_power_off(_phy);
->> +       /* Assert all available resets */
->> +       for (i = 0; i < cfg->num_resets; i++) {
->> +               reset_control_assert(uniphy->resets[i].rstc);
->> +               if (cfg->reset_udelay)
->> +                       usleep_range(cfg->reset_udelay, cfg->reset_udelay + 10);
->> +       }
->>
->> -       reset_control_deassert(phy->por_rst);
->> +       clk_bulk_disable_unprepare(cfg->num_clks, uniphy->clks);
->> +
->> +       regulator_bulk_disable(cfg->num_vregs, uniphy->vregs);
->>
->>          return 0;
->>   }
->>
->> -static const struct phy_ops ipq4019_usb_ss_phy_ops = {
->> -       .power_on       = ipq4019_ss_phy_power_on,
->> -       .power_off      = ipq4019_ss_phy_power_off,
->> +static const struct phy_ops uniphy_phy_ops = {
->> +       .power_on       = uniphy_enable,
->> +       .power_off      = uniphy_disable,
-> Using _enable / _disable for power_on() and power_off() isn't logical.
->
->> +       .owner          = THIS_MODULE,
->>   };
->>
->> -static int ipq4019_hs_phy_power_off(struct phy *_phy)
->> +static int qcom_uniphy_vreg_init(struct qcom_uniphy *uniphy)
->> +{
->> +       const struct uniphy_cfg *cfg = uniphy->cfg;
->> +       struct device *dev = uniphy->dev;
->> +       int i, ret;
->> +
->> +       uniphy->vregs = devm_kcalloc(dev, cfg->num_vregs,
->> +                                    sizeof(*uniphy->vregs), GFP_KERNEL);
-> You know the maximum amount of regulators. Can you use an array
-> instead of allocating data?
->
->> +       if (!uniphy->vregs)
->> +               return -ENOMEM;
->> +
->> +       for (i = 0; i < cfg->num_vregs; i++)
->> +               uniphy->vregs[i].supply = cfg->vreg_list[i];
->> +
->> +       ret = devm_regulator_bulk_get(dev, cfg->num_vregs, uniphy->vregs);
->> +
-> Drop empty lines between ret assignment and check.
->
->> +       if (ret)
->> +               return dev_err_probe(dev, ret, "failed to get regulators\n");
->> +
->> +       return 0;
->> +}
->> +
->> +static int qcom_uniphy_reset_init(struct qcom_uniphy *uniphy)
->>   {
->> -       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +       const struct uniphy_cfg *cfg = uniphy->cfg;
->> +       struct device *dev = uniphy->dev;
->> +       int i, ret;
->> +
->> +       uniphy->resets = devm_kcalloc(dev, cfg->num_resets,
->> +                                     sizeof(*uniphy->resets), GFP_KERNEL);
-> Same here, can you use an array?
->
->> +       if (!uniphy->resets)
->> +               return -ENOMEM;
->>
->> -       reset_control_assert(phy->por_rst);
->> -       msleep(10);
->> +       for (i = 0; i < cfg->num_resets; i++)
->> +               uniphy->resets[i].id = cfg->reset_list[i];
-> Declare common resets list and use
-> devm_reset_control_bulk_get_optional_exclusive().
->
->> -       reset_control_assert(phy->srif_rst);
->> -       msleep(10);
->> +       ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_resets, uniphy->resets);
->> +       if (ret)
->> +               return dev_err_probe(dev, ret, "failed to get resets\n");
->>
->>          return 0;
->>   }
->>
->> -static int ipq4019_hs_phy_power_on(struct phy *_phy)
->> +static int qcom_uniphy_clk_init(struct qcom_uniphy *uniphy)
-> I don't see clocks actually being used. Please do not introduce unused features.
->
->>   {
->> -       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +       const struct uniphy_cfg *cfg = uniphy->cfg;
->> +       struct device *dev = uniphy->dev;
->> +       int i, ret;
->>
->> -       ipq4019_hs_phy_power_off(_phy);
->>
->> -       reset_control_deassert(phy->srif_rst);
->> -       msleep(10);
->> +       uniphy->clks = devm_kcalloc(dev, cfg->num_clks,
->> +                                   sizeof(*uniphy->clks), GFP_KERNEL);
->> +       if (!uniphy->clks)
->> +               return -ENOMEM;
->> +
->> +       for (i = 0; i < cfg->num_clks; i++)
->> +               uniphy->clks[i].id = cfg->clk_list[i];
->>
->> -       reset_control_deassert(phy->por_rst);
->> +       ret = devm_clk_bulk_get(dev, cfg->num_clks, uniphy->clks);
->> +       if (ret)
->> +               return dev_err_probe(dev, ret, "failed to get clocks\n");
->>
->>          return 0;
->>   }
->>
->> -static const struct phy_ops ipq4019_usb_hs_phy_ops = {
->> -       .power_on       = ipq4019_hs_phy_power_on,
->> -       .power_off      = ipq4019_hs_phy_power_off,
->> -};
->> +static void phy_clk_release_provider(void *res)
->> +{
->> +       of_clk_del_provider(res);
->> +}
->>
->> -static const struct of_device_id ipq4019_usb_phy_of_match[] = {
->> -       { .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hs_phy_ops},
->> -       { .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ss_phy_ops},
->> -       { },
->> -};
->> -MODULE_DEVICE_TABLE(of, ipq4019_usb_phy_of_match);
->> +/*
->> + * Register a fixed rate pipe clock.
->> + *
->> + * The <s>_pipe_clksrc generated by PHY goes to the GCC that gate
->> + * controls it. The <s>_pipe_clk coming out of the GCC is requested
->> + * by the PHY driver for its operations.
->> + * We register the <s>_pipe_clksrc here. The gcc driver takes care
->> + * of assigning this <s>_pipe_clksrc as parent to <s>_pipe_clk.
->> + * Below picture shows this relationship.
->> + *
->> + *         +---------------+
->> + *         |   PHY block   |<<---------------------------------------+
->> + *         |               |                                         |
->> + *         |   +-------+   |                   +-----+               |
->> + *   I/P---^-->|  PLL  |---^--->pipe_clksrc--->| GCC |--->pipe_clk---+
->> + *    clk  |   +-------+   |                   +-----+
->> + *         +---------------+
->> + */
->> +static int phy_pipe_clk_register(struct qcom_uniphy *uniphy, struct device_node *np)
->> +{
->> +       struct clk_fixed_rate *fixed = &uniphy->pipe_clk_fixed;
->> +       const struct uniphy_cfg *cfg = uniphy->cfg;
->> +       struct device *dev = uniphy->dev;
->> +       struct clk_init_data init = { };
->> +       int ret;
->> +
->> +       ret = of_property_read_string(np, "clock-output-names", &init.name);
->> +       if (ret) {
->> +               dev_err(dev, "%pOFn: No clock-output-names\n", np);
->> +               return ret;
->> +       }
->> +
->> +       init.ops = &clk_fixed_rate_ops;
->> +
->> +       fixed->fixed_rate = cfg->pipe_clk_rate;
->> +       fixed->hw.init = &init;
->>
->> -static int ipq4019_usb_phy_probe(struct platform_device *pdev)
->> +       ret = devm_clk_hw_register(dev, &fixed->hw);
->> +       if (ret)
->> +               return ret;
->> +
->> +       ret = of_clk_add_hw_provider(np, of_clk_hw_simple_get, &fixed->hw);
->> +       if (ret)
->> +               return ret;
-> When you c&p something, please take care to understand the code you are copying.
-> Unlike QMP drivers you can (and should) use devm_of_clk_add_hw_provider() here.
->
-> Not to mention that pipe clocks are not in this patch.
->
->> +
->> +       /*
->> +        * Roll a devm action because the clock provider is the child node, but
->> +        * the child node is not actually a device.
->> +        */
->> +       return devm_add_action_or_reset(dev, phy_clk_release_provider, np);
->> +}
->> +
->> +static int qcom_uniphy_probe(struct platform_device *pdev)
->>   {
->>          struct device *dev = &pdev->dev;
->>          struct phy_provider *phy_provider;
->> -       struct ipq4019_usb_phy *phy;
->> +       struct qcom_uniphy *uniphy;
->> +       struct device_node *np;
->> +       int ret;
->>
->> -       phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
->> -       if (!phy)
->> +       uniphy = devm_kzalloc(dev, sizeof(*uniphy), GFP_KERNEL);
->> +       if (!uniphy)
->>                  return -ENOMEM;
->>
->> -       phy->dev = &pdev->dev;
->> -       phy->base = devm_platform_ioremap_resource(pdev, 0);
->> -       if (IS_ERR(phy->base)) {
->> -               dev_err(dev, "failed to remap register memory\n");
->> -               return PTR_ERR(phy->base);
->> -       }
->> +       uniphy->dev = dev;
->>
->> -       phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
->> -       if (IS_ERR(phy->por_rst)) {
->> -               if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
->> -                       dev_err(dev, "POR reset is missing\n");
->> -               return PTR_ERR(phy->por_rst);
->> +       uniphy->cfg = of_device_get_match_data(dev);
->> +       if (!uniphy->cfg)
->> +               return -EINVAL;
->> +
->> +       uniphy->base = devm_platform_ioremap_resource(pdev, 0);
->> +       if (IS_ERR(uniphy->base)) {
->> +               ret = PTR_ERR(uniphy->base);
->> +               dev_err_probe(dev, ret, "failed to remap register memory\n");
->> +               return ret;
->>          }
->>
->> -       phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
->> -       if (IS_ERR(phy->srif_rst))
->> -               return PTR_ERR(phy->srif_rst);
->> +       ret = qcom_uniphy_clk_init(uniphy);
->> +       if (ret)
->> +               return ret;
->> +
->> +       ret = qcom_uniphy_reset_init(uniphy);
->> +       if (ret)
->> +               return ret;
->> +
->> +       ret = qcom_uniphy_vreg_init(uniphy);
->> +       if (ret < 0)
->> +               return ret;
->> +
->> +       if (uniphy->cfg->pipe_clk_rate) {
->> +               np = of_node_get(dev->of_node);
-> What for? Do you think that the driver can outlive struct device?
->
->> +               ret = phy_pipe_clk_register(uniphy, np);
->> +               if (ret) {
->> +                       dev_err_probe(dev, ret, "failed to register pipe clk\n");
->> +                       goto err;
->> +               }
->> +       }
->>
->> -       phy->phy = devm_phy_create(dev, NULL, of_device_get_match_data(dev));
->> -       if (IS_ERR(phy->phy)) {
->> -               dev_err(dev, "failed to create PHY\n");
->> -               return PTR_ERR(phy->phy);
->> +       uniphy->phy = devm_phy_create(dev, NULL, &uniphy_phy_ops);
->> +       if (IS_ERR(uniphy->phy)) {
->> +               ret = PTR_ERR(uniphy->phy);
->> +               dev_err_probe(dev, ret, "failed to create PHY\n");
->> +               goto err;
->>          }
->> -       phy_set_drvdata(phy->phy, phy);
->> +
->> +       phy_set_drvdata(uniphy->phy, uniphy);
->>
->>          phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
->>
->> -       return PTR_ERR_OR_ZERO(phy_provider);
->> +       ret = PTR_ERR_OR_ZERO(phy_provider);
->> +
->> +err:
->> +       if (uniphy->cfg->pipe_clk_rate)
->> +               of_node_put(np);
->> +       return ret;
->>   }
->>
->> -static struct platform_driver ipq4019_usb_phy_driver = {
->> -       .probe  = ipq4019_usb_phy_probe,
->> +static const struct of_device_id qcom_uniphy_of_match[] = {
->> +       { .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hsphy_cfg},
->> +       { .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ssphy_cfg},
->> +       { },
->> +};
->> +MODULE_DEVICE_TABLE(of, qcom_uniphy_of_match);
->> +
->> +static struct platform_driver qcom_uniphy_driver = {
->> +       .probe  = qcom_uniphy_probe,
->>          .driver = {
->> -               .of_match_table = ipq4019_usb_phy_of_match,
->> -               .name  = "ipq4019-usb-phy",
->> +               .of_match_table = qcom_uniphy_of_match,
->> +               .name  = "qcom-uniphy",
->>          }
->>   };
->> -module_platform_driver(ipq4019_usb_phy_driver);
->> +module_platform_driver(qcom_uniphy_driver);
->>
->> -MODULE_DESCRIPTION("QCOM/IPQ4019 USB phy driver");
->> +MODULE_DESCRIPTION("QCOM uniphy driver");
->>   MODULE_AUTHOR("John Crispin <john@phrozen.org>");
->>   MODULE_LICENSE("GPL v2");
-> General comment: please consider dropping this beast and starting from
-> scratch, adding only really necessary bits to the existing ipq4019 USB
-> PHY driver.
-Rewritten the entire driver considering the IPQ5332 as well and because 
-of it
-there are unused code which are utilized in patch [8/9]. I should have 
-added only the IPQ4019
-support alone in this patch and then incrementally update it for 
-IPQ5332. Will follow that here
-onwards. Will address all the review comments.
+Le 31/08/2023 à 12:22, Hans Verkuil a écrit :
+> On 31/08/2023 09:54, Benjamin Gaignard wrote:
+>> Le 30/08/2023 à 18:36, Hans Verkuil a écrit :
+>>> On 30/08/2023 18:24, Benjamin Gaignard wrote:
+>>>> Le 30/08/2023 à 15:23, Hans Verkuil a écrit :
+>>>>> On 24/08/2023 11:21, Benjamin Gaignard wrote:
+>>>>>> The first step before changing how vb2 buffers are stored into queue
+>>>>>> is to avoid direct access to bufs arrays.
+>>>>>>
+>>>>>> This patch adds 2 helpers functions to add and remove vb2 buffers
+>>>>>> from a queue. With these 2 and vb2_get_buffer(), bufs field of
+>>>>>> struct vb2_queue becomes like a private member of the structure.
+>>>>>>
+>>>>>> After each call to vb2_get_buffer() we need to be sure that we get
+>>>>>> a valid pointer so check the return value of all of them.
+>>>>>>
+>>>>>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>>>>>>
+>>>>>> # Conflicts:
+>>>>>> #    drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>> ---
+>>>>>>     .../media/common/videobuf2/videobuf2-core.c   | 203 ++++++++++++++----
+>>>>>>     .../media/common/videobuf2/videobuf2-v4l2.c   |  28 ++-
+>>>>>>     drivers/media/platform/amphion/vpu_dbg.c      |  22 +-
+>>>>>>     .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   6 +-
+>>>>>>     .../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c |   2 +-
+>>>>>>     drivers/media/platform/st/sti/hva/hva-v4l2.c  |   4 +
+>>>>>>     drivers/media/test-drivers/visl/visl-dec.c    |  28 ++-
+>>>>>>     .../staging/media/atomisp/pci/atomisp_ioctl.c |   2 +-
+>>>>>>     8 files changed, 230 insertions(+), 65 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>> index e06905533ef4..8aa13591b782 100644
+>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+>>>>>> @@ -403,6 +403,37 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
+>>>>>>             vb->skip_cache_sync_on_finish = 1;
+>>>>>>     }
+>>>>>>     +/**
+>>>>>> + * vb2_queue_add_buffer() - add a buffer to a queue
+>>>>>> + * @q:    pointer to &struct vb2_queue with videobuf2 queue.
+>>>>>> + * @vb:    pointer to &struct vb2_buffer to be added to the queue.
+>>>>>> + * @index: index where add vb2_buffer in the queue
+>>>>>> + */
+>>>>>> +static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, int index)
+>>>>>> +{
+>>>>>> +    if (index < VB2_MAX_FRAME && !q->bufs[index]) {
+>>>>>> +        q->bufs[index] = vb;
+>>>>>> +        vb->index = index;
+>>>>>> +        vb->vb2_queue = q;
+>>>>>> +        return true;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    return false;
+>>>>>> +}
+>>>>>> +
+>>>>>> +/**
+>>>>>> + * vb2_queue_remove_buffer() - remove a buffer from a queue
+>>>>>> + * @q:    pointer to &struct vb2_queue with videobuf2 queue.
+>>>>>> + * @vb:    pointer to &struct vb2_buffer to be removed from the queue.
+>>>>>> + */
+>>>>>> +static void vb2_queue_remove_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
+>>>>>> +{
+>>>>>> +    if (vb->index < VB2_MAX_FRAME) {
+>>>>>> +        q->bufs[vb->index] = NULL;
+>>>>>> +        vb->vb2_queue = NULL;
+>>>>>> +    }
+>>>>>> +}
+>>>>>> +
+>>>>>>     /*
+>>>>>>      * __vb2_queue_alloc() - allocate vb2 buffer structures and (for MMAP type)
+>>>>>>      * video buffer memory for all buffers/planes on the queue and initializes the
+>>>>>> @@ -431,9 +462,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>>>>>             }
+>>>>>>               vb->state = VB2_BUF_STATE_DEQUEUED;
+>>>>>> -        vb->vb2_queue = q;
+>>>>>>             vb->num_planes = num_planes;
+>>>>>> -        vb->index = q->num_buffers + buffer;
+>>>>>>             vb->type = q->type;
+>>>>>>             vb->memory = memory;
+>>>>>>             init_buffer_cache_hints(q, vb);
+>>>>>> @@ -443,7 +472,11 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>>>>>             }
+>>>>>>             call_void_bufop(q, init_buffer, vb);
+>>>>>>     -        q->bufs[vb->index] = vb;
+>>>>>> +        if (!vb2_queue_add_buffer(q, vb, q->num_buffers + buffer)) {
+>>>>>> +            dprintk(q, 1, "failed adding buffer %d to queue\n", buffer);
+>>>>>> +            kfree(vb);
+>>>>>> +            break;
+>>>>>> +        }
+>>>>>>               /* Allocate video buffer memory for the MMAP type */
+>>>>>>             if (memory == VB2_MEMORY_MMAP) {
+>>>>>> @@ -451,7 +484,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>>>>>                 if (ret) {
+>>>>>>                     dprintk(q, 1, "failed allocating memory for buffer %d\n",
+>>>>>>                         buffer);
+>>>>>> -                q->bufs[vb->index] = NULL;
+>>>>>> +                vb2_queue_remove_buffer(q, vb);
+>>>>>>                     kfree(vb);
+>>>>>>                     break;
+>>>>>>                 }
+>>>>>> @@ -466,7 +499,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>>>>>                     dprintk(q, 1, "buffer %d %p initialization failed\n",
+>>>>>>                         buffer, vb);
+>>>>>>                     __vb2_buf_mem_free(vb);
+>>>>>> -                q->bufs[vb->index] = NULL;
+>>>>>> +                vb2_queue_remove_buffer(q, vb);
+>>>>>>                     kfree(vb);
+>>>>>>                     break;
+>>>>>>                 }
+>>>>>> @@ -489,7 +522,7 @@ static void __vb2_free_mem(struct vb2_queue *q, unsigned int buffers)
+>>>>>>           for (buffer = q->num_buffers - buffers; buffer < q->num_buffers;
+>>>>>>              ++buffer) {
+>>>>>> -        vb = q->bufs[buffer];
+>>>>>> +        vb = vb2_get_buffer(q, buffer);
+>>>>>>             if (!vb)
+>>>>>>                 continue;
+>>>>>>     @@ -517,7 +550,7 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
+>>>>>>         /* Call driver-provided cleanup function for each buffer, if provided */
+>>>>>>         for (buffer = q->num_buffers - buffers; buffer < q->num_buffers;
+>>>>>>              ++buffer) {
+>>>>>> -        struct vb2_buffer *vb = q->bufs[buffer];
+>>>>>> +        struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
+>>>>>>               if (vb && vb->planes[0].mem_priv)
+>>>>>>                 call_void_vb_qop(vb, buf_cleanup, vb);
+>>>>>> @@ -557,15 +590,20 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
+>>>>>>             q->cnt_unprepare_streaming = 0;
+>>>>>>         }
+>>>>>>         for (buffer = 0; buffer < q->num_buffers; ++buffer) {
+>>>>>> -        struct vb2_buffer *vb = q->bufs[buffer];
+>>>>>> -        bool unbalanced = vb->cnt_mem_alloc != vb->cnt_mem_put ||
+>>>>>> -                  vb->cnt_mem_prepare != vb->cnt_mem_finish ||
+>>>>>> -                  vb->cnt_mem_get_userptr != vb->cnt_mem_put_userptr ||
+>>>>>> -                  vb->cnt_mem_attach_dmabuf != vb->cnt_mem_detach_dmabuf ||
+>>>>>> -                  vb->cnt_mem_map_dmabuf != vb->cnt_mem_unmap_dmabuf ||
+>>>>>> -                  vb->cnt_buf_queue != vb->cnt_buf_done ||
+>>>>>> -                  vb->cnt_buf_prepare != vb->cnt_buf_finish ||
+>>>>>> -                  vb->cnt_buf_init != vb->cnt_buf_cleanup;
+>>>>>> +        struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
+>>>>>> +        bool unbalanced;
+>>>>>> +
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        unbalanced = vb->cnt_mem_alloc != vb->cnt_mem_put ||
+>>>>>> +                 vb->cnt_mem_prepare != vb->cnt_mem_finish ||
+>>>>>> +                 vb->cnt_mem_get_userptr != vb->cnt_mem_put_userptr ||
+>>>>>> +                 vb->cnt_mem_attach_dmabuf != vb->cnt_mem_detach_dmabuf ||
+>>>>>> +                 vb->cnt_mem_map_dmabuf != vb->cnt_mem_unmap_dmabuf ||
+>>>>>> +                 vb->cnt_buf_queue != vb->cnt_buf_done ||
+>>>>>> +                 vb->cnt_buf_prepare != vb->cnt_buf_finish ||
+>>>>>> +                 vb->cnt_buf_init != vb->cnt_buf_cleanup;
+>>>>>>               if (unbalanced || debug) {
+>>>>> I think we should drop the '|| debug' part. It is already annoying today to see these
+>>>>> messages when the debug parameter is > 0, and now the number of buffers is still
+>>>>> fairly small. But if we allow a lot more buffers, then this will really spam the
+>>>>> kernel log.
+>>>>>
+>>>>> I think this should be dropped, and we only report unbalanced buffers.
+>>>>>
+>>>>> And another optimization is to only report the unbalanced counters. Right now
+>>>>> it reports all counters, but it is again too much spamming of the kernel log.
+>>>>>
+>>>>> I think this change can be done as a separate patch before this patch.
+>>>>> That way it can be picked up separately from the other changes in this series.
+>>>>>
+>>>>>>                 pr_info("   counters for queue %p, buffer %d:%s\n",
+>>>>>> @@ -597,8 +635,13 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
+>>>>>>         /* Free vb2 buffers */
+>>>>>>         for (buffer = q->num_buffers - buffers; buffer < q->num_buffers;
+>>>>>>              ++buffer) {
+>>>>>> -        kfree(q->bufs[buffer]);
+>>>>>> -        q->bufs[buffer] = NULL;
+>>>>>> +        struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
+>>>>>> +
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        vb2_queue_remove_buffer(q, vb);
+>>>>>> +        kfree(vb);
+>>>>>>         }
+>>>>>>           q->num_buffers -= buffers;
+>>>>>> @@ -634,7 +677,12 @@ static bool __buffers_in_use(struct vb2_queue *q)
+>>>>>>     {
+>>>>>>         unsigned int buffer;
+>>>>>>         for (buffer = 0; buffer < q->num_buffers; ++buffer) {
+>>>>>> -        if (vb2_buffer_in_use(q, q->bufs[buffer]))
+>>>>>> +        struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
+>>>>>> +
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        if (vb2_buffer_in_use(q, vb))
+>>>>>>                 return true;
+>>>>>>         }
+>>>>>>         return false;
+>>>>>> @@ -642,7 +690,10 @@ static bool __buffers_in_use(struct vb2_queue *q)
+>>>>>>       void vb2_core_querybuf(struct vb2_queue *q, unsigned int index, void *pb)
+>>>>>>     {
+>>>>>> -    call_void_bufop(q, fill_user_buffer, q->bufs[index], pb);
+>>>>>> +    struct vb2_buffer *vb = vb2_get_buffer(q, index);
+>>>>>> +
+>>>>>> +    if (vb)
+>>>>>> +        call_void_bufop(q, fill_user_buffer, vb, pb);
+>>>>> I think that rather than passing the index (that then has to be verified)
+>>>>> it is better to pass the vb2_buffer pointer directly and leave it up to
+>>>>> the caller to do the index verification.
+>>>>>
+>>>>> Another option is to drop this function altogether and let the called
+>>>>> call the fill_user_buffer function. Either works for me.
+>>>>>
+>>>>>>     }
+>>>>>>     EXPORT_SYMBOL_GPL(vb2_core_querybuf);
+>>>>>>     @@ -1553,7 +1604,13 @@ int vb2_core_prepare_buf(struct vb2_queue *q, unsigned int index, void *pb)
+>>>>> Here too it is better to pass the vb2_buffer pointer instead of an index.
+>>>>>
+>>>>> This function assumes that the index is valid, so the called actually does the
+>>>>> validation. Passing the vb pointer instead of the index makes more sense
+>>>>> in this new situation.
+>>>>>
+>>>>> This is also true for two other core functions: vb2_core_qbuf and vb2_core_expbuf.
+>>>>>
+>>>>>>         struct vb2_buffer *vb;
+>>>>>>         int ret;
+>>>>>>     -    vb = q->bufs[index];
+>>>>>> +    vb = vb2_get_buffer(q, index);
+>>>>>> +
+>>>>>> +    if (!vb) {
+>>>>>> +        dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +        return -EINVAL;
+>>>>>> +    }
+>>>>> Changing that avoids having to add this check, so it simplifies the code.
+>>>>>
+>>>>> I think that this change can be done in a separate patch before this one.
+>>>>>
+>>>>> It makes sense to apply that regardless of the remainder of this series.
+>>>>>
+>>>>>> +
+>>>>>>         if (vb->state != VB2_BUF_STATE_DEQUEUED) {
+>>>>>>             dprintk(q, 1, "invalid buffer state %s\n",
+>>>>>>                 vb2_state_name(vb->state));
+>>>>>> @@ -1624,7 +1681,11 @@ static int vb2_start_streaming(struct vb2_queue *q)
+>>>>>>              * correctly return them to vb2.
+>>>>>>              */
+>>>>>>             for (i = 0; i < q->num_buffers; ++i) {
+>>>>>> -            vb = q->bufs[i];
+>>>>>> +            vb = vb2_get_buffer(q, i);
+>>>>>> +
+>>>>>> +            if (!vb)
+>>>>>> +                continue;
+>>>>>> +
+>>>>>>                 if (vb->state == VB2_BUF_STATE_ACTIVE)
+>>>>>>                     vb2_buffer_done(vb, VB2_BUF_STATE_QUEUED);
+>>>>>>             }
+>>>>>> @@ -1652,7 +1713,12 @@ int vb2_core_qbuf(struct vb2_queue *q, unsigned int index, void *pb,
+>>>>>>             return -EIO;
+>>>>>>         }
+>>>>>>     -    vb = q->bufs[index];
+>>>>>> +    vb = vb2_get_buffer(q, index);
+>>>>>> +
+>>>>>> +    if (!vb) {
+>>>>>> +        dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +        return -EINVAL;
+>>>>>> +    }
+>>>>>>           if (!req && vb->state != VB2_BUF_STATE_IN_REQUEST &&
+>>>>>>             q->requires_requests) {
+>>>>>> @@ -2028,12 +2094,18 @@ static void __vb2_queue_cancel(struct vb2_queue *q)
+>>>>>>          * to vb2 in stop_streaming().
+>>>>>>          */
+>>>>>>         if (WARN_ON(atomic_read(&q->owned_by_drv_count))) {
+>>>>>> -        for (i = 0; i < q->num_buffers; ++i)
+>>>>>> -            if (q->bufs[i]->state == VB2_BUF_STATE_ACTIVE) {
+>>>>>> +        for (i = 0; i < q->num_buffers; ++i) {
+>>>>>> +            struct vb2_buffer *vb = vb2_get_buffer(q, i);
+>>>>>> +
+>>>>>> +            if (!vb)
+>>>>>> +                continue;
+>>>>>> +
+>>>>>> +            if (vb->state == VB2_BUF_STATE_ACTIVE) {
+>>>>>>                     pr_warn("driver bug: stop_streaming operation is leaving buf %p in active state\n",
+>>>>>> -                    q->bufs[i]);
+>>>>>> -                vb2_buffer_done(q->bufs[i], VB2_BUF_STATE_ERROR);
+>>>>>> +                    vb);
+>>>>>> +                vb2_buffer_done(vb, VB2_BUF_STATE_ERROR);
+>>>>>>                 }
+>>>>>> +        }
+>>>>>>             /* Must be zero now */
+>>>>>>             WARN_ON(atomic_read(&q->owned_by_drv_count));
+>>>>>>         }
+>>>>>> @@ -2067,9 +2139,14 @@ static void __vb2_queue_cancel(struct vb2_queue *q)
+>>>>>>          * be changed, so we can't move the buf_finish() to __vb2_dqbuf().
+>>>>>>          */
+>>>>>>         for (i = 0; i < q->num_buffers; ++i) {
+>>>>>> -        struct vb2_buffer *vb = q->bufs[i];
+>>>>>> -        struct media_request *req = vb->req_obj.req;
+>>>>>> +        struct vb2_buffer *vb;
+>>>>>> +        struct media_request *req;
+>>>>>> +
+>>>>>> +        vb = vb2_get_buffer(q, i);
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>>     +        req = vb->req_obj.req;
+>>>>>>             /*
+>>>>>>              * If a request is associated with this buffer, then
+>>>>>>              * call buf_request_cancel() to give the driver to complete()
+>>>>>> @@ -2219,7 +2296,10 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long off,
+>>>>>>         buffer = (off >> (PLANE_INDEX_SHIFT + PAGE_SHIFT)) & MAX_BUFFERS;
+>>>>>>         plane = (off >> PAGE_SHIFT) & PLANE_INDEX_MASK;
+>>>>>>     -    vb = q->bufs[buffer];
+>>>>>> +    vb = vb2_get_buffer(q, buffer);
+>>>>>> +    if (!vb)
+>>>>>> +        return -EINVAL;
+>>>>>> +
+>>>>>>         if (vb->planes[plane].m.offset == off) {
+>>>>>>             *_buffer = buffer;
+>>>>>>             *_plane = plane;
+>>>>>> @@ -2262,7 +2342,12 @@ int vb2_core_expbuf(struct vb2_queue *q, int *fd, unsigned int type,
+>>>>>>             return -EINVAL;
+>>>>>>         }
+>>>>>>     -    vb = q->bufs[index];
+>>>>>> +    vb = vb2_get_buffer(q, index);
+>>>>>> +
+>>>>>> +    if (!vb) {
+>>>>>> +        dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +        return -EINVAL;
+>>>>>> +    }
+>>>>>>           if (plane >= vb->num_planes) {
+>>>>>>             dprintk(q, 1, "buffer plane out of range\n");
+>>>>>> @@ -2339,7 +2424,13 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
+>>>>>>         if (ret)
+>>>>>>             goto unlock;
+>>>>>>     -    vb = q->bufs[buffer];
+>>>>>> +    vb = vb2_get_buffer(q, buffer);
+>>>>>> +
+>>>>>> +    if (!vb) {
+>>>>>> +        dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +        ret = -EINVAL;
+>>>>>> +        goto unlock;
+>>>>>> +    }
+>>>>>>           /*
+>>>>>>          * MMAP requires page_aligned buffers.
+>>>>>> @@ -2396,7 +2487,12 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
+>>>>>>         if (ret)
+>>>>>>             goto unlock;
+>>>>>>     -    vb = q->bufs[buffer];
+>>>>>> +    vb = vb2_get_buffer(q, buffer);
+>>>>>> +    if (!vb) {
+>>>>>> +        dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +        ret = -EINVAL;
+>>>>>> +        goto unlock;
+>>>>>> +    }
+>>>>>>           vaddr = vb2_plane_vaddr(vb, plane);
+>>>>>>         mutex_unlock(&q->mmap_lock);
+>>>>>> @@ -2625,6 +2721,7 @@ struct vb2_fileio_data {
+>>>>>>     static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>>>>>>     {
+>>>>>>         struct vb2_fileio_data *fileio;
+>>>>>> +    struct vb2_buffer *vb;
+>>>>>>         int i, ret;
+>>>>>>         unsigned int count = 0;
+>>>>>>     @@ -2679,7 +2776,13 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>>>>>>          * Check if plane_count is correct
+>>>>>>          * (multiplane buffers are not supported).
+>>>>>>          */
+>>>>>> -    if (q->bufs[0]->num_planes != 1) {
+>>>>>> +    vb = vb2_get_buffer(q, 0);
+>>>>>> +    if (!vb) {
+>>>>>> +        ret = -EBUSY;
+>>>>>> +        goto err_reqbufs;
+>>>>>> +    }
+>>>>> This cannot happen. These fileio helper functions implement the read() support
+>>>>> and all the buffer allocation happens here. Userspace can never add or delete
+>>>>> buffers later, so there will never be holes. It is safe to assume that
+>>>>> vb2_get_buffer(q, i) will always return a valid vb pointer for i in the range
+>>>>> of 0 - q->num_buffers-1.
+>>>>>
+>>>>> Perhaps add a comment to that effect, but otherwise you can drop the checks.
+>>>>>
+>>>>>> +
+>>>>>> +    if (vb->num_planes != 1) {
+>>>>>>             ret = -EBUSY;
+>>>>>>             goto err_reqbufs;
+>>>>>>         }
+>>>>>> @@ -2688,12 +2791,17 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>>>>>>          * Get kernel address of each buffer.
+>>>>>>          */
+>>>>>>         for (i = 0; i < q->num_buffers; i++) {
+>>>>>> -        fileio->bufs[i].vaddr = vb2_plane_vaddr(q->bufs[i], 0);
+>>>>>> +        vb = vb2_get_buffer(q, i);
+>>>>>> +
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        fileio->bufs[i].vaddr = vb2_plane_vaddr(vb, 0);
+>>>>>>             if (fileio->bufs[i].vaddr == NULL) {
+>>>>>>                 ret = -EINVAL;
+>>>>>>                 goto err_reqbufs;
+>>>>>>             }
+>>>>>> -        fileio->bufs[i].size = vb2_plane_size(q->bufs[i], 0);
+>>>>>> +        fileio->bufs[i].size = vb2_plane_size(vb, 0);
+>>>>>>         }
+>>>>>>           /*
+>>>>>> @@ -2821,15 +2929,18 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
+>>>>>>               fileio->cur_index = index;
+>>>>>>             buf = &fileio->bufs[index];
+>>>>>> -        b = q->bufs[index];
+>>>>>> +        b = vb2_get_buffer(q, index);
+>>>>>> +
+>>>>>> +        if (!b)
+>>>>>> +            return -EINVAL;
+>>>>>>               /*
+>>>>>>              * Get number of bytes filled by the driver
+>>>>>>              */
+>>>>>>             buf->pos = 0;
+>>>>>>             buf->queued = 0;
+>>>>>> -        buf->size = read ? vb2_get_plane_payload(q->bufs[index], 0)
+>>>>>> -                 : vb2_plane_size(q->bufs[index], 0);
+>>>>>> +        buf->size = read ? vb2_get_plane_payload(b, 0)
+>>>>>> +                 : vb2_plane_size(b, 0);
+>>>>>>             /* Compensate for data_offset on read in the multiplanar case. */
+>>>>>>             if (is_multiplanar && read &&
+>>>>>>                     b->planes[0].data_offset < buf->size) {
+>>>>>> @@ -2872,8 +2983,12 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
+>>>>>>          * Queue next buffer if required.
+>>>>>>          */
+>>>>>>         if (buf->pos == buf->size || (!read && fileio->write_immediately)) {
+>>>>>> -        struct vb2_buffer *b = q->bufs[index];
+>>>>>> +        struct vb2_buffer *b = vb2_get_buffer(q, index);
+>>>>>>     +        if (!b) {
+>>>>>> +            dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +            return -EINVAL;
+>>>>>> +        }
+>>>>>>             /*
+>>>>>>              * Check if this is the last buffer to read.
+>>>>>>              */
+>>>>>> @@ -2899,7 +3014,7 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
+>>>>>>              */
+>>>>>>             buf->pos = 0;
+>>>>>>             buf->queued = 1;
+>>>>>> -        buf->size = vb2_plane_size(q->bufs[index], 0);
+>>>>>> +        buf->size = vb2_plane_size(b, 0);
+>>>>>>             fileio->q_count += 1;
+>>>>>>             /*
+>>>>>>              * If we are queuing up buffers for the first time, then
+>>>>>> @@ -2970,7 +3085,9 @@ static int vb2_thread(void *data)
+>>>>>>              * Call vb2_dqbuf to get buffer back.
+>>>>>>              */
+>>>>>>             if (prequeue) {
+>>>>>> -            vb = q->bufs[index++];
+>>>>>> +            vb = vb2_get_buffer(q, index++);
+>>>>>> +            if (!vb)
+>>>>>> +                continue;
+>>>>>>                 prequeue--;
+>>>>>>             } else {
+>>>>>>                 call_void_qop(q, wait_finish, q);
+>>>>>> @@ -2979,7 +3096,7 @@ static int vb2_thread(void *data)
+>>>>>>                 call_void_qop(q, wait_prepare, q);
+>>>>>>                 dprintk(q, 5, "file io: vb2_dqbuf result: %d\n", ret);
+>>>>>>                 if (!ret)
+>>>>>> -                vb = q->bufs[index];
+>>>>>> +                vb = vb2_get_buffer(q, index);
+>>>>>>             }
+>>>>>>             if (ret || threadio->stop)
+>>>>>>                 break;
+>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>> index c7a54d82a55e..724135d41f7f 100644
+>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>>>>> @@ -383,8 +383,7 @@ static int vb2_queue_or_prepare_buf(struct vb2_queue *q, struct media_device *md
+>>>>>>             return -EINVAL;
+>>>>>>         }
+>>>>>>     -    if (q->bufs[b->index] == NULL) {
+>>>>>> -        /* Should never happen */
+>>>>>> +    if (!vb2_get_buffer(q, b->index)) {
+>>>>>>             dprintk(q, 1, "%s: buffer is NULL\n", opname);
+>>>>> How about:
+>>>>>
+>>>>>              dprintk(q, 1, "%s: buffer %u was deleted\n", opname, b->index);
+>>>>>
+>>>>> although perhaps that change is more appropriate in patch 09/10?
+>>>>>
+>>>>> Regardless, once it is possible to delete buffers, then this message should be
+>>>>> adjusted accordingly.
+>>>>>
+>>>>>>             return -EINVAL;
+>>>>>>         }
+>>>>>> @@ -394,7 +393,7 @@ static int vb2_queue_or_prepare_buf(struct vb2_queue *q, struct media_device *md
+>>>>>>             return -EINVAL;
+>>>>>>         }
+>>>>>>     -    vb = q->bufs[b->index];
+>>>>>> +    vb = vb2_get_buffer(q, b->index);
+>>>>> This can be moved up to the 'if (!vb2_get_buffer(q, b->index)) {' check above.
+>>>>> That avoids calling vb2_get_buffer twice.
+>>>>>
+>>>>>>         vbuf = to_vb2_v4l2_buffer(vb);
+>>>>>>         ret = __verify_planes_array(vb, b);
+>>>>>>         if (ret)
+>>>>>> @@ -628,11 +627,18 @@ static const struct vb2_buf_ops v4l2_buf_ops = {
+>>>>>>     struct vb2_buffer *vb2_find_buffer(struct vb2_queue *q, u64 timestamp)
+>>>>>>     {
+>>>>>>         unsigned int i;
+>>>>>> +    struct vb2_buffer *vb2;
+>>>>>>     -    for (i = 0; i < q->num_buffers; i++)
+>>>>>> -        if (q->bufs[i]->copied_timestamp &&
+>>>>>> -            q->bufs[i]->timestamp == timestamp)
+>>>>>> -            return vb2_get_buffer(q, i);
+>>>>> Perhaps add a comment here that this loop doesn't scale if there
+>>>>> is a really large number of buffers and something more efficient
+>>>>> will have to be found in that case.
+>>>>>
+>>>>>> +    for (i = 0; i < q->num_buffers; i++) {
+>>>>>> +        vb2 = vb2_get_buffer(q, i);
+>>>>>> +
+>>>>>> +        if (!vb2)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        if (vb2->copied_timestamp &&
+>>>>>> +            vb2->timestamp == timestamp)
+>>>>>> +            return vb2;
+>>>>>> +    }
+>>>>>>         return NULL;
+>>>>>>     }
+>>>>>>     EXPORT_SYMBOL_GPL(vb2_find_buffer);
+>>>>>> @@ -664,7 +670,13 @@ int vb2_querybuf(struct vb2_queue *q, struct v4l2_buffer *b)
+>>>>>>             dprintk(q, 1, "buffer index out of range\n");
+>>>>>>             return -EINVAL;
+>>>>>>         }
+>>>>>> -    vb = q->bufs[b->index];
+>>>>>> +    vb = vb2_get_buffer(q, b->index);
+>>>>>> +
+>>>>>> +    if (!vb) {
+>>>>>> +        dprintk(q, 1, "can't find the requested buffer\n");
+>>>>>> +        return -EINVAL;
+>>>>>> +    }
+>>>>>> +
+>>>>>>         ret = __verify_planes_array(vb, b);
+>>>>>>         if (!ret)
+>>>>>>             vb2_core_querybuf(q, b->index, b);
+>>>>>> diff --git a/drivers/media/platform/amphion/vpu_dbg.c b/drivers/media/platform/amphion/vpu_dbg.c
+>>>>>> index 982c2c777484..a462d6fe4ea9 100644
+>>>>>> --- a/drivers/media/platform/amphion/vpu_dbg.c
+>>>>>> +++ b/drivers/media/platform/amphion/vpu_dbg.c
+>>>>>> @@ -140,11 +140,18 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
+>>>>>>           vq = v4l2_m2m_get_src_vq(inst->fh.m2m_ctx);
+>>>>>>         for (i = 0; i < vq->num_buffers; i++) {
+>>>>>> -        struct vb2_buffer *vb = vq->bufs[i];
+>>>>>> -        struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+>>>>>> +        struct vb2_buffer *vb;
+>>>>>> +        struct vb2_v4l2_buffer *vbuf;
+>>>>>> +
+>>>>>> +        vb = vb2_get_buffer(vq, i);
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>>               if (vb->state == VB2_BUF_STATE_DEQUEUED)
+>>>>>>                 continue;
+>>>>>> +
+>>>>>> +        vbuf = to_vb2_v4l2_buffer(vb);
+>>>>>> +
+>>>>>>             num = scnprintf(str, sizeof(str),
+>>>>>>                     "output [%2d] state = %10s, %8s\n",
+>>>>>>                     i, vb2_stat_name[vb->state],
+>>>>>> @@ -155,11 +162,18 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
+>>>>>>           vq = v4l2_m2m_get_dst_vq(inst->fh.m2m_ctx);
+>>>>>>         for (i = 0; i < vq->num_buffers; i++) {
+>>>>>> -        struct vb2_buffer *vb = vq->bufs[i];
+>>>>>> -        struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+>>>>>> +        struct vb2_buffer *vb;
+>>>>>> +        struct vb2_v4l2_buffer *vbuf;
+>>>>>> +
+>>>>>> +        vb = vb2_get_buffer(vq, i);
+>>>>>> +        if (!vb)
+>>>>>> +            continue;
+>>>>>>               if (vb->state == VB2_BUF_STATE_DEQUEUED)
+>>>>>>                 continue;
+>>>>>> +
+>>>>>> +        vbuf = to_vb2_v4l2_buffer(vb);
+>>>>>> +
+>>>>>>             num = scnprintf(str, sizeof(str),
+>>>>>>                     "capture[%2d] state = %10s, %8s\n",
+>>>>>>                     i, vb2_stat_name[vb->state],
+>>>>> This can be a separate patch, right? It doesn't depend on any core changes.
+>>>>>
+>>>>> And this can also be applied before this patch.
+>>>> Hans, I would like to clarify this comment (and the following Ditto).
+>>>> Are you against use vb2_get_buffer() outside core ?
+>>>> or testing vb2_get_buffer() result ?
+>>>> The goal of this patch was to remove all access like vq->bufs[i] and to make
+>>>> sure that vb buffer are always valid.
+>>> Sorry for the confusion. I meant that AFAICS each of these driver changes can be
+>>> done in the separate patch and that those separate patches can be applied before
+>>> this patch. I.e., they are independent.
+>>>
+>>> I always prefer specific driver changes to be done as separate patches rather
+>>> than one patch modifying a lot of drivers in one go. That is not always possible,
+>>> of course, but in this case I think it is fine, unless I missed something.
+>> All changes in the drivers use vb2_get_buffer() which is introduced in this patch
+>> so I can't do them before.
+>> If you want I can make a patch per driver but after this patch.
+> ??? vb2_get_buffer() has been defined in include/media/videobuf2-core.h for a long
+> time (2019 to be precise).
 
-- Praveenkumar
+Yes I have made a mistake, sorry for the noise.
+
+>
+> Regards,
+>
+> 	Hans
+>
+>> Regards,
+>> Benjamin
+>>
+>>> Regards,
+>>>
+>>>      Hans
+>>>
+>>>> Regards,
+>>>> Benjamin
+>>>>
+>>>>>> diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+>>>>>> index 621038aab116..62910a1b8a98 100644
+>>>>>> --- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+>>>>>> +++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+>>>>>> @@ -603,7 +603,11 @@ static int mtk_jpeg_qbuf(struct file *file, void *priv, struct v4l2_buffer *buf)
+>>>>>>             return -EINVAL;
+>>>>>>         }
+>>>>>>     -    vb = vq->bufs[buf->index];
+>>>>>> +    vb = vb2_get_buffer(vq, buf->index);
+>>>>>> +    if (!vb) {
+>>>>>> +        dev_err(ctx->jpeg->dev, "buffer not found\n");
+>>>>>> +        return -EINVAL;
+>>>>>> +    }
+>>>>>>         jpeg_src_buf = mtk_jpeg_vb2_to_srcbuf(vb);
+>>>>>>         jpeg_src_buf->bs_size = buf->m.planes[0].bytesused;
+>>>>>>     
+>>>>> Ditto.
+>>>>>
+>>>>>> diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+>>>>>> index e393e3e668f8..3d2ae0e1b5b6 100644
+>>>>>> --- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+>>>>>> +++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+>>>>>> @@ -1696,7 +1696,7 @@ static int vdec_vp9_slice_setup_core_buffer(struct vdec_vp9_slice_instance *inst
+>>>>>>           /* update internal buffer's width/height */
+>>>>>>         for (i = 0; i < vq->num_buffers; i++) {
+>>>>>> -        if (vb == vq->bufs[i]) {
+>>>>>> +        if (vb == vb2_get_buffer(vq, i)) {
+>>>>>>                 instance->dpb[i].width = w;
+>>>>>>                 instance->dpb[i].height = h;
+>>>>>>                 break;
+>>>>> Ditto.
+>>>>>
+>>>>>> diff --git a/drivers/media/platform/st/sti/hva/hva-v4l2.c b/drivers/media/platform/st/sti/hva/hva-v4l2.c
+>>>>>> index 3a848ca32a0e..326be09bdb55 100644
+>>>>>> --- a/drivers/media/platform/st/sti/hva/hva-v4l2.c
+>>>>>> +++ b/drivers/media/platform/st/sti/hva/hva-v4l2.c
+>>>>>> @@ -577,6 +577,10 @@ static int hva_qbuf(struct file *file, void *priv, struct v4l2_buffer *buf)
+>>>>>>             }
+>>>>>>               vb2_buf = vb2_get_buffer(vq, buf->index);
+>>>>>> +        if (!vb2_buf) {
+>>>>>> +            dev_dbg(dev, "%s buffer index %d not found\n", ctx->name, buf->index);
+>>>>>> +            return -EINVAL;
+>>>>>> +        }
+>>>>>>             stream = to_hva_stream(to_vb2_v4l2_buffer(vb2_buf));
+>>>>>>             stream->bytesused = buf->bytesused;
+>>>>>>         }
+>>>>> Ditto.
+>>>>>
+>>>>>> diff --git a/drivers/media/test-drivers/visl/visl-dec.c b/drivers/media/test-drivers/visl/visl-dec.c
+>>>>>> index 318d675e5668..ba20ea998d19 100644
+>>>>>> --- a/drivers/media/test-drivers/visl/visl-dec.c
+>>>>>> +++ b/drivers/media/test-drivers/visl/visl-dec.c
+>>>>>> @@ -290,13 +290,20 @@ static void visl_tpg_fill(struct visl_ctx *ctx, struct visl_run *run)
+>>>>>>         for (i = 0; i < out_q->num_buffers; i++) {
+>>>>>>             char entry[] = "index: %u, state: %s, request_fd: %d, ";
+>>>>>>             u32 old_len = len;
+>>>>>> -        char *q_status = visl_get_vb2_state(out_q->bufs[i]->state);
+>>>>>> +        struct vb2_buffer *vb2;
+>>>>>> +        char *q_status;
+>>>>>> +
+>>>>>> +        vb2 = vb2_get_buffer(out_q, i);
+>>>>>> +        if (!vb2)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        q_status = visl_get_vb2_state(vb2->state);
+>>>>>>               len += scnprintf(&buf[len], TPG_STR_BUF_SZ - len,
+>>>>>>                      entry, i, q_status,
+>>>>>> -                 to_vb2_v4l2_buffer(out_q->bufs[i])->request_fd);
+>>>>>> +                 to_vb2_v4l2_buffer(vb2)->request_fd);
+>>>>>>     -        len += visl_fill_bytesused(to_vb2_v4l2_buffer(out_q->bufs[i]),
+>>>>>> +        len += visl_fill_bytesused(to_vb2_v4l2_buffer(vb2),
+>>>>>>                            &buf[len],
+>>>>>>                            TPG_STR_BUF_SZ - len);
+>>>>>>     @@ -342,13 +349,20 @@ static void visl_tpg_fill(struct visl_ctx *ctx, struct visl_run *run)
+>>>>>>         len = 0;
+>>>>>>         for (i = 0; i < cap_q->num_buffers; i++) {
+>>>>>>             u32 old_len = len;
+>>>>>> -        char *q_status = visl_get_vb2_state(cap_q->bufs[i]->state);
+>>>>>> +        struct vb2_buffer *vb2;
+>>>>>> +        char *q_status;
+>>>>>> +
+>>>>>> +        vb2 = vb2_get_buffer(cap_q, i);
+>>>>>> +        if (!vb2)
+>>>>>> +            continue;
+>>>>>> +
+>>>>>> +        q_status = visl_get_vb2_state(vb2->state);
+>>>>>>               len += scnprintf(&buf[len], TPG_STR_BUF_SZ - len,
+>>>>>>                      "index: %u, status: %s, timestamp: %llu, is_held: %d",
+>>>>>> -                 cap_q->bufs[i]->index, q_status,
+>>>>>> -                 cap_q->bufs[i]->timestamp,
+>>>>>> -                 to_vb2_v4l2_buffer(cap_q->bufs[i])->is_held);
+>>>>>> +                 vb2->index, q_status,
+>>>>>> +                 vb2->timestamp,
+>>>>>> +                 to_vb2_v4l2_buffer(vb2)->is_held);
+>>>>>>               tpg_gen_text(&ctx->tpg, basep, line++ * line_height, 16, &buf[old_len]);
+>>>>>>             frame_dprintk(ctx->dev, run->dst->sequence, "%s", &buf[old_len]);
+>>>>> Ditto.
+>>>>>
+>>>>>> diff --git a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+>>>>>> index d2174156573a..4b65c69fa60d 100644
+>>>>>> --- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+>>>>>> +++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+>>>>>> @@ -1061,7 +1061,7 @@ static int atomisp_dqbuf_wrapper(struct file *file, void *fh, struct v4l2_buffer
+>>>>>>         if (ret)
+>>>>>>             return ret;
+>>>>>>     -    vb = pipe->vb_queue.bufs[buf->index];
+>>>>>> +    vb = vb2_get_buffer(&pipe->vb_queue, buf->index);
+>>>>>>         frame = vb_to_frame(vb);
+>>>>>>           buf->reserved = asd->frame_status[buf->index];
+>>>>> Ditto.
+>>>>>
+>>>>> Background: I think it is really useful to merge a lot of the groundwork early
+>>>>> on, where possible. It simplifies the remainder of the patch series.
+>>>>>
+>>>>> Regards,
+>>>>>
+>>>>>       Hans
+>>>>>
+>
