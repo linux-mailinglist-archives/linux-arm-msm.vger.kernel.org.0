@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 511D578F1EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 19:30:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5708B78F26C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Aug 2023 20:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231476AbjHaRaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 13:30:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46198 "EHLO
+        id S1346863AbjHaSUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 14:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235041AbjHaRaJ (ORCPT
+        with ESMTP id S1343507AbjHaSUU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 13:30:09 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE916E7A;
-        Thu, 31 Aug 2023 10:29:57 -0700 (PDT)
+        Thu, 31 Aug 2023 14:20:20 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4EC8E6B;
+        Thu, 31 Aug 2023 11:20:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 35A87CE216A;
-        Thu, 31 Aug 2023 17:29:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD63C433C7;
-        Thu, 31 Aug 2023 17:29:52 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id EFACCCE201B;
+        Thu, 31 Aug 2023 18:20:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DC9C433C8;
+        Thu, 31 Aug 2023 18:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693502994;
-        bh=057dXhBltFNY+YXutamWEKDOENY+dS9838PYVA3CeIk=;
+        s=k20201202; t=1693506012;
+        bh=7WZI1mZEAh514Sx8f5fF5/Wrmape0Upa19isw5zY/KQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YAg2oRB2Hz4CCaDGqT+FpM5RsRuIyfObS5GYwv4qsjQsEN+HmzbDaTxJnvFpStRRd
-         b00tiO7VLBSRyilW0ijkSUxyBAa2sxb+FML2eTBhG35GFsAA7qf1hQtb5f+8vVKixa
-         yPAriWirIlFos9iq7I9p40aG0ObfpRrBETt185Z4c7+nye4Pl0kmDrhh4cl/A3sHh/
-         uIFwdmugmKkajgnRbu5f8yhjugaVMRr/Dg4NVmbzdayh5+tdFBYE/vs+XrMoncl889
-         BE5JBZn6DL45yNp3NIxH2AkFPcQseeitRtr7OnBCFYW3vK3UyAMTlZlPQsHU/n6nfz
-         2nYRKMW8Jas6Q==
-Received: (nullmailer pid 2472823 invoked by uid 1000);
-        Thu, 31 Aug 2023 17:29:51 -0000
-Date:   Thu, 31 Aug 2023 12:29:51 -0500
+        b=KKvJ4sKl6IpJTyTUlBUin9PMewbFd3/btKqOkBv7/kNsKJqy93lhMvBKt2YxKD6gl
+         QUYdrgZGqcIITI8Eg6E5a7LgzhimMq1DG6nd9YtsmxQCRD78QaXnBXxFGHEsaMkaMa
+         xVxLg9TouCBR0XBS3CiGIB9oYTtPZPlb3y/4Xoc6P+AMENWJJO4c8plKwxQTyriRwL
+         8jU7mgpbCAkRe5IZCkICompyodmRuH/aWOeOzxZkgdNn7dpr+qLXzRjGB0p9GmNLcG
+         XnVCYH0uyMXFXO7SLVdjv/mxULzcb5GZeb77v19QuF1Ey6OSdj7RfItFRdhBgJn4A9
+         FUEI3iVPSdGQw==
+Received: (nullmailer pid 2540904 invoked by uid 1000);
+        Thu, 31 Aug 2023 18:20:04 -0000
+Date:   Thu, 31 Aug 2023 13:20:04 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     alsa-devel@alsa-project.org, andersson@kernel.org,
-        quic_plai@quicinc.com, linux-arm-msm@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        perex@perex.cz, bgoswami@quicinc.com, devicetree@vger.kernel.org,
-        tiwai@suse.com, linux-kernel@vger.kernel.org, agross@kernel.org,
-        lgirdwood@gmail.com, srinivas.kandagatla@linaro.org,
-        mathias.nyman@intel.com, linux-usb@vger.kernel.org,
-        broonie@kernel.org, gregkh@linuxfoundation.org,
-        Thinh.Nguyen@synopsys.com, quic_jackp@quicinc.com
-Subject: Re: [PATCH v5 24/32] ASoC: dt-bindings: Update example for enabling
- USB offload on SM8250
-Message-ID: <169350299098.2472764.11068604113616998755.robh@kernel.org>
-References: <20230829210657.9904-1-quic_wcheng@quicinc.com>
- <20230829210657.9904-25-quic_wcheng@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH 1/7] dt-bindings: dmaengine: qcom: gpi: Allow dma-coherent
+Message-ID: <169350600377.2540849.5971761743710979201.robh@kernel.org>
+References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
+ <20230830-topic-8550_dmac2-v1-1-49bb25239fb1@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230829210657.9904-25-quic_wcheng@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230830-topic-8550_dmac2-v1-1-49bb25239fb1@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -67,15 +67,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 29 Aug 2023 14:06:49 -0700, Wesley Cheng wrote:
-> Add an example on enabling of USB offload for the Q6DSP.  The routing can
-> be done by the mixer, which can pass the multimedia stream to the USB
-> backend.
+On Wed, 30 Aug 2023 14:48:40 +0200, Konrad Dybcio wrote:
+> On SM8550, the GPI DMA controller is coherent with the CPU.
+> Allow specifying that.
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
