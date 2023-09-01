@@ -2,211 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A612A78F896
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 08:32:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5875C78F8AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 08:45:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235920AbjIAGch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 02:32:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
+        id S242283AbjIAGpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 02:45:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbjIAGcg (ORCPT
+        with ESMTP id S231775AbjIAGpF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 02:32:36 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11DD09E;
-        Thu, 31 Aug 2023 23:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693549953; x=1725085953;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=/pxsW55MVBsOzk6oCbE/5pKPjqBXhRXgd1iOPD4l0p0=;
-  b=XnqhoRt2YtfVmW8XewyCIr3wJfMGTpqbuColLDG9rR0RJT+/tTone6Ko
-   1/wJ/ofZzQgjSAGGNe+265tA4UuT3erkEDpxJfmNLsSktn2HY3Dw19B35
-   RvEILaYflE2uGSJ1qd9EDoI60jWGU2Gn/G4j9UUi5hK1TZqhX9joAK5Gg
-   gRmFTnZxCbDj17/vNwscHRyMFO7FJmkdAmBweazno2xGtwbxAKbQW8BER
-   PxcLYge5shgKQaoHGH8bVBaaL2o3715v5JOX4aSrNA9WY2tS4vgob3A3h
-   DKxzUZyRWpvHmwhTkwYJCKX/mM/yfOJDiO3hAtoY4JO6OZKGbpP/zX/Fq
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="440128573"
-X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
-   d="scan'208";a="440128573"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 23:32:31 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="689642590"
-X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
-   d="scan'208";a="689642590"
-Received: from lkp-server01.sh.intel.com (HELO 5d8055a4f6aa) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 31 Aug 2023 23:32:28 -0700
-Received: from kbuild by 5d8055a4f6aa with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qbxhi-00010F-02;
-        Fri, 01 Sep 2023 06:32:26 +0000
-Date:   Fri, 1 Sep 2023 14:31:55 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH v1 5/5] misc: fastrpc: Add support to allocate shared
- context bank
-Message-ID: <202309011446.SVM4HbHv-lkp@intel.com>
-References: <1693499292-19083-6-git-send-email-quic_ekangupt@quicinc.com>
+        Fri, 1 Sep 2023 02:45:05 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19670CEB;
+        Thu, 31 Aug 2023 23:45:03 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id E6941660728E;
+        Fri,  1 Sep 2023 07:45:00 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693550701;
+        bh=xNJ/JsssI9AvwYvwzTZkZ5foAHHEAsCmcEIqq3AhxhY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=bTvk5hB3bcbHHptFnVoC2Sbc8fsX4l4fGhveQSe9keJt9UZ1zZAhUuxCoeD4NkJmM
+         GEUQX7N7j9KSYsKhIfIbUxVZxgvDXPR7uKdTKeFoupCnnwSX8Gq2LwMyf/73wAqEx+
+         JV+8g0cjpOPQ4dHTCEA8otwzhyFHhvGhJtVTCaZZ4gpgNmnj8UxDB3cPoJl7Jr9wUK
+         PShRV20mt9N+upwTqBX9lrmdjAHaUCl+Zchoyx5n3bG5VnpEHGiZMJWlKobizQNCAm
+         y3mEM1Urr0Uxq+GULrHcEOkE5g7T82gt6DZiaAaqiBa7zK/q9IpSIdAfoqHSYUA6Y2
+         oXDHjoAW9jAyg==
+Date:   Fri, 1 Sep 2023 08:44:57 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 5/6] drm/panfrost: Implement generic DRM object RSS
+ reporting function
+Message-ID: <20230901084457.5bc1ad69@collabora.com>
+In-Reply-To: <jev3jdwfkdoqbdhdgapfyb2fghpmw4lzhozi6m2ylfvsofwstv@4uj624i74i3e>
+References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
+        <20230824013604.466224-6-adrian.larumbe@collabora.com>
+        <20230830125210.3d1172db@collabora.com>
+        <jev3jdwfkdoqbdhdgapfyb2fghpmw4lzhozi6m2ylfvsofwstv@4uj624i74i3e>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1693499292-19083-6-git-send-email-quic_ekangupt@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ekansh,
+On Fri, 1 Sep 2023 01:03:23 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-kernel test robot noticed the following build warnings:
+> >> @@ -274,13 +286,23 @@ panfrost_gem_prime_import_sg_table(struct drm_de=
+vice *dev,
+> >>  {
+> >>  	struct drm_gem_object *obj;
+> >>  	struct panfrost_gem_object *bo;
+> >> +	struct scatterlist *sgl;
+> >> +	unsigned int count;
+> >> +	size_t total =3D 0;
+> >> =20
+> >>  	obj =3D drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
+> >>  	if (IS_ERR(obj))
+> >>  		return ERR_CAST(obj);
+> >> =20
+> >> +	for_each_sgtable_dma_sg(sgt, sgl, count) {
+> >> +		size_t len =3D sg_dma_len(sgl);
+> >> +
+> >> +		total +=3D len;
+> >> +	} =20
+> >
+> >Why not simply have bo->rss_size =3D obj->size here? Not sure I see a
+> >reason to not trust dma_buf? =20
+>=20
+> Can PRIME-imported BO's ever be heap objects?
 
-[auto build test WARNING on char-misc/char-misc-testing]
-[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.5 next-20230831]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-fastrpc-multimode-invoke-request-support/20230901-002929
-base:   char-misc/char-misc-testing
-patch link:    https://lore.kernel.org/r/1693499292-19083-6-git-send-email-quic_ekangupt%40quicinc.com
-patch subject: [PATCH v1 5/5] misc: fastrpc: Add support to allocate shared context bank
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230901/202309011446.SVM4HbHv-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230901/202309011446.SVM4HbHv-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309011446.SVM4HbHv-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/misc/fastrpc.c: In function 'fastrpc_context_alloc':
-   drivers/misc/fastrpc.c:674:29: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-     674 |                 ctx->args = (struct fastrpc_invoke_args *)invoke->inv.args;
-         |                             ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_init_create_static_process':
-   drivers/misc/fastrpc.c:1540:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1540 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_init_create_process':
-   drivers/misc/fastrpc.c:1677:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1677 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_release_current_dsp_process':
-   drivers/misc/fastrpc.c:1730:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1730 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_device_release':
-   drivers/misc/fastrpc.c:1739:42: warning: unused variable 'n' [-Wunused-variable]
-    1739 |         struct fastrpc_invoke_ctx *ctx, *n;
-         |                                          ^
-   drivers/misc/fastrpc.c:1739:36: warning: unused variable 'ctx' [-Wunused-variable]
-    1739 |         struct fastrpc_invoke_ctx *ctx, *n;
-         |                                    ^~~
-   drivers/misc/fastrpc.c: In function 'fastrpc_init_attach':
-   drivers/misc/fastrpc.c:1871:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1871 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_invoke':
-   drivers/misc/fastrpc.c:1902:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1902 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_internal_control':
-   drivers/misc/fastrpc.c:1920:14: error: 'FASTRPC_CONTROL_SMMU' undeclared (first use in this function); did you mean 'FASTRPC_IOCTL_MMAP'?
-    1920 |         case FASTRPC_CONTROL_SMMU:
-         |              ^~~~~~~~~~~~~~~~~~~~
-         |              FASTRPC_IOCTL_MMAP
-   drivers/misc/fastrpc.c:1920:14: note: each undeclared identifier is reported only once for each function it appears in
-   drivers/misc/fastrpc.c:1920:9: error: case label not within a switch statement
-    1920 |         case FASTRPC_CONTROL_SMMU:
-         |         ^~~~
-   drivers/misc/fastrpc.c:1922:17: error: break statement not within loop or switch
-    1922 |                 break;
-         |                 ^~~~~
-   drivers/misc/fastrpc.c:1923:9: error: 'default' label not within a switch statement
-    1923 |         default:
-         |         ^~~~~~~
-   drivers/misc/fastrpc.c:1925:17: error: break statement not within loop or switch
-    1925 |                 break;
-         |                 ^~~~~
->> drivers/misc/fastrpc.c:1913:13: warning: variable 'err' set but not used [-Wunused-but-set-variable]
-    1913 |         int err = 0;
-         |             ^~~
-   drivers/misc/fastrpc.c: At top level:
-   drivers/misc/fastrpc.c:1927:9: error: expected identifier or '(' before 'return'
-    1927 |         return err;
-         |         ^~~~~~
-   drivers/misc/fastrpc.c:1928:1: error: expected identifier or '(' before '}' token
-    1928 | }
-         | ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_multimode_invoke':
-   drivers/misc/fastrpc.c:1964:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1964 |                 einv.inv.args = (__u64)args;
-         |                                 ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_get_info_from_dsp':
-   drivers/misc/fastrpc.c:2000:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    2000 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_req_munmap_impl':
-   drivers/misc/fastrpc.c:2103:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    2103 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_req_mmap':
-   drivers/misc/fastrpc.c:2201:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    2201 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_unmap_impl':
-   drivers/misc/fastrpc.c:2282:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    2282 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_map':
-   drivers/misc/fastrpc.c:2351:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    2351 |         ioctl.inv.args = (__u64)args;
-         |                          ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_internal_control':
-   drivers/misc/fastrpc.c:1926:9: error: control reaches end of non-void function [-Werror=return-type]
-    1926 |         }
-         |         ^
-   cc1: some warnings being treated as errors
-
-
-vim +/err +1913 drivers/misc/fastrpc.c
-
-  1909	
-  1910	static int fastrpc_internal_control(struct fastrpc_user *fl,
-  1911						struct fastrpc_internal_control *cp)
-  1912	{
-> 1913		int err = 0;
-  1914	
-  1915		if (!fl)
-  1916			return -EBADF;
-  1917		if (!cp)
-  1918			return -EINVAL;
-  1919	
-  1920		case FASTRPC_CONTROL_SMMU:
-  1921			fl->sharedcb = cp->smmu.sharedcb;
-> 1922			break;
-  1923		default:
-  1924			err = -EBADRQC;
-  1925			break;
-  1926		}
-  1927		return err;
-  1928	}
-  1929	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Nope, heap BOs can't be exported, and if they can, that's probably a
+bug we need to fix.
