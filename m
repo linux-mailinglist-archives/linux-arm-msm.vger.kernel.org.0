@@ -2,670 +2,380 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E927B78F6A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 03:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3079478F6D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 03:50:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232476AbjIABOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Aug 2023 21:14:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43388 "EHLO
+        id S1344696AbjIABuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Aug 2023 21:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232362AbjIABOR (ORCPT
+        with ESMTP id S230061AbjIABuX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Aug 2023 21:14:17 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5898495;
-        Thu, 31 Aug 2023 18:14:13 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3810oIl2018694;
-        Fri, 1 Sep 2023 01:14:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kwhYoQKIg6Wy2pdUrxkKnuzlqSenR2Djg8RzAaLH51U=;
- b=X4/ICo5qBdWT170iCxymOu7fTjxpA46w4RRnzOell9US1lkxh/RyAOH08h7UGh2WwqNw
- nFRL5xUC0SPnp65WW98Cpe/9YyPLAathnhf9obQFdEwScPfV1gLkWjeyF+xPeC0cjHn9
- 1UoKWcefHDJKurDD1oNK/SSSgmwnZIRoQMXsp7Et8npgaDpmV+vS8ZHBjkjj/SFMpVFh
- irzthRz561+CQiggPIOPRIdsFWh6vPycw1yjBRrJVELSK90kcu6ALJCm1voRCiCNjFa0
- mQ6+g58OAzic6xARz+42KlIazOzrte7yxsykuDC+BtzrZVIcN1eB4qLbgoN2MUJnxbg3 IQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st6ctc72y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 01:13:59 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3811DwrO021855
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 01:13:58 GMT
-Received: from [10.71.114.68] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 31 Aug
- 2023 18:13:57 -0700
-Message-ID: <9eee5666-8bd1-9a42-53b4-6a07ccba652e@quicinc.com>
-Date:   Thu, 31 Aug 2023 18:13:57 -0700
+        Thu, 31 Aug 2023 21:50:23 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7ACE6E;
+        Thu, 31 Aug 2023 18:50:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693533019; x=1725069019;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Z/IUJxs1mc3hfH7hCTKbpZvonJnzNoHHAzpaCom1+88=;
+  b=EKbgcUoN0VpEhPRCN8i7wMAVDAtpKllj7I4moASuL6w+qDN6ItRv1rX6
+   bApB+nNyhI/727FOgi9G2XSGpWcHkQqAV5Qk/KUd8308GVwU3g38LxQco
+   E3WDh1eH2EJKZOnkSGYYluGDUBwcMApdrN5VFbOHiqT/NOAtj8COu7hpQ
+   mCVBF6+SEEZ8TxWoocPfp2s5UBJ09hqa21dd8l4ZlL6Sjt7ppPOLCR/tt
+   DK+VhzT88j4Rjw65SU43WajXFBWXXEjGNe8H/WvJeNHHFzoprZdWYX39r
+   eV4Y50fEPtej5f3Wlp5+jt3x8Il9IfHOJFIGxinw2sfq+glmPes6Mq+/M
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="379898124"
+X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
+   d="scan'208";a="379898124"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 18:50:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="809886470"
+X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
+   d="scan'208";a="809886470"
+Received: from lkp-server01.sh.intel.com (HELO 5d8055a4f6aa) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 31 Aug 2023 18:50:15 -0700
+Received: from kbuild by 5d8055a4f6aa with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qbtIb-0000kd-2k;
+        Fri, 01 Sep 2023 01:50:13 +0000
+Date:   Fri, 1 Sep 2023 09:49:42 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev,
+        Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH v1 4/5] misc: fastrpc: Add support to save and restore
+ interrupted
+Message-ID: <202309010926.bLqVExVs-lkp@intel.com>
+References: <1693499292-19083-5-git-send-email-quic_ekangupt@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v11 06/13] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "Johan Hovold" <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>,
-        Harsh Agarwal <quic_harshq@quicinc.com>
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-7-quic_kriskura@quicinc.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <20230828133033.11988-7-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fd5PkVGzNFK8tOlIEa7yt48Qs7vOVXfQ
-X-Proofpoint-ORIG-GUID: fd5PkVGzNFK8tOlIEa7yt48Qs7vOVXfQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-31_22,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1011 malwarescore=0 phishscore=0 adultscore=0 mlxlogscore=999
- suspectscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010009
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1693499292-19083-5-git-send-email-quic_ekangupt@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+Hi Ekansh,
 
-On 8/28/2023 6:30 AM, Krishna Kurapati wrote:
-> From: Harsh Agarwal <quic_harshq@quicinc.com>
-> 
-> Currently the DWC3 driver supports only single port controller
-> which requires at most one HS and one SS PHY.
-> 
-> But the DWC3 USB controller can be connected to multiple ports and
-> each port can have their own PHYs. Each port of the multiport
-> controller can either be HS+SS capable or HS only capable
-> Proper quantification of them is required to modify GUSB2PHYCFG
-> and GUSB3PIPECTL registers appropriately.
-> 
-> Add support for detecting, obtaining and configuring phy's supported
-> by a multiport controller and. Limit the max number of ports
-> supported to 4 as only SC8280 which is a quad port controller supports
-> Multiport currently.
-> 
-> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> Co-developed-by:Krishna Kurapati <quic_kriskura@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->   drivers/usb/dwc3/core.c | 252 +++++++++++++++++++++++++++-------------
->   drivers/usb/dwc3/core.h |  11 +-
->   drivers/usb/dwc3/drd.c  |  15 ++-
->   3 files changed, 190 insertions(+), 88 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index 6eacf0ff90b5..31400c309bff 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -124,6 +124,7 @@ static void __dwc3_set_mode(struct work_struct *work)
->   	int ret;
->   	u32 reg;
->   	u32 desired_dr_role;
-> +	int i;
->   
->   	mutex_lock(&dwc->mutex);
->   	spin_lock_irqsave(&dwc->lock, flags);
-> @@ -201,8 +202,10 @@ static void __dwc3_set_mode(struct work_struct *work)
->   		} else {
->   			if (dwc->usb2_phy)
->   				otg_set_vbus(dwc->usb2_phy->otg, true);
-> -			phy_set_mode(dwc->usb2_generic_phy, PHY_MODE_USB_HOST);
-> -			phy_set_mode(dwc->usb3_generic_phy, PHY_MODE_USB_HOST);
-> +			for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +				phy_set_mode(dwc->usb2_generic_phy[i], PHY_MODE_USB_HOST);
-> +				phy_set_mode(dwc->usb3_generic_phy[i], PHY_MODE_USB_HOST);
-> +			}
->   			if (dwc->dis_split_quirk) {
->   				reg = dwc3_readl(dwc->regs, DWC3_GUCTL3);
->   				reg |= DWC3_GUCTL3_SPLITDISABLE;
-> @@ -217,8 +220,8 @@ static void __dwc3_set_mode(struct work_struct *work)
->   
->   		if (dwc->usb2_phy)
->   			otg_set_vbus(dwc->usb2_phy->otg, false);
-> -		phy_set_mode(dwc->usb2_generic_phy, PHY_MODE_USB_DEVICE);
-> -		phy_set_mode(dwc->usb3_generic_phy, PHY_MODE_USB_DEVICE);
-> +		phy_set_mode(dwc->usb2_generic_phy[0], PHY_MODE_USB_DEVICE);
-> +		phy_set_mode(dwc->usb3_generic_phy[0], PHY_MODE_USB_DEVICE);
->   
+kernel test robot noticed the following build warnings:
 
-Throughout this patch, you are looping across all PHYs irrespective of 
-if we are in device mode or not.  This is the only exception where you 
-are setting only PHY index 0 (for both SS and HS PHYs).  Do you think we 
-should also only modify PHY index#0 for other PHY related sequences?
+[auto build test WARNING on char-misc/char-misc-testing]
+[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.5 next-20230831]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
->   		ret = dwc3_gadget_init(dwc);
->   		if (ret)
-> @@ -589,22 +592,14 @@ static int dwc3_core_ulpi_init(struct dwc3 *dwc)
->   	return ret;
->   }
->   
-> -/**
-> - * dwc3_phy_setup - Configure USB PHY Interface of DWC3 Core
-> - * @dwc: Pointer to our controller context structure
-> - *
-> - * Returns 0 on success. The USB PHY interfaces are configured but not
-> - * initialized. The PHY interfaces and the PHYs get initialized together with
-> - * the core in dwc3_core_init.
-> - */
-> -static int dwc3_phy_setup(struct dwc3 *dwc)
-> +static int dwc3_ss_phy_setup(struct dwc3 *dwc, int index)
->   {
->   	unsigned int hw_mode;
->   	u32 reg;
->   
->   	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
->   
-> -	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
-> +	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(index));
->   
->   	/*
->   	 * Make sure UX_EXIT_PX is cleared as that causes issues with some
-> @@ -659,9 +654,19 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->   	if (dwc->dis_del_phy_power_chg_quirk)
->   		reg &= ~DWC3_GUSB3PIPECTL_DEPOCHANGE;
->   
-> -	dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), reg);
-> +	dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(index), reg);
->   
-> -	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-> +	return 0;
-> +}
-> +
-> +static int dwc3_hs_phy_setup(struct dwc3 *dwc, int index)
-> +{
-> +	unsigned int hw_mode;
-> +	u32 reg;
-> +
-> +	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
-> +
-> +	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(index));
->   
->   	/* Select the HS PHY interface */
->   	switch (DWC3_GHWPARAMS3_HSPHY_IFC(dwc->hwparams.hwparams3)) {
-> @@ -673,7 +678,7 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->   		} else if (dwc->hsphy_interface &&
->   				!strncmp(dwc->hsphy_interface, "ulpi", 4)) {
->   			reg |= DWC3_GUSB2PHYCFG_ULPI_UTMI;
-> -			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-> +			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(index), reg);
->   		} else {
->   			/* Relying on default value. */
->   			if (!(reg & DWC3_GUSB2PHYCFG_ULPI_UTMI))
-> @@ -740,7 +745,35 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->   	if (dwc->ulpi_ext_vbus_drv)
->   		reg |= DWC3_GUSB2PHYCFG_ULPIEXTVBUSDRV;
->   
-> -	dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-> +	dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(index), reg);
-> +
-> +	return 0;
-> +}
-> +
-> +/**
-> + * dwc3_phy_setup - Configure USB PHY Interface of DWC3 Core
-> + * @dwc: Pointer to our controller context structure
-> + *
-> + * Returns 0 on success. The USB PHY interfaces are configured but not
-> + * initialized. The PHY interfaces and the PHYs get initialized together with
-> + * the core in dwc3_core_init.
-> + */
-> +static int dwc3_phy_setup(struct dwc3 *dwc)
-> +{
-> +	int i;
-> +	int ret;
-> +
-> +	for (i = 0; i < dwc->num_usb3_ports; i++) {
-> +		ret = dwc3_ss_phy_setup(dwc, i);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = dwc3_hs_phy_setup(dwc, i);
-> +		if (ret)
-> +			return ret;
-> +	}
->   
->   	return 0;
->   }
-> @@ -748,23 +781,32 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->   static int dwc3_phy_init(struct dwc3 *dwc)
->   {
->   	int ret;
-> +	int i;
-> +	int j;
->   
->   	usb_phy_init(dwc->usb2_phy);
->   	usb_phy_init(dwc->usb3_phy);
->   
-> -	ret = phy_init(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_shutdown_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_exit_phy;
->   
-> -	ret = phy_init(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_exit_usb2_phy;
-> +		ret = phy_init(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			phy_exit(dwc->usb2_generic_phy[i]);
-> +			goto err_exit_phy;
-> +		}
-> +	}
->   
->   	return 0;
->   
-> -err_exit_usb2_phy:
-> -	phy_exit(dwc->usb2_generic_phy);
-> -err_shutdown_usb3_phy:
-> +err_exit_phy:
-> +	for (j = i - 1; j >= 0; j--) {
-> +		phy_exit(dwc->usb2_generic_phy[j]);
-> +		phy_exit(dwc->usb3_generic_phy[j]);
-> +	}
-> +
->   	usb_phy_shutdown(dwc->usb3_phy);
->   	usb_phy_shutdown(dwc->usb2_phy);
->   
-> @@ -773,8 +815,12 @@ static int dwc3_phy_init(struct dwc3 *dwc)
->   
->   static void dwc3_phy_exit(struct dwc3 *dwc)
->   {
-> -	phy_exit(dwc->usb3_generic_phy);
-> -	phy_exit(dwc->usb2_generic_phy);
-> +	int i;
-> +
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		phy_exit(dwc->usb3_generic_phy[i]);
-> +		phy_exit(dwc->usb2_generic_phy[i]);
-> +	}
->   
->   	usb_phy_shutdown(dwc->usb3_phy);
->   	usb_phy_shutdown(dwc->usb2_phy);
-> @@ -783,23 +829,32 @@ static void dwc3_phy_exit(struct dwc3 *dwc)
->   static int dwc3_phy_power_on(struct dwc3 *dwc)
->   {
->   	int ret;
-> +	int i;
-> +	int j;
->   
->   	usb_phy_set_suspend(dwc->usb2_phy, 0);
->   	usb_phy_set_suspend(dwc->usb3_phy, 0);
->   
-> -	ret = phy_power_on(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_suspend_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_power_off_phy;
->   
-> -	ret = phy_power_on(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_power_off_usb2_phy;
-> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			phy_power_off(dwc->usb2_generic_phy[i]);
-> +			goto err_power_off_phy;
-> +		}
-> +	}
->   
->   	return 0;
->   
-> -err_power_off_usb2_phy:
-> -	phy_power_off(dwc->usb2_generic_phy);
-> -err_suspend_usb3_phy:
-> +err_power_off_phy:
-> +	for (j = i - 1; j >= 0; j--) {
-> +		phy_power_off(dwc->usb2_generic_phy[j]);
-> +		phy_power_off(dwc->usb3_generic_phy[j]);
-> +	}
-> +
->   	usb_phy_set_suspend(dwc->usb3_phy, 1);
->   	usb_phy_set_suspend(dwc->usb2_phy, 1);
->   
-> @@ -808,8 +863,12 @@ static int dwc3_phy_power_on(struct dwc3 *dwc)
->   
->   static void dwc3_phy_power_off(struct dwc3 *dwc)
->   {
-> -	phy_power_off(dwc->usb3_generic_phy);
-> -	phy_power_off(dwc->usb2_generic_phy);
-> +	int i;
-> +
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		phy_power_off(dwc->usb3_generic_phy[i]);
-> +		phy_power_off(dwc->usb2_generic_phy[i]);
-> +	}
->   
->   	usb_phy_set_suspend(dwc->usb3_phy, 1);
->   	usb_phy_set_suspend(dwc->usb2_phy, 1);
-> @@ -1082,6 +1141,7 @@ static int dwc3_core_init(struct dwc3 *dwc)
->   	unsigned int		hw_mode;
->   	u32			reg;
->   	int			ret;
-> +	int			i;
->   
->   	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
->   
-> @@ -1125,15 +1185,19 @@ static int dwc3_core_init(struct dwc3 *dwc)
->   	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD &&
->   	    !DWC3_VER_IS_WITHIN(DWC3, ANY, 194A)) {
->   		if (!dwc->dis_u3_susphy_quirk) {
-> -			reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
-> -			reg |= DWC3_GUSB3PIPECTL_SUSPHY;
-> -			dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), reg);
-> +			for (i = 0; i < dwc->num_usb3_ports; i++) {
-> +				reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(i));
-> +				reg |= DWC3_GUSB3PIPECTL_SUSPHY;
-> +				dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(i), reg);
-> +			}
->   		}
->   
->   		if (!dwc->dis_u2_susphy_quirk) {
-> -			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-> -			reg |= DWC3_GUSB2PHYCFG_SUSPHY;
-> -			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-> +			for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +				reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(i));
-> +				reg |= DWC3_GUSB2PHYCFG_SUSPHY;
-> +				dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(i), reg);
-> +			}
->   		}
->   	}
->   
-> @@ -1276,7 +1340,9 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->   {
->   	struct device		*dev = dwc->dev;
->   	struct device_node	*node = dev->of_node;
-> +	char phy_name[11];
->   	int ret;
-> +	int i;
->   
->   	if (node) {
->   		dwc->usb2_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 0);
-> @@ -1302,22 +1368,36 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->   			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
->   	}
->   
-> -	dwc->usb2_generic_phy = devm_phy_get(dev, "usb2-phy");
-> -	if (IS_ERR(dwc->usb2_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb2_generic_phy);
-> -		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb2_generic_phy = NULL;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		if (dwc->num_usb2_ports == 1)
-> +			sprintf(phy_name, "usb2-phy");
->   		else
-> -			return dev_err_probe(dev, ret, "no usb2 phy configured\n");
-> -	}
-> +			sprintf(phy_name, "usb2-port%d", i);
->   
-> -	dwc->usb3_generic_phy = devm_phy_get(dev, "usb3-phy");
-> -	if (IS_ERR(dwc->usb3_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb3_generic_phy);
-> -		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb3_generic_phy = NULL;
-> +		dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb2_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb2_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb2_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret,
-> +					"failed to lookup phy %s\n", phy_name);
-> +		}
-> +
-> +		if (dwc->num_usb2_ports == 1)
-> +			sprintf(phy_name, "usb3-phy");
->   		else
-> -			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
-> +			sprintf(phy_name, "usb3-port%d", i);
-> +
-> +		dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb3_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb3_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb3_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret,
-> +					"failed to lookup phy %s\n", phy_name);
-> +		}
->   	}
->   
->   	return 0;
-> @@ -1327,6 +1407,7 @@ static int dwc3_core_init_mode(struct dwc3 *dwc)
->   {
->   	struct device *dev = dwc->dev;
->   	int ret;
-> +	int i;
->   
->   	switch (dwc->dr_mode) {
->   	case USB_DR_MODE_PERIPHERAL:
-> @@ -1334,8 +1415,8 @@ static int dwc3_core_init_mode(struct dwc3 *dwc)
->   
->   		if (dwc->usb2_phy)
->   			otg_set_vbus(dwc->usb2_phy->otg, false);
-> -		phy_set_mode(dwc->usb2_generic_phy, PHY_MODE_USB_DEVICE);
-> -		phy_set_mode(dwc->usb3_generic_phy, PHY_MODE_USB_DEVICE);
-> +		phy_set_mode(dwc->usb2_generic_phy[0], PHY_MODE_USB_DEVICE);
-> +		phy_set_mode(dwc->usb3_generic_phy[0], PHY_MODE_USB_DEVICE);
->   
->   		ret = dwc3_gadget_init(dwc);
->   		if (ret)
-> @@ -1346,8 +1427,10 @@ static int dwc3_core_init_mode(struct dwc3 *dwc)
->   
->   		if (dwc->usb2_phy)
->   			otg_set_vbus(dwc->usb2_phy->otg, true);
-> -		phy_set_mode(dwc->usb2_generic_phy, PHY_MODE_USB_HOST);
-> -		phy_set_mode(dwc->usb3_generic_phy, PHY_MODE_USB_HOST);
-> +		for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +			phy_set_mode(dwc->usb2_generic_phy[i], PHY_MODE_USB_HOST);
-> +			phy_set_mode(dwc->usb3_generic_phy[i], PHY_MODE_USB_HOST);
-> +		}
->   
->   		ret = dwc3_host_init(dwc);
->   		if (ret)
-> @@ -1804,9 +1887,12 @@ static int dwc3_read_port_info(struct dwc3 *dwc)
->   
->   	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
->   			dwc->num_usb2_ports, dwc->num_usb3_ports);
-> -
->   	iounmap(base);
->   
-> +	if ((dwc->num_usb2_ports > DWC3_MAX_PORTS) ||
-> +		(dwc->num_usb3_ports > DWC3_MAX_PORTS))
-> +		return -ENOMEM;
-> +
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-fastrpc-multimode-invoke-request-support/20230901-002929
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/1693499292-19083-5-git-send-email-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v1 4/5] misc: fastrpc: Add support to save and restore interrupted
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230901/202309010926.bLqVExVs-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230901/202309010926.bLqVExVs-lkp@intel.com/reproduce)
 
-Shouldn't this be more applicable to be included in patch#4 in this series?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309010926.bLqVExVs-lkp@intel.com/
 
-Thanks
-Wesley Cheng
+All warnings (new ones prefixed by >>):
 
->   	return 0;
->   }
->   
-> @@ -2042,6 +2128,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->   {
->   	unsigned long	flags;
->   	u32 reg;
-> +	int i;
->   
->   	switch (dwc->current_dr_role) {
->   	case DWC3_GCTL_PRTCAP_DEVICE:
-> @@ -2060,17 +2147,21 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->   		/* Let controller to suspend HSPHY before PHY driver suspends */
->   		if (dwc->dis_u2_susphy_quirk ||
->   		    dwc->dis_enblslpm_quirk) {
-> -			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-> -			reg |=  DWC3_GUSB2PHYCFG_ENBLSLPM |
-> -				DWC3_GUSB2PHYCFG_SUSPHY;
-> -			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-> +			for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +				reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(i));
-> +				reg |=  DWC3_GUSB2PHYCFG_ENBLSLPM |
-> +					DWC3_GUSB2PHYCFG_SUSPHY;
-> +				dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(i), reg);
-> +			}
->   
->   			/* Give some time for USB2 PHY to suspend */
->   			usleep_range(5000, 6000);
->   		}
->   
-> -		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
-> -		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
-> +		for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +			phy_pm_runtime_put_sync(dwc->usb2_generic_phy[i]);
-> +			phy_pm_runtime_put_sync(dwc->usb3_generic_phy[i]);
-> +		}
->   		break;
->   	case DWC3_GCTL_PRTCAP_OTG:
->   		/* do nothing during runtime_suspend */
-> @@ -2100,6 +2191,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
->   	unsigned long	flags;
->   	int		ret;
->   	u32		reg;
-> +	int		i;
->   
->   	switch (dwc->current_dr_role) {
->   	case DWC3_GCTL_PRTCAP_DEVICE:
-> @@ -2119,17 +2211,21 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
->   			break;
->   		}
->   		/* Restore GUSB2PHYCFG bits that were modified in suspend */
-> -		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-> -		if (dwc->dis_u2_susphy_quirk)
-> -			reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-> +		 for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(i));
-> +			if (dwc->dis_u2_susphy_quirk)
-> +				reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
->   
-> -		if (dwc->dis_enblslpm_quirk)
-> -			reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
-> +			if (dwc->dis_enblslpm_quirk)
-> +				reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
->   
-> -		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-> +			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(i), reg);
-> +		}
->   
-> -		phy_pm_runtime_get_sync(dwc->usb2_generic_phy);
-> -		phy_pm_runtime_get_sync(dwc->usb3_generic_phy);
-> +		for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +			phy_pm_runtime_get_sync(dwc->usb2_generic_phy[i]);
-> +			phy_pm_runtime_get_sync(dwc->usb3_generic_phy[i]);
-> +		}
->   		break;
->   	case DWC3_GCTL_PRTCAP_OTG:
->   		/* nothing to do on runtime_resume */
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 5b0f2aa115d2..5521dc9ca034 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -33,6 +33,9 @@
->   
->   #include <linux/power_supply.h>
->   
-> +/* Number of ports supported by a multiport controller */
-> +#define DWC3_MAX_PORTS 4
-> +
->   #define DWC3_MSG_MAX	500
->   
->   /* Global constants */
-> @@ -1024,8 +1027,8 @@ struct dwc3_scratchpad_array {
->    * @usb_psy: pointer to power supply interface.
->    * @usb2_phy: pointer to USB2 PHY
->    * @usb3_phy: pointer to USB3 PHY
-> - * @usb2_generic_phy: pointer to USB2 PHY
-> - * @usb3_generic_phy: pointer to USB3 PHY
-> + * @usb2_generic_phy: pointer to array of USB2 PHY
-> + * @usb3_generic_phy: pointer to array of USB3 PHY
->    * @num_usb2_ports: number of USB2 ports
->    * @num_usb3_ports: number of USB3 ports
->    * @phys_ready: flag to indicate that PHYs are ready
-> @@ -1164,8 +1167,8 @@ struct dwc3 {
->   	struct usb_phy		*usb2_phy;
->   	struct usb_phy		*usb3_phy;
->   
-> -	struct phy		*usb2_generic_phy;
-> -	struct phy		*usb3_generic_phy;
-> +	struct phy		*usb2_generic_phy[DWC3_MAX_PORTS];
-> +	struct phy		*usb3_generic_phy[DWC3_MAX_PORTS];
->   
->   	u8			num_usb2_ports;
->   	u8			num_usb3_ports;
-> diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
-> index 039bf241769a..9aec41f1ad43 100644
-> --- a/drivers/usb/dwc3/drd.c
-> +++ b/drivers/usb/dwc3/drd.c
-> @@ -331,6 +331,7 @@ void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
->   	u32 reg;
->   	int id;
->   	unsigned long flags;
-> +	int i;
->   
->   	if (dwc->dr_mode != USB_DR_MODE_OTG)
->   		return;
-> @@ -386,9 +387,12 @@ void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
->   		} else {
->   			if (dwc->usb2_phy)
->   				otg_set_vbus(dwc->usb2_phy->otg, true);
-> -			if (dwc->usb2_generic_phy)
-> -				phy_set_mode(dwc->usb2_generic_phy,
-> -					     PHY_MODE_USB_HOST);
-> +			for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +				if (dwc->usb2_generic_phy[i]) {
-> +					phy_set_mode(dwc->usb2_generic_phy[i],
-> +						     PHY_MODE_USB_HOST);
-> +				}
-> +			}
->   		}
->   		break;
->   	case DWC3_OTG_ROLE_DEVICE:
-> @@ -400,9 +404,8 @@ void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
->   
->   		if (dwc->usb2_phy)
->   			otg_set_vbus(dwc->usb2_phy->otg, false);
-> -		if (dwc->usb2_generic_phy)
-> -			phy_set_mode(dwc->usb2_generic_phy,
-> -				     PHY_MODE_USB_DEVICE);
-> +		if (dwc->usb2_generic_phy[0])
-> +			phy_set_mode(dwc->usb2_generic_phy[0], PHY_MODE_USB_DEVICE);
->   		ret = dwc3_gadget_init(dwc);
->   		if (ret)
->   			dev_err(dwc->dev, "failed to initialize peripheral\n");
+   drivers/misc/fastrpc.c: In function 'fastrpc_context_alloc':
+   drivers/misc/fastrpc.c:663:29: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+     663 |                 ctx->args = (struct fastrpc_invoke_args *)invoke->inv.args;
+         |                             ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_init_create_static_process':
+   drivers/misc/fastrpc.c:1494:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1494 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_init_create_process':
+   drivers/misc/fastrpc.c:1627:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1627 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_release_current_dsp_process':
+   drivers/misc/fastrpc.c:1710:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1710 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_device_release':
+>> drivers/misc/fastrpc.c:1719:42: warning: unused variable 'n' [-Wunused-variable]
+    1719 |         struct fastrpc_invoke_ctx *ctx, *n;
+         |                                          ^
+>> drivers/misc/fastrpc.c:1719:36: warning: unused variable 'ctx' [-Wunused-variable]
+    1719 |         struct fastrpc_invoke_ctx *ctx, *n;
+         |                                    ^~~
+   drivers/misc/fastrpc.c: In function 'fastrpc_init_attach':
+   drivers/misc/fastrpc.c:1856:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1856 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_invoke':
+   drivers/misc/fastrpc.c:1887:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1887 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_multimode_invoke':
+   drivers/misc/fastrpc.c:1928:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1928 |                 einv.inv.args = (__u64)args;
+         |                                 ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_get_info_from_dsp':
+   drivers/misc/fastrpc.c:1958:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1958 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_munmap_impl':
+   drivers/misc/fastrpc.c:2061:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    2061 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_mmap':
+   drivers/misc/fastrpc.c:2159:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    2159 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_unmap_impl':
+   drivers/misc/fastrpc.c:2240:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    2240 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_map':
+   drivers/misc/fastrpc.c:2309:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    2309 |         ioctl.inv.args = (__u64)args;
+         |                          ^
+
+
+vim +/n +1719 drivers/misc/fastrpc.c
+
+0871561055e666 Abel Vesa                2022-11-25  1530  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1531  static int fastrpc_init_create_process(struct fastrpc_user *fl,
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1532  					char __user *argp)
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1533  {
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1534  	struct fastrpc_init_create init;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1535  	struct fastrpc_invoke_args *args;
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1536  	struct fastrpc_enhanced_invoke ioctl;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1537  	struct fastrpc_phy_page pages[1];
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1538  	struct fastrpc_map *map = NULL;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1539  	struct fastrpc_buf *imem = NULL;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1540  	int memlen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1541  	int err;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1542  	struct {
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1543  		int pgid;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1544  		u32 namelen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1545  		u32 filelen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1546  		u32 pageslen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1547  		u32 attrs;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1548  		u32 siglen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1549  	} inbuf;
+7f1f481263c3ce Jeya R                   2022-02-14  1550  	bool unsigned_module = false;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1551  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1552  	args = kcalloc(FASTRPC_CREATE_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1553  	if (!args)
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1554  		return -ENOMEM;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1555  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1556  	if (copy_from_user(&init, argp, sizeof(init))) {
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1557  		err = -EFAULT;
+b49f6d83e290f1 Thierry Escande          2019-03-07  1558  		goto err;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1559  	}
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1560  
+7f1f481263c3ce Jeya R                   2022-02-14  1561  	if (init.attrs & FASTRPC_MODE_UNSIGNED_MODULE)
+7f1f481263c3ce Jeya R                   2022-02-14  1562  		unsigned_module = true;
+7f1f481263c3ce Jeya R                   2022-02-14  1563  
+7f1f481263c3ce Jeya R                   2022-02-14  1564  	if (is_session_rejected(fl, unsigned_module)) {
+7f1f481263c3ce Jeya R                   2022-02-14  1565  		err = -ECONNREFUSED;
+7f1f481263c3ce Jeya R                   2022-02-14  1566  		goto err;
+7f1f481263c3ce Jeya R                   2022-02-14  1567  	}
+7f1f481263c3ce Jeya R                   2022-02-14  1568  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1569  	if (init.filelen > INIT_FILELEN_MAX) {
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1570  		err = -EINVAL;
+b49f6d83e290f1 Thierry Escande          2019-03-07  1571  		goto err;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1572  	}
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1573  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1574  	inbuf.pgid = fl->tgid;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1575  	inbuf.namelen = strlen(current->comm) + 1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1576  	inbuf.filelen = init.filelen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1577  	inbuf.pageslen = 1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1578  	inbuf.attrs = init.attrs;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1579  	inbuf.siglen = init.siglen;
+84195d206e1fbd Jonathan Marek           2020-09-08  1580  	fl->pd = USER_PD;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1581  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1582  	if (init.filelen && init.filefd) {
+e90d911906196b Vamsi Krishna Gattupalli 2022-02-14  1583  		err = fastrpc_map_create(fl, init.filefd, init.filelen, 0, &map);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1584  		if (err)
+b49f6d83e290f1 Thierry Escande          2019-03-07  1585  			goto err;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1586  	}
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1587  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1588  	memlen = ALIGN(max(INIT_FILELEN_MAX, (int)init.filelen * 4),
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1589  		       1024 * 1024);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1590  	err = fastrpc_buf_alloc(fl, fl->sctx->dev, memlen,
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1591  				&imem);
+b49f6d83e290f1 Thierry Escande          2019-03-07  1592  	if (err)
+b49f6d83e290f1 Thierry Escande          2019-03-07  1593  		goto err_alloc;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1594  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1595  	fl->init_mem = imem;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1596  	args[0].ptr = (u64)(uintptr_t)&inbuf;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1597  	args[0].length = sizeof(inbuf);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1598  	args[0].fd = -1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1599  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1600  	args[1].ptr = (u64)(uintptr_t)current->comm;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1601  	args[1].length = inbuf.namelen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1602  	args[1].fd = -1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1603  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1604  	args[2].ptr = (u64) init.file;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1605  	args[2].length = inbuf.filelen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1606  	args[2].fd = init.filefd;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1607  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1608  	pages[0].addr = imem->phys;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1609  	pages[0].size = imem->size;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1610  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1611  	args[3].ptr = (u64)(uintptr_t) pages;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1612  	args[3].length = 1 * sizeof(*pages);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1613  	args[3].fd = -1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1614  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1615  	args[4].ptr = (u64)(uintptr_t)&inbuf.attrs;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1616  	args[4].length = sizeof(inbuf.attrs);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1617  	args[4].fd = -1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1618  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1619  	args[5].ptr = (u64)(uintptr_t) &inbuf.siglen;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1620  	args[5].length = sizeof(inbuf.siglen);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1621  	args[5].fd = -1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1622  
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1623  	ioctl.inv.handle = FASTRPC_INIT_HANDLE;
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1624  	ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1625  	if (init.attrs)
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1626  		ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
+db2e49fb9bf108 Ekansh Gupta             2023-08-31 @1627  	ioctl.inv.args = (__u64)args;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1628  
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1629  	err = fastrpc_internal_invoke(fl, true, &ioctl);
+b49f6d83e290f1 Thierry Escande          2019-03-07  1630  	if (err)
+b49f6d83e290f1 Thierry Escande          2019-03-07  1631  		goto err_invoke;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1632  
+b49f6d83e290f1 Thierry Escande          2019-03-07  1633  	kfree(args);
+b49f6d83e290f1 Thierry Escande          2019-03-07  1634  
+b49f6d83e290f1 Thierry Escande          2019-03-07  1635  	return 0;
+b49f6d83e290f1 Thierry Escande          2019-03-07  1636  
+b49f6d83e290f1 Thierry Escande          2019-03-07  1637  err_invoke:
+b49f6d83e290f1 Thierry Escande          2019-03-07  1638  	fl->init_mem = NULL;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1639  	fastrpc_buf_free(imem);
+b49f6d83e290f1 Thierry Escande          2019-03-07  1640  err_alloc:
+b49f6d83e290f1 Thierry Escande          2019-03-07  1641  	fastrpc_map_put(map);
+b49f6d83e290f1 Thierry Escande          2019-03-07  1642  err:
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1643  	kfree(args);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1644  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1645  	return err;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1646  }
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1647  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1648  static struct fastrpc_session_ctx *fastrpc_session_alloc(
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1649  					struct fastrpc_channel_ctx *cctx)
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1650  {
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1651  	struct fastrpc_session_ctx *session = NULL;
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1652  	unsigned long flags;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1653  	int i;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1654  
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1655  	spin_lock_irqsave(&cctx->lock, flags);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1656  	for (i = 0; i < cctx->sesscount; i++) {
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1657  		if (!cctx->session[i].used && cctx->session[i].valid) {
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1658  			cctx->session[i].used = true;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1659  			session = &cctx->session[i];
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1660  			break;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1661  		}
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1662  	}
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1663  	spin_unlock_irqrestore(&cctx->lock, flags);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1664  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1665  	return session;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1666  }
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1667  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1668  static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1669  				 struct fastrpc_session_ctx *session)
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1670  {
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1671  	unsigned long flags;
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1672  
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1673  	spin_lock_irqsave(&cctx->lock, flags);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1674  	session->used = false;
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1675  	spin_unlock_irqrestore(&cctx->lock, flags);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1676  }
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1677  
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1678  static void fastrpc_context_list_free(struct fastrpc_user *fl)
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1679  {
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1680  	struct fastrpc_invoke_ctx *ctx, *n;
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1681  
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1682  	list_for_each_entry_safe(ctx, n, &fl->interrupted, node) {
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1683  		spin_lock(&fl->lock);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1684  		list_del(&ctx->node);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1685  		spin_unlock(&fl->lock);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1686  		fastrpc_context_put(ctx);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1687  	}
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1688  
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1689  	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1690  		spin_lock(&fl->lock);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1691  		list_del(&ctx->node);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1692  		spin_unlock(&fl->lock);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1693  		fastrpc_context_put(ctx);
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1694  	}
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1695  }
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1696  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1697  static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1698  {
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1699  	struct fastrpc_invoke_args args[1];
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1700  	struct fastrpc_enhanced_invoke ioctl;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1701  	int tgid = 0;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1702  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1703  	tgid = fl->tgid;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1704  	args[0].ptr = (u64)(uintptr_t) &tgid;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1705  	args[0].length = sizeof(tgid);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1706  	args[0].fd = -1;
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1707  
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1708  	ioctl.inv.handle = FASTRPC_INIT_HANDLE;
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1709  	ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
+db2e49fb9bf108 Ekansh Gupta             2023-08-31 @1710  	ioctl.inv.args = (__u64)args;
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1711  
+db2e49fb9bf108 Ekansh Gupta             2023-08-31  1712  	return fastrpc_internal_invoke(fl, true, &ioctl);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1713  }
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1714  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1715  static int fastrpc_device_release(struct inode *inode, struct file *file)
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1716  {
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1717  	struct fastrpc_user *fl = (struct fastrpc_user *)file->private_data;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1718  	struct fastrpc_channel_ctx *cctx = fl->cctx;
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08 @1719  	struct fastrpc_invoke_ctx *ctx, *n;
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1720  	struct fastrpc_map *map, *m;
+2419e55e532de1 Jorge Ramirez-Ortiz      2019-10-09  1721  	struct fastrpc_buf *buf, *b;
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1722  	unsigned long flags;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1723  
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1724  	fastrpc_release_current_dsp_process(fl);
+d73f71c7c6ee15 Srinivas Kandagatla      2019-02-08  1725  
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1726  	spin_lock_irqsave(&cctx->lock, flags);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1727  	list_del(&fl->user);
+977e6c8d1d1806 Srinivas Kandagatla      2019-03-07  1728  	spin_unlock_irqrestore(&cctx->lock, flags);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1729  
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1730  	if (fl->init_mem)
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1731  		fastrpc_buf_free(fl->init_mem);
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1732  
+1d9e27a4779236 Ekansh Gupta             2023-08-31  1733  	fastrpc_context_list_free(fl);
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1734  
+5bb96c8f9268e2 Abel Vesa                2022-11-24  1735  	list_for_each_entry_safe(map, m, &fl->maps, node)
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1736  		fastrpc_map_put(map);
+c68cfb718c8f97 Srinivas Kandagatla      2019-02-08  1737  
+2419e55e532de1 Jorge Ramirez-Ortiz      2019-10-09  1738  	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+2419e55e532de1 Jorge Ramirez-Ortiz      2019-10-09  1739  		list_del(&buf->node);
+2419e55e532de1 Jorge Ramirez-Ortiz      2019-10-09  1740  		fastrpc_buf_free(buf);
+2419e55e532de1 Jorge Ramirez-Ortiz      2019-10-09  1741  	}
+2419e55e532de1 Jorge Ramirez-Ortiz      2019-10-09  1742  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1743  	fastrpc_session_free(cctx, fl->sctx);
+278d56f970ae6e Bjorn Andersson          2019-08-29  1744  	fastrpc_channel_ctx_put(cctx);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1745  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1746  	mutex_destroy(&fl->mutex);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1747  	kfree(fl);
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1748  	file->private_data = NULL;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1749  
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1750  	return 0;
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1751  }
+f6f9279f2bf0e3 Srinivas Kandagatla      2019-02-08  1752  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
