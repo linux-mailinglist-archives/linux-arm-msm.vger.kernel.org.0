@@ -2,114 +2,300 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE24B78FF3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 16:31:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CB2378FF5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 16:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344972AbjIAObs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 10:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34188 "EHLO
+        id S1350045AbjIAOll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 10:41:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237433AbjIAObr (ORCPT
+        with ESMTP id S236217AbjIAOlk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 10:31:47 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C07AC
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 07:31:44 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fe32016bc8so20999275e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 07:31:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693578703; x=1694183503; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ItieQro37js0Xivx/KuEwWU84tuXoE8kLB5CTHgD0s0=;
-        b=c86y69Tze1Q6lAbhrBFNELGkaEUqW4VtAE1kB7182heOQ/dv29MiiwlneCyirvc1TW
-         B3VigeePVd+UtpUDBbiV+a/x8O3380NBZ5Eu82v/wAFWaTi6k8imIxRwMRwy5jkHAafc
-         dQcJcNf2oZ1G10jUyapK5ktw81VJYATsWY3G/fqHKZ6IGQLBavv6NkW3J2LxsrUsMyUd
-         o6M9XY0jrROAqfthipAgDKKxZhzVoapc9DPE2ajAMiyeeNu2SIC2V7/NatMX9qVfgKKr
-         lyHhpNrX710aDCeRGjVMF9XPDijBUe/nvP1f0Z/PBSSWRE71Z2EAqbLaaglBULr1cwlD
-         ZEVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693578703; x=1694183503;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ItieQro37js0Xivx/KuEwWU84tuXoE8kLB5CTHgD0s0=;
-        b=N0+FZls4Fxe6Eec1dT8MV/5d8N2lXR2Ns0rYzYnwlzyxyPK7LOyA1aeke3hP/HHlsW
-         sMKESFLPKzHEm0oQlxLL5XH3211PcidSa7WpOIxhdtyogJpZxyNtK/ThJ2D+ecIU6aYf
-         l0Afsw7jyXq1TXrZqoz1Ost15W6qyB1jSKcSbcQS8Jl9U1u8UfGQ1DdVwWwW1m3S3nS4
-         mF1TABbQC4mKlc/yT0bgLurLsd99fp/gF4UU6TIWiE1yurubgQio1UdRrKkGlqG8SwST
-         7h/5qjLZzTIaTjATNGmZYEEtHA8Ubhddh8XVL9nQSj+miUrY6gH4X1vFTrRSs7FS36My
-         qKGQ==
-X-Gm-Message-State: AOJu0Yz9iRp2I2cpHZ5NevNazrkZ/+3ZF/uBYTeAJJfTI+5/NkBZm+fu
-        HY28t5zRvp2mM9064WvhK64lsA==
-X-Google-Smtp-Source: AGHT+IE4lWhpQs9q5dJpmlxzxIA/yuvOt+uDsr/czXDK+l+wj0w4HQmP2GTBi3i+lbwGzHY082v92Q==
-X-Received: by 2002:a5d:4b46:0:b0:317:67bf:337f with SMTP id w6-20020a5d4b46000000b0031767bf337fmr2050872wrs.2.1693578702923;
-        Fri, 01 Sep 2023 07:31:42 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id h8-20020a5d4fc8000000b0031ae8d86af4sm5351547wrw.103.2023.09.01.07.31.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Sep 2023 07:31:42 -0700 (PDT)
-Message-ID: <90a3675c-2e30-35a5-85d9-3d1b895ab265@linaro.org>
-Date:   Fri, 1 Sep 2023 15:31:41 +0100
+        Fri, 1 Sep 2023 10:41:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E520210F3;
+        Fri,  1 Sep 2023 07:41:36 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381CbtWP000627;
+        Fri, 1 Sep 2023 14:41:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZVZP4qpMY7sJBp24OjgLikdVW0/yjZXJJGDmIj59SIU=;
+ b=jcJ3Pb88RT2xm8DFA9jPB9UDtD7Gsd8EWqmP+SxbT3fyyE7VCEoMCYXY2DgzlrTVpzad
+ /Fib4JVnQJRfPUQEvjwLM7XG+0esNkuulI6rVCSLv+wFHVrqR2yz8gyn/kLNtgYgWge7
+ QCISpz863DJO1+LLwZeCGt3W+mh09FktscxNqopK0Ym2VBuXVJEjauzpe9qQybmRKOWz
+ K8arucrFvD+531dScjCVW40XLS1joX5j8+1FyuVWNwMiaRIAEOH+h5PRcoWIYnQ8lewQ
+ c54QsZFyzdbyShwjVBHElybtZf7sqBFXKpeZN2f4UYJTPUhXJzxhkLpeRlEmJSBi8Q89 7w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3su89e9fq9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 01 Sep 2023 14:41:15 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381EfDlG011857
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 1 Sep 2023 14:41:13 GMT
+Received: from [10.253.79.146] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 1 Sep
+ 2023 07:41:09 -0700
+Message-ID: <475d60a3-9b97-6a91-d638-09cf38d47eca@quicinc.com>
+Date:   Fri, 1 Sep 2023 22:41:07 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2] arm64: dts: ipq5018: Correct uart1_pins pinconf
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v8 07/13] coresight-tpdm: Add nodes to set trigger
+ timestamp and type
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
+ <1692681973-20764-8-git-send-email-quic_taozha@quicinc.com>
+ <90beb51a-27fc-ef16-88cb-07a4b4ec06e4@arm.com>
 Content-Language: en-US
-To:     Ziyang Huang <hzyitc@outlook.com>
-Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_gokulsri@quicinc.com,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        robh+dt@kernel.org
-References: <TYZPR01MB5556F902BF64AF857C3ABD44C9E5A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <49fbae87-ce09-23af-6bcd-459b5646e680@nexus-software.ie>
- <TYZPR01MB55565E0E55FAE550EAA53D3AC9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <TYZPR01MB55565E0E55FAE550EAA53D3AC9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <90beb51a-27fc-ef16-88cb-07a4b4ec06e4@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vYJmj11bJkrBln-ktfzzEY-1ek_otPHz
+X-Proofpoint-GUID: vYJmj11bJkrBln-ktfzzEY-1ek_otPHz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-01_12,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 clxscore=1011 suspectscore=0
+ malwarescore=0 mlxscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309010137
 X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/09/2023 14:09, Ziyang Huang wrote:
->> Is this change something that should be expressed for a particular 
->> board ?
+
+On 9/1/2023 6:43 PM, Suzuki K Poulose wrote:
+> On 22/08/2023 06:26, Tao Zhang wrote:
+>> The nodes are needed to set or show the trigger timestamp and
+>> trigger type. This change is to add these nodes to achieve these
+>> function.
 >>
-> 
-> Yes, this is device-special. Some boards use GPIO20 and 21 while others 
-> use GPIO28 and 29. But we have defined a wrong value here. At lease, it 
-> should be a correct demo. Or should I leave 2 configs here to let device 
-> choose?
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 22 +++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 95 
+>> ++++++++++++++++++++++
+>>   2 files changed, 117 insertions(+)
+>>
+>> diff --git 
+>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index 2936226..9e26e30 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -21,3 +21,25 @@ Description:
+>>             Accepts only one value -  1.
+>>           1 : Reset the dataset of the tpdm
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_type
+>> +Date:        March 2023
+>> +KernelVersion    6.5
+>
+> 6.7
+>
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (RW) Set/Get the trigger type of the DSB for tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB trigger type to false
+>> +        1 : Set the DSB trigger type to true
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_ts
+>> +Date:        March 2023
+>> +KernelVersion    6.5
+>
+> Same here
+>
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (RW) Set/Get the trigger timestamp of the DSB for tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB trigger type to false
+>> +        1 : Set the DSB trigger type to true
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index d6e7c8c..8e11c9b 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -25,6 +25,18 @@ static bool tpdm_has_dsb_dataset(struct 
+>> tpdm_drvdata *drvdata)
+>>       return (drvdata->datasets & TPDM_PIDR0_DS_DSB);
+>>   }
+>>   +static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>> +                       struct attribute *attr, int n)
+>
+> minor nit: please align.
+>
+> static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>                    struct attribute *attr, int n)
+>
+> I don't know if you have a different setting for tabs in your editor.
+> Please refer to the coding style document.
 
-https://gist.github.com/ptpt52/ae47eb7b86ce2911df06d067152f02ac
+Tab size is set to 4 in my editor.
 
-U-Boot 2016.01 (Jul 08 2021 - 07:14:42 +0000)
+There are 5 tabs and 3 spaces at the beginning of this line.
 
-DRAM:  smem ram ptable found: ver: 1 len: 4
-256 MiB
-TEST-
-SPI_ADDR_LEN=3
-SF: Detected XM25QU128C with page size 256 Bytes, erase size 4 KiB, 
-total 16 MiB
-*** Warning - bad CRC, using default environment
+I don't know if this is the same as what you see in this patch.
 
-In:    serial@78AF000
-Out:   serial@78AF000
-Err:   serial@78AF000
+I see from the editor that the code meets the requirements of the coding 
+style document.
 
-So, we're saying the correct default console is blsp0_uart0 ?
+If the gap in alignment is not resolved, such alignment problems may 
+still occur.
 
-https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/blob/5343739b4070bcec2fecd72f758c16adc31a3083/arch/arm/dts/ipq5018-mp03.3.dts
 
----
-bod
+Best,
+
+Tao
+
+>
+>> +{
+>> +    struct device *dev = kobj_to_dev(kobj);
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    if (drvdata && tpdm_has_dsb_dataset(drvdata))
+>> +        return attr->mode;
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
+>>   {
+>>       if (tpdm_has_dsb_dataset(drvdata)) {
+>> @@ -232,8 +244,91 @@ static struct attribute_group tpdm_attr_grp = {
+>>       .attrs = tpdm_attrs,
+>>   };
+>>   +static ssize_t dsb_trig_type_show(struct device *dev,
+>> +          struct device_attribute *attr, char *buf)
+>
+> same here.
+>
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->trig_type);
+>> +}
+>> +
+>> +/*
+>> + * Trigger type (boolean):
+>> + * false - Disable trigger type.
+>> + * true  - Enable trigger type.
+>> + */
+>> +static ssize_t dsb_trig_type_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->trig_type = true;
+>> +    else
+>> +        drvdata->dsb->trig_type = false;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_trig_type);
+>> +
+>> +static ssize_t dsb_trig_ts_show(struct device *dev,
+>> +                    struct device_attribute *attr,
+>> +                    char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->trig_ts);
+>> +}
+>> +
+>> +/*
+>> + * Trigger timestamp (boolean):
+>> + * false - Disable trigger timestamp.
+>> + * true  - Enable trigger timestamp.
+>> + */
+>> +static ssize_t dsb_trig_ts_store(struct device *dev,
+>> +                   struct device_attribute *attr,
+>> +                   const char *buf,
+>> +                   size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->trig_ts = true;
+>> +    else
+>> +        drvdata->dsb->trig_ts = false;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_trig_ts);
+>> +
+>> +static struct attribute *tpdm_dsb_attrs[] = {
+>> +    &dev_attr_dsb_trig_ts.attr,
+>> +    &dev_attr_dsb_trig_type.attr,
+>> +    NULL,
+>> +};
+>> +
+>> +static struct attribute_group tpdm_dsb_attr_grp = {
+>> +    .attrs = tpdm_dsb_attrs,
+>> +    .is_visible = tpdm_dsb_is_visible,
+>> +};
+>> +
+>>   static const struct attribute_group *tpdm_attr_grps[] = {
+>>       &tpdm_attr_grp,
+>> +    &tpdm_dsb_attr_grp,
+>>       NULL,
+>>   };
+>
+> Rest looks fine to me
+>
+> Suzuki
+>
