@@ -2,461 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1EAD78F8D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 09:01:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3032B78F90A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 09:22:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345704AbjIAHBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 03:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33976 "EHLO
+        id S233627AbjIAHWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 03:22:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbjIAHBM (ORCPT
+        with ESMTP id S231532AbjIAHWb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 03:01:12 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A5810D2;
-        Fri,  1 Sep 2023 00:01:08 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3816jjNM025707;
-        Fri, 1 Sep 2023 07:00:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=0s1KoKJXAdqEKQ2U/kIybBGFtL0ncrGc0fZEPUE9J5Y=;
- b=VvbjbWkAP0sWP+6xjHbtLnZHcNWZOCdYSekqd9rGq0oCEG9Mh+SyOZtB7Cvb5ZQrG4el
- AM/I5JkaCcicoBGVS5BwZncFqfNP3ehjH9HjtL9EQMzsQL6B4GkGtI68OXupK0Ne+IyK
- b89BN3e8lHAY8XYn64Wvk6ek945qOqfQ8pQS/x84SSw1L9laO91+1aKwFvColpzcgTtP
- OGOXLhHgZhmSihx5l0bpNIgWR8sUXJIdAIAcSKR+oloFEQ5Gv3j7meBUOctNAWUz1DLG
- JF5xgbzGgotpxmbtViLKknw5nEy3vrBVxgy9u6PTjuPMhG8N2iJQtrCtGNegse7ABxar AQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stub8affy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 07:00:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38170w9a004213
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 07:00:58 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 1 Sep 2023 00:00:54 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_devipriy@quicinc.com>, <quic_saahtoma@quicinc.com>
-Subject: [PATCH V2] clk: qcom: clk-alpha-pll: Use determine_rate instead of round_rate
-Date:   Fri, 1 Sep 2023 12:30:41 +0530
-Message-ID: <20230901070041.13463-1-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 1 Sep 2023 03:22:31 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 397E410D1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 00:22:28 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-522bd411679so2146081a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 00:22:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693552947; x=1694157747; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SPFsQnNFOyEr/TykWKNk6Jb2skH/iHM6FQJgvqRqvps=;
+        b=WPTuZWSXyo1h+b+TfFV5S1aQRMEl8CHlEKKlmrZTy9oMNFvwuiE4P6gTkUV87w0SsC
+         +tqwKyQQ9bLDkZafmJEowPP0xLZPbx/2/MJncB9ew0zHTe7tQE2tuT+BU4TH3dbDMXPK
+         IAWrn4mKXkAZD3rsWQGvlrAr2RCnrlXjBMVstwPX5VjLfl89lTIG0so58yC2v/l1vTws
+         o5S30pRg5SjurCikElK92Hu09M/XCbBkGKJYbr7NvDvfsaMdvcG0H1gCUo+yTduIRW2/
+         5ko9kIk7Chkdy1gNO36Jof057/wYH8Dx+58xPNqPwSturygAsV/cmyM8dZXoRVP8MMG2
+         xkag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693552947; x=1694157747;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SPFsQnNFOyEr/TykWKNk6Jb2skH/iHM6FQJgvqRqvps=;
+        b=k6ol6oahBivKWtrhyQeifPGwoR+21LpMZ9vWBuzzGUWjfsf22Z7yVYh5wEMHcECvpd
+         Knq6U6Jx2If6DGrOaDarOAbZ23xu4DBck2W4qNZjdKJxoPZ9h5FImW3zUqU12a7Hn8YY
+         2/h39nYV/BDqB4E93jnaCxjJfO8IBMaeXAj0BsAmHeF4EM4RT6JoRuB9+X9krEo0Rt3E
+         gCW1PDQG9NpMcLK7cQSMHwFsWg8lf6kRuStOzbAN7mrOaC66lATsqKj7kENpich+AoWJ
+         HrdCvi2D5YSWZGhZ/eLIO5D0YOS1ngl+xgtvIIAUtdh616S+j/IWrOWBYvavd+CUvU2Y
+         yhzw==
+X-Gm-Message-State: AOJu0YwtCS5Jt9HquU+yaZexfyYI126ql6wqG4uesG/x24HQBV/r/2nf
+        Xj2IGxGcDFfmujFwhozAGdQ+MK9DqE5lLKcyxbo=
+X-Google-Smtp-Source: AGHT+IFgN+HP2h7HdCEHswR/JfRaRMzRiHzFqtC23Op5CwtCJi3SNSIxWFUJtkdGiI04AMI4XWMdvA==
+X-Received: by 2002:aa7:c3d4:0:b0:522:2711:863 with SMTP id l20-20020aa7c3d4000000b0052227110863mr1351919edr.1.1693552946615;
+        Fri, 01 Sep 2023 00:22:26 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id i14-20020aa7dd0e000000b0052bcdbe263esm1748912edv.36.2023.09.01.00.22.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Sep 2023 00:22:26 -0700 (PDT)
+Message-ID: <f340f731-8471-39be-c7b2-7d930916e3b1@linaro.org>
+Date:   Fri, 1 Sep 2023 09:22:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 34r5av10KtpiWSnWc5rlyYle0whaXiev
-X-Proofpoint-ORIG-GUID: 34r5av10KtpiWSnWc5rlyYle0whaXiev
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-01_04,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010066
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH] dt-bindings: firmware: Add documentation for
+ qcom,platform-parts-info
+To:     Naman Jain <quic_namajain@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_rohiagar@quicinc.com,
+        kernel@quicinc.com
+References: <20230901060223.19575-1-quic_namajain@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230901060223.19575-1-quic_namajain@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The round_rate() API returns a long value as the errors are reported using
-negative error codes. This leads to long overflow when the clock rate
-exceeds 2GHz.As the clock controller treats the clock rate above signed
-long max as an error, use determine_rate in place of round_rate as the
-determine_rate API does not possess such limitations.
+On 01/09/2023 08:02, Naman Jain wrote:
+> Add documentation to describe device tree bindings for QCOM's
+> platform-parts-info node. Firmware populates these nodes to pass the
+> information to kernel regarding the subset of hardware blocks
+> and features like Camera, Modem, Display present in a product.
+> 
+> This is to support that the same software image runs seamlessly on
+> different platforms where one or more HW blocks are not supported or
+> if some sub parts for a particular block are not supported.
+> 
+> Purpose of these definitions is to allow clients to know about this,
+> and thus, handle these cases gracefully.
 
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- Changes in V2:
-	- Updated divider_round_rate to divider_determine_rate as 
-	  suggested by Stephen Boyd.
+Whether camera is or is not supported, is defined by presence of camera
+node or by its status field.
 
- drivers/clk/qcom/clk-alpha-pll.c | 125 +++++++++++++++++--------------
- 1 file changed, 68 insertions(+), 57 deletions(-)
+Existing firmware (e.g. U-Boot) is also doing this - patching DTS when
+needed.
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 1c2a72840cd2..de2b7e2784ec 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -756,22 +756,24 @@ static int clk_alpha_pll_hwfsm_set_rate(struct clk_hw *hw, unsigned long rate,
- 					clk_alpha_pll_hwfsm_is_enabled);
- }
- 
--static long clk_alpha_pll_round_rate(struct clk_hw *hw, unsigned long rate,
--				     unsigned long *prate)
-+static int clk_alpha_pll_determine_rate(struct clk_hw *hw,
-+					struct clk_rate_request *req)
- {
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l, alpha_width = pll_alpha_width(pll);
- 	u64 a;
- 	unsigned long min_freq, max_freq;
- 
--	rate = alpha_pll_round_rate(rate, *prate, &l, &a, alpha_width);
--	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
--		return rate;
-+	req->rate = alpha_pll_round_rate(req->rate, req->best_parent_rate,
-+					 &l, &a, alpha_width);
-+	if (!pll->vco_table || alpha_pll_find_vco(pll, req->rate))
-+		return 0;
- 
- 	min_freq = pll->vco_table[0].min_freq;
- 	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
- 
--	return clamp(rate, min_freq, max_freq);
-+	req->rate = clamp(req->rate, min_freq, max_freq);
-+	return 0;
- }
- 
- static unsigned long
-@@ -918,12 +920,15 @@ static int alpha_pll_huayra_set_rate(struct clk_hw *hw, unsigned long rate,
- 	return 0;
- }
- 
--static long alpha_pll_huayra_round_rate(struct clk_hw *hw, unsigned long rate,
--					unsigned long *prate)
-+static int alpha_pll_huayra_determine_rate(struct clk_hw *hw,
-+					   struct clk_rate_request *req)
- {
- 	u32 l, a;
- 
--	return alpha_huayra_pll_round_rate(rate, *prate, &l, &a);
-+	req->rate = alpha_huayra_pll_round_rate(req->rate,
-+						req->best_parent_rate,
-+						&l, &a);
-+	return 0;
- }
- 
- static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
-@@ -1042,7 +1047,7 @@ const struct clk_ops clk_alpha_pll_ops = {
- 	.disable = clk_alpha_pll_disable,
- 	.is_enabled = clk_alpha_pll_is_enabled,
- 	.recalc_rate = clk_alpha_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = clk_alpha_pll_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_ops);
-@@ -1052,7 +1057,7 @@ const struct clk_ops clk_alpha_pll_huayra_ops = {
- 	.disable = clk_alpha_pll_disable,
- 	.is_enabled = clk_alpha_pll_is_enabled,
- 	.recalc_rate = alpha_pll_huayra_recalc_rate,
--	.round_rate = alpha_pll_huayra_round_rate,
-+	.determine_rate = alpha_pll_huayra_determine_rate,
- 	.set_rate = alpha_pll_huayra_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_huayra_ops);
-@@ -1062,7 +1067,7 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops = {
- 	.disable = clk_alpha_pll_hwfsm_disable,
- 	.is_enabled = clk_alpha_pll_hwfsm_is_enabled,
- 	.recalc_rate = clk_alpha_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = clk_alpha_pll_hwfsm_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
-@@ -1072,7 +1077,7 @@ const struct clk_ops clk_alpha_pll_fixed_trion_ops = {
- 	.disable = clk_trion_pll_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_trion_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_trion_ops);
- 
-@@ -1106,9 +1111,8 @@ static const struct clk_div_table clk_alpha_2bit_div_table[] = {
- 	{ }
- };
- 
--static long
--clk_alpha_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
--				 unsigned long *prate)
-+static int clk_alpha_pll_postdiv_determine_rate(struct clk_hw *hw,
-+						struct clk_rate_request *req)
- {
- 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
- 	const struct clk_div_table *table;
-@@ -1118,13 +1122,13 @@ clk_alpha_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
- 	else
- 		table = clk_alpha_div_table;
- 
--	return divider_round_rate(hw, rate, prate, table,
--				  pll->width, CLK_DIVIDER_POWER_OF_TWO);
-+	req->rate = divider_determine_rate(hw, req, table,
-+					   pll->width, CLK_DIVIDER_POWER_OF_TWO);
-+	return 0;
- }
- 
--static long
--clk_alpha_pll_postdiv_round_ro_rate(struct clk_hw *hw, unsigned long rate,
--				    unsigned long *prate)
-+static int clk_alpha_pll_postdiv_determine_ro_rate(struct clk_hw *hw,
-+						   struct clk_rate_request *req)
- {
- 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
- 	u32 ctl, div;
-@@ -1136,9 +1140,11 @@ clk_alpha_pll_postdiv_round_ro_rate(struct clk_hw *hw, unsigned long rate,
- 	div = 1 << fls(ctl);
- 
- 	if (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)
--		*prate = clk_hw_round_rate(clk_hw_get_parent(hw), div * rate);
-+		req->best_parent_rate = clk_hw_round_rate(clk_hw_get_parent(hw),
-+							  div * req->rate);
-+	req->rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, div);
- 
--	return DIV_ROUND_UP_ULL((u64)*prate, div);
-+	return 0;
- }
- 
- static int clk_alpha_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-@@ -1157,13 +1163,13 @@ static int clk_alpha_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
- 
- const struct clk_ops clk_alpha_pll_postdiv_ops = {
- 	.recalc_rate = clk_alpha_pll_postdiv_recalc_rate,
--	.round_rate = clk_alpha_pll_postdiv_round_rate,
-+	.determine_rate = clk_alpha_pll_postdiv_determine_rate,
- 	.set_rate = clk_alpha_pll_postdiv_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_ops);
- 
- const struct clk_ops clk_alpha_pll_postdiv_ro_ops = {
--	.round_rate = clk_alpha_pll_postdiv_round_ro_rate,
-+	.determine_rate = clk_alpha_pll_postdiv_determine_ro_rate,
- 	.recalc_rate = clk_alpha_pll_postdiv_recalc_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_ro_ops);
-@@ -1405,7 +1411,7 @@ const struct clk_ops clk_alpha_pll_fabia_ops = {
- 	.is_enabled = clk_alpha_pll_is_enabled,
- 	.set_rate = alpha_pll_fabia_set_rate,
- 	.recalc_rate = alpha_pll_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_fabia_ops);
- 
-@@ -1414,7 +1420,7 @@ const struct clk_ops clk_alpha_pll_fixed_fabia_ops = {
- 	.disable = alpha_pll_fabia_disable,
- 	.is_enabled = clk_alpha_pll_is_enabled,
- 	.recalc_rate = alpha_pll_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_fabia_ops);
- 
-@@ -1464,14 +1470,15 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	return (parent_rate / div);
- }
- 
--static long
--clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
--				 unsigned long *prate)
-+static int
-+clk_trion_pll_postdiv_determine_rate(struct clk_hw *hw,
-+				     struct clk_rate_request *req)
- {
- 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
- 
--	return divider_round_rate(hw, rate, prate, pll->post_div_table,
--				  pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-+	req->rate = divider_determine_rate(hw, req, pll->post_div_table, pll->width,
-+					   CLK_DIVIDER_ROUND_CLOSEST);
-+	return 0;
- };
- 
- static int
-@@ -1497,18 +1504,20 @@ clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
- 
- const struct clk_ops clk_alpha_pll_postdiv_trion_ops = {
- 	.recalc_rate = clk_trion_pll_postdiv_recalc_rate,
--	.round_rate = clk_trion_pll_postdiv_round_rate,
-+	.determine_rate = clk_trion_pll_postdiv_determine_rate,
- 	.set_rate = clk_trion_pll_postdiv_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_trion_ops);
- 
--static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
--				unsigned long rate, unsigned long *prate)
-+static int
-+clk_alpha_pll_postdiv_fabia_determine_rate(struct clk_hw *hw,
-+					   struct clk_rate_request *req)
- {
- 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
- 
--	return divider_round_rate(hw, rate, prate, pll->post_div_table,
--				pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-+	req->rate = divider_determine_rate(hw, req, pll->post_div_table, pll->width,
-+					   CLK_DIVIDER_ROUND_CLOSEST);
-+	return 0;
- }
- 
- static int clk_alpha_pll_postdiv_fabia_set_rate(struct clk_hw *hw,
-@@ -1543,7 +1552,7 @@ static int clk_alpha_pll_postdiv_fabia_set_rate(struct clk_hw *hw,
- 
- const struct clk_ops clk_alpha_pll_postdiv_fabia_ops = {
- 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
-+	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
- 	.set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
-@@ -1695,7 +1704,7 @@ const struct clk_ops clk_alpha_pll_trion_ops = {
- 	.disable = clk_trion_pll_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_trion_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = alpha_pll_trion_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_trion_ops);
-@@ -1706,14 +1715,14 @@ const struct clk_ops clk_alpha_pll_lucid_ops = {
- 	.disable = clk_trion_pll_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_trion_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = alpha_pll_trion_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_ops);
- 
- const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
- 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
-+	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
- 	.set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
-@@ -1765,7 +1774,7 @@ const struct clk_ops clk_alpha_pll_agera_ops = {
- 	.disable = clk_alpha_pll_disable,
- 	.is_enabled = clk_alpha_pll_is_enabled,
- 	.recalc_rate = alpha_pll_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = clk_alpha_pll_agera_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_agera_ops);
-@@ -1930,7 +1939,7 @@ const struct clk_ops clk_alpha_pll_lucid_5lpe_ops = {
- 	.disable = alpha_pll_lucid_5lpe_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_trion_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_5lpe_ops);
-@@ -1940,13 +1949,13 @@ const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops = {
- 	.disable = alpha_pll_lucid_5lpe_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_trion_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_lucid_5lpe_ops);
- 
- const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops = {
- 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
-+	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
- 	.set_rate = clk_lucid_5lpe_pll_postdiv_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_5lpe_ops);
-@@ -2099,7 +2108,7 @@ const struct clk_ops clk_alpha_pll_zonda_ops = {
- 	.disable = clk_zonda_pll_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_trion_pll_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = clk_zonda_pll_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
-@@ -2289,13 +2298,13 @@ const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops = {
- 	.disable = alpha_pll_lucid_evo_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_lucid_evo_ops);
- 
- const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops = {
- 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
--	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
-+	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
- 	.set_rate = clk_lucid_evo_pll_postdiv_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_evo_ops);
-@@ -2306,7 +2315,7 @@ const struct clk_ops clk_alpha_pll_lucid_evo_ops = {
- 	.disable = alpha_pll_lucid_evo_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_evo_ops);
-@@ -2317,7 +2326,7 @@ const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops = {
- 	.disable = alpha_pll_reset_lucid_evo_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
--	.round_rate = clk_alpha_pll_round_rate,
-+	.determine_rate = clk_alpha_pll_determine_rate,
- 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_reset_lucid_evo_ops);
-@@ -2353,22 +2362,24 @@ static unsigned long clk_rivian_evo_pll_recalc_rate(struct clk_hw *hw,
- 	return parent_rate * l;
- }
- 
--static long clk_rivian_evo_pll_round_rate(struct clk_hw *hw, unsigned long rate,
--					  unsigned long *prate)
-+static int clk_rivian_evo_pll_determine_rate(struct clk_hw *hw,
-+					     struct clk_rate_request *req)
- {
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	unsigned long min_freq, max_freq;
- 	u32 l;
- 	u64 a;
- 
--	rate = alpha_pll_round_rate(rate, *prate, &l, &a, 0);
--	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
--		return rate;
-+	req->rate = alpha_pll_round_rate(req->rate, req->best_parent_rate,
-+					 &l, &a, 0);
-+	if (!pll->vco_table || alpha_pll_find_vco(pll, req->rate))
-+		return 0;
- 
- 	min_freq = pll->vco_table[0].min_freq;
- 	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
- 
--	return clamp(rate, min_freq, max_freq);
-+	req->rate = clamp(req->rate, min_freq, max_freq);
-+	return 0;
- }
- 
- const struct clk_ops clk_alpha_pll_rivian_evo_ops = {
-@@ -2376,7 +2387,7 @@ const struct clk_ops clk_alpha_pll_rivian_evo_ops = {
- 	.disable = alpha_pll_lucid_5lpe_disable,
- 	.is_enabled = clk_trion_pll_is_enabled,
- 	.recalc_rate = clk_rivian_evo_pll_recalc_rate,
--	.round_rate = clk_rivian_evo_pll_round_rate,
-+	.determine_rate = clk_rivian_evo_pll_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_rivian_evo_ops);
- 
--- 
-2.34.1
+I do not think introducing some parallel way makes any sense, so no,
+that's not the way to do it.
+
+Best regards,
+Krzysztof
 
