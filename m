@@ -2,70 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F6278FA63
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 11:02:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 083A778FA95
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 11:20:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245266AbjIAJCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 05:02:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54214 "EHLO
+        id S244732AbjIAJUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 05:20:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345416AbjIAJCh (ORCPT
+        with ESMTP id S238784AbjIAJUA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 05:02:37 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9959010D7
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 02:02:34 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99c93638322so355917466b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 02:02:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693558953; x=1694163753; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8VJAln+FxvaL2Dzcsz1PZfKm9ZVCQjWZvz3A9Btztd4=;
-        b=lqQBikyJ8SLnMIUe3umd+3N5EQ9ddqFCwlEQv+AaSP1brQhmLsadx7hRUWKAJaLOsJ
-         mgtlhUCiIFv3gdPlQOp3W0idtTf18dvWjq8xtLaeUv/2zoIDWMtmyRi9GOlDXA/1ZNvU
-         3dLOCheECrwk2uSwX5o4wDvpolc/gG4v4IsEAGJ0/DvIwBryB34KA+iSy3IFVBMZkSd7
-         ueKd3rw9oSOL7Bl2/2CfDxLPP8yaD9TRMgf0wQ5IRXln2KXOztsBan+90CF78WX4Hb+K
-         a0O8eGvigAnJ1XSTb5UNRITD+CgVsRwvUliP4QvP7hLRxMWx+FYPlA2Y1+rCtS2OvCxR
-         P3eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693558953; x=1694163753;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8VJAln+FxvaL2Dzcsz1PZfKm9ZVCQjWZvz3A9Btztd4=;
-        b=NCPblSaWQuL8kNdb4HVT7scKRK7gUa330sxByqA183eHLkPhv9Jgrk4y288id669T2
-         t5mc13lXsSUP1SbNxg1LdtvvOdBEVVEV5+VkFNWIclU9sGPjgYGH+4HRMwJ2Hk4B9p8z
-         CU62Wp3rL/TdYc6XWr2xwafBmnX/3762ri3nwap4+djWyye8VBdgquTo07YVCShRltj7
-         4/N2eijrsIOCl5XFxl0Dl/EmhuyzRznxHePAd9MILiZa936h50Wd5bqrOyLPDEecg3A4
-         B1fqk5INTEHyq33PgAu0iU0fMGaHZaGDv886ueHks9XLYJdOzHp6IsJ/8GQODTA0MXK5
-         VtnA==
-X-Gm-Message-State: AOJu0YxvFytwwnvhaam233Hm3BraIVeN5j1AsHjVr6IhuzIJLuxP0Gfj
-        TUnPcj57xHr4oWMrToampefgSjIAZXh7CtuZyOI=
-X-Google-Smtp-Source: AGHT+IHMqvAKaaMztMMy4iFQEJuNgzItxXUvYDtTEYmOaPl8nMUOVjn+s5wvrZm2Kp43g4Esm7n6LQ==
-X-Received: by 2002:a17:907:3e1f:b0:9a5:9b93:d60d with SMTP id hp31-20020a1709073e1f00b009a59b93d60dmr5190862ejc.36.1693558953152;
-        Fri, 01 Sep 2023 02:02:33 -0700 (PDT)
-Received: from krzk-bin.. (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id ov22-20020a170906fc1600b00992c92af6f4sm1753687ejb.144.2023.09.01.02.02.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Sep 2023 02:02:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] pinctrl: qcom: lpass-lpi: allow slew rate bit in main pin config register
-Date:   Fri,  1 Sep 2023 11:02:24 +0200
-Message-Id: <20230901090224.27770-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230901090224.27770-1-krzysztof.kozlowski@linaro.org>
-References: <20230901090224.27770-1-krzysztof.kozlowski@linaro.org>
+        Fri, 1 Sep 2023 05:20:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4183310DE;
+        Fri,  1 Sep 2023 02:19:57 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3816v7pK017622;
+        Fri, 1 Sep 2023 09:18:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=nV9wh/wX3lrBXA9saHDTN/lasg7aMwu9eMXXe2AtyN0=;
+ b=C7xUoXy4+UDEX50HrivuDlr93PDVWY9zez0fLhBB4eqC7xWIS6nAzwE4gNNhchu2slLN
+ XdFo6IDAALuPZ0NeSLt4mwqzQAr1dWmCbQ671sHIvYXgibsUIVyN9cTa89ZyRkMBoFxd
+ 5VcCsB45cAZIDWBNyPJg6qW1laF6Dc9RNDHH005G0avegkA2RbjAFElhFYfQJh00owe/
+ Qyudcs/0r6KqVA3M1JTurDC2lHZTykR8y+oWOoxOUd6lUcZVMQ+UtC5ku3mMKrTrQuRn
+ XUsp4KvNh3G4IbfCHnlLefdhwyDe/KWJoxLdQwf4a7strXZNvFi0fDl9gBcpmJL2mWjb 7Q== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stxru1sw2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 01 Sep 2023 09:18:45 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3819Iia8021312
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 1 Sep 2023 09:18:44 GMT
+Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 1 Sep 2023 02:18:39 -0700
+From:   Luo Jie <quic_luoj@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH v6 0/4] add clock controller of qca8386/qca8084
+Date:   Fri, 1 Sep 2023 17:18:19 +0800
+Message-ID: <20230901091823.30242-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0W134c96bBFtki4KK9KXE_BpU3PyfW4P
+X-Proofpoint-ORIG-GUID: 0W134c96bBFtki4KK9KXE_BpU3PyfW4P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-01_07,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ clxscore=1011 malwarescore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309010086
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -75,94 +80,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Existing Qualcomm SoCs have the LPASS pin controller slew rate control
-in separate register, however this will change with upcoming Qualcomm
-SoCs.  The slew rate will be part of the main register for pin
-configuration, thus second device IO address space is not needed.
+qca8xxx is 4 * 2.5GBaseT ports chip, working as switch mode
+named by qca8386, or working as PHY mode named by qca8084,
+clock hardware reigster is accessed by MDIO bus.
 
-Prepare for supporting new SoCs by adding flag customizing the driver
-behavior for slew rate.
+This patch series add the clock controller of qca8363/qca8084,
+and add the clock ops clk_branch2_prepare_ops to avoid spin lock
+used during the clock operation of qca8k clock controller where
+the sleep happens when accessing clock control register by MDIO
+bus.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 20 ++++++++++++++------
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.h |  7 +++++++
- 2 files changed, 21 insertions(+), 6 deletions(-)
+Changes in v2:
+	* remove clock flag CLK_ENABLE_MUTEX_LOCK.
+	* add clock ops clk_branch2_qca8k_ops.
+	* improve yaml file for fixing dtschema warnings.
+	* enable clock controller driver in defconfig.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index e2df2193a802..40eb58a3a8cd 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -190,6 +190,7 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
- 				    const struct lpi_pingroup *g,
- 				    unsigned int group, unsigned int slew)
- {
-+	void __iomem *reg;
- 	unsigned long sval;
- 	int slew_offset;
- 
-@@ -203,12 +204,17 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
- 	if (slew_offset == LPI_NO_SLEW)
- 		return 0;
- 
-+	if (pctrl->data->flags & LPI_FLAG_SLEW_RATE_SAME_REG)
-+		reg = pctrl->tlmm_base + LPI_TLMM_REG_OFFSET * group + LPI_GPIO_CFG_REG;
-+	else
-+		reg = pctrl->slew_base + LPI_SLEW_RATE_CTL_REG;
-+
- 	mutex_lock(&pctrl->lock);
- 
--	sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
-+	sval = ioread32(reg);
- 	sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
- 	sval |= slew << slew_offset;
--	iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
-+	iowrite32(sval, reg);
- 
- 	mutex_unlock(&pctrl->lock);
- 
-@@ -452,10 +458,12 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(pctrl->tlmm_base),
- 				     "TLMM resource not provided\n");
- 
--	pctrl->slew_base = devm_platform_ioremap_resource(pdev, 1);
--	if (IS_ERR(pctrl->slew_base))
--		return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
--				     "Slew resource not provided\n");
-+	if (!(data->flags & LPI_FLAG_SLEW_RATE_SAME_REG)) {
-+		pctrl->slew_base = devm_platform_ioremap_resource(pdev, 1);
-+		if (IS_ERR(pctrl->slew_base))
-+			return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
-+					     "Slew resource not provided\n");
-+	}
- 
- 	ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
- 	if (ret)
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-index 29047bb80bb8..8a4cd8aef38c 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-@@ -60,6 +60,12 @@ struct pinctrl_pin_desc;
- 		.nfuncs = 5,				\
- 	}
- 
-+/*
-+ * Slew rate control is done in the same register as rest of the
-+ * pin configuration.
-+ */
-+#define LPI_FLAG_SLEW_RATE_SAME_REG			BIT(0)
-+
- struct lpi_pingroup {
- 	struct group_desc group;
- 	unsigned int pin;
-@@ -82,6 +88,7 @@ struct lpi_pinctrl_variant_data {
- 	int ngroups;
- 	const struct lpi_function *functions;
- 	int nfunctions;
-+	unsigned int flags;
- };
- 
- int lpi_pinctrl_probe(struct platform_device *pdev);
+Changes in v3:
+	* rename clk_branch2_qca8k_ops to clk_branch2_mdio_ops.
+	* fix review comments on yaml file.
+	* use dev_err_probe on driver probe error.
+	* only use the compatible "qcom,qca8084-nsscc".
+	* remove enable clock controller driver patch.
+
+Changes in v4:
+	* add _qcom_cc_really_probe function.
+	* commonizing the probe function.
+	* remove flag CLK_IS_CRITICAL from clocks only needed
+	to be enabled in switch device.
+	* update device tree property reg to 0x10. 
+
+Changes in v5:
+	* commonize qcom_cc_really_probe.
+	* add halt_check for the branch clocks.
+	* fix the review comments on nsscc-qca8k.c. 
+
+Changes in v6:
+	* rename clk_branch2_mdio_ops to clk_branch2_prepare_ops.
+
+Luo Jie (4):
+  clk: qcom: branch: Add clk_branch2_prepare_ops
+  dt-bindings: clock: add qca8386/qca8084 clock and reset definitions
+  clk: qcom: common: commonize qcom_cc_really_probe
+  clk: qcom: add clock controller driver for qca8386/qca8084
+
+ .../bindings/clock/qcom,qca8k-nsscc.yaml      |   79 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/apss-ipq6018.c               |    2 +-
+ drivers/clk/qcom/camcc-sc7180.c               |    2 +-
+ drivers/clk/qcom/camcc-sc7280.c               |    2 +-
+ drivers/clk/qcom/camcc-sdm845.c               |    2 +-
+ drivers/clk/qcom/camcc-sm6350.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8250.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8450.c               |    2 +-
+ drivers/clk/qcom/clk-branch.c                 |    7 +
+ drivers/clk/qcom/clk-branch.h                 |    1 +
+ drivers/clk/qcom/common.c                     |    7 +-
+ drivers/clk/qcom/common.h                     |    2 +-
+ drivers/clk/qcom/dispcc-qcm2290.c             |    2 +-
+ drivers/clk/qcom/dispcc-sc7180.c              |    2 +-
+ drivers/clk/qcom/dispcc-sc7280.c              |    2 +-
+ drivers/clk/qcom/dispcc-sc8280xp.c            |    2 +-
+ drivers/clk/qcom/dispcc-sdm845.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6115.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6125.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6350.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6375.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8250.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8450.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8550.c              |    2 +-
+ drivers/clk/qcom/gcc-ipq6018.c                |    2 +-
+ drivers/clk/qcom/gcc-ipq8074.c                |    2 +-
+ drivers/clk/qcom/gcc-mdm9607.c                |    2 +-
+ drivers/clk/qcom/gcc-mdm9615.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8917.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8939.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8953.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8976.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8996.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8998.c                |    2 +-
+ drivers/clk/qcom/gcc-qcm2290.c                |    2 +-
+ drivers/clk/qcom/gcc-qcs404.c                 |    2 +-
+ drivers/clk/qcom/gcc-qdu1000.c                |    2 +-
+ drivers/clk/qcom/gcc-sa8775p.c                |    2 +-
+ drivers/clk/qcom/gcc-sc7180.c                 |    2 +-
+ drivers/clk/qcom/gcc-sc7280.c                 |    2 +-
+ drivers/clk/qcom/gcc-sc8180x.c                |    2 +-
+ drivers/clk/qcom/gcc-sc8280xp.c               |    2 +-
+ drivers/clk/qcom/gcc-sdm660.c                 |    2 +-
+ drivers/clk/qcom/gcc-sdm845.c                 |    2 +-
+ drivers/clk/qcom/gcc-sdx55.c                  |    2 +-
+ drivers/clk/qcom/gcc-sdx65.c                  |    2 +-
+ drivers/clk/qcom/gcc-sdx75.c                  |    2 +-
+ drivers/clk/qcom/gcc-sm6115.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6125.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6350.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6375.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm7150.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8150.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8250.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8350.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8450.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8550.c                 |    2 +-
+ drivers/clk/qcom/gpucc-msm8998.c              |    2 +-
+ drivers/clk/qcom/gpucc-sa8775p.c              |    2 +-
+ drivers/clk/qcom/gpucc-sc7180.c               |    2 +-
+ drivers/clk/qcom/gpucc-sc7280.c               |    2 +-
+ drivers/clk/qcom/gpucc-sc8280xp.c             |    2 +-
+ drivers/clk/qcom/gpucc-sdm660.c               |    2 +-
+ drivers/clk/qcom/gpucc-sdm845.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6115.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6125.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6350.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6375.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8150.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8250.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8350.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8450.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8550.c               |    2 +-
+ drivers/clk/qcom/lcc-ipq806x.c                |    2 +-
+ drivers/clk/qcom/lcc-mdm9615.c                |    2 +-
+ drivers/clk/qcom/lcc-msm8960.c                |    2 +-
+ drivers/clk/qcom/lpassaudiocc-sc7280.c        |    4 +-
+ drivers/clk/qcom/lpasscorecc-sc7180.c         |    2 +-
+ drivers/clk/qcom/lpasscorecc-sc7280.c         |    2 +-
+ drivers/clk/qcom/mmcc-msm8960.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8974.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8994.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8996.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8998.c               |    2 +-
+ drivers/clk/qcom/mmcc-sdm660.c                |    2 +-
+ drivers/clk/qcom/nsscc-qca8k.c                | 2179 +++++++++++++++++
+ drivers/clk/qcom/tcsrcc-sm8550.c              |    2 +-
+ drivers/clk/qcom/videocc-sc7180.c             |    2 +-
+ drivers/clk/qcom/videocc-sc7280.c             |    2 +-
+ drivers/clk/qcom/videocc-sdm845.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8150.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8250.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8350.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8450.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8550.c             |    2 +-
+ include/dt-bindings/clock/qcom,qca8k-nsscc.h  |  101 +
+ include/dt-bindings/reset/qcom,qca8k-nsscc.h  |   75 +
+ 99 files changed, 2545 insertions(+), 95 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,qca8k-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+ create mode 100644 include/dt-bindings/clock/qcom,qca8k-nsscc.h
+ create mode 100644 include/dt-bindings/reset/qcom,qca8k-nsscc.h
+
+
+base-commit: bd6c11bc43c496cddfc6cf603b5d45365606dbd5
 -- 
-2.34.1
+2.42.0
 
