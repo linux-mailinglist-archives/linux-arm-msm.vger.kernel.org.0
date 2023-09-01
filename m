@@ -2,75 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 201AE78FF9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 17:04:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9AA978FFA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 17:08:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350098AbjIAPEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 11:04:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37054 "EHLO
+        id S1345363AbjIAPI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 11:08:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232461AbjIAPEO (ORCPT
+        with ESMTP id S235231AbjIAPI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 11:04:14 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9466510E5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 08:04:10 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-401da71b7c5so21186915e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 08:04:10 -0700 (PDT)
+        Fri, 1 Sep 2023 11:08:59 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 272D110CF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 08:08:56 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-52a23227567so2831759a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 08:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693580649; x=1694185449; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IWnLKgy4psQAOPCmq/KJu4X6vCCHFBpqjxEL4HJlAgs=;
-        b=n+wE5ieHXurAgi1byUSaX4KsGtfy3zHADC/OQfi33+CpznUU88VFfpnwzeadHwAB9X
-         p7E6XSZl8+Abe807eKpCY7RWgOJI5o+tUU/A7Xu976iTwL1jq2IJCCWyFp21lq4Ts7i7
-         zWDJsHJSts+DpNLsrvpIROaS4vKL8qSU3Pxv2wr1CvrjE8gXAYv4oAFzYrPCjsD2N0ts
-         BxiucjC8NLNTf48cAn4tzId3mPxfiprB93zTnetJR29kx2PzhipHbxyTMg4TN0Z459qB
-         b4aTJeCL6Mp8DLa9ivC8f3UO8atxx/SKLgoksCMUDZCeVuIsA8YgpZ7xHGSRgSjBjC+4
-         8Kbw==
+        d=chromium.org; s=google; t=1693580933; x=1694185733; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ir5d0LdfkLCgxj9RUuUc7L+7Tk1dgspXe4TSyCCKnNc=;
+        b=e4U+qKEKPEWC3jTX2lC28xipxDQopFEEUwrwvYsB27iMP1qovCp/1Tsb8Qj4JDzi2T
+         VbX8XSbsDpxAtqb2+IIZYRGa7/EaCeisnqMFjKYe1xn0wkcx7mBtTzdccRc0oOtRhb47
+         w3BaeJyPXFpvGVwvqNXxRvhKUrGLs6h93c+N0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693580649; x=1694185449;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IWnLKgy4psQAOPCmq/KJu4X6vCCHFBpqjxEL4HJlAgs=;
-        b=HkFsr/+FGk3/5582oKlPBJ+8hRPhzHDsAvjRojVgPrYPAjb0uvraskCS68t6g5L5Ku
-         smF/MGKNadbErxRLEpLpclMRCzTr3/+8pMiww/ihsh3+JSIgKQar5rdnG1hexhsf4Gwf
-         BCE/QpiZ1Nxac6kXMlr69WY9ktqRw8cKn6+11y8+9U6/aQDu2WJ8Ch/EEu68/c2iL9t1
-         Exm2KfdOKK+2hpzHVZ+WL+Vv3HaHLiVyhrEPzspvCU+G0oMLvwVdWl2+5KUDMCgOG9XF
-         NJafNcYYm66e1i7Y7QwelmtjR3s6o9boTlrBoRTkrG4SQ8Npj6k5xLEDaA/kaUcAGG24
-         9qDA==
-X-Gm-Message-State: AOJu0Yzd84QLidL2pr59mFBzETfJhHJG4DEm7FoyHrSQjz2lAUJ5BbMk
-        g8RVaCdmZwprdQ5H8jV61acXUg==
-X-Google-Smtp-Source: AGHT+IGhXUcSeTC1y/HbwZL6d49yRvC6KlJjPuI32snrfXHFombXdShnxsysYVpAb4HQE5xETHL9yw==
-X-Received: by 2002:a05:600c:205a:b0:401:264b:5df7 with SMTP id p26-20020a05600c205a00b00401264b5df7mr1938908wmg.35.1693580648493;
-        Fri, 01 Sep 2023 08:04:08 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c379200b003fee65091fdsm8347949wmr.40.2023.09.01.08.04.07
+        d=1e100.net; s=20221208; t=1693580933; x=1694185733;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ir5d0LdfkLCgxj9RUuUc7L+7Tk1dgspXe4TSyCCKnNc=;
+        b=lGbN092ZnaQ1w9f4/EdHQtwcPxsAS8PoKr381WRorgO/GvLn2YGjbntd2HW8snMlD1
+         vhcofzbJaLjOy2xcXVxHZEaUhIyqHH00HZYTN3Kzw03L7893zY4Qxt66Wk2xDiwwhBIn
+         lLVNNHd4RKCO/FfZk9rV+tPAJCJvi4zG5sp9m45uHrQYpYEkZtSXIlB+cMeN/dWzsyWs
+         dl05/nLZDHjj3qWE+9kqkl/mX2SUMxwI5YCMaC80BUev4CmFBFZhXuQaDAC2LEy/YeQX
+         Sn+br2JoprZJMeJsnZBaZZkrDSvFAEAozQKZu8/XUBg9+ZxeTPvcNuSDJ0b6GUvqZelE
+         hFDA==
+X-Gm-Message-State: AOJu0Yx4oILNJy5vwQGjdDCcH1X3Wd81XikorCG8s9GWpgylCQxsUoo+
+        CXI1ddo9RBV/K0XAxE8eutHp91iLZvduNsPsyyeOVKZD
+X-Google-Smtp-Source: AGHT+IG7ApPF+l1sVZTP2u+gO3CZ7NTVXxL1ztYJBPdit4u7mBeIJbzzcLkK4Ca7wbvrLLxExNLNNA==
+X-Received: by 2002:a17:906:f252:b0:99c:fb44:d4a9 with SMTP id gy18-20020a170906f25200b0099cfb44d4a9mr1554849ejb.77.1693580933511;
+        Fri, 01 Sep 2023 08:08:53 -0700 (PDT)
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
+        by smtp.gmail.com with ESMTPSA id j9-20020a170906410900b00993b381f808sm2071215ejk.38.2023.09.01.08.08.52
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Sep 2023 08:04:07 -0700 (PDT)
-Message-ID: <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
-Date:   Fri, 1 Sep 2023 16:04:06 +0100
+        Fri, 01 Sep 2023 08:08:52 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-402bec56ca6so4475e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 08:08:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:282:b0:3fe:dd72:13ae with SMTP id
+ 2-20020a05600c028200b003fedd7213aemr166371wmk.0.1693580932622; Fri, 01 Sep
+ 2023 08:08:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
-Content-Language: en-US
-To:     Ziyang Huang <hzyitc@outlook.com>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gokulsri@quicinc.com, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com> <CAD=FV=WS2hgY=bQjLOs3Fdp8pbZyMsaS-0BpoxPq90Etfi+Xuw@mail.gmail.com>
+ <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso> <CAD=FV=XhdORH=naTtoc+kCC4A7UdAJKwq=Te6B3qvXNGBwBieg@mail.gmail.com>
+ <CV7O0TYYEFA8.1Q42JITFSW77Q@otso>
+In-Reply-To: <CV7O0TYYEFA8.1Q42JITFSW77Q@otso>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 1 Sep 2023 08:08:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UG-dFg7wZsn6n=pkejie0fr+G0q3CguNspGYxoC2ZBLw@mail.gmail.com>
+Message-ID: <CAD=FV=UG-dFg7wZsn6n=pkejie0fr+G0q3CguNspGYxoC2ZBLw@mail.gmail.com>
+Subject: Re: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,140 +92,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/09/2023 15:10, Ziyang Huang wrote:
-> In pinctrl, the pinconfigs for uart are named "blspX_uartY".
->    X is the UART ID. Starts from 1.
->      1-6 are in BLSP Block 1.
->      7-12 are in BLSP Block 2.
->    Y is the index of mux config. Starts from 0.
-> 
-> In dts, the serials are also named "blspX_uartY", but with different logic.
->    X is the BLSP Block ID. Starts from 1.
->    Y is the uart id inside block.
->      In "ipq6018.dtsi" and "ipq8074.dtsi", it starts from 1.
->      But in "ipq5332.dtsi" and "ipq9574.dtsi", it starts from 0.
-> 
-> +-----------------+-----------------+-------------+-----------------+
-> |     Block ID    | ID inside Block |  dts name   | pinconfig name  |
-> | (Starts from 1) | (Starts from 1) |             |                 |
-> +-----------------+-----------------+-------------+-----------------+
-> |        1        |        1        | blsp1_uart1 |   blsp0_uartY   |
-> |        1        |        2        | blsp1_uart2 |   blsp1_uartY   |
-> |        1        |        6        | blsp1_uart6 |   blsp5_uartY   |
-> |        2        |        1        | blsp2_uart1 |   blsp6_uartY   |
-> |        2        |        6        | blsp2_uart6 |   blsp12_uartY  |
-> +-----------------+-----------------+-------------+-----------------+
-> 
-> In "ipq5018.dts", "blsp1_uart1" (dts name) is the first serial (confimed
-> by the address), So its pinconfig should be "blsp0_uart0" (pinconfig name,
-> use GPIO 20 and 21) or "blsp0_uart1" (pinconfig name, use GPIO 28 and 29).
-> 
-> Fixes: 570006756a16 ("arm64: dts: Add ipq5018 SoC and rdp432-c2 board support")
-> Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
-> ---
-> Changes since v1:
-> - Use corrent name in From
-> 
-> Changes since v2:
-> - Define 2 pinconfs for uart1 in ipq5018.dtsi
-> - rdp432-c2 use uart1_pins_a
-> 
->   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  2 +-
->   arch/arm64/boot/dts/qcom/ipq5018.dtsi          | 15 +++++++++++----
->   2 files changed, 12 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-> index e636a1cb9b77..e83d1863e89c 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-> @@ -23,7 +23,7 @@ chosen {
->   };
->   
->   &blsp1_uart1 {
-> -	pinctrl-0 = <&uart1_pins>;
-> +	pinctrl-0 = <&uart1_pins_a>;
->   	pinctrl-names = "default";
->   	status = "okay";
->   };
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 9f13d2dcdfd5..50b4a2bd6fd3 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -103,11 +103,18 @@ tlmm: pinctrl@1000000 {
->   			interrupt-controller;
->   			#interrupt-cells = <2>;
->   
-> -			uart1_pins: uart1-state {
-> -				pins = "gpio31", "gpio32", "gpio33", "gpio34";
-> -				function = "blsp1_uart1";
-> +			uart1_pins_a: uart1@0 {
-> +				pins = "gpio20", "gpio21";
-> +				function = "blsp0_uart0";
->   				drive-strength = <8>;
-> -				bias-pull-down;
-> +				bias-disabled;
-> +			};
-> +
-> +			uart1_pins_b: uart1@1 {
-> +				pins = "gpio28", "gpio29";
-> +				function = "blsp0_uart1";
-> +				drive-strength = <8>;
-> +				bias-disabled;
->   			};
->   		};
->   
+Hi,
 
-The assignment of pins 20 and 21 to blsp1_uart1 is not correct.
+On Fri, Sep 1, 2023 at 7:54=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.com=
+> wrote:
+>
+> > > > So maybe the right fix here is to just change your dts to specify o=
+ne
+> > > > memory region?
+> > >
+> > > I got feedback from Konrad that this here would be the preferred
+> > > approach compared to having a different dts for ChromeOS vs non-Chrom=
+eOS
+> > > devices. I don't feel strongly to either, for me it's also okay to
+> > > remove the extra memory regions and only have the main one used on
+> > > regular qcom devices.
+> > >
+> > > Let me know what you think.
+> >
+> > I don't hate the idea of leaving the extra memory regions in the dts.
+> > They do describe the hardware, after all, even if the main OS can't
+> > actually access those memory regions. ...though the same could also be
+> > said about the clock you've removed. Said another way: if you want to
+> > fully describe the hardware then the dts should have the extra memory
+> > regions and the clock. If you are OK w/ just describing the hardware
+> > in the way that the OS has access to then the dts should not have the
+> > extra memory regions and not have the clock. Does that sound right?
+>
+> Not sure which of those memory regions are actually accessible on this
+> board, but honestly I don't even want to try accessing it. Blowing fuses
+> is not my wish there ;)
+>
+> On downstream the node is just described like the following:
+>
+>         qfprom: qfprom@780000 {
+>                 compatible =3D "qcom,qfprom";
+>                 reg =3D <0x780000 0x7000>;
+>                 ...
+>         };
+>
+> So we have 0x780000 - 0x786fff here.
+>
+> In sc7280.dtsi we have the following:
+>
+>         qfprom: efuse@784000 {
+>                 compatible =3D "qcom,sc7280-qfprom", "qcom,qfprom";
+>                 reg =3D <0 0x00784000 0 0xa20>,
+>                           <0 0x00780000 0 0xa20>,
+>                           <0 0x00782000 0 0x120>,
+>                           <0 0x00786000 0 0x1fff>;
+>                 ...
+>         };
+>
+> So I guess this:
+> * 0x780000 - 0x780a1f
+> * 0x782000 - 0x78211f
+> * 0x784000 - 0x784a1f
+> * 0x786000 - 0x787ffe
+>
+> So at least the last memory region seems to be partially out of range
+> according to downstream.
 
-The blspX_uartY in pinctrl should match what is in the dtsi so assigning 
-pins_a above to blsp1_uart1 is not right. The dts name and pinctrl name 
-should be the same.
+From the other discussion, it sounds as if you _can_ leave the clock
+in the device tree and then use "clk_get_optional" here. IMO then, the
+right answer is to use "clk_get_optional" but then also modify the
+check below so that instead of:
 
-Your console is on blsp0_uart0.
+/* Only enable writing if we have SoC data. */
+if (priv->soc_data)
+  econfig.reg_write =3D qfprom_reg_write;
 
-https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/blob/5343739b4070bcec2fecd72f758c16adc31a3083/arch/arm/dts/ipq5018-mp03.3.dts#L33
+It is:
 
-So roughly speaking
-
-arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-
-aliases {
-	serial0 = &blsp0_uart0;
-};
-
-chosen {
-	stdout-path = "serial0:115200n8";
-};
-
-&blsp0_uart0 {
-         pinctrl-0 = <&uart0_pins>;
-         pinctrl-names = "default";
-         status = "okay";
-};
+/* Only enable writing if we have SoC data and a valid clock */
+if (priv->soc_data && priv->secclk)
+  econfig.reg_write =3D qfprom_reg_write;
 
 
-arch/arm64/boot/dts/qcom/ipq5018.dtsi
+Does that work for you?
 
-blsp0_uart0: serial@78af000
 
-either that or  blsp0_uart1 for pins28 and pins29 - you seem to indicate 
-pins_1 => blsp0_uart0.
+> So after reading all of this I tried running this commmand on the phone
+> and the phone reboots into 900e mode.
+>
+>   $ cat /sys/devices/platform/soc@0/784000.efuse/qfprom0/nvmem
+>
+> I guess normally this should work? So if I interpret this correctly, the
+> Linux driver thinks it can access more than it can/should. But also
+> should probably try this command on another chipset to see if it works
+> on any really?
 
-The two roots of the problem are
+Presumably your firmware needs a different "sc7280_qfprom_keepout". If
+that's true then I guess you'll have to undergo negotiations with the
+DT bindings folks and the nvmem maintainer to figure out how to
+specify that your firmware protects different things than the ChromeOS
+firmware?
 
-1. Mislabeling of the uart block in the dtsi
-2. Invalid miscongiruation of pins for that misnamed block
 
-The fix should be
-
-1. Fix the labeling of uart in the dtsi
-2. Decide on which pins gpio20, gpio21 ? are the right ones to configure
-
-I thought you said in a previous email if you changed pins gpio28 and 
-gpio29 that the UART would fail if so that implies blsp0_uart1.
-
-Either way the pinctrl and dts should agree.
-
----
-bod
-
+-Doug
