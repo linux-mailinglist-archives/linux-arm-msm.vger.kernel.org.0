@@ -2,146 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50CF57902D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 22:29:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFEED79037F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 00:03:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350723AbjIAU3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 16:29:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58918 "EHLO
+        id S229726AbjIAWDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 18:03:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242521AbjIAU3W (ORCPT
+        with ESMTP id S231400AbjIAVwU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 16:29:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FD4E7E;
-        Fri,  1 Sep 2023 13:29:19 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381ItjDG005899;
-        Fri, 1 Sep 2023 20:29:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2FYXvMmpReuPlYSmTDcvNg1rIzAmGZtkeMDCuhzAtGw=;
- b=RpGMbsimYgMc3eNR7ei7vHPVzYUwHYGYWfqvFd5Hm0dfsshzelWMpDIZ1rnuLnmPTBJW
- QrE9r0G9055pwpCfvVOPDMYtRHxC1oQjdFF+Gqzr4/3Fj+LWLC7Ub9J9K4ZZKtKtFbum
- sHYN6I0cLw7UKq0OoSob97cywjNlU+qDOZ1qNg1FPayvbNvP7zzH3hwGYkQ+kG9Bx9jv
- pkoE04KD1f8QglapQUr69SaBGB43NBDRiCuHqw/3ZSvJVuKYp2UadZBnGPAgApX2FtyJ
- dkQahInoVqPNSAkfaD2bOsDEwD7LSCXJ9CVg7yTTQ0XSZVrP7POVtWlVknMqnRdcBF39 TQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc22hupp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 20:29:05 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381KT4X3011614
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 20:29:04 GMT
-Received: from [10.110.95.146] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 1 Sep
- 2023 13:29:04 -0700
-Message-ID: <deeefaf8-2ac9-cee0-eed4-687e36ac6f10@quicinc.com>
-Date:   Fri, 1 Sep 2023 13:29:03 -0700
+        Fri, 1 Sep 2023 17:52:20 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F8452116
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 14:50:12 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d795e9a0816so2042037276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 14:50:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693605011; x=1694209811; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lA/gYj4G9dBVeXUfikZ7kSFesNkiwy9bpcMTmp53A5g=;
+        b=Df9m0Zb0XoB4vJn0lpjDR/qkENwptWimLSJ4AY5Rmbt7PAHxmeIivyRbLYSDT1g4tV
+         QW50GwFZ/wRqop9ReuCUdo/ewoGQGPJ3s65AZpjNAh9+a+RYoJ/ZcRFiTuf2dzveENbZ
+         Wy26uhiAfzMAp9+Q0TVK1x4GKdCmnkWkI4bOmcUDTrtKQLyBUFejl1ibCy1LQQ40l3On
+         075O8kIws/ebJXupO5S3BCVrbJt4yXiUunidFB54Otm7Iq65OwOccZNIZvO5ISRYH6mf
+         x+890tG/k060/SJDtybsAQTehuTCdYII7Ulp7MVp9tCuKkSAhkHbBGSWF1gsfdbXddp6
+         EKEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693605011; x=1694209811;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lA/gYj4G9dBVeXUfikZ7kSFesNkiwy9bpcMTmp53A5g=;
+        b=FvK12zvTzN1bsRZkizTgSwk6rs+K5EPI7FqJO2HE1K7CqsZDA+YP7+v/00PGlgGhWa
+         C1B/4IE0Q5rWIbnZKD3Bkr9LSgYqS372SUnBwb5KWxA9KRetkIAtIRJ0Uhuo8fYdZjmS
+         c689wIx8okF3JVts1v0ibx8R0wsfDKiNPym/QU5MAd64p3eDJqxFfhxVqkyg5DiKt8r6
+         4BJVFa8cEnxSI8GJrIzu+fj6qiPAX2VUwfB6mrB+UqKReyyRdUtXSlBtpYauCozBhIfP
+         fvJ2TBe7swrqUl2R1IVVt1pQ81BvfAg49kL/PdXLZTDJQvUnRd4hDulYeynPws69ca8c
+         /A5Q==
+X-Gm-Message-State: AOJu0YzPhn9TkBLe0CDMxwjgCqG7RIJ153esRVN8bSEIXYwHHHsyrtcE
+        Cr/tKw7Y7JWrK15Ia/KuKawCnWLqYR3QmvI/J81vWkEC7WWGPdA/
+X-Google-Smtp-Source: AGHT+IFAIw3fZY5uif8FGyQUm6GVIBe/G3nd55d0OfG3nGHm9snPjGrA8RAKabs/WWggVm9iSiyma2/CBVv19LYToSA=
+X-Received: by 2002:a25:348b:0:b0:d78:1311:aa1b with SMTP id
+ b133-20020a25348b000000b00d781311aa1bmr4040638yba.48.1693605011562; Fri, 01
+ Sep 2023 14:50:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Doug Anderson <dianders@chromium.org>
-CC:     <cros-qcom-dts-watchers@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com>
- <CAD=FV=WS2hgY=bQjLOs3Fdp8pbZyMsaS-0BpoxPq90Etfi+Xuw@mail.gmail.com>
- <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso>
+References: <20230901092645.20522-1-quic_nsekar@quicinc.com> <20230901092645.20522-3-quic_nsekar@quicinc.com>
+In-Reply-To: <20230901092645.20522-3-quic_nsekar@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 2 Sep 2023 00:50:00 +0300
+Message-ID: <CAA8EJppej++gbrWrRU9EFBntjzck4-9xbgS_sCPBfcxEofUo3Q@mail.gmail.com>
+Subject: Re: [PATCH V3 2/4] phy: qcom-m31: Add compatible, phy init sequence
+ for IPQ5018
+To:     Nitheesh Sekar <quic_nsekar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9Ar9RfHXW3BZTXygIUaxyBxzbbtd8VRn
-X-Proofpoint-ORIG-GUID: 9Ar9RfHXW3BZTXygIUaxyBxzbbtd8VRn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-01_17,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- clxscore=1011 mlxscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 phishscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010192
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/30/2023 7:43 AM, Luca Weiss wrote:
-> On Wed Aug 30, 2023 at 4:30 PM CEST, Doug Anderson wrote:
->> Hi,
->>
->> On Wed, Aug 30, 2023 at 2:58 AM Luca Weiss <luca.weiss@fairphone.com> wrote:
->>>
->>> On some platforms like sc7280 on non-ChromeOS devices the core clock
->>> cannot be touched by Linux so we cannot provide it. Mark it as optional
->>> as accessing qfprom works without it.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>  drivers/nvmem/qfprom.c | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> Are you actually testing burning fuses from the OS, or are you just
->> using the nvmem in "read-only" mode? From comments in the bindings, if
->> you're trying to burn the fuses then the clock is required. If things
->> are in read-only mode then the clock isn't required.
-> 
-> Hi Doug,
-> 
-> I definitely don't plan on burning any fuses on this phone. Not even
-> sure that's allowed by the TZ / boot stack.
-> 
->>
->> When I compare to the driver, it seems like the driver assumes that if
->> more than one memory region is provided then you must be supporting
->> burning fuses. The bindings agree that having 4 memory regions
->> specified means that the nvmem supports burning and 1 memory region
->> specified means read-only. The extra 3 memory regions in the nvmem are
->> all about fuse burning, I believe.
->>
->> So maybe the right fix here is to just change your dts to specify one
->> memory region?
-> 
-> I got feedback from Konrad that this here would be the preferred
-> approach compared to having a different dts for ChromeOS vs non-ChromeOS
-> devices. I don't feel strongly to either, for me it's also okay to
-> remove the extra memory regions and only have the main one used on
-> regular qcom devices.
-> 
-> Let me know what you think.
+On Fri, 1 Sept 2023 at 12:27, Nitheesh Sekar <quic_nsekar@quicinc.com> wrote:
+>
+> Add phy init sequence and compatible string for IPQ5018
+> chipset.
+>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> ---
+> V3:
+>         Dropped 0 delay inits.
+>         Added static const type for m31_ipq5018_regs.
+> V2:
+>         Updated the commit message.
+> ---
+>  drivers/phy/qualcomm/phy-qcom-m31.c | 49 +++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
+> index ed08072ca032..ceee38695d7d 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-m31.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
+> @@ -82,6 +82,48 @@ struct m31_priv_data {
+>         unsigned int                    nregs;
+>  };
+>
+> +static const struct m31_phy_regs m31_ipq5018_regs[] = {
+> +       {
 
-I would prefer to re-use the sc7280 DT as well. Thank you for your patches. We plan to use your patches for platform on the same part. 
+C99 initializers, please?
+
+> +               USB_PHY_CFG0,
+> +               UTMI_PHY_OVERRIDE_EN
+> +       },
+> +       {
+> +               USB_PHY_UTMI_CTRL5,
+> +               POR_EN,
+> +               15
+> +       },
+> +       {
+> +               USB_PHY_FSEL_SEL,
+> +               FREQ_SEL
+> +       },
+> +       {
+> +               USB_PHY_HS_PHY_CTRL_COMMON0,
+> +               COMMONONN | FSEL | RETENABLEN
+> +       },
+> +       {
+> +               USB_PHY_REFCLK_CTRL,
+> +               CLKCORE
+> +       },
+> +       {
+> +               USB_PHY_UTMI_CTRL5,
+> +               POR_EN
+> +       },
+> +       {
+> +               USB_PHY_HS_PHY_CTRL2,
+> +               USB2_SUSPEND_N_SEL | USB2_SUSPEND_N | USB2_UTMI_CLK_EN
+> +       },
+> +       {
+> +               USB_PHY_UTMI_CTRL5
+> +       },
+> +       {
+> +               USB_PHY_HS_PHY_CTRL2,
+> +               USB2_SUSPEND_N | USB2_UTMI_CLK_EN
+> +       },
+> +       {
+> +               USB_PHY_CFG0
+
+What is the value written? While it didn't make sense to write 0
+delays, it is sensible to write 0 register values here.
+
+> +       },
+> +};
+> +
+>  struct m31_phy_regs m31_ipq5332_regs[] = {
+>         {
+>                 USB_PHY_CFG0,
+> @@ -268,6 +310,12 @@ static int m31usb_phy_probe(struct platform_device *pdev)
+>         return PTR_ERR_OR_ZERO(phy_provider);
+>  }
+>
+> +static const struct m31_priv_data m31_ipq5018_data = {
+> +       .ulpi_mode = false,
+> +       .regs = m31_ipq5018_regs,
+> +       .nregs = ARRAY_SIZE(m31_ipq5018_regs),
+> +};
+> +
+>  static const struct m31_priv_data m31_ipq5332_data = {
+>         .ulpi_mode = false,
+>         .regs = m31_ipq5332_regs,
+> @@ -275,6 +323,7 @@ static const struct m31_priv_data m31_ipq5332_data = {
+>  };
+>
+>  static const struct of_device_id m31usb_phy_id_table[] = {
+> +       { .compatible = "qcom,ipq5018-usb-hsphy", .data = &m31_ipq5018_data },
+>         { .compatible = "qcom,ipq5332-usb-hsphy", .data = &m31_ipq5332_data },
+>         { },
+>  };
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
 
 -- 
----Trilok Soni
-
+With best wishes
+Dmitry
