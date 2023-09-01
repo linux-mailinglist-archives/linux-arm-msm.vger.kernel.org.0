@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 400CB78FD11
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 14:20:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62E1B78FD35
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 14:29:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238003AbjIAMUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 08:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33496 "EHLO
+        id S1349425AbjIAM3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 08:29:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349386AbjIAMUq (ORCPT
+        with ESMTP id S1349433AbjIAM3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 08:20:46 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E9310D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 05:20:43 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2bcb54226e7so22198291fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 05:20:43 -0700 (PDT)
+        Fri, 1 Sep 2023 08:29:04 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29A4810E0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 05:29:01 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-500bdef7167so3738412e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 05:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693570840; x=1694175640; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=wRixf5Wln0+aq96AqT15WNRlI0DI7acs2jHkGoyqUC4=;
-        b=WJ2qRpi9cgKouMXABSj9ZSCukBo2/90W1bGsAjIYK6M6inoaHNxUDlTWuqGGnCkwlx
-         PRNDmkmsNTmQKc0O3h8y1ag94/2GQ8EldP3jt6oWM8ymoJFYf5tEMfovYC/zJ6V+/EXf
-         J5Zz1d9ZDsFnXSlABTE3FDvvXV5+UnZnAwvueAxMBFRH82SwL889itCbRXH8yoLac78r
-         0pm96l2q+i5hiMsL0D2enTjKJJQvGaYQS5BfS107t7Dktbu6gk9PPhpt+sve7edoK7LA
-         KuCx8no1pS4/bhBvZ4CLejyotf++fGRydED7XZULOOF/f3SSaj/RtIQqfga9qK4k1cV/
-         ATwg==
+        d=linaro.org; s=google; t=1693571339; x=1694176139; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2rXyBxVHzh14H4lsJtqZsMfSNqjUOUgjpNJoum6M9uk=;
+        b=lgTw8BRu+5UbgfzDdVF5bLOgb4/rUW/+nKwSk1J7fIDGKUxolGFts2mePxZ5MiQkEM
+         xRhOkCxNRI6f/VRYSb6DErDckaZ5RLl53EKtDsaI1CScOiYTrp0wrFpSKm/nbD9I4+aQ
+         HF0n1cu7k9tsksMFhgxaQIeYhC41mLh0xdm+furzT63YOu3zDy6XCcnQ2cYa+74SfLle
+         yQWsgr+QEa4yrqALrH6g/GLQVVQeQHGpg3uWZqH+/hDWGfRtQrSy0fGQLdr9yk/YmcwB
+         2tJX1QFbBN7GPJLVMugaE/Zno8IatTylu5vJ7jQ1RWl+UK8ifLueVi5KXSNWINuu/z7y
+         FL0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693570840; x=1694175640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wRixf5Wln0+aq96AqT15WNRlI0DI7acs2jHkGoyqUC4=;
-        b=ID7OFdKhpMwdyEyaBMhEifD/pNYyvZlOZwfu2DzE8DLcLCOhuOHYIcKwQ1E1JrA0wp
-         Amm84pKUMhyG9/rw7+Wj2VfDQmlgGkosnK+b82sVvWKYE9zeVhKMnTUxMEl0hEl43lPU
-         DTS0U4CfiQyZkI1mDc3SjuSyLKpfXqwTvDTuQ5ummtozCqvffudtARJh8jOoPq476uA/
-         fNsmQPBowpWsDmvpPfhBAhrGIjLsAT4dYrCD6szVeqJSJc1TNmGsyuVCSaNhYZxgEH5o
-         hO59EoSC8/dA8eN3+e2vAc6JYmDqhgTMA5i4vCQUUv+BNgAoDXNYs4UNEasSelZ8jAGO
-         MhgA==
-X-Gm-Message-State: AOJu0YxyoolSVXIklZQgtl1bUJa+T10JPMWnhx7KH10WtgZ2040NREKt
-        GH0wkOd+kuy0+KbziLgFo5iktQ==
-X-Google-Smtp-Source: AGHT+IE4Z/ktQ6qMzlFSopP5r6fYP4i40xwCpIZt9FemIrY+cUooZOn6b31azRQy3vMZowlZJS3F8g==
-X-Received: by 2002:a05:651c:339:b0:2bc:fbc9:c0a2 with SMTP id b25-20020a05651c033900b002bcfbc9c0a2mr1879201ljp.16.1693570840584;
-        Fri, 01 Sep 2023 05:20:40 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693571339; x=1694176139;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2rXyBxVHzh14H4lsJtqZsMfSNqjUOUgjpNJoum6M9uk=;
+        b=dj9hB0gdAxB7YYhDDYYO0nSQnNup+6BN6QXmiZj+w4NjfUumMrUcGUCkUFHlRd0rE5
+         6LW7VM7joI7uadk4FKvWxoXPb00Q0a8yNQ21jKybg4FhqOCfP4O9ywLqZmc7NWNdSBJX
+         XmfgpKcNg2lbVde+SXMBqb5+MpOvVgeKG3siaasTZOKYivesdV2dm7agWRaLcsNfFnMq
+         n33YK0ki+J9GWwfu8Vaw8d/D7Bkdd/t0fP1DPSlcQ4LwEpGawTg5a/ekS3Bkd5dts92+
+         2VSbLggtHGKXk2JLpWbfYlZ+Pl3+S+/SgbPt9a412d0ZHm+mp8lTuhKWizUn6wodd50A
+         r+LA==
+X-Gm-Message-State: AOJu0YwTeKhXpK4KUtegkSCBcy3RazxfnkEA40uAx4oDX4e1bNMt9LV4
+        twnHXP0vEsAxptY+a0gCsNq82rH7urhf4L+E1BngBg==
+X-Google-Smtp-Source: AGHT+IFKBVmf1Jrha0rdIrsWwiaj+lLI0uFYIFXXTas+Mbfuzwe1HTdf8ZaFhvxMbnEG93i0WxChFA==
+X-Received: by 2002:a05:6512:159c:b0:500:b102:d1c9 with SMTP id bp28-20020a056512159c00b00500b102d1c9mr1833843lfb.29.1693571339234;
+        Fri, 01 Sep 2023 05:28:59 -0700 (PDT)
 Received: from [192.168.1.101] (abxh154.neoplus.adsl.tpnet.pl. [83.9.1.154])
-        by smtp.gmail.com with ESMTPSA id d25-20020a2eb059000000b002bcc4d64758sm733680ljl.103.2023.09.01.05.20.39
+        by smtp.gmail.com with ESMTPSA id o10-20020ac2434a000000b004fe20d1b288sm632572lfl.159.2023.09.01.05.28.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Sep 2023 05:20:40 -0700 (PDT)
-Message-ID: <88964c63-950f-4d68-826b-f3b7243a2c5f@linaro.org>
-Date:   Fri, 1 Sep 2023 14:20:38 +0200
+        Fri, 01 Sep 2023 05:28:58 -0700 (PDT)
+Message-ID: <08a10dc1-bb8e-48b1-8d86-5ee513835196@linaro.org>
+Date:   Fri, 1 Sep 2023 14:28:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 0/6] scsi: ufs: qcom: Align programming sequence as per
- HW spec
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>, mani@kernel.org,
-        agross@kernel.org, andersson@kernel.org, jejb@linux.ibm.com,
-        martin.petersen@oracle.com
-Cc:     quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH 2/2] pinctrl: qcom: lpass-lpi: allow slew rate bit in main
+ pin config register
 Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230901090224.27770-1-krzysztof.kozlowski@linaro.org>
+ <20230901090224.27770-3-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,28 +101,57 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
+In-Reply-To: <20230901090224.27770-3-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1.09.2023 13:43, Nitin Rawat wrote:
-> This patch aligns programming sequence as per Qualcomm UFS
-> hardware specification.
+On 1.09.2023 11:02, Krzysztof Kozlowski wrote:
+> Existing Qualcomm SoCs have the LPASS pin controller slew rate control
+> in separate register, however this will change with upcoming Qualcomm
+> SoCs.  The slew rate will be part of the main register for pin
+> configuration, thus second device IO address space is not needed.
 > 
-> changes from v5:
-> - Addressed Mani comment to FIELD_PREP and FIELD_FIT.
-> - Optimised ufs_qcom_set_core_clk_ctrl API.
-> - Updated commit text for few patches to capture more details.
+> Prepare for supporting new SoCs by adding flag customizing the driver
+> behavior for slew rate.
 > 
-Any reason I received this twice?
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 20 ++++++++++++++------
+>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h |  7 +++++++
+>  2 files changed, 21 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> index e2df2193a802..40eb58a3a8cd 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> @@ -190,6 +190,7 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
+>  				    const struct lpi_pingroup *g,
+>  				    unsigned int group, unsigned int slew)
+>  {
+> +	void __iomem *reg;
+Aaalmost reverse-Christmas-tree!
+
+>  	unsigned long sval;
+>  	int slew_offset;
+>  
+> @@ -203,12 +204,17 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
+>  	if (slew_offset == LPI_NO_SLEW)
+>  		return 0;
+>  
+> +	if (pctrl->data->flags & LPI_FLAG_SLEW_RATE_SAME_REG)
+> +		reg = pctrl->tlmm_base + LPI_TLMM_REG_OFFSET * group + LPI_GPIO_CFG_REG;
+> +	else
+> +		reg = pctrl->slew_base + LPI_SLEW_RATE_CTL_REG;
+Perhaps lpi_gpio_read/write could be used here?
+
+I guess both ways work though
 
 Konrad
