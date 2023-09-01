@@ -2,232 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C278F78FBB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 12:20:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E227178FBDD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 12:43:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347823AbjIAKUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 06:20:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40166 "EHLO
+        id S236061AbjIAKnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 06:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236336AbjIAKUy (ORCPT
+        with ESMTP id S231417AbjIAKnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 06:20:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E31610CE;
-        Fri,  1 Sep 2023 03:20:51 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38158R08000439;
-        Fri, 1 Sep 2023 10:20:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=CxkTwtXNuDZ8nz873kFU50hTQXSUIeL+vEV4jI8YuDY=;
- b=KKSeoxwaqsmG4srm54hlp+J395Yjt65vHosKBSxpLC578AzvEixPENbAsq2TQN6MjI8l
- dx7RaA8/mu8esPZYHN5D8aIzZIPkgeXBq89xWXrvXMQTufSq/XltwHZu7q0SGWBwuKCe
- 39wTpJN8NfZDxn+07pbf7u9SdnCxNBrpGfdUxxHgB4CpovzMbQVWVnJYCxhn1/x3g3hL
- LZSyMQpTBKACDUquFVAfOB6X8NTwRyCJM1EPAygCAXIjgLibcQYQSvHkznczP7GOnMaw
- EgYLuftPp8zP8q2bVSVM1yr0IzASSv6ja8lD1IY+mWJAia0qQcwyMNUIMC92fTuBAJKR 3Q== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stv5naq6a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 10:20:42 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381AKeS2026429
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 10:20:40 GMT
-Received: from srichara-linux.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Fri, 1 Sep 2023 03:20:37 -0700
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To:     <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <quic_viswanat@quicinc.com>,
-        <quic_srichara@quicinc.com>
-Subject: [PATCH net-next 2/2] net: qrtr: Add support for processing DEL_PROC type control message
-Date:   Fri, 1 Sep 2023 15:50:21 +0530
-Message-ID: <1693563621-1920-3-git-send-email-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1693563621-1920-1-git-send-email-quic_srichara@quicinc.com>
-References: <1693563621-1920-1-git-send-email-quic_srichara@quicinc.com>
+        Fri, 1 Sep 2023 06:43:31 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CA934E72;
+        Fri,  1 Sep 2023 03:43:26 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F0B0EFEC;
+        Fri,  1 Sep 2023 03:44:04 -0700 (PDT)
+Received: from [10.57.91.85] (unknown [10.57.91.85])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 594583FBD2;
+        Fri,  1 Sep 2023 03:43:23 -0700 (PDT)
+Message-ID: <90beb51a-27fc-ef16-88cb-07a4b4ec06e4@arm.com>
+Date:   Fri, 1 Sep 2023 11:43:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: j5nUXHzdourcnL855dXd_OJo8ekrYd7V
-X-Proofpoint-ORIG-GUID: j5nUXHzdourcnL855dXd_OJo8ekrYd7V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-01_07,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 mlxlogscore=790 spamscore=0 adultscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0
- mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010096
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [PATCH v8 07/13] coresight-tpdm: Add nodes to set trigger
+ timestamp and type
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
+ <1692681973-20764-8-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1692681973-20764-8-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For certain rproc's like modem, when it goes down and endpoint gets
-un-registered, DEL_PROC control message gets forwarded to other
-remote nodes. So remote nodes should listen on the message,
-wakeup all local waiters waiting for tx_resume notifications
-(which will never come) and also forward the message to all
-local qrtr sockets like QMI etc. Adding the support here.
+On 22/08/2023 06:26, Tao Zhang wrote:
+> The nodes are needed to set or show the trigger timestamp and
+> trigger type. This change is to add these nodes to achieve these
+> function.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 22 +++++
+>   drivers/hwtracing/coresight/coresight-tpdm.c       | 95 ++++++++++++++++++++++
+>   2 files changed, 117 insertions(+)
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index 2936226..9e26e30 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -21,3 +21,25 @@ Description:
+>   
+>   		Accepts only one value -  1.
+>   		1 : Reset the dataset of the tpdm
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_type
+> +Date:		March 2023
+> +KernelVersion	6.5
 
-Introduced a new rx worker here, because endpoint_post can get called in
-atomic contexts, but processing of DEL_PROC needs to acquire node
-qrtr_tx mutex.
+6.7
 
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
----
-Right now DEL_PROC is sent only by some legacy targets, latest uses
-only _BYE signalling for local observers only. So later that needs to
-be changed to broadcast and do the same DEL_PROC processing.
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(RW) Set/Get the trigger type of the DSB for tpdm.
+> +
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Set the DSB trigger type to false
+> +		1 : Set the DSB trigger type to true
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_ts
+> +Date:		March 2023
+> +KernelVersion	6.5
 
- include/uapi/linux/qrtr.h |  1 +
- net/qrtr/af_qrtr.c        | 65 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+)
+Same here
 
-diff --git a/include/uapi/linux/qrtr.h b/include/uapi/linux/qrtr.h
-index f7e2fb3..1c92015 100644
---- a/include/uapi/linux/qrtr.h
-+++ b/include/uapi/linux/qrtr.h
-@@ -26,6 +26,7 @@ enum qrtr_pkt_type {
- 	QRTR_TYPE_PING          = 9,
- 	QRTR_TYPE_NEW_LOOKUP	= 10,
- 	QRTR_TYPE_DEL_LOOKUP	= 11,
-+	QRTR_TYPE_DEL_PROC	= 13,
- };
- 
- struct qrtr_ctrl_pkt {
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 26197a0..426cea0 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2015, Sony Mobile Communications Inc.
-  * Copyright (c) 2013, The Linux Foundation. All rights reserved.
-  */
-+#include <linux/kthread.h>
- #include <linux/module.h>
- #include <linux/netlink.h>
- #include <linux/qrtr.h>
-@@ -122,6 +123,9 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
-  * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
-  * @rx_queue: receive queue
-  * @item: list item for broadcast list
-+ * @kworker: worker thread for recv work
-+ * @task: task to run the worker thread
-+ * @read_data: scheduled work for recv work
-  */
- struct qrtr_node {
- 	struct mutex ep_lock;
-@@ -134,6 +138,9 @@ struct qrtr_node {
- 
- 	struct sk_buff_head rx_queue;
- 	struct list_head item;
-+	struct kthread_worker kworker;
-+	struct task_struct *task;
-+	struct kthread_work read_data;
- };
- 
- /**
-@@ -186,6 +193,9 @@ static void __qrtr_node_release(struct kref *kref)
- 	list_del(&node->item);
- 	mutex_unlock(&qrtr_node_lock);
- 
-+	kthread_flush_worker(&node->kworker);
-+	kthread_stop(node->task);
-+
- 	skb_queue_purge(&node->rx_queue);
- 
- 	/* Free tx flow counters */
-@@ -526,6 +536,9 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 
- 	if (cb->type == QRTR_TYPE_RESUME_TX) {
- 		qrtr_tx_resume(node, skb);
-+	} else if (cb->type == QRTR_TYPE_DEL_PROC) {
-+		skb_queue_tail(&node->rx_queue, skb);
-+		kthread_queue_work(&node->kworker, &node->read_data);
- 	} else {
- 		ipc = qrtr_port_lookup(cb->dst_port);
- 		if (!ipc)
-@@ -574,6 +587,50 @@ static struct sk_buff *qrtr_alloc_ctrl_packet(struct qrtr_ctrl_pkt **pkt,
- 	return skb;
- }
- 
-+/* Handle DEL_PROC control message */
-+static void qrtr_node_rx_work(struct kthread_work *work)
-+{
-+	struct qrtr_node *node = container_of(work, struct qrtr_node,
-+					      read_data);
-+	struct qrtr_ctrl_pkt *pkt;
-+	void __rcu **slot;
-+	struct radix_tree_iter iter;
-+	struct qrtr_tx_flow *flow;
-+	struct sk_buff *skb;
-+	struct qrtr_sock *ipc;
-+
-+	while ((skb = skb_dequeue(&node->rx_queue)) != NULL) {
-+		struct qrtr_cb *cb = (struct qrtr_cb *)skb->cb;
-+
-+		ipc = qrtr_port_lookup(cb->dst_port);
-+		if (!ipc) {
-+			kfree_skb(skb);
-+			continue;
-+		}
-+
-+		if (cb->type == QRTR_TYPE_DEL_PROC) {
-+			/* Free tx flow counters */
-+			mutex_lock(&node->qrtr_tx_lock);
-+			radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, &iter, 0) {
-+				flow = *slot;
-+				wake_up_interruptible_all(&flow->resume_tx);
-+			}
-+			mutex_unlock(&node->qrtr_tx_lock);
-+
-+			/* Translate DEL_PROC to BYE for local enqueue */
-+			cb->type = QRTR_TYPE_BYE;
-+			pkt = (struct qrtr_ctrl_pkt *)skb->data;
-+			memset(pkt, 0, sizeof(*pkt));
-+			pkt->cmd = cpu_to_le32(QRTR_TYPE_BYE);
-+
-+			if (sock_queue_rcv_skb(&ipc->sk, skb))
-+				kfree_skb(skb);
-+
-+			qrtr_port_put(ipc);
-+		}
-+	}
-+}
-+
- /**
-  * qrtr_endpoint_register() - register a new endpoint
-  * @ep: endpoint to register
-@@ -599,6 +656,14 @@ int qrtr_endpoint_register(struct qrtr_endpoint *ep, unsigned int nid)
- 	node->nid = QRTR_EP_NID_AUTO;
- 	node->ep = ep;
- 
-+	kthread_init_work(&node->read_data, qrtr_node_rx_work);
-+	kthread_init_worker(&node->kworker);
-+	node->task = kthread_run(kthread_worker_fn, &node->kworker, "qrtr_rx");
-+	if (IS_ERR(node->task)) {
-+		kfree(node);
-+		return -ENOMEM;
-+	}
-+
- 	INIT_RADIX_TREE(&node->qrtr_tx_flow, GFP_KERNEL);
- 	mutex_init(&node->qrtr_tx_lock);
- 
--- 
-2.7.4
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(RW) Set/Get the trigger timestamp of the DSB for tpdm.
+> +
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Set the DSB trigger type to false
+> +		1 : Set the DSB trigger type to true
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index d6e7c8c..8e11c9b 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -25,6 +25,18 @@ static bool tpdm_has_dsb_dataset(struct tpdm_drvdata *drvdata)
+>   	return (drvdata->datasets & TPDM_PIDR0_DS_DSB);
+>   }
+>   
+> +static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+> +					   struct attribute *attr, int n)
+
+minor nit: please align.
+
+static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+				   struct attribute *attr, int n)
+
+I don't know if you have a different setting for tabs in your editor.
+Please refer to the coding style document.
+
+> +{
+> +	struct device *dev = kobj_to_dev(kobj);
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	if (drvdata && tpdm_has_dsb_dataset(drvdata))
+> +		return attr->mode;
+> +
+> +	return 0;
+> +}
+> +
+>   static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
+>   {
+>   	if (tpdm_has_dsb_dataset(drvdata)) {
+> @@ -232,8 +244,91 @@ static struct attribute_group tpdm_attr_grp = {
+>   	.attrs = tpdm_attrs,
+>   };
+>   
+> +static ssize_t dsb_trig_type_show(struct device *dev,
+> +		  struct device_attribute *attr, char *buf)
+
+same here.
+
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_type);
+> +}
+> +
+> +/*
+> + * Trigger type (boolean):
+> + * false - Disable trigger type.
+> + * true  - Enable trigger type.
+> + */
+> +static ssize_t dsb_trig_type_store(struct device *dev,
+> +					  struct device_attribute *attr,
+> +					  const char *buf,
+> +					  size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->dsb->trig_type = true;
+> +	else
+> +		drvdata->dsb->trig_type = false;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_type);
+> +
+> +static ssize_t dsb_trig_ts_show(struct device *dev,
+> +					struct device_attribute *attr,
+> +					char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_ts);
+> +}
+> +
+> +/*
+> + * Trigger timestamp (boolean):
+> + * false - Disable trigger timestamp.
+> + * true  - Enable trigger timestamp.
+> + */
+> +static ssize_t dsb_trig_ts_store(struct device *dev,
+> +				   struct device_attribute *attr,
+> +				   const char *buf,
+> +				   size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->dsb->trig_ts = true;
+> +	else
+> +		drvdata->dsb->trig_ts = false;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_ts);
+> +
+> +static struct attribute *tpdm_dsb_attrs[] = {
+> +	&dev_attr_dsb_trig_ts.attr,
+> +	&dev_attr_dsb_trig_type.attr,
+> +	NULL,
+> +};
+> +
+> +static struct attribute_group tpdm_dsb_attr_grp = {
+> +	.attrs = tpdm_dsb_attrs,
+> +	.is_visible = tpdm_dsb_is_visible,
+> +};
+> +
+>   static const struct attribute_group *tpdm_attr_grps[] = {
+>   	&tpdm_attr_grp,
+> +	&tpdm_dsb_attr_grp,
+>   	NULL,
+>   };
+>   
+
+Rest looks fine to me
+
+Suzuki
 
