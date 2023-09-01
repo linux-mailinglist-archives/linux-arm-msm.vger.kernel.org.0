@@ -2,191 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9AA978FFA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 17:08:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CED6178FFC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 17:17:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345363AbjIAPI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 11:08:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46640 "EHLO
+        id S239224AbjIAPRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 11:17:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235231AbjIAPI7 (ORCPT
+        with ESMTP id S231857AbjIAPR3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 11:08:59 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 272D110CF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 08:08:56 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-52a23227567so2831759a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 08:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1693580933; x=1694185733; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ir5d0LdfkLCgxj9RUuUc7L+7Tk1dgspXe4TSyCCKnNc=;
-        b=e4U+qKEKPEWC3jTX2lC28xipxDQopFEEUwrwvYsB27iMP1qovCp/1Tsb8Qj4JDzi2T
-         VbX8XSbsDpxAtqb2+IIZYRGa7/EaCeisnqMFjKYe1xn0wkcx7mBtTzdccRc0oOtRhb47
-         w3BaeJyPXFpvGVwvqNXxRvhKUrGLs6h93c+N0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693580933; x=1694185733;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ir5d0LdfkLCgxj9RUuUc7L+7Tk1dgspXe4TSyCCKnNc=;
-        b=lGbN092ZnaQ1w9f4/EdHQtwcPxsAS8PoKr381WRorgO/GvLn2YGjbntd2HW8snMlD1
-         vhcofzbJaLjOy2xcXVxHZEaUhIyqHH00HZYTN3Kzw03L7893zY4Qxt66Wk2xDiwwhBIn
-         lLVNNHd4RKCO/FfZk9rV+tPAJCJvi4zG5sp9m45uHrQYpYEkZtSXIlB+cMeN/dWzsyWs
-         dl05/nLZDHjj3qWE+9kqkl/mX2SUMxwI5YCMaC80BUev4CmFBFZhXuQaDAC2LEy/YeQX
-         Sn+br2JoprZJMeJsnZBaZZkrDSvFAEAozQKZu8/XUBg9+ZxeTPvcNuSDJ0b6GUvqZelE
-         hFDA==
-X-Gm-Message-State: AOJu0Yx4oILNJy5vwQGjdDCcH1X3Wd81XikorCG8s9GWpgylCQxsUoo+
-        CXI1ddo9RBV/K0XAxE8eutHp91iLZvduNsPsyyeOVKZD
-X-Google-Smtp-Source: AGHT+IG7ApPF+l1sVZTP2u+gO3CZ7NTVXxL1ztYJBPdit4u7mBeIJbzzcLkK4Ca7wbvrLLxExNLNNA==
-X-Received: by 2002:a17:906:f252:b0:99c:fb44:d4a9 with SMTP id gy18-20020a170906f25200b0099cfb44d4a9mr1554849ejb.77.1693580933511;
-        Fri, 01 Sep 2023 08:08:53 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id j9-20020a170906410900b00993b381f808sm2071215ejk.38.2023.09.01.08.08.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Sep 2023 08:08:52 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-402bec56ca6so4475e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 08:08:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:282:b0:3fe:dd72:13ae with SMTP id
- 2-20020a05600c028200b003fedd7213aemr166371wmk.0.1693580932622; Fri, 01 Sep
- 2023 08:08:52 -0700 (PDT)
+        Fri, 1 Sep 2023 11:17:29 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 873EE10CF;
+        Fri,  1 Sep 2023 08:17:24 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381Ad8Te010808;
+        Fri, 1 Sep 2023 15:17:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=DS7hdx6E7VA2wQSfq1YDOlTUARyaDs3G14Q9M+H7yEc=;
+ b=Mp13jdESrnqf1Pl4XbrA0BgUiSR0tE2QO0D7zBpmr6aM8UQQ9P58RrRznBaMwcpEZsQk
+ NJwVWc+qcgdD3iTznKWEHTJJ+loHtbqndq3mw93YZ71/xKuqNj+W5uEYTHGo9/KojiSo
+ EigBaGlmP7xPH/Mi70wygSWY2NcO+BGIhpyVB4MP/3TQZHDIRC5nzutodE1aZVMvkVWe
+ 7uYjfTe05r6v+Aqvp/OC2J43aXOPabacoKOf5l0rDXHg7WhtwPhm3FgFR2hTKdi5aHIJ
+ oZEYLrTBAlqYTcJmkXR3LuNFGS2fRoBT+6WnvQSMZYH2GyQNUVwoiRuBfaBrEOkI/KjJ iQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc9k12gt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 01 Sep 2023 15:17:16 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381FHEwo004407
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 1 Sep 2023 15:17:14 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 1 Sep 2023 08:17:15 -0700
+Date:   Fri, 1 Sep 2023 08:17:13 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+CC:     <mani@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
+        <martin.petersen@oracle.com>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Naveen Kumar Goud Arepalli" <quic_narepall@quicinc.com>
+Subject: Re: [PATCH V6 1/6] scsi: ufs: qcom: Align mask for
+ core_clk_1us_cycles
+Message-ID: <20230901151713.GQ818859@hu-bjorande-lv.qualcomm.com>
+References: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
+ <20230901114336.31339-2-quic_nitirawa@quicinc.com>
 MIME-Version: 1.0
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com> <CAD=FV=WS2hgY=bQjLOs3Fdp8pbZyMsaS-0BpoxPq90Etfi+Xuw@mail.gmail.com>
- <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso> <CAD=FV=XhdORH=naTtoc+kCC4A7UdAJKwq=Te6B3qvXNGBwBieg@mail.gmail.com>
- <CV7O0TYYEFA8.1Q42JITFSW77Q@otso>
-In-Reply-To: <CV7O0TYYEFA8.1Q42JITFSW77Q@otso>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 1 Sep 2023 08:08:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UG-dFg7wZsn6n=pkejie0fr+G0q3CguNspGYxoC2ZBLw@mail.gmail.com>
-Message-ID: <CAD=FV=UG-dFg7wZsn6n=pkejie0fr+G0q3CguNspGYxoC2ZBLw@mail.gmail.com>
-Subject: Re: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230901114336.31339-2-quic_nitirawa@quicinc.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VyiaAMRnV7s9K8GcpnLmhOhppJ6sKyFv
+X-Proofpoint-ORIG-GUID: VyiaAMRnV7s9K8GcpnLmhOhppJ6sKyFv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-01_13,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ bulkscore=0 clxscore=1011 phishscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309010143
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Sep 01, 2023 at 05:13:31PM +0530, Nitin Rawat wrote:
+> Align core_clk_1us_cycles mask for Qualcomm UFS Controller V4.0.0
 
-On Fri, Sep 1, 2023 at 7:54=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.com=
-> wrote:
->
-> > > > So maybe the right fix here is to just change your dts to specify o=
-ne
-> > > > memory region?
-> > >
-> > > I got feedback from Konrad that this here would be the preferred
-> > > approach compared to having a different dts for ChromeOS vs non-Chrom=
-eOS
-> > > devices. I don't feel strongly to either, for me it's also okay to
-> > > remove the extra memory regions and only have the main one used on
-> > > regular qcom devices.
-> > >
-> > > Let me know what you think.
-> >
-> > I don't hate the idea of leaving the extra memory regions in the dts.
-> > They do describe the hardware, after all, even if the main OS can't
-> > actually access those memory regions. ...though the same could also be
-> > said about the clock you've removed. Said another way: if you want to
-> > fully describe the hardware then the dts should have the extra memory
-> > regions and the clock. If you are OK w/ just describing the hardware
-> > in the way that the OS has access to then the dts should not have the
-> > extra memory regions and not have the clock. Does that sound right?
->
-> Not sure which of those memory regions are actually accessible on this
-> board, but honestly I don't even want to try accessing it. Blowing fuses
-> is not my wish there ;)
->
-> On downstream the node is just described like the following:
->
->         qfprom: qfprom@780000 {
->                 compatible =3D "qcom,qfprom";
->                 reg =3D <0x780000 0x7000>;
->                 ...
->         };
->
-> So we have 0x780000 - 0x786fff here.
->
-> In sc7280.dtsi we have the following:
->
->         qfprom: efuse@784000 {
->                 compatible =3D "qcom,sc7280-qfprom", "qcom,qfprom";
->                 reg =3D <0 0x00784000 0 0xa20>,
->                           <0 0x00780000 0 0xa20>,
->                           <0 0x00782000 0 0x120>,
->                           <0 0x00786000 0 0x1fff>;
->                 ...
->         };
->
-> So I guess this:
-> * 0x780000 - 0x780a1f
-> * 0x782000 - 0x78211f
-> * 0x784000 - 0x784a1f
-> * 0x786000 - 0x787ffe
->
-> So at least the last memory region seems to be partially out of range
-> according to downstream.
+"Align clk mask for ... as per hardware specification."? Are you trying
+to say "The DME_VS_CORE_CLK_CTRL register has changed in v4 of the
+Qualcomm UFS controller, introduce support for the new register layout"?
 
-From the other discussion, it sounds as if you _can_ leave the clock
-in the device tree and then use "clk_get_optional" here. IMO then, the
-right answer is to use "clk_get_optional" but then also modify the
-check below so that instead of:
+You're not aligning the code to match the hardware specification, you're
+fixing the code because the register has changed.
 
-/* Only enable writing if we have SoC data. */
-if (priv->soc_data)
-  econfig.reg_write =3D qfprom_reg_write;
+> onwards as per Hardware Specification.
+> 
+> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 28 ++++++++++++++++++----------
+>  drivers/ufs/host/ufs-qcom.h |  5 +++--
+>  2 files changed, 21 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index f88febb23123..fe36003faaa8 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1297,22 +1297,30 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
+>  }
+> 
+>  static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+> -						       u32 clk_cycles)
+> +						       u32 cycles_in_1us)
 
-It is:
+This is a nice clarification, but changing the function prototype gives
+a sense that you changed the parameters - and that's not the case.
 
-/* Only enable writing if we have SoC data and a valid clock */
-if (priv->soc_data && priv->secclk)
-  econfig.reg_write =3D qfprom_reg_write;
+So if you drop this rename, you make the purpose of the patch clearer.
 
+>  {
+> -	int err;
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>  	u32 core_clk_ctrl_reg;
+> +	int ret;
 
-Does that work for you?
+Renaming err to ret is unrelated and only unnecessary complexity to the
+patch.
 
+> 
+> -	if (clk_cycles > DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK)
+> -		return -EINVAL;
+> -
+> -	err = ufshcd_dme_get(hba,
+> +	ret = ufshcd_dme_get(hba,
+>  			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+>  			    &core_clk_ctrl_reg);
+> -	if (err)
+> -		return err;
+> +	if (ret)
+> +		return ret;
+> 
+> -	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK;
+> -	core_clk_ctrl_reg |= clk_cycles;
+> +	/* Bit mask is different for UFS host controller V4.0.0 onwards */
+> +	if (host->hw_ver.major >= 4) {
+> +		if (!FIELD_FIT(CLK_1US_CYCLES_MASK_V4, cycles_in_1us))
+> +			return -ERANGE;
+> +		core_clk_ctrl_reg &= ~CLK_1US_CYCLES_MASK_V4;
+> +		core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK_V4, cycles_in_1us);
+> +	} else {
+> +		if (!FIELD_FIT(CLK_1US_CYCLES_MASK, cycles_in_1us))
+> +			return -ERANGE;
+> +		core_clk_ctrl_reg &= ~CLK_1US_CYCLES_MASK;
+> +		core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK, cycles_in_1us);
+> +	}
+> 
+>  	/* Clear CORE_CLK_DIV_EN */
+>  	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index d6f8e74bd538..8a9d3dbec297 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -129,8 +129,9 @@ enum {
+>  #define PA_VS_CONFIG_REG1	0x9000
+>  #define DME_VS_CORE_CLK_CTRL	0xD002
+>  /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
+> -#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT		BIT(8)
+> -#define DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MASK	0xFF
+> +#define CLK_1US_CYCLES_MASK_V4				GENMASK(27, 16)
+> +#define CLK_1US_CYCLES_MASK				GENMASK(7, 0)
+> +#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT	BIT(8)
 
-> So after reading all of this I tried running this commmand on the phone
-> and the phone reboots into 900e mode.
->
->   $ cat /sys/devices/platform/soc@0/784000.efuse/qfprom0/nvmem
->
-> I guess normally this should work? So if I interpret this correctly, the
-> Linux driver thinks it can access more than it can/should. But also
-> should probably try this command on another chipset to see if it works
-> on any really?
+Hard to say without applying the patch, please double check that the
+values here have matching indentation level.
 
-Presumably your firmware needs a different "sc7280_qfprom_keepout". If
-that's true then I guess you'll have to undergo negotiations with the
-DT bindings folks and the nvmem maintainer to figure out how to
-specify that your firmware protects different things than the ChromeOS
-firmware?
+Thank you,
+Bjorn
 
-
--Doug
+> 
+>  static inline void
+>  ufs_qcom_get_controller_revision(struct ufs_hba *hba,
+> --
+> 2.17.1
+> 
