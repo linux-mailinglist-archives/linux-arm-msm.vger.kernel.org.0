@@ -2,109 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA6DE78FF8D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 16:57:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 201AE78FF9C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 17:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243508AbjIAO5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 10:57:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60558 "EHLO
+        id S1350098AbjIAPEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 11:04:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350088AbjIAO5A (ORCPT
+        with ESMTP id S232461AbjIAPEO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 10:57:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DBA10D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 07:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1693580169;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=qe/MwpMHYNafFC+5TmrxwtfbdYEx0carSbG7f8NMKRs=;
-        b=eUbAj6zJn/hlG/IfvxkA0I5NC/Ehc3t0yFceAj0d+2y5diNNceRIZ9plwUw2OzA0zfVdry
-        ewA+VpusddHsRwqdicAqUKeRzrbHgu6yDMOhpZAdkbjEc9QqTK1PnCSA1CiHKFBQdsIbb8
-        /j7k+e1IPb8PM3r8GrXZ6MaEy+W5Rjs=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-kMoltwh0OGCXtvyZZbhlyw-1; Fri, 01 Sep 2023 10:56:08 -0400
-X-MC-Unique: kMoltwh0OGCXtvyZZbhlyw-1
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-64cb143d3b5so21603036d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 07:56:08 -0700 (PDT)
+        Fri, 1 Sep 2023 11:04:14 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9466510E5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 08:04:10 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-401da71b7c5so21186915e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 08:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693580649; x=1694185449; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IWnLKgy4psQAOPCmq/KJu4X6vCCHFBpqjxEL4HJlAgs=;
+        b=n+wE5ieHXurAgi1byUSaX4KsGtfy3zHADC/OQfi33+CpznUU88VFfpnwzeadHwAB9X
+         p7E6XSZl8+Abe807eKpCY7RWgOJI5o+tUU/A7Xu976iTwL1jq2IJCCWyFp21lq4Ts7i7
+         zWDJsHJSts+DpNLsrvpIROaS4vKL8qSU3Pxv2wr1CvrjE8gXAYv4oAFzYrPCjsD2N0ts
+         BxiucjC8NLNTf48cAn4tzId3mPxfiprB93zTnetJR29kx2PzhipHbxyTMg4TN0Z459qB
+         b4aTJeCL6Mp8DLa9ivC8f3UO8atxx/SKLgoksCMUDZCeVuIsA8YgpZ7xHGSRgSjBjC+4
+         8Kbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693580168; x=1694184968;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qe/MwpMHYNafFC+5TmrxwtfbdYEx0carSbG7f8NMKRs=;
-        b=ZUymbTqVGcJsW7CU2cb+6hMi8Ub8K3W8qGpGSW4e9lAWvbIXL0K2DgGh9bwgk9vfr/
-         hq18k0TbB4P2h/cCi2N/Wue1lMZGom4hcAxC4FENMec7Yu1MKUOlA1PeAfFqdrELCIFC
-         GaAcQ5upvawv6Nb18hM1NfOPY+8rZSk+AOL1Pso8WRrMYDAz8NjGeJ0udhsr1bQVnXhp
-         ytOciNkl9CxpmaYy7espDAo5CU76rYIonCO3EF8zpcf+iCMEyKxwQqSmdex0h5RZb4xt
-         5U9eufmQ6JsVu4FxB6EZ/GWCMbownPrnOkfnOBr7sXaIUtn66xt5k201x7Pa8tncfZBo
-         JhOw==
-X-Gm-Message-State: AOJu0YwktFWp5bpk71+6+BMRNX2DaeVvupNASae5T6DpMdapyoK5MIXW
-        Fw/IQr7p9i660TADPWLkP466KX0yAehPAUjLXb10eGQGX0CjQ8bs1pVhuMcLQOsW7nAmEmhS/no
-        zf4xph9XkWbR8XdayvKSFv7317w==
-X-Received: by 2002:a05:6214:8e9:b0:64f:802b:7e07 with SMTP id dr9-20020a05621408e900b0064f802b7e07mr2635419qvb.55.1693580167842;
-        Fri, 01 Sep 2023 07:56:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQ3n3tqbAoVK0w2zo4+AmmYnWe5wemVA5ID/TosFzjP+ELrCFhfa6IqepolB0g6Qx5gP00zg==
-X-Received: by 2002:a05:6214:8e9:b0:64f:802b:7e07 with SMTP id dr9-20020a05621408e900b0064f802b7e07mr2635407qvb.55.1693580167552;
-        Fri, 01 Sep 2023 07:56:07 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::49])
-        by smtp.gmail.com with ESMTPSA id pc17-20020a056214489100b00631ecb1052esm1275941qvb.74.2023.09.01.07.56.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Sep 2023 07:56:07 -0700 (PDT)
-Date:   Fri, 1 Sep 2023 09:56:05 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     mani@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, jejb@linux.ibm.com,
-        martin.petersen@oracle.com, quic_cang@quicinc.com,
-        quic_nguyenb@quicinc.com, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V6 0/6] scsi: ufs: qcom: Align programming sequence as
- per HW spec
-Message-ID: <or3ak3pzz6eozhvvjsjh52vrylehlhvrqrg3ey6slhjtx2mj5g@6vho7zpyeady>
-References: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
+        d=1e100.net; s=20221208; t=1693580649; x=1694185449;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IWnLKgy4psQAOPCmq/KJu4X6vCCHFBpqjxEL4HJlAgs=;
+        b=HkFsr/+FGk3/5582oKlPBJ+8hRPhzHDsAvjRojVgPrYPAjb0uvraskCS68t6g5L5Ku
+         smF/MGKNadbErxRLEpLpclMRCzTr3/+8pMiww/ihsh3+JSIgKQar5rdnG1hexhsf4Gwf
+         BCE/QpiZ1Nxac6kXMlr69WY9ktqRw8cKn6+11y8+9U6/aQDu2WJ8Ch/EEu68/c2iL9t1
+         Exm2KfdOKK+2hpzHVZ+WL+Vv3HaHLiVyhrEPzspvCU+G0oMLvwVdWl2+5KUDMCgOG9XF
+         NJafNcYYm66e1i7Y7QwelmtjR3s6o9boTlrBoRTkrG4SQ8Npj6k5xLEDaA/kaUcAGG24
+         9qDA==
+X-Gm-Message-State: AOJu0Yzd84QLidL2pr59mFBzETfJhHJG4DEm7FoyHrSQjz2lAUJ5BbMk
+        g8RVaCdmZwprdQ5H8jV61acXUg==
+X-Google-Smtp-Source: AGHT+IGhXUcSeTC1y/HbwZL6d49yRvC6KlJjPuI32snrfXHFombXdShnxsysYVpAb4HQE5xETHL9yw==
+X-Received: by 2002:a05:600c:205a:b0:401:264b:5df7 with SMTP id p26-20020a05600c205a00b00401264b5df7mr1938908wmg.35.1693580648493;
+        Fri, 01 Sep 2023 08:04:08 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o18-20020a05600c379200b003fee65091fdsm8347949wmr.40.2023.09.01.08.04.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Sep 2023 08:04:07 -0700 (PDT)
+Message-ID: <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
+Date:   Fri, 1 Sep 2023 16:04:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
+Content-Language: en-US
+To:     Ziyang Huang <hzyitc@outlook.com>, agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        quic_gokulsri@quicinc.com, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 01, 2023 at 05:13:30PM +0530, Nitin Rawat wrote:
-> This patch aligns programming sequence as per Qualcomm UFS
-> hardware specification.
+On 01/09/2023 15:10, Ziyang Huang wrote:
+> In pinctrl, the pinconfigs for uart are named "blspX_uartY".
+>    X is the UART ID. Starts from 1.
+>      1-6 are in BLSP Block 1.
+>      7-12 are in BLSP Block 2.
+>    Y is the index of mux config. Starts from 0.
+> 
+> In dts, the serials are also named "blspX_uartY", but with different logic.
+>    X is the BLSP Block ID. Starts from 1.
+>    Y is the uart id inside block.
+>      In "ipq6018.dtsi" and "ipq8074.dtsi", it starts from 1.
+>      But in "ipq5332.dtsi" and "ipq9574.dtsi", it starts from 0.
+> 
+> +-----------------+-----------------+-------------+-----------------+
+> |     Block ID    | ID inside Block |  dts name   | pinconfig name  |
+> | (Starts from 1) | (Starts from 1) |             |                 |
+> +-----------------+-----------------+-------------+-----------------+
+> |        1        |        1        | blsp1_uart1 |   blsp0_uartY   |
+> |        1        |        2        | blsp1_uart2 |   blsp1_uartY   |
+> |        1        |        6        | blsp1_uart6 |   blsp5_uartY   |
+> |        2        |        1        | blsp2_uart1 |   blsp6_uartY   |
+> |        2        |        6        | blsp2_uart6 |   blsp12_uartY  |
+> +-----------------+-----------------+-------------+-----------------+
+> 
+> In "ipq5018.dts", "blsp1_uart1" (dts name) is the first serial (confimed
+> by the address), So its pinconfig should be "blsp0_uart0" (pinconfig name,
+> use GPIO 20 and 21) or "blsp0_uart1" (pinconfig name, use GPIO 28 and 29).
+> 
+> Fixes: 570006756a16 ("arm64: dts: Add ipq5018 SoC and rdp432-c2 board support")
+> Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+> ---
+> Changes since v1:
+> - Use corrent name in From
+> 
+> Changes since v2:
+> - Define 2 pinconfs for uart1 in ipq5018.dtsi
+> - rdp432-c2 use uart1_pins_a
+> 
+>   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  2 +-
+>   arch/arm64/boot/dts/qcom/ipq5018.dtsi          | 15 +++++++++++----
+>   2 files changed, 12 insertions(+), 5 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+> index e636a1cb9b77..e83d1863e89c 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+> @@ -23,7 +23,7 @@ chosen {
+>   };
+>   
+>   &blsp1_uart1 {
+> -	pinctrl-0 = <&uart1_pins>;
+> +	pinctrl-0 = <&uart1_pins_a>;
+>   	pinctrl-names = "default";
+>   	status = "okay";
+>   };
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+> index 9f13d2dcdfd5..50b4a2bd6fd3 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+> @@ -103,11 +103,18 @@ tlmm: pinctrl@1000000 {
+>   			interrupt-controller;
+>   			#interrupt-cells = <2>;
+>   
+> -			uart1_pins: uart1-state {
+> -				pins = "gpio31", "gpio32", "gpio33", "gpio34";
+> -				function = "blsp1_uart1";
+> +			uart1_pins_a: uart1@0 {
+> +				pins = "gpio20", "gpio21";
+> +				function = "blsp0_uart0";
+>   				drive-strength = <8>;
+> -				bias-pull-down;
+> +				bias-disabled;
+> +			};
+> +
+> +			uart1_pins_b: uart1@1 {
+> +				pins = "gpio28", "gpio29";
+> +				function = "blsp0_uart1";
+> +				drive-strength = <8>;
+> +				bias-disabled;
+>   			};
+>   		};
+>   
 
-reading this series, it is difficult for me to understand as a user of
-the driver if this should have any noticeable effect.
+The assignment of pins 20 and 21 to blsp1_uart1 is not correct.
 
-Some of the patches mention that there is no functional change, some
-only say align with the HPG but change programming sequence, frequency,
-etc if I understand correctly on a quick glance.
+The blspX_uartY in pinctrl should match what is in the dtsi so assigning 
+pins_a above to blsp1_uart1 is not right. The dts name and pinctrl name 
+should be the same.
 
-I think being a bit verbose in some of the patches with respect to
-explaining the effect of the patch (or lack of a noticeable effect)
-would be a beneficial improvement to this series if there's another
-version.
+Your console is on blsp0_uart0.
 
-I agree that aligning with the HPG instead of doing some undefined
-sequence is a good idea, I'm just reading some of the changes and
-thinking "I have no idea if this is going to fix something (no Fixes:
-tag but it almost sounds like one), will this improve something, or will this
-just change the programming sequence to a known and recommended
-sequence?".
+https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/blob/5343739b4070bcec2fecd72f758c16adc31a3083/arch/arm/dts/ipq5018-mp03.3.dts#L33
 
-Thanks for the patches,
-Andrew
+So roughly speaking
+
+arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+
+aliases {
+	serial0 = &blsp0_uart0;
+};
+
+chosen {
+	stdout-path = "serial0:115200n8";
+};
+
+&blsp0_uart0 {
+         pinctrl-0 = <&uart0_pins>;
+         pinctrl-names = "default";
+         status = "okay";
+};
+
+
+arch/arm64/boot/dts/qcom/ipq5018.dtsi
+
+blsp0_uart0: serial@78af000
+
+either that or  blsp0_uart1 for pins28 and pins29 - you seem to indicate 
+pins_1 => blsp0_uart0.
+
+The two roots of the problem are
+
+1. Mislabeling of the uart block in the dtsi
+2. Invalid miscongiruation of pins for that misnamed block
+
+The fix should be
+
+1. Fix the labeling of uart in the dtsi
+2. Decide on which pins gpio20, gpio21 ? are the right ones to configure
+
+I thought you said in a previous email if you changed pins gpio28 and 
+gpio29 that the UART would fail if so that implies blsp0_uart1.
+
+Either way the pinctrl and dts should agree.
+
+---
+bod
 
