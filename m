@@ -2,124 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E75F78FD67
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 14:39:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4070178FD75
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 14:44:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239963AbjIAMjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 08:39:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38612 "EHLO
+        id S1349506AbjIAMod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 08:44:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231718AbjIAMjt (ORCPT
+        with ESMTP id S1349502AbjIAMoc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 08:39:49 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14E610CF;
-        Fri,  1 Sep 2023 05:39:45 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3818aSZT004423;
-        Fri, 1 Sep 2023 12:39:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k1kev0CaEjHSf9FHyvneqGylMQtr6Je4H0t2FJvzYfU=;
- b=GNdch/3uHQM6uiXAw8+vaaRBBLYHf3sULrBBBAzLSeD2M8Rbbn674g7dPsvA5LOa4Ipx
- PCoParouCC9aFyPRqok85xEOJHw4xdrH90nKQL3kZi7Xl+PWb2YUPGlyzSQsuuMV15CN
- nR/NMt6RFpAQ0z1cWj3NMh+QOysr+Y1UENDY0X3QD+MqIRig3UZ5kRrjceXBoYP+Gbl3
- E/3yYX97ydRhXcIQQ7fO4rI6XBL38yqR9MFylrBC2JmtL2VsRAyb08GJgKaW8UZMr4G7
- DAMS2oqlU1OUWvLyJVDxFaeFpenp6FdJiRZcugMwmGHYoduqKRPL42YNq0SlurXpQbqo cg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3str1nkexu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 12:39:37 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381CdalX029982
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 12:39:36 GMT
-Received: from [10.201.203.60] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 1 Sep
- 2023 05:39:32 -0700
-Message-ID: <7a2612ae-7ab0-5aaf-c903-d2d58f89f5ea@quicinc.com>
-Date:   Fri, 1 Sep 2023 18:09:29 +0530
+        Fri, 1 Sep 2023 08:44:32 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A94010D7;
+        Fri,  1 Sep 2023 05:44:27 -0700 (PDT)
+Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:4d01:31d2:de6b:d217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 0DFD866072B1;
+        Fri,  1 Sep 2023 13:44:25 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693572265;
+        bh=6bKJsNQuCp9wrCZ4U5UGjs1WsKO8DWGQ1kTptdno01s=;
+        h=From:To:Cc:Subject:Date:From;
+        b=DU2PUm+bUaPZGUyfKuN/jnhmT0k+he2YbtxgGxSXT+C1SpjyFACkj8iNc9CmmFUn2
+         FcwZv6YRo/o3p+CZfd06gUP421quk0dljMZospn8eZACuk4pHAeC34tdI9uqOttc3p
+         psuN+SA2D32QnCIlO9zNFBb9shj5kFBCrZlw9zen0zultKSL0zH7I0ayOeTQqEvY28
+         p9zh/qXsghO3D+eLq4oyfcDkRTXoPUT042FNE3102CaT+3H6RKIIa3f4iLiLL4O/OB
+         cV/lucEZc1NqJkf7JVPibPZI1cdjt+dwwrREAie5y/X10bA5DrnOTcSsovSMxE8yYE
+         jSfDcb8CC9S7A==
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: [PATCH v6 00/18] Add DELETE_BUF ioctl
+Date:   Fri,  1 Sep 2023 14:43:56 +0200
+Message-Id: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2] arm64: dts: ipq5018: Correct uart1_pins pinconf
-Content-Language: en-US
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Ziyang Huang <hzyitc@outlook.com>, <agross@kernel.org>
-CC:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <quic_gokulsri@quicinc.com>,
-        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <TYZPR01MB5556F902BF64AF857C3ABD44C9E5A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <49fbae87-ce09-23af-6bcd-459b5646e680@nexus-software.ie>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <49fbae87-ce09-23af-6bcd-459b5646e680@nexus-software.ie>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: u1IIqYurAniy2UKzdph7GcVPAVzqhdxF
-X-Proofpoint-ORIG-GUID: u1IIqYurAniy2UKzdph7GcVPAVzqhdxF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-01_10,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- mlxlogscore=982 spamscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 adultscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010118
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ziyang,
+Unlike when resolution change on keyframes, dynamic resolution change
+on inter frames doesn't allow to do a stream off/on sequence because
+it is need to keep all previous references alive to decode inter frames.
+This constraint have two main problems:
+- more memory consumption.
+- more buffers in use.
+To solve these issue this series introduce DELETE_BUFS ioctl and remove
+the 32 buffers limit per queue.
 
-<...>
+VP9 conformance tests using fluster give a score of 210/305.
+The 24 resize inter tests (vp90-2-21-resize_inter_* files) are ok
+but require to use postprocessor.
 
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi 
->> b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> index 9f13d2dcdfd5..91b98020e1c6 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> @@ -104,10 +104,10 @@ tlmm: pinctrl@1000000 {
->>               #interrupt-cells = <2>;
->>               uart1_pins: uart1-state {
->> -                pins = "gpio31", "gpio32", "gpio33", "gpio34";
->> -                function = "blsp1_uart1";
->> +                pins = "gpio28", "gpio29";
->> +                function = "blsp0_uart1";
->>                   drive-strength = <8>;
->> -                bias-pull-down;
->> +                bias-disabled;
->>               };
->>           };
-> 
-> So this change will have the effect of changing the console on 
-> ipq5018-rdp432 from gpio31-gpio34 to gpio28, gpio29.
-> 
-> Have you verified that change on hardware or the schematic ?
-> 
-> https://forum.openwrt.org/t/add-support-for-xiaomi-redmi-ax5400-white-version/140879/22?page=2 
-> 
-> 
-> This has the wrong UART pinout ?
-> 
-> Is this change something that should be expressed for a particular board ?
+Kernel branch is available here:
+https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v6
 
-  Infact again checked it, the correct pins are "gpio20", "gpio21".
-  It works so far because u-boot has configured it.
+GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
+change is here:
+https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
+
+changes in version 6:
+- Get a patch per driver to use vb2_get_buffer() instead of directly access
+  to queue buffers array.
+- Add lock in vb2_core_delete_buf()
+- Use vb2_buffer instead of index
+- Fix various comments
+- Change buffer index name to BUFFER_INDEX_MASK
+- Stop spamming kernel log with unbalanced counters
+
+changes in version 5:
+- Rework offset cookie encoding pattern is n ow the first patch of the
+  serie.
+- Use static array instead of allocated one for postprocessor buffers.
+
+changes in version 4:
+- Stop using Xarray, instead let queues decide about their own maximum
+  number of buffer and allocate bufs array given that value.
+- Rework offset cookie encoding pattern.
+- Change DELETE_BUF to DELETE_BUFS because it now usable for
+  range of buffer to be symetrical of CREATE_BUFS.
+- Add fixes tags on couple of Verisilicon related patches.
+- Be smarter in Verisilicon postprocessor buffers management.
+- Rebase on top of v6.4
+
+changes in version 3:
+- Use Xarray API to store allocated video buffers.
+- No module parameter to limit the number of buffer per queue.
+- Use Xarray inside Verisilicon driver to store postprocessor buffers
+  and remove VB2_MAX_FRAME limit.
+- Allow Versilicon driver to change of resolution while streaming
+- Various fixes the Verisilicon VP9 code to improve fluster score.
+ 
+changes in version 2:
+- Use a dynamic array and not a list to keep trace of allocated buffers.
+  Not use IDR interface because it is marked as deprecated in kernel
+  documentation.
+- Add a module parameter to limit the number of buffer per queue.
+- Add DELETE_BUF ioctl and m2m helpers.
 
 Regards,
-  Sricharan
+Benjamin
+ 
+Benjamin Gaignard (18):
+  media: videobuf2: Rework offset 'cookie' encoding pattern
+  media: videobuf2: Stop spamming kernel log with all queue counter
+  media: videobuf2: Use vb2_buffer instead of index
+  media: amphion: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: mediatek: jpeg: Use vb2_get_buffer() instead of directly access
+    to buffers array
+  media: mediatek: vdec: Use vb2_get_buffer() instead of directly access
+    to buffers array
+  media: sti: hva: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: visl: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: atomisp: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: videobuf2: Access vb2_queue bufs array through helper functions
+  media: videobuf2: Be more flexible on the number of queue stored
+    buffers
+  media: verisilicon: Refactor postprocessor to store more buffers
+  media: verisilicon: Store chroma and motion vectors offset
+  media: verisilicon: vp9: Use destination buffer height to compute
+    chroma offset
+  media: verisilicon: postproc: Fix down scale test
+  media: verisilicon: vp9: Allow to change resolution while streaming
+  media: v4l2: Add DELETE_BUFS ioctl
+  media: v4l2: Add mem2mem helpers for DELETE_BUFS ioctl
+
+ .../userspace-api/media/v4l/user-func.rst     |   1 +
+ .../media/v4l/vidioc-delete-bufs.rst          |  73 ++++
+ .../media/common/videobuf2/videobuf2-core.c   | 379 ++++++++++++------
+ .../media/common/videobuf2/videobuf2-v4l2.c   |  99 ++++-
+ drivers/media/dvb-core/dvb_vb2.c              |   6 +-
+ drivers/media/platform/amphion/vpu_dbg.c      |  22 +-
+ .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   6 +-
+ .../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c |   2 +-
+ drivers/media/platform/st/sti/hva/hva-v4l2.c  |   4 +
+ drivers/media/platform/verisilicon/hantro.h   |   9 +-
+ .../media/platform/verisilicon/hantro_drv.c   |   4 +-
+ .../platform/verisilicon/hantro_g2_vp9_dec.c  |  10 +-
+ .../media/platform/verisilicon/hantro_hw.h    |   4 +-
+ .../platform/verisilicon/hantro_postproc.c    |  95 ++++-
+ .../media/platform/verisilicon/hantro_v4l2.c  |  27 +-
+ drivers/media/test-drivers/vim2m.c            |   1 +
+ drivers/media/test-drivers/visl/visl-dec.c    |  28 +-
+ drivers/media/v4l2-core/v4l2-dev.c            |   1 +
+ drivers/media/v4l2-core/v4l2-ioctl.c          |  17 +
+ drivers/media/v4l2-core/v4l2-mem2mem.c        |  20 +
+ .../staging/media/atomisp/pci/atomisp_ioctl.c |   2 +-
+ include/media/v4l2-ioctl.h                    |   4 +
+ include/media/v4l2-mem2mem.h                  |  12 +
+ include/media/videobuf2-core.h                |  29 +-
+ include/media/videobuf2-v4l2.h                |  11 +
+ include/uapi/linux/videodev2.h                |  16 +
+ 26 files changed, 664 insertions(+), 218 deletions(-)
+ create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
+
+-- 
+2.39.2
+
