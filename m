@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0DA079008A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 18:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C9179008C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 18:13:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244902AbjIAQLC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 12:11:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50408 "EHLO
+        id S1343563AbjIAQNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 12:13:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242107AbjIAQLC (ORCPT
+        with ESMTP id S232819AbjIAQNC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 12:11:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1964CDD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 09:10:59 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381DS6FS012774;
-        Fri, 1 Sep 2023 16:10:54 GMT
+        Fri, 1 Sep 2023 12:13:02 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8506107
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 09:12:58 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381ClMuj031158;
+        Fri, 1 Sep 2023 16:12:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : mime-version : content-transfer-encoding :
  content-type; s=qcppdkim1;
- bh=rbQgj5LEVVXkXw9/KgGEXCJEbnqFKBagAU8tsnxvWO8=;
- b=a4w9esW13v8P6Jjb273ju/7+QuwPJ9loOY9yHRipa2H5Kfc/Wf3VkIKxWo/tUZqpbeIi
- Nx/OLvz+NU7T/6di5IQx7EBJ6RaIw0BWh+KUh/XV/MxqE5pokK8nLVcSC29gLCSsrz36
- DVSFWqyMaEr5LIMNxkCvAXtAd1XSZ7FCfFMustEn4ibzTRTUOarW0vdX2hAeQVyP4fSf
- yfJmtUaE9SpsrNKhTnKGUdh/x4hTPe8/9ZwvDBkqOGDe+CFCBUToH+kdM5TMAjMoZqQI
- hVApvvC+WNMe8aOc9yL0S+ClMfKwLomhZwginGh8x5OmaPIqL30BijRteGJvgIXEwtVG lw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc9k16tb-1
+ bh=rSablmFYevFlvzpVyJ4uUuZAwehyARgc+1appNX+3Lg=;
+ b=arCYTERAuV7BNrwWFHw8H5vT6W+jBUV9PTbETEZSFW8pp968gvRrP48A2sv3fS+4bpDm
+ ItgStJIq2IiIhDzj/i1kxO857h4Q2CnEdTFGhGDHkti6OTN1/ZF3JG4vssXgKWzkKCl9
+ VrTmZWTioI6eG3zuPVHB2CbvW9GBm6S4dp6iQ8Vtih8VIIUMsMVuarx+hpPPlgofNIal
+ zooG9l0/ZaCz4lI+qfqeLdE2d4eioYy8PBsD55ggLxlCR7jS+K3p1IHh802MKeaOY9IO
+ TddduPX+GQm0lcLXXmY6+eGpvBR3U+rw2var26qOO5VEJXrJ812HjXDJdL+1SEg+T+jl kg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc22h8xq-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 16:10:54 +0000
+        Fri, 01 Sep 2023 16:12:52 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381GArDu022448
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381GCpTZ027860
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 16:10:53 GMT
+        Fri, 1 Sep 2023 16:12:51 GMT
 Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 1 Sep 2023 09:10:52 -0700
+ 15.2.1118.36; Fri, 1 Sep 2023 09:12:50 -0700
 From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
 To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
         <stanislaw.gruszka@linux.intel.com>
 CC:     <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <dri-devel@lists.freedesktop.org>,
         Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] accel/qaic: Register for PCI driver at the beginning of module init
-Date:   Fri, 1 Sep 2023 10:10:37 -0600
-Message-ID: <20230901161037.6124-1-quic_jhugo@quicinc.com>
+Subject: [PATCH] accel/qaic: Use devm_drm_dev_alloc() instead of drm_dev_alloc()
+Date:   Fri, 1 Sep 2023 10:12:36 -0600
+Message-ID: <20230901161236.8371-1-quic_jhugo@quicinc.com>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -57,19 +57,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xvI_H7P9Q4SQFPEaKXDf7JTf013M2QKv
-X-Proofpoint-ORIG-GUID: xvI_H7P9Q4SQFPEaKXDf7JTf013M2QKv
+X-Proofpoint-GUID: lp0McTj8Rr0nG5rd2NvQdZyq2fM4-2Hq
+X-Proofpoint-ORIG-GUID: lp0McTj8Rr0nG5rd2NvQdZyq2fM4-2Hq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-01_13,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309010150
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309010151
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,62 +78,219 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-As qaic drivers base device is connected to host via PCI framework, it
-makes sense to register in PCI framework at the beginning of module
-init.
+Since drm_dev_alloc() is deprecated it is recommended to use
+devm_drm_dev_alloc() instead. Update the driver to start using
+devm_drm_dev_alloc().
 
 Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 ---
- drivers/accel/qaic/qaic_drv.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/accel/qaic/qaic.h     |   7 ++-
+ drivers/accel/qaic/qaic_drv.c | 102 ++++++++++++++--------------------
+ 2 files changed, 47 insertions(+), 62 deletions(-)
 
+diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+index f2bd637a0d4e..9d98a10af1cb 100644
+--- a/drivers/accel/qaic/qaic.h
++++ b/drivers/accel/qaic/qaic.h
+@@ -27,6 +27,9 @@
+ #define QAIC_DBC_OFF(i)		((i) * QAIC_DBC_SIZE + QAIC_DBC_BASE)
+ 
+ #define to_qaic_bo(obj) container_of(obj, struct qaic_bo, base)
++#define to_qaic_drm_device(dev) container_of(dev, struct qaic_drm_device, drm)
++#define to_drm(qddev) (&(qddev)->drm)
++#define to_accel_kdev(qddev) (to_drm(qddev)->accel->kdev) /* Return Linux device of accel node */
+ 
+ extern bool datapath_polling;
+ 
+@@ -137,6 +140,8 @@ struct qaic_device {
+ };
+ 
+ struct qaic_drm_device {
++	/* The drm device struct of this drm device */
++	struct drm_device	drm;
+ 	/* Pointer to the root device struct driven by this driver */
+ 	struct qaic_device	*qdev;
+ 	/*
+@@ -146,8 +151,6 @@ struct qaic_drm_device {
+ 	 * device is the actual physical device
+ 	 */
+ 	s32			partition_id;
+-	/* Pointer to the drm device struct of this drm device */
+-	struct drm_device	*ddev;
+ 	/* Head in list of users who have opened this drm device */
+ 	struct list_head	users;
+ 	/* Synchronizes access to users list */
 diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index b5de82e6eb4d..49b5039f4cad 100644
+index 49b5039f4cad..d9e1ba64d7cf 100644
 --- a/drivers/accel/qaic/qaic_drv.c
 +++ b/drivers/accel/qaic/qaic_drv.c
-@@ -591,22 +591,22 @@ static int __init qaic_init(void)
+@@ -22,6 +22,7 @@
+ #include <drm/drm_file.h>
+ #include <drm/drm_gem.h>
+ #include <drm/drm_ioctl.h>
++#include <drm/drm_managed.h>
+ #include <uapi/drm/qaic_accel.h>
+ 
+ #include "mhi_controller.h"
+@@ -55,7 +56,7 @@ static void free_usr(struct kref *kref)
+ 
+ static int qaic_open(struct drm_device *dev, struct drm_file *file)
  {
+-	struct qaic_drm_device *qddev = dev->dev_private;
++	struct qaic_drm_device *qddev = to_qaic_drm_device(dev);
+ 	struct qaic_device *qdev = qddev->qdev;
+ 	struct qaic_user *usr;
+ 	int rcu_id;
+@@ -170,64 +171,39 @@ static const struct drm_driver qaic_accel_driver = {
+ 
+ static int qaic_create_drm_device(struct qaic_device *qdev, s32 partition_id)
+ {
+-	struct qaic_drm_device *qddev;
+-	struct drm_device *ddev;
+-	struct device *pdev;
++	struct qaic_drm_device *qddev = qdev->qddev;
++	struct drm_device *drm = to_drm(qddev);
  	int ret;
  
--	ret = mhi_driver_register(&qaic_mhi_driver);
-+	ret = pci_register_driver(&qaic_pci_driver);
- 	if (ret) {
--		pr_debug("qaic: mhi_driver_register failed %d\n", ret);
-+		pr_debug("qaic: pci_register_driver failed %d\n", ret);
- 		return ret;
- 	}
+ 	/* Hold off implementing partitions until the uapi is determined */
+ 	if (partition_id != QAIC_NO_PARTITION)
+ 		return -EINVAL;
  
--	ret = pci_register_driver(&qaic_pci_driver);
-+	ret = mhi_driver_register(&qaic_mhi_driver);
- 	if (ret) {
--		pr_debug("qaic: pci_register_driver failed %d\n", ret);
--		goto free_mhi;
-+		pr_debug("qaic: mhi_driver_register failed %d\n", ret);
-+		goto free_pci;
- 	}
+-	pdev = &qdev->pdev->dev;
+-
+-	qddev = kzalloc(sizeof(*qddev), GFP_KERNEL);
+-	if (!qddev)
+-		return -ENOMEM;
+-
+-	ddev = drm_dev_alloc(&qaic_accel_driver, pdev);
+-	if (IS_ERR(ddev)) {
+-		ret = PTR_ERR(ddev);
+-		goto ddev_fail;
+-	}
+-
+-	ddev->dev_private = qddev;
+-	qddev->ddev = ddev;
+-
+-	qddev->qdev = qdev;
+ 	qddev->partition_id = partition_id;
+-	INIT_LIST_HEAD(&qddev->users);
+-	mutex_init(&qddev->users_mutex);
+-
+-	qdev->qddev = qddev;
+-
+-	ret = drm_dev_register(ddev, 0);
+-	if (ret) {
+-		pci_dbg(qdev->pdev, "%s: drm_dev_register failed %d\n", __func__, ret);
+-		goto drm_reg_fail;
+-	}
  
- 	return 0;
+-	return 0;
++	/*
++	 * drm_dev_unregister() sets the driver data to NULL and
++	 * drm_dev_register() does not update the driver data. During a SOC
++	 * reset drm dev is unregistered and registered again leaving the
++	 * driver data to NULL.
++	 */
++	dev_set_drvdata(to_accel_kdev(qddev), drm->accel);
++	ret = drm_dev_register(drm, 0);
++	if (ret)
++		pci_dbg(qdev->pdev, "drm_dev_register failed %d\n", ret);
  
--free_mhi:
--	mhi_driver_unregister(&qaic_mhi_driver);
-+free_pci:
-+	pci_unregister_driver(&qaic_pci_driver);
+-drm_reg_fail:
+-	mutex_destroy(&qddev->users_mutex);
+-	qdev->qddev = NULL;
+-	drm_dev_put(ddev);
+-ddev_fail:
+-	kfree(qddev);
  	return ret;
  }
  
-@@ -628,8 +628,8 @@ static void __exit qaic_exit(void)
- 	 * reinitializing the link_up state after the cleanup is done.
- 	 */
- 	link_up = true;
--	pci_unregister_driver(&qaic_pci_driver);
- 	mhi_driver_unregister(&qaic_mhi_driver);
-+	pci_unregister_driver(&qaic_pci_driver);
+ static void qaic_destroy_drm_device(struct qaic_device *qdev, s32 partition_id)
+ {
+-	struct qaic_drm_device *qddev;
++	struct qaic_drm_device *qddev = qdev->qddev;
++	struct drm_device *drm = to_drm(qddev);
+ 	struct qaic_user *usr;
+ 
+-	qddev = qdev->qddev;
+-	qdev->qddev = NULL;
+-	if (!qddev)
+-		return;
+-
++	drm_dev_get(drm);
++	drm_dev_unregister(drm);
++	qddev->partition_id = 0;
+ 	/*
+ 	 * Existing users get unresolvable errors till they close FDs.
+ 	 * Need to sync carefully with users calling close(). The
+@@ -254,13 +230,7 @@ static void qaic_destroy_drm_device(struct qaic_device *qdev, s32 partition_id)
+ 		mutex_lock(&qddev->users_mutex);
+ 	}
+ 	mutex_unlock(&qddev->users_mutex);
+-
+-	if (qddev->ddev) {
+-		drm_dev_unregister(qddev->ddev);
+-		drm_dev_put(qddev->ddev);
+-	}
+-
+-	kfree(qddev);
++	drm_dev_put(drm);
  }
  
- module_init(qaic_init);
+ static int qaic_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
+@@ -344,8 +314,20 @@ void qaic_dev_reset_clean_local_state(struct qaic_device *qdev, bool exit_reset)
+ 		qdev->in_reset = false;
+ }
+ 
++static void cleanup_qdev(struct qaic_device *qdev)
++{
++	int i;
++
++	for (i = 0; i < qdev->num_dbc; ++i)
++		cleanup_srcu_struct(&qdev->dbc[i].ch_lock);
++	cleanup_srcu_struct(&qdev->dev_lock);
++	pci_set_drvdata(qdev->pdev, NULL);
++	destroy_workqueue(qdev->cntl_wq);
++}
++
+ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
++	struct qaic_drm_device *qddev;
+ 	struct qaic_device *qdev;
+ 	int i;
+ 
+@@ -381,18 +363,18 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
+ 		INIT_LIST_HEAD(&qdev->dbc[i].bo_lists);
+ 	}
+ 
+-	return qdev;
+-}
++	qddev = devm_drm_dev_alloc(&pdev->dev, &qaic_accel_driver, struct qaic_drm_device, drm);
++	if (IS_ERR(qddev)) {
++		cleanup_qdev(qdev);
++		return NULL;
++	}
+ 
+-static void cleanup_qdev(struct qaic_device *qdev)
+-{
+-	int i;
++	drmm_mutex_init(to_drm(qddev), &qddev->users_mutex);
++	INIT_LIST_HEAD(&qddev->users);
++	qddev->qdev = qdev;
++	qdev->qddev = qddev;
+ 
+-	for (i = 0; i < qdev->num_dbc; ++i)
+-		cleanup_srcu_struct(&qdev->dbc[i].ch_lock);
+-	cleanup_srcu_struct(&qdev->dev_lock);
+-	pci_set_drvdata(qdev->pdev, NULL);
+-	destroy_workqueue(qdev->cntl_wq);
++	return qdev;
+ }
+ 
+ static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev)
 -- 
 2.40.1
 
