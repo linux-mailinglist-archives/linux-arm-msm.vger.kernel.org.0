@@ -2,178 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBC6A78FC84
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 13:44:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 400CB78FD11
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 14:20:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349252AbjIALou (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 07:44:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59800 "EHLO
+        id S238003AbjIAMUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 08:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244037AbjIALor (ORCPT
+        with ESMTP id S1349386AbjIAMUq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 07:44:47 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F5510FB;
-        Fri,  1 Sep 2023 04:44:07 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3815f8rC001631;
-        Fri, 1 Sep 2023 11:43:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=O8sZ2FQUD6yKcJ5az9yIPexHXPlnR4H6esMtC6yX0y0=;
- b=iwzmp5mHlGUgsLJh/o3lKswnxfZvkJmkol5+yQ3lNd1eAXVmMtBfcnYQ2vhBeBKvfFZY
- PmzMP7DWDESTkiXgiUCUUu7pNZG+7dBfxyhunN0sr/1UHsdDVMoODYnjJ6ktdnQGQeHI
- SeY84hbZSUHExc6IT64vkmIaWHAcdXLbvN+97ytVFQK4pJsz9xQkWD2Ot8BqwI6bHXUG
- T4a9f2cs9LgAYMJej27/LtOWLVJAC+r4Mv6vxLXy+dMae5KwnjQ8+UMZrbD8lhyUVbvp
- vszVVUKyMAx93I18PzsuuIfwqUD8QYIsR0pD024KIJKtp8kDTb9qCuc1bzSF9KPiMJbH pQ== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stpy9bq24-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 11:43:46 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 381BhhsG014748;
-        Fri, 1 Sep 2023 11:43:43 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3sqafmj08r-1;
-        Fri, 01 Sep 2023 11:43:43 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 381Bhgfs014721;
-        Fri, 1 Sep 2023 11:43:43 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 381BhgJV014709;
-        Fri, 01 Sep 2023 11:43:43 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-        id 9BF225006A8; Fri,  1 Sep 2023 17:13:42 +0530 (+0530)
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-To:     mani@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, jejb@linux.ibm.com,
+        Fri, 1 Sep 2023 08:20:46 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E9310D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 05:20:43 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2bcb54226e7so22198291fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 05:20:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693570840; x=1694175640; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wRixf5Wln0+aq96AqT15WNRlI0DI7acs2jHkGoyqUC4=;
+        b=WJ2qRpi9cgKouMXABSj9ZSCukBo2/90W1bGsAjIYK6M6inoaHNxUDlTWuqGGnCkwlx
+         PRNDmkmsNTmQKc0O3h8y1ag94/2GQ8EldP3jt6oWM8ymoJFYf5tEMfovYC/zJ6V+/EXf
+         J5Zz1d9ZDsFnXSlABTE3FDvvXV5+UnZnAwvueAxMBFRH82SwL889itCbRXH8yoLac78r
+         0pm96l2q+i5hiMsL0D2enTjKJJQvGaYQS5BfS107t7Dktbu6gk9PPhpt+sve7edoK7LA
+         KuCx8no1pS4/bhBvZ4CLejyotf++fGRydED7XZULOOF/f3SSaj/RtIQqfga9qK4k1cV/
+         ATwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693570840; x=1694175640;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wRixf5Wln0+aq96AqT15WNRlI0DI7acs2jHkGoyqUC4=;
+        b=ID7OFdKhpMwdyEyaBMhEifD/pNYyvZlOZwfu2DzE8DLcLCOhuOHYIcKwQ1E1JrA0wp
+         Amm84pKUMhyG9/rw7+Wj2VfDQmlgGkosnK+b82sVvWKYE9zeVhKMnTUxMEl0hEl43lPU
+         DTS0U4CfiQyZkI1mDc3SjuSyLKpfXqwTvDTuQ5ummtozCqvffudtARJh8jOoPq476uA/
+         fNsmQPBowpWsDmvpPfhBAhrGIjLsAT4dYrCD6szVeqJSJc1TNmGsyuVCSaNhYZxgEH5o
+         hO59EoSC8/dA8eN3+e2vAc6JYmDqhgTMA5i4vCQUUv+BNgAoDXNYs4UNEasSelZ8jAGO
+         MhgA==
+X-Gm-Message-State: AOJu0YxyoolSVXIklZQgtl1bUJa+T10JPMWnhx7KH10WtgZ2040NREKt
+        GH0wkOd+kuy0+KbziLgFo5iktQ==
+X-Google-Smtp-Source: AGHT+IE4Z/ktQ6qMzlFSopP5r6fYP4i40xwCpIZt9FemIrY+cUooZOn6b31azRQy3vMZowlZJS3F8g==
+X-Received: by 2002:a05:651c:339:b0:2bc:fbc9:c0a2 with SMTP id b25-20020a05651c033900b002bcfbc9c0a2mr1879201ljp.16.1693570840584;
+        Fri, 01 Sep 2023 05:20:40 -0700 (PDT)
+Received: from [192.168.1.101] (abxh154.neoplus.adsl.tpnet.pl. [83.9.1.154])
+        by smtp.gmail.com with ESMTPSA id d25-20020a2eb059000000b002bcc4d64758sm733680ljl.103.2023.09.01.05.20.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Sep 2023 05:20:40 -0700 (PDT)
+Message-ID: <88964c63-950f-4d68-826b-f3b7243a2c5f@linaro.org>
+Date:   Fri, 1 Sep 2023 14:20:38 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V6 0/6] scsi: ufs: qcom: Align programming sequence as per
+ HW spec
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, mani@kernel.org,
+        agross@kernel.org, andersson@kernel.org, jejb@linux.ibm.com,
         martin.petersen@oracle.com
 Cc:     quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
         linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Subject: [PATCH V6 6/6] scsi: ufs: qcom: Configure clk HW division based on scaling conditions.
-Date:   Fri,  1 Sep 2023 17:13:36 +0530
-Message-Id: <20230901114336.31339-7-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
+        linux-arm-msm@vger.kernel.org
 References: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FbpUUws7zAMFUpQ94ft5ZXsWjonUWFyW
-X-Proofpoint-GUID: FbpUUws7zAMFUpQ94ft5ZXsWjonUWFyW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-01_09,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0 adultscore=0
- mlxlogscore=965 clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010109
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-a) Enable internal HW division of unipro core_clk for scale up condition.
-b) Clear internal HW division of unipro core_clk for scale down condition.
+On 1.09.2023 13:43, Nitin Rawat wrote:
+> This patch aligns programming sequence as per Qualcomm UFS
+> hardware specification.
+> 
+> changes from v5:
+> - Addressed Mani comment to FIELD_PREP and FIELD_FIT.
+> - Optimised ufs_qcom_set_core_clk_ctrl API.
+> - Updated commit text for few patches to capture more details.
+> 
+Any reason I received this twice?
 
-Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 31 +++++++++++++++++--------------
- drivers/ufs/host/ufs-qcom.h |  2 +-
- 2 files changed, 18 insertions(+), 15 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index c251c98a74f0..2ddda9356abc 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1389,18 +1389,21 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba,
- 		core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK, cycles_in_1us);
- 	}
-
--	/* Clear CORE_CLK_DIV_EN */
--	core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
-+	/* Enable CORE_CLK_DIV_EN for scale up condition */
-+	if (is_max_freq)
-+		core_clk_ctrl_reg |= CORE_CLK_DIV_EN_BIT;
-
- 	ret = ufshcd_dme_set(hba,
- 			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
- 			    core_clk_ctrl_reg);
-+	if (ret)
-+		return ret;
- 	/*
- 	 * UFS host controller V4.0.0 onwards needs to program
- 	 * PA_VS_CORE_CLK_40NS_CYCLES attribute per programmed
- 	 * frequency of unipro core clk of UFS host controller.
- 	 */
--	if (!ret && (host->hw_ver.major >= 4)) {
-+	if (host->hw_ver.major >= 4) {
- 		if (cycles_in_40ns > PA_VS_CORE_CLK_40NS_CYCLES_MASK)
- 			return -EINVAL;
-
-@@ -1451,26 +1454,26 @@ static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
- static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	int err;
--	u32 core_clk_ctrl_reg;
-+	int ret;
-+	u32 reg;
-
- 	if (!ufs_qcom_cap_qunipro(host))
- 		return 0;
-
--	err = ufshcd_dme_get(hba,
-+	ret = ufshcd_dme_get(hba,
- 			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
--			    &core_clk_ctrl_reg);
-+			    &reg);
-+	if (ret)
-+		return ret;
-
- 	/* make sure CORE_CLK_DIV_EN is cleared */
--	if (!err &&
--	    (core_clk_ctrl_reg & DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT)) {
--		core_clk_ctrl_reg &= ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
--		err = ufshcd_dme_set(hba,
-+	if (reg & CORE_CLK_DIV_EN_BIT) {
-+		reg &= ~CORE_CLK_DIV_EN_BIT;
-+		ret = ufshcd_dme_set(hba,
- 				    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
--				    core_clk_ctrl_reg);
-+				    reg);
- 	}
--
--	return err;
-+	return ret;
- }
-
- static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index bc176ef58e3e..bf0c370c79c7 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -141,7 +141,7 @@ enum {
- /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
- #define CLK_1US_CYCLES_MASK_V4				GENMASK(27, 16)
- #define CLK_1US_CYCLES_MASK				GENMASK(7, 0)
--#define DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT	BIT(8)
-+#define CORE_CLK_DIV_EN_BIT				BIT(8)
- #define PA_VS_CORE_CLK_40NS_CYCLES			0x9007
- #define PA_VS_CORE_CLK_40NS_CYCLES_MASK			GENMASK(6, 0)
-
---
-2.17.1
-
+Konrad
