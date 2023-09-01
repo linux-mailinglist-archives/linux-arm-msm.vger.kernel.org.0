@@ -2,70 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65A787901EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 20:10:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50CF57902D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 22:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350512AbjIASKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 14:10:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33908 "EHLO
+        id S1350723AbjIAU3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 16:29:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244823AbjIASKt (ORCPT
+        with ESMTP id S242521AbjIAU3W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 14:10:49 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F6E19C;
-        Fri,  1 Sep 2023 11:10:46 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9a58dbd5daeso294640366b.2;
-        Fri, 01 Sep 2023 11:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693591845; x=1694196645; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zxWwqJu6zd1x4UXrAe321NeYBqI8ed/gpuuiA6ARJ4U=;
-        b=ph859srzdrb3JdJszo4Mg9gyW+WMjXui6BaH/6B4tIs5NKyQb03iqcQFTEWL1gyind
-         KLpabg1cx3TG7Nv9C61whqjUwabQDxsAVK6vpK1tvVC+OiJZDr+tFKaO+nH7vuVzYw4j
-         NwvuGuhdtra9F3ZX/KscvfmcR00oDXk2Fc4m/WvyGsWjoGPCk19eCVlqZ05VkoNbpkUr
-         YB0oA2Vr0vDT4ZYG6zXYVMsfPCbAWQnVaOgDvwWhRBQuYNrC395/ph2U3nBGVT8rbCZ7
-         lWdYWte859qUS4+/AKyQsG5DDfhOIUhJYfVf2ZYJvuaiybPw9eOU3c/5KsmMQ2pk/wFJ
-         DXnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693591845; x=1694196645;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zxWwqJu6zd1x4UXrAe321NeYBqI8ed/gpuuiA6ARJ4U=;
-        b=PpYQoHTB5Z7tXRfdJvu/x0PJxKkCj71vArgbmArwJSF/WGmqSHcFlZwSASJPxJQxFW
-         nohJk1X/Rrm2fD8wMGJMrPzSgOZUPN0XLDddDrX+Rux5iWRrtR6Ltlvu8K2ZXyxmVj6b
-         g/0DGeWA1JqTe7RoQ+Oeh42b3/aHzKhkMppUIqFIVTaem/Qo8tDo/yQRutLKgPA3Sv/n
-         ezyPSaEp25v62RaZQDdleToo/dzga6x7OJELFphVOfQ6g+9idbECeXKNGxeH329jVsGa
-         GZA8QFhJI9lSkR2esNeT7PshXDWRIVqH9c4pPwq2qngdOCqSCT2z3O5X9Xr6G2stzLYh
-         XzNA==
-X-Gm-Message-State: AOJu0YwrwRVZDPiqugWf5eJmZdGKoneJYrMOvfIk1P541zNDOTbY7j4L
-        5b5dYxY0Dudq+bdWpcluOho=
-X-Google-Smtp-Source: AGHT+IFVYLNs2VBY6jrYIC97D3941yh4hyQRLWEZpvcFzpC4AOdibDnMFWZ0u1FxneSr/LTchcZEVQ==
-X-Received: by 2002:a17:906:f252:b0:9a2:40e:2cad with SMTP id gy18-20020a170906f25200b009a2040e2cadmr2351811ejb.48.1693591845094;
-        Fri, 01 Sep 2023 11:10:45 -0700 (PDT)
-Received: from fedora.. (dh207-99-49.xnet.hr. [88.207.99.49])
-        by smtp.googlemail.com with ESMTPSA id j9-20020a170906410900b0099bd5b72d93sm2278999ejk.43.2023.09.01.11.10.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Sep 2023 11:10:44 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 2/2] soc: qcom: socinfo: Add IDs for IPQ8174 family
-Date:   Fri,  1 Sep 2023 20:10:05 +0200
-Message-ID: <20230901181041.1538999-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230901181041.1538999-1-robimarko@gmail.com>
-References: <20230901181041.1538999-1-robimarko@gmail.com>
+        Fri, 1 Sep 2023 16:29:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FD4E7E;
+        Fri,  1 Sep 2023 13:29:19 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381ItjDG005899;
+        Fri, 1 Sep 2023 20:29:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2FYXvMmpReuPlYSmTDcvNg1rIzAmGZtkeMDCuhzAtGw=;
+ b=RpGMbsimYgMc3eNR7ei7vHPVzYUwHYGYWfqvFd5Hm0dfsshzelWMpDIZ1rnuLnmPTBJW
+ QrE9r0G9055pwpCfvVOPDMYtRHxC1oQjdFF+Gqzr4/3Fj+LWLC7Ub9J9K4ZZKtKtFbum
+ sHYN6I0cLw7UKq0OoSob97cywjNlU+qDOZ1qNg1FPayvbNvP7zzH3hwGYkQ+kG9Bx9jv
+ pkoE04KD1f8QglapQUr69SaBGB43NBDRiCuHqw/3ZSvJVuKYp2UadZBnGPAgApX2FtyJ
+ dkQahInoVqPNSAkfaD2bOsDEwD7LSCXJ9CVg7yTTQ0XSZVrP7POVtWlVknMqnRdcBF39 TQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc22hupp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 01 Sep 2023 20:29:05 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381KT4X3011614
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 1 Sep 2023 20:29:04 GMT
+Received: from [10.110.95.146] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 1 Sep
+ 2023 13:29:04 -0700
+Message-ID: <deeefaf8-2ac9-cee0-eed4-687e36ac6f10@quicinc.com>
+Date:   Fri, 1 Sep 2023 13:29:03 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Doug Anderson <dianders@chromium.org>
+CC:     <cros-qcom-dts-watchers@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com>
+ <CAD=FV=WS2hgY=bQjLOs3Fdp8pbZyMsaS-0BpoxPq90Etfi+Xuw@mail.gmail.com>
+ <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9Ar9RfHXW3BZTXygIUaxyBxzbbtd8VRn
+X-Proofpoint-ORIG-GUID: 9Ar9RfHXW3BZTXygIUaxyBxzbbtd8VRn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-01_17,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ clxscore=1011 mlxscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309010192
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,28 +96,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8174 (Oak) family is part of the IPQ8074 family, but the ID-s for it
-are missing so lets add them.
+On 8/30/2023 7:43 AM, Luca Weiss wrote:
+> On Wed Aug 30, 2023 at 4:30 PM CEST, Doug Anderson wrote:
+>> Hi,
+>>
+>> On Wed, Aug 30, 2023 at 2:58 AM Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>>
+>>> On some platforms like sc7280 on non-ChromeOS devices the core clock
+>>> cannot be touched by Linux so we cannot provide it. Mark it as optional
+>>> as accessing qfprom works without it.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>>  drivers/nvmem/qfprom.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> Are you actually testing burning fuses from the OS, or are you just
+>> using the nvmem in "read-only" mode? From comments in the bindings, if
+>> you're trying to burn the fuses then the clock is required. If things
+>> are in read-only mode then the clock isn't required.
+> 
+> Hi Doug,
+> 
+> I definitely don't plan on burning any fuses on this phone. Not even
+> sure that's allowed by the TZ / boot stack.
+> 
+>>
+>> When I compare to the driver, it seems like the driver assumes that if
+>> more than one memory region is provided then you must be supporting
+>> burning fuses. The bindings agree that having 4 memory regions
+>> specified means that the nvmem supports burning and 1 memory region
+>> specified means read-only. The extra 3 memory regions in the nvmem are
+>> all about fuse burning, I believe.
+>>
+>> So maybe the right fix here is to just change your dts to specify one
+>> memory region?
+> 
+> I got feedback from Konrad that this here would be the preferred
+> approach compared to having a different dts for ChromeOS vs non-ChromeOS
+> devices. I don't feel strongly to either, for me it's also okay to
+> remove the extra memory regions and only have the main one used on
+> regular qcom devices.
+> 
+> Let me know what you think.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- drivers/soc/qcom/socinfo.c | 3 +++
- 1 file changed, 3 insertions(+)
+I would prefer to re-use the sc7280 DT as well. Thank you for your patches. We plan to use your patches for platform on the same part. 
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 497cfb720fcb..345f0b002eb5 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -359,6 +359,9 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(SM6125) },
- 	{ qcom_board_id(IPQ8070A) },
- 	{ qcom_board_id(IPQ8071A) },
-+	{ qcom_board_id(IPQ8172) },
-+	{ qcom_board_id(IPQ8173) },
-+	{ qcom_board_id(IPQ8174) },
- 	{ qcom_board_id(IPQ6018) },
- 	{ qcom_board_id(IPQ6028) },
- 	{ qcom_board_id(SDM429W) },
 -- 
-2.41.0
+---Trilok Soni
 
