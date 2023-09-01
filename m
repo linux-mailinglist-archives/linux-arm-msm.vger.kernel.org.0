@@ -2,411 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6B9C790165
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 19:23:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7396B79016E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 19:27:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350363AbjIARXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 13:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36120 "EHLO
+        id S1350381AbjIAR1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 13:27:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350375AbjIARXd (ORCPT
+        with ESMTP id S1350364AbjIAR1c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 13:23:33 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCD4CF3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 10:23:26 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 381GwkJm027603;
-        Fri, 1 Sep 2023 17:23:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=7TKQZ+mJVlBlM643DDPZT9pa/C442ZwtAl0VVSwS9rM=;
- b=Idxx5At0UwgSgC11/pkUYiMRftwvF7ZAxV3hsKwO6sQY9dfYc/V65ZsfeSz+TMZWz+La
- KAlki3CDfxh3Z9YkFXRcASqBC0E5dkpxtFwQwx26kaOAlszWJfbfKHZuIt25ahhPINn/
- 7kQHU3gVTnReOgdIq75NQO6jWelZQrCYurrW/Ng+FZCwHxacHFyEZgGzpDAYASQGEEL4
- crf2TUmHZu+BE7WGx3Dl4tYUMEsNA6twp8FmMJR7dXpssLkZF6VNATZ6VSQ+azI2N0rC
- x+6Uce8IU6NzDMhSCXde/QSdDfMiaBrtzeblMXUnpEv6yEEw3rHHvuGgVvWGD9iJ7riL Gg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc9k1dej-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 17:23:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381HNKiE025820
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 17:23:20 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 1 Sep 2023 10:23:19 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>, <ogabbay@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH 7/7] accel/qaic: Add QAIC_DETACH_SLICE_BO IOCTL
-Date:   Fri, 1 Sep 2023 11:22:47 -0600
-Message-ID: <20230901172247.11410-8-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230901172247.11410-1-quic_jhugo@quicinc.com>
-References: <20230901172247.11410-1-quic_jhugo@quicinc.com>
+        Fri, 1 Sep 2023 13:27:32 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA5FCF3
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 10:27:29 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9a2185bd83cso285485666b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 10:27:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693589247; x=1694194047; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ss+qLANCDr/E1E/sALCGcAu2OPaPDRXb4/ydOTBXzBQ=;
+        b=be1P/Setc7BYeSbX+uxLFsvKKJNY0V/zheELmkmFNL24uxotZMEMlPBlixUir1YTvg
+         CMhAtsaqX17lKeob3uIEIdnvaWCvte58c1PBWS0mF5bdMn1iokwX2fvaLq3Mx3RgAX1b
+         clhRIF9wRtslIctRiUlnuVROCU2rLfal2VU2MwQHHyIZaoVWKgQlrXvkVtOjy7EUXU18
+         jIg6/j4Hgqy7rb2xUbAqr4wxGtGie/pTlBBPLGVp77v9vHqpD1Wx0KLoLaB6nd5HXK2Q
+         1h2lTbU71ScMrCgHlFZXH7Dw9dnVu1KhHe78ZryopMSMWy6nsCwjxVH/nZmpZ3NQof9r
+         vmvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693589247; x=1694194047;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ss+qLANCDr/E1E/sALCGcAu2OPaPDRXb4/ydOTBXzBQ=;
+        b=QRXVjDOa16IVMBhKOHRbmDVqV9bghhcK54sic0VBiOCMewLRC3Ix5ZZm7e2rqRH5uw
+         rQCGCvMyzKK2t+sLM5L0TOO+yO+5gTSfL2TqXhkGLhmNdXmljNRfBfVNyIVk6G7VdW37
+         RjKL/KlzmF2EuMtyJpXB2+DiQh8Y1DpV/+c+833OgdRCmuio1EWpEi6UnMQQ2/6hXeWE
+         4BaJ2DXT1+a/DVde+pg5wmDMfvKA7ESgnLJgwLps1GtpcQ6OphnOinccAzwP0kPA2iOq
+         v5ndscxmsgFED6QGLGSHo1398K4F4Ows0r//4S1JvKFXHgAtugUKKHCr4iqjq+zhS4OS
+         3uxw==
+X-Gm-Message-State: AOJu0YwwXZ5o15QSCl49c6Zp33qngWtYQokjlaMQZ0zYGAIJRnjys+E1
+        Q+T1EdECg/7HG2/VD698NZUe2g==
+X-Google-Smtp-Source: AGHT+IFcGVffPeSk/gYy/neXvresZTi7Jf5x67zGvWyJZLah1F7/YCdkWQjFSzedTTHx9Sne0C2e9g==
+X-Received: by 2002:a17:906:8a70:b0:9a1:c00e:60cd with SMTP id hy16-20020a1709068a7000b009a1c00e60cdmr2312887ejc.15.1693589247510;
+        Fri, 01 Sep 2023 10:27:27 -0700 (PDT)
+Received: from linaro.org ([84.232.191.193])
+        by smtp.gmail.com with ESMTPSA id p20-20020a170906229400b0099bd1a78ef5sm2208075eja.74.2023.09.01.10.27.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Sep 2023 10:27:26 -0700 (PDT)
+Date:   Fri, 1 Sep 2023 20:27:25 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sm8550: Add missing DWC3 quirks
+Message-ID: <ZPIe/W7Bbm9Lv2Zp@linaro.org>
+References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
+ <20230830-topic-8550_dmac2-v1-6-49bb25239fb1@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pHelFsYPB91grn0ArQJzFXnsefyHpi_i
-X-Proofpoint-ORIG-GUID: pHelFsYPB91grn0ArQJzFXnsefyHpi_i
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-01_14,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309010163
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230830-topic-8550_dmac2-v1-6-49bb25239fb1@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+On 23-08-30 14:48:45, Konrad Dybcio wrote:
+> As expected, Qualcomm DWC3 implementation come with a sizable number
+> of quirks. Make sure to account for all of them.
+> 
+> Fixes: 7f7e5c1b037f ("arm64: dts: qcom: sm8550: Add USB PHYs and controller nodes")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
-Once a BO is attached with slicing configuration that BO can only be used
-for that particular setting. With this new feature user can detach slicing
-configuration off an already sliced BO and attach new slicing configuration
-using QAIC_ATTACH_SLICE_BO.
+That is a lot of quirks I missed :D.
 
-This will support BO recycling.
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
-detach_slice_bo() detaches slicing configuration from a BO. This new
-helper function can also be used in release_dbc() as we are doing the
-exact same thing.
-
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-[jhugo: add documentation for new ioctl]
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- Documentation/accel/qaic/qaic.rst |  10 +++
- drivers/accel/qaic/qaic.h         |   4 +-
- drivers/accel/qaic/qaic_data.c    | 119 +++++++++++++++++++++++++++---
- drivers/accel/qaic/qaic_drv.c     |   1 +
- include/uapi/drm/qaic_accel.h     |  12 +++
- 5 files changed, 135 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
-index 72a70ab6e3a8..c88502383136 100644
---- a/Documentation/accel/qaic/qaic.rst
-+++ b/Documentation/accel/qaic/qaic.rst
-@@ -123,6 +123,16 @@ DRM_IOCTL_QAIC_PART_DEV
-   AIC100 device and can be used for limiting a process to some subset of
-   resources.
- 
-+DRM_IOCTL_QAIC_DETACH_SLICE_BO
-+  This IOCTL allows userspace to remove the slicing information from a BO that
-+  was originally provided by a call to DRM_IOCTL_QAIC_ATTACH_SLICE_BO. This
-+  is the inverse of DRM_IOCTL_QAIC_ATTACH_SLICE_BO. The BO must be idle for
-+  DRM_IOCTL_QAIC_DETACH_SLICE_BO to be called. After a successful detach slice
-+  operation the BO may have new slicing information attached with a new call
-+  to DRM_IOCTL_QAIC_ATTACH_SLICE_BO. After detach slice, the BO cannot be
-+  executed until after a new attach slice operation. Combining attach slice
-+  and detach slice calls allows userspace to use a BO with multiple workloads.
-+
- Userspace Client Isolation
- ==========================
- 
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index 27cf66dbd5a5..28f1e81a1465 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -219,7 +219,8 @@ struct qaic_bo {
- 		 */
- 		u32		queue_level_before;
- 	} perf_stats;
--
-+	/* Synchronizes BO operations */
-+	struct mutex		lock;
- };
- 
- struct bo_slice {
-@@ -275,6 +276,7 @@ int qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *f
- int qaic_partial_execute_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
- int qaic_wait_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
- int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
-+int qaic_detach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
- void irq_polling_work(struct work_struct *work);
- 
- #endif /* _QAIC_H_ */
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 2acb9dbac88b..c90fa6a430f6 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -624,6 +624,7 @@ static void qaic_free_object(struct drm_gem_object *obj)
- 		qaic_free_sgt(bo->sgt);
- 	}
- 
-+	mutex_destroy(&bo->lock);
- 	drm_gem_object_release(obj);
- 	kfree(bo);
- }
-@@ -641,6 +642,7 @@ static void qaic_init_bo(struct qaic_bo *bo, bool reinit)
- 		bo->sliced = false;
- 		reinit_completion(&bo->xfer_done);
- 	} else {
-+		mutex_init(&bo->lock);
- 		init_completion(&bo->xfer_done);
- 	}
- 	complete_all(&bo->xfer_done);
-@@ -1002,10 +1004,13 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
- 	}
- 
- 	bo = to_qaic_bo(obj);
-+	ret = mutex_lock_interruptible(&bo->lock);
-+	if (ret)
-+		goto put_bo;
- 
- 	if (bo->sliced) {
- 		ret = -EINVAL;
--		goto put_bo;
-+		goto unlock_bo;
- 	}
- 
- 	dbc = &qdev->dbc[args->hdr.dbc_id];
-@@ -1029,7 +1034,7 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
- 	bo->sliced = true;
- 	list_add_tail(&bo->bo_list, &bo->dbc->bo_lists);
- 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
--	drm_gem_object_put(obj);
-+	mutex_unlock(&bo->lock);
- 	srcu_read_unlock(&qdev->dev_lock, qdev_rcu_id);
- 	srcu_read_unlock(&usr->qddev_lock, usr_rcu_id);
- 
-@@ -1039,6 +1044,8 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
- 	qaic_unprepare_bo(qdev, bo);
- unlock_ch_srcu:
- 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
-+unlock_bo:
-+	mutex_unlock(&bo->lock);
- put_bo:
- 	drm_gem_object_put(obj);
- free_slice_ent:
-@@ -1193,15 +1200,18 @@ static int send_bo_list_to_device(struct qaic_device *qdev, struct drm_file *fil
- 		}
- 
- 		bo = to_qaic_bo(obj);
-+		ret = mutex_lock_interruptible(&bo->lock);
-+		if (ret)
-+			goto failed_to_send_bo;
- 
- 		if (!bo->sliced) {
- 			ret = -EINVAL;
--			goto failed_to_send_bo;
-+			goto unlock_bo;
- 		}
- 
- 		if (is_partial && pexec[i].resize > bo->base.size) {
- 			ret = -EINVAL;
--			goto failed_to_send_bo;
-+			goto unlock_bo;
- 		}
- 
- 		spin_lock_irqsave(&dbc->xfer_lock, flags);
-@@ -1210,7 +1220,7 @@ static int send_bo_list_to_device(struct qaic_device *qdev, struct drm_file *fil
- 		if (queued) {
- 			spin_unlock_irqrestore(&dbc->xfer_lock, flags);
- 			ret = -EINVAL;
--			goto failed_to_send_bo;
-+			goto unlock_bo;
- 		}
- 
- 		bo->req_id = dbc->next_req_id++;
-@@ -1241,17 +1251,20 @@ static int send_bo_list_to_device(struct qaic_device *qdev, struct drm_file *fil
- 			if (ret) {
- 				bo->queued = false;
- 				spin_unlock_irqrestore(&dbc->xfer_lock, flags);
--				goto failed_to_send_bo;
-+				goto unlock_bo;
- 			}
- 		}
- 		reinit_completion(&bo->xfer_done);
- 		list_add_tail(&bo->xfer_list, &dbc->xfer_list);
- 		spin_unlock_irqrestore(&dbc->xfer_lock, flags);
- 		dma_sync_sgtable_for_device(&qdev->pdev->dev, bo->sgt, bo->dir);
-+		mutex_unlock(&bo->lock);
- 	}
- 
- 	return 0;
- 
-+unlock_bo:
-+	mutex_unlock(&bo->lock);
- failed_to_send_bo:
- 	if (likely(obj))
- 		drm_gem_object_put(obj);
-@@ -1807,6 +1820,91 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
- 	return ret;
- }
- 
-+static void detach_slice_bo(struct qaic_device *qdev, struct qaic_bo *bo)
-+{
-+	qaic_free_slices_bo(bo);
-+	qaic_unprepare_bo(qdev, bo);
-+	qaic_init_bo(bo, true);
-+	list_del(&bo->bo_list);
-+	drm_gem_object_put(&bo->base);
-+}
-+
-+int qaic_detach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv)
-+{
-+	struct qaic_detach_slice *args = data;
-+	int rcu_id, usr_rcu_id, qdev_rcu_id;
-+	struct dma_bridge_chan *dbc;
-+	struct drm_gem_object *obj;
-+	struct qaic_device *qdev;
-+	struct qaic_user *usr;
-+	unsigned long flags;
-+	struct qaic_bo *bo;
-+	int ret;
-+
-+	if (args->pad != 0)
-+		return -EINVAL;
-+
-+	usr = file_priv->driver_priv;
-+	usr_rcu_id = srcu_read_lock(&usr->qddev_lock);
-+	if (!usr->qddev) {
-+		ret = -ENODEV;
-+		goto unlock_usr_srcu;
-+	}
-+
-+	qdev = usr->qddev->qdev;
-+	qdev_rcu_id = srcu_read_lock(&qdev->dev_lock);
-+	if (qdev->in_reset) {
-+		ret = -ENODEV;
-+		goto unlock_dev_srcu;
-+	}
-+
-+	obj = drm_gem_object_lookup(file_priv, args->handle);
-+	if (!obj) {
-+		ret = -ENOENT;
-+		goto unlock_dev_srcu;
-+	}
-+
-+	bo = to_qaic_bo(obj);
-+	ret = mutex_lock_interruptible(&bo->lock);
-+	if (ret)
-+		goto put_bo;
-+
-+	if (!bo->sliced) {
-+		ret = -EINVAL;
-+		goto unlock_bo;
-+	}
-+
-+	dbc = bo->dbc;
-+	rcu_id = srcu_read_lock(&dbc->ch_lock);
-+	if (dbc->usr != usr) {
-+		ret = -EINVAL;
-+		goto unlock_ch_srcu;
-+	}
-+
-+	/* Check if BO is committed to H/W for DMA */
-+	spin_lock_irqsave(&dbc->xfer_lock, flags);
-+	if (bo->queued) {
-+		spin_unlock_irqrestore(&dbc->xfer_lock, flags);
-+		ret = -EBUSY;
-+		goto unlock_ch_srcu;
-+	}
-+	spin_unlock_irqrestore(&dbc->xfer_lock, flags);
-+
-+	detach_slice_bo(qdev, bo);
-+
-+unlock_ch_srcu:
-+	srcu_read_unlock(&dbc->ch_lock, rcu_id);
-+unlock_bo:
-+	mutex_unlock(&bo->lock);
-+put_bo:
-+	drm_gem_object_put(obj);
-+unlock_dev_srcu:
-+	srcu_read_unlock(&qdev->dev_lock, qdev_rcu_id);
-+unlock_usr_srcu:
-+	srcu_read_unlock(&usr->qddev_lock, usr_rcu_id);
-+	return ret;
-+}
-+
- static void empty_xfer_list(struct qaic_device *qdev, struct dma_bridge_chan *dbc)
- {
- 	unsigned long flags;
-@@ -1888,10 +1986,11 @@ void release_dbc(struct qaic_device *qdev, u32 dbc_id)
- 	dbc->usr = NULL;
- 
- 	list_for_each_entry_safe(bo, bo_temp, &dbc->bo_lists, bo_list) {
--		qaic_free_slices_bo(bo);
--		qaic_unprepare_bo(qdev, bo);
--		qaic_init_bo(bo, true);
--		list_del(&bo->bo_list);
-+		drm_gem_object_get(&bo->base);
-+		mutex_lock(&bo->lock);
-+		detach_slice_bo(qdev, bo);
-+		mutex_unlock(&bo->lock);
-+		drm_gem_object_put(&bo->base);
- 	}
- 
- 	dbc->in_use = false;
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index b5de82e6eb4d..e2bfb4eaf852 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -150,6 +150,7 @@ static const struct drm_ioctl_desc qaic_drm_ioctls[] = {
- 	DRM_IOCTL_DEF_DRV(QAIC_PARTIAL_EXECUTE_BO, qaic_partial_execute_bo_ioctl, 0),
- 	DRM_IOCTL_DEF_DRV(QAIC_WAIT_BO, qaic_wait_bo_ioctl, 0),
- 	DRM_IOCTL_DEF_DRV(QAIC_PERF_STATS_BO, qaic_perf_stats_bo_ioctl, 0),
-+	DRM_IOCTL_DEF_DRV(QAIC_DETACH_SLICE_BO, qaic_detach_slice_bo_ioctl, 0),
- };
- 
- static const struct drm_driver qaic_accel_driver = {
-diff --git a/include/uapi/drm/qaic_accel.h b/include/uapi/drm/qaic_accel.h
-index f89880b7bfb6..43ac5d864512 100644
---- a/include/uapi/drm/qaic_accel.h
-+++ b/include/uapi/drm/qaic_accel.h
-@@ -372,6 +372,16 @@ struct qaic_perf_stats_entry {
- 	__u32 pad;
- };
- 
-+/**
-+ * struct qaic_detach_slice - Detaches slicing configuration from BO.
-+ * @handle: In. GEM handle of the BO to detach slicing configuration.
-+ * @pad: Structure padding. Must be 0.
-+ */
-+struct qaic_detach_slice {
-+	__u32 handle;
-+	__u32 pad;
-+};
-+
- #define DRM_QAIC_MANAGE				0x00
- #define DRM_QAIC_CREATE_BO			0x01
- #define DRM_QAIC_MMAP_BO			0x02
-@@ -380,6 +390,7 @@ struct qaic_perf_stats_entry {
- #define DRM_QAIC_PARTIAL_EXECUTE_BO		0x05
- #define DRM_QAIC_WAIT_BO			0x06
- #define DRM_QAIC_PERF_STATS_BO			0x07
-+#define DRM_QAIC_DETACH_SLICE_BO		0x08
- 
- #define DRM_IOCTL_QAIC_MANAGE			DRM_IOWR(DRM_COMMAND_BASE + DRM_QAIC_MANAGE, struct qaic_manage_msg)
- #define DRM_IOCTL_QAIC_CREATE_BO		DRM_IOWR(DRM_COMMAND_BASE + DRM_QAIC_CREATE_BO,	struct qaic_create_bo)
-@@ -389,6 +400,7 @@ struct qaic_perf_stats_entry {
- #define DRM_IOCTL_QAIC_PARTIAL_EXECUTE_BO	DRM_IOW(DRM_COMMAND_BASE + DRM_QAIC_PARTIAL_EXECUTE_BO,	struct qaic_execute)
- #define DRM_IOCTL_QAIC_WAIT_BO			DRM_IOW(DRM_COMMAND_BASE + DRM_QAIC_WAIT_BO, struct qaic_wait)
- #define DRM_IOCTL_QAIC_PERF_STATS_BO		DRM_IOWR(DRM_COMMAND_BASE + DRM_QAIC_PERF_STATS_BO, struct qaic_perf_stats)
-+#define DRM_IOCTL_QAIC_DETACH_SLICE_BO		DRM_IOW(DRM_COMMAND_BASE + DRM_QAIC_DETACH_SLICE_BO, struct qaic_detach_slice)
- 
- #if defined(__cplusplus)
- }
--- 
-2.40.1
-
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 944b4b8c95f5..8ee61c9383ec 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -2930,12 +2930,20 @@ usb_1_dwc3: usb@a600000 {
+>  				reg = <0x0 0x0a600000 0x0 0xcd00>;
+>  				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+>  				iommus = <&apps_smmu 0x40 0x0>;
+> -				snps,dis_u2_susphy_quirk;
+> -				snps,dis_enblslpm_quirk;
+> -				snps,usb3_lpm_capable;
+>  				phys = <&usb_1_hsphy>,
+>  				       <&usb_dp_qmpphy QMP_USB43DP_USB3_PHY>;
+>  				phy-names = "usb2-phy", "usb3-phy";
+> +				snps,hird-threshold = /bits/ 8 <0x0>;
+> +				snps,usb2-gadget-lpm-disable;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_enblslpm_quirk;
+> +				snps,dis-u1-entry-quirk;
+> +				snps,dis-u2-entry-quirk;
+> +				snps,is-utmi-l1-suspend;
+> +				snps,usb3_lpm_capable;
+> +				snps,usb2-lpm-disable;
+> +				snps,has-lpm-erratum;
+> +				tx-fifo-resize;
+>  
+>  				ports {
+>  					#address-cells = <1>;
+> 
+> -- 
+> 2.42.0
+> 
