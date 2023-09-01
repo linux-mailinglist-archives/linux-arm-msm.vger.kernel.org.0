@@ -2,126 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5AFD78FAC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 11:27:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32CC178FBB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 12:20:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347829AbjIAJ1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 05:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53308 "EHLO
+        id S239586AbjIAKUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 06:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234850AbjIAJ1y (ORCPT
+        with ESMTP id S235699AbjIAKUq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 05:27:54 -0400
+        Fri, 1 Sep 2023 06:20:46 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D845D1730;
-        Fri,  1 Sep 2023 02:27:37 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3818w5JD015622;
-        Fri, 1 Sep 2023 09:27:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=z9h5OietALUlWpPG+Jm+Q/uVhH0CTwsoV5KDaBuoAuo=;
- b=AneeKo+Y+Ybp/YYTpX2YzgiPSWsHyz//OVX7VdlRZuxF0GH2YLwjgogOTJhFMtbBvuSl
- OFeJh5XydRXI+TpJ1ZmJZh7X2kiPYJ+NQcX0bqvbsiuCoyyLJlBd+RgjEXQwvSuH+I2E
- AbT/YcQZUr1J0gNCsfx3gRZsPv+ljnJ1b/T+vPVnXLXs0oqS1FPXwEvTBgObZHhziBYt
- 4gwUmPDpFoBbF9FtAiqXNWqhnD+vhqROhe0xOZSdmMMiG9OTA4E2HnMhBDEZbIMGAkBK
- LHTKX2brapoQYTwF8mgjgrM190suz8ujgIZoYKATeIXxzI58AqI8fqjk04mpEtkwFunB 1A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suc22g5fp-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853A4CEB;
+        Fri,  1 Sep 2023 03:20:43 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3813sOTC017516;
+        Fri, 1 Sep 2023 10:20:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=iu/KISp09kiIoNcVq9gHvJxa/zUXV6Lpnj7rqa4qOxQ=;
+ b=oEDy0PZxpuXyf3L+OT00o7XsEWMf3cJUzKFE/cv4xxbqvs/2DBfI27nzxPwOenRZp/us
+ R8EFBOkau3MCGkROwcUZ0L2MsqxAMcua40Ev65Da5FsFhh+K4OE/KsgV8h3YVs28CE1X
+ 6AwKBAcD4/3fHCQVfJRg4lhibZqYsqxySQm//sdPrHTLBxFBFvVLnn55T33s1JbXWK9T
+ UbNm7MFwGL10TmyViYBTM/SsXTS58FTrEs2fewOcCht7+iazwtSWMwCiu64QhLRcLN1p
+ b0CJ4we6TPoaNTr31655gU2Nh7l6BsSfa26g/ByzaQwY9hnN7S/VAceTcaa90nYwBDux xA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3su89e8sb9-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 01 Sep 2023 09:27:30 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3819RThM013037
+        Fri, 01 Sep 2023 10:20:34 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 381AKXLm026322
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 1 Sep 2023 09:27:29 GMT
-Received: from nsekar-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+        Fri, 1 Sep 2023 10:20:33 GMT
+Received: from srichara-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 1 Sep 2023 02:27:23 -0700
-From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-CC:     Nitheesh Sekar <quic_nsekar@quicinc.com>,
-        Amandeep Singh <quic_amansing@quicinc.com>
-Subject: [PATCH V3 4/4] arm64: dts: qcom: ipq5018: Enable USB
-Date:   Fri, 1 Sep 2023 14:56:45 +0530
-Message-ID: <20230901092645.20522-5-quic_nsekar@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230901092645.20522-1-quic_nsekar@quicinc.com>
-References: <20230901092645.20522-1-quic_nsekar@quicinc.com>
+ 15.2.1118.30; Fri, 1 Sep 2023 03:20:30 -0700
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+To:     <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
+        <kuba@kernel.org>, <pabeni@redhat.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <quic_viswanat@quicinc.com>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH net-next 0/2] net: qrtr: Few qrtr fixes
+Date:   Fri, 1 Sep 2023 15:50:19 +0530
+Message-ID: <1693563621-1920-1-git-send-email-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 16vT5A4Uu2IxR5fXKMIUKp3rXCOwOfWJ
-X-Proofpoint-ORIG-GUID: 16vT5A4Uu2IxR5fXKMIUKp3rXCOwOfWJ
+X-Proofpoint-ORIG-GUID: FSbyiQMfNKLBp1HBmG1AAR9E_cPhGjX5
+X-Proofpoint-GUID: FSbyiQMfNKLBp1HBmG1AAR9E_cPhGjX5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-01_07,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- clxscore=1015 mlxscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=553 phishscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309010088
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 clxscore=1011 suspectscore=0
+ malwarescore=0 mlxscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=443 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309010096
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable USB2 in host mode.
+Patch #1 fixes a race condition between qrtr driver and ns opening and
+sending data to a control port.
 
-Co-developed-by: Amandeep Singh <quic_amansing@quicinc.com>
-Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
-Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
----
-V3:
-	Renamed usb2_0_dwc  to usb_dwc and sorted
-	the USB related nodes.
-V2:
-	Sort and reorder USB related nodes.
----
- arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Patch #2 address the issue with legacy targets sending the SSR
+notifications using DEL_PROC control message.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-index e636a1cb9b77..8460b538eb6a 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-@@ -67,6 +67,18 @@
- 	};
- };
- 
-+&usb {
-+	status = "okay";
-+};
-+
-+&usb_dwc {
-+	dr_mode = "host";
-+};
-+
-+&usbphy0 {
-+	status = "okay";
-+};
-+
- &xo_board_clk {
- 	clock-frequency = <24000000>;
- };
+Sricharan Ramabadhran (1):
+  net: qrtr: Add support for processing DEL_PROC type control message
+
+Vignesh Viswanathan (1):
+  net: qrtr: Prevent stale ports from sending
+
+ include/uapi/linux/qrtr.h |  1 +
+ net/qrtr/af_qrtr.c        | 75 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 76 insertions(+)
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.7.4
 
