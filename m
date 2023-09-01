@@ -2,209 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DCA87901A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 19:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77C667901EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 20:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233130AbjIARzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 13:55:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57306 "EHLO
+        id S237241AbjIASKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 14:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235331AbjIARzj (ORCPT
+        with ESMTP id S233604AbjIASKt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 13:55:39 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE36E65
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 10:55:35 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-5008faf4456so4049066e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 10:55:35 -0700 (PDT)
+        Fri, 1 Sep 2023 14:10:49 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AB4992;
+        Fri,  1 Sep 2023 11:10:45 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-98377c5d53eso271793966b.0;
+        Fri, 01 Sep 2023 11:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693590933; x=1694195733; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=iXwfrkGM7Hz+jCAI0wm9OEdUpgziFLOO3YnjHkqpV2w=;
-        b=xdoz+/a23dmydI3ey5EbohLlk1xVa0PRFwgfEbKyT5yqzWSZpmqKvxzagemM34mJHr
-         BiuPFGWu/VgtvMSiCict3JQAwZZAAmqMX+deq9FXGMmnFTuR1nniieoryYnObZwysVUH
-         E8TY7LxHC/Tm6kXNPq8ennScCZt7NJdGlAJtBeQWjcYjJNbf4Kp4aaO/eCM2nQiS7rhb
-         xs9IHcK/wKzgxe8EY0V8jBIVWhC1vHxvQqdI0XGyuqmy2mQ1lmngVsQsWdb2JtYXPnAE
-         NlP9OorykmSZegjxcCrtl1ToNMnI+k3Ee8pfVxczjiI2AyZ62bLN8pvCguVT/9mchIGo
-         M2rA==
+        d=gmail.com; s=20221208; t=1693591844; x=1694196644; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7vAUl+f+nTpTddF45AevJsS/6FUW2IsLXphAnOA2RZ4=;
+        b=InzpSEc7xNd+5B5lqJphhTHDY6uViCOpkXJR/6ozf7IH0ysivpMl9HnOU8+fbKvJUn
+         ns9opGLp34tr7OUn4qYUaZ0OO7yPbjMETvzUYEYDhBrKki8Xp16xFtMd1ec3NLMGq1Mq
+         RKGuwFYPH0BFbQePJNyNa3hgZ3XBcRSTFqto6skRFl6/eqthfwuD+YYgo3XBQs20QN9A
+         /w/+k4EE9hoqdUPWOWR/w9iG8dRqA+ehGWO1ltCYiGA9940K7Fx5BQANzOC3j6uSkOeU
+         UHHlMJ2+cVWAZADyWfGTUv0jcE3eLcbmHyiRpo3rjcHNsH8+DN+ZUTjT7QqSTUCTLewk
+         7WLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693590933; x=1694195733;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1693591844; x=1694196644;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iXwfrkGM7Hz+jCAI0wm9OEdUpgziFLOO3YnjHkqpV2w=;
-        b=C3FWjqPCc4E+oZo7suwoGfQ9loUiQ2/PUtloMrubD9YrAulhKjWPFOwwa4tWv5m3rG
-         jD5VqsTxR7tRaKjbEynz0YBPWco3kozLqBNlWbouGrt84MSHcVNKsdBx64D3/dy8BkFw
-         7p4Z9oKfRqnOlsCGW7pnOC10iCdie1rLGCRqwzOU8RSFzUed5lfDOlzzG1Shn8YURF/4
-         xiC9zquziKfjqlN/PyefYH7QEI0nVVajKQfmcBA6Lyb8cydYvmuWWT1U6HSbMSYNDNFE
-         5sgBX6Rl+G2YCsdMH8CH3L3wGpSNzyPcU0XC2s7d/FlH1eMM7nOt//AOX7u/QpJzx+iD
-         eLBA==
-X-Gm-Message-State: AOJu0YyOWTb8+tVHK6PPiw8HPUitd6KrR95od+PQ7km6KYfgZC+LQozi
-        Nf+5YNZdgEFflxq4z9UJB0nHPg==
-X-Google-Smtp-Source: AGHT+IEVz6fJWAjbQSaZH9j8buVj8fBa5mtJlorGodbyAE6AeJjp2x4UEgh5FPmAsFJCi5/vrH6s7Q==
-X-Received: by 2002:a05:6512:2016:b0:500:91c1:9642 with SMTP id a22-20020a056512201600b0050091c19642mr1780047lfb.21.1693590933257;
-        Fri, 01 Sep 2023 10:55:33 -0700 (PDT)
-Received: from [192.168.1.101] (abxh154.neoplus.adsl.tpnet.pl. [83.9.1.154])
-        by smtp.gmail.com with ESMTPSA id r1-20020a19ac41000000b004ff748f6f1fsm717827lfc.69.2023.09.01.10.55.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Sep 2023 10:55:32 -0700 (PDT)
-Message-ID: <519259d7-ac6d-409b-a864-071e41f66f70@linaro.org>
-Date:   Fri, 1 Sep 2023 19:55:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/15] clk: qcom: gcc-sm6375: Unregister critical clocks
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        bh=7vAUl+f+nTpTddF45AevJsS/6FUW2IsLXphAnOA2RZ4=;
+        b=fnkYA/7brrYM4zxZS8EVosbO/CDecvmFaYNMRbdv/Np2jMRtw/FyuPa4Qfa/Q70WBU
+         9AkrPGBIJvNTMy7DU1iQaYo+oSTS/rRO95KEJQzcrXHbe2esDtEfs20U1UU11umK84lD
+         KjrEkFX3oGFU/kNrfDh7922RifX5DONxQAp7fR3xiB4hId37U6NKDWyOz4QmyPvczTG/
+         K1UclyppsAzq8hD3m8m48FPZbPTSB6a444mICrmETdca4+BUL9oNFh8IhTbFWM6HRx/I
+         KckLF5oDNq2IE31lDPISkdSc5fY1JvaJu+kTR0C5qgUdGK/4PvKmFs/06K/NwatldAof
+         yZwA==
+X-Gm-Message-State: AOJu0YwsDS2Ny3TCTxyMcs7jlH9G/1/Y+68OLM4YCrEaYfRID/oFgjK/
+        /Y+AlSHGOFIoj7/P0LKOoms=
+X-Google-Smtp-Source: AGHT+IFi6wHXHh77TlN/+blswyS/MIXBXlCnQXBSVFYt7wNq/Nvi0h0HD08ZRCHs84L0DK3a45V4BQ==
+X-Received: by 2002:a17:906:32d3:b0:9a1:d7cd:6040 with SMTP id k19-20020a17090632d300b009a1d7cd6040mr1940535ejk.37.1693591843661;
+        Fri, 01 Sep 2023 11:10:43 -0700 (PDT)
+Received: from fedora.. (dh207-99-49.xnet.hr. [88.207.99.49])
+        by smtp.googlemail.com with ESMTPSA id j9-20020a170906410900b0099bd5b72d93sm2278999ejk.43.2023.09.01.11.10.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Sep 2023 11:10:43 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
- <20230717-topic-branch_aon_cleanup-v1-3-27784d27a4f4@linaro.org>
- <ZLaRtrH85v4kpSvb@hovoldconsulting.com>
- <33a26241-026a-9466-5dd6-e3202b29f57c@linaro.org>
- <ybugl2m7o5cnzj4lv5ksit2rip6yvths5ieo3xlw6cycto2zax@2jimga475z2t>
- <ZLeiM6l6tu6XDzrr@hovoldconsulting.com>
- <cc9e6464-5e47-4044-9785-c57167f0e1c5@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <cc9e6464-5e47-4044-9785-c57167f0e1c5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add IDs for IPQ8174 family
+Date:   Fri,  1 Sep 2023 20:10:04 +0200
+Message-ID: <20230901181041.1538999-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9.08.2023 18:52, Konrad Dybcio wrote:
-> On 19.07.2023 10:43, Johan Hovold wrote:
->> On Tue, Jul 18, 2023 at 09:23:52AM -0700, Bjorn Andersson wrote:
->>> On Tue, Jul 18, 2023 at 03:26:51PM +0200, Konrad Dybcio wrote:
->>>> On 18.07.2023 15:20, Johan Hovold wrote:
->>>>> On Mon, Jul 17, 2023 at 05:19:10PM +0200, Konrad Dybcio wrote:
->>>>>> Some clocks need to be always-on, but we don't really do anything
->>>>>> with them, other than calling enable() once and telling Linux they're
->>>>>> enabled.
->>>>>>
->>>>>> Unregister them to save a couple of bytes and, perhaps more
->>>>>> importantly, allow for runtime suspend of the clock controller device,
->>>>>> as CLK_IS_CRITICAL prevents the latter.
->>>>>
->>>>> But this doesn't sound right. How can you disable a controller which
->>>>> still has clocks enabled?
->>>>>
->>>>> Shouldn't instead these clocks be modelled properly so that they are
->>>>> only enabled when actually needed?
->>>> Hm.. We do have clk_branch2_aon_ops, but something still needs to
->>>> toggle these clocks.
->>>>
->>>
->>> Before we started replacing these clocks with static votes, I handled
->>> exactly this problem in the turingcc-qcs404 driver by registering the
->>> ahb clock with a pm_clk_add(). The clock framework will then
->>> automagically keep the clock enabled around operations, but it will also
->>> keep the runtime state active as long as the clock is prepared.
->>>
->>> As mentioned in an earlier reply today, there's no similarity to this in
->>> the reset or gdsc code, so we'd need to add that in order to rely on
->>> such mechanism.
->>
->> This reminds me of:
->>
->> 	4cc47e8add63 ("clk: qcom: gdsc: Remove direct runtime PM calls")
->>
->> which recently removed a broken attempt to implement this for gdscs.
->>
->> Just stumbled over GENPD_FLAG_PM_CLK which may provide a way forward at
->> least for genpd (but see below).
->>
->>>> I *think* we could leave a permanent vote in probe() without breaking
->>>> runtime pm! I'll give it a spin bit later..
->>>>
->>>
->>> Modelling the AHB clock in DT and putting a devm_clk_get_enabled() would
->>> properly connect the two, and thereby handle probe order between the two
->>> clock controllers.
->>
->> Yeah, this dependency really should be described eventually.
->>
->>> But it would prevent the power-domain of the parent provider to ever
->>> suspending. Using pm_clk_add() this would at least depend on client
->>> votes.
->>
->> IIUC using pm_clk_add() would also prevent the parent from suspending
->> due to that resume call in clk_prepare().
->>
->> And this mechanism is also used for GENPD_FLAG_PM_CLK...
-> So.. how do we go about solving the issue that this patch tried to
-> address?
-I see things this way:
+IPQ8174 (Oak) family is part of the IPQ8074 family, but the ID-s for it
+are missing so lets add them.
 
-- clock controllers (non-gcc) that use magic writes today,
-  they should stay as they are to avoid dramatic spaghetti wrt
-  dt backwards compatibility
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ include/dt-bindings/arm/qcom,ids.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-- clock controllers (non-gcc) that use CLK_IS_CRITICAL are
-  transitioned to magic writes to skip the PM code fluff which
-  prevents shutting down the PDs if any clock is critical and
-  for uniformity with point 1 (as the device trees still don't
-  contain any references to the necessary clocks)
+diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+index be12e1dd1f38..d2b84a308fde 100644
+--- a/include/dt-bindings/arm/qcom,ids.h
++++ b/include/dt-bindings/arm/qcom,ids.h
+@@ -203,6 +203,9 @@
+ #define QCOM_ID_SM6125			394
+ #define QCOM_ID_IPQ8070A		395
+ #define QCOM_ID_IPQ8071A		396
++#define QCOM_ID_IPQ8172			397
++#define QCOM_ID_IPQ8173			398
++#define QCOM_ID_IPQ8174			399
+ #define QCOM_ID_IPQ6018			402
+ #define QCOM_ID_IPQ6028			403
+ #define QCOM_ID_SDM429W			416
+-- 
+2.41.0
 
-- new clock controllers are modeled with use of pm_clk and with
-  proper device tree references
-
-FWIW Qualcomm nowadays just keep these clocks always on (answering
-Johan's question - they're either off-from-Linux-POV-not-really-in-
-hardware or these clocks retain the enable bit, I don't know) in
-their shipping downstream kernels, the power leak is probably
-minimal, but if we can avoid it, every nanowatt is to our advantage
-
-Konrad
