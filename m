@@ -2,128 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7396B79016E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 19:27:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F060D790177
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Sep 2023 19:30:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350381AbjIAR1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 13:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50204 "EHLO
+        id S1350402AbjIARaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 13:30:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350364AbjIAR1c (ORCPT
+        with ESMTP id S229753AbjIARaW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 13:27:32 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA5FCF3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 10:27:29 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9a2185bd83cso285485666b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 10:27:28 -0700 (PDT)
+        Fri, 1 Sep 2023 13:30:22 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143A21BF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Sep 2023 10:30:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-401da71b83cso22918755e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Sep 2023 10:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693589247; x=1694194047; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693589417; x=1694194217; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ss+qLANCDr/E1E/sALCGcAu2OPaPDRXb4/ydOTBXzBQ=;
-        b=be1P/Setc7BYeSbX+uxLFsvKKJNY0V/zheELmkmFNL24uxotZMEMlPBlixUir1YTvg
-         CMhAtsaqX17lKeob3uIEIdnvaWCvte58c1PBWS0mF5bdMn1iokwX2fvaLq3Mx3RgAX1b
-         clhRIF9wRtslIctRiUlnuVROCU2rLfal2VU2MwQHHyIZaoVWKgQlrXvkVtOjy7EUXU18
-         jIg6/j4Hgqy7rb2xUbAqr4wxGtGie/pTlBBPLGVp77v9vHqpD1Wx0KLoLaB6nd5HXK2Q
-         1h2lTbU71ScMrCgHlFZXH7Dw9dnVu1KhHe78ZryopMSMWy6nsCwjxVH/nZmpZ3NQof9r
-         vmvw==
+        bh=ElHKg+pX3fEdOOZS1kWbQ4ja8S276wFxRNF1asSPqwQ=;
+        b=ZjK3757tYtzcIggL5ITwi5MMzhztdb9qqTmbEdux9UEH1oj2DcLOnsFzf0dE4ts46B
+         xKO36m5FlDsq+nQb29HC75V6NKt2bdwyae7CGcf5PuCQkvEP6Hez3qFQJENg6ZZDeSFH
+         6j0OzwSpu62U7jVkFaaOA6FWX52I+dEXO76I2FsQthJEU7Kj7pa7/XyxLE8gvuCRtzap
+         kf6p43zf2mRZV5dJ82m6r0cjQcC/PixvsgyN+0cKVW0ld1QSL9wzsoQ/sPpyMU0wT27F
+         hWJsl4+OHlxenM4jgZkNpPVkEcJw6JPkik4+h1L74AWwG99yIJErXvwyIxmOJWV5U5zE
+         O4UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693589247; x=1694194047;
+        d=1e100.net; s=20221208; t=1693589417; x=1694194217;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ss+qLANCDr/E1E/sALCGcAu2OPaPDRXb4/ydOTBXzBQ=;
-        b=QRXVjDOa16IVMBhKOHRbmDVqV9bghhcK54sic0VBiOCMewLRC3Ix5ZZm7e2rqRH5uw
-         rQCGCvMyzKK2t+sLM5L0TOO+yO+5gTSfL2TqXhkGLhmNdXmljNRfBfVNyIVk6G7VdW37
-         RjKL/KlzmF2EuMtyJpXB2+DiQh8Y1DpV/+c+833OgdRCmuio1EWpEi6UnMQQ2/6hXeWE
-         4BaJ2DXT1+a/DVde+pg5wmDMfvKA7ESgnLJgwLps1GtpcQ6OphnOinccAzwP0kPA2iOq
-         v5ndscxmsgFED6QGLGSHo1398K4F4Ows0r//4S1JvKFXHgAtugUKKHCr4iqjq+zhS4OS
-         3uxw==
-X-Gm-Message-State: AOJu0YwwXZ5o15QSCl49c6Zp33qngWtYQokjlaMQZ0zYGAIJRnjys+E1
-        Q+T1EdECg/7HG2/VD698NZUe2g==
-X-Google-Smtp-Source: AGHT+IFcGVffPeSk/gYy/neXvresZTi7Jf5x67zGvWyJZLah1F7/YCdkWQjFSzedTTHx9Sne0C2e9g==
-X-Received: by 2002:a17:906:8a70:b0:9a1:c00e:60cd with SMTP id hy16-20020a1709068a7000b009a1c00e60cdmr2312887ejc.15.1693589247510;
-        Fri, 01 Sep 2023 10:27:27 -0700 (PDT)
+        bh=ElHKg+pX3fEdOOZS1kWbQ4ja8S276wFxRNF1asSPqwQ=;
+        b=hR9S96xjHgipAswVDlCL46Vo2UXYwNILMIF0d0BJbdkKHPUa/QfElMvDQbEIUZJ9aM
+         pPw2JR+383CfdG9ZEel306gw6mIuqbI6r5MlAHh8lZbfqmwRbeTmApji3r04VWD5oTpq
+         X0NdDx0qr0NaOClHDVXRL+PkZQO7JUFOQF+W7T2y5e9A0eeG2IpDwBZ0NKzvnGILqQk+
+         9jPxKu2HdNKMEckRaaaBayY7lyLt/kDBFHQM15CYX0ttsq6Dvo3njVtziD8sowD3kaCV
+         uVJaD8rheBxwwZfwrgmEx71X+6fHVjnVNbUG9I8Up8HZBHAerCAJi4/Ju6R78g7MXZwE
+         2OxQ==
+X-Gm-Message-State: AOJu0Yw2/SXmzc8rbFqzbtfxFyyuJfLoDcDvCHkue141cMIpZ61LZTB+
+        GIG/LA9NfSjlmKJ84gXY6r2JBg==
+X-Google-Smtp-Source: AGHT+IF8OpU763whLIgLndYDsjQedtPeUvT/LnG8ROSIeLXPbR7jiGEGsm3HGrHRuDrOCdJY5kV5YQ==
+X-Received: by 2002:adf:d227:0:b0:314:124f:12be with SMTP id k7-20020adfd227000000b00314124f12bemr2459722wrh.3.1693589417436;
+        Fri, 01 Sep 2023 10:30:17 -0700 (PDT)
 Received: from linaro.org ([84.232.191.193])
-        by smtp.gmail.com with ESMTPSA id p20-20020a170906229400b0099bd1a78ef5sm2208075eja.74.2023.09.01.10.27.26
+        by smtp.gmail.com with ESMTPSA id k11-20020a5d6d4b000000b0031ad2663ed0sm5803411wri.66.2023.09.01.10.30.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Sep 2023 10:27:26 -0700 (PDT)
-Date:   Fri, 1 Sep 2023 20:27:25 +0300
+        Fri, 01 Sep 2023 10:30:16 -0700 (PDT)
+Date:   Fri, 1 Sep 2023 20:30:15 +0300
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
         Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH 6/7] arm64: dts: qcom: sm8550: Add missing DWC3 quirks
-Message-ID: <ZPIe/W7Bbm9Lv2Zp@linaro.org>
-References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
- <20230830-topic-8550_dmac2-v1-6-49bb25239fb1@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] phy: qcom-qmp-combo: Square out 8550
+ POWER_STATE_CONFIG1
+Message-ID: <ZPIfpyghcS3kS7Fb@linaro.org>
+References: <20230829-topic-8550_usbphy-v1-0-599ddbfa094a@linaro.org>
+ <20230829-topic-8550_usbphy-v1-1-599ddbfa094a@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230830-topic-8550_dmac2-v1-6-49bb25239fb1@linaro.org>
+In-Reply-To: <20230829-topic-8550_usbphy-v1-1-599ddbfa094a@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-08-30 14:48:45, Konrad Dybcio wrote:
-> As expected, Qualcomm DWC3 implementation come with a sizable number
-> of quirks. Make sure to account for all of them.
+On 23-08-29 22:59:04, Konrad Dybcio wrote:
+> There are two instances of the POWER_STATE_CONFIG1 register: one in
+> the PCS space and another one in PCS_USB.
 > 
-> Fixes: 7f7e5c1b037f ("arm64: dts: qcom: sm8550: Add USB PHYs and controller nodes")
+> The downstream init sequence pokes the latter one while we've been poking
+> the former one (and misnamed it as the latter one, impostor!). Fix that
+> up to avoid UB.
+> 
+> Fixes: 49742e9edab3 ("phy: qcom-qmp-combo: Add support for SM8550")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-
-That is a lot of quirks I missed :D.
 
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 2 +-
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 3 ++-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 944b4b8c95f5..8ee61c9383ec 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2930,12 +2930,20 @@ usb_1_dwc3: usb@a600000 {
->  				reg = <0x0 0x0a600000 0x0 0xcd00>;
->  				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
->  				iommus = <&apps_smmu 0x40 0x0>;
-> -				snps,dis_u2_susphy_quirk;
-> -				snps,dis_enblslpm_quirk;
-> -				snps,usb3_lpm_capable;
->  				phys = <&usb_1_hsphy>,
->  				       <&usb_dp_qmpphy QMP_USB43DP_USB3_PHY>;
->  				phy-names = "usb2-phy", "usb3-phy";
-> +				snps,hird-threshold = /bits/ 8 <0x0>;
-> +				snps,usb2-gadget-lpm-disable;
-> +				snps,dis_u2_susphy_quirk;
-> +				snps,dis_enblslpm_quirk;
-> +				snps,dis-u1-entry-quirk;
-> +				snps,dis-u2-entry-quirk;
-> +				snps,is-utmi-l1-suspend;
-> +				snps,usb3_lpm_capable;
-> +				snps,usb2-lpm-disable;
-> +				snps,has-lpm-erratum;
-> +				tx-fifo-resize;
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index cbb28afce135..843099d314bf 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -859,10 +859,10 @@ static const struct qmp_phy_init_tbl sm8550_usb3_pcs_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_PCS_TX_RX_CONFIG, 0x0c),
+>  	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_EQ_CONFIG1, 0x4b),
+>  	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_EQ_CONFIG5, 0x10),
+> -	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_POWER_STATE_CONFIG1, 0x68),
+>  };
 >  
->  				ports {
->  					#address-cells = <1>;
+>  static const struct qmp_phy_init_tbl sm8550_usb3_pcs_usb_tbl[] = {
+> +	QMP_PHY_INIT_CFG(QPHY_USB_Q6_PCS_USB3_POWER_STATE_CONFIG1, 0x68),
+>  	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
+>  	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
+>  	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L, 0x40),
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
+> index 9510e63ba9d8..b9060c242fd2 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
+> @@ -12,7 +12,7 @@
+>  #define QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG3		0xcc
+>  #define QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG6		0xd8
+>  #define QPHY_USB_V6_PCS_REFGEN_REQ_CONFIG1		0xdc
+> -#define QPHY_USB_V6_PCS_USB3_POWER_STATE_CONFIG1	0x90
+> +#define QPHY_USB_V6_PCS_POWER_STATE_CONFIG1		0x90
+>  #define QPHY_USB_V6_PCS_RX_SIGDET_LVL			0x188
+>  #define QPHY_USB_V6_PCS_RCVR_DTCT_DLY_P1U2_L		0x190
+>  #define QPHY_USB_V6_PCS_RCVR_DTCT_DLY_P1U2_H		0x194
+> @@ -23,6 +23,7 @@
+>  #define QPHY_USB_V6_PCS_EQ_CONFIG1			0x1dc
+>  #define QPHY_USB_V6_PCS_EQ_CONFIG5			0x1ec
+>  
+> +#define QPHY_USB_Q6_PCS_USB3_POWER_STATE_CONFIG1	0x00
+>  #define QPHY_USB_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL	0x18
+>  #define QPHY_USB_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2	0x3c
+>  #define QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L		0x40
 > 
 > -- 
 > 2.42.0
