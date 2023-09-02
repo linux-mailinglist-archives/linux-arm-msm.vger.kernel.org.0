@@ -2,42 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BC777908F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 19:34:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 082F879098D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 22:28:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbjIBRem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Sep 2023 13:34:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34900 "EHLO
+        id S234241AbjIBU2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Sep 2023 16:28:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjIBRed (ORCPT
+        with ESMTP id S234250AbjIBU2S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Sep 2023 13:34:33 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3CAAA4;
-        Sat,  2 Sep 2023 10:34:27 -0700 (PDT)
-Received: from [192.168.178.23] (k10064.upc-k.chello.nl [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7EF76CF376;
-        Sat,  2 Sep 2023 17:34:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1693676066; bh=4AwTwBIRZzliGYZREHlXp1lG8UPu59oASjiNI3bF69E=;
-        h=From:Date:Subject:To:Cc;
-        b=c/NZHMQW118TC49OMKDBUTT5pzfgJXnGA+hPJBBd8dXvBCG2p5jAKWpwyd839MVrs
-         MEX56NJjEvGXAF8pLYgtvsDUQ4cFekeWREK9cpTxixxKFmBKhdETznERNFI6RP4WMz
-         fSZBPnq6FWyFJS8mA7h41cplQbZ5hb7u/J00l0ME=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sat, 02 Sep 2023 19:34:23 +0200
-Subject: [PATCH] clk: qcom: mmcc-msm8974: remove ocmemcx_ahb_clk
+        Sat, 2 Sep 2023 16:28:18 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755A2CD6
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Sep 2023 13:28:14 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50079d148aeso409486e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Sep 2023 13:28:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693686493; x=1694291293; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AqfoenQWKjB8osDxkwnJtLt7lDhWz7e/+s7umbsPwHw=;
+        b=swKso9zaMeE8R5oZjRS8ty0OwExYJa4ha1t8KJkRfTc791O0G2shPvtBU4uifG8jBs
+         AZD3uT1E9Q2MkDU1l9svrGjU+VVCzsXgqjwJjgIPzBhOP7/9fK4PF3R2Z6mciOT7hQB+
+         B0PkhdQFSxqzBm3oiJ8wSspp2ey/zWuEBSif5eVMj9ahqbf/W+9rKBERtRVtnVHDskdG
+         Ed9IWcMPaZEyGRrk0sAmA13nktmI206WuBkks27jZlUkGqycITAa4qsVPGnm9JA2CfVw
+         H2kov2FFhEK6M9Q5tb/0z2ifUjk5PXASAxK5nuKa7UJ7mgv+xzZ6jZLxFIW029UhicTV
+         8ccg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693686493; x=1694291293;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AqfoenQWKjB8osDxkwnJtLt7lDhWz7e/+s7umbsPwHw=;
+        b=kMk1191d39hv9hGfydGmXZF/YcrN21Fkf1/sA73mgjSrmad8VNOzF3Ag6YbvY6CD/U
+         YcnoRfOGl0gmRdB06uZ63ixFYB2t4E7lTAT8wjo4iYVnOCPQ49GZinP28lFrlleawmko
+         Jguf0AwCk8DN7E0S6F9LUdvbaio11SZfEqDtzVQ5C++ObQwghevP6yh1KxLinZTn0L9o
+         uA1ijn0AB1e6T9LIJSUN0G6GZBbsNn63KvMtUqGviWYXzxwiAMINN4277yb+6A2qFhpU
+         UuxYiioc6Z1vzIpl8mFJLVDlsY825hF4cbC093rRxbWECd5COT17Rwbtj+rNDi0HW2Ux
+         Y/9g==
+X-Gm-Message-State: AOJu0YxtyzwiO69WA9Miwmn3vQ0lgtZhSgaDsXgGM5TV6XVJKGSoF4ce
+        Qw+QjLXUpe78Eroo36DOrGqCng==
+X-Google-Smtp-Source: AGHT+IFKG4hNiSYylXmxPiCLbNRI/9QDxNUYdr8ha450JvMnEp+W79CNqzswJe03zTPMb/vPObWnrQ==
+X-Received: by 2002:a05:6512:742:b0:500:7f51:d129 with SMTP id c2-20020a056512074200b005007f51d129mr3115285lfs.34.1693686492622;
+        Sat, 02 Sep 2023 13:28:12 -0700 (PDT)
+Received: from [192.168.1.101] (abxi170.neoplus.adsl.tpnet.pl. [83.9.2.170])
+        by smtp.gmail.com with ESMTPSA id g22-20020ac25396000000b00500829f7b2bsm1073827lfh.250.2023.09.02.13.28.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 Sep 2023 13:28:12 -0700 (PDT)
+Message-ID: <091e4156-cdaa-4233-b7e5-69e3f8ee9a49@linaro.org>
+Date:   Sat, 2 Sep 2023 22:28:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230902-msm8226-ocmemcx_ahb_clk-remove-v1-1-8124dbde83b9@z3ntu.xyz>
-X-B4-Tracking: v=1; b=H4sIAB5y82QC/x3NQQqDQAxA0atI1g2MUYt6lVJEY6xB48gMiCDev
- YPLt/n/gihBJUKbXRDk0Kh+S8hfGfDcbz9BHZOBHBWucYQWrSZ6o2cT47Pr56HjdcEg5g/Buhr
- ZlQXzlBOkyB5k0vMZfL73/QdBLv5VcAAAAA==
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: mmcc-msm8974: remove ocmemcx_ahb_clk
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -46,114 +67,80 @@ To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Mike Turquette <mturquette@linaro.org>
 Cc:     Stephen Boyd <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3142; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=4AwTwBIRZzliGYZREHlXp1lG8UPu59oASjiNI3bF69E=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBk83Ihgntx2p7Pa8+ZtqGg0lBSF3+6uCpxhNDkE
- HWdALklowyJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZPNyIQAKCRBy2EO4nU3X
- VmMRD/41WapwOh7gw0YxXKz1jni5oxzXtDIBedeyoNFO9qwQcC08VyjBE4qoDJv2liQ4qF71/lI
- R0767d4pFaZTq+acl1cOi9nqQk7E9uuWOHv3u9FH9kRjC+R9pfDz8N4zaiYlkUFOCQi3Wm3wtE4
- yVcZ09hiURCB7nhSjRj2rpypLr9HTzyr/Sj5H6tQ8CgWAuw6q0nRjBcgvP3707g/0MyIA+wH7+M
- hnP3nELVChPMXMhrd+/6US4NYNxAYkvyDiNvHbvnphAQvkQdKSSPeJTrO1H92hc7ZBJquAJpcAq
- +M42mk4yapK/QsrYBpyB2L9qkCHOfyvhQ5u+0MQI/rdxaSBeYUFKAaFSGj1B83yBxme5fth8se/
- IcUQVodOGg19X3eJ3Ea7zlQ02cm4A/Mx8SpFi9DRdck+GUcQVOqTvbZ/kklVrplCxUO2ywy7TR0
- Ip2qewZt4Em2smnEVui8Cu+KfxJnC4oKU4QcYRVPJ03XvmF9FQVimCoRrmb2c8deso9czgwCTK0
- 6+b0BxTAnUFa6xmVRoBsn9It2QRMVw0P8ecAMQdd/pw2Z9p0OH4oaXRaNMpeVGm4lQv1uOgwnsQ
- LlWrUuTJ6IydYIg0eZkzSRRIBbdp/62rhrbnP2xUoB68WLcb8uZIX+ecngjvurC8dUG7kFJMP10
- Pnm3RuTPCcu0VTw==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+        devicetree@vger.kernel.org
+References: <20230902-msm8226-ocmemcx_ahb_clk-remove-v1-1-8124dbde83b9@z3ntu.xyz>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230902-msm8226-ocmemcx_ahb_clk-remove-v1-1-8124dbde83b9@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-According to a commit in the 3.4 vendor kernel sources[0] the
-ocmemcx_ahb_clk clock "is controlled by RPM and should not be touched by
-APPS.".
+On 2.09.2023 19:34, Luca Weiss wrote:
+> According to a commit in the 3.4 vendor kernel sources[0] the
+> ocmemcx_ahb_clk clock "is controlled by RPM and should not be touched by
+> APPS.".
+> 
+> [0] https://git.codelinaro.org/clo/la/kernel/msm/-/commit/37df5f2d91b4d5768b37fcaacaeea958dd683ebc
+> 
+> And indeed, when using MDSS+GPU+OCMEM on MSM8226 and not using
+> clk_ignore_unused, when Linux tries to disable the clock the device
+> crashes and reboots.
+> 
+> And since there's also no evidence of this clock in msm8974 vendor
+> kernel sources, remove the clock for msm8226 and msm8974.
+Going over the downstream clock driver for 26 and 74 and comparing
+the registered clocks with mainline may be useful.
 
-[0] https://git.codelinaro.org/clo/la/kernel/msm/-/commit/37df5f2d91b4d5768b37fcaacaeea958dd683ebc
+Older clock drivers were likely written by hand and people doing
+that likely didn't have a great reference of which clocks should
+be skipped due to having been moved to firmware somewhere in the
+bringup process.
 
-And indeed, when using MDSS+GPU+OCMEM on MSM8226 and not using
-clk_ignore_unused, when Linux tries to disable the clock the device
-crashes and reboots.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-And since there's also no evidence of this clock in msm8974 vendor
-kernel sources, remove the clock for msm8226 and msm8974.
-
-Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- drivers/clk/qcom/mmcc-msm8974.c               | 18 ------------------
- include/dt-bindings/clock/qcom,mmcc-msm8974.h |  1 -
- 2 files changed, 19 deletions(-)
-
-diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-index c37524d55d8e..3ce40c80666b 100644
---- a/drivers/clk/qcom/mmcc-msm8974.c
-+++ b/drivers/clk/qcom/mmcc-msm8974.c
-@@ -2171,22 +2171,6 @@ static struct clk_branch mmss_s0_axi_clk = {
- 	},
- };
- 
--static struct clk_branch ocmemcx_ahb_clk = {
--	.halt_reg = 0x405c,
--	.clkr = {
--		.enable_reg = 0x405c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "ocmemcx_ahb_clk",
--			.parent_hws = (const struct clk_hw*[]){
--				&mmss_ahb_clk_src.clkr.hw
--			},
--			.num_parents = 1,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch ocmemcx_ocmemnoc_clk = {
- 	.halt_reg = 0x4058,
- 	.clkr = {
-@@ -2504,7 +2488,6 @@ static struct clk_regmap *mmcc_msm8226_clocks[] = {
- 	[MMSS_MMSSNOC_BTO_AHB_CLK] = &mmss_mmssnoc_bto_ahb_clk.clkr,
- 	[MMSS_MMSSNOC_AXI_CLK] = &mmss_mmssnoc_axi_clk.clkr,
- 	[MMSS_S0_AXI_CLK] = &mmss_s0_axi_clk.clkr,
--	[OCMEMCX_AHB_CLK] = &ocmemcx_ahb_clk.clkr,
- 	[OXILI_GFX3D_CLK] = &oxili_gfx3d_clk.clkr,
- 	[OXILICX_AHB_CLK] = &oxilicx_ahb_clk.clkr,
- 	[OXILICX_AXI_CLK] = &oxilicx_axi_clk.clkr,
-@@ -2661,7 +2644,6 @@ static struct clk_regmap *mmcc_msm8974_clocks[] = {
- 	[MMSS_MMSSNOC_BTO_AHB_CLK] = &mmss_mmssnoc_bto_ahb_clk.clkr,
- 	[MMSS_MMSSNOC_AXI_CLK] = &mmss_mmssnoc_axi_clk.clkr,
- 	[MMSS_S0_AXI_CLK] = &mmss_s0_axi_clk.clkr,
--	[OCMEMCX_AHB_CLK] = &ocmemcx_ahb_clk.clkr,
- 	[OCMEMCX_OCMEMNOC_CLK] = &ocmemcx_ocmemnoc_clk.clkr,
- 	[OCMEMNOC_CLK] = &ocmemnoc_clk.clkr,
- 	[OXILI_GFX3D_CLK] = &oxili_gfx3d_clk.clkr,
-diff --git a/include/dt-bindings/clock/qcom,mmcc-msm8974.h b/include/dt-bindings/clock/qcom,mmcc-msm8974.h
-index a62cb0629a7a..743ee60632eb 100644
---- a/include/dt-bindings/clock/qcom,mmcc-msm8974.h
-+++ b/include/dt-bindings/clock/qcom,mmcc-msm8974.h
-@@ -121,7 +121,6 @@
- #define MMSS_MMSSNOC_BTO_AHB_CLK			112
- #define MMSS_MMSSNOC_AXI_CLK				113
- #define MMSS_S0_AXI_CLK					114
--#define OCMEMCX_AHB_CLK					115
- #define OCMEMCX_OCMEMNOC_CLK				116
- #define OXILI_OCMEMGX_CLK				117
- #define OCMEMNOC_CLK					118
-
----
-base-commit: 7c2878be573282a9961c359b806ccf70afe1a6b6
-change-id: 20230902-msm8226-ocmemcx_ahb_clk-remove-85dc043ccf12
-
-Best regards,
--- 
-Luca Weiss <luca@z3ntu.xyz>
+Konrad
 
