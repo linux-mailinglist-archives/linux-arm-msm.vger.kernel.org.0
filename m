@@ -2,80 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA88D79079F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 13:45:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AFCD7907B8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 13:57:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352052AbjIBLpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Sep 2023 07:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35036 "EHLO
+        id S233141AbjIBL5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Sep 2023 07:57:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231146AbjIBLpo (ORCPT
+        with ESMTP id S229580AbjIBL5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Sep 2023 07:45:44 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE06510D2
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Sep 2023 04:45:39 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bd0d135ca3so50251161fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Sep 2023 04:45:39 -0700 (PDT)
+        Sat, 2 Sep 2023 07:57:33 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E06510F5
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Sep 2023 04:57:30 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-500bdef7167so994799e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Sep 2023 04:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693655138; x=1694259938; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693655848; x=1694260648; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zorMJs2VMBIVf26DDqKbZ6mYOJqpHE4v3AzFjSkIo58=;
-        b=C0VvNqwy+HFtsTOr0QwqPfaErpnJ+j+gbK+OgW5cm8ltddV0QZzA7EHkoRC0OZf5SR
-         rNU8NR/WmaKCdy8A/hKkysdtTlVFdesRIBgA/UASNPamtiTP2KtDTRBMhlaeT8YLdehX
-         TX1gF2g7KRZBBSE4OfaWG35xZGNzWFX0+Vv1RcZgH7ONyqsKxeggXkb16H4iHsZgXTkv
-         d2xg8J2UXSSbA9DkSVIyE4lAE/EJq/bFI2B8e9bwML/vMg2+HQA8tm20C5TzFl6zYUUt
-         uxHkBwsSdws+/5gDBNvz+LqVZuU6KnrF3wOtnm0DRJmPtVkUKEOw3yxiJvmD6/xYGAki
-         zvTg==
+        bh=jDa7Mj6sArPataDgSx4z5NxOtH/XftsbKDNnlo52CRg=;
+        b=RS53jAH4qgcbikiCiDgQ5CzSK+jO9f2kkDQdc2svtutW1wS942bfEiHOe/yhjzqzig
+         NiSKHv3uQwfA69cG6BFFl5ss/SRbqk4Ltg+1VYdr2B069H6MPfXJ01WBNhR2YUAj+4lu
+         JlRT9aAtK2rsl4H4kYWGqZ0Nk/5PYwRTRKNT5D20Wuh1ca9ZAOQJ8DLfTAAjDTliygrY
+         Q3SEqerZUl7iKnHMPGR+n88frBkQJ/prkLIw3Ji2urCYKFTLhMndraKWeINhjrw2rI2e
+         qV2dErOE4t9g/TQ8B3IcWXf53hf115qlVVo5fkGPo3c9Laejy/rILwksCRiWFmjPnsyE
+         kGrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693655138; x=1694259938;
+        d=1e100.net; s=20221208; t=1693655848; x=1694260648;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zorMJs2VMBIVf26DDqKbZ6mYOJqpHE4v3AzFjSkIo58=;
-        b=b4Fy/FjRULYdWTBBDx4ptfrGCM9Or98MVFQ4vKyuESijZwDYSRdUcvuw65hJSO77+H
-         GRDApx2/n//qJVZ/S+KucHFlbV1ovFFiz21Eicw9yAVAmRZmD7Delahr2rLaNQcSzKZG
-         7NxC85DE630894ixvcyC5OQCGfAZHo2qIKTguoNTTmLpxH1+s1gfCVGWskSfkul3Kvjk
-         YtPVVWJI2J9Z0NCTat9myOX7qnYrSGAmC7FTGpYzeICcB/hBSH9Ufcw7Soh33WuwOfKA
-         ocxIaC8br315i1lfsrrkRZuIr0HsSC5dgx9UUJzvMCFiqmNVZaHaunmATn9bB+PUa1Sq
-         Yv/g==
-X-Gm-Message-State: AOJu0YyLXhtdaR80oRpZ+oKYupouXzdkotkUsrD4mS/cAHkffVYvi+Ja
-        EayThKbmKqo+jZcFc8bTrFGH1w==
-X-Google-Smtp-Source: AGHT+IFqP05K7+DSnGRKSlA7ReM081tFrZrwpnWX1jlZNOk+CT3xMfqqzeSpSMMca0sSWBFoIRRtUQ==
-X-Received: by 2002:a2e:7d18:0:b0:2bc:e1a3:fbaa with SMTP id y24-20020a2e7d18000000b002bce1a3fbaamr3630421ljc.22.1693655137988;
-        Sat, 02 Sep 2023 04:45:37 -0700 (PDT)
+        bh=jDa7Mj6sArPataDgSx4z5NxOtH/XftsbKDNnlo52CRg=;
+        b=Je375ktkw/gsKGu9kKb1q6XyW91ZlkMKXWaJgzDTFU94a6liP6WuQY2vnb+4DtbjMY
+         5L5dgyVu//vtxjP7fYQRYR+StTMqvJoVxyQ2+kLE/I49CWGaGLGXY/ntR1Wt9eHT6nZL
+         3Yh0Cfl3wpL5lClTd+4S0IIlvuYoq/0zp780vQKtl8DjW8hfV5axFDaJ+OXO4HVYCOGg
+         yBoPpBr716g8O73rt+40oQVKX2IHLMjrEPvD+mVZ/nEUSUToQ+3FtiLqQbBlZ3z803Ws
+         0guHMSYRC9FhIxpgRwrc8TYjl+jJ4NVWdAxaofwRArV8E57UavJW60F8QXGadybm+xKz
+         rMUA==
+X-Gm-Message-State: AOJu0Yx+5jJZ6h9zDUvCQO9g9y4JsC7PfxJE6hmMr2ctw1NQUMIOSrZW
+        0G/CihkSvpgSLgRl0KKxxJ2tvg==
+X-Google-Smtp-Source: AGHT+IEYG2aZATJsHIb7Bhd7H3gdibYwXzz6lm5qAFh0+KxyLnYy8P4+diX+3bXR9VunynVsV3RT7w==
+X-Received: by 2002:ac2:4f08:0:b0:4f8:6d9d:abe0 with SMTP id k8-20020ac24f08000000b004f86d9dabe0mr1728550lfr.33.1693655848495;
+        Sat, 02 Sep 2023 04:57:28 -0700 (PDT)
 Received: from [192.168.1.101] (abxi170.neoplus.adsl.tpnet.pl. [83.9.2.170])
-        by smtp.gmail.com with ESMTPSA id v2-20020a2e9602000000b002b9fe77d00dsm1168719ljh.93.2023.09.02.04.45.36
+        by smtp.gmail.com with ESMTPSA id l26-20020ac2555a000000b00500998f63cdsm962839lfk.109.2023.09.02.04.57.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Sep 2023 04:45:37 -0700 (PDT)
-Message-ID: <5f05c76e-e74e-4954-a729-3ed2a1d33605@linaro.org>
-Date:   Sat, 2 Sep 2023 13:45:35 +0200
+        Sat, 02 Sep 2023 04:57:27 -0700 (PDT)
+Message-ID: <2b52c9b2-adf1-4622-9d0d-fe6599523174@linaro.org>
+Date:   Sat, 2 Sep 2023 13:57:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] arm64: dts: qcom: qcm6490: Add device-tree for
- Fairphone 5
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916/39-samsung-a2015: Add flash LED
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-11-5a954519bbad@fairphone.com>
- <72c2fd33-613b-49be-b394-0663f459f0c5@linaro.org>
- <CV7NGPVH4U0W.PN2NOIO19Z7U@otso>
+To:     Henrik Grimler <henrik@grimler.se>
+Cc:     Raymond Hackley <raymondhackley@protonmail.com>, agross@kernel.org,
+        andersson@kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        nikita@trvn.ru, robh+dt@kernel.org, stephan@gerhold.net,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230822140407.3316-1-raymondhackley@protonmail.com>
+ <c016d9ac-da33-4a0b-8684-ab7b4b50ebe3@linaro.org>
+ <20230822150035.3803-1-raymondhackley@protonmail.com>
+ <fb452457-6687-4f68-9498-92a3077c9a44@linaro.org> <ZOz4460Q/JQcMcU1@L14.lan>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,76 +103,62 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CV7NGPVH4U0W.PN2NOIO19Z7U@otso>
+In-Reply-To: <ZOz4460Q/JQcMcU1@L14.lan>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1.09.2023 16:27, Luca Weiss wrote:
-> On Wed Aug 30, 2023 at 12:45 PM CEST, Konrad Dybcio wrote:
->> On 30.08.2023 11:58, Luca Weiss wrote:
->>> Add device tree for the Fairphone 5 smartphone which is based on
->>> the QCM6490 SoC.
+On 28.08.2023 21:43, Henrik Grimler wrote:
+> Hi Konrad,
+> 
+> On Sat, Aug 26, 2023 at 02:09:38PM +0200, Konrad Dybcio wrote:
+>> On 22.08.2023 17:01, Raymond Hackley wrote:
+>>> Hi Konrad,
 >>>
->>> Supported features are, as of now:
->>> * Bluetooth
->>> * Debug UART
->>> * Display via simplefb
->>> * Flash/torch LED
->>> * Flip cover sensor
->>> * Power & volume buttons
->>> * RTC
->>> * SD card
->>> * USB
->>> * Various plumbing like regulators, i2c, spi, etc
+>>>> What about the other subdevices registered with the RT5033 MFD?
 >>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
-[...]
-
->>> +	panel: panel {
->>> +		compatible = "boe,rm692e5";
->> Undocumented compatbile
+>>> Currently the MFD is not able to control the flash LED, due to missing
+>>> driver for it.
+>>> Alternatively we control it with GPIO pins. With driver leds-sgm3140, the
+>>> binding is not under the RT5033 MFD.
+>> Hm.. I have mixed feelings..
+>>
+>> Does the led controlled onboard this chip have some super complex
+>> functionality that is going to be exposed through a specific driver
+>> and that is not exposed through the sgm3140 driver?
 > 
-> Not quite sure how to document this properly. This dummy panel node is
-> used for the simplefb/simpledrm so that user space can get panel
-> dimensions already.
+> The rt5033-led&sgm3140 situation was discussed in msm8916-mainline
+> matrix room before, here is a summary for list.
 > 
-> This approach of a separate panel node was apparently preferred when the
-> functionality was upstreamed but of course as can be seen this panel
-> node is very barebones where many properties are not present which would
-> be needed with the full panel driver (once it's working).
+> Using the full rt5033-led driver (old patchset here [1]) has some
+> benefits, like:
+> * led can have different intensity levels
+> * led can (supposedly) be used in strobe mode
 > 
-> Also for example for the bindings I think width-mm and height-mm won't
-> be needed anymore since that information will be provided by the driver
-> then.
+> Using sgm3140 driver mostly works fine, but there could potentially be
+> situations where led stops working and a reboot to stock android
+> kernel is required to get it working again.  So far that has only been
+> reproduced by first booting a kernel with full rt5033-led driver
+> (based on [1]), and then booting a kernel using sgm3140 driver
+> instead.
 > 
-> Please let me know how/where to document this.
-As discussed offline, the workflow here would be to oneOf: (wink)
+> [1] https://lore.kernel.org/linux-leds/1448446948-13729-1-git-send-email-ingi2.kim@samsung.com/
+2015, whoops..
 
-- wait until there's a proper driver and create a binding based on
-  what you know (because you have a working driver and can test it)
-  is necessary for it to function
+Looks like the reviewers were mostly happy (style comments for the
+most part), so perhaps it'd be worth to bring it back?
 
-- create the binding for that display panel + driver ic combo in
-  advance and pray that whatever you put there will be enough when
-  you take upon yourself to write the driver
-
-I'd suggest dropping these properties (or keeping them downstream or
-something) for now, the display should not be terribly hard to bring
-up properly, let's hope that can be done soon!
-
-> I'm aware, but will work on this later since it's not useful without
-> USB-C role switching and working audio.
-You can still peek at it in like sysfs or so, but up to you.
-
+As for this patch, I'll be happy to take it if you can confirm the
+rt5033-leds driver won't require bindings changes (i.e. the node
+you're adding today would work fine as-is if you removed sgm3140
+and probed the separate driver), at least in the form that it was
+posted in the link above..
 
 Konrad
