@@ -2,81 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2EB87907C9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 14:17:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B4337907CC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 14:23:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352094AbjIBMRV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Sep 2023 08:17:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43166 "EHLO
+        id S1352126AbjIBMXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Sep 2023 08:23:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbjIBMRU (ORCPT
+        with ESMTP id S1351076AbjIBMXC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Sep 2023 08:17:20 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B6FF12D
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Sep 2023 05:17:17 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-500bdef7167so1008846e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Sep 2023 05:17:17 -0700 (PDT)
+        Sat, 2 Sep 2023 08:23:02 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5213BE72
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Sep 2023 05:22:57 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fe27849e6aso4670712e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Sep 2023 05:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693657036; x=1694261836; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8YjCL4MC8RHhoT9yS4acFO7xCziXIBoNIPh3JbO9pMI=;
-        b=DDhAW4IaARQiav1aw9XB9oQzMMUgOmqwznL1aKlToloxCdL3kBg9W3ybpx8elM5QAy
-         F6BkyeXWvWUN6etRs22EIBti4e8pPOXdyH+vEADurBzYC0mocFhiS8BTMS1Z9t/pQzJx
-         erK7WHqgGxIzEkE5WEf97z4/VrQ749ekID3IFyPr5UFnMWDCHffGhFsPErvT7Q8Wn0Hl
-         TtclAckfU1pV5RaRC9i4XZtwnw2dEizwSWYCPXYRKlZnax8Skptb2DpyN9Psw/aWikG4
-         eC3vDM2SyksrG9dwmpBftpw39hKlwLod4aiGomlS/ghiV4LLu641G6n1RF35f9ykyzJH
-         JT5g==
+        d=linaro.org; s=google; t=1693657375; x=1694262175; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=inkHgVlv/XrMvFjg8YzebzCQsHBV+fhNXbfLxuaBdsc=;
+        b=EztvANhUDBwtoS26/ikGWtxMwVFhEsKZRftZPOFBVz+A6E2ZgfsEiuCrVVaMjVieNr
+         eUbr7PlTDAtydKpV1sLNAgaFyTCfsE2bmf9k+a9WXscgTN/i1ize/6QY/2Bdg/re0gxm
+         ZxAoTceJYYAJhViowiVcYbw+jdK8TndSrXQfYFDxNfFF0WmUQoKQzAAUatpgJKGPEN6W
+         L+ZmW7tOVv9m/sJ0cC3Fr3tFP0TRJwdWjU9M+rA22H83RpbLMOSvjM/qMKMRAsjkE+tX
+         p/kCcZFCHFwj/rhSNo/4JMNWzXKpOah4yaBaUi62yj+z05Szo/afXAZAo2QHlQkgK4Ii
+         TYsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693657036; x=1694261836;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8YjCL4MC8RHhoT9yS4acFO7xCziXIBoNIPh3JbO9pMI=;
-        b=kHT4fw32H0j7U78cxqd8wpMMdSmHWcTRR6OfOcP0z6uv0cNM7tQARw1dSOMSgYD6Fw
-         c7y5B9JJtx5BfctJqYe6v2XLWftQKO5jZ/Ri7iJb8LLDwvkZu2g0GfTJ2Cg3zmEHkMjf
-         pumsktGOxai1CwE5fhIlCepZDxUmtRmA0jOZWQgErENy8BKjf/vhHurmOFCIr3dime/u
-         JFJTGfJWqqBMNq4gFp0Cp2Z/4VKXwBFTIZtqJT0baFeTM8Gzs+9Sr/TIs7u8MzBat3Ew
-         Y5JJz7H0y5TW/JnhizppESE1nYjyhiJ9t49GDcaN8kkCIjy9OWPY5zZxtcnanBk27IeS
-         c6mA==
-X-Gm-Message-State: AOJu0Yx2QnhJA4aKw7WBTdFJDLZBGtttIB+9wF6whPo46eBzumG+isTp
-        0Bl0znxA6mI3/PUN/+ifY6ysJHf2db9gpiRdouFZcA==
-X-Google-Smtp-Source: AGHT+IGx6FZYlE0NJqd3FNjJKJHBhb975Mne1npLdrzyohd6egRy8/Yo6eOFAKVhppxUYwJt2keaxg==
-X-Received: by 2002:a05:6512:220f:b0:500:7756:644f with SMTP id h15-20020a056512220f00b005007756644fmr2613051lfu.8.1693657035599;
-        Sat, 02 Sep 2023 05:17:15 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693657375; x=1694262175;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=inkHgVlv/XrMvFjg8YzebzCQsHBV+fhNXbfLxuaBdsc=;
+        b=Eos5sWu0D//sfNDzVWPAhYWB55f/qr1b+SjG6Y3Et7AFgZc2cxZfE4z4JPOzKPTkq9
+         CAfrnUmhE2u3VVKi6LmjFrFV3Avr1CTNPGub5mG9w7HqoOqVMIIuXDwutHgJo5n3n0UN
+         aBKlHrwKUz3WWS/oWoelGRTk2uJhc+iEVBa+A8jLxNmAjxkfbwvKidALgyVk0+kHy4rq
+         PPwtPZT9okd2LzWgPpfs7Rgo0F0B7WUngyLw9ZGn8fAmOh1ISfnZHZs6aiI9UMpZ819x
+         GEN2dFxUeDlSziMaE+TuhOznOBZua88mJT9NWIpkHgwzhNXpIyB3dNq/lEI2DhwPD4gP
+         nQzQ==
+X-Gm-Message-State: AOJu0YzX7Dfg25iC4oxfYL1FjTz39Kp9QLfMSaE6HPMxnbEW5pN9ShE5
+        Nk2rX6cG8d6qBhTLGP61v9S7eA==
+X-Google-Smtp-Source: AGHT+IFstkLJDS/HETwMajNV3deWCdOK9KBKLsTmQVXdkjplL/Yy2wh4gmT+Mnvc6W55XwcgNKkBow==
+X-Received: by 2002:a05:6512:1103:b0:500:bb99:69a6 with SMTP id l3-20020a056512110300b00500bb9969a6mr4499765lfg.39.1693657375475;
+        Sat, 02 Sep 2023 05:22:55 -0700 (PDT)
 Received: from [192.168.1.101] (abxi170.neoplus.adsl.tpnet.pl. [83.9.2.170])
-        by smtp.gmail.com with ESMTPSA id r13-20020ac25a4d000000b004ff1b5c8df3sm978910lfn.211.2023.09.02.05.17.14
+        by smtp.gmail.com with ESMTPSA id a2-20020a056512020200b004ff89a88ef7sm975884lfo.14.2023.09.02.05.22.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Sep 2023 05:17:15 -0700 (PDT)
-Message-ID: <4b38699c-8276-4474-8d0c-b54a69ea8be3@linaro.org>
-Date:   Sat, 2 Sep 2023 14:17:13 +0200
+        Sat, 02 Sep 2023 05:22:55 -0700 (PDT)
+Message-ID: <295f0c31-3612-428c-849b-9469a6136f47@linaro.org>
+Date:   Sat, 2 Sep 2023 14:22:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] venus: pm_helpers: Use dev_pm_genpd_set_hwmode to
- switch GDSC mode
+Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
 Content-Language: en-US
+To:     Ziyang Huang <hzyitc@outlook.com>, agross@kernel.org
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        quic_gokulsri@quicinc.com, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>
-Cc:     linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20230816145741.1472721-1-abel.vesa@linaro.org>
- <20230816145741.1472721-7-abel.vesa@linaro.org>
- <ef031105-3b77-484d-8f47-a6c0233dd9c2@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -112,68 +99,46 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ef031105-3b77-484d-8f47-a6c0233dd9c2@linaro.org>
+In-Reply-To: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.08.2023 19:58, Konrad Dybcio wrote:
-> On 16.08.2023 16:57, Abel Vesa wrote:
->> From: Jagadeesh Kona <quic_jkona@quicinc.com>
->>
->> This change demonstrates the use of dev_pm_genpd_set_hwmode API from
->> video driver to switch the video mvs0 gdsc to SW/HW modes at runtime
->> based on requirement.
->>
->> This change adds a new boolean array member vcodec_pmdomains_hwctrl in
->> venus_resources structure to indicate if GDSC's have HW control support
->> or not. This data is used in vcodec_control_v4() to check if GDSC has
->> support to switch to HW control mode and then call dev_pm_genpd_set_hwmode
->> to switch the GDSC mode.
->>
->> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->> ---
-> [...]
+On 1.09.2023 16:10, Ziyang Huang wrote:
+> In pinctrl, the pinconfigs for uart are named "blspX_uartY".
+>   X is the UART ID. Starts from 1.
+>     1-6 are in BLSP Block 1.
+>     7-12 are in BLSP Block 2.
+>   Y is the index of mux config. Starts from 0.
 > 
->>  static int vcodec_control_v4(struct venus_core *core, u32 coreid, bool enable)
->>  {
->> -	void __iomem *ctrl, *stat;
->> -	u32 val;
->> -	int ret;
->> -
->> -	if (IS_V6(core)) {
->> -		ctrl = core->wrapper_base + WRAPPER_CORE_POWER_CONTROL_V6;
->> -		stat = core->wrapper_base + WRAPPER_CORE_POWER_STATUS_V6;
->> -	} else if (coreid == VIDC_CORE_ID_1) {
->> -		ctrl = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_CONTROL;
->> -		stat = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_STATUS;
->> -	} else {
->> -		ctrl = core->wrapper_base + WRAPPER_VCODEC1_MMCC_POWER_CONTROL;
->> -		stat = core->wrapper_base + WRAPPER_VCODEC1_MMCC_POWER_STATUS;
->> -	}
->> -
->> -	if (enable) {
->> -		writel(0, ctrl);
->> -
->> -		ret = readl_poll_timeout(stat, val, val & BIT(1), 1, 100);
->> -		if (ret)
->> -			return ret;
->> -	} else {
->> -		writel(1, ctrl);
-> This removal cries for better explanation.
+> In dts, the serials are also named "blspX_uartY", but with different logic.
+>   X is the BLSP Block ID. Starts from 1.
+>   Y is the uart id inside block.
+>     In "ipq6018.dtsi" and "ipq8074.dtsi", it starts from 1.
+>     But in "ipq5332.dtsi" and "ipq9574.dtsi", it starts from 0.
 > 
-> Has the venus hw been setting some registers that alter the GDSC's state?
-> Or the hardware's expectations of the GDSC state?
-Clearly can't read the commit message
-
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> +-----------------+-----------------+-------------+-----------------+
+> |     Block ID    | ID inside Block |  dts name   | pinconfig name  |
+> | (Starts from 1) | (Starts from 1) |             |                 |
+> +-----------------+-----------------+-------------+-----------------+
+> |        1        |        1        | blsp1_uart1 |   blsp0_uartY   |
+> |        1        |        2        | blsp1_uart2 |   blsp1_uartY   |
+> |        1        |        6        | blsp1_uart6 |   blsp5_uartY   |
+> |        2        |        1        | blsp2_uart1 |   blsp6_uartY   |
+> |        2        |        6        | blsp2_uart6 |   blsp12_uartY  |
+> +-----------------+-----------------+-------------+-----------------+
+> 
+> In "ipq5018.dts", "blsp1_uart1" (dts name) is the first serial (confimed
+> by the address), So its pinconfig should be "blsp0_uart0" (pinconfig name,
+> use GPIO 20 and 21) or "blsp0_uart1" (pinconfig name, use GPIO 28 and 29).
+Surely only one pair of wires is connected? Why is there an "OR"?
 
 Konrad
