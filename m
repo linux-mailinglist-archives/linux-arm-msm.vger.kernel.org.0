@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA35E790393
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 00:19:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8F407904D9
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Sep 2023 05:21:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240872AbjIAWTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Sep 2023 18:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
+        id S229817AbjIBDVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Sep 2023 23:21:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235923AbjIAWTE (ORCPT
+        with ESMTP id S229764AbjIBDVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Sep 2023 18:19:04 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F103F2D56;
-        Fri,  1 Sep 2023 15:19:01 -0700 (PDT)
+        Fri, 1 Sep 2023 23:21:14 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C52E7E;
+        Fri,  1 Sep 2023 20:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693606741; x=1725142741;
+  t=1693624870; x=1725160870;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:content-transfer-encoding:in-reply-to;
-  bh=RGoNgoP1tkAOm5Qmu/pw23EzpeEN4IrBktGvciLUMlY=;
-  b=IzPNuwIR7WK86LeFvk+/fwGkFJtLPZYDannNxYVQPPZOK2QOMPro7Sdo
-   RHy8llYbhb08NLTWihqOsvDbz+nDYMJ8q/fEQZXPuXPUX5zqeQcZr+XuF
-   lG5palw263Iexjfi8mJviM6j2GCBwulSjKAhCiPwiC0IYOVAKXWZUInXN
-   Un8gO/oEIAnkDOMnsLDprDOkaaHQrWGDsOOmZP11cPM6TyUDANP/EE0lF
-   2FMSvSoBR/Yhoy4cdFxmynzay9ktZXrz8sTCeNvmGPy0l1yiUKNHijYgE
-   IrdYVPeUYgw/V0kAL92weHM/CNBUO8HfqMSeP0kHk/RiQ7A3sgv9IDcL8
+  bh=OhIqMbUbOOWVETjMdSrdXDJq9r+qQHGx1UnX35EU7J4=;
+  b=LlDlBVP0H3a2ZHt7+/aerV9DABpWj1naySGP4ljfprx+vPOma00r7h1D
+   XP4gDiwFdsJHJc7tdcP7DrCXN3ZTM+tnWMbV2Tq9PUb4Ph47JGJ3LyUmw
+   MFoB8MU9+sFVP5wu1G37sqfwZ0cr0CCIkVsZeubSUn44i39fZEwh5HNrC
+   IaesdvQ5409t02/8BTryVtsTgYX8bC2sbv+XKIhXu8Ta9T6ZBebvto6z3
+   iNmV9S+sKGMGFNwSOvIYlwcFO8f2wZm68Hm4c6p+GKtJWV2TZkZTPufaF
+   hcvocWUCKG14KLCmc0C7POKvkGpBTPqvvnL/DUQ4uEwUjtV5M8lHBm70v
    g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="373714329"
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="380133819"
 X-IronPort-AV: E=Sophos;i="6.02,221,1688454000"; 
-   d="scan'208";a="373714329"
+   d="scan'208";a="380133819"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2023 15:19:01 -0700
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2023 20:21:09 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="805598368"
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="805653883"
 X-IronPort-AV: E=Sophos;i="6.02,221,1688454000"; 
-   d="scan'208";a="805598368"
+   d="scan'208";a="805653883"
 Received: from lkp-server01.sh.intel.com (HELO 5d8055a4f6aa) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 01 Sep 2023 15:18:56 -0700
+  by fmsmga008.fm.intel.com with ESMTP; 01 Sep 2023 20:21:04 -0700
 Received: from kbuild by 5d8055a4f6aa with local (Exim 4.96)
         (envelope-from <lkp@intel.com>)
-        id 1qcCTe-0001h7-2E;
-        Fri, 01 Sep 2023 22:18:54 +0000
-Date:   Sat, 2 Sep 2023 06:18:48 +0800
+        id 1qcHC2-0001uf-1y;
+        Sat, 02 Sep 2023 03:21:02 +0000
+Date:   Sat, 2 Sep 2023 11:20:59 +0800
 From:   kernel test robot <lkp@intel.com>
 To:     =?iso-8859-1?Q?Adri=E1n?= Larumbe <adrian.larumbe@collabora.com>,
         maarten.lankhorst@linux.intel.com, mripard@kernel.org,
@@ -57,19 +57,17 @@ Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         healych@amazon.com, kernel@collabora.com,
         freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 6/6] drm/drm-file: Allow size unit selection in
- drm_show_memory_stats
-Message-ID: <202309020634.fwC7KBk6-lkp@intel.com>
-References: <20230824013604.466224-7-adrian.larumbe@collabora.com>
+Subject: Re: [PATCH v2 2/6] drm/panfrost: Add fdinfo support GPU load metrics
+Message-ID: <202309021155.i3NPUDJi-lkp@intel.com>
+References: <20230824013604.466224-3-adrian.larumbe@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230824013604.466224-7-adrian.larumbe@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230824013604.466224-3-adrian.larumbe@collabora.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,51 +86,115 @@ https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
 url:    https://github.com/intel-lab-lkp/linux/commits/Adri-n-Larumbe/drm-panfrost-Add-cycle-count-GPU-register-definitions/20230824-093848
 base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230824013604.466224-7-adrian.larumbe%40collabora.com
-patch subject: [PATCH v2 6/6] drm/drm-file: Allow size unit selection in drm_show_memory_stats
-config: x86_64-randconfig-002-20230902 (https://download.01.org/0day-ci/archive/20230902/202309020634.fwC7KBk6-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230902/202309020634.fwC7KBk6-lkp@intel.com/reproduce)
+patch link:    https://lore.kernel.org/r/20230824013604.466224-3-adrian.larumbe%40collabora.com
+patch subject: [PATCH v2 2/6] drm/panfrost: Add fdinfo support GPU load metrics
+config: s390-randconfig-001-20230902 (https://download.01.org/0day-ci/archive/20230902/202309021155.i3NPUDJi-lkp@intel.com/config)
+compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230902/202309021155.i3NPUDJi-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309020634.fwC7KBk6-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309021155.i3NPUDJi-lkp@intel.com/
 
 All warnings (new ones prefixed by >>):
 
->> drivers/gpu/drm/drm_file.c:905: warning: Function parameter or member 'unit' not described in 'drm_print_memory_stats'
+   In file included from drivers/gpu/drm/panfrost/panfrost_drv.c:17:
+   In file included from drivers/gpu/drm/panfrost/panfrost_device.h:9:
+   In file included from include/linux/io-pgtable.h:6:
+   In file included from include/linux/iommu.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __raw_readb(PCI_IOBASE + addr);
+                             ~~~~~~~~~~ ^
+   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:37:59: note: expanded from macro '__le16_to_cpu'
+   #define __le16_to_cpu(x) __swab16((__force __u16)(__le16)(x))
+                                                             ^
+   include/uapi/linux/swab.h:102:54: note: expanded from macro '__swab16'
+   #define __swab16(x) (__u16)__builtin_bswap16((__u16)(x))
+                                                        ^
+   In file included from drivers/gpu/drm/panfrost/panfrost_drv.c:17:
+   In file included from drivers/gpu/drm/panfrost/panfrost_device.h:9:
+   In file included from include/linux/io-pgtable.h:6:
+   In file included from include/linux/iommu.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:35:59: note: expanded from macro '__le32_to_cpu'
+   #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
+                                                             ^
+   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
+   #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
+                                                        ^
+   In file included from drivers/gpu/drm/panfrost/panfrost_drv.c:17:
+   In file included from drivers/gpu/drm/panfrost/panfrost_device.h:9:
+   In file included from include/linux/io-pgtable.h:6:
+   In file included from include/linux/iommu.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writeb(value, PCI_IOBASE + addr);
+                               ~~~~~~~~~~ ^
+   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:692:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsb(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:700:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsw(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:708:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsl(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:717:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesb(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:726:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesw(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:735:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesl(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+>> drivers/gpu/drm/panfrost/panfrost_drv.c:552:17: warning: format specifies type 'unsigned int' but the argument has type 'unsigned long' [-Wformat]
+                              ei->name, pfdev->pfdevfreq.current_frequency);
+                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   13 warnings generated.
 
 
-vim +905 drivers/gpu/drm/drm_file.c
+vim +552 drivers/gpu/drm/panfrost/panfrost_drv.c
 
-686b21b5f6ca2f Rob Clark      2023-05-24  891  
-686b21b5f6ca2f Rob Clark      2023-05-24  892  /**
-686b21b5f6ca2f Rob Clark      2023-05-24  893   * drm_print_memory_stats - A helper to print memory stats
-686b21b5f6ca2f Rob Clark      2023-05-24  894   * @p: The printer to print output to
-686b21b5f6ca2f Rob Clark      2023-05-24  895   * @stats: The collected memory stats
-686b21b5f6ca2f Rob Clark      2023-05-24  896   * @supported_status: Bitmask of optional stats which are available
-686b21b5f6ca2f Rob Clark      2023-05-24  897   * @region: The memory region
-686b21b5f6ca2f Rob Clark      2023-05-24  898   *
-686b21b5f6ca2f Rob Clark      2023-05-24  899   */
-686b21b5f6ca2f Rob Clark      2023-05-24  900  void drm_print_memory_stats(struct drm_printer *p,
-686b21b5f6ca2f Rob Clark      2023-05-24  901  			    const struct drm_memory_stats *stats,
-686b21b5f6ca2f Rob Clark      2023-05-24  902  			    enum drm_gem_object_status supported_status,
-cccad8cb432637 Adrián Larumbe 2023-08-24  903  			    const char *region,
-cccad8cb432637 Adrián Larumbe 2023-08-24  904  			    unsigned int unit)
-686b21b5f6ca2f Rob Clark      2023-05-24 @905  {
-cccad8cb432637 Adrián Larumbe 2023-08-24  906  	print_size(p, "total", region, stats->private + stats->shared, unit);
-cccad8cb432637 Adrián Larumbe 2023-08-24  907  	print_size(p, "shared", region, stats->shared, unit);
-cccad8cb432637 Adrián Larumbe 2023-08-24  908  	print_size(p, "active", region, stats->active, unit);
-686b21b5f6ca2f Rob Clark      2023-05-24  909  
-686b21b5f6ca2f Rob Clark      2023-05-24  910  	if (supported_status & DRM_GEM_OBJECT_RESIDENT)
-cccad8cb432637 Adrián Larumbe 2023-08-24  911  		print_size(p, "resident", region, stats->resident, unit);
-686b21b5f6ca2f Rob Clark      2023-05-24  912  
-686b21b5f6ca2f Rob Clark      2023-05-24  913  	if (supported_status & DRM_GEM_OBJECT_PURGEABLE)
-cccad8cb432637 Adrián Larumbe 2023-08-24  914  		print_size(p, "purgeable", region, stats->purgeable, unit);
-686b21b5f6ca2f Rob Clark      2023-05-24  915  }
-686b21b5f6ca2f Rob Clark      2023-05-24  916  EXPORT_SYMBOL(drm_print_memory_stats);
-686b21b5f6ca2f Rob Clark      2023-05-24  917  
+   534	
+   535	
+   536	static void panfrost_gpu_show_fdinfo(struct panfrost_device *pfdev,
+   537					     struct panfrost_file_priv *panfrost_priv,
+   538					     struct drm_printer *p)
+   539	{
+   540		int i;
+   541	
+   542		for (i = 0; i < NUM_JOB_SLOTS - 1; i++) {
+   543			struct engine_info *ei = &panfrost_priv->fdinfo.engines[i];
+   544	
+   545			drm_printf(p, "drm-engine-%s:\t%llu ns\n",
+   546				   ei->name, ei->elapsed_ns);
+   547			drm_printf(p, "drm-cycles-%s:\t%llu\n",
+   548				   ei->name, ei->cycles);
+   549			drm_printf(p, "drm-maxfreq-%s:\t%u Hz\n",
+   550				   ei->name, panfrost_priv->fdinfo.maxfreq);
+   551			drm_printf(p, "drm-curfreq-%s:\t%u Hz\n",
+ > 552				   ei->name, pfdev->pfdevfreq.current_frequency);
+   553		}
+   554	}
+   555	
 
 -- 
 0-DAY CI Kernel Test Service
