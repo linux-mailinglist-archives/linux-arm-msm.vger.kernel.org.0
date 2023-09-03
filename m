@@ -2,208 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B917E790BFE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Sep 2023 15:02:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 834DE790C03
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Sep 2023 15:11:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236809AbjICNCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Sep 2023 09:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38114 "EHLO
+        id S231398AbjICNLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Sep 2023 09:11:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbjICNCu (ORCPT
+        with ESMTP id S229731AbjICNLe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Sep 2023 09:02:50 -0400
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01olkn2108.outbound.protection.outlook.com [40.92.52.108])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777DD11A;
-        Sun,  3 Sep 2023 06:02:46 -0700 (PDT)
+        Sun, 3 Sep 2023 09:11:34 -0400
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01olkn2105.outbound.protection.outlook.com [40.92.52.105])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D7C11D;
+        Sun,  3 Sep 2023 06:11:31 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=N8R1DKlxyuDgpEX3sMdm5xT3PEwtRuUb6NdTR8iV8ss9uTMcxiwvfsDcBYkoKtAks3ecaI/cIHG3KiKkN/pxEM7laZejIL4s4bY15rG0T21Fi1rilP6JOqaOtw+htQJ/wZzDkG5iOXhW2Ge5DncfluyzRzIGhFncZLTFnUmuqcs2ADQYAGh36BxhMAXksnrXbCTG9UcVheldjSiITkmgoR1rJFLIhgHGyjRlLv4NrIceio83rsuxY5F82iqNOJXL4EhUhdrCvL4d1zM4wi6N/GlkP1KhbotzhGPCd7gJycWZhZ5iL/V/6gSs22PW/dlPHiMywbTwYfU3rrRQHjoWUw==
+ b=NsgvL0FWiGv2jU0XVtaB21asLbPEXndeQUIauwrAlhFDySOGJAsN3CvUWcxTei44G7yeFTpkIn0dIXtKlVguA4DboqTH/FgPV++mF90Bj4hGh+ZW27BHMUMrK47sgRHsXZVri3JakUOH91Rnz2CnnUFk8E/fLvobAGSziamKM6UrHjMbfoTR+9M2gOxB+RVG2XzKHg2BoLODW/FcLxyQsOYvvkdRBLbD8s9olNNPVRI1QSreFUcDcX5YKG0DUWj7LxH6hEqSj2893zf3jCdclwNvGUztD5qtKKIQ7YNZaQ+GjefIYyUSwvlQ8B1INouZ9jz/T4Mj+5+69SFQ7PRyCA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TXCAujRKuEMg7A0gHtXxZtldt6Q3tGJ2G/QvgdT9XWk=;
- b=lM7bcthQYSILPTGU085D+m7yKX0V/3FxQ8N9sFfkVx1H69m6Mr0PHlPCRLM+2JqQLwPLx6K1PYkXan0CV+fJn1Xvkng2cHxkuUSrKkyE3c6v0QeQziBT2b0Ka25h4S/tXv8N2mGqKXEZ3x32+l3vemQYe6nksM9pHnoqicHSqu7ata2Jtwa9aFCmKvJ2+ToC4JJaDGqD6drHpo54zouT9hUWXCw10UMWBZ18wESgnHmi2UuuVn5HXd1rnkrnGwYAWvlc2Q5Dz/M+1mTaFPALOoUiyTz5bbxQacq1Aocx+zG0hq1PCgvH3F9JoXUngl30MrWmScwRt8ANmJ/Al4yjfA==
+ bh=B7DsD/nBNP+K3X/WFudyYr9ykpCh69AdlRv8hl/5sec=;
+ b=T83j9bZR83c8EWjh+ozAfkASrB2Y53f/JmJ2i/K3fMPl7BaJ9wSsnx55MLKWReOfW7MGE63GjWXowy7EXG3MyxXY9U2ULMnWWejRr+fvnNMuWOnfKwzFHPb1VUrPSLBABy7hic1TLqVxNKrUQZ5dqBlTZfgtwIHP9jo0gxPYiSdV1l2rywKlhE9HrJCd+Q5IHJhIKMDVRpFGnOMxtNitZjpZFLD+o44ZaYXaQ4DojMxIhiTc/wJI3c9nH9RDPDpfN+aql7EBqRuqzf93Ig9ReiPZk+vmj8sJG64E1dL7KdyMSq8DM5w998p74VfxHOR577fIKM74QqYhXcoK9TyGAw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TXCAujRKuEMg7A0gHtXxZtldt6Q3tGJ2G/QvgdT9XWk=;
- b=nFeH6HKJgA/ik451WSdlT04BTDSWR7pKXuAH3nHZIBV6sPMxfrWWBIodNH6icQAgwooyNp1meSalap5gNSg5rcGh1GbRgo0PWBD43XoVwuwKR4iE/iLlQdJj/N8mcsF7YMQBJwPQxP7SR4R2NbtdL0XjhQgH3JPLp5OwiWL2D95hNsLa27l6Ak4kOjgN/nHx8luBBTC6OM8pWQeHIsrIwld558UR7LOhqiTNHwjyhAwVwfMC7l0CUV7sT+yuJV4O0eiiBX7m+onVIZGYhxYh3atx1a+tL2G6Jex2Zi13tjxBrRMMk2nfrVOF6sJMty02Oo5ScNB4ew6tTIEQBfPwPQ==
+ bh=B7DsD/nBNP+K3X/WFudyYr9ykpCh69AdlRv8hl/5sec=;
+ b=YdIdoQH8S5BGHgTzxi1qfQqvjjRE1PgAT4jVI8vOrGLanW4ixyQRdx3s1acwGtjWnZe5UBg3lgtVdqzpD+SaXjYq/MBovzZWEBMrP6FLjN4uUJ+iimLfSDnwUk8oYdLSAkQxfDHAzAtkbqTPkq7awbhGooXs2AJbP9iPlnNkF7osRV2tUxiMm4CkqUFXgbEoG9ED1Wler2x+bd3UgGaScO5lh92srDQKmBuE0NnCZfq/u0aCshZtH8Es/PTew6pD4IKwGOb8/ATP8ZGZKrZUBb+uTN0c+9o2PFrZfn8hD/c1kaCnrl5ZgigSnt8ayqnDSldpK5FUcmcI9e/ItDSU4w==
 Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9) by TYZPR01MB4941.apcprd01.prod.exchangelabs.com
- (2603:1096:400:282::8) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:1096:400:363::9) by SG2PR01MB4292.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:1cf::8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.30; Sun, 3 Sep
- 2023 13:02:41 +0000
+ 2023 13:11:25 +0000
 Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
  ([fe80::a40d:d453:3c29:577c]) by TYZPR01MB5556.apcprd01.prod.exchangelabs.com
  ([fe80::a40d:d453:3c29:577c%4]) with mapi id 15.20.6745.030; Sun, 3 Sep 2023
- 13:02:41 +0000
-Message-ID: <TYZPR01MB555673C1E12A27DA8109DBEAC9EAA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-Date:   Sun, 3 Sep 2023 21:02:33 +0800
+ 13:11:25 +0000
+Message-ID: <TYZPR01MB5556EB1FEA752CE30FC6F64DC9EAA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+Date:   Sun, 3 Sep 2023 21:11:16 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.0
 Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, quic_gokulsri@quicinc.com,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        quic_gokulsri@quicinc.com, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
+ <295f0c31-3612-428c-849b-9469a6136f47@linaro.org>
 From:   Ziyang Huang <hzyitc@outlook.com>
-In-Reply-To: <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
+In-Reply-To: <295f0c31-3612-428c-849b-9469a6136f47@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TMN:  [BMVubM4hnjMhegShwFiPqGeAfylNvh6d]
-X-ClientProxiedBy: SI2PR01CA0039.apcprd01.prod.exchangelabs.com
- (2603:1096:4:193::16) To TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+X-TMN:  [z1ff1/bhe1hl3Z0pFthfETBi4I96JpMy]
+X-ClientProxiedBy: TYWPR01CA0007.jpnprd01.prod.outlook.com
+ (2603:1096:400:a9::12) To TYZPR01MB5556.apcprd01.prod.exchangelabs.com
  (2603:1096:400:363::9)
-X-Microsoft-Original-Message-ID: <ce970610-417d-7073-2d71-1bedd0195009@outlook.com>
+X-Microsoft-Original-Message-ID: <b4248b65-24f1-29d8-6077-79c8c46ac6c7@outlook.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR01MB5556:EE_|TYZPR01MB4941:EE_
-X-MS-Office365-Filtering-Correlation-Id: 484e7e70-8bf0-4088-a72c-08dbac7e0eb3
+X-MS-TrafficTypeDiagnostic: TYZPR01MB5556:EE_|SG2PR01MB4292:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2f6a9e77-191d-4053-bf62-08dbac7f46db
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 6XZh4xGTJ9lM84jKcIg4lWljBKoCNiMk93w75Vv7/JZjB3nmuTcIYxrFkquoDYl6wi6lzPBA/zbMSTDfPFpOq6c36UA3KIrfa5NBBP2mTRmWlMHi8ve50dXIC308zv23iwMprQDdTZSKIrT942ziRt8jn1pTVip6FR+qBSR2/rmPLoLftwQLFWKPkYlRrsRM5OzcIdHW2YD9A4+kI1TvJLYxtKzBYVRTpkbIX1Ahu1YPGEo2FAsbDp34fHlAHT03hqbPyWq/nM0UQRcrhv0yVY8lea3THkqMMcPrMW2D2AkdOWSzbPJypKxTF0QZhecyvDfF8JGMCpzfaRJoY5Whs/xTDUv5iS4NZ/2kUIzzlJRjseL/X6FkSsEjn4+tYt61/1AinF0U0712iyXg/nv6YsmNbSstbpqhhSlKNm0Kd4DXR9V0jLaqkSWSDzxLwoEU4Ev7xi17/33K6fcYIW9r06IB3suhvidbZSWgVairiDxWmfL1rAnwUKXvPkdZACGpPKwQHjmHG7tvbgjuQRcoL+haB88RDHnpnt7TSKxuFJM=
+X-Microsoft-Antispam-Message-Info: 9Sk9cMrw9757DZzpIdnEsOPacYzoktaDS6EBHV18W+Nb9wYeda3SN3/MWI0nXYqP3k6vKCkG1E1cFY/ChfhONZ2LKDboSBP/NhwRDqmLgg3t5Sp/sFu9BNRq3quMBwbFBC2bYUv1NyAprTVfuXkIRs7sWpaQmrwZHo4yfAE/bvTADn+ihLZE8eJ6W45tfaR/RgRLi3JjshugrrTs0Xk6WT+CGbBc2Y3/BDEY6LeTJLhPwq4xHGaXiOGvKCo22b9StOjAWY/u9fSAo+Vx85w7xRVJD3S9B8uTPgkaTMURZDuvVeyRrsjYoM9r3sJcAqyXKCCJPFMitI3G5BRFEC02BWf5812Bnri0R9yZtkUmEKoDBxpuN9SoNjAI+96yfKKEqUfCQa3Jh2pGdxCrDYv2mGqIk3XaDI+g6P/1q2WTbGEQOAW3wXPjtjWs+AjDMRmqdbrCPQqx8ARSKiyNhEVWUe9/HMAS9Jx0FmHwmdzkZBNfsIYGldRuqfAMRmDDFM3O+T04Gt1Zv531BEBKwsFQLiYlRgOMntnynWCU4Zgxj+EvbvrnvdhkyEnrI0UtOEJX
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VEg3cnk4bDFDM0x3UGdNaVdseURxczdhQ0p1ZENMRXBNOFRnRDBiVDZaWExO?=
- =?utf-8?B?SFFHckV4V0NQSFZ4LzhjMUllbWR3Z2hoYXpSSUFLbUZFMysrOW5ZYjN6TWt0?=
- =?utf-8?B?WTFEcUZOS01RNmJtRTA2NGtYTmk4TDVOQlFmcmYvL0pXWnExY0NGQXdqaFBI?=
- =?utf-8?B?VjAzTSs1NkVzVXBiRGtOZnRQTHo2UmhEN2hmajZwbVByRk1wZ29qMzZZSzgy?=
- =?utf-8?B?TDZpaURLcDBrdmdSS0hBTm9adUFvQ014L1d0dTNrNGpUd3V4bGE5VisxWTF2?=
- =?utf-8?B?MkhsVDZFNmgxNkl0djR0b2ZBOElqTjVndDhqcUZTTi9NY3hyQ0d2MWM5OWpU?=
- =?utf-8?B?Y0NtRU9RYlBDMFdLRE9GZnJzS1dOZ3M0ZFEzOXBnRHovdG80d0JRSTFySjVF?=
- =?utf-8?B?Rk9qZVBTc2N6c0pIdTRnNXd5TVFCSXF0eGJDZ0dVRjFRZ3gvU0VtdnJQVkY2?=
- =?utf-8?B?aTJ0YUhNbDZlVTZ2dUM3ajhOdTVTRVFUTFNOSFVkS08xSDA2cldyWnpENFpH?=
- =?utf-8?B?dFltMVJEU2szbzBONi80eVZxUndjUjlCOVpGNytwblVtYnFhUERhMCtBay85?=
- =?utf-8?B?R1E0TGk0OEZpS2puMUdzTlJwVnJWV2ZaM3dTTUNaSHNWck5kY1ArQmp6MUJ3?=
- =?utf-8?B?amhQeTVKNHlLYlM4Mi9UNVo4MncyTSttWHFKbEhaNkJqWE95NkNRSWFMSTZS?=
- =?utf-8?B?ODdZNkJzRjZFZWRtSnphdUZvb2dJUnhCb09wemJYQ1JGcmwyL05oQUNlUmJK?=
- =?utf-8?B?VXMzZ2ZzMFZKM2I1VjFtcjY2ajN2SjRrNjRVQW9KMUJNMEVMZGh0NFQ3L1ZJ?=
- =?utf-8?B?VnhtSklTRkRZRWhuQ0wxZms1cGk0a1dlKzRqcHY5VUZhQ09lN0hnM3N2SkhG?=
- =?utf-8?B?N3RBOFlQbkpMRC9FSkF1NHhCZXJKbFhiK3doYWV4dnI4R2hEeE1RRlhiUDJI?=
- =?utf-8?B?RWpMUjR6U2pVVE91TnNLSDJXSHNkbE5YUXNDa2NWcVlmWm94V3RFclY5MmpZ?=
- =?utf-8?B?YUREL3Fac2V6cStreTZnV21jc2FYMkx2dWttTGdTbWxCL29sdGFwa2hraW15?=
- =?utf-8?B?RSsrV2ltZFlCOExXU2hEN2hFY0hPTldPcGJ3OCtVYXo0TUlDZlp4VFJrRUtB?=
- =?utf-8?B?QVgxSmVVdERlMzZPSU1zSkFHcjlvZyszL2pEZ0pIWTJHb3F5emlGNWh0UGg3?=
- =?utf-8?B?UmdqL2hrWFlwUWpGamRUcGtveDBlMitpZXJKa2NtS01ieFRJeThqdVZFNlBC?=
- =?utf-8?B?eUM0ZDRwaTB0UTJxU3drYXZYck5XU1NUUW14Q0htVGtmQkE4NlFpd1psc3U3?=
- =?utf-8?B?WWY5OUxkSEZjWUxTNm5jRFdWWG9rVWpFWFVQR3l2T3RDSjkvdi9pMUJDcUJO?=
- =?utf-8?B?OVJ3UW11SThYWkdKNnZDNkFyMzV2QWdvakJvTlhycWQ3QnI1VEllZTR0cmFW?=
- =?utf-8?B?M3I1dkVwWUY4TXNlWU1MUEdNWWdFdUJ4b2ZTOU14dU94MkRyYm4rb3ZXNUJz?=
- =?utf-8?B?eXVjMTBtemdoNzlQMUhnVEVDNDRPOXlUMU5QWmVKL2xsd1MyLzBaYTYyZTk1?=
- =?utf-8?B?MngvQ0MzYXB5NUVNUE9wajR4MzJLRzhEeXBXdDJCLzZjdkdpWXkxbVR1d1Bv?=
- =?utf-8?B?M3JmczBKYnB2V2kyV3BLUStqdG9zSXc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c0tnWGFVMk5wTUFyUkxMMU1tOU5zczQ0Zjl1dllMU3ZXcEpwQnF4NjlVWGEv?=
+ =?utf-8?B?MjdrOFpjbnZTcC9QdFdjdjFaTnFON2ZSMkJIV3p0azMyRG5LTmp0aW1SK3pm?=
+ =?utf-8?B?cVRmUDhyaG9FaEVBTG9uakNsTHo1MHFMVmFlM0t2dWJOY2xTSzN6MmlRNnJl?=
+ =?utf-8?B?UkRDc0dLOGN1SGtTbnJTNnhOc0ZnNDFxV3dhOWord0dZQ2hQQmJQZmhFTFVM?=
+ =?utf-8?B?QWltc0c0RmxkZzFOODdGMmtmSTNhWnpXVkVyM0c4NkRZVDNVQUFRTFJBbDJx?=
+ =?utf-8?B?MjZPeGp4WVBkQkFaUW1BZXM2MmRsRkZnRlcxVnV3UElmbldMRC9hM0E5N3Jv?=
+ =?utf-8?B?a05rQTRTZkR1cWx1aStBQmNlUFZ2V2dsR0trMmNVV2hkM3c2bEVZS29OOE53?=
+ =?utf-8?B?dTl3YTZxTFZva0VtOXRIbTcvMUFBakQwM2RXTnRZem0rakowc3ZBby94Ni82?=
+ =?utf-8?B?OEtPL1JIOS9PUWQ1bU1QVXYzWWF3a1N1T1RZUzk1ckpvbnFGSnF5U3NWQTNO?=
+ =?utf-8?B?dFhXM2x1RTc5bXFqbmgvRWdoS1hEN1MxcmZPd3NpckRRMHBZZy9RNi8yYUVh?=
+ =?utf-8?B?TWdwdFlnZUtEMTZHRUE4YWFPMys4dnNuZzVNc2U5SDMvMDZ0am4wVHA4Ukh1?=
+ =?utf-8?B?VEY2aEJMMDJhcDNOR3ZWV3c1aGcyTXozZGZtWEkrd3h6T3N2a3BzOVJPODVU?=
+ =?utf-8?B?SS9aU0R5V0EwYUhEWTZEWjVUQ3Rvdk1BUHZrVGtNcXdIbTFyTmFJTHZES25G?=
+ =?utf-8?B?UFhwamdoOUdaY0d2b2N5SXR2ZGEwWnlWeHZjQmwrbnZqN0FuUUxBUzhBblZ5?=
+ =?utf-8?B?eEJuYnRIZGI1bWZ4VnIwWXZ4QWpVWVNRQUx1c2lCSUtGc0VWUGEwdGFlZHZY?=
+ =?utf-8?B?UGhmK3lLSVQ0WUcveGdmanJ0UEc2T1hqa1JnQXlGb3RJZmg4TGVKVThlb0VQ?=
+ =?utf-8?B?cVVFZlpuZ0UwT3BvYllXa1hQZmQ5d3dERG5jSDFDa0VTV2hzTXhOK3NNSlVn?=
+ =?utf-8?B?TTVMTHl5cFM2NHh5b3ZDL1hvOVZ1ZDRONFM1SVJKRmUySnowdVRtZEFabFBa?=
+ =?utf-8?B?cHRBMStPOXR6YkFRQjg5N1BkK214M3NQTGxRL3k0MEtFQ1pBdnYzOWVyck5m?=
+ =?utf-8?B?MUcwdWppVDQ3VUI2dVdKR0dCMEsrM0RNY3FmRWFFUEl4MWozRlYrVVUyL2RE?=
+ =?utf-8?B?TGMzSGpKOEwrcms4YndsZG03MFpmb0dNRXdRSkhsckViVUd6VE9KMUpMU1hy?=
+ =?utf-8?B?TWJWYW45cC9BMENsKzJsM2FhV0I4aW9RdDNEQy9ZWm5zNnZxOGkwb1JsOXd3?=
+ =?utf-8?B?bFhBZnB5aXp0aTN2cWVNb3dheDFuL2tJdEJxbnIraDJxY2IrODgrRDE0SGI3?=
+ =?utf-8?B?VDNhVUZjNW5NdVNUNnJFMDI0SU1DU3VSa1FsbDhGb2lGdVNOY3d4czZVQmdn?=
+ =?utf-8?B?UFN5Y2NScUM0azRVRml3bmxjUlRkR2pCWVVQT3NrdHhPdFF5N2NpNlFrV3JL?=
+ =?utf-8?B?NHphUGxwL0FiUS9SeWhNQ2RQL1RXenZ4RjViZlpGcWkzbk5pbUYxSStTN3pZ?=
+ =?utf-8?B?TVJNWFhKTTllSHc0YmJwYVNiWllrZUhoWldBVTVqZmR3dTFnK0xOcllWUmZZ?=
+ =?utf-8?B?OTR4NnI0b01CRm1YNUtCdHpsMWlJSGc9PQ==?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 484e7e70-8bf0-4088-a72c-08dbac7e0eb3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2f6a9e77-191d-4053-bf62-08dbac7f46db
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR01MB5556.apcprd01.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2023 13:02:41.7726
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2023 13:11:25.5141
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR01MB4941
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR01MB4292
 X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_MUA_MOZILLA,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-在 2023/9/1 23:04, Bryan O'Donoghue 写道:
-> <...>
+在 2023/9/2 20:22, Konrad Dybcio 写道:
+> On 1.09.2023 16:10, Ziyang Huang wrote:
+>> In pinctrl, the pinconfigs for uart are named "blspX_uartY".
+>>    X is the UART ID. Starts from 1.
+>>      1-6 are in BLSP Block 1.
+>>      7-12 are in BLSP Block 2.
+>>    Y is the index of mux config. Starts from 0.
+>>
+>> In dts, the serials are also named "blspX_uartY", but with different logic.
+>>    X is the BLSP Block ID. Starts from 1.
+>>    Y is the uart id inside block.
+>>      In "ipq6018.dtsi" and "ipq8074.dtsi", it starts from 1.
+>>      But in "ipq5332.dtsi" and "ipq9574.dtsi", it starts from 0.
+>>
+>> +-----------------+-----------------+-------------+-----------------+
+>> |     Block ID    | ID inside Block |  dts name   | pinconfig name  |
+>> | (Starts from 1) | (Starts from 1) |             |                 |
+>> +-----------------+-----------------+-------------+-----------------+
+>> |        1        |        1        | blsp1_uart1 |   blsp0_uartY   |
+>> |        1        |        2        | blsp1_uart2 |   blsp1_uartY   |
+>> |        1        |        6        | blsp1_uart6 |   blsp5_uartY   |
+>> |        2        |        1        | blsp2_uart1 |   blsp6_uartY   |
+>> |        2        |        6        | blsp2_uart6 |   blsp12_uartY  |
+>> +-----------------+-----------------+-------------+-----------------+
+>>
+>> In "ipq5018.dts", "blsp1_uart1" (dts name) is the first serial (confimed
+>> by the address), So its pinconfig should be "blsp0_uart0" (pinconfig name,
+>> use GPIO 20 and 21) or "blsp0_uart1" (pinconfig name, use GPIO 28 and 29).
+> Surely only one pair of wires is connected? Why is there an "OR"?
 > 
-> The assignment of pins 20 and 21 to blsp1_uart1 is not correct.
-> 
-> The blspX_uartY in pinctrl should match what is in the dtsi so assigning 
-> pins_a above to blsp1_uart1 is not right. The dts name and pinctrl name 
-> should be the same.
-> 
-> Your console is on blsp0_uart0.
-> 
-> https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/blob/5343739b4070bcec2fecd72f758c16adc31a3083/arch/arm/dts/ipq5018-mp03.3.dts#L33
-> 
-> So roughly speaking
-> 
-> arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-> 
-> aliases {
->      serial0 = &blsp0_uart0;
-> };
-> 
-> chosen {
->      stdout-path = "serial0:115200n8";
-> };
-> 
-> &blsp0_uart0 {
->          pinctrl-0 = <&uart0_pins>;
->          pinctrl-names = "default";
->          status = "okay";
-> };
-> 
-> 
-> arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> 
-> blsp0_uart0: serial@78af000
-> 
-> either that or  blsp0_uart1 for pins28 and pins29 - you seem to indicate 
-> pins_1 => blsp0_uart0.
-> 
-> The two roots of the problem are
-> 
-> 1. Mislabeling of the uart block in the dtsi
-> 2. Invalid miscongiruation of pins for that misnamed block
-> 
-> The fix should be
-> 
-> 1. Fix the labeling of uart in the dtsi
-> 2. Decide on which pins gpio20, gpio21 ? are the right ones to configure
-> 
-> I thought you said in a previous email if you changed pins gpio28 and 
-> gpio29 that the UART would fail if so that implies blsp0_uart1.
-> 
-> Either way the pinctrl and dts should agree.
-> 
-> ---
-> bod
-> 
+> Konrad
 
-No, please read my commit message carefully.
+Because it is configurable. Please read my previous email.
 
-The Y of pinctrl is the index of pinmux config. So it can't be used in 
-the serial node definition.
+And these two groups can be connected at same time. This is what u-boot 
+does. It just like the parallel circuit. So there can be "or/and". lol...
 
-Please note that the physical port of first serial is configurable. It 
-can use gpio20, gpio21 or/and gpio28,29. All of these pins are for the 
-first serial.
-
-Let's take the second serial as an example. It has 3 configurable 
-physical port groups - "blsp1_uart0" (pinconfig name, use GPIO 
-10,11,12,13), "blsp1_uart1" (gpio 31,32,33,34), "blsp1_uart2" (gpio 
-23,24,25,26).
-
-But the dts name of the second serial definition is "blsp1_uart2". 
-Because it the second serial of the first BLSP block.
-
-Same logic. The dts name of the first serial definition is 
-"blsp1_uart1". Because it the first serial of the first BLSP block.
-
-I think I need to introduce the architecture of these SoC. It has two 
-BLSP block. Each BLSP block has several uart port.
-
-So the dts name of serial contains the BLSP index and the serial index 
-inside BLSP. But pinconf name doesn't care about it. So it use global 
-index. And due to the physical ports are configurable, it need pinmux index.
-
-The equation will be like this:
-
-dts name of serial definition: "blspX_uartY"
-pinconf name: "blspU_uartV"
-U = (uart_number_inside_each_blsp * (X - 1)) + (Y - 1)
