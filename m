@@ -2,71 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EE8A791AFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 17:57:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58E15791AFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 17:58:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233748AbjIDP5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 11:57:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42250 "EHLO
+        id S237437AbjIDP6k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 11:58:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237437AbjIDP5m (ORCPT
+        with ESMTP id S233694AbjIDP6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 11:57:42 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC828CC8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 08:57:28 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2bcb89b476bso24354511fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 08:57:28 -0700 (PDT)
+        Mon, 4 Sep 2023 11:58:40 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8753198E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 08:58:10 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so24267701fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 08:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693843047; x=1694447847; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+NIOd76QGPtI0Gh0yrE1hZgLNhqddMf7XtXZytpmEo8=;
-        b=wvnnHTmSCu4f0eUXl0PjUo/8Nqgb8Ijx69kR183D8T0HNAWXMEE6klKpFLbB3hPHA+
-         fUPWKsv1sjrE9wPu2JAPZOnNn/eq/FaCrFu6dzVuAnIRQMdWtSienA2dEenIpp5nfY4b
-         /pmYfmDCDND2t6sf+tobsyJ8neb/xizUX0T6aLoJlE7e2DhdjuaA0AhO+NEYfYbSb0mH
-         W6mCub4Ffo8P/9CX4EhhEq/HU8Y/nneb/oIf8CIWwD5A2H90QmsZJZWQOkOnB9BHTCe/
-         iPHRQ6rxJF7J7cOkRoHEhMS7Vzv5LrA7r6dUeiyhx/gPVTkeQb/febjpfvmc0V1Oh65Q
-         jjlA==
+        d=linaro.org; s=google; t=1693843087; x=1694447887; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZUHwKLnbFXm7KLRQcxSJtkjW8XETj6X7RNn1FYYUf0Q=;
+        b=JtV3S2MbAePyqIXhTSWzsBL5GG+Y/kv7+sWkj7+R25NggqXL09VIa7/ABeNx+AT8IN
+         W2v5UXEMhiHDcMKpajOk1l90n9Ssvd4bNzec2BKL7dgi95zh78ZxYNRTmYo89xg2sl4K
+         r/znH3IeDcmXGBHhuC/wQX9wCcli1+9ccpFhPd3Ss+DXekqQx9LBUZyAFZi8/Tb9HjT5
+         AWzRoEZH4rn/s3VnXi/OLIN+mxF6weiQQaM+/H73X3QSYqwpdBpKhtPD+ZsVM3vpiXCz
+         a03WzbOutje4o8Aqyz22fghjJkCp4wYvUbba3fHdpXeEcnr/JRemRjVBtQXiEyy9EUau
+         eGxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693843047; x=1694447847;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+NIOd76QGPtI0Gh0yrE1hZgLNhqddMf7XtXZytpmEo8=;
-        b=OorBNcRsxegfXm8KhqmMDfJBBrHMss8L1Rkj16hfAXHlkPjYRAi6EedqxaByt+nqxg
-         X0KOM3Rhh8LuswmwqbdmUQ20tXQ3SridRNlDnC8vkUpSqzdpJpJ3iO1uOgu5FomI6MCg
-         mveNzPHvbFfQfUXkxo8fExReiJ1QvqrCE+QxNGp19YFS5dDOH8b3knCVXOV9SHGMeeZM
-         +cVfoyJsXXN3XPiXyQgZbGPptHk+j4AA21zqeIp16xAxO15FdchxGV3qJDnn3ak7WCLg
-         p5KDpgSw3ZWAki03YT5ZT+hXTToaQiABhf6m4gkVI7K8jdV/O3xo1QVlNfC9UGYCHHQv
-         K1Nw==
-X-Gm-Message-State: AOJu0YwEh96OHQwLuDfKAT+4+vS30oOvJFhVWyuS+Yw00/1w5nMvsDdu
-        wepqquYI1IEQDwOweWHn+jbshg==
-X-Google-Smtp-Source: AGHT+IEwGjoHj6yssGvj2iwLn37dyJe/ETSmZG5mVIP5hi57jgL7R1OQMtc4AHRoPC4JaOCrD8s4kA==
-X-Received: by 2002:a2e:9019:0:b0:2bc:b6d9:4347 with SMTP id h25-20020a2e9019000000b002bcb6d94347mr8084688ljg.20.1693843046717;
-        Mon, 04 Sep 2023 08:57:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693843087; x=1694447887;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZUHwKLnbFXm7KLRQcxSJtkjW8XETj6X7RNn1FYYUf0Q=;
+        b=VqGKvV26xq1Z63oex0v1dSU0QHnOJZ9FSvgeozJ+GBgQ6Wlna0/aqwMj5qgou7NikI
+         3Sra6elIpEFfYK+bEm79JLFZi+xQGcEW9DfAcseDpEe+W0Pu0q5os+BHWYL4fMp7aBuv
+         Bj74cS9wb1Bf6y+tjnj8gAjT+DiDtfP7FUvXw6ROZwpqQwQRycCjSjAJ6D5QoaDF6gaR
+         dR9QrO1KD5gJ4zd8etf2vQ6+BD0y/G5mhNrBiVfb/bQLOaQGYKtQwbcjQfZDvzp+lapS
+         U68TAeQMAK2pbuvjywb/brArSduVD1/xlGRD9e+Oup9yU2o84Oc0bj3fKH2COkNyeeJr
+         3kKA==
+X-Gm-Message-State: AOJu0Yw1VYPLoup57NhVM0OYoc3wehVpNSEuq/48w1ztJSa+THN0ZmjP
+        OfhKw0xegWc1mvqw+14aZ8zPOQ==
+X-Google-Smtp-Source: AGHT+IG1PG1HQBGY/9Uip6GHEELtcEOKs21LhuZthksMhsuW/ax+AaFG+MVw04dTmJ1G98sQFym4kg==
+X-Received: by 2002:a2e:918b:0:b0:2b7:33b9:8809 with SMTP id f11-20020a2e918b000000b002b733b98809mr7120141ljg.16.1693843087517;
+        Mon, 04 Sep 2023 08:58:07 -0700 (PDT)
 Received: from [192.168.1.101] (abxj43.neoplus.adsl.tpnet.pl. [83.9.3.43])
-        by smtp.gmail.com with ESMTPSA id w23-20020a2e8217000000b002b6e099c481sm2213693ljg.51.2023.09.04.08.57.25
+        by smtp.gmail.com with ESMTPSA id w23-20020a2e8217000000b002b6e099c481sm2213693ljg.51.2023.09.04.08.58.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Sep 2023 08:57:26 -0700 (PDT)
-Message-ID: <9febd543-0de4-40f4-8e5a-4ad89b86eebf@linaro.org>
-Date:   Mon, 4 Sep 2023 17:57:24 +0200
+        Mon, 04 Sep 2023 08:58:07 -0700 (PDT)
+Message-ID: <9492bc16-2d8f-44a1-b2d6-d5f8353f30fa@linaro.org>
+Date:   Mon, 4 Sep 2023 17:58:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Fix hwlock index for SMEM for IPQ
- platforms
+Subject: Re: [PATCH 0/3] Fix tcsr_mutex register for IPQ6018
+Content-Language: en-US
 To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org, ohad@wizery.com,
+        baolin.wang@linux.alibaba.com, linux-remoteproc@vger.kernel.org
 Cc:     quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
         quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
         quic_varada@quicinc.com
-References: <20230904063344.4144086-1-quic_viswanat@quicinc.com>
-Content-Language: en-US
+References: <20230904055010.4118982-1-quic_viswanat@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230904063344.4144086-1-quic_viswanat@quicinc.com>
+In-Reply-To: <20230904055010.4118982-1-quic_viswanat@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,16 +115,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.09.2023 08:33, Vignesh Viswanathan wrote:
-> SMEM uses lock index 3 of the TCSR Mutex hwlock for allocations
-> in SMEM region shared by the Host and FW.
+On 4.09.2023 07:50, Vignesh Viswanathan wrote:
+> IPQ6018 has 32 tcsr_mutext hwlock registers of 0x1000 size each.
+> The compatible string qcom,ipq6018-tcsr-mutex is mapped to
+> of_msm8226_tcsr_mutex which has 32 locks configured with stride of 0x80
+> and doesn't match the HW present in IPQ6018.
 > 
-> Fix the SMEM hwlock index to 3 for IPQ5332, IPQ6018, IPQ8074 and IPQ9574.
+> This series fixes the following:
+> 1. Fix the tcsr_mutex hwlock register size to 0x20000 in ipq6018.dtsi.
+> 2. Remove qcom,ipq6018-tcsr-mutex compatible string for tcsr_mutex in
+> ipq6018.dtsi.
+> 3. Drop unused qcom,ipq6018-tcsr-mutex compatible string from
+> qcom_hwspinlock driver and dt-bindings.
 > 
-> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
-> ---
-Please make it a separate patch for each one. Somebody trying to revert
-this in the future will have to potentially resolve 4 conflicts in this
-current form.
+Sounds like 20230904063344.4144086-1-quic_viswanat@quicinc.com can't
+go in without this then?
 
 Konrad
