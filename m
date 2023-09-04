@@ -2,113 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B07B7911B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 08:58:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC5607911BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 09:05:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351852AbjIDG6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 02:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54396 "EHLO
+        id S244319AbjIDHFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 03:05:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345038AbjIDG6B (ORCPT
+        with ESMTP id S231300AbjIDHFA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 02:58:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C71123;
-        Sun,  3 Sep 2023 23:57:58 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 384657cT018056;
-        Mon, 4 Sep 2023 06:57:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=f/6q3k2/wRZz7MrXuwsX/SOSEOJVMJyRe+NGRs2DE0g=;
- b=P9+55I561j+wbDV0HQvurE3EjvwAfgfmBYOIc3BB8ooUBR3MS0m4KTD9TGDxCs1b0wiv
- pbSPWE/Mg6YRC61MQhNq0mVk3Y1N7qqpZ8ofEr6DXjKpjSkHjLrtCwQxdcMeRxQErKOe
- 11wLsW30Ogq56hky9h9wAAkRDde2UR3h6xw/7qlJzTB4UZ5Nb3tP7UztIW+2H78Wv9Ts
- 5jsar31snGsXxlQVfv2EaYoj8A8O7rD6Lvx+Jepu9gMjDyEUrU/uAP0fvzHiDJ9GIxrA
- BSl/lHoBk8s2jAG38CZReqsEoP4LbySN6aC0n/1U3ItqbZ2Q6meUH7QbAfDDDRh1WRGR Dw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suw50tqd4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 04 Sep 2023 06:57:51 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3846vo49007109
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 4 Sep 2023 06:57:50 GMT
-Received: from [10.201.162.56] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 3 Sep
- 2023 23:57:45 -0700
-Message-ID: <7579f8d6-8968-44c4-bba7-8221d5d4516f@quicinc.com>
-Date:   Mon, 4 Sep 2023 12:27:41 +0530
+        Mon, 4 Sep 2023 03:05:00 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C76B11A;
+        Mon,  4 Sep 2023 00:04:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693811097; x=1725347097;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4eDDWz5tkHMgCyvYqnj9aGELY6NXC+giySFujrhuh7w=;
+  b=hL6saONAh1YAcrO+kVh2BAVmYxem35bYBKc0Slx0jjN7IAxF1g5zzIJl
+   6PhMLr0tNcdyF0yhBLxWyC+c8dej3e7zS+8LzQT8xN7YDX2S5oKg1hH1/
+   SaADx70ogY3Zx+kj0OP/JfEBOodCu+xTdxOJKBve/ixOB5Rzd+OHfPppt
+   WTJD7eLysKoB4+Ermz6B2OfI22V6meqExYcvfbtO1XB1Q/lo28KcCfKYp
+   /3NEu509fUzOh0W6LqQQNC6DEKlq3uvYVz+frN1T4w4KHUKhD8MfsIAsF
+   o6FWi6yvcgAPPpXXSGSpkxMKU2eCPWG+XU1f4K49IHS472A08nls/5MA2
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="379247735"
+X-IronPort-AV: E=Sophos;i="6.02,225,1688454000"; 
+   d="scan'208";a="379247735"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 00:04:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="734222228"
+X-IronPort-AV: E=Sophos;i="6.02,225,1688454000"; 
+   d="scan'208";a="734222228"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by orsmga007.jf.intel.com with SMTP; 04 Sep 2023 00:04:52 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 04 Sep 2023 10:04:51 +0300
+Date:   Mon, 4 Sep 2023 10:04:51 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     quic_huliu@quicinc.com
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
+        subbaram@quicinc.com
+Subject: Re: [PATCH v5] usb: typec: qcom: Update the logic of regulator
+ enable and disable
+Message-ID: <ZPWBk0JRzJivItav@kuha.fi.intel.com>
+References: <20230831-qcom-tcpc-v5-1-5e2661dc6c1d@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: ipq6018: Fix tcsr_mutex register
- size
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <ohad@wizery.com>,
-        <baolin.wang@linux.alibaba.com>, <linux-remoteproc@vger.kernel.org>
-CC:     <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>
-References: <20230904055010.4118982-1-quic_viswanat@quicinc.com>
- <20230904055010.4118982-2-quic_viswanat@quicinc.com>
- <9380d42a-2c24-89ad-14ca-99e0f1ffcbf7@linaro.org>
-From:   Vignesh Viswanathan <quic_viswanat@quicinc.com>
-In-Reply-To: <9380d42a-2c24-89ad-14ca-99e0f1ffcbf7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -sm1hK-OuwDX9mdZj_jh7sFlt59J_EIh
-X-Proofpoint-ORIG-GUID: -sm1hK-OuwDX9mdZj_jh7sFlt59J_EIh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-04_03,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 mlxlogscore=670 clxscore=1011
- spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 mlxscore=0
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2309040062
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230831-qcom-tcpc-v5-1-5e2661dc6c1d@quicinc.com>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/4/2023 12:10 PM, Krzysztof Kozlowski wrote:
-> On 04/09/2023 07:50, Vignesh Viswanathan wrote:
->> IPQ6018 has 32 tcsr_mutex hwlock registers and size of each is 0x1000.
->>
->> Fix size of the tcsr_mutex hwlock register to 0x20000.
->> Also, remove the qcom,ipq6018-tcsr-mutex compatible as this maps to
->> incorrect stride and mutex config for IPQ6018 in hwspinlock driver.
+On Thu, Aug 31, 2023 at 06:19:45PM +0800, Hui Liu via B4 Relay wrote:
+> From: Hui Liu <quic_huliu@quicinc.com>
 > 
-> This is 6018, so if 6018 compatible is incorrect... this does not make
-> any sense.
+> Removed the call logic of disable and enable regulator
+> in reset function. Enable the regulator in qcom_pmic_typec_start
+> function and disable it in qcom_pmic_typec_stop function to
+> avoid unbalanced regulator disable warnings.
 > 
-> NAK
+> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb5
+> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+
+> ---
+> Changes in v5:
+> - Removed Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+> - Updated V4 history
+> - Link to v4: https://lore.kernel.org/r/20230830-qcom-tcpc-v4-1-c19b0984879b@quicinc.com
 > 
-
-Understood, Instead of removing the 6018 compatible, I'll use the same
-and fix the config mapped to 6018 in the hwspinlock driver.
-
-Thanks,
-Vignesh
+> Changes in v4:
+> - Rephrased commit text
+> - Link to v3: https://lore.kernel.org/r/20230828-qcom-tcpc-v3-1-e95b7afa34d9@quicinc.com
+> 
+> Changes in v3:
+> - Take Bryan's proposal to remove enable/disable operation in pdphy
+> enable and pdphy disable function, then enable regulator in pdphy start
+> function and disable it in pdphy stop function.
+> - Link to v2: https://lore.kernel.org/r/20230824-qcom-tcpc-v2-1-3dd8c3424564@quicinc.com
+> 
+> Changes in v2:
+> - Add Fixes tag
+> - Link to v1: https://lore.kernel.org/r/20230823-qcom-tcpc-v1-1-fa81a09ca056@quicinc.com
+> ---
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> index bb0b8479d80f..52c81378e36e 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> @@ -381,10 +381,6 @@ static int qcom_pmic_typec_pdphy_enable(struct pmic_typec_pdphy *pmic_typec_pdph
+>  	struct device *dev = pmic_typec_pdphy->dev;
+>  	int ret;
+>  
+> -	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
+> -	if (ret)
+> -		return ret;
+> -
+>  	/* PD 2.0, DR=TYPEC_DEVICE, PR=TYPEC_SINK */
+>  	ret = regmap_update_bits(pmic_typec_pdphy->regmap,
+>  				 pmic_typec_pdphy->base + USB_PDPHY_MSG_CONFIG_REG,
+> @@ -422,8 +418,6 @@ static int qcom_pmic_typec_pdphy_disable(struct pmic_typec_pdphy *pmic_typec_pdp
+>  	ret = regmap_write(pmic_typec_pdphy->regmap,
+>  			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
+>  
+> -	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
+> -
+>  	return ret;
+>  }
+>  
+> @@ -447,6 +441,10 @@ int qcom_pmic_typec_pdphy_start(struct pmic_typec_pdphy *pmic_typec_pdphy,
+>  	int i;
+>  	int ret;
+>  
+> +	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
+> +	if (ret)
+> +		return ret;
+> +
+>  	pmic_typec_pdphy->tcpm_port = tcpm_port;
+>  
+>  	ret = pmic_typec_pdphy_reset(pmic_typec_pdphy);
+> @@ -467,6 +465,8 @@ void qcom_pmic_typec_pdphy_stop(struct pmic_typec_pdphy *pmic_typec_pdphy)
+>  		disable_irq(pmic_typec_pdphy->irq_data[i].irq);
+>  
+>  	qcom_pmic_typec_pdphy_reset_on(pmic_typec_pdphy);
+> +
+> +	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
+>  }
+>  
+>  struct pmic_typec_pdphy *qcom_pmic_typec_pdphy_alloc(struct device *dev)
+> 
+> ---
+> base-commit: bbb9e06d2c6435af9c62074ad7048910eeb2e7bc
+> change-id: 20230822-qcom-tcpc-d41954ac65fa
 > 
 > Best regards,
-> Krzysztof
-> 
+> -- 
+> Hui Liu <quic_huliu@quicinc.com>
+
+-- 
+heikki
