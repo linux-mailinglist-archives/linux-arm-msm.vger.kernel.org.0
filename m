@@ -2,135 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DDDB79127C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 09:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED89879131F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 10:14:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345041AbjIDHqF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 03:46:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56144 "EHLO
+        id S1347269AbjIDIOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 04:14:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234092AbjIDHqF (ORCPT
+        with ESMTP id S1352529AbjIDIOv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 03:46:05 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784D2F0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 00:45:58 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-52a06f5f556so1416953a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 00:45:58 -0700 (PDT)
+        Mon, 4 Sep 2023 04:14:51 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89919103
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 01:14:45 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9a648f9d8e3so127444266b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 01:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693813557; x=1694418357; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1oTX6pDWFbsRBZELPps+RqPck8JFOCibC5eerUlD3+Y=;
-        b=KHLl7/25PIapidsHyQKEFBKOTxf6bdnVFR8vrJDais5jypdLg+e/+UYYLkQQv2Zifk
-         P7zPpsy3PrJdr7kM6UFpIvH/CjuOySZp3oEchwM6280f7lPAei2cPgGfiJ+D8aw2DZXt
-         2tm/xveo1hHW5UUj7HyrkGCwn1P2eOQg8X13dMReHQeEWErDZTJkl2tBla71rOGeSTvh
-         w/6EQb1bJ9ScBD+vKpqzsyK5ecIJHuD7QwJDtnBkXlNduTbx5PvT/q8OOQIn48ggayKn
-         YcYodCOVBQXepTVkAkm/7oQRujHUADw8L4NKNztI/GGJSvvXgDAdzHXO8ccLvUgCzbdR
-         RS0Q==
+        d=fairphone.com; s=fair; t=1693815284; x=1694420084; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MWMi9FtNgdsDW9Ls5zX1bxJmX9VcD9rhfLYu4eJXCwc=;
+        b=xd8Bcb7IDJ5lyj9B7pfTxOZfGpY5+VosjSWfwM9iVg1ZH4nq+N1FBGJUKc+5Vleecb
+         r7XZ8aMdUWoidP6SytEJNrO0A3dMsv04pHKMXr8V3IdbmDYhoy9wrMQo3jxH1FmNDsQI
+         gxyXnjxSMqPWUAFZU0V3BmbFe5JW0NugZhFPP6hkF+plKCrfJLZ9B0UK01VhH3au/pSu
+         wp4W6rlRgX2aCr4/KDPaqWtdizv1OFVvAIL5jAyEM3yyJuu+5A6LppDUy69Bf9RGbVJt
+         fNKKxPG6E6TLDXlQk7Mw1/TFd5MDdKC2/AouzGP/0UzBZvhme3GmP38ZQDWrOgDp+kEK
+         t8Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693813557; x=1694418357;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1oTX6pDWFbsRBZELPps+RqPck8JFOCibC5eerUlD3+Y=;
-        b=XvBq94UK8lD4d69OaVqxlPQaAWLnE35qOQSbvefXOq3goJDNOz2gss19BBd8tgsjTY
-         RV0YlMeuAelcwWOCFafv84pplLvosdeyWD27ODBBgUrsNXp8Xzxb6r70WMb9rLyvdkNh
-         C4eHtKOFizsYoPQ/Q0dfXYcgOTa6aMsxovG+6uOsThjB6Vvrib8A9ehwVBw3TvU9mhwA
-         zi6r27+BJgjHTcjJ2WGvMDCin5M3gEV8H8w78+ectyWI87xsMdgidUEAykJul4cNAHy/
-         mYEvyUSfryweoG7uoDiUYosQmU0lLJ0no0Qjh3KsJ90kfT+iIa/4yrekiG7Qnm0jXvYH
-         rm6w==
-X-Gm-Message-State: AOJu0YxTQvNxOkhT7abeg4CLXMjgvpnlm0ldgW7/47w4UUXf/Ufm804l
-        heVBnFYaFF5Rnety0C3nVt1Lnw==
-X-Google-Smtp-Source: AGHT+IEINRbAsvSeWTCzWDCv0GspT0nyL54gbJfmOb7e8zMLCOSHCmSVJ54yK1U9rDxCZlhVy58Klw==
-X-Received: by 2002:aa7:df81:0:b0:525:6d6e:ed53 with SMTP id b1-20020aa7df81000000b005256d6eed53mr5951385edy.27.1693813557008;
-        Mon, 04 Sep 2023 00:45:57 -0700 (PDT)
-Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id b18-20020a05640202d200b0051dfa2e30b2sm5498533edx.9.2023.09.04.00.45.56
+        d=1e100.net; s=20221208; t=1693815284; x=1694420084;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MWMi9FtNgdsDW9Ls5zX1bxJmX9VcD9rhfLYu4eJXCwc=;
+        b=CnluvdaAG0QhnvBQSUHIr3lxkXmm5BEb3kDMxLC0vUusFQirLh6kHP1ntIw5ecpdRY
+         iNwqIbRbCFQid2lMaWWA+Oi450nhEz85sOmvk1GR3uUvXI0cPgLsfrSOk9PhI7kGJu1r
+         PCVrgoij7V+xBD6cKct/dw2dHbjhXeiGQDP9q/NwbnQ5VWn3wndZzIkm0h9zQ9jBK9Qy
+         AygLP1tGxG46PCc0O+zlv2Db6VV1pxVSsCr00ajoYSqNTfOdySzGcWFSdQNJCRveVV0E
+         tuB/axS8fS6zwrwQqF9MpUbrJOvszpViIrThokL0pqCHvzhFuuYkWQx/Ci1GSgLf5uMt
+         vTsg==
+X-Gm-Message-State: AOJu0YxeGCEcpAAId9GfJFXarc0Io5D1ITkTA0Y4YG7mncpSlswuwtW1
+        VqKLDRFlm0pKj+eUACvDVuIOug==
+X-Google-Smtp-Source: AGHT+IHUaOSlrS5L3pk5vdj2p6HRN/GNfjoEP6nrYuWjZ/0Ux6QVQihqo46O6Ejh8hYfgT+s6QlW4w==
+X-Received: by 2002:a17:906:20dd:b0:9a1:eef2:a110 with SMTP id c29-20020a17090620dd00b009a1eef2a110mr7175962ejc.19.1693815284020;
+        Mon, 04 Sep 2023 01:14:44 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id e7-20020a170906248700b009920a690cd9sm5787656ejb.59.2023.09.04.01.14.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Sep 2023 00:45:56 -0700 (PDT)
-Message-ID: <1f0bf00f-07db-4017-a30b-618d90ce0457@linaro.org>
-Date:   Mon, 4 Sep 2023 09:45:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH 2/2] pinctrl: qcom: lpass-lpi: allow slew rate bit in main
- pin config register
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230901090224.27770-1-krzysztof.kozlowski@linaro.org>
- <20230901090224.27770-3-krzysztof.kozlowski@linaro.org>
- <08a10dc1-bb8e-48b1-8d86-5ee513835196@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <08a10dc1-bb8e-48b1-8d86-5ee513835196@linaro.org>
+        Mon, 04 Sep 2023 01:14:43 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Date:   Mon, 04 Sep 2023 10:14:42 +0200
+Message-Id: <CV9ZEMOTNO1D.378QGW3KMG4E8@otso>
+Cc:     <cros-qcom-dts-watchers@chromium.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
+        "Linus Walleij" <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Viresh Kumar" <viresh.kumar@linaro.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 02/11] nvmem: qfprom: Mark core clk as optional
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Doug Anderson" <dianders@chromium.org>
+X-Mailer: aerc 0.15.2
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-2-5a954519bbad@fairphone.com>
+ <CAD=FV=WS2hgY=bQjLOs3Fdp8pbZyMsaS-0BpoxPq90Etfi+Xuw@mail.gmail.com>
+ <CV5YJVXIL8OT.1ZWW3KVCHPTA5@otso>
+ <CAD=FV=XhdORH=naTtoc+kCC4A7UdAJKwq=Te6B3qvXNGBwBieg@mail.gmail.com>
+ <CV7O0TYYEFA8.1Q42JITFSW77Q@otso>
+ <CAD=FV=UG-dFg7wZsn6n=pkejie0fr+G0q3CguNspGYxoC2ZBLw@mail.gmail.com>
+In-Reply-To: <CAD=FV=UG-dFg7wZsn6n=pkejie0fr+G0q3CguNspGYxoC2ZBLw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/09/2023 14:28, Konrad Dybcio wrote:
-> On 1.09.2023 11:02, Krzysztof Kozlowski wrote:
->> Existing Qualcomm SoCs have the LPASS pin controller slew rate control
->> in separate register, however this will change with upcoming Qualcomm
->> SoCs.  The slew rate will be part of the main register for pin
->> configuration, thus second device IO address space is not needed.
->>
->> Prepare for supporting new SoCs by adding flag customizing the driver
->> behavior for slew rate.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 20 ++++++++++++++------
->>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h |  7 +++++++
->>  2 files changed, 21 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> index e2df2193a802..40eb58a3a8cd 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> @@ -190,6 +190,7 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
->>  				    const struct lpi_pingroup *g,
->>  				    unsigned int group, unsigned int slew)
->>  {
->> +	void __iomem *reg;
-> Aaalmost reverse-Christmas-tree!
+On Fri Sep 1, 2023 at 5:08 PM CEST, Doug Anderson wrote:
+> Hi,
+>
+> On Fri, Sep 1, 2023 at 7:54=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.c=
+om> wrote:
+> >
+> > > > > So maybe the right fix here is to just change your dts to specify=
+ one
+> > > > > memory region?
+> > > >
+> > > > I got feedback from Konrad that this here would be the preferred
+> > > > approach compared to having a different dts for ChromeOS vs non-Chr=
+omeOS
+> > > > devices. I don't feel strongly to either, for me it's also okay to
+> > > > remove the extra memory regions and only have the main one used on
+> > > > regular qcom devices.
+> > > >
+> > > > Let me know what you think.
+> > >
+> > > I don't hate the idea of leaving the extra memory regions in the dts.
+> > > They do describe the hardware, after all, even if the main OS can't
+> > > actually access those memory regions. ...though the same could also b=
+e
+> > > said about the clock you've removed. Said another way: if you want to
+> > > fully describe the hardware then the dts should have the extra memory
+> > > regions and the clock. If you are OK w/ just describing the hardware
+> > > in the way that the OS has access to then the dts should not have the
+> > > extra memory regions and not have the clock. Does that sound right?
+> >
+> > Not sure which of those memory regions are actually accessible on this
+> > board, but honestly I don't even want to try accessing it. Blowing fuse=
+s
+> > is not my wish there ;)
+> >
+> > On downstream the node is just described like the following:
+> >
+> >         qfprom: qfprom@780000 {
+> >                 compatible =3D "qcom,qfprom";
+> >                 reg =3D <0x780000 0x7000>;
+> >                 ...
+> >         };
+> >
+> > So we have 0x780000 - 0x786fff here.
+> >
+> > In sc7280.dtsi we have the following:
+> >
+> >         qfprom: efuse@784000 {
+> >                 compatible =3D "qcom,sc7280-qfprom", "qcom,qfprom";
+> >                 reg =3D <0 0x00784000 0 0xa20>,
+> >                           <0 0x00780000 0 0xa20>,
+> >                           <0 0x00782000 0 0x120>,
+> >                           <0 0x00786000 0 0x1fff>;
+> >                 ...
+> >         };
+> >
+> > So I guess this:
+> > * 0x780000 - 0x780a1f
+> > * 0x782000 - 0x78211f
+> > * 0x784000 - 0x784a1f
+> > * 0x786000 - 0x787ffe
+> >
+> > So at least the last memory region seems to be partially out of range
+> > according to downstream.
+>
+> From the other discussion, it sounds as if you _can_ leave the clock
+> in the device tree and then use "clk_get_optional" here. IMO then, the
+> right answer is to use "clk_get_optional" but then also modify the
+> check below so that instead of:
+>
+> /* Only enable writing if we have SoC data. */
+> if (priv->soc_data)
+>   econfig.reg_write =3D qfprom_reg_write;
+>
+> It is:
+>
+> /* Only enable writing if we have SoC data and a valid clock */
+> if (priv->soc_data && priv->secclk)
+>   econfig.reg_write =3D qfprom_reg_write;
+>
+>
+> Does that work for you?
 
-I can fix it.
+Thanks Doug, this feels like a good solution. I'll update v2 with that.
 
-> 
->>  	unsigned long sval;
->>  	int slew_offset;
->>  
->> @@ -203,12 +204,17 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
->>  	if (slew_offset == LPI_NO_SLEW)
->>  		return 0;
->>  
->> +	if (pctrl->data->flags & LPI_FLAG_SLEW_RATE_SAME_REG)
->> +		reg = pctrl->tlmm_base + LPI_TLMM_REG_OFFSET * group + LPI_GPIO_CFG_REG;
->> +	else
->> +		reg = pctrl->slew_base + LPI_SLEW_RATE_CTL_REG;
-> Perhaps lpi_gpio_read/write could be used here?
-> 
-> I guess both ways work though
+>
+>
+> > So after reading all of this I tried running this commmand on the phone
+> > and the phone reboots into 900e mode.
+> >
+> >   $ cat /sys/devices/platform/soc@0/784000.efuse/qfprom0/nvmem
+> >
+> > I guess normally this should work? So if I interpret this correctly, th=
+e
+> > Linux driver thinks it can access more than it can/should. But also
+> > should probably try this command on another chipset to see if it works
+> > on any really?
+>
+> Presumably your firmware needs a different "sc7280_qfprom_keepout". If
+> that's true then I guess you'll have to undergo negotiations with the
+> DT bindings folks and the nvmem maintainer to figure out how to
+> specify that your firmware protects different things than the ChromeOS
+> firmware?
 
-I was thinking about this, but decided not to in favor of duplicating
-"tlmm_base + offset * group ....". It would not make the code easier to
-read.
+Right. But based on Konrad's reply here, I think I'll skip this for now
+since generally qfprom seems to be fine with the current data, at least
+for the purposes it's used for on my device.
+
+Regards
+Luca
 
 
-Best regards,
-Krzysztof
+>
+>
+> -Doug
 
