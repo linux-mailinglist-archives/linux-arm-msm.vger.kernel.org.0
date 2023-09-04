@@ -2,192 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65A0779173B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 14:35:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26B56791970
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 16:09:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236236AbjIDMfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 08:35:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
+        id S235108AbjIDOJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 10:09:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232080AbjIDMfc (ORCPT
+        with ESMTP id S232822AbjIDOJP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 08:35:32 -0400
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5D6EC;
-        Mon,  4 Sep 2023 05:35:29 -0700 (PDT)
-Date:   Mon, 04 Sep 2023 12:35:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1693830923; x=1694090123;
-        bh=at8BjoFpddRw4d0u09ct+6YIxedFb1vgOg5Bk99QBFA=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=KaiugxjdVi2200gYrnmj2bVQJrdiArkOcEyPW21B82Y9TrR8aeUnbUteeHTzHpdF0
-         z1GksSHP2z6D44HVmZpnUj7L3Fxju6y+P+n2K5fhN0tnxRg/XHUJhCCK6yKiF2QagI
-         1Dmyp80rrygdKB8Jq5CHkW9+2lPzRKC5VCTv/qU4WquINryvn3Fk1CGFb6hcNI9SHT
-         53Wj+ysqy1y+JYLlkeTEmcJ5WprMf9taeL7SV9CB9x786DTpkgsM2a2K6pxQ6kCzJl
-         MjFQL7vLcu6TXlpANqF0TIgFKEY11+XyoiGYPs3nrlmPGEJRG+4L4lpbp092q3K8f3
-         Ffrtno2HR8OMw==
-To:     linux-kernel@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Markuss Broks <markuss.broks@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-j5-common: Add accelerometer
-Message-ID: <20230904123123.2593-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Mon, 4 Sep 2023 10:09:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8AC9CDB;
+        Mon,  4 Sep 2023 07:09:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 74E07B80E3B;
+        Mon,  4 Sep 2023 14:09:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9A6C433C8;
+        Mon,  4 Sep 2023 14:09:05 +0000 (UTC)
+Message-ID: <b3561832-b7e4-f612-4729-fd4ca8234602@xs4all.nl>
+Date:   Mon, 4 Sep 2023 16:09:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v6 11/18] media: videobuf2: Be more flexible on the number
+ of queue stored buffers
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
+ <20230901124414.48497-12-benjamin.gaignard@collabora.com>
+ <37e5e418-c38a-b863-ffdf-72ce300cf227@xs4all.nl>
+ <319d6103-26c3-bc02-3f80-90e653c8ee37@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <319d6103-26c3-bc02-3f80-90e653c8ee37@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Markuss Broks <markuss.broks@gmail.com>
+Hi Benjamin,
 
-J5 and J5X have ST LIS2HH12 accelerometer.
-Add support for it.
+This patch can be folded into 11/18 to make it work properly.
 
-Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Co-developed-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+vb2_core_queue_release() is also called when the file handle of the video device is
+closed and it is also the owner of the currently allocated buffers. This will free
+q->bufs, but queue_init isn't called a second time for non-m2m devices. So move
+the allocation of q->bufs from queue_init to reqbufs/create_buffers.
+
+And when releasing the file handle we also check if there is no owner at all:
+in that case vb2_queue_release() must still be called to free q->bufs.
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 ---
- .../dts/qcom/msm8916-samsung-j5-common.dtsi   | 39 +++++++++++++++++++
- .../boot/dts/qcom/msm8916-samsung-j5.dts      |  5 +++
- .../boot/dts/qcom/msm8916-samsung-j5x.dts     | 15 +++++++
- 3 files changed, 59 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-core.c | 15 +++++++++++++--
+ drivers/media/common/videobuf2/videobuf2-v4l2.c |  4 ++--
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi b/arch=
-/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-index cb0e4a7faf91..68e22873647f 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-@@ -84,6 +84,31 @@ muic: extcon@25 {
- =09=09=09pinctrl-0 =3D <&muic_int_default>;
- =09=09};
- =09};
+diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+index dc7f6b59d237..202d7c80ffd2 100644
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -859,6 +859,12 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+ 			return 0;
+ 	}
+
++	if (!q->bufs) {
++		q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
++		if (!q->bufs)
++			return -ENOMEM;
++	}
 +
-+=09i2c_sensors: i2c-sensors {
-+=09=09compatible =3D "i2c-gpio";
+ 	/*
+ 	 * Make sure the requested values and current defaults are sane.
+ 	 */
+@@ -985,6 +991,12 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+ 		return -ENOBUFS;
+ 	}
+
++	if (!q->bufs) {
++		q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
++		if (!q->bufs)
++			return -ENOMEM;
++	}
 +
-+=09=09sda-gpios =3D <&tlmm 31 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-+=09=09scl-gpios =3D <&tlmm 32 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-+
-+=09=09pinctrl-0 =3D <&sensors_i2c_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09#address-cells =3D <1>;
-+=09=09#size-cells =3D <0>;
-+
-+=09=09accelerometer: accelerometer@1d {
-+=09=09=09compatible =3D "st,lis2hh12";
-+=09=09=09reg =3D <0x1d>;
-+
-+=09=09=09interrupts-extended =3D <&tlmm 115 IRQ_TYPE_LEVEL_HIGH>;
-+
-+=09=09=09pinctrl-0 =3D <&accel_int_default>;
-+=09=09=09pinctrl-names =3D "default";
-+
-+=09=09=09st,drdy-int-pin =3D <1>;
-+=09=09};
-+=09};
- };
-=20
- &blsp_i2c5 {
-@@ -147,6 +172,13 @@ &wcnss_iris {
- };
-=20
- &tlmm {
-+=09accel_int_default: accel-int-default-state {
-+=09=09pins =3D "gpio115";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09gpio_hall_sensor_default: gpio-hall-sensor-default-state {
- =09=09pins =3D "gpio52";
- =09=09function =3D "gpio";
-@@ -187,6 +219,13 @@ sdc2_cd_default: sdc2-cd-default-state {
- =09=09bias-disable;
- =09};
-=20
-+=09sensors_i2c_default: sensors-i2c-default-state {
-+=09=09pins =3D "gpio31", "gpio32";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09tsp_int_default: tsp-int-default-state {
- =09=09pins =3D "gpio13";
- =09=09function =3D "gpio";
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts b/arch/arm64/b=
-oot/dts/qcom/msm8916-samsung-j5.dts
-index 3e1ff5b4d2d7..58c2f5a70e78 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-@@ -10,6 +10,11 @@ / {
- =09chassis-type =3D "handset";
- };
-=20
-+&accelerometer {
-+=09vdd-supply =3D <&pm8916_l5>;
-+=09vddio-supply =3D <&pm8916_l5>;
-+};
-+
- &blsp_i2c5 {
- =09status =3D "disabled";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts b/arch/arm64/=
-boot/dts/qcom/msm8916-samsung-j5x.dts
-index b2fe109723d8..8b404a9cd62d 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts
-@@ -23,6 +23,17 @@ reg_vdd_tsp_a: regulator-vdd-tsp-a {
- =09};
- };
-=20
-+&accelerometer {
-+=09interrupts-extended =3D <&tlmm 49 IRQ_TYPE_LEVEL_HIGH>;
-+
-+=09vdd-supply =3D <&pm8916_l6>;
-+=09vddio-supply =3D <&pm8916_l6>;
-+
-+=09mount-matrix =3D "0", "-1", "0",
-+=09=09       "1", "0", "0",
-+=09=09       "0", "0", "-1";
-+};
-+
- &muic {
- =09interrupts =3D <121 IRQ_TYPE_EDGE_FALLING>;
- };
-@@ -40,6 +51,10 @@ tsp_ldo_en_default: tsp-ldo-en-default-state {
- =09};
- };
-=20
-+&accel_int_default {
-+=09pins =3D "gpio49";
-+};
-+
- &muic_int_default {
- =09pins =3D "gpio121";
- };
---=20
-2.39.2
+ 	if (no_previous_buffers) {
+ 		if (q->waiting_in_dqbuf && *count) {
+ 			dprintk(q, 1, "another dup()ped fd is waiting for a buffer\n");
+@@ -2525,8 +2537,6 @@ int vb2_core_queue_init(struct vb2_queue *q)
+ 	/* The maximum is limited by offset cookie encoding pattern */
+ 	q->max_allowed_buffers = min_t(unsigned int, q->max_allowed_buffers, BUFFER_INDEX_MASK);
+
+-	q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
+-
+ 	if (q->buf_struct_size == 0)
+ 		q->buf_struct_size = sizeof(struct vb2_buffer);
+
+@@ -2552,6 +2562,7 @@ void vb2_core_queue_release(struct vb2_queue *q)
+ 	mutex_lock(&q->mmap_lock);
+ 	__vb2_queue_free(q, q->num_buffers);
+ 	kfree(q->bufs);
++	q->bufs = NULL;
+ 	mutex_unlock(&q->mmap_lock);
+ }
+ EXPORT_SYMBOL_GPL(vb2_core_queue_release);
+diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+index 8ba658ad9891..104fc5c4f574 100644
+--- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
++++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+@@ -1148,7 +1148,7 @@ int _vb2_fop_release(struct file *file, struct mutex *lock)
+
+ 	if (lock)
+ 		mutex_lock(lock);
+-	if (file->private_data == vdev->queue->owner) {
++	if (!vdev->queue->owner || file->private_data == vdev->queue->owner) {
+ 		vb2_queue_release(vdev->queue);
+ 		vdev->queue->owner = NULL;
+ 	}
+@@ -1276,7 +1276,7 @@ void vb2_video_unregister_device(struct video_device *vdev)
+ 	 */
+ 	get_device(&vdev->dev);
+ 	video_unregister_device(vdev);
+-	if (vdev->queue && vdev->queue->owner) {
++	if (vdev->queue) {
+ 		struct mutex *lock = vdev->queue->lock ?
+ 			vdev->queue->lock : vdev->lock;
+
+-- 
+2.40.1
 
 
