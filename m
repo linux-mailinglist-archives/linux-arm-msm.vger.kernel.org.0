@@ -2,78 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C78B791709
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 14:24:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65A0779173B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 14:35:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233693AbjIDMYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 08:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39058 "EHLO
+        id S236236AbjIDMfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 08:35:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350132AbjIDMYW (ORCPT
+        with ESMTP id S232080AbjIDMfc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 08:24:22 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76F21B8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 05:24:17 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40078c4855fso13560855e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 05:24:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693830256; x=1694435056; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bydKmgcfnBrn6zqy9gih0IJ/7f6bZJC6JySV7YICefw=;
-        b=lh+S4vx1Gk8754X7D5VZqIy+ltY82zeu9lTLXi8LgXryAoYXfj3mnZD4ePCohJALlE
-         ZRryLA9KOro48RR1yDJQMQ8jS2p+h+XE+c5tLTq5XtbXoMeD0Gas0T3UPfnQ7ekblgf2
-         74TuAcdlmZd6EcGtDOYvsviJstkbLuKPFqIv1zQDK+Kc5KqyKSrkprR7yiMEe/mrqCki
-         R+cTkSZZpVZd9m/RKIWAe7H28S3pVxCfSAynqzgNr1TtwEETtFEFwqf56PsCEqe+382M
-         R0vvR5wto1DEZAIX0BIrAxKzE1z2MOFAl1byxSux0PhL/f68i6WNpX6XR9tzx8XIhTLh
-         xJVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693830256; x=1694435056;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bydKmgcfnBrn6zqy9gih0IJ/7f6bZJC6JySV7YICefw=;
-        b=alWtyMgRYwE2V1mybj0IgOB4WpAzYPKA6esK34SmoFvSTzhnG5Yp6KEqmkM0cuzbqw
-         EtslZvomyYtcWOa8tFCFAXJ6+skz5cKyejf/gpgp0qStIbIN023E1m6jpmS8M0qorTs3
-         ocrpYUxvXWKvdReLtGufpkncDekr1jE55jamnjSmNLWxfrhHyxENgjyfnf0/R58k3nBX
-         a6xp/7hfMGrCx1gvn29yrmSzP9AVoSS8s6OGUPUCuIo6x1LKNa6TIRMCr1o3Oqw1Da8Z
-         AmqS6VC7n7ekM8QNQH9iq70WRgH4dHoJ06D/N5+61reUlDtKYG6LlQ6WlH15AIwLmAFz
-         aPqA==
-X-Gm-Message-State: AOJu0YzOmiHbymSIUU4uzM4tDHNZ6BYbSNtDUbuAXxMfUQVQECeNQGc8
-        ppi+9ODLj7F8lhigWO8MnWk5DA==
-X-Google-Smtp-Source: AGHT+IFrAgI71dnQ3lucSmJZ8Xj8kwOpEXyGtkrEu61tDg8JukeF/cHgajTlbmEv/Kwm08lwGpV/KQ==
-X-Received: by 2002:a05:600c:2241:b0:401:c436:8999 with SMTP id a1-20020a05600c224100b00401c4368999mr7474061wmm.30.1693830256171;
-        Mon, 04 Sep 2023 05:24:16 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id e16-20020a05600c219000b003fe2a40d287sm13944384wme.1.2023.09.04.05.24.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Sep 2023 05:24:15 -0700 (PDT)
-Message-ID: <d7745ece-bea1-f8f9-a1d2-0f01aa221ade@linaro.org>
-Date:   Mon, 4 Sep 2023 13:24:14 +0100
+        Mon, 4 Sep 2023 08:35:32 -0400
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5D6EC;
+        Mon,  4 Sep 2023 05:35:29 -0700 (PDT)
+Date:   Mon, 04 Sep 2023 12:35:03 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1693830923; x=1694090123;
+        bh=at8BjoFpddRw4d0u09ct+6YIxedFb1vgOg5Bk99QBFA=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=KaiugxjdVi2200gYrnmj2bVQJrdiArkOcEyPW21B82Y9TrR8aeUnbUteeHTzHpdF0
+         z1GksSHP2z6D44HVmZpnUj7L3Fxju6y+P+n2K5fhN0tnxRg/XHUJhCCK6yKiF2QagI
+         1Dmyp80rrygdKB8Jq5CHkW9+2lPzRKC5VCTv/qU4WquINryvn3Fk1CGFb6hcNI9SHT
+         53Wj+ysqy1y+JYLlkeTEmcJ5WprMf9taeL7SV9CB9x786DTpkgsM2a2K6pxQ6kCzJl
+         MjFQL7vLcu6TXlpANqF0TIgFKEY11+XyoiGYPs3nrlmPGEJRG+4L4lpbp092q3K8f3
+         Ffrtno2HR8OMw==
+To:     linux-kernel@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Markuss Broks <markuss.broks@gmail.com>
+Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-j5-common: Add accelerometer
+Message-ID: <20230904123123.2593-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 08/15] media: qcom: camss: Untangle if/else spaghetti
- in camss
-Content-Language: en-US
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hverkuil-cisco@xs4all.nl, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230823104444.1954663-1-bryan.odonoghue@linaro.org>
- <20230823104444.1954663-9-bryan.odonoghue@linaro.org>
- <20230828185110.GN14596@pendragon.ideasonboard.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230828185110.GN14596@pendragon.ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,95 +55,139 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/08/2023 19:51, Laurent Pinchart wrote:
->> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
->> @@ -592,15 +592,19 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->>   	csid->camss = camss;
->>   	csid->id = id;
->>   
->> -	if (camss->res->version == CAMSS_8x16) {
->> +	switch (camss->res->version) {
->> +	case CAMSS_8x16:
->>   		csid->ops = &csid_ops_4_1;
->> -	} else if (camss->res->version == CAMSS_8x96 ||
->> -		   camss->res->version == CAMSS_660) {
->> +		break;
->> +	case CAMSS_8x96:
->> +	case CAMSS_660:
->>   		csid->ops = &csid_ops_4_7;
->> -	} else if (camss->res->version == CAMSS_845 ||
->> -		   camss->res->version == CAMSS_8250) {
->> +		break;
->> +	case CAMSS_845:
->> +	case CAMSS_8250:
->>   		csid->ops = &csid_ops_gen2;
->> -	} else {
->> +		break;
->> +	default:
->>   		return -EINVAL;
-> This should never happen, as adding support for a new SoC should come
-> with an update for all the applicable switch/case statements. It's
-> useful to let the compiler complain if someone forgets to do so, but
-> with a default case, you will only see the issue at runtime. Could it be
-> caught at compile time ?
-> 
+From: Markuss Broks <markuss.broks@gmail.com>
 
-This can be done in fact.
+J5 and J5X have ST LIS2HH12 accelerometer.
+Add support for it.
 
-https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wswitch_002denum-303
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-typedef enum {
-         MO = 0,
-         LARRY,
-         CURLY,
-         BINGO,
-}my_type;
-
-int main (int argc, char *argv[])
-{
-         my_type x;
-         time_t t;
-
-         srand((unsigned) time(&t));
-
-         x = rand() % BINGO;
-
-         switch(x) {
-         case MO:
-                 printf("mo\n");
-                 break;
-         case LARRY:
-                 printf("larry\n");
-                 break;
-         default:
-                 printf("blargh\n");
-                 break;
-
-         }
-
-         return 0;
-}
-
-gcc -o test test.c -Wswitch-enum
-test.c: In function ‘main’:
-test.c:38:9: warning: enumeration value ‘CURLY’ not handled in switch 
-[-Wswitch-enum]
-    38 |         switch(x) {
-       |         ^~~~~~
-
-It looks like we only enable that switch for tools though
-
-grep -r "Wswitch-enum" *
-tools/scripts/Makefile.include:EXTRA_WARNINGS += -Wswitch-enum
-tools/bpf/bpftool/Makefile:CFLAGS += $(filter-out -Wswitch-enum 
--Wnested-externs,$(EXTRA_WARNINGS))
-
-I'll still implement the code though, since if we do introduce the 
-switch for the kernel it would be caught.
-
+Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
+Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Co-developed-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 ---
-bod
+ .../dts/qcom/msm8916-samsung-j5-common.dtsi   | 39 +++++++++++++++++++
+ .../boot/dts/qcom/msm8916-samsung-j5.dts      |  5 +++
+ .../boot/dts/qcom/msm8916-samsung-j5x.dts     | 15 +++++++
+ 3 files changed, 59 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi b/arch=
+/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
+index cb0e4a7faf91..68e22873647f 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
+@@ -84,6 +84,31 @@ muic: extcon@25 {
+ =09=09=09pinctrl-0 =3D <&muic_int_default>;
+ =09=09};
+ =09};
++
++=09i2c_sensors: i2c-sensors {
++=09=09compatible =3D "i2c-gpio";
++
++=09=09sda-gpios =3D <&tlmm 31 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
++=09=09scl-gpios =3D <&tlmm 32 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
++
++=09=09pinctrl-0 =3D <&sensors_i2c_default>;
++=09=09pinctrl-names =3D "default";
++
++=09=09#address-cells =3D <1>;
++=09=09#size-cells =3D <0>;
++
++=09=09accelerometer: accelerometer@1d {
++=09=09=09compatible =3D "st,lis2hh12";
++=09=09=09reg =3D <0x1d>;
++
++=09=09=09interrupts-extended =3D <&tlmm 115 IRQ_TYPE_LEVEL_HIGH>;
++
++=09=09=09pinctrl-0 =3D <&accel_int_default>;
++=09=09=09pinctrl-names =3D "default";
++
++=09=09=09st,drdy-int-pin =3D <1>;
++=09=09};
++=09};
+ };
+=20
+ &blsp_i2c5 {
+@@ -147,6 +172,13 @@ &wcnss_iris {
+ };
+=20
+ &tlmm {
++=09accel_int_default: accel-int-default-state {
++=09=09pins =3D "gpio115";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
++
+ =09gpio_hall_sensor_default: gpio-hall-sensor-default-state {
+ =09=09pins =3D "gpio52";
+ =09=09function =3D "gpio";
+@@ -187,6 +219,13 @@ sdc2_cd_default: sdc2-cd-default-state {
+ =09=09bias-disable;
+ =09};
+=20
++=09sensors_i2c_default: sensors-i2c-default-state {
++=09=09pins =3D "gpio31", "gpio32";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
++
+ =09tsp_int_default: tsp-int-default-state {
+ =09=09pins =3D "gpio13";
+ =09=09function =3D "gpio";
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts b/arch/arm64/b=
+oot/dts/qcom/msm8916-samsung-j5.dts
+index 3e1ff5b4d2d7..58c2f5a70e78 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
+@@ -10,6 +10,11 @@ / {
+ =09chassis-type =3D "handset";
+ };
+=20
++&accelerometer {
++=09vdd-supply =3D <&pm8916_l5>;
++=09vddio-supply =3D <&pm8916_l5>;
++};
++
+ &blsp_i2c5 {
+ =09status =3D "disabled";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts b/arch/arm64/=
+boot/dts/qcom/msm8916-samsung-j5x.dts
+index b2fe109723d8..8b404a9cd62d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts
+@@ -23,6 +23,17 @@ reg_vdd_tsp_a: regulator-vdd-tsp-a {
+ =09};
+ };
+=20
++&accelerometer {
++=09interrupts-extended =3D <&tlmm 49 IRQ_TYPE_LEVEL_HIGH>;
++
++=09vdd-supply =3D <&pm8916_l6>;
++=09vddio-supply =3D <&pm8916_l6>;
++
++=09mount-matrix =3D "0", "-1", "0",
++=09=09       "1", "0", "0",
++=09=09       "0", "0", "-1";
++};
++
+ &muic {
+ =09interrupts =3D <121 IRQ_TYPE_EDGE_FALLING>;
+ };
+@@ -40,6 +51,10 @@ tsp_ldo_en_default: tsp-ldo-en-default-state {
+ =09};
+ };
+=20
++&accel_int_default {
++=09pins =3D "gpio49";
++};
++
+ &muic_int_default {
+ =09pins =3D "gpio121";
+ };
+--=20
+2.39.2
+
+
