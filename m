@@ -2,204 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D346790F68
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 02:59:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C8B6790FB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 03:53:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350099AbjIDA5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Sep 2023 20:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46702 "EHLO
+        id S238002AbjIDBxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Sep 2023 21:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350071AbjIDA5g (ORCPT
+        with ESMTP id S237008AbjIDBxp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Sep 2023 20:57:36 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D4999D
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Sep 2023 17:57:29 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-31977ace1c8so824789f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Sep 2023 17:57:29 -0700 (PDT)
+        Sun, 3 Sep 2023 21:53:45 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3421BE7
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Sep 2023 18:53:41 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso13083071fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Sep 2023 18:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693789048; x=1694393848; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F4NiAX8nddOFb+q5MdSSZTo4J0GfTd0YP95tRAyVWeE=;
-        b=xw3hl6gLjolM1XU5AfcMXPIFNSvIf8DiOHTgSVwT7DubcasI0YbHjxehXd2O98955d
-         vgPHNVK7P0odIcxB+3JLJmTXRUbb6BQ0JPlEIAv4AANp0+0CRcxMZdpImYovjn3zi/mu
-         x70F790qKxoE4O2n9bLqb8+kqHbCB2fsBkja6yQ9KUjV78T0cXeW2v5CwXzgrJOsW3B+
-         EUte9yneVBIXA7Yu0sa4IkQ56KUbhvqxO0O51FL2iSFyRZHG9tt6B6x7R2Nnqrppo+w7
-         aXWxnPF3AJ9v5byxAyIUNMZQAE1jnc9fKjpODYpjkToyWRcVxlTvTPw9VGRUJxr35Zny
-         ER/Q==
+        d=linaro.org; s=google; t=1693792419; x=1694397219; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dy2kbeuiRBdiBUHn2uNtKw0zEJJVCb8NdeL9BezpnxE=;
+        b=QXwAVku7OtIQ8lBKmIM5JR+cTZrppIkipVwUaHV6H4uZ8R4hLMS3JyjREPqfPaXb+a
+         KCRwNVNc9Fg74VwXkG1kZluf3cklNuM/Y522WrHdyj0l2lrepku4rGTyuuuexeQpEKZk
+         MYNu8C2htSKPlwELSuDbhfqBZ7PThtPCbVKZsa+DjlWBUqCyTyvD0t2J6BYcAdOhkbGK
+         WH4eW5XLixIkPqyl4t7/HOZuAXDJftxIjl8gTjeh+hX7F6Kto2lvFxx9/OUbtnfh5Jvz
+         Howd4xhGDAwu2ndHMqU9/mmP3QZ/OkarnKOJ9lln2zk3q6qSA2lQLOQCGsvkTvRFc3bZ
+         G8Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693789048; x=1694393848;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F4NiAX8nddOFb+q5MdSSZTo4J0GfTd0YP95tRAyVWeE=;
-        b=AW2i9+PW3fkAdDuoIQ7k4xjX9hNLTA/iPJ5hFvYcsoRg+H7uQrAW05wHrGUPB6n+Rw
-         ZCOLWcUMok5wfdlRaVWcJRYC8Nv06rCcDhXJYdS58p4xJKKkUQETCfbRIZyPclKvVwg4
-         UMog6URBTng966D0drBJJciQtRKypRrnoAIHwPAcep+a+sEhVvvCL4n5inDq1dGMk9iH
-         RpCUnHD+kqGiRTL8jUzoC7RcrOF//fiE2IGzf+CycB8aZeGprCT7w7JQ8rleyHiYs/Xa
-         a3JlUe3YLzXt48/NZMPY99TMxqS5gIEnLjwslKN9O9bAUqwOqMVR5MrBZvdCkOUf+vIC
-         PyxQ==
-X-Gm-Message-State: AOJu0YymSlJjydgYbdncG2zBQ7IIHGaEXw3TFxuGfwzlZXt/urutfXze
-        PV+V6I9sl0bZ0SWTZYVP8qQXNg==
-X-Google-Smtp-Source: AGHT+IFU+VFezB3qmW7ae+FJNxTsbAodLWMouwX29XWEuFb3b0PM47kSPr0KPSt6Bfebz16hQOqWEg==
-X-Received: by 2002:adf:ef91:0:b0:317:69d2:35be with SMTP id d17-20020adfef91000000b0031769d235bemr6522208wro.30.1693789047727;
-        Sun, 03 Sep 2023 17:57:27 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id k33-20020a05600c1ca100b0040210a27e29sm12824297wms.32.2023.09.03.17.57.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Sep 2023 17:57:27 -0700 (PDT)
-Message-ID: <c6f4b93c-aa80-e250-d06b-6b3bdfbfc64b@linaro.org>
-Date:   Mon, 4 Sep 2023 01:57:26 +0100
+        d=1e100.net; s=20221208; t=1693792419; x=1694397219;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dy2kbeuiRBdiBUHn2uNtKw0zEJJVCb8NdeL9BezpnxE=;
+        b=CZoiyJ0xjS8JZcUJRDkUSMNrDEUqMDRas7br8ArFSgMfmj/85YRrlXWPuD/iIyrbcL
+         9hZqOOs9YYMyzNXlwPuyhgjPNWWZ9XjF4hSL3jEtxTA/+CKTPU84GYh3GFiEcLZi5BC4
+         8dQdku9/RV53KIUXN2qHvRVbZ6L03MNUJZoXYhZXAmy5+n6JfcWvaKO5M3dwZjxbFsTM
+         P4ruvXKOjJ9LbuH1ZyfI+IOc6sfjc3akOwv2JrWhDh54NvY7zEK4mI6/mdvh5kKlNaHm
+         jBGngkalfnl26dwdmqmnHyo7Z9SmcejWFvNBgsf0hNm+IBoCkeTbjq6L1jQ5vuIelgr4
+         B8Zg==
+X-Gm-Message-State: AOJu0YwLYC5pApSAI7ISEgoChSttX/nzgfB2g3n1xPVzFclKCEq05q1C
+        oHPxAENW15c7aEhCOTNdU0BMIg==
+X-Google-Smtp-Source: AGHT+IEr0RCH4tYSkpwLMyNrd6sFeVftt2qeSJkJg6rBPTOdgqkf2WJkV6CnkFDa+VVNamWPRzGQhQ==
+X-Received: by 2002:a2e:7812:0:b0:2bc:fb79:d165 with SMTP id t18-20020a2e7812000000b002bcfb79d165mr6335992ljc.39.1693792419380;
+        Sun, 03 Sep 2023 18:53:39 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id o14-20020a2e9b4e000000b002b6d68b520esm1736657ljj.65.2023.09.03.18.53.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Sep 2023 18:53:38 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/3] drm: introduce per-encoder debugfs directory
+Date:   Mon,  4 Sep 2023 04:53:35 +0300
+Message-Id: <20230904015338.2941417-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
-Content-Language: en-US
-To:     Ziyang Huang <hzyitc@outlook.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, quic_gokulsri@quicinc.com,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
- <TYZPR01MB555673C1E12A27DA8109DBEAC9EAA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <TYZPR01MB555673C1E12A27DA8109DBEAC9EAA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/09/2023 14:02, Ziyang Huang wrote:
-> 在 2023/9/1 23:04, Bryan O'Donoghue 写道:
->> <...>
->>
->> The assignment of pins 20 and 21 to blsp1_uart1 is not correct.
->>
->> The blspX_uartY in pinctrl should match what is in the dtsi so 
->> assigning pins_a above to blsp1_uart1 is not right. The dts name and 
->> pinctrl name should be the same.
->>
->> Your console is on blsp0_uart0.
->>
->> https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/blob/5343739b4070bcec2fecd72f758c16adc31a3083/arch/arm/dts/ipq5018-mp03.3.dts#L33
->>
->> So roughly speaking
->>
->> arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->>
->> aliases {
->>      serial0 = &blsp0_uart0;
->> };
->>
->> chosen {
->>      stdout-path = "serial0:115200n8";
->> };
->>
->> &blsp0_uart0 {
->>          pinctrl-0 = <&uart0_pins>;
->>          pinctrl-names = "default";
->>          status = "okay";
->> };
->>
->>
->> arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>
->> blsp0_uart0: serial@78af000
->>
->> either that or  blsp0_uart1 for pins28 and pins29 - you seem to 
->> indicate pins_1 => blsp0_uart0.
->>
->> The two roots of the problem are
->>
->> 1. Mislabeling of the uart block in the dtsi
->> 2. Invalid miscongiruation of pins for that misnamed block
->>
->> The fix should be
->>
->> 1. Fix the labeling of uart in the dtsi
->> 2. Decide on which pins gpio20, gpio21 ? are the right ones to configure
->>
->> I thought you said in a previous email if you changed pins gpio28 and 
->> gpio29 that the UART would fail if so that implies blsp0_uart1.
->>
->> Either way the pinctrl and dts should agree.
->>
->> ---
->> bod
->>
-> 
-> No, please read my commit message carefully.
-> 
-> The Y of pinctrl is the index of pinmux config. So it can't be used in 
-> the serial node definition.
-> 
-> Please note that the physical port of first serial is configurable. It 
-> can use gpio20, gpio21 or/and gpio28,29. All of these pins are for the 
-> first serial.
-> 
-> Let's take the second serial as an example. It has 3 configurable 
-> physical port groups - "blsp1_uart0" (pinconfig name, use GPIO 
-> 10,11,12,13), "blsp1_uart1" (gpio 31,32,33,34), "blsp1_uart2" (gpio 
-> 23,24,25,26).
-> 
-> But the dts name of the second serial definition is "blsp1_uart2". 
-> Because it the second serial of the first BLSP block.
-> 
-> Same logic. The dts name of the first serial definition is 
-> "blsp1_uart1". Because it the first serial of the first BLSP block.
-> 
-> I think I need to introduce the architecture of these SoC. It has two 
-> BLSP block. Each BLSP block has several uart port.
-> 
-> So the dts name of serial contains the BLSP index and the serial index 
-> inside BLSP. But pinconf name doesn't care about it. So it use global 
-> index. And due to the physical ports are configurable, it need pinmux 
-> index.
-> 
-> The equation will be like this:
-> 
-> dts name of serial definition: "blspX_uartY"
-> pinconf name: "blspU_uartV"
-> U = (uart_number_inside_each_blsp * (X - 1)) + (Y - 1)
+Each of connectors and CRTCs used by the DRM device provides debugfs
+directory, which is used by several standard debugfs files and can
+further be extended by the driver. Add such generic debugfs directories
+for encoder. As a showcase for this dir, migrate `bridge_chains' debugfs
+file (which contains per-encoder data) and MSM custom encoder status to
+this new debugfs directory.
 
-I've checked the documentation for this chip.
+Dmitry Baryshkov (3):
+  drm/encoder: register per-encoder debugfs dir
+  drm/bridge: migrate bridge_chains to per-encoder file
+  drm/msm/dpu: move encoder status to standard encoder debugfs dir
 
-gpio20, gpio21 = blsp0_uart0
-gpio28, gpio29 = blsp0_uart0
+ drivers/gpu/drm/drm_bridge.c                | 44 --------------
+ drivers/gpu/drm/drm_debugfs.c               | 64 ++++++++++++++++++++-
+ drivers/gpu/drm/drm_encoder.c               |  4 ++
+ drivers/gpu/drm/drm_internal.h              |  9 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 45 ++-------------
+ include/drm/drm_bridge.h                    |  2 -
+ include/drm/drm_encoder.h                   | 16 +++++-
+ 7 files changed, 95 insertions(+), 89 deletions(-)
 
-These pins are muxed to UART0, I agree, the u-boot dts also indicates 
-this also.
+-- 
+2.39.2
 
-If we open the documentation further we see
-
-0x78AF000 = BLSP1_BLSP_UART0
-0x79b0000 = BLSP1_BLSP_UART1
-
-So for starters the dtsi has the _wrong_ label.
-
-Here/anseo
-
-grep uart0: arch/arm64/boot/dts/qcom/*
-arch/arm64/boot/dts/qcom/ipq5332.dtsi:		blsp1_uart0: serial@78af000 {
-arch/arm64/boot/dts/qcom/ipq9574.dtsi:		blsp1_uart0: serial@78af000 {
-
-That's how that label ought to be the main hint something is askance is 
-assigning a pin named "blsp0_uart0" to a dts entry named "blsp1_uart1".
-
-Please update the label in your next revision.
-
----
-bod
