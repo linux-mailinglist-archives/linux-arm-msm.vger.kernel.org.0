@@ -2,150 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CBF07914B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 11:28:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3802B7914BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 11:29:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243589AbjIDJ2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 05:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49456 "EHLO
+        id S1347221AbjIDJ3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 05:29:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbjIDJ2a (ORCPT
+        with ESMTP id S229747AbjIDJ3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 05:28:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A60B18D;
-        Mon,  4 Sep 2023 02:28:27 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3847qnJJ016758;
-        Mon, 4 Sep 2023 09:28:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dHSeTJ8qyo7II+cTEjTn3YYF2/d7aYJKF5QdA04W/wA=;
- b=QOukjCHt4foQnwLrIDrxwmYIy4GSHfRh4XHCwHdx3PyTIMqqA81Sbw2U8N1opZlklRMU
- 6yqfSeNAHFZqAQalF6EcWvr/Q/eWaCyboubwD9L8zVEuepb5gT94Bkb2HdTnGFSm38Gi
- RTc6gIaP7eGTF8mmt9w37utAHfMIbT8NMN99pVWLrVjx7vXvzaSyAE4tStWDVRSBxfhM
- m4lkerwj8UNmEmDK3sSTodZ32BWhXHGrLn8ac485/0XRzo0LeXS2866ITw+4EcpUaEZl
- UtkrJua/LCr4VOQK2Sl6/UTta2ybnWs9AOlntCJzxMBS6qavJ0B0+n1n4AcKfRb8aB3x qg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suw50u02b-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 04 Sep 2023 09:28:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3849SAsa024974
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 4 Sep 2023 09:28:10 GMT
-Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 4 Sep
- 2023 02:28:05 -0700
-Message-ID: <f37d2dd8-d625-048e-9c21-bba710b40086@quicinc.com>
-Date:   Mon, 4 Sep 2023 14:57:39 +0530
+        Mon, 4 Sep 2023 05:29:04 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D56CC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 02:29:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693819740; x=1725355740;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=hSEf9AtIpa1+Qo/iru9dpm+rlzezvLKZKvW79Pi0lXc=;
+  b=fXYG1QNNWFMuTpppbGpzOpyKnGccEMAP+8gp5D8Lb+2M/GZdhhytoasS
+   nAln2Paqb/Ueya557QxxUF94Vb8VUq795P8VtOegP0NE7qyr4hNgdbEcv
+   iaNKjmo/oNoLbMs4RR5uFhj3Kw706U+T6njPmvBGJa3QfXihV0wCrydjV
+   1oQZ+SipNja93PCkSwqP8LX/ef7CIT+Kgp9shyksGuqwfR1FIgHaL9Xgn
+   W+oaygtmbH09hjhGtrboDcBG+2pmkuXHVriAwOZ8kad8ehrtPEFAjngPS
+   j/FWmRv7Enndg8lZeABZ9alCsu3xC5R65ZZdJX1oaOMZh1W8cXiifcDez
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="356055681"
+X-IronPort-AV: E=Sophos;i="6.02,226,1688454000"; 
+   d="scan'208";a="356055681"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 02:28:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="855548971"
+X-IronPort-AV: E=Sophos;i="6.02,226,1688454000"; 
+   d="scan'208";a="855548971"
+Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 02:28:58 -0700
+Date:   Mon, 4 Sep 2023 11:28:55 +0200
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_carlv@quicinc.com, quic_pkanojiy@quicinc.com,
+        linux-arm-msm@vger.kernel.org, ogabbay@kernel.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/qaic: Use devm_drm_dev_alloc() instead of
+ drm_dev_alloc()
+Message-ID: <20230904092855.GC184247@linux.intel.com>
+References: <20230901161236.8371-1-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 4/6] clk: qcom: Use HW_CTRL_TRIGGER flag to switch
- video GDSC to HW mode
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        "Stephen Boyd" <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, <linux-pm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>
-References: <20230816145741.1472721-1-abel.vesa@linaro.org>
- <20230816145741.1472721-5-abel.vesa@linaro.org>
- <2fc0d771-cee2-4826-a62a-56ed4bfad3a2@linaro.org>
- <ZOXiUzxfs1cj3SWT@linaro.org>
- <07e93a9d-69ac-41b7-aa21-b855b97bf801@linaro.org>
- <ef1439f8-4a9b-53b4-34be-1229b39d2310@quicinc.com>
- <8257f7b3-dfb8-4683-85de-600f3b1ed54b@linaro.org>
-Content-Language: en-US
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <8257f7b3-dfb8-4683-85de-600f3b1ed54b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: viwiA0owfd7w1Vn0wPtxqXNg9vGIJMER
-X-Proofpoint-ORIG-GUID: viwiA0owfd7w1Vn0wPtxqXNg9vGIJMER
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-04_07,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 mlxlogscore=730 clxscore=1015
- spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 mlxscore=0
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2309040085
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230901161236.8371-1-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/2/2023 5:33 PM, Konrad Dybcio wrote:
-> On 28.08.2023 08:48, Jagadeesh Kona wrote:
->>
->>
->> On 8/26/2023 4:17 PM, Konrad Dybcio wrote:
->>> On 23.08.2023 12:41, Abel Vesa wrote:
->>>> On 23-08-16 19:56:46, Konrad Dybcio wrote:
->>>>> On 16.08.2023 16:57, Abel Vesa wrote:
->>>>>> From: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>
->>>>>> The current HW_CTRL flag switches the video GDSC to HW control mode as
->>>>>> part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
->>>>>> give consumer drivers more control and switch the GDSC mode as and when
->>>>>> required.
->>>>>>
->>>>>> HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
->>>>>> HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
->>>>>>
->>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>>>> ---
->>>>> Do we have any use for the HW_CTRL flag?
->>>>>
->>>>> Perhaps it should be renamed to HW_CTRL_ALWAYS?
->>>>>
->>>>> Or even better, *if and only if* that is necessary, add a common
->>>>> property like "always_hw_managed" to the genpd code?
->>>>
->>>> The HW_CTRL flag is still needed for the consumers that expect the GDSC
->>>> to be have the HW control bit set right after it gets enabled.
->>> Guess the correct question here would be.. Are there any?
->>>
->>
->> Yes, Display GDSC(mdss_gdsc) is required to be controlled always in HW control mode when it is enabled.
-> Oh really?
+On Fri, Sep 01, 2023 at 10:12:36AM -0600, Jeffrey Hugo wrote:
+> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 > 
-> Looking at msm-5.10 techpack, only the SDE RSC driver seems to
-> trigger regulator fast mode (so, enabling gdsc hw_ctrl on downstream).
+> Since drm_dev_alloc() is deprecated it is recommended to use
+> devm_drm_dev_alloc() instead. Update the driver to start using
+> devm_drm_dev_alloc().
 > 
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> +	/*
+> +	 * drm_dev_unregister() sets the driver data to NULL and
+> +	 * drm_dev_register() does not update the driver data. During a SOC
+> +	 * reset drm dev is unregistered and registered again leaving the
+> +	 * driver data to NULL.
+> +	 */
+> +	dev_set_drvdata(to_accel_kdev(qddev), drm->accel);
 
-Yes, on downstream, display GDSC has only one consumer(SDE RSC driver) 
-and there are no other consumers. SDE RSC driver switches the GDSC to hw 
-control mode once GDSC is enabled and leaves it in hw control mode. Thanks!
+Yeah, explicitly nullified in drm_minor_unregister() with ' /* safety belt */
+comment. I think in long term goal would be device reset not require
+unregister/register.
 
-Regards,
-Jagadeesh
+> +	drm_dev_get(drm);
+> +	drm_dev_unregister(drm);
 
-> Konrad
+That looks odd. I guess there is use-after-free problem if you just do
+drm_dev_unregister(). Additional drm_dev_get() does not seems to be right
+solution, but I'm not 100% sure, so ... 
+
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+
+Regards
+Stanislaw
+
