@@ -2,98 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3802B7914BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 11:29:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23C807914C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 11:33:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347221AbjIDJ3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 05:29:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
+        id S234330AbjIDJdE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 05:33:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbjIDJ3E (ORCPT
+        with ESMTP id S232923AbjIDJdE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 05:29:04 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D56CC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 02:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693819740; x=1725355740;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hSEf9AtIpa1+Qo/iru9dpm+rlzezvLKZKvW79Pi0lXc=;
-  b=fXYG1QNNWFMuTpppbGpzOpyKnGccEMAP+8gp5D8Lb+2M/GZdhhytoasS
-   nAln2Paqb/Ueya557QxxUF94Vb8VUq795P8VtOegP0NE7qyr4hNgdbEcv
-   iaNKjmo/oNoLbMs4RR5uFhj3Kw706U+T6njPmvBGJa3QfXihV0wCrydjV
-   1oQZ+SipNja93PCkSwqP8LX/ef7CIT+Kgp9shyksGuqwfR1FIgHaL9Xgn
-   W+oaygtmbH09hjhGtrboDcBG+2pmkuXHVriAwOZ8kad8ehrtPEFAjngPS
-   j/FWmRv7Enndg8lZeABZ9alCsu3xC5R65ZZdJX1oaOMZh1W8cXiifcDez
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="356055681"
-X-IronPort-AV: E=Sophos;i="6.02,226,1688454000"; 
-   d="scan'208";a="356055681"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 02:28:59 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="855548971"
-X-IronPort-AV: E=Sophos;i="6.02,226,1688454000"; 
-   d="scan'208";a="855548971"
-Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 02:28:58 -0700
-Date:   Mon, 4 Sep 2023 11:28:55 +0200
-From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     quic_carlv@quicinc.com, quic_pkanojiy@quicinc.com,
-        linux-arm-msm@vger.kernel.org, ogabbay@kernel.org,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] accel/qaic: Use devm_drm_dev_alloc() instead of
- drm_dev_alloc()
-Message-ID: <20230904092855.GC184247@linux.intel.com>
-References: <20230901161236.8371-1-quic_jhugo@quicinc.com>
+        Mon, 4 Sep 2023 05:33:04 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B011CC4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 02:33:00 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so4430782a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 02:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693819979; x=1694424779; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=D6lF0yLij+X6WG+JF5oJhpFpGYbg0jGTt46XFYaBxW8=;
+        b=miYKQxxiRTzlomOErBbMlnIaZ1nhTCrhc+YcYAP7I++MBEVoRNFpAndULlEFfJepa9
+         9JWtoIBTMpjMBannBauiakeRFIW8L8rm+LbKeYSNtSRBFeh73Co+fAOpVhSh4Vrg3Tib
+         NFEDYXt8s9qcPdEmfPr6W9hB8+IhIRS93uUjDBmy1UU747y8UqpvdYNrjL2kKvvwm3LQ
+         G/i7OWTTy8zKsWCxu4zZKmhnZSiqsoovt0G7xdZncQK3R1gQOsuE0HRYhfdYpQPu5XDM
+         R0LZtTnO7Yf5ho75/28YtZpdrDhnpy7x1DtXxFh0EI1XtCz4+aoBuRFs9jD26fsEibQS
+         92Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693819979; x=1694424779;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D6lF0yLij+X6WG+JF5oJhpFpGYbg0jGTt46XFYaBxW8=;
+        b=NdjFLrKImjdP8AJll1GgIGSI8rbtdLhTqa9FUsadKfprGUhHTx6EJwXe168Fo2LW3w
+         t07AAdPB9gIDakczbOPY/wRIMe5FWd6nQeD1ag0kwdXBm9j0GJmHaUhVve9s6Kb5WwMp
+         QsY9yt0yHFqlMR4idFJP+fgh+p3S6IWw0K4TM80hFp/sJQQmPNdOlS7FnTz7gkWkC+Jn
+         Flae7DJA7LiiU9a1cZS1UoKrWovjfTRWdvma5UljPpKEJEo1LAULyipJO6b7hpFdUbv4
+         jNAK29HYPDsZ3LhsisgtBeTHtENjGHzEzfObjDIVwa8NojQ6lRDH9vzb/KerlvET+N0O
+         k+zA==
+X-Gm-Message-State: AOJu0YyEC2WO/f09b/3FLqFaXFF6PuScVYjcyq8CLcsh8nbk/3M5jb+y
+        Zqe7rfzpGmhMBtWL+quDjOMDQw==
+X-Google-Smtp-Source: AGHT+IG2UiuAQfd9LsYfk4KhK5NrnZMH7uuYN45A4Nx09ClzsdyQVmSs6ZHB918+eFkJOiNJb43vWA==
+X-Received: by 2002:a17:906:7395:b0:9a1:f1b2:9f2e with SMTP id f21-20020a170906739500b009a1f1b29f2emr9371713ejl.2.1693819979089;
+        Mon, 04 Sep 2023 02:32:59 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id gh4-20020a170906e08400b009a1e73f2b4bsm5838482ejb.48.2023.09.04.02.32.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Sep 2023 02:32:58 -0700 (PDT)
+Message-ID: <fbfc6e8d-dd6a-ee1d-a62a-d076470db18b@linaro.org>
+Date:   Mon, 4 Sep 2023 11:32:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230901161236.8371-1-quic_jhugo@quicinc.com>
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH] dt-bindings: firmware: Add documentation for
+ qcom,platform-parts-info
+Content-Language: en-US
+To:     Naman Jain <quic_namajain@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_rohiagar@quicinc.com,
+        kernel@quicinc.com
+References: <20230901060223.19575-1-quic_namajain@quicinc.com>
+ <f340f731-8471-39be-c7b2-7d930916e3b1@linaro.org>
+ <359ba91d-866b-45e4-83fe-598ed791f877@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <359ba91d-866b-45e4-83fe-598ed791f877@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 01, 2023 at 10:12:36AM -0600, Jeffrey Hugo wrote:
-> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+On 04/09/2023 10:38, Naman Jain wrote:
 > 
-> Since drm_dev_alloc() is deprecated it is recommended to use
-> devm_drm_dev_alloc() instead. Update the driver to start using
-> devm_drm_dev_alloc().
+> On 9/1/2023 12:52 PM, Krzysztof Kozlowski wrote:
+>> On 01/09/2023 08:02, Naman Jain wrote:
+>>> Add documentation to describe device tree bindings for QCOM's
+>>> platform-parts-info node. Firmware populates these nodes to pass the
+>>> information to kernel regarding the subset of hardware blocks
+>>> and features like Camera, Modem, Display present in a product.
+>>>
+>>> This is to support that the same software image runs seamlessly on
+>>> different platforms where one or more HW blocks are not supported or
+>>> if some sub parts for a particular block are not supported.
+>>>
+>>> Purpose of these definitions is to allow clients to know about this,
+>>> and thus, handle these cases gracefully.
+>> Whether camera is or is not supported, is defined by presence of camera
+>> node or by its status field.
+>>
+>> Existing firmware (e.g. U-Boot) is also doing this - patching DTS when
+>> needed.
+>>
+>> I do not think introducing some parallel way makes any sense, so no,
+>> that's not the way to do it.
+>>
+>> Best regards,
+>> Krzysztof
 > 
-> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> +	/*
-> +	 * drm_dev_unregister() sets the driver data to NULL and
-> +	 * drm_dev_register() does not update the driver data. During a SOC
-> +	 * reset drm dev is unregistered and registered again leaving the
-> +	 * driver data to NULL.
-> +	 */
-> +	dev_set_drvdata(to_accel_kdev(qddev), drm->accel);
+> 
+> Thanks Krzysztof for reviewing the patch. I think for telling whether 
+> the Camera HW block is not
+> supported / not present, firmware can either remove the device tree 
+> node, or change its status
+> to disabled, so that is fine.
+> With this patch, I was trying to address the use case, where Camera is 
+> supported but certain features
+> of that particular Camera are not supported, due to dependent HW blocks 
+> not present, or due to
+> product decision to not support it. We wanted to avoid the firmware to 
+> have this overhead of knowing
+> what these individual bits mean and thus, disable few of the HW blocks 
+> that are supposed to be
+> disabled. And this is applicable for each of these HW blocks.
 
-Yeah, explicitly nullified in drm_minor_unregister() with ' /* safety belt */
-comment. I think in long term goal would be device reset not require
-unregister/register.
+What is and what is not supported by camera, is obvious from the
+compatible and you do not need this patch.
 
-> +	drm_dev_get(drm);
-> +	drm_dev_unregister(drm);
+> 
+> For example, we can know from 32 bits provided for modem, if 3G/4G/5G is 
+> supported or not on a
+> platform.
 
-That looks odd. I guess there is use-after-free problem if you just do
-drm_dev_unregister(). Additional drm_dev_get() does not seems to be right
-solution, but I'm not 100% sure, so ... 
+Again, compatible-dependent.
 
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+> That is decided based on presence/absence of certain HW 
+> blocks, but it may or may not be as
+> simple as disabling a particular DT node.
+> Basically we wanted to defer it to the subsystem drivers, to do whatever 
+> they like with this
+> information on sub-parts that are available.
+> 
+> Will rephrase my commit message to make it clearer, but would like to 
+> hear your thoughts on this first.
 
-Regards
-Stanislaw
+Sorry, no, such node is not the solution.
+
+Best regards,
+Krzysztof
 
