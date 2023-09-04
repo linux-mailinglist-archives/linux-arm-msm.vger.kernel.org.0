@@ -2,114 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEF9C7919E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 16:44:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C48437919E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 16:44:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345223AbjIDOoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 10:44:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44516 "EHLO
+        id S1343739AbjIDOok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 10:44:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238076AbjIDOoo (ORCPT
+        with ESMTP id S231791AbjIDOoj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 10:44:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1857E1707;
-        Mon,  4 Sep 2023 07:44:38 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 384Cvbwe026209;
-        Mon, 4 Sep 2023 14:44:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pEH8wCvB9G7cNPAhCZQR1sm1VmgCR+QbsrW7+My6K3c=;
- b=nvlD3k67C31Wor7cXNQXucllRjxnc5mnE7yrbYlzAlbnCnHDt0amPJKi9r1iP0ua/q7x
- OIRlnEQlvc0BkEdv9Dl+8SOdm/cLs09L9DwaXtdQa6YIRwnUmKaSS2/FqioBL1MspqxM
- 1W8X/33q66OJVZD5oEYRtgQywEOfzDxdp4E4L+vE8hgQXgrAnsFu11Bpy07a/+YAWnAk
- gJzJKPplrY9dvEbS8b9/Eusl+Ryh0Vmtq2W6cnZv/XePIzqy/RU/Gek+DOKXFIwxvty/
- z3Cgi7Wp+hvG5ldKmW37OYzdg7kCmhTfh7P1FSQ4OhHyXvisMTVBSkE9KB7s0nOJgIkM zg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suvcrbn5s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 04 Sep 2023 14:44:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 384EiU3E025691
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 4 Sep 2023 14:44:30 GMT
-Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 4 Sep
- 2023 07:44:26 -0700
-Message-ID: <a352b67b-4da9-d477-b953-b8003d4de91c@quicinc.com>
-Date:   Mon, 4 Sep 2023 20:14:23 +0530
+        Mon, 4 Sep 2023 10:44:39 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8253210DE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 07:44:33 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bce552508fso23042411fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 07:44:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693838672; x=1694443472; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kH7WX/bL02gBNSwkaIeLx/wyDLsKZbgUWcH4uKnAa/o=;
+        b=brCDj/Wc2dF2RVYr2acJNeqE9L/qhGYSZQ0uadgNiYQqQD6T/U207fMR+Uwf2Q70rg
+         t61DkAeSEUGjK+scU2/yIuJnuzE+UahJ7h+Kqr9ATGSkP3icCwD910agWahOadPx2nra
+         uABo5KbE+nrK5BzSIHwQcNWcAtqRCcMCLo1QvBATf4mCjq+ZqVFrol1tL7HZLrhtoDrJ
+         83RQXhbm0GaTcUwN2A46y2bASa5t4jFjfG3h4XtHblGVYnCOFfKV68zPD4h8oPEaaesN
+         oT35Hwka/lOB68M963Vjs06YLoVWxRu0nO0NYKfXVsk14zt9+scgJbgykn0jHS9mxCFg
+         SkIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693838672; x=1694443472;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kH7WX/bL02gBNSwkaIeLx/wyDLsKZbgUWcH4uKnAa/o=;
+        b=K/JEKl5c0s38aJ9Sr1H/x6Xg3xa5tjjl/XRAktZ5Kr6FQk0OxgsHikyt0mQta5Mhqv
+         +zMyk6z+3kxOK7fu5E35h6xjZXYMkyr3d2paeP8LtpbZ11hkwTpJ9qxKPq/FfQL6lac8
+         qGVHPYxOsPeUhNYPqKh9VoE190qv4bIyQ3KHEB4/Vn/hGbN29iSGSzOHxi76cIoqPDdx
+         eoZ3S/oSLHX/EwSHLJiX7DrbV+eUSFRYsMMGZ7XZdfqO/hShEsbWTT4rQ/+8Bs4Ykp4O
+         C5/J+6k6vH//hY2iU+JIQBsAFzFltEaxtLJJjBgt8gN1jDcSFFTBUjcfsr/2LXD1GJmJ
+         m59A==
+X-Gm-Message-State: AOJu0Yz4jyqBrhQkIHJeRjlxMko46Yx/Db7c1VMSkAikG/jky9WjqtmF
+        wRFAPZOG9+TeOO9rrwfNZQ+JZQ==
+X-Google-Smtp-Source: AGHT+IEErqFoQDFEzrD9081gh8cXtiVUP+rR3xhizgoZsbXsVV7hp8UJS6hWIuK/ebDqwwBDgJ6ljQ==
+X-Received: by 2002:a2e:3e15:0:b0:2bd:ddf:8aa6 with SMTP id l21-20020a2e3e15000000b002bd0ddf8aa6mr6774021lja.23.1693838671794;
+        Mon, 04 Sep 2023 07:44:31 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id v10-20020a2e7a0a000000b002bce8404157sm2177440ljc.12.2023.09.04.07.44.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Sep 2023 07:44:31 -0700 (PDT)
+Message-ID: <9bfdbcb5-bb17-471c-ba79-5e215e440928@linaro.org>
+Date:   Mon, 4 Sep 2023 17:44:30 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH V6 4/6] scsi: ufs: qcom: Align unipro clk attributes
- configuration as per HPG
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     <mani@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <quic_cang@quicinc.com>,
-        <quic_nguyenb@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Naveen Kumar Goud Arepalli" <quic_narepall@quicinc.com>
-References: <20230901114336.31339-1-quic_nitirawa@quicinc.com>
- <20230901114336.31339-5-quic_nitirawa@quicinc.com>
- <20230901154358.GU818859@hu-bjorande-lv.qualcomm.com>
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <20230901154358.GU818859@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] drm/msm/dpu: move INTF tearing checks to
+ dpu_encoder_phys_cmd_ini
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: f7Rc_J0VrKNtHAsNXXRGm9afeF3Dmo_1
-X-Proofpoint-ORIG-GUID: f7Rc_J0VrKNtHAsNXXRGm9afeF3Dmo_1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-04_07,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 suspectscore=0
- lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309040131
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/1/2023 9:13 PM, Bjorn Andersson wrote:
-> On Fri, Sep 01, 2023 at 05:13:34PM +0530, Nitin Rawat wrote:
->> Currently CORE_CLK_1US_CYCLES, PA_VS_CORE_CLK_40NS_CYCLES are configured
->> in clk scaling post change ops.
->>
->> Move this to clk scaling pre change ops to align completely with hardware
->> specification. This doesn't bring any functionality change.
->>
-> 
-> How can applying the clock scaling configuration, and "aligning with
-> hardware specification" not "bring any functionality change"?
-> 
-> If the code is called in a way where there is no difference between pre
-> and post callbacks, then state that - but it begs the question, why do
-> we have this "flexible" (complex) callback scheme if it doesn't matter.
-> 
-> Regards,
-> Bjorn
+Of course this should be 'drm/msm/dpu: drop DPU_INTF_TE and 
+DPU_PINGPONG_TE' series
 
-Hi Bjorn,
+On 04/09/2023 05:04, Dmitry Baryshkov wrote:
+> rop two feature flags, DPU_INTF_TE and DPU_PINGPONG_TE, in favour of
+> performing the MDSS revision checks instead.
+> 
+> Changes since v2:
+> - Added guarding checks for hw_intf and hw_pp in debug print (Marijn)
+> - Removed extra empty lines (Marijn)
+> 
+> Changes since v1:
+> - Added missing patch
+> - Reworked commit messages (following suggestions by Marijn)
+> - Changed code to check for major & INTF type rather than checking for
+>    intr presence in catalog. Added WARN_ON()s instead. (Marijn)
+> - Added severall comments & TODO item.
+> 
+> Dmitry Baryshkov (8):
+>    drm/msm/dpu: inline _setup_pingpong_ops()
+>    drm/msm/dpu: enable PINGPONG TE operations only when supported by HW
+>    drm/msm/dpu: drop the DPU_PINGPONG_TE flag
+>    drm/msm/dpu: inline _setup_intf_ops()
+>    drm/msm/dpu: enable INTF TE operations only when supported by HW
+>    drm/msm/dpu: drop DPU_INTF_TE feature flag
+>    drm/msm/dpu: drop useless check from
+>      dpu_encoder_phys_cmd_te_rd_ptr_irq()
+>    drm/msm/dpu: move INTF tearing checks to dpu_encoder_phys_cmd_init
+> 
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 52 +++++++++----------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  3 +-
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  6 +--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 51 +++++++++---------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 41 +++++++--------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  3 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  2 +-
+>   7 files changed, 75 insertions(+), 83 deletions(-)
+> 
 
-Here my intention is to align the sequence completely with HPG. 
-Functionality w.r.t to clock scaling is not impacted here.
-I'll update the commit text to capture more details in next patchset.
+-- 
+With best wishes
+Dmitry
 
-Thanks,
-Nitin
