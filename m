@@ -2,165 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC5607911BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 09:05:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DDDB79127C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 09:46:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244319AbjIDHFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 03:05:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35386 "EHLO
+        id S1345041AbjIDHqF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 03:46:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231300AbjIDHFA (ORCPT
+        with ESMTP id S234092AbjIDHqF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 03:05:00 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C76B11A;
-        Mon,  4 Sep 2023 00:04:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693811097; x=1725347097;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4eDDWz5tkHMgCyvYqnj9aGELY6NXC+giySFujrhuh7w=;
-  b=hL6saONAh1YAcrO+kVh2BAVmYxem35bYBKc0Slx0jjN7IAxF1g5zzIJl
-   6PhMLr0tNcdyF0yhBLxWyC+c8dej3e7zS+8LzQT8xN7YDX2S5oKg1hH1/
-   SaADx70ogY3Zx+kj0OP/JfEBOodCu+xTdxOJKBve/ixOB5Rzd+OHfPppt
-   WTJD7eLysKoB4+Ermz6B2OfI22V6meqExYcvfbtO1XB1Q/lo28KcCfKYp
-   /3NEu509fUzOh0W6LqQQNC6DEKlq3uvYVz+frN1T4w4KHUKhD8MfsIAsF
-   o6FWi6yvcgAPPpXXSGSpkxMKU2eCPWG+XU1f4K49IHS472A08nls/5MA2
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="379247735"
-X-IronPort-AV: E=Sophos;i="6.02,225,1688454000"; 
-   d="scan'208";a="379247735"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 00:04:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="734222228"
-X-IronPort-AV: E=Sophos;i="6.02,225,1688454000"; 
-   d="scan'208";a="734222228"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orsmga007.jf.intel.com with SMTP; 04 Sep 2023 00:04:52 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 04 Sep 2023 10:04:51 +0300
-Date:   Mon, 4 Sep 2023 10:04:51 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     quic_huliu@quicinc.com
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
+        Mon, 4 Sep 2023 03:46:05 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784D2F0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 00:45:58 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-52a06f5f556so1416953a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 00:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693813557; x=1694418357; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1oTX6pDWFbsRBZELPps+RqPck8JFOCibC5eerUlD3+Y=;
+        b=KHLl7/25PIapidsHyQKEFBKOTxf6bdnVFR8vrJDais5jypdLg+e/+UYYLkQQv2Zifk
+         P7zPpsy3PrJdr7kM6UFpIvH/CjuOySZp3oEchwM6280f7lPAei2cPgGfiJ+D8aw2DZXt
+         2tm/xveo1hHW5UUj7HyrkGCwn1P2eOQg8X13dMReHQeEWErDZTJkl2tBla71rOGeSTvh
+         w/6EQb1bJ9ScBD+vKpqzsyK5ecIJHuD7QwJDtnBkXlNduTbx5PvT/q8OOQIn48ggayKn
+         YcYodCOVBQXepTVkAkm/7oQRujHUADw8L4NKNztI/GGJSvvXgDAdzHXO8ccLvUgCzbdR
+         RS0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693813557; x=1694418357;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1oTX6pDWFbsRBZELPps+RqPck8JFOCibC5eerUlD3+Y=;
+        b=XvBq94UK8lD4d69OaVqxlPQaAWLnE35qOQSbvefXOq3goJDNOz2gss19BBd8tgsjTY
+         RV0YlMeuAelcwWOCFafv84pplLvosdeyWD27ODBBgUrsNXp8Xzxb6r70WMb9rLyvdkNh
+         C4eHtKOFizsYoPQ/Q0dfXYcgOTa6aMsxovG+6uOsThjB6Vvrib8A9ehwVBw3TvU9mhwA
+         zi6r27+BJgjHTcjJ2WGvMDCin5M3gEV8H8w78+ectyWI87xsMdgidUEAykJul4cNAHy/
+         mYEvyUSfryweoG7uoDiUYosQmU0lLJ0no0Qjh3KsJ90kfT+iIa/4yrekiG7Qnm0jXvYH
+         rm6w==
+X-Gm-Message-State: AOJu0YxTQvNxOkhT7abeg4CLXMjgvpnlm0ldgW7/47w4UUXf/Ufm804l
+        heVBnFYaFF5Rnety0C3nVt1Lnw==
+X-Google-Smtp-Source: AGHT+IEINRbAsvSeWTCzWDCv0GspT0nyL54gbJfmOb7e8zMLCOSHCmSVJ54yK1U9rDxCZlhVy58Klw==
+X-Received: by 2002:aa7:df81:0:b0:525:6d6e:ed53 with SMTP id b1-20020aa7df81000000b005256d6eed53mr5951385edy.27.1693813557008;
+        Mon, 04 Sep 2023 00:45:57 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id b18-20020a05640202d200b0051dfa2e30b2sm5498533edx.9.2023.09.04.00.45.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Sep 2023 00:45:56 -0700 (PDT)
+Message-ID: <1f0bf00f-07db-4017-a30b-618d90ce0457@linaro.org>
+Date:   Mon, 4 Sep 2023 09:45:55 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 2/2] pinctrl: qcom: lpass-lpi: allow slew rate bit in main
+ pin config register
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com,
-        subbaram@quicinc.com
-Subject: Re: [PATCH v5] usb: typec: qcom: Update the logic of regulator
- enable and disable
-Message-ID: <ZPWBk0JRzJivItav@kuha.fi.intel.com>
-References: <20230831-qcom-tcpc-v5-1-5e2661dc6c1d@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230831-qcom-tcpc-v5-1-5e2661dc6c1d@quicinc.com>
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230901090224.27770-1-krzysztof.kozlowski@linaro.org>
+ <20230901090224.27770-3-krzysztof.kozlowski@linaro.org>
+ <08a10dc1-bb8e-48b1-8d86-5ee513835196@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <08a10dc1-bb8e-48b1-8d86-5ee513835196@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 31, 2023 at 06:19:45PM +0800, Hui Liu via B4 Relay wrote:
-> From: Hui Liu <quic_huliu@quicinc.com>
-> 
-> Removed the call logic of disable and enable regulator
-> in reset function. Enable the regulator in qcom_pmic_typec_start
-> function and disable it in qcom_pmic_typec_stop function to
-> avoid unbalanced regulator disable warnings.
-> 
-> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb5
-> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+On 01/09/2023 14:28, Konrad Dybcio wrote:
+> On 1.09.2023 11:02, Krzysztof Kozlowski wrote:
+>> Existing Qualcomm SoCs have the LPASS pin controller slew rate control
+>> in separate register, however this will change with upcoming Qualcomm
+>> SoCs.  The slew rate will be part of the main register for pin
+>> configuration, thus second device IO address space is not needed.
+>>
+>> Prepare for supporting new SoCs by adding flag customizing the driver
+>> behavior for slew rate.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 20 ++++++++++++++------
+>>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h |  7 +++++++
+>>  2 files changed, 21 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> index e2df2193a802..40eb58a3a8cd 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> @@ -190,6 +190,7 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
+>>  				    const struct lpi_pingroup *g,
+>>  				    unsigned int group, unsigned int slew)
+>>  {
+>> +	void __iomem *reg;
+> Aaalmost reverse-Christmas-tree!
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+I can fix it.
 
-> ---
-> Changes in v5:
-> - Removed Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-> - Updated V4 history
-> - Link to v4: https://lore.kernel.org/r/20230830-qcom-tcpc-v4-1-c19b0984879b@quicinc.com
 > 
-> Changes in v4:
-> - Rephrased commit text
-> - Link to v3: https://lore.kernel.org/r/20230828-qcom-tcpc-v3-1-e95b7afa34d9@quicinc.com
+>>  	unsigned long sval;
+>>  	int slew_offset;
+>>  
+>> @@ -203,12 +204,17 @@ static int lpi_config_set_slew_rate(struct lpi_pinctrl *pctrl,
+>>  	if (slew_offset == LPI_NO_SLEW)
+>>  		return 0;
+>>  
+>> +	if (pctrl->data->flags & LPI_FLAG_SLEW_RATE_SAME_REG)
+>> +		reg = pctrl->tlmm_base + LPI_TLMM_REG_OFFSET * group + LPI_GPIO_CFG_REG;
+>> +	else
+>> +		reg = pctrl->slew_base + LPI_SLEW_RATE_CTL_REG;
+> Perhaps lpi_gpio_read/write could be used here?
 > 
-> Changes in v3:
-> - Take Bryan's proposal to remove enable/disable operation in pdphy
-> enable and pdphy disable function, then enable regulator in pdphy start
-> function and disable it in pdphy stop function.
-> - Link to v2: https://lore.kernel.org/r/20230824-qcom-tcpc-v2-1-3dd8c3424564@quicinc.com
-> 
-> Changes in v2:
-> - Add Fixes tag
-> - Link to v1: https://lore.kernel.org/r/20230823-qcom-tcpc-v1-1-fa81a09ca056@quicinc.com
-> ---
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> index bb0b8479d80f..52c81378e36e 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> @@ -381,10 +381,6 @@ static int qcom_pmic_typec_pdphy_enable(struct pmic_typec_pdphy *pmic_typec_pdph
->  	struct device *dev = pmic_typec_pdphy->dev;
->  	int ret;
->  
-> -	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
-> -	if (ret)
-> -		return ret;
-> -
->  	/* PD 2.0, DR=TYPEC_DEVICE, PR=TYPEC_SINK */
->  	ret = regmap_update_bits(pmic_typec_pdphy->regmap,
->  				 pmic_typec_pdphy->base + USB_PDPHY_MSG_CONFIG_REG,
-> @@ -422,8 +418,6 @@ static int qcom_pmic_typec_pdphy_disable(struct pmic_typec_pdphy *pmic_typec_pdp
->  	ret = regmap_write(pmic_typec_pdphy->regmap,
->  			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
->  
-> -	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
-> -
->  	return ret;
->  }
->  
-> @@ -447,6 +441,10 @@ int qcom_pmic_typec_pdphy_start(struct pmic_typec_pdphy *pmic_typec_pdphy,
->  	int i;
->  	int ret;
->  
-> +	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
-> +	if (ret)
-> +		return ret;
-> +
->  	pmic_typec_pdphy->tcpm_port = tcpm_port;
->  
->  	ret = pmic_typec_pdphy_reset(pmic_typec_pdphy);
-> @@ -467,6 +465,8 @@ void qcom_pmic_typec_pdphy_stop(struct pmic_typec_pdphy *pmic_typec_pdphy)
->  		disable_irq(pmic_typec_pdphy->irq_data[i].irq);
->  
->  	qcom_pmic_typec_pdphy_reset_on(pmic_typec_pdphy);
-> +
-> +	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
->  }
->  
->  struct pmic_typec_pdphy *qcom_pmic_typec_pdphy_alloc(struct device *dev)
-> 
-> ---
-> base-commit: bbb9e06d2c6435af9c62074ad7048910eeb2e7bc
-> change-id: 20230822-qcom-tcpc-d41954ac65fa
-> 
-> Best regards,
-> -- 
-> Hui Liu <quic_huliu@quicinc.com>
+> I guess both ways work though
 
--- 
-heikki
+I was thinking about this, but decided not to in favor of duplicating
+"tlmm_base + offset * group ....". It would not make the code easier to
+read.
+
+
+Best regards,
+Krzysztof
+
