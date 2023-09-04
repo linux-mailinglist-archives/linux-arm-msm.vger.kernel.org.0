@@ -2,161 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A75179133C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 10:22:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 864F779139A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 10:38:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351419AbjIDIWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 04:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35304 "EHLO
+        id S235464AbjIDIiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 04:38:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230273AbjIDIWv (ORCPT
+        with ESMTP id S229923AbjIDIiT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 04:22:51 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id AF87CD8;
-        Mon,  4 Sep 2023 01:22:47 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6FDEA11FB;
-        Mon,  4 Sep 2023 01:23:25 -0700 (PDT)
-Received: from [10.57.92.217] (unknown [10.57.92.217])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1D4543F8A4;
-        Mon,  4 Sep 2023 01:22:43 -0700 (PDT)
-Message-ID: <89ff07ec-d0b4-a984-3269-7d5647a6b007@arm.com>
-Date:   Mon, 4 Sep 2023 09:22:44 +0100
+        Mon, 4 Sep 2023 04:38:19 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E20A493;
+        Mon,  4 Sep 2023 01:38:15 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3847pLij030066;
+        Mon, 4 Sep 2023 08:38:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4evW5x2jf5yJ7uFy236w0xJCDV6EE1sj+3xfMBmDyfE=;
+ b=Lta72LbTjPZX51f6UYg4+IaV25MOob+hYrQejLTa03PnUi4VNexOUMqsph5kz+XB80QH
+ uVoqhPAl/zZx49pweF2VKjz9O4lgtcYcEDbITl8H/Hdwp14sILMJXNyRny723cnY2SyR
+ Hw+OFEJp94NUM9Pkz2IrRc3sbBJe+K5nhy3RT3M8xBqwCMvWGhTKAUHzsMJFtc3cs1NM
+ txc/ZUnVbO0UaaVDBltjlQK+zma87GE6dYVHfew+xhjcLiHmIJrXNOXmhvBdtJ286G02
+ 0xvVYZhMMeoXcAYEFr23m5OPZ9Z7dG984apJblcB27MsbClZYXNljDZzqEXBi2sGumQZ dg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suv2caxvw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 04 Sep 2023 08:38:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3848cA3F002377
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 4 Sep 2023 08:38:10 GMT
+Received: from [10.214.82.226] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 4 Sep
+ 2023 01:38:03 -0700
+Message-ID: <359ba91d-866b-45e4-83fe-598ed791f877@quicinc.com>
+Date:   Mon, 4 Sep 2023 14:08:00 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 2/6] drm/panfrost: Add fdinfo support GPU load metrics
-Content-Language: en-GB
-To:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com
-References: <20230824013604.466224-1-adrian.larumbe@collabora.com>
- <20230824013604.466224-3-adrian.larumbe@collabora.com>
- <23f38307-3246-28a9-f396-5660acb21a18@arm.com>
- <enzglusbu4anwaqyalsyan3bfzecbpxttnq5v2o65hun4foj7s@ql5byzj6krk2>
-From:   Steven Price <steven.price@arm.com>
-In-Reply-To: <enzglusbu4anwaqyalsyan3bfzecbpxttnq5v2o65hun4foj7s@ql5byzj6krk2>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: firmware: Add documentation for
+ qcom,platform-parts-info
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_kaushalk@quicinc.com>, <quic_rohiagar@quicinc.com>,
+        <kernel@quicinc.com>
+References: <20230901060223.19575-1-quic_namajain@quicinc.com>
+ <f340f731-8471-39be-c7b2-7d930916e3b1@linaro.org>
+From:   Naman Jain <quic_namajain@quicinc.com>
+In-Reply-To: <f340f731-8471-39be-c7b2-7d930916e3b1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: MHhkfxv5_tvEVbYi4IjqQS7KlshkVjnL
+X-Proofpoint-GUID: MHhkfxv5_tvEVbYi4IjqQS7KlshkVjnL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-04_06,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 mlxscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ suspectscore=0 adultscore=0 malwarescore=0 bulkscore=0 clxscore=1011
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309040077
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/08/2023 22:34, Adrián Larumbe wrote:
-> On 31.08.2023 16:54, Steven Price wrote:
->> On 24/08/2023 02:34, Adrián Larumbe wrote:
->>> The drm-stats fdinfo tags made available to user space are drm-engine,
->>> drm-cycles, drm-max-freq and drm-curfreq, one per job slot.
->>>
->>> This deviates from standard practice in other DRM drivers, where a single
->>> set of key:value pairs is provided for the whole render engine. However,
->>> Panfrost has separate queues for fragment and vertex/tiler jobs, so a
->>> decision was made to calculate bus cycles and workload times separately.
->>>
->>> Maximum operating frequency is calculated at devfreq initialisation time.
->>> Current frequency is made available to user space because nvtop uses it
->>> when performing engine usage calculations.
->>>
->>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
->>> ---
->>>  drivers/gpu/drm/panfrost/panfrost_devfreq.c |  8 ++++
->>>  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  3 ++
->>>  drivers/gpu/drm/panfrost/panfrost_device.h  | 13 ++++++
->>>  drivers/gpu/drm/panfrost/panfrost_drv.c     | 45 ++++++++++++++++++++-
->>>  drivers/gpu/drm/panfrost/panfrost_job.c     | 30 ++++++++++++++
->>>  drivers/gpu/drm/panfrost/panfrost_job.h     |  4 ++
->>>  6 files changed, 102 insertions(+), 1 deletion(-)
->>>
->>
->> [...]
->>
->>> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
->>> index a2ab99698ca8..3fd372301019 100644
->>> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
->>> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
->>> @@ -267,6 +267,7 @@ static int panfrost_ioctl_submit(struct drm_device *dev, void *data,
->>>  	job->requirements = args->requirements;
->>>  	job->flush_id = panfrost_gpu_get_latest_flush_id(pfdev);
->>>  	job->mmu = file_priv->mmu;
->>> +	job->priv = file_priv;
->>>  
->>>  	slot = panfrost_job_get_slot(job);
->>>  
->>> @@ -483,6 +484,14 @@ panfrost_open(struct drm_device *dev, struct drm_file *file)
->>>  		goto err_free;
->>>  	}
->>>  
->>> +	snprintf(panfrost_priv->fdinfo.engines[0].name, MAX_SLOT_NAME_LEN, "frg");
->>> +	snprintf(panfrost_priv->fdinfo.engines[1].name, MAX_SLOT_NAME_LEN, "vtx");
->>> +#if 0
->>> +	/* Add compute engine in the future */
->>> +	snprintf(panfrost_priv->fdinfo.engines[2].name, MAX_SLOT_NAME_LEN, "cmp");
->>> +#endif
->>
->> I'm not sure what names are best, but slot 2 isn't actually a compute slot.
->>
->> Slot 0 is fragment, that name is fine.
->>
->> Slot 1 and 2 are actually the same (from a hardware perspective) but the
->> core affinity of the two slots cannot overlap which means you need to
->> divide the GPU in two to usefully use both slots. The only GPU that this
->> actually makes sense for is the T628[1] as it has two (non-coherent)
->> core groups.
->>
->> The upshot is that slot 1 is used for all of vertex, tiling and compute.
->> Slot 2 is currently never used, but kbase will use it only for compute
->> (and only on the two core group GPUs).
-> 
-> I think I might've be rushed to draw inspiration for this from a comment in panfrost_job.c:
-> 
-> int panfrost_job_get_slot(struct panfrost_job *job)
-> {
-> 	/* JS0: fragment jobs.
-> 	 * JS1: vertex/tiler jobs
-> 	 * JS2: compute jobs
-> 	 */
->          [...]
-> }
-> 
-> Maybe I could rename the engine names to "fragment", "vertex-tiler" and "compute-only"?
-> There's no reason why I would skimp on engine name length, and anything more
-> descriptive would be just as good.
 
-Yeah, those names are probably the best we're going to get. And I
-certainly prefer the longer names.
-
->> Personally I'd be tempted to call them "slot 0", "slot 1" and "slot 2" -
->> but I appreciate that's not very helpful to people who aren't intimately
->> familiar with the hardware ;)
-> 
-> The downside of this is that both IGT's fdinfo library and nvtop will use the
-> engime name for display, and like you said these numbers might mean nothing to
-> someone who isn't acquainted with the hardware.
-
-Indeed - I've spent way too much time with the hardware and there are
-many subtleties so I tent to try to avoid calling them anything other
-than "slot x" (especially when talking to hardware engineers). For
-example a test that submits NULL jobs can submit them to any slot.
-However, when you get beyond artificial tests then it is quite
-consistent that slot 0=fragment, slot 1=vertex-tiler (and compute), slot
-2=never used (except for compute on dual core groups).
-
-Steve
-
->> Steve
+On 9/1/2023 12:52 PM, Krzysztof Kozlowski wrote:
+> On 01/09/2023 08:02, Naman Jain wrote:
+>> Add documentation to describe device tree bindings for QCOM's
+>> platform-parts-info node. Firmware populates these nodes to pass the
+>> information to kernel regarding the subset of hardware blocks
+>> and features like Camera, Modem, Display present in a product.
 >>
->> [1] And technically the T608 but that's even rarer and the T60x isn't
->> (yet) supported by Panfrost.
+>> This is to support that the same software image runs seamlessly on
+>> different platforms where one or more HW blocks are not supported or
+>> if some sub parts for a particular block are not supported.
+>>
+>> Purpose of these definitions is to allow clients to know about this,
+>> and thus, handle these cases gracefully.
+> Whether camera is or is not supported, is defined by presence of camera
+> node or by its status field.
+>
+> Existing firmware (e.g. U-Boot) is also doing this - patching DTS when
+> needed.
+>
+> I do not think introducing some parallel way makes any sense, so no,
+> that's not the way to do it.
+>
+> Best regards,
+> Krzysztof
 
+
+Thanks Krzysztof for reviewing the patch. I think for telling whether 
+the Camera HW block is not
+supported / not present, firmware can either remove the device tree 
+node, or change its status
+to disabled, so that is fine.
+With this patch, I was trying to address the use case, where Camera is 
+supported but certain features
+of that particular Camera are not supported, due to dependent HW blocks 
+not present, or due to
+product decision to not support it. We wanted to avoid the firmware to 
+have this overhead of knowing
+what these individual bits mean and thus, disable few of the HW blocks 
+that are supposed to be
+disabled. And this is applicable for each of these HW blocks.
+
+For example, we can know from 32 bits provided for modem, if 3G/4G/5G is 
+supported or not on a
+platform. That is decided based on presence/absence of certain HW 
+blocks, but it may or may not be as
+simple as disabling a particular DT node.
+Basically we wanted to defer it to the subsystem drivers, to do whatever 
+they like with this
+information on sub-parts that are available.
+
+Will rephrase my commit message to make it clearer, but would like to 
+hear your thoughts on this first.
+
+
+Thanks,
+
+Naman Jain
+
+
+>
