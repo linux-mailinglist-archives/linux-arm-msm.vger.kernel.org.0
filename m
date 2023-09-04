@@ -2,149 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 864F779139A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 10:38:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EC8A79147B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 11:12:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235464AbjIDIiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Sep 2023 04:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
+        id S235537AbjIDJMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Sep 2023 05:12:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbjIDIiT (ORCPT
+        with ESMTP id S231458AbjIDJMI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 04:38:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E20A493;
-        Mon,  4 Sep 2023 01:38:15 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3847pLij030066;
-        Mon, 4 Sep 2023 08:38:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4evW5x2jf5yJ7uFy236w0xJCDV6EE1sj+3xfMBmDyfE=;
- b=Lta72LbTjPZX51f6UYg4+IaV25MOob+hYrQejLTa03PnUi4VNexOUMqsph5kz+XB80QH
- uVoqhPAl/zZx49pweF2VKjz9O4lgtcYcEDbITl8H/Hdwp14sILMJXNyRny723cnY2SyR
- Hw+OFEJp94NUM9Pkz2IrRc3sbBJe+K5nhy3RT3M8xBqwCMvWGhTKAUHzsMJFtc3cs1NM
- txc/ZUnVbO0UaaVDBltjlQK+zma87GE6dYVHfew+xhjcLiHmIJrXNOXmhvBdtJ286G02
- 0xvVYZhMMeoXcAYEFr23m5OPZ9Z7dG984apJblcB27MsbClZYXNljDZzqEXBi2sGumQZ dg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suv2caxvw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 04 Sep 2023 08:38:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3848cA3F002377
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 4 Sep 2023 08:38:10 GMT
-Received: from [10.214.82.226] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 4 Sep
- 2023 01:38:03 -0700
-Message-ID: <359ba91d-866b-45e4-83fe-598ed791f877@quicinc.com>
-Date:   Mon, 4 Sep 2023 14:08:00 +0530
+        Mon, 4 Sep 2023 05:12:08 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DA0A18C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 02:12:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693818725; x=1725354725;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=cRXNq9EH5e0PduqdEKQkaQOgqb4pxzgS4wdXvH0K0B0=;
+  b=L5y5BAHr04zld2SznGfYAAs9q6cKaAbwwrjwXXdhNlZc1uaZY1xzPzXv
+   rKAmVAm+D9DdJ1Kr2VCx4ZxijHYM+IkaJF74qDseflQYc+Oo4N+SRyVFI
+   YeHA8sSBZIY80LCl9q9QvVg3BnhIZ7vl+jO4flH2jmzojcVUvr6QXdUs7
+   o5E3P3Ycmrvt5TNk9mXsSqnF9zHwvdqU5ZWtiOMTTqO7dqMZufHuepzR3
+   d7aI94Og9b+pPUr3J73bcrZOSVe0D2zanKfzZGjdnvMm2SDEzYJi9PzJK
+   A3StXXHpoHWY7j9SqWU+m3Ebyz95UUy1NMlqBmjgyw3wl03bYjHY8/Hac
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="442953343"
+X-IronPort-AV: E=Sophos;i="6.02,226,1688454000"; 
+   d="scan'208";a="442953343"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 02:12:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10822"; a="690521395"
+X-IronPort-AV: E=Sophos;i="6.02,226,1688454000"; 
+   d="scan'208";a="690521395"
+Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2023 02:12:02 -0700
+Date:   Mon, 4 Sep 2023 11:12:00 +0200
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_carlv@quicinc.com, quic_pkanojiy@quicinc.com,
+        ogabbay@kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/qaic: Register for PCI driver at the beginning of
+ module init
+Message-ID: <20230904091200.GB184247@linux.intel.com>
+References: <20230901161037.6124-1-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: firmware: Add documentation for
- qcom,platform-parts-info
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_kaushalk@quicinc.com>, <quic_rohiagar@quicinc.com>,
-        <kernel@quicinc.com>
-References: <20230901060223.19575-1-quic_namajain@quicinc.com>
- <f340f731-8471-39be-c7b2-7d930916e3b1@linaro.org>
-From:   Naman Jain <quic_namajain@quicinc.com>
-In-Reply-To: <f340f731-8471-39be-c7b2-7d930916e3b1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MHhkfxv5_tvEVbYi4IjqQS7KlshkVjnL
-X-Proofpoint-GUID: MHhkfxv5_tvEVbYi4IjqQS7KlshkVjnL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-04_06,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 mlxscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
- suspectscore=0 adultscore=0 malwarescore=0 bulkscore=0 clxscore=1011
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309040077
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230901161037.6124-1-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 9/1/2023 12:52 PM, Krzysztof Kozlowski wrote:
-> On 01/09/2023 08:02, Naman Jain wrote:
->> Add documentation to describe device tree bindings for QCOM's
->> platform-parts-info node. Firmware populates these nodes to pass the
->> information to kernel regarding the subset of hardware blocks
->> and features like Camera, Modem, Display present in a product.
->>
->> This is to support that the same software image runs seamlessly on
->> different platforms where one or more HW blocks are not supported or
->> if some sub parts for a particular block are not supported.
->>
->> Purpose of these definitions is to allow clients to know about this,
->> and thus, handle these cases gracefully.
-> Whether camera is or is not supported, is defined by presence of camera
-> node or by its status field.
->
-> Existing firmware (e.g. U-Boot) is also doing this - patching DTS when
-> needed.
->
-> I do not think introducing some parallel way makes any sense, so no,
-> that's not the way to do it.
->
-> Best regards,
-> Krzysztof
-
-
-Thanks Krzysztof for reviewing the patch. I think for telling whether 
-the Camera HW block is not
-supported / not present, firmware can either remove the device tree 
-node, or change its status
-to disabled, so that is fine.
-With this patch, I was trying to address the use case, where Camera is 
-supported but certain features
-of that particular Camera are not supported, due to dependent HW blocks 
-not present, or due to
-product decision to not support it. We wanted to avoid the firmware to 
-have this overhead of knowing
-what these individual bits mean and thus, disable few of the HW blocks 
-that are supposed to be
-disabled. And this is applicable for each of these HW blocks.
-
-For example, we can know from 32 bits provided for modem, if 3G/4G/5G is 
-supported or not on a
-platform. That is decided based on presence/absence of certain HW 
-blocks, but it may or may not be as
-simple as disabling a particular DT node.
-Basically we wanted to defer it to the subsystem drivers, to do whatever 
-they like with this
-information on sub-parts that are available.
-
-Will rephrase my commit message to make it clearer, but would like to 
-hear your thoughts on this first.
-
-
-Thanks,
-
-Naman Jain
-
-
->
+On Fri, Sep 01, 2023 at 10:10:37AM -0600, Jeffrey Hugo wrote:
+> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> 
+> As qaic drivers base device is connected to host via PCI framework, it
+> makes sense to register in PCI framework at the beginning of module
+> init.
+> 
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
