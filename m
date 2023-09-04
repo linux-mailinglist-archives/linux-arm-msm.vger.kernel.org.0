@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF01B790FCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 04:05:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F4D5790FCE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 04:05:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350360AbjIDCFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1350538AbjIDCFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 3 Sep 2023 22:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35564 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350357AbjIDCFH (ORCPT
+        with ESMTP id S1350541AbjIDCFJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Sep 2023 22:05:07 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E765D100
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Sep 2023 19:05:01 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2bcc14ea414so13861961fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Sep 2023 19:05:01 -0700 (PDT)
+        Sun, 3 Sep 2023 22:05:09 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6196A9
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Sep 2023 19:05:02 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bccda76fb1so14814441fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Sep 2023 19:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693793100; x=1694397900; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693793101; x=1694397901; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LctnTM5rXutjH2qlEAQeifma8NswX6DnB9xbh8Rm9eY=;
-        b=ED+n0MD8TRL81VDu/VkIAmuzqBjwe3OXYdywjtLRwxTL2q9j1jY5feYr7gWvE8rlHg
-         nVCjHHAT2++MMgrSiCgcCcYR+UfruO0CfvF5uFIOFV+/F2KKBaF3svNE15MpD0b9bFFd
-         RM9qknTdNkSTOU6bX8R9qBvsHzPYcAfW+kal3vvsFaAwR6OQm3p1aUAxRGRy5tcZa/b9
-         2yVJP89IfE07RcklymSQIJjR8QQMYSnaA7SndT1cOexGRmnjnFye8B5+sbgCQnUFSGLz
-         v1TtfpLrRXwLZc1CNK5Y/xsT/2qgaQXirjmlUICEPC9tZhdQC6QX+6/8oEnETH1DqypC
-         zoFw==
+        bh=ND9TWls6WljGZ9WIziWPWxaNspuAqLv4XdjEfOK8lUI=;
+        b=LbhPGXVjre00Z/HPi3uZa2zGwqeFY9CpP1FGxKu/DXxPpuQO2KIR2iqJxFpVpSGxTi
+         I6LrbyXOK76pp78ZWzOPzJ9YElZqr8S5C4riJbtXkhHI7BfnrHTcyyaKd9XajkzjlTfW
+         rvIgPQEbWBNZYzA7gmOsdHpe4x97Yjw0gIVWeistbU0p24wIvS9QuSi+drSEhytD1EgI
+         EroLHWb4oPjkA9z4QPWsSRCLn7y6IB2vd2SiRDavjADeozuIj9vj/PjUuZof1HH+qNKF
+         89MQ8uII7/Ng8KZZJPSfMFIJ/qVWldeQmPM70NQg3ZPzzDt5zbj6+yk2201SFWtZm3cU
+         iVTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693793100; x=1694397900;
+        d=1e100.net; s=20221208; t=1693793101; x=1694397901;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LctnTM5rXutjH2qlEAQeifma8NswX6DnB9xbh8Rm9eY=;
-        b=UbppB+8hDhFB5AAyin8Vf8ddyWHZC4Idc8BMZEuvzvggzCqScDTm9voUc45lTvGWoK
-         DuLqOTAELqq9ydG1hiZhn8GifEYW4gIo6t6J4W8DEl894FctV7AfOIB0Y8BZ7OuTHUE0
-         i09BtCAydL42+pkdEmTrDC1C22c7Nfng6lzRpTrFbUXA+sGPYjdNJwNWtiuf1Mq2m5Oe
-         uYT0oYug6HtwlwgDDX0sozmWz3nROAUJb5KtDbIHXO1DXyBrZGKQiZkCchLVUYOLjbKB
-         HWgifzeoKiuIR2wqZ45sAIq69261ufhxi1m2O1agszMgjxpFaDWGBbc3QNQaTuMb6M8W
-         /pcg==
-X-Gm-Message-State: AOJu0YwDwy++8GWIPshXhgepgh7oaKIUbuFjKRTUEElW3Ckdpum7ujUY
-        g6NcejAmqLJyLLDZfjO6oTXd1Q==
-X-Google-Smtp-Source: AGHT+IErnrm0+qqKHmwbz21Eyaqf6ZQ4HGuLHJcLnOTwGxcmFR3xhvBdJIfEOcc0tD654qjyPABRDQ==
-X-Received: by 2002:a05:651c:145:b0:2bb:a123:2db7 with SMTP id c5-20020a05651c014500b002bba1232db7mr5205131ljd.51.1693793100378;
-        Sun, 03 Sep 2023 19:05:00 -0700 (PDT)
+        bh=ND9TWls6WljGZ9WIziWPWxaNspuAqLv4XdjEfOK8lUI=;
+        b=UPWfLFiC69QJDIuAqhQ9DhMfJm92dWynVOxYR761nKElkvch8YXz+fUAQlZznYW6ta
+         t3WuVdxwTw2nJvOu8asGrpqhfUx7fR+ER7jS6zuvCQFKeCb/C+pn72lpegB5w2Do/CnX
+         a08Y3eVWbPTuHlSbvoeXwBrGVT+37tjMr/OI00IOj/gMKuBxGdTTlMnhtRlpKFg4f0e+
+         HbPbwGdhUC3UNNEoHxg3WEC02FYL1w1TnGUnwpcjGuDABzIShzHYyYHAcmnLnHT+HYht
+         9MbZtidYGnP6GRYkmXwqGwLZEeTnE40Tu7xxw6uUDZmrX2Kz6faLpqXBeph8s+SgNOaF
+         UiHA==
+X-Gm-Message-State: AOJu0YyISlBoeAJvF5JuWRz1VFLnu4R1dDSs8vWrORBicDE8+bXJoqUg
+        fnr16Tw93gw583bErAoVDefwFnxSKjKND9AdYKI=
+X-Google-Smtp-Source: AGHT+IFWbfGA5SPwQb9KAW491TGzx4BsLhxrFJCHwvDlY00nbTmmGEYFV+xN3Jn9gSryCqTk/mI8/A==
+X-Received: by 2002:a2e:8608:0:b0:2bc:dada:dbe0 with SMTP id a8-20020a2e8608000000b002bcdadadbe0mr6270880lji.10.1693793101188;
+        Sun, 03 Sep 2023 19:05:01 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020a2e9c4d000000b002bce0e9385asm1818237ljj.9.2023.09.03.19.04.59
+        by smtp.gmail.com with ESMTPSA id t13-20020a2e9c4d000000b002bce0e9385asm1818237ljj.9.2023.09.03.19.05.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Sep 2023 19:04:59 -0700 (PDT)
+        Sun, 03 Sep 2023 19:05:00 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v3 7/8] drm/msm/dpu: drop useless check from dpu_encoder_phys_cmd_te_rd_ptr_irq()
-Date:   Mon,  4 Sep 2023 05:04:53 +0300
-Message-Id: <20230904020454.2945667-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 8/8] drm/msm/dpu: move INTF tearing checks to dpu_encoder_phys_cmd_init
+Date:   Mon,  4 Sep 2023 05:04:54 +0300
+Message-Id: <20230904020454.2945667-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org>
 References: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org>
@@ -77,33 +77,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dpu_encoder_phys_cmd_te_rd_ptr_irq() function uses neither hw_intf
-nor hw_pp data, so we can drop the corresponding check.
+As the INTF is fixed at the encoder creation time, we can move the
+check whether INTF supports tearchck to dpu_encoder_phys_cmd_init().
+This function can return an error if INTF doesn't have required feature.
+Performing this check in dpu_encoder_phys_cmd_tearcheck_config() is less
+useful, as this function returns void.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 8 --------
- 1 file changed, 8 deletions(-)
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 39 +++++++++++--------
+ 1 file changed, 23 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index e03b2075639d..d18236bd98e6 100644
+index d18236bd98e6..ca1296379c4d 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -108,14 +108,6 @@ static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg, int irq_idx)
- 	struct dpu_encoder_phys *phys_enc = arg;
- 	struct dpu_encoder_phys_cmd *cmd_enc;
+@@ -325,24 +325,21 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 	unsigned long vsync_hz;
+ 	struct dpu_kms *dpu_kms;
  
 -	if (phys_enc->has_intf_te) {
--		if (!phys_enc->hw_intf)
+-		if (!phys_enc->hw_intf ||
+-		    !phys_enc->hw_intf->ops.enable_tearcheck) {
+-			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
 -			return;
--	} else {
--		if (!phys_enc->hw_pp)
--			return;
--	}
+-		}
 -
- 	DPU_ATRACE_BEGIN("rd_ptr_irq");
- 	cmd_enc = to_dpu_encoder_phys_cmd(phys_enc);
+-		DPU_DEBUG_CMDENC(cmd_enc, "");
+-	} else {
+-		if (!phys_enc->hw_pp ||
+-		    !phys_enc->hw_pp->ops.enable_tearcheck) {
+-			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
+-			return;
+-		}
+-
+-		DPU_DEBUG_CMDENC(cmd_enc, "pp %d\n", phys_enc->hw_pp->idx - PINGPONG_0);
++	/*
++	 * TODO: if/when resource allocation is refactored, move this to a
++	 * place where the driver can actually return an error.
++	 */
++	if (!phys_enc->has_intf_te &&
++	    (!phys_enc->hw_pp ||
++	     !phys_enc->hw_pp->ops.enable_tearcheck)) {
++		DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
++		return;
+ 	}
+ 
++	DPU_DEBUG_CMDENC(cmd_enc, "intf %d pp %d\n",
++			 phys_enc->hw_intf ? phys_enc->hw_intf->idx - INTF_0 : -1,
++			 phys_enc->hw_pp ? phys_enc->hw_pp->idx - PINGPONG_0 : -1);
++
+ 	mode = &phys_enc->cached_mode;
+ 
+ 	dpu_kms = phys_enc->dpu_kms;
+@@ -768,10 +765,20 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+ 	phys_enc->intf_mode = INTF_MODE_CMD;
+ 	cmd_enc->stream_sel = 0;
+ 
++	if (!phys_enc->hw_intf) {
++		DPU_ERROR_CMDENC(cmd_enc, "no INTF provided\n");
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	/* DPU before 5.0 use PINGPONG for TE handling */
+ 	if (phys_enc->dpu_kms->catalog->mdss_ver->core_major_ver >= 5)
+ 		phys_enc->has_intf_te = true;
+ 
++	if (phys_enc->has_intf_te && !phys_enc->hw_intf->ops.enable_tearcheck) {
++		DPU_ERROR_CMDENC(cmd_enc, "tearcheck not supported\n");
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
+ 	init_waitqueue_head(&cmd_enc->pending_vblank_wq);
  
 -- 
 2.39.2
