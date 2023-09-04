@@ -2,155 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F4D5790FCE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 04:05:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E435C791075
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Sep 2023 05:42:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350538AbjIDCFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Sep 2023 22:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
+        id S234835AbjIDDmp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Sep 2023 23:42:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350541AbjIDCFJ (ORCPT
+        with ESMTP id S234654AbjIDDmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Sep 2023 22:05:09 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6196A9
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Sep 2023 19:05:02 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bccda76fb1so14814441fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Sep 2023 19:05:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693793101; x=1694397901; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ND9TWls6WljGZ9WIziWPWxaNspuAqLv4XdjEfOK8lUI=;
-        b=LbhPGXVjre00Z/HPi3uZa2zGwqeFY9CpP1FGxKu/DXxPpuQO2KIR2iqJxFpVpSGxTi
-         I6LrbyXOK76pp78ZWzOPzJ9YElZqr8S5C4riJbtXkhHI7BfnrHTcyyaKd9XajkzjlTfW
-         rvIgPQEbWBNZYzA7gmOsdHpe4x97Yjw0gIVWeistbU0p24wIvS9QuSi+drSEhytD1EgI
-         EroLHWb4oPjkA9z4QPWsSRCLn7y6IB2vd2SiRDavjADeozuIj9vj/PjUuZof1HH+qNKF
-         89MQ8uII7/Ng8KZZJPSfMFIJ/qVWldeQmPM70NQg3ZPzzDt5zbj6+yk2201SFWtZm3cU
-         iVTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693793101; x=1694397901;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ND9TWls6WljGZ9WIziWPWxaNspuAqLv4XdjEfOK8lUI=;
-        b=UPWfLFiC69QJDIuAqhQ9DhMfJm92dWynVOxYR761nKElkvch8YXz+fUAQlZznYW6ta
-         t3WuVdxwTw2nJvOu8asGrpqhfUx7fR+ER7jS6zuvCQFKeCb/C+pn72lpegB5w2Do/CnX
-         a08Y3eVWbPTuHlSbvoeXwBrGVT+37tjMr/OI00IOj/gMKuBxGdTTlMnhtRlpKFg4f0e+
-         HbPbwGdhUC3UNNEoHxg3WEC02FYL1w1TnGUnwpcjGuDABzIShzHYyYHAcmnLnHT+HYht
-         9MbZtidYGnP6GRYkmXwqGwLZEeTnE40Tu7xxw6uUDZmrX2Kz6faLpqXBeph8s+SgNOaF
-         UiHA==
-X-Gm-Message-State: AOJu0YyISlBoeAJvF5JuWRz1VFLnu4R1dDSs8vWrORBicDE8+bXJoqUg
-        fnr16Tw93gw583bErAoVDefwFnxSKjKND9AdYKI=
-X-Google-Smtp-Source: AGHT+IFWbfGA5SPwQb9KAW491TGzx4BsLhxrFJCHwvDlY00nbTmmGEYFV+xN3Jn9gSryCqTk/mI8/A==
-X-Received: by 2002:a2e:8608:0:b0:2bc:dada:dbe0 with SMTP id a8-20020a2e8608000000b002bcdadadbe0mr6270880lji.10.1693793101188;
-        Sun, 03 Sep 2023 19:05:01 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020a2e9c4d000000b002bce0e9385asm1818237ljj.9.2023.09.03.19.05.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Sep 2023 19:05:00 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v3 8/8] drm/msm/dpu: move INTF tearing checks to dpu_encoder_phys_cmd_init
-Date:   Mon,  4 Sep 2023 05:04:54 +0300
-Message-Id: <20230904020454.2945667-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org>
-References: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org>
+        Sun, 3 Sep 2023 23:42:44 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21A9FC5;
+        Sun,  3 Sep 2023 20:42:41 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3842h4gH007357;
+        Mon, 4 Sep 2023 03:42:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=O+/XS3FO6CJQ1q+RWnw2Sk5jsuw5ukIgy+7tMylPBMg=;
+ b=J1m75aG3z2Rz+VFjMCs/oUR8j5fW7DB9SPHANa1ZxLPSyZcTNCM3NsyDr88b8sKqG8W6
+ 7FGlsmKNq9MSNkZqSIuYRUixRId+N+t9mnJR5NEZKF88RelwygvRb1p+wAyxftYU6+xF
+ /gkPLswI838fsOuelJU3WLXqGZNh0otCO1h5L87RilUPFLuOM+vuaEZPg6V1Hh/Rz1Bg
+ YCU6nRp2DpWuK24kluFXFDJTrmoJV3MTp3Auk+me03P6fv3hoUXRleXH1M2YYZJ5nrzu
+ u3wyxkLNj6LKgei37fYboXT45t3B7bJ7D+NiO70iVCiGtM2HYWNFAVp3nBJx5K4j939I mg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suvn6jfsr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 04 Sep 2023 03:42:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3843gTAW028984
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 4 Sep 2023 03:42:29 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 3 Sep
+ 2023 20:42:25 -0700
+Message-ID: <dc7d8303-078d-4bd5-5e06-1e656f23d07a@quicinc.com>
+Date:   Mon, 4 Sep 2023 09:12:20 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add IDs for IPQ8174
+ family
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20230901181041.1538999-1-robimarko@gmail.com>
+ <28b7934f-f041-ad7b-d44a-3bed70aaf100@quicinc.com>
+ <CAA8EJproMKoW=ue3dDCW88gkLyYqWQFvbmKdkoqXb3dVOL45dw@mail.gmail.com>
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <CAA8EJproMKoW=ue3dDCW88gkLyYqWQFvbmKdkoqXb3dVOL45dw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4FeLDyeKMif2HymWS17ddb_esjdhbkUF
+X-Proofpoint-GUID: 4FeLDyeKMif2HymWS17ddb_esjdhbkUF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-03_21,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 clxscore=1015 mlxlogscore=942 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309040033
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the INTF is fixed at the encoder creation time, we can move the
-check whether INTF supports tearchck to dpu_encoder_phys_cmd_init().
-This function can return an error if INTF doesn't have required feature.
-Performing this check in dpu_encoder_phys_cmd_tearcheck_config() is less
-useful, as this function returns void.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 39 +++++++++++--------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+On 9/2/2023 9:05 PM, Dmitry Baryshkov wrote:
+> On Sat, 2 Sept 2023 at 17:43, Kathiravan T <quic_kathirav@quicinc.com> wrote:
+>>
+>> On 9/1/2023 11:40 PM, Robert Marko wrote:
+>>> IPQ8174 (Oak) family is part of the IPQ8074 family, but the ID-s for it
+>>> are missing so lets add them.
+>>>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>> ---
+>>>    include/dt-bindings/arm/qcom,ids.h | 3 +++
+>>>    1 file changed, 3 insertions(+)
+>>
+>> Reviewed-by: Kathiravan T <quic_kathirav@quicinc.com>
+> Is there a chance of you using the full family name in your git tags?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index d18236bd98e6..ca1296379c4d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -325,24 +325,21 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
- 	unsigned long vsync_hz;
- 	struct dpu_kms *dpu_kms;
- 
--	if (phys_enc->has_intf_te) {
--		if (!phys_enc->hw_intf ||
--		    !phys_enc->hw_intf->ops.enable_tearcheck) {
--			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
--			return;
--		}
--
--		DPU_DEBUG_CMDENC(cmd_enc, "");
--	} else {
--		if (!phys_enc->hw_pp ||
--		    !phys_enc->hw_pp->ops.enable_tearcheck) {
--			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
--			return;
--		}
--
--		DPU_DEBUG_CMDENC(cmd_enc, "pp %d\n", phys_enc->hw_pp->idx - PINGPONG_0);
-+	/*
-+	 * TODO: if/when resource allocation is refactored, move this to a
-+	 * place where the driver can actually return an error.
-+	 */
-+	if (!phys_enc->has_intf_te &&
-+	    (!phys_enc->hw_pp ||
-+	     !phys_enc->hw_pp->ops.enable_tearcheck)) {
-+		DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-+		return;
- 	}
- 
-+	DPU_DEBUG_CMDENC(cmd_enc, "intf %d pp %d\n",
-+			 phys_enc->hw_intf ? phys_enc->hw_intf->idx - INTF_0 : -1,
-+			 phys_enc->hw_pp ? phys_enc->hw_pp->idx - PINGPONG_0 : -1);
-+
- 	mode = &phys_enc->cached_mode;
- 
- 	dpu_kms = phys_enc->dpu_kms;
-@@ -768,10 +765,20 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- 	phys_enc->intf_mode = INTF_MODE_CMD;
- 	cmd_enc->stream_sel = 0;
- 
-+	if (!phys_enc->hw_intf) {
-+		DPU_ERROR_CMDENC(cmd_enc, "no INTF provided\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
- 	/* DPU before 5.0 use PINGPONG for TE handling */
- 	if (phys_enc->dpu_kms->catalog->mdss_ver->core_major_ver >= 5)
- 		phys_enc->has_intf_te = true;
- 
-+	if (phys_enc->has_intf_te && !phys_enc->hw_intf->ops.enable_tearcheck) {
-+		DPU_ERROR_CMDENC(cmd_enc, "tearcheck not supported\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
- 	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
- 	init_waitqueue_head(&cmd_enc->pending_vblank_wq);
- 
--- 
-2.39.2
 
+Sure, Going forward will use the full family name..
+
+
+Thanks,
+
+>
+>>> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+>>> index be12e1dd1f38..d2b84a308fde 100644
+>>> --- a/include/dt-bindings/arm/qcom,ids.h
+>>> +++ b/include/dt-bindings/arm/qcom,ids.h
+>>> @@ -203,6 +203,9 @@
+>>>    #define QCOM_ID_SM6125                      394
+>>>    #define QCOM_ID_IPQ8070A            395
+>>>    #define QCOM_ID_IPQ8071A            396
+>>> +#define QCOM_ID_IPQ8172                      397
+>>> +#define QCOM_ID_IPQ8173                      398
+>>> +#define QCOM_ID_IPQ8174                      399
+>>>    #define QCOM_ID_IPQ6018                     402
+>>>    #define QCOM_ID_IPQ6028                     403
+>>>    #define QCOM_ID_SDM429W                     416
+>
+>
