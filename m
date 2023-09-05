@@ -2,320 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0BF77926DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:33:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D786C792808
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:42:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237835AbjIEQFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:05:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37520 "EHLO
+        id S238954AbjIEQHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:07:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354118AbjIEJlL (ORCPT
+        with ESMTP id S1354143AbjIEJ4p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 05:41:11 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3A50C1AD;
-        Tue,  5 Sep 2023 02:41:07 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9D7F011FB;
-        Tue,  5 Sep 2023 02:41:44 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 11F2B3F793;
-        Tue,  5 Sep 2023 02:41:03 -0700 (PDT)
-Message-ID: <04ccbad9-3d36-0962-0027-a7a7e914b02b@arm.com>
-Date:   Tue, 5 Sep 2023 10:41:02 +0100
+        Tue, 5 Sep 2023 05:56:45 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBBAB18C;
+        Tue,  5 Sep 2023 02:56:41 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3856E2L0002916;
+        Tue, 5 Sep 2023 09:56:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=vfgVDhvOSV2ueMzB7mhpoS2y7u+bBW8t/lA82pC8OHE=;
+ b=SrwapdkkZFmYL6wYfDUk5x2Ll6C+YmEGlv3eID8ZOq9h/hd2Yi3GxMtO5snZhzKMUeSL
+ nvFp0E7fpQPH7aEA7TPxITza91hCp6xDmfZaaKkj3HeD3bbuwuhhMNXOVMLwXIk6F2uc
+ 9s+cL3sbgU8043C+x0eU6Dw6ywTz15uXXsAGgAPoO7qyLa9wxSZcekoSCa2gqxxwP9tK
+ beOdQkBvd1VJkDUyElBugF7D08MUUl4/E8zNvSnPRh+7qPSp3yHu2dvaD7oKhk90W47Y
+ l3TffStk+7Zjh4VrYIsKt02w1HJY/4oihz02Fe/kjljDqTrRzcBjDfq9i2TZ8xMB4Fcx ag== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3swtyngt4w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 05 Sep 2023 09:56:31 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3859uU7l020247
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 5 Sep 2023 09:56:30 GMT
+Received: from hu-viswanat-blr.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 5 Sep 2023 02:56:24 -0700
+From:   Vignesh Viswanathan <quic_viswanat@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <ohad@wizery.com>,
+        <baolin.wang@linux.alibaba.com>, <linux-remoteproc@vger.kernel.org>
+CC:     <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>,
+        Vignesh Viswanathan <quic_viswanat@quicinc.com>
+Subject: [PATCH v2 0/2] Fix tcsr_mutex register for IPQ6018
+Date:   Tue, 5 Sep 2023 15:25:33 +0530
+Message-ID: <20230905095535.1263113-1-quic_viswanat@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v8 10/13] coresight-tpdm: Add nodes to configure pattern
- match output
-Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
- <1692681973-20764-11-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1692681973-20764-11-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XsstAehvnF8fiP26QoE4zmTSHCzg1guy
+X-Proofpoint-ORIG-GUID: XsstAehvnF8fiP26QoE4zmTSHCzg1guy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-05_07,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ mlxlogscore=580 phishscore=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2309050088
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/08/2023 06:26, Tao Zhang wrote:
-> Add nodes to configure trigger pattern and trigger pattern mask.
-> Each DSB subunit TPDM has maximum of n(n<7) XPR registers to
-> configure trigger pattern match output. Eight 32 bit registers
-> providing DSB interface trigger output pattern match comparison.
-> And each DSB subunit TPDM has maximum of m(m<7) XPMR registers to
-> configure trigger pattern mask match output. Eight 32 bit
-> registers providing DSB interface trigger output pattern match
-> mask.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 18 +++++-
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 71 +++++++++++++++++++++-
->   drivers/hwtracing/coresight/coresight-tpdm.h       | 29 +++++++++
->   3 files changed, 116 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 097fdc4..f5cd302 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -107,4 +107,20 @@ Date:		March 2023
->   KernelVersion	6.5
->   Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
->   Description:
-> -		Read a set of the edge control mask of the DSB in TPDM.
-> \ No newline at end of file
-> +		Read a set of the edge control mask of the DSB in TPDM.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt/xpr[0:7]
-> +Date:		March 2023
-> +KernelVersion	6.5
+IPQ6018 has 32 tcsr_mutex hwlock registers of 0x1000 size each.
+The compatible string qcom,ipq6018-tcsr-mutex is mapped to
+of_msm8226_tcsr_mutex which has 32 locks configured with stride of 0x80
+and doesn't match the HW present in IPQ6018.
 
-Same as previous patches
+This series fixes the following:
+ 1. Fix the tcsr_mutex register size to 0x20000 in IPQ6018 DTSI.
+ 2. Remove IPQ6018 specific compatible in hwspinlock driver so that it
+    falls back to pick of_tcsr_mutex data.
 
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the value of the trigger pattern for the DSB
-> +		subunit TPDM.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt/xpmr[0:7]
-> +Date:		March 2023
-> +KernelVersion	6.5
+Changes in v2:
+ - Drop changes to remove qcom,ipq6018-tcsr-mutex from dt-bindings
+ - Drop changes to remove qcom,ipq6018-tcsr-mutex compatible from
+   ipq6018.dtsi
+ - Add Fixes and stable tags
 
-here too
+Vignesh Viswanathan (2):
+  arm64: dts: qcom: ipq6018: Fix tcsr_mutex register size
+  hwspinlock: qcom: Remove IPQ6018 SOC specific compatible
 
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the mask of the trigger pattern for the DSB
-> +		subunit TPDM.
-> \ No newline at end of file
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index ba61e6a..6521019 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -39,9 +39,46 @@ static ssize_t tpdm_simple_dataset_show(struct device *dev,
->   	case DSB_EDGE_CTRL_MASK:
->   		return sysfs_emit(buf, "0x%x\n",
->   				drvdata->dsb->edge_ctrl_mask[tpdm_attr->idx]);
-> +	case DSB_TRIG_PATT:
-> +		return sysfs_emit(buf, "0x%x\n",
-> +				drvdata->dsb->trig_patt[tpdm_attr->idx]);
-> +	case DSB_TRIG_PATT_MASK:
-> +		return sysfs_emit(buf, "0x%x\n",
-> +				drvdata->dsb->trig_patt_mask[tpdm_attr->idx]);
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +}
-> +
-> +/* Write dataset array member with the index number */
-> +static ssize_t tpdm_simple_dataset_store(struct device *dev,
-> +					  struct device_attribute *attr,
-> +					  const char *buf,
-> +					  size_t size)
-> +{
-> +	unsigned long val;
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
+ drivers/hwspinlock/qcom_hwspinlock.c  | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-	ssize_t ret = size;
-
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	struct tpdm_dataset_attribute *tpdm_attr =
-> +		container_of(attr, struct tpdm_dataset_attribute, attr);
-> +
-> +	if (kstrtoul(buf, 0, &val) || (tpdm_attr->idx >= tpdm_attr->max))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	switch (tpdm_attr->mem) {
-> +	case DSB_TRIG_PATT:
-> +		drvdata->dsb->trig_patt[tpdm_attr->idx] = val;
-> +		break;
-> +	case DSB_TRIG_PATT_MASK:
-> +		drvdata->dsb->trig_patt_mask[tpdm_attr->idx] = val;
-> +		break;
->   	default:
-> +		spin_unlock(&drvdata->spinlock);
-
-		ret = -EINVAL;
-
-Please avoid releasing the lock in two different places where possible.
-Instead use a variable like above.
-
->   		return -EINVAL;
->   	}
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	return size;
-
-	return ret;
-
->   }
->   
->   static bool tpdm_has_dsb_dataset(struct tpdm_drvdata *drvdata)
-> @@ -102,7 +139,12 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   	for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++)
->   		writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
->   			   drvdata->base + TPDM_DSB_EDCMR(i));
-> -
-> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-> +		writel_relaxed(drvdata->dsb->trig_patt[i],
-> +			    drvdata->base + TPDM_DSB_XPR(i));
-> +		writel_relaxed(drvdata->dsb->trig_patt_mask[i],
-> +			    drvdata->base + TPDM_DSB_XPMR(i));
-> +	}
->   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
->   	/* Set trigger timestamp */
->   	if (drvdata->dsb->trig_ts)
-> @@ -531,6 +573,26 @@ static struct attribute *tpdm_dsb_edge_attrs[] = {
->   	NULL,
->   };
->   
-> +static struct attribute *tpdm_dsb_trig_patt_attrs[] = {
-> +	DSB_TRIG_PATT_ATTR(0),
-> +	DSB_TRIG_PATT_ATTR(1),
-> +	DSB_TRIG_PATT_ATTR(2),
-> +	DSB_TRIG_PATT_ATTR(3),
-> +	DSB_TRIG_PATT_ATTR(4),
-> +	DSB_TRIG_PATT_ATTR(5),
-> +	DSB_TRIG_PATT_ATTR(6),
-> +	DSB_TRIG_PATT_ATTR(7),
-> +	DSB_TRIG_PATT_MASK_ATTR(0),
-> +	DSB_TRIG_PATT_MASK_ATTR(1),
-> +	DSB_TRIG_PATT_MASK_ATTR(2),
-> +	DSB_TRIG_PATT_MASK_ATTR(3),
-> +	DSB_TRIG_PATT_MASK_ATTR(4),
-> +	DSB_TRIG_PATT_MASK_ATTR(5),
-> +	DSB_TRIG_PATT_MASK_ATTR(6),
-> +	DSB_TRIG_PATT_MASK_ATTR(7),
-> +	NULL,
-> +};
-> +
->   static struct attribute *tpdm_dsb_attrs[] = {
->   	&dev_attr_dsb_mode.attr,
->   	&dev_attr_dsb_trig_ts.attr,
-> @@ -549,10 +611,17 @@ static struct attribute_group tpdm_dsb_edge_grp = {
->   	.name = "dsb_edge",
->   };
->   
-> +static struct attribute_group tpdm_dsb_trig_patt_grp = {
-> +	.attrs = tpdm_dsb_trig_patt_attrs,
-> +	.is_visible = tpdm_dsb_is_visible,
-> +	.name = "dsb_trig_patt",
-> +};
-> +
->   static const struct attribute_group *tpdm_attr_grps[] = {
->   	&tpdm_attr_grp,
->   	&tpdm_dsb_attrs_grp,
->   	&tpdm_dsb_edge_grp,
-> +	&tpdm_dsb_trig_patt_grp,
->   	NULL,
->   };
->   
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index 9736e00..9e1b0a4 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -12,6 +12,8 @@
->   /* DSB Subunit Registers */
->   #define TPDM_DSB_CR		(0x780)
->   #define TPDM_DSB_TIER		(0x784)
-> +#define TPDM_DSB_XPR(n)		(0x7C8 + (n * 4))
-> +#define TPDM_DSB_XPMR(n)	(0x7E8 + (n * 4))
->   #define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
->   #define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
->   
-> @@ -80,6 +82,8 @@
->   #define TPDM_DSB_MAX_EDCR	16
->   /* MAX number of EDCMR registers */
->   #define TPDM_DSB_MAX_EDCMR	8
-> +/* MAX number of DSB pattern */
-> +#define TPDM_DSB_MAX_PATT	8
->   
->   #define tpdm_simple_dataset_ro(name, mem, idx, max)			\
->   	(&((struct tpdm_dataset_attribute[]) {			\
-> @@ -91,6 +95,17 @@
->   	   }								\
->   	})[0].attr.attr)
->   
-> +#define tpdm_simple_dataset_rw(name, mem, idx, max)			\
-> +	(&((struct tpdm_dataset_attribute[]) {			\
-> +	   {								\
-> +		__ATTR(name, 0644, tpdm_simple_dataset_show,		\
-> +		tpdm_simple_dataset_store),		\
-> +		mem,							\ > +		idx,							\
-> +		max								\
-
-Same as previous, you could get rid of max
-
-> +	   }								\
-> +	})[0].attr.attr)
-> +
->   #define DSB_EDGE_CTRL_ATTR(nr)					\
->   		tpdm_simple_dataset_ro(edcr##nr,		\
->   		DSB_EDGE_CTRL, nr, TPDM_DSB_MAX_EDCR)
-> @@ -99,12 +114,22 @@
->   		tpdm_simple_dataset_ro(edcmr##nr,		\
->   		DSB_EDGE_CTRL_MASK, nr, TPDM_DSB_MAX_EDCMR)
->   
-> +#define DSB_TRIG_PATT_ATTR(nr)					\
-> +		tpdm_simple_dataset_rw(xpr##nr,			\
-> +		DSB_TRIG_PATT, nr, TPDM_DSB_MAX_PATT)
-> +
-> +#define DSB_TRIG_PATT_MASK_ATTR(nr)				\
-> +		tpdm_simple_dataset_rw(xpmr##nr,		\
-> +		DSB_TRIG_PATT_MASK, nr, TPDM_DSB_MAX_PATT)
-> +
->   /**
->    * struct dsb_dataset - specifics associated to dsb dataset
->    * @mode:             DSB programming mode
->    * @edge_ctrl_idx     Index number of the edge control
->    * @edge_ctrl:        Save value for edge control
->    * @edge_ctrl_mask:   Save value for edge control mask
-> + * @trig_patt:        Save value for trigger pattern
-> + * @trig_patt_mask:   Save value for trigger pattern mask
->    * @trig_ts:          Enable/Disable trigger timestamp.
->    * @trig_type:        Enable/Disable trigger type.
->    */
-> @@ -113,6 +138,8 @@ struct dsb_dataset {
->   	u32				edge_ctrl_idx;
->   	u32				edge_ctrl[TPDM_DSB_MAX_EDCR];
->   	u32				edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
-> +	u32				trig_patt[TPDM_DSB_MAX_PATT];
-> +	u32				trig_patt_mask[TPDM_DSB_MAX_PATT];
->   	bool			trig_ts;
->   	bool			trig_type;
->   };
-> @@ -142,6 +169,8 @@ struct tpdm_drvdata {
->   enum dataset_mem {
->   	DSB_EDGE_CTRL,
->   	DSB_EDGE_CTRL_MASK,
-> +	DSB_TRIG_PATT,
-> +	DSB_TRIG_PATT_MASK,
->   };
-
-Suzuki
-
+-- 
+2.41.0
 
