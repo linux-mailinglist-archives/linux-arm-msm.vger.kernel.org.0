@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FB80792B09
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:02:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A10B792CA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:43:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232989AbjIEQqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:46:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59094 "EHLO
+        id S238462AbjIERnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 13:43:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235728AbjIEQfV (ORCPT
+        with ESMTP id S238665AbjIERnX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 12:35:21 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5AF1FC8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:33:23 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-400a087b0bfso26889865e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:33:23 -0700 (PDT)
+        Tue, 5 Sep 2023 13:43:23 -0400
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2CB49CB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:21:44 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-99bdcade7fbso389618466b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693931506; x=1694536306; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693930771; x=1694535571; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1I6IwceD9yMG95Xy3C5UFcBdFWUjpLzegH+tNAfDOaI=;
-        b=Pfv+aWD/C7L4PJlcj5Wk02+dkvLKhNS0VvzlHBTMcZe1XDY9vhLjfLhnO+M0tbukCx
-         j/AfG63CcuM46U8GEfuh0/ZnvUCyc3P4vZaooS4GxH39VJoBlkm3zm6NxM4Aa5xo8H6u
-         D2YTqyYobT2A4TAsEHORcmgPfAebLoPqOWMRdYCM//JjjE/79mD8YCDWrpugwhFJ1q3W
-         tIKe9TUTasEqvu8gdXIWlPkmzkdOmbCh4PRuoq7lS2i4rWdW6PRE12pLkskFSWgfUD72
-         qMmoq0c96l7pci4qPw0NYstoGI9wDzWnfMCC/XKmtAIXqVWdkCm5OBaK7i62YOuoDtx7
-         k42w==
+        bh=nc7aDvSgD11jc9qTAmRhPuXkI/EL03RkU/8y9cpVhM8=;
+        b=sdQEgXF9j/GmpgBq2a8KvaSRSQfnfbRZoQSS0/G9agf7Y4q5EhTMZ5xJsyDnKP0kT4
+         C7NvrAwRlPU+QVD3RBfZxu7HGIDGCU0elp6CgWAxkE7fYmQ4iUKJVxBzSarCTOZ1wh3u
+         VMaYILQwwWbobdosqLsGIPk+n16xFs3M5pvQyCXd8j9H3NgRIkTHGlruzu5hfjZVZRsP
+         dcwOtqpkM0WD3cjhYAymMzUSO6DVl+rxKBg96CaSmq74nxaxDDLefHcAzN+YhzLzJNWd
+         ABfhSPl1Y6FZXhd/6EsR9Ck5o1CtiheGZBXPI3FUJJpXCt1fwREroeyZPgqAfDH77jNn
+         ZsNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693931506; x=1694536306;
+        d=1e100.net; s=20221208; t=1693930771; x=1694535571;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1I6IwceD9yMG95Xy3C5UFcBdFWUjpLzegH+tNAfDOaI=;
-        b=fmsMqqTVDyjb9vTBH0oELnLa6zIIMbv1rZvyTSjKzJpGYnVTHATpOsWqQWdhGrgfc2
-         UfXa1H57kKk7z3VDXhkTyH5fmBZv6oZsynplyNcDWOFANgXvaOL7jJUOBAnUkDpX39jT
-         NoA/BAX0VDrYInpdi8h4/jmlNbYL7dqmNhIp/U1e5rME4NMPHykJZmqpcf0WWxSDdWN/
-         giYIH2EskoKcNpp1dGDPsedngI7Njmzf7xBGr+vSQWRMOW05o3M7z23x08MS585o+MtA
-         9kx+3UmxffMFCSTaPglEusD9oHPpvCuuBM3S+OrjlKSRKxRCjx5LD4A8WVXlC1E0SMAO
-         5I5g==
-X-Gm-Message-State: AOJu0Yw6gFrzObh5nHBoVdS3rB33bjqcL3ANbBVXY7UhmzieVkMLfsvE
-        uaQaE8npjd72SHZ1t9rvysgLrrx7+Rt1JKXrkxQ=
-X-Google-Smtp-Source: AGHT+IE652HnpOuqvnVBGDDLrT5wGDbZm60/a3Eibz5HpmZ0r1doLgr270vkCnEhcqO3UeDgCRLTVw==
-X-Received: by 2002:a17:906:1db2:b0:9a6:4fe0:4552 with SMTP id u18-20020a1709061db200b009a64fe04552mr203290ejh.46.1693930770138;
-        Tue, 05 Sep 2023 09:19:30 -0700 (PDT)
+        bh=nc7aDvSgD11jc9qTAmRhPuXkI/EL03RkU/8y9cpVhM8=;
+        b=LGEKF/uJCpXN/ssJ+CNOJHZNROupBtH832+x4XRlDx6zZdKixuabdHph7jyzOoocK5
+         Euq647pF8v9KHxJfJ1dw1SBx+qVFcrNHENpSjj9U4JX1hyFJHPIoC9PPJjeEAbtGYqqY
+         GQOMADamW4KfDGIPx7Gpyq/vZiEJR6OGKx/X+4zzqTDyAg6gJDN6W1rRWV9+zqPfFs+P
+         duLunvtv9V7Cl/ZApcXEDXgjC8Dqd596fp/R8PPvhPP9U333mUNQiOWKUTKxmQR2sbka
+         MQMSsGUocLZzGG62cpUBieZzW3zsz8JRTrstJOX2KEKT9sprglwdmUAL2cS9qFufLP8T
+         47aQ==
+X-Gm-Message-State: AOJu0Yx+dneCCdbjnDNPYJ6zJgeCFdXQ2k3i0Hk5iAJxLSKEQ9t8EZWQ
+        ejGISQL4PzZOAk+UpXqVylqTo6OPDpcr1LIIXLQ=
+X-Google-Smtp-Source: AGHT+IFDt0aiNmz4JoBfxZRfoL070Nshr+IkSPI/NbDBpHRKk536hIiBuSGX6XbpHkvfBjtKOnU/ww==
+X-Received: by 2002:a17:906:768d:b0:9a1:db2e:9dbf with SMTP id o13-20020a170906768d00b009a1db2e9dbfmr291124ejm.14.1693930771239;
+        Tue, 05 Sep 2023 09:19:31 -0700 (PDT)
 Received: from krzk-bin.. (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id v26-20020a170906489a00b0099cc36c4681sm7743165ejq.157.2023.09.05.09.19.28
+        by smtp.gmail.com with ESMTPSA id v26-20020a170906489a00b0099cc36c4681sm7743165ejq.157.2023.09.05.09.19.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 09:19:29 -0700 (PDT)
+        Tue, 05 Sep 2023 09:19:30 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,17 +60,18 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 02/12] arm64: dts: qcom: sm6125-sprout: correct UFS pad supply
-Date:   Tue,  5 Sep 2023 18:19:10 +0200
-Message-Id: <20230905161920.252013-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 03/12] arm64: dts: qcom: sm6115-pro1x: correct UFS pad supply
+Date:   Tue,  5 Sep 2023 18:19:11 +0200
+Message-Id: <20230905161920.252013-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230905161920.252013-1-krzysztof.kozlowski@linaro.org>
 References: <20230905161920.252013-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,29 +96,29 @@ similar, depending on the SoC) used by UFS controller.
 Bring back handling of this supply by using more appropriate regulator -
 UFS controller host supply.  This also fixes dtbs_check warning:
 
-  sm6125-xiaomi-laurel-sprout.dtb: phy@4807000: 'vddp-ref-clk-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
+  sm6115-fxtec-pro1x.dtb: phy@4807000: 'vddp-ref-clk-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-index 90b5f22ea9dc..a49d3ebb1931 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-@@ -400,13 +400,13 @@ &ufs_mem_hc {
- 	vccq2-supply = <&vreg_l11a>;
+diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+index 9b70a87906dc..98eb072fa912 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
++++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+@@ -219,13 +219,13 @@ &ufs_mem_hc {
  	vcc-max-microamp = <600000>;
+ 	vccq2-supply = <&pm6125_l11a>;
  	vccq2-max-microamp = <600000>;
-+	vdd-hba-supply = <&vreg_l18a>;
++	vdd-hba-supply = <&pm6125_l18a>;
  	status = "okay";
  };
  
  &ufs_mem_phy {
- 	vdda-phy-supply = <&vreg_l4a>;
- 	vdda-pll-supply = <&vreg_l10a>;
--	vddp-ref-clk-supply = <&vreg_l18a>;
+ 	vdda-phy-supply = <&pm6125_l4a>;
+ 	vdda-pll-supply = <&pm6125_l12a>;
+-	vddp-ref-clk-supply = <&pm6125_l18a>;
  	status = "okay";
  };
  
