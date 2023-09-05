@@ -2,87 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46CF5792604
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:25:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD83F792774
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:36:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239455AbjIEQH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
+        id S238843AbjIEQG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:06:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353890AbjIEIax (ORCPT
+        with ESMTP id S1353897AbjIEIdx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 04:30:53 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB70CDC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 01:30:47 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4ff9b389677so3467105e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 01:30:47 -0700 (PDT)
+        Tue, 5 Sep 2023 04:33:53 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B50CCD2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 01:33:49 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bceb02fd2bso32286541fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 01:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1693902646; x=1694507446; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LWq30L/k6esO2m+8xJQ6plHCzdQIEU3cixCgpzG9F48=;
-        b=PXUS5OrCIr0hfIiE/RYFGI+eTfixlts42tgW5wCnRf0opXHzFIjtsXr6JyebIdn9tg
-         FBhI3Rqqee/Gl3C0da6tAxI6dCCXEQsjsVtuSr2n/p5xZGLu0vi5//ZskgqBM4Z53AdP
-         UBTfWJ35XhHIySddhkdM0qcNF8soWEqoGeFPw5Iak5/0zLUjsAMolwGVNsRdWCB6lpQY
-         p9RMVuACmnr0R14z8k1RuV8DV64dwrMxOQJtwxVyMP7nPkwp7feR04nkhRtKqX8gStDl
-         GALyse9Jh2L6M/GNvl34rZ5PAUGvFj0cIQx4fhKE/1joHr20rZDln+eGo2ZC8Slye1rm
-         1/iQ==
+        d=linaro.org; s=google; t=1693902827; x=1694507627; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fIa/MpEa51tsfHy6/cWnzhXG3DHHEf9vL3b6MO1snO8=;
+        b=OnMbdMB5vCjLqUhgBi8/PmJF5kMKSFUD9qb0WBLqyStKqKg3SNCcL8FD+c/FLqjTvf
+         DH/ka5TzWk0OSV5fbyGs09G3kDShcAa00sN6P+SPwGui7NeTXsEtKyDRZ4ra1zV+7uvH
+         3Tt3jXjJaEuKQevTbrXcjw8nuNDBS2TD3p7B/OOG2Nj7NyBtI9H8UshBlizacwrPDiJn
+         akufMpnzFMK86LeslMBsduQC0opMfbAItbmja2Lmm2NUkpRzIVAkdjhyD/8QJXOrGk3t
+         Hz29H7xyVMmmY9DfvXOudYzPHXpBcrRLItNX3KjAmJGjjw7ySLbP0SDLfwBCsxZsbfsm
+         niKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693902646; x=1694507446;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LWq30L/k6esO2m+8xJQ6plHCzdQIEU3cixCgpzG9F48=;
-        b=UIY+FUOJ+3Aj1Hahu8ZF+RR++Lh7H7DDIhUEMhNmW81/C5ZR7Uz9xmuzBc4d2OD/Zw
-         nxcqyuEkVsy/E1Xat1c5t7L9IN8FHmgOwwsiv1Uv5TrkoKegH+3shRwPKrMbk0YXmbWB
-         FZ/OBXplj4sUhtbjKN3X8QnLdeZRMazIpK3y9E/HZ6q4K+i+d2AbzxgomH+B77Vje1PS
-         NNZkuNKijbB8tQvZ/hegWFPXKdAdOuE6FnXaY6cfi0ZF9swhVEfjg7ZdMD55NNESvyVR
-         mlJ57oPPzV81o8PpGwP6eA+tDbeerVq/sHAe10SSnHFHkTeiiB4XBdp+DkK4xTE1ZJCm
-         2KWw==
-X-Gm-Message-State: AOJu0YwDzXEkuhDZdlKMw9eL9xso2edOweOPm/ToluJmbW/DIVnD0wPa
-        JmCis4vnjCHkFybjEaOPrGwNJQ==
-X-Google-Smtp-Source: AGHT+IHnW0XedN1vSaHx1JHDD4mFf80P5Zlb6gBn9z9f8KVQh7bwaME+VxnDiJKWubHNVVg3SjkedQ==
-X-Received: by 2002:a05:6512:ea6:b0:4fe:e50:422d with SMTP id bi38-20020a0565120ea600b004fe0e50422dmr9421046lfb.25.1693902645843;
-        Tue, 05 Sep 2023 01:30:45 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id fj22-20020a0564022b9600b005256aaa6e7asm667460edb.78.2023.09.05.01.30.45
+        d=1e100.net; s=20221208; t=1693902827; x=1694507627;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fIa/MpEa51tsfHy6/cWnzhXG3DHHEf9vL3b6MO1snO8=;
+        b=XVE6EXmzfjR1bGwnvJo0XNYmlMEV3uT7S1c5rtTU3R4GqawHrYIapf6jcquKNnKZJY
+         wP+wJlMpFMmfrZ4zD1kyahTTq+R141ChGgp1geJRv5sFiYH8IJB9/FKnJmnwdF7DUhz6
+         BkZ9hXgGX1/+F52zeFIPBanJ2zlRDhUgKUS2gk6L1we0VXWd+Oyhkc0GhgQT4JM6/K6a
+         xk7pWIHGLKS2GZd0VhvvGGw1pU7+GDyq5894taC4kRObYLrCbQFpcjydssf/BIsxbF4y
+         CgyGGAruy6LZJ8IlRHXvEpuJRZK5gQuqpo7LmPPbxxyPSaYLb5IvDr9FyDIigsjd7B8k
+         kKXg==
+X-Gm-Message-State: AOJu0Yz2Xlm4yReccW5jjWugFeo7teMIXFd9KRC+6Xr2C1wv9WLEI2By
+        BzONf2YokIz4G1GrF5kjFcIv1g==
+X-Google-Smtp-Source: AGHT+IERvRsqlyntQj4VnGYcehWf4fwbM2d9GauHcdKXaP7oVH8xT6P7pIWarRvWpuelwwxRKeA7rw==
+X-Received: by 2002:a2e:b6c2:0:b0:2bc:da3e:3bda with SMTP id m2-20020a2eb6c2000000b002bcda3e3bdamr7592956ljo.2.1693902827530;
+        Tue, 05 Sep 2023 01:33:47 -0700 (PDT)
+Received: from [192.168.1.101] (abxj43.neoplus.adsl.tpnet.pl. [83.9.3.43])
+        by smtp.gmail.com with ESMTPSA id z9-20020a2e8849000000b002b9415597d0sm2774957ljj.78.2023.09.05.01.33.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Sep 2023 01:30:45 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        Tue, 05 Sep 2023 01:33:47 -0700 (PDT)
+Message-ID: <879d42f0-acf7-441b-a820-3b6f67620eeb@linaro.org>
+Date:   Tue, 5 Sep 2023 10:33:45 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] crypto: qcom-rng: Add hwrng support
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     neil.armstrong@linaro.org, agross@kernel.org, andersson@kernel.org,
+        conor+dt@kernel.org, davem@davemloft.net,
+        devicetree@vger.kernel.org, herbert@gondor.apana.org.au,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marijn.suijten@somainline.org, robh+dt@kernel.org, vkoul@kernel.org
+References: <20230901131502.1549809-1-quic_omprsing@quicinc.com>
+ <20230901144636.GP818859@hu-bjorande-lv.qualcomm.com>
+ <76bec0e9-3d80-469b-8666-06f1b639facb@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <76bec0e9-3d80-469b-8666-06f1b639facb@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 05 Sep 2023 10:30:44 +0200
-Message-Id: <CVAUDGBO4S08.1F0O66ZE6I4IG@otso>
-To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
-Cc:     <cros-qcom-dts-watchers@chromium.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Viresh Kumar" <viresh.kumar@linaro.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.15.2
-References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
- <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
- <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
- <CV6NF0466658.20DGU7QKF2UBR@otso>
- <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
- <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
- <CAA8EJpoXreHpxZQ2G10n0OiQzUX4ffk=gvo87dAU4-r+Svqpeg@mail.gmail.com>
-In-Reply-To: <CAA8EJpoXreHpxZQ2G10n0OiQzUX4ffk=gvo87dAU4-r+Svqpeg@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -93,102 +117,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu Aug 31, 2023 at 2:27 PM CEST, Dmitry Baryshkov wrote:
-> On Thu, 31 Aug 2023 at 14:54, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 31/08/2023 13:33, Dmitry Baryshkov wrote:
-> > > On Thu, 31 Aug 2023 at 13:13, Luca Weiss <luca.weiss@fairphone.com> w=
-rote:
-> > >>
-> > >> On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
-> > >>> On 30/08/2023 11:58, Luca Weiss wrote:
-> > >>>> Like other Qualcomm PMICs the PM7250B can be used on different add=
-resses
-> > >>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
-> > >>>> possible.
-> > >>>>
-> > >>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > >>>> ---
-> > >>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++------=
--
-> > >>>>  1 file changed, 16 insertions(+), 7 deletions(-)
-> > >>>>
-> > >>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/bo=
-ot/dts/qcom/pm7250b.dtsi
-> > >>>> index e8540c36bd99..3514de536baa 100644
-> > >>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> > >>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> > >>>> @@ -7,6 +7,15 @@
-> > >>>>  #include <dt-bindings/interrupt-controller/irq.h>
-> > >>>>  #include <dt-bindings/spmi/spmi.h>
-> > >>>>
-> > >>>> +/* This PMIC can be configured to be at different SIDs */
-> > >>>> +#ifndef PM7250B_SID
-> > >>>> +   #define PM7250B_SID 2
-> > >>>> +#endif
-> > >>>
-> > >>> Why do you send the same patch as v1, without any reference to prev=
-ious
-> > >>> discussions?
-> > >>>
-> > >>> You got here feedback already.
-> > >>>
-> > >>> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3f3=
-13d9fe9@linaro.org/
-> > >>
-> > >> Hi Krzysztof,
-> > >>
-> > >> I did mention that original patch in the cover letter of this series=
-.
-> > >> I'm definitely aware of the discussion earlier this year there but a=
-lso
-> > >> tried to get an update lately if there's any update with no response=
-.
-> > >
-> > > I think the overall consensus was that my proposal is too complicated
-> > > for the DT files.
-> >
-> > I proposed to duplicate the entries. Do you keep QUP nodes in DTSI and
-> > customize per address? No.
->
-> At the same time, we do keep SoC files separate from the board files.
-> Yes, I'm slightly exaggerating here.
->
-> I think that for PMIC files it makes sense to extract common parts if
-> that eases reuse of the common parts.
+On 5.09.2023 04:50, Om Prakash Singh wrote:
+> 
+> 
+> On 9/1/2023 8:16 PM, Bjorn Andersson wrote:
+>> On Fri, Sep 01, 2023 at 06:45:02PM +0530, Om Prakash Singh wrote:
+>>> This is follow patch on top of [1]
+>>
+>> This information does not add value to the git history, if you need to
+>> inform the maintainer that the patch should be applied after some
+>> in-flight dependency then state so after the "---" line below.
+>>
+>> But, this patch strictly conflicts with [1], so the statement won't make
+>> sense if this is merged.
+>>
+>>> to add hwrng support for newer platform with trng capability.
+>>
+>> Please rewrite this so that it's clear that the problem you're trying to
+>> solve with this patch (i.e. the problem description) is that newer
+>> platforms has trng. Describe how this relates to the existing driver
+>> (e.g. same/similar hardware interface). State that you purposefully kept
+>> the crypto interface in place for the new hardware as well (so that it's
+>> clear that this isn't an accident or oversight).
+>>
+>>>
+>>> [1] https://lore.kernel.org/lkml/20230824-topic-sm8550-rng-v2-4-dfcafbb16a3e@linaro.org/
+>>>
+>>> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+>>> ---
+[...]
 
-Hi all,
+>>
+>> Can you please confirm that it's appropriate to name this "trng" without
+>> the "-ee" suffix. Should all trng instances (v2 and v3) skip
+>> initialization?
+> All trng supported platform needs to skip initialzation.
+> we don't need to have both "trng-ee" and "trng".
+> If "trng-ee" is prefer we shold update it in patch [1] it itself,
+Looking back at ba3ab6371cdd ("crypto: qcom-rng - Add support for prng-ee"),
+it was solved in a way that we would stray from today - nowadays
+we'd call it qcom,msm8996-prng or something.
 
-what can I do for v2 now?
+The -ee part was only there to discern parts that were initialized
+by other software.
 
-1. Keep this patch as-is, and keep pm7250b in device dts.
+Since you said that all TRNGs need that, I'm also for dropping "-ee".
 
-2. Drop pm7250b patch and drop from device dts, until _someone_ figures
-out a solution talking to the PMIC on different SID.
-
-3. Something else like copy-pasting pm7250b.dtsi to pm7250-8.dtsi and
-changing the SID there, and using that in device dts.
-
-Please let me know what to do.
-
-Regards
-Luca
-
->
-> >
-> > I definitely do not agree to these ifndef->define. Maybe using just
-> > define would work (so drop ifndef->define), because this makes it
-> > obvious and fail-safe if included in wrong place... except that it is
-> > still not the define we expect. This is not the coding style present in
-> > other DTSes.
-> >
-> > The true problem how these SPMI bindings were created. Requiring SID
-> > address in every child is clearly redundant and I think we do not follo=
-w
-> > such approach anywhere else.
-> >
-> > Best regards,
-> > Krzysztof
-> >
-
+Konrad
