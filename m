@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7615F792B04
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:02:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 978A9792AFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:02:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236811AbjIEQqP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:46:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56966 "EHLO
+        id S233266AbjIEQqE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:46:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238343AbjIEQg4 (ORCPT
+        with ESMTP id S1355066AbjIEQeJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 12:36:56 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E418E5C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:34:19 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4ffa248263cso4254450e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:34:18 -0700 (PDT)
+        Tue, 5 Sep 2023 12:34:09 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42810173F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:33:00 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52bd9ddb741so3874049a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693931570; x=1694536370; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693931492; x=1694536292; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wH0Ng8oy03X8SMHsmTArDNYyeNPd8XC1y8dXMDsLWIc=;
-        b=Yx4mN0MqzO96QMm+7RYHtF6t7rHakKm+SRXEi7m+jR28vPU3BtYZ70JgJ2XwhZTyzP
-         AqBL21f1xKvZAxi/wtU76MOrRNhOI4LaiZsvj0t1BPTgYTtct5E6iAac6yKGkljebnz5
-         u2YFRHO7qPjtf+oAQi6fRiIq/bXITCk9FdRip9E+QAB8/cxi8L7N5VmduiAIlLSQLVIu
-         WgZDKI7hG2r4ny2blxPCidScmDDDFR+/4kTXdIHxUucmBulciL2AxCC3/Rae0NebR08V
-         Wo9vlssbNqe8aXtkAQDlyNkU1Ud1QRteSycRzcdMRhgVfxYAHq04QaIGY3/Pvc2csb2c
-         TQcQ==
+        bh=jCtQWgbb02h7KYD8U2ktyb4TldTEghF6cZdnaKwaLc0=;
+        b=pMeY4lmdo/OkRpJovzW/wCxst082fSuyZW8JsTT+VCkmED4NBDqxbxYaDuhW1fJ0FJ
+         MQFsCS9MkOzRRuqgYi96LiDj7TchnHVky/bjDtSpxVMI1L0P+YJ5NEKf+lFD4M6KUgjI
+         gAm7jS/3oSyL7RA+I+hyVqztGS487hrm2qa3koqP3jq5cH9POUuhK+/m4M4D66iyPI6P
+         yshAfRxLbUKmV19qrH7ye+aVLVV64aTG6iSlkxnVJSDPO+3BhSJittyAOLPa7LCp/HP5
+         aFc+SjEDQVZQYVgI7ClGu5Q1AxyYHWSyajz9XiZOsX/TuJsBqPterZmH8wBOdPBHczCz
+         biqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693931570; x=1694536370;
+        d=1e100.net; s=20221208; t=1693931492; x=1694536292;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wH0Ng8oy03X8SMHsmTArDNYyeNPd8XC1y8dXMDsLWIc=;
-        b=BbaMmWIRyx7q8Y+27fSDQ6S5evnbGj5IPKf1H+shmTfoZkrOfVs5KFNmtP0DEh/P1J
-         ZDY4kDK7iVkA5DZsAFzrzpJoR3Nvdu9JA02M3r2cohMWYvMVgjv1ROuQVutPscinK0YY
-         wpR0/oyx8jhmzMXqmrAu03/2xoXcS6k8jRNMyZ5sFkutTGUIfcBFD2Ob1dzewdSS0VqM
-         7Sxgnb1g88+Kzi+5BKCxjFfMwl9CCx4h7AxYk/UBQqXd9iJwgboiDXWlUdfXpZp6ZwLw
-         RCqxzYRu0NMEyWpk+9u+wZfN1XPBBXKxX60Fmok67fea5xRzy3e468DU6kU0PUUfRrfT
-         B/kg==
-X-Gm-Message-State: AOJu0Yw7UJrMhxYTfszaTTaPpAy5u5Nt9bueHacRCe5AFgXHkdcEvxL0
-        gHB1TpphJH+Wma56Fo0wu5nA7nDY63wkfg1mVDk=
-X-Google-Smtp-Source: AGHT+IEnMq/K+PBH4fIwWFHDZIzZQAuV6yDEJtoSosWhc0PuWlIX9lGFDqQXnARU4PSyDs6TMRTApQ==
-X-Received: by 2002:a19:6703:0:b0:4f9:cd02:4af1 with SMTP id b3-20020a196703000000b004f9cd024af1mr211263lfc.34.1693930776810;
-        Tue, 05 Sep 2023 09:19:36 -0700 (PDT)
+        bh=jCtQWgbb02h7KYD8U2ktyb4TldTEghF6cZdnaKwaLc0=;
+        b=l2xbt4+W3YSUSC6QCtC/f8pq0Rk5U37n2KcfFWpbN5gbjnISPHwp5jOxILmY15VzrE
+         Nn+jiFsZoWHp3CpV/sYG2XYLpfGHTXXHpzs2dRqwQlo/ftQAfGRMijtgNxilB8zz1f54
+         VM82xTofG23IjmJmjiQ8KaYHNjoIUUv4jJ5udrHkuiZEGcGb1/7O+eB4zlVHnobQRovH
+         fBPC9EWGc4sNswwQkAYrcSk0lGeENmyAM3HBrHpuhuIj4MFxNWogiSBJ+/ZLn+0Evenq
+         E5p+urRManyTeKlRVA2lTRxKSBbIf1x50pKQDHuQOH4AChCKuVGtETtXbyKnPBh2e2nM
+         ng0g==
+X-Gm-Message-State: AOJu0Yx0ZCRSYi7m9FhYLZNkSuuAgwZY1SDAVIqqOc+afXtSRcCIsDb6
+        0AG6DfmcbaeeYg03Qw1nLZOyEBPnFgg4gQBBsdg=
+X-Google-Smtp-Source: AGHT+IG/vRGmEaxsFaRgwpx5PNlOfs16fo0/0gTaACViAusSmncbJI1uTB1sOjpWhj3mmg2REQVmcQ==
+X-Received: by 2002:a17:906:cc49:b0:9a1:bcf9:4f99 with SMTP id mm9-20020a170906cc4900b009a1bcf94f99mr237434ejb.36.1693930778172;
+        Tue, 05 Sep 2023 09:19:38 -0700 (PDT)
 Received: from krzk-bin.. (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id v26-20020a170906489a00b0099cc36c4681sm7743165ejq.157.2023.09.05.09.19.35
+        by smtp.gmail.com with ESMTPSA id v26-20020a170906489a00b0099cc36c4681sm7743165ejq.157.2023.09.05.09.19.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 09:19:36 -0700 (PDT)
+        Tue, 05 Sep 2023 09:19:37 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 08/12] arm64: dts: qcom: msm8998-pro1: correct UFS pad supply
-Date:   Tue,  5 Sep 2023 18:19:16 +0200
-Message-Id: <20230905161920.252013-9-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 09/12] arm64: dts: qcom: msm8998-mtp: correct UFS pad supply
+Date:   Tue,  5 Sep 2023 18:19:17 +0200
+Message-Id: <20230905161920.252013-10-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230905161920.252013-1-krzysztof.kozlowski@linaro.org>
 References: <20230905161920.252013-1-krzysztof.kozlowski@linaro.org>
@@ -95,18 +95,18 @@ similar, depending on the SoC) used by UFS controller.
 Bring back handling of this supply by using more appropriate regulator -
 UFS controller host supply.  This also fixes dtbs_check warning:
 
-  msm8998-fxtec-pro1.dtb: phy@1da7000: 'vddp-ref-clk-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
+  msm8998-mtp.dtb: phy@1da7000: 'vddp-ref-clk-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts | 2 +-
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-index b6a214bea70f..f1ceaedd9520 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-@@ -671,6 +671,7 @@ &ufshc {
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dts b/arch/arm64/boot/dts/qcom/msm8998-mtp.dts
+index 4319f4da8996..7c77612fb990 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dts
+@@ -412,6 +412,7 @@ &ufshc {
  	vcc-supply = <&vreg_l20a_2p95>;
  	vccq-supply = <&vreg_l26a_1p2>;
  	vccq2-supply = <&vreg_s4a_1p8>;
@@ -114,7 +114,7 @@ index b6a214bea70f..f1ceaedd9520 100644
  	vcc-max-microamp = <750000>;
  	vccq-max-microamp = <560000>;
  	vccq2-max-microamp = <750000>;
-@@ -680,7 +681,6 @@ &ufsphy {
+@@ -421,7 +422,6 @@ &ufsphy {
  	status = "okay";
  	vdda-phy-supply = <&vreg_l1a_0p875>;
  	vdda-pll-supply = <&vreg_l2a_1p2>;
