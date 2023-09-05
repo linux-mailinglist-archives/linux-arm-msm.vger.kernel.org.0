@@ -2,62 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90A73792613
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:26:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9EDF7925A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:23:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237581AbjIEQEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60424 "EHLO
+        id S237545AbjIEQHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:07:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354259AbjIEKZx (ORCPT
+        with ESMTP id S1354273AbjIEKa7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 06:25:53 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D1B5DB;
-        Tue,  5 Sep 2023 03:25:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BAB11B8113E;
-        Tue,  5 Sep 2023 10:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6876DC433C7;
-        Tue,  5 Sep 2023 10:25:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693909547;
-        bh=s5OcvhMGsauyHDIDghPQ23qUl8W6KKM1Q1jw2SF9yi4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MCmfXrexYhH4Ai/BXu//C7U3rOTpsCWaLsG2uJMmVDnnEHOp1gXStiwclOrtqdLCF
-         MncEUQuevfAWcC/UQV5gAuG3WKjdr9gaDPvbVnTVJae/dzpZCdgEXzRv3Cb74PEev5
-         +0AAn1NOM6DAmxh0fEreYMJ1dJ8/wZqN5KGGWfc1nsBNPN4G+61Ic8F9Mb5EQWiHca
-         hl4iq8ICMou/PeI5bUv9Er9LzY0Ek2BOGGSveOQJFtSxnin4jDb3dngoSq6d1+EPJx
-         N4tUUInzW1rehli5Atc4hYch3YUxSuyIuL672CLe1FgME3om0QlqSbN1FrGb9QTkzy
-         NbANuoCgERNpg==
-Date:   Tue, 5 Sep 2023 12:25:43 +0200
-From:   Andi Shyti <andi.shyti@kernel.org>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-        dmitry.baryshkov@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Liao Chang <liaochang1@huawei.com>,
-        Todor Tomov <todor.too@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Wolfram Sang <wsa@kernel.org>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        error27@gmail.com, vegard.nossum@oracle.com
-Subject: Re: [PATCH next] i2c: qcom-cci: Fix error checking in cci_probe()
-Message-ID: <20230905102543.54weuecvkcujusip@zenone.zhora.eu>
-References: <20230823194202.2280957-1-harshit.m.mogalapalli@oracle.com>
- <47e3acac-7d4f-43bd-bd55-5ae9ab993f2d@kadam.mountain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <47e3acac-7d4f-43bd-bd55-5ae9ab993f2d@kadam.mountain>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Tue, 5 Sep 2023 06:30:59 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A338C199;
+        Tue,  5 Sep 2023 03:30:56 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3859EVfI010513;
+        Tue, 5 Sep 2023 10:30:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=TpfFJN53W+ViGIa50jhbAyPdNZv9znLM1xPZ+sjUNCk=;
+ b=HwC2ysD+Vno8TF7HoUYRN3i1ZjeQ1/tMmUKLDzY3RoV3eb53PENZVouMflLRUEALOe3A
+ Pi5Prm0e6VQ6MZZOQtuzWw7r9vo/IyDiUvTRm+/xipP0QQqYcv1GtcYEi+fvPD/b4Ypm
+ 7rZr6Rm5NHoQDrvV8kyYgRGsm+kUrydekK+2nYv103nGGltInN2zfrjXIIJ9iZVQ8fEQ
+ PDlId4Sp0X/wGqYDb8pdhTlWcACIRpqo0cfIO8bdc5TsNb3zai/cmo1ze48WOj/Cf0mB
+ wPkGV8rnFm7poKTMkdwp6XsPitN7dtybVcvjpw5i6iVzP6lnRs7WwPqysh+2odj4L0Nd xg== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sww32rm8e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 05 Sep 2023 10:30:44 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 385AUeEm018085;
+        Tue, 5 Sep 2023 10:30:40 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3sux4km16c-1;
+        Tue, 05 Sep 2023 10:30:40 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 385AUePT018073;
+        Tue, 5 Sep 2023 10:30:40 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 385AUdSZ018069;
+        Tue, 05 Sep 2023 10:30:40 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 2B7451D0C; Tue,  5 Sep 2023 16:00:39 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, abel.vesa@linaro.org,
+        quic_wcheng@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, kernel@quicinc.com,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v2 0/5] Add USB Support on Qualcomm's SDX75 Platform
+Date:   Tue,  5 Sep 2023 16:00:33 +0530
+Message-Id: <1693909838-6682-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zDlUmFKepkqD6TWCL_xcXNI5qJXA0fz7
+X-Proofpoint-GUID: zDlUmFKepkqD6TWCL_xcXNI5qJXA0fz7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-05_08,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ mlxlogscore=556 mlxscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309050093
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,30 +82,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dan,
+Hi,
 
-On Tue, Sep 05, 2023 at 12:10:31PM +0300, Dan Carpenter wrote:
-> On Wed, Aug 23, 2023 at 12:42:02PM -0700, Harshit Mogalapalli wrote:
-> > devm_clk_bulk_get_all() can return zero when no clocks are obtained.
-> > Passing zero to dev_err_probe() is a success which is incorrect.
-> > 
-> > Fixes: 605efbf43813 ("i2c: qcom-cci: Use dev_err_probe in probe function")
-> > Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-> > ---
-> > Only compile tested, found by static analysis with smatch.
-> > 
-> > https://lore.kernel.org/all/CAA8EJprTOjbOy7N5+8NiJaNNhK+_btdUUFcpHKPkMuCZj5umMA@mail.gmail.com/
-> > ^^ I reported initially here, Dmitry suggested we need to fix it in a
-> > different patch.
-> > 
-> > the Fixes commit used above pointed this bug, but the real fixes tag is this:
-> > Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-> 
-> This has already been applied but, for future reference, you should have
-> gone with the real fixes tag instead of where the static checker started
-> complaining.
+Changes in v2:
+ - Dropped the new dt schema introduced in v1 for sdx75 usb3 phy
+   and reusing the bindings.
+ - Rephrased the commit message of patch 3/5
+ - Removed stray lines from the patch 5/5
 
-yeah... sorry... I normally check all the "Fixes:" tags, but
-sometimes, out of sheer laziness, I trust the commit.
+This series adds support of USB3 PHY support for Qualcomm's SDX75 Platform.
 
-Andi
+Thanks,
+Rohit.
+
+Rohit Agarwal (5):
+  dt-bindings: phy: qcom,snps-eusb2-phy: Add compatible for SDX75
+  dt-bindings: phy: qcom,qmp-usb: Add SDX75 USB3 PHY
+  dt-bindings: usb: qcom,dwc3: Fix SDX65 clocks
+  dt-bindings: usb: dwc3: Add SDX75 compatible
+  phy: qcom-qmp-usb: Add Qualcomm SDX75 USB3 PHY support
+
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        |  40 +++++-
+ .../bindings/phy/qcom,snps-eusb2-phy.yaml          |   7 +-
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |   4 +
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c            | 158 +++++++++++++++++++++
+ 4 files changed, 205 insertions(+), 4 deletions(-)
+
+-- 
+2.7.4
+
