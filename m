@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8383D792C61
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0488792B07
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:02:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237716AbjIERTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 13:19:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46286 "EHLO
+        id S230463AbjIEQqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:46:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344187AbjIERSS (ORCPT
+        with ESMTP id S1353688AbjIEQ2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 13:18:18 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220D73B045
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:44:29 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52bcd4db4cbso3703613a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:44:29 -0700 (PDT)
+        Tue, 5 Sep 2023 12:28:53 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39CF30E0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:19:10 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bcc187e0b5so42547921fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693932204; x=1694537004; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693930656; x=1694535456; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SDmEkkiomzbm/t0kyOHY3bm7nezdvpUGCm1Gee0mEtE=;
-        b=bAHn/fLuzb/2ET+pp4MIjsT/bpDVoUfwjvrkKMm7npc+eLPDGTKzjxTBAKZN9Nn2vG
-         IsVmnSxSrt4A7FM6sgZ6WO+gTlyyzdTo9l0yXlr1M0ZDmKR2ftFtR+um1wKX2eNo3i6M
-         pfd/ZpHyA6uHvZRBpVEs924z3mFgu+yaOvhc4IitVsfBAMiOXXO5xeTUgtjDMGKYNSQD
-         R2LmMDMPmaigq8kSnI9gOVxI8juNF29DCSYYEvIp+gx4BOXED4r6xI7Id2yY2xZ2g/yd
-         9SPyeVErN858A4Rb/eTDYr2TElvVWd8zGLpb7g7gKP3NW3/0jirR6YKkIGLTYEBHArz8
-         CL2A==
+        bh=ZSU9k7U5l+JbONJFiOhrIjvO2o9Sv1BbHrtzBfvKaJQ=;
+        b=OHwtxnwQK8XxMHb4KC5eTgh4tydst7ss8VzzE7ovHzdLevHuSVntgAWKg7Xvhm1Oqc
+         Fuj3NyvV0tRFu3U2NBBCH9KSI9I5lzrIvH6j/CMWj5UMGh9Eom+xG6IamDUBIokLy8DW
+         fDOrxJ7NaeEGAAP5xzfSqPSjejgqsXd/mogUh3LTnJCc7hjMtUAqUMxJa0Z/1+IQBwlS
+         jzX45yp/JLTehX2SvYr+A6mfrMnSi9WObR11zN7agUrhyK0XS2JaPeLrojPzqEJ6A0X/
+         T8C8PVexUNei3gQkGnUYmYjAYvGq4m3on8XIna9ItAnisbISdwjURwaBelzQb17yDqT2
+         S+WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693932204; x=1694537004;
+        d=1e100.net; s=20221208; t=1693930656; x=1694535456;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SDmEkkiomzbm/t0kyOHY3bm7nezdvpUGCm1Gee0mEtE=;
-        b=caycjVHY8YJ3Fdhp+05fQtnN/7zwXLBhbbAW46UjY+uyeeU+EEQcMTKTnt7HsGz2gC
-         aB+qi+mmi+bDadLTnC75S9OA41BmxYT8F9mqNKDRs1WPtGVNtW9M8duL/1iXIb5hUixo
-         iQ2rySdh+ZMFOxuCKpWKKbX3QLju9atTWh+/5akdNiTGQhXyjWjspXOT/Y2p4gLOUyYZ
-         Hu3Rpubu5SUoHgi7c5dqhYz7kxKoaSwoRN56ff2vzsC9ppYGXnkoynm8C9InGJnBwIpR
-         wjDKd+H16MsC3fDYXUKoVnnah5Bt6p+5EccLwtmV3puHMdcmwkHuDeBts55DHwMFjgvA
-         1Z4g==
-X-Gm-Message-State: AOJu0YzBhLf77Bcqmy34hLO0Avn0RJZplmlWiEVvN8BbLRhg8YHFOTQW
-        +UASDZxeDZygLNjekfNpghoz5GM4NIK3xxdYmls9Ng==
-X-Google-Smtp-Source: AGHT+IG95JkmN66/glE3KZ9evrj4ynCBfjln8sFmAB+NvGPgcflf1KTh5SG7UN7y6QuRyekGl9BiHg==
-X-Received: by 2002:a17:907:7714:b0:9a2:1df2:8e08 with SMTP id kw20-20020a170907771400b009a21df28e08mr219686ejc.45.1693930070557;
-        Tue, 05 Sep 2023 09:07:50 -0700 (PDT)
+        bh=ZSU9k7U5l+JbONJFiOhrIjvO2o9Sv1BbHrtzBfvKaJQ=;
+        b=aH/2ItxOUSww7UWp7KnBikJDwV4ru27Dz1yoYbxSD3o8EioYmgeC8ziPRy49gcc5BZ
+         5Yg0JnA/9c3tQqhULK8v6byt0DuTKno46HdwrkvkgtUrHDmM9tGToWHOBJuDQN+Jv/zs
+         Bdiowv/2Z75TGNbcW2EtFjeqL6s3iTSwFjB/34AckMfYvjX4Pxv6WHTCzvnpjcowWhr9
+         CO49S94UQ4HUUlDyjx+o4NRWizbg+RwX9CQqyDA4RJQNlL2yv66lDHGjNuCvHsplP9qA
+         njcLs6np73II8UOfiMk7ZSEOXviQj79P7iJsCCkZoC3GH9w+MRlGM4stMJzM/faO6zTW
+         7GDw==
+X-Gm-Message-State: AOJu0YxXXk4+hkWV2tG0oTDAfz6m3BLjzBolTFmDIKY9VvKeZ0Oq6ASG
+        CDlq1sK8JXkHr9qFXyfFZkPyu5umr8BSx2sCkhU=
+X-Google-Smtp-Source: AGHT+IHmLe1g3na3+mMgD44UxKDlaLyzw3S0+7joAYdsj5hlVVZrv+mXBkC3DKuopZa28QZ8CRXfoQ==
+X-Received: by 2002:a17:906:32c7:b0:9a5:9038:b1e7 with SMTP id k7-20020a17090632c700b009a59038b1e7mr236508ejk.36.1693930089748;
+        Tue, 05 Sep 2023 09:08:09 -0700 (PDT)
 Received: from [192.168.37.232] (178235177232.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.232])
-        by smtp.gmail.com with ESMTPSA id rl21-20020a170907217500b0099315454e76sm7701782ejb.211.2023.09.05.09.07.48
+        by smtp.gmail.com with ESMTPSA id rl21-20020a170907217500b0099315454e76sm7701782ejb.211.2023.09.05.09.08.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Sep 2023 09:07:50 -0700 (PDT)
-Message-ID: <5446a3fd-59bc-4297-b3c4-204d014ac3cd@linaro.org>
-Date:   Tue, 5 Sep 2023 18:07:47 +0200
+        Tue, 05 Sep 2023 09:08:09 -0700 (PDT)
+Message-ID: <d89f9acb-60ca-4a86-a55f-194e7756107a@linaro.org>
+Date:   Tue, 5 Sep 2023 18:08:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: ipq6018: Fix tcsr_mutex register
- size
+Subject: Re: [PATCH v2 2/2] hwspinlock: qcom: Remove IPQ6018 SOC specific
+ compatible
 Content-Language: en-US
 To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -67,7 +67,7 @@ Cc:     quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
         quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
         quic_varada@quicinc.com, stable@vger.kernel.org
 References: <20230905095535.1263113-1-quic_viswanat@quicinc.com>
- <20230905095535.1263113-2-quic_viswanat@quicinc.com>
+ <20230905095535.1263113-3-quic_viswanat@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -104,7 +104,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230905095535.1263113-2-quic_viswanat@quicinc.com>
+In-Reply-To: <20230905095535.1263113-3-quic_viswanat@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -118,17 +118,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 5.09.2023 11:55, Vignesh Viswanathan wrote:
-> IPQ6018's TCSR Mutex HW lock register has 32 locks of size 4KB each.
-> Total size of the TCSR Mutex registers is 128KB.
+> IPQ6018 has 32 tcsr_mutex hwlock registers with stride 0x1000.
+> The compatible string qcom,ipq6018-tcsr-mutex is mapped to
+> of_msm8226_tcsr_mutex which has 32 locks configured with stride of 0x80
+> and doesn't match the HW present in IPQ6018.
 > 
-> Fix size of the tcsr_mutex hwlock register to 0x20000.
+> Remove IPQ6018 specific compatible string so that it fallsback to
+> of_tcsr_mutex data which maps to the correct configuration for IPQ6018.
 > 
 > Changes in v2:
->  - Drop change to remove qcom,ipq6018-tcsr-mutex compatible string
+>  - Updated commit message
 >  - Added Fixes and stable tags
 > 
 > Cc: stable@vger.kernel.org
-> Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
+> Fixes: 5d4753f741d8 ("hwspinlock: qcom: add support for MMIO on older SoCs")
 > Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
