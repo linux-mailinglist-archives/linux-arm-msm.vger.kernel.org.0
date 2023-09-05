@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDF8A79281E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:42:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C792D792796
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:37:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238475AbjIEQGL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:06:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
+        id S238739AbjIEQGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:06:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244686AbjIEBZi (ORCPT
+        with ESMTP id S244690AbjIEBZi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 4 Sep 2023 21:25:38 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443BECC7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 18:25:34 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ffa248263cso3076335e87.2
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01895CC8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 18:25:35 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b962535808so30003461fa.0
         for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 18:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693877132; x=1694481932; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693877133; x=1694481933; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cX+y0ZTXdBXhLtW/h/aZWSr4/bitsbVJKgCnflkiv+0=;
-        b=hz/nrHCyDzC/S49BHYwcsei07sUbEBpR6yXcwZTE4KazCkxfcT/jA37EPaNXNaXHFY
-         t0Rr4n7dQJl6Rb/iwhEHdrYvZArR+kZd0Yerm1rJfNXxbxUOEhaimWbSbKC1up623/Bl
-         DwKMDfhhcepWIK0NYVMZZrzcBhTWcgo/kO1eu0kUFr/XFZYh48TrPUJ8sjOhv2fRrkDQ
-         q2UVc4B+rPII8bfxMz03uRFtBkEJDKmh0yBYuPvdVvL6rB+s8Vorb1d2aDgbwSnuvMdD
-         vvRqvNjLO8NTJCS10T8mH2uVHKy8ybpS540JeqgjsKebdBqnYYlplqELSnvGm4ghrWaH
-         apAw==
+        bh=2Rm3Y5KAtKu5ohVxEVzs5WePQAFUL7jzU8IZiFS6eHM=;
+        b=Jw4NsrrGzS/IJ9J9DTlST7Z2WdSP2Ygd9Zfs4tIUCcrJvd5wyFOvc118Jdks9JonuZ
+         YoSgIvGmCHiazwIQq3A3Pn++LusEmJ/bPhWdEoi21kcV013TalrfqHJXDxzftY371P92
+         4tomedPaH++svN9V2VX9D7v7aGzLxkdTaYzzvA38FnUOnVPokf20Rd/2AVIadU8Ygo7e
+         6C6Js2fCTzWSvBnjjBW7Klj3ITd9N7+OetKFxvShOCTCCvC+PIAv/zquHgrK/E4Z4kZn
+         mgI21jUqyASqU3ImUldOiWY+RNF1d064BomwkWtVGQgyM2UG+uG8PchXXSfPa+Pe4VzG
+         qXKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693877132; x=1694481932;
+        d=1e100.net; s=20221208; t=1693877133; x=1694481933;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cX+y0ZTXdBXhLtW/h/aZWSr4/bitsbVJKgCnflkiv+0=;
-        b=Ny1+mOkjISBeYi7NvSR/IsJjUF8EW+yCEFmJvRRvDJvuvJXkqagDYevDZSQnRcrtow
-         ZQeI1MRRW2k+joNdA9bB4O87x9q1A+Ln2U/1TJZjYMh1+TKNRfBi5KFagivpEZzxeBrB
-         2QSUwKjYGjE6nLdfaBUzrrhvyq8ekzlCXpZE4PPtjQJ1D+roW3ui7I0B+1q6JOG3Telz
-         Y32RzsWy3/ybW1CWJozQnSCqY72qRG8sgzeEW84t9Mw8rRdgrD1cjYC3ME8ZFI2DhQOM
-         8TY16hcR1Am/MxaBfbqjhcgVjtKQfulfdILLV8vsh9vAuIRhaNIg4g0vUsXAU0Edo0xx
-         rKIQ==
-X-Gm-Message-State: AOJu0YzJDekq+aY6u5VDMHOLRhzSeKwDB+BPFARvgDiPrQzxz37wlwhJ
-        w3z206eyvFBayeVUEwbosiXuMw==
-X-Google-Smtp-Source: AGHT+IEJH80knqaAIEal5a9s8kuLKS74X1Uga4lfsB4cJhsnI1oSEPfoKNz3+GvAInf8RvWV8C5K9w==
-X-Received: by 2002:ac2:4545:0:b0:4f9:5580:1894 with SMTP id j5-20020ac24545000000b004f955801894mr7561799lfm.15.1693877132569;
-        Mon, 04 Sep 2023 18:25:32 -0700 (PDT)
+        bh=2Rm3Y5KAtKu5ohVxEVzs5WePQAFUL7jzU8IZiFS6eHM=;
+        b=MmVmgOmQM4MIR4Aoem7Szsgc2eDE8iCJJ77rneGhCOFOWkYHpKp6eLn2DSboKJTG8L
+         7Nbt5id7YRBUKACG94rNDZHk+S+KRGqoS1eRx+baNvxSuTyiTQCRwKWExacEKIPz9hNC
+         CiJD/1cJTysP153+iL+Hv2Pz+fo36Sc5sIT05q4UjUNCcYQTPFrSZR1O7YWZy0K9JZnS
+         90ZrTmO3NKv+js8nP5Z6b231YKB1QWNGvh8M7xs7JZyarenF5crvoSnhF9VQZX+/77th
+         ZIu0YX995iQhAl2GWT/ftuSm67SIJMjzyYsggmxFihqHOe5+AvIpZdmW4a64v2DGpdqY
+         TKWA==
+X-Gm-Message-State: AOJu0YztvKOhaAub3INM3+TJOGzJF+9OA6OhXEJrp6XJ+PquejjKoWCM
+        HSYFQygAhUjIAGb+P4GF2heuRw==
+X-Google-Smtp-Source: AGHT+IFISVrODvciD3wTkeSF8eCILfBUiFH6C734EjjBz5hFOMj/JPaBvd/KoMHYhMSBh8gV3ssqAw==
+X-Received: by 2002:a05:6512:3e1a:b0:500:9214:b308 with SMTP id i26-20020a0565123e1a00b005009214b308mr8473224lfv.65.1693877133308;
+        Mon, 04 Sep 2023 18:25:33 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v25-20020ac25599000000b004ff70c76208sm2062369lfg.84.2023.09.04.18.25.31
+        by smtp.gmail.com with ESMTPSA id v25-20020ac25599000000b004ff70c76208sm2062369lfg.84.2023.09.04.18.25.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Sep 2023 18:25:31 -0700 (PDT)
+        Mon, 04 Sep 2023 18:25:32 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v3 6/8] drm/msm/dpu: drop the dpu_caps::qseed_type field
-Date:   Tue,  5 Sep 2023 04:25:24 +0300
-Message-Id: <20230905012526.3010798-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 7/8] drm/msm/dpu: merge DPU_SSPP_SCALER_QSEED3, QSEED3LITE, QSEED4
+Date:   Tue,  5 Sep 2023 04:25:25 +0300
+Message-Id: <20230905012526.3010798-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230905012526.3010798-1-dmitry.baryshkov@linaro.org>
 References: <20230905012526.3010798-1-dmitry.baryshkov@linaro.org>
@@ -77,217 +77,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qseed_type field points out the particular QSEED type implemented by
-the scaler. However this field is unused by the driver. Correct scaler
-type is inferred from the features data. Drop the the qseed_type field.
+Three different features, DPU_SSPP_SCALER_QSEED3, QSEED3LITE and QSEED4
+are all related to different versions of the same HW scaling block.
+Corresponding driver parts use scaler_blk.version to identify the
+correct way to program the hardware. In order to simplify the driver
+codepath, merge these three feature bits.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h           | 2 --
- 15 files changed, 16 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 6 +-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 9 ++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 4 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 3 +--
+ 5 files changed, 7 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 5ea938b57eda..1276981c16d2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps msm8998_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x7,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 440d49842f31..bfd2fa4d27ef 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sdm845_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index 619afa54c714..c873743d9123 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8150_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index 668b48e3c922..20e95a0d3e81 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc8180x_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index 52f3884e587b..e1a06e609cc1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8250_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index e76a6d329896..206e5a64e5e4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc7180_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x9,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-index 8fc938398aa6..1122a62acddf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm6115_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x4,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2160,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-index 12d9825a2b30..8aea53d5c86f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-@@ -11,7 +11,6 @@
- static const struct dpu_caps sm6350_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x7,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-index 6c43099b252e..73756ee7bba7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-@@ -11,7 +11,6 @@
- static const struct dpu_caps sm6375_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x4,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2160,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index 8989dc17b491..fcefb7a66bec 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8350_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 58fa7d238106..5f3c740fd0a7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc7280_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x7,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2400,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 70a9ef59b43e..332097f8799f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc8280xp_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 11,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 5c7a8ce7bc4d..90977084958a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8450_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index c5d173b5ee36..23f4d8d8e22b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8550_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index b37b4076e53a..67d66319a825 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -31,10 +31,10 @@
+ 	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+ 
+ #define VIG_SC7180_MASK \
+-	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
++	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+ 
+ #define VIG_SM6125_MASK \
+-	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
++	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+ 
+ #define VIG_SC7180_MASK_SDMA \
+ 	(VIG_SC7180_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 63716ff5558f..7ca6286756f6 100644
+index 7ca6286756f6..8dbf0322394e 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -345,7 +345,6 @@ struct dpu_rotation_cfg {
-  * @max_mixer_width    max layer mixer line width support.
-  * @max_mixer_blendstages max layer mixer blend stages or
-  *                       supported z order
-- * @qseed_type         qseed2 or qseed3 support.
-  * @has_src_split      source split feature status
-  * @has_dim_layer      dim layer feature status
-  * @has_idle_pc        indicate if idle power collapse feature is supported
-@@ -358,7 +357,6 @@ struct dpu_rotation_cfg {
- struct dpu_caps {
- 	u32 max_mixer_width;
- 	u32 max_mixer_blendstages;
--	u32 qseed_type;
- 	bool has_src_split;
- 	bool has_dim_layer;
- 	bool has_idle_pc;
+@@ -51,9 +51,7 @@ enum {
+ /**
+  * SSPP sub-blocks/features
+  * @DPU_SSPP_SCALER_QSEED2,  QSEED2 algorithm support
+- * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support
+- * @DPU_SSPP_SCALER_QSEED3LITE,  QSEED3 Lite alogorithm support
+- * @DPU_SSPP_SCALER_QSEED4,  QSEED4 algorithm support
++ * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support (also QSEED3LITE and QSEED4)
+  * @DPU_SSPP_SCALER_RGB,     RGB Scaler, supported by RGB pipes
+  * @DPU_SSPP_CSC,            Support of Color space converion
+  * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
+@@ -72,8 +70,6 @@ enum {
+ enum {
+ 	DPU_SSPP_SCALER_QSEED2 = 0x1,
+ 	DPU_SSPP_SCALER_QSEED3,
+-	DPU_SSPP_SCALER_QSEED3LITE,
+-	DPU_SSPP_SCALER_QSEED4,
+ 	DPU_SSPP_SCALER_RGB,
+ 	DPU_SSPP_CSC,
+ 	DPU_SSPP_CSC_10BIT,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+index f2192de93713..c20f37c8033c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+@@ -603,9 +603,7 @@ static void _setup_layer_ops(struct dpu_hw_sspp *c,
+ 		test_bit(DPU_SSPP_SMART_DMA_V2, &c->cap->features))
+ 		c->ops.setup_multirect = dpu_hw_sspp_setup_multirect;
+ 
+-	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features) ||
+-			test_bit(DPU_SSPP_SCALER_QSEED3LITE, &features) ||
+-			test_bit(DPU_SSPP_SCALER_QSEED4, &features)) {
++	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features)) {
+ 		c->ops.setup_scaler = _dpu_hw_sspp_setup_scaler3;
+ 		c->ops.get_scaler_ver = _dpu_hw_sspp_get_scaler3_ver;
+ 	}
+@@ -640,10 +638,7 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
+ 			cfg->len,
+ 			kms);
+ 
+-	if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+-			cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+-			cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
+-			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
++	if (sblk->scaler_blk.len)
+ 		dpu_debugfs_create_regset32("scaler_blk", 0400,
+ 				debugfs_root,
+ 				sblk->scaler_blk.base + cfg->base,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+index cbf4f95ff0fd..d7954e900296 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+@@ -26,9 +26,7 @@ struct dpu_hw_sspp;
+  */
+ #define DPU_SSPP_SCALER (BIT(DPU_SSPP_SCALER_RGB) | \
+ 			 BIT(DPU_SSPP_SCALER_QSEED2) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED3) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED3LITE) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED4))
++			 BIT(DPU_SSPP_SCALER_QSEED3))
+ 
+ /*
+  * Define all CSC feature bits in catalog
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index c2aaaded07ed..109355275ec5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -438,8 +438,7 @@ static void _dpu_plane_setup_scaler3(struct dpu_hw_sspp *pipe_hw,
+ 			scale_cfg->src_height[i] /= chroma_subsmpl_v;
+ 		}
+ 
+-		if (pipe_hw->cap->features &
+-			BIT(DPU_SSPP_SCALER_QSEED4)) {
++		if (pipe_hw->cap->sblk->scaler_blk.version >= 0x3000) {
+ 			scale_cfg->preload_x[i] = DPU_QSEED4_DEFAULT_PRELOAD_H;
+ 			scale_cfg->preload_y[i] = DPU_QSEED4_DEFAULT_PRELOAD_V;
+ 		} else {
 -- 
 2.39.2
 
