@@ -2,83 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B86D79256D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:22:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A02E79257F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:23:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236595AbjIEQFG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:05:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
+        id S238669AbjIEQGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354353AbjIEK5P (ORCPT
+        with ESMTP id S1354360AbjIELAT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 06:57:15 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EA7D1A8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 03:57:12 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d78328bc2abso2011683276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 03:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693911431; x=1694516231; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nFp9JN673sSpwa45B4q2HQSN730WX8grbrKR4m9d76A=;
-        b=EUXkgM9iKYXkdGIhIzbe0Itxp2yGw47ebDol5/1/y+FAIKyO0+TNzTkz2rcND3U6fS
-         jckDEAQeYd5rZR9WWdHcOokHRuwM4/z/i7YsuVJF1KXbPYYLbDJecjbmt9lPW9RQP9O5
-         WyQz5iq0B8r4JXgUbrzzAPBByLp5L5SFEGQ7Wnpb5y/eeeZOluqSkfbhPULLLxMOcakP
-         NnQtRwyeB7bIoB+/I7d1OhvvSqaxFfTpNPqiyU03tUMnyf2DsHDW6q377XRkNzFriyLI
-         8KbRILHkmBs9rbilXa5PiIXF9ob+IfoTdcOh8ynfamc5OFRq/yaJvJJHbCZDozTk/xHF
-         itKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693911431; x=1694516231;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nFp9JN673sSpwa45B4q2HQSN730WX8grbrKR4m9d76A=;
-        b=D4n09VTmzSJLH0vEZi9eXFiPhDbiXn6Igi9ak4wvghO30E8h8D9HB5s2LNy2Lk2uZk
-         VlryE9Qf9sYfSDX7xKK1J6yUEqci68ZRWECsS0u8c3N7QIMl5YD7fgegrN4HjkkTl2Gh
-         GIhVAWGMvqgc9A5Pow14K1zTRNdOSCnPdkmnJXD68RbmpJhzPndtGezmp4KrCqp7tljH
-         s7o6aeiIZQltlAOw39AwYLAjBMQcIBidB6KZEKhBM2kIxcO0DDr+bDSs0YldDtCxEFXG
-         s+suqzPRMCREiudwCcG8fx3aw+KtBNQSBA3r9Ek2GQzzLb3JrS2zg0hgNkVeTrmxibMr
-         ujwg==
-X-Gm-Message-State: AOJu0Yx9yof2EymVbzbUSkhi1GKVhhfh4c+Lz4jXgcfBrG9aBoM5/M2r
-        ewQcMM3sQ4L8v+6Bor4J7bzkrQhqzh24RWxrR/XGzA==
-X-Google-Smtp-Source: AGHT+IGZHwMQlo/ityKImZ2VeEtB90rqhklF5U6Gv8PiiU7XpveUbpNUVJmNlPMw3mBk4Obk/SUY2ph1gPYN6jbIHDo=
-X-Received: by 2002:a25:ac20:0:b0:d53:f98f:8018 with SMTP id
- w32-20020a25ac20000000b00d53f98f8018mr13526068ybi.65.1693911431284; Tue, 05
- Sep 2023 03:57:11 -0700 (PDT)
+        Tue, 5 Sep 2023 07:00:19 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B1312A;
+        Tue,  5 Sep 2023 04:00:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 6C860CE10BD;
+        Tue,  5 Sep 2023 11:00:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C47EC433C7;
+        Tue,  5 Sep 2023 11:00:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693911611;
+        bh=Wfk1BuK7Xhfcrf4xZDmH9THWGITu0aqQKjO7PM3R1kk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=phwKNbWl+Q1EF5s4UKKO34pA7mX/nDJdHQO+AJCheMIBRtMD5JQ/mrDJbaWwZqs3c
+         OlgUil3K0caYN+kKH4/TNBWGmbV2kkl3o7eFWeKQ8VnOAgvk9jnfA5uQoOb4Ujhojt
+         AVeoAlnl2O1GW6Sb1Y7LBXJ8V/NvE46QuNAJpWARUPzn1BC7n/UQUWiEFFZ906Kb6A
+         UEC4H0DIYMdyqaAy2822ULAeUcRUIpXaV0anrm6oUZjkLPGhgzTkR94a/EcI51Ywuk
+         96CPMIfuyUguLsh+/hXEpWnUVQ+OyvtZ1Q8h3dZg95LvMMqOb4dLqu3aRY3CJwc1pR
+         EVEL/1N7/nlhA==
+Date:   Tue, 5 Sep 2023 13:00:09 +0200
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Vignesh Raman <vignesh.raman@collabora.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, helen.koike@collabora.com,
+        guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+        david.heidelberg@collabora.com, daniels@collabora.com,
+        gustavo.padovan@collabora.com, emma@anholt.net,
+        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
+        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
+        jani.nikula@linux.intel.com, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        virtualization@lists.linux-foundation.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] drm: ci: Force db410c to host mode
+Message-ID: <2jz6wurh6ejbaejwtb5r5gukjuw4zs7ujk5hbwfpsn26o6esqe@g2nnb2gjpnjp>
+References: <20230904161516.66751-1-vignesh.raman@collabora.com>
+ <20230904161516.66751-3-vignesh.raman@collabora.com>
+ <CAA8EJpq_cmFQ6TGy1xELh3ButWKLfSkQcp5ix049s_iqKw6DvQ@mail.gmail.com>
+ <ueznsu2dlvq5zp3ls262fww54bnlqa3e2ssr6f65vrrionloms@ir2ywgeajj4w>
+ <2c812fe4-04ba-0243-5330-c7b7e695cff9@collabora.com>
 MIME-Version: 1.0
-References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org>
- <20230903214150.2877023-2-dmitry.baryshkov@linaro.org> <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
-In-Reply-To: <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 5 Sep 2023 13:56:59 +0300
-Message-ID: <CAA8EJpqUg2-k7LLBL38RHU1sThkXB54ca68xEMd1yMnHQcQ++w@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 01/12] Revert "drm/sysfs: Link DRM connectors to
- corresponding Type-C connectors"
-To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Won Chung <wonchung@google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2c812fe4-04ba-0243-5330-c7b7e695cff9@collabora.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,64 +68,175 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Heikki,
+On Tue, Sep 05, 2023 at 03:39:33PM +0530, Vignesh Raman wrote:
+> Hi Dmitry, Maxime,
+>=20
+> On 05/09/23 14:13, Maxime Ripard wrote:
+> > Hi,
+> >=20
+> > On Mon, Sep 04, 2023 at 07:59:26PM +0300, Dmitry Baryshkov wrote:
+> > > On Mon, 4 Sept 2023 at 19:16, Vignesh Raman <vignesh.raman@collabora.=
+com> wrote:
+> > > >=20
+> > > > Force db410c to host mode to fix network issue which results in fai=
+lure
+> > > > to mount root fs via NFS.
+> > > > See https://gitlab.freedesktop.org/gfx-ci/linux/-/commit/cb72a629b8=
+c15c80a54dda510743cefd1c4b65b8
+> > > >=20
+> > > > Use fdtoverlay command to merge base device tree with an overlay
+> > > > which contains the fix for USB controllers to work in host mode.
+> > > >=20
+> > > > Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> > > > ---
+> > > >=20
+> > > > v2:
+> > > >    - Use fdtoverlay command to merge overlay dtbo with the base dtb=
+ instead of modifying the kernel sources
+> > > >=20
+> > > > ---
+> > > >   drivers/gpu/drm/ci/build.sh                         |  5 +++++
+> > > >   .../gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts  | 13 ++++++++=
++++++
+> > > >   2 files changed, 18 insertions(+)
+> > > >   create mode 100644 drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-ove=
+rlay.dts
+> > > >=20
+> > > > diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build=
+=2Esh
+> > > > index 7b014287a041..92ffd98cd09e 100644
+> > > > --- a/drivers/gpu/drm/ci/build.sh
+> > > > +++ b/drivers/gpu/drm/ci/build.sh
+> > > > @@ -92,6 +92,11 @@ done
+> > > >=20
+> > > >   if [[ -n ${DEVICE_TREES} ]]; then
+> > > >       make dtbs
+> > > > +    if [[ -e arch/arm64/boot/dts/qcom/apq8016-sbc.dtb ]]; then
+> > > > +        dtc -@ -I dts -O dtb -o drivers/gpu/drm/ci/dt-overlays/apq=
+8016-sbc-overlay.dtbo drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+> > > > +        fdtoverlay -i arch/arm64/boot/dts/qcom/apq8016-sbc.dtb -o =
+arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb drivers/gpu/drm/ci/dt-over=
+lays/apq8016-sbc-overlay.dtbo
+> > > > +        mv arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb arch/a=
+rm64/boot/dts/qcom/apq8016-sbc.dtb
+> > > > +    fi
+> > > >       cp ${DEVICE_TREES} /lava-files/.
+> > > >   fi
+> > > >=20
+> > > > diff --git a/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts=
+ b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+> > > > new file mode 100644
+> > > > index 000000000000..57b7604f1c23
+> > > > --- /dev/null
+> > > > +++ b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+> > > > @@ -0,0 +1,13 @@
+> > > > +/dts-v1/;
+> > > > +/plugin/;
+> > > > +
+> > > > +/ {
+> > > > +    fragment@0 {
+> > > > +        target-path =3D "/soc@0";
+> > > > +        __overlay__ {
+> > > > +            usb@78d9000 {
+> > > > +                dr_mode =3D "host";
+> > > > +            };
+> > > > +        };
+> > > > +    };
+> > > > +};
+> > > > --
+> > > > 2.40.1
+> > >=20
+> > > Can we use normal dtso syntax here instead of defining fragments manu=
+ally?
+> >=20
+> > What Dmitry is hinting about is to use the "Sugar Syntax". There a good=
+ documentation here:
+> > https://source.android.com/docs/core/architecture/dto/syntax
+>=20
+>=20
+> With the below DTO syntax,
+> /dts-v1/;
+> /plugin/;
+>=20
+> &usb {
+>   usb@78d9000 {
+>     dr_mode =3D "host";
+>   };
+> };
+>=20
+> Decoded dtbo file is,
+> /dts-v1/;
+>=20
+> / {
+>=20
+> 	fragment@0 {
+> 		target =3D <0xffffffff>;
+>=20
+> 		__overlay__ {
+>=20
+> 			usb@78d9000 {
+> 				dr_mode =3D "host";
+> 			};
+> 		};
+> 	};
+>=20
+> 	__fixups__ {
+> 		usb =3D "/fragment@0:target:0";
+> 	};
+> };
+>=20
+> With the previous fix using fragment we get,
+> / {
+>=20
+> 	fragment@0 {
+> 		target-path	 =3D "/soc@0";
+>=20
+> 		__overlay__ {
+>=20
+> 			usb@78d9000 {
+> 				dr_mode =3D "host";
+> 			};
+> 		};
+> 	};
+> };
+>=20
+> Decoded apq8016-sbc.dtb file with the fix (setting dr_mode to host) is,
+> /dts-v1/;
+> / {=09
+> 	soc@0 {
+> 		usb@78d9000 {
+> 			dr_mode =3D "host";
+> 		};=09
+> 	};
+> };
+>=20
+> How can set the target to "soc@0" using the DTO syntax?
 
-On Tue, 5 Sept 2023 at 11:50, Heikki Krogerus
-<heikki.krogerus@linux.intel.com> wrote:
->
-> Hi Dmitry,
->
-> On Mon, Sep 04, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
-> > The kdev->fwnode pointer is never set in drm_sysfs_connector_add(), so
-> > dev_fwnode() checks never succeed, making the respective commit NOP.
->
-> That's not true. The dev->fwnode is assigned when the device is
-> created on ACPI platforms automatically. If the drm_connector fwnode
-> member is assigned before the device is registered, then that fwnode
-> is assigned also to the device - see drm_connector_acpi_find_companion().
->
-> But please note that even if drm_connector does not have anything in
-> its fwnode member, the device may still be assigned fwnode, just based
-> on some other logic (maybe in drivers/acpi/acpi_video.c?).
->
-> > And if drm_sysfs_connector_add() is modified to set kdev->fwnode, it
-> > breaks drivers already using components (as it was pointed at [1]),
-> > resulting in a deadlock. Lockdep trace is provided below.
-> >
-> > Granted these two issues, it seems impractical to fix this commit in any
-> > sane way. Revert it instead.
->
-> I think there is already user space stuff that relies on these links,
-> so I'm not sure you can just remove them like that. If the component
-> framework is not the correct tool here, then I think you need to
-> suggest some other way of creating them.
+To strictly answer your question, that would be something like
 
-The issue (that was pointed out during review) is that having a
-component code in the framework code can lead to lockups. With the
-patch #2 in place (which is the only logical way to set kdev->fwnode
-for non-ACPI systems) probing of drivers which use components and set
-drm_connector::fwnode breaks immediately.
+&{/soc@0} {
+	usb@78d9000 {
+		dr_mode =3D "host";
+	};
+};
 
-Can we move the component part to the respective drivers? With the
-patch 2 in place, connector->fwnode will be copied to the created
-kdev's fwnode pointer.
+You can simplify this further however by doing:
 
-Another option might be to make this drm_sysfs component registration optional.
 
-> Side note. The problem you are describing here is a limitation in the
-> component framework - right now it's made with the idea that a device
-> can represent a single component, but it really should allow a device
-> to represent multiple components. I'm not saying that you should try
-> to fix the component framework, but I just wanted to make a note about
-> this (and this is not the only problem with the component framework).
->
-> I like the component framework as a concept, but I think it needs a
-> lot of improvements - possibly rewrite.
+&{/soc@0/usb@78d9000} {
+	dr_mode =3D "host";
+};
 
-Yes. There were several attempts to rewrite the component framework,
-but none succeeded up to now. Anyway, I consider rewriting components
-framework to be a bigger topic compared to drm connector fwnode setup.
+Also, that node actually has a label ("usb"), defined here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arc=
+h/arm64/boot/dts/qcom/msm8916.dtsi#n2322
 
---
-With best wishes
-Dmitry
+So you can end up with
+
+&usb {
+	dr_mode =3D "host";
+};
+
+All of them should be equivalent to the one you had in your patch.
+
+Maxime
