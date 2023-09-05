@@ -2,216 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85F3679281B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:42:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 343F579265D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238893AbjIEQHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:07:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        id S237858AbjIEQFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:05:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354398AbjIELTv (ORCPT
+        with ESMTP id S1354443AbjIELmA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 07:19:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F9A1AB;
-        Tue,  5 Sep 2023 04:19:46 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3859dRqR022051;
-        Tue, 5 Sep 2023 11:19:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=A5t1dlkYJ0wOotUEYyQn+vL7gadDWE9jXO6dxQeebf8=;
- b=pT5tYCH5Z0MV2uthVO76ZpxcV9gvNgS9n+qBRow17z8zjlN/+8KjJiqGYuDTvdjtMNbT
- tRjLjlwAxTiqLdoAxrhZHbPrvlCnUwHJfGPFo80DqSmfSJis3KIJN3IKNwyed/Apk7uS
- OsTr46SNlk8Ax9em87RG3ZAt26mynPGiCRow76F3674N3LDQmty2IiqLTP2nfiGb3/xv
- YPh7e+AiwkZ8yPMC296a44ollc1T2+TQxKrgarKP7oeC70idxvd1rMur0WCT27BZQFfW
- HypsQnMreN4RjSljwA/Frf677wjYofDL5oY/WBjWE6Em3R4WSws4ftXeutvn4GMfr7h8 Bg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3swpr6h5fw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 05 Sep 2023 11:19:36 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 385BJZNH026931
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 5 Sep 2023 11:19:35 GMT
-Received: from [10.201.203.60] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 5 Sep
- 2023 04:19:31 -0700
-Message-ID: <7355fb0a-f2a7-1af6-3369-a5996610e9cc@quicinc.com>
-Date:   Tue, 5 Sep 2023 16:49:28 +0530
+        Tue, 5 Sep 2023 07:42:00 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A6C11AD;
+        Tue,  5 Sep 2023 04:41:54 -0700 (PDT)
+Received: from [192.168.1.23] (unknown [171.76.82.102])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: vignesh)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id EBCCA66071FD;
+        Tue,  5 Sep 2023 12:41:48 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693914113;
+        bh=Wdvv7kzQnQGD3G2x32niCSAkLAytXs7VXpn7J1J1VkM=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=AW9E55wOUkgs71c5ftwkfCTT9m2IIE6VwkCCx2or0kc4A3xemZumoehIE8+q0uJUv
+         +z1Ibrc02A78fJGFDqZYShdYrA2c1l80BkjZlxwhI8h4WjTuEZG/7zyhlJW1YNbadz
+         fu3ifByxt982jgr8NiQLTkwp7YDt6eeyzmQcdPDmJNYBwqhM0Y/ejYakBToaiwWPVZ
+         beL+KiLptHsoQRw9a5rt6Oqz8CrirmQ8dVizMW2okVJB0tGVxMIBxRXVixfzOqIUZD
+         zEkwNlRzQYyRZD2CM48lUz281JepakgYMCSZ724OoW3YYJApAjIhWESDj/0LFL6ujx
+         qeCsD+pufKtBg==
+Message-ID: <6be5f5d8-8940-c79b-4a01-3f3d73641e4e@collabora.com>
+Date:   Tue, 5 Sep 2023 17:11:43 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 2/7] drm: ci: Force db410c to host mode
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Ziyang Huang <hzyitc@outlook.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <quic_gokulsri@quicinc.com>, <quic_varada@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
- <TYZPR01MB555673C1E12A27DA8109DBEAC9EAA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <c6f4b93c-aa80-e250-d06b-6b3bdfbfc64b@linaro.org>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <c6f4b93c-aa80-e250-d06b-6b3bdfbfc64b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tGCfYoTi52mR0a0gyY9FY5HTxnNHlmKn
-X-Proofpoint-GUID: tGCfYoTi52mR0a0gyY9FY5HTxnNHlmKn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-05_09,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- impostorscore=0 mlxlogscore=999 clxscore=1011 adultscore=0
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2309050100
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>
+Cc:     dri-devel@lists.freedesktop.org, helen.koike@collabora.com,
+        guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+        david.heidelberg@collabora.com, daniels@collabora.com,
+        gustavo.padovan@collabora.com, emma@anholt.net,
+        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
+        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
+        jani.nikula@linux.intel.com, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        virtualization@lists.linux-foundation.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230904161516.66751-1-vignesh.raman@collabora.com>
+ <20230904161516.66751-3-vignesh.raman@collabora.com>
+ <CAA8EJpq_cmFQ6TGy1xELh3ButWKLfSkQcp5ix049s_iqKw6DvQ@mail.gmail.com>
+ <ueznsu2dlvq5zp3ls262fww54bnlqa3e2ssr6f65vrrionloms@ir2ywgeajj4w>
+ <2c812fe4-04ba-0243-5330-c7b7e695cff9@collabora.com>
+ <2jz6wurh6ejbaejwtb5r5gukjuw4zs7ujk5hbwfpsn26o6esqe@g2nnb2gjpnjp>
+ <CAA8EJpoGoopP64T1nm1ye1ukTwT=u+LYY1ubQG-9dQ-j41iHiA@mail.gmail.com>
+From:   Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <CAA8EJpoGoopP64T1nm1ye1ukTwT=u+LYY1ubQG-9dQ-j41iHiA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-
-On 9/4/2023 6:27 AM, Bryan O'Donoghue wrote:
-> On 03/09/2023 14:02, Ziyang Huang wrote:
->> 在 2023/9/1 23:04, Bryan O'Donoghue 写道:
->>> <...>
+On 05/09/23 16:40, Dmitry Baryshkov wrote:
+> On Tue, 5 Sept 2023 at 14:00, Maxime Ripard <mripard@kernel.org> wrote:
+>>
+>> On Tue, Sep 05, 2023 at 03:39:33PM +0530, Vignesh Raman wrote:
+>>> Hi Dmitry, Maxime,
 >>>
->>> The assignment of pins 20 and 21 to blsp1_uart1 is not correct.
+>>> On 05/09/23 14:13, Maxime Ripard wrote:
+>>>> Hi,
+>>>>
+>>>> On Mon, Sep 04, 2023 at 07:59:26PM +0300, Dmitry Baryshkov wrote:
+>>>>> On Mon, 4 Sept 2023 at 19:16, Vignesh Raman <vignesh.raman@collabora.com> wrote:
+>>>>>>
+>>>>>> Force db410c to host mode to fix network issue which results in failure
+>>>>>> to mount root fs via NFS.
+>>>>>> See https://gitlab.freedesktop.org/gfx-ci/linux/-/commit/cb72a629b8c15c80a54dda510743cefd1c4b65b8
+>>>>>>
+>>>>>> Use fdtoverlay command to merge base device tree with an overlay
+>>>>>> which contains the fix for USB controllers to work in host mode.
+>>>>>>
+>>>>>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>>>>>> ---
+>>>>>>
+>>>>>> v2:
+>>>>>>     - Use fdtoverlay command to merge overlay dtbo with the base dtb instead of modifying the kernel sources
+>>>>>>
+>>>>>> ---
+>>>>>>    drivers/gpu/drm/ci/build.sh                         |  5 +++++
+>>>>>>    .../gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts  | 13 +++++++++++++
+>>>>>>    2 files changed, 18 insertions(+)
+>>>>>>    create mode 100644 drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+>>>>>> index 7b014287a041..92ffd98cd09e 100644
+>>>>>> --- a/drivers/gpu/drm/ci/build.sh
+>>>>>> +++ b/drivers/gpu/drm/ci/build.sh
+>>>>>> @@ -92,6 +92,11 @@ done
+>>>>>>
+>>>>>>    if [[ -n ${DEVICE_TREES} ]]; then
+>>>>>>        make dtbs
+>>>>>> +    if [[ -e arch/arm64/boot/dts/qcom/apq8016-sbc.dtb ]]; then
+>>>>>> +        dtc -@ -I dts -O dtb -o drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dtbo drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+>>>>>> +        fdtoverlay -i arch/arm64/boot/dts/qcom/apq8016-sbc.dtb -o arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dtbo
+>>>>>> +        mv arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
+>>>>>> +    fi
+>>>>>>        cp ${DEVICE_TREES} /lava-files/.
+>>>>>>    fi
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+>>>>>> new file mode 100644
+>>>>>> index 000000000000..57b7604f1c23
+>>>>>> --- /dev/null
+>>>>>> +++ b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
+>>>>>> @@ -0,0 +1,13 @@
+>>>>>> +/dts-v1/;
+>>>>>> +/plugin/;
+>>>>>> +
+>>>>>> +/ {
+>>>>>> +    fragment@0 {
+>>>>>> +        target-path = "/soc@0";
+>>>>>> +        __overlay__ {
+>>>>>> +            usb@78d9000 {
+>>>>>> +                dr_mode = "host";
+>>>>>> +            };
+>>>>>> +        };
+>>>>>> +    };
+>>>>>> +};
+>>>>>> --
+>>>>>> 2.40.1
+>>>>>
+>>>>> Can we use normal dtso syntax here instead of defining fragments manually?
+>>>>
+>>>> What Dmitry is hinting about is to use the "Sugar Syntax". There a good documentation here:
+>>>> https://source.android.com/docs/core/architecture/dto/syntax
 >>>
->>> The blspX_uartY in pinctrl should match what is in the dtsi so 
->>> assigning pins_a above to blsp1_uart1 is not right. The dts name and 
->>> pinctrl name should be the same.
 >>>
->>> Your console is on blsp0_uart0.
+>>> With the below DTO syntax,
+>>> /dts-v1/;
+>>> /plugin/;
 >>>
->>> https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/blob/5343739b4070bcec2fecd72f758c16adc31a3083/arch/arm/dts/ipq5018-mp03.3.dts#L33 
->>>
->>>
->>> So roughly speaking
->>>
->>> arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->>>
->>> aliases {
->>>      serial0 = &blsp0_uart0;
+>>> &usb {
+>>>    usb@78d9000 {
+>>>      dr_mode = "host";
+>>>    };
 >>> };
 >>>
->>> chosen {
->>>      stdout-path = "serial0:115200n8";
+>>> Decoded dtbo file is,
+>>> /dts-v1/;
+>>>
+>>> / {
+>>>
+>>>        fragment@0 {
+>>>                target = <0xffffffff>;
+>>>
+>>>                __overlay__ {
+>>>
+>>>                        usb@78d9000 {
+>>>                                dr_mode = "host";
+>>>                        };
+>>>                };
+>>>        };
+>>>
+>>>        __fixups__ {
+>>>                usb = "/fragment@0:target:0";
+>>>        };
 >>> };
 >>>
->>> &blsp0_uart0 {
->>>          pinctrl-0 = <&uart0_pins>;
->>>          pinctrl-names = "default";
->>>          status = "okay";
+>>> With the previous fix using fragment we get,
+>>> / {
+>>>
+>>>        fragment@0 {
+>>>                target-path      = "/soc@0";
+>>>
+>>>                __overlay__ {
+>>>
+>>>                        usb@78d9000 {
+>>>                                dr_mode = "host";
+>>>                        };
+>>>                };
+>>>        };
 >>> };
 >>>
+>>> Decoded apq8016-sbc.dtb file with the fix (setting dr_mode to host) is,
+>>> /dts-v1/;
+>>> / {
+>>>        soc@0 {
+>>>                usb@78d9000 {
+>>>                        dr_mode = "host";
+>>>                };
+>>>        };
+>>> };
 >>>
->>> arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>>
->>> blsp0_uart0: serial@78af000
->>>
->>> either that or  blsp0_uart1 for pins28 and pins29 - you seem to 
->>> indicate pins_1 => blsp0_uart0.
->>>
->>> The two roots of the problem are
->>>
->>> 1. Mislabeling of the uart block in the dtsi
->>> 2. Invalid miscongiruation of pins for that misnamed block
->>>
->>> The fix should be
->>>
->>> 1. Fix the labeling of uart in the dtsi
->>> 2. Decide on which pins gpio20, gpio21 ? are the right ones to configure
->>>
->>> I thought you said in a previous email if you changed pins gpio28 and 
->>> gpio29 that the UART would fail if so that implies blsp0_uart1.
->>>
->>> Either way the pinctrl and dts should agree.
->>>
->>> ---
->>> bod
->>>
+>>> How can set the target to "soc@0" using the DTO syntax?
 >>
->> No, please read my commit message carefully.
+>> To strictly answer your question, that would be something like
 >>
->> The Y of pinctrl is the index of pinmux config. So it can't be used in 
->> the serial node definition.
+>> &{/soc@0} {
+>>          usb@78d9000 {
+>>                  dr_mode = "host";
+>>          };
+>> };
 >>
->> Please note that the physical port of first serial is configurable. It 
->> can use gpio20, gpio21 or/and gpio28,29. All of these pins are for the 
->> first serial.
+>> You can simplify this further however by doing:
 >>
->> Let's take the second serial as an example. It has 3 configurable 
->> physical port groups - "blsp1_uart0" (pinconfig name, use GPIO 
->> 10,11,12,13), "blsp1_uart1" (gpio 31,32,33,34), "blsp1_uart2" (gpio 
->> 23,24,25,26).
 >>
->> But the dts name of the second serial definition is "blsp1_uart2". 
->> Because it the second serial of the first BLSP block.
+>> &{/soc@0/usb@78d9000} {
+>>          dr_mode = "host";
+>> };
+
+The above works. Thanks.
+
 >>
->> Same logic. The dts name of the first serial definition is 
->> "blsp1_uart1". Because it the first serial of the first BLSP block.
+>> Also, that node actually has a label ("usb"), defined here:
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/msm8916.dtsi#n2322
 >>
->> I think I need to introduce the architecture of these SoC. It has two 
->> BLSP block. Each BLSP block has several uart port.
+>> So you can end up with
 >>
->> So the dts name of serial contains the BLSP index and the serial index 
->> inside BLSP. But pinconf name doesn't care about it. So it use global 
->> index. And due to the physical ports are configurable, it need pinmux 
->> index.
->>
->> The equation will be like this:
->>
->> dts name of serial definition: "blspX_uartY"
->> pinconf name: "blspU_uartV"
->> U = (uart_number_inside_each_blsp * (X - 1)) + (Y - 1)
+>> &usb {
+>>          dr_mode = "host";
+>> };
 > 
-> I've checked the documentation for this chip.
-> 
-> gpio20, gpio21 = blsp0_uart0
-> gpio28, gpio29 = blsp0_uart0
-> 
-> These pins are muxed to UART0, I agree, the u-boot dts also indicates 
-> this also.
-> 
-> If we open the documentation further we see
-> 
-> 0x78AF000 = BLSP1_BLSP_UART0
-> 0x79b0000 = BLSP1_BLSP_UART1
-> 
-> So for starters the dtsi has the _wrong_ label.
-> 
-> Here/anseo
-> 
-> grep uart0: arch/arm64/boot/dts/qcom/*
-> arch/arm64/boot/dts/qcom/ipq5332.dtsi:        blsp1_uart0: serial@78af000 {
-> arch/arm64/boot/dts/qcom/ipq9574.dtsi:        blsp1_uart0: serial@78af000 {
-> 
-> That's how that label ought to be the main hint something is askance is 
-> assigning a pin named "blsp0_uart0" to a dts entry named "blsp1_uart1".
-> 
-> Please update the label in your next revision.
+> ... which is the simplest and thus more robust one.
 > 
 
-   Agree here, both label (to blsp1_uart0) and pins needs to be updated
-    (as in this patch).
+Should it be,
+&{/soc@0/usb} {
+	dr_mode = "host";
+};
+
+I will send a v3 version for this. Thank you.
 
 Regards,
-  Sricharan
+Vignesh
